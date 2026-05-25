@@ -1,0 +1,17 @@
+{
+  "apiVersion": "0.1",
+  "plugins": [
+    {
+      "id": "example-exporter",
+      "path": "plugins/example-exporter",
+      "category": "exporter",
+      "status": "bundled"
+    },
+    {
+      "id": "example-agent-provider",
+      "path": "plugins/example-agent-provider",
+      "category": "agent_provider",
+      "status": "bundled"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "example-exporter",
+  "name": "Example Exporter",
+  "version": "0.1.0",
+  "apiVersion": "0.1",
+  "entrypoint": "plugin.py",
+  "hooks": ["exporter"],
+  "permissions": ["read:sessions"]
+}
+

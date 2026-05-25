@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install API package
+        run: python -m pip install -e .
+      - name: Compile Python
+        run: python -m compileall -q apps/api/neural_console scripts plugins
+      - name: Run API tests
+        run: python -m unittest discover apps/api/tests
+      - name: Run deterministic smoke
+        run: python scripts/smoke_core.py
+
+  web-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install Web dependencies
+        run: npm ci
+      - name: Build Web
+        run: npm run build
+      - name: Audit Web dependencies
+        run: npm audit --audit-level=moderate
+
+  compose-smoke:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_BASE_IMAGE: public.ecr.aws/docker/library/python:3.11-slim
+      NODE_BASE_IMAGE: public.ecr.aws/docker/library/node:22-slim
+      POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
+      LANGFUSE_POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
+      REDIS_IMAGE: public.ecr.aws/docker/library/redis:7
+      CLICKHOUSE_IMAGE: mirror.gcr.io/clickhouse/clickhouse-server:25.3-alpine
+      MINIO_IMAGE: quay.io/minio/minio:latest
+      FALKORDB_IMAGE: mirror.gcr.io/falkordb/falkordb:latest
+      LANGFUSE_WEB_IMAGE: ghcr.io/langfuse/langfuse:3
+      LANGFUSE_WORKER_IMAGE: ghcr.io/langfuse/langfuse-worker:3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate CI env
+        run: python scripts/setup_env.py --force
+      - name: Validate Compose config
+        run: docker compose -f infra/compose/docker-compose.yml --profile full config >/dev/null
+      - name: Start smoke stack
+        run: docker compose -f infra/compose/docker-compose.yml --profile smoke up -d --build
+      - name: Wait for API
+        run: |
+          for i in $(seq 1 60); do
+            curl -fsS http://127.0.0.1:8000/v1/health && exit 0
+            sleep 2
+          done
+          docker compose -f infra/compose/docker-compose.yml --profile smoke ps
+          docker compose -f infra/compose/docker-compose.yml --profile smoke logs --tail=200
+          exit 1
+      - name: Verify fake-agent flow
+        run: API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
+      - name: Verify mock HTTP agent flow
+        run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
+      - name: Stop stack
+        if: always()
+        run: docker compose -f infra/compose/docker-compose.yml --profile smoke down -v

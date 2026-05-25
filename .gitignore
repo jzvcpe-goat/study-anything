@@ -1,0 +1,16 @@
+.DS_Store
+.codex/
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+node_modules/
+dist/
+build/
+*.log
+data/
+.lancedb/
