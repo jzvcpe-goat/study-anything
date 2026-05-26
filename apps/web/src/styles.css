@@ -262,12 +262,61 @@ small {
   color: #9a382f;
 }
 
+.statusDot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #9aa6b2;
+  box-shadow: 0 0 0 4px #eef1f4;
+}
+
+.statusDot.good {
+  background: #22834f;
+  box-shadow: 0 0 0 4px #e7f5ec;
+}
+
+.statusDot.warn {
+  background: #b7741b;
+  box-shadow: 0 0 0 4px #fff3d7;
+}
+
 .notice {
   border: 1px solid #d4dbe3;
   border-radius: 8px;
   margin-bottom: 14px;
   padding: 12px 14px;
   background: #ffffff;
+}
+
+.runwayGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.runwayCard {
+  display: flex;
+  min-width: 0;
+  min-height: 86px;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid #d9dee5;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.runwayCard div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.runwayCard strong {
+  overflow-wrap: anywhere;
 }
 
 .notice.warn {
@@ -376,9 +425,11 @@ small {
 }
 
 .workflowStep small {
-  overflow-wrap: anywhere;
+  overflow: hidden;
   font-size: 11px;
   line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .quizBlock,
@@ -547,6 +598,50 @@ small {
   grid-column: 1 / -1;
 }
 
+.branchBoard {
+  display: grid;
+  gap: 16px;
+}
+
+.branchHero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #d9dee5;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 18px;
+}
+
+.branchGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.branchLane {
+  display: grid;
+  min-height: 124px;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid #e1e6eb;
+  border-radius: 8px;
+  background: #fbfcfd;
+  padding: 14px;
+}
+
+.branchLane strong,
+.branchLane small {
+  overflow-wrap: anywhere;
+}
+
+.gateGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .emptyState {
   margin: 0;
   color: #687586;
@@ -556,7 +651,9 @@ small {
   .appShell,
   .learnGrid,
   .splitGrid,
-  .opsLayout {
+  .opsLayout,
+  .runwayGrid,
+  .branchGrid {
     grid-template-columns: 1fr;
   }
 
@@ -588,9 +685,15 @@ small {
   .workflowMap,
   .metricStrip,
   .statGrid,
+  .gateGrid,
   .integrationRow,
   .eventRow {
     grid-template-columns: 1fr;
+  }
+
+  .branchHero {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .brandBlock {

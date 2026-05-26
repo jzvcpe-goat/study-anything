@@ -11,9 +11,10 @@
 - [ ] `(cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)`
 - [ ] Start API locally and run `API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py`.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
-- [ ] `docker compose -f infra/compose/docker-compose.yml config`
-- [ ] `docker compose -f infra/compose/docker-compose.yml --profile smoke up --build mock-http-agent`
-- [ ] `docker compose -f infra/compose/docker-compose.yml up --build`
+- [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
+- [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up --build mock-http-agent`
+- [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
+- [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
 - [ ] Open Web UI at http://localhost:5173
 - [ ] Complete demo learning flow.
 - [ ] Check http://localhost:8000/v1/system/status

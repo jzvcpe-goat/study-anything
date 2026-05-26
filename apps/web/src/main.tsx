@@ -130,7 +130,7 @@ type IntegrationStatus = {
   next_step: string;
 };
 
-type ViewKey = "learn" | "agents" | "ops" | "plugins";
+type ViewKey = "learn" | "agents" | "ops" | "plugins" | "branches";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
@@ -407,7 +407,8 @@ function App() {
             ["learn", "Learn", "Run the source-bound learning loop"],
             ["agents", "Agents", "Configure Bring Your Own Agent"],
             ["ops", "System", "Inspect runtime health and HITL"],
-            ["plugins", "Plugins", "Review extension surfaces"]
+            ["plugins", "Plugins", "Review extension surfaces"],
+            ["branches", "Branches", "Keep main clean and shippable"]
           ].map(([key, label, helper]) => (
             <button
               className={activeView === key ? "navItem active" : "navItem"}
@@ -464,6 +465,14 @@ function App() {
         {error && <section className="notice bad">{error}</section>}
         {loading && <section className="notice neutral">{loading}</section>}
 
+        <Runway
+          agentStatus={agentStatus}
+          integrations={integrations}
+          plugins={plugins}
+          session={session}
+          systemStatus={systemStatus}
+        />
+
         {activeView === "learn" && (
           <LearnView
             activeQuiz={activeQuiz}
@@ -515,6 +524,8 @@ function App() {
         )}
 
         {activeView === "plugins" && <PluginView plugins={plugins} />}
+
+        {activeView === "branches" && <BranchView />}
       </section>
     </main>
   );
@@ -524,7 +535,61 @@ function viewTitle(view: ViewKey) {
   if (view === "agents") return "Agent Control Plane";
   if (view === "ops") return "System Operations";
   if (view === "plugins") return "Plugin Ecosystem";
+  if (view === "branches") return "Branch Command Center";
   return "Learning Workspace";
+}
+
+function Runway({
+  agentStatus,
+  integrations,
+  plugins,
+  session,
+  systemStatus
+}: {
+  agentStatus: AgentStatus | null;
+  integrations: IntegrationStatus[];
+  plugins: PluginStatus[];
+  session: Session | null;
+  systemStatus: SystemStatus | null;
+}) {
+  const agentReady = Boolean(agentStatus?.defaults["quiz.generate"]);
+  const composeReady = integrations.some((item) => item.name.toLowerCase().includes("postgres") && item.status === "available");
+  return (
+    <section className="runwayGrid" aria-label="Workspace lanes">
+      <article className="runwayCard">
+        <span className={`statusDot ${agentReady ? "good" : "warn"}`} />
+        <div>
+          <p className="eyebrow">Agent Lane</p>
+          <strong>{agentReady ? "Provider routed" : "Needs default"}</strong>
+          <small>{agentStatus?.providers.length ?? 0} providers registered</small>
+        </div>
+      </article>
+      <article className="runwayCard">
+        <span className={`statusDot ${session ? "good" : "neutral"}`} />
+        <div>
+          <p className="eyebrow">Learning Lane</p>
+          <strong>{session?.stage ?? "Idle"}</strong>
+          <small>{session ? shortId(session.session_id) : "start a session"}</small>
+        </div>
+      </article>
+      <article className="runwayCard">
+        <span className={`statusDot ${composeReady || systemStatus?.status === "ok" ? "good" : "warn"}`} />
+        <div>
+          <p className="eyebrow">Stack Lane</p>
+          <strong>{systemStatus?.session_store ?? "unknown store"}</strong>
+          <small>{systemStatus?.langgraph_available ? "LangGraph available" : "alpha executor"}</small>
+        </div>
+      </article>
+      <article className="runwayCard">
+        <span className={`statusDot ${plugins.length ? "good" : "neutral"}`} />
+        <div>
+          <p className="eyebrow">Extension Lane</p>
+          <strong>{plugins.length} plugins</strong>
+          <small>{integrations.length} integration boundaries</small>
+        </div>
+      </article>
+    </section>
+  );
 }
 
 function LearnView(props: {
@@ -902,6 +967,43 @@ function PluginView({ plugins }: { plugins: PluginStatus[] }) {
           </article>
         ))}
         {plugins.length === 0 && <p className="emptyState">No plugins discovered.</p>}
+      </div>
+    </section>
+  );
+}
+
+function BranchView() {
+  const lanes = [
+    ["main", "Protected trunk", "Release-ready code, green checks, public tags."],
+    ["codex/ui-*", "UI worktree", "Multi-zone frontend changes and visual QA."],
+    ["feature/*", "Product feature", "One shippable behavior change per PR."],
+    ["fix/*", "Regression fix", "Small patches with focused tests."],
+    ["docs/*", "Docs lane", "OSS guides, release notes, and architecture docs."],
+    ["dependabot/*", "Dependency lane", "Grouped React, Vite, and Actions updates."],
+    ["release/v*", "Release lane", "Short stabilization branch before a public tag."]
+  ];
+  return (
+    <section className="branchBoard">
+      <div className="branchHero">
+        <div>
+          <p className="eyebrow">OSS Launch Flow</p>
+          <h3>Main stays clean; experiments travel by branch.</h3>
+        </div>
+        <span className="statusPill good">codex/ui-dashboard-foundation</span>
+      </div>
+      <div className="branchGrid">
+        {lanes.map(([name, role, note]) => (
+          <article className="branchLane" key={name}>
+            <span className="idTag">{name}</span>
+            <strong>{role}</strong>
+            <small>{note}</small>
+          </article>
+        ))}
+      </div>
+      <div className="gateGrid">
+        <Stat label="Required gates" value="api-tests / web-build / compose-smoke" />
+        <Stat label="UI branch" value="draft PR until reviewed" />
+        <Stat label="Dependency rule" value="group peer updates" />
       </div>
     </section>
   );
