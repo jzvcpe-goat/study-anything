@@ -44,8 +44,8 @@ If you already have services on the default ports, override `API_PORT`, `WEB_POR
 After the GitHub repository publishes GHCR images, you can skip local API/Web builds:
 
 ```bash
-STUDY_ANYTHING_API_IMAGE=ghcr.io/<owner>/<repo>/api:v0.1.0-alpha \
-STUDY_ANYTHING_WEB_IMAGE=ghcr.io/<owner>/<repo>/web:v0.1.0-alpha \
+STUDY_ANYTHING_API_IMAGE=ghcr.io/jzvcpe-goat/study-anything/api:v0.1.0-alpha \
+STUDY_ANYTHING_WEB_IMAGE=ghcr.io/jzvcpe-goat/study-anything/web:v0.1.0-alpha \
 docker compose \
   -f infra/compose/docker-compose.yml \
   -f infra/compose/docker-compose.images.yml \
