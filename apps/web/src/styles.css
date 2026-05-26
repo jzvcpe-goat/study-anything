@@ -110,7 +110,7 @@ small {
 
 .appShell {
   display: grid;
-  grid-template-columns: 304px minmax(0, 1fr);
+  grid-template-columns: 284px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -216,7 +216,7 @@ small {
 
 .content {
   min-width: 0;
-  padding: 24px;
+  padding: 22px;
 }
 
 .topbar {
@@ -226,6 +226,28 @@ small {
 
 .topbarActions {
   justify-content: flex-end;
+}
+
+.segmentedControl {
+  display: inline-flex;
+  gap: 2px;
+  border: 1px solid #cfd6df;
+  border-radius: 8px;
+  background: #eef2f5;
+  padding: 2px;
+}
+
+.segmentedControl button {
+  min-height: 30px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 5px 9px;
+}
+
+.segmentedControl button.active {
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(24, 33, 31, 0.08);
 }
 
 .statusPill,
@@ -334,6 +356,49 @@ small {
   gap: 16px;
 }
 
+.conversationGrid {
+  display: grid;
+  grid-template-columns: minmax(460px, 1fr) minmax(320px, 390px);
+  gap: 16px;
+  align-items: start;
+}
+
+.conversationPanel {
+  display: grid;
+  min-height: calc(100vh - 210px);
+  align-content: start;
+  gap: 16px;
+}
+
+.commandInput {
+  min-height: 178px;
+  border-color: #b8c4cf;
+  background: #ffffff;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.commandActions {
+  justify-content: flex-start;
+}
+
+.contextRail {
+  display: grid;
+  gap: 16px;
+}
+
+.quizPrompt {
+  border: 1px solid #d8e1ea;
+  border-radius: 8px;
+  background: #f7f9fb;
+  padding: 14px;
+}
+
+.workflowPanel {
+  border-top: 1px solid #edf0f3;
+  padding-top: 4px;
+}
+
 .splitGrid,
 .opsLayout {
   display: grid;
@@ -359,7 +424,7 @@ small {
 }
 
 .sourceText {
-  min-height: 190px;
+  min-height: 150px;
 }
 
 .metricStrip {
@@ -509,6 +574,31 @@ small {
   overflow-wrap: anywhere;
 }
 
+.readinessPanel {
+  display: grid;
+  gap: 10px;
+}
+
+.readinessScore {
+  color: #1f6f8b;
+  font-size: 24px;
+}
+
+.readinessBar {
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e7edf2;
+}
+
+.readinessBar span {
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: #1f6f8b;
+}
+
 .capabilityGrid {
   display: flex;
   flex-wrap: wrap;
@@ -650,6 +740,7 @@ small {
 @media (max-width: 1180px) {
   .appShell,
   .learnGrid,
+  .conversationGrid,
   .splitGrid,
   .opsLayout,
   .runwayGrid,
