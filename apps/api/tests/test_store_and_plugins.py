@@ -7,9 +7,9 @@ from pathlib import Path
 
 from _path import ROOT  # noqa: F401
 
-from neural_console.core.plugin_registry import PluginRegistry
-from neural_console.core.store import JsonSessionStore, create_session_store
-from neural_console.core.workflow import new_session
+from study_anything.core.plugin_registry import PluginRegistry
+from study_anything.core.store import JsonSessionStore, create_session_store
+from study_anything.core.workflow import new_session
 
 
 class StoreAndPluginTests(unittest.TestCase):

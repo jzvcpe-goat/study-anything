@@ -17,7 +17,7 @@ assignees: ""
 - OS:
 - Docker:
 - Browser:
-- Neural Console version:
+- Study Anything version:
 
 ## Logs or screenshots
 

@@ -1,4 +1,4 @@
-"""FastAPI app for Neural Console self-host alpha."""
+"""FastAPI app for Study Anything self-host alpha."""
 
 from __future__ import annotations
 
@@ -10,18 +10,18 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from neural_console import __version__
-from neural_console.core.agent_registry import (
+from study_anything import __version__
+from study_anything.core.agent_registry import (
     AgentCapability,
     AgentRegistry,
     AgentRouter,
     AgentTask,
 )
-from neural_console.core.integrations import integration_matrix
-from neural_console.core.langgraph_adapter import langgraph_available
-from neural_console.core.plugin_registry import PluginRegistry
-from neural_console.core.store import create_session_store
-from neural_console.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
+from study_anything.core.integrations import integration_matrix
+from study_anything.core.langgraph_adapter import langgraph_available
+from study_anything.core.plugin_registry import PluginRegistry
+from study_anything.core.store import create_session_store
+from study_anything.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
 
 
 class CreateSessionRequest(BaseModel):
@@ -85,7 +85,11 @@ class ResolveHitlRequest(BaseModel):
     payload: Dict[str, Any] = Field(default_factory=dict)
 
 
-data_dir = Path(os.getenv("NEURAL_CONSOLE_DATA_DIR", "data/api"))
+def _env(primary: str, legacy: str, default: str) -> str:
+    return os.getenv(primary) or os.getenv(legacy) or default
+
+
+data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data/api"))
 agent_registry = AgentRegistry(data_dir / "agent_registry.json")
 agent_router = AgentRouter(agent_registry)
 workflow = LearningWorkflow(agent_router)
@@ -96,7 +100,9 @@ store = create_session_store(
 )
 plugin_dirs = [
     Path(value)
-    for value in os.getenv("NEURAL_CONSOLE_PLUGIN_DIRS", "plugins").split(os.pathsep)
+    for value in _env("STUDY_ANYTHING_PLUGIN_DIRS", "NEURAL_CONSOLE_PLUGIN_DIRS", "plugins").split(
+        os.pathsep
+    )
     if value.strip()
 ]
 plugins = PluginRegistry(plugin_dirs)
@@ -112,7 +118,7 @@ def _legacy_capability(capability: str) -> AgentCapability:
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Neural Console", version=__version__)
+    app = FastAPI(title="Study Anything", version=__version__)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

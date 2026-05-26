@@ -4,7 +4,7 @@ import unittest
 
 from _path import ROOT  # noqa: F401
 
-from neural_console.core.plugin_manifest import validate_manifest
+from study_anything.core.plugin_manifest import validate_manifest
 
 
 class PluginManifestTests(unittest.TestCase):

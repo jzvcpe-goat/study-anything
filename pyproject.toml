@@ -1,11 +1,11 @@
 [project]
-name = "neural-console"
+name = "study-anything"
 version = "0.1.0-alpha"
-description = "Open-source, self-host-first AI-native learning console."
+description = "Open-source, self-host-first AI-native learning system."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
-authors = [{ name = "Neural Console contributors" }]
+authors = [{ name = "Study Anything contributors" }]
 dependencies = [
   "fastapi>=0.115.0",
   "uvicorn[standard]>=0.30.0",
@@ -39,4 +39,4 @@ strict = true
 
 [tool.setuptools.packages.find]
 where = ["apps/api"]
-include = ["neural_console*"]
+include = ["study_anything*"]

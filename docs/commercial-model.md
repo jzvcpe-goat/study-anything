@@ -1,6 +1,6 @@
 # Commercial Model
 
-Neural Console follows an Obsidian-inspired trust model while remaining Apache-2.0 open source.
+Study Anything follows an Obsidian-inspired trust model while remaining Apache-2.0 open source.
 
 ## Free Core
 
@@ -16,9 +16,9 @@ The core app remains free and self-hostable:
 
 Paid services should sell convenience, reliability, collaboration, and hosting, not access to the core workflow.
 
-- Neural Sync: encrypted backup/sync.
-- Neural Publish: publish selected learning artifacts.
-- Neural Teams: collaboration and admin controls.
+- Study Sync: encrypted backup/sync.
+- Study Publish: publish selected learning artifacts.
+- Study Teams: collaboration and admin controls.
 - Catalyst: optional supporter tier.
 
 ## PMF Before Monetization

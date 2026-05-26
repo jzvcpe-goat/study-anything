@@ -3,10 +3,10 @@
 ## v0.1.0-alpha
 
 - [ ] `python3 -m unittest discover apps/api/tests`
-- [ ] `python3 -m compileall -q apps/api/neural_console scripts plugins`
+- [ ] `python3 -m compileall -q apps/api/study_anything scripts plugins`
 - [ ] `python3 scripts/smoke_core.py`
-- [ ] `python3 scripts/setup_env.py --force --output /tmp/neural-console.env`
-- [ ] `python3 scripts/check_env.py --env /tmp/neural-console.env --strict`
+- [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
+- [ ] `python3 scripts/check_env.py --env /tmp/study-anything.env --strict`
 - [ ] `python -m pip install -e .`
 - [ ] `(cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)`
 - [ ] Start API locally and run `API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py`.

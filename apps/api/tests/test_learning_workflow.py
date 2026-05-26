@@ -4,8 +4,8 @@ import unittest
 
 from _path import ROOT  # noqa: F401
 
-from neural_console.core.agent_registry import AgentRegistry, AgentRouter
-from neural_console.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
+from study_anything.core.agent_registry import AgentRegistry, AgentRouter
+from study_anything.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
 
 
 class LearningWorkflowTests(unittest.TestCase):

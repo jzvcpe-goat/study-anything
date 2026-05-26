@@ -1,2 +1,2 @@
-"""Core tests for Neural Console alpha."""
+"""Core tests for Study Anything alpha."""
 

@@ -1,6 +1,6 @@
 # Agent Contract
 
-Neural Console uses Bring Your Own Agent. The app orchestrates learning state and validates outputs; the user's agent owns model choice, credentials, tools, and internal reasoning.
+Study Anything uses Bring Your Own Agent. The app orchestrates learning state and validates outputs; the user's agent owns model choice, credentials, tools, and internal reasoning.
 
 ## Provider Types
 
@@ -101,11 +101,11 @@ class Handler(BaseHTTPRequestHandler):
 HTTPServer(("127.0.0.1", 8787), Handler).serve_forever()
 ```
 
-When Neural Console runs in Docker, use `http://host.docker.internal:8787` as the endpoint for a host-local agent.
+When Study Anything runs in Docker, use `http://host.docker.internal:8787` as the endpoint for a host-local agent.
 
 ## Security Rules
 
-- Do not put real model API keys into Neural Console.
+- Do not put real model API keys into Study Anything.
 - Keep provider secrets inside the user's agent process or its own secret manager.
 - HTTP traces record provider id, task type, latency, status, token/cost metadata if supplied, and redacted metadata only.
 - CLI adapters are disabled until an operator explicitly enables a command allowlist and timeout policy.

@@ -62,7 +62,7 @@ def integration_matrix() -> List[IntegrationStatus]:
             target="Supported through a user-owned agent gateway",
             status="external_agent_supported",
             runtime_check="User agent may call Ollama internally",
-            product_surface="Docs only; no first-class model runtime in Neural Console",
+            product_surface="Docs only; no first-class model runtime in Study Anything",
             next_step="Publish an example Ollama HTTP agent plugin/gateway.",
         ),
         IntegrationStatus(

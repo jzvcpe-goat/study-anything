@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-printf "Neural Console self-host doctor\n"
+printf "Study Anything self-host doctor\n"
 printf "================================\n"
 
 check_cmd() {

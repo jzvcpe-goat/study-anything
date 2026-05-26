@@ -1,6 +1,6 @@
 # Plugin API
 
-Plugins extend Neural Console without changing the core workflow.
+Plugins extend Study Anything without changing the core workflow.
 
 ## Manifest
 
@@ -33,7 +33,7 @@ Each plugin ships a `plugin.json` file:
 
 ## Discovery
 
-The API scans `NEURAL_CONSOLE_PLUGIN_DIRS`, defaulting to `plugins` locally and `/app/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
+The API scans `STUDY_ANYTHING_PLUGIN_DIRS`, defaulting to `plugins` locally and `/app/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
 
 Bundled plugins are listed in `plugins/registry.json`. Future community registries should be append-only signed indexes rather than runtime code downloads.
 

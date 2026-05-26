@@ -28,8 +28,8 @@ def build_generated_values() -> dict[str, str]:
     values = {
         "POSTGRES_PASSWORD": postgres_password,
         "DATABASE_URL": (
-            "postgresql://neural:"
-            f"{quote(postgres_password, safe='')}@app-postgres:5432/neural_console"
+            "postgresql://study:"
+            f"{quote(postgres_password, safe='')}@app-postgres:5432/study_anything"
         ),
         "LANGFUSE_POSTGRES_PASSWORD": langfuse_postgres_password,
         "LANGFUSE_DATABASE_URL": (
@@ -63,7 +63,7 @@ def render_env(template: str, generated: dict[str, str]) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate a Neural Console .env file.")
+    parser = argparse.ArgumentParser(description="Generate a Study Anything .env file.")
     parser.add_argument("--example", type=Path, default=DEFAULT_EXAMPLE)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--force", action="store_true", help="Overwrite an existing output file.")

@@ -1,6 +1,6 @@
 # Self-Hosting
 
-Neural Console is designed to be self-hosted first.
+Study Anything is designed to be self-hosted first.
 
 ## Requirements
 
@@ -44,8 +44,8 @@ If you already have services on the default ports, override `API_PORT`, `WEB_POR
 After the GitHub repository publishes GHCR images, you can skip local API/Web builds:
 
 ```bash
-NEURAL_CONSOLE_API_IMAGE=ghcr.io/<owner>/<repo>/api:v0.1.0-alpha \
-NEURAL_CONSOLE_WEB_IMAGE=ghcr.io/<owner>/<repo>/web:v0.1.0-alpha \
+STUDY_ANYTHING_API_IMAGE=ghcr.io/<owner>/<repo>/api:v0.1.0-alpha \
+STUDY_ANYTHING_WEB_IMAGE=ghcr.io/<owner>/<repo>/web:v0.1.0-alpha \
 docker compose \
   -f infra/compose/docker-compose.yml \
   -f infra/compose/docker-compose.images.yml \
@@ -66,9 +66,9 @@ Open:
 
 The Docker self-host stack stores session state in app Postgres by default with `SESSION_STORE=postgres`.
 
-Agent provider defaults are still stored in the `neural_console_data` Docker volume at `/data/neural-console/agent_registry.json` during alpha. Keep this volume in backups if you configure real HTTP agent endpoints.
+Agent provider defaults are still stored in the `study_anything_data` Docker volume at `/data/study-anything/agent_registry.json` during alpha. Keep this volume in backups if you configure real HTTP agent endpoints.
 
-For Python-only development without Docker, set `SESSION_STORE=json` and `NEURAL_CONSOLE_DATA_DIR=data/api`.
+For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_ANYTHING_DATA_DIR=data/api`.
 
 ## Secrets
 
@@ -83,13 +83,13 @@ In `APP_ENV=production`, `scripts/check_env.py` fails on default passwords, blan
 
 ## Agent Providers
 
-Use the Web UI provider panel or API endpoints to configure a provider. Real model credentials, tools, and reasoning stay inside the user's agent and are not stored by Neural Console.
+Use the Web UI provider panel or API endpoints to configure a provider. Real model credentials, tools, and reasoning stay inside the user's agent and are not stored by Study Anything.
 
 Common choices:
 
 - Local HTTP agent: `http://host.docker.internal:8787`
-- OpenClaw/Codex-style gateway: expose the Neural Console agent contract over HTTP and call any internal model/tool stack you choose.
-- Ollama: supported through your own agent, not as a required Neural Console runtime.
+- OpenClaw/Codex-style gateway: expose the Study Anything agent contract over HTTP and call any internal model/tool stack you choose.
+- Ollama: supported through your own agent, not as a required Study Anything runtime.
 - Fake demo: deterministic agent for smoke testing.
 
 The HTTP agent must accept a JSON `AgentTask` and return a JSON `AgentResult`. See `docs/agent-contract.md`.
@@ -112,7 +112,7 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scri
 
 ## Plugins
 
-Bundled plugins live in `/app/plugins` inside the API container. Community plugins can be mounted into that path or added to `NEURAL_CONSOLE_PLUGIN_DIRS`.
+Bundled plugins live in `/app/plugins` inside the API container. Community plugins can be mounted into that path or added to `STUDY_ANYTHING_PLUGIN_DIRS`.
 
 ## Stop
 

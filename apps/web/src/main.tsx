@@ -239,7 +239,7 @@ function App() {
       <header className="topbar">
         <div>
           <p className="eyebrow">Self-host Alpha</p>
-          <h1>Neural Console</h1>
+          <h1>Study Anything</h1>
         </div>
         <div className="statusPill">
           <span className="dot" />

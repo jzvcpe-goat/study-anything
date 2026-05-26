@@ -12,5 +12,5 @@ from typing import Mapping
 def export_session(session: Mapping[str, object]) -> str:
     title = session.get("session_id", "unknown-session")
     mastery = session.get("mastery", {})
-    return f"# Neural Console Export\n\nSession: {title}\n\nMastery: {mastery}\n"
+    return f"# Study Anything Export\n\nSession: {title}\n\nMastery: {mastery}\n"
 

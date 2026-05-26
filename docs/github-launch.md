@@ -1,12 +1,12 @@
 # GitHub Launch Guide
 
-This guide is for the first public alpha launch. The goal is open-source and local-first: users should be able to clone, inspect, run, and extend Neural Console without creating an account or giving Neural Console model keys.
+This guide is for the first public alpha launch. The goal is open-source and local-first: users should be able to clone, inspect, run, and extend Study Anything without creating an account or giving Study Anything model keys.
 
 ## Launch Positioning
 
 - License: Apache-2.0.
 - Distribution: GitHub repository first, Docker Compose self-host first.
-- Real reasoning: Bring Your Own Agent. Neural Console stores endpoint/config metadata, not real model API keys.
+- Real reasoning: Bring Your Own Agent. Study Anything stores endpoint/config metadata, not real model API keys.
 - Monetization: not in the MVP. Future hosted services should sell convenience and collaboration, not lock-in.
 
 ## Before Creating The GitHub Repo
@@ -14,8 +14,8 @@ This guide is for the first public alpha launch. The goal is open-source and loc
 Run:
 
 ```bash
-python3 scripts/setup_env.py --force --output /tmp/neural-console.env
-python3 scripts/check_env.py --env /tmp/neural-console.env --strict
+python3 scripts/setup_env.py --force --output /tmp/study-anything.env
+python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
@@ -36,7 +36,7 @@ If using GitHub CLI:
 
 ```bash
 gh auth status
-gh repo create neural-console --public --source=. --remote=origin --description "Open-source, self-host-first AI-native learning console"
+gh repo create study-anything --public --source=. --remote=origin --description "Open-source, self-host-first AI-native learning system"
 git add -A
 git commit -m "Release v0.1.0-alpha self-host MVP"
 git push -u origin main
@@ -47,7 +47,7 @@ git push origin v0.1.0-alpha
 If the repo already exists:
 
 ```bash
-git remote add origin git@github.com:<owner>/neural-console.git
+git remote add origin git@github.com:<owner>/study-anything.git
 git add -A
 git commit -m "Release v0.1.0-alpha self-host MVP"
 git push -u origin main

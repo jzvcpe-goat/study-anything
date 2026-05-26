@@ -18,4 +18,4 @@ COPY scripts/mock_http_agent.py ./scripts/mock_http_agent.py
 
 EXPOSE 8000
 
-CMD ["uvicorn", "neural_console.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "study_anything.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

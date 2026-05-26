@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal Neural Console HTTP agent for local and Compose smoke tests."""
+"""Minimal Study Anything HTTP agent for local and Compose smoke tests."""
 
 from __future__ import annotations
 

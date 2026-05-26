@@ -16,13 +16,13 @@ HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
 WEAK_VALUES = {
     "",
     "postgres",
-    "neural_dev_password",
+    "study_dev_password",
     "miniosecret",
     "myredissecret",
     "clickhouse",
     "change-me-nextauth-secret",
     "change-me-langfuse-salt",
-    "change-me-neural-postgres",
+    "change-me-study-postgres",
     "change-me-langfuse-postgres",
     "change-me-clickhouse",
     "change-me-minio",
@@ -56,7 +56,7 @@ def parse_env(path: Path) -> dict[str, str]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Check Neural Console .env safety.")
+    parser = argparse.ArgumentParser(description="Check Study Anything .env safety.")
     parser.add_argument("--env", type=Path, default=DEFAULT_ENV)
     parser.add_argument(
         "--strict",

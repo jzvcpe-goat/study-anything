@@ -1,6 +1,6 @@
 """User-owned agent configuration and task routing.
 
-Neural Console owns learning orchestration and output validation. Real model
+Study Anything owns learning orchestration and output validation. Real model
 selection, credentials, tools, and reasoning live inside the user's agent.
 """
 
@@ -464,7 +464,7 @@ class AgentRegistry:
             return AgentHealth(
                 provider_id=provider.provider_id,
                 status="healthy",
-                message="HTTP agent accepted the Neural Console contract.",
+                message="HTTP agent accepted the Study Anything contract.",
                 capabilities=capabilities,
             )
         if provider.kind == AgentProviderKind.CLI_AGENT:

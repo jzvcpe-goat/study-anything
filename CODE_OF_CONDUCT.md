@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Neural Console is a learning infrastructure project. We expect contributors to be respectful, precise, and generous with context.
+Study Anything is a learning infrastructure project. We expect contributors to be respectful, precise, and generous with context.
 
 Unacceptable behavior includes harassment, personal attacks, doxxing, spam, and publishing private user data or credentials.
 

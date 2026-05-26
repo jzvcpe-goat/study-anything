@@ -4,16 +4,16 @@ set -eu
 ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 cd "$ROOT"
 
-printf "Neural Console release check\n"
+printf "Study Anything release check\n"
 printf "============================\n"
 
-tmp_env="${TMPDIR:-/tmp}/neural-console-release.env"
+tmp_env="${TMPDIR:-/tmp}/study-anything-release.env"
 python3 scripts/setup_env.py --force --output "$tmp_env"
 python3 scripts/check_env.py --env "$tmp_env" --strict
 if [ -f .env ]; then
   python3 scripts/check_env.py
 fi
-python3 -m compileall -q apps/api/neural_console scripts plugins
+python3 -m compileall -q apps/api/study_anything scripts plugins
 python3 -m unittest discover apps/api/tests
 python3 scripts/smoke_core.py
 

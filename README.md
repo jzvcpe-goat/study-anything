@@ -1,6 +1,6 @@
-# Neural Console
+# Study Anything
 
-Neural Console is an open-source, self-host-first learning system for AI-native study workflows. The core idea is simple: reading should produce artifacts, and artifacts should deepen reading.
+Study Anything is an open-source, self-host-first learning system for AI-native study workflows. The core idea is simple: reading should produce artifacts, and artifacts should deepen reading.
 
 The alpha MVP runs a full local learning loop:
 
@@ -49,7 +49,7 @@ Then open:
 
 ## Bring Your Own Agent
 
-Neural Console ships with a deterministic fake agent for tests and demos. Real reasoning is performed by an agent that the user owns and runs outside Neural Console.
+Study Anything ships with a deterministic fake agent for tests and demos. Real reasoning is performed by an agent that the user owns and runs outside Study Anything.
 
 Supported MVP provider shapes:
 
@@ -58,7 +58,7 @@ Supported MVP provider shapes:
 - `cli_agent`: reserved adapter, disabled by default until explicitly allowlisted.
 - `mcp_agent`: plugin ecosystem extension point.
 
-The agent flow mirrors tools such as OpenClaw and Codex: the user controls the model, credentials, tools, and reasoning inside their own agent; Neural Console sends structured learning tasks and validates structured results.
+The agent flow mirrors tools such as OpenClaw and Codex: the user controls the model, credentials, tools, and reasoning inside their own agent; Study Anything sends structured learning tasks and validates structured results.
 
 ## Repository Layout
 

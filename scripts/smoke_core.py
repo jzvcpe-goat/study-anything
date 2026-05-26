@@ -11,8 +11,8 @@ API_ROOT = ROOT / "apps" / "api"
 if str(API_ROOT) not in sys.path:
     sys.path.insert(0, str(API_ROOT))
 
-from neural_console.core.agent_registry import AgentRegistry, AgentRouter
-from neural_console.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
+from study_anything.core.agent_registry import AgentRegistry, AgentRouter
+from study_anything.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
 
 
 def main() -> None:

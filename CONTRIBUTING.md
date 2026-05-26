@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping build Neural Console.
+Thanks for helping build Study Anything.
 
 ## Development Loop
 
@@ -26,8 +26,8 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python
 
 ## Project Boundaries
 
-- Core learning workflow belongs in `apps/api/neural_console/core`.
-- HTTP transport belongs in `apps/api/neural_console/api`.
+- Core learning workflow belongs in `apps/api/study_anything/core`.
+- HTTP transport belongs in `apps/api/study_anything/api`.
 - UI state should come from public APIs, not duplicate backend logic.
 - Real model providers must be user-configured and observable.
 - Do not commit secrets, model credentials, private traces, or user data.

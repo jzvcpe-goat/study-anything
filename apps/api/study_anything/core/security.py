@@ -12,7 +12,7 @@ from typing import Mapping
 REDACTED = "[redacted]"
 
 
-def hash_user_id(user_id: str, salt: str = "neural-console-alpha") -> str:
+def hash_user_id(user_id: str, salt: str = "study-anything-alpha") -> str:
     """Return a stable, non-reversible user hash for logs and events."""
 
     digest = hmac.new(salt.encode("utf-8"), user_id.encode("utf-8"), hashlib.sha256)

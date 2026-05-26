@@ -4,7 +4,7 @@ import unittest
 
 from _path import ROOT  # noqa: F401
 
-from neural_console.core.integrations import integration_matrix
+from study_anything.core.integrations import integration_matrix
 
 
 class IntegrationMatrixTests(unittest.TestCase):

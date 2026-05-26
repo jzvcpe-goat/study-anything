@@ -13,7 +13,7 @@ def utc_now() -> str:
 
 
 @dataclass(frozen=True)
-class NeuralEvent:
+class StudyEvent:
     event_id: str
     session_id: str
     user_hash: str
@@ -35,7 +35,7 @@ class NeuralEvent:
         payload: Optional[Dict[str, Any]] = None,
         severity: str = "info",
         trace_id: Optional[str] = None,
-    ) -> "NeuralEvent":
+    ) -> "StudyEvent":
         return cls(
             event_id=str(uuid4()),
             session_id=session_id,

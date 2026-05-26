@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify a running Neural Console API with the public learning flow."""
+"""Verify a running Study Anything API with the public learning flow."""
 
 from __future__ import annotations
 

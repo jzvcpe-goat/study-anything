@@ -11,7 +11,7 @@ from typing import Any, ClassVar
 
 from _path import ROOT  # noqa: F401
 
-from neural_console.core.agent_registry import (
+from study_anything.core.agent_registry import (
     AgentCapability,
     AgentConfigurationRequired,
     AgentProviderUnavailable,
@@ -20,7 +20,7 @@ from neural_console.core.agent_registry import (
     AgentRouter,
     AgentTask,
 )
-from neural_console.core.model_registry import Capability, ModelRegistry, ModelRouter
+from study_anything.core.model_registry import Capability, ModelRegistry, ModelRouter
 
 
 class _AgentHandler(BaseHTTPRequestHandler):

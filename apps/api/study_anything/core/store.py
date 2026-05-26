@@ -7,7 +7,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from .events import NeuralEvent
+from .events import StudyEvent
 from .workflow import (
     Answer,
     GradingResult,
@@ -99,7 +99,7 @@ class PostgresSessionStore:
         with self._connect() as conn:
             conn.execute(
                 """
-                INSERT INTO neural_console_sessions
+                INSERT INTO study_anything_sessions
                     (session_id, user_hash, user_id, stage, payload, created_at, updated_at)
                 VALUES
                     (%s, %s, %s, %s, %s::jsonb, now(), now())
@@ -117,7 +117,7 @@ class PostgresSessionStore:
     def get(self, session_id: str) -> LearningState:
         with self._connect() as conn:
             row = conn.execute(
-                "SELECT payload FROM neural_console_sessions WHERE session_id = %s",
+                "SELECT payload FROM study_anything_sessions WHERE session_id = %s",
                 (session_id,),
             ).fetchone()
         if row is None:
@@ -130,7 +130,7 @@ class PostgresSessionStore:
     def list_sessions(self) -> List[LearningState]:
         with self._connect() as conn:
             rows = conn.execute(
-                "SELECT payload FROM neural_console_sessions ORDER BY updated_at DESC"
+                "SELECT payload FROM study_anything_sessions ORDER BY updated_at DESC"
             ).fetchall()
         sessions: List[LearningState] = []
         for row in rows:
@@ -157,7 +157,7 @@ class PostgresSessionStore:
         with self._connect() as conn:
             conn.execute(
                 """
-                CREATE TABLE IF NOT EXISTS neural_console_sessions (
+                CREATE TABLE IF NOT EXISTS study_anything_sessions (
                     session_id TEXT PRIMARY KEY,
                     user_hash TEXT NOT NULL,
                     user_id TEXT NOT NULL,
@@ -170,14 +170,35 @@ class PostgresSessionStore:
             )
             conn.execute(
                 """
-                CREATE INDEX IF NOT EXISTS neural_console_sessions_updated_at_idx
-                ON neural_console_sessions (updated_at DESC)
+                CREATE INDEX IF NOT EXISTS study_anything_sessions_updated_at_idx
+                ON study_anything_sessions (updated_at DESC)
                 """
             )
             conn.execute(
                 """
-                CREATE INDEX IF NOT EXISTS neural_console_sessions_user_hash_idx
-                ON neural_console_sessions (user_hash)
+                CREATE INDEX IF NOT EXISTS study_anything_sessions_user_hash_idx
+                ON study_anything_sessions (user_hash)
+                """
+            )
+            conn.execute(
+                """
+                DO $$
+                BEGIN
+                    IF to_regclass('public.neural_console_sessions') IS NOT NULL THEN
+                        INSERT INTO study_anything_sessions
+                            (session_id, user_hash, user_id, stage, payload, created_at, updated_at)
+                        SELECT
+                            session_id,
+                            user_hash,
+                            user_id,
+                            stage,
+                            payload,
+                            created_at,
+                            updated_at
+                        FROM neural_console_sessions
+                        ON CONFLICT (session_id) DO NOTHING;
+                    END IF;
+                END $$;
                 """
             )
 
@@ -217,7 +238,7 @@ def learning_state_from_dict(values: Dict[str, Any]) -> LearningState:
         insights=list(values.get("insights", [])),
         scribe_log=list(values.get("scribe_log", [])),
         hitl_interrupts=[HitlInterrupt(**item) for item in values.get("hitl_interrupts", [])],
-        events=[NeuralEvent(**item) for item in values.get("events", [])],
+        events=[StudyEvent(**item) for item in values.get("events", [])],
         audit_log=list(values.get("audit_log", [])),
         discarded=bool(values.get("discarded", False)),
         created_at=values.get("created_at"),

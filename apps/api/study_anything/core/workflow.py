@@ -19,7 +19,7 @@ from .agent_registry import (
     AgentRouter,
     AgentTask,
 )
-from .events import NeuralEvent, utc_now
+from .events import StudyEvent, utc_now
 from .security import hash_user_id, sha256_text
 
 
@@ -86,7 +86,7 @@ class LearningState:
     insights: List[str] = field(default_factory=list)
     scribe_log: List[str] = field(default_factory=list)
     hitl_interrupts: List[HitlInterrupt] = field(default_factory=list)
-    events: List[NeuralEvent] = field(default_factory=list)
+    events: List[StudyEvent] = field(default_factory=list)
     audit_log: List[Dict[str, Any]] = field(default_factory=list)
     discarded: bool = False
     created_at: str = field(default_factory=utc_now)
@@ -118,7 +118,7 @@ def append_event(
     payload: Optional[Dict[str, Any]] = None,
     severity: str = "info",
 ) -> LearningState:
-    event = NeuralEvent.create(
+    event = StudyEvent.create(
         session_id=state.session_id,
         user_hash=state.user_hash,
         event_type=event_type,

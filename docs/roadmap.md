@@ -28,7 +28,7 @@
 
 ## Post-PMF Commercial Services
 
-- Neural Sync: encrypted backup and cross-device sync.
-- Neural Publish: publish selected maps, trails, decks, or reports.
-- Neural Teams: private shared workspaces and audit/export controls.
+- Study Sync: encrypted backup and cross-device sync.
+- Study Publish: publish selected maps, trails, decks, or reports.
+- Study Teams: private shared workspaces and audit/export controls.
 - Catalyst: supporter tier with early builds and roadmap voting.

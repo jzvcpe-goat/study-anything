@@ -1,18 +1,18 @@
 # Optional override for using published GHCR images instead of local builds.
 # Usage:
-#   NEURAL_CONSOLE_API_IMAGE=ghcr.io/<owner>/<repo>/api:v0.1.0-alpha \
-#   NEURAL_CONSOLE_WEB_IMAGE=ghcr.io/<owner>/<repo>/web:v0.1.0-alpha \
+#   STUDY_ANYTHING_API_IMAGE=ghcr.io/<owner>/<repo>/api:v0.1.0-alpha \
+#   STUDY_ANYTHING_WEB_IMAGE=ghcr.io/<owner>/<repo>/web:v0.1.0-alpha \
 #   docker compose -f infra/compose/docker-compose.yml -f infra/compose/docker-compose.images.yml up -d
 
 services:
   api:
-    image: ${NEURAL_CONSOLE_API_IMAGE}
+    image: ${STUDY_ANYTHING_API_IMAGE}
     build: !reset null
 
   web:
-    image: ${NEURAL_CONSOLE_WEB_IMAGE}
+    image: ${STUDY_ANYTHING_WEB_IMAGE}
     build: !reset null
 
   mock-http-agent:
-    image: ${NEURAL_CONSOLE_API_IMAGE}
+    image: ${STUDY_ANYTHING_API_IMAGE}
     build: !reset null
