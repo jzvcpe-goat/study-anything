@@ -423,12 +423,7 @@ function App() {
 
   return (
     <main className="appShell">
-      <div className="ambientStudy" aria-hidden="true">
-        <span className="ambientSheet sheetOne" />
-        <span className="ambientSheet sheetTwo" />
-        <span className="ambientLine lineOne" />
-        <span className="ambientLine lineTwo" />
-      </div>
+      <div className="ambientStudy" aria-hidden="true" />
 
       <header className="siteHeader">
         <button className="brandButton" onClick={() => setView("learn")}>

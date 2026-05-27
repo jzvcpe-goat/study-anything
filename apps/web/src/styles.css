@@ -13,10 +13,7 @@
   --font-display: "Iowan Old Style", "Songti SC", "STSong", Georgia, serif;
   --font-body: "Avenir Next", "Gill Sans", "PingFang SC", "Noto Sans CJK SC", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 18% 18%, rgba(201, 147, 52, 0.18), transparent 34rem),
-    radial-gradient(circle at 88% 10%, rgba(42, 111, 128, 0.16), transparent 28rem),
-    linear-gradient(135deg, #fff9ef 0%, #f2e6d5 46%, #e3eadf 100%);
+  background: #21180f;
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -160,69 +157,33 @@ small {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 246, 225, 0.36), rgba(255, 246, 225, 0.08) 45%, rgba(29, 24, 16, 0.42)),
+    url("/assets/field-notes-bg.jpg") center / cover no-repeat;
+  animation: backgroundBreath 18s ease-in-out infinite;
 }
 
 .ambientStudy::before {
   position: absolute;
   inset: 0;
   content: "";
-  background-image:
-    linear-gradient(rgba(34, 37, 30, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 37, 30, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 82%);
-}
-
-.ambientSheet,
-.ambientLine {
-  position: absolute;
-  display: block;
-  opacity: 0.42;
-  animation: pageFloat 15s ease-in-out infinite;
-}
-
-.ambientSheet {
-  width: 34vw;
-  max-width: 520px;
-  min-width: 260px;
-  aspect-ratio: 1.32;
-  border: 1px solid rgba(72, 68, 58, 0.1);
-  border-radius: 8px;
   background:
-    linear-gradient(90deg, rgba(34, 37, 30, 0.08) 12%, transparent 12% 100%),
-    repeating-linear-gradient(180deg, transparent 0 20px, rgba(34, 37, 30, 0.08) 21px 22px),
-    rgba(255, 251, 243, 0.62);
-  box-shadow: 0 24px 80px rgba(74, 63, 45, 0.12);
+    radial-gradient(circle at 18% 38%, rgba(255, 248, 229, 0.62), transparent 28rem),
+    radial-gradient(circle at 74% 42%, rgba(255, 248, 229, 0.22), transparent 22rem),
+    linear-gradient(180deg, rgba(255, 248, 229, 0.14), rgba(255, 248, 229, 0.03));
 }
 
-.sheetOne {
-  right: -8vw;
-  top: 16vh;
-  rotate: -7deg;
-}
-
-.sheetTwo {
-  bottom: 8vh;
-  left: -12vw;
-  rotate: 9deg;
-  animation-delay: -6s;
-}
-
-.ambientLine {
-  height: 1px;
-  width: 34vw;
-  background: linear-gradient(90deg, transparent, rgba(47, 107, 82, 0.38), transparent);
-}
-
-.lineOne {
-  top: 28vh;
-  left: 42vw;
-}
-
-.lineTwo {
-  right: 12vw;
-  bottom: 22vh;
-  animation-delay: -9s;
+.ambientStudy::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image:
+    linear-gradient(rgba(34, 37, 30, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 37, 30, 0.028) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
 }
 
 .siteHeader {
@@ -361,15 +322,16 @@ small {
 
 .heroStage {
   display: grid;
-  grid-template-columns: minmax(280px, 0.88fr) minmax(520px, 1.12fr);
-  gap: clamp(24px, 5vw, 76px);
+  grid-template-columns: minmax(320px, 0.88fr) minmax(420px, 1.12fr);
+  gap: clamp(20px, 4vw, 62px);
   align-items: center;
-  min-height: 100svh;
-  padding: clamp(20px, 5vh, 62px) 0 52px;
+  min-height: calc(100svh - 92px);
+  padding: clamp(12px, 3vh, 36px) 0 48px;
 }
 
 .heroCopy {
   max-width: 780px;
+  text-shadow: 0 1px 0 rgba(255, 250, 239, 0.42);
   animation: introLift 680ms ease both;
 }
 
@@ -413,7 +375,7 @@ small {
 
 .learningGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 330px);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
   gap: 16px;
   align-items: stretch;
 }
@@ -423,16 +385,16 @@ small {
   min-width: 0;
   border: 1px solid rgba(60, 57, 49, 0.16);
   border-radius: 8px;
-  background: rgba(255, 251, 243, 0.68);
-  backdrop-filter: blur(18px);
+  background: rgba(255, 249, 237, 0.76);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 70px rgba(42, 31, 18, 0.13);
 }
 
 .conversationPanel {
   display: grid;
   gap: 18px;
-  min-height: 570px;
+  min-height: 430px;
   padding: clamp(18px, 3vw, 28px);
-  box-shadow: 0 30px 100px rgba(68, 54, 34, 0.15);
 }
 
 .naturalComposer {
@@ -466,7 +428,7 @@ small {
 }
 
 .composer textarea {
-  min-height: 180px;
+  min-height: 136px;
   font-size: 16px;
 }
 
@@ -673,17 +635,19 @@ small {
   }
 }
 
-@keyframes pageFloat {
+@keyframes backgroundBreath {
   0%,
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: scale(1);
+    filter: saturate(0.98) brightness(1);
   }
   50% {
-    transform: translate3d(18px, -16px, 0);
+    transform: scale(1.012);
+    filter: saturate(1.04) brightness(1.03);
   }
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 760px) {
   .siteHeader,
   .heroStage,
   .learningGrid,
