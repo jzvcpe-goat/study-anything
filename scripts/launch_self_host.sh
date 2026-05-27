@@ -15,15 +15,18 @@ if command -v python3 >/dev/null 2>&1; then
 fi
 
 profile="${STACK_PROFILE:-full}"
+compose() {
+  docker compose --env-file .env -f infra/compose/docker-compose.yml "$@"
+}
 case "$profile" in
   core)
-    docker compose -f infra/compose/docker-compose.yml up --build
+    compose up --build
     ;;
   smoke)
-    docker compose -f infra/compose/docker-compose.yml --profile smoke up --build
+    compose --profile smoke up --build
     ;;
   full)
-    docker compose -f infra/compose/docker-compose.yml --profile full up --build
+    compose --profile full up --build
     ;;
   *)
     printf "Unsupported STACK_PROFILE=%s. Use core, smoke, or full.\n" "$profile" >&2

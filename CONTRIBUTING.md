@@ -24,6 +24,10 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python
 ./scripts/stop_self_host.sh
 ```
 
+## Branching
+
+Use focused branches and PRs. `main` should stay release-ready, UI work should use `codex/ui-*` or `feature/*`, and dependency updates should stay grouped by ecosystem. See `docs/branching.md` for the full branch policy.
+
 ## Project Boundaries
 
 - Core learning workflow belongs in `apps/api/study_anything/core`.

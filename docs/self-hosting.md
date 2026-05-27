@@ -47,6 +47,7 @@ After the GitHub repository publishes GHCR images, you can skip local API/Web bu
 STUDY_ANYTHING_API_IMAGE=ghcr.io/jzvcpe-goat/study-anything/api:v0.1.0-alpha \
 STUDY_ANYTHING_WEB_IMAGE=ghcr.io/jzvcpe-goat/study-anything/web:v0.1.0-alpha \
 docker compose \
+  --env-file .env \
   -f infra/compose/docker-compose.yml \
   -f infra/compose/docker-compose.images.yml \
   --profile full up -d
@@ -67,6 +68,8 @@ Open:
 The Docker self-host stack stores session state in app Postgres by default with `SESSION_STORE=postgres`.
 
 Agent provider defaults are still stored in the `study_anything_data` Docker volume at `/data/study-anything/agent_registry.json` during alpha. Keep this volume in backups if you configure real HTTP agent endpoints.
+
+The Web container serves the built UI and proxies same-origin `/v1/*` requests to the API container through `WEB_API_PROXY_TARGET`, which defaults to `http://api:8000`. This keeps the browser on `http://localhost:5173` while avoiding browser-side knowledge of the internal Compose network.
 
 For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_ANYTHING_DATA_DIR=data/api`.
 
@@ -106,7 +109,7 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/ve
 For Docker Compose, start the optional smoke profile and configure the API to reach the mock agent on the Compose network:
 
 ```bash
-docker compose -f infra/compose/docker-compose.yml --profile smoke up -d mock-http-agent
+docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up -d mock-http-agent
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scripts/verify_mock_http_agent_flow.py
 ```
 

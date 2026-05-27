@@ -80,6 +80,10 @@ The alpha plugin surface supports manifest validation and discovery for importer
 
 See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting notes.
 
+## Commercial Readiness
+
+Study Anything is a public self-host Alpha foundation, roughly 35% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+
 ## GitHub Launch
 
 The repository includes GitHub Actions for Python tests, Web build/audit, Docker Compose smoke, and GHCR image publishing. See `docs/github-launch.md` before cutting the first public alpha release.

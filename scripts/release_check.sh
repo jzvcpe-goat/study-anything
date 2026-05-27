@@ -24,9 +24,11 @@ else
 fi
 
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
-  docker compose -f infra/compose/docker-compose.yml --profile full config >/dev/null
+  docker compose --env-file "$tmp_env" -f infra/compose/docker-compose.yml --profile full config >/dev/null
 else
   printf "warn  docker compose missing; skipped Compose config validation.\n"
 fi
+
+printf "hint  after launching Docker Compose, run: WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py\n"
 
 printf "ok    release check completed\n"

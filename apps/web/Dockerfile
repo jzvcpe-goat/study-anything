@@ -7,9 +7,10 @@ COPY apps/web/package.json apps/web/tsconfig.json apps/web/vite.config.ts apps/w
 COPY apps/web/package-lock.json ./package-lock.json
 COPY apps/web/src ./src
 COPY apps/web/public ./public
+COPY apps/web/server.mjs ./server.mjs
 
 RUN npm ci && npm run build
 
 EXPOSE 5173
 
-CMD ["npm", "run", "preview"]
+CMD ["node", "server.mjs"]
