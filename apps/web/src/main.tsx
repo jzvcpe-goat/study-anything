@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -277,7 +277,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   const t = copy[locale];
-  const answeredIds = useMemo(() => new Set(session?.answers.map((answer) => answer.item_id) ?? []), [session]);
+  const answeredIds = new Set(session?.answers.map((answer) => answer.item_id) ?? []);
   const activeQuiz = session?.quiz_items.find((item) => !answeredIds.has(item.item_id)) ?? null;
   const latestGrade = session?.grading_results[session.grading_results.length - 1] ?? null;
   const agentReady = Boolean(agentStatus?.defaults["quiz.generate"]);
@@ -423,14 +423,21 @@ function App() {
 
   return (
     <main className="appShell">
-      <aside className="sidebar">
-        <div className="brandBlock">
+      <div className="ambientStudy" aria-hidden="true">
+        <span className="ambientSheet sheetOne" />
+        <span className="ambientSheet sheetTwo" />
+        <span className="ambientLine lineOne" />
+        <span className="ambientLine lineTwo" />
+      </div>
+
+      <header className="siteHeader">
+        <button className="brandButton" onClick={() => setView("learn")}>
           <div className="brandMark">SA</div>
           <div>
             <p className="eyebrow">{t.appMode}</p>
-            <h1>Study Anything</h1>
+            <strong>Study Anything</strong>
           </div>
-        </div>
+        </button>
 
         <nav className="navList" aria-label="Primary">
           <button className={view === "learn" ? "navItem active" : "navItem"} onClick={() => setView("learn")}>
@@ -443,91 +450,94 @@ function App() {
           </button>
         </nav>
 
-        <section className="sessionRail">
-          <div className="sectionTitle">
-            <h2>{t.recent}</h2>
-            <button className="iconButton" onClick={() => refresh()} title={t.refresh}>
-              R
+        <div className="headerTools">
+          <div className="segmentedControl" aria-label="Language">
+            <button className={locale === "zh" ? "active" : ""} onClick={() => setLocale("zh")}>
+              中文
+            </button>
+            <button className={locale === "en" ? "active" : ""} onClick={() => setLocale("en")}>
+              EN
             </button>
           </div>
-          <div className="sessionList">
-            {sessions.slice(0, 8).map((item) => (
-              <button
-                className={session?.session_id === item.session_id ? "sessionItem active" : "sessionItem"}
-                key={item.session_id}
-                onClick={() => loadSession(item.session_id)}
-              >
-                <span>{item.source?.title ?? t.navLearn}</span>
-                <small>
-                  {stageLabel(item.stage, t.stages)} {formatTime(item.updated_at)}
-                </small>
-              </button>
-            ))}
-            {sessions.length === 0 && <p className="emptyState">{t.emptyRecent}</p>}
-          </div>
-        </section>
-      </aside>
+          <span className={`statusPill ${agentReady ? "good" : "warn"}`}>{agentReady ? t.agentReady : t.agentMissing}</span>
+        </div>
+      </header>
 
-      <section className="content">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">{view === "learn" ? t.navLearnHint : t.navAgentHint}</p>
-            <h2>{view === "learn" ? t.learnTitle : t.agentTitle}</h2>
-          </div>
-          <div className="topbarActions">
-            <div className="segmentedControl" aria-label="Language">
-              <button className={locale === "zh" ? "active" : ""} onClick={() => setLocale("zh")}>
-                中文
-              </button>
-              <button className={locale === "en" ? "active" : ""} onClick={() => setLocale("en")}>
-                EN
-              </button>
-            </div>
-            <span className={`statusPill ${agentReady ? "good" : "warn"}`}>{agentReady ? t.agentReady : t.agentMissing}</span>
-          </div>
-        </header>
+      <section className={`heroStage ${view === "agent" ? "agentStage" : ""}`}>
+        <div className="heroCopy">
+          <p className="eyebrow">{view === "learn" ? t.navLearnHint : t.navAgentHint}</p>
+          <h1>Study Anything</h1>
+          <p className="heroQuestion">{view === "learn" ? t.learnTitle : t.agentTitle}</p>
+          <p className="heroSentence">{view === "learn" ? t.learnSubtitle : t.agentLead}</p>
+        </div>
 
-        {error && <section className="notice bad">{error}</section>}
-        {loading && <section className="notice neutral">{loading}</section>}
+        <div className="heroProduct">
+          {error && <section className="notice bad">{error}</section>}
+          {loading && <section className="notice neutral">{loading}</section>}
 
-        {view === "learn" ? (
-          <LearningWorkspace
-            activeQuiz={activeQuiz}
-            composer={composer}
-            hitlTasks={hitlTasks}
-            latestGrade={latestGrade}
-            onComposerChange={setComposer}
-            onResolve={resolveTask}
-            onStartFromSource={() => startLearning({ title, reference, text: sourceText })}
-            onSubmit={handleComposer}
-            progress={progressFor(session?.stage)}
-            reference={reference}
-            session={session}
-            setReference={setReference}
-            setSourceText={setSourceText}
-            setTitle={setTitle}
-            sourceStats={sourceStats}
-            sourceText={sourceText}
-            t={t}
-            title={title}
-          />
-        ) : (
-          <AgentWorkspace
-            agentStatus={agentStatus}
-            agentTest={agentTest}
-            providerEndpoint={providerEndpoint}
-            providerKind={providerKind}
-            providerLabel={providerLabel}
-            saveProvider={saveProvider}
-            selectedProviderId={selectedProviderId}
-            setProviderEndpoint={setProviderEndpoint}
-            setProviderKind={setProviderKind}
-            setProviderLabel={setProviderLabel}
-            setSelectedProviderId={setSelectedProviderId}
-            t={t}
-            testProvider={testProvider}
-          />
-        )}
+          {view === "learn" ? (
+            <LearningWorkspace
+              activeQuiz={activeQuiz}
+              composer={composer}
+              hitlTasks={hitlTasks}
+              latestGrade={latestGrade}
+              onComposerChange={setComposer}
+              onResolve={resolveTask}
+              onStartFromSource={() => startLearning({ title, reference, text: sourceText })}
+              onSubmit={handleComposer}
+              progress={progressFor(session?.stage)}
+              reference={reference}
+              session={session}
+              setReference={setReference}
+              setSourceText={setSourceText}
+              setTitle={setTitle}
+              sourceStats={sourceStats}
+              sourceText={sourceText}
+              t={t}
+              title={title}
+            />
+          ) : (
+            <AgentWorkspace
+              agentStatus={agentStatus}
+              agentTest={agentTest}
+              providerEndpoint={providerEndpoint}
+              providerKind={providerKind}
+              providerLabel={providerLabel}
+              saveProvider={saveProvider}
+              selectedProviderId={selectedProviderId}
+              setProviderEndpoint={setProviderEndpoint}
+              setProviderKind={setProviderKind}
+              setProviderLabel={setProviderLabel}
+              setSelectedProviderId={setSelectedProviderId}
+              t={t}
+              testProvider={testProvider}
+            />
+          )}
+        </div>
+      </section>
+
+      <section className="recentShelf" aria-label={t.recent}>
+        <div className="sectionTitle">
+          <h2>{t.recent}</h2>
+          <button className="iconButton" onClick={() => refresh()} title={t.refresh}>
+            R
+          </button>
+        </div>
+        <div className="sessionList">
+          {sessions.slice(0, 8).map((item) => (
+            <button
+              className={session?.session_id === item.session_id ? "sessionItem active" : "sessionItem"}
+              key={item.session_id}
+              onClick={() => loadSession(item.session_id)}
+            >
+              <span>{item.source?.title ?? t.navLearn}</span>
+              <small>
+                {stageLabel(item.stage, t.stages)} {formatTime(item.updated_at)}
+              </small>
+            </button>
+          ))}
+          {sessions.length === 0 && <p className="emptyState">{t.emptyRecent}</p>}
+        </div>
       </section>
     </main>
   );
@@ -578,8 +588,7 @@ function LearningWorkspace(props: {
 
   return (
     <div className="learningGrid">
-      <section className="conversationPanel">
-        <p className="lede">{t.learnSubtitle}</p>
+      <section className="conversationPanel naturalComposer">
         <div className="messageList">
           <article className="message assistant">
             <strong>{activeQuiz ? t.quizIntro : t.welcome}</strong>
@@ -711,13 +720,8 @@ function AgentWorkspace(props: {
     <div className="agentGrid">
       <section className="conversationPanel agentIntro">
         <h3>{t.agentTitle}</h3>
-        <p>{t.agentLead}</p>
         <div className="trustNote">{t.noSecrets}</div>
-        <div className="capabilityGrid">
-          {t.capabilityLabels.map((label) => (
-            <span key={label}>{label}</span>
-          ))}
-        </div>
+        <p className="capabilitySentence">{t.capabilityLabels.join(" · ")}</p>
       </section>
 
       <section className="sidePanel agentSetup">
