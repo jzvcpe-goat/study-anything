@@ -1,6 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+
+type Locale = "zh" | "en";
+type ViewKey = "learn" | "agent";
 
 type ProviderStatus = {
   provider_id: string;
@@ -17,19 +20,15 @@ type AgentStatus = {
 };
 
 type ReadingSource = {
-  source_type: string;
   reference: string;
   title: string;
   text: string;
-  excerpt_hash: string;
   verified: boolean;
 };
 
 type QuizItem = {
   item_id: string;
   prompt: string;
-  source_ref: string;
-  excerpt_hash: string;
   rubric: string;
 };
 
@@ -37,437 +36,29 @@ type GradingResult = {
   item_id: string;
   score: number;
   feedback: string;
-  reward: number;
-};
-
-type AgentEventMetadata = {
-  provider_id?: string;
-  task_type?: string;
-  status?: string;
-  latency_ms?: number;
-};
-
-type EventPayload = {
-  agent?: AgentEventMetadata;
-  agents?: AgentEventMetadata[];
-  stage?: string;
-  count?: number;
-  average?: number;
-  level?: number;
-  bloom?: string;
-  kind?: string;
-  message?: string;
-};
-
-type StudyEvent = {
-  event_id: string;
-  type: string;
-  node: string;
-  created_at: string;
-  payload?: EventPayload;
 };
 
 type HitlInterrupt = {
   task_id: string;
-  kind: string;
   message: string;
-  payload: Record<string, unknown>;
   status: string;
 };
 
 type Session = {
   session_id: string;
   stage: string;
-  track: string;
   source: ReadingSource | null;
   quiz_items: QuizItem[];
   answers: Array<{ item_id: string; text: string }>;
   grading_results: GradingResult[];
   mastery: { level: number; bloom: string };
   insights: string[];
-  scribe_log: string[];
   hitl_interrupts: HitlInterrupt[];
-  events: StudyEvent[];
   discarded: boolean;
-  created_at: string;
   updated_at: string;
 };
 
-type SystemStatus = {
-  status: string;
-  version: string;
-  data_dir: string;
-  session_store?: string;
-  session_count: number;
-  open_hitl_count: number;
-  langgraph_available: boolean;
-  agent_status: AgentStatus;
-  plugin_count: number;
-};
-
-type PluginStatus = {
-  manifest: null | {
-    plugin_id: string;
-    name: string;
-    version: string;
-    api_version: string;
-    entrypoint: string;
-    hooks: string[];
-    permissions: string[];
-  };
-  path: string;
-  status: string;
-  message: string;
-};
-
-type IntegrationStatus = {
-  name: string;
-  category: string;
-  target: string;
-  status: string;
-  runtime_check: string;
-  product_surface: string;
-  next_step: string;
-};
-
-type ViewKey = "learn" | "agents" | "ops" | "plugins" | "branches";
-type Locale = "zh" | "en";
-
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
-
-const COPY = {
-  zh: {
-    branch: "分支：codex/ui-dashboard-foundation",
-    selfHost: "本地优先 Alpha",
-    recentSessions: "最近学习",
-    refresh: "刷新",
-    agentReady: "Agent 已就绪",
-    agentSetupNeeded: "需要配置 Agent",
-    noSessions: "还没有学习记录。",
-    nav: [
-      ["learn", "学习", "用自然语言启动学习流"],
-      ["agents", "Agents", "配置用户自己的 Agent"],
-      ["ops", "系统", "检查运行状态和人工介入"],
-      ["plugins", "插件", "查看扩展生态"],
-      ["branches", "分支", "保持主干干净可发布"]
-    ],
-    titles: {
-      learn: "学习工作台",
-      agents: "Agent 控制台",
-      ops: "系统运行",
-      plugins: "插件生态",
-      branches: "分支指挥中心"
-    },
-    runway: {
-      agent: "Agent 通道",
-      learning: "学习通道",
-      stack: "全栈通道",
-      extension: "扩展通道",
-      routed: "已路由 Provider",
-      needsDefault: "需要默认 Provider",
-      providers: "个 Provider 已注册",
-      idle: "空闲",
-      startSession: "开始一次学习",
-      langgraph: "LangGraph 可用",
-      alphaExecutor: "Alpha 执行器",
-      plugins: "个插件",
-      boundaries: "个集成边界"
-    },
-    command: {
-      eyebrow: "自然语言入口",
-      title: "告诉 Study Anything 你想学什么",
-      startPlaceholder:
-        "粘贴一段材料，或直接说：帮我围绕这段内容生成带出处的测验并评估掌握度。",
-      answerPlaceholder: "直接用自然语言回答当前题目，Study Anything 会按来源和评分规则评估。",
-      start: "开始学习流",
-      submit: "提交自然语言回答",
-      demo: "使用右侧材料开始",
-      resume: "继续运行",
-      discard: "丢弃"
-    },
-    source: {
-      input: "材料",
-      title: "阅读来源",
-      titleLabel: "标题",
-      reference: "来源引用",
-      text: "材料正文",
-      linked: "已链接",
-      missing: "缺少引用",
-      words: "词",
-      chars: "字符",
-      verified: "已验证",
-      localDraft: "本地草稿"
-    },
-    flow: {
-      workflow: "流程",
-      noSession: "暂无会话",
-      steps: ["初始化", "规划", "验证", "测验", "评分", "掌握", "综合", "记录", "孵化"],
-      quiz: "来源绑定测验",
-      emptyTitle: "先用自然语言或材料开始。",
-      emptyBody: "系统会创建会话、绑定来源、生成测验，并等待你的回答。",
-      resolve: "解决",
-      mastery: "掌握度与事件",
-      evidence: "证据",
-      bloom: "Bloom",
-      latestScore: "最新得分",
-      updated: "更新",
-      never: "尚未更新",
-      none: "无",
-      eventTimeline: "事件时间线",
-      noEvents: "暂无事件"
-    },
-    readiness: {
-      eyebrow: "商业化距离",
-      title: "商业化就绪度",
-      estimate: "约 35%",
-      note: "当前更像可公开 Alpha，不是可收费 SaaS。",
-      strengths: "已完成：开源基础、Docker 栈、BYO Agent、学习闭环、插件雏形、CI。",
-      gaps: "缺口：账户/权限、加密同步、支付、团队空间、插件市场、可观测 SLA、规模化安全审计。"
-    },
-    agentView: {
-      byoa: "用户自带 Agent",
-      setup: "Provider 配置",
-      noKeys: "不保存模型密钥",
-      providerKind: "Provider 类型",
-      localHttp: "本地 HTTP Agent",
-      fakeDemo: "Fake demo agent",
-      cli: "CLI agent adapter",
-      mcp: "MCP agent adapter",
-      label: "名称",
-      endpoint: "Endpoint",
-      save: "保存默认配置",
-      testSaved: "测试已保存",
-      registry: "注册表",
-      defaults: "Providers 与默认能力",
-      enabled: " 个启用",
-      none: "还没有配置 Provider。",
-      capabilityDefaults: "能力默认路由",
-      select: "选择",
-      test: "测试",
-      unset: "未设置",
-      local: "local"
-    },
-    opsView: {
-      runtime: "运行时",
-      systemHealth: "系统健康",
-      version: "版本",
-      sessions: "会话",
-      hitl: "人工介入",
-      store: "存储",
-      langgraph: "LangGraph",
-      plugins: "插件",
-      available: "可用",
-      alphaExecutor: "Alpha 执行器",
-      noDataDir: "未报告数据目录。",
-      boundaries: "边界",
-      integrationMatrix: "集成矩阵",
-      humanReview: "人工审核",
-      openInterrupts: "开放中断",
-      noHitl: "没有人工介入任务。"
-    },
-    pluginsView: {
-      extensions: "扩展",
-      registry: "插件注册表",
-      discovered: " 个已发现",
-      none: "没有发现插件。"
-    },
-    branchView: {
-      eyebrow: "OSS 上线流",
-      title: "主干保持可发布，实验进入分支。",
-      lanes: [
-        ["main", "受保护主干", "可发布代码、绿色检查、公开标签。"],
-        ["codex/ui-*", "UI 工作分支", "多分区前端改动和视觉 QA。"],
-        ["feature/*", "产品功能", "每个 PR 一个可交付行为。"],
-        ["fix/*", "缺陷修复", "小补丁和聚焦测试。"],
-        ["docs/*", "文档通道", "开源指南、发布说明和架构文档。"],
-        ["dependabot/*", "依赖通道", "React、Vite、Actions 分组升级。"],
-        ["release/v*", "发布通道", "公开标签前的短期稳定分支。"]
-      ],
-      gates: "必需检查",
-      uiBranch: "UI 分支",
-      dependencyRule: "依赖规则",
-      gateValue: "api-tests / web-build / compose-smoke",
-      uiValue: "review 前保持 draft PR",
-      dependencyValue: "peer 依赖分组升级"
-    },
-    loading: {
-      start: "正在启动学习流",
-      load: "正在加载会话",
-      saveAgent: "正在保存 Agent Provider",
-      testAgent: "正在测试 Agent",
-      submit: "正在提交回答",
-      resume: "正在继续运行",
-      discard: "正在丢弃会话",
-      hitl: "正在解决人工介入任务"
-    }
-  },
-  en: {
-    branch: "Branch: codex/ui-dashboard-foundation",
-    selfHost: "Self-host Alpha",
-    recentSessions: "Recent Sessions",
-    refresh: "Refresh",
-    agentReady: "Agent ready",
-    agentSetupNeeded: "Agent setup needed",
-    noSessions: "No saved sessions yet.",
-    nav: [
-      ["learn", "Learn", "Start from natural language"],
-      ["agents", "Agents", "Configure Bring Your Own Agent"],
-      ["ops", "System", "Inspect runtime health and HITL"],
-      ["plugins", "Plugins", "Review extension surfaces"],
-      ["branches", "Branches", "Keep main clean and shippable"]
-    ],
-    titles: {
-      learn: "Learning Workspace",
-      agents: "Agent Control Plane",
-      ops: "System Operations",
-      plugins: "Plugin Ecosystem",
-      branches: "Branch Command Center"
-    },
-    runway: {
-      agent: "Agent Lane",
-      learning: "Learning Lane",
-      stack: "Stack Lane",
-      extension: "Extension Lane",
-      routed: "Provider routed",
-      needsDefault: "Needs default",
-      providers: " providers registered",
-      idle: "Idle",
-      startSession: "start a session",
-      langgraph: "LangGraph available",
-      alphaExecutor: "alpha executor",
-      plugins: " plugins",
-      boundaries: " integration boundaries"
-    },
-    command: {
-      eyebrow: "Natural language entry",
-      title: "Tell Study Anything what you want to learn",
-      startPlaceholder: "Paste source text, or ask for a source-bound quiz and mastery evaluation.",
-      answerPlaceholder: "Answer the current question in natural language. Study Anything will grade it against the source.",
-      start: "Start learning flow",
-      submit: "Submit natural answer",
-      demo: "Start from source",
-      resume: "Resume",
-      discard: "Discard"
-    },
-    source: {
-      input: "Input",
-      title: "Reading Source",
-      titleLabel: "Title",
-      reference: "Source reference",
-      text: "Source text",
-      linked: "linked",
-      missing: "missing",
-      words: "words",
-      chars: "chars",
-      verified: "verified",
-      localDraft: "local draft"
-    },
-    flow: {
-      workflow: "Workflow",
-      noSession: "No active session",
-      steps: ["Initialize", "Architect", "Verify", "Quiz", "Grade", "Mastery", "Synthesize", "Scribe", "Incubate"],
-      quiz: "Source-bound quiz",
-      emptyTitle: "Start with natural language or a reading source.",
-      emptyBody: "The system creates a session, binds the source, generates a quiz, and waits for an answer.",
-      resolve: "Resolve",
-      mastery: "Mastery And Events",
-      evidence: "Evidence",
-      bloom: "Bloom",
-      latestScore: "Latest score",
-      updated: "Updated",
-      never: "Never",
-      none: "none",
-      eventTimeline: "Event Timeline",
-      noEvents: "No events yet."
-    },
-    readiness: {
-      eyebrow: "Commercial distance",
-      title: "Commercial readiness",
-      estimate: "About 35%",
-      note: "This is a public Alpha foundation, not a paid SaaS yet.",
-      strengths: "Done: OSS base, Docker stack, BYO Agent, learning loop, plugin seed, CI.",
-      gaps: "Gaps: accounts, permissions, encrypted sync, billing, team spaces, marketplace, observability SLA, security audit."
-    },
-    agentView: {
-      byoa: "Bring Your Own Agent",
-      setup: "Provider Setup",
-      noKeys: "No model keys stored",
-      providerKind: "Provider kind",
-      localHttp: "Local HTTP Agent",
-      fakeDemo: "Fake demo agent",
-      cli: "CLI agent adapter",
-      mcp: "MCP agent adapter",
-      label: "Label",
-      endpoint: "Endpoint",
-      save: "Save defaults",
-      testSaved: "Test saved",
-      registry: "Registry",
-      defaults: "Providers And Defaults",
-      enabled: " enabled",
-      none: "No providers configured.",
-      capabilityDefaults: "Capability defaults",
-      select: "Select",
-      test: "Test",
-      unset: "unset",
-      local: "local"
-    },
-    opsView: {
-      runtime: "Runtime",
-      systemHealth: "System Health",
-      version: "Version",
-      sessions: "Sessions",
-      hitl: "HITL",
-      store: "Store",
-      langgraph: "LangGraph",
-      plugins: "Plugins",
-      available: "available",
-      alphaExecutor: "alpha executor",
-      noDataDir: "No data directory reported.",
-      boundaries: "Boundaries",
-      integrationMatrix: "Integration Matrix",
-      humanReview: "Human Review",
-      openInterrupts: "Open Interrupts",
-      noHitl: "No HITL interrupts."
-    },
-    pluginsView: {
-      extensions: "Extensions",
-      registry: "Plugin Registry",
-      discovered: " discovered",
-      none: "No plugins discovered."
-    },
-    branchView: {
-      eyebrow: "OSS Launch Flow",
-      title: "Main stays clean; experiments travel by branch.",
-      lanes: [
-        ["main", "Protected trunk", "Release-ready code, green checks, public tags."],
-        ["codex/ui-*", "UI worktree", "Multi-zone frontend changes and visual QA."],
-        ["feature/*", "Product feature", "One shippable behavior change per PR."],
-        ["fix/*", "Regression fix", "Small patches with focused tests."],
-        ["docs/*", "Docs lane", "OSS guides, release notes, and architecture docs."],
-        ["dependabot/*", "Dependency lane", "Grouped React, Vite, and Actions updates."],
-        ["release/v*", "Release lane", "Short stabilization branch before a public tag."]
-      ],
-      gates: "Required gates",
-      uiBranch: "UI branch",
-      dependencyRule: "Dependency rule",
-      gateValue: "api-tests / web-build / compose-smoke",
-      uiValue: "draft PR until reviewed",
-      dependencyValue: "group peer updates"
-    },
-    loading: {
-      start: "Starting learning flow",
-      load: "Loading session",
-      saveAgent: "Saving agent provider",
-      testAgent: "Testing agent",
-      submit: "Submitting answer",
-      resume: "Resuming workflow",
-      discard: "Discarding session",
-      hitl: "Resolving HITL"
-    }
-  }
-} as const;
-
-type Copy = (typeof COPY)[Locale];
 
 const CAPABILITIES = [
   "quiz.generate",
@@ -478,17 +69,146 @@ const CAPABILITIES = [
   "embedding.create"
 ];
 
-const WORKFLOW_STEPS = [
-  ["initialize_session", "Initialize"],
-  ["architect_node", "Architect"],
-  ["gap_filler", "Verify"],
-  ["quiz_generator", "Quiz"],
-  ["quiz_grader", "Grade"],
-  ["mastery_evaluator", "Mastery"],
-  ["synthesist_node", "Synthesize"],
-  ["scribe_node", "Scribe"],
-  ["incubation_detector", "Incubate"]
-];
+const copy = {
+  zh: {
+    appMode: "本地优先学习系统",
+    navLearn: "学习",
+    navAgent: "Agent",
+    navLearnHint: "自然语言学习空间",
+    navAgentHint: "连接你自己的推理系统",
+    recent: "最近学习",
+    emptyRecent: "还没有学习记录。",
+    refresh: "刷新",
+    learnTitle: "今天想学什么？",
+    learnSubtitle: "粘贴材料或直接描述目标，Study Anything 会生成带来源约束的练习并追踪掌握度。",
+    agentReady: "Agent 已连接",
+    agentMissing: "未连接 Agent",
+    inputPlaceholder: "例如：帮我学习这段关于渐近理论的材料，生成测验，并在我回答后评估掌握度。",
+    answerPlaceholder: "直接回答当前问题。系统会基于材料和评分标准给出反馈。",
+    start: "开始学习",
+    answer: "提交回答",
+    useSource: "使用右侧材料",
+    newRound: "新学习",
+    sourceTitle: "学习材料",
+    title: "标题",
+    reference: "来源",
+    sourceText: "正文",
+    verified: "来源已校验",
+    draft: "本地草稿",
+    words: "词",
+    chars: "字符",
+    progressTitle: "学习进度",
+    mastery: "掌握度",
+    score: "最新得分",
+    feedback: "反馈",
+    insight: "综合理解",
+    noFeedback: "完成回答后会显示反馈。",
+    needsReview: "需要你确认",
+    resolve: "确认",
+    stages: {
+      idle: "准备开始",
+      initialized: "已创建学习",
+      awaiting_reading: "等待材料",
+      reading_submitted: "理解材料",
+      awaiting_answers: "等待作答",
+      completed: "已完成",
+      discarded: "已丢弃"
+    },
+    welcome: "把你要学习的内容放进输入框，或者使用右侧材料开始。",
+    quizIntro: "先回答这个问题：",
+    agentTitle: "连接你的 Agent",
+    agentLead: "真实推理、凭证和工具都留在你自己的 Agent 中。Study Anything 只发送学习任务、校验结构化输出并记录学习状态。",
+    kind: "类型",
+    label: "名称",
+    endpoint: "地址",
+    saveAgent: "保存并设为默认",
+    testAgent: "测试连接",
+    configuredAgents: "已配置 Agent",
+    noAgents: "还没有配置 Agent。",
+    capabilities: "学习能力",
+    noSecrets: "Study Anything 不保存你的推理凭证。",
+    healthy: "连接正常",
+    localAgent: "本地 HTTP Agent",
+    fakeAgent: "演示 Agent",
+    cliAgent: "CLI Agent",
+    mcpAgent: "MCP Agent",
+    capabilityLabels: ["生成练习", "评分反馈", "总结理解", "校验来源", "检索记忆", "创建向量"],
+    loadingStart: "正在开始学习",
+    loadingAnswer: "正在提交回答",
+    loadingAgent: "正在保存 Agent",
+    loadingTest: "正在测试连接",
+    loadingRefresh: "正在刷新"
+  },
+  en: {
+    appMode: "Local-first learning system",
+    navLearn: "Learn",
+    navAgent: "Agent",
+    navLearnHint: "Natural-language study space",
+    navAgentHint: "Connect your own reasoning system",
+    recent: "Recent",
+    emptyRecent: "No learning sessions yet.",
+    refresh: "Refresh",
+    learnTitle: "What do you want to learn today?",
+    learnSubtitle: "Paste source material or describe a goal. Study Anything turns it into grounded practice and tracks mastery.",
+    agentReady: "Agent connected",
+    agentMissing: "Agent not connected",
+    inputPlaceholder: "Example: help me study this passage, generate a quiz, and evaluate my mastery after I answer.",
+    answerPlaceholder: "Answer the current question. The system will grade it against the source and rubric.",
+    start: "Start learning",
+    answer: "Submit answer",
+    useSource: "Use source panel",
+    newRound: "New study",
+    sourceTitle: "Study Material",
+    title: "Title",
+    reference: "Source",
+    sourceText: "Text",
+    verified: "Source verified",
+    draft: "Local draft",
+    words: "words",
+    chars: "chars",
+    progressTitle: "Progress",
+    mastery: "Mastery",
+    score: "Latest score",
+    feedback: "Feedback",
+    insight: "Synthesis",
+    noFeedback: "Feedback appears after you answer.",
+    needsReview: "Needs your review",
+    resolve: "Confirm",
+    stages: {
+      idle: "Ready",
+      initialized: "Created",
+      awaiting_reading: "Waiting for source",
+      reading_submitted: "Reading",
+      awaiting_answers: "Waiting for answer",
+      completed: "Completed",
+      discarded: "Discarded"
+    },
+    welcome: "Put learning material into the input box, or start from the source panel.",
+    quizIntro: "Answer this first:",
+    agentTitle: "Connect Your Agent",
+    agentLead: "Real reasoning, credentials, and tools stay inside your own agent. Study Anything sends learning tasks, validates structured output, and records learning state.",
+    kind: "Type",
+    label: "Name",
+    endpoint: "Endpoint",
+    saveAgent: "Save as default",
+    testAgent: "Test connection",
+    configuredAgents: "Configured agents",
+    noAgents: "No agents configured.",
+    capabilities: "Learning capabilities",
+    noSecrets: "Study Anything never stores your reasoning credentials.",
+    healthy: "Connection ok",
+    localAgent: "Local HTTP Agent",
+    fakeAgent: "Demo Agent",
+    cliAgent: "CLI Agent",
+    mcpAgent: "MCP Agent",
+    capabilityLabels: ["Generate practice", "Grade answers", "Synthesize", "Verify source", "Retrieve memory", "Create embeddings"],
+    loadingStart: "Starting learning",
+    loadingAnswer: "Submitting answer",
+    loadingAgent: "Saving agent",
+    loadingTest: "Testing connection",
+    loadingRefresh: "Refreshing"
+  }
+} as const;
 
 async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -501,72 +221,67 @@ async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-function shortId(value: string, size = 8) {
-  return value.slice(0, size);
+function wordCount(value: string) {
+  return value.trim().split(/\s+/).filter(Boolean).length;
 }
 
 function formatTime(value?: string) {
-  if (!value) return "Never";
-  return new Intl.DateTimeFormat(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-    month: "short",
-    day: "numeric"
-  }).format(new Date(value));
+  if (!value) return "";
+  return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(
+    new Date(value)
+  );
 }
 
-function wordCount(value: string) {
-  const words = value.trim().split(/\s+/).filter(Boolean);
-  return words.length;
+function progressFor(stage?: string) {
+  if (stage === "completed") return 100;
+  if (stage === "awaiting_answers") return 62;
+  if (stage === "reading_submitted") return 44;
+  if (stage === "awaiting_reading" || stage === "initialized") return 18;
+  return 0;
 }
 
-function eventAgent(event: StudyEvent) {
-  return event.payload?.agent ?? event.payload?.agents?.[0];
+function stageLabel(stage: string | undefined, labels: Record<string, string>) {
+  return labels[stage ?? "idle"] ?? stage ?? labels.idle;
 }
 
-function toneForStatus(status: string) {
-  if (["ok", "ready", "valid", "completed", "public", "available", "enabled"].includes(status)) return "good";
-  if (["pending", "docs_only", "skipped"].includes(status)) return "warn";
-  if (["error", "invalid", "failed"].includes(status)) return "bad";
-  return "neutral";
+function agentKindLabel(
+  kind: string,
+  labels: { localAgent: string; fakeAgent: string; cliAgent: string; mcpAgent: string }
+) {
+  if (kind === "http_agent") return labels.localAgent;
+  if (kind === "fake_agent") return labels.fakeAgent;
+  if (kind === "cli_agent") return labels.cliAgent;
+  if (kind === "mcp_agent") return labels.mcpAgent;
+  return labels.localAgent;
 }
 
 function App() {
-  const [activeView, setActiveView] = useState<ViewKey>("learn");
   const [locale, setLocale] = useState<Locale>("zh");
+  const [view, setView] = useState<ViewKey>("learn");
   const [agentStatus, setAgentStatus] = useState<AgentStatus | null>(null);
-  const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
-  const [plugins, setPlugins] = useState<PluginStatus[]>([]);
-  const [integrations, setIntegrations] = useState<IntegrationStatus[]>([]);
-  const [hitlTasks, setHitlTasks] = useState<HitlInterrupt[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [session, setSession] = useState<Session | null>(null);
+  const [hitlTasks, setHitlTasks] = useState<HitlInterrupt[]>([]);
   const [title, setTitle] = useState("Asymptotic Theory Reading");
   const [reference, setReference] = useState("demo://reading/asymptotic-theory");
-  const [text, setText] = useState(
+  const [sourceText, setSourceText] = useState(
     "A precise learning system should bind every generated question to a source, grade answers with a rubric, and update mastery only when evidence supports the change."
   );
-  const [answer, setAnswer] = useState("");
+  const [composer, setComposer] = useState("");
   const [providerKind, setProviderKind] = useState("http_agent");
   const [providerLabel, setProviderLabel] = useState("Local HTTP Agent");
   const [providerEndpoint, setProviderEndpoint] = useState("http://127.0.0.1:8787");
-  const [savedProviderId, setSavedProviderId] = useState<string | null>(null);
+  const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
   const [agentTest, setAgentTest] = useState<string | null>(null);
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const copy = COPY[locale];
-  const [command, setCommand] = useState("");
 
-  const answeredIds = useMemo(() => new Set(session?.answers.map((item) => item.item_id) ?? []), [session]);
-  const activeQuiz = session?.quiz_items.find((item) => !answeredIds.has(item.item_id)) ?? session?.quiz_items[0];
-  const latestGrade = session?.grading_results[session.grading_results.length - 1];
-  const openInterrupts = session?.hitl_interrupts.filter((item) => item.status === "open") ?? [];
-  const readyProviders = agentStatus?.providers.filter((provider) => provider.enabled) ?? [];
-  const sourceStats = {
-    words: wordCount(text),
-    chars: text.length,
-    reference: reference.trim() ? "linked" : "missing"
-  };
+  const t = copy[locale];
+  const answeredIds = useMemo(() => new Set(session?.answers.map((answer) => answer.item_id) ?? []), [session]);
+  const activeQuiz = session?.quiz_items.find((item) => !answeredIds.has(item.item_id)) ?? null;
+  const latestGrade = session?.grading_results[session.grading_results.length - 1] ?? null;
+  const agentReady = Boolean(agentStatus?.defaults["quiz.generate"]);
+  const sourceStats = { words: wordCount(sourceText), chars: sourceText.length };
 
   async function runTask<T>(label: string, task: () => Promise<T>) {
     setLoading(label);
@@ -581,34 +296,24 @@ function App() {
     }
   }
 
-  async function refreshAgents() {
-    setAgentStatus(await api<AgentStatus>("/v1/agents/status"));
+  async function refresh(currentSessionId = session?.session_id) {
+    await runTask(t.loadingRefresh, async () => {
+      const [agents, sessionList, hitl] = await Promise.all([
+        api<AgentStatus>("/v1/agents/status"),
+        api<Session[]>("/v1/sessions"),
+        api<HitlInterrupt[]>("/v1/hitl")
+      ]);
+      setAgentStatus(agents);
+      setSessions(sessionList);
+      setHitlTasks(hitl);
+      if (currentSessionId) {
+        setSession(await api<Session>(`/v1/sessions/${currentSessionId}`));
+      }
+    });
   }
 
-  async function refreshOps() {
-    const [status, pluginList, integrationList, hitlList, sessionList] = await Promise.all([
-      api<SystemStatus>("/v1/system/status"),
-      api<PluginStatus[]>("/v1/plugins"),
-      api<IntegrationStatus[]>("/v1/system/integrations"),
-      api<HitlInterrupt[]>("/v1/hitl"),
-      api<Session[]>("/v1/sessions")
-    ]);
-    setSystemStatus(status);
-    setPlugins(pluginList);
-    setIntegrations(integrationList);
-    setHitlTasks(hitlList);
-    setSessions(sessionList);
-  }
-
-  async function refreshAll(nextSessionId = session?.session_id) {
-    await Promise.all([refreshAgents(), refreshOps()]);
-    if (nextSessionId) {
-      setSession(await api<Session>(`/v1/sessions/${nextSessionId}`));
-    }
-  }
-
-  async function startLearningFlow(source: { title: string; reference: string; text: string }) {
-    await runTask(copy.loading.start, async () => {
+  async function startLearning(source: { title: string; reference: string; text: string }) {
+    await runTask(t.loadingStart, async () => {
       const created = await api<Session>("/v1/sessions", {
         method: "POST",
         body: JSON.stringify({ user_id: "local-user", track: "ACADEMIC", use_demo_agent: true })
@@ -617,45 +322,54 @@ function App() {
         method: "POST",
         body: JSON.stringify({ source_type: "local_text", ...source })
       });
-      const running = await api<Session>(`/v1/sessions/${withReading.session_id}/run`, {
-        method: "POST"
-      });
+      const running = await api<Session>(`/v1/sessions/${withReading.session_id}/run`, { method: "POST" });
       setSession(running);
-      setAnswer("");
-      await refreshAll(running.session_id);
+      setComposer("");
+      await refresh(running.session_id);
     });
   }
 
-  async function startDemo() {
-    await startLearningFlow({ reference, title, text });
+  async function submitAnswer(text: string) {
+    if (!session || !activeQuiz) return;
+    await runTask(t.loadingAnswer, async () => {
+      const updated = await api<Session>(`/v1/sessions/${session.session_id}/answers`, {
+        method: "POST",
+        body: JSON.stringify({ answers: { [activeQuiz.item_id]: text } })
+      });
+      setSession(updated);
+      setComposer("");
+      await refresh(updated.session_id);
+    });
   }
 
-  async function runNaturalCommand() {
-    const value = command.trim();
-    if (!value) return;
-    if (session && activeQuiz) {
-      await submitAnswerText(value);
-      setCommand("");
+  async function handleComposer() {
+    const value = composer.trim();
+    if (!value && !activeQuiz) {
+      await startLearning({ title, reference, text: sourceText });
       return;
     }
-    const commandTitle = value.length > 42 ? `${value.slice(0, 42)}...` : value;
-    await startLearningFlow({
-      title: commandTitle || title,
-      reference: reference.trim() || "natural://study-anything/session",
-      text: value.length > 24 ? value : text
+    if (activeQuiz) {
+      await submitAnswer(value);
+      return;
+    }
+    const naturalTitle = value.length > 42 ? `${value.slice(0, 42)}...` : value || title;
+    await startLearning({
+      title: naturalTitle,
+      reference: reference.trim() || "local://study-anything",
+      text: value.length > 24 ? value : sourceText
     });
-    setCommand("");
   }
 
   async function loadSession(sessionId: string) {
-    await runTask(copy.loading.load, async () => {
-      setSession(await api<Session>(`/v1/sessions/${sessionId}`));
-      setActiveView("learn");
-    });
+    const loaded = await runTask(t.loadingRefresh, () => api<Session>(`/v1/sessions/${sessionId}`));
+    if (loaded) {
+      setSession(loaded);
+      setView("learn");
+    }
   }
 
-  async function addProvider() {
-    await runTask(copy.loading.saveAgent, async () => {
+  async function saveProvider() {
+    await runTask(t.loadingAgent, async () => {
       const provider = await api<ProviderStatus>("/v1/agents/providers", {
         method: "POST",
         body: JSON.stringify({
@@ -670,135 +384,86 @@ function App() {
         CAPABILITIES.map((capability) =>
           api<AgentStatus>("/v1/agents/defaults", {
             method: "POST",
-            body: JSON.stringify({
-              user_id: "local-user",
-              capability,
-              provider_id: provider.provider_id
-            })
+            body: JSON.stringify({ user_id: "local-user", capability, provider_id: provider.provider_id })
           })
         )
       );
-      setSavedProviderId(provider.provider_id);
+      setSelectedProviderId(provider.provider_id);
       setAgentTest(null);
-      await refreshAll();
+      await refresh();
     });
   }
 
-  async function testSavedAgent(providerId = savedProviderId) {
+  async function testProvider(providerId = selectedProviderId) {
     if (!providerId) return;
-    await runTask(copy.loading.testAgent, async () => {
+    await runTask(t.loadingTest, async () => {
       const health = await api<{ status: string; message: string }>("/v1/agents/test", {
         method: "POST",
         body: JSON.stringify({ provider_id: providerId })
       });
       setAgentTest(`${health.status}: ${health.message}`);
-      await refreshAgents();
     });
   }
 
-  async function submitAnswerText(answerText: string) {
-    if (!session || !activeQuiz) return;
-    await runTask(copy.loading.submit, async () => {
-      const updated = await api<Session>(`/v1/sessions/${session.session_id}/answers`, {
+  async function resolveTask(taskId: string) {
+    if (!session) return;
+    const updated = await runTask(t.loadingRefresh, () =>
+      api<Session>(`/v1/hitl/${taskId}/resolve`, {
         method: "POST",
-        body: JSON.stringify({ answers: { [activeQuiz.item_id]: answerText } })
-      });
-      setSession(updated);
-      setAnswer("");
-      await refreshAll(updated.session_id);
-    });
-  }
-
-  async function submitAnswer() {
-    await submitAnswerText(answer);
-  }
-
-  async function resume() {
-    if (!session) return;
-    await runTask(copy.loading.resume, async () => {
-      const updated = await api<Session>(`/v1/sessions/${session.session_id}/resume`, {
-        method: "POST"
-      });
-      setSession(updated);
-      await refreshAll(updated.session_id);
-    });
-  }
-
-  async function discard() {
-    if (!session) return;
-    await runTask(copy.loading.discard, async () => {
-      const updated = await api<Session>(`/v1/sessions/${session.session_id}/discard`, {
-        method: "POST"
-      });
-      setSession(updated);
-      await refreshAll(updated.session_id);
-    });
-  }
-
-  async function resolveHitl(taskId: string) {
-    if (!session) return;
-    await runTask(copy.loading.hitl, async () => {
-      const updated = await api<Session>(`/v1/hitl/${taskId}/resolve`, {
-        method: "POST",
-        body: JSON.stringify({
-          session_id: session.session_id,
-          payload: { resolved_from: "web-ui" }
-        })
-      });
-      setSession(updated);
-      await refreshAll(updated.session_id);
-    });
+        body: JSON.stringify({ session_id: session.session_id, payload: { resolved_from: "web-ui" } })
+      })
+    );
+    if (updated) setSession(updated);
   }
 
   useEffect(() => {
-    refreshAll().catch((err) => setError(String(err)));
+    refresh().catch((err) => setError(String(err)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <main className="appShell">
-      <aside className="sidebar" aria-label="Workspace">
+      <aside className="sidebar">
         <div className="brandBlock">
           <div className="brandMark">SA</div>
           <div>
-            <p className="eyebrow">{copy.selfHost}</p>
+            <p className="eyebrow">{t.appMode}</p>
             <h1>Study Anything</h1>
           </div>
         </div>
 
         <nav className="navList" aria-label="Primary">
-          {copy.nav.map(([key, label, helper]) => (
-            <button
-              className={activeView === key ? "navItem active" : "navItem"}
-              key={key}
-              onClick={() => setActiveView(key as ViewKey)}
-            >
-              <span>{label}</span>
-              <small>{helper}</small>
-            </button>
-          ))}
+          <button className={view === "learn" ? "navItem active" : "navItem"} onClick={() => setView("learn")}>
+            <span>{t.navLearn}</span>
+            <small>{t.navLearnHint}</small>
+          </button>
+          <button className={view === "agent" ? "navItem active" : "navItem"} onClick={() => setView("agent")}>
+            <span>{t.navAgent}</span>
+            <small>{t.navAgentHint}</small>
+          </button>
         </nav>
 
-        <section className="sessionRail" aria-label="Recent sessions">
+        <section className="sessionRail">
           <div className="sectionTitle">
-            <h2>{copy.recentSessions}</h2>
-            <button className="iconButton" onClick={() => refreshAll()} title={copy.refresh}>
+            <h2>{t.recent}</h2>
+            <button className="iconButton" onClick={() => refresh()} title={t.refresh}>
               R
             </button>
           </div>
           <div className="sessionList">
-            {sessions.slice(0, 7).map((item) => (
+            {sessions.slice(0, 8).map((item) => (
               <button
                 className={session?.session_id === item.session_id ? "sessionItem active" : "sessionItem"}
                 key={item.session_id}
                 onClick={() => loadSession(item.session_id)}
               >
-                <span>{item.source?.title ?? item.track}</span>
+                <span>{item.source?.title ?? t.navLearn}</span>
                 <small>
-                  {item.stage} / {shortId(item.session_id)}
+                  {stageLabel(item.stage, t.stages)} {formatTime(item.updated_at)}
                 </small>
               </button>
             ))}
-            {sessions.length === 0 && <p className="emptyState">{copy.noSessions}</p>}
+            {sessions.length === 0 && <p className="emptyState">{t.emptyRecent}</p>}
           </div>
         </section>
       </aside>
@@ -806,8 +471,8 @@ function App() {
       <section className="content">
         <header className="topbar">
           <div>
-            <p className="eyebrow">{copy.branch}</p>
-            <h2>{viewTitle(activeView, copy)}</h2>
+            <p className="eyebrow">{view === "learn" ? t.navLearnHint : t.navAgentHint}</p>
+            <h2>{view === "learn" ? t.learnTitle : t.agentTitle}</h2>
           </div>
           <div className="topbarActions">
             <div className="segmentedControl" aria-label="Language">
@@ -818,667 +483,295 @@ function App() {
                 EN
               </button>
             </div>
-            <span className={`statusPill ${agentStatus?.defaults["quiz.generate"] ? "good" : "warn"}`}>
-              {agentStatus?.defaults["quiz.generate"] ? copy.agentReady : copy.agentSetupNeeded}
-            </span>
-            <button onClick={() => refreshAll()} disabled={Boolean(loading)}>
-              {copy.refresh}
-            </button>
+            <span className={`statusPill ${agentReady ? "good" : "warn"}`}>{agentReady ? t.agentReady : t.agentMissing}</span>
           </div>
         </header>
 
         {error && <section className="notice bad">{error}</section>}
         {loading && <section className="notice neutral">{loading}</section>}
 
-        <Runway
-          agentStatus={agentStatus}
-          copy={copy}
-          integrations={integrations}
-          plugins={plugins}
-          session={session}
-          systemStatus={systemStatus}
-        />
-
-        {activeView === "learn" && (
-          <LearnView
+        {view === "learn" ? (
+          <LearningWorkspace
             activeQuiz={activeQuiz}
-            answer={answer}
-            command={command}
-            copy={copy}
-            discard={discard}
+            composer={composer}
+            hitlTasks={hitlTasks}
             latestGrade={latestGrade}
-            openInterrupts={openInterrupts}
+            onComposerChange={setComposer}
+            onResolve={resolveTask}
+            onStartFromSource={() => startLearning({ title, reference, text: sourceText })}
+            onSubmit={handleComposer}
+            progress={progressFor(session?.stage)}
             reference={reference}
-            resolveHitl={resolveHitl}
-            resume={resume}
-            runNaturalCommand={runNaturalCommand}
             session={session}
-            setAnswer={setAnswer}
-            setCommand={setCommand}
             setReference={setReference}
-            setText={setText}
+            setSourceText={setSourceText}
             setTitle={setTitle}
             sourceStats={sourceStats}
-            startDemo={startDemo}
-            submitAnswer={submitAnswer}
-            text={text}
+            sourceText={sourceText}
+            t={t}
             title={title}
           />
-        )}
-
-        {activeView === "agents" && (
-          <AgentView
+        ) : (
+          <AgentWorkspace
             agentStatus={agentStatus}
             agentTest={agentTest}
-            copy={copy}
             providerEndpoint={providerEndpoint}
             providerKind={providerKind}
             providerLabel={providerLabel}
-            readyProviders={readyProviders}
-            savedProviderId={savedProviderId}
+            saveProvider={saveProvider}
+            selectedProviderId={selectedProviderId}
             setProviderEndpoint={setProviderEndpoint}
             setProviderKind={setProviderKind}
             setProviderLabel={setProviderLabel}
-            setSavedProviderId={setSavedProviderId}
-            saveProvider={addProvider}
-            testProvider={testSavedAgent}
+            setSelectedProviderId={setSelectedProviderId}
+            t={t}
+            testProvider={testProvider}
           />
         )}
-
-        {activeView === "ops" && (
-          <OpsView
-            copy={copy}
-            hitlTasks={hitlTasks}
-            integrations={integrations}
-            session={session}
-            systemStatus={systemStatus}
-          />
-        )}
-
-        {activeView === "plugins" && <PluginView copy={copy} plugins={plugins} />}
-
-        {activeView === "branches" && <BranchView copy={copy} />}
       </section>
     </main>
   );
 }
 
-function viewTitle(view: ViewKey, copy: Copy) {
-  return copy.titles[view];
-}
-
-function Runway({
-  agentStatus,
-  copy,
-  integrations,
-  plugins,
-  session,
-  systemStatus
-}: {
-  agentStatus: AgentStatus | null;
-  copy: Copy;
-  integrations: IntegrationStatus[];
-  plugins: PluginStatus[];
-  session: Session | null;
-  systemStatus: SystemStatus | null;
-}) {
-  const agentReady = Boolean(agentStatus?.defaults["quiz.generate"]);
-  const composeReady = integrations.some((item) => item.name.toLowerCase().includes("postgres") && item.status === "available");
-  return (
-    <section className="runwayGrid" aria-label="Workspace lanes">
-      <article className="runwayCard">
-        <span className={`statusDot ${agentReady ? "good" : "warn"}`} />
-        <div>
-          <p className="eyebrow">{copy.runway.agent}</p>
-          <strong>{agentReady ? copy.runway.routed : copy.runway.needsDefault}</strong>
-          <small>
-            {agentStatus?.providers.length ?? 0}
-            {copy.runway.providers}
-          </small>
-        </div>
-      </article>
-      <article className="runwayCard">
-        <span className={`statusDot ${session ? "good" : "neutral"}`} />
-        <div>
-          <p className="eyebrow">{copy.runway.learning}</p>
-          <strong>{session?.stage ?? copy.runway.idle}</strong>
-          <small>{session ? shortId(session.session_id) : copy.runway.startSession}</small>
-        </div>
-      </article>
-      <article className="runwayCard">
-        <span className={`statusDot ${composeReady || systemStatus?.status === "ok" ? "good" : "warn"}`} />
-        <div>
-          <p className="eyebrow">{copy.runway.stack}</p>
-          <strong>{systemStatus?.session_store ?? "unknown store"}</strong>
-          <small>{systemStatus?.langgraph_available ? copy.runway.langgraph : copy.runway.alphaExecutor}</small>
-        </div>
-      </article>
-      <article className="runwayCard">
-        <span className={`statusDot ${plugins.length ? "good" : "neutral"}`} />
-        <div>
-          <p className="eyebrow">{copy.runway.extension}</p>
-          <strong>
-            {plugins.length}
-            {copy.runway.plugins}
-          </strong>
-          <small>
-            {integrations.length}
-            {copy.runway.boundaries}
-          </small>
-        </div>
-      </article>
-    </section>
-  );
-}
-
-function LearnView(props: {
-  activeQuiz?: QuizItem;
-  answer: string;
-  command: string;
-  copy: Copy;
-  discard: () => void;
-  latestGrade?: GradingResult;
-  openInterrupts: HitlInterrupt[];
+function LearningWorkspace(props: {
+  activeQuiz: QuizItem | null;
+  composer: string;
+  hitlTasks: HitlInterrupt[];
+  latestGrade: GradingResult | null;
+  onComposerChange: (value: string) => void;
+  onResolve: (taskId: string) => void;
+  onStartFromSource: () => void;
+  onSubmit: () => void;
+  progress: number;
   reference: string;
-  resolveHitl: (taskId: string) => void;
-  resume: () => void;
-  runNaturalCommand: () => void;
   session: Session | null;
-  setAnswer: (value: string) => void;
-  setCommand: (value: string) => void;
   setReference: (value: string) => void;
-  setText: (value: string) => void;
+  setSourceText: (value: string) => void;
   setTitle: (value: string) => void;
-  sourceStats: { words: number; chars: number; reference: string };
-  startDemo: () => void;
-  submitAnswer: () => void;
-  text: string;
+  sourceStats: { words: number; chars: number };
+  sourceText: string;
+  t: (typeof copy)[Locale];
   title: string;
 }) {
   const {
     activeQuiz,
-    answer,
-    command,
-    copy,
-    discard,
+    composer,
+    hitlTasks,
     latestGrade,
-    openInterrupts,
+    onComposerChange,
+    onResolve,
+    onStartFromSource,
+    onSubmit,
+    progress,
     reference,
-    resolveHitl,
-    resume,
-    runNaturalCommand,
     session,
-    setAnswer,
-    setCommand,
     setReference,
-    setText,
+    setSourceText,
     setTitle,
     sourceStats,
-    startDemo,
-    submitAnswer,
-    text,
+    sourceText,
+    t,
     title
   } = props;
+  const latestInsight = session?.insights[session.insights.length - 1];
+  const openTasks = hitlTasks.filter((task) => task.status === "open");
 
   return (
-    <div className="conversationGrid">
-      <section className="toolPanel conversationPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.command.eyebrow}</p>
-            <h3>{copy.command.title}</h3>
-          </div>
-          <span className="idTag">{session ? shortId(session.session_id) : "idle"}</span>
+    <div className="learningGrid">
+      <section className="conversationPanel">
+        <p className="lede">{t.learnSubtitle}</p>
+        <div className="messageList">
+          <article className="message assistant">
+            <strong>{activeQuiz ? t.quizIntro : t.welcome}</strong>
+            {activeQuiz && <p>{activeQuiz.prompt}</p>}
+            {activeQuiz && <small>{activeQuiz.rubric}</small>}
+          </article>
+          {latestGrade && (
+            <article className="message result">
+              <strong>{t.feedback}</strong>
+              <p>{latestGrade.feedback}</p>
+            </article>
+          )}
+          {latestInsight && (
+            <article className="message result">
+              <strong>{t.insight}</strong>
+              <p>{latestInsight}</p>
+            </article>
+          )}
         </div>
-
-        {activeQuiz && (
-          <div className="quizPrompt">
-            <p className="eyebrow">{copy.flow.quiz}</p>
-            <h4>{activeQuiz.prompt}</h4>
-            <p>{activeQuiz.rubric}</p>
+        <div className="composer">
+          <textarea
+            value={composer}
+            onChange={(event) => onComposerChange(event.target.value)}
+            placeholder={activeQuiz ? t.answerPlaceholder : t.inputPlaceholder}
+          />
+          <div className="composerActions">
+            <button className="primary" onClick={onSubmit}>
+              {activeQuiz ? t.answer : t.start}
+            </button>
+            {!activeQuiz && <button onClick={onStartFromSource}>{t.useSource}</button>}
           </div>
-        )}
-
-        <textarea
-          className="commandInput"
-          value={command}
-          onChange={(event) => {
-            setCommand(event.target.value);
-            if (activeQuiz) setAnswer(event.target.value);
-          }}
-          placeholder={activeQuiz ? copy.command.answerPlaceholder : copy.command.startPlaceholder}
-        />
-        <div className="actionRow commandActions">
-          <button className="primary" onClick={runNaturalCommand}>
-            {activeQuiz ? copy.command.submit : copy.command.start}
-          </button>
-          <button onClick={startDemo}>{copy.command.demo}</button>
-          <button onClick={resume} disabled={!session}>
-            {copy.command.resume}
-          </button>
-          <button onClick={discard} disabled={!session}>
-            {copy.command.discard}
-          </button>
         </div>
-
-        {openInterrupts.length > 0 && (
-          <div className="notice warn">
-            {openInterrupts.map((item) => (
-              <div className="interruptRow" key={item.task_id}>
-                <span>{item.message}</span>
-                <button onClick={() => resolveHitl(item.task_id)}>{copy.flow.resolve}</button>
+        {openTasks.length > 0 && (
+          <div className="reviewBox">
+            <strong>{t.needsReview}</strong>
+            {openTasks.map((task) => (
+              <div className="reviewItem" key={task.task_id}>
+                <span>{task.message}</span>
+                <button onClick={() => onResolve(task.task_id)}>{t.resolve}</button>
               </div>
             ))}
           </div>
         )}
-
-        {!activeQuiz && (
-          <div className="emptyPanel">
-            <h4>{copy.flow.emptyTitle}</h4>
-            <p>{copy.flow.emptyBody}</p>
-          </div>
-        )}
-
-        <section className="workflowPanel">
-          <div className="panelHeading">
-            <div>
-              <p className="eyebrow">{copy.flow.workflow}</p>
-              <h3>{session?.stage ?? copy.flow.noSession}</h3>
-            </div>
-          </div>
-          <div className="workflowMap">
-            {WORKFLOW_STEPS.map(([node, label], index) => {
-              const completed = session?.events.some((event) => event.node === node);
-              return (
-                <div className={completed ? "workflowStep done" : "workflowStep"} key={node}>
-                  <span>{index + 1}</span>
-                  <strong>{copy.flow.steps[index] ?? label}</strong>
-                  <small>{node}</small>
-                </div>
-              );
-            })}
-          </div>
-        </section>
       </section>
 
-      <aside className="contextRail">
-        <section className="toolPanel sourcePanel">
+      <aside className="detailRail">
+        <section className="sidePanel">
           <div className="panelHeading">
-            <div>
-              <p className="eyebrow">{copy.source.input}</p>
-              <h3>{copy.source.title}</h3>
-            </div>
-            <span className={`statusPill ${sourceStats.reference === "linked" ? "good" : "warn"}`}>
-              {sourceStats.reference === "linked" ? copy.source.linked : copy.source.missing}
+            <h3>{t.sourceTitle}</h3>
+            <span className={`statusPill ${session?.source?.verified ? "good" : "neutral"}`}>
+              {session?.source?.verified ? t.verified : t.draft}
             </span>
           </div>
           <label>
-            {copy.source.titleLabel}
+            {t.title}
             <input value={title} onChange={(event) => setTitle(event.target.value)} />
           </label>
           <label>
-            {copy.source.reference}
+            {t.reference}
             <input value={reference} onChange={(event) => setReference(event.target.value)} />
           </label>
           <label>
-            {copy.source.text}
-            <textarea className="sourceText" value={text} onChange={(event) => setText(event.target.value)} />
+            {t.sourceText}
+            <textarea value={sourceText} onChange={(event) => setSourceText(event.target.value)} />
           </label>
           <div className="metricStrip">
             <span>
-              {sourceStats.words} {copy.source.words}
+              {sourceStats.words} {t.words}
             </span>
             <span>
-              {sourceStats.chars} {copy.source.chars}
+              {sourceStats.chars} {t.chars}
             </span>
-            <span>{session?.source?.verified ? copy.source.verified : copy.source.localDraft}</span>
           </div>
         </section>
 
-        <section className="toolPanel evidencePanel">
+        <section className="sidePanel">
           <div className="panelHeading">
-            <div>
-              <p className="eyebrow">{copy.flow.evidence}</p>
-              <h3>{copy.flow.mastery}</h3>
-            </div>
-            <div className="masteryBadge">{session?.mastery.level.toFixed(1) ?? "0.0"}</div>
+            <h3>{t.progressTitle}</h3>
+            <strong>{stageLabel(session?.stage, t.stages)}</strong>
           </div>
-          <dl className="definitionGrid">
-            <dt>{copy.flow.bloom}</dt>
-            <dd>{session?.mastery.bloom ?? "remember"}</dd>
-            <dt>{copy.flow.latestScore}</dt>
-            <dd>{latestGrade ? latestGrade.score.toFixed(2) : copy.flow.none}</dd>
-            <dt>{copy.flow.updated}</dt>
-            <dd>{session?.updated_at ? formatTime(session.updated_at) : copy.flow.never}</dd>
+          <div className="progressBar">
+            <span style={{ width: `${progress}%` }} />
+          </div>
+          <dl className="progressStats">
+            <dt>{t.mastery}</dt>
+            <dd>{session?.mastery.level.toFixed(1) ?? "0.0"}</dd>
+            <dt>{t.score}</dt>
+            <dd>{latestGrade ? latestGrade.score.toFixed(2) : "-"}</dd>
           </dl>
-          {latestGrade && <p className="feedback">{latestGrade.feedback}</p>}
-          <EventList events={session?.events ?? []} title={copy.flow.eventTimeline} emptyLabel={copy.flow.noEvents} />
-        </section>
-
-        <section className="toolPanel readinessPanel">
-          <div className="panelHeading">
-            <div>
-              <p className="eyebrow">{copy.readiness.eyebrow}</p>
-              <h3>{copy.readiness.title}</h3>
-            </div>
-            <strong className="readinessScore">{copy.readiness.estimate}</strong>
-          </div>
-          <div className="readinessBar">
-            <span />
-          </div>
-          <p>{copy.readiness.note}</p>
-          <small>{copy.readiness.strengths}</small>
-          <small>{copy.readiness.gaps}</small>
+          <p className="feedbackText">{latestGrade?.feedback ?? t.noFeedback}</p>
         </section>
       </aside>
     </div>
   );
 }
 
-function AgentView(props: {
+function AgentWorkspace(props: {
   agentStatus: AgentStatus | null;
   agentTest: string | null;
-  copy: Copy;
   providerEndpoint: string;
   providerKind: string;
   providerLabel: string;
-  readyProviders: ProviderStatus[];
-  savedProviderId: string | null;
   saveProvider: () => void;
+  selectedProviderId: string | null;
   setProviderEndpoint: (value: string) => void;
   setProviderKind: (value: string) => void;
   setProviderLabel: (value: string) => void;
-  setSavedProviderId: (value: string | null) => void;
+  setSelectedProviderId: (value: string | null) => void;
+  t: (typeof copy)[Locale];
   testProvider: (providerId?: string | null) => void;
 }) {
   const {
     agentStatus,
     agentTest,
-    copy,
     providerEndpoint,
     providerKind,
     providerLabel,
-    readyProviders,
-    savedProviderId,
     saveProvider,
+    selectedProviderId,
     setProviderEndpoint,
     setProviderKind,
     setProviderLabel,
-    setSavedProviderId,
+    setSelectedProviderId,
+    t,
     testProvider
   } = props;
 
   return (
-    <div className="splitGrid">
-      <section className="toolPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.agentView.byoa}</p>
-            <h3>{copy.agentView.setup}</h3>
-          </div>
-          <span className="statusPill neutral">{copy.agentView.noKeys}</span>
+    <div className="agentGrid">
+      <section className="conversationPanel agentIntro">
+        <h3>{t.agentTitle}</h3>
+        <p>{t.agentLead}</p>
+        <div className="trustNote">{t.noSecrets}</div>
+        <div className="capabilityGrid">
+          {t.capabilityLabels.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
         </div>
+      </section>
+
+      <section className="sidePanel agentSetup">
         <label>
-          {copy.agentView.providerKind}
+          {t.kind}
           <select value={providerKind} onChange={(event) => setProviderKind(event.target.value)}>
-            <option value="http_agent">{copy.agentView.localHttp}</option>
-            <option value="fake_agent">{copy.agentView.fakeDemo}</option>
-            <option value="cli_agent">{copy.agentView.cli}</option>
-            <option value="mcp_agent">{copy.agentView.mcp}</option>
+            <option value="http_agent">{t.localAgent}</option>
+            <option value="fake_agent">{t.fakeAgent}</option>
+            <option value="cli_agent">{t.cliAgent}</option>
+            <option value="mcp_agent">{t.mcpAgent}</option>
           </select>
         </label>
         <label>
-          {copy.agentView.label}
+          {t.label}
           <input value={providerLabel} onChange={(event) => setProviderLabel(event.target.value)} />
         </label>
         <label>
-          {copy.agentView.endpoint}
+          {t.endpoint}
           <input
             disabled={providerKind !== "http_agent"}
             value={providerEndpoint}
             onChange={(event) => setProviderEndpoint(event.target.value)}
-            placeholder="http://127.0.0.1:8787"
           />
         </label>
-        <div className="capabilityGrid">
-          {CAPABILITIES.map((capability) => (
-            <span key={capability}>{capability}</span>
-          ))}
-        </div>
-        <div className="actionRow">
+        <div className="composerActions">
           <button className="primary" onClick={saveProvider}>
-            {copy.agentView.save}
+            {t.saveAgent}
           </button>
-          <button disabled={!savedProviderId} onClick={() => testProvider(savedProviderId)}>
-            {copy.agentView.testSaved}
+          <button disabled={!selectedProviderId} onClick={() => testProvider(selectedProviderId)}>
+            {t.testAgent}
           </button>
         </div>
-        {agentTest && <p className="feedback">{agentTest}</p>}
+        {agentTest && <p className="feedbackText">{agentTest}</p>}
       </section>
 
-      <section className="toolPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.agentView.registry}</p>
-            <h3>{copy.agentView.defaults}</h3>
-          </div>
-          <span className="idTag">
-            {readyProviders.length}
-            {copy.agentView.enabled}
-          </span>
-        </div>
+      <section className="sidePanel agentList">
+        <h3>{t.configuredAgents}</h3>
         <div className="providerList">
           {agentStatus?.providers.map((provider) => (
-            <div className="providerRow" key={provider.provider_id}>
-              <div>
-                <strong>{provider.label}</strong>
-                <small>
-                  {provider.kind} / {provider.endpoint || copy.agentView.local}
-                </small>
-              </div>
-              <div className="providerActions">
-                <button onClick={() => setSavedProviderId(provider.provider_id)}>{copy.agentView.select}</button>
-                <button onClick={() => testProvider(provider.provider_id)}>{copy.agentView.test}</button>
-              </div>
-            </div>
+            <button
+              className={selectedProviderId === provider.provider_id ? "providerCard active" : "providerCard"}
+              key={provider.provider_id}
+              onClick={() => setSelectedProviderId(provider.provider_id)}
+            >
+              <strong>{provider.label}</strong>
+              <small>
+                {agentKindLabel(provider.kind, t)}
+                {provider.endpoint ? ` · ${provider.endpoint}` : ""}
+              </small>
+            </button>
           ))}
-          {agentStatus?.providers.length === 0 && <p className="emptyState">{copy.agentView.none}</p>}
-        </div>
-        <h4>{copy.agentView.capabilityDefaults}</h4>
-        <dl className="definitionGrid">
-          {CAPABILITIES.map((capability) => (
-            <React.Fragment key={capability}>
-              <dt>{capability}</dt>
-              <dd>
-                {agentStatus?.defaults[capability]
-                  ? shortId(String(agentStatus.defaults[capability]))
-                  : copy.agentView.unset}
-              </dd>
-            </React.Fragment>
-          ))}
-        </dl>
-      </section>
-    </div>
-  );
-}
-
-function OpsView(props: {
-  copy: Copy;
-  hitlTasks: HitlInterrupt[];
-  integrations: IntegrationStatus[];
-  session: Session | null;
-  systemStatus: SystemStatus | null;
-}) {
-  const { copy, hitlTasks, integrations, session, systemStatus } = props;
-  return (
-    <div className="opsLayout">
-      <section className="toolPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.opsView.runtime}</p>
-            <h3>{copy.opsView.systemHealth}</h3>
-          </div>
-          <span className={`statusPill ${toneForStatus(systemStatus?.status ?? "unknown")}`}>
-            {systemStatus?.status ?? "unknown"}
-          </span>
-        </div>
-        <div className="statGrid">
-          <Stat label={copy.opsView.version} value={systemStatus?.version ?? "unknown"} />
-          <Stat label={copy.opsView.sessions} value={systemStatus?.session_count ?? 0} />
-          <Stat label={copy.opsView.hitl} value={systemStatus?.open_hitl_count ?? 0} />
-          <Stat label={copy.opsView.store} value={systemStatus?.session_store ?? "unknown"} />
-          <Stat
-            label={copy.opsView.langgraph}
-            value={systemStatus?.langgraph_available ? copy.opsView.available : copy.opsView.alphaExecutor}
-          />
-          <Stat label={copy.opsView.plugins} value={systemStatus?.plugin_count ?? 0} />
-        </div>
-        <p className="pathText">{systemStatus?.data_dir ?? copy.opsView.noDataDir}</p>
-      </section>
-
-      <section className="toolPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.opsView.boundaries}</p>
-            <h3>{copy.opsView.integrationMatrix}</h3>
-          </div>
-        </div>
-        <div className="integrationTable">
-          {integrations.map((item) => (
-            <div className="integrationRow" key={item.name}>
-              <strong>{item.name}</strong>
-              <span>{item.category}</span>
-              <span className={`statusPill ${toneForStatus(item.status)}`}>{item.status}</span>
-              <small>{item.next_step}</small>
-            </div>
-          ))}
+          {agentStatus?.providers.length === 0 && <p className="emptyState">{t.noAgents}</p>}
         </div>
       </section>
-
-      <section className="toolPanel">
-        <div className="panelHeading">
-          <div>
-            <p className="eyebrow">{copy.opsView.humanReview}</p>
-            <h3>{copy.opsView.openInterrupts}</h3>
-          </div>
-          <span className="idTag">{hitlTasks.filter((item) => item.status === "open").length}</span>
-        </div>
-        <div className="hitlList">
-          {hitlTasks.map((item) => (
-            <div className="hitlRow" key={item.task_id}>
-              <strong>{item.kind}</strong>
-              <p>{item.message}</p>
-              <small>{item.status}</small>
-            </div>
-          ))}
-          {hitlTasks.length === 0 && <p className="emptyState">{copy.opsView.noHitl}</p>}
-        </div>
-        {session && <EventList events={session.events} />}
-      </section>
-    </div>
-  );
-}
-
-function PluginView({ copy, plugins }: { copy: Copy; plugins: PluginStatus[] }) {
-  return (
-    <section className="toolPanel">
-      <div className="panelHeading">
-        <div>
-          <p className="eyebrow">{copy.pluginsView.extensions}</p>
-          <h3>{copy.pluginsView.registry}</h3>
-        </div>
-        <span className="idTag">
-          {plugins.length}
-          {copy.pluginsView.discovered}
-        </span>
-      </div>
-      <div className="pluginGrid">
-        {plugins.map((plugin) => (
-          <article className="pluginItem" key={plugin.path}>
-            <div>
-              <strong>{plugin.manifest?.name ?? plugin.path}</strong>
-              <small>{plugin.manifest?.plugin_id ?? plugin.path}</small>
-            </div>
-            <span className={`statusPill ${toneForStatus(plugin.status)}`}>{plugin.status}</span>
-            <p>{plugin.message}</p>
-            <div className="capabilityGrid">
-              {(plugin.manifest?.hooks ?? []).map((hook) => (
-                <span key={hook}>{hook}</span>
-              ))}
-            </div>
-          </article>
-        ))}
-        {plugins.length === 0 && <p className="emptyState">{copy.pluginsView.none}</p>}
-      </div>
-    </section>
-  );
-}
-
-function BranchView({ copy }: { copy: Copy }) {
-  const lanes = copy.branchView.lanes;
-  return (
-    <section className="branchBoard">
-      <div className="branchHero">
-        <div>
-          <p className="eyebrow">{copy.branchView.eyebrow}</p>
-          <h3>{copy.branchView.title}</h3>
-        </div>
-        <span className="statusPill good">codex/ui-dashboard-foundation</span>
-      </div>
-      <div className="branchGrid">
-        {lanes.map(([name, role, note]) => (
-          <article className="branchLane" key={name}>
-            <span className="idTag">{name}</span>
-            <strong>{role}</strong>
-            <small>{note}</small>
-          </article>
-        ))}
-      </div>
-      <div className="gateGrid">
-        <Stat label={copy.branchView.gates} value={copy.branchView.gateValue} />
-        <Stat label={copy.branchView.uiBranch} value={copy.branchView.uiValue} />
-        <Stat label={copy.branchView.dependencyRule} value={copy.branchView.dependencyValue} />
-      </div>
-    </section>
-  );
-}
-
-function EventList({
-  emptyLabel = "No events yet.",
-  events,
-  title = "Event Timeline"
-}: {
-  emptyLabel?: string;
-  events: StudyEvent[];
-  title?: string;
-}) {
-  return (
-    <div className="eventList">
-      <h4>{title}</h4>
-      {events.slice(-9).map((event) => {
-        const agent = eventAgent(event);
-        return (
-          <div className="eventRow" key={event.event_id}>
-            <span>{formatTime(event.created_at)}</span>
-            <strong>{event.type}</strong>
-            <small>
-              {agent?.provider_id
-                ? `${event.node} / ${agent.task_type ?? "agent"} / ${shortId(agent.provider_id)}`
-                : event.node}
-            </small>
-          </div>
-        );
-      })}
-      {events.length === 0 && <p className="emptyState">{emptyLabel}</p>}
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="statItem">
-      <span>{label}</span>
-      <strong>{value}</strong>
     </div>
   );
 }
