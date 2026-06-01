@@ -9,15 +9,22 @@
 - Plugin manifest contract and example plugin.
 - Durable JSON alpha store for sessions and agent defaults.
 - Web operator panel for agent setup, system status, and plugin discovery.
+- Skill-first CLI and repo-local Agent skill.
 - OSS docs and contribution flow.
 
-## v0.2
+## v0.2 In Progress
 
 - Durable Postgres session store.
-- LangGraph production adapter with Postgres checkpointing.
-- Langfuse trace client integration.
+- Compiled LangGraph adapter with in-memory and Postgres checkpointing.
+- Privacy-preserving Langfuse v4 node observations.
+- Explicit local plugin installer with manifest validation.
+
+## v0.2 Next
+
 - Importer plugin SDK.
 - E2E Playwright tests.
+- FalkorDB source/mastery edge persistence.
+- LanceDB reading embedding index and retrieval API.
 
 ## PMF Track
 

@@ -3,6 +3,7 @@
 ## v0.1.0-alpha
 
 - [ ] `python3 -m unittest discover apps/api/tests`
+- [ ] `LANGGRAPH_STRICT_MSGPACK=true python -m unittest discover apps/api/tests`
 - [ ] `python3 -m compileall -q apps/api/study_anything scripts plugins`
 - [ ] `python3 scripts/smoke_core.py`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
@@ -17,6 +18,7 @@
 - [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
 - [ ] Open Web UI at http://localhost:5173
 - [ ] Complete demo learning flow.
+- [ ] Install a local example plugin with `python3 scripts/install_local_plugin.py plugins/example-exporter --destination /tmp/study-anything-plugin-check`.
 - [ ] Check http://localhost:8000/v1/system/status
 - [ ] Check http://localhost:8000/v1/agents/status
 - [ ] Check http://localhost:8000/v1/plugins
