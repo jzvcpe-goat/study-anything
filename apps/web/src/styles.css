@@ -114,7 +114,7 @@ p {
 h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(56px, 9vw, 124px);
+  font-size: clamp(50px, 6.3vw, 90px);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: 0;
@@ -322,8 +322,8 @@ small {
 
 .heroStage {
   display: grid;
-  grid-template-columns: minmax(320px, 0.88fr) minmax(420px, 1.12fr);
-  gap: clamp(20px, 4vw, 62px);
+  grid-template-columns: minmax(310px, 0.62fr) minmax(0, 1.38fr);
+  gap: clamp(16px, 2.8vw, 44px);
   align-items: center;
   min-height: calc(100svh - 92px);
   padding: clamp(12px, 3vh, 36px) 0 48px;
@@ -347,7 +347,7 @@ small {
   max-width: 620px;
   margin: 0;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -375,8 +375,8 @@ small {
 
 .learningGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-  gap: 16px;
+  grid-template-columns: minmax(210px, 0.8fr) minmax(270px, 1fr) minmax(170px, 0.62fr);
+  gap: 12px;
   align-items: stretch;
 }
 
@@ -392,19 +392,21 @@ small {
 
 .conversationPanel {
   display: grid;
-  gap: 18px;
-  min-height: 430px;
-  padding: clamp(18px, 3vw, 28px);
+  gap: 14px;
+  min-height: 470px;
+  padding: clamp(16px, 2vw, 22px);
 }
 
 .naturalComposer {
-  grid-template-rows: 1fr auto auto;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
 }
 
 .messageList {
   display: grid;
   gap: 12px;
-  align-content: center;
+  align-content: start;
 }
 
 .message {
@@ -428,7 +430,7 @@ small {
 }
 
 .composer textarea {
-  min-height: 136px;
+  min-height: 118px;
   font-size: 16px;
 }
 
@@ -459,8 +461,22 @@ small {
   gap: 14px;
 }
 
+.learningGrid .detailRail {
+  display: contents;
+}
+
+.learningGrid .detailRail .sidePanel:first-child {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.learningGrid .detailRail .sidePanel:last-child {
+  grid-column: 3;
+  grid-row: 1;
+}
+
 .sidePanel {
-  padding: 16px;
+  padding: 15px;
 }
 
 .panelHeading,
@@ -475,7 +491,11 @@ small {
 .panelHeading h3,
 .sectionTitle h2 {
   margin: 0;
-  font-size: 21px;
+  font-size: 20px;
+}
+
+.sidePanel textarea {
+  min-height: 112px;
 }
 
 .metricStrip {
@@ -533,11 +553,12 @@ small {
 }
 
 .agentGrid {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-columns: minmax(220px, 0.82fr) minmax(260px, 1fr) minmax(220px, 0.82fr);
+  align-items: start;
 }
 
 .agentIntro {
-  min-height: 320px;
+  min-height: 330px;
   align-content: center;
 }
 

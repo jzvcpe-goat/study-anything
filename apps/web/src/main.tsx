@@ -87,7 +87,7 @@ const copy = {
     answerPlaceholder: "直接回答当前问题。系统会基于材料和评分标准给出反馈。",
     start: "开始学习",
     answer: "提交回答",
-    useSource: "使用右侧材料",
+    useSource: "使用学习材料",
     newRound: "新学习",
     sourceTitle: "学习材料",
     title: "标题",
@@ -114,7 +114,7 @@ const copy = {
       completed: "已完成",
       discarded: "已丢弃"
     },
-    welcome: "把你要学习的内容放进输入框，或者使用右侧材料开始。",
+    welcome: "把你要学习的内容放进输入框，或者先完善材料区。",
     quizIntro: "先回答这个问题：",
     agentTitle: "连接你的 Agent",
     agentLead: "真实推理、凭证和工具都留在你自己的 Agent 中。Study Anything 只发送学习任务、校验结构化输出并记录学习状态。",
@@ -156,7 +156,7 @@ const copy = {
     answerPlaceholder: "Answer the current question. The system will grade it against the source and rubric.",
     start: "Start learning",
     answer: "Submit answer",
-    useSource: "Use source panel",
+    useSource: "Use study material",
     newRound: "New study",
     sourceTitle: "Study Material",
     title: "Title",
@@ -183,7 +183,7 @@ const copy = {
       completed: "Completed",
       discarded: "Discarded"
     },
-    welcome: "Put learning material into the input box, or start from the source panel.",
+    welcome: "Put learning material into the input box, or start from the source area.",
     quizIntro: "Answer this first:",
     agentTitle: "Connect Your Agent",
     agentLead: "Real reasoning, credentials, and tools stay inside your own agent. Study Anything sends learning tasks, validates structured output, and records learning state.",
@@ -584,6 +584,10 @@ function LearningWorkspace(props: {
   return (
     <div className="learningGrid">
       <section className="conversationPanel naturalComposer">
+        <div className="panelHeading">
+          <h3>{t.navLearn}</h3>
+          <span className="statusPill">{stageLabel(session?.stage, t.stages)}</span>
+        </div>
         <div className="messageList">
           <article className="message assistant">
             <strong>{activeQuiz ? t.quizIntro : t.welcome}</strong>

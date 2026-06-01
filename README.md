@@ -60,6 +60,17 @@ Supported MVP provider shapes:
 
 The agent flow mirrors tools such as OpenClaw and Codex: the user controls the model, credentials, tools, and reasoning inside their own agent; Study Anything sends structured learning tasks and validates structured results.
 
+## Skill Mode
+
+You can use the learning loop before the Web UI is visually complete. The repo includes a standard-library CLI and a repo-local Codex skill:
+
+```bash
+python3 scripts/study_anything_cli.py health
+python3 scripts/study_anything_cli.py demo
+```
+
+Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. See `docs/skill-mode.md`.
+
 ## Repository Layout
 
 ```text
@@ -70,6 +81,7 @@ infra/compose/             Docker Compose stack
 plugins/example-exporter/  Example exporter manifest
 plugins/example-agent-provider/ Example agent provider manifest
 scripts/                   Local smoke helpers
+skills/study-anything/     Repo-local Agent skill for CLI learning flows
 ```
 
 ## Plugin Ecosystem

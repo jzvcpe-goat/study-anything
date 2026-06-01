@@ -1,0 +1,4 @@
+interface:
+  display_name: "Study Anything"
+  short_description: "Run a self-hosted AI learning loop"
+  default_prompt: "Use $study-anything to start a source-bound learning session from my material."

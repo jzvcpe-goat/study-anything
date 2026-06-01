@@ -72,6 +72,7 @@ Agent provider defaults are still stored in the `study_anything_data` Docker vol
 The Web container serves the built UI and proxies same-origin `/v1/*` requests to the API container through `WEB_API_PROXY_TARGET`, which defaults to `http://api:8000`. This keeps the browser on `http://localhost:5173` while avoiding browser-side knowledge of the internal Compose network.
 
 For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_ANYTHING_DATA_DIR=data/api`.
+The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by default. Set `VITE_API_PROXY_TARGET` when your local API uses another address.
 
 ## Secrets
 
