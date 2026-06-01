@@ -22,6 +22,7 @@ These remain for one alpha release and return agent-backed status:
 ## Sessions
 
 - `POST /v1/sessions`
+- `GET /v1/sessions`
 - `GET /v1/sessions/{session_id}`
 - `POST /v1/sessions/{session_id}/reading`
 - `POST /v1/sessions/{session_id}/run`
