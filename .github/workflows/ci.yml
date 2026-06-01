@@ -54,6 +54,7 @@ jobs:
       FALKORDB_IMAGE: mirror.gcr.io/falkordb/falkordb:latest
       LANGFUSE_WEB_IMAGE: ghcr.io/langfuse/langfuse:3
       LANGFUSE_WORKER_IMAGE: ghcr.io/langfuse/langfuse-worker:3
+      FALKORDB_ENABLED: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -78,6 +79,8 @@ jobs:
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
       - name: Verify mock HTTP agent flow
         run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
+      - name: Verify FalkorDB topology projection
+        run: API_BASE=http://127.0.0.1:8000 python scripts/verify_falkordb_flow.py
       - name: Stop stack
         if: always()
         run: docker compose -f infra/compose/docker-compose.yml --profile smoke down -v

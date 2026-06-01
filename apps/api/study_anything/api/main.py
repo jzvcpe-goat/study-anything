@@ -24,6 +24,12 @@ from study_anything.core.langgraph_adapter import (
     build_learning_workflow,
     langgraph_available,
 )
+from study_anything.core.knowledge_graph import (
+    KnowledgeGraphProjectionRequired,
+    KnowledgeGraphUnavailable,
+    build_knowledge_graph_sink,
+    projection_from_state,
+)
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.store import create_session_store
 from study_anything.core.tracing import build_trace_sink
@@ -99,6 +105,7 @@ data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data
 agent_registry = AgentRegistry(data_dir / "agent_registry.json")
 agent_router = AgentRouter(agent_registry)
 trace_sink = build_trace_sink()
+knowledge_graph_sink = build_knowledge_graph_sink()
 workflow_engine = os.getenv("WORKFLOW_ENGINE", "langgraph")
 langgraph_checkpoint: Optional[LangGraphCheckpointResource] = None
 if workflow_engine == "langgraph":
@@ -110,6 +117,7 @@ if workflow_engine == "langgraph":
 workflow = build_learning_workflow(
     agent_router,
     trace_sink=trace_sink,
+    knowledge_graph_sink=knowledge_graph_sink,
     engine=workflow_engine,
     checkpointer=langgraph_checkpoint.saver if langgraph_checkpoint else None,
 )
@@ -166,6 +174,7 @@ def create_app() -> FastAPI:
             "workflow_engine": workflow.engine,
             "langgraph_checkpointer": langgraph_checkpoint.backend if langgraph_checkpoint else None,
             "telemetry_enabled": trace_sink.enabled,
+            "knowledge_graph": knowledge_graph_sink.status().public_dict(),
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "plugin_count": len(plugins.discover()),
@@ -174,6 +183,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/system/integrations")
     def system_integrations() -> list[dict[str, str]]:
         return [item.public_dict() for item in integration_matrix()]
+
+    @app.get("/v1/graph/status")
+    def knowledge_graph_status() -> dict[str, object]:
+        return knowledge_graph_sink.status().public_dict()
 
     @app.get("/v1/agents/status")
     def agent_status(user_id: str = "local-user") -> dict[str, object]:
@@ -324,6 +337,34 @@ def create_app() -> FastAPI:
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         return {"level": mastery.level, "bloom": mastery.bloom}
+
+    @app.get("/v1/sessions/{session_id}/topology")
+    def get_topology(session_id: str) -> dict[str, object]:
+        try:
+            store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        try:
+            return knowledge_graph_sink.topology(session_id).public_dict()
+        except KnowledgeGraphUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.post("/v1/sessions/{session_id}/topology/rebuild")
+    def rebuild_topology(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        if not knowledge_graph_sink.enabled:
+            raise HTTPException(status_code=503, detail="Knowledge graph projection is disabled.")
+        try:
+            result = knowledge_graph_sink.project(projection_from_state(state))
+            topology = knowledge_graph_sink.topology(session_id)
+        except KnowledgeGraphProjectionRequired as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except KnowledgeGraphUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        return {**result.public_dict(), "topology": topology.public_dict()}
 
     @app.get("/v1/hitl")
     def list_hitl() -> list[dict[str, object]]:

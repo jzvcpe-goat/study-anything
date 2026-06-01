@@ -6,6 +6,7 @@ from typing import Any, Callable, Optional, TypedDict
 
 from .agent_registry import AgentRouter
 from .events import StudyEvent
+from .knowledge_graph import KnowledgeGraphSink
 from .tracing import TraceSink
 from .workflow import (
     Answer,
@@ -94,10 +95,15 @@ class LangGraphLearningWorkflow(LearningWorkflow):
         self,
         agent_router: AgentRouter,
         trace_sink: Optional[TraceSink] = None,
+        knowledge_graph_sink: Optional[KnowledgeGraphSink] = None,
         *,
         checkpointer: Optional[Any] = None,
     ) -> None:
-        super().__init__(agent_router, trace_sink=trace_sink)
+        super().__init__(
+            agent_router,
+            trace_sink=trace_sink,
+            knowledge_graph_sink=knowledge_graph_sink,
+        )
         if not langgraph_available():
             raise RuntimeError("LangGraph is not installed in this environment.")
         if checkpointer is None:
@@ -148,6 +154,7 @@ class LangGraphLearningWorkflow(LearningWorkflow):
 def build_learning_workflow(
     agent_router: AgentRouter,
     trace_sink: Optional[TraceSink] = None,
+    knowledge_graph_sink: Optional[KnowledgeGraphSink] = None,
     *,
     engine: str = "langgraph",
     checkpointer: Optional[Any] = None,
@@ -157,8 +164,13 @@ def build_learning_workflow(
         return LangGraphLearningWorkflow(
             agent_router,
             trace_sink=trace_sink,
+            knowledge_graph_sink=knowledge_graph_sink,
             checkpointer=checkpointer,
         )
     if engine_value == "deterministic":
-        return LearningWorkflow(agent_router, trace_sink=trace_sink)
+        return LearningWorkflow(
+            agent_router,
+            trace_sink=trace_sink,
+            knowledge_graph_sink=knowledge_graph_sink,
+        )
     raise ValueError(f"Unsupported WORKFLOW_ENGINE={engine}. Use langgraph or deterministic.")

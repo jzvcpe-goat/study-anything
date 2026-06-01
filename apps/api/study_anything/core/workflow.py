@@ -20,6 +20,7 @@ from .agent_registry import (
     AgentTask,
 )
 from .events import StudyEvent, utc_now
+from .knowledge_graph import KnowledgeGraphSink, NoopKnowledgeGraphSink, projection_from_state
 from .security import hash_user_id, sha256_text
 from .tracing import NoopTraceSink, TraceSink
 
@@ -217,9 +218,15 @@ class LearningWorkflow:
         "incubation_detector",
     )
 
-    def __init__(self, agent_router: AgentRouter, trace_sink: Optional[TraceSink] = None) -> None:
+    def __init__(
+        self,
+        agent_router: AgentRouter,
+        trace_sink: Optional[TraceSink] = None,
+        knowledge_graph_sink: Optional[KnowledgeGraphSink] = None,
+    ) -> None:
         self.agent_router = agent_router
         self.trace_sink = trace_sink or NoopTraceSink()
+        self.knowledge_graph_sink = knowledge_graph_sink or NoopKnowledgeGraphSink()
 
     def _append_event(
         self,
@@ -402,11 +409,29 @@ class LearningWorkflow:
         level = min(6.0, state.mastery.level + increment)
         bloom = "understand" if level >= 0.5 else "remember"
         next_state = replace(state, mastery=Mastery(level=level, bloom=bloom), stage="mastery_evaluated")
-        return self._append_event(
+        next_state = self._append_event(
             next_state,
             event_type="mastery.upgrade" if increment else "mastery.unchanged",
             node="mastery_evaluator",
             payload={"level": level, "bloom": bloom, "average_score": average},
+        )
+        if not self.knowledge_graph_sink.enabled:
+            return next_state
+        try:
+            result = self.knowledge_graph_sink.project(projection_from_state(next_state))
+        except Exception:
+            return self._append_event(
+                next_state,
+                event_type="knowledge_graph.projection_failed",
+                node="mastery_evaluator",
+                payload={"status": "unavailable"},
+                severity="warning",
+            )
+        return self._append_event(
+            next_state,
+            event_type="knowledge_graph.projected",
+            node="mastery_evaluator",
+            payload={"status": result.status},
         )
 
     def synthesist_node(self, state: LearningState) -> LearningState:

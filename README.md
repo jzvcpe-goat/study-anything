@@ -20,6 +20,7 @@ The alpha MVP runs a full local learning loop:
 - Local-first data ownership.
 - Bring Your Own Agent: no hardcoded real model default, no stored model API keys.
 - Self-host before SaaS.
+- Optional privacy-preserving topology projection: Postgres remains canonical, FalkorDB stays disposable.
 - Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
 - API-as-product: the Web UI is a client of the public API.
 
@@ -45,6 +46,7 @@ Then open:
 - Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Knowledge graph status: http://localhost:8000/v1/graph/status
 - Langfuse: http://localhost:3000
 
 ## Bring Your Own Agent
@@ -100,7 +102,7 @@ See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 35% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 43% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
@@ -108,4 +110,4 @@ The repository includes GitHub Actions for Python tests, Web build/audit, Docker
 
 ## Status
 
-This repository is an alpha scaffold. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is an alpha scaffold. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.

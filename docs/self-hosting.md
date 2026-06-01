@@ -37,7 +37,7 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 `scripts/setup_env.py` generates these mirror-friendly defaults automatically. Use `.env.example` as documentation, not as a production secret file.
 
-If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
+If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
 
 ## Using Published Images
 
@@ -75,6 +75,30 @@ For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_
 The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by default. Set `VITE_API_PROXY_TARGET` when your local API uses another address.
 
 The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
+
+## Optional Learning Topology
+
+FalkorDB is included in the `full` profile but graph projection is disabled by default. Enable the
+privacy-preserving projection explicitly in `.env`:
+
+```bash
+FALKORDB_ENABLED=true
+FALKORDB_HOST=falkordb
+FALKORDB_PORT=6379
+FALKORDB_GRAPH=study_anything
+FALKORDB_QUERY_TIMEOUT_MS=1000
+```
+
+The API will continue learning sessions if FalkorDB is unavailable. Postgres remains the canonical
+store. Graph records contain source references, excerpt hashes, mastery metadata, and topology IDs only.
+
+Inspect the adapter or rebuild a session projection:
+
+```bash
+curl http://localhost:8000/v1/graph/status
+curl http://localhost:8000/v1/sessions/SESSION_ID/topology
+curl -X POST http://localhost:8000/v1/sessions/SESSION_ID/topology/rebuild
+```
 
 ## Secrets
 

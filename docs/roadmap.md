@@ -18,12 +18,12 @@
 - Compiled LangGraph adapter with in-memory and Postgres checkpointing.
 - Privacy-preserving Langfuse v4 node observations.
 - Explicit local plugin installer with manifest validation.
+- Optional FalkorDB source/mastery topology projection with session rebuild APIs.
 
 ## v0.2 Next
 
 - Importer plugin SDK.
 - E2E Playwright tests.
-- FalkorDB source/mastery edge persistence.
 - LanceDB reading embedding index and retrieval API.
 
 ## PMF Track
