@@ -10,6 +10,8 @@ services:
       APP_ENV: ${APP_ENV:-development}
       DATABASE_URL: ${DATABASE_URL:-postgresql://study:study_dev_password@app-postgres:5432/study_anything}
       SESSION_STORE: ${SESSION_STORE:-postgres}
+      WORKFLOW_ENGINE: ${WORKFLOW_ENGINE:-langgraph}
+      LANGGRAPH_CHECKPOINTER: ${LANGGRAPH_CHECKPOINTER:-postgres}
       LANGFUSE_HOST: ${LANGFUSE_HOST:-http://langfuse-web:3000}
       LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
       LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
@@ -18,7 +20,7 @@ services:
       AGENT_HTTP_GATEWAY_URL: ${AGENT_HTTP_GATEWAY_URL:-http://host.docker.internal:8787}
       AGENT_CLI_ENABLED: ${AGENT_CLI_ENABLED:-false}
       STUDY_ANYTHING_DATA_DIR: /data/study-anything
-      STUDY_ANYTHING_PLUGIN_DIRS: /app/plugins
+      STUDY_ANYTHING_PLUGIN_DIRS: /app/plugins:/data/study-anything/plugins
     ports:
       - "${API_PORT:-8000}:8000"
     volumes:

@@ -74,6 +74,8 @@ The Web container serves the built UI and proxies same-origin `/v1/*` requests t
 For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_ANYTHING_DATA_DIR=data/api`.
 The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by default. Set `VITE_API_PROXY_TARGET` when your local API uses another address.
 
+The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
+
 ## Secrets
 
 Do not deploy with placeholder values from `.env.example`. Generate a local file:
@@ -116,7 +118,13 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scri
 
 ## Plugins
 
-Bundled plugins live in `/app/plugins` inside the API container. Community plugins can be mounted into that path or added to `STUDY_ANYTHING_PLUGIN_DIRS`.
+Bundled plugins live in `/app/plugins` inside the API container. Locally installed plugins live in the writable Study Anything data volume under `/data/study-anything/plugins`. Community plugin directories can also be added to `STUDY_ANYTHING_PLUGIN_DIRS`.
+
+For source checkouts, install one explicitly selected local plugin with:
+
+```bash
+python3 scripts/install_local_plugin.py /path/to/plugin
+```
 
 ## Stop
 

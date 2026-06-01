@@ -31,10 +31,10 @@ def integration_matrix() -> List[IntegrationStatus]:
             name="LangGraph",
             category="orchestration",
             target="StateGraph + Postgres checkpointer",
-            status="adapter_ready" if package_available("langgraph") else "declared_dependency",
+            status="compiled_adapter" if package_available("langgraph") else "declared_dependency",
             runtime_check="import langgraph",
-            product_surface="/v1/system/status.langgraph_available",
-            next_step="Replace deterministic executor with compiled StateGraph and checkpoint resume.",
+            product_surface="/v1/system/status.workflow_engine",
+            next_step="Soak the compiled graph and Postgres checkpointer under real self-host usage.",
         ),
         IntegrationStatus(
             name="Langfuse",
@@ -44,8 +44,8 @@ def integration_matrix() -> List[IntegrationStatus]:
             if package_available("langfuse")
             else "compose_only",
             runtime_check="LANGFUSE_HOST plus optional SDK import",
-            product_surface="Docker Compose + trace sink boundary",
-            next_step="Emit node observations when keys are configured.",
+            product_surface="Docker Compose + privacy-preserving node observations",
+            next_step="Add retention guidance and inspect traces under a configured local project.",
         ),
         IntegrationStatus(
             name="Agent Gateway",
@@ -116,8 +116,8 @@ def integration_matrix() -> List[IntegrationStatus]:
             target="Business data + LangGraph checkpointing",
             status="session_store_ready" if package_available("psycopg") else "compose_service",
             runtime_check="app-postgres service + psycopg",
-            product_surface="Docker Compose + SESSION_STORE=postgres",
-            next_step="Add LangGraph checkpoint tables when the compiled graph executor replaces the alpha runner.",
+            product_surface="Docker Compose + sessions + optional LangGraph checkpoints",
+            next_step="Load-test checkpoint cleanup and backup behavior.",
         ),
         IntegrationStatus(
             name="ClickHouse",

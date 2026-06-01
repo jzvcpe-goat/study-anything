@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import atexit
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -18,10 +19,15 @@ from study_anything.core.agent_registry import (
     AgentTask,
 )
 from study_anything.core.integrations import integration_matrix
-from study_anything.core.langgraph_adapter import langgraph_available
+from study_anything.core.langgraph_adapter import (
+    LangGraphCheckpointResource,
+    build_learning_workflow,
+    langgraph_available,
+)
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.store import create_session_store
-from study_anything.core.workflow import Answer, LearningWorkflow, new_session, submit_answers, submit_reading
+from study_anything.core.tracing import build_trace_sink
+from study_anything.core.workflow import Answer, new_session, submit_answers, submit_reading
 
 
 class CreateSessionRequest(BaseModel):
@@ -92,7 +98,21 @@ def _env(primary: str, legacy: str, default: str) -> str:
 data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data/api"))
 agent_registry = AgentRegistry(data_dir / "agent_registry.json")
 agent_router = AgentRouter(agent_registry)
-workflow = LearningWorkflow(agent_router)
+trace_sink = build_trace_sink()
+workflow_engine = os.getenv("WORKFLOW_ENGINE", "langgraph")
+langgraph_checkpoint: Optional[LangGraphCheckpointResource] = None
+if workflow_engine == "langgraph":
+    langgraph_checkpoint = LangGraphCheckpointResource(
+        backend=os.getenv("LANGGRAPH_CHECKPOINTER", "memory"),
+        database_url=os.getenv("DATABASE_URL"),
+    )
+    atexit.register(langgraph_checkpoint.close)
+workflow = build_learning_workflow(
+    agent_router,
+    trace_sink=trace_sink,
+    engine=workflow_engine,
+    checkpointer=langgraph_checkpoint.saver if langgraph_checkpoint else None,
+)
 store = create_session_store(
     data_dir=data_dir,
     database_url=os.getenv("DATABASE_URL"),
@@ -100,9 +120,11 @@ store = create_session_store(
 )
 plugin_dirs = [
     Path(value)
-    for value in _env("STUDY_ANYTHING_PLUGIN_DIRS", "NEURAL_CONSOLE_PLUGIN_DIRS", "plugins").split(
-        os.pathsep
-    )
+    for value in _env(
+        "STUDY_ANYTHING_PLUGIN_DIRS",
+        "NEURAL_CONSOLE_PLUGIN_DIRS",
+        f"plugins{os.pathsep}data/plugins",
+    ).split(os.pathsep)
     if value.strip()
 ]
 plugins = PluginRegistry(plugin_dirs)
@@ -141,6 +163,9 @@ def create_app() -> FastAPI:
             "session_count": len(store.list_sessions()),
             "open_hitl_count": len(store.list_hitl()),
             "langgraph_available": langgraph_available(),
+            "workflow_engine": workflow.engine,
+            "langgraph_checkpointer": langgraph_checkpoint.backend if langgraph_checkpoint else None,
+            "telemetry_enabled": trace_sink.enabled,
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "plugin_count": len(plugins.discover()),
@@ -231,7 +256,7 @@ def create_app() -> FastAPI:
         use_demo = payload.use_demo_agent if payload.use_demo_agent is not None else payload.use_demo_provider
         if use_demo:
             agent_registry.set_demo_defaults(payload.user_id)
-        state = store.save(new_session(payload.user_id, payload.track))
+        state = store.save(new_session(payload.user_id, payload.track, trace_sink=trace_sink))
         return state.public_dict()
 
     @app.get("/v1/sessions")
@@ -257,6 +282,7 @@ def create_app() -> FastAPI:
             reference=payload.reference,
             title=payload.title,
             text=payload.text,
+            trace_sink=trace_sink,
         )
         return store.save(state).public_dict()
 
@@ -279,7 +305,7 @@ def create_app() -> FastAPI:
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         answers = [Answer(item_id=item_id, text=text) for item_id, text in payload.answers.items()]
-        state = submit_answers(state, answers)
+        state = submit_answers(state, answers, trace_sink=trace_sink)
         state = workflow.run(state)
         return store.save(state).public_dict()
 

@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 35%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 40%.
 
 ## What Is Ready
 
@@ -9,6 +9,9 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Bring Your Own Agent architecture with fake demo agent and HTTP agent contract.
 - Source-bound learning loop: ingestion, quiz generation, grading, mastery, synthesis, scribe log, HITL, discard.
 - Plugin manifest validation and example plugin surfaces.
+- Explicit local plugin installer with manifest validation and overwrite protection.
+- Compiled LangGraph adapter with in-memory and Postgres checkpointing modes.
+- Optional privacy-preserving Langfuse v4 learning-event observations.
 - CI for API tests, Web build, and Compose smoke.
 - GHCR image publishing path.
 
@@ -37,9 +40,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 Reach 50-55% readiness by making the self-host Alpha friendly for real learners:
 
-- Natural-language-first Web UI.
-- Bilingual Chinese/English experience.
-- Reliable one-command Docker launch.
-- Clear agent gateway examples.
-- Plugin installation story.
-- Public roadmap with PMF metrics.
+- Guided first-run onboarding for non-developer learners.
+- Plugin installation UX with permission confirmation.
+- FalkorDB source/mastery edge persistence.
+- Privacy-preserving PMF metrics and an opt-in hosted waitlist.
+- Docker soak testing, trace retention guidance, and a documented backup path.

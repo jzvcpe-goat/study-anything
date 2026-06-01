@@ -33,7 +33,7 @@ Each plugin ships a `plugin.json` file:
 
 ## Discovery
 
-The API scans `STUDY_ANYTHING_PLUGIN_DIRS`, defaulting to `plugins` locally and `/app/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
+The API scans `STUDY_ANYTHING_PLUGIN_DIRS`, defaulting to `plugins` and `data/plugins` locally and `/app/plugins:/data/study-anything/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
 
 Bundled plugins are listed in `plugins/registry.json`. Future community registries should be append-only signed indexes rather than runtime code downloads.
 
@@ -45,3 +45,15 @@ Bundled examples:
 ## Permission Model
 
 Plugins must declare permissions. The alpha validator rejects missing IDs, unsupported hook names, and unsupported permissions.
+
+## Local Installation
+
+Install a plugin from an explicitly selected local directory:
+
+```bash
+python3 scripts/install_local_plugin.py /path/to/plugin
+```
+
+The installer validates `plugin.json`, copies the directory into `data/plugins`, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
+
+The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions. Remote registries, signing, review metadata, and an install UI remain future trust-layer work.

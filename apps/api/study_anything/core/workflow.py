@@ -21,6 +21,7 @@ from .agent_registry import (
 )
 from .events import StudyEvent, utc_now
 from .security import hash_user_id, sha256_text
+from .tracing import NoopTraceSink, TraceSink
 
 
 @dataclass(frozen=True)
@@ -98,7 +99,12 @@ class LearningState:
         return data
 
 
-def new_session(user_id: str, track: str = "ACADEMIC") -> LearningState:
+def new_session(
+    user_id: str,
+    track: str = "ACADEMIC",
+    *,
+    trace_sink: Optional[TraceSink] = None,
+) -> LearningState:
     session_id = str(uuid4())
     user_hash = hash_user_id(user_id)
     state = LearningState(session_id=session_id, user_id=user_id, user_hash=user_hash, track=track)
@@ -107,6 +113,7 @@ def new_session(user_id: str, track: str = "ACADEMIC") -> LearningState:
         event_type="session.created",
         node="initialize_session",
         payload={"track": track},
+        trace_sink=trace_sink,
     )
 
 
@@ -117,7 +124,16 @@ def append_event(
     node: str,
     payload: Optional[Dict[str, Any]] = None,
     severity: str = "info",
+    trace_sink: Optional[TraceSink] = None,
 ) -> LearningState:
+    trace_id = None
+    if trace_sink is not None:
+        trace_id = trace_sink.capture_event(
+            name=event_type,
+            session_id=state.session_id,
+            user_hash=state.user_hash,
+            metadata={"node": node, "severity": severity, **(payload or {})},
+        )
     event = StudyEvent.create(
         session_id=state.session_id,
         user_hash=state.user_hash,
@@ -125,6 +141,7 @@ def append_event(
         node=node,
         payload=payload or {},
         severity=severity,
+        trace_id=trace_id,
     )
     audit = {
         "timestamp": event.created_at,
@@ -148,6 +165,7 @@ def submit_reading(
     reference: str,
     title: str,
     text: str,
+    trace_sink: Optional[TraceSink] = None,
 ) -> LearningState:
     excerpt_hash = sha256_text(text[:2000])
     source = ReadingSource(
@@ -164,20 +182,29 @@ def submit_reading(
         event_type="reading.submitted",
         node="initialize_session",
         payload={"source_type": source_type, "has_reference": bool(reference.strip())},
+        trace_sink=trace_sink,
     )
 
 
-def submit_answers(state: LearningState, answers: Iterable[Answer]) -> LearningState:
+def submit_answers(
+    state: LearningState,
+    answers: Iterable[Answer],
+    *,
+    trace_sink: Optional[TraceSink] = None,
+) -> LearningState:
     next_state = replace(state, answers=list(answers), stage="answers_submitted")
     return append_event(
         next_state,
         event_type="answers.submitted",
         node="quiz_grader",
         payload={"answer_count": len(next_state.answers)},
+        trace_sink=trace_sink,
     )
 
 
 class LearningWorkflow:
+    engine = "deterministic"
+
     NODE_ORDER = (
         "initialize_session",
         "architect_node",
@@ -190,8 +217,27 @@ class LearningWorkflow:
         "incubation_detector",
     )
 
-    def __init__(self, agent_router: AgentRouter) -> None:
+    def __init__(self, agent_router: AgentRouter, trace_sink: Optional[TraceSink] = None) -> None:
         self.agent_router = agent_router
+        self.trace_sink = trace_sink or NoopTraceSink()
+
+    def _append_event(
+        self,
+        state: LearningState,
+        *,
+        event_type: str,
+        node: str,
+        payload: Optional[Dict[str, Any]] = None,
+        severity: str = "info",
+    ) -> LearningState:
+        return append_event(
+            state,
+            event_type=event_type,
+            node=node,
+            payload=payload,
+            severity=severity,
+            trace_sink=self.trace_sink,
+        )
 
     def run(self, state: LearningState) -> LearningState:
         current = state
@@ -205,7 +251,7 @@ class LearningWorkflow:
         return current
 
     def initialize_session(self, state: LearningState) -> LearningState:
-        return append_event(
+        return self._append_event(
             state,
             event_type="node.completed",
             node="initialize_session",
@@ -220,7 +266,7 @@ class LearningWorkflow:
                 message="Add a reading source before running the learning workflow.",
                 node="architect_node",
             )
-        return append_event(
+        return self._append_event(
             replace(state, stage="architected"),
             event_type="node.completed",
             node="architect_node",
@@ -238,7 +284,7 @@ class LearningWorkflow:
                 node="gap_filler",
                 payload={"title": state.source.title},
             )
-        return append_event(
+        return self._append_event(
             replace(state, stage="source_verified"),
             event_type="source.verified",
             node="gap_filler",
@@ -284,7 +330,7 @@ class LearningWorkflow:
             rubric="Ground the answer in the cited source and state one implication.",
         )
         next_state = replace(state, quiz_items=[quiz], stage="awaiting_answers")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="quiz.generated",
             node="quiz_generator",
@@ -337,7 +383,7 @@ class LearningWorkflow:
             )
             agent_events.append(agent_result.public_metadata())
         next_state = replace(state, grading_results=results, stage="graded")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="answers.graded",
             node="quiz_grader",
@@ -356,7 +402,7 @@ class LearningWorkflow:
         level = min(6.0, state.mastery.level + increment)
         bloom = "understand" if level >= 0.5 else "remember"
         next_state = replace(state, mastery=Mastery(level=level, bloom=bloom), stage="mastery_evaluated")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="mastery.upgrade" if increment else "mastery.unchanged",
             node="mastery_evaluator",
@@ -394,7 +440,7 @@ class LearningWorkflow:
             return self._interrupt_from_agent(state, agent_result, node="synthesist_node")
         insight = str(agent_result.content)
         next_state = replace(state, insights=state.insights + [insight], stage="synthesized")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="insight.generated",
             node="synthesist_node",
@@ -406,7 +452,7 @@ class LearningWorkflow:
             return state
         note = f"{utc_now()} session={state.session_id} mastery={state.mastery.level:.1f}"
         next_state = replace(state, scribe_log=state.scribe_log + [note], stage="scribed")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="scribe.logged",
             node="scribe_node",
@@ -425,7 +471,7 @@ class LearningWorkflow:
                 node="incubation_detector",
             )
         next_state = replace(state, stage="completed")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="session.completed",
             node="incubation_detector",
@@ -434,7 +480,7 @@ class LearningWorkflow:
 
     def discard(self, state: LearningState) -> LearningState:
         next_state = replace(state, discarded=True, stage="discarded")
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="card.discarded",
             node="scribe_node",
@@ -452,7 +498,7 @@ class LearningWorkflow:
                 interrupts.append(interrupt)
         if not found:
             raise KeyError(f"Unknown HITL task: {task_id}")
-        return append_event(
+        return self._append_event(
             replace(state, hitl_interrupts=interrupts),
             event_type="hitl.resolved",
             node="hitl",
@@ -479,7 +525,7 @@ class LearningWorkflow:
             hitl_interrupts=state.hitl_interrupts + [interrupt],
             stage="interrupted",
         )
-        return append_event(
+        return self._append_event(
             next_state,
             event_type="hitl.interrupt",
             node=node,

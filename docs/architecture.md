@@ -20,7 +20,9 @@ The alpha workflow models the nine Study Anything nodes:
 8. `scribe_node`
 9. `incubation_detector`
 
-The current implementation uses a deterministic Python executor with a LangGraph-ready boundary in `core/langgraph_adapter.py`. Docker dependencies include LangGraph and the Postgres checkpointer so the production adapter can replace the local executor without changing API contracts.
+The current implementation runs the existing deterministic business nodes through a compiled LangGraph `StateGraph`. Local Python development uses an in-memory checkpointer by default. Docker self-host uses the app Postgres service when `LANGGRAPH_CHECKPOINTER=postgres`.
+
+Set `WORKFLOW_ENGINE=deterministic` to fall back to the original sequential executor while debugging.
 
 ## Agent Layer
 
@@ -30,7 +32,7 @@ Study Anything does not store real model API keys, choose production models, or 
 
 ## Observability Layer
 
-Langfuse is included in Compose for self-hosted traces. The core event model already carries trace IDs and agent metadata.
+Langfuse is included in Compose for self-hosted traces. When telemetry is explicitly enabled and project keys are configured, learning events emit Langfuse v4 observations. Trace metadata is allowlisted: source prose, answers, synthesis text, HITL prose, and nested agent metadata are omitted.
 
 ## Persistence Layer
 
