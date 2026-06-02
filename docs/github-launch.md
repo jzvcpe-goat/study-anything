@@ -1,6 +1,6 @@
-# GitHub Launch Guide
+# GitHub Release Guide
 
-This guide is for the first public alpha launch. The goal is open-source and local-first: users should be able to clone, inspect, run, and extend Study Anything without creating an account or giving Study Anything model keys.
+This guide is for public alpha releases. The goal is open-source and local-first: users should be able to clone, inspect, run, and extend Study Anything without creating an account or giving Study Anything model keys.
 
 ## Launch Positioning
 
@@ -9,7 +9,7 @@ This guide is for the first public alpha launch. The goal is open-source and loc
 - Real reasoning: Bring Your Own Agent. Study Anything stores endpoint/config metadata, not real model API keys.
 - Monetization: not in the MVP. Future hosted services should sell convenience and collaboration, not lock-in.
 
-## Before Creating The GitHub Repo
+## Before Publishing A Release
 
 Run:
 
@@ -27,32 +27,27 @@ Confirm:
 
 - `.env` is not staged.
 - No screenshots, traces, or logs contain private source text or secrets.
-- `docs/release-notes/v0.1.0-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.0-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
-## Create And Push
+## Tag And Push
 
-If using GitHub CLI:
+Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 
 ```bash
-gh auth status
-gh repo create study-anything --public --source=. --remote=origin --description "Open-source, self-host-first AI-native learning system"
-git add -A
-git commit -m "Release v0.1.0-alpha self-host MVP"
-git push -u origin main
-git tag v0.1.0-alpha
-git push origin v0.1.0-alpha
+git switch main
+git pull --ff-only
+git tag v0.2.0-alpha
+git push origin v0.2.0-alpha
 ```
 
-If the repo already exists:
+Create the prerelease after the tag is pushed:
 
 ```bash
-git remote add origin git@github.com:<owner>/study-anything.git
-git add -A
-git commit -m "Release v0.1.0-alpha self-host MVP"
-git push -u origin main
-git tag v0.1.0-alpha
-git push origin v0.1.0-alpha
+gh release create v0.2.0-alpha \
+  --prerelease \
+  --title "Study Anything v0.2.0-alpha" \
+  --notes-file docs/release-notes/v0.2.0-alpha.md
 ```
 
 ## GitHub Settings
@@ -69,19 +64,14 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.1.0-alpha
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/web:v0.1.0-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.0-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/web:v0.2.0-alpha
 ```
 
-## First Release Notes
+## Release Notes
 
-Use the existing release notes as the GitHub Release body:
-
-```bash
-gh release create v0.1.0-alpha \
-  --title "v0.1.0-alpha Self-host MVP" \
-  --notes-file docs/release-notes/v0.1.0-alpha.md
-```
+Use `docs/release-notes/v0.2.0-alpha.md` as the GitHub Release body. Keep the matching file in the
+repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet
 

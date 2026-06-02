@@ -6,7 +6,8 @@ The alpha line is supported on a best-effort basis until the first stable releas
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x-alpha | Yes |
+| 0.2.x-alpha | Yes |
+| 0.1.x-alpha | No |
 
 ## Reporting
 

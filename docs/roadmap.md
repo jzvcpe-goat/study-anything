@@ -12,7 +12,7 @@
 - Skill-first CLI and repo-local Agent skill.
 - OSS docs and contribution flow.
 
-## v0.2 In Progress
+## v0.2.0-alpha
 
 - Durable Postgres session store.
 - Compiled LangGraph adapter with in-memory and Postgres checkpointing.
@@ -20,8 +20,9 @@
 - Explicit local plugin installer with manifest validation.
 - Optional FalkorDB source/mastery topology projection with session rebuild APIs.
 - Local self-host backup and restore with checksum verification.
+- Multi-architecture GHCR images for Linux servers and Apple Silicon Docker Desktop.
 
-## v0.2 Next
+## v0.3 Next
 
 - Importer plugin SDK.
 - E2E Playwright tests.

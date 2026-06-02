@@ -58,6 +58,23 @@ Open:
 - Knowledge graph status: http://localhost:8000/v1/graph/status
 - Langfuse: http://localhost:3000
 
+## Published Images
+
+Use the multi-architecture `v0.2.0-alpha` images when you want to skip local API and Web builds:
+
+```bash
+python3 scripts/setup_env.py
+STUDY_ANYTHING_API_IMAGE=ghcr.io/jzvcpe-goat/study-anything/api:v0.2.0-alpha \
+STUDY_ANYTHING_WEB_IMAGE=ghcr.io/jzvcpe-goat/study-anything/web:v0.2.0-alpha \
+docker compose \
+  --env-file .env \
+  -f infra/compose/docker-compose.yml \
+  -f infra/compose/docker-compose.images.yml \
+  up -d
+```
+
+The release images support `linux/amd64` and `linux/arm64`.
+
 ## Bring Your Own Agent
 
 Study Anything ships with a deterministic fake agent for tests and demos. Real reasoning is performed by an agent that the user owns and runs outside Study Anything.
@@ -124,12 +141,12 @@ volume backups.
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 43% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 48% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
-The repository includes GitHub Actions for Python tests, Web build/audit, Docker Compose smoke, and GHCR image publishing. See `docs/github-launch.md` before cutting the first public alpha release.
+The repository includes GitHub Actions for Python tests, Web build/audit, Docker Compose smoke, and GHCR image publishing. See `docs/github-launch.md` before cutting the current alpha release.
 
 ## Status
 
-This repository is an alpha scaffold. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is a self-host alpha. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
