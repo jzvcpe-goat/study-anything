@@ -48,8 +48,9 @@ class FakeClient:
         self.graph = graph
         self.select_calls = 0
 
-    def ping(self) -> bool:
-        return True
+    def execute_command(self, command: str) -> str:
+        self.command = command
+        return "PONG"
 
     def select_graph(self, graph_name: str) -> FakeGraph:
         self.select_calls += 1
@@ -114,6 +115,7 @@ class KnowledgeGraphTests(unittest.TestCase):
 
         self.assertEqual(status.status, "healthy")
         self.assertEqual(client.select_calls, 0)
+        self.assertEqual(client.command, "PING")
 
     def test_topology_response_contains_only_safe_nodes_and_edges(self) -> None:
         graph = FakeGraph()

@@ -1,0 +1,83 @@
+# Kimi Agent Gateway
+
+Study Anything does not store model credentials or call real models directly. To use Kimi, run the
+included user-owned gateway as a separate local process.
+
+Kimi's official API is OpenAI-compatible and accepts Chat Completions requests at
+`https://api.moonshot.cn/v1/chat/completions`. The current Kimi documentation recommends
+`kimi-k2.5`. See the official [Kimi K2.5 quickstart](https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart)
+and [model list](https://platform.moonshot.cn/docs/intro).
+
+## Start Study Anything
+
+For a lightweight local setup:
+
+```bash
+./scripts/launch_skill_mode.sh
+```
+
+For Docker self-host:
+
+```bash
+python3 scripts/setup_env.py
+./scripts/launch_self_host.sh
+```
+
+## Start The User-Owned Kimi Gateway
+
+Run this in a separate terminal. The API key remains in the gateway process environment and is never
+stored by Study Anything:
+
+```bash
+export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
+export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
+export AGENT_LLM_MODEL="kimi-k2.5"
+export AGENT_LLM_EXTRA_BODY_JSON='{"thinking":{"type":"disabled"}}'
+
+python3 scripts/openai_compatible_agent_gateway.py \
+  --host 127.0.0.1 \
+  --port 8787
+```
+
+Disabling thinking is optional. It is useful for the short structured tasks in the Study Anything MVP.
+
+## Register The Gateway
+
+For Skill Mode or another host-local API:
+
+```bash
+python3 scripts/study_anything_cli.py agent-add-http \
+  --label "My Kimi gateway" \
+  --endpoint "http://127.0.0.1:8787/invoke" \
+  --set-default
+```
+
+For a Docker-hosted Study Anything API, use:
+
+```bash
+python3 scripts/study_anything_cli.py agent-add-http \
+  --label "My Kimi gateway" \
+  --endpoint "http://host.docker.internal:8787/invoke" \
+  --set-default
+```
+
+The command prints a provider ID. Verify it, then start a configured learning session:
+
+```bash
+python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
+
+python3 scripts/study_anything_cli.py start \
+  --agent-mode configured \
+  --title "My notes" \
+  --reference "local://my-notes" \
+  --text "Paste the source material here."
+```
+
+## Browser-Only Kimi Limitation
+
+A browser-only Kimi conversation cannot run local scripts, access your repository, or call
+`http://127.0.0.1`. Kimi's official documentation also states that the inference API itself does not
+execute code or access external resources.
+
+Use the local gateway above, or expose an authenticated private HTTPS gateway if Study Anything and
+your agent run on different machines. Do not expose the local gateway directly to the public internet.

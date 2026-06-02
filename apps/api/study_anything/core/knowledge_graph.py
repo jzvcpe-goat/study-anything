@@ -196,7 +196,7 @@ class FalkorDBKnowledgeGraphSink(KnowledgeGraphSink):
 
     def status(self) -> KnowledgeGraphStatus:
         try:
-            self._select_client().ping()
+            self._select_client().execute_command("PING")
         except Exception:
             return KnowledgeGraphStatus(
                 enabled=True,

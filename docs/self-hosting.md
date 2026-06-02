@@ -16,11 +16,18 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
-`./scripts/launch_self_host.sh` uses `STACK_PROFILE=full` by default. Available profiles:
+`./scripts/launch_self_host.sh` uses `STACK_PROFILE=core` by default and starts containers in the
+background. Available profiles:
 
 - `core`: API, Web UI, and app Postgres.
 - `smoke`: core stack plus the mock HTTP agent.
 - `full`: core stack plus Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.
+
+Use the heavier full profile only when you want the optional operational services:
+
+```bash
+STACK_PROFILE=full ./scripts/launch_self_host.sh
+```
 
 If Docker Hub is unreachable from Docker Desktop but public ECR works, set these optional overrides in `.env` before building:
 
@@ -119,6 +126,7 @@ Common choices:
 
 - Local HTTP agent: `http://host.docker.internal:8787`
 - OpenClaw/Codex-style gateway: expose the Study Anything agent contract over HTTP and call any internal model/tool stack you choose.
+- Kimi: run `scripts/openai_compatible_agent_gateway.py` with your Moonshot API environment. See `docs/kimi-agent-gateway.md`.
 - Ollama: supported through your own agent, not as a required Study Anything runtime.
 - Fake demo: deterministic agent for smoke testing.
 
