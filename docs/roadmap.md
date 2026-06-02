@@ -22,6 +22,13 @@
 - Local self-host backup and restore with checksum verification.
 - Multi-architecture GHCR images for Linux servers and Apple Silicon Docker Desktop.
 
+## v0.2.1-alpha
+
+- One-command published-image core launch for first-run self-hosting.
+- Sequential API/Web image pulls with clear cold-download messaging.
+- Explicit tag, registry mirror, and offline-cache overrides.
+- Shell behavior tests for source builds and published-image launches.
+
 ## v0.3 Next
 
 - Importer plugin SDK.

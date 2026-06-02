@@ -21,5 +21,5 @@ CREATE INDEX IF NOT EXISTS study_anything_sessions_user_hash_idx
 ON study_anything_sessions (user_hash);
 
 INSERT INTO study_anything_metadata (key, value)
-VALUES ('schema_version', '0.2.0-alpha')
+VALUES ('schema_version', '0.2.1-alpha')
 ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now();

@@ -60,7 +60,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.0-alpha` images when you want to skip local API and Web builds:
+Use the multi-architecture `v0.2.1-alpha` images when you want to skip local API and Web builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -136,7 +136,7 @@ volume backups.
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 48% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 49% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 

@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.2.0-alpha
+## v0.2.1-alpha
 
 - [ ] `python3 -m unittest discover apps/api/tests`
 - [ ] `LANGGRAPH_STRICT_MSGPACK=true python -m unittest discover apps/api/tests`
@@ -15,6 +15,7 @@
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up --build mock-http-agent`
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
+- [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
 - [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
 - [ ] `python3 scripts/self_host_data.py backup --output /tmp/study-anything-backup-check`
 - [ ] Restore that backup in a disposable local stack with `python3 scripts/self_host_data.py restore /tmp/study-anything-backup-check --yes`.
@@ -30,4 +31,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.2.0-alpha`.
+- [ ] Tag `v0.2.1-alpha`.
