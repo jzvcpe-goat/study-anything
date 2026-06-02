@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import stat
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import sys
 
@@ -18,6 +20,7 @@ from self_host_data import (  # noqa: E402
     parse_env,
     restore_env_snapshot,
     verify_manifest,
+    wait_for_postgres,
     write_manifest,
 )
 
@@ -77,6 +80,21 @@ class SelfHostDataTests(unittest.TestCase):
             manifest = backup_dir / "manifest.json"
             self.assertEqual(json.loads(manifest.read_text()), {"schema_version": 1, "files": []})
             self.assertEqual(stat.S_IMODE(manifest.stat().st_mode), 0o600)
+
+    @patch("self_host_data.run")
+    def test_wait_for_postgres_does_not_recreate_running_service(self, run_mock) -> None:
+        run_mock.side_effect = [
+            subprocess.CompletedProcess([], 0, stdout=b"container-id\n"),
+            subprocess.CompletedProcess([], 0, stdout=b"accepting connections\n"),
+        ]
+
+        wait_for_postgres(Path(".env"), {"POSTGRES_USER": "study", "POSTGRES_DB": "study_anything"})
+
+        commands = [call.args[0] for call in run_mock.call_args_list]
+        self.assertEqual(len(commands), 2)
+        self.assertIn("ps", commands[0])
+        self.assertNotIn("up", commands[0])
+        self.assertIn("pg_isready", commands[1])
 
 
 if __name__ == "__main__":

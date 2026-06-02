@@ -163,7 +163,12 @@ def helper_image(env_file: Path) -> str:
 def wait_for_postgres(env_file: Path, values: dict[str, str]) -> None:
     user = values.get("POSTGRES_USER", "study")
     database = values.get("POSTGRES_DB", "study_anything")
-    run(compose_command(env_file, "up", "-d", "app-postgres"))
+    running = run(
+        compose_command(env_file, "ps", "--status", "running", "-q", "app-postgres"),
+        capture_output=True,
+    )
+    if not running.stdout.decode("utf-8").strip():
+        run(compose_command(env_file, "up", "-d", "app-postgres"))
     for _attempt in range(30):
         result = run(
             compose_command(
