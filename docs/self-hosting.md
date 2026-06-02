@@ -51,18 +51,30 @@ If you already have services on the default ports, override `API_PORT`, `WEB_POR
 After the GitHub repository publishes GHCR images, you can skip local API/Web builds:
 
 ```bash
-STUDY_ANYTHING_API_IMAGE=ghcr.io/jzvcpe-goat/study-anything/api:v0.2.0-alpha \
-STUDY_ANYTHING_WEB_IMAGE=ghcr.io/jzvcpe-goat/study-anything/web:v0.2.0-alpha \
-docker compose \
-  --env-file .env \
-  -f infra/compose/docker-compose.yml \
-  -f infra/compose/docker-compose.images.yml \
-  --profile full up -d
+USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
-This is optional. The default local-first path still builds from source.
+This starts the core API, Web UI, and app Postgres services. The launcher pulls API and Web
+sequentially before startup so a cold first download remains easy to understand. Use
+`STACK_PROFILE=full USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh` only when you also want
+the optional observability services.
+
+Published images are optional. The default local-first path still builds from source.
 Published API and Web images include `linux/amd64` and `linux/arm64` manifests so the same command
 works on common Linux servers and Apple Silicon Docker Desktop.
+
+For a pinned or mirrored deployment, override the tag or exact image names:
+
+```bash
+STUDY_ANYTHING_IMAGE_TAG=v0.2.0-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.0-alpha \
+STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.0-alpha \
+USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+```
+
+Set `PULL_PUBLISHED_IMAGES=false` only when the desired images are already cached locally or managed
+by an offline deployment process.
 
 Open:
 

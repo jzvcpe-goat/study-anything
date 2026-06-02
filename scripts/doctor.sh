@@ -56,6 +56,7 @@ fi
 printf "\nDefault launch ports: 3000, 5173, 8000, 5432, 5433, 6379, 6378, 8123, 9000, 9090\n"
 printf "If a port is occupied, override the matching *_PORT value in .env before launch.\n"
 printf "STACK_PROFILE=core starts API/Web/Postgres only; STACK_PROFILE=smoke adds the mock HTTP agent; STACK_PROFILE=full adds Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.\n"
+printf "Use USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh to skip local API/Web builds and consume the multi-architecture GHCR release images.\n"
 
 if [ "$problems" -gt 0 ]; then
   printf "\nDoctor found %s blocking issue(s).\n" "$problems" >&2
