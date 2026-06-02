@@ -85,6 +85,46 @@ The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by defaul
 
 The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
 
+## Backup And Restore
+
+Create a local backup before upgrades or Docker volume maintenance:
+
+```bash
+python3 scripts/self_host_data.py backup
+```
+
+The default backup contains:
+
+- A compressed `pg_dump` of the canonical app Postgres database.
+- The `study_anything_data` volume with Agent configuration and locally installed plugins.
+- A private `env.snapshot` so a lost self-host environment can be recovered.
+- A SHA-256 manifest checked before restore.
+
+Backup directories are written under `backups/` by default, ignored by Git, and created with local
+user-only permissions. They contain secrets and private learning data. Keep them encrypted at rest,
+do not commit them, and do not upload them to an untrusted storage provider.
+
+To include disposable topology data and optional Langfuse service volumes when they exist:
+
+```bash
+python3 scripts/self_host_data.py backup --include-optional
+```
+
+For the most consistent optional-service snapshot, stop the stack first with
+`./scripts/stop_self_host.sh`. The backup tool starts app Postgres long enough to create its canonical
+SQL dump.
+
+Restore is intentionally explicit and destructive:
+
+```bash
+python3 scripts/self_host_data.py restore backups/study-anything-backup-YYYYmmddTHHMMSSZ --yes
+./scripts/launch_self_host.sh
+```
+
+An existing `.env` is preserved by default. Use `--restore-env` only when you intentionally want to
+replace it with the backed-up environment snapshot. If `.env` is missing, the snapshot is restored
+automatically.
+
 ## Optional Learning Topology
 
 FalkorDB is included in the `full` profile but graph projection is disabled by default. Enable the

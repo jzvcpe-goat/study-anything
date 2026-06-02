@@ -110,6 +110,18 @@ python3 scripts/install_local_plugin.py plugins/example-exporter
 
 See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting notes.
 
+## Local Backups
+
+Protect the local-first learning state with an explicit backup before upgrades:
+
+```bash
+python3 scripts/self_host_data.py backup
+```
+
+The backup includes the canonical app Postgres dump, Agent configuration volume, checksums, and a
+private `env.snapshot`. See `docs/self-hosting.md` for restore commands and optional operational
+volume backups.
+
 ## Commercial Readiness
 
 Study Anything is a public self-host Alpha foundation, roughly 43% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.

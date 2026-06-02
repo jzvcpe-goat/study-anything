@@ -19,6 +19,7 @@
 - Privacy-preserving Langfuse v4 node observations.
 - Explicit local plugin installer with manifest validation.
 - Optional FalkorDB source/mastery topology projection with session rebuild APIs.
+- Local self-host backup and restore with checksum verification.
 
 ## v0.2 Next
 
