@@ -55,7 +55,8 @@ USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
 This starts the core API, Web UI, and app Postgres services. The launcher pulls API and Web
-sequentially before startup so a cold first download remains easy to understand. Use
+sequentially before startup and shows layer progress so a cold first download remains easy to
+understand. Use
 `STACK_PROFILE=full USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh` only when you also want
 the optional observability services.
 
@@ -66,10 +67,10 @@ works on common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.2.1-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.2.2-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.1-alpha \
-STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.1-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.2-alpha \
+STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.2-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 

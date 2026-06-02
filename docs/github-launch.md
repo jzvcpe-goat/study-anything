@@ -27,7 +27,7 @@ Confirm:
 
 - `.env` is not staged.
 - No screenshots, traces, or logs contain private source text or secrets.
-- `docs/release-notes/v0.2.1-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.2-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -37,17 +37,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.1-alpha
-git push origin v0.2.1-alpha
+git tag v0.2.2-alpha
+git push origin v0.2.2-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.1-alpha \
+gh release create v0.2.2-alpha \
   --prerelease \
-  --title "Study Anything v0.2.1-alpha" \
-  --notes-file docs/release-notes/v0.2.1-alpha.md
+  --title "Study Anything v0.2.2-alpha" \
+  --notes-file docs/release-notes/v0.2.2-alpha.md
 ```
 
 ## GitHub Settings
@@ -64,13 +64,13 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.1-alpha
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/web:v0.2.1-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.2-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/web:v0.2.2-alpha
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.1-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.2-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

@@ -1,14 +1,14 @@
 # Release Checklist
 
-## v0.2.1-alpha
+## v0.2.2-alpha
 
-- [ ] `python3 -m unittest discover apps/api/tests`
-- [ ] `LANGGRAPH_STRICT_MSGPACK=true python -m unittest discover apps/api/tests`
-- [ ] `python3 -m compileall -q apps/api/study_anything scripts plugins`
-- [ ] `python3 scripts/smoke_core.py`
+- [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
+- [ ] `.venv/bin/python -m unittest discover apps/api/tests`
+- [ ] `LANGGRAPH_STRICT_MSGPACK=true .venv/bin/python -m unittest discover apps/api/tests`
+- [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
+- [ ] `.venv/bin/python scripts/smoke_core.py`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
 - [ ] `python3 scripts/check_env.py --env /tmp/study-anything.env --strict`
-- [ ] `python -m pip install -e .`
 - [ ] `(cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)`
 - [ ] Start API locally and run `API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py`.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
@@ -31,4 +31,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.2.1-alpha`.
+- [ ] Tag `v0.2.2-alpha`.

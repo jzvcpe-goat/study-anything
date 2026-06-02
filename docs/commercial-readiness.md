@@ -16,7 +16,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Local-first backup and restore with checksum verification for canonical Postgres state and Agent configuration.
 - CI for API tests, Web build, Compose smoke, FalkorDB projection, and backup/restore rollback.
 - Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
-- One-command published-image core launch with sequential cold-download handling.
+- One-command published-image core launch with sequential pulls and visible cold-download progress.
 
 ## What Blocks Commercial Launch
 
