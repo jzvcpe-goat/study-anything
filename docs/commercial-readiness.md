@@ -13,6 +13,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Compiled LangGraph adapter with in-memory and Postgres checkpointing modes.
 - Optional privacy-preserving Langfuse v4 learning-event observations.
 - Optional privacy-preserving FalkorDB topology projection with idempotent per-session rebuild.
+- Local-first backup and restore with checksum verification for canonical Postgres state and Agent configuration.
 - CI for API tests, Web build, and Compose smoke.
 - GHCR image publishing path.
 
@@ -44,4 +45,4 @@ Reach 50-55% readiness by making the self-host Alpha friendly for real learners:
 - Guided first-run onboarding for non-developer learners.
 - Plugin installation UX with permission confirmation.
 - Privacy-preserving PMF metrics and an opt-in hosted waitlist.
-- Docker soak testing, trace retention guidance, and a documented backup path.
+- Docker soak testing and trace retention guidance.

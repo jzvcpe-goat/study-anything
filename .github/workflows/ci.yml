@@ -99,6 +99,15 @@ jobs:
         run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
       - name: Verify FalkorDB topology projection
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_falkordb_flow.py
+      - name: Verify self-host backup and restore
+        run: |
+          backup_dir="${RUNNER_TEMP}/study-anything-backup-check"
+          before="$(docker compose -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
+          python scripts/self_host_data.py backup --output "$backup_dir"
+          API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
+          python scripts/self_host_data.py restore "$backup_dir" --yes
+          after="$(docker compose -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
+          test "$before" = "$after"
       - name: Dump stack logs on failure
         if: failure()
         run: |

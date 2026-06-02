@@ -16,6 +16,8 @@
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up --build mock-http-agent`
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
+- [ ] `python3 scripts/self_host_data.py backup --output /tmp/study-anything-backup-check`
+- [ ] Restore that backup in a disposable local stack with `python3 scripts/self_host_data.py restore /tmp/study-anything-backup-check --yes`.
 - [ ] Open Web UI at http://localhost:5173
 - [ ] Complete demo learning flow.
 - [ ] Install a local example plugin with `python3 scripts/install_local_plugin.py plugins/example-exporter --destination /tmp/study-anything-plugin-check`.
@@ -25,6 +27,7 @@
 - [ ] Check Langfuse starts at http://localhost:3000
 - [ ] Confirm `.env` is not committed.
 - [ ] Confirm no secrets in logs, traces, docs, or screenshots.
+- [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
 - [ ] Tag `v0.1.0-alpha`.
