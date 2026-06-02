@@ -61,6 +61,8 @@ docker compose \
 ```
 
 This is optional. The default local-first path still builds from source.
+Published API and Web images include `linux/amd64` and `linux/arm64` manifests so the same command
+works on common Linux servers and Apple Silicon Docker Desktop.
 
 Open:
 
