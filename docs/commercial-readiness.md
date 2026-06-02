@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 43%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 48%.
 
 ## What Is Ready
 
@@ -14,8 +14,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Optional privacy-preserving Langfuse v4 learning-event observations.
 - Optional privacy-preserving FalkorDB topology projection with idempotent per-session rebuild.
 - Local-first backup and restore with checksum verification for canonical Postgres state and Agent configuration.
-- CI for API tests, Web build, and Compose smoke.
-- GHCR image publishing path.
+- CI for API tests, Web build, Compose smoke, FalkorDB projection, and backup/restore rollback.
+- Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
 
 ## What Blocks Commercial Launch
 

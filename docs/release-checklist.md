@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.1.0-alpha
+## v0.2.0-alpha
 
 - [ ] `python3 -m unittest discover apps/api/tests`
 - [ ] `LANGGRAPH_STRICT_MSGPACK=true python -m unittest discover apps/api/tests`
@@ -30,4 +30,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.1.0-alpha`.
+- [ ] Tag `v0.2.0-alpha`.
