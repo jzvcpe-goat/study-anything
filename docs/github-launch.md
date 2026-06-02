@@ -65,7 +65,8 @@ Recommended repository settings:
 - Enable Dependabot alerts.
 - Enable secret scanning and push protection if available.
 - Publish packages to GHCR through `.github/workflows/docker-images.yml`.
-- Confirm the public images can be pulled anonymously:
+- Confirm the public images can be pulled anonymously and publish both `linux/amd64` and
+  `linux/arm64` manifests:
 
 ```bash
 docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.1.0-alpha
