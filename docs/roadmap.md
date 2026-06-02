@@ -29,6 +29,11 @@
 - Explicit tag, registry mirror, and offline-cache overrides.
 - Shell behavior tests for source builds and published-image launches.
 
+## v0.2.2-alpha
+
+- Visible Docker layer progress during published-image pulls.
+- Patch release for slow-network first-run clarity.
+
 ## v0.3 Next
 
 - Importer plugin SDK.

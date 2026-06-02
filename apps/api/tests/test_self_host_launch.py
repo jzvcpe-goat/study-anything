@@ -77,12 +77,12 @@ class SelfHostLaunchTests(unittest.TestCase):
     def test_published_launch_pulls_images_sequentially_without_building(self) -> None:
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
-            "docker pull --quiet "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.1-alpha"
+            "docker pull "
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.2-alpha"
         )
         web_pull = (
-            "docker pull --quiet "
-            "ghcr.io/jzvcpe-goat/study-anything/web:v0.2.1-alpha"
+            "docker pull "
+            "ghcr.io/jzvcpe-goat/study-anything/web:v0.2.2-alpha"
         )
         self.assertLess(output.index(api_pull), output.index(web_pull))
         self.assertIn(
@@ -99,8 +99,8 @@ class SelfHostLaunchTests(unittest.TestCase):
             STUDY_ANYTHING_API_IMAGE="registry.example/study-api:test",
             STUDY_ANYTHING_WEB_IMAGE="registry.example/study-web:test",
         )
-        self.assertIn("docker pull --quiet registry.example/study-api:test", output)
-        self.assertIn("docker pull --quiet registry.example/study-web:test", output)
+        self.assertIn("docker pull registry.example/study-api:test", output)
+        self.assertIn("docker pull registry.example/study-web:test", output)
         self.assertIn("--profile smoke up -d", output)
 
     def test_published_launch_can_use_cached_images_without_pull(self) -> None:

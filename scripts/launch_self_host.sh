@@ -16,7 +16,7 @@ fi
 
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
-image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.1-alpha}"
+image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.2-alpha}"
 
 is_true() {
   case "$1" in
@@ -63,9 +63,9 @@ if is_true "$use_published_images"; then
   printf "Using published Study Anything images tagged %s.\n" "$image_tag"
   if is_true "${PULL_PUBLISHED_IMAGES:-true}"; then
     printf "Pulling API image first. A cold download can take a few minutes.\n"
-    docker pull --quiet "$STUDY_ANYTHING_API_IMAGE"
+    docker pull "$STUDY_ANYTHING_API_IMAGE"
     printf "Pulling Web image second.\n"
-    docker pull --quiet "$STUDY_ANYTHING_WEB_IMAGE"
+    docker pull "$STUDY_ANYTHING_WEB_IMAGE"
   else
     printf "Skipping published image pulls because PULL_PUBLISHED_IMAGES=%s.\n" "${PULL_PUBLISHED_IMAGES:-false}"
   fi
