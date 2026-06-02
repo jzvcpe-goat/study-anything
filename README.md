@@ -64,16 +64,11 @@ Use the multi-architecture `v0.2.0-alpha` images when you want to skip local API
 
 ```bash
 python3 scripts/setup_env.py
-STUDY_ANYTHING_API_IMAGE=ghcr.io/jzvcpe-goat/study-anything/api:v0.2.0-alpha \
-STUDY_ANYTHING_WEB_IMAGE=ghcr.io/jzvcpe-goat/study-anything/web:v0.2.0-alpha \
-docker compose \
-  --env-file .env \
-  -f infra/compose/docker-compose.yml \
-  -f infra/compose/docker-compose.images.yml \
-  up -d
+USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
-The release images support `linux/amd64` and `linux/arm64`.
+The launcher pulls API and Web sequentially so first-run downloads remain understandable on slower
+connections. The release images support `linux/amd64` and `linux/arm64`.
 
 ## Bring Your Own Agent
 
