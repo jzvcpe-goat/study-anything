@@ -5,13 +5,16 @@ description: Operate a self-hosted Study Anything learning loop through its repo
 
 # Study Anything
 
-Use the repository CLI from the Study Anything project root:
+Use the repository CLI from the Study Anything project root. First ensure the local API is ready:
 
 ```bash
+./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
 ```
 
 Set `STUDY_ANYTHING_API_BASE` when the API is not at `http://127.0.0.1:8000`.
+If the user already runs the Docker stack or a remote private deployment, do not launch another local
+API. Check `health` against their configured API base instead.
 
 ## Start A Learning Loop
 

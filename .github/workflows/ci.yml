@@ -21,6 +21,14 @@ jobs:
         run: python -m unittest discover apps/api/tests
       - name: Run deterministic smoke
         run: python scripts/smoke_core.py
+      - name: Verify skill-mode bootstrap and CLI
+        run: |
+          export STUDY_ANYTHING_VENV="$(python -c 'import sys; print(sys.prefix)')"
+          export STUDY_ANYTHING_DATA_DIR="${RUNNER_TEMP}/study-anything-skill-mode"
+          export API_PORT=8012
+          ./scripts/launch_skill_mode.sh
+          trap './scripts/stop_skill_mode.sh' EXIT
+          STUDY_ANYTHING_API_BASE=http://127.0.0.1:8012 python scripts/verify_skill_cli_flow.py
 
   web-build:
     runs-on: ubuntu-latest
@@ -54,6 +62,7 @@ jobs:
       FALKORDB_IMAGE: mirror.gcr.io/falkordb/falkordb:latest
       LANGFUSE_WEB_IMAGE: ghcr.io/langfuse/langfuse:3
       LANGFUSE_WORKER_IMAGE: ghcr.io/langfuse/langfuse-worker:3
+      FALKORDB_ENABLED: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -78,6 +87,13 @@ jobs:
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
       - name: Verify mock HTTP agent flow
         run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
+      - name: Verify FalkorDB topology projection
+        run: API_BASE=http://127.0.0.1:8000 python scripts/verify_falkordb_flow.py
+      - name: Dump stack logs on failure
+        if: failure()
+        run: |
+          docker compose -f infra/compose/docker-compose.yml --profile smoke ps
+          docker compose -f infra/compose/docker-compose.yml --profile smoke logs --tail=300
       - name: Stop stack
         if: always()
         run: docker compose -f infra/compose/docker-compose.yml --profile smoke down -v

@@ -1,6 +1,6 @@
 # Architecture
 
-Study Anything is split into four MVP layers.
+Study Anything is split into five MVP layers.
 
 ## API Layer
 
@@ -39,3 +39,14 @@ Langfuse is included in Compose for self-hosted traces. When telemetry is explic
 Docker self-host uses app Postgres for session state with `SESSION_STORE=postgres`. Python-only local development can use `SESSION_STORE=json` for a file-backed store under `STUDY_ANYTHING_DATA_DIR`.
 
 Agent provider defaults remain JSON-backed in the alpha Docker volume. This keeps the Bring Your Own Agent surface simple while the public provider contract settles.
+
+## Optional Topology Projection
+
+FalkorDB is a disposable learning-topology projection, never the canonical store. Postgres remains the
+source of truth. After mastery evaluation, the workflow may project learner, session, source-reference,
+and mastery edges through an explicit allowlist.
+
+Graph failures produce a sanitized warning event and do not block learning. The graph does not receive
+reading prose, titles, quizzes, answers, feedback, insights, scribe logs, agent metadata, or secrets.
+Operators can inspect graph health and rebuild a single session from canonical state through the fixed
+topology API.

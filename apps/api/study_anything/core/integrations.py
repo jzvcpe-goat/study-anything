@@ -68,11 +68,13 @@ def integration_matrix() -> List[IntegrationStatus]:
         IntegrationStatus(
             name="FalkorDB",
             category="knowledge_graph",
-            target="Knowledge topology",
-            status="compose_service",
-            runtime_check="falkordb service on 6379",
-            product_surface="Docker Compose",
-            next_step="Persist source/mastery edges from synthesist_node.",
+            target="Privacy-preserving learning topology projection",
+            status="optional_runtime_adapter"
+            if package_available("falkordb")
+            else "declared_dependency",
+            runtime_check="GET /v1/graph/status",
+            product_surface="Docker Compose + topology APIs",
+            next_step="Soak idempotent projections under real self-host usage.",
         ),
         IntegrationStatus(
             name="LanceDB",

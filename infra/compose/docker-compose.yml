@@ -12,6 +12,11 @@ services:
       SESSION_STORE: ${SESSION_STORE:-postgres}
       WORKFLOW_ENGINE: ${WORKFLOW_ENGINE:-langgraph}
       LANGGRAPH_CHECKPOINTER: ${LANGGRAPH_CHECKPOINTER:-postgres}
+      FALKORDB_ENABLED: ${FALKORDB_ENABLED:-false}
+      FALKORDB_HOST: ${FALKORDB_HOST:-falkordb}
+      FALKORDB_PORT: ${FALKORDB_PORT:-6379}
+      FALKORDB_GRAPH: ${FALKORDB_GRAPH:-study_anything}
+      FALKORDB_QUERY_TIMEOUT_MS: ${FALKORDB_QUERY_TIMEOUT_MS:-1000}
       LANGFUSE_HOST: ${LANGFUSE_HOST:-http://langfuse-web:3000}
       LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
       LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
@@ -94,13 +99,18 @@ services:
       retries: 10
 
   falkordb:
-    profiles: ["full"]
+    profiles: ["smoke", "full"]
     image: ${FALKORDB_IMAGE:-docker.io/falkordb/falkordb:latest}
     restart: unless-stopped
     ports:
-      - "127.0.0.1:${FALKORDB_PORT:-6378}:6379"
+      - "127.0.0.1:${FALKORDB_HOST_PORT:-6378}:6379"
     volumes:
       - falkordb_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   langfuse-worker:
     profiles: ["full"]

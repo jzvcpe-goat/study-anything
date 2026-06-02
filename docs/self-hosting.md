@@ -16,11 +16,18 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
-`./scripts/launch_self_host.sh` uses `STACK_PROFILE=full` by default. Available profiles:
+`./scripts/launch_self_host.sh` uses `STACK_PROFILE=core` by default and starts containers in the
+background. Available profiles:
 
 - `core`: API, Web UI, and app Postgres.
 - `smoke`: core stack plus the mock HTTP agent.
 - `full`: core stack plus Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.
+
+Use the heavier full profile only when you want the optional operational services:
+
+```bash
+STACK_PROFILE=full ./scripts/launch_self_host.sh
+```
 
 If Docker Hub is unreachable from Docker Desktop but public ECR works, set these optional overrides in `.env` before building:
 
@@ -37,7 +44,7 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 `scripts/setup_env.py` generates these mirror-friendly defaults automatically. Use `.env.example` as documentation, not as a production secret file.
 
-If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
+If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
 
 ## Using Published Images
 
@@ -76,6 +83,30 @@ The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by defaul
 
 The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
 
+## Optional Learning Topology
+
+FalkorDB is included in the `full` profile but graph projection is disabled by default. Enable the
+privacy-preserving projection explicitly in `.env`:
+
+```bash
+FALKORDB_ENABLED=true
+FALKORDB_HOST=falkordb
+FALKORDB_PORT=6379
+FALKORDB_GRAPH=study_anything
+FALKORDB_QUERY_TIMEOUT_MS=1000
+```
+
+The API will continue learning sessions if FalkorDB is unavailable. Postgres remains the canonical
+store. Graph records contain source references, excerpt hashes, mastery metadata, and topology IDs only.
+
+Inspect the adapter or rebuild a session projection:
+
+```bash
+curl http://localhost:8000/v1/graph/status
+curl http://localhost:8000/v1/sessions/SESSION_ID/topology
+curl -X POST http://localhost:8000/v1/sessions/SESSION_ID/topology/rebuild
+```
+
 ## Secrets
 
 Do not deploy with placeholder values from `.env.example`. Generate a local file:
@@ -95,6 +126,7 @@ Common choices:
 
 - Local HTTP agent: `http://host.docker.internal:8787`
 - OpenClaw/Codex-style gateway: expose the Study Anything agent contract over HTTP and call any internal model/tool stack you choose.
+- Kimi: run `scripts/openai_compatible_agent_gateway.py` with your Moonshot API environment. See `docs/kimi-agent-gateway.md`.
 - Ollama: supported through your own agent, not as a required Study Anything runtime.
 - Fake demo: deterministic agent for smoke testing.
 

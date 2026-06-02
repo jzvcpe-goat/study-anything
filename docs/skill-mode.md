@@ -9,14 +9,33 @@ The CLI talks only to the public API. It does not store model API keys or execut
 
 ## Start
 
-Launch the API or Docker stack, then run:
+For the smallest working setup, launch the local Skill API and run the deterministic demo:
 
 ```bash
+./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
 python3 scripts/study_anything_cli.py demo
 ```
 
+`launch_skill_mode.sh` verifies Python 3.11+, creates `.venv` when needed, installs API dependencies,
+and starts the local API in the background with JSON session storage. Stop it with:
+
+```bash
+./scripts/stop_skill_mode.sh
+```
+
 The deterministic demo creates a source-bound question, submits a grounded answer, updates mastery, and synthesizes an insight.
+
+## Agent Runtime Boundary
+
+The bundled skill is a repo-local instruction file, not a hosted service. It works directly in
+terminal-capable agents such as Codex and local coding agents that can run shell commands inside this
+repository.
+
+Chat-only LLM products, including a browser-only Kimi conversation, cannot execute the scripts on your
+computer or reach `http://127.0.0.1:8000`. To use Kimi for real reasoning, run Study Anything locally
+and expose a private HTTPS agent gateway that implements `docs/agent-contract.md`. Keep model credentials
+inside that gateway.
 
 ## Learn From A Source
 
@@ -49,10 +68,14 @@ Use `--agent-mode configured` when starting a session with that gateway. Credent
 
 ## Install The Skill
 
-Copy or symlink `skills/study-anything` into your Codex skills directory to make it discoverable:
+For Codex, copy or symlink `skills/study-anything` into your skills directory to make it discoverable:
 
 ```bash
 ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-anything"
 ```
 
 The skill teaches an Agent to operate the same CLI, including HITL resolution and explicit confirmation before discard.
+
+For another terminal-capable agent, provide `skills/study-anything/SKILL.md` as its operating
+instructions and keep the repository available as its working directory. If that agent does not support
+skills natively, ask it to follow the file as a runbook.

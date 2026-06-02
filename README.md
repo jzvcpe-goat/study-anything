@@ -20,19 +20,25 @@ The alpha MVP runs a full local learning loop:
 - Local-first data ownership.
 - Bring Your Own Agent: no hardcoded real model default, no stored model API keys.
 - Self-host before SaaS.
+- Optional privacy-preserving topology projection: Postgres remains canonical, FalkorDB stays disposable.
 - Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
 - API-as-product: the Web UI is a client of the public API.
 
-## Quickstart
+## Fastest Local Demo
 
-The codebase is structured so core tests run without Docker or a real agent.
+Use Skill Mode when you want to try the learning loop without Docker:
 
 ```bash
-python3 -m unittest discover apps/api/tests
-python3 scripts/smoke_core.py
+./scripts/launch_skill_mode.sh
+python3 scripts/study_anything_cli.py demo
 ```
 
-For the full alpha stack, install Docker and run:
+This creates a local Python virtual environment when needed, starts the API in the background, and uses
+the deterministic demo agent. Stop it with `./scripts/stop_skill_mode.sh`.
+
+## Docker Self-Host
+
+Install Docker Desktop, start its daemon, then run:
 
 ```bash
 python3 scripts/setup_env.py
@@ -40,11 +46,16 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
-Then open:
+The default Docker profile is `core`: API, Web UI, and Postgres. It starts in the background so the
+terminal returns. Enable observability and optional topology services later with
+`STACK_PROFILE=full ./scripts/launch_self_host.sh`.
+
+Open:
 
 - Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Knowledge graph status: http://localhost:8000/v1/graph/status
 - Langfuse: http://localhost:3000
 
 ## Bring Your Own Agent
@@ -65,11 +76,12 @@ The agent flow mirrors tools such as OpenClaw and Codex: the user controls the m
 You can use the learning loop before the Web UI is visually complete. The repo includes a standard-library CLI and a repo-local Codex skill:
 
 ```bash
+./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
 python3 scripts/study_anything_cli.py demo
 ```
 
-Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. See `docs/skill-mode.md`.
+Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. Chat-only LLM products cannot run local scripts or reach `localhost`; use a terminal-capable agent or expose the API securely. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage, see `docs/skill-mode.md`.
 
 ## Repository Layout
 
@@ -100,7 +112,7 @@ See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 35% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 43% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
@@ -108,4 +120,4 @@ The repository includes GitHub Actions for Python tests, Web build/audit, Docker
 
 ## Status
 
-This repository is an alpha scaffold. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is an alpha scaffold. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.

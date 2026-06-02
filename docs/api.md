@@ -34,6 +34,16 @@ These remain for one alpha release and return agent-backed status:
 - `POST /v1/sessions/{session_id}/discard`
 - `GET /v1/sessions/{session_id}/mastery`
 
+## Optional Learning Topology
+
+- `GET /v1/graph/status`
+- `GET /v1/sessions/{session_id}/topology`
+- `POST /v1/sessions/{session_id}/topology/rebuild`
+
+FalkorDB is an optional projection layer. These endpoints expose only source references, excerpt hashes,
+mastery metadata, and topology identifiers. They never expose reading prose, quiz content, answers, or
+generated insights.
+
 ## HITL and Events
 
 - `GET /v1/hitl`
