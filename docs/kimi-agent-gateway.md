@@ -13,6 +13,7 @@ and [model list](https://platform.moonshot.cn/docs/intro).
 For a lightweight local setup:
 
 ```bash
+./scripts/run_skill_mode_demo.sh
 ./scripts/launch_skill_mode.sh
 ```
 
@@ -81,3 +82,7 @@ execute code or access external resources.
 
 Use the local gateway above, or expose an authenticated private HTTPS gateway if Study Anything and
 your agent run on different machines. Do not expose the local gateway directly to the public internet.
+
+If you want Kimi to follow the repo-local skill, give it `skills/study-anything/SKILL.md` as a
+runbook, but a local terminal-capable agent still needs to execute the commands. In the MVP, Kimi is
+best used as the Bring Your Own Agent reasoning layer through the gateway, not as the local operator.

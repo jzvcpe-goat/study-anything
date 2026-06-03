@@ -29,12 +29,13 @@ The alpha MVP runs a full local learning loop:
 Use Skill Mode when you want to try the learning loop without Docker:
 
 ```bash
-./scripts/launch_skill_mode.sh
-python3 scripts/study_anything_cli.py demo
+./scripts/run_skill_mode_demo.sh
 ```
 
-This creates a local Python virtual environment when needed, starts the API in the background, and uses
-the deterministic demo agent. Stop it with `./scripts/stop_skill_mode.sh`.
+This creates a local Python virtual environment when needed, starts the API, verifies the CLI learning
+loop, and stops the API in one command. This is the safest path for terminal-capable LLM agents whose
+shell tools may not preserve background processes. For a persistent local API, run
+`./scripts/launch_skill_mode.sh` and stop it with `./scripts/stop_skill_mode.sh`.
 
 ## Docker Self-Host
 
@@ -88,12 +89,13 @@ The agent flow mirrors tools such as OpenClaw and Codex: the user controls the m
 You can use the learning loop before the Web UI is visually complete. The repo includes a standard-library CLI and a repo-local Codex skill:
 
 ```bash
-./scripts/launch_skill_mode.sh
-python3 scripts/study_anything_cli.py health
-python3 scripts/study_anything_cli.py demo
+./scripts/run_skill_mode_demo.sh
 ```
 
-Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. Chat-only LLM products cannot run local scripts or reach `localhost`; use a terminal-capable agent or expose the API securely. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage, see `docs/skill-mode.md`.
+For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
+`python3 scripts/study_anything_cli.py demo`.
+
+Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. Chat-only LLM products cannot run local scripts or reach `localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage, see `docs/skill-mode.md`.
 
 ## Repository Layout
 
