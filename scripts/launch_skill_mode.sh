@@ -95,3 +95,4 @@ done
 printf "Study Anything Skill API is ready at %s\n" "$api_base"
 printf "Try: python3 scripts/study_anything_cli.py demo\n"
 printf "Stop with: ./scripts/stop_skill_mode.sh\n"
+printf "Agent shell note: if background processes do not persist, use ./scripts/run_skill_mode_demo.sh.\n"

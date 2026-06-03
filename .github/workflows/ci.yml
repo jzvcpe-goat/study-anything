@@ -26,9 +26,7 @@ jobs:
           export STUDY_ANYTHING_VENV="$(python -c 'import sys; print(sys.prefix)')"
           export STUDY_ANYTHING_DATA_DIR="${RUNNER_TEMP}/study-anything-skill-mode"
           export API_PORT=8012
-          ./scripts/launch_skill_mode.sh
-          trap './scripts/stop_skill_mode.sh' EXIT
-          STUDY_ANYTHING_API_BASE=http://127.0.0.1:8012 python scripts/verify_skill_cli_flow.py
+          ./scripts/run_skill_mode_demo.sh
 
   web-build:
     runs-on: ubuntu-latest

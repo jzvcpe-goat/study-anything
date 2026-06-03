@@ -7,6 +7,7 @@
 - [ ] `LANGGRAPH_STRICT_MSGPACK=true .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
 - [ ] `.venv/bin/python scripts/smoke_core.py`
+- [ ] `./scripts/run_skill_mode_demo.sh`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
 - [ ] `python3 scripts/check_env.py --env /tmp/study-anything.env --strict`
 - [ ] `(cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)`

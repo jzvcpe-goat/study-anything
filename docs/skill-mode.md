@@ -12,6 +12,16 @@ The CLI talks only to the public API. It does not store model API keys or execut
 For the smallest working setup, launch the local Skill API and run the deterministic demo:
 
 ```bash
+./scripts/run_skill_mode_demo.sh
+```
+
+This is the recommended smoke command for terminal-capable LLM agents. Some agent shells clean up
+background processes after a command finishes; the one-command runner starts the API, verifies the CLI
+learning loop, checks discard confirmation, and stops the API before exiting.
+
+For persistent local use, run:
+
+```bash
 ./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
 python3 scripts/study_anything_cli.py demo
@@ -36,6 +46,12 @@ Chat-only LLM products, including a browser-only Kimi conversation, cannot execu
 computer or reach `http://127.0.0.1:8000`. To use Kimi for real reasoning, run Study Anything locally
 and expose a private HTTPS agent gateway that implements `docs/agent-contract.md`. Keep model credentials
 inside that gateway.
+
+In short:
+
+- Kimi as chat UI only: can read this runbook and tell you what to run, but cannot operate the local skill.
+- Kimi through API: can be the reasoning model inside `scripts/openai_compatible_agent_gateway.py`.
+- Terminal Agent/Codex/local coding agent: can operate `scripts/study_anything_cli.py` directly.
 
 ## Learn From A Source
 
@@ -65,6 +81,12 @@ python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
 ```
 
 Use `--agent-mode configured` when starting a session with that gateway. Credentials, tools, and model choice remain inside the gateway.
+
+You can also avoid environment variables by passing `--api-base`:
+
+```bash
+python3 scripts/study_anything_cli.py --api-base http://127.0.0.1:8000 health
+```
 
 ## Install The Skill
 

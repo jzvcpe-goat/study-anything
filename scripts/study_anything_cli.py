@@ -279,6 +279,7 @@ def add_session_id(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--api-base", help="Override STUDY_ANYTHING_API_BASE for this command")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -359,6 +360,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
+    if args.api_base:
+        os.environ["STUDY_ANYTHING_API_BASE"] = args.api_base
     args.func(args)
 
 
