@@ -40,6 +40,7 @@
 - Agent status copy distinguishes the deterministic demo agent from a learner-configured real Agent.
 - Web learning sessions default to the learner's Agent when one is configured.
 - Permission-gated Web plugin installation for explicitly selected local plugin directories.
+- Self-host doctor checks Docker, Compose config, profile ports, health endpoints, Agent gateway hints, and recovery commands.
 - Mobile learning layout keeps the source, composer, and progress areas readable instead of squeezing columns.
 
 ## v0.3 Next
