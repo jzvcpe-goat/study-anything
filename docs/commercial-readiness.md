@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 52%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 54%.
 
 ## What Is Ready
 
@@ -9,7 +9,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Bring Your Own Agent architecture with fake demo agent and HTTP agent contract.
 - Source-bound learning loop: ingestion, quiz generation, grading, mastery, synthesis, scribe log, HITL, discard.
 - Plugin manifest validation and example plugin surfaces.
-- Explicit local plugin installer with manifest validation and overwrite protection.
+- Explicit local plugin installer and Web permission-confirmation flow with manifest validation and overwrite protection.
 - Compiled LangGraph adapter with in-memory and Postgres checkpointing modes.
 - Optional privacy-preserving Langfuse v4 learning-event observations.
 - Optional privacy-preserving FalkorDB topology projection with idempotent per-session rebuild.
@@ -25,7 +25,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - End-to-end encrypted sync/backup for paid convenience services.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
 - Team spaces, admin controls, export/audit guarantees, and enterprise data retention settings.
-- Plugin marketplace trust model: signing, review, permission prompts, install/update UX.
+- Plugin marketplace trust model: signing, review metadata, remote registry policy, update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
 - Product analytics for PMF: weekly active learners, repeat sessions, mastery delta, plugin installs, hosted waitlist.
@@ -44,7 +44,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 Reach 55-60% readiness by making the self-host Alpha dependable for real learners:
 
-- Plugin installation UX with permission confirmation.
 - Privacy-preserving PMF metrics and an opt-in hosted waitlist.
 - Docker soak testing and trace retention guidance.
 - Plain-language recovery docs for failed Docker pulls, unhealthy Agent gateways, and backup restore drills.
+- Signed plugin registry design and update-review workflow.

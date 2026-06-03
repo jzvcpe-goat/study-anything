@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Iterable, List, Mapping
 
 
@@ -32,6 +32,59 @@ ALLOWED_PERMISSIONS = {
     "ui:panel",
 }
 
+PERMISSION_DETAILS = {
+    "read:sessions": {
+        "label": "Read learning sessions",
+        "risk": "medium",
+        "description": "Can read session metadata, sources, progress, answers, and mastery records exposed by plugin hooks.",
+    },
+    "write:sessions": {
+        "label": "Modify learning sessions",
+        "risk": "high",
+        "description": "Can create or update learning session state when a future plugin loader enables this hook.",
+    },
+    "read:cards": {
+        "label": "Read study cards",
+        "risk": "medium",
+        "description": "Can read generated cards or review items exposed by plugin hooks.",
+    },
+    "write:cards": {
+        "label": "Modify study cards",
+        "risk": "high",
+        "description": "Can create or update generated cards or review items.",
+    },
+    "read:models": {
+        "label": "Read deprecated model settings",
+        "risk": "low",
+        "description": "Can inspect deprecated model-provider compatibility settings.",
+    },
+    "write:models": {
+        "label": "Modify deprecated model settings",
+        "risk": "medium",
+        "description": "Can change deprecated model-provider compatibility settings.",
+    },
+    "read:agents": {
+        "label": "Read Agent settings",
+        "risk": "medium",
+        "description": "Can inspect configured Agent providers, capabilities, and health metadata.",
+    },
+    "write:agents": {
+        "label": "Modify Agent settings",
+        "risk": "high",
+        "description": "Can add or update Agent provider configuration.",
+    },
+    "network:http": {
+        "label": "Use HTTP network access",
+        "risk": "high",
+        "description": "Can call HTTP endpoints through future plugin hooks. Secrets must stay outside Study Anything.",
+    },
+    "ui:panel": {
+        "label": "Add a UI panel",
+        "risk": "low",
+        "description": "Can register a frontend panel surface for status, configuration, or plugin interaction.",
+    },
+}
+
 
 @dataclass(frozen=True)
 class PluginManifest:
@@ -42,6 +95,17 @@ class PluginManifest:
     entrypoint: str
     hooks: List[str]
     permissions: List[str]
+
+
+@dataclass(frozen=True)
+class PluginPermissionDetail:
+    permission: str
+    label: str
+    risk: str
+    description: str
+
+    def public_dict(self) -> dict[str, str]:
+        return asdict(self)
 
 
 def _require_string(values: Mapping[str, object], key: str) -> str:
@@ -78,3 +142,24 @@ def validate_manifest(values: Mapping[str, object]) -> PluginManifest:
         hooks=hooks,
         permissions=permissions,
     )
+
+
+def describe_permission(permission: str) -> PluginPermissionDetail:
+    detail = PERMISSION_DETAILS.get(
+        permission,
+        {
+            "label": permission,
+            "risk": "unknown",
+            "description": "No permission description is available.",
+        },
+    )
+    return PluginPermissionDetail(
+        permission=permission,
+        label=detail["label"],
+        risk=detail["risk"],
+        description=detail["description"],
+    )
+
+
+def describe_permissions(permissions: Iterable[str]) -> List[PluginPermissionDetail]:
+    return [describe_permission(permission) for permission in permissions]

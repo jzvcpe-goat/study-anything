@@ -19,6 +19,33 @@ type AgentStatus = {
   defaults: Record<string, string | null>;
 };
 
+type PluginManifest = {
+  plugin_id: string;
+  name: string;
+  version: string;
+  api_version: string;
+  entrypoint: string;
+  hooks: string[];
+  permissions: string[];
+};
+
+type PermissionDetail = {
+  permission: string;
+  label: string;
+  risk: string;
+  description: string;
+};
+
+type PluginStatus = {
+  manifest: PluginManifest | null;
+  permission_details: PermissionDetail[];
+  path: string;
+  status: string;
+  message: string;
+  install_dir?: string;
+  requires_confirmation?: boolean;
+};
+
 type ReadingSource = {
   reference: string;
   title: string;
@@ -148,6 +175,22 @@ const copy = {
     configuredAgents: "已配置 Agent",
     noAgents: "还没有配置 Agent。",
     agentSetupHint: "如果你暂时没有自己的 Agent，可以继续使用演示 Agent；一旦保存 HTTP Agent，后续学习会默认交给它处理。",
+    pluginTrustTitle: "插件信任与安装",
+    pluginTrustLead: "只安装你在本机明确选择的插件目录。Study Anything 会先校验 manifest，并要求你确认权限。",
+    pluginSourcePath: "插件目录",
+    pluginPathPlaceholder: "例如：plugins/example-exporter 或 /path/to/plugin",
+    pluginPathRequired: "先填写本机插件目录。",
+    previewPlugin: "预览权限",
+    installPlugin: "确认权限并安装",
+    installedPlugins: "已发现插件",
+    noPlugins: "还没有发现插件。",
+    pluginPermissions: "请求权限",
+    pluginConfirmHint: "逐项勾选后才可以安装。安装只复制文件，不下载、不执行插件代码。",
+    pluginInstallBlocked: "请先确认全部权限。",
+    pluginInstalled: "插件已安装",
+    pluginHooks: "Hooks",
+    pluginInstallDir: "安装目录",
+    permissionRisk: "风险",
     capabilities: "学习能力",
     noSecrets: "Study Anything 不保存你的推理凭证。",
     healthy: "连接正常",
@@ -160,6 +203,8 @@ const copy = {
     loadingAnswer: "正在提交回答",
     loadingAgent: "正在保存 Agent",
     loadingTest: "正在测试连接",
+    loadingPluginPreview: "正在读取插件 manifest",
+    loadingPluginInstall: "正在安装插件",
     loadingRefresh: "正在刷新"
   },
   en: {
@@ -234,6 +279,22 @@ const copy = {
     configuredAgents: "Configured agents",
     noAgents: "No agents configured.",
     agentSetupHint: "If you do not have your own agent yet, keep using the demo agent. Once you save an HTTP agent, future learning uses it by default.",
+    pluginTrustTitle: "Plugin Trust and Install",
+    pluginTrustLead: "Install only a local plugin directory you explicitly choose. Study Anything validates the manifest and asks you to confirm permissions first.",
+    pluginSourcePath: "Plugin directory",
+    pluginPathPlaceholder: "Example: plugins/example-exporter or /path/to/plugin",
+    pluginPathRequired: "Enter a local plugin directory first.",
+    previewPlugin: "Preview permissions",
+    installPlugin: "Confirm and install",
+    installedPlugins: "Discovered plugins",
+    noPlugins: "No plugins discovered.",
+    pluginPermissions: "Requested permissions",
+    pluginConfirmHint: "Check each permission before installing. Install copies files only; it does not download or execute plugin code.",
+    pluginInstallBlocked: "Confirm every permission first.",
+    pluginInstalled: "Plugin installed",
+    pluginHooks: "Hooks",
+    pluginInstallDir: "Install directory",
+    permissionRisk: "Risk",
     capabilities: "Learning capabilities",
     noSecrets: "Study Anything never stores your reasoning credentials.",
     healthy: "Connection ok",
@@ -246,6 +307,8 @@ const copy = {
     loadingAnswer: "Submitting answer",
     loadingAgent: "Saving agent",
     loadingTest: "Testing connection",
+    loadingPluginPreview: "Reading plugin manifest",
+    loadingPluginInstall: "Installing plugin",
     loadingRefresh: "Refreshing"
   }
 } as const;
@@ -311,6 +374,11 @@ function App() {
   const [providerEndpoint, setProviderEndpoint] = useState("http://127.0.0.1:8787");
   const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
   const [agentTest, setAgentTest] = useState<string | null>(null);
+  const [plugins, setPlugins] = useState<PluginStatus[]>([]);
+  const [pluginSourcePath, setPluginSourcePath] = useState("plugins/example-exporter");
+  const [pluginPreview, setPluginPreview] = useState<PluginStatus | null>(null);
+  const [confirmedPluginPermissions, setConfirmedPluginPermissions] = useState<string[]>([]);
+  const [pluginInstallResult, setPluginInstallResult] = useState<string | null>(null);
   const [guideDismissed, setGuideDismissed] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("study-anything-onboarding-dismissed") === "true";
@@ -330,6 +398,10 @@ function App() {
   const firstRun = sessions.length === 0 && !session;
   const showOnboarding = firstRun && !guideDismissed;
   const sourceStats = { words: wordCount(sourceText), chars: sourceText.length };
+  const previewPermissions = pluginPreview?.manifest?.permissions ?? [];
+  const canInstallPlugin =
+    Boolean(pluginPreview?.manifest) &&
+    previewPermissions.every((permission) => confirmedPluginPermissions.includes(permission));
 
   async function runTask<T>(label: string, task: () => Promise<T>) {
     setLoading(label);
@@ -346,14 +418,16 @@ function App() {
 
   async function refresh(currentSessionId = session?.session_id) {
     await runTask(t.loadingRefresh, async () => {
-      const [agents, sessionList, hitl] = await Promise.all([
+      const [agents, sessionList, hitl, pluginList] = await Promise.all([
         api<AgentStatus>("/v1/agents/status"),
         api<Session[]>("/v1/sessions"),
-        api<HitlInterrupt[]>("/v1/hitl")
+        api<HitlInterrupt[]>("/v1/hitl"),
+        api<PluginStatus[]>("/v1/plugins")
       ]);
       setAgentStatus(agents);
       setSessions(sessionList);
       setHitlTasks(hitl);
+      setPlugins(pluginList);
       if (currentSessionId) {
         setSession(await api<Session>(`/v1/sessions/${currentSessionId}`));
       }
@@ -487,6 +561,52 @@ function App() {
     });
   }
 
+  async function previewPlugin() {
+    const sourcePath = pluginSourcePath.trim();
+    if (!sourcePath) {
+      setError(t.pluginPathRequired);
+      return;
+    }
+    await runTask(t.loadingPluginPreview, async () => {
+      const preview = await api<PluginStatus>("/v1/plugins/preview", {
+        method: "POST",
+        body: JSON.stringify({ source_path: sourcePath })
+      });
+      setPluginPreview(preview);
+      setConfirmedPluginPermissions([]);
+      setPluginInstallResult(null);
+    });
+  }
+
+  function togglePluginPermission(permission: string) {
+    setConfirmedPluginPermissions((current) =>
+      current.includes(permission)
+        ? current.filter((item) => item !== permission)
+        : [...current, permission]
+    );
+  }
+
+  async function installPlugin() {
+    if (!pluginPreview?.manifest) return;
+    if (!canInstallPlugin) {
+      setError(t.pluginInstallBlocked);
+      return;
+    }
+    await runTask(t.loadingPluginInstall, async () => {
+      const installed = await api<PluginStatus>("/v1/plugins/install", {
+        method: "POST",
+        body: JSON.stringify({
+          source_path: pluginSourcePath.trim(),
+          confirmed_permissions: confirmedPluginPermissions
+        })
+      });
+      setPluginInstallResult(`${t.pluginInstalled}: ${installed.manifest?.name ?? installed.path}`);
+      setPluginPreview(null);
+      setConfirmedPluginPermissions([]);
+      await refresh();
+    });
+  }
+
   async function resolveTask(taskId: string) {
     if (!session) return;
     const updated = await runTask(t.loadingRefresh, () =>
@@ -585,6 +705,14 @@ function App() {
             <AgentWorkspace
               agentStatus={agentStatus}
               agentTest={agentTest}
+              canInstallPlugin={canInstallPlugin}
+              confirmedPluginPermissions={confirmedPluginPermissions}
+              installPlugin={installPlugin}
+              pluginInstallResult={pluginInstallResult}
+              pluginPreview={pluginPreview}
+              plugins={plugins}
+              pluginSourcePath={pluginSourcePath}
+              previewPlugin={previewPlugin}
               providerEndpoint={providerEndpoint}
               providerKind={providerKind}
               providerLabel={providerLabel}
@@ -595,8 +723,10 @@ function App() {
               setProviderKind={setProviderKind}
               setProviderLabel={setProviderLabel}
               setSelectedProviderId={setSelectedProviderId}
+              setPluginSourcePath={setPluginSourcePath}
               t={t}
               testProvider={testProvider}
+              togglePluginPermission={togglePluginPermission}
             />
           )}
         </div>
@@ -847,6 +977,14 @@ function FirstRunGuide(props: {
 function AgentWorkspace(props: {
   agentStatus: AgentStatus | null;
   agentTest: string | null;
+  canInstallPlugin: boolean;
+  confirmedPluginPermissions: string[];
+  installPlugin: () => void;
+  pluginInstallResult: string | null;
+  pluginPreview: PluginStatus | null;
+  plugins: PluginStatus[];
+  pluginSourcePath: string;
+  previewPlugin: () => void;
   providerEndpoint: string;
   providerKind: string;
   providerLabel: string;
@@ -857,12 +995,22 @@ function AgentWorkspace(props: {
   setProviderKind: (value: string) => void;
   setProviderLabel: (value: string) => void;
   setSelectedProviderId: (value: string | null) => void;
+  setPluginSourcePath: (value: string) => void;
   t: (typeof copy)[Locale];
   testProvider: (providerId?: string | null) => void;
+  togglePluginPermission: (permission: string) => void;
 }) {
   const {
     agentStatus,
     agentTest,
+    canInstallPlugin,
+    confirmedPluginPermissions,
+    installPlugin,
+    pluginInstallResult,
+    pluginPreview,
+    plugins,
+    pluginSourcePath,
+    previewPlugin,
     providerEndpoint,
     providerKind,
     providerLabel,
@@ -873,9 +1021,12 @@ function AgentWorkspace(props: {
     setProviderKind,
     setProviderLabel,
     setSelectedProviderId,
+    setPluginSourcePath,
     t,
-    testProvider
+    testProvider,
+    togglePluginPermission
   } = props;
+  const previewManifest = pluginPreview?.manifest;
 
   return (
     <div className="agentGrid">
@@ -938,6 +1089,88 @@ function AgentWorkspace(props: {
             </button>
           ))}
           {agentStatus?.providers.length === 0 && <p className="emptyState">{t.noAgents}</p>}
+        </div>
+      </section>
+
+      <section className="sidePanel pluginTrust">
+        <div className="pluginInstall">
+          <div>
+            <h3>{t.pluginTrustTitle}</h3>
+            <p>{t.pluginTrustLead}</p>
+          </div>
+          <label>
+            {t.pluginSourcePath}
+            <input
+              placeholder={t.pluginPathPlaceholder}
+              value={pluginSourcePath}
+              onChange={(event) => setPluginSourcePath(event.target.value)}
+            />
+          </label>
+          <div className="composerActions">
+            <button onClick={previewPlugin}>{t.previewPlugin}</button>
+            <button className="primary" disabled={!canInstallPlugin} onClick={installPlugin}>
+              {t.installPlugin}
+            </button>
+          </div>
+          {pluginPreview && (
+            <div className="permissionReview">
+              <div className="panelHeading">
+                <h3>{previewManifest?.name ?? pluginPreview.status}</h3>
+                <span className={`statusPill ${pluginPreview.status === "ready" ? "good" : "warn"}`}>
+                  {pluginPreview.status}
+                </span>
+              </div>
+              <small>{pluginPreview.message}</small>
+              {previewManifest && (
+                <>
+                  <p className="pluginMeta">
+                    {t.pluginHooks}: {previewManifest.hooks.join(", ")}
+                  </p>
+                  <strong>{t.pluginPermissions}</strong>
+                  <div className="permissionList">
+                    {pluginPreview.permission_details.map((detail) => (
+                      <label className={`permissionItem ${detail.risk}`} key={detail.permission}>
+                        <input
+                          checked={confirmedPluginPermissions.includes(detail.permission)}
+                          onChange={() => togglePluginPermission(detail.permission)}
+                          type="checkbox"
+                        />
+                        <span>
+                          <b>{detail.label}</b>
+                          <small>
+                            {detail.permission} · {t.permissionRisk}: {detail.risk}
+                          </small>
+                          <p>{detail.description}</p>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                  <p className="feedbackText">{t.pluginConfirmHint}</p>
+                  {pluginPreview.install_dir && (
+                    <small>
+                      {t.pluginInstallDir}: {pluginPreview.install_dir}
+                    </small>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+          {pluginInstallResult && <p className="feedbackText good">{pluginInstallResult}</p>}
+        </div>
+
+        <div className="pluginDiscovery">
+          <h3>{t.installedPlugins}</h3>
+          <div className="providerList">
+            {plugins.map((plugin) => (
+              <div className="providerCard pluginCard" key={`${plugin.path}-${plugin.manifest?.plugin_id ?? plugin.status}`}>
+                <strong>{plugin.manifest?.name ?? plugin.path}</strong>
+                <small>{plugin.manifest?.plugin_id ?? plugin.message}</small>
+                {plugin.manifest && <small>{plugin.manifest.permissions.join(" · ")}</small>}
+                <small>{plugin.path}</small>
+              </div>
+            ))}
+            {plugins.length === 0 && <p className="emptyState">{t.noPlugins}</p>}
+          </div>
         </div>
       </section>
     </div>

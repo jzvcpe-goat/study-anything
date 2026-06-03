@@ -55,3 +55,10 @@ generated insights.
 - `GET /v1/system/status`
 - `GET /v1/system/integrations`
 - `GET /v1/plugins`
+- `POST /v1/plugins/preview`
+- `POST /v1/plugins/install`
+
+Plugin install is local-first. Preview validates a user-selected local directory and returns the manifest,
+permission details, and target install directory without copying or executing plugin code. Install requires
+the caller to echo the exact manifest permission list as `confirmed_permissions`; otherwise the API returns
+`409`.

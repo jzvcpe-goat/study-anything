@@ -207,7 +207,11 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scri
 
 Bundled plugins live in `/app/plugins` inside the API container. Locally installed plugins live in the writable Study Anything data volume under `/data/study-anything/plugins`. Community plugin directories can also be added to `STUDY_ANYTHING_PLUGIN_DIRS`.
 
-For source checkouts, install one explicitly selected local plugin with:
+Use the Web Agent page to preview one explicitly selected local plugin directory, confirm each requested
+permission, and copy it into the writable plugin data directory. The API never downloads or executes plugin
+code during this install step.
+
+For source checkouts, the same local install path is available from the CLI:
 
 ```bash
 python3 scripts/install_local_plugin.py /path/to/plugin
