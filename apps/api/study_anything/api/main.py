@@ -97,6 +97,16 @@ class ResolveHitlRequest(BaseModel):
     payload: Dict[str, Any] = Field(default_factory=dict)
 
 
+class PluginPreviewRequest(BaseModel):
+    source_path: str
+
+
+class PluginInstallRequest(BaseModel):
+    source_path: str
+    confirmed_permissions: List[str] = Field(default_factory=list)
+    replace_existing: bool = False
+
+
 def _env(primary: str, legacy: str, default: str) -> str:
     return os.getenv(primary) or os.getenv(legacy) or default
 
@@ -126,6 +136,7 @@ store = create_session_store(
     database_url=os.getenv("DATABASE_URL"),
     backend=os.getenv("SESSION_STORE", "json"),
 )
+plugin_install_dir = Path(os.getenv("STUDY_ANYTHING_PLUGIN_INSTALL_DIR") or data_dir / "plugins")
 plugin_dirs = [
     Path(value)
     for value in _env(
@@ -135,6 +146,8 @@ plugin_dirs = [
     ).split(os.pathsep)
     if value.strip()
 ]
+if plugin_install_dir not in plugin_dirs:
+    plugin_dirs.append(plugin_install_dir)
 plugins = PluginRegistry(plugin_dirs)
 
 
@@ -388,6 +401,48 @@ def create_app() -> FastAPI:
     @app.get("/v1/plugins")
     def list_plugins() -> list[dict[str, object]]:
         return [status.public_dict() for status in plugins.discover()]
+
+    @app.post("/v1/plugins/preview")
+    def preview_plugin(payload: PluginPreviewRequest) -> dict[str, object]:
+        status = plugins.preview_local(Path(payload.source_path).expanduser())
+        return {
+            **status.public_dict(),
+            "install_dir": str(plugin_install_dir),
+            "requires_confirmation": bool(status.manifest and status.manifest.permissions),
+        }
+
+    @app.post("/v1/plugins/install")
+    def install_plugin(payload: PluginInstallRequest) -> dict[str, object]:
+        source_path = Path(payload.source_path).expanduser()
+        preview = plugins.preview_local(source_path)
+        if preview.manifest is None:
+            raise HTTPException(status_code=400, detail=preview.message)
+        expected_permissions = sorted(preview.manifest.permissions)
+        confirmed_permissions = sorted(set(payload.confirmed_permissions))
+        if confirmed_permissions != expected_permissions:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "message": "Plugin permissions must be explicitly confirmed before installation.",
+                    "expected_permissions": expected_permissions,
+                    "confirmed_permissions": confirmed_permissions,
+                },
+            )
+        try:
+            status = plugins.install_local(
+                source_path,
+                plugin_install_dir,
+                replace_existing=payload.replace_existing,
+            )
+        except FileExistsError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except (OSError, ValueError) as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        return {
+            **status.public_dict(),
+            "install_dir": str(plugin_install_dir),
+            "requires_confirmation": False,
+        }
 
     return app
 

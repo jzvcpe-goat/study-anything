@@ -44,16 +44,30 @@ Bundled examples:
 
 ## Permission Model
 
-Plugins must declare permissions. The alpha validator rejects missing IDs, unsupported hook names, and unsupported permissions.
+Plugins must declare permissions. The alpha validator rejects missing IDs, unsupported hook names, and unsupported permissions. Discovery and preview responses include permission labels, descriptions, and coarse risk levels so users can review what a plugin is asking for before installation.
 
 ## Local Installation
 
-Install a plugin from an explicitly selected local directory:
+Install a plugin from an explicitly selected local directory in the Web Agent page:
+
+1. Paste a local or container-visible plugin directory path.
+2. Preview the manifest.
+3. Review and check every requested permission.
+4. Install only after the permission list is confirmed.
+
+The same flow is available through the API:
+
+- `POST /v1/plugins/preview`
+- `POST /v1/plugins/install`
+
+`/v1/plugins/install` requires the caller to send `confirmed_permissions` matching the manifest exactly. A missing or partial confirmation is rejected with `409`.
+
+You can also use the CLI:
 
 ```bash
 python3 scripts/install_local_plugin.py /path/to/plugin
 ```
 
-The installer validates `plugin.json`, copies the directory into `data/plugins`, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
+The installer validates `plugin.json`, copies the directory into the local plugin data directory, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
 
-The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions. Remote registries, signing, review metadata, and an install UI remain future trust-layer work.
+The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions. Remote registries, signing, review metadata, and marketplace payments remain future trust-layer work.

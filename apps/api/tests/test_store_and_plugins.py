@@ -60,6 +60,32 @@ class StoreAndPluginTests(unittest.TestCase):
             self.assertEqual(len(statuses), 1)
             self.assertEqual(statuses[0].status, "ready")
             self.assertEqual(statuses[0].manifest.plugin_id if statuses[0].manifest else None, "demo-plugin")
+            public = statuses[0].public_dict()
+            self.assertEqual(public["permission_details"][0]["permission"], "read:sessions")
+
+    def test_plugin_registry_previews_local_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            plugin_dir = Path(tmpdir) / "demo-plugin"
+            plugin_dir.mkdir()
+            (plugin_dir / "plugin.json").write_text(
+                json.dumps(
+                    {
+                        "id": "demo-plugin",
+                        "name": "Demo Plugin",
+                        "version": "0.1.0",
+                        "apiVersion": "0.1",
+                        "entrypoint": "plugin.py",
+                        "hooks": ["exporter"],
+                        "permissions": ["read:sessions", "network:http"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            status = PluginRegistry([]).preview_local(plugin_dir)
+
+            self.assertEqual(status.status, "ready")
+            self.assertEqual(len(status.public_dict()["permission_details"]), 2)
 
     def test_plugin_registry_reports_invalid_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

@@ -4,7 +4,7 @@ import unittest
 
 from _path import ROOT  # noqa: F401
 
-from study_anything.core.plugin_manifest import validate_manifest
+from study_anything.core.plugin_manifest import describe_permissions, validate_manifest
 
 
 class PluginManifestTests(unittest.TestCase):
@@ -65,6 +65,13 @@ class PluginManifestTests(unittest.TestCase):
                     "permissions": ["root"],
                 }
             )
+
+    def test_describes_permission_risk(self) -> None:
+        details = describe_permissions(["read:sessions", "network:http"])
+
+        self.assertEqual(details[0].permission, "read:sessions")
+        self.assertEqual(details[0].risk, "medium")
+        self.assertEqual(details[1].risk, "high")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable, List, Optional
 
-from .plugin_manifest import PluginManifest, validate_manifest
+from .plugin_manifest import PluginManifest, describe_permissions, validate_manifest
 
 
 @dataclass(frozen=True)
@@ -19,8 +19,14 @@ class PluginStatus:
     message: str
 
     def public_dict(self) -> dict[str, object]:
+        permission_details: list[dict[str, str]] = []
+        if self.manifest:
+            permission_details = [
+                detail.public_dict() for detail in describe_permissions(self.manifest.permissions)
+            ]
         return {
             "manifest": asdict(self.manifest) if self.manifest else None,
+            "permission_details": permission_details,
             "path": self.path,
             "status": self.status,
             "message": self.message,
@@ -39,6 +45,12 @@ class PluginRegistry:
             for manifest_path in sorted(plugin_dir.glob("*/plugin.json")):
                 statuses.append(self._load_manifest(manifest_path))
         return statuses
+
+    def preview_local(self, source_dir: Path) -> PluginStatus:
+        """Validate one explicitly selected local plugin without installing it."""
+
+        source = source_dir.resolve()
+        return self._load_manifest(source / "plugin.json")
 
     def install_local(
         self,

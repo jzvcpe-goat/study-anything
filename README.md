@@ -112,9 +112,9 @@ skills/study-anything/     Repo-local Agent skill for CLI learning flows
 
 ## Plugin Ecosystem
 
-The alpha plugin surface supports manifest validation and discovery for importers, agent providers, agent tools, source verifiers, quiz generators, graders, exporters, and UI panels. See `docs/plugins.md` and `plugins/example-exporter`.
+The alpha plugin surface supports manifest validation, discovery, and permission-gated local installation for importers, agent providers, agent tools, source verifiers, quiz generators, graders, exporters, and UI panels. See `docs/plugins.md` and `plugins/example-exporter`.
 
-Install an explicitly selected local plugin without downloading or executing code:
+Install an explicitly selected local plugin from the Web Agent page, or use the CLI without downloading or executing code:
 
 ```bash
 python3 scripts/install_local_plugin.py plugins/example-exporter
