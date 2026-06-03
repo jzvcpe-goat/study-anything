@@ -61,6 +61,21 @@ button.primary {
   color: #fffaf0;
 }
 
+button.textButton {
+  min-height: 32px;
+  border-color: transparent;
+  background: transparent;
+  padding: 4px 0;
+  color: var(--muted);
+  text-align: left;
+}
+
+button.textButton:hover {
+  background: transparent;
+  color: var(--moss-deep);
+  transform: none;
+}
+
 button:disabled,
 input:disabled {
   cursor: not-allowed;
@@ -400,7 +415,61 @@ small {
 .naturalComposer {
   grid-column: 2;
   grid-row: 1 / span 2;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+}
+
+.firstRunGuide {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid rgba(60, 57, 49, 0.15);
+  border-bottom: 1px solid rgba(60, 57, 49, 0.15);
+  padding: 14px 0;
+}
+
+.firstRunCopy h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.firstRunCopy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.guideSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.guideSteps article {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-height: 168px;
+  border-left: 3px solid rgba(47, 107, 82, 0.35);
+  padding: 3px 0 3px 12px;
+}
+
+.guideSteps article:nth-child(2) {
+  border-left-color: rgba(201, 147, 52, 0.55);
+}
+
+.guideSteps article:nth-child(3) {
+  border-left-color: rgba(42, 111, 128, 0.5);
+}
+
+.guideSteps p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.guideSteps button {
+  align-self: end;
+  width: fit-content;
 }
 
 .messageList {
@@ -570,6 +639,20 @@ small {
   font-weight: 700;
 }
 
+.agentModeNote {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 18px;
+  padding: 12px 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.agentModeNote.good {
+  color: var(--moss-deep);
+  font-weight: 700;
+}
+
 .capabilitySentence {
   max-width: 580px;
   margin: 0;
@@ -686,8 +769,28 @@ small {
     min-height: auto;
   }
 
+  .naturalComposer,
+  .learningGrid .detailRail .sidePanel:first-child,
+  .learningGrid .detailRail .sidePanel:last-child {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .learningGrid .detailRail {
+    display: grid;
+    gap: 14px;
+  }
+
   .sessionList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guideSteps {
+    grid-template-columns: 1fr;
+  }
+
+  .guideSteps article {
+    min-height: auto;
   }
 }
 
