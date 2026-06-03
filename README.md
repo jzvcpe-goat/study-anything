@@ -47,6 +47,9 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
+`doctor.sh` checks Docker, Compose, required tools, port availability, API/Web health, Agent gateway
+reachability hints, plugin directories, and recovery commands before you launch.
+
 The default Docker profile is `core`: API, Web UI, and Postgres. It starts in the background so the
 terminal returns. Enable observability and optional topology services later with
 `STACK_PROFILE=full ./scripts/launch_self_host.sh`.

@@ -46,6 +46,38 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
 
+## Troubleshooting And Recovery
+
+Run the doctor before and after launch when a self-host setup does not behave as expected:
+
+```bash
+./scripts/doctor.sh
+```
+
+It checks Docker, Compose, required local tools, Compose config validity, profile-specific port
+availability, API/Web health, Agent gateway hints, and plugin directories. Port warnings do not always
+mean failure; they can also mean the stack is already running. If a launch stalls, inspect the running
+services and logs:
+
+```bash
+docker compose --env-file .env -f infra/compose/docker-compose.yml ps
+docker compose --env-file .env -f infra/compose/docker-compose.yml logs --tail=200 api web app-postgres
+```
+
+Common recovery paths:
+
+- Docker daemon unavailable: start Docker Desktop or Docker Engine, then rerun `./scripts/doctor.sh`.
+- Image pull failure: rerun with published images, a mirror override, or `PULL_PUBLISHED_IMAGES=false`
+  only when images are already cached locally.
+- Port conflict: change the matching `*_PORT` value in `.env` and relaunch.
+- API unhealthy: check `api` and `app-postgres` logs first; the Web service waits on API health.
+- Agent gateway unreachable: use `STACK_PROFILE=smoke` to validate with the mock HTTP Agent, then switch
+  to your own gateway endpoint.
+- Plugin install confusion: the Web Agent page previews local plugin permissions before copying files;
+  installed plugins live in the writable Study Anything data volume.
+- Risky upgrade or restore: run `python3 scripts/self_host_data.py backup` before changing volumes,
+  images, or environment values.
+
 ## Using Published Images
 
 After the GitHub repository publishes GHCR images, you can skip local API/Web builds:
