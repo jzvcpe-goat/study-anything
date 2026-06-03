@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 49%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 52%.
 
 ## What Is Ready
 
@@ -17,6 +17,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - CI for API tests, Web build, Compose smoke, FalkorDB projection, and backup/restore rollback.
 - Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
 - One-command published-image core launch with sequential pulls and visible cold-download progress.
+- Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
 
 ## What Blocks Commercial Launch
 
@@ -28,11 +29,11 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
 - Product analytics for PMF: weekly active learners, repeat sessions, mastery delta, plugin installs, hosted waitlist.
-- Polished onboarding and documentation for non-developer users.
+- Non-developer polish beyond first-run: installer UX, recovery guidance, support docs, and upgrade confidence.
 
 ## Suggested Branch Tracks
 
-- `codex/ui-natural-language-workspace`: natural-language-first UI and bilingual onboarding.
+- `codex/guided-first-run-onboarding`: natural-language-first UI, bilingual first-run path, and Agent setup clarity.
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.
 - `feature/encrypted-sync-design`: Sync protocol, key ownership, and hosted convenience boundary.
 - `feature/plugin-trust`: plugin permissions, signing, review metadata, and install UX.
@@ -41,9 +42,9 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 ## Next Commercial Milestone
 
-Reach 50-55% readiness by making the self-host Alpha friendly for real learners:
+Reach 55-60% readiness by making the self-host Alpha dependable for real learners:
 
-- Guided first-run onboarding for non-developer learners.
 - Plugin installation UX with permission confirmation.
 - Privacy-preserving PMF metrics and an opt-in hosted waitlist.
 - Docker soak testing and trace retention guidance.
+- Plain-language recovery docs for failed Docker pulls, unhealthy Agent gateways, and backup restore drills.

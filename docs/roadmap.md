@@ -34,6 +34,13 @@
 - Visible Docker layer progress during published-image pulls.
 - Patch release for slow-network first-run clarity.
 
+## v0.2.3-alpha
+
+- Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
+- Agent status copy distinguishes the deterministic demo agent from a learner-configured real Agent.
+- Web learning sessions default to the learner's Agent when one is configured.
+- Mobile learning layout keeps the source, composer, and progress areas readable instead of squeezing columns.
+
 ## v0.3 Next
 
 - Importer plugin SDK.

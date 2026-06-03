@@ -69,6 +69,12 @@ const CAPABILITIES = [
   "embedding.create"
 ];
 
+const DEMO_SOURCE = {
+  title: "Asymptotic Theory Reading",
+  reference: "demo://reading/asymptotic-theory",
+  text: "A precise learning system should bind every generated question to a source, grade answers with a rubric, and update mastery only when evidence supports the change."
+};
+
 const copy = {
   zh: {
     appMode: "本地优先学习系统",
@@ -82,9 +88,23 @@ const copy = {
     learnTitle: "今天想学什么？",
     learnSubtitle: "粘贴材料或直接描述目标，Study Anything 会生成带来源约束的练习并追踪掌握度。",
     agentReady: "Agent 已连接",
+    demoAgentReady: "演示 Agent 可用",
     agentMissing: "未连接 Agent",
+    setupTitle: "第一次使用，从这里开始",
+    setupLead: "先用演示 Agent 跑通学习闭环，再把真实推理交给你自己的 Agent。",
+    setupDemoTitle: "1. 跑通本地演示",
+    setupDemoBody: "不需要任何密钥，验证提问、作答、评分和掌握度更新。",
+    setupSourceTitle: "2. 换成你的材料",
+    setupSourceBody: "粘贴文章、笔记或课程片段，问题会绑定到来源。",
+    setupAgentTitle: "3. 接入你的 Agent",
+    setupAgentBody: "真实模型、工具和凭证留在你的网关里。",
+    runDemo: "运行演示",
+    useOwnNotes: "使用我的材料",
+    connectAgent: "连接 Agent",
+    dismissGuide: "稍后再说",
     inputPlaceholder: "例如：帮我学习这段关于渐近理论的材料，生成测验，并在我回答后评估掌握度。",
     answerPlaceholder: "直接回答当前问题。系统会基于材料和评分标准给出反馈。",
+    answerRequired: "先写下你的回答，再提交评分。",
     start: "开始学习",
     answer: "提交回答",
     useSource: "使用学习材料",
@@ -93,6 +113,8 @@ const copy = {
     title: "标题",
     reference: "来源",
     sourceText: "正文",
+    sourceTextPlaceholder: "粘贴你要学习的材料。可以是课堂笔记、论文片段、项目文档或阅读摘录。",
+    sourceRequired: "先粘贴学习材料，或在上方输入你要学习的内容。",
     verified: "来源已校验",
     draft: "本地草稿",
     words: "词",
@@ -125,6 +147,7 @@ const copy = {
     testAgent: "测试连接",
     configuredAgents: "已配置 Agent",
     noAgents: "还没有配置 Agent。",
+    agentSetupHint: "如果你暂时没有自己的 Agent，可以继续使用演示 Agent；一旦保存 HTTP Agent，后续学习会默认交给它处理。",
     capabilities: "学习能力",
     noSecrets: "Study Anything 不保存你的推理凭证。",
     healthy: "连接正常",
@@ -151,9 +174,23 @@ const copy = {
     learnTitle: "What do you want to learn today?",
     learnSubtitle: "Paste source material or describe a goal. Study Anything turns it into grounded practice and tracks mastery.",
     agentReady: "Agent connected",
+    demoAgentReady: "Demo Agent ready",
     agentMissing: "Agent not connected",
+    setupTitle: "Start here",
+    setupLead: "Run the demo loop first, then move real reasoning into your own agent.",
+    setupDemoTitle: "1. Run the local demo",
+    setupDemoBody: "No key required. Verify quiz, answer, grading, and mastery updates.",
+    setupSourceTitle: "2. Use your material",
+    setupSourceBody: "Paste notes, readings, or docs. Questions stay bound to the source.",
+    setupAgentTitle: "3. Connect your agent",
+    setupAgentBody: "Keep real models, tools, and credentials inside your gateway.",
+    runDemo: "Run demo",
+    useOwnNotes: "Use my notes",
+    connectAgent: "Connect agent",
+    dismissGuide: "Later",
     inputPlaceholder: "Example: help me study this passage, generate a quiz, and evaluate my mastery after I answer.",
     answerPlaceholder: "Answer the current question. The system will grade it against the source and rubric.",
+    answerRequired: "Write your answer before submitting it for grading.",
     start: "Start learning",
     answer: "Submit answer",
     useSource: "Use study material",
@@ -162,6 +199,8 @@ const copy = {
     title: "Title",
     reference: "Source",
     sourceText: "Text",
+    sourceTextPlaceholder: "Paste the material you want to study. Notes, paper excerpts, docs, and course snippets all work.",
+    sourceRequired: "Paste study material first, or describe what you want to learn above.",
     verified: "Source verified",
     draft: "Local draft",
     words: "words",
@@ -194,6 +233,7 @@ const copy = {
     testAgent: "Test connection",
     configuredAgents: "Configured agents",
     noAgents: "No agents configured.",
+    agentSetupHint: "If you do not have your own agent yet, keep using the demo agent. Once you save an HTTP agent, future learning uses it by default.",
     capabilities: "Learning capabilities",
     noSecrets: "Study Anything never stores your reasoning credentials.",
     healthy: "Connection ok",
@@ -262,17 +302,19 @@ function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [hitlTasks, setHitlTasks] = useState<HitlInterrupt[]>([]);
-  const [title, setTitle] = useState("Asymptotic Theory Reading");
-  const [reference, setReference] = useState("demo://reading/asymptotic-theory");
-  const [sourceText, setSourceText] = useState(
-    "A precise learning system should bind every generated question to a source, grade answers with a rubric, and update mastery only when evidence supports the change."
-  );
+  const [title, setTitle] = useState(DEMO_SOURCE.title);
+  const [reference, setReference] = useState(DEMO_SOURCE.reference);
+  const [sourceText, setSourceText] = useState(DEMO_SOURCE.text);
   const [composer, setComposer] = useState("");
   const [providerKind, setProviderKind] = useState("http_agent");
   const [providerLabel, setProviderLabel] = useState("Local HTTP Agent");
   const [providerEndpoint, setProviderEndpoint] = useState("http://127.0.0.1:8787");
   const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
   const [agentTest, setAgentTest] = useState<string | null>(null);
+  const [guideDismissed, setGuideDismissed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("study-anything-onboarding-dismissed") === "true";
+  });
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -280,7 +322,13 @@ function App() {
   const answeredIds = new Set(session?.answers.map((answer) => answer.item_id) ?? []);
   const activeQuiz = session?.quiz_items.find((item) => !answeredIds.has(item.item_id)) ?? null;
   const latestGrade = session?.grading_results[session.grading_results.length - 1] ?? null;
-  const agentReady = Boolean(agentStatus?.defaults["quiz.generate"]);
+  const defaultQuizProviderId = agentStatus?.defaults["quiz.generate"] ?? null;
+  const defaultQuizProvider =
+    agentStatus?.providers.find((provider) => provider.provider_id === defaultQuizProviderId) ?? null;
+  const agentReady = Boolean(defaultQuizProviderId);
+  const realAgentReady = Boolean(defaultQuizProvider && defaultQuizProvider.kind !== "fake_agent");
+  const firstRun = sessions.length === 0 && !session;
+  const showOnboarding = firstRun && !guideDismissed;
   const sourceStats = { words: wordCount(sourceText), chars: sourceText.length };
 
   async function runTask<T>(label: string, task: () => Promise<T>) {
@@ -316,7 +364,7 @@ function App() {
     await runTask(t.loadingStart, async () => {
       const created = await api<Session>("/v1/sessions", {
         method: "POST",
-        body: JSON.stringify({ user_id: "local-user", track: "ACADEMIC", use_demo_agent: true })
+        body: JSON.stringify({ user_id: "local-user", track: "ACADEMIC", use_demo_agent: !realAgentReady })
       });
       const withReading = await api<Session>(`/v1/sessions/${created.session_id}/reading`, {
         method: "POST",
@@ -331,6 +379,10 @@ function App() {
 
   async function submitAnswer(text: string) {
     if (!session || !activeQuiz) return;
+    if (!text.trim()) {
+      setError(t.answerRequired);
+      return;
+    }
     await runTask(t.loadingAnswer, async () => {
       const updated = await api<Session>(`/v1/sessions/${session.session_id}/answers`, {
         method: "POST",
@@ -345,6 +397,10 @@ function App() {
   async function handleComposer() {
     const value = composer.trim();
     if (!value && !activeQuiz) {
+      if (!sourceText.trim()) {
+        setError(t.sourceRequired);
+        return;
+      }
       await startLearning({ title, reference, text: sourceText });
       return;
     }
@@ -356,8 +412,34 @@ function App() {
     await startLearning({
       title: naturalTitle,
       reference: reference.trim() || "local://study-anything",
-      text: value.length > 24 ? value : sourceText
+      text: value.length > 24 || !sourceText.trim() ? value : sourceText
     });
+  }
+
+  async function startFromSource() {
+    if (!sourceText.trim()) {
+      setError(t.sourceRequired);
+      return;
+    }
+    await startLearning({ title, reference, text: sourceText });
+  }
+
+  function dismissGuide() {
+    setGuideDismissed(true);
+    window.localStorage.setItem("study-anything-onboarding-dismissed", "true");
+  }
+
+  function prepareOwnNotes() {
+    setTitle(locale === "zh" ? "我的学习材料" : "My study material");
+    setReference("local://my-notes");
+    setSourceText("");
+  }
+
+  async function runDemoSource() {
+    setTitle(DEMO_SOURCE.title);
+    setReference(DEMO_SOURCE.reference);
+    setSourceText(DEMO_SOURCE.text);
+    await startLearning(DEMO_SOURCE);
   }
 
   async function loadSession(sessionId: string) {
@@ -454,7 +536,9 @@ function App() {
               EN
             </button>
           </div>
-          <span className={`statusPill ${agentReady ? "good" : "warn"}`}>{agentReady ? t.agentReady : t.agentMissing}</span>
+          <span className={`statusPill ${agentReady ? "good" : "warn"}`}>
+            {realAgentReady ? t.agentReady : agentReady ? t.demoAgentReady : t.agentMissing}
+          </span>
         </div>
       </header>
 
@@ -475,12 +559,17 @@ function App() {
               activeQuiz={activeQuiz}
               composer={composer}
               hitlTasks={hitlTasks}
+              onConnectAgent={() => setView("agent")}
               latestGrade={latestGrade}
               onComposerChange={setComposer}
+              onDismissGuide={dismissGuide}
               onResolve={resolveTask}
-              onStartFromSource={() => startLearning({ title, reference, text: sourceText })}
+              onStartFromSource={startFromSource}
+              onRunDemo={runDemoSource}
+              onUseOwnNotes={prepareOwnNotes}
               onSubmit={handleComposer}
               progress={progressFor(session?.stage)}
+              realAgentReady={realAgentReady}
               reference={reference}
               session={session}
               setReference={setReference}
@@ -488,6 +577,7 @@ function App() {
               setTitle={setTitle}
               sourceStats={sourceStats}
               sourceText={sourceText}
+              showOnboarding={showOnboarding}
               t={t}
               title={title}
             />
@@ -498,6 +588,7 @@ function App() {
               providerEndpoint={providerEndpoint}
               providerKind={providerKind}
               providerLabel={providerLabel}
+              realAgentReady={realAgentReady}
               saveProvider={saveProvider}
               selectedProviderId={selectedProviderId}
               setProviderEndpoint={setProviderEndpoint}
@@ -543,11 +634,16 @@ function LearningWorkspace(props: {
   composer: string;
   hitlTasks: HitlInterrupt[];
   latestGrade: GradingResult | null;
+  onConnectAgent: () => void;
   onComposerChange: (value: string) => void;
+  onDismissGuide: () => void;
   onResolve: (taskId: string) => void;
+  onRunDemo: () => void;
   onStartFromSource: () => void;
   onSubmit: () => void;
+  onUseOwnNotes: () => void;
   progress: number;
+  realAgentReady: boolean;
   reference: string;
   session: Session | null;
   setReference: (value: string) => void;
@@ -555,6 +651,7 @@ function LearningWorkspace(props: {
   setTitle: (value: string) => void;
   sourceStats: { words: number; chars: number };
   sourceText: string;
+  showOnboarding: boolean;
   t: (typeof copy)[Locale];
   title: string;
 }) {
@@ -563,11 +660,16 @@ function LearningWorkspace(props: {
     composer,
     hitlTasks,
     latestGrade,
+    onConnectAgent,
     onComposerChange,
+    onDismissGuide,
     onResolve,
+    onRunDemo,
     onStartFromSource,
     onSubmit,
+    onUseOwnNotes,
     progress,
+    realAgentReady,
     reference,
     session,
     setReference,
@@ -575,6 +677,7 @@ function LearningWorkspace(props: {
     setTitle,
     sourceStats,
     sourceText,
+    showOnboarding,
     t,
     title
   } = props;
@@ -588,6 +691,16 @@ function LearningWorkspace(props: {
           <h3>{t.navLearn}</h3>
           <span className="statusPill">{stageLabel(session?.stage, t.stages)}</span>
         </div>
+        {showOnboarding && (
+          <FirstRunGuide
+            onConnectAgent={onConnectAgent}
+            onDismissGuide={onDismissGuide}
+            onRunDemo={onRunDemo}
+            onUseOwnNotes={onUseOwnNotes}
+            realAgentReady={realAgentReady}
+            t={t}
+          />
+        )}
         <div className="messageList">
           <article className="message assistant">
             <strong>{activeQuiz ? t.quizIntro : t.welcome}</strong>
@@ -651,7 +764,11 @@ function LearningWorkspace(props: {
           </label>
           <label>
             {t.sourceText}
-            <textarea value={sourceText} onChange={(event) => setSourceText(event.target.value)} />
+            <textarea
+              placeholder={t.sourceTextPlaceholder}
+              value={sourceText}
+              onChange={(event) => setSourceText(event.target.value)}
+            />
           </label>
           <div className="metricStrip">
             <span>
@@ -684,12 +801,56 @@ function LearningWorkspace(props: {
   );
 }
 
+function FirstRunGuide(props: {
+  onConnectAgent: () => void;
+  onDismissGuide: () => void;
+  onRunDemo: () => void;
+  onUseOwnNotes: () => void;
+  realAgentReady: boolean;
+  t: (typeof copy)[Locale];
+}) {
+  const { onConnectAgent, onDismissGuide, onRunDemo, onUseOwnNotes, realAgentReady, t } = props;
+
+  return (
+    <section className="firstRunGuide" aria-label={t.setupTitle}>
+      <div className="firstRunCopy">
+        <p className="eyebrow">{realAgentReady ? t.agentReady : t.demoAgentReady}</p>
+        <h3>{t.setupTitle}</h3>
+        <p>{t.setupLead}</p>
+      </div>
+      <div className="guideSteps">
+        <article>
+          <strong>{t.setupDemoTitle}</strong>
+          <p>{t.setupDemoBody}</p>
+          <button className="primary" onClick={onRunDemo}>
+            {t.runDemo}
+          </button>
+        </article>
+        <article>
+          <strong>{t.setupSourceTitle}</strong>
+          <p>{t.setupSourceBody}</p>
+          <button onClick={onUseOwnNotes}>{t.useOwnNotes}</button>
+        </article>
+        <article>
+          <strong>{t.setupAgentTitle}</strong>
+          <p>{t.setupAgentBody}</p>
+          <button onClick={onConnectAgent}>{t.connectAgent}</button>
+        </article>
+      </div>
+      <button className="textButton" onClick={onDismissGuide}>
+        {t.dismissGuide}
+      </button>
+    </section>
+  );
+}
+
 function AgentWorkspace(props: {
   agentStatus: AgentStatus | null;
   agentTest: string | null;
   providerEndpoint: string;
   providerKind: string;
   providerLabel: string;
+  realAgentReady: boolean;
   saveProvider: () => void;
   selectedProviderId: string | null;
   setProviderEndpoint: (value: string) => void;
@@ -705,6 +866,7 @@ function AgentWorkspace(props: {
     providerEndpoint,
     providerKind,
     providerLabel,
+    realAgentReady,
     saveProvider,
     selectedProviderId,
     setProviderEndpoint,
@@ -720,6 +882,9 @@ function AgentWorkspace(props: {
       <section className="conversationPanel agentIntro">
         <h3>{t.agentTitle}</h3>
         <div className="trustNote">{t.noSecrets}</div>
+        <p className={`agentModeNote ${realAgentReady ? "good" : ""}`}>
+          {realAgentReady ? t.agentReady : t.agentSetupHint}
+        </p>
         <p className="capabilitySentence">{t.capabilityLabels.join(" · ")}</p>
       </section>
 

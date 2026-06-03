@@ -138,7 +138,7 @@ volume backups.
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 49% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 52% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
@@ -146,4 +146,4 @@ The repository includes GitHub Actions for Python tests, Web build/audit, Docker
 
 ## Status
 
-This repository is a self-host alpha. The deterministic learning workflow, agent registry, plugin manifest validation, API surface, Web UI shell, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
