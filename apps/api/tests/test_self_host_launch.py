@@ -12,7 +12,7 @@ SCRIPT = REPO_ROOT / "scripts" / "launch_self_host.sh"
 
 
 class SelfHostLaunchTests(unittest.TestCase):
-    def run_launch(self, **overrides: str) -> str:
+    def run_launch_process(self, **overrides: str) -> tuple[subprocess.CompletedProcess[str], str]:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             bin_dir = root / "bin"
@@ -51,13 +51,18 @@ class SelfHostLaunchTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
-            if completed.returncode != 0:
-                self.fail(
-                    f"launch_self_host.sh exited {completed.returncode}\n"
-                    f"stdout:\n{completed.stdout}\n"
-                    f"stderr:\n{completed.stderr}"
-                )
-            return completed.stdout + "\n--- commands ---\n" + log_file.read_text(encoding="utf-8")
+            commands = log_file.read_text(encoding="utf-8") if log_file.exists() else ""
+            return completed, commands
+
+    def run_launch(self, **overrides: str) -> str:
+        completed, commands = self.run_launch_process(**overrides)
+        if completed.returncode != 0:
+            self.fail(
+                f"launch_self_host.sh exited {completed.returncode}\n"
+                f"stdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}"
+            )
+        return completed.stdout + "\n--- commands ---\n" + commands
 
     @staticmethod
     def write_stub(path: Path, body: str) -> None:
@@ -65,7 +70,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         path.chmod(0o755)
 
     def test_default_launch_builds_from_source(self) -> None:
-        output = self.run_launch()
+        output = self.run_launch(ALLOW_NON_ASCII_DOCKER_BUILD="true")
         self.assertIn("Building Study Anything API and Web images from this source checkout.", output)
         self.assertIn(
             "docker compose --env-file .env -f infra/compose/docker-compose.yml up -d --build",
@@ -110,6 +115,17 @@ class SelfHostLaunchTests(unittest.TestCase):
         )
         self.assertIn("Skipping published image pulls because PULL_PUBLISHED_IMAGES=false.", output)
         self.assertNotIn("docker pull", output)
+
+    def test_non_ascii_source_path_has_actionable_diagnostic(self) -> None:
+        completed, commands = self.run_launch_process(
+            STUDY_ANYTHING_DOCKER_SOURCE_PATH="/tmp/学习系统"
+        )
+
+        self.assertEqual(completed.returncode, 1)
+        self.assertIn("checkout path contains non-ASCII characters", completed.stderr)
+        self.assertIn("USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh", completed.stderr)
+        self.assertIn("ALLOW_NON_ASCII_DOCKER_BUILD=true ./scripts/launch_self_host.sh", completed.stderr)
+        self.assertNotIn("docker compose", commands)
 
 
 if __name__ == "__main__":

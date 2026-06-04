@@ -92,6 +92,51 @@ class PmfApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    def test_pmf_export_requires_consent_and_returns_shareable_aggregate(self) -> None:
+        store = InMemorySessionStore()
+        state = replace(
+            new_session("export-user"),
+            stage="completed",
+            answers=[Answer(item_id="q1", text="Private export answer")],
+            mastery=Mastery(level=0.5, bloom="understand"),
+            insights=["Private export insight"],
+        )
+        store.save(state)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            interest_store = LocalPmfInterestStore(Path(tmpdir) / "pmf.json")
+            interest_store.record(
+                user_id="export-user",
+                services=["neural_publish"],
+                contact="export@example.com",
+                comment="Private export comment",
+                source="web-ui",
+            )
+            client, stack = self._client(store, interest_store)
+            with stack, client:
+                blocked = client.post("/v1/pmf/export", json={"destination": "self_archive"})
+                exported = client.post(
+                    "/v1/pmf/export",
+                    json={
+                        "consent_to_share": True,
+                        "destination": "hosted_waitlist",
+                        "note": "Private export note",
+                    },
+                )
+
+        self.assertEqual(blocked.status_code, 409)
+        self.assertEqual(exported.status_code, 200)
+        body = exported.json()
+        serialized = exported.text
+        self.assertEqual(body["schema_version"], "pmf-export-v1")
+        self.assertEqual(body["destination"], "hosted_waitlist")
+        self.assertEqual(body["metrics"]["sessions"]["completed"], 1)
+        self.assertEqual(body["hosted_interest"]["services"]["neural_publish"], 1)
+        self.assertTrue(body["privacy"]["shareable_after_consent"])
+        self.assertNotIn("export-user", serialized)
+        self.assertNotIn("export@example.com", serialized)
+        self.assertNotIn("Private export", serialized)
+        self.assertNotIn("contact_hash", body["hosted_interest"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,20 +5,27 @@ printf "Study Anything self-host doctor\n"
 printf "================================\n"
 
 problems=0
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$ROOT"
 env_file="${ENV_FILE:-.env}"
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
 image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.3-alpha}"
+docker_source_path="${STUDY_ANYTHING_DOCKER_SOURCE_PATH:-$ROOT}"
 
 is_true() {
   case "$1" in
     1|true|TRUE|yes|YES)
       return 0
-      ;;
+    ;;
     *)
       return 1
       ;;
   esac
+}
+
+path_has_non_ascii() {
+  printf "%s" "$1" | LC_ALL=C grep -q '[^ -~]'
 }
 
 check_cmd() {
@@ -142,6 +149,11 @@ if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1 &
       problems=$((problems + 1))
     fi
   else
+    if path_has_non_ascii "$docker_source_path" && ! is_true "${ALLOW_NON_ASCII_DOCKER_BUILD:-false}"; then
+      printf "miss  Docker source build path contains non-ASCII characters: %s\n" "$docker_source_path"
+      printf "      Use USE_PUBLISHED_IMAGES=true, clone to an ASCII-only path, or set ALLOW_NON_ASCII_DOCKER_BUILD=true to bypass.\n"
+      problems=$((problems + 1))
+    fi
     if docker compose --env-file "$env_file" -f infra/compose/docker-compose.yml config >/dev/null; then
       printf "ok    Docker Compose source-build config is valid for STACK_PROFILE=%s\n" "$profile"
     else

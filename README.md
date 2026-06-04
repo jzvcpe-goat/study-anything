@@ -56,6 +56,10 @@ The default Docker profile is `core`: API, Web UI, and Postgres. It starts in th
 terminal returns. Enable observability and optional topology services later with
 `STACK_PROFILE=full ./scripts/launch_self_host.sh`.
 
+If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/buildx may fail before
+the app build starts. Use `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh` or clone the repo
+to an ASCII-only path such as `~/study-anything` for local source builds.
+
 Open:
 
 - Web UI: http://localhost:5173

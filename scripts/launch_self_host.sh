@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
+ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$ROOT"
+
 if [ ! -f .env ]; then
   if command -v python3 >/dev/null 2>&1; then
     python3 scripts/setup_env.py
@@ -17,6 +20,7 @@ fi
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
 image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.3-alpha}"
+docker_source_path="${STUDY_ANYTHING_DOCKER_SOURCE_PATH:-$ROOT}"
 
 is_true() {
   case "$1" in
@@ -28,6 +32,24 @@ is_true() {
       ;;
   esac
 }
+
+path_has_non_ascii() {
+  printf "%s" "$1" | LC_ALL=C grep -q '[^ -~]'
+}
+
+if ! is_true "$use_published_images" && path_has_non_ascii "$docker_source_path"; then
+  if ! is_true "${ALLOW_NON_ASCII_DOCKER_BUILD:-false}"; then
+    printf "Docker source builds can fail when the checkout path contains non-ASCII characters.\n" >&2
+    printf "Current path: %s\n" "$docker_source_path" >&2
+    printf "Docker Desktop BuildKit/buildx may report: x-docker-expose-session-sharedkey contains value with non-printable ASCII characters.\n" >&2
+    printf "\nUse one of these recovery paths:\n" >&2
+    printf "  USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh\n" >&2
+    printf "  git clone <repo-url> ~/study-anything && cd ~/study-anything && ./scripts/launch_self_host.sh\n" >&2
+    printf "\nTo bypass this guard anyway:\n" >&2
+    printf "  ALLOW_NON_ASCII_DOCKER_BUILD=true ./scripts/launch_self_host.sh\n" >&2
+    exit 1
+  fi
+fi
 
 if is_true "$use_published_images"; then
   export STUDY_ANYTHING_API_IMAGE="${STUDY_ANYTHING_API_IMAGE:-ghcr.io/jzvcpe-goat/study-anything/api:${image_tag}}"

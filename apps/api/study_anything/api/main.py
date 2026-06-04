@@ -30,7 +30,7 @@ from study_anything.core.knowledge_graph import (
     build_knowledge_graph_sink,
     projection_from_state,
 )
-from study_anything.core.pmf import LocalPmfInterestStore, compute_pmf_metrics
+from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.store import create_session_store
 from study_anything.core.tracing import build_trace_sink
@@ -115,6 +115,12 @@ class PmfInterestRequest(BaseModel):
     source: str = Field(default="api")
     locale: Optional[str] = None
     comment: Optional[str] = None
+
+
+class PmfExportRequest(BaseModel):
+    consent_to_share: bool = False
+    destination: str = Field(default="self_archive")
+    note: Optional[str] = None
 
 
 def _env(primary: str, legacy: str, default: str) -> str:
@@ -239,6 +245,25 @@ def create_app() -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         return intent.public_dict()
+
+    @app.post("/v1/pmf/export")
+    def export_pmf(payload: PmfExportRequest) -> dict[str, object]:
+        interest_summary = pmf_interest_store.summary()
+        metrics = compute_pmf_metrics(
+            store.list_sessions(),
+            plugins.discover(),
+            interest_summary,
+        )
+        try:
+            return build_pmf_export(
+                metrics,
+                interest_summary,
+                consent_to_share=payload.consent_to_share,
+                destination=payload.destination,
+                note=payload.note,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
 
     @app.get("/v1/graph/status")
     def knowledge_graph_status() -> dict[str, object]:

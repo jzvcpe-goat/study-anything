@@ -54,6 +54,7 @@
 ## PMF Track
 
 - Community-scale PMF readouts from explicitly shared local aggregate exports.
+- Explicit-consent local PMF export packages for community feedback and hosted waitlist review.
 - Cohort-level mastery delta and repeat-use analysis.
 - Plugin activation telemetry, opt-in only.
 - Hosted waitlist consent and export policy for Sync and Publish.
