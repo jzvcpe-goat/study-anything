@@ -30,6 +30,7 @@ from study_anything.core.knowledge_graph import (
     build_knowledge_graph_sink,
     projection_from_state,
 )
+from study_anything.core.pmf import LocalPmfInterestStore, compute_pmf_metrics
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.store import create_session_store
 from study_anything.core.tracing import build_trace_sink
@@ -107,6 +108,15 @@ class PluginInstallRequest(BaseModel):
     replace_existing: bool = False
 
 
+class PmfInterestRequest(BaseModel):
+    user_id: str = Field(default="local-user")
+    services: List[str] = Field(default_factory=lambda: ["neural_sync"])
+    contact: Optional[str] = None
+    source: str = Field(default="api")
+    locale: Optional[str] = None
+    comment: Optional[str] = None
+
+
 def _env(primary: str, legacy: str, default: str) -> str:
     return os.getenv(primary) or os.getenv(legacy) or default
 
@@ -136,6 +146,7 @@ store = create_session_store(
     database_url=os.getenv("DATABASE_URL"),
     backend=os.getenv("SESSION_STORE", "json"),
 )
+pmf_interest_store = LocalPmfInterestStore(data_dir / "pmf_interests.json")
 plugin_install_dir = Path(os.getenv("STUDY_ANYTHING_PLUGIN_INSTALL_DIR") or data_dir / "plugins")
 plugin_dirs = [
     Path(value)
@@ -191,11 +202,43 @@ def create_app() -> FastAPI:
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "plugin_count": len(plugins.discover()),
+            "pmf_metrics": compute_pmf_metrics(
+                store.list_sessions(),
+                plugins.discover(),
+                pmf_interest_store.summary(),
+            )["signals"],
         }
 
     @app.get("/v1/system/integrations")
     def system_integrations() -> list[dict[str, str]]:
         return [item.public_dict() for item in integration_matrix()]
+
+    @app.get("/v1/metrics/pmf")
+    def pmf_metrics() -> dict[str, object]:
+        return compute_pmf_metrics(
+            store.list_sessions(),
+            plugins.discover(),
+            pmf_interest_store.summary(),
+        )
+
+    @app.get("/v1/pmf/summary")
+    def pmf_interest_summary() -> dict[str, object]:
+        return pmf_interest_store.summary()
+
+    @app.post("/v1/pmf/interest")
+    def record_pmf_interest(payload: PmfInterestRequest) -> dict[str, object]:
+        try:
+            intent = pmf_interest_store.record(
+                user_id=payload.user_id,
+                services=payload.services,
+                contact=payload.contact,
+                source=payload.source,
+                locale=payload.locale,
+                comment=payload.comment,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        return intent.public_dict()
 
     @app.get("/v1/graph/status")
     def knowledge_graph_status() -> dict[str, object]:

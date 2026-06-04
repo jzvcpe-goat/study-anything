@@ -123,6 +123,19 @@ Install an explicitly selected local plugin from the Web Agent page, or use the 
 python3 scripts/install_local_plugin.py plugins/example-exporter
 ```
 
+## Local PMF Signals
+
+Study Anything includes a local-only launch panel and API metrics for PMF validation:
+
+- completed learning loops and completion rate
+- active learner hashes and repeat usage
+- mastery delta and answer volume
+- ready plugin count
+- opt-in local interest for future Sync, Publish, Teams, Catalyst, or hosted alpha services
+
+These metrics stay on the self-hosted machine by default. They do not expose reading prose, quiz prompts,
+answers, grading feedback, insights, Agent metadata, raw user IDs, or raw contact values.
+
 ## Self-Hosting
 
 See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting notes.
@@ -141,7 +154,7 @@ volume backups.
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 52% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 58% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
@@ -149,4 +162,4 @@ The repository includes GitHub Actions for Python tests, Web build/audit, Docker
 
 ## Status
 
-This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.

@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 55%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 58%.
 
 ## What Is Ready
 
@@ -19,6 +19,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - One-command published-image core launch with sequential pulls and visible cold-download progress.
 - Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
+- Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
+- Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 
 ## What Blocks Commercial Launch
 
@@ -29,7 +31,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Plugin marketplace trust model: signing, review metadata, remote registry policy, update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
-- Product analytics for PMF: weekly active learners, repeat sessions, mastery delta, plugin installs, hosted waitlist.
+- PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by cohort, plugin activation, and hosted waitlist conversion.
 - Non-developer polish beyond first-run: upgrade confidence, support docs, and guided recovery for rare edge cases.
 
 ## Suggested Branch Tracks
@@ -38,14 +40,14 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.
 - `feature/encrypted-sync-design`: Sync protocol, key ownership, and hosted convenience boundary.
 - `feature/plugin-trust`: plugin permissions, signing, review metadata, and install UX.
-- `feature/pmf-metrics`: privacy-preserving local metrics and optional hosted waitlist.
+- `feature/pmf-validation`: community PMF readouts, hosted waitlist export policy, and cohort-level learning outcomes.
 - `ops/production-hardening`: container, CI, release, and security baseline.
 
 ## Next Commercial Milestone
 
-Reach 55-60% readiness by making the self-host Alpha dependable for real learners:
+Reach 60-65% readiness by making the self-host Alpha dependable for real learners:
 
-- Privacy-preserving PMF metrics and an opt-in hosted waitlist.
 - Docker soak testing and trace retention guidance.
 - Backup restore drills in a disposable local stack.
 - Signed plugin registry design and update-review workflow.
+- Clear hosted waitlist export policy and consent flow before any cloud service.

@@ -115,7 +115,21 @@ Open:
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - System status: http://localhost:8000/v1/system/status
+- Local PMF metrics: http://localhost:8000/v1/metrics/pmf
 - Langfuse: http://localhost:3000
+
+## Post-Launch Verification
+
+After the API and Web UI are healthy, run the public smoke flow:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
+```
+
+This creates a demo learning session, submits source-bound reading, answers the generated quiz, verifies
+mastery completion, reads local PMF metrics, and records one local-only hosted-alpha intent. PMF metrics
+are aggregate-only; they do not expose raw source text, answers, insights, user IDs, contact values, or
+Agent metadata.
 
 ## Data
 
