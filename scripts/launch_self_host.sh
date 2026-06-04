@@ -16,7 +16,7 @@ fi
 
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
-image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.2-alpha}"
+image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.3-alpha}"
 
 is_true() {
   case "$1" in

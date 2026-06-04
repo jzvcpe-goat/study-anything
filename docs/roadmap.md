@@ -43,6 +43,7 @@
 - Self-host doctor checks Docker, Compose config, profile ports, health endpoints, Agent gateway hints, and recovery commands.
 - Mobile learning layout keeps the source, composer, and progress areas readable instead of squeezing columns.
 - Local-only PMF launch panel and API metrics for completion, repeat usage, mastery delta, plugin readiness, and future-service interest.
+- Foreground Skill Mode launch for agent and desktop environments that do not preserve background processes.
 
 ## v0.3 Next
 
