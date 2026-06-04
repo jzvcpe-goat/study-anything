@@ -20,6 +20,7 @@ python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py
+curl -s http://127.0.0.1:8000/v1/metrics/pmf
 ./scripts/stop_self_host.sh
 ```
 
@@ -27,6 +28,8 @@ Confirm:
 
 - `.env` is not staged.
 - No screenshots, traces, or logs contain private source text or secrets.
+- `/v1/metrics/pmf` returns only aggregate local PMF signals and does not expose source text, answers,
+  insights, raw user identifiers, Agent metadata, or raw contact values.
 - `docs/release-notes/v0.2.2-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 

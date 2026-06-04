@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 type Locale = "zh" | "en";
-type ViewKey = "learn" | "agent";
+type ViewKey = "learn" | "agent" | "launch";
 
 type ProviderStatus = {
   provider_id: string;
@@ -85,6 +85,63 @@ type Session = {
   updated_at: string;
 };
 
+type PmfMetrics = {
+  schema_version: string;
+  generated_at: string;
+  sessions: {
+    total: number;
+    completed: number;
+    discarded: number;
+    open_hitl: number;
+    agent_interrupts: number;
+    completion_rate: number;
+  };
+  learners: {
+    unique: number;
+    active_7d: number;
+    active_30d: number;
+    repeat: number;
+    repeat_rate: number;
+  };
+  learning: {
+    answered_sessions: number;
+    total_answers: number;
+    insight_sessions: number;
+    average_mastery_level: number;
+    average_mastery_delta: number;
+  };
+  plugins: {
+    ready: number;
+    invalid: number;
+  };
+  hosted_interest: PmfInterestSummary;
+  signals: {
+    weekly_active_learners: number;
+    completion_rate: number;
+    repeat_learning_rate: number;
+    plugin_installs: number;
+    hosted_waitlist_count: number;
+  };
+  privacy: {
+    local_only: boolean;
+    raw_contact_stored: boolean;
+    raw_user_identifiers_exposed: boolean;
+    privacy_exclusions: string[];
+  };
+};
+
+type PmfInterestSummary = {
+  schema_version: string;
+  total: number;
+  with_contact: number;
+  with_comment: number;
+  services: Record<string, number>;
+  sources: Record<string, number>;
+  local_only: boolean;
+  raw_contact_stored: boolean;
+  privacy_exclusions: string[];
+};
+
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CAPABILITIES = [
@@ -95,6 +152,8 @@ const CAPABILITIES = [
   "memory.retrieve",
   "embedding.create"
 ];
+
+const INTEREST_SERVICES = ["neural_sync", "neural_publish", "neural_teams", "catalyst", "hosted_alpha"];
 
 const DEMO_SOURCE = {
   title: "Asymptotic Theory Reading",
@@ -107,8 +166,10 @@ const copy = {
     appMode: "本地优先学习系统",
     navLearn: "学习",
     navAgent: "Agent",
+    navLaunch: "上线",
     navLearnHint: "自然语言学习空间",
     navAgentHint: "连接你自己的推理系统",
+    navLaunchHint: "本地 PMF 与部署信号",
     recent: "最近学习",
     emptyRecent: "还没有学习记录。",
     refresh: "刷新",
@@ -205,14 +266,44 @@ const copy = {
     loadingTest: "正在测试连接",
     loadingPluginPreview: "正在读取插件 manifest",
     loadingPluginInstall: "正在安装插件",
-    loadingRefresh: "正在刷新"
+    loadingRefresh: "正在刷新",
+    launchTitle: "上线准备不是猜出来的",
+    launchLead: "用本机聚合指标观察学习闭环、重复使用和插件生态，不上传正文、答案、洞察或真实联系方式。",
+    launchSignalTitle: "PMF 信号",
+    launchPrivacyTitle: "隐私边界",
+    launchInterestTitle: "未来服务意向",
+    launchInterestLead: "可选记录你对 Sync、Publish、Teams 或 Catalyst 的兴趣。数据只保存在本机。",
+    completedSessions: "完成学习",
+    completionRate: "完成率",
+    activeLearners: "7日活跃学习者",
+    repeatLearners: "重复学习者",
+    averageMasteryDelta: "平均掌握提升",
+    pluginInstalls: "已就绪插件",
+    hostedInterest: "本地意向",
+    contactOptional: "联系方式（可选，仅保存 hash）",
+    interestComment: "备注（可选，只记录是否填写）",
+    recordInterest: "记录本地意向",
+    interestRecorded: "已记录本地意向",
+    localOnly: "本地保存",
+    noRawContact: "不保存原始联系方式",
+    noRawLearningData: "不暴露正文、答案或洞察",
+    services: {
+      neural_sync: "Neural Sync",
+      neural_publish: "Neural Publish",
+      neural_teams: "Neural Teams",
+      catalyst: "Catalyst",
+      hosted_alpha: "Hosted Alpha"
+    },
+    loadingInterest: "正在记录意向"
   },
   en: {
     appMode: "Local-first learning system",
     navLearn: "Learn",
     navAgent: "Agent",
+    navLaunch: "Launch",
     navLearnHint: "Natural-language study space",
     navAgentHint: "Connect your own reasoning system",
+    navLaunchHint: "Local PMF and deploy signals",
     recent: "Recent",
     emptyRecent: "No learning sessions yet.",
     refresh: "Refresh",
@@ -309,7 +400,35 @@ const copy = {
     loadingTest: "Testing connection",
     loadingPluginPreview: "Reading plugin manifest",
     loadingPluginInstall: "Installing plugin",
-    loadingRefresh: "Refreshing"
+    loadingRefresh: "Refreshing",
+    launchTitle: "Launch Readiness Is Measured",
+    launchLead: "Read local aggregate signals for the learning loop, repeat usage, and plugin ecosystem without uploading source text, answers, insights, or raw contact details.",
+    launchSignalTitle: "PMF Signals",
+    launchPrivacyTitle: "Privacy Boundary",
+    launchInterestTitle: "Future Service Interest",
+    launchInterestLead: "Optionally record interest in Sync, Publish, Teams, or Catalyst. The record stays on this machine.",
+    completedSessions: "Completed sessions",
+    completionRate: "Completion rate",
+    activeLearners: "7d active learners",
+    repeatLearners: "Repeat learners",
+    averageMasteryDelta: "Avg mastery delta",
+    pluginInstalls: "Ready plugins",
+    hostedInterest: "Local interest",
+    contactOptional: "Contact (optional, hash only)",
+    interestComment: "Comment (optional, presence only)",
+    recordInterest: "Record local interest",
+    interestRecorded: "Local interest recorded",
+    localOnly: "Local only",
+    noRawContact: "No raw contact stored",
+    noRawLearningData: "No source text, answers, or insights exposed",
+    services: {
+      neural_sync: "Neural Sync",
+      neural_publish: "Neural Publish",
+      neural_teams: "Neural Teams",
+      catalyst: "Catalyst",
+      hosted_alpha: "Hosted Alpha"
+    },
+    loadingInterest: "Recording interest"
   }
 } as const;
 
@@ -335,6 +454,10 @@ function formatTime(value?: string) {
   );
 }
 
+function formatPercent(value = 0) {
+  return `${Math.round(value * 100)}%`;
+}
+
 function progressFor(stage?: string) {
   if (stage === "completed") return 100;
   if (stage === "awaiting_answers") return 62;
@@ -358,6 +481,10 @@ function agentKindLabel(
   return labels.localAgent;
 }
 
+function serviceLabel(service: string, labels: Partial<Record<string, string>>) {
+  return labels[service] ?? service;
+}
+
 function App() {
   const [locale, setLocale] = useState<Locale>("zh");
   const [view, setView] = useState<ViewKey>("learn");
@@ -379,6 +506,12 @@ function App() {
   const [pluginPreview, setPluginPreview] = useState<PluginStatus | null>(null);
   const [confirmedPluginPermissions, setConfirmedPluginPermissions] = useState<string[]>([]);
   const [pluginInstallResult, setPluginInstallResult] = useState<string | null>(null);
+  const [pmfMetrics, setPmfMetrics] = useState<PmfMetrics | null>(null);
+  const [pmfSummary, setPmfSummary] = useState<PmfInterestSummary | null>(null);
+  const [selectedInterestServices, setSelectedInterestServices] = useState<string[]>(["neural_sync"]);
+  const [interestContact, setInterestContact] = useState("");
+  const [interestComment, setInterestComment] = useState("");
+  const [interestResult, setInterestResult] = useState<string | null>(null);
   const [guideDismissed, setGuideDismissed] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("study-anything-onboarding-dismissed") === "true";
@@ -402,6 +535,12 @@ function App() {
   const canInstallPlugin =
     Boolean(pluginPreview?.manifest) &&
     previewPermissions.every((permission) => confirmedPluginPermissions.includes(permission));
+  const heroHint =
+    view === "learn" ? t.navLearnHint : view === "agent" ? t.navAgentHint : t.navLaunchHint;
+  const heroQuestion =
+    view === "learn" ? t.learnTitle : view === "agent" ? t.agentTitle : t.launchTitle;
+  const heroSentence =
+    view === "learn" ? t.learnSubtitle : view === "agent" ? t.agentLead : t.launchLead;
 
   async function runTask<T>(label: string, task: () => Promise<T>) {
     setLoading(label);
@@ -418,16 +557,20 @@ function App() {
 
   async function refresh(currentSessionId = session?.session_id) {
     await runTask(t.loadingRefresh, async () => {
-      const [agents, sessionList, hitl, pluginList] = await Promise.all([
+      const [agents, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
         api<AgentStatus>("/v1/agents/status"),
         api<Session[]>("/v1/sessions"),
         api<HitlInterrupt[]>("/v1/hitl"),
-        api<PluginStatus[]>("/v1/plugins")
+        api<PluginStatus[]>("/v1/plugins"),
+        api<PmfMetrics>("/v1/metrics/pmf"),
+        api<PmfInterestSummary>("/v1/pmf/summary")
       ]);
       setAgentStatus(agents);
       setSessions(sessionList);
       setHitlTasks(hitl);
       setPlugins(pluginList);
+      setPmfMetrics(metrics);
+      setPmfSummary(pmfInterest);
       if (currentSessionId) {
         setSession(await api<Session>(`/v1/sessions/${currentSessionId}`));
       }
@@ -607,6 +750,35 @@ function App() {
     });
   }
 
+  function toggleInterestService(service: string) {
+    setSelectedInterestServices((current) =>
+      current.includes(service)
+        ? current.filter((item) => item !== service)
+        : [...current, service]
+    );
+  }
+
+  async function recordInterest() {
+    const services = selectedInterestServices.length ? selectedInterestServices : ["neural_sync"];
+    await runTask(t.loadingInterest, async () => {
+      await api("/v1/pmf/interest", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: "local-user",
+          services,
+          contact: interestContact,
+          comment: interestComment,
+          source: "web-ui",
+          locale
+        })
+      });
+      setInterestResult(t.interestRecorded);
+      setInterestContact("");
+      setInterestComment("");
+      await refresh();
+    });
+  }
+
   async function resolveTask(taskId: string) {
     if (!session) return;
     const updated = await runTask(t.loadingRefresh, () =>
@@ -645,6 +817,10 @@ function App() {
             <span>{t.navAgent}</span>
             <small>{t.navAgentHint}</small>
           </button>
+          <button className={view === "launch" ? "navItem active" : "navItem"} onClick={() => setView("launch")}>
+            <span>{t.navLaunch}</span>
+            <small>{t.navLaunchHint}</small>
+          </button>
         </nav>
 
         <div className="headerTools">
@@ -662,12 +838,12 @@ function App() {
         </div>
       </header>
 
-      <section className={`heroStage ${view === "agent" ? "agentStage" : ""}`}>
+      <section className={`heroStage ${view !== "learn" ? "agentStage" : ""}`}>
         <div className="heroCopy">
-          <p className="eyebrow">{view === "learn" ? t.navLearnHint : t.navAgentHint}</p>
+          <p className="eyebrow">{heroHint}</p>
           <h1>Study Anything</h1>
-          <p className="heroQuestion">{view === "learn" ? t.learnTitle : t.agentTitle}</p>
-          <p className="heroSentence">{view === "learn" ? t.learnSubtitle : t.agentLead}</p>
+          <p className="heroQuestion">{heroQuestion}</p>
+          <p className="heroSentence">{heroSentence}</p>
         </div>
 
         <div className="heroProduct">
@@ -701,7 +877,7 @@ function App() {
               t={t}
               title={title}
             />
-          ) : (
+          ) : view === "agent" ? (
             <AgentWorkspace
               agentStatus={agentStatus}
               agentTest={agentTest}
@@ -727,6 +903,20 @@ function App() {
               t={t}
               testProvider={testProvider}
               togglePluginPermission={togglePluginPermission}
+            />
+          ) : (
+            <LaunchWorkspace
+              interestComment={interestComment}
+              interestContact={interestContact}
+              interestResult={interestResult}
+              metrics={pmfMetrics}
+              onRecordInterest={recordInterest}
+              onToggleService={toggleInterestService}
+              selectedServices={selectedInterestServices}
+              setInterestComment={setInterestComment}
+              setInterestContact={setInterestContact}
+              summary={pmfSummary}
+              t={t}
             />
           )}
         </div>
@@ -971,6 +1161,107 @@ function FirstRunGuide(props: {
         {t.dismissGuide}
       </button>
     </section>
+  );
+}
+
+function LaunchWorkspace(props: {
+  interestComment: string;
+  interestContact: string;
+  interestResult: string | null;
+  metrics: PmfMetrics | null;
+  onRecordInterest: () => void;
+  onToggleService: (service: string) => void;
+  selectedServices: string[];
+  setInterestComment: (value: string) => void;
+  setInterestContact: (value: string) => void;
+  summary: PmfInterestSummary | null;
+  t: (typeof copy)[Locale];
+}) {
+  const {
+    interestComment,
+    interestContact,
+    interestResult,
+    metrics,
+    onRecordInterest,
+    onToggleService,
+    selectedServices,
+    setInterestComment,
+    setInterestContact,
+    summary,
+    t
+  } = props;
+  const interestSummary = summary ?? metrics?.hosted_interest ?? null;
+  const metricItems = [
+    { label: t.completedSessions, value: metrics?.sessions.completed ?? 0 },
+    { label: t.completionRate, value: formatPercent(metrics?.sessions.completion_rate ?? 0) },
+    { label: t.activeLearners, value: metrics?.learners.active_7d ?? 0 },
+    { label: t.repeatLearners, value: metrics?.learners.repeat ?? 0 },
+    { label: t.averageMasteryDelta, value: (metrics?.learning.average_mastery_delta ?? 0).toFixed(2) },
+    { label: t.pluginInstalls, value: metrics?.plugins.ready ?? 0 },
+    { label: t.hostedInterest, value: interestSummary?.total ?? 0 }
+  ];
+
+  return (
+    <div className="launchGrid">
+      <section className="conversationPanel launchSignals">
+        <div className="panelHeading">
+          <h3>{t.launchSignalTitle}</h3>
+          <span className="statusPill good">pmf-v1</span>
+        </div>
+        <div className="metricBoard">
+          {metricItems.map((item) => (
+            <article className="metricTile" key={item.label}>
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+            </article>
+          ))}
+        </div>
+        <p className="feedbackText">
+          {metrics ? `${t.localOnly} · ${formatTime(metrics.generated_at)}` : t.loadingRefresh}
+        </p>
+      </section>
+
+      <section className="sidePanel privacyPanel">
+        <h3>{t.launchPrivacyTitle}</h3>
+        <div className="privacyList">
+          <span>{t.localOnly}</span>
+          <span>{t.noRawContact}</span>
+          <span>{t.noRawLearningData}</span>
+        </div>
+        <p className="feedbackText">
+          {metrics?.privacy.privacy_exclusions.slice(0, 6).join(" · ") ?? ""}
+        </p>
+      </section>
+
+      <section className="sidePanel interestPanel">
+        <h3>{t.launchInterestTitle}</h3>
+        <p className="pluginMeta">{t.launchInterestLead}</p>
+        <div className="interestChoices">
+          {INTEREST_SERVICES.map((service) => (
+            <label className="interestChoice" key={service}>
+              <input
+                checked={selectedServices.includes(service)}
+                onChange={() => onToggleService(service)}
+                type="checkbox"
+              />
+              <span>{serviceLabel(service, t.services)}</span>
+            </label>
+          ))}
+        </div>
+        <label>
+          {t.contactOptional}
+          <input value={interestContact} onChange={(event) => setInterestContact(event.target.value)} />
+        </label>
+        <label>
+          {t.interestComment}
+          <textarea value={interestComment} onChange={(event) => setInterestComment(event.target.value)} />
+        </label>
+        <button className="primary" onClick={onRecordInterest}>
+          {t.recordInterest}
+        </button>
+        {interestResult && <p className="feedbackText good">{interestResult}</p>}
+      </section>
+    </div>
   );
 }
 

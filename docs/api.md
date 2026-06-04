@@ -62,3 +62,19 @@ Plugin install is local-first. Preview validates a user-selected local directory
 permission details, and target install directory without copying or executing plugin code. Install requires
 the caller to echo the exact manifest permission list as `confirmed_permissions`; otherwise the API returns
 `409`.
+
+## Local PMF and Launch Signals
+
+- `GET /v1/metrics/pmf`
+- `GET /v1/pmf/summary`
+- `POST /v1/pmf/interest`
+
+PMF metrics are local aggregate signals for self-host operators. They count sessions, completed learning
+loops, active learner hashes, repeat usage, mastery delta, ready plugins, and optional future-service
+interest. The response does not include session IDs, user IDs, user hashes, source titles, reading prose,
+quiz prompts, answers, grading feedback, insights, scribe logs, Agent metadata, or raw contact values.
+
+`POST /v1/pmf/interest` records an explicit local intent for future convenience services such as
+`neural_sync`, `neural_publish`, `neural_teams`, `catalyst`, `plugin_marketplace`, or `hosted_alpha`.
+Optional contact values are hashed before storage; optional comments are reduced to a boolean
+`comment_provided` flag.

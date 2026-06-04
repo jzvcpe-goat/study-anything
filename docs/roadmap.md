@@ -42,6 +42,7 @@
 - Permission-gated Web plugin installation for explicitly selected local plugin directories.
 - Self-host doctor checks Docker, Compose config, profile ports, health endpoints, Agent gateway hints, and recovery commands.
 - Mobile learning layout keeps the source, composer, and progress areas readable instead of squeezing columns.
+- Local-only PMF launch panel and API metrics for completion, repeat usage, mastery delta, plugin readiness, and future-service interest.
 
 ## v0.3 Next
 
@@ -51,10 +52,10 @@
 
 ## PMF Track
 
-- Weekly active learner instrumentation.
-- Completion rate and mastery delta dashboards.
-- Plugin install and activation telemetry, opt-in only.
-- Hosted waitlist for Sync and Publish.
+- Community-scale PMF readouts from explicitly shared local aggregate exports.
+- Cohort-level mastery delta and repeat-use analysis.
+- Plugin activation telemetry, opt-in only.
+- Hosted waitlist consent and export policy for Sync and Publish.
 
 ## Post-PMF Commercial Services
 

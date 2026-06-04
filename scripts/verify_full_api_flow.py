@@ -65,6 +65,22 @@ def main() -> None:
     )
     if completed["stage"] != "completed":
         raise RuntimeError(f"Expected completed stage, got {completed['stage']}")
+    metrics = request("/v1/metrics/pmf")
+    if metrics.get("schema_version") != "pmf-v1":
+        raise RuntimeError(f"PMF metrics schema is not pmf-v1: {metrics}")
+    if metrics.get("sessions", {}).get("completed", 0) < 1:
+        raise RuntimeError(f"PMF metrics did not count the completed smoke session: {metrics}")
+    intent = request(
+        "/v1/pmf/interest",
+        {
+            "user_id": "smoke-user",
+            "services": ["hosted_alpha"],
+            "source": "verify_full_api_flow",
+        },
+    )
+    if not intent.get("local_only"):
+        raise RuntimeError(f"PMF interest should be local-only: {intent}")
+    pmf_summary = request("/v1/pmf/summary")
     print(
         json.dumps(
             {
@@ -74,6 +90,8 @@ def main() -> None:
                 "mastery": completed["mastery"],
                 "agent_schema": agents["schema_version"],
                 "plugins": len(plugins),
+                "pmf_completed_sessions": metrics["sessions"]["completed"],
+                "pmf_interest_total": pmf_summary["total"],
             },
             ensure_ascii=False,
         )

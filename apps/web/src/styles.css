@@ -525,7 +525,8 @@ small {
 }
 
 .detailRail,
-.agentGrid {
+.agentGrid,
+.launchGrid {
   display: grid;
   gap: 14px;
 }
@@ -751,6 +752,75 @@ small {
   padding: 12px;
 }
 
+.launchGrid {
+  grid-template-columns: minmax(280px, 1.2fr) minmax(220px, 0.72fr) minmax(260px, 0.9fr);
+  align-items: start;
+}
+
+.launchSignals {
+  min-height: 380px;
+}
+
+.metricBoard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metricTile {
+  display: grid;
+  gap: 6px;
+  min-height: 88px;
+  border-left: 3px solid rgba(47, 107, 82, 0.42);
+  padding: 7px 0 7px 14px;
+}
+
+.metricTile:nth-child(2n) {
+  border-left-color: rgba(42, 111, 128, 0.48);
+}
+
+.metricTile strong {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.metricTile span,
+.privacyList span {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.privacyList {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.privacyList span {
+  border-left: 3px solid rgba(47, 107, 82, 0.38);
+  padding: 4px 0 4px 12px;
+  font-weight: 700;
+}
+
+.interestChoices {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.interestChoice {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  margin: 0;
+  color: var(--ink);
+}
+
+.interestChoice input {
+  width: 18px;
+  min-height: 18px;
+}
+
 .recentShelf {
   max-width: 1160px;
   margin: 8px auto 0;
@@ -829,7 +899,8 @@ small {
   .siteHeader,
   .heroStage,
   .learningGrid,
-  .agentGrid {
+  .agentGrid,
+  .launchGrid {
     grid-template-columns: 1fr;
   }
 
@@ -922,7 +993,8 @@ small {
   }
 
   .sessionList,
-  .metricStrip {
+  .metricStrip,
+  .metricBoard {
     grid-template-columns: 1fr;
   }
 }
