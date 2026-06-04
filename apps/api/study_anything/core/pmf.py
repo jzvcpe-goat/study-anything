@@ -33,6 +33,14 @@ ALLOWED_INTEREST_SOURCES = {
     "verify_full_api_flow",
 }
 
+ALLOWED_EXPORT_DESTINATIONS = {
+    "self_archive",
+    "github_discussion",
+    "email_to_maintainers",
+    "hosted_waitlist",
+    "research_report",
+}
+
 PRIVACY_EXCLUSIONS = [
     "reading_text",
     "source_title",
@@ -43,7 +51,16 @@ PRIVACY_EXCLUSIONS = [
     "scribe_log",
     "agent_metadata",
     "raw_contact",
+    "individual_contact_hashes",
+    "individual_user_hashes",
+    "freeform_comments",
 ]
+
+EXPORT_CONSENT_STATEMENT = (
+    "I understand this PMF package is intended for explicit sharing. It contains "
+    "aggregate local learning and interest signals only, and excludes source text, "
+    "answers, insights, raw contact values, contact hashes, and user hashes."
+)
 
 
 @dataclass(frozen=True)
@@ -253,6 +270,59 @@ def compute_pmf_metrics(
     }
 
 
+def build_pmf_export(
+    metrics: Mapping[str, object],
+    interest_summary: Mapping[str, object],
+    *,
+    consent_to_share: bool,
+    destination: str = "self_archive",
+    note: Optional[str] = None,
+) -> dict[str, object]:
+    """Build an explicit-consent PMF package safe for community PMF validation."""
+
+    if not consent_to_share:
+        raise ValueError("PMF export requires explicit consent_to_share=true.")
+    safe_destination = _safe_export_destination(destination)
+    sanitized_metrics = {
+        "sessions": dict(metrics.get("sessions", {}) or {}),
+        "learners": dict(metrics.get("learners", {}) or {}),
+        "learning": dict(metrics.get("learning", {}) or {}),
+        "plugins": dict(metrics.get("plugins", {}) or {}),
+        "signals": dict(metrics.get("signals", {}) or {}),
+    }
+    sanitized_interest = {
+        "schema_version": interest_summary.get("schema_version", "pmf-interest-v1"),
+        "total": int(interest_summary.get("total", 0) or 0),
+        "with_contact": int(interest_summary.get("with_contact", 0) or 0),
+        "with_comment": int(interest_summary.get("with_comment", 0) or 0),
+        "services": dict(interest_summary.get("services", {}) or {}),
+        "sources": dict(interest_summary.get("sources", {}) or {}),
+        "raw_contact_stored": False,
+    }
+    return {
+        "schema_version": "pmf-export-v1",
+        "generated_at": utc_now(),
+        "destination": safe_destination,
+        "consent": {
+            "granted": True,
+            "statement": EXPORT_CONSENT_STATEMENT,
+            "note_provided": bool(note and note.strip()),
+        },
+        "metrics": sanitized_metrics,
+        "hosted_interest": sanitized_interest,
+        "privacy": {
+            "local_only_source": True,
+            "shareable_after_consent": True,
+            "raw_contact_stored": False,
+            "raw_user_identifiers_exposed": False,
+            "individual_contact_hashes_exposed": False,
+            "individual_user_hashes_exposed": False,
+            "freeform_comments_exposed": False,
+            "privacy_exclusions": PRIVACY_EXCLUSIONS,
+        },
+    }
+
+
 def _contact_type(contact: Optional[str]) -> Optional[str]:
     if not contact:
         return None
@@ -266,6 +336,18 @@ def _safe_source(source: str) -> str:
     if normalized in ALLOWED_INTEREST_SOURCES:
         return normalized
     return "api"
+
+
+def _safe_export_destination(destination: str) -> str:
+    normalized = destination.strip().lower()
+    if normalized in ALLOWED_EXPORT_DESTINATIONS:
+        return normalized
+    raise ValueError(
+        "Unsupported PMF export destination: "
+        + destination
+        + ". Supported destinations: "
+        + ", ".join(sorted(ALLOWED_EXPORT_DESTINATIONS))
+    )
 
 
 def _ratio(numerator: int, denominator: int) -> float:

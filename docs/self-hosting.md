@@ -46,6 +46,33 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
 
+## Checkout Path Compatibility
+
+Docker Desktop BuildKit/buildx can fail before the app build starts when the source checkout path
+contains non-ASCII characters. The error usually looks like:
+
+```text
+header key "x-docker-expose-session-sharedkey" contains value with non-printable ASCII characters
+```
+
+If `./scripts/doctor.sh` reports this, use one of these paths:
+
+```bash
+USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+```
+
+or move/clone the source checkout to an ASCII-only path before local source builds:
+
+```bash
+git clone https://github.com/jzvcpe-goat/study-anything.git ~/study-anything
+cd ~/study-anything
+python3 scripts/setup_env.py
+./scripts/launch_self_host.sh
+```
+
+Set `ALLOW_NON_ASCII_DOCKER_BUILD=true` only if you know your Docker version no longer has this
+BuildKit path bug and you want to bypass the guard.
+
 ## Troubleshooting And Recovery
 
 Run the doctor before and after launch when a self-host setup does not behave as expected:

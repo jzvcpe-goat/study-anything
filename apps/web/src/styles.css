@@ -821,6 +821,32 @@ small {
   min-height: 18px;
 }
 
+.exportPanel {
+  border-top: 1px solid var(--line);
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.exportPanel button {
+  margin: 8px 0 12px;
+}
+
+.exportSummary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  margin: 10px 0 0;
+}
+
+.exportSummary dt {
+  color: var(--muted);
+}
+
+.exportSummary dd {
+  margin: 0;
+  font-weight: 800;
+}
+
 .recentShelf {
   max-width: 1160px;
   margin: 8px auto 0;

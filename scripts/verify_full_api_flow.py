@@ -80,6 +80,26 @@ def main() -> None:
     )
     if not intent.get("local_only"):
         raise RuntimeError(f"PMF interest should be local-only: {intent}")
+    try:
+        request("/v1/pmf/export", {"destination": "self_archive"})
+    except RuntimeError as exc:
+        if "409" not in str(exc):
+            raise
+    else:
+        raise RuntimeError("PMF export should require explicit consent.")
+    export = request(
+        "/v1/pmf/export",
+        {
+            "consent_to_share": True,
+            "destination": "self_archive",
+            "note": "Smoke export note must not be included.",
+        },
+    )
+    if export.get("schema_version") != "pmf-export-v1":
+        raise RuntimeError(f"PMF export schema is not pmf-export-v1: {export}")
+    serialized_export = json.dumps(export, ensure_ascii=False)
+    if "Smoke export note" in serialized_export or "smoke-user" in serialized_export:
+        raise RuntimeError(f"PMF export leaked private smoke data: {export}")
     pmf_summary = request("/v1/pmf/summary")
     print(
         json.dumps(
@@ -92,6 +112,7 @@ def main() -> None:
                 "plugins": len(plugins),
                 "pmf_completed_sessions": metrics["sessions"]["completed"],
                 "pmf_interest_total": pmf_summary["total"],
+                "pmf_export_schema": export["schema_version"],
             },
             ensure_ascii=False,
         )

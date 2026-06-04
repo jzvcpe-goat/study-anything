@@ -142,6 +142,41 @@ type PmfInterestSummary = {
   privacy_exclusions: string[];
 };
 
+type PmfExport = {
+  schema_version: string;
+  generated_at: string;
+  destination: string;
+  consent: {
+    granted: boolean;
+    statement: string;
+    note_provided: boolean;
+  };
+  metrics: {
+    sessions: Record<string, number>;
+    learners: Record<string, number>;
+    learning: Record<string, number>;
+    plugins: Record<string, number>;
+    signals: Record<string, number>;
+  };
+  hosted_interest: {
+    total: number;
+    with_contact: number;
+    with_comment: number;
+    services: Record<string, number>;
+    sources: Record<string, number>;
+    raw_contact_stored: boolean;
+  };
+  privacy: {
+    shareable_after_consent: boolean;
+    raw_contact_stored: boolean;
+    raw_user_identifiers_exposed: boolean;
+    individual_contact_hashes_exposed: boolean;
+    individual_user_hashes_exposed: boolean;
+    freeform_comments_exposed: boolean;
+    privacy_exclusions: string[];
+  };
+};
+
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CAPABILITIES = [
@@ -273,6 +308,8 @@ const copy = {
     launchPrivacyTitle: "隐私边界",
     launchInterestTitle: "未来服务意向",
     launchInterestLead: "可选记录你对 Sync、Publish、Teams 或 Catalyst 的兴趣。数据只保存在本机。",
+    launchExportTitle: "分享 PMF 包",
+    launchExportLead: "生成一个可分享的聚合包，用于社区 PMF 反馈或 hosted waitlist。需要你明确同意。",
     completedSessions: "完成学习",
     completionRate: "完成率",
     activeLearners: "7日活跃学习者",
@@ -284,6 +321,12 @@ const copy = {
     interestComment: "备注（可选，只记录是否填写）",
     recordInterest: "记录本地意向",
     interestRecorded: "已记录本地意向",
+    exportConsent: "我同意生成仅含聚合数据的 PMF 分享包。",
+    exportPmf: "生成分享包",
+    exportReady: "分享包已生成",
+    exportBlocked: "请先确认分享同意。",
+    exportDestination: "分享目的",
+    exportSchema: "导出版本",
     localOnly: "本地保存",
     noRawContact: "不保存原始联系方式",
     noRawLearningData: "不暴露正文、答案或洞察",
@@ -294,7 +337,8 @@ const copy = {
       catalyst: "Catalyst",
       hosted_alpha: "Hosted Alpha"
     },
-    loadingInterest: "正在记录意向"
+    loadingInterest: "正在记录意向",
+    loadingExport: "正在生成分享包"
   },
   en: {
     appMode: "Local-first learning system",
@@ -407,6 +451,8 @@ const copy = {
     launchPrivacyTitle: "Privacy Boundary",
     launchInterestTitle: "Future Service Interest",
     launchInterestLead: "Optionally record interest in Sync, Publish, Teams, or Catalyst. The record stays on this machine.",
+    launchExportTitle: "Share PMF Package",
+    launchExportLead: "Generate a shareable aggregate package for community PMF feedback or hosted waitlist review. Explicit consent is required.",
     completedSessions: "Completed sessions",
     completionRate: "Completion rate",
     activeLearners: "7d active learners",
@@ -418,6 +464,12 @@ const copy = {
     interestComment: "Comment (optional, presence only)",
     recordInterest: "Record local interest",
     interestRecorded: "Local interest recorded",
+    exportConsent: "I consent to generate a PMF package containing aggregate data only.",
+    exportPmf: "Generate package",
+    exportReady: "Share package generated",
+    exportBlocked: "Confirm sharing consent first.",
+    exportDestination: "Destination",
+    exportSchema: "Export schema",
     localOnly: "Local only",
     noRawContact: "No raw contact stored",
     noRawLearningData: "No source text, answers, or insights exposed",
@@ -428,7 +480,8 @@ const copy = {
       catalyst: "Catalyst",
       hosted_alpha: "Hosted Alpha"
     },
-    loadingInterest: "Recording interest"
+    loadingInterest: "Recording interest",
+    loadingExport: "Generating share package"
   }
 } as const;
 
@@ -512,6 +565,9 @@ function App() {
   const [interestContact, setInterestContact] = useState("");
   const [interestComment, setInterestComment] = useState("");
   const [interestResult, setInterestResult] = useState<string | null>(null);
+  const [pmfShareConsent, setPmfShareConsent] = useState(false);
+  const [pmfExport, setPmfExport] = useState<PmfExport | null>(null);
+  const [pmfExportResult, setPmfExportResult] = useState<string | null>(null);
   const [guideDismissed, setGuideDismissed] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("study-anything-onboarding-dismissed") === "true";
@@ -779,6 +835,25 @@ function App() {
     });
   }
 
+  async function createPmfExport() {
+    if (!pmfShareConsent) {
+      setError(t.exportBlocked);
+      return;
+    }
+    await runTask(t.loadingExport, async () => {
+      const exported = await api<PmfExport>("/v1/pmf/export", {
+        method: "POST",
+        body: JSON.stringify({
+          consent_to_share: true,
+          destination: "self_archive",
+          note: "generated-from-web-ui"
+        })
+      });
+      setPmfExport(exported);
+      setPmfExportResult(t.exportReady);
+    });
+  }
+
   async function resolveTask(taskId: string) {
     if (!session) return;
     const updated = await runTask(t.loadingRefresh, () =>
@@ -910,11 +985,16 @@ function App() {
               interestContact={interestContact}
               interestResult={interestResult}
               metrics={pmfMetrics}
+              onCreatePmfExport={createPmfExport}
               onRecordInterest={recordInterest}
               onToggleService={toggleInterestService}
+              pmfExport={pmfExport}
+              pmfExportResult={pmfExportResult}
+              pmfShareConsent={pmfShareConsent}
               selectedServices={selectedInterestServices}
               setInterestComment={setInterestComment}
               setInterestContact={setInterestContact}
+              setPmfShareConsent={setPmfShareConsent}
               summary={pmfSummary}
               t={t}
             />
@@ -1169,11 +1249,16 @@ function LaunchWorkspace(props: {
   interestContact: string;
   interestResult: string | null;
   metrics: PmfMetrics | null;
+  onCreatePmfExport: () => void;
   onRecordInterest: () => void;
   onToggleService: (service: string) => void;
+  pmfExport: PmfExport | null;
+  pmfExportResult: string | null;
+  pmfShareConsent: boolean;
   selectedServices: string[];
   setInterestComment: (value: string) => void;
   setInterestContact: (value: string) => void;
+  setPmfShareConsent: (value: boolean) => void;
   summary: PmfInterestSummary | null;
   t: (typeof copy)[Locale];
 }) {
@@ -1182,11 +1267,16 @@ function LaunchWorkspace(props: {
     interestContact,
     interestResult,
     metrics,
+    onCreatePmfExport,
     onRecordInterest,
     onToggleService,
+    pmfExport,
+    pmfExportResult,
+    pmfShareConsent,
     selectedServices,
     setInterestComment,
     setInterestContact,
+    setPmfShareConsent,
     summary,
     t
   } = props;
@@ -1231,6 +1321,34 @@ function LaunchWorkspace(props: {
         <p className="feedbackText">
           {metrics?.privacy.privacy_exclusions.slice(0, 6).join(" · ") ?? ""}
         </p>
+        <div className="exportPanel">
+          <h3>{t.launchExportTitle}</h3>
+          <p className="pluginMeta">{t.launchExportLead}</p>
+          <label className="interestChoice">
+            <input
+              checked={pmfShareConsent}
+              onChange={(event) => setPmfShareConsent(event.target.checked)}
+              type="checkbox"
+            />
+            <span>{t.exportConsent}</span>
+          </label>
+          <button disabled={!pmfShareConsent} onClick={onCreatePmfExport}>
+            {t.exportPmf}
+          </button>
+          {pmfExportResult && <p className="feedbackText good">{pmfExportResult}</p>}
+          {pmfExport && (
+            <dl className="exportSummary">
+              <dt>{t.exportSchema}</dt>
+              <dd>{pmfExport.schema_version}</dd>
+              <dt>{t.exportDestination}</dt>
+              <dd>{pmfExport.destination}</dd>
+              <dt>{t.completedSessions}</dt>
+              <dd>{pmfExport.metrics.sessions.completed ?? 0}</dd>
+              <dt>{t.hostedInterest}</dt>
+              <dd>{pmfExport.hosted_interest.total}</dd>
+            </dl>
+          )}
+        </div>
       </section>
 
       <section className="sidePanel interestPanel">

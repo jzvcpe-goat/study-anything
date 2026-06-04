@@ -21,6 +21,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
+- Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
 
 ## What Blocks Commercial Launch
 
@@ -50,4 +51,4 @@ Reach 60-65% readiness by making the self-host Alpha dependable for real learner
 - Docker soak testing and trace retention guidance.
 - Backup restore drills in a disposable local stack.
 - Signed plugin registry design and update-review workflow.
-- Clear hosted waitlist export policy and consent flow before any cloud service.
+- Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.

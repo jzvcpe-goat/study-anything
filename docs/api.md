@@ -68,6 +68,7 @@ the caller to echo the exact manifest permission list as `confirmed_permissions`
 - `GET /v1/metrics/pmf`
 - `GET /v1/pmf/summary`
 - `POST /v1/pmf/interest`
+- `POST /v1/pmf/export`
 
 PMF metrics are local aggregate signals for self-host operators. They count sessions, completed learning
 loops, active learner hashes, repeat usage, mastery delta, ready plugins, and optional future-service
@@ -78,3 +79,10 @@ quiz prompts, answers, grading feedback, insights, scribe logs, Agent metadata, 
 `neural_sync`, `neural_publish`, `neural_teams`, `catalyst`, `plugin_marketplace`, or `hosted_alpha`.
 Optional contact values are hashed before storage; optional comments are reduced to a boolean
 `comment_provided` flag.
+
+`POST /v1/pmf/export` creates a shareable aggregate package only when `consent_to_share=true`.
+Supported destinations are `self_archive`, `github_discussion`, `email_to_maintainers`,
+`hosted_waitlist`, and `research_report`. The export includes aggregate PMF metrics, service-interest
+counts, the consent statement, and privacy flags. It does not include source text, quiz prompts, answers,
+feedback, insights, scribe logs, Agent metadata, raw user IDs, user hashes, raw contact values, contact
+hashes, or freeform comments.

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from _path import ROOT  # noqa: F401
 
-from study_anything.core.pmf import LocalPmfInterestStore, compute_pmf_metrics
+from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.plugin_registry import PluginStatus
 from study_anything.core.workflow import Answer, Mastery, submit_reading, new_session
 
@@ -82,6 +82,50 @@ class PmfMetricsTests(unittest.TestCase):
 
             with self.assertRaises(ValueError):
                 store.record(user_id="pmf-user", services=["unknown"])
+
+    def test_pmf_export_requires_consent_and_excludes_individual_hashes(self) -> None:
+        metrics = {
+            "sessions": {"completed": 1},
+            "learners": {"unique": 1},
+            "learning": {"average_mastery_delta": 0.5},
+            "plugins": {"ready": 1},
+            "signals": {"hosted_waitlist_count": 1},
+            "hosted_interest": {
+                "total": 1,
+                "services": {"neural_sync": 1},
+                "contact_hash": "must-not-export",
+            },
+        }
+        summary = {
+            "schema_version": "pmf-interest-v1",
+            "total": 1,
+            "with_contact": 1,
+            "with_comment": 1,
+            "services": {"neural_sync": 1},
+            "sources": {"web-ui": 1},
+            "contact_hash": "must-not-export",
+        }
+
+        with self.assertRaises(ValueError):
+            build_pmf_export(metrics, summary, consent_to_share=False)
+
+        exported = build_pmf_export(
+            metrics,
+            summary,
+            consent_to_share=True,
+            destination="github_discussion",
+            note="Private note should not appear.",
+        )
+        serialized = json.dumps(exported)
+
+        self.assertEqual(exported["schema_version"], "pmf-export-v1")
+        self.assertEqual(exported["destination"], "github_discussion")
+        self.assertTrue(exported["consent"]["granted"])
+        self.assertTrue(exported["consent"]["note_provided"])
+        self.assertEqual(exported["hosted_interest"]["total"], 1)
+        self.assertNotIn("must-not-export", serialized)
+        self.assertNotIn("Private note", serialized)
+        self.assertNotIn("contact_hash", exported["hosted_interest"])
 
 
 if __name__ == "__main__":
