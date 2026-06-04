@@ -78,11 +78,11 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.2-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.3-alpha"
         )
         web_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/web:v0.2.2-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/web:v0.2.3-alpha"
         )
         self.assertLess(output.index(api_pull), output.index(web_pull))
         self.assertIn(
