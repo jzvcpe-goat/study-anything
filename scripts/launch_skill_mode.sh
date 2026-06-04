@@ -12,6 +12,11 @@ pid_file="$data_dir/api.pid"
 log_file="$data_dir/api.log"
 venv_dir="${STUDY_ANYTHING_VENV:-$ROOT/.venv}"
 venv_python="$venv_dir/bin/python3"
+foreground="${SKILL_API_FOREGROUND:-false}"
+
+if [ "${1:-}" = "--foreground" ]; then
+  foreground="true"
+fi
 
 if [ -x "$venv_python" ]; then
   python_bin="$venv_python"
@@ -64,6 +69,19 @@ if [ -f "$pid_file" ]; then
     exit 1
   fi
   rm -f "$pid_file"
+fi
+
+if [ "$foreground" = "true" ]; then
+  printf "Starting Study Anything Skill API in foreground at %s ...\n" "$api_base"
+  printf "Keep this terminal open. Stop with Ctrl-C.\n"
+  SESSION_STORE=json \
+  WORKFLOW_ENGINE=langgraph \
+  LANGGRAPH_CHECKPOINTER=memory \
+  FALKORDB_ENABLED=false \
+  STUDY_ANYTHING_DATA_DIR="$data_dir" \
+  exec "$venv_python" -m uvicorn study_anything.api.main:app \
+    --host "$api_host" \
+    --port "$api_port"
 fi
 
 printf "Starting Study Anything Skill API at %s ...\n" "$api_base"

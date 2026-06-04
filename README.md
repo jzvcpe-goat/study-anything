@@ -35,7 +35,9 @@ Use Skill Mode when you want to try the learning loop without Docker:
 This creates a local Python virtual environment when needed, starts the API, verifies the CLI learning
 loop, and stops the API in one command. This is the safest path for terminal-capable LLM agents whose
 shell tools may not preserve background processes. For a persistent local API, run
-`./scripts/launch_skill_mode.sh` and stop it with `./scripts/stop_skill_mode.sh`.
+`./scripts/launch_skill_mode.sh` and stop it with `./scripts/stop_skill_mode.sh`. If your agent or
+desktop shell does not preserve background processes, use `./scripts/launch_skill_mode.sh --foreground`
+and keep that terminal open while a browser or another agent uses the API.
 
 ## Docker Self-Host
 
