@@ -45,6 +45,14 @@
 - Local-only PMF launch panel and API metrics for completion, repeat usage, mastery delta, plugin readiness, and future-service interest.
 - Foreground Skill Mode launch for agent and desktop environments that do not preserve background processes.
 
+## v0.2.4-alpha
+
+- Explicit-consent PMF export packages for community feedback and hosted waitlist review.
+- Web Launch panel consent gate for aggregate-only PMF sharing.
+- Full API smoke verification now covers PMF export consent failure and success paths.
+- Docker self-host source-build diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
+- Release docs updated for the deployability fix and PMF export package.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
@@ -54,7 +62,6 @@
 ## PMF Track
 
 - Community-scale PMF readouts from explicitly shared local aggregate exports.
-- Explicit-consent local PMF export packages for community feedback and hosted waitlist review.
 - Cohort-level mastery delta and repeat-use analysis.
 - Plugin activation telemetry, opt-in only.
 - Hosted waitlist consent and export policy for Sync and Publish.
