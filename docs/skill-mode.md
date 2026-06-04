@@ -34,6 +34,22 @@ and starts the local API in the background with JSON session storage. Stop it wi
 ./scripts/stop_skill_mode.sh
 ```
 
+Some desktop or agent sandboxes do not keep background processes alive after the launch command
+returns. In that environment, keep the API in the foreground instead:
+
+```bash
+./scripts/launch_skill_mode.sh --foreground
+```
+
+or:
+
+```bash
+SKILL_API_FOREGROUND=true ./scripts/launch_skill_mode.sh
+```
+
+Leave that terminal running, then use another terminal, browser, or agent to call
+`http://127.0.0.1:8000`. Stop the foreground API with `Ctrl-C`.
+
 The deterministic demo creates a source-bound question, submits a grounded answer, updates mastery, and synthesizes an insight.
 
 ## Agent Runtime Boundary
