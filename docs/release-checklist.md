@@ -23,6 +23,7 @@
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
+- [ ] Verify `GET /v1/sync/status`, `POST /v1/sync/export`, and `POST /v1/sync/inspect` work without returning source text, answers, raw user IDs, or Agent endpoints in plaintext.
 - [ ] `python3 scripts/self_host_data.py backup --output /tmp/study-anything-backup-check`
 - [ ] Restore that backup in a disposable local stack with `python3 scripts/self_host_data.py restore /tmp/study-anything-backup-check --yes`.
 - [ ] Open Web UI at http://localhost:5173

@@ -142,6 +142,7 @@ Open:
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - System status: http://localhost:8000/v1/system/status
+- Local encrypted sync status: http://localhost:8000/v1/sync/status
 - Local PMF metrics: http://localhost:8000/v1/metrics/pmf
 - Langfuse: http://localhost:3000
 
@@ -156,7 +157,9 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 This creates a demo learning session, submits source-bound reading, answers the generated quiz, verifies
 mastery completion, reads local PMF metrics, and records one local-only hosted-alpha intent. PMF metrics
 are aggregate-only; they do not expose raw source text, answers, insights, user IDs, contact values, or
-Agent metadata.
+Agent metadata. The smoke flow also exports and inspects an encrypted local sync package, then checks
+that the package response does not expose the smoke learner, source text, answer text, or Agent details
+in plaintext.
 
 ## Data
 
@@ -170,6 +173,35 @@ For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_
 The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by default. Set `VITE_API_PROXY_TARGET` when your local API uses another address.
 
 The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
+
+## Encrypted Sync Package
+
+The public API includes a local encrypted package foundation for future Study Sync:
+
+```bash
+curl http://localhost:8000/v1/sync/status
+
+curl -X POST http://localhost:8000/v1/sync/export \
+  -H 'Content-Type: application/json' \
+  -d '{"passphrase":"choose a long local passphrase"}'
+```
+
+The export endpoint returns an encrypted package envelope plus count-only summary metadata. The
+passphrase is never stored by Study Anything. The package is not uploaded anywhere; keep it in storage
+you control. The package envelope excludes source text, answers, raw user IDs, Agent endpoints, Agent
+metadata, and plugin source code in plaintext.
+
+To inspect a package without restoring it:
+
+```bash
+curl -X POST http://localhost:8000/v1/sync/inspect \
+  -H 'Content-Type: application/json' \
+  -d '{"passphrase":"choose a long local passphrase","package":{...}}'
+```
+
+`/v1/sync/inspect` returns schema, timestamp, summary counts, and privacy flags only. Hosted accounts,
+remote storage, cross-device conflict resolution, recovery flows, and billing are not part of the
+self-host alpha.
 
 ## Backup And Restore
 

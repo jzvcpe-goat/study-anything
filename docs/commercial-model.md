@@ -16,7 +16,7 @@ The core app remains free and self-hostable:
 
 Paid services should sell convenience, reliability, collaboration, and hosting, not access to the core workflow.
 
-- Study Sync: encrypted backup/sync.
+- Study Sync: hosted encrypted backup/sync on top of the local encrypted package boundary.
 - Study Publish: publish selected learning artifacts.
 - Study Teams: collaboration and admin controls.
 - Catalyst: optional supporter tier.

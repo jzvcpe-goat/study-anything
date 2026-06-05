@@ -100,6 +100,35 @@ def main() -> None:
     serialized_export = json.dumps(export, ensure_ascii=False)
     if "Smoke export note" in serialized_export or "smoke-user" in serialized_export:
         raise RuntimeError(f"PMF export leaked private smoke data: {export}")
+    sync_status = request("/v1/sync/status")
+    if not sync_status.get("encrypted_package_supported"):
+        raise RuntimeError(f"Sync status is not package-ready: {sync_status}")
+    if sync_status.get("hosted_sync_enabled"):
+        raise RuntimeError(f"Hosted sync should stay disabled in self-host alpha: {sync_status}")
+    sync_export = request(
+        "/v1/sync/export",
+        {"passphrase": "verify full api encrypted sync passphrase"},
+    )
+    if sync_export.get("package", {}).get("schema_version") != "sync-package-v1":
+        raise RuntimeError(f"Sync export schema is not sync-package-v1: {sync_export}")
+    serialized_sync_export = json.dumps(sync_export, ensure_ascii=False)
+    if (
+        "smoke-user" in serialized_sync_export
+        or "launch smoke test" in serialized_sync_export.lower()
+        or "source evidence" in serialized_sync_export.lower()
+    ):
+        raise RuntimeError(f"Sync export leaked private smoke data: {sync_export}")
+    sync_inspect = request(
+        "/v1/sync/inspect",
+        {
+            "passphrase": "verify full api encrypted sync passphrase",
+            "package": sync_export["package"],
+        },
+    )
+    if sync_inspect.get("schema_version") != "sync-inspect-v1":
+        raise RuntimeError(f"Sync inspect schema is not sync-inspect-v1: {sync_inspect}")
+    if sync_inspect.get("privacy", {}).get("plaintext_returned"):
+        raise RuntimeError(f"Sync inspect returned plaintext: {sync_inspect}")
     pmf_summary = request("/v1/pmf/summary")
     print(
         json.dumps(
@@ -113,6 +142,8 @@ def main() -> None:
                 "pmf_completed_sessions": metrics["sessions"]["completed"],
                 "pmf_interest_total": pmf_summary["total"],
                 "pmf_export_schema": export["schema_version"],
+                "sync_package_schema": sync_export["package"]["schema_version"],
+                "sync_session_count": sync_inspect["payload_summary"]["session_count"],
             },
             ensure_ascii=False,
         )

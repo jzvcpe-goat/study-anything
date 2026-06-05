@@ -20,6 +20,7 @@ The alpha MVP runs a full local learning loop:
 - Local-first data ownership.
 - Bring Your Own Agent: no hardcoded real model default, no stored model API keys.
 - Self-host before SaaS.
+- Encrypted local sync packages before hosted Sync.
 - Optional privacy-preserving topology projection: Postgres remains canonical, FalkorDB stays disposable.
 - Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
 - API-as-product: the Web UI is a client of the public API.
@@ -65,6 +66,7 @@ Open:
 - Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
 - Langfuse: http://localhost:3000
 
@@ -158,9 +160,20 @@ The backup includes the canonical app Postgres dump, Agent configuration volume,
 private `env.snapshot`. See `docs/self-hosting.md` for restore commands and optional operational
 volume backups.
 
+For portable local-first state packages, the API can also generate an encrypted sync package with a
+user-supplied passphrase:
+
+```bash
+curl -X POST http://localhost:8000/v1/sync/export \
+  -H 'Content-Type: application/json' \
+  -d '{"passphrase":"choose a long local passphrase"}'
+```
+
+Study Anything does not store the passphrase or upload the package.
+
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 58% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 65% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
@@ -168,4 +181,4 @@ The repository includes GitHub Actions for Python tests, Web build/audit, Docker
 
 ## Status
 
-This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, local encrypted sync package, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.

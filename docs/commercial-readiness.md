@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 60%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 65%.
 
 ## What Is Ready
 
@@ -22,6 +22,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Actionable Docker self-host diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Plugin trust summaries for local installs, including source digest, review metadata, signature metadata status, risk level, and install recommendation.
 - Local workspace ownership foundation with hashed local identities, default workspace assignment, roles, and role capability names.
+- Local encrypted sync package foundation with user-supplied passphrases, AES-256-GCM package envelopes, count-only inspect summaries, and no hosted upload.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
@@ -29,7 +30,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 ## What Blocks Commercial Launch
 
 - Hosted accounts and identity provider integration beyond the local workspace boundary.
-- End-to-end encrypted sync/backup for paid convenience services.
+- Hosted encrypted sync service: remote storage, multi-device conflict resolution, account recovery, and support tooling.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
 - Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
 - Plugin marketplace trust model beyond local installs: cryptographic signature verification, signed remote registry policy, update UX, review queues, and payment boundaries.
@@ -42,16 +43,17 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 - `codex/guided-first-run-onboarding`: natural-language-first UI, bilingual first-run path, and Agent setup clarity.
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.
-- `feature/encrypted-sync-design`: Sync protocol, key ownership, and hosted convenience boundary.
+- `feature/hosted-sync-service`: remote storage, recovery, conflict resolution, and paid convenience boundary.
 - `feature/plugin-trust`: plugin permissions, signing, review metadata, and install UX.
 - `feature/pmf-validation`: community PMF readouts, hosted waitlist export policy, and cohort-level learning outcomes.
 - `ops/production-hardening`: container, CI, release, and security baseline.
 
 ## Next Commercial Milestone
 
-Reach 65% readiness by making the self-host Alpha dependable for real learners:
+Reach 70% readiness by making the self-host Alpha dependable for real learners:
 
 - Docker soak testing and trace retention guidance.
 - Backup restore drills in a disposable local stack.
+- Encrypted sync package restore preview and documented recovery drill.
 - Signed plugin registry verification and update-review workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.
