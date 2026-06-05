@@ -32,6 +32,7 @@ from study_anything.core.knowledge_graph import (
 )
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.plugin_registry import PluginRegistry
+from study_anything.core.plugin_trust import plugin_trust_policy
 from study_anything.core.store import create_session_store
 from study_anything.core.tracing import build_trace_sink
 from study_anything.core.workflow import Answer, new_session, submit_answers, submit_reading
@@ -469,6 +470,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/plugins")
     def list_plugins() -> list[dict[str, object]]:
         return [status.public_dict() for status in plugins.discover()]
+
+    @app.get("/v1/plugins/trust-policy")
+    def get_plugin_trust_policy() -> dict[str, object]:
+        return plugin_trust_policy()
 
     @app.post("/v1/plugins/preview")
     def preview_plugin(payload: PluginPreviewRequest) -> dict[str, object]:

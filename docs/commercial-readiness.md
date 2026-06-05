@@ -20,6 +20,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
 - Actionable Docker self-host diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
+- Plugin trust summaries for local installs, including source digest, review metadata, signature metadata status, risk level, and install recommendation.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
@@ -30,7 +31,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - End-to-end encrypted sync/backup for paid convenience services.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
 - Team spaces, admin controls, export/audit guarantees, and enterprise data retention settings.
-- Plugin marketplace trust model: signing, review metadata, remote registry policy, update UX, and payment boundaries.
+- Plugin marketplace trust model beyond local installs: cryptographic signature verification, signed remote registry policy, update UX, review queues, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by cohort, plugin activation, and hosted waitlist conversion.
@@ -51,5 +52,5 @@ Reach 65% readiness by making the self-host Alpha dependable for real learners:
 
 - Docker soak testing and trace retention guidance.
 - Backup restore drills in a disposable local stack.
-- Signed plugin registry design and update-review workflow.
+- Signed plugin registry verification and update-review workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.

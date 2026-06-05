@@ -5,6 +5,16 @@
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["exporter"],
-  "permissions": ["read:sessions"]
+  "permissions": ["read:sessions"],
+  "publisher": {
+    "name": "Study Anything contributors",
+    "url": "https://github.com/jzvcpe-goat/study-anything"
+  },
+  "review": {
+    "status": "maintainer_reviewed",
+    "reviewedBy": "Study Anything maintainers",
+    "reviewedAt": "2026-06-04",
+    "notesUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-exporter"
+  },
+  "sourceUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-exporter"
 }
-

@@ -59,7 +59,24 @@ class PluginApiTests(unittest.TestCase):
             self.assertTrue(body["requires_confirmation"])
             self.assertEqual(body["manifest"]["plugin_id"], "demo-plugin")
             self.assertEqual(body["permission_details"][1]["permission"], "network:http")
+            self.assertEqual(body["trust"]["risk_level"], "high")
+            self.assertEqual(body["trust"]["install_recommendation"], "review_required")
+            self.assertTrue(str(body["trust"]["source_digest"]).startswith("sha256:"))
             self.assertFalse((install_dir / "demo-plugin").exists())
+
+    def test_plugin_trust_policy_endpoint(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            install_dir = Path(tmpdir) / "installed"
+            client, stack = self._client(install_dir)
+
+            with stack, client:
+                response = client.get("/v1/plugins/trust-policy")
+
+            body = response.json()
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(body["schema_version"], "plugin-trust-v1")
+            self.assertTrue(body["local_first"])
+            self.assertFalse(body["remote_code_downloads_allowed"])
 
     def test_install_plugin_requires_exact_permission_confirmation(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

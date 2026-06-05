@@ -709,6 +709,39 @@ small {
   padding-top: 14px;
 }
 
+.trustSummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+  margin: 12px 0 16px;
+}
+
+.trustSummary > div {
+  min-width: 0;
+}
+
+.trustSummary small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.trustSummary strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.trustSummary .pluginMeta {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.trustDigest {
+  grid-column: 1 / -1;
+}
+
 .permissionList {
   display: grid;
   gap: 10px;

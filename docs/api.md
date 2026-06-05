@@ -55,13 +55,18 @@ generated insights.
 - `GET /v1/system/status`
 - `GET /v1/system/integrations`
 - `GET /v1/plugins`
+- `GET /v1/plugins/trust-policy`
 - `POST /v1/plugins/preview`
 - `POST /v1/plugins/install`
 
 Plugin install is local-first. Preview validates a user-selected local directory and returns the manifest,
-permission details, and target install directory without copying or executing plugin code. Install requires
-the caller to echo the exact manifest permission list as `confirmed_permissions`; otherwise the API returns
-`409`.
+permission details, trust summary, and target install directory without copying or executing plugin code.
+Install requires the caller to echo the exact manifest permission list as `confirmed_permissions`;
+otherwise the API returns `409`.
+
+`GET /v1/plugins/trust-policy` returns the local-first alpha trust policy: local directories only, no
+remote code downloads, no entrypoint execution during install, no raw secrets stored by Study Anything,
+supported review statuses, and install recommendation values.
 
 ## Local PMF and Launch Signals
 
