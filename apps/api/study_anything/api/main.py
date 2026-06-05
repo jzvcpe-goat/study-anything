@@ -34,6 +34,14 @@ from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, com
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.plugin_trust import plugin_trust_policy
 from study_anything.core.store import create_session_store
+from study_anything.core.sync_package import (
+    MIN_PASSPHRASE_LENGTH,
+    SyncPackageError,
+    build_sync_payload,
+    encrypt_sync_package,
+    inspect_sync_package,
+    sync_status,
+)
 from study_anything.core.tracing import build_trace_sink
 from study_anything.core.workflow import Answer, new_session, submit_answers, submit_reading
 from study_anything.core.workspace import (
@@ -128,6 +136,17 @@ class PmfExportRequest(BaseModel):
     consent_to_share: bool = False
     destination: str = Field(default="self_archive")
     note: Optional[str] = None
+
+
+class SyncExportRequest(BaseModel):
+    passphrase: str = Field(min_length=MIN_PASSPHRASE_LENGTH)
+    include_pmf: bool = True
+    include_plugin_inventory: bool = True
+
+
+class SyncInspectRequest(BaseModel):
+    passphrase: str
+    package: Dict[str, Any]
 
 
 class WorkspaceCreateRequest(BaseModel):
@@ -227,6 +246,7 @@ def create_app() -> FastAPI:
             "langgraph_checkpointer": langgraph_checkpoint.backend if langgraph_checkpoint else None,
             "telemetry_enabled": trace_sink.enabled,
             "knowledge_graph": knowledge_graph_sink.status().public_dict(),
+            "sync": sync_status(),
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "workspace_status": workspace_store.status(user_id),
@@ -337,6 +357,37 @@ def create_app() -> FastAPI:
             )
         except ValueError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @app.get("/v1/sync/status")
+    def get_sync_status() -> dict[str, object]:
+        return sync_status()
+
+    @app.post("/v1/sync/export")
+    def export_sync_package(payload: SyncExportRequest) -> dict[str, object]:
+        sync_payload = build_sync_payload(
+            sessions=store.list_sessions(),
+            data_dir=data_dir,
+            plugin_statuses=plugins.discover(),
+            include_pmf=payload.include_pmf,
+            include_plugin_inventory=payload.include_plugin_inventory,
+        )
+        try:
+            return encrypt_sync_package(
+                sync_payload,
+                passphrase=payload.passphrase,
+            ).public_dict()
+        except SyncPackageError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post("/v1/sync/inspect")
+    def inspect_sync_package_endpoint(payload: SyncInspectRequest) -> dict[str, object]:
+        try:
+            return inspect_sync_package(
+                payload.package,
+                passphrase=payload.passphrase,
+            )
+        except SyncPackageError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     @app.get("/v1/graph/status")
     def knowledge_graph_status() -> dict[str, object]:

@@ -59,11 +59,13 @@
 - `GET /v1/plugins/trust-policy` documents the self-host alpha trust boundary for plugins.
 - Plugin manifest now accepts optional publisher, review, signature, homepage, and source metadata.
 - Local workspace ownership foundation with hashed identities, roles, default workspace assignment, and session `workspace_id`.
+- Local encrypted sync package foundation with `/v1/sync/status`, `/v1/sync/export`, and `/v1/sync/inspect`.
+- Full API smoke verification now checks encrypted package export, inspect, and plaintext leakage boundaries.
 
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Hosted-account design for Sync/Teams on top of the local workspace boundary.
+- Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
 - LanceDB reading embedding index and retrieval API.
 
@@ -76,7 +78,7 @@
 
 ## Post-PMF Commercial Services
 
-- Study Sync: encrypted backup and cross-device sync.
+- Study Sync: hosted encrypted backup, cross-device sync, conflict resolution, and recovery flows.
 - Study Publish: publish selected maps, trails, decks, or reports.
 - Study Teams: private shared workspaces and audit/export controls.
 - Catalyst: supporter tier with early builds and roadmap voting.

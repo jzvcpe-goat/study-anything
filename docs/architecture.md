@@ -1,6 +1,6 @@
 # Architecture
 
-Study Anything is split into five MVP layers.
+Study Anything is split into six MVP layers.
 
 ## API Layer
 
@@ -51,6 +51,18 @@ Docker self-host uses app Postgres for session state with `SESSION_STORE=postgre
 Agent provider defaults and local workspace state remain JSON-backed in the alpha Docker volume. This
 keeps the Bring Your Own Agent and local ownership surfaces simple while the public provider and hosted
 service contracts settle.
+
+## Encrypted Sync Package Layer
+
+The local sync package layer creates AES-256-GCM encrypted exports from canonical session state plus
+local Agent registry, workspace state, PMF interest records, and plugin inventory metadata. Users supply
+the passphrase for each export or inspect request; Study Anything does not persist it.
+
+The package envelope is intentionally count-only and excludes source prose, titles, quiz prompts,
+answers, grading feedback, insights, scribe logs, raw user IDs, Agent endpoints, Agent metadata, and
+plugin source code in plaintext. `/v1/sync/inspect` validates a package and returns summary metadata
+only. Destructive restore, hosted upload, account recovery, billing, and conflict resolution are future
+Study Sync concerns, not MVP self-host requirements.
 
 ## Optional Topology Projection
 

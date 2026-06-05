@@ -35,6 +35,27 @@ permissions such as `read_sessions`, `create_sessions`, `manage_members`, `confi
 `install_plugins`, and `export_pmf`. Session creation accepts an optional `workspace_id`; when omitted,
 Study Anything creates or reuses the caller's local default workspace.
 
+## Local Encrypted Sync Package
+
+- `GET /v1/sync/status`
+- `POST /v1/sync/export`
+- `POST /v1/sync/inspect`
+
+Sync package APIs are the local-first foundation for future Study Sync. They do not upload data,
+create hosted accounts, store billing state, or persist the package passphrase.
+
+`POST /v1/sync/export` requires a user-provided `passphrase` with at least 12 characters. It returns an
+AES-256-GCM encrypted package envelope and a count-only payload summary. The encrypted payload can
+include sessions, local Agent registry configuration, local workspace state, local PMF interest records,
+and plugin inventory metadata. The response envelope does not include raw user IDs, source text, source
+titles, quiz prompts, answers, grading feedback, insights, scribe logs, Agent endpoints, Agent metadata,
+or plugin source code in plaintext.
+
+`POST /v1/sync/inspect` decrypts a package with the supplied passphrase and returns only schema,
+creation time, summary counts, and privacy flags. It never returns the plaintext payload and does not
+restore data. Hosted upload, cross-device conflict resolution, and account recovery remain planned
+commercial-service work.
+
 ## Sessions
 
 - `POST /v1/sessions`
