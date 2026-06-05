@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Iterable, List, Optional
 
 from .plugin_manifest import PluginManifest, describe_permissions, validate_manifest
+from .plugin_trust import PluginTrustReport, assess_plugin_trust
 
 
 @dataclass(frozen=True)
@@ -17,6 +18,7 @@ class PluginStatus:
     path: str
     status: str
     message: str
+    trust: Optional[PluginTrustReport] = None
 
     def public_dict(self) -> dict[str, object]:
         permission_details: list[dict[str, str]] = []
@@ -30,6 +32,7 @@ class PluginStatus:
             "path": self.path,
             "status": self.status,
             "message": self.message,
+            "trust": self.trust.public_dict() if self.trust else None,
         }
 
 
@@ -80,7 +83,7 @@ class PluginRegistry:
         shutil.copytree(
             source,
             target,
-            ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"),
+            ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".pyo", ".DS_Store", ".git"),
         )
         return self._load_manifest(target / "plugin.json")
 
@@ -89,15 +92,19 @@ class PluginRegistry:
             values = json.loads(manifest_path.read_text(encoding="utf-8"))
             manifest = validate_manifest(values)
         except (OSError, json.JSONDecodeError, ValueError) as exc:
+            plugin_dir = manifest_path.parent
             return PluginStatus(
                 manifest=None,
-                path=str(manifest_path.parent),
+                path=str(plugin_dir),
                 status="invalid",
                 message=str(exc),
+                trust=assess_plugin_trust(plugin_dir, None),
             )
+        plugin_dir = manifest_path.parent
         return PluginStatus(
             manifest=manifest,
-            path=str(manifest_path.parent),
+            path=str(plugin_dir),
             status="ready",
             message="Plugin manifest is valid.",
+            trust=assess_plugin_trust(plugin_dir, manifest),
         )

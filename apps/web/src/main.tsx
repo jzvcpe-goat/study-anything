@@ -29,6 +29,19 @@ type PluginManifest = {
   permissions: string[];
 };
 
+type PluginTrustReport = {
+  source_digest: string | null;
+  review_status: string;
+  signature_status: string;
+  risk_level: string;
+  install_recommendation: string;
+  warnings: string[];
+  local_only: boolean;
+  remote_code_downloads_allowed: boolean;
+  entrypoints_executed_during_install: boolean;
+  raw_secrets_allowed: boolean;
+};
+
 type PermissionDetail = {
   permission: string;
   label: string;
@@ -42,6 +55,7 @@ type PluginStatus = {
   path: string;
   status: string;
   message: string;
+  trust: PluginTrustReport | null;
   install_dir?: string;
   requires_confirmation?: boolean;
 };
@@ -286,6 +300,12 @@ const copy = {
     pluginInstalled: "插件已安装",
     pluginHooks: "Hooks",
     pluginInstallDir: "安装目录",
+    pluginRiskLevel: "风险等级",
+    pluginReviewStatus: "审查状态",
+    pluginSignatureStatus: "签名状态",
+    pluginRecommendation: "安装建议",
+    pluginDigest: "源码摘要",
+    pluginWarnings: "注意",
     permissionRisk: "风险",
     capabilities: "学习能力",
     noSecrets: "Study Anything 不保存你的推理凭证。",
@@ -429,6 +449,12 @@ const copy = {
     pluginInstalled: "Plugin installed",
     pluginHooks: "Hooks",
     pluginInstallDir: "Install directory",
+    pluginRiskLevel: "Risk level",
+    pluginReviewStatus: "Review status",
+    pluginSignatureStatus: "Signature status",
+    pluginRecommendation: "Recommendation",
+    pluginDigest: "Source digest",
+    pluginWarnings: "Warnings",
     permissionRisk: "Risk",
     capabilities: "Learning capabilities",
     noSecrets: "Study Anything never stores your reasoning credentials.",
@@ -509,6 +535,12 @@ function formatTime(value?: string) {
 
 function formatPercent(value = 0) {
   return `${Math.round(value * 100)}%`;
+}
+
+function formatDigest(value: string | null) {
+  if (!value) return "n/a";
+  if (value.length <= 28) return value;
+  return `${value.slice(0, 18)}...${value.slice(-8)}`;
 }
 
 function progressFor(stage?: string) {
@@ -1535,6 +1567,35 @@ function AgentWorkspace(props: {
                   <p className="pluginMeta">
                     {t.pluginHooks}: {previewManifest.hooks.join(", ")}
                   </p>
+                  {pluginPreview.trust && (
+                    <div className="trustSummary">
+                      <div>
+                        <small>{t.pluginRiskLevel}</small>
+                        <strong>{pluginPreview.trust.risk_level}</strong>
+                      </div>
+                      <div>
+                        <small>{t.pluginReviewStatus}</small>
+                        <strong>{pluginPreview.trust.review_status}</strong>
+                      </div>
+                      <div>
+                        <small>{t.pluginSignatureStatus}</small>
+                        <strong>{pluginPreview.trust.signature_status}</strong>
+                      </div>
+                      <div>
+                        <small>{t.pluginRecommendation}</small>
+                        <strong>{pluginPreview.trust.install_recommendation}</strong>
+                      </div>
+                      <div className="trustDigest">
+                        <small>{t.pluginDigest}</small>
+                        <strong>{formatDigest(pluginPreview.trust.source_digest)}</strong>
+                      </div>
+                      {pluginPreview.trust.warnings.length > 0 && (
+                        <p className="pluginMeta">
+                          {t.pluginWarnings}: {pluginPreview.trust.warnings.join(" ")}
+                        </p>
+                      )}
+                    </div>
+                  )}
                   <strong>{t.pluginPermissions}</strong>
                   <div className="permissionList">
                     {pluginPreview.permission_details.map((detail) => (
@@ -1575,6 +1636,12 @@ function AgentWorkspace(props: {
                 <strong>{plugin.manifest?.name ?? plugin.path}</strong>
                 <small>{plugin.manifest?.plugin_id ?? plugin.message}</small>
                 {plugin.manifest && <small>{plugin.manifest.permissions.join(" · ")}</small>}
+                {plugin.trust && (
+                  <small>
+                    {t.pluginRiskLevel}: {plugin.trust.risk_level} · {t.pluginRecommendation}:{" "}
+                    {plugin.trust.install_recommendation}
+                  </small>
+                )}
                 <small>{plugin.path}</small>
               </div>
             ))}

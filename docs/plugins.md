@@ -14,9 +14,36 @@ Each plugin ships a `plugin.json` file:
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["exporter"],
-  "permissions": ["read:sessions"]
+  "permissions": ["read:sessions"],
+  "publisher": {
+    "name": "Example Maintainer",
+    "url": "https://example.invalid"
+  },
+  "review": {
+    "status": "self_reviewed",
+    "reviewedBy": "Example Maintainer",
+    "reviewedAt": "2026-06-04",
+    "notesUrl": "https://example.invalid/review"
+  },
+  "signature": {
+    "type": "minisign",
+    "signer": "Example Maintainer",
+    "value": "signature-metadata-placeholder"
+  },
+  "homepage": "https://example.invalid/plugin",
+  "sourceUrl": "https://example.invalid/source"
 }
 ```
+
+Only `id`, `name`, `version`, `apiVersion`, `entrypoint`, `hooks`, and `permissions` are required.
+Trust metadata is optional in the alpha and is treated as review context, not proof of authenticity.
+
+Supported review statuses:
+
+- `unreviewed`
+- `self_reviewed`
+- `community_reviewed`
+- `maintainer_reviewed`
 
 ## MVP Hooks
 
@@ -46,6 +73,24 @@ Bundled examples:
 
 Plugins must declare permissions. The alpha validator rejects missing IDs, unsupported hook names, and unsupported permissions. Discovery and preview responses include permission labels, descriptions, and coarse risk levels so users can review what a plugin is asking for before installation.
 
+## Trust Summary
+
+Discovery, preview, and install responses include a `trust` object:
+
+- `source_digest`: stable SHA-256 digest of install-relevant files, excluding cache files, `.git`, and local OS metadata.
+- `review_status`: manifest review metadata or `unreviewed`.
+- `signature_status`: `unsigned` or `metadata_only`.
+- `risk_level`: highest permission risk across the manifest.
+- `install_recommendation`: `allow_with_confirmation`, `review_required`, or `do_not_install`.
+- `warnings`: human-readable reasons to slow down before install.
+
+The trust policy is available at `GET /v1/plugins/trust-policy`. It states the alpha install rules:
+local directories only, no remote code downloads, no entrypoint execution during install, and no raw
+secrets stored by Study Anything.
+
+Signature fields are deliberately metadata-only in this release. Real cryptographic verification,
+signed remote indexes, plugin update policy, and marketplace payment boundaries remain future work.
+
 ## Local Installation
 
 Install a plugin from an explicitly selected local directory in the Web Agent page:
@@ -70,4 +115,6 @@ python3 scripts/install_local_plugin.py /path/to/plugin
 
 The installer validates `plugin.json`, copies the directory into the local plugin data directory, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
 
-The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions. Remote registries, signing, review metadata, and marketplace payments remain future trust-layer work.
+The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions.
+Remote registries, cryptographic signature verification, review queues, update UX, and marketplace
+payments remain future trust-layer work.

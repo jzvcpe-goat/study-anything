@@ -5,5 +5,16 @@
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["agent_provider", "agent_panel"],
-  "permissions": ["read:agents", "write:agents", "network:http", "ui:panel"]
+  "permissions": ["read:agents", "write:agents", "network:http", "ui:panel"],
+  "publisher": {
+    "name": "Study Anything contributors",
+    "url": "https://github.com/jzvcpe-goat/study-anything"
+  },
+  "review": {
+    "status": "maintainer_reviewed",
+    "reviewedBy": "Study Anything maintainers",
+    "reviewedAt": "2026-06-04",
+    "notesUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-agent-provider"
+  },
+  "sourceUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-agent-provider"
 }

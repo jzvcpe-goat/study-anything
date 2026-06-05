@@ -53,6 +53,12 @@
 - Docker self-host source-build diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Release docs updated for the deployability fix and PMF export package.
 
+## v0.2.5-alpha
+
+- Local plugin trust summaries with source digests, review metadata, signature metadata status, risk level, and install recommendation.
+- `GET /v1/plugins/trust-policy` documents the self-host alpha trust boundary for plugins.
+- Plugin manifest now accepts optional publisher, review, signature, homepage, and source metadata.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
