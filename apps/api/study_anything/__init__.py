@@ -1,3 +1,3 @@
 """Study Anything API package."""
 
-__version__ = "0.2.4-alpha"
+__version__ = "0.2.5-alpha"
