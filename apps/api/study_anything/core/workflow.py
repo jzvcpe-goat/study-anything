@@ -78,6 +78,7 @@ class LearningState:
     session_id: str
     user_id: str
     user_hash: str
+    workspace_id: Optional[str] = None
     track: str = "ACADEMIC"
     stage: str = "created"
     source: Optional[ReadingSource] = None
@@ -104,16 +105,23 @@ def new_session(
     user_id: str,
     track: str = "ACADEMIC",
     *,
+    workspace_id: Optional[str] = None,
     trace_sink: Optional[TraceSink] = None,
 ) -> LearningState:
     session_id = str(uuid4())
     user_hash = hash_user_id(user_id)
-    state = LearningState(session_id=session_id, user_id=user_id, user_hash=user_hash, track=track)
+    state = LearningState(
+        session_id=session_id,
+        user_id=user_id,
+        user_hash=user_hash,
+        workspace_id=workspace_id,
+        track=track,
+    )
     return append_event(
         state,
         event_type="session.created",
         node="initialize_session",
-        payload={"track": track},
+        payload={"track": track, "workspace_id": workspace_id},
         trace_sink=trace_sink,
     )
 
