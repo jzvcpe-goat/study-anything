@@ -87,6 +87,7 @@ type HitlInterrupt = {
 
 type Session = {
   session_id: string;
+  workspace_id: string | null;
   stage: string;
   source: ReadingSource | null;
   quiz_items: QuizItem[];
@@ -191,6 +192,36 @@ type PmfExport = {
   };
 };
 
+type WorkspaceMember = {
+  user_hash: string;
+  role: string;
+  display_name: string;
+};
+
+type WorkspaceSummary = {
+  workspace_id: string;
+  name: string;
+  slug: string;
+  owner_hash: string;
+  members: WorkspaceMember[];
+  local_only: boolean;
+};
+
+type WorkspaceStatus = {
+  schema_version: string;
+  local_only: boolean;
+  account_required: boolean;
+  raw_user_ids_stored: boolean;
+  default_workspace: WorkspaceSummary;
+  workspaces: WorkspaceSummary[];
+  role_permissions: Record<string, string[]>;
+  commercial_boundary: {
+    hosted_sync_enabled: boolean;
+    billing_enabled: boolean;
+    remote_identity_provider: string | null;
+  };
+};
+
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CAPABILITIES = [
@@ -219,6 +250,7 @@ const copy = {
     navLearnHint: "自然语言学习空间",
     navAgentHint: "连接你自己的推理系统",
     navLaunchHint: "本地 PMF 与部署信号",
+    workspaceLabel: "本地工作区",
     recent: "最近学习",
     emptyRecent: "还没有学习记录。",
     refresh: "刷新",
@@ -368,6 +400,7 @@ const copy = {
     navLearnHint: "Natural-language study space",
     navAgentHint: "Connect your own reasoning system",
     navLaunchHint: "Local PMF and deploy signals",
+    workspaceLabel: "Local workspace",
     recent: "Recent",
     emptyRecent: "No learning sessions yet.",
     refresh: "Refresh",
@@ -574,6 +607,7 @@ function App() {
   const [locale, setLocale] = useState<Locale>("zh");
   const [view, setView] = useState<ViewKey>("learn");
   const [agentStatus, setAgentStatus] = useState<AgentStatus | null>(null);
+  const [workspaceStatus, setWorkspaceStatus] = useState<WorkspaceStatus | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [hitlTasks, setHitlTasks] = useState<HitlInterrupt[]>([]);
@@ -645,8 +679,9 @@ function App() {
 
   async function refresh(currentSessionId = session?.session_id) {
     await runTask(t.loadingRefresh, async () => {
-      const [agents, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
+      const [agents, workspace, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
         api<AgentStatus>("/v1/agents/status"),
+        api<WorkspaceStatus>("/v1/workspaces/status"),
         api<Session[]>("/v1/sessions"),
         api<HitlInterrupt[]>("/v1/hitl"),
         api<PluginStatus[]>("/v1/plugins"),
@@ -654,6 +689,7 @@ function App() {
         api<PmfInterestSummary>("/v1/pmf/summary")
       ]);
       setAgentStatus(agents);
+      setWorkspaceStatus(workspace);
       setSessions(sessionList);
       setHitlTasks(hitl);
       setPlugins(pluginList);
@@ -669,7 +705,12 @@ function App() {
     await runTask(t.loadingStart, async () => {
       const created = await api<Session>("/v1/sessions", {
         method: "POST",
-        body: JSON.stringify({ user_id: "local-user", track: "ACADEMIC", use_demo_agent: !realAgentReady })
+        body: JSON.stringify({
+          user_id: "local-user",
+          track: "ACADEMIC",
+          use_demo_agent: !realAgentReady,
+          workspace_id: workspaceStatus?.default_workspace.workspace_id
+        })
       });
       const withReading = await api<Session>(`/v1/sessions/${created.session_id}/reading`, {
         method: "POST",
@@ -942,6 +983,11 @@ function App() {
           <span className={`statusPill ${agentReady ? "good" : "warn"}`}>
             {realAgentReady ? t.agentReady : agentReady ? t.demoAgentReady : t.agentMissing}
           </span>
+          {workspaceStatus && (
+            <span className="statusPill workspacePill">
+              {t.workspaceLabel}: {workspaceStatus.default_workspace.name}
+            </span>
+          )}
         </div>
       </header>
 

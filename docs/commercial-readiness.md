@@ -21,16 +21,17 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
 - Actionable Docker self-host diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Plugin trust summaries for local installs, including source digest, review metadata, signature metadata status, risk level, and install recommendation.
+- Local workspace ownership foundation with hashed local identities, default workspace assignment, roles, and role capability names.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
 
 ## What Blocks Commercial Launch
 
-- Accounts, identity, workspace ownership, roles, and permission boundaries.
+- Hosted accounts and identity provider integration beyond the local workspace boundary.
 - End-to-end encrypted sync/backup for paid convenience services.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
-- Team spaces, admin controls, export/audit guarantees, and enterprise data retention settings.
+- Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
 - Plugin marketplace trust model beyond local installs: cryptographic signature verification, signed remote registry policy, update UX, review queues, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.

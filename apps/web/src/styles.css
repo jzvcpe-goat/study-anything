@@ -335,6 +335,13 @@ small {
   color: #835914;
 }
 
+.workspacePill {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .heroStage {
   display: grid;
   grid-template-columns: minmax(310px, 0.62fr) minmax(0, 1.38fr);

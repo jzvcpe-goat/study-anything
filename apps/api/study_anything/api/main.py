@@ -36,6 +36,11 @@ from study_anything.core.plugin_trust import plugin_trust_policy
 from study_anything.core.store import create_session_store
 from study_anything.core.tracing import build_trace_sink
 from study_anything.core.workflow import Answer, new_session, submit_answers, submit_reading
+from study_anything.core.workspace import (
+    LocalWorkspaceStore,
+    WorkspaceAccessDenied,
+    WorkspaceError,
+)
 
 
 class CreateSessionRequest(BaseModel):
@@ -43,6 +48,7 @@ class CreateSessionRequest(BaseModel):
     track: str = Field(default="ACADEMIC")
     use_demo_provider: bool = Field(default=True)
     use_demo_agent: Optional[bool] = None
+    workspace_id: Optional[str] = None
 
 
 class ReadingRequest(BaseModel):
@@ -124,6 +130,20 @@ class PmfExportRequest(BaseModel):
     note: Optional[str] = None
 
 
+class WorkspaceCreateRequest(BaseModel):
+    owner_user_id: str = Field(default="local-user")
+    name: str = Field(default="Personal Workspace")
+    slug: Optional[str] = None
+    owner_display_name: Optional[str] = None
+
+
+class WorkspaceMemberRequest(BaseModel):
+    acting_user_id: str = Field(default="local-user")
+    member_user_id: str
+    role: str = Field(default="member")
+    display_name: Optional[str] = None
+
+
 def _env(primary: str, legacy: str, default: str) -> str:
     return os.getenv(primary) or os.getenv(legacy) or default
 
@@ -131,6 +151,7 @@ def _env(primary: str, legacy: str, default: str) -> str:
 data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data/api"))
 agent_registry = AgentRegistry(data_dir / "agent_registry.json")
 agent_router = AgentRouter(agent_registry)
+workspace_store = LocalWorkspaceStore(data_dir / "workspace_state.json")
 trace_sink = build_trace_sink()
 knowledge_graph_sink = build_knowledge_graph_sink()
 workflow_engine = os.getenv("WORKFLOW_ENGINE", "langgraph")
@@ -208,6 +229,7 @@ def create_app() -> FastAPI:
             "knowledge_graph": knowledge_graph_sink.status().public_dict(),
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
+            "workspace_status": workspace_store.status(user_id),
             "plugin_count": len(plugins.discover()),
             "pmf_metrics": compute_pmf_metrics(
                 store.list_sessions(),
@@ -219,6 +241,56 @@ def create_app() -> FastAPI:
     @app.get("/v1/system/integrations")
     def system_integrations() -> list[dict[str, str]]:
         return [item.public_dict() for item in integration_matrix()]
+
+    @app.get("/v1/workspaces/status")
+    def workspace_status(user_id: str = "local-user") -> dict[str, object]:
+        try:
+            return workspace_store.status(user_id)
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.get("/v1/workspaces")
+    def list_workspaces(user_id: str = "local-user") -> list[dict[str, object]]:
+        try:
+            workspace_store.ensure_default_workspace(user_id)
+            return [
+                workspace.public_dict()
+                for workspace in workspace_store.list_for_user(user_id)
+            ]
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post("/v1/workspaces")
+    def create_workspace(payload: WorkspaceCreateRequest) -> dict[str, object]:
+        try:
+            return workspace_store.create_workspace(
+                owner_user_id=payload.owner_user_id,
+                name=payload.name,
+                slug=payload.slug,
+                owner_display_name=payload.owner_display_name,
+            ).public_dict()
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post("/v1/workspaces/{workspace_id}/members")
+    def add_workspace_member(
+        workspace_id: str,
+        payload: WorkspaceMemberRequest,
+    ) -> dict[str, object]:
+        try:
+            return workspace_store.add_member(
+                workspace_id=workspace_id,
+                acting_user_id=payload.acting_user_id,
+                member_user_id=payload.member_user_id,
+                role=payload.role,
+                display_name=payload.display_name,
+            ).public_dict()
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Workspace not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     @app.get("/v1/metrics/pmf")
     def pmf_metrics() -> dict[str, object]:
@@ -348,15 +420,60 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/sessions")
     def create_session(payload: CreateSessionRequest) -> dict[str, object]:
-        use_demo = payload.use_demo_agent if payload.use_demo_agent is not None else payload.use_demo_provider
+        use_demo = (
+            payload.use_demo_agent
+            if payload.use_demo_agent is not None
+            else payload.use_demo_provider
+        )
+        try:
+            if payload.workspace_id:
+                workspace_store.assert_permission(
+                    payload.user_id,
+                    payload.workspace_id,
+                    "create_sessions",
+                )
+                workspace_id = payload.workspace_id
+            else:
+                workspace_id = workspace_store.ensure_default_workspace(
+                    payload.user_id
+                ).workspace_id
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Workspace not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
         if use_demo:
             agent_registry.set_demo_defaults(payload.user_id)
-        state = store.save(new_session(payload.user_id, payload.track, trace_sink=trace_sink))
+        state = store.save(
+            new_session(
+                payload.user_id,
+                payload.track,
+                workspace_id=workspace_id,
+                trace_sink=trace_sink,
+            )
+        )
         return state.public_dict()
 
     @app.get("/v1/sessions")
-    def list_sessions() -> list[dict[str, object]]:
-        return [state.public_dict() for state in store.list_sessions()]
+    def list_sessions(
+        user_id: str = "local-user",
+        workspace_id: Optional[str] = None,
+    ) -> list[dict[str, object]]:
+        sessions = store.list_sessions()
+        if workspace_id:
+            try:
+                workspace_store.assert_permission(
+                    user_id,
+                    workspace_id,
+                    "read_sessions",
+                )
+            except KeyError as exc:
+                raise HTTPException(status_code=404, detail="Workspace not found") from exc
+            except WorkspaceAccessDenied as exc:
+                raise HTTPException(status_code=403, detail=str(exc)) from exc
+            sessions = [state for state in sessions if state.workspace_id == workspace_id]
+        return [state.public_dict() for state in sessions]
 
     @app.get("/v1/sessions/{session_id}")
     def get_session(session_id: str) -> dict[str, object]:

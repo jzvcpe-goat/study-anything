@@ -100,17 +100,34 @@ class PostgresSessionStore:
             conn.execute(
                 """
                 INSERT INTO study_anything_sessions
-                    (session_id, user_hash, user_id, stage, payload, created_at, updated_at)
+                    (
+                        session_id,
+                        user_hash,
+                        user_id,
+                        workspace_id,
+                        stage,
+                        payload,
+                        created_at,
+                        updated_at
+                    )
                 VALUES
-                    (%s, %s, %s, %s, %s::jsonb, now(), now())
+                    (%s, %s, %s, %s, %s, %s::jsonb, now(), now())
                 ON CONFLICT (session_id) DO UPDATE SET
                     user_hash = EXCLUDED.user_hash,
                     user_id = EXCLUDED.user_id,
+                    workspace_id = EXCLUDED.workspace_id,
                     stage = EXCLUDED.stage,
                     payload = EXCLUDED.payload,
                     updated_at = now()
                 """,
-                (state.session_id, state.user_hash, state.user_id, state.stage, payload),
+                (
+                    state.session_id,
+                    state.user_hash,
+                    state.user_id,
+                    state.workspace_id,
+                    state.stage,
+                    payload,
+                ),
             )
         return state
 
@@ -161,11 +178,18 @@ class PostgresSessionStore:
                     session_id TEXT PRIMARY KEY,
                     user_hash TEXT NOT NULL,
                     user_id TEXT NOT NULL,
+                    workspace_id TEXT,
                     stage TEXT NOT NULL,
                     payload JSONB NOT NULL,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
                 )
+                """
+            )
+            conn.execute(
+                """
+                ALTER TABLE study_anything_sessions
+                ADD COLUMN IF NOT EXISTS workspace_id TEXT
                 """
             )
             conn.execute(
@@ -182,15 +206,31 @@ class PostgresSessionStore:
             )
             conn.execute(
                 """
+                CREATE INDEX IF NOT EXISTS study_anything_sessions_workspace_id_idx
+                ON study_anything_sessions (workspace_id)
+                """
+            )
+            conn.execute(
+                """
                 DO $$
                 BEGIN
                     IF to_regclass('public.neural_console_sessions') IS NOT NULL THEN
                         INSERT INTO study_anything_sessions
-                            (session_id, user_hash, user_id, stage, payload, created_at, updated_at)
+                            (
+                                session_id,
+                                user_hash,
+                                user_id,
+                                workspace_id,
+                                stage,
+                                payload,
+                                created_at,
+                                updated_at
+                            )
                         SELECT
                             session_id,
                             user_hash,
                             user_id,
+                            NULL,
                             stage,
                             payload,
                             created_at,
@@ -228,6 +268,7 @@ def learning_state_from_dict(values: Dict[str, Any]) -> LearningState:
         session_id=values["session_id"],
         user_id=values.get("user_id", "local-user"),
         user_hash=values["user_hash"],
+        workspace_id=values.get("workspace_id"),
         track=values.get("track", "ACADEMIC"),
         stage=values.get("stage", "created"),
         source=source,

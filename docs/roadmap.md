@@ -58,10 +58,12 @@
 - Local plugin trust summaries with source digests, review metadata, signature metadata status, risk level, and install recommendation.
 - `GET /v1/plugins/trust-policy` documents the self-host alpha trust boundary for plugins.
 - Plugin manifest now accepts optional publisher, review, signature, homepage, and source metadata.
+- Local workspace ownership foundation with hashed identities, roles, default workspace assignment, and session `workspace_id`.
 
 ## v0.3 Next
 
 - Importer plugin SDK.
+- Hosted-account design for Sync/Teams on top of the local workspace boundary.
 - E2E Playwright tests.
 - LanceDB reading embedding index and retrieval API.
 

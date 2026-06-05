@@ -30,6 +30,16 @@ Set `WORKFLOW_ENGINE=deterministic` to fall back to the original sequential exec
 
 Study Anything does not store real model API keys, choose production models, or run the user's tools. The recommended MVP path is a local/private HTTP agent gateway. Deprecated `ModelRegistry` imports and `/v1/models/*` endpoints remain as aliases for one alpha release.
 
+## Local Identity And Workspace Layer
+
+`LocalWorkspaceStore` keeps hashed local identities, default workspace ownership, membership roles, and
+role capability names in the self-host data directory. It is a local ownership boundary for sessions and
+future Sync/Teams services, not a hosted account system. Raw user IDs are not persisted in the workspace
+store.
+
+New sessions carry `workspace_id` in canonical session state. Existing sessions without a workspace ID
+continue to load, and the API creates a default local workspace when a caller has not selected one.
+
 ## Observability Layer
 
 Langfuse is included in Compose for self-hosted traces. When telemetry is explicitly enabled and project keys are configured, learning events emit Langfuse v4 observations. Trace metadata is allowlisted: source prose, answers, synthesis text, HITL prose, and nested agent metadata are omitted.
@@ -38,7 +48,9 @@ Langfuse is included in Compose for self-hosted traces. When telemetry is explic
 
 Docker self-host uses app Postgres for session state with `SESSION_STORE=postgres`. Python-only local development can use `SESSION_STORE=json` for a file-backed store under `STUDY_ANYTHING_DATA_DIR`.
 
-Agent provider defaults remain JSON-backed in the alpha Docker volume. This keeps the Bring Your Own Agent surface simple while the public provider contract settles.
+Agent provider defaults and local workspace state remain JSON-backed in the alpha Docker volume. This
+keeps the Bring Your Own Agent and local ownership surfaces simple while the public provider and hosted
+service contracts settle.
 
 ## Optional Topology Projection
 

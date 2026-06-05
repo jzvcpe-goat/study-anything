@@ -19,6 +19,22 @@ These remain for one alpha release and return agent-backed status:
 - `POST /v1/models/defaults`
 - `POST /v1/models/test`
 
+## Local Workspaces
+
+- `GET /v1/workspaces/status`
+- `GET /v1/workspaces`
+- `POST /v1/workspaces`
+- `POST /v1/workspaces/{workspace_id}/members`
+
+Workspaces are local-first ownership boundaries, not hosted accounts. The API stores hashed local
+identities, workspace membership, roles, and role capability names. It does not require an account,
+contact method, remote identity provider, or billing plan.
+
+Supported roles are `owner`, `admin`, `member`, and `viewer`. Workspace responses include role
+permissions such as `read_sessions`, `create_sessions`, `manage_members`, `configure_agents`,
+`install_plugins`, and `export_pmf`. Session creation accepts an optional `workspace_id`; when omitted,
+Study Anything creates or reuses the caller's local default workspace.
+
 ## Sessions
 
 - `POST /v1/sessions`
