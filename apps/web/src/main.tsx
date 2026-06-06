@@ -471,6 +471,29 @@ const copy = {
     loadingRefresh: "正在刷新",
     launchTitle: "上线准备不是猜出来的",
     launchLead: "用本机聚合指标观察学习闭环、重复使用和插件生态，不上传正文、答案、洞察或真实联系方式。",
+    launchScoreTitle: "商业化 MVP 准备度",
+    launchScoreLead: "把自托管上线拆成可验证的门槛：核心学习、用户代理、恢复、同步边界、插件信任和 PMF 信号。",
+    launchScoreReady: "可供 Alpha 用户试用",
+    launchScorePartial: "接近可试用",
+    launchScoreBlocked: "仍需补齐",
+    launchEvidence: "当前证据",
+    launchNextAction: "下一步",
+    launchGatesTitle: "上线门槛",
+    launchCommandTitle: "运维烟雾命令",
+    launchCommandLead: "给 GitHub README、支持答复和新贡献者使用的最短验证路径。",
+    gateCoreRuntime: "核心运行时",
+    gateLearningLoop: "学习闭环",
+    gateAgentPath: "用户自有 Agent",
+    gateRecovery: "备份恢复",
+    gateSyncBoundary: "同步信任边界",
+    gatePluginTrust: "插件信任",
+    gatePmfPrivacy: "PMF 与隐私",
+    gateReady: "已就绪",
+    gateNeedsWork: "待补齐",
+    commandDoctor: "自托管医生",
+    commandWebSmoke: "Web 全栈烟雾",
+    commandPublishedSmoke: "发布镜像烟雾",
+    commandRecoveryDrill: "备份恢复演练",
     launchSignalTitle: "PMF 信号",
     launchPrivacyTitle: "隐私边界",
     launchInterestTitle: "未来服务意向",
@@ -671,6 +694,29 @@ const copy = {
     loadingRefresh: "Refreshing",
     launchTitle: "Launch Readiness Is Measured",
     launchLead: "Read local aggregate signals for the learning loop, repeat usage, and plugin ecosystem without uploading source text, answers, insights, or raw contact details.",
+    launchScoreTitle: "Commercial MVP Readiness",
+    launchScoreLead: "Self-host launch split into verifiable gates: core learning, user-owned agent, recovery, sync boundary, plugin trust, and PMF signals.",
+    launchScoreReady: "Ready for alpha users",
+    launchScorePartial: "Close to usable alpha",
+    launchScoreBlocked: "Needs more work",
+    launchEvidence: "Current evidence",
+    launchNextAction: "Next action",
+    launchGatesTitle: "Launch gates",
+    launchCommandTitle: "Ops smoke commands",
+    launchCommandLead: "The shortest verification path for GitHub README, support replies, and new contributors.",
+    gateCoreRuntime: "Core runtime",
+    gateLearningLoop: "Learning loop",
+    gateAgentPath: "User-owned agent",
+    gateRecovery: "Backup recovery",
+    gateSyncBoundary: "Sync trust boundary",
+    gatePluginTrust: "Plugin trust",
+    gatePmfPrivacy: "PMF and privacy",
+    gateReady: "Ready",
+    gateNeedsWork: "Needs work",
+    commandDoctor: "Self-host doctor",
+    commandWebSmoke: "Web full-stack smoke",
+    commandPublishedSmoke: "Published-image smoke",
+    commandRecoveryDrill: "Backup restore drill",
     launchSignalTitle: "PMF Signals",
     launchPrivacyTitle: "Privacy Boundary",
     launchInterestTitle: "Future Service Interest",
@@ -1397,6 +1443,8 @@ function App() {
               setPmfShareConsent={setPmfShareConsent}
               summary={pmfSummary}
               locale={locale}
+              agentReady={agentReady}
+              realAgentReady={realAgentReady}
               systemStatus={systemStatus}
               syncExport={syncExport}
               syncInspect={syncInspect}
@@ -1672,6 +1720,7 @@ function FirstRunGuide(props: {
 }
 
 function LaunchWorkspace(props: {
+  agentReady: boolean;
   integrations: IntegrationStatus[];
   interestComment: string;
   interestContact: string;
@@ -1691,6 +1740,7 @@ function LaunchWorkspace(props: {
   setPmfShareConsent: (value: boolean) => void;
   summary: PmfInterestSummary | null;
   locale: Locale;
+  realAgentReady: boolean;
   systemStatus: SystemStatus | null;
   syncExport: SyncExport | null;
   syncInspect: SyncInspect | null;
@@ -1701,6 +1751,7 @@ function LaunchWorkspace(props: {
   t: (typeof copy)[Locale];
 }) {
   const {
+    agentReady,
     integrations,
     interestComment,
     interestContact,
@@ -1720,6 +1771,7 @@ function LaunchWorkspace(props: {
     setPmfShareConsent,
     summary,
     locale,
+    realAgentReady,
     systemStatus,
     syncExport,
     syncInspect,
@@ -1754,9 +1806,179 @@ function LaunchWorkspace(props: {
     .filter((item) => ["LangGraph", "Langfuse", "FalkorDB", "Postgres", "Agent Gateway"].includes(item.name))
     .slice(0, 5);
   const recovery = systemStatus?.recovery ?? null;
+  const launchGates = [
+    {
+      label: t.gateCoreRuntime,
+      ready: systemStatus?.status === "ok",
+      evidence: systemStatus ? `${systemStatus.version} · ${systemStatus.session_store}` : "/v1/system/status",
+      nextAction:
+        systemStatus?.status === "ok"
+          ? locale === "zh"
+            ? "继续跑 Web 和 API smoke。"
+            : "Keep running Web and API smoke checks."
+          : locale === "zh"
+            ? "先启动 API 并检查 Docker Compose。"
+            : "Start the API and check Docker Compose."
+    },
+    {
+      label: t.gateLearningLoop,
+      ready: (metrics?.sessions.completed ?? 0) > 0,
+      evidence: `${metrics?.sessions.completed ?? 0} · ${formatPercent(metrics?.sessions.completion_rate ?? 0)}`,
+      nextAction:
+        (metrics?.sessions.completed ?? 0) > 0
+          ? locale === "zh"
+            ? "让真实学习者重复完成学习。"
+            : "Have real learners repeat the loop."
+          : locale === "zh"
+            ? "先完成一次演示学习。"
+            : "Complete one demo learning run."
+    },
+    {
+      label: t.gateAgentPath,
+      ready: realAgentReady,
+      evidence: realAgentReady ? t.agentReady : agentReady ? t.demoAgentReady : t.agentMissing,
+      nextAction:
+        realAgentReady
+          ? locale === "zh"
+            ? "记录用户 Agent 网关示例。"
+            : "Document the user-agent gateway example."
+          : locale === "zh"
+            ? "接入本地 HTTP Agent，真实密钥留在用户 Agent。"
+            : "Connect a local HTTP agent; keep real keys inside the user's agent."
+    },
+    {
+      label: t.gateRecovery,
+      ready: recovery?.status === "ready" && recovery.backup_supported,
+      evidence: recovery ? `${recovery.schema_version} · ${recovery.status}` : "recovery-status-v1",
+      nextAction:
+        recovery?.status === "ready"
+          ? locale === "zh"
+            ? "定期跑 disposable recovery drill。"
+            : "Run the disposable recovery drill regularly."
+          : locale === "zh"
+            ? "检查备份命令和恢复演练。"
+            : "Check backup commands and restore drill."
+    },
+    {
+      label: t.gateSyncBoundary,
+      ready: Boolean(syncStatus?.encrypted_package_supported && !syncStatus.raw_passphrase_stored),
+      evidence: syncStatus ? `${syncStatus.schema_version} · ${syncStatus.hosted_sync_enabled ? "hosted" : "local"}` : "sync-package-v1",
+      nextAction:
+        syncStatus?.encrypted_package_supported
+          ? locale === "zh"
+            ? "用口令导出并只读检查加密包。"
+            : "Export and inspect an encrypted package."
+          : locale === "zh"
+            ? "先启用本地加密包能力。"
+            : "Enable the local encrypted package path."
+    },
+    {
+      label: t.gatePluginTrust,
+      ready: (metrics?.plugins.ready ?? systemStatus?.plugin_count ?? 0) > 0,
+      evidence: `${metrics?.plugins.ready ?? 0}/${systemStatus?.plugin_count ?? 0}`,
+      nextAction:
+        (metrics?.plugins.ready ?? systemStatus?.plugin_count ?? 0) > 0
+          ? locale === "zh"
+            ? "继续补远程签名 registry 和更新审查。"
+            : "Add remote signed registry and update review next."
+          : locale === "zh"
+            ? "安装并验证示例插件。"
+            : "Install and verify the example plugin."
+    },
+    {
+      label: t.gatePmfPrivacy,
+      ready: Boolean(metrics?.privacy.local_only && !metrics.privacy.raw_contact_stored && !metrics.privacy.raw_user_identifiers_exposed),
+      evidence: metrics ? `${metrics.schema_version} · ${interestSummary?.total ?? 0}` : "pmf-v1",
+      nextAction:
+        metrics?.privacy.local_only
+          ? locale === "zh"
+            ? "收集聚合 PMF 包，不上传个人学习内容。"
+            : "Collect aggregate PMF packages without uploading personal learning content."
+          : locale === "zh"
+            ? "确认 PMF 指标仍是本地聚合。"
+            : "Confirm PMF metrics remain local aggregates."
+    }
+  ];
+  const readyGateCount = launchGates.filter((gate) => gate.ready).length;
+  const readinessScore = Math.round((readyGateCount / launchGates.length) * 100);
+  const readinessTone = readinessScore >= 85 ? "good" : readinessScore >= 60 ? "warn" : "bad";
+  const readinessLabel =
+    readinessScore >= 85 ? t.launchScoreReady : readinessScore >= 60 ? t.launchScorePartial : t.launchScoreBlocked;
+  const commandItems = [
+    { label: t.commandDoctor, command: "USE_PUBLISHED_IMAGES=true ./scripts/doctor.sh" },
+    { label: t.commandWebSmoke, command: "WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py" },
+    { label: t.commandPublishedSmoke, command: "python3 scripts/verify_published_image_launch.py --tag v0.2.7-alpha" },
+    { label: t.commandRecoveryDrill, command: "python3 scripts/verify_backup_restore_drill.py" }
+  ];
 
   return (
     <div className="launchGrid">
+      <section className="conversationPanel launchReadiness">
+        <div className="readinessHero">
+          <div>
+            <p className="eyebrow">{t.launchTitle}</p>
+            <h2 aria-label={t.launchScoreTitle}>
+              {locale === "zh" ? (
+                <>
+                  商业化 MVP
+                  <br />
+                  准备度
+                </>
+              ) : (
+                t.launchScoreTitle
+              )}
+            </h2>
+            <p aria-label={t.launchScoreLead}>
+              {locale === "zh" ? (
+                <>
+                  自托管上线的可验证门槛：
+                  <br />
+                  核心学习、用户代理、恢复。
+                  <br />
+                  同步边界、插件信任和 PMF 信号。
+                </>
+              ) : (
+                t.launchScoreLead
+              )}
+            </p>
+          </div>
+          <div className={`readinessScore ${readinessTone}`}>
+            <strong>{readinessScore}%</strong>
+            <span>{readinessLabel}</span>
+          </div>
+        </div>
+        <div className="gateBoard" aria-label={t.launchGatesTitle}>
+          {launchGates.map((gate) => (
+            <article className={`gateTile ${gate.ready ? "ready" : "needsWork"}`} key={gate.label}>
+              <div>
+                <span>{gate.ready ? t.gateReady : t.gateNeedsWork}</span>
+                <strong>{gate.label}</strong>
+              </div>
+              <dl>
+                <dt>{t.launchEvidence}</dt>
+                <dd>{gate.evidence}</dd>
+                <dt>{t.launchNextAction}</dt>
+                <dd>{gate.nextAction}</dd>
+              </dl>
+            </article>
+          ))}
+        </div>
+        <div className="commandBand">
+          <div>
+            <h3>{t.launchCommandTitle}</h3>
+            <p>{t.launchCommandLead}</p>
+          </div>
+          <div className="commandGrid">
+            {commandItems.map((item) => (
+              <label key={item.label}>
+                {item.label}
+                <code>{item.command}</code>
+              </label>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="conversationPanel launchSignals">
         <div className="panelHeading">
           <h3>{t.launchSignalTitle}</h3>
