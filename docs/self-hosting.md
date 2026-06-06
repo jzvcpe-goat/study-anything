@@ -126,10 +126,10 @@ works on common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.2.5-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.2.6-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.5-alpha \
-STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.5-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.6-alpha \
+STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.6-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
