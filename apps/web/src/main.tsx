@@ -2003,7 +2003,7 @@ function AgentWorkspace(props: {
 
   return (
     <div className="agentGrid">
-      <section className="conversationPanel agentIntro">
+      <section className="conversationPanel agentIntro workbenchPaper">
         <h3>{t.agentTitle}</h3>
         <div className="trustNote">{t.noSecrets}</div>
         <p className={`agentModeNote ${realAgentReady ? "good" : ""}`}>
@@ -2012,7 +2012,7 @@ function AgentWorkspace(props: {
         <p className="capabilitySentence">{t.capabilityLabels.join(" · ")}</p>
       </section>
 
-      <section className="sidePanel agentSetup">
+      <section className="sidePanel agentSetup workbenchPaper">
         <label>
           {t.kind}
           <select value={providerKind} onChange={(event) => setProviderKind(event.target.value)}>
@@ -2045,7 +2045,7 @@ function AgentWorkspace(props: {
         {agentTest && <p className="feedbackText">{agentTest}</p>}
       </section>
 
-      <section className="sidePanel agentList">
+      <section className="sidePanel agentList workbenchPaper">
         <h3>{t.configuredAgents}</h3>
         <div className="providerList">
           {agentStatus?.providers.map((provider) => (
@@ -2065,7 +2065,7 @@ function AgentWorkspace(props: {
         </div>
       </section>
 
-      <section className="sidePanel pluginTrust">
+      <section className="sidePanel pluginTrust workbenchPaper">
         <div className="pluginInstall">
           <div>
             <h3>{t.pluginTrustTitle}</h3>

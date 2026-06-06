@@ -777,13 +777,49 @@ small {
 }
 
 .agentGrid {
-  grid-template-columns: minmax(220px, 0.82fr) minmax(260px, 1fr) minmax(220px, 0.82fr);
+  grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 1.1fr) minmax(250px, 0.8fr);
   align-items: start;
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
 .agentIntro {
-  min-height: 330px;
-  align-content: center;
+  min-height: 360px;
+  align-content: space-between;
+}
+
+.workbenchPaper {
+  position: relative;
+  overflow: hidden;
+}
+
+.agentGrid .workbenchPaper,
+.launchGrid .conversationPanel,
+.launchGrid .sidePanel {
+  border-color: rgba(68, 49, 25, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 252, 245, 0.9), rgba(246, 234, 214, 0.76)),
+    rgba(255, 249, 237, 0.72);
+}
+
+.agentGrid .workbenchPaper::before,
+.launchGrid .conversationPanel::before,
+.launchGrid .sidePanel::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image:
+    linear-gradient(rgba(34, 37, 30, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 37, 30, 0.02) 1px, transparent 1px);
+  background-size: 54px 54px;
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.agentGrid .workbenchPaper > *,
+.launchGrid .conversationPanel > *,
+.launchGrid .sidePanel > * {
+  position: relative;
 }
 
 .trustNote {
@@ -815,6 +851,14 @@ small {
   line-height: 1.7;
 }
 
+.agentSetup {
+  min-height: 360px;
+}
+
+.agentList {
+  min-height: 240px;
+}
+
 .providerList {
   display: grid;
   gap: 8px;
@@ -825,6 +869,8 @@ small {
   justify-items: start;
   width: 100%;
   min-height: 62px;
+  border-color: rgba(60, 57, 49, 0.1);
+  background: rgba(255, 252, 245, 0.56);
 }
 
 .providerCard.active {
@@ -835,8 +881,9 @@ small {
 .pluginTrust {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
   gap: 18px;
+  padding: clamp(18px, 2.2vw, 26px);
 }
 
 .pluginInstall,
@@ -928,19 +975,21 @@ small {
 }
 
 .pluginCard {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(60, 57, 49, 0.1);
   border-radius: 8px;
-  background: rgba(255, 251, 243, 0.52);
+  background: rgba(255, 252, 245, 0.54);
   padding: 12px;
 }
 
 .launchGrid {
-  grid-template-columns: minmax(420px, 1fr) minmax(300px, 360px);
+  grid-template-columns: minmax(460px, 1fr) minmax(320px, 390px);
   align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
 }
 
 .launchSignals {
-  min-height: 560px;
+  min-height: 620px;
   align-content: start;
 }
 
@@ -952,17 +1001,17 @@ small {
 .metricBoard {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .metricTile {
   display: grid;
   gap: 6px;
-  min-height: 104px;
-  border: 1px solid rgba(60, 57, 49, 0.12);
-  border-left: 3px solid rgba(47, 107, 82, 0.42);
+  min-height: 92px;
+  border: 1px solid rgba(60, 57, 49, 0.1);
+  border-top: 3px solid rgba(47, 107, 82, 0.42);
   border-radius: 8px;
-  background: rgba(255, 251, 243, 0.42);
+  background: rgba(255, 252, 245, 0.5);
   padding: 12px;
 }
 
@@ -971,15 +1020,17 @@ small {
 }
 
 .metricTile strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3vw, 40px);
+  font-size: clamp(25px, 2.8vw, 36px);
   line-height: 1;
 }
 
 .runtimeBoard {
   border-top: 1px solid var(--line);
-  margin-top: 20px;
-  padding-top: 4px;
+  margin-top: 18px;
+  padding-top: 2px;
 }
 
 .runtimeGrid {
@@ -1021,7 +1072,7 @@ small {
 
 .integrationList article {
   display: grid;
-  grid-template-columns: minmax(86px, 0.35fr) minmax(120px, 0.45fr) minmax(0, 1fr);
+  grid-template-columns: minmax(86px, 0.35fr) minmax(96px, 0.32fr) minmax(0, 1fr);
   gap: 10px;
   align-items: start;
   border-left: 3px solid rgba(42, 111, 128, 0.42);
