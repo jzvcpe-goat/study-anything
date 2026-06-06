@@ -1309,12 +1309,14 @@ function App() {
       </header>
 
       <section className={`heroStage ${view === "learn" ? "learnStage" : "agentStage"}`}>
-        <div className="heroCopy">
-          <p className="eyebrow">{heroHint}</p>
-          <h1>Study Anything</h1>
-          <p className="heroQuestion">{heroQuestion}</p>
-          <p className="heroSentence">{heroSentence}</p>
-        </div>
+        {view !== "learn" && (
+          <div className="heroCopy">
+            <p className="eyebrow">{heroHint}</p>
+            <h1>Study Anything</h1>
+            <p className="heroQuestion">{heroQuestion}</p>
+            <p className="heroSentence">{heroSentence}</p>
+          </div>
+        )}
 
         <div className="heroProduct">
           {error && <section className="notice bad">{error}</section>}
@@ -1493,9 +1495,32 @@ function LearningWorkspace(props: {
   return (
     <div className="learningGrid">
       <section className="conversationPanel naturalComposer">
-        <div className="panelHeading">
-          <h3>{t.navLearn}</h3>
+        <div className="studyMasthead">
+          <p className="eyebrow">{t.appMode}</p>
+          <h1>Study Anything</h1>
+          <p>{t.learnSubtitle}</p>
+        </div>
+        <div className="studyQuestion">
+          <p>{activeQuiz ? t.quizIntro : t.welcome}</p>
           <span className="statusPill">{stageLabel(session?.stage, t.stages)}</span>
+        </div>
+        <div className="composer">
+          <textarea
+            value={composer}
+            onChange={(event) => onComposerChange(event.target.value)}
+            placeholder={activeQuiz ? activeQuiz.prompt : t.inputPlaceholder}
+          />
+          <div className="composerActions">
+            <button className="primary" onClick={onSubmit}>
+              {activeQuiz ? t.answer : t.start}
+            </button>
+            {!activeQuiz && <button onClick={onStartFromSource}>{t.useSource}</button>}
+            {!realAgentReady && <button onClick={onConnectAgent}>{t.connectAgent}</button>}
+          </div>
+        </div>
+        <div className="studyTrustLine">
+          <span>{t.noRawLearningData}</span>
+          <span>{t.noSecrets}</span>
         </div>
         {showOnboarding && (
           <FirstRunGuide
@@ -1508,11 +1533,13 @@ function LearningWorkspace(props: {
           />
         )}
         <div className="messageList">
-          <article className="message assistant">
-            <strong>{activeQuiz ? t.quizIntro : t.welcome}</strong>
-            {activeQuiz && <p>{activeQuiz.prompt}</p>}
-            {activeQuiz && <small>{activeQuiz.rubric}</small>}
-          </article>
+          {activeQuiz && (
+            <article className="message assistant">
+              <strong>{t.quizIntro}</strong>
+              <p>{activeQuiz.prompt}</p>
+              <small>{activeQuiz.rubric}</small>
+            </article>
+          )}
           {latestGrade && (
             <article className="message result">
               <strong>{t.feedback}</strong>
@@ -1525,19 +1552,6 @@ function LearningWorkspace(props: {
               <p>{latestInsight}</p>
             </article>
           )}
-        </div>
-        <div className="composer">
-          <textarea
-            value={composer}
-            onChange={(event) => onComposerChange(event.target.value)}
-            placeholder={activeQuiz ? t.answerPlaceholder : t.inputPlaceholder}
-          />
-          <div className="composerActions">
-            <button className="primary" onClick={onSubmit}>
-              {activeQuiz ? t.answer : t.start}
-            </button>
-            {!activeQuiz && <button onClick={onStartFromSource}>{t.useSource}</button>}
-          </div>
         </div>
         {openTasks.length > 0 && (
           <div className="reviewBox">
@@ -1605,6 +1619,9 @@ function LearningWorkspace(props: {
             <small>{t.noSecrets}</small>
           </div>
           <p className="feedbackText">{latestGrade?.feedback ?? t.noFeedback}</p>
+          <button className="primary fullWidthAction" onClick={onConnectAgent}>
+            {t.connectAgent}
+          </button>
         </section>
       </aside>
     </div>
