@@ -1,6 +1,6 @@
 {
   "name": "@study-anything/web",
-  "version": "0.2.5-alpha",
+  "version": "0.2.6-alpha",
   "private": true,
   "type": "module",
   "scripts": {

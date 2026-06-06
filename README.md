@@ -73,7 +73,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.5-alpha` images when you want to skip local API and Web builds:
+Use the multi-architecture `v0.2.6-alpha` images when you want to skip local API and Web builds:
 
 ```bash
 python3 scripts/setup_env.py
