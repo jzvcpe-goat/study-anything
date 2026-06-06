@@ -14,18 +14,23 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Optional privacy-preserving Langfuse v4 learning-event observations.
 - Optional privacy-preserving FalkorDB topology projection with idempotent per-session rebuild.
 - Local-first backup and restore with checksum verification for canonical Postgres state and Agent configuration.
+- Disposable backup/restore drill script that creates an isolated Compose project, verifies rollback, and removes its test volumes on success.
 - CI for API tests, Web build, Compose smoke, FalkorDB projection, and backup/restore rollback.
 - Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
 - One-command published-image core launch with sequential pulls and visible cold-download progress.
 - Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
+- Direct Web links for launch-critical Learn, Agent/plugin-trust, and PMF/Sync/Recovery readiness surfaces.
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
+- Read-only recovery status API and Web surface for backup coverage, safeguards, and restore privacy warnings.
 - Actionable Docker self-host diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Plugin trust summaries for local installs, including source digest, review metadata, signature metadata status, risk level, and install recommendation.
+- Local plugin registry digest verification with Ed25519 registry-signature support when trusted keys are present.
 - Local workspace ownership foundation with hashed local identities, default workspace assignment, roles, and role capability names.
 - Local encrypted sync package foundation with user-supplied passphrases, AES-256-GCM package envelopes, count-only inspect summaries, and no hosted upload.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
+- Web same-origin full-stack smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, and local PMF metrics through the Web origin.
 
 ## What Blocks Commercial Launch
 
@@ -33,7 +38,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Hosted encrypted sync service: remote storage, multi-device conflict resolution, account recovery, and support tooling.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
 - Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
-- Plugin marketplace trust model beyond local installs: cryptographic signature verification, signed remote registry policy, update UX, review queues, and payment boundaries.
+- Plugin marketplace trust model beyond local installs: remote signed registry distribution, update UX, review queues, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by cohort, plugin activation, and hosted waitlist conversion.
@@ -53,7 +58,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 Reach 70% readiness by making the self-host Alpha dependable for real learners:
 
 - Docker soak testing and trace retention guidance.
-- Backup restore drills in a disposable local stack.
+- Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.
 - Encrypted sync package restore preview and documented recovery drill.
-- Signed plugin registry verification and update-review workflow.
+- Remote signed plugin registry distribution and update-review workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.

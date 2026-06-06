@@ -88,8 +88,26 @@ def run(
     )
 
 
+def compose_project_name(env_file: Path) -> str | None:
+    if not env_file.exists():
+        return None
+    for line in env_file.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        if key.strip() == "COMPOSE_PROJECT_NAME":
+            project_name = value.strip().strip("'\"")
+            return project_name or None
+    return None
+
+
 def compose_command(env_file: Path, *args: str, profiles: Iterable[str] = ()) -> list[str]:
-    command = ["docker", "compose", "--env-file", str(env_file), "-f", str(COMPOSE_FILE)]
+    command = ["docker", "compose"]
+    project_name = compose_project_name(env_file)
+    if project_name:
+        command.extend(["--project-name", project_name])
+    command.extend(["--env-file", str(env_file), "-f", str(COMPOSE_FILE)])
     for profile in profiles:
         command.extend(["--profile", profile])
     command.extend(args)

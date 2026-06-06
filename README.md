@@ -66,6 +66,7 @@ Open:
 - Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Recovery status: http://localhost:8000/v1/recovery/status
 - Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
 - Langfuse: http://localhost:3000
@@ -144,6 +145,12 @@ Study Anything includes a local-only launch panel and API metrics for PMF valida
 These metrics stay on the self-hosted machine by default. They do not expose reading prose, quiz prompts,
 answers, grading feedback, insights, Agent metadata, raw user IDs, or raw contact values.
 
+The Web UI supports direct links for the three launch-critical surfaces:
+
+- Learn: http://localhost:5173/?view=learn
+- Agent setup and plugin trust: http://localhost:5173/?view=agent
+- PMF, Sync, Recovery, and self-host runtime readiness: http://localhost:5173/?view=launch
+
 ## Self-Hosting
 
 See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting notes.
@@ -178,6 +185,16 @@ Study Anything is a public self-host Alpha foundation, roughly 65% of the way to
 ## GitHub Launch
 
 The repository includes GitHub Actions for Python tests, Web build/audit, Docker Compose smoke, and GHCR image publishing. See `docs/github-launch.md` before cutting the current alpha release.
+
+Before a risky local upgrade, rehearse backup and restore without touching your real volumes:
+
+```bash
+python3 scripts/verify_backup_restore_drill.py
+```
+
+The drill runs against a disposable Docker Compose project. It verifies both the API learning loop and
+the Web same-origin proxy path, creates a local backup, mutates state, restores the backup, and confirms
+the session count rolls back while destructive restore remains unavailable from the Web/API.
 
 ## Status
 
