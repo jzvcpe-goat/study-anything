@@ -73,7 +73,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.6-alpha` images when you want to skip local API and Web builds:
+Use the multi-architecture `v0.2.7-alpha` images when you want to skip local API and Web builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -82,6 +82,12 @@ USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
 The launcher pulls API and Web sequentially and shows layer progress so first-run downloads remain
 understandable on slower connections. The release images support `linux/amd64` and `linux/arm64`.
+
+Maintainers can verify the public images with:
+
+```bash
+python3 scripts/verify_published_image_launch.py --tag v0.2.7-alpha
+```
 
 ## Bring Your Own Agent
 

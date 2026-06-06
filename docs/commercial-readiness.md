@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 68%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 70%.
 
 ## What Is Ready
 
@@ -31,7 +31,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
 - Web same-origin full-stack smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, and local PMF metrics through the Web origin.
-- Published v0.2.6-alpha release path for the current recovery, plugin-registry, and workbench UI improvements.
+- Disposable published-image smoke that verifies public GHCR API/Web images, runtime version, API flow, and Web-origin flow.
+- Published v0.2.7-alpha release path for the current recovery, plugin-registry, and workbench UI improvements.
 
 ## What Blocks Commercial Launch
 
@@ -56,7 +57,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 ## Next Commercial Milestone
 
-Reach 70% readiness by making the self-host Alpha dependable for real learners:
+Reach 75% readiness by making the self-host Alpha dependable for real learners:
 
 - Docker soak testing and trace retention guidance.
 - Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.

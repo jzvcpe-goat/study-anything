@@ -70,6 +70,16 @@
 - Web same-origin full-stack smoke now verifies recovery status, encrypted Sync export/inspect, plugin registry trust, and local PMF metrics through the Web origin.
 - Learn, Agent, and Launch Web views share the notebook/workbench visual direction from the Image2 concept pass while keeping API-backed interactions intact.
 
+## v0.2.7-alpha
+
+- API runtime version now resolves from package metadata so `/v1/health` and `/v1/system/status`
+  match the release artifact.
+- Published-image launch defaults point at the corrected alpha tag.
+- Disposable published-image smoke verifies public GHCR API/Web images, runtime version, API learning
+  loop, and Web same-origin flow before users depend on a release.
+- Learn UI moves closer to a natural-language-first study console with source and progress as
+  supporting rails.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
