@@ -12,6 +12,7 @@ from urllib.request import Request, urlopen
 
 
 WEB_BASE = os.getenv("WEB_BASE", "http://127.0.0.1:5173").rstrip("/")
+SYNC_TEST_PASSPHRASE = "web-smoke-local-passphrase"
 
 
 def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
@@ -32,6 +33,12 @@ def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise RuntimeError(f"{exc.code} {path}: {detail}") from exc
+
+
+def assert_dict(value: Any, name: str) -> Dict[str, Any]:
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{name} did not return a JSON object: {value!r}")
+    return value
 
 
 def main() -> None:
@@ -62,6 +69,54 @@ def main() -> None:
     )
     if completed["stage"] != "completed":
         raise RuntimeError(f"Expected completed stage, got {completed['stage']}")
+
+    recovery = assert_dict(request("/v1/recovery/status"), "Recovery status")
+    if recovery.get("schema_version") != "recovery-status-v1" or recovery.get("restore_api_enabled"):
+        raise RuntimeError(f"Recovery status is not launch-safe: {recovery}")
+
+    system = assert_dict(request("/v1/system/status"), "System status")
+    if system.get("status") != "ok" or system.get("recovery", {}).get("schema_version") != "recovery-status-v1":
+        raise RuntimeError(f"System status is missing launch readiness data: {system}")
+
+    sync_status = assert_dict(request("/v1/sync/status"), "Sync status")
+    if not sync_status.get("encrypted_package_supported") or sync_status.get("hosted_sync_enabled"):
+        raise RuntimeError(f"Sync status violates local-first MVP boundary: {sync_status}")
+
+    sync_export = assert_dict(
+        request(
+            "/v1/sync/export",
+            {
+                "passphrase": SYNC_TEST_PASSPHRASE,
+                "include_pmf": True,
+                "include_plugin_inventory": True,
+            },
+        ),
+        "Sync export",
+    )
+    if sync_export.get("schema_version") != "sync-package-v1":
+        raise RuntimeError(f"Unexpected sync package schema: {sync_export}")
+    if not sync_export.get("privacy", {}).get("encrypted"):
+        raise RuntimeError(f"Sync export must be encrypted: {sync_export}")
+    sync_inspect = assert_dict(
+        request(
+            "/v1/sync/inspect",
+            {"passphrase": SYNC_TEST_PASSPHRASE, "package": sync_export["package"]},
+        ),
+        "Sync inspect",
+    )
+    if sync_inspect.get("privacy", {}).get("plaintext_returned"):
+        raise RuntimeError(f"Sync inspect must not return plaintext: {sync_inspect}")
+
+    plugins = request("/v1/plugins")
+    if not isinstance(plugins, list) or not any(
+        item.get("trust", {}).get("registry_status") == "digest_verified" for item in plugins if isinstance(item, dict)
+    ):
+        raise RuntimeError(f"Expected at least one registry-verified plugin: {plugins}")
+
+    pmf = assert_dict(request("/v1/metrics/pmf"), "PMF metrics")
+    if pmf.get("privacy", {}).get("raw_contact_stored") or not pmf.get("privacy", {}).get("local_only"):
+        raise RuntimeError(f"PMF metrics must remain local and redacted: {pmf}")
+
     print(
         json.dumps(
             {
@@ -70,6 +125,17 @@ def main() -> None:
                 "session_id": session_id,
                 "stage": completed["stage"],
                 "mastery": completed["mastery"],
+                "recovery_schema": recovery["schema_version"],
+                "restore_api_enabled": recovery["restore_api_enabled"],
+                "sync_package_schema": sync_export["schema_version"],
+                "sync_plaintext_returned": sync_inspect["privacy"]["plaintext_returned"],
+                "registry_verified_plugins": sum(
+                    1
+                    for item in plugins
+                    if isinstance(item, dict)
+                    and item.get("trust", {}).get("registry_status") == "digest_verified"
+                ),
+                "pmf_completed_sessions": pmf["sessions"]["completed"],
             },
             ensure_ascii=False,
         )

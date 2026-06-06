@@ -91,6 +91,7 @@ generated insights.
 
 - `GET /v1/system/status`
 - `GET /v1/system/integrations`
+- `GET /v1/recovery/status`
 - `GET /v1/plugins`
 - `GET /v1/plugins/trust-policy`
 - `POST /v1/plugins/preview`
@@ -103,7 +104,13 @@ otherwise the API returns `409`.
 
 `GET /v1/plugins/trust-policy` returns the local-first alpha trust policy: local directories only, no
 remote code downloads, no entrypoint execution during install, no raw secrets stored by Study Anything,
-supported review statuses, and install recommendation values.
+supported review statuses, registry digest/signature statuses, Ed25519 registry-signature payload,
+and install recommendation values.
+
+`GET /v1/recovery/status` returns read-only self-host backup and restore readiness. It exposes the
+documented local commands, backup coverage, privacy warnings, and safety checks such as SHA-256
+manifests and explicit destructive-restore confirmation. It does not run backup or restore operations,
+does not expose absolute local paths, and keeps destructive restore out of the Web/API surface.
 
 ## Local PMF and Launch Signals
 

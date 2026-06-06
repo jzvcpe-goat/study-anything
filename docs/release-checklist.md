@@ -20,15 +20,22 @@
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
 - [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
+- [ ] Confirm the Web same-origin smoke verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, and local PMF metrics.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
 - [ ] Verify `GET /v1/sync/status`, `POST /v1/sync/export`, and `POST /v1/sync/inspect` work without returning source text, answers, raw user IDs, or Agent endpoints in plaintext.
+- [ ] Verify `GET /v1/recovery/status` returns `schema_version=recovery-status-v1`, `restore_api_enabled=false`, and no absolute backup paths or secrets.
+- [ ] Run `python3 scripts/verify_backup_restore_drill.py` against a disposable Docker stack.
+- [ ] Confirm the disposable drill uses an ASCII temp source copy when the checkout path is non-ASCII and verifies API + Web proxy smoke before backup.
 - [ ] `python3 scripts/self_host_data.py backup --output /tmp/study-anything-backup-check`
 - [ ] Restore that backup in a disposable local stack with `python3 scripts/self_host_data.py restore /tmp/study-anything-backup-check --yes`.
 - [ ] Open Web UI at http://localhost:5173
+- [ ] Open direct Web views: http://localhost:5173/?view=learn, http://localhost:5173/?view=agent, and http://localhost:5173/?view=launch.
 - [ ] Complete demo learning flow.
+- [ ] Visual-check Web UI on desktop and narrow/mobile width for Learn, Agent, and Launch views.
 - [ ] Install a local example plugin with `python3 scripts/install_local_plugin.py plugins/example-exporter --destination /tmp/study-anything-plugin-check`.
+- [ ] Verify bundled plugins report `registry_status=digest_verified`; invalid registry digest/signature cases return `do_not_install`.
 - [ ] Check http://localhost:8000/v1/system/status
 - [ ] Check http://localhost:8000/v1/agents/status
 - [ ] Check http://localhost:8000/v1/plugins

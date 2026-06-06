@@ -33,6 +33,7 @@ type PluginTrustReport = {
   source_digest: string | null;
   review_status: string;
   signature_status: string;
+  registry_status: string;
   risk_level: string;
   install_recommendation: string;
   warnings: string[];
@@ -222,6 +223,119 @@ type WorkspaceStatus = {
   };
 };
 
+type SyncStatus = {
+  schema_version: string;
+  status: string;
+  encrypted_package_supported: boolean;
+  hosted_sync_enabled: boolean;
+  raw_passphrase_stored: boolean;
+  local_first: boolean;
+  commercial_boundary: {
+    accounts_enabled: boolean;
+    billing_enabled: boolean;
+    remote_storage_enabled: boolean;
+    conflict_resolution: string;
+  };
+};
+
+type SyncPayloadSummary = {
+  session_count: number;
+  agent_provider_count: number;
+  workspace_count: number;
+  pmf_interest_count: number;
+  plugin_inventory_count: number;
+  includes_agent_registry: boolean;
+  includes_workspace_state: boolean;
+  includes_pmf_interests: boolean;
+  includes_plugin_inventory: boolean;
+};
+
+type SyncExport = {
+  schema_version: string;
+  package: Record<string, unknown>;
+  payload_summary: SyncPayloadSummary;
+  size_bytes: number;
+  privacy: {
+    encrypted: boolean;
+    cipher: string;
+    raw_passphrase_stored: boolean;
+    hosted_upload: boolean;
+    plaintext_excluded_from_envelope: string[];
+  };
+};
+
+type SyncInspect = {
+  schema_version: string;
+  package_schema_version: string;
+  payload_schema_version: string;
+  created_at: string;
+  payload_summary: SyncPayloadSummary;
+  privacy: {
+    plaintext_returned: boolean;
+    restore_api_enabled: boolean;
+    raw_passphrase_stored: boolean;
+  };
+};
+
+type KnowledgeGraphStatus = {
+  status: string;
+  enabled?: boolean;
+  graph?: string;
+  message?: string;
+};
+
+type SystemStatus = {
+  status: string;
+  version: string;
+  session_store: string;
+  session_count: number;
+  open_hitl_count: number;
+  langgraph_available: boolean;
+  workflow_engine: string;
+  langgraph_checkpointer: string | null;
+  telemetry_enabled: boolean;
+  knowledge_graph: KnowledgeGraphStatus;
+  recovery: RecoveryStatus;
+  plugin_count: number;
+};
+
+type RecoveryStatus = {
+  schema_version: string;
+  status: string;
+  local_only: boolean;
+  backup_supported: boolean;
+  restore_supported: boolean;
+  restore_api_enabled: boolean;
+  restore_requires_confirmation: boolean;
+  destructive_restore: boolean;
+  backup_root: string;
+  commands: {
+    backup: string;
+    backup_include_optional: string;
+    restore: string;
+  };
+  coverage: Record<string, boolean | string>;
+  safeguards: Record<string, boolean>;
+  privacy: {
+    contains_private_learning_data: boolean;
+    contains_env_snapshot: boolean;
+    raw_secrets_may_be_present: boolean;
+    commit_safe: boolean;
+    encrypt_at_rest_required: boolean;
+  };
+  notes: string[];
+};
+
+type IntegrationStatus = {
+  name: string;
+  category: string;
+  target: string;
+  status: string;
+  runtime_check: string;
+  product_surface: string;
+  next_step: string;
+};
+
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const CAPABILITIES = [
@@ -254,8 +368,8 @@ const copy = {
     recent: "最近学习",
     emptyRecent: "还没有学习记录。",
     refresh: "刷新",
-    learnTitle: "今天想学什么？",
-    learnSubtitle: "粘贴材料或直接描述目标，Study Anything 会生成带来源约束的练习并追踪掌握度。",
+    learnTitle: "用自己的 Agent 学任何东西",
+    learnSubtitle: "资料留在本地，推理由你控制，学习路径持续生长。",
     agentReady: "Agent 已连接",
     demoAgentReady: "演示 Agent 可用",
     agentMissing: "未连接 Agent",
@@ -305,7 +419,7 @@ const copy = {
       completed: "已完成",
       discarded: "已丢弃"
     },
-    welcome: "把你要学习的内容放进输入框，或者先完善材料区。",
+    welcome: "用自然语言描述目标，或把学习材料拖进左侧纸页。",
     quizIntro: "先回答这个问题：",
     agentTitle: "连接你的 Agent",
     agentLead: "真实推理、凭证和工具都留在你自己的 Agent 中。Study Anything 只发送学习任务、校验结构化输出并记录学习状态。",
@@ -335,6 +449,7 @@ const copy = {
     pluginRiskLevel: "风险等级",
     pluginReviewStatus: "审查状态",
     pluginSignatureStatus: "签名状态",
+    pluginRegistryStatus: "登记册状态",
     pluginRecommendation: "安装建议",
     pluginDigest: "源码摘要",
     pluginWarnings: "注意",
@@ -362,6 +477,55 @@ const copy = {
     launchInterestLead: "可选记录你对 Sync、Publish、Teams 或 Catalyst 的兴趣。数据只保存在本机。",
     launchExportTitle: "分享 PMF 包",
     launchExportLead: "生成一个可分享的聚合包，用于社区 PMF 反馈或 hosted waitlist。需要你明确同意。",
+    launchRuntimeTitle: "自托管运行时",
+    launchRuntimeLead: "来自本机 API 的真实状态，用来判断这套部署是否已经适合给早期用户使用。",
+    runtimeApi: "API 版本",
+    runtimeStore: "会话存储",
+    runtimeWorkflow: "工作流",
+    runtimeCheckpointer: "检查点",
+    runtimeTopology: "学习拓扑",
+    runtimeTelemetry: "观测",
+    runtimeHitl: "待处理确认",
+    runtimePlugins: "插件",
+    runtimeSessions: "学习记录",
+    runtimeReady: "核心可用",
+    runtimeUnavailable: "待检查",
+    integrationNextSteps: "集成下一步",
+    recoveryPanelTitle: "备份与恢复",
+    recoveryPanelLead: "升级、迁移或试验插件前先备份；恢复只保留手动命令。",
+    recoveryReady: "恢复路径就绪",
+    recoveryNeedsAttention: "需要检查",
+    backupCommandLabel: "备份命令",
+    restoreCommandLabel: "恢复命令",
+    recoveryCoverage: "Postgres + Agent + plugins + env snapshot",
+    recoverySafeguards: "SHA-256 manifest · restore 需要 --yes",
+    recoveryPrivacyWarning: "备份含私有学习数据和本地密钥线索，请自行加密保存。",
+    recoveryNoWebRestore: "Web/API 不执行破坏性恢复。",
+    enabled: "已启用",
+    disabled: "未启用",
+    available: "可用",
+    optional: "可选",
+    needsConfig: "需配置",
+    planned: "规划中",
+    notInstalled: "未安装",
+    syncPanelTitle: "同步与安全",
+    syncPanelLead: "生成本地加密包，先验证 Sync 的信任边界；不会上传，也不会保存 passphrase。",
+    syncStatusReady: "本地加密包可用",
+    syncHostedOff: "Hosted Sync 未启用",
+    syncPassphrase: "加密口令",
+    syncPassphrasePlaceholder: "至少 12 个字符，仅用于本次导出/检查",
+    syncExport: "生成加密包",
+    syncInspect: "检查加密包",
+    syncExportReady: "加密包已生成",
+    syncInspectReady: "加密包检查通过",
+    syncPassphraseRequired: "请填写至少 12 个字符的加密口令。",
+    syncPackageSize: "包大小",
+    syncSessions: "学习记录",
+    syncAgents: "Agent 配置",
+    syncWorkspaces: "工作区",
+    syncPlugins: "插件清单",
+    syncPrivacy: "密文包 · 不上传 · 不返回明文",
+    syncNoPackage: "先生成加密包，再做只读检查。",
     completedSessions: "完成学习",
     completionRate: "完成率",
     activeLearners: "7日活跃学习者",
@@ -404,8 +568,8 @@ const copy = {
     recent: "Recent",
     emptyRecent: "No learning sessions yet.",
     refresh: "Refresh",
-    learnTitle: "What do you want to learn today?",
-    learnSubtitle: "Paste source material or describe a goal. Study Anything turns it into grounded practice and tracks mastery.",
+    learnTitle: "Learn anything with your own agent",
+    learnSubtitle: "Keep sources local, control reasoning, and let the learning path keep growing.",
     agentReady: "Agent connected",
     demoAgentReady: "Demo Agent ready",
     agentMissing: "Agent not connected",
@@ -455,7 +619,7 @@ const copy = {
       completed: "Completed",
       discarded: "Discarded"
     },
-    welcome: "Put learning material into the input box, or start from the source area.",
+    welcome: "Describe the goal in natural language, or place source material into the left paper sheet.",
     quizIntro: "Answer this first:",
     agentTitle: "Connect Your Agent",
     agentLead: "Real reasoning, credentials, and tools stay inside your own agent. Study Anything sends learning tasks, validates structured output, and records learning state.",
@@ -485,6 +649,7 @@ const copy = {
     pluginRiskLevel: "Risk level",
     pluginReviewStatus: "Review status",
     pluginSignatureStatus: "Signature status",
+    pluginRegistryStatus: "Registry status",
     pluginRecommendation: "Recommendation",
     pluginDigest: "Source digest",
     pluginWarnings: "Warnings",
@@ -512,6 +677,55 @@ const copy = {
     launchInterestLead: "Optionally record interest in Sync, Publish, Teams, or Catalyst. The record stays on this machine.",
     launchExportTitle: "Share PMF Package",
     launchExportLead: "Generate a shareable aggregate package for community PMF feedback or hosted waitlist review. Explicit consent is required.",
+    launchRuntimeTitle: "Self-host Runtime",
+    launchRuntimeLead: "Live local API status for deciding whether this deployment is ready for early users.",
+    runtimeApi: "API version",
+    runtimeStore: "Session store",
+    runtimeWorkflow: "Workflow",
+    runtimeCheckpointer: "Checkpointer",
+    runtimeTopology: "Learning topology",
+    runtimeTelemetry: "Observability",
+    runtimeHitl: "Open HITL",
+    runtimePlugins: "Plugins",
+    runtimeSessions: "Sessions",
+    runtimeReady: "Core ready",
+    runtimeUnavailable: "Needs check",
+    integrationNextSteps: "Integration next steps",
+    recoveryPanelTitle: "Backup and Restore",
+    recoveryPanelLead: "Back up before upgrades, migrations, or plugin experiments. Restore stays a manual command.",
+    recoveryReady: "Recovery path ready",
+    recoveryNeedsAttention: "Needs check",
+    backupCommandLabel: "Backup command",
+    restoreCommandLabel: "Restore command",
+    recoveryCoverage: "Postgres + Agent + plugins + env snapshot",
+    recoverySafeguards: "SHA-256 manifest · restore requires --yes",
+    recoveryPrivacyWarning: "Backups contain private learning data and local secret hints. Keep them encrypted at rest.",
+    recoveryNoWebRestore: "Web/API never performs destructive restore.",
+    enabled: "Enabled",
+    disabled: "Disabled",
+    available: "Available",
+    optional: "Optional",
+    needsConfig: "Needs config",
+    planned: "Planned",
+    notInstalled: "Not installed",
+    syncPanelTitle: "Sync and Safety",
+    syncPanelLead: "Generate a local encrypted package to validate the Sync trust boundary. Nothing is uploaded and the passphrase is not stored.",
+    syncStatusReady: "Local encrypted package ready",
+    syncHostedOff: "Hosted Sync disabled",
+    syncPassphrase: "Encryption passphrase",
+    syncPassphrasePlaceholder: "At least 12 characters, used only for this export/inspect",
+    syncExport: "Generate encrypted package",
+    syncInspect: "Inspect package",
+    syncExportReady: "Encrypted package generated",
+    syncInspectReady: "Encrypted package inspected",
+    syncPassphraseRequired: "Enter an encryption passphrase with at least 12 characters.",
+    syncPackageSize: "Package size",
+    syncSessions: "Sessions",
+    syncAgents: "Agent config",
+    syncWorkspaces: "Workspaces",
+    syncPlugins: "Plugin inventory",
+    syncPrivacy: "Encrypted package · no upload · no plaintext returned",
+    syncNoPackage: "Generate an encrypted package before inspecting it.",
     completedSessions: "Completed sessions",
     completionRate: "Completion rate",
     activeLearners: "7d active learners",
@@ -576,6 +790,37 @@ function formatDigest(value: string | null) {
   return `${value.slice(0, 18)}...${value.slice(-8)}`;
 }
 
+function formatRuntimeStatus(status: string | undefined, t: (typeof copy)[Locale]) {
+  if (!status) return "-";
+  if (["ok", "healthy", "compiled_adapter", "runtime_adapter", "external_agent_supported", "session_store_ready"].includes(status)) {
+    return t.available;
+  }
+  if (["optional_runtime_adapter", "compose_and_optional_client", "compose_service", "compose_only", "declared_dependency"].includes(status)) {
+    return t.optional;
+  }
+  if (["configuration_required", "unavailable"].includes(status)) {
+    return t.needsConfig;
+  }
+  if (["adapter_stub", "planned"].includes(status)) {
+    return t.planned;
+  }
+  if (status === "disabled") return t.disabled;
+  if (status === "not_installed") return t.notInstalled;
+  return status.replace(/_/g, " ");
+}
+
+function integrationNextStep(item: IntegrationStatus, locale: Locale) {
+  if (locale === "en") return item.next_step;
+  const zh: Record<string, string> = {
+    "LangGraph": "用真实自托管会话压测编译图和 Postgres 检查点。",
+    "Langfuse": "补充留存策略，并检查本地项目里的脱敏 traces。",
+    "Agent Gateway": "把 CLI 和 MCP adapter 放到显式插件权限之后再开放。",
+    "FalkorDB": "用真实学习流压测幂等拓扑投影。",
+    "Postgres": "压测检查点清理和备份行为。"
+  };
+  return zh[item.name] ?? item.next_step;
+}
+
 function progressFor(stage?: string) {
   if (stage === "completed") return 100;
   if (stage === "awaiting_answers") return 62;
@@ -603,9 +848,19 @@ function serviceLabel(service: string, labels: Partial<Record<string, string>>) 
   return labels[service] ?? service;
 }
 
+function isViewKey(value: string | null): value is ViewKey {
+  return value === "learn" || value === "agent" || value === "launch";
+}
+
+function initialView(): ViewKey {
+  if (typeof window === "undefined") return "learn";
+  const value = new URLSearchParams(window.location.search).get("view");
+  return isViewKey(value) ? value : "learn";
+}
+
 function App() {
   const [locale, setLocale] = useState<Locale>("zh");
-  const [view, setView] = useState<ViewKey>("learn");
+  const [view, setView] = useState<ViewKey>(() => initialView());
   const [agentStatus, setAgentStatus] = useState<AgentStatus | null>(null);
   const [workspaceStatus, setWorkspaceStatus] = useState<WorkspaceStatus | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -634,6 +889,13 @@ function App() {
   const [pmfShareConsent, setPmfShareConsent] = useState(false);
   const [pmfExport, setPmfExport] = useState<PmfExport | null>(null);
   const [pmfExportResult, setPmfExportResult] = useState<string | null>(null);
+  const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
+  const [syncPassphrase, setSyncPassphrase] = useState("");
+  const [syncExport, setSyncExport] = useState<SyncExport | null>(null);
+  const [syncInspect, setSyncInspect] = useState<SyncInspect | null>(null);
+  const [syncResult, setSyncResult] = useState<string | null>(null);
+  const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
+  const [integrations, setIntegrations] = useState<IntegrationStatus[]>([]);
   const [guideDismissed, setGuideDismissed] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("study-anything-onboarding-dismissed") === "true";
@@ -679,9 +941,12 @@ function App() {
 
   async function refresh(currentSessionId = session?.session_id) {
     await runTask(t.loadingRefresh, async () => {
-      const [agents, workspace, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
+      const [agents, workspace, sync, system, integrationList, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
         api<AgentStatus>("/v1/agents/status"),
         api<WorkspaceStatus>("/v1/workspaces/status"),
+        api<SyncStatus>("/v1/sync/status"),
+        api<SystemStatus>("/v1/system/status"),
+        api<IntegrationStatus[]>("/v1/system/integrations"),
         api<Session[]>("/v1/sessions"),
         api<HitlInterrupt[]>("/v1/hitl"),
         api<PluginStatus[]>("/v1/plugins"),
@@ -690,6 +955,9 @@ function App() {
       ]);
       setAgentStatus(agents);
       setWorkspaceStatus(workspace);
+      setSyncStatus(sync);
+      setSystemStatus(system);
+      setIntegrations(integrationList);
       setSessions(sessionList);
       setHitlTasks(hitl);
       setPlugins(pluginList);
@@ -927,6 +1195,48 @@ function App() {
     });
   }
 
+  async function createSyncExport() {
+    if (syncPassphrase.length < 12) {
+      setError(t.syncPassphraseRequired);
+      return;
+    }
+    await runTask(t.loadingExport, async () => {
+      const exported = await api<SyncExport>("/v1/sync/export", {
+        method: "POST",
+        body: JSON.stringify({
+          passphrase: syncPassphrase,
+          include_pmf: true,
+          include_plugin_inventory: true
+        })
+      });
+      setSyncExport(exported);
+      setSyncInspect(null);
+      setSyncResult(t.syncExportReady);
+    });
+  }
+
+  async function inspectLatestSyncPackage() {
+    if (!syncExport) {
+      setError(t.syncNoPackage);
+      return;
+    }
+    if (syncPassphrase.length < 12) {
+      setError(t.syncPassphraseRequired);
+      return;
+    }
+    await runTask(t.loadingRefresh, async () => {
+      const inspected = await api<SyncInspect>("/v1/sync/inspect", {
+        method: "POST",
+        body: JSON.stringify({
+          passphrase: syncPassphrase,
+          package: syncExport.package
+        })
+      });
+      setSyncInspect(inspected);
+      setSyncResult(t.syncInspectReady);
+    });
+  }
+
   async function resolveTask(taskId: string) {
     if (!session) return;
     const updated = await runTask(t.loadingRefresh, () =>
@@ -942,6 +1252,13 @@ function App() {
     refresh().catch((err) => setError(String(err)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("view", view);
+    window.history.replaceState(null, "", url);
+  }, [view]);
 
   return (
     <main className="appShell">
@@ -991,7 +1308,7 @@ function App() {
         </div>
       </header>
 
-      <section className={`heroStage ${view !== "learn" ? "agentStage" : ""}`}>
+      <section className={`heroStage ${view === "learn" ? "learnStage" : "agentStage"}`}>
         <div className="heroCopy">
           <p className="eyebrow">{heroHint}</p>
           <h1>Study Anything</h1>
@@ -1059,11 +1376,14 @@ function App() {
             />
           ) : (
             <LaunchWorkspace
+              integrations={integrations}
               interestComment={interestComment}
               interestContact={interestContact}
               interestResult={interestResult}
               metrics={pmfMetrics}
+              onCreateSyncExport={createSyncExport}
               onCreatePmfExport={createPmfExport}
+              onInspectSyncPackage={inspectLatestSyncPackage}
               onRecordInterest={recordInterest}
               onToggleService={toggleInterestService}
               pmfExport={pmfExport}
@@ -1074,6 +1394,14 @@ function App() {
               setInterestContact={setInterestContact}
               setPmfShareConsent={setPmfShareConsent}
               summary={pmfSummary}
+              locale={locale}
+              systemStatus={systemStatus}
+              syncExport={syncExport}
+              syncInspect={syncInspect}
+              syncPassphrase={syncPassphrase}
+              syncResult={syncResult}
+              syncStatus={syncStatus}
+              setSyncPassphrase={setSyncPassphrase}
               t={t}
             />
           )}
@@ -1083,8 +1411,8 @@ function App() {
       <section className="recentShelf" aria-label={t.recent}>
         <div className="sectionTitle">
           <h2>{t.recent}</h2>
-          <button className="iconButton" onClick={() => refresh()} title={t.refresh}>
-            R
+          <button aria-label={t.refresh} className="iconButton" onClick={() => refresh()} title={t.refresh}>
+            ↻
           </button>
         </div>
         <div className="sessionList">
@@ -1225,7 +1553,7 @@ function LearningWorkspace(props: {
       </section>
 
       <aside className="detailRail">
-        <section className="sidePanel">
+        <section className="sidePanel sourcePanel">
           <div className="panelHeading">
             <h3>{t.sourceTitle}</h3>
             <span className={`statusPill ${session?.source?.verified ? "good" : "neutral"}`}>
@@ -1258,7 +1586,7 @@ function LearningWorkspace(props: {
           </div>
         </section>
 
-        <section className="sidePanel">
+        <section className="sidePanel progressPanel">
           <div className="panelHeading">
             <h3>{t.progressTitle}</h3>
             <strong>{stageLabel(session?.stage, t.stages)}</strong>
@@ -1272,6 +1600,10 @@ function LearningWorkspace(props: {
             <dt>{t.score}</dt>
             <dd>{latestGrade ? latestGrade.score.toFixed(2) : "-"}</dd>
           </dl>
+          <div className={`agentEvidence ${realAgentReady ? "good" : ""}`}>
+            <strong>{realAgentReady ? t.agentReady : t.demoAgentReady}</strong>
+            <small>{t.noSecrets}</small>
+          </div>
           <p className="feedbackText">{latestGrade?.feedback ?? t.noFeedback}</p>
         </section>
       </aside>
@@ -1323,11 +1655,14 @@ function FirstRunGuide(props: {
 }
 
 function LaunchWorkspace(props: {
+  integrations: IntegrationStatus[];
   interestComment: string;
   interestContact: string;
   interestResult: string | null;
   metrics: PmfMetrics | null;
+  onCreateSyncExport: () => void;
   onCreatePmfExport: () => void;
+  onInspectSyncPackage: () => void;
   onRecordInterest: () => void;
   onToggleService: (service: string) => void;
   pmfExport: PmfExport | null;
@@ -1338,14 +1673,25 @@ function LaunchWorkspace(props: {
   setInterestContact: (value: string) => void;
   setPmfShareConsent: (value: boolean) => void;
   summary: PmfInterestSummary | null;
+  locale: Locale;
+  systemStatus: SystemStatus | null;
+  syncExport: SyncExport | null;
+  syncInspect: SyncInspect | null;
+  syncPassphrase: string;
+  syncResult: string | null;
+  syncStatus: SyncStatus | null;
+  setSyncPassphrase: (value: string) => void;
   t: (typeof copy)[Locale];
 }) {
   const {
+    integrations,
     interestComment,
     interestContact,
     interestResult,
     metrics,
+    onCreateSyncExport,
     onCreatePmfExport,
+    onInspectSyncPackage,
     onRecordInterest,
     onToggleService,
     pmfExport,
@@ -1356,6 +1702,14 @@ function LaunchWorkspace(props: {
     setInterestContact,
     setPmfShareConsent,
     summary,
+    locale,
+    systemStatus,
+    syncExport,
+    syncInspect,
+    syncPassphrase,
+    syncResult,
+    syncStatus,
+    setSyncPassphrase,
     t
   } = props;
   const interestSummary = summary ?? metrics?.hosted_interest ?? null;
@@ -1368,6 +1722,21 @@ function LaunchWorkspace(props: {
     { label: t.pluginInstalls, value: metrics?.plugins.ready ?? 0 },
     { label: t.hostedInterest, value: interestSummary?.total ?? 0 }
   ];
+  const runtimeItems = [
+    { label: t.runtimeApi, value: systemStatus?.version ?? "-" },
+    { label: t.runtimeStore, value: systemStatus?.session_store ?? "-" },
+    { label: t.runtimeWorkflow, value: systemStatus?.workflow_engine ?? "-" },
+    { label: t.runtimeCheckpointer, value: systemStatus?.langgraph_checkpointer ?? (systemStatus?.langgraph_available ? "memory" : "-") },
+    { label: t.runtimeTopology, value: formatRuntimeStatus(systemStatus?.knowledge_graph.status, t) },
+    { label: t.runtimeTelemetry, value: systemStatus?.telemetry_enabled ? t.enabled : t.disabled },
+    { label: t.runtimeSessions, value: systemStatus?.session_count ?? 0 },
+    { label: t.runtimeHitl, value: systemStatus?.open_hitl_count ?? 0 },
+    { label: t.runtimePlugins, value: systemStatus?.plugin_count ?? 0 }
+  ];
+  const integrationHighlights = integrations
+    .filter((item) => ["LangGraph", "Langfuse", "FalkorDB", "Postgres", "Agent Gateway"].includes(item.name))
+    .slice(0, 5);
+  const recovery = systemStatus?.recovery ?? null;
 
   return (
     <div className="launchGrid">
@@ -1384,22 +1753,139 @@ function LaunchWorkspace(props: {
             </article>
           ))}
         </div>
+        <div className="runtimeBoard">
+          <div className="panelHeading compact">
+            <div>
+              <h3>{t.launchRuntimeTitle}</h3>
+              <p>{t.launchRuntimeLead}</p>
+            </div>
+            <span className={`statusPill ${systemStatus?.status === "ok" ? "good" : "warn"}`}>
+              {systemStatus?.status === "ok" ? t.runtimeReady : t.runtimeUnavailable}
+            </span>
+          </div>
+          <dl className="runtimeGrid">
+            {runtimeItems.map((item) => (
+              <div key={item.label}>
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+          {integrationHighlights.length > 0 && (
+            <div className="integrationList">
+              <strong>{t.integrationNextSteps}</strong>
+              {integrationHighlights.map((item) => (
+                <article key={item.name}>
+                  <span>{item.name}</span>
+                  <small>{formatRuntimeStatus(item.status, t)}</small>
+                  <p>{integrationNextStep(item, locale)}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
         <p className="feedbackText">
           {metrics ? `${t.localOnly} · ${formatTime(metrics.generated_at)}` : t.loadingRefresh}
         </p>
       </section>
 
-      <section className="sidePanel privacyPanel">
-        <h3>{t.launchPrivacyTitle}</h3>
-        <div className="privacyList">
-          <span>{t.localOnly}</span>
-          <span>{t.noRawContact}</span>
-          <span>{t.noRawLearningData}</span>
-        </div>
-        <p className="feedbackText">
-          {metrics?.privacy.privacy_exclusions.slice(0, 6).join(" · ") ?? ""}
-        </p>
-        <div className="exportPanel">
+      <aside className="launchStatusRail">
+        <section className="sidePanel privacyPanel">
+          <div className="panelHeading">
+            <h3>{t.launchPrivacyTitle}</h3>
+            <span className="statusPill good">{syncStatus?.local_first ? t.localOnly : "local"}</span>
+          </div>
+          <div className="privacyList compact">
+            <span>{t.noRawContact}</span>
+            <span>{t.noRawLearningData}</span>
+            <span>{t.syncPrivacy}</span>
+          </div>
+          <p className="feedbackText">
+            {metrics?.privacy.privacy_exclusions.slice(0, 4).join(" · ") ?? ""}
+          </p>
+        </section>
+
+        <section className="sidePanel syncPanel">
+          <div className="panelHeading">
+            <h3>{t.syncPanelTitle}</h3>
+            <span className={`statusPill ${syncStatus?.encrypted_package_supported ? "good" : "warn"}`}>
+              {syncStatus?.encrypted_package_supported ? "sync-package-v1" : "offline"}
+            </span>
+          </div>
+          <p className="pluginMeta">{t.syncPanelLead}</p>
+          <div className="privacyList compact">
+            <span>{syncStatus?.encrypted_package_supported ? t.syncStatusReady : t.loadingRefresh}</span>
+            <span>{syncStatus?.hosted_sync_enabled ? "Hosted Sync" : t.syncHostedOff}</span>
+            <span>{t.syncPrivacy}</span>
+          </div>
+          <label>
+            {t.syncPassphrase}
+            <input
+              autoComplete="off"
+              placeholder={t.syncPassphrasePlaceholder}
+              type="password"
+              value={syncPassphrase}
+              onChange={(event) => setSyncPassphrase(event.target.value)}
+            />
+          </label>
+          <div className="composerActions">
+            <button className="primary" onClick={onCreateSyncExport}>
+              {t.syncExport}
+            </button>
+            <button disabled={!syncExport} onClick={onInspectSyncPackage}>
+              {t.syncInspect}
+            </button>
+          </div>
+          {syncResult && <p className="feedbackText good">{syncResult}</p>}
+          {(syncExport || syncInspect) && (
+            <dl className="exportSummary syncSummary">
+              <dt>{t.exportSchema}</dt>
+              <dd>{syncInspect?.payload_schema_version ?? syncExport?.schema_version}</dd>
+              <dt>{t.syncSessions}</dt>
+              <dd>{syncInspect?.payload_summary.session_count ?? syncExport?.payload_summary.session_count}</dd>
+              <dt>{t.syncAgents}</dt>
+              <dd>{syncInspect?.payload_summary.agent_provider_count ?? syncExport?.payload_summary.agent_provider_count}</dd>
+              <dt>{t.syncWorkspaces}</dt>
+              <dd>{syncInspect?.payload_summary.workspace_count ?? syncExport?.payload_summary.workspace_count}</dd>
+              <dt>{t.syncPlugins}</dt>
+              <dd>{syncInspect?.payload_summary.plugin_inventory_count ?? syncExport?.payload_summary.plugin_inventory_count}</dd>
+              {syncExport && (
+                <>
+                  <dt>{t.syncPackageSize}</dt>
+                  <dd>{Math.round(syncExport.size_bytes / 1024)} KB</dd>
+                </>
+              )}
+            </dl>
+          )}
+        </section>
+
+        <section className="sidePanel recoveryPanel">
+          <div className="panelHeading">
+            <h3>{t.recoveryPanelTitle}</h3>
+            <span className={`statusPill ${recovery?.status === "ready" ? "good" : "warn"}`}>
+              {recovery?.status === "ready" ? t.recoveryReady : t.recoveryNeedsAttention}
+            </span>
+          </div>
+          <p className="pluginMeta">{t.recoveryPanelLead}</p>
+          <div className="commandStack">
+            <label>
+              {t.backupCommandLabel}
+              <code>{recovery?.commands.backup ?? "python3 scripts/self_host_data.py backup"}</code>
+            </label>
+            <label>
+              {t.restoreCommandLabel}
+              <code>{recovery?.commands.restore ?? "python3 scripts/self_host_data.py restore backups/study-anything-backup-YYYYmmddTHHMMSSZ --yes"}</code>
+            </label>
+          </div>
+          <div className="privacyList compact">
+            <span>{t.recoveryCoverage}</span>
+            <span>{t.recoverySafeguards}</span>
+            <span>{t.recoveryNoWebRestore}</span>
+          </div>
+          <p className="feedbackText warn">{t.recoveryPrivacyWarning}</p>
+        </section>
+
+        <section className="sidePanel exportPanel">
           <h3>{t.launchExportTitle}</h3>
           <p className="pluginMeta">{t.launchExportLead}</p>
           <label className="interestChoice">
@@ -1426,8 +1912,8 @@ function LaunchWorkspace(props: {
               <dd>{pmfExport.hosted_interest.total}</dd>
             </dl>
           )}
-        </div>
-      </section>
+        </section>
+      </aside>
 
       <section className="sidePanel interestPanel">
         <h3>{t.launchInterestTitle}</h3>
@@ -1628,6 +2114,10 @@ function AgentWorkspace(props: {
                         <strong>{pluginPreview.trust.signature_status}</strong>
                       </div>
                       <div>
+                        <small>{t.pluginRegistryStatus}</small>
+                        <strong>{pluginPreview.trust.registry_status}</strong>
+                      </div>
+                      <div>
                         <small>{t.pluginRecommendation}</small>
                         <strong>{pluginPreview.trust.install_recommendation}</strong>
                       </div>
@@ -1685,7 +2175,8 @@ function AgentWorkspace(props: {
                 {plugin.trust && (
                   <small>
                     {t.pluginRiskLevel}: {plugin.trust.risk_level} · {t.pluginRecommendation}:{" "}
-                    {plugin.trust.install_recommendation}
+                    {plugin.trust.install_recommendation} · {t.pluginRegistryStatus}:{" "}
+                    {plugin.trust.registry_status}
                   </small>
                 )}
                 <small>{plugin.path}</small>
@@ -1699,4 +2190,11 @@ function AgentWorkspace(props: {
   );
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+type RootContainer = HTMLElement & {
+  _studyAnythingRoot?: ReturnType<typeof createRoot>;
+};
+
+const rootContainer = document.getElementById("root") as RootContainer;
+const root = rootContainer._studyAnythingRoot ?? createRoot(rootContainer);
+rootContainer._studyAnythingRoot = root;
+root.render(<App />);

@@ -142,6 +142,7 @@ Open:
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - System status: http://localhost:8000/v1/system/status
+- Recovery status: http://localhost:8000/v1/recovery/status
 - Local encrypted sync status: http://localhost:8000/v1/sync/status
 - Local PMF metrics: http://localhost:8000/v1/metrics/pmf
 - Langfuse: http://localhost:3000
@@ -160,6 +161,22 @@ are aggregate-only; they do not expose raw source text, answers, insights, user 
 Agent metadata. The smoke flow also exports and inspects an encrypted local sync package, then checks
 that the package response does not expose the smoke learner, source text, answer text, or Agent details
 in plaintext.
+
+Then verify the Web container and same-origin proxy path:
+
+```bash
+WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py
+```
+
+This checks the rendered Web entry point, completes a demo learning loop through `/v1/*` proxied from
+the Web origin, reads recovery/system/sync/plugin/PMF readiness, creates and inspects an encrypted sync
+package, and asserts that destructive restore stays disabled from the API surface.
+
+The three launch-critical Web surfaces can be opened directly:
+
+- Learn: http://localhost:5173/?view=learn
+- Agent setup and plugin trust: http://localhost:5173/?view=agent
+- PMF, Sync, Recovery, and runtime readiness: http://localhost:5173/?view=launch
 
 ## Data
 
@@ -211,6 +228,17 @@ Create a local backup before upgrades or Docker volume maintenance:
 python3 scripts/self_host_data.py backup
 ```
 
+The API exposes a read-only recovery status so operators and the Web UI can show the current backup
+contract without triggering backup or restore operations:
+
+```bash
+curl http://localhost:8000/v1/recovery/status
+```
+
+This endpoint returns the documented backup/restore commands, coverage, privacy warnings, and
+safeguards. It intentionally omits absolute host paths, never returns secrets, and does not expose a
+destructive restore API.
+
 The default backup contains:
 
 - A compressed `pg_dump` of the canonical app Postgres database.
@@ -242,6 +270,19 @@ python3 scripts/self_host_data.py restore backups/study-anything-backup-YYYYmmdd
 An existing `.env` is preserved by default. Use `--restore-env` only when you intentionally want to
 replace it with the backed-up environment snapshot. If `.env` is missing, the snapshot is restored
 automatically.
+
+To rehearse the whole backup/restore path without touching your real self-host volumes, run the
+disposable drill:
+
+```bash
+python3 scripts/verify_backup_restore_drill.py
+```
+
+The drill generates a temporary `.env` with a unique `COMPOSE_PROJECT_NAME` and random host ports,
+starts a core API/Web/Postgres stack, creates baseline learning data, backs it up, mutates the stack,
+restores the backup, and asserts the session count rolled back. It removes its containers, volumes,
+and temporary backup on success. Add `--keep-on-failure` when you want to inspect the disposable
+Compose project after a failed run.
 
 ## Optional Learning Topology
 

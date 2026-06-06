@@ -1,17 +1,21 @@
 {
+  "schemaVersion": "plugin-registry-v1",
   "apiVersion": "0.1",
+  "trustedKeys": [],
   "plugins": [
     {
       "id": "example-exporter",
       "path": "plugins/example-exporter",
       "category": "exporter",
-      "status": "bundled"
+      "status": "bundled",
+      "sourceDigest": "sha256:d398a34ff2c25e82feec49e2141d41201136cce45cd2467821aea37ac8f75716"
     },
     {
       "id": "example-agent-provider",
       "path": "plugins/example-agent-provider",
       "category": "agent_provider",
-      "status": "bundled"
+      "status": "bundled",
+      "sourceDigest": "sha256:465f5298c88539414538ccf69f2927401194d3834c13acfc538f7d6bd3a9883d"
     }
   ]
 }

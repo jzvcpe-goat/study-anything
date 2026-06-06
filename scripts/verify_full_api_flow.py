@@ -35,9 +35,27 @@ def main() -> None:
     if health.get("status") != "ok":
         raise RuntimeError(f"API health is not ok: {health}")
 
+    recovery = request("/v1/recovery/status")
+    if recovery.get("schema_version") != "recovery-status-v1":
+        raise RuntimeError(f"Recovery status schema is not recovery-status-v1: {recovery}")
+    if recovery.get("restore_api_enabled"):
+        raise RuntimeError(f"Recovery status exposed destructive restore through the API: {recovery}")
+    serialized_recovery = json.dumps(recovery, ensure_ascii=False)
+    forbidden_recovery_fragments = ["/Users/", "/home/runner", "/private/", "OPENAI_API_KEY", "sk-"]
+    leaked_fragments = [fragment for fragment in forbidden_recovery_fragments if fragment in serialized_recovery]
+    if leaked_fragments:
+        raise RuntimeError(f"Recovery status leaked local path or secret-looking data: {leaked_fragments}")
+
     plugins = request("/v1/plugins")
     if not isinstance(plugins, list):
         raise RuntimeError("Plugin endpoint did not return a list.")
+    registry_verified_plugins = [
+        plugin
+        for plugin in plugins
+        if plugin.get("trust", {}).get("registry_status") == "digest_verified"
+    ]
+    if not registry_verified_plugins:
+        raise RuntimeError(f"No bundled plugin reported registry digest verification: {plugins}")
 
     agents = request("/v1/agents/status")
     if agents.get("schema_version") != "agent-v1":
@@ -144,6 +162,9 @@ def main() -> None:
                 "pmf_export_schema": export["schema_version"],
                 "sync_package_schema": sync_export["package"]["schema_version"],
                 "sync_session_count": sync_inspect["payload_summary"]["session_count"],
+                "recovery_schema": recovery["schema_version"],
+                "restore_api_enabled": recovery["restore_api_enabled"],
+                "registry_verified_plugins": len(registry_verified_plugins),
             },
             ensure_ascii=False,
         )

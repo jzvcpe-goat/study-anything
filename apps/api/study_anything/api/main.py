@@ -33,6 +33,7 @@ from study_anything.core.knowledge_graph import (
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.plugin_trust import plugin_trust_policy
+from study_anything.core.recovery import recovery_status
 from study_anything.core.store import create_session_store
 from study_anything.core.sync_package import (
     MIN_PASSPHRASE_LENGTH,
@@ -168,6 +169,7 @@ def _env(primary: str, legacy: str, default: str) -> str:
 
 
 data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data/api"))
+project_root = Path(__file__).resolve().parents[4]
 agent_registry = AgentRegistry(data_dir / "agent_registry.json")
 agent_router = AgentRouter(agent_registry)
 workspace_store = LocalWorkspaceStore(data_dir / "workspace_state.json")
@@ -250,6 +252,7 @@ def create_app() -> FastAPI:
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "workspace_status": workspace_store.status(user_id),
+            "recovery": recovery_status(project_root),
             "plugin_count": len(plugins.discover()),
             "pmf_metrics": compute_pmf_metrics(
                 store.list_sessions(),
@@ -261,6 +264,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/system/integrations")
     def system_integrations() -> list[dict[str, str]]:
         return [item.public_dict() for item in integration_matrix()]
+
+    @app.get("/v1/recovery/status")
+    def get_recovery_status() -> dict[str, object]:
+        return recovery_status(project_root)
 
     @app.get("/v1/workspaces/status")
     def workspace_status(user_id: str = "local-user") -> dict[str, object]:

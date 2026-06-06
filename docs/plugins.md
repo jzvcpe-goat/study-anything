@@ -62,7 +62,10 @@ Supported review statuses:
 
 The API scans `STUDY_ANYTHING_PLUGIN_DIRS`, defaulting to `plugins` and `data/plugins` locally and `/app/plugins:/data/study-anything/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
 
-Bundled plugins are listed in `plugins/registry.json`. Future community registries should be append-only signed indexes rather than runtime code downloads.
+Bundled plugins are listed in `plugins/registry.json`. The registry is local metadata, not a remote
+marketplace. It can pin `sourceDigest` for each plugin and can include trusted Ed25519 public keys
+for registry signatures. Study Anything verifies registry digest/signature metadata when present,
+but still never downloads or executes remote plugin code during preview or install.
 
 Bundled examples:
 
@@ -80,6 +83,7 @@ Discovery, preview, and install responses include a `trust` object:
 - `source_digest`: stable SHA-256 digest of install-relevant files, excluding cache files, `.git`, and local OS metadata.
 - `review_status`: manifest review metadata or `unreviewed`.
 - `signature_status`: `unsigned` or `metadata_only`.
+- `registry_status`: `not_listed`, `digest_verified`, `digest_mismatch`, or `missing_digest`.
 - `risk_level`: highest permission risk across the manifest.
 - `install_recommendation`: `allow_with_confirmation`, `review_required`, or `do_not_install`.
 - `warnings`: human-readable reasons to slow down before install.
@@ -88,8 +92,20 @@ The trust policy is available at `GET /v1/plugins/trust-policy`. It states the a
 local directories only, no remote code downloads, no entrypoint execution during install, and no raw
 secrets stored by Study Anything.
 
-Signature fields are deliberately metadata-only in this release. Real cryptographic verification,
-signed remote indexes, plugin update policy, and marketplace payment boundaries remain future work.
+Manifest `signature` fields remain metadata-only. Registry entries can add `sourceDigest` and an
+Ed25519 signature over:
+
+```text
+study-anything-plugin-registry-v1
+<plugin_id>
+<version>
+<source_digest>
+```
+
+When a matching trusted public key is present in the local registry, Study Anything reports
+`signature_status=registry_signature_verified`; mismatched digests or invalid signatures return
+`do_not_install`. Remote registries, review queues, update UX, and marketplace payments remain future
+trust-layer work.
 
 ## Local Installation
 
@@ -116,5 +132,4 @@ python3 scripts/install_local_plugin.py /path/to/plugin
 The installer validates `plugin.json`, copies the directory into the local plugin data directory, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
 
 The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions.
-Remote registries, cryptographic signature verification, review queues, update UX, and marketplace
-payments remain future trust-layer work.
+Remote registries, review queues, update UX, and marketplace payments remain future trust-layer work.

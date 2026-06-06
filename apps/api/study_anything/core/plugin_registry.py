@@ -88,11 +88,11 @@ class PluginRegistry:
         return self._load_manifest(target / "plugin.json")
 
     def _load_manifest(self, manifest_path: Path) -> PluginStatus:
+        plugin_dir = manifest_path.parent
         try:
             values = json.loads(manifest_path.read_text(encoding="utf-8"))
             manifest = validate_manifest(values)
         except (OSError, json.JSONDecodeError, ValueError) as exc:
-            plugin_dir = manifest_path.parent
             return PluginStatus(
                 manifest=None,
                 path=str(plugin_dir),
@@ -100,11 +100,67 @@ class PluginRegistry:
                 message=str(exc),
                 trust=assess_plugin_trust(plugin_dir, None),
             )
-        plugin_dir = manifest_path.parent
+        registry_entry, trusted_keys = self._registry_context(plugin_dir, manifest)
         return PluginStatus(
             manifest=manifest,
             path=str(plugin_dir),
             status="ready",
             message="Plugin manifest is valid.",
-            trust=assess_plugin_trust(plugin_dir, manifest),
+            trust=assess_plugin_trust(
+                plugin_dir,
+                manifest,
+                registry_entry=registry_entry,
+                trusted_registry_keys=trusted_keys,
+            ),
         )
+
+    def _registry_context(
+        self,
+        plugin_dir: Path,
+        manifest: PluginManifest,
+    ) -> tuple[Optional[dict[str, object]], dict[str, dict[str, object]]]:
+        registry_path = plugin_dir.parent / "registry.json"
+        if not registry_path.exists():
+            return None, {}
+        try:
+            values = json.loads(registry_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None, {}
+        plugins = values.get("plugins")
+        if not isinstance(plugins, list):
+            return None, {}
+        trusted_keys = _trusted_registry_keys(values)
+        for entry in plugins:
+            if not isinstance(entry, dict):
+                continue
+            if entry.get("id") != manifest.plugin_id:
+                continue
+            if _registry_path_matches(registry_path, plugin_dir, entry.get("path")):
+                return entry, trusted_keys
+        return None, trusted_keys
+
+
+def _trusted_registry_keys(values: dict[str, object]) -> dict[str, dict[str, object]]:
+    keys = values.get("trustedKeys")
+    if not isinstance(keys, list):
+        return {}
+    indexed: dict[str, dict[str, object]] = {}
+    for key in keys:
+        if not isinstance(key, dict):
+            continue
+        key_id = key.get("id")
+        if isinstance(key_id, str) and key_id.strip():
+            indexed[key_id.strip()] = key
+    return indexed
+
+
+def _registry_path_matches(registry_path: Path, plugin_dir: Path, raw_path: object) -> bool:
+    if not isinstance(raw_path, str) or not raw_path.strip():
+        return True
+    entry_path = Path(raw_path)
+    plugin_resolved = plugin_dir.resolve()
+    candidates = [
+        (registry_path.parent / entry_path).resolve(),
+        (registry_path.parent.parent / entry_path).resolve(),
+    ]
+    return plugin_resolved in candidates or entry_path.name == plugin_dir.name
