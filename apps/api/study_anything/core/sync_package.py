@@ -241,6 +241,85 @@ def inspect_sync_package(package: Mapping[str, Any], *, passphrase: str) -> dict
     }
 
 
+def preview_sync_restore(
+    package: Mapping[str, Any],
+    *,
+    passphrase: str,
+    current_sessions: Iterable[LearningState],
+) -> dict[str, object]:
+    """Return a non-destructive restore plan for an encrypted sync package.
+
+    The preview deliberately exposes only counts, hashes, and safety flags. It
+    never returns decrypted session payloads, source text, answers, Agent
+    endpoints, PMF records, plugin details, or raw user identifiers.
+    """
+
+    payload = decrypt_sync_package(package, passphrase=passphrase)
+    package_session_ids = _session_ids_from_payload(payload)
+    unique_package_session_ids = set(package_session_ids)
+    current_session_ids = {state.session_id for state in current_sessions}
+    conflict_ids = sorted(unique_package_session_ids & current_session_ids)
+    sessions_to_add = len(unique_package_session_ids - current_session_ids)
+    sessions_to_overwrite = len(conflict_ids)
+    sessions_to_keep = len(current_session_ids - unique_package_session_ids)
+    duplicate_count = len(package_session_ids) - len(unique_package_session_ids)
+    summary = _summary_from_payload(payload)
+    warnings = [
+        "Restore preview is count-only and does not mutate local data.",
+        "Manual restore can overwrite sessions with matching identifiers.",
+        "Keep the encrypted package and passphrase outside public repos and support tickets.",
+    ]
+    if duplicate_count:
+        warnings.append(
+            "The package contains duplicate session identifiers; restore tooling should reject "
+            "or de-duplicate before writing."
+        )
+    if sessions_to_overwrite:
+        warnings.append("One or more local sessions would be overwritten by a manual restore.")
+    return {
+        "schema_version": "sync-restore-preview-v1",
+        "package_schema_version": package.get("schema_version"),
+        "payload_schema_version": payload.get("schema_version"),
+        "created_at": payload.get("created_at"),
+        "payload_summary": summary.public_dict(),
+        "restore_api_enabled": False,
+        "destructive_restore": False,
+        "would_restore": {
+            "sessions": len(unique_package_session_ids),
+            "agent_registry": summary.includes_agent_registry,
+            "workspace_state": summary.includes_workspace_state,
+            "pmf_interests": summary.includes_pmf_interests,
+            "plugin_inventory": summary.includes_plugin_inventory,
+        },
+        "changes": {
+            "sessions_to_add": sessions_to_add,
+            "sessions_to_overwrite": sessions_to_overwrite,
+            "sessions_to_keep": sessions_to_keep,
+            "current_sessions_after_restore": sessions_to_keep + len(unique_package_session_ids),
+        },
+        "conflicts": {
+            "session_id_conflicts": sessions_to_overwrite,
+            "conflict_session_hashes": [_hash_identifier(session_id) for session_id in conflict_ids],
+            "package_duplicate_session_ids": duplicate_count,
+        },
+        "required_confirmation": {
+            "manual_restore_required": True,
+            "restore_command": "python3 scripts/self_host_data.py restore backups/study-anything-backup-YYYYmmddTHHMMSSZ --yes",
+            "passphrase_required_again": True,
+        },
+        "privacy": {
+            "plaintext_returned": False,
+            "raw_passphrase_stored": False,
+            "raw_user_identifiers_exposed": False,
+            "source_text_returned": False,
+            "answers_returned": False,
+            "agent_endpoints_returned": False,
+            "pmf_contacts_returned": False,
+        },
+        "warnings": warnings,
+    }
+
+
 def _summarize_payload(
     *,
     sessions: list[Mapping[str, Any]],
@@ -326,6 +405,27 @@ def _pmf_interest_count(pmf_interests: Any) -> int:
     if isinstance(pmf_interests, list):
         return len(pmf_interests)
     return 0
+
+
+def _session_ids_from_payload(payload: Mapping[str, Any]) -> list[str]:
+    data = payload.get("data")
+    if not isinstance(data, Mapping):
+        return []
+    sessions = data.get("sessions", [])
+    if not isinstance(sessions, list):
+        return []
+    session_ids: list[str] = []
+    for item in sessions:
+        if not isinstance(item, Mapping):
+            continue
+        session_id = item.get("session_id")
+        if isinstance(session_id, str) and session_id.strip():
+            session_ids.append(session_id)
+    return session_ids
+
+
+def _hash_identifier(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
 
 
 def _read_json(path: Path) -> Any:

@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 70%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 72%.
 
 ## What Is Ready
 
@@ -27,6 +27,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Local plugin registry digest verification with Ed25519 registry-signature support when trusted keys are present.
 - Local workspace ownership foundation with hashed local identities, default workspace assignment, roles, and role capability names.
 - Local encrypted sync package foundation with user-supplied passphrases, AES-256-GCM package envelopes, count-only inspect summaries, and no hosted upload.
+- Read-only encrypted sync restore preview that compares a package with local sessions and returns only counts, conflict hashes, warnings, and manual confirmation requirements.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
@@ -61,6 +62,6 @@ Reach 75% readiness by making the self-host Alpha dependable for real learners:
 
 - Docker soak testing and trace retention guidance.
 - Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.
-- Encrypted sync package restore preview and documented recovery drill.
+- Documented recovery drill walkthroughs for non-developer self-host operators.
 - Remote signed plugin registry distribution and update-review workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.
