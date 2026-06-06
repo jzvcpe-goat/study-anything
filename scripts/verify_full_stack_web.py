@@ -106,6 +106,22 @@ def main() -> None:
     )
     if sync_inspect.get("privacy", {}).get("plaintext_returned"):
         raise RuntimeError(f"Sync inspect must not return plaintext: {sync_inspect}")
+    sync_restore_preview = assert_dict(
+        request(
+            "/v1/sync/restore-preview",
+            {"passphrase": SYNC_TEST_PASSPHRASE, "package": sync_export["package"]},
+        ),
+        "Sync restore preview",
+    )
+    if sync_restore_preview.get("schema_version") != "sync-restore-preview-v1":
+        raise RuntimeError(f"Unexpected sync restore preview schema: {sync_restore_preview}")
+    if sync_restore_preview.get("restore_api_enabled") or sync_restore_preview.get("destructive_restore"):
+        raise RuntimeError(f"Sync restore preview must stay non-destructive: {sync_restore_preview}")
+    if sync_restore_preview.get("privacy", {}).get("plaintext_returned"):
+        raise RuntimeError(f"Sync restore preview must not return plaintext: {sync_restore_preview}")
+    serialized_preview = json.dumps(sync_restore_preview, ensure_ascii=False)
+    if "web-smoke-user" in serialized_preview or session_id in serialized_preview:
+        raise RuntimeError(f"Sync restore preview leaked private web smoke data: {sync_restore_preview}")
 
     plugins = request("/v1/plugins")
     if not isinstance(plugins, list) or not any(
@@ -129,6 +145,7 @@ def main() -> None:
                 "restore_api_enabled": recovery["restore_api_enabled"],
                 "sync_package_schema": sync_export["schema_version"],
                 "sync_plaintext_returned": sync_inspect["privacy"]["plaintext_returned"],
+                "sync_restore_preview_schema": sync_restore_preview["schema_version"],
                 "registry_verified_plugins": sum(
                     1
                     for item in plugins

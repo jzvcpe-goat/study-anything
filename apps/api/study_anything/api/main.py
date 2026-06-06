@@ -41,6 +41,7 @@ from study_anything.core.sync_package import (
     build_sync_payload,
     encrypt_sync_package,
     inspect_sync_package,
+    preview_sync_restore,
     sync_status,
 )
 from study_anything.core.tracing import build_trace_sink
@@ -146,6 +147,11 @@ class SyncExportRequest(BaseModel):
 
 
 class SyncInspectRequest(BaseModel):
+    passphrase: str
+    package: Dict[str, Any]
+
+
+class SyncRestorePreviewRequest(BaseModel):
     passphrase: str
     package: Dict[str, Any]
 
@@ -392,6 +398,17 @@ def create_app() -> FastAPI:
             return inspect_sync_package(
                 payload.package,
                 passphrase=payload.passphrase,
+            )
+        except SyncPackageError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post("/v1/sync/restore-preview")
+    def preview_sync_restore_endpoint(payload: SyncRestorePreviewRequest) -> dict[str, object]:
+        try:
+            return preview_sync_restore(
+                payload.package,
+                passphrase=payload.passphrase,
+                current_sessions=store.list_sessions(),
             )
         except SyncPackageError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc

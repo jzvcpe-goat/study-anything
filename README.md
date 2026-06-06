@@ -182,11 +182,18 @@ curl -X POST http://localhost:8000/v1/sync/export \
   -d '{"passphrase":"choose a long local passphrase"}'
 ```
 
-Study Anything does not store the passphrase or upload the package.
+Study Anything does not store the passphrase or upload the package. You can inspect or preview restore
+impact without returning plaintext or writing local data:
+
+```bash
+curl -X POST http://localhost:8000/v1/sync/restore-preview \
+  -H 'Content-Type: application/json' \
+  -d '{"passphrase":"choose a long local passphrase","package":{...}}'
+```
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 65% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 72% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 

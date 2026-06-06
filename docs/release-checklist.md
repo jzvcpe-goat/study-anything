@@ -25,7 +25,7 @@
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
-- [ ] Verify `GET /v1/sync/status`, `POST /v1/sync/export`, and `POST /v1/sync/inspect` work without returning source text, answers, raw user IDs, or Agent endpoints in plaintext.
+- [ ] Verify `GET /v1/sync/status`, `POST /v1/sync/export`, `POST /v1/sync/inspect`, and `POST /v1/sync/restore-preview` work without returning source text, answers, raw user IDs, session IDs, or Agent endpoints in plaintext.
 - [ ] Verify `GET /v1/recovery/status` returns `schema_version=recovery-status-v1`, `restore_api_enabled=false`, and no absolute backup paths or secrets.
 - [ ] Run `python3 scripts/verify_backup_restore_drill.py` against a disposable Docker stack.
 - [ ] Confirm the disposable drill uses an ASCII temp source copy when the checkout path is non-ASCII and verifies API + Web proxy smoke before backup.

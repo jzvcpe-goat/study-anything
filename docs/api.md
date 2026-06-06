@@ -40,6 +40,7 @@ Study Anything creates or reuses the caller's local default workspace.
 - `GET /v1/sync/status`
 - `POST /v1/sync/export`
 - `POST /v1/sync/inspect`
+- `POST /v1/sync/restore-preview`
 
 Sync package APIs are the local-first foundation for future Study Sync. They do not upload data,
 create hosted accounts, store billing state, or persist the package passphrase.
@@ -55,6 +56,12 @@ or plugin source code in plaintext.
 creation time, summary counts, and privacy flags. It never returns the plaintext payload and does not
 restore data. Hosted upload, cross-device conflict resolution, and account recovery remain planned
 commercial-service work.
+
+`POST /v1/sync/restore-preview` decrypts a package with the supplied passphrase and compares it with the
+current local session inventory without writing data. It returns a count-only restore plan: sessions that
+would be added, overwritten, or kept, the projected post-restore session count, conflict hashes, warnings,
+and explicit manual-restore requirements. It never returns raw session IDs, user IDs, source text, answers,
+Agent endpoints, PMF contact values, or decrypted plugin inventory.
 
 ## Sessions
 

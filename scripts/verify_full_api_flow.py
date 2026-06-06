@@ -147,6 +147,29 @@ def main() -> None:
         raise RuntimeError(f"Sync inspect schema is not sync-inspect-v1: {sync_inspect}")
     if sync_inspect.get("privacy", {}).get("plaintext_returned"):
         raise RuntimeError(f"Sync inspect returned plaintext: {sync_inspect}")
+    sync_restore_preview = request(
+        "/v1/sync/restore-preview",
+        {
+            "passphrase": "verify full api encrypted sync passphrase",
+            "package": sync_export["package"],
+        },
+    )
+    if sync_restore_preview.get("schema_version") != "sync-restore-preview-v1":
+        raise RuntimeError(
+            f"Sync restore preview schema is not sync-restore-preview-v1: {sync_restore_preview}"
+        )
+    if sync_restore_preview.get("restore_api_enabled") or sync_restore_preview.get("destructive_restore"):
+        raise RuntimeError(f"Sync restore preview must remain non-destructive: {sync_restore_preview}")
+    if sync_restore_preview.get("privacy", {}).get("plaintext_returned"):
+        raise RuntimeError(f"Sync restore preview returned plaintext: {sync_restore_preview}")
+    serialized_preview = json.dumps(sync_restore_preview, ensure_ascii=False)
+    if (
+        "smoke-user" in serialized_preview
+        or "launch smoke test" in serialized_preview.lower()
+        or "source evidence" in serialized_preview.lower()
+        or session_id in serialized_preview
+    ):
+        raise RuntimeError(f"Sync restore preview leaked private smoke data: {sync_restore_preview}")
     pmf_summary = request("/v1/pmf/summary")
     print(
         json.dumps(
@@ -162,6 +185,7 @@ def main() -> None:
                 "pmf_export_schema": export["schema_version"],
                 "sync_package_schema": sync_export["package"]["schema_version"],
                 "sync_session_count": sync_inspect["payload_summary"]["session_count"],
+                "sync_restore_preview_schema": sync_restore_preview["schema_version"],
                 "recovery_schema": recovery["schema_version"],
                 "restore_api_enabled": recovery["restore_api_enabled"],
                 "registry_verified_plugins": len(registry_verified_plugins),

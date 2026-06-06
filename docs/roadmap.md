@@ -60,6 +60,7 @@
 - Plugin manifest now accepts optional publisher, review, signature, homepage, and source metadata.
 - Local workspace ownership foundation with hashed identities, roles, default workspace assignment, and session `workspace_id`.
 - Local encrypted sync package foundation with `/v1/sync/status`, `/v1/sync/export`, and `/v1/sync/inspect`.
+- Read-only encrypted sync restore preview with count-only add/overwrite/keep impact, conflict hashes, warnings, and no data mutation.
 - Full API smoke verification now checks encrypted package export, inspect, and plaintext leakage boundaries.
 
 ## v0.2.6-alpha

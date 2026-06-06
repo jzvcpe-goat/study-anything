@@ -71,6 +71,13 @@ class SyncApiTests(unittest.TestCase):
                         "package": exported.json()["package"],
                     },
                 )
+                restore_preview = client.post(
+                    "/v1/sync/restore-preview",
+                    json={
+                        "passphrase": "local encrypted sync passphrase",
+                        "package": exported.json()["package"],
+                    },
+                )
                 rejected = client.post(
                     "/v1/sync/inspect",
                     json={
@@ -88,9 +95,15 @@ class SyncApiTests(unittest.TestCase):
         self.assertEqual(inspected.status_code, 200)
         self.assertEqual(inspected.json()["payload_summary"]["session_count"], 1)
         self.assertFalse(inspected.json()["privacy"]["plaintext_returned"])
+        self.assertEqual(restore_preview.status_code, 200)
+        self.assertEqual(restore_preview.json()["schema_version"], "sync-restore-preview-v1")
+        self.assertFalse(restore_preview.json()["restore_api_enabled"])
+        self.assertFalse(restore_preview.json()["privacy"]["plaintext_returned"])
+        self.assertEqual(restore_preview.json()["changes"]["sessions_to_overwrite"], 1)
+        self.assertEqual(restore_preview.json()["changes"]["sessions_to_add"], 0)
         self.assertEqual(rejected.status_code, 400)
 
-        combined = exported.text + inspected.text
+        combined = exported.text + inspected.text + restore_preview.text
         self.assertNotIn("api-sync-user@example.com", combined)
         self.assertNotIn("API sync private source text", combined)
         self.assertNotIn("API sync private answer", combined)

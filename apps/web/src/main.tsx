@@ -277,6 +277,49 @@ type SyncInspect = {
   };
 };
 
+type SyncRestorePreview = {
+  schema_version: string;
+  package_schema_version: string;
+  payload_schema_version: string;
+  created_at: string;
+  payload_summary: SyncPayloadSummary;
+  restore_api_enabled: boolean;
+  destructive_restore: boolean;
+  would_restore: {
+    sessions: number;
+    agent_registry: boolean;
+    workspace_state: boolean;
+    pmf_interests: boolean;
+    plugin_inventory: boolean;
+  };
+  changes: {
+    sessions_to_add: number;
+    sessions_to_overwrite: number;
+    sessions_to_keep: number;
+    current_sessions_after_restore: number;
+  };
+  conflicts: {
+    session_id_conflicts: number;
+    conflict_session_hashes: string[];
+    package_duplicate_session_ids: number;
+  };
+  required_confirmation: {
+    manual_restore_required: boolean;
+    restore_command: string;
+    passphrase_required_again: boolean;
+  };
+  privacy: {
+    plaintext_returned: boolean;
+    raw_passphrase_stored: boolean;
+    raw_user_identifiers_exposed: boolean;
+    source_text_returned: boolean;
+    answers_returned: boolean;
+    agent_endpoints_returned: boolean;
+    pmf_contacts_returned: boolean;
+  };
+  warnings: string[];
+};
+
 type KnowledgeGraphStatus = {
   status: string;
   enabled?: boolean;
@@ -539,8 +582,10 @@ const copy = {
     syncPassphrasePlaceholder: "至少 12 个字符，仅用于本次导出/检查",
     syncExport: "生成加密包",
     syncInspect: "检查加密包",
+    syncRestorePreview: "恢复预演",
     syncExportReady: "加密包已生成",
     syncInspectReady: "加密包检查通过",
+    syncRestoreReady: "恢复预演已生成",
     syncPassphraseRequired: "请填写至少 12 个字符的加密口令。",
     syncPackageSize: "包大小",
     syncSessions: "学习记录",
@@ -549,6 +594,15 @@ const copy = {
     syncPlugins: "插件清单",
     syncPrivacy: "密文包 · 不上传 · 不返回明文",
     syncNoPackage: "先生成加密包，再做只读检查。",
+    syncRestorePreviewTitle: "只读恢复预演",
+    syncRestorePreviewLead: "比较加密包和当前本机数据，只返回数量、冲突 hash 和警告；不会写入或覆盖数据。",
+    syncRestoreAdd: "将新增",
+    syncRestoreOverwrite: "将覆盖",
+    syncRestoreKeep: "将保留",
+    syncRestoreAfter: "恢复后总数",
+    syncRestoreConflicts: "冲突 hash",
+    syncRestoreWarnings: "恢复提示",
+    syncRestoreManualOnly: "只支持手动恢复",
     completedSessions: "完成学习",
     completionRate: "完成率",
     activeLearners: "7日活跃学习者",
@@ -762,8 +816,10 @@ const copy = {
     syncPassphrasePlaceholder: "At least 12 characters, used only for this export/inspect",
     syncExport: "Generate encrypted package",
     syncInspect: "Inspect package",
+    syncRestorePreview: "Restore preview",
     syncExportReady: "Encrypted package generated",
     syncInspectReady: "Encrypted package inspected",
+    syncRestoreReady: "Restore preview generated",
     syncPassphraseRequired: "Enter an encryption passphrase with at least 12 characters.",
     syncPackageSize: "Package size",
     syncSessions: "Sessions",
@@ -772,6 +828,15 @@ const copy = {
     syncPlugins: "Plugin inventory",
     syncPrivacy: "Encrypted package · no upload · no plaintext returned",
     syncNoPackage: "Generate an encrypted package before inspecting it.",
+    syncRestorePreviewTitle: "Read-only restore preview",
+    syncRestorePreviewLead: "Compare the encrypted package with local data and return only counts, conflict hashes, and warnings. Nothing is written or overwritten.",
+    syncRestoreAdd: "Would add",
+    syncRestoreOverwrite: "Would overwrite",
+    syncRestoreKeep: "Would keep",
+    syncRestoreAfter: "After restore",
+    syncRestoreConflicts: "Conflict hashes",
+    syncRestoreWarnings: "Restore notes",
+    syncRestoreManualOnly: "Manual restore only",
     completedSessions: "Completed sessions",
     completionRate: "Completion rate",
     activeLearners: "7d active learners",
@@ -867,6 +932,18 @@ function integrationNextStep(item: IntegrationStatus, locale: Locale) {
   return zh[item.name] ?? item.next_step;
 }
 
+function restoreWarningLabel(warning: string, locale: Locale) {
+  if (locale === "en") return warning;
+  const zh: Record<string, string> = {
+    "Restore preview is count-only and does not mutate local data.": "恢复预演只返回数量，不会修改本机数据。",
+    "Manual restore can overwrite sessions with matching identifiers.": "手动恢复可能覆盖标识符相同的学习记录。",
+    "Keep the encrypted package and passphrase outside public repos and support tickets.": "加密包和口令不要放进公开仓库或支持工单。",
+    "One or more local sessions would be overwritten by a manual restore.": "手动恢复会覆盖一个或多个本地学习记录。",
+    "The package contains duplicate session identifiers; restore tooling should reject or de-duplicate before writing.": "加密包包含重复学习记录标识；真实恢复工具写入前应拒绝或去重。"
+  };
+  return zh[warning] ?? warning;
+}
+
 function progressFor(stage?: string) {
   if (stage === "completed") return 100;
   if (stage === "awaiting_answers") return 62;
@@ -939,6 +1016,7 @@ function App() {
   const [syncPassphrase, setSyncPassphrase] = useState("");
   const [syncExport, setSyncExport] = useState<SyncExport | null>(null);
   const [syncInspect, setSyncInspect] = useState<SyncInspect | null>(null);
+  const [syncRestorePreview, setSyncRestorePreview] = useState<SyncRestorePreview | null>(null);
   const [syncResult, setSyncResult] = useState<string | null>(null);
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
   const [integrations, setIntegrations] = useState<IntegrationStatus[]>([]);
@@ -1257,6 +1335,7 @@ function App() {
       });
       setSyncExport(exported);
       setSyncInspect(null);
+      setSyncRestorePreview(null);
       setSyncResult(t.syncExportReady);
     });
   }
@@ -1280,6 +1359,28 @@ function App() {
       });
       setSyncInspect(inspected);
       setSyncResult(t.syncInspectReady);
+    });
+  }
+
+  async function previewLatestSyncRestore() {
+    if (!syncExport) {
+      setError(t.syncNoPackage);
+      return;
+    }
+    if (syncPassphrase.length < 12) {
+      setError(t.syncPassphraseRequired);
+      return;
+    }
+    await runTask(t.loadingRefresh, async () => {
+      const preview = await api<SyncRestorePreview>("/v1/sync/restore-preview", {
+        method: "POST",
+        body: JSON.stringify({
+          passphrase: syncPassphrase,
+          package: syncExport.package
+        })
+      });
+      setSyncRestorePreview(preview);
+      setSyncResult(t.syncRestoreReady);
     });
   }
 
@@ -1432,6 +1533,7 @@ function App() {
               onCreateSyncExport={createSyncExport}
               onCreatePmfExport={createPmfExport}
               onInspectSyncPackage={inspectLatestSyncPackage}
+              onPreviewSyncRestore={previewLatestSyncRestore}
               onRecordInterest={recordInterest}
               onToggleService={toggleInterestService}
               pmfExport={pmfExport}
@@ -1449,6 +1551,7 @@ function App() {
               syncExport={syncExport}
               syncInspect={syncInspect}
               syncPassphrase={syncPassphrase}
+              syncRestorePreview={syncRestorePreview}
               syncResult={syncResult}
               syncStatus={syncStatus}
               setSyncPassphrase={setSyncPassphrase}
@@ -1729,6 +1832,7 @@ function LaunchWorkspace(props: {
   onCreateSyncExport: () => void;
   onCreatePmfExport: () => void;
   onInspectSyncPackage: () => void;
+  onPreviewSyncRestore: () => void;
   onRecordInterest: () => void;
   onToggleService: (service: string) => void;
   pmfExport: PmfExport | null;
@@ -1745,6 +1849,7 @@ function LaunchWorkspace(props: {
   syncExport: SyncExport | null;
   syncInspect: SyncInspect | null;
   syncPassphrase: string;
+  syncRestorePreview: SyncRestorePreview | null;
   syncResult: string | null;
   syncStatus: SyncStatus | null;
   setSyncPassphrase: (value: string) => void;
@@ -1760,6 +1865,7 @@ function LaunchWorkspace(props: {
     onCreateSyncExport,
     onCreatePmfExport,
     onInspectSyncPackage,
+    onPreviewSyncRestore,
     onRecordInterest,
     onToggleService,
     pmfExport,
@@ -1776,6 +1882,7 @@ function LaunchWorkspace(props: {
     syncExport,
     syncInspect,
     syncPassphrase,
+    syncRestorePreview,
     syncResult,
     syncStatus,
     setSyncPassphrase,
@@ -2074,6 +2181,9 @@ function LaunchWorkspace(props: {
             <button disabled={!syncExport} onClick={onInspectSyncPackage}>
               {t.syncInspect}
             </button>
+            <button disabled={!syncExport} onClick={onPreviewSyncRestore}>
+              {t.syncRestorePreview}
+            </button>
           </div>
           {syncResult && <p className="feedbackText good">{syncResult}</p>}
           {(syncExport || syncInspect) && (
@@ -2095,6 +2205,38 @@ function LaunchWorkspace(props: {
                 </>
               )}
             </dl>
+          )}
+          {syncRestorePreview && (
+            <div className="restorePreviewBox">
+              <div className="panelHeading compact">
+                <div>
+                  <h3>{t.syncRestorePreviewTitle}</h3>
+                  <p>{t.syncRestorePreviewLead}</p>
+                </div>
+                <span className="statusPill warn">{t.syncRestoreManualOnly}</span>
+              </div>
+              <dl className="exportSummary">
+                <dt>{t.syncRestoreAdd}</dt>
+                <dd>{syncRestorePreview.changes.sessions_to_add}</dd>
+                <dt>{t.syncRestoreOverwrite}</dt>
+                <dd>{syncRestorePreview.changes.sessions_to_overwrite}</dd>
+                <dt>{t.syncRestoreKeep}</dt>
+                <dd>{syncRestorePreview.changes.sessions_to_keep}</dd>
+                <dt>{t.syncRestoreAfter}</dt>
+                <dd>{syncRestorePreview.changes.current_sessions_after_restore}</dd>
+                <dt>{t.syncRestoreConflicts}</dt>
+                <dd>
+                  {syncRestorePreview.conflicts.conflict_session_hashes.length
+                    ? syncRestorePreview.conflicts.conflict_session_hashes.join(", ")
+                    : "0"}
+                </dd>
+              </dl>
+              <div className="privacyList compact restoreWarnings" aria-label={t.syncRestoreWarnings}>
+                {syncRestorePreview.warnings.slice(0, 3).map((warning) => (
+                  <span key={warning}>{restoreWarningLabel(warning, locale)}</span>
+                ))}
+              </div>
+            </div>
           )}
         </section>
 

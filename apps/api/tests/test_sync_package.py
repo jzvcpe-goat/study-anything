@@ -14,6 +14,7 @@ from study_anything.core.sync_package import (
     decrypt_sync_package,
     encrypt_sync_package,
     inspect_sync_package,
+    preview_sync_restore,
     sync_status,
 )
 from study_anything.core.workflow import Answer, Mastery, new_session, submit_answers, submit_reading
@@ -111,6 +112,52 @@ class SyncPackageTests(unittest.TestCase):
 
         with self.assertRaises(SyncPackageError):
             decrypt_sync_package(export.package, passphrase="wrong passphrase")
+
+    def test_restore_preview_is_non_destructive_and_count_only(self) -> None:
+        current = new_session("restore-preview-current@example.com")
+        current = submit_reading(
+            current,
+            source_type="local_text",
+            reference="demo://restore-current",
+            title="Private Current Title",
+            text="Private current source text.",
+        )
+        incoming = new_session("restore-preview-new@example.com")
+        incoming = submit_reading(
+            incoming,
+            source_type="local_text",
+            reference="demo://restore-incoming",
+            title="Private Incoming Title",
+            text="Private incoming source text.",
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            payload = build_sync_payload(sessions=[current, incoming], data_dir=Path(tmpdir))
+            export = encrypt_sync_package(payload, passphrase="preview passphrase")
+
+        preview = preview_sync_restore(
+            export.package,
+            passphrase="preview passphrase",
+            current_sessions=[current],
+        )
+        preview_text = json.dumps(preview, ensure_ascii=False)
+
+        self.assertEqual(preview["schema_version"], "sync-restore-preview-v1")
+        self.assertFalse(preview["restore_api_enabled"])
+        self.assertFalse(preview["destructive_restore"])
+        self.assertEqual(preview["changes"]["sessions_to_add"], 1)
+        self.assertEqual(preview["changes"]["sessions_to_overwrite"], 1)
+        self.assertEqual(preview["changes"]["current_sessions_after_restore"], 2)
+        self.assertEqual(preview["conflicts"]["session_id_conflicts"], 1)
+        self.assertEqual(len(preview["conflicts"]["conflict_session_hashes"]), 1)
+        self.assertFalse(preview["privacy"]["plaintext_returned"])
+        self.assertFalse(preview["privacy"]["source_text_returned"])
+        self.assertNotIn("restore-preview-current@example.com", preview_text)
+        self.assertNotIn("Private Current Title", preview_text)
+        self.assertNotIn("Private current source text", preview_text)
+        self.assertNotIn("Private incoming source text", preview_text)
+        self.assertNotIn(current.session_id, preview_text)
+        self.assertNotIn(incoming.session_id, preview_text)
 
     def test_status_keeps_hosted_sync_disabled(self) -> None:
         status = sync_status()

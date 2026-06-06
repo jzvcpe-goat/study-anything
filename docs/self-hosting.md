@@ -225,9 +225,19 @@ curl -X POST http://localhost:8000/v1/sync/inspect \
   -d '{"passphrase":"choose a long local passphrase","package":{...}}'
 ```
 
-`/v1/sync/inspect` returns schema, timestamp, summary counts, and privacy flags only. Hosted accounts,
-remote storage, cross-device conflict resolution, recovery flows, and billing are not part of the
-self-host alpha.
+To preview what a package would add or overwrite before a migration or upgrade:
+
+```bash
+curl -X POST http://localhost:8000/v1/sync/restore-preview \
+  -H 'Content-Type: application/json' \
+  -d '{"passphrase":"choose a long local passphrase","package":{...}}'
+```
+
+`/v1/sync/inspect` returns schema, timestamp, summary counts, and privacy flags only.
+`/v1/sync/restore-preview` adds count-only restore impact, conflict hashes, warnings, and manual
+confirmation requirements. Neither endpoint writes data or returns decrypted session payloads. Hosted
+accounts, remote storage, cross-device conflict resolution, recovery flows, and billing are not part of
+the self-host alpha.
 
 ## Backup And Restore
 
