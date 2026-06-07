@@ -28,30 +28,10 @@ jobs:
           export API_PORT=8012
           ./scripts/run_skill_mode_demo.sh
 
-  web-build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "22"
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
-      - name: Install Web dependencies
-        run: npm ci
-      - name: Build Web
-        run: npm run build
-      - name: Audit Web dependencies
-        run: npm audit --audit-level=moderate
-
   compose-smoke:
     runs-on: ubuntu-latest
     env:
       PYTHON_BASE_IMAGE: public.ecr.aws/docker/library/python:3.11-slim
-      NODE_BASE_IMAGE: public.ecr.aws/docker/library/node:22-slim
       POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
       LANGFUSE_POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
       REDIS_IMAGE: public.ecr.aws/docker/library/redis:7

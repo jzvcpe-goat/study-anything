@@ -1,6 +1,6 @@
 # Skill Mode
 
-Study Anything can be used before the Web UI is visually complete. The repository includes a small standard-library CLI and a repo-local Codex skill:
+Study Anything can be used as an API/Skill-first learning system. The repository includes a small standard-library CLI and a repo-local Codex skill:
 
 - CLI: `scripts/study_anything_cli.py`
 - Skill: `skills/study-anything`

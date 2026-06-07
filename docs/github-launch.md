@@ -19,7 +19,6 @@ python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
-WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py
 curl -s http://127.0.0.1:8000/v1/metrics/pmf
 ./scripts/stop_self_host.sh
@@ -34,8 +33,8 @@ Confirm:
   insights, raw user identifiers, Agent metadata, or raw contact values.
 - `scripts/verify_backup_restore_drill.py` can create, mutate, restore, and clean up a disposable
   Docker stack.
-- `scripts/verify_published_image_launch.py --tag v0.2.7-alpha` can pull the public API/Web images,
-  verify the running API version, complete the API learning loop, and complete the Web-origin smoke.
+- `scripts/verify_published_image_launch.py --tag v0.2.7-alpha` can pull the public API image,
+  verify the running API version, and complete the API learning loop.
 - `docs/release-notes/v0.2.7-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
@@ -74,7 +73,6 @@ Recommended repository settings:
 
 ```bash
 docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.7-alpha
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/web:v0.2.7-alpha
 python3 scripts/verify_published_image_launch.py --tag v0.2.7-alpha
 ```
 

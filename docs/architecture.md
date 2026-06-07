@@ -4,7 +4,9 @@ Study Anything is split into six MVP layers.
 
 ## API Layer
 
-FastAPI exposes stable REST and event endpoints. The Web UI is intentionally thin and consumes these APIs.
+FastAPI exposes stable REST and event endpoints. In the current launch path, external agents, CLIs,
+skills, and future platform plugins consume these APIs directly; a standalone Web UI is intentionally
+out of scope until the product delivery layer is redesigned.
 
 ## Workflow Layer
 

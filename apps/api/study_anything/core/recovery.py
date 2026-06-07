@@ -63,6 +63,6 @@ def recovery_status(project_root: Path) -> dict[str, Any]:
         },
         "notes": [
             "Backups are local artifacts and can include private learning data and environment secrets.",
-            "Restore is intentionally explicit and destructive; the Web UI never triggers it.",
+            "Restore is intentionally explicit and destructive; the public API never triggers it.",
         ],
     }

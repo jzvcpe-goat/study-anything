@@ -10,9 +10,9 @@
 - [ ] `./scripts/run_skill_mode_demo.sh`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
 - [ ] `python3 scripts/check_env.py --env /tmp/study-anything.env --strict`
-- [ ] `(cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)`
 - [ ] Start API locally and run `API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py`.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
+- [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
 - [ ] `./scripts/doctor.sh`
 - [ ] Non-ASCII checkout paths produce an actionable Docker source-build diagnostic or use `USE_PUBLISHED_IMAGES=true`.
@@ -20,21 +20,15 @@
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
 - [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.2.7-alpha`.
-- [ ] `WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py`
-- [ ] Confirm the Web same-origin smoke verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, and local PMF metrics.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
 - [ ] Verify `GET /v1/sync/status`, `POST /v1/sync/export`, `POST /v1/sync/inspect`, and `POST /v1/sync/restore-preview` work without returning source text, answers, raw user IDs, session IDs, or Agent endpoints in plaintext.
 - [ ] Verify `GET /v1/recovery/status` returns `schema_version=recovery-status-v1`, `restore_api_enabled=false`, and no absolute backup paths or secrets.
 - [ ] Run `python3 scripts/verify_backup_restore_drill.py` against a disposable Docker stack.
-- [ ] Confirm the disposable drill uses an ASCII temp source copy when the checkout path is non-ASCII and verifies API + Web proxy smoke before backup.
+- [ ] Confirm the disposable drill uses an ASCII temp source copy when the checkout path is non-ASCII and verifies API smoke before backup.
 - [ ] `python3 scripts/self_host_data.py backup --output /tmp/study-anything-backup-check`
 - [ ] Restore that backup in a disposable local stack with `python3 scripts/self_host_data.py restore /tmp/study-anything-backup-check --yes`.
-- [ ] Open Web UI at http://localhost:5173
-- [ ] Open direct Web views: http://localhost:5173/?view=learn, http://localhost:5173/?view=agent, and http://localhost:5173/?view=launch.
-- [ ] Complete demo learning flow.
-- [ ] Visual-check Web UI on desktop and narrow/mobile width for Learn, Agent, and Launch views.
 - [ ] Install a local example plugin with `python3 scripts/install_local_plugin.py plugins/example-exporter --destination /tmp/study-anything-plugin-check`.
 - [ ] Verify bundled plugins report `registry_status=digest_verified`; `GET /v1/plugins/registry-review` returns `plugin-registry-review-v1` with `remote_code_downloads_allowed=false`; invalid registry digest/signature cases return `do_not_install`.
 - [ ] Check http://localhost:8000/v1/system/status

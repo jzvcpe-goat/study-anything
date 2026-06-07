@@ -23,7 +23,7 @@ The alpha MVP runs a full local learning loop:
 - Encrypted local sync packages before hosted Sync.
 - Optional privacy-preserving topology projection: Postgres remains canonical, FalkorDB stays disposable.
 - Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
-- API-as-product: the Web UI is a client of the public API.
+- API/Skill-as-product: external agents, CLIs, and future platform plugins are clients of the public API.
 
 ## Fastest Local Demo
 
@@ -50,10 +50,10 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
-`doctor.sh` checks Docker, Compose, required tools, port availability, API/Web health, Agent gateway
+`doctor.sh` checks Docker, Compose, required tools, port availability, API health, Agent gateway
 reachability hints, plugin directories, and recovery commands before you launch.
 
-The default Docker profile is `core`: API, Web UI, and Postgres. It starts in the background so the
+The default Docker profile is `core`: API and Postgres. It starts in the background so the
 terminal returns. Enable observability and optional topology services later with
 `STACK_PROFILE=full ./scripts/launch_self_host.sh`.
 
@@ -63,7 +63,6 @@ to an ASCII-only path such as `~/study-anything` for local source builds.
 
 Open:
 
-- Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - Recovery status: http://localhost:8000/v1/recovery/status
@@ -73,15 +72,15 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.7-alpha` images when you want to skip local API and Web builds:
+Use the multi-architecture `v0.2.7-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
-The launcher pulls API and Web sequentially and shows layer progress so first-run downloads remain
-understandable on slower connections. The release images support `linux/amd64` and `linux/arm64`.
+The launcher pulls the API image and shows layer progress so first-run downloads remain
+understandable on slower connections. The release image supports `linux/amd64` and `linux/arm64`.
 
 Maintainers can verify the public images with:
 
@@ -104,7 +103,7 @@ The agent flow mirrors tools such as OpenClaw and Codex: the user controls the m
 
 ## Skill Mode
 
-You can use the learning loop before the Web UI is visually complete. The repo includes a standard-library CLI and a repo-local Codex skill:
+The repo includes a standard-library CLI and a repo-local Codex skill:
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
@@ -119,7 +118,6 @@ Connect a user-owned HTTP agent, start source-bound sessions, answer questions, 
 
 ```text
 apps/api/                  FastAPI app and learning engine
-apps/web/                  React/Vite alpha UI
 docs/                      Architecture, roadmap, plugin API, commercial model
 infra/compose/             Docker Compose stack
 plugins/example-exporter/  Example exporter manifest
@@ -130,9 +128,9 @@ skills/study-anything/     Repo-local Agent skill for CLI learning flows
 
 ## Plugin Ecosystem
 
-The alpha plugin surface supports manifest validation, discovery, and permission-gated local installation for importers, agent providers, agent tools, source verifiers, quiz generators, graders, exporters, and UI panels. See `docs/plugins.md` and `plugins/example-exporter`.
+The alpha plugin surface supports manifest validation, discovery, and permission-gated local installation for importers, agent providers, agent tools, source verifiers, quiz generators, graders, exporters, and future client panels. See `docs/plugins.md` and `plugins/example-exporter`.
 
-Install an explicitly selected local plugin from the Web Agent page, or use the CLI without downloading or executing code:
+Install an explicitly selected local plugin with the CLI without downloading or executing remote code:
 
 ```bash
 python3 scripts/install_local_plugin.py plugins/example-exporter
@@ -149,7 +147,7 @@ manual-review actions without downloading or executing plugin code.
 
 ## Local PMF Signals
 
-Study Anything includes a local-only launch panel and API metrics for PMF validation:
+Study Anything includes local-only API metrics for PMF validation:
 
 - completed learning loops and completion rate
 - active learner hashes and repeat usage
@@ -159,12 +157,6 @@ Study Anything includes a local-only launch panel and API metrics for PMF valida
 
 These metrics stay on the self-hosted machine by default. They do not expose reading prose, quiz prompts,
 answers, grading feedback, insights, Agent metadata, raw user IDs, or raw contact values.
-
-The Web UI supports direct links for the three launch-critical surfaces:
-
-- Learn: http://localhost:5173/?view=learn
-- Agent setup and plugin trust: http://localhost:5173/?view=agent
-- PMF, Sync, Recovery, and self-host runtime readiness: http://localhost:5173/?view=launch
 
 ## Self-Hosting
 
@@ -202,11 +194,11 @@ curl -X POST http://localhost:8000/v1/sync/restore-preview \
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 74% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 68% of the way to a complete commercial product after removing the broken standalone Web UI from the launch path. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 
-The repository includes GitHub Actions for Python tests, Web build/audit, Docker Compose smoke, and GHCR image publishing. See `docs/github-launch.md` before cutting the current alpha release.
+The repository includes GitHub Actions for Python tests, Docker Compose smoke, and GHCR API image publishing. See `docs/github-launch.md` before cutting the current alpha release.
 
 Before a risky local upgrade, rehearse backup and restore without touching your real volumes:
 
@@ -214,10 +206,10 @@ Before a risky local upgrade, rehearse backup and restore without touching your 
 python3 scripts/verify_backup_restore_drill.py
 ```
 
-The drill runs against a disposable Docker Compose project. It verifies both the API learning loop and
-the Web same-origin proxy path, creates a local backup, mutates state, restores the backup, and confirms
-the session count rolls back while destructive restore remains unavailable from the Web/API.
+The drill runs against a disposable Docker Compose project. It verifies the API learning loop, creates
+a local backup, mutates state, restores the backup, and confirms the session count rolls back while
+destructive restore remains unavailable from the API.
 
 ## Status
 
-This repository is a self-host alpha. The deterministic learning workflow, guided Web onboarding, agent registry, plugin manifest validation, local encrypted sync package, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation.
+This repository is a self-host alpha. The deterministic learning workflow, Skill Mode, agent registry, plugin manifest validation, local encrypted sync package, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation. A polished standalone Web UI is not part of the current launch path.

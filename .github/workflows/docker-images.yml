@@ -17,8 +17,6 @@ jobs:
         include:
           - name: api
             dockerfile: apps/api/Dockerfile
-          - name: web
-            dockerfile: apps/web/Dockerfile
     steps:
       - uses: actions/checkout@v6
       - uses: docker/setup-qemu-action@v4
@@ -53,4 +51,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             PYTHON_BASE_IMAGE=public.ecr.aws/docker/library/python:3.11-slim
-            NODE_BASE_IMAGE=public.ecr.aws/docker/library/node:22-slim

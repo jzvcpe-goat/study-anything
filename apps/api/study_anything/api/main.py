@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from study_anything import __version__
+from study_anything.core.agent_audit import build_agent_audit
 from study_anything.core.agent_registry import (
     AgentCapability,
     AgentRegistry,
@@ -658,6 +659,29 @@ def create_app() -> FastAPI:
             return [event.__dict__ for event in store.get(session_id).events]
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
+
+    @app.get("/v1/sessions/{session_id}/agent-audit")
+    def get_agent_audit(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        return build_agent_audit(
+            state,
+            agent_status=agent_registry.status(state.user_id),
+        )
+
+    @app.get("/v1/sessions/{session_id}/agent-eval")
+    def get_deprecated_agent_eval(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        return build_agent_audit(
+            state,
+            agent_status=agent_registry.status(state.user_id),
+            deprecated_alias=True,
+        )
 
     @app.get("/v1/plugins")
     def list_plugins() -> list[dict[str, object]]:

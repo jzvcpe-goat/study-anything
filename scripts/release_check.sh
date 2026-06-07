@@ -41,18 +41,12 @@ fi
 "$python_bin" -m unittest discover apps/api/tests
 "$python_bin" scripts/smoke_core.py
 
-if command -v npm >/dev/null 2>&1; then
-  (cd apps/web && npm ci && npm run build && npm audit --audit-level=moderate)
-else
-  printf "warn  npm missing; skipped Web build and audit.\n"
-fi
-
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
   docker compose --env-file "$tmp_env" -f infra/compose/docker-compose.yml --profile full config >/dev/null
 else
   printf "warn  docker compose missing; skipped Compose config validation.\n"
 fi
 
-printf "hint  after launching Docker Compose, run: WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py\n"
+printf "hint  after launching Docker Compose, run: API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py\n"
 
 printf "ok    release check completed\n"

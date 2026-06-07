@@ -109,6 +109,13 @@ def main() -> None:
     ]
     if len(handled_by_agent) < 2:
         raise RuntimeError("Expected agent metadata in workflow events.")
+    agent_audit = request(f"/v1/sessions/{session_id}/agent-audit")
+    if agent_audit.get("schema_version") != "agent-audit-v1":
+        raise RuntimeError(f"Agent audit schema is not agent-audit-v1: {agent_audit}")
+    if agent_audit.get("status") != "verified":
+        raise RuntimeError(f"Agent audit did not verify full coverage: {agent_audit}")
+    if not agent_audit.get("used_external_agent"):
+        raise RuntimeError(f"Agent audit did not identify the user-owned HTTP agent: {agent_audit}")
     print(
         json.dumps(
             {
@@ -118,6 +125,9 @@ def main() -> None:
                 "mastery": completed["mastery"],
                 "agent_provider": provider["provider_id"],
                 "agent_events": len(handled_by_agent),
+                "agent_audit_status": agent_audit["status"],
+                "agent_audit_observed_tasks": agent_audit["observed_tasks"],
+                "agent_audit_used_external_agent": agent_audit["used_external_agent"],
             },
             ensure_ascii=False,
         )

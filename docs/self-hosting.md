@@ -5,7 +5,7 @@ Study Anything is designed to be self-hosted first.
 ## Requirements
 
 - Docker with Compose plugin.
-- 4 GB RAM minimum for the app stack, more if your own agent runs local models.
+- 2 GB RAM minimum for the API/Postgres stack, more if your own agent runs local models.
 - Optional: any local/private HTTP agent gateway.
 
 ## Launch
@@ -19,8 +19,8 @@ python3 scripts/setup_env.py
 `./scripts/launch_self_host.sh` uses `STACK_PROFILE=core` by default and starts containers in the
 background. Available profiles:
 
-- `core`: API, Web UI, and app Postgres.
-- `smoke`: core stack plus the mock HTTP agent.
+- `core`: API and app Postgres.
+- `smoke`: core stack plus the mock HTTP agent and FalkorDB.
 - `full`: core stack plus Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.
 
 Use the heavier full profile only when you want the optional operational services:
@@ -33,7 +33,6 @@ If Docker Hub is unreachable from Docker Desktop but public ECR works, set these
 
 ```bash
 PYTHON_BASE_IMAGE=public.ecr.aws/docker/library/python:3.11-slim
-NODE_BASE_IMAGE=public.ecr.aws/docker/library/node:22-slim
 POSTGRES_IMAGE=public.ecr.aws/docker/library/postgres:17
 LANGFUSE_POSTGRES_IMAGE=public.ecr.aws/docker/library/postgres:17
 REDIS_IMAGE=public.ecr.aws/docker/library/redis:7
@@ -44,7 +43,7 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 `scripts/setup_env.py` generates these mirror-friendly defaults automatically. Use `.env.example` as documentation, not as a production secret file.
 
-If you already have services on the default ports, override `API_PORT`, `WEB_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
+If you already have services on the default ports, override `API_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
 
 ## Checkout Path Compatibility
 
@@ -82,13 +81,13 @@ Run the doctor before and after launch when a self-host setup does not behave as
 ```
 
 It checks Docker, Compose, required local tools, Compose config validity, profile-specific port
-availability, API/Web health, Agent gateway hints, and plugin directories. Port warnings do not always
+availability, API health, Agent gateway hints, and plugin directories. Port warnings do not always
 mean failure; they can also mean the stack is already running. If a launch stalls, inspect the running
 services and logs:
 
 ```bash
 docker compose --env-file .env -f infra/compose/docker-compose.yml ps
-docker compose --env-file .env -f infra/compose/docker-compose.yml logs --tail=200 api web app-postgres
+docker compose --env-file .env -f infra/compose/docker-compose.yml logs --tail=200 api app-postgres
 ```
 
 Common recovery paths:
@@ -97,31 +96,30 @@ Common recovery paths:
 - Image pull failure: rerun with published images, a mirror override, or `PULL_PUBLISHED_IMAGES=false`
   only when images are already cached locally.
 - Port conflict: change the matching `*_PORT` value in `.env` and relaunch.
-- API unhealthy: check `api` and `app-postgres` logs first; the Web service waits on API health.
+- API unhealthy: check `api` and `app-postgres` logs first.
 - Agent gateway unreachable: use `STACK_PROFILE=smoke` to validate with the mock HTTP Agent, then switch
   to your own gateway endpoint.
-- Plugin install confusion: the Web Agent page previews local plugin permissions before copying files;
-  installed plugins live in the writable Study Anything data volume.
+- Plugin install confusion: preview local plugin permissions before copying files; installed plugins
+  live in the writable Study Anything data volume.
 - Risky upgrade or restore: run `python3 scripts/self_host_data.py backup` before changing volumes,
   images, or environment values.
 
 ## Using Published Images
 
-After the GitHub repository publishes GHCR images, you can skip local API/Web builds:
+After the GitHub repository publishes GHCR images, you can skip local API builds:
 
 ```bash
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
-This starts the core API, Web UI, and app Postgres services. The launcher pulls API and Web
-sequentially before startup and shows layer progress so a cold first download remains easy to
-understand. Use
+This starts the core API and app Postgres services. The launcher pulls the API image before startup
+and shows layer progress so a cold first download remains easy to understand. Use
 `STACK_PROFILE=full USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh` only when you also want
 the optional observability services.
 
 Published images are optional. The default local-first path still builds from source.
-Published API and Web images include `linux/amd64` and `linux/arm64` manifests so the same command
-works on common Linux servers and Apple Silicon Docker Desktop.
+Published API images include `linux/amd64` and `linux/arm64` manifests so the same command works on
+common Linux servers and Apple Silicon Docker Desktop.
 
 For a pinned or mirrored deployment, override the tag or exact image names:
 
@@ -129,7 +127,6 @@ For a pinned or mirrored deployment, override the tag or exact image names:
 STUDY_ANYTHING_IMAGE_TAG=v0.2.7-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
 STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.7-alpha \
-STUDY_ANYTHING_WEB_IMAGE=registry.example/study-anything/web:v0.2.7-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -138,7 +135,6 @@ by an offline deployment process.
 
 Open:
 
-- Web UI: http://localhost:5173
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - System status: http://localhost:8000/v1/system/status
@@ -149,7 +145,7 @@ Open:
 
 ## Post-Launch Verification
 
-After the API and Web UI are healthy, run the public smoke flow:
+After the API is healthy, run the public smoke flow:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
@@ -162,30 +158,14 @@ Agent metadata. The smoke flow also exports and inspects an encrypted local sync
 that the package response does not expose the smoke learner, source text, answer text, or Agent details
 in plaintext.
 
-Then verify the Web container and same-origin proxy path:
-
-```bash
-WEB_BASE=http://127.0.0.1:5173 python3 scripts/verify_full_stack_web.py
-```
-
-This checks the rendered Web entry point, completes a demo learning loop through `/v1/*` proxied from
-the Web origin, reads recovery/system/sync/plugin/PMF readiness, creates and inspects an encrypted sync
-package, and asserts that destructive restore stays disabled from the API surface.
-
-The three launch-critical Web surfaces can be opened directly:
-
-- Learn: http://localhost:5173/?view=learn
-- Agent setup and plugin trust: http://localhost:5173/?view=agent
-- PMF, Sync, Recovery, and runtime readiness: http://localhost:5173/?view=launch
-
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
 python3 scripts/verify_published_image_launch.py --tag v0.2.7-alpha
 ```
 
-This pulls the published API and Web images, checks the runtime version, completes the API learning
-loop, completes the Web same-origin smoke, and removes the temporary Compose project on success.
+This pulls the published API image, checks the runtime version, completes the API learning loop, and
+removes the temporary Compose project on success.
 
 ## Data
 
@@ -193,10 +173,7 @@ The Docker self-host stack stores session state in app Postgres by default with 
 
 Agent provider defaults are still stored in the `study_anything_data` Docker volume at `/data/study-anything/agent_registry.json` during alpha. Keep this volume in backups if you configure real HTTP agent endpoints.
 
-The Web container serves the built UI and proxies same-origin `/v1/*` requests to the API container through `WEB_API_PROXY_TARGET`, which defaults to `http://api:8000`. This keeps the browser on `http://localhost:5173` while avoiding browser-side knowledge of the internal Compose network.
-
 For Python-only development without Docker, set `SESSION_STORE=json` and `STUDY_ANYTHING_DATA_DIR=data/api`.
-The Vite development server proxies `/v1/*` to `http://127.0.0.1:8000` by default. Set `VITE_API_PROXY_TARGET` when your local API uses another address.
 
 The API runs the compiled LangGraph workflow by default. Docker self-host uses `LANGGRAPH_CHECKPOINTER=postgres`; local Python development defaults to the in-memory checkpointer. Set `WORKFLOW_ENGINE=deterministic` only when you need to fall back to the alpha sequential executor.
 
@@ -247,7 +224,7 @@ Create a local backup before upgrades or Docker volume maintenance:
 python3 scripts/self_host_data.py backup
 ```
 
-The API exposes a read-only recovery status so operators and the Web UI can show the current backup
+The API exposes a read-only recovery status so operators can inspect the current backup
 contract without triggering backup or restore operations:
 
 ```bash
@@ -298,7 +275,7 @@ python3 scripts/verify_backup_restore_drill.py
 ```
 
 The drill generates a temporary `.env` with a unique `COMPOSE_PROJECT_NAME` and random host ports,
-starts a core API/Web/Postgres stack, creates baseline learning data, backs it up, mutates the stack,
+starts a core API/Postgres stack, creates baseline learning data, backs it up, mutates the stack,
 restores the backup, and asserts the session count rolled back. It removes its containers, volumes,
 and temporary backup on success. Add `--keep-on-failure` when you want to inspect the disposable
 Compose project after a failed run.
@@ -340,7 +317,7 @@ In `APP_ENV=production`, `scripts/check_env.py` fails on default passwords, blan
 
 ## Agent Providers
 
-Use the Web UI provider panel or API endpoints to configure a provider. Real model credentials, tools, and reasoning stay inside the user's agent and are not stored by Study Anything.
+Use the API endpoints or CLI to configure a provider. Real model credentials, tools, and reasoning stay inside the user's agent and are not stored by Study Anything.
 
 Common choices:
 
@@ -372,9 +349,9 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scri
 
 Bundled plugins live in `/app/plugins` inside the API container. Locally installed plugins live in the writable Study Anything data volume under `/data/study-anything/plugins`. Community plugin directories can also be added to `STUDY_ANYTHING_PLUGIN_DIRS`.
 
-Use the Web Agent page to preview one explicitly selected local plugin directory, confirm each requested
-permission, and copy it into the writable plugin data directory. The API never downloads or executes plugin
-code during this install step.
+Use `POST /v1/plugins/preview` to preview one explicitly selected local plugin directory, confirm each
+requested permission, and copy it into the writable plugin data directory with `POST /v1/plugins/install`.
+The API never downloads or executes plugin code during this install step.
 
 Before installing or updating community plugins, check the registry review surface:
 
