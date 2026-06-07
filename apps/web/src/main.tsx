@@ -447,6 +447,16 @@ const copy = {
     refresh: "刷新",
     learnTitle: "用自己的 Agent 学任何东西",
     learnSubtitle: "资料留在本地，推理由你控制，学习路径持续生长。",
+    naturalStudyTitle: "自然语言学习",
+    naturalStudyLead: "说出目标，Study Anything 会生成有来源、有反馈的学习回合。",
+    promptExamplesTitle: "试试这些例子：",
+    promptExamples: ["解释 TCP 三次握手的过程", "对比 REST 与 gRPC 的区别", "总结《原则》中的核心思想"],
+    assistantGreeting: "有什么我可以帮你学习的吗？",
+    userExampleLabel: "你",
+    userPromptExample: "帮我理解这段材料里最重要的概念，并给出一个可检验的问题。",
+    assistantPlanTitle: "学习计划",
+    assistantPlanSteps: ["绑定来源", "生成问题", "等待你的回答", "评分并更新掌握度"],
+    sourcePanelLead: "把文章、笔记或课程片段放在这里。自然语言输入也可以直接开始。",
     agentReady: "Agent 已连接",
     demoAgentReady: "演示 Agent 可用",
     agentMissing: "未连接 Agent",
@@ -496,7 +506,7 @@ const copy = {
       completed: "已完成",
       discarded: "已丢弃"
     },
-    welcome: "用自然语言描述目标，或把学习材料拖进左侧纸页。",
+    welcome: "用自然语言描述目标，或把学习材料放进左侧纸页。",
     quizIntro: "先回答这个问题：",
     agentTitle: "连接你的 Agent",
     agentLead: "真实推理、凭证和工具都留在你自己的 Agent 中。Study Anything 只发送学习任务、校验结构化输出并记录学习状态。",
@@ -699,6 +709,16 @@ const copy = {
     refresh: "Refresh",
     learnTitle: "Learn anything with your own agent",
     learnSubtitle: "Keep sources local, control reasoning, and let the learning path keep growing.",
+    naturalStudyTitle: "Natural-language study",
+    naturalStudyLead: "Say the goal. Study Anything turns it into a source-bound learning round with feedback and mastery.",
+    promptExamplesTitle: "Try one:",
+    promptExamples: ["Explain the TCP handshake", "Compare REST and gRPC", "Summarize the core ideas in Principles"],
+    assistantGreeting: "What would you like to study?",
+    userExampleLabel: "You",
+    userPromptExample: "Help me understand the most important idea in this source, then ask one checkable question.",
+    assistantPlanTitle: "Learning plan",
+    assistantPlanSteps: ["Bind source", "Generate question", "Wait for your answer", "Grade and update mastery"],
+    sourcePanelLead: "Put notes, readings, or course excerpts here. Natural-language input can also start a round directly.",
     agentReady: "Agent connected",
     demoAgentReady: "Demo Agent ready",
     agentMissing: "Agent not connected",
@@ -748,7 +768,7 @@ const copy = {
       completed: "Completed",
       discarded: "Discarded"
     },
-    welcome: "Describe the goal in natural language, or place source material into the left paper sheet.",
+    welcome: "Describe the goal in natural language, or put source material into the left paper sheet.",
     quizIntro: "Answer this first:",
     agentTitle: "Connect Your Agent",
     agentLead: "Real reasoning, credentials, and tools stay inside your own agent. Study Anything sends learning tasks, validates structured output, and records learning state.",
@@ -1588,6 +1608,7 @@ function App() {
               latestGrade={latestGrade}
               onComposerChange={setComposer}
               onDismissGuide={dismissGuide}
+              onPromptExample={setComposer}
               onResolve={resolveTask}
               onStartFromSource={startFromSource}
               onRunDemo={runDemoSource}
@@ -1708,6 +1729,7 @@ function LearningWorkspace(props: {
   onConnectAgent: () => void;
   onComposerChange: (value: string) => void;
   onDismissGuide: () => void;
+  onPromptExample: (value: string) => void;
   onResolve: (taskId: string) => void;
   onRunDemo: () => void;
   onStartFromSource: () => void;
@@ -1734,6 +1756,7 @@ function LearningWorkspace(props: {
     onConnectAgent,
     onComposerChange,
     onDismissGuide,
+    onPromptExample,
     onResolve,
     onRunDemo,
     onStartFromSource,
@@ -1754,14 +1777,15 @@ function LearningWorkspace(props: {
   } = props;
   const latestInsight = session?.insights[session.insights.length - 1];
   const openTasks = hitlTasks.filter((task) => task.status === "open");
+  const showStarterConversation = !session && !activeQuiz && !latestGrade && !latestInsight;
 
   return (
     <div className="learningGrid">
       <section className="conversationPanel naturalComposer">
         <div className="studyMasthead">
-          <p className="eyebrow">{t.appMode}</p>
-          <h1>Study Anything</h1>
-          <p>{t.learnSubtitle}</p>
+          <p className="eyebrow">{t.navLearnHint}</p>
+          <h2>{t.naturalStudyTitle}</h2>
+          <p>{t.naturalStudyLead}</p>
         </div>
         <div className="studyQuestion">
           <p>{activeQuiz ? t.quizIntro : t.welcome}</p>
@@ -1781,6 +1805,16 @@ function LearningWorkspace(props: {
             {!realAgentReady && <button onClick={onConnectAgent}>{t.connectAgent}</button>}
           </div>
         </div>
+        {!activeQuiz && (
+          <div className="promptExampleRow">
+            <span>{t.promptExamplesTitle}</span>
+            {t.promptExamples.map((example) => (
+              <button className="promptChip" key={example} onClick={() => onPromptExample(example)}>
+                {example}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="studyTrustLine">
           <span>{t.noRawLearningData}</span>
           <span>{t.noSecrets}</span>
@@ -1796,6 +1830,26 @@ function LearningWorkspace(props: {
           />
         )}
         <div className="messageList">
+          {showStarterConversation && (
+            <>
+              <article className="message assistant">
+                <strong>SA</strong>
+                <p>{t.assistantGreeting}</p>
+              </article>
+              <article className="message user">
+                <strong>{t.userExampleLabel}</strong>
+                <p>{t.userPromptExample}</p>
+              </article>
+              <article className="learningPlanCard">
+                <strong>{t.assistantPlanTitle}</strong>
+                <ol>
+                  {t.assistantPlanSteps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+              </article>
+            </>
+          )}
           {activeQuiz && (
             <article className="message assistant">
               <strong>{t.quizIntro}</strong>
@@ -1831,6 +1885,11 @@ function LearningWorkspace(props: {
 
       <aside className="detailRail">
         <section className="sidePanel sourcePanel">
+          <div className="sourceBrand">
+            <p className="eyebrow">{t.appMode}</p>
+            <h1>Study Anything</h1>
+            <p>{t.sourcePanelLead}</p>
+          </div>
           <div className="panelHeading">
             <h3>{t.sourceTitle}</h3>
             <span className={`statusPill ${session?.source?.verified ? "good" : "neutral"}`}>
