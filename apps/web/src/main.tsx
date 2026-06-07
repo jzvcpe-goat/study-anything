@@ -61,6 +61,40 @@ type PluginStatus = {
   requires_confirmation?: boolean;
 };
 
+type PluginRegistryReviewItem = {
+  plugin_id: string;
+  name: string;
+  installed_version: string | null;
+  registry_version: string | null;
+  registry_path: string;
+  source_path: string | null;
+  registry_status: string;
+  signature_status: string;
+  review_status: string;
+  risk_level: string;
+  install_recommendation: string;
+  update_status: string;
+  action: string;
+  warnings: string[];
+};
+
+type PluginRegistryReview = {
+  schema_version: string;
+  local_first: boolean;
+  remote_code_downloads_allowed: boolean;
+  entrypoints_executed: boolean;
+  registry_files: string[];
+  trusted_key_count: number;
+  plugin_count: number;
+  verified_count: number;
+  signature_verified_count: number;
+  review_required_count: number;
+  update_available_count: number;
+  blocked_count: number;
+  items: PluginRegistryReviewItem[];
+  notes: string[];
+};
+
 type ReadingSource = {
   reference: string;
   title: string;
@@ -466,6 +500,11 @@ const copy = {
     quizIntro: "先回答这个问题：",
     agentTitle: "连接你的 Agent",
     agentLead: "真实推理、凭证和工具都留在你自己的 Agent 中。Study Anything 只发送学习任务、校验结构化输出并记录学习状态。",
+    agentContractTitle: "自然语言任务契约",
+    agentContractPrompt: "帮我学习这段材料，生成测验，并在我回答后评估掌握度。",
+    agentContractInput: "发送任务：类型、会话、材料、题目、答案、评分标准和约束",
+    agentContractOutput: "校验输出：内容、引用、分数、反馈、置信度和元数据",
+    agentContractGuardrail: "结构不合法会进入人工确认，不直接写入学习状态。",
     kind: "类型",
     label: "名称",
     endpoint: "地址",
@@ -497,6 +536,19 @@ const copy = {
     pluginDigest: "源码摘要",
     pluginWarnings: "注意",
     permissionRisk: "风险",
+    pluginRegistryReviewTitle: "Registry 审查",
+    pluginRegistryReviewLead: "审查本机 registry 元数据、摘要和签名状态；不下载、不更新、不执行插件代码。",
+    pluginRegistryVerified: "摘要已验证",
+    pluginRegistrySignatureVerified: "签名已验证",
+    pluginRegistryReviewRequired: "需审查",
+    pluginRegistryUpdateAvailable: "可更新",
+    pluginRegistryBlocked: "已阻止",
+    pluginRegistryTrustedKeys: "可信公钥",
+    pluginRegistryFiles: "Registry 文件",
+    pluginRegistryAction: "动作",
+    pluginRegistryUpdateStatus: "更新状态",
+    pluginRegistryBoundary: "元数据审查 · 本地安装 · 无自动下载",
+    pluginRegistryEmpty: "还没有 registry 审查数据。",
     capabilities: "学习能力",
     noSecrets: "Study Anything 不保存你的推理凭证。",
     healthy: "连接正常",
@@ -700,6 +752,11 @@ const copy = {
     quizIntro: "Answer this first:",
     agentTitle: "Connect Your Agent",
     agentLead: "Real reasoning, credentials, and tools stay inside your own agent. Study Anything sends learning tasks, validates structured output, and records learning state.",
+    agentContractTitle: "Natural Language Task Contract",
+    agentContractPrompt: "Help me study this source, generate a quiz, then evaluate my mastery after I answer.",
+    agentContractInput: "Send task: type, session, source, quiz, answers, rubric, and constraints",
+    agentContractOutput: "Validate result: content, citations, score, feedback, confidence, and metadata",
+    agentContractGuardrail: "Invalid structure becomes human review instead of mutating learning state.",
     kind: "Type",
     label: "Name",
     endpoint: "Endpoint",
@@ -731,6 +788,19 @@ const copy = {
     pluginDigest: "Source digest",
     pluginWarnings: "Warnings",
     permissionRisk: "Risk",
+    pluginRegistryReviewTitle: "Registry Review",
+    pluginRegistryReviewLead: "Review local registry metadata, digests, and signatures. No plugin code is downloaded, updated, or executed.",
+    pluginRegistryVerified: "Digest verified",
+    pluginRegistrySignatureVerified: "Signature verified",
+    pluginRegistryReviewRequired: "Needs review",
+    pluginRegistryUpdateAvailable: "Updates",
+    pluginRegistryBlocked: "Blocked",
+    pluginRegistryTrustedKeys: "Trusted keys",
+    pluginRegistryFiles: "Registry files",
+    pluginRegistryAction: "Action",
+    pluginRegistryUpdateStatus: "Update status",
+    pluginRegistryBoundary: "Metadata review · local install · no automatic downloads",
+    pluginRegistryEmpty: "No registry review data yet.",
     capabilities: "Learning capabilities",
     noSecrets: "Study Anything never stores your reasoning credentials.",
     healthy: "Connection ok",
@@ -944,6 +1014,31 @@ function restoreWarningLabel(warning: string, locale: Locale) {
   return zh[warning] ?? warning;
 }
 
+function registryActionLabel(action: string, locale: Locale) {
+  if (locale === "en") return action.replace(/_/g, " ");
+  const zh: Record<string, string> = {
+    ready: "可安装",
+    confirm_update_review: "确认更新审查",
+    manual_review_required: "需要人工审查",
+    block_install: "阻止安装",
+    add_to_signed_registry: "加入签名 registry"
+  };
+  return zh[action] ?? action.replace(/_/g, " ");
+}
+
+function registryUpdateLabel(status: string, locale: Locale) {
+  if (locale === "en") return status.replace(/_/g, " ");
+  const zh: Record<string, string> = {
+    current: "当前版本",
+    update_available: "发现新版本",
+    local_newer: "本地较新",
+    not_installed: "未安装",
+    not_listed: "未列入",
+    unknown: "未知"
+  };
+  return zh[status] ?? status.replace(/_/g, " ");
+}
+
 function progressFor(stage?: string) {
   if (stage === "completed") return 100;
   if (stage === "awaiting_answers") return 62;
@@ -999,6 +1094,7 @@ function App() {
   const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
   const [agentTest, setAgentTest] = useState<string | null>(null);
   const [plugins, setPlugins] = useState<PluginStatus[]>([]);
+  const [pluginRegistryReview, setPluginRegistryReview] = useState<PluginRegistryReview | null>(null);
   const [pluginSourcePath, setPluginSourcePath] = useState("plugins/example-exporter");
   const [pluginPreview, setPluginPreview] = useState<PluginStatus | null>(null);
   const [confirmedPluginPermissions, setConfirmedPluginPermissions] = useState<string[]>([]);
@@ -1065,7 +1161,19 @@ function App() {
 
   async function refresh(currentSessionId = session?.session_id) {
     await runTask(t.loadingRefresh, async () => {
-      const [agents, workspace, sync, system, integrationList, sessionList, hitl, pluginList, metrics, pmfInterest] = await Promise.all([
+      const [
+        agents,
+        workspace,
+        sync,
+        system,
+        integrationList,
+        sessionList,
+        hitl,
+        pluginList,
+        registryReview,
+        metrics,
+        pmfInterest
+      ] = await Promise.all([
         api<AgentStatus>("/v1/agents/status"),
         api<WorkspaceStatus>("/v1/workspaces/status"),
         api<SyncStatus>("/v1/sync/status"),
@@ -1074,6 +1182,7 @@ function App() {
         api<Session[]>("/v1/sessions"),
         api<HitlInterrupt[]>("/v1/hitl"),
         api<PluginStatus[]>("/v1/plugins"),
+        api<PluginRegistryReview>("/v1/plugins/registry-review"),
         api<PmfMetrics>("/v1/metrics/pmf"),
         api<PmfInterestSummary>("/v1/pmf/summary")
       ]);
@@ -1085,6 +1194,7 @@ function App() {
       setSessions(sessionList);
       setHitlTasks(hitl);
       setPlugins(pluginList);
+      setPluginRegistryReview(registryReview);
       setPmfMetrics(metrics);
       setPmfSummary(pmfInterest);
       if (currentSessionId) {
@@ -1503,8 +1613,10 @@ function App() {
               canInstallPlugin={canInstallPlugin}
               confirmedPluginPermissions={confirmedPluginPermissions}
               installPlugin={installPlugin}
+              locale={locale}
               pluginInstallResult={pluginInstallResult}
               pluginPreview={pluginPreview}
+              pluginRegistryReview={pluginRegistryReview}
               plugins={plugins}
               pluginSourcePath={pluginSourcePath}
               previewPlugin={previewPlugin}
@@ -2334,8 +2446,10 @@ function AgentWorkspace(props: {
   canInstallPlugin: boolean;
   confirmedPluginPermissions: string[];
   installPlugin: () => void;
+  locale: Locale;
   pluginInstallResult: string | null;
   pluginPreview: PluginStatus | null;
+  pluginRegistryReview: PluginRegistryReview | null;
   plugins: PluginStatus[];
   pluginSourcePath: string;
   previewPlugin: () => void;
@@ -2360,8 +2474,10 @@ function AgentWorkspace(props: {
     canInstallPlugin,
     confirmedPluginPermissions,
     installPlugin,
+    locale,
     pluginInstallResult,
     pluginPreview,
+    pluginRegistryReview,
     plugins,
     pluginSourcePath,
     previewPlugin,
@@ -2387,6 +2503,15 @@ function AgentWorkspace(props: {
       <section className="conversationPanel agentIntro workbenchPaper">
         <h3>{t.agentTitle}</h3>
         <div className="trustNote">{t.noSecrets}</div>
+        <div className="agentContractPanel">
+          <span>{t.agentContractTitle}</span>
+          <strong>{t.agentContractPrompt}</strong>
+          <div className="contractFlow">
+            <small>{t.agentContractInput}</small>
+            <small>{t.agentContractOutput}</small>
+          </div>
+          <p>{t.agentContractGuardrail}</p>
+        </div>
         <p className={`agentModeNote ${realAgentReady ? "good" : ""}`}>
           {realAgentReady ? t.agentReady : t.agentSetupHint}
         </p>
@@ -2543,6 +2668,74 @@ function AgentWorkspace(props: {
             </div>
           )}
           {pluginInstallResult && <p className="feedbackText good">{pluginInstallResult}</p>}
+        </div>
+
+        <div className="pluginRegistryReview">
+          <div>
+            <h3>{t.pluginRegistryReviewTitle}</h3>
+            <p>{t.pluginRegistryReviewLead}</p>
+          </div>
+          {pluginRegistryReview ? (
+            <>
+              <div className="registryMetricGrid">
+                <div>
+                  <strong>{pluginRegistryReview.verified_count}</strong>
+                  <span>{t.pluginRegistryVerified}</span>
+                </div>
+                <div>
+                  <strong>{pluginRegistryReview.signature_verified_count}</strong>
+                  <span>{t.pluginRegistrySignatureVerified}</span>
+                </div>
+                <div>
+                  <strong>{pluginRegistryReview.review_required_count}</strong>
+                  <span>{t.pluginRegistryReviewRequired}</span>
+                </div>
+                <div>
+                  <strong>{pluginRegistryReview.update_available_count}</strong>
+                  <span>{t.pluginRegistryUpdateAvailable}</span>
+                </div>
+                <div>
+                  <strong>{pluginRegistryReview.blocked_count}</strong>
+                  <span>{t.pluginRegistryBlocked}</span>
+                </div>
+              </div>
+              <div className="privacyList compact">
+                <span>{t.pluginRegistryBoundary}</span>
+                <span>
+                  {t.pluginRegistryTrustedKeys}: {pluginRegistryReview.trusted_key_count}
+                </span>
+                <span>
+                  {t.pluginRegistryFiles}: {pluginRegistryReview.registry_files.join(", ") || "0"}
+                </span>
+              </div>
+              <div className="registryReviewList">
+                {pluginRegistryReview.items.slice(0, 6).map((item) => (
+                  <article className={`registryReviewItem ${item.action}`} key={`${item.plugin_id}-${item.registry_path}`}>
+                    <header>
+                      <strong>{item.name}</strong>
+                      <small>
+                        {item.plugin_id}
+                        {item.registry_version ? ` · ${item.installed_version ?? "-"} -> ${item.registry_version}` : ""}
+                      </small>
+                    </header>
+                    <dl>
+                      <dt>{t.pluginRegistryAction}</dt>
+                      <dd>{registryActionLabel(item.action, locale)}</dd>
+                      <dt>{t.pluginRegistryUpdateStatus}</dt>
+                      <dd>{registryUpdateLabel(item.update_status, locale)}</dd>
+                      <dt>{t.pluginRegistryStatus}</dt>
+                      <dd>{item.registry_status}</dd>
+                      <dt>{t.pluginSignatureStatus}</dt>
+                      <dd>{item.signature_status}</dd>
+                    </dl>
+                    {item.warnings.length > 0 && <p>{item.warnings.slice(0, 2).join(" ")}</p>}
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p className="emptyState">{t.pluginRegistryEmpty}</p>
+          )}
         </div>
 
         <div className="pluginDiscovery">

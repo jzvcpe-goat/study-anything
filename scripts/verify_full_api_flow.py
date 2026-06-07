@@ -56,6 +56,15 @@ def main() -> None:
     ]
     if not registry_verified_plugins:
         raise RuntimeError(f"No bundled plugin reported registry digest verification: {plugins}")
+    registry_review = request("/v1/plugins/registry-review")
+    if registry_review.get("schema_version") != "plugin-registry-review-v1":
+        raise RuntimeError(
+            f"Plugin registry review schema is not plugin-registry-review-v1: {registry_review}"
+        )
+    if registry_review.get("remote_code_downloads_allowed") or registry_review.get("entrypoints_executed"):
+        raise RuntimeError(f"Plugin registry review must remain metadata-only: {registry_review}")
+    if registry_review.get("verified_count", 0) < 1:
+        raise RuntimeError(f"Plugin registry review did not count verified plugins: {registry_review}")
 
     agents = request("/v1/agents/status")
     if agents.get("schema_version") != "agent-v1":
@@ -189,6 +198,7 @@ def main() -> None:
                 "recovery_schema": recovery["schema_version"],
                 "restore_api_enabled": recovery["restore_api_enabled"],
                 "registry_verified_plugins": len(registry_verified_plugins),
+                "plugin_registry_review_schema": registry_review["schema_version"],
             },
             ensure_ascii=False,
         )

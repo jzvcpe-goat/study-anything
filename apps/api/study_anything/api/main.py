@@ -667,6 +667,10 @@ def create_app() -> FastAPI:
     def get_plugin_trust_policy() -> dict[str, object]:
         return plugin_trust_policy()
 
+    @app.get("/v1/plugins/registry-review")
+    def get_plugin_registry_review() -> dict[str, object]:
+        return plugins.registry_review().public_dict()
+
     @app.post("/v1/plugins/preview")
     def preview_plugin(payload: PluginPreviewRequest) -> dict[str, object]:
         status = plugins.preview_local(Path(payload.source_path).expanduser())

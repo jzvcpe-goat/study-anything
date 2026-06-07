@@ -169,6 +169,7 @@ def plugin_trust_policy() -> dict[str, object]:
             "Plugins are installed only from explicitly selected local directories.",
             "Study Anything does not store model keys or agent secrets for plugins.",
             "Registry Ed25519 signatures are verified when a local registry provides trusted public keys.",
+            "Registry review reads metadata only and does not download, update, or execute plugin code.",
             "High-risk plugins should be reviewed before installation.",
         ],
     }

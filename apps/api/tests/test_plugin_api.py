@@ -78,6 +78,42 @@ class PluginApiTests(unittest.TestCase):
             self.assertTrue(body["local_first"])
             self.assertFalse(body["remote_code_downloads_allowed"])
 
+    def test_plugin_registry_review_endpoint_is_metadata_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            source = write_plugin(root)
+            installed_root = root / "installed"
+            installed_root.mkdir()
+            registry = {
+                "schemaVersion": "plugin-registry-v1",
+                "trustedKeys": [],
+                "plugins": [
+                    {
+                        "id": "demo-plugin",
+                        "name": "Demo Plugin",
+                        "version": "0.1.0",
+                        "path": source.name,
+                        "sourceDigest": "sha256:" + "0" * 64,
+                    }
+                ],
+            }
+            (root / "registry.json").write_text(json.dumps(registry), encoding="utf-8")
+            client, stack = self._client(root)
+
+            with stack, client:
+                response = client.get("/v1/plugins/registry-review")
+
+            body = response.json()
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(body["schema_version"], "plugin-registry-review-v1")
+            self.assertFalse(body["remote_code_downloads_allowed"])
+            self.assertFalse(body["entrypoints_executed"])
+            self.assertEqual(body["plugin_count"], 1)
+            self.assertEqual(body["items"][0]["action"], "block_install")
+            self.assertEqual(body["registry_files"], ["registry.json"])
+            self.assertEqual(body["items"][0]["registry_path"], "registry.json")
+            self.assertFalse((installed_root / "demo-plugin").exists())
+
     def test_install_plugin_requires_exact_permission_confirmation(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

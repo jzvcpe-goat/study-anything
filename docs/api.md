@@ -101,6 +101,7 @@ generated insights.
 - `GET /v1/recovery/status`
 - `GET /v1/plugins`
 - `GET /v1/plugins/trust-policy`
+- `GET /v1/plugins/registry-review`
 - `POST /v1/plugins/preview`
 - `POST /v1/plugins/install`
 
@@ -113,6 +114,11 @@ otherwise the API returns `409`.
 remote code downloads, no entrypoint execution during install, no raw secrets stored by Study Anything,
 supported review statuses, registry digest/signature statuses, Ed25519 registry-signature payload,
 and install recommendation values.
+
+`GET /v1/plugins/registry-review` summarizes local registry metadata against discovered local plugins.
+It returns verified counts, signature verification counts, update candidates, blocked entries, manual
+review requirements, registry file names, and per-plugin action labels. It reads metadata only and never
+downloads plugin source, installs updates, executes entrypoints, or contacts a marketplace.
 
 `GET /v1/recovery/status` returns read-only self-host backup and restore readiness. It exposes the
 documented local commands, backup coverage, privacy warnings, and safety checks such as SHA-256

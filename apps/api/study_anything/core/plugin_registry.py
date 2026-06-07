@@ -6,7 +6,7 @@ import json
 import shutil
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Iterable, List, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 from .plugin_manifest import PluginManifest, describe_permissions, validate_manifest
 from .plugin_trust import PluginTrustReport, assess_plugin_trust
@@ -33,6 +33,62 @@ class PluginStatus:
             "status": self.status,
             "message": self.message,
             "trust": self.trust.public_dict() if self.trust else None,
+        }
+
+
+@dataclass(frozen=True)
+class PluginRegistryReviewItem:
+    plugin_id: str
+    name: str
+    installed_version: Optional[str]
+    registry_version: Optional[str]
+    registry_path: str
+    source_path: Optional[str]
+    registry_status: str
+    signature_status: str
+    review_status: str
+    risk_level: str
+    install_recommendation: str
+    update_status: str
+    action: str
+    warnings: list[str]
+
+    def public_dict(self) -> dict[str, object]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class PluginRegistryReview:
+    registry_files: list[str]
+    trusted_key_count: int
+    plugin_count: int
+    verified_count: int
+    signature_verified_count: int
+    review_required_count: int
+    update_available_count: int
+    blocked_count: int
+    items: list[PluginRegistryReviewItem]
+
+    def public_dict(self) -> dict[str, object]:
+        return {
+            "schema_version": "plugin-registry-review-v1",
+            "local_first": True,
+            "remote_code_downloads_allowed": False,
+            "entrypoints_executed": False,
+            "registry_files": self.registry_files,
+            "trusted_key_count": self.trusted_key_count,
+            "plugin_count": self.plugin_count,
+            "verified_count": self.verified_count,
+            "signature_verified_count": self.signature_verified_count,
+            "review_required_count": self.review_required_count,
+            "update_available_count": self.update_available_count,
+            "blocked_count": self.blocked_count,
+            "items": [item.public_dict() for item in self.items],
+            "notes": [
+                "Registry review reads metadata only and never downloads plugin code.",
+                "Install and update remain explicit local-directory operations.",
+                "Remote marketplace payments and automatic updates are not enabled in the self-host alpha.",
+            ],
         }
 
 
@@ -87,6 +143,116 @@ class PluginRegistry:
         )
         return self._load_manifest(target / "plugin.json")
 
+    def registry_review(self) -> PluginRegistryReview:
+        """Summarize local registry metadata against discovered plugins.
+
+        This is the self-host alpha foundation for a future signed plugin
+        marketplace. It reads registry metadata only and never downloads,
+        installs, updates, or executes plugin code.
+        """
+
+        statuses = self.discover()
+        discovered = {
+            status.manifest.plugin_id: status
+            for status in statuses
+            if status.manifest is not None
+        }
+        registry_documents = self._registry_documents()
+        items: list[PluginRegistryReviewItem] = []
+        seen_ids: set[str] = set()
+        trusted_key_count = sum(len(_trusted_registry_keys(document.values)) for document in registry_documents)
+        for document in registry_documents:
+            for entry in _registry_plugins(document.values):
+                plugin_id = _string_field(entry, "id")
+                if not plugin_id:
+                    continue
+                status = discovered.get(plugin_id)
+                seen_ids.add(plugin_id)
+                registry_version = _string_field(entry, "version")
+                source_path = _string_field(entry, "path")
+                if status and status.manifest:
+                    trust = status.trust
+                    installed_version = status.manifest.version
+                    name = status.manifest.name
+                    registry_status = trust.registry_status if trust else "unknown"
+                    signature_status = trust.signature_status if trust else "unknown"
+                    review_status = trust.review_status if trust else "unreviewed"
+                    risk_level = trust.risk_level if trust else "unknown"
+                    install_recommendation = trust.install_recommendation if trust else "review_required"
+                    warnings = list(trust.warnings) if trust else ["Trust report unavailable."]
+                    update_status = _update_status(installed_version, registry_version)
+                    action = _review_action(
+                        registry_status=registry_status,
+                        signature_status=signature_status,
+                        install_recommendation=install_recommendation,
+                        update_status=update_status,
+                    )
+                else:
+                    installed_version = None
+                    name = _string_field(entry, "name") or plugin_id
+                    registry_status = "metadata_only"
+                    signature_status = _entry_signature_status(entry)
+                    review_status = _entry_review_status(entry)
+                    risk_level = "unknown"
+                    install_recommendation = "review_required"
+                    update_status = "not_installed"
+                    action = "manual_review_required"
+                    warnings = [
+                        "Registry entry is not installed locally; review and fetch source outside Study Anything before installing.",
+                    ]
+                items.append(
+                    PluginRegistryReviewItem(
+                        plugin_id=plugin_id,
+                        name=name,
+                        installed_version=installed_version,
+                        registry_version=registry_version,
+                        registry_path=document.public_path,
+                        source_path=source_path,
+                        registry_status=registry_status,
+                        signature_status=signature_status,
+                        review_status=review_status,
+                        risk_level=risk_level,
+                        install_recommendation=install_recommendation,
+                        update_status=update_status,
+                        action=action,
+                        warnings=warnings,
+                    )
+                )
+        for plugin_id, status in discovered.items():
+            if plugin_id in seen_ids or status.manifest is None:
+                continue
+            trust = status.trust
+            items.append(
+                PluginRegistryReviewItem(
+                    plugin_id=plugin_id,
+                    name=status.manifest.name,
+                    installed_version=status.manifest.version,
+                    registry_version=None,
+                    registry_path="not_listed",
+                    source_path=status.path,
+                    registry_status=trust.registry_status if trust else "not_listed",
+                    signature_status=trust.signature_status if trust else "unsigned",
+                    review_status=trust.review_status if trust else "unreviewed",
+                    risk_level=trust.risk_level if trust else "unknown",
+                    install_recommendation=trust.install_recommendation if trust else "review_required",
+                    update_status="not_listed",
+                    action="add_to_signed_registry",
+                    warnings=list(trust.warnings) if trust else ["Plugin is not listed in a registry."],
+                )
+            )
+        items = sorted(items, key=lambda item: (item.action, item.plugin_id))
+        return PluginRegistryReview(
+            registry_files=[document.public_path for document in registry_documents],
+            trusted_key_count=trusted_key_count,
+            plugin_count=len(items),
+            verified_count=sum(1 for item in items if item.registry_status == "digest_verified"),
+            signature_verified_count=sum(1 for item in items if item.signature_status == "registry_signature_verified"),
+            review_required_count=sum(1 for item in items if item.action in {"manual_review_required", "confirm_update_review"}),
+            update_available_count=sum(1 for item in items if item.update_status == "update_available"),
+            blocked_count=sum(1 for item in items if item.action == "block_install"),
+            items=items,
+        )
+
     def _load_manifest(self, manifest_path: Path) -> PluginStatus:
         plugin_dir = manifest_path.parent
         try:
@@ -139,6 +305,37 @@ class PluginRegistry:
                 return entry, trusted_keys
         return None, trusted_keys
 
+    def _registry_documents(self) -> list["_RegistryDocument"]:
+        documents: list[_RegistryDocument] = []
+        seen: set[Path] = set()
+        for plugin_dir in self.plugin_dirs:
+            registry_path = (plugin_dir / "registry.json").resolve()
+            if registry_path in seen or not registry_path.exists():
+                continue
+            seen.add(registry_path)
+            try:
+                values = json.loads(registry_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if isinstance(values, dict):
+                documents.append(
+                    _RegistryDocument(
+                        path=registry_path,
+                        values=values,
+                    )
+                )
+        return documents
+
+
+@dataclass(frozen=True)
+class _RegistryDocument:
+    path: Path
+    values: dict[str, object]
+
+    @property
+    def public_path(self) -> str:
+        return self.path.name
+
 
 def _trusted_registry_keys(values: dict[str, object]) -> dict[str, dict[str, object]]:
     keys = values.get("trustedKeys")
@@ -152,6 +349,88 @@ def _trusted_registry_keys(values: dict[str, object]) -> dict[str, dict[str, obj
         if isinstance(key_id, str) and key_id.strip():
             indexed[key_id.strip()] = key
     return indexed
+
+
+def _registry_plugins(values: Mapping[str, object]) -> list[dict[str, object]]:
+    plugins = values.get("plugins")
+    if not isinstance(plugins, list):
+        return []
+    return [entry for entry in plugins if isinstance(entry, dict)]
+
+
+def _string_field(values: Mapping[str, object], key: str) -> Optional[str]:
+    value = values.get(key)
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
+
+
+def _entry_signature_status(entry: Mapping[str, object]) -> str:
+    signature = entry.get("signature")
+    if isinstance(signature, Mapping):
+        return "metadata_only"
+    if _string_field(entry, "sourceDigest"):
+        return "registry_digest_declared"
+    return "unsigned"
+
+
+def _entry_review_status(entry: Mapping[str, object]) -> str:
+    review = entry.get("review")
+    if isinstance(review, Mapping):
+        status = _string_field(review, "status")
+        if status:
+            return status
+    status = _string_field(entry, "reviewStatus")
+    return status or "unreviewed"
+
+
+def _update_status(installed_version: str, registry_version: Optional[str]) -> str:
+    if not registry_version:
+        return "unknown"
+    comparison = _compare_versions(registry_version, installed_version)
+    if comparison > 0:
+        return "update_available"
+    if comparison < 0:
+        return "local_newer"
+    return "current"
+
+
+def _compare_versions(left: str, right: str) -> int:
+    left_parts = _version_parts(left)
+    right_parts = _version_parts(right)
+    max_len = max(len(left_parts), len(right_parts))
+    left_parts += [0] * (max_len - len(left_parts))
+    right_parts += [0] * (max_len - len(right_parts))
+    if left_parts > right_parts:
+        return 1
+    if left_parts < right_parts:
+        return -1
+    return 0
+
+
+def _version_parts(value: str) -> list[int]:
+    parts: list[int] = []
+    for raw_part in value.replace("-", ".").split("."):
+        digits = "".join(char for char in raw_part if char.isdigit())
+        if digits:
+            parts.append(int(digits))
+    return parts or [0]
+
+
+def _review_action(
+    *,
+    registry_status: str,
+    signature_status: str,
+    install_recommendation: str,
+    update_status: str,
+) -> str:
+    if install_recommendation == "do_not_install" or registry_status in {"digest_mismatch", "missing_digest"}:
+        return "block_install"
+    if update_status == "update_available":
+        return "confirm_update_review"
+    if signature_status in {"registry_signature_verified", "registry_digest_verified"} and install_recommendation == "allow_with_confirmation":
+        return "ready"
+    return "manual_review_required"
 
 
 def _registry_path_matches(registry_path: Path, plugin_dir: Path, raw_path: object) -> bool:

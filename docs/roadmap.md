@@ -68,6 +68,7 @@
 - Read-only recovery status API and Web surface for backup coverage, safeguards, restore privacy, and manual recovery commands.
 - Disposable Docker backup/restore drill for self-host validation, including non-ASCII checkout recovery via an ASCII temp source copy.
 - Local plugin registry digest verification, with Ed25519 registry-signature support when trusted keys are configured.
+- Read-only plugin registry review reports verified digests, signature counts, update candidates, blocked entries, and manual-review actions.
 - Web same-origin full-stack smoke now verifies recovery status, encrypted Sync export/inspect, plugin registry trust, and local PMF metrics through the Web origin.
 - Learn, Agent, and Launch Web views share the notebook/workbench visual direction from the Image2 concept pass while keeping API-backed interactions intact.
 
