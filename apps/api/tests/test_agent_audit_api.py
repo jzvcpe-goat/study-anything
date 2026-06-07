@@ -184,11 +184,97 @@ class AgentAuditApiTests(unittest.TestCase):
         self.assertTrue(body["deprecated"])
         self.assertEqual(body["replacement"], "/v1/sessions/{session_id}/agent-audit")
 
+    def test_agent_eval_artifact_exports_external_eval_strategy(self) -> None:
+        with TemporaryDirectory() as tmpdir, self._server() as endpoint:
+            client, stack, _registry = self._client(Path(tmpdir))
+            with stack, client:
+                provider = client.post(
+                    "/v1/agents/providers",
+                    json={
+                        "kind": "http_agent",
+                        "label": "Eval HTTP Agent",
+                        "endpoint": endpoint,
+                        "capabilities": [
+                            "quiz.generate",
+                            "answer.grade",
+                            "insight.synthesize",
+                        ],
+                    },
+                ).json()
+                for capability in ["quiz.generate", "answer.grade", "insight.synthesize"]:
+                    client.post(
+                        "/v1/agents/defaults",
+                        json={
+                            "user_id": "eval-http",
+                            "capability": capability,
+                            "provider_id": provider["provider_id"],
+                        },
+                    )
+                session = client.post(
+                    "/v1/sessions",
+                    json={"user_id": "eval-http", "use_demo_agent": False},
+                ).json()
+                session_id = session["session_id"]
+                client.post(
+                    f"/v1/sessions/{session_id}/reading",
+                    json={
+                        "source_type": "local_text",
+                        "reference": "demo://agent-eval-artifact",
+                        "title": "Private eval title",
+                        "text": "Private eval source prose must stay out of eval artifacts.",
+                    },
+                )
+                running = client.post(f"/v1/sessions/{session_id}/run").json()
+                quiz_id = running["quiz_items"][0]["item_id"]
+                client.post(
+                    f"/v1/sessions/{session_id}/answers",
+                    json={"answers": {quiz_id: "Private eval answer."}},
+                )
+                response = client.get(f"/v1/sessions/{session_id}/agent-eval/artifact")
+
+        body = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(body["schema_version"], "agent-eval-artifact-v1")
+        self.assertEqual(body["status"], "ready_for_external_eval")
+        self.assertTrue(body["used_external_agent"])
+        self.assertEqual(
+            body["external_eval_layers"],
+            [
+                "contract_regression",
+                "agent_task_completion",
+                "trajectory_match",
+                "source_grounding",
+                "citation_quality",
+            ],
+        )
+        adapter_ids = {adapter["adapter_id"] for adapter in body["adapter_strategy"]}
+        self.assertEqual(
+            adapter_ids,
+            {"promptfoo", "deepeval", "langchain-agentevals", "ragas"},
+        )
+        required_gates = [gate for gate in body["native_gates"] if gate["required"]]
+        self.assertTrue(required_gates)
+        self.assertTrue(all(gate["status"] == "pass" for gate in required_gates))
+        self.assertEqual(
+            [step["task_type"] for step in body["trajectory"]],
+            ["quiz.generate", "answer.grade", "insight.synthesize"],
+        )
+        self.assertNotIn("Private", response.text)
+        self.assertNotIn(endpoint, response.text)
+
     def test_agent_audit_returns_404_for_missing_session(self) -> None:
         with TemporaryDirectory() as tmpdir:
             client, stack, _registry = self._client(Path(tmpdir))
             with stack, client:
                 response = client.get("/v1/sessions/missing/agent-audit")
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_agent_eval_artifact_returns_404_for_missing_session(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            client, stack, _registry = self._client(Path(tmpdir))
+            with stack, client:
+                response = client.get("/v1/sessions/missing/agent-eval/artifact")
 
         self.assertEqual(response.status_code, 404)
 
@@ -215,4 +301,3 @@ class AgentAuditApiTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

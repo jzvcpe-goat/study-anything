@@ -31,6 +31,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
 - API smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, local PMF metrics, and Agent audit boundaries.
+- Redacted Agent Eval artifact foundation that bridges invocation audit evidence into mature external eval tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API learning flow.
 - Published release path for the current recovery, plugin-registry, Skill/API, and Bring Your Own Agent foundations.
 
@@ -50,6 +51,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 ## Suggested Branch Tracks
 
 - `codex/platform-agent-integrations`: Kimi/Codex/WorkBuddy-style Skill and HTTP tool packaging.
+- `codex/agent-eval-foundation`: Promptfoo, DeepEval, LangChain AgentEvals, and Ragas integration surfaces.
 - `codex/new-product-ui`: redesigned natural-language-first UI after API/Skill launch is stable.
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.
 - `feature/hosted-sync-service`: remote storage, recovery, conflict resolution, and paid convenience boundary.
@@ -66,4 +68,4 @@ Reach 75% readiness by making the self-host Alpha dependable for real learners w
 - Documented recovery drill walkthroughs for non-developer self-host operators.
 - Hosted signed plugin registry distribution, maintainer review queue, and explicit update install workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.
-- Mature Agent quality eval adapters for DeepEval, LangChain AgentEvals, and Ragas.
+- Mature Agent quality eval suites wired into CI or documented operator workflows.
