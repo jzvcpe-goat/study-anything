@@ -53,7 +53,6 @@ fi
 
 if is_true "$use_published_images"; then
   export STUDY_ANYTHING_API_IMAGE="${STUDY_ANYTHING_API_IMAGE:-ghcr.io/jzvcpe-goat/study-anything/api:${image_tag}}"
-  export STUDY_ANYTHING_WEB_IMAGE="${STUDY_ANYTHING_WEB_IMAGE:-ghcr.io/jzvcpe-goat/study-anything/web:${image_tag}}"
 fi
 
 compose() {
@@ -84,15 +83,13 @@ fi
 if is_true "$use_published_images"; then
   printf "Using published Study Anything images tagged %s.\n" "$image_tag"
   if is_true "${PULL_PUBLISHED_IMAGES:-true}"; then
-    printf "Pulling API image first. A cold download can take a few minutes.\n"
+    printf "Pulling API image. A cold download can take a few minutes.\n"
     docker pull "$STUDY_ANYTHING_API_IMAGE"
-    printf "Pulling Web image second.\n"
-    docker pull "$STUDY_ANYTHING_WEB_IMAGE"
   else
     printf "Skipping published image pulls because PULL_PUBLISHED_IMAGES=%s.\n" "${PULL_PUBLISHED_IMAGES:-false}"
   fi
 else
-  printf "Building Study Anything API and Web images from this source checkout.\n"
+  printf "Building Study Anything API image from this source checkout.\n"
 fi
 
 case "$profile" in
@@ -129,6 +126,6 @@ until curl -fsS "$api_url" >/dev/null 2>&1; do
 done
 
 printf "Study Anything is ready.\n"
-printf "Web UI:    http://127.0.0.1:%s\n" "${WEB_PORT:-5173}"
 printf "API docs:  http://127.0.0.1:%s/docs\n" "${API_PORT:-8000}"
+printf "API health:http://127.0.0.1:%s/v1/health\n" "${API_PORT:-8000}"
 printf "Stop with: ./scripts/stop_self_host.sh\n"

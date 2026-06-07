@@ -77,6 +77,8 @@ Agent endpoints, PMF contact values, or decrypted plugin inventory.
 - `POST /v1/sessions/{session_id}/answers`
 - `POST /v1/sessions/{session_id}/discard`
 - `GET /v1/sessions/{session_id}/mastery`
+- `GET /v1/sessions/{session_id}/agent-audit`
+- `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
 ## Optional Learning Topology
 

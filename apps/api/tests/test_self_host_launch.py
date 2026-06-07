@@ -71,7 +71,7 @@ class SelfHostLaunchTests(unittest.TestCase):
 
     def test_default_launch_builds_from_source(self) -> None:
         output = self.run_launch(ALLOW_NON_ASCII_DOCKER_BUILD="true")
-        self.assertIn("Building Study Anything API and Web images from this source checkout.", output)
+        self.assertIn("Building Study Anything API image from this source checkout.", output)
         self.assertIn(
             "docker compose --env-file .env -f infra/compose/docker-compose.yml up -d --build",
             output,
@@ -85,11 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
             "docker pull "
             "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.7-alpha"
         )
-        web_pull = (
-            "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/web:v0.2.7-alpha"
-        )
-        self.assertLess(output.index(api_pull), output.index(web_pull))
+        self.assertIn(api_pull, output)
         self.assertIn(
             "docker compose --env-file .env -f infra/compose/docker-compose.yml "
             "-f infra/compose/docker-compose.images.yml up -d",
@@ -102,10 +98,8 @@ class SelfHostLaunchTests(unittest.TestCase):
             USE_PUBLISHED_IMAGES="yes",
             STACK_PROFILE="smoke",
             STUDY_ANYTHING_API_IMAGE="registry.example/study-api:test",
-            STUDY_ANYTHING_WEB_IMAGE="registry.example/study-web:test",
         )
         self.assertIn("docker pull registry.example/study-api:test", output)
-        self.assertIn("docker pull registry.example/study-web:test", output)
         self.assertIn("--profile smoke up -d", output)
 
     def test_published_launch_can_use_cached_images_without_pull(self) -> None:

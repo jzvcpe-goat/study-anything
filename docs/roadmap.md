@@ -8,7 +8,6 @@
 - Agent registry and provider health checks.
 - Plugin manifest contract and example plugin.
 - Durable JSON alpha store for sessions and agent defaults.
-- Web operator panel for agent setup, system status, and plugin discovery.
 - Skill-first CLI and repo-local Agent skill.
 - OSS docs and contribution flow.
 
@@ -25,7 +24,7 @@
 ## v0.2.1-alpha
 
 - One-command published-image core launch for first-run self-hosting.
-- Sequential API/Web image pulls with clear cold-download messaging.
+- Sequential API image pulls with clear cold-download messaging.
 - Explicit tag, registry mirror, and offline-cache overrides.
 - Shell behavior tests for source builds and published-image launches.
 
@@ -36,7 +35,7 @@
 
 ## v0.2.3-alpha
 
-- Guided first-run Web onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
+- API/Skill-first onboarding for the demo loop, learner-owned source material, and Bring Your Own Agent setup.
 - Agent status copy distinguishes the deterministic demo agent from a learner-configured real Agent.
 - Web learning sessions default to the learner's Agent when one is configured.
 - Permission-gated Web plugin installation for explicitly selected local plugin directories.
@@ -48,7 +47,7 @@
 ## v0.2.4-alpha
 
 - Explicit-consent PMF export packages for community feedback and hosted waitlist review.
-- Web Launch panel consent gate for aggregate-only PMF sharing.
+- API consent gate for aggregate-only PMF sharing.
 - Full API smoke verification now covers PMF export consent failure and success paths.
 - Docker self-host source-build diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Release docs updated for the deployability fix and PMF export package.
@@ -65,26 +64,26 @@
 
 ## v0.2.6-alpha
 
-- Read-only recovery status API and Web surface for backup coverage, safeguards, restore privacy, and manual recovery commands.
+- Read-only recovery status API for backup coverage, safeguards, restore privacy, and manual recovery commands.
 - Disposable Docker backup/restore drill for self-host validation, including non-ASCII checkout recovery via an ASCII temp source copy.
 - Local plugin registry digest verification, with Ed25519 registry-signature support when trusted keys are configured.
 - Read-only plugin registry review reports verified digests, signature counts, update candidates, blocked entries, and manual-review actions.
-- Web same-origin full-stack smoke now verifies recovery status, encrypted Sync export/inspect, plugin registry trust, and local PMF metrics through the Web origin.
-- Learn, Agent, and Launch Web views share the notebook/workbench visual direction from the Image2 concept pass while keeping API-backed interactions intact.
+- API smoke now verifies recovery status, encrypted Sync export/inspect, plugin registry trust, local PMF metrics, and Agent audit boundaries.
 
 ## v0.2.7-alpha
 
 - API runtime version now resolves from package metadata so `/v1/health` and `/v1/system/status`
   match the release artifact.
 - Published-image launch defaults point at the corrected alpha tag.
-- Disposable published-image smoke verifies public GHCR API/Web images, runtime version, API learning
-  loop, and Web same-origin flow before users depend on a release.
-- Learn UI moves closer to a natural-language-first study console with source and progress as
-  supporting rails.
+- Disposable published-image smoke verifies the public GHCR API image, runtime version, and API learning
+  loop before users depend on a release.
+- Standalone Web UI removed from the launch path; future UI work moves to a separate branch after API/Skill stability.
 
 ## v0.3 Next
 
 - Importer plugin SDK.
+- Platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills.
+- Mature Agent quality eval adapters for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
 - LanceDB reading embedding index and retrieval API.

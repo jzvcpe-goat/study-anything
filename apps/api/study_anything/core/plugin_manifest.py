@@ -81,7 +81,7 @@ PERMISSION_DETAILS = {
     "ui:panel": {
         "label": "Add a UI panel",
         "risk": "low",
-        "description": "Can register a frontend panel surface for status, configuration, or plugin interaction.",
+        "description": "Can register a future client panel surface for status, configuration, or plugin interaction.",
     },
 }
 

@@ -1,15 +1,15 @@
 # Branching
 
-Study Anything uses a small trunk-based workflow that keeps `main` release-ready while leaving room for focused UI, API, docs, and release work.
+Study Anything uses a small trunk-based workflow that keeps `main` release-ready while leaving room for focused API, Skill, agent-integration, docs, and future UI work.
 
 ## Permanent Branches
 
-- `main`: protected, release-ready trunk. Every merge should pass API tests, web build checks, and the relevant smoke checks.
+- `main`: protected, release-ready trunk. Every merge should pass API tests and the relevant API/Skill/Docker smoke checks.
 - `release/vX.Y.Z`: short-lived stabilization branches for public tags when a release needs final validation.
 
 ## Working Branches
 
-- `codex/ui-*`: Codex-built UI feature branches. Use these for larger frontend iterations, screenshots, and visual QA.
+- `codex/ui-*`: isolated future UI feature branches. Use these only when the product delivery layer is being rebuilt outside the launch-critical API/Skill path.
 - `feature/*`: contributor feature branches.
 - `fix/*`: bug fixes and regressions.
 - `docs/*`: documentation-only changes.
@@ -23,21 +23,19 @@ Every PR should include:
 
 - A short product-facing summary.
 - Test evidence for the touched surface.
-- Screenshots for visible UI changes.
+- Screenshots for visible UI changes when a PR intentionally touches a future UI branch.
 - Security and privacy notes when data, agent configuration, plugin permissions, or deployment behavior changes.
 
 Required checks for normal code changes:
 
 - API unit tests.
-- Web build.
 - Docker or full-stack smoke test when the PR touches compose, release scripts, API startup, or agent integration paths.
+- Skill demo or Agent smoke test when the PR touches CLI, Skill, or Bring Your Own Agent behavior.
 
 ## Dependency Branches
 
 Dependencies are grouped by ecosystem so peer dependencies move together:
 
-- React runtime: `react`, `react-dom`, `@types/react`, `@types/react-dom`.
-- Vite toolchain: `vite`, `@vitejs/*`.
 - GitHub Actions runtime: `actions/*`, `docker/*`.
 
 If Dependabot opens split PRs that conflict with peer dependencies, close the split PRs after the grouped branch exists and keep the grouped PR as the source of truth.

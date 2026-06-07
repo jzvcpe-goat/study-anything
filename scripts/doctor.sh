@@ -50,8 +50,6 @@ check_optional_cmd() {
 check_cmd docker
 check_cmd curl
 check_optional_cmd python3
-check_optional_cmd node
-check_optional_cmd npm
 check_optional_cmd lsof
 
 if command -v docker >/dev/null 2>&1; then
@@ -141,7 +139,6 @@ check_http_health() {
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1 && [ -f "$env_file" ]; then
   if is_true "$use_published_images"; then
     export STUDY_ANYTHING_API_IMAGE="${STUDY_ANYTHING_API_IMAGE:-ghcr.io/jzvcpe-goat/study-anything/api:${image_tag}}"
-    export STUDY_ANYTHING_WEB_IMAGE="${STUDY_ANYTHING_WEB_IMAGE:-ghcr.io/jzvcpe-goat/study-anything/web:${image_tag}}"
     if docker compose --env-file "$env_file" -f infra/compose/docker-compose.yml -f infra/compose/docker-compose.images.yml config >/dev/null; then
       printf "ok    Docker Compose published-image config is valid for STACK_PROFILE=%s\n" "$profile"
     else
@@ -164,7 +161,6 @@ if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1 &
 fi
 
 printf "\nPort checks for STACK_PROFILE=%s\n" "$profile"
-check_port "Web UI" WEB_PORT 5173
 check_port "API" API_PORT 8000
 check_port "App Postgres" APP_POSTGRES_PORT 5433
 case "$profile" in
@@ -191,9 +187,7 @@ case "$profile" in
 esac
 
 api_port="$(env_value API_PORT 8000)"
-web_port="$(env_value WEB_PORT 5173)"
 check_http_health "API health" "http://127.0.0.1:${api_port}/v1/health"
-check_http_health "Web UI" "http://127.0.0.1:${web_port}"
 
 agent_url="$(env_value AGENT_HTTP_GATEWAY_URL http://host.docker.internal:8787)"
 case "$agent_url" in
@@ -201,7 +195,7 @@ case "$agent_url" in
     check_http_health "HTTP Agent gateway" "$agent_url/health"
     ;;
   "")
-    printf "info  AGENT_HTTP_GATEWAY_URL is blank. Use the demo Agent or configure your own gateway in the Web UI.\n"
+    printf "info  AGENT_HTTP_GATEWAY_URL is blank. Use the demo Agent or configure your own gateway through /v1/agents/*.\n"
     ;;
   *)
     printf "info  Agent gateway is configured as %s. If Docker cannot reach it, try http://host.docker.internal:8787 or the smoke profile.\n" "$agent_url"
@@ -230,13 +224,13 @@ printf "  Launch core stack:        ./scripts/launch_self_host.sh\n"
 printf "  Launch with GHCR images:  USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh\n"
 printf "  Skip pulls if cached:     USE_PUBLISHED_IMAGES=true PULL_PUBLISHED_IMAGES=false ./scripts/launch_self_host.sh\n"
 printf "  Smoke Agent path:         STACK_PROFILE=smoke ./scripts/launch_self_host.sh\n"
-printf "  API/Web logs:             docker compose --env-file %s -f infra/compose/docker-compose.yml logs --tail=200 api web app-postgres\n" "$env_file"
+printf "  API logs:                 docker compose --env-file %s -f infra/compose/docker-compose.yml logs --tail=200 api app-postgres\n" "$env_file"
 printf "  Full stack status:        docker compose --env-file %s -f infra/compose/docker-compose.yml ps\n" "$env_file"
 printf "  Backup before changes:    python3 scripts/self_host_data.py backup\n"
 printf "  Stop stack:               ./scripts/stop_self_host.sh\n"
 
 printf "\nProfile guide\n"
-printf "  STACK_PROFILE=core starts API/Web/Postgres only.\n"
+printf "  STACK_PROFILE=core starts API/Postgres only.\n"
 printf "  STACK_PROFILE=smoke adds the mock HTTP agent and FalkorDB for smoke tests.\n"
 printf "  STACK_PROFILE=full adds Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.\n"
 

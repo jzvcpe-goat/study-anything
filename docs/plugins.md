@@ -51,12 +51,12 @@ Supported review statuses:
 - `model_provider`: deprecated compatibility hook for one alpha release.
 - `agent_provider`: register an agent provider.
 - `agent_tool`: expose a backend tool available to an agent adapter.
-- `agent_panel`: register a frontend panel for agent status or configuration.
+- `agent_panel`: register a future client panel for agent status or configuration.
 - `source_verifier`: validate ISBN, DOI, arXiv, repo, or local source references.
 - `quiz_generator`: generate source-bound quiz items.
 - `grader`: grade answers.
 - `exporter`: export sessions, cards, or mastery logs.
-- `ui_panel`: register a frontend panel.
+- `ui_panel`: register a future client panel.
 
 ## Discovery
 

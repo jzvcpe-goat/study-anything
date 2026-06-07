@@ -23,10 +23,8 @@ COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.yml"
 IMAGE_COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.images.yml"
 SETUP_ENV = ROOT / "scripts" / "setup_env.py"
 VERIFY_FULL_API_FLOW = ROOT / "scripts" / "verify_full_api_flow.py"
-VERIFY_FULL_STACK_WEB = ROOT / "scripts" / "verify_full_stack_web.py"
 PORT_KEYS = (
     "API_PORT",
-    "WEB_PORT",
     "APP_POSTGRES_PORT",
     "MOCK_AGENT_PORT",
     "FALKORDB_HOST_PORT",
@@ -102,7 +100,6 @@ def create_disposable_env(
     project_name: str,
     tag: str,
     api_image: str,
-    web_image: str,
 ) -> Path:
     env_file = work_dir / ".env"
     run([sys.executable, str(SETUP_ENV), "--force", "--output", str(env_file)])
@@ -116,7 +113,6 @@ def create_disposable_env(
         "WORKFLOW_ENGINE": "langgraph",
         "STUDY_ANYTHING_IMAGE_TAG": tag,
         "STUDY_ANYTHING_API_IMAGE": api_image,
-        "STUDY_ANYTHING_WEB_IMAGE": web_image,
     }
     additions.update({key: str(free_port()) for key in PORT_KEYS})
     with env_file.open("a", encoding="utf-8") as target:
@@ -124,12 +120,6 @@ def create_disposable_env(
         for key, value in additions.items():
             target.write(f"{key}={value}\n")
     return env_file
-
-
-def request_text(base: str, path: str) -> str:
-    req = Request(f"{base.rstrip('/')}{path}", method="GET")
-    with urlopen(req, timeout=10) as response:
-        return response.read().decode("utf-8")
 
 
 def request_json(base: str, path: str) -> Any:
@@ -151,28 +141,9 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
     raise RuntimeError(f"API did not become healthy within {timeout_seconds}s: {last_error}")
 
 
-def wait_for_web(web_base: str, timeout_seconds: int) -> None:
-    deadline = time.monotonic() + timeout_seconds
-    last_error = "not attempted"
-    while time.monotonic() < deadline:
-        try:
-            request_text(web_base, "/")
-            return
-        except (HTTPError, URLError, TimeoutError, OSError, RuntimeError) as exc:
-            last_error = str(exc)
-            time.sleep(2)
-    raise RuntimeError(f"Web UI did not become reachable within {timeout_seconds}s: {last_error}")
-
-
 def verify_flow(api_base: str) -> dict[str, Any]:
     env = {**os.environ, "API_BASE": api_base}
     result = run([sys.executable, str(VERIFY_FULL_API_FLOW)], env=env, capture_output=True)
-    return json.loads(result.stdout.strip().splitlines()[-1])
-
-
-def verify_web_flow(web_base: str) -> dict[str, Any]:
-    env = {**os.environ, "WEB_BASE": web_base}
-    result = run([sys.executable, str(VERIFY_FULL_STACK_WEB)], env=env, capture_output=True)
     return json.loads(result.stdout.strip().splitlines()[-1])
 
 
@@ -188,18 +159,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tag", default="v0.2.7-alpha", help="Published Study Anything image tag.")
     parser.add_argument("--expected-version", help="Expected /v1/health and /v1/system/status version.")
-    parser.add_argument("--timeout", type=int, default=240, help="Seconds to wait for API and Web health.")
+    parser.add_argument("--timeout", type=int, default=240, help="Seconds to wait for API health.")
     parser.add_argument("--skip-pull", action="store_true", help="Use locally cached images.")
     parser.add_argument("--keep-on-failure", action="store_true", help="Leave disposable stack for debugging.")
-    parser.add_argument("--keep-on-success", action="store_true", help="Leave disposable stack for visual QA.")
+    parser.add_argument("--keep-on-success", action="store_true", help="Leave disposable stack for inspection.")
     parser.add_argument("--api-image", help="Exact API image to run.")
-    parser.add_argument("--web-image", help="Exact Web image to run.")
     args = parser.parse_args()
 
     tag = args.tag
     expected_version = args.expected_version or default_expected_version(tag)
     api_image = args.api_image or f"ghcr.io/jzvcpe-goat/study-anything/api:{tag}"
-    web_image = args.web_image or f"ghcr.io/jzvcpe-goat/study-anything/web:{tag}"
     project_name = f"study_anything_published_{int(time.time())}"
     work_dir = Path(tempfile.mkdtemp(prefix="study-anything-published-"))
     env_file = create_disposable_env(
@@ -207,19 +176,16 @@ def main() -> None:
         project_name=project_name,
         tag=tag,
         api_image=api_image,
-        web_image=web_image,
     )
     values = parse_env(env_file)
     api_base = f"http://127.0.0.1:{values['API_PORT']}"
-    web_base = f"http://127.0.0.1:{values['WEB_PORT']}"
     cleanup = not args.keep_on_success
 
     try:
         if not args.skip_pull:
-            run(compose(env_file, "pull", "api", "web"))
-        run(compose(env_file, "up", "-d", "api", "web"))
+            run(compose(env_file, "pull", "api"))
+        run(compose(env_file, "up", "-d", "api"))
         wait_for_api(api_base, args.timeout)
-        wait_for_web(web_base, args.timeout)
 
         health = request_json(api_base, "/v1/health")
         system = request_json(api_base, "/v1/system/status")
@@ -231,7 +197,6 @@ def main() -> None:
             )
 
         api_flow = verify_flow(api_base)
-        web_flow = verify_web_flow(web_base)
 
         print(
             json.dumps(
@@ -240,22 +205,17 @@ def main() -> None:
                     "project": project_name,
                     "tag": tag,
                     "api_image": api_image,
-                    "web_image": web_image,
                     "api_base": api_base,
-                    "web_base": web_base,
                     "system_version": system["version"],
                     "api_session_id": api_flow["session_id"],
-                    "web_session_id": web_flow["session_id"],
                     "registry_verified_plugins": api_flow.get("registry_verified_plugins"),
-                    "web_sync_package_schema": web_flow.get("sync_package_schema"),
-                    "web_sync_plaintext_returned": web_flow.get("sync_plaintext_returned"),
                     "env_file": str(env_file) if args.keep_on_success else None,
                 },
                 ensure_ascii=False,
             )
         )
         if args.keep_on_success:
-            print(f"Kept disposable published-image project for visual QA: {project_name}", file=sys.stderr)
+            print(f"Kept disposable published-image project for inspection: {project_name}", file=sys.stderr)
             print(f"Disposable env: {env_file}", file=sys.stderr)
     except Exception:
         if args.keep_on_failure:

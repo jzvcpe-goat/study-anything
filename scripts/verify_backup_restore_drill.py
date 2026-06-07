@@ -23,10 +23,8 @@ COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.yml"
 SETUP_ENV = ROOT / "scripts" / "setup_env.py"
 SELF_HOST_DATA = ROOT / "scripts" / "self_host_data.py"
 VERIFY_FULL_API_FLOW = ROOT / "scripts" / "verify_full_api_flow.py"
-VERIFY_FULL_STACK_WEB = ROOT / "scripts" / "verify_full_stack_web.py"
 PORT_KEYS = (
     "API_PORT",
-    "WEB_PORT",
     "APP_POSTGRES_PORT",
     "MOCK_AGENT_PORT",
     "FALKORDB_HOST_PORT",
@@ -171,25 +169,6 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
     raise RuntimeError(f"API did not become healthy within {timeout_seconds}s: {last_error}")
 
 
-def wait_for_web(web_base: str, timeout_seconds: int) -> None:
-    deadline = time.monotonic() + timeout_seconds
-    last_error = "not attempted"
-    while time.monotonic() < deadline:
-        try:
-            request_text(web_base, "/")
-            return
-        except (HTTPError, URLError, TimeoutError, OSError, RuntimeError) as exc:
-            last_error = str(exc)
-            time.sleep(2)
-    raise RuntimeError(f"Web UI did not become reachable within {timeout_seconds}s: {last_error}")
-
-
-def request_text(base: str, path: str) -> str:
-    req = Request(f"{base.rstrip('/')}{path}", method="GET")
-    with urlopen(req, timeout=10) as response:
-        return response.read().decode("utf-8")
-
-
 def request_json(api_base: str, path: str) -> Any:
     req = Request(f"{api_base.rstrip('/')}{path}", method="GET")
     with urlopen(req, timeout=10) as response:
@@ -226,16 +205,6 @@ def verify_flow(api_base: str) -> dict[str, Any]:
     return json.loads(result.stdout.strip().splitlines()[-1])
 
 
-def verify_web_flow(web_base: str) -> dict[str, Any]:
-    env = {**os.environ, "WEB_BASE": web_base}
-    result = run(
-        [sys.executable, str(VERIFY_FULL_STACK_WEB)],
-        env=env,
-        capture_output=True,
-    )
-    return json.loads(result.stdout.strip().splitlines()[-1])
-
-
 def cleanup_stack(env_file: Path) -> None:
     run(compose(env_file, "down", "-v", "--remove-orphans", profiles=("smoke", "full")), check=False)
 
@@ -261,7 +230,6 @@ def main() -> None:
     env_file = create_disposable_env(work_dir, project_name)
     values = parse_env(env_file)
     api_base = f"http://127.0.0.1:{values['API_PORT']}"
-    web_base = f"http://127.0.0.1:{values['WEB_PORT']}"
     backup_dir = work_dir / "backup"
     cleanup = True
 
@@ -269,13 +237,11 @@ def main() -> None:
         up_command = ["up", "-d"]
         if not args.no_build:
             up_command.append("--build")
-        up_command.extend(["api", "web"])
+        up_command.append("api")
         run(compose(env_file, *up_command))
         wait_for_api(api_base, args.timeout)
-        wait_for_web(web_base, args.timeout)
 
         baseline_flow = verify_flow(api_base)
-        baseline_web_flow = verify_web_flow(web_base)
         baseline_count = session_count(env_file)
         if baseline_count < 1:
             raise RuntimeError("Baseline smoke flow did not create a session.")
@@ -327,18 +293,14 @@ def main() -> None:
                     "status": "ok",
                     "project": project_name,
                     "api_base": api_base,
-                    "web_base": web_base,
                     "baseline_session_count": baseline_count,
                     "mutated_session_count": mutated_count,
                     "restored_session_count": restored_count,
                     "baseline_session_id": baseline_flow["session_id"],
-                    "baseline_web_session_id": baseline_web_flow["session_id"],
                     "mutated_session_id": mutated_flow["session_id"],
                     "backup_manifest": str(backup_dir / "manifest.json"),
                     "restore_api_enabled": recovery["restore_api_enabled"],
                     "registry_verified_plugins": baseline_flow.get("registry_verified_plugins"),
-                    "web_sync_package_schema": baseline_web_flow.get("sync_package_schema"),
-                    "web_sync_plaintext_returned": baseline_web_flow.get("sync_plaintext_returned"),
                 },
                 ensure_ascii=False,
             )
