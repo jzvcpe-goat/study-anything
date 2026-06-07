@@ -86,6 +86,11 @@
   required learning tasks.
 - Docker, CI, release, and self-host docs target API/Postgres core services and GHCR API images only.
 
+## v0.2.9-alpha
+
+- Published-image verifier now normalizes Python alpha package versions such as `0.2.9a0` when checking
+  a `v0.2.9-alpha` tag.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
