@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 
 from study_anything import __version__
 from study_anything.core.agent_audit import build_agent_audit
+from study_anything.core.agent_eval import build_agent_eval_artifact
 from study_anything.core.agent_registry import (
     AgentCapability,
     AgentRegistry,
@@ -682,6 +683,18 @@ def create_app() -> FastAPI:
             agent_status=agent_registry.status(state.user_id),
             deprecated_alias=True,
         )
+
+    @app.get("/v1/sessions/{session_id}/agent-eval/artifact")
+    def get_agent_eval_artifact(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        audit = build_agent_audit(
+            state,
+            agent_status=agent_registry.status(state.user_id),
+        )
+        return build_agent_eval_artifact(audit)
 
     @app.get("/v1/plugins")
     def list_plugins() -> list[dict[str, object]]:

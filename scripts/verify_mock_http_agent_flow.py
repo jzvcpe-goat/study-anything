@@ -116,6 +116,19 @@ def main() -> None:
         raise RuntimeError(f"Agent audit did not verify full coverage: {agent_audit}")
     if not agent_audit.get("used_external_agent"):
         raise RuntimeError(f"Agent audit did not identify the user-owned HTTP agent: {agent_audit}")
+    agent_eval_artifact = request(f"/v1/sessions/{session_id}/agent-eval/artifact")
+    if agent_eval_artifact.get("schema_version") != "agent-eval-artifact-v1":
+        raise RuntimeError(f"Agent eval artifact schema is not agent-eval-artifact-v1: {agent_eval_artifact}")
+    if agent_eval_artifact.get("status") != "ready_for_external_eval":
+        raise RuntimeError(f"Agent eval artifact is not ready for external eval: {agent_eval_artifact}")
+    if not agent_eval_artifact.get("used_external_agent"):
+        raise RuntimeError(f"Agent eval artifact did not preserve external Agent proof: {agent_eval_artifact}")
+    required_eval_gates = [
+        gate for gate in agent_eval_artifact.get("native_gates", []) if gate.get("required")
+    ]
+    failed_eval_gates = [gate for gate in required_eval_gates if gate.get("status") != "pass"]
+    if failed_eval_gates:
+        raise RuntimeError(f"Agent eval required gates failed: {failed_eval_gates}")
     print(
         json.dumps(
             {
@@ -128,6 +141,8 @@ def main() -> None:
                 "agent_audit_status": agent_audit["status"],
                 "agent_audit_observed_tasks": agent_audit["observed_tasks"],
                 "agent_audit_used_external_agent": agent_audit["used_external_agent"],
+                "agent_eval_schema": agent_eval_artifact["schema_version"],
+                "agent_eval_used_external_agent": agent_eval_artifact["used_external_agent"],
             },
             ensure_ascii=False,
         )

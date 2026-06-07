@@ -91,11 +91,17 @@
 - Published-image verifier now normalizes Python alpha package versions such as `0.2.9a0` when checking
   a `v0.2.9-alpha` tag.
 
+## v0.2.10-alpha
+
+- Agent Eval foundation with a redacted `/v1/sessions/{session_id}/agent-eval/artifact` bridge.
+- Promptfoo contract-gate template for completed learning sessions.
+- Mature eval adapter strategy for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
 - Platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills.
-- Mature Agent quality eval adapters for DeepEval, LangChain AgentEvals, and Ragas.
+- Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
 - LanceDB reading embedding index and retrieval API.

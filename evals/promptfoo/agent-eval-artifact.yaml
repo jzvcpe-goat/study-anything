@@ -1,0 +1,40 @@
+description: Study Anything Agent eval artifact contract gate
+
+prompts:
+  - "{{sessionId}}"
+
+providers:
+  - id: https
+    config:
+      url: "{{apiBase}}/v1/sessions/{{sessionId}}/agent-eval/artifact"
+      method: GET
+      headers:
+        Content-Type: application/json
+      transformResponse: json
+
+tests:
+  - vars:
+      apiBase: http://127.0.0.1:8000
+      sessionId: replace-with-completed-session-id
+    assert:
+      - type: javascript
+        value: output.schema_version === 'agent-eval-artifact-v1'
+      - type: javascript
+        value: output.status === 'ready_for_external_eval'
+      - type: javascript
+        value: output.native_gates.filter((gate) => gate.required).every((gate) => gate.status === 'pass')
+      - type: javascript
+        value: |
+          ['promptfoo', 'deepeval', 'langchain-agentevals', 'ragas']
+            .every((adapter) => output.adapter_strategy.some((item) => item.adapter_id === adapter))
+      - type: javascript
+        value: |
+          JSON.stringify(output.trajectory.map((step) => step.task_type)) ===
+          JSON.stringify(['quiz.generate', 'answer.grade', 'insight.synthesize'])
+      - type: javascript
+        value: |
+          output.privacy.raw_source_text_included === false &&
+          output.privacy.raw_answers_included === false &&
+          output.privacy.raw_feedback_included === false &&
+          output.privacy.agent_endpoints_included === false &&
+          output.privacy.raw_agent_metadata_included === false

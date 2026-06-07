@@ -13,6 +13,7 @@
 - [ ] Start API locally and run `API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py`.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
+- [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py` and verify `GET /v1/sessions/{session_id}/agent-eval/artifact` emits a redacted `agent-eval-artifact-v1` bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
 - [ ] `./scripts/doctor.sh`
 - [ ] Non-ASCII checkout paths produce an actionable Docker source-build diagnostic or use `USE_PUBLISHED_IMAGES=true`.

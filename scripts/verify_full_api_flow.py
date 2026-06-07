@@ -92,6 +92,35 @@ def main() -> None:
     )
     if completed["stage"] != "completed":
         raise RuntimeError(f"Expected completed stage, got {completed['stage']}")
+    agent_audit = request(f"/v1/sessions/{session_id}/agent-audit")
+    if agent_audit.get("schema_version") != "agent-audit-v1":
+        raise RuntimeError(f"Agent audit schema is not agent-audit-v1: {agent_audit}")
+    if agent_audit.get("status") != "verified":
+        raise RuntimeError(f"Agent audit did not verify required tasks: {agent_audit}")
+    agent_eval_artifact = request(f"/v1/sessions/{session_id}/agent-eval/artifact")
+    if agent_eval_artifact.get("schema_version") != "agent-eval-artifact-v1":
+        raise RuntimeError(f"Agent eval artifact schema is not agent-eval-artifact-v1: {agent_eval_artifact}")
+    if agent_eval_artifact.get("status") != "ready_for_external_eval":
+        raise RuntimeError(f"Agent eval artifact is not ready: {agent_eval_artifact}")
+    required_eval_gates = [
+        gate for gate in agent_eval_artifact.get("native_gates", []) if gate.get("required")
+    ]
+    failed_eval_gates = [gate for gate in required_eval_gates if gate.get("status") != "pass"]
+    if failed_eval_gates:
+        raise RuntimeError(f"Agent eval required gates failed: {failed_eval_gates}")
+    adapter_ids = {
+        adapter.get("adapter_id") for adapter in agent_eval_artifact.get("adapter_strategy", [])
+    }
+    expected_adapter_ids = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
+    if adapter_ids != expected_adapter_ids:
+        raise RuntimeError(f"Agent eval adapter strategy mismatch: {adapter_ids}")
+    serialized_eval = json.dumps(agent_eval_artifact, ensure_ascii=False)
+    if (
+        "launch smoke test" in serialized_eval.lower()
+        or "source evidence" in serialized_eval.lower()
+        or "smoke-user" in serialized_eval
+    ):
+        raise RuntimeError(f"Agent eval artifact leaked private smoke data: {agent_eval_artifact}")
     metrics = request("/v1/metrics/pmf")
     if metrics.get("schema_version") != "pmf-v1":
         raise RuntimeError(f"PMF metrics schema is not pmf-v1: {metrics}")
@@ -188,6 +217,8 @@ def main() -> None:
                 "stage": completed["stage"],
                 "mastery": completed["mastery"],
                 "agent_schema": agents["schema_version"],
+                "agent_audit_status": agent_audit["status"],
+                "agent_eval_schema": agent_eval_artifact["schema_version"],
                 "plugins": len(plugins),
                 "pmf_completed_sessions": metrics["sessions"]["completed"],
                 "pmf_interest_total": pmf_summary["total"],
