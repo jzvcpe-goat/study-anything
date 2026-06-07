@@ -79,6 +79,13 @@
   loop before users depend on a release.
 - Standalone Web UI removed from the launch path; future UI work moves to a separate branch after API/Skill stability.
 
+## v0.2.8-alpha
+
+- API/Skill launch path becomes the release contract after removing the broken standalone Web UI.
+- Agent invocation audit API proves whether Study Anything used fake or user-owned HTTP agents for
+  required learning tasks.
+- Docker, CI, release, and self-host docs target API/Postgres core services and GHCR API images only.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
