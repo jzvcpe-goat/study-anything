@@ -36,7 +36,7 @@
 - [ ] Complete demo learning flow.
 - [ ] Visual-check Web UI on desktop and narrow/mobile width for Learn, Agent, and Launch views.
 - [ ] Install a local example plugin with `python3 scripts/install_local_plugin.py plugins/example-exporter --destination /tmp/study-anything-plugin-check`.
-- [ ] Verify bundled plugins report `registry_status=digest_verified`; invalid registry digest/signature cases return `do_not_install`.
+- [ ] Verify bundled plugins report `registry_status=digest_verified`; `GET /v1/plugins/registry-review` returns `plugin-registry-review-v1` with `remote_code_downloads_allowed=false`; invalid registry digest/signature cases return `do_not_install`.
 - [ ] Check http://localhost:8000/v1/system/status
 - [ ] Check http://localhost:8000/v1/agents/status
 - [ ] Check http://localhost:8000/v1/plugins

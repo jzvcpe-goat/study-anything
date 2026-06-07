@@ -128,6 +128,13 @@ def main() -> None:
         item.get("trust", {}).get("registry_status") == "digest_verified" for item in plugins if isinstance(item, dict)
     ):
         raise RuntimeError(f"Expected at least one registry-verified plugin: {plugins}")
+    registry_review = assert_dict(request("/v1/plugins/registry-review"), "Plugin registry review")
+    if registry_review.get("schema_version") != "plugin-registry-review-v1":
+        raise RuntimeError(f"Plugin registry review schema mismatch: {registry_review}")
+    if registry_review.get("remote_code_downloads_allowed") or registry_review.get("entrypoints_executed"):
+        raise RuntimeError(f"Plugin registry review must stay metadata-only: {registry_review}")
+    if registry_review.get("verified_count", 0) < 1:
+        raise RuntimeError(f"Plugin registry review did not count verified plugins: {registry_review}")
 
     pmf = assert_dict(request("/v1/metrics/pmf"), "PMF metrics")
     if pmf.get("privacy", {}).get("raw_contact_stored") or not pmf.get("privacy", {}).get("local_only"):
@@ -146,6 +153,7 @@ def main() -> None:
                 "sync_package_schema": sync_export["schema_version"],
                 "sync_plaintext_returned": sync_inspect["privacy"]["plaintext_returned"],
                 "sync_restore_preview_schema": sync_restore_preview["schema_version"],
+                "plugin_registry_review_schema": registry_review["schema_version"],
                 "registry_verified_plugins": sum(
                     1
                     for item in plugins

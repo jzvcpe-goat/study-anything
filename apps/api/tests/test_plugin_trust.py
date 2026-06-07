@@ -181,6 +181,51 @@ class PluginTrustTests(unittest.TestCase):
             self.assertEqual(trust["signature_status"], "registry_signature_verified")
             self.assertNotIn("cryptographically verified", " ".join(trust["warnings"]))
 
+    def test_registry_review_reports_updates_without_downloading_code(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            plugin_dir = write_trust_plugin(root)
+            digest = compute_plugin_source_digest(plugin_dir)
+            (root / "registry.json").write_text(
+                json.dumps(
+                    {
+                        "schemaVersion": "plugin-registry-v1",
+                        "trustedKeys": [],
+                        "plugins": [
+                            {
+                                "id": "trust-plugin",
+                                "name": "Trust Plugin",
+                                "version": "0.2.0",
+                                "path": "trust-plugin",
+                                "sourceDigest": digest,
+                                "review": {"status": "community_reviewed"},
+                            },
+                            {
+                                "id": "remote-only-plugin",
+                                "name": "Remote Only Plugin",
+                                "version": "0.1.0",
+                                "path": "remote-only-plugin",
+                                "sourceDigest": "sha256:" + "1" * 64,
+                            },
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            review = PluginRegistry([root]).registry_review().public_dict()
+            items = {item["plugin_id"]: item for item in review["items"]}
+
+            self.assertEqual(review["schema_version"], "plugin-registry-review-v1")
+            self.assertFalse(review["remote_code_downloads_allowed"])
+            self.assertFalse(review["entrypoints_executed"])
+            self.assertEqual(items["trust-plugin"]["update_status"], "update_available")
+            self.assertEqual(items["trust-plugin"]["action"], "confirm_update_review")
+            self.assertEqual(items["remote-only-plugin"]["update_status"], "not_installed")
+            self.assertEqual(items["remote-only-plugin"]["action"], "manual_review_required")
+            self.assertGreaterEqual(review["review_required_count"], 1)
+            self.assertEqual(review["update_available_count"], 1)
+
     def test_policy_is_local_first(self) -> None:
         policy = plugin_trust_policy()
 

@@ -138,6 +138,15 @@ Install an explicitly selected local plugin from the Web Agent page, or use the 
 python3 scripts/install_local_plugin.py plugins/example-exporter
 ```
 
+Review local registry metadata before installing or updating community plugins:
+
+```bash
+curl http://localhost:8000/v1/plugins/registry-review
+```
+
+The registry review path reports digest/signature status, update candidates, blocked entries, and
+manual-review actions without downloading or executing plugin code.
+
 ## Local PMF Signals
 
 Study Anything includes a local-only launch panel and API metrics for PMF validation:
@@ -193,7 +202,7 @@ curl -X POST http://localhost:8000/v1/sync/restore-preview \
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 72% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is a public self-host Alpha foundation, roughly 74% of the way to a complete commercial product. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
 
 ## GitHub Launch
 

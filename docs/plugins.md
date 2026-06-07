@@ -92,6 +92,21 @@ The trust policy is available at `GET /v1/plugins/trust-policy`. It states the a
 local directories only, no remote code downloads, no entrypoint execution during install, and no raw
 secrets stored by Study Anything.
 
+Registry review is available at `GET /v1/plugins/registry-review`. It compares local registry metadata
+with discovered local plugins and returns:
+
+- verified digest count
+- verified registry-signature count
+- update candidates by registry version
+- blocked entries such as digest mismatches
+- plugins or registry entries requiring manual review
+- per-plugin actions such as `ready`, `confirm_update_review`, `manual_review_required`,
+  `block_install`, or `add_to_signed_registry`
+
+This endpoint is metadata-only. It does not download plugin source, install updates, execute plugin
+entrypoints, or contact a remote marketplace. Use it before installing or updating community plugins,
+then perform source review and local installation explicitly.
+
 Manifest `signature` fields remain metadata-only. Registry entries can add `sourceDigest` and an
 Ed25519 signature over:
 
@@ -104,8 +119,7 @@ study-anything-plugin-registry-v1
 
 When a matching trusted public key is present in the local registry, Study Anything reports
 `signature_status=registry_signature_verified`; mismatched digests or invalid signatures return
-`do_not_install`. Remote registries, review queues, update UX, and marketplace payments remain future
-trust-layer work.
+`do_not_install`. Remote marketplace payments and automatic updates remain future trust-layer work.
 
 ## Local Installation
 

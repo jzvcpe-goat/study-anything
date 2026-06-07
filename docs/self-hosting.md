@@ -376,6 +376,16 @@ Use the Web Agent page to preview one explicitly selected local plugin directory
 permission, and copy it into the writable plugin data directory. The API never downloads or executes plugin
 code during this install step.
 
+Before installing or updating community plugins, check the registry review surface:
+
+```bash
+curl http://localhost:8000/v1/plugins/registry-review
+```
+
+The response is metadata-only. It reports verified digests, registry-signature counts, update
+candidates, blocked entries, and manual-review actions without downloading plugin code, installing
+updates, or executing entrypoints.
+
 For source checkouts, the same local install path is available from the CLI:
 
 ```bash

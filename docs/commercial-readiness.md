@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 72%.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 74%.
 
 ## What Is Ready
 
@@ -25,6 +25,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Actionable Docker self-host diagnostics for non-ASCII checkout paths, with published-image and ASCII-path recovery guidance.
 - Plugin trust summaries for local installs, including source digest, review metadata, signature metadata status, risk level, and install recommendation.
 - Local plugin registry digest verification with Ed25519 registry-signature support when trusted keys are present.
+- Read-only plugin registry review that surfaces verified digests, signature counts, update candidates, blocked entries, and manual-review actions without downloading code.
 - Local workspace ownership foundation with hashed local identities, default workspace assignment, roles, and role capability names.
 - Local encrypted sync package foundation with user-supplied passphrases, AES-256-GCM package envelopes, count-only inspect summaries, and no hosted upload.
 - Read-only encrypted sync restore preview that compares a package with local sessions and returns only counts, conflict hashes, warnings, and manual confirmation requirements.
@@ -41,7 +42,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Hosted encrypted sync service: remote storage, multi-device conflict resolution, account recovery, and support tooling.
 - Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
 - Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
-- Plugin marketplace trust model beyond local installs: remote signed registry distribution, update UX, review queues, and payment boundaries.
+- Plugin marketplace trust model beyond local installs: hosted signed registry distribution, maintainer review queues, automatic update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by cohort, plugin activation, and hosted waitlist conversion.
@@ -63,5 +64,5 @@ Reach 75% readiness by making the self-host Alpha dependable for real learners:
 - Docker soak testing and trace retention guidance.
 - Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.
 - Documented recovery drill walkthroughs for non-developer self-host operators.
-- Remote signed plugin registry distribution and update-review workflow.
+- Hosted signed plugin registry distribution, maintainer review queue, and explicit update install workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.

@@ -5,16 +5,30 @@
   "plugins": [
     {
       "id": "example-exporter",
+      "name": "Example Exporter",
+      "version": "0.1.0",
       "path": "plugins/example-exporter",
       "category": "exporter",
       "status": "bundled",
+      "review": {
+        "status": "maintainer_reviewed",
+        "reviewedBy": "Study Anything maintainers",
+        "reviewedAt": "2026-06-04"
+      },
       "sourceDigest": "sha256:d398a34ff2c25e82feec49e2141d41201136cce45cd2467821aea37ac8f75716"
     },
     {
       "id": "example-agent-provider",
+      "name": "Example Agent Provider",
+      "version": "0.1.0",
       "path": "plugins/example-agent-provider",
       "category": "agent_provider",
       "status": "bundled",
+      "review": {
+        "status": "maintainer_reviewed",
+        "reviewedBy": "Study Anything maintainers",
+        "reviewedAt": "2026-06-04"
+      },
       "sourceDigest": "sha256:465f5298c88539414538ccf69f2927401194d3834c13acfc538f7d6bd3a9883d"
     }
   ]
