@@ -10,7 +10,7 @@ cd "$ROOT"
 env_file="${ENV_FILE:-.env}"
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
-image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.8-alpha}"
+image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.9-alpha}"
 docker_source_path="${STUDY_ANYTHING_DOCKER_SOURCE_PATH:-$ROOT}"
 
 is_true() {

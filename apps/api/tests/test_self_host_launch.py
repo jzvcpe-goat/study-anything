@@ -5,10 +5,12 @@ import subprocess
 import tempfile
 import textwrap
 import unittest
+from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = REPO_ROOT / "scripts" / "launch_self_host.sh"
+PUBLISHED_IMAGE_SCRIPT = REPO_ROOT / "scripts" / "verify_published_image_launch.py"
 
 
 class SelfHostLaunchTests(unittest.TestCase):
@@ -83,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.8-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.9-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -120,6 +122,18 @@ class SelfHostLaunchTests(unittest.TestCase):
         self.assertIn("USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh", completed.stderr)
         self.assertIn("ALLOW_NON_ASCII_DOCKER_BUILD=true ./scripts/launch_self_host.sh", completed.stderr)
         self.assertNotIn("docker compose", commands)
+
+
+class PublishedImageLaunchTests(unittest.TestCase):
+    def test_default_expected_version_normalizes_alpha_tag(self) -> None:
+        spec = spec_from_file_location("verify_published_image_launch", PUBLISHED_IMAGE_SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        self.assertEqual(module.default_expected_version("v0.2.9-alpha"), "0.2.9a0")
+        self.assertEqual(module.default_expected_version("0.2.9-alpha"), "0.2.9a0")
 
 
 if __name__ == "__main__":

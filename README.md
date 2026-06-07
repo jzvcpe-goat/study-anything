@@ -72,7 +72,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.8-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.9-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -85,7 +85,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.8-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.9-alpha
 ```
 
 ## Bring Your Own Agent

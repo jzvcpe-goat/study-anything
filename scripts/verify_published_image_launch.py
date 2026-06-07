@@ -152,12 +152,13 @@ def cleanup_stack(env_file: Path) -> None:
 
 
 def default_expected_version(tag: str) -> str:
-    return tag[1:] if tag.startswith("v") else tag
+    value = tag[1:] if tag.startswith("v") else tag
+    return value.replace("-alpha", "a0")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tag", default="v0.2.8-alpha", help="Published Study Anything image tag.")
+    parser.add_argument("--tag", default="v0.2.9-alpha", help="Published Study Anything image tag.")
     parser.add_argument("--expected-version", help="Expected /v1/health and /v1/system/status version.")
     parser.add_argument("--timeout", type=int, default=240, help="Seconds to wait for API health.")
     parser.add_argument("--skip-pull", action="store_true", help="Use locally cached images.")
