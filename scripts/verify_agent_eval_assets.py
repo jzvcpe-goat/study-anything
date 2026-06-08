@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""Verify Agent eval adapter assets stay aligned with the API artifact."""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parent.parent
+EXPECTED_ADAPTER_IDS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
+EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
+
+
+def fail(message: str) -> None:
+    raise RuntimeError(message)
+
+
+def assert_contains(path: Path, *needles: str) -> str:
+    text = path.read_text(encoding="utf-8")
+    missing = [needle for needle in needles if needle not in text]
+    if missing:
+        fail(f"{path.relative_to(ROOT)} is missing required text: {missing}")
+    return text
+
+
+def sample_audit() -> dict[str, Any]:
+    return {
+        "schema_version": "agent-audit-v1",
+        "session_id": "eval-asset-session",
+        "stage": "completed",
+        "status": "verified",
+        "required_tasks": EXPECTED_TRAJECTORY,
+        "observed_tasks": sorted(EXPECTED_TRAJECTORY),
+        "missing_tasks": [],
+        "used_external_agent": True,
+        "used_fake_agent": False,
+        "source_bound": {
+            "source_reference_present": True,
+            "excerpt_hash_present": True,
+        },
+        "privacy": {
+            "source_text_returned": False,
+            "answers_returned": False,
+            "feedback_returned": False,
+            "agent_endpoint_returned": False,
+            "raw_agent_metadata_returned": False,
+        },
+        "evidence": [
+            {
+                "node": "quiz",
+                "task_type": "quiz.generate",
+                "provider_id": "http-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 12,
+                "confidence": 0.91,
+            },
+            {
+                "node": "grading",
+                "task_type": "answer.grade",
+                "provider_id": "http-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 13,
+                "confidence": 0.92,
+            },
+            {
+                "node": "synthesis",
+                "task_type": "insight.synthesize",
+                "provider_id": "http-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 14,
+                "confidence": 0.93,
+            },
+        ],
+    }
+
+
+def main() -> None:
+    sys.path.insert(0, str(ROOT / "apps" / "api"))
+    from study_anything.core.agent_eval import (  # noqa: PLC0415
+        AGENT_EVAL_ADAPTERS,
+        build_agent_eval_artifact,
+    )
+
+    adapter_ids = {adapter.adapter_id for adapter in AGENT_EVAL_ADAPTERS}
+    if adapter_ids != EXPECTED_ADAPTER_IDS:
+        fail(f"Agent eval adapter ids drifted: {sorted(adapter_ids)}")
+
+    artifact = build_agent_eval_artifact(sample_audit())
+    if artifact.get("schema_version") != "agent-eval-artifact-v1":
+        fail(f"Unexpected artifact schema: {artifact}")
+    if artifact.get("status") != "ready_for_external_eval":
+        fail(f"Sample artifact is not externally evaluable: {artifact}")
+    if {item.get("adapter_id") for item in artifact.get("adapter_strategy", [])} != EXPECTED_ADAPTER_IDS:
+        fail(f"Artifact adapter strategy drifted: {artifact.get('adapter_strategy')}")
+    if [step.get("task_type") for step in artifact.get("trajectory", [])] != EXPECTED_TRAJECTORY:
+        fail(f"Artifact trajectory drifted: {artifact.get('trajectory')}")
+    failed_required = [
+        gate
+        for gate in artifact.get("native_gates", [])
+        if gate.get("required") and gate.get("status") != "pass"
+    ]
+    if failed_required:
+        fail(f"Required native gates failed for sample artifact: {failed_required}")
+
+    serialized = json.dumps(artifact, ensure_ascii=False)
+    forbidden = [
+        "Private source",
+        "Private answer",
+        "Private feedback",
+        "sk-proj",
+        "http://127.0.0.1",
+        "OPENAI_API_KEY",
+    ]
+    leaks = [fragment for fragment in forbidden if fragment in serialized]
+    if leaks or re.search(r"sk-(?:proj-)?[A-Za-z0-9]{16,}", serialized):
+        fail(f"Sample eval artifact leaked forbidden data: {leaks}")
+
+    promptfoo_config = ROOT / "evals" / "promptfoo" / "agent-eval-artifact.yaml"
+    assert_contains(
+        promptfoo_config,
+        "/v1/sessions/{{sessionId}}/agent-eval/artifact",
+        "output.schema_version === 'agent-eval-artifact-v1'",
+        "output.status === 'ready_for_external_eval'",
+        "output.native_gates.filter((gate) => gate.required).every((gate) => gate.status === 'pass')",
+        "quiz.generate",
+        "answer.grade",
+        "insight.synthesize",
+        "raw_source_text_included === false",
+        "raw_answers_included === false",
+        "raw_feedback_included === false",
+        "agent_endpoints_included === false",
+        "raw_agent_metadata_included === false",
+    )
+    for adapter_id in EXPECTED_ADAPTER_IDS:
+        assert_contains(promptfoo_config, adapter_id)
+
+    assert_contains(
+        ROOT / "evals" / "README.md",
+        "Promptfoo",
+        "scripts/run_external_agent_evals.py",
+        "scripts/verify_agent_eval_flow.py",
+    )
+    assert_contains(
+        ROOT / "docs" / "agent-eval.md",
+        "Promptfoo",
+        "DeepEval",
+        "Ragas",
+        "LangChain AgentEvals",
+        "scripts/run_external_agent_evals.py",
+    )
+
+    print(
+        json.dumps(
+            {
+                "status": "ok",
+                "schema_version": artifact["schema_version"],
+                "adapter_ids": sorted(EXPECTED_ADAPTER_IDS),
+                "trajectory": EXPECTED_TRAJECTORY,
+                "promptfoo_config": str(promptfoo_config.relative_to(ROOT)),
+            },
+            ensure_ascii=False,
+        )
+    )
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as exc:  # pragma: no cover - CLI failure path
+        print(f"verify_agent_eval_assets failed: {exc}", file=sys.stderr)
+        sys.exit(1)

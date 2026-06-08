@@ -7,6 +7,7 @@
 - [ ] `LANGGRAPH_STRICT_MSGPACK=true .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
 - [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
+- [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`
 - [ ] `.venv/bin/python scripts/smoke_core.py`
 - [ ] `./scripts/run_skill_mode_demo.sh`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`
@@ -15,6 +16,7 @@
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py` and verify `GET /v1/sessions/{session_id}/agent-eval/artifact` emits a redacted `agent-eval-artifact-v1` bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
+- [ ] When Node/npm package installation is allowed, run `API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required`.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py` and verify `platform/study-anything-platform-tools.json` matches the public learning tool contract.
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
 - [ ] `./scripts/doctor.sh`

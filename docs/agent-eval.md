@@ -56,10 +56,29 @@ The first four gates must pass before external quality evals are meaningful.
 
 ## Promptfoo
 
-Create or reuse a completed learning session, then run:
+Create or reuse a completed learning session, then run the Study Anything wrapper:
 
 ```bash
-npx promptfoo@latest eval -c evals/promptfoo/agent-eval-artifact.yaml \
+API_BASE=http://127.0.0.1:8000 \
+  .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session
+```
+
+For release-candidate validation where Node/npm package installation is allowed to fail the build,
+require the external gate:
+
+```bash
+API_BASE=http://127.0.0.1:8000 \
+  .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required
+```
+
+The wrapper pins Promptfoo and applies a timeout. This avoids clean clones hanging silently on first
+`npx` package download while still using the mature Promptfoo runner when the operator enables the
+external gate.
+
+You can also call Promptfoo directly:
+
+```bash
+npx promptfoo@0.121.15 eval -c evals/promptfoo/agent-eval-artifact.yaml \
   --var apiBase=http://127.0.0.1:8000 \
   --var sessionId=<completed-session-id>
 ```
@@ -119,11 +138,20 @@ EXPECT_EXTERNAL_AGENT=true API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://
 
 This smoke verifies native gates and adapter readiness. It does not call judge models.
 
+To prevent drift between the API artifact, Promptfoo config, docs, and release claims:
+
+```bash
+.venv/bin/python scripts/verify_agent_eval_assets.py
+```
+
 ## Launch Rule
 
 A release can claim Agent Eval foundation only when:
 
 - API tests cover `agent-eval/artifact`.
+- `scripts/verify_agent_eval_assets.py` passes.
 - `scripts/verify_agent_eval_flow.py` passes on the fake demo path.
+- Promptfoo can be invoked through `scripts/run_external_agent_evals.py --tool promptfoo` when the
+  release environment permits external Node package installation.
 - Mock/user-owned HTTP Agent smoke verifies `agent-audit` and can optionally require external Agent usage.
 - Docs list the selected mature eval projects and explain why Study Anything does not run judge models by default.
