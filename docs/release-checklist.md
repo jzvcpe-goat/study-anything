@@ -6,6 +6,7 @@
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `LANGGRAPH_STRICT_MSGPACK=true .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
+- [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
 - [ ] `.venv/bin/python scripts/smoke_core.py`
 - [ ] `./scripts/run_skill_mode_demo.sh`
 - [ ] `python3 scripts/setup_env.py --force --output /tmp/study-anything.env`

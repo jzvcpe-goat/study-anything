@@ -129,6 +129,21 @@ platform/study-anything-platform-tools.json
 The manifest exposes only the learning loop tools and redacted evidence endpoints. It does not expose
 model/provider setup, plugin installation, encrypted sync export, or other management APIs.
 
+Generated import assets are checked in for platforms that prefer OpenAPI or function tools:
+
+```text
+platform/generated/study-anything-platform-openapi.json
+platform/generated/study-anything-openai-tools.json
+platform/generated/study-anything-tool-catalog.md
+```
+
+Regenerate them after editing the manifest:
+
+```bash
+python3 scripts/generate_platform_agent_assets.py
+python3 scripts/generate_platform_agent_assets.py --check
+```
+
 Validate a running platform-tool integration with:
 
 ```bash
@@ -161,7 +176,7 @@ apps/api/                  FastAPI app and learning engine
 docs/                      Architecture, roadmap, plugin API, commercial model
 evals/                     External eval tool templates
 infra/compose/             Docker Compose stack
-platform/                  Machine-readable platform Agent tool manifest
+platform/                  Platform Agent tool manifest and generated import assets
 plugins/example-exporter/  Example exporter manifest
 plugins/example-agent-provider/ Example agent provider manifest
 scripts/                   Local smoke helpers
