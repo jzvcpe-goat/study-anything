@@ -18,6 +18,7 @@ python3 scripts/setup_env.py --force --output /tmp/study-anything.env
 python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_platform_ecosystem_packs.py
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py

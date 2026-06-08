@@ -70,6 +70,25 @@ python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 ```
 
+## Packaged Ecosystem Starters
+
+Copy-ready platform packs live in:
+
+```text
+platform/packs/codex
+platform/packs/kimi
+platform/packs/workbuddy
+```
+
+Each pack includes a `pack.json` plus README with the recommended entrypoints, import assets,
+verification commands, acceptance evidence, and privacy boundary for that platform shape.
+
+Verify the packs against the source manifest:
+
+```bash
+python3 scripts/verify_platform_ecosystem_packs.py
+```
+
 ## Codex Or Terminal-Capable Agents
 
 Use the repo-local skill and CLI when the platform Agent can run shell commands in this repository:

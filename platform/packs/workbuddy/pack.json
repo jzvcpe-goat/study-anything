@@ -1,0 +1,36 @@
+{
+  "schema_version": "study-anything-platform-pack-v1",
+  "platform_id": "workbuddy",
+  "name": "Study Anything WorkBuddy HTTP Tool Pack",
+  "integration_mode": "openapi_http_tools",
+  "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
+  "entrypoints": {
+    "openapi": "platform/generated/study-anything-platform-openapi.json",
+    "tool_catalog": "platform/generated/study-anything-tool-catalog.md",
+    "api_docs": "docs/api.md"
+  },
+  "import_assets": [
+    "platform/study-anything-platform-tools.json",
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-tool-catalog.md"
+  ],
+  "local_verification_commands": [
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py"
+  ],
+  "acceptance_evidence": [
+    "agent_audit.status == verified",
+    "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
+    "all required native gates pass",
+    "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+  ],
+  "must_not_log_or_share": [
+    "raw source text",
+    "learner answers",
+    "grading feedback",
+    "generated insights",
+    "agent endpoints",
+    "agent metadata",
+    "API keys or model secrets"
+  ]
+}

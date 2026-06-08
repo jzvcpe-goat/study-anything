@@ -114,8 +114,8 @@
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Packaged platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills beyond generic
-  OpenAPI/function-tool assets.
+- Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
+  platform-specific submission docs.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.

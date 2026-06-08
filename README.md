@@ -145,11 +145,20 @@ platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
 ```
 
+Copy-ready starter packs are checked in for platform ecosystems:
+
+```text
+platform/packs/codex
+platform/packs/kimi
+platform/packs/workbuddy
+```
+
 Regenerate them after editing the manifest:
 
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_platform_ecosystem_packs.py
 ```
 
 Validate a running platform-tool integration with:

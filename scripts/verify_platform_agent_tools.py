@@ -16,6 +16,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
+PACKS_DIR = ROOT / "platform" / "packs"
 API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://127.0.0.1:8000")).rstrip("/")
 REQUIRED_TOOLS = {
     "study_anything_health",
@@ -29,6 +30,7 @@ REQUIRED_TOOLS = {
 }
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
+REQUIRED_PLATFORM_PACKS = {"codex", "kimi", "workbuddy"}
 BANNED_TOOL_PATH_FRAGMENTS = (
     "/v1/agents/providers",
     "/v1/agents/defaults",
@@ -90,6 +92,13 @@ def validate_manifest(manifest: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     command = evidence.get("local_verification_command", "")
     if "verify_platform_agent_tools.py" not in command:
         raise VerificationError("Manifest acceptance evidence must point to verify_platform_agent_tools.py.")
+    missing_packs = [
+        pack_id
+        for pack_id in sorted(REQUIRED_PLATFORM_PACKS)
+        if not (PACKS_DIR / pack_id / "pack.json").exists()
+    ]
+    if missing_packs:
+        raise VerificationError(f"Missing platform ecosystem packs: {missing_packs}")
     return by_name
 
 
