@@ -116,6 +116,8 @@
 - Importer plugin SDK.
 - Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
   platform-specific submission docs.
+- Publish platform bundle manifests with release artifacts so ecosystem integrations can verify
+  copied assets by sha256.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.

@@ -9,6 +9,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-platform-openapi.json`
 - `platform/generated/study-anything-openai-tools.json`
 - `platform/generated/study-anything-tool-catalog.md`
+- `platform/generated/study-anything-platform-bundle.json`
 
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
@@ -24,6 +25,7 @@ the user's platform Agent or user-owned HTTP Agent gateway.
 
 ```bash
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
+.venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 ```
 
 For a running API:
