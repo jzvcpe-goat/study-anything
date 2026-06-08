@@ -30,6 +30,9 @@ fi
 printf "Running deterministic Skill Mode CLI flow ...\n"
 "$python_bin" scripts/verify_skill_cli_flow.py
 
+printf "Verifying Agent eval artifact flow ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_agent_eval_flow.py
+
 printf "Verifying platform-agent tool manifest ...\n"
 "$python_bin" scripts/verify_platform_agent_tools.py
 

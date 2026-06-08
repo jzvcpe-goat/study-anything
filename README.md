@@ -113,6 +113,14 @@ Against a running API:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+.venv/bin/python scripts/verify_agent_eval_assets.py
+```
+
+When Node/npm package installation is allowed, run the Promptfoo adapter directly through the wrapper:
+
+```bash
+API_BASE=http://127.0.0.1:8000 \
+  .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required
 ```
 
 See `docs/agent-eval.md` and `evals/promptfoo/agent-eval-artifact.yaml`.
