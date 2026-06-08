@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.11-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.12-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -132,8 +132,8 @@ class PublishedImageLaunchTests(unittest.TestCase):
         module = module_from_spec(spec)
         spec.loader.exec_module(module)
 
-        self.assertEqual(module.default_expected_version("v0.2.11-alpha"), "0.2.11a0")
-        self.assertEqual(module.default_expected_version("0.2.11-alpha"), "0.2.11a0")
+        self.assertEqual(module.default_expected_version("v0.2.12-alpha"), "0.2.12a0")
+        self.assertEqual(module.default_expected_version("0.2.12-alpha"), "0.2.12a0")
 
 
 if __name__ == "__main__":
