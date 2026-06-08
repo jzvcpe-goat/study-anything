@@ -73,6 +73,14 @@ Agent endpoints, PMF contact values, or decrypted plugin inventory.
 - `POST /v1/sessions/{session_id}/run`
 - `POST /v1/sessions/{session_id}/resume`
 
+For platform Agent tools, use the constrained manifest at
+`platform/study-anything-platform-tools.json` instead of exposing the full API surface. Validate that
+manifest against a running API with:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+```
+
 ## Learning
 
 - `POST /v1/sessions/{session_id}/answers`

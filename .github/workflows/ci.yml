@@ -73,6 +73,8 @@ jobs:
           exit 1
       - name: Verify fake-agent flow
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
+      - name: Verify platform Agent tool manifest
+        run: API_BASE=http://127.0.0.1:8000 python scripts/verify_platform_agent_tools.py
       - name: Verify mock HTTP agent flow
         run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
       - name: Verify FalkorDB topology projection

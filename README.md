@@ -117,6 +117,26 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 
 See `docs/agent-eval.md` and `evals/promptfoo/agent-eval-artifact.yaml`.
 
+## Platform Agent Package
+
+Use the constrained tool manifest when integrating Study Anything into Codex, Kimi Work,
+WorkBuddy-style workspaces, or private Agent platforms:
+
+```text
+platform/study-anything-platform-tools.json
+```
+
+The manifest exposes only the learning loop tools and redacted evidence endpoints. It does not expose
+model/provider setup, plugin installation, encrypted sync export, or other management APIs.
+
+Validate a running platform-tool integration with:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+```
+
+`./scripts/run_skill_mode_demo.sh` runs this check automatically after the CLI smoke.
+
 ## Skill Mode
 
 The repo includes a standard-library CLI and a repo-local Codex skill:
@@ -141,6 +161,7 @@ apps/api/                  FastAPI app and learning engine
 docs/                      Architecture, roadmap, plugin API, commercial model
 evals/                     External eval tool templates
 infra/compose/             Docker Compose stack
+platform/                  Machine-readable platform Agent tool manifest
 plugins/example-exporter/  Example exporter manifest
 plugins/example-agent-provider/ Example agent provider manifest
 scripts/                   Local smoke helpers
