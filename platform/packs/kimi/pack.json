@@ -1,0 +1,42 @@
+{
+  "schema_version": "study-anything-platform-pack-v1",
+  "platform_id": "kimi",
+  "name": "Study Anything Kimi Tool Pack",
+  "integration_mode": "openai_compatible_tools",
+  "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
+  "entrypoints": {
+    "openai_tools": "platform/generated/study-anything-openai-tools.json",
+    "openapi": "platform/generated/study-anything-platform-openapi.json",
+    "gateway": "scripts/openai_compatible_agent_gateway.py",
+    "guide": "docs/kimi-agent-gateway.md"
+  },
+  "import_assets": [
+    "platform/study-anything-platform-tools.json",
+    "platform/generated/study-anything-openai-tools.json",
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-tool-catalog.md"
+  ],
+  "local_verification_commands": [
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py"
+  ],
+  "acceptance_evidence": [
+    "agent_audit.status == verified",
+    "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
+    "all required native gates pass",
+    "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+  ],
+  "must_not_log_or_share": [
+    "raw source text",
+    "learner answers",
+    "grading feedback",
+    "generated insights",
+    "agent endpoints",
+    "agent metadata",
+    "API keys or model secrets"
+  ],
+  "notes": [
+    "Browser-only Kimi chat cannot reach localhost directly.",
+    "Kimi or Moonshot credentials stay in the user's gateway environment."
+  ]
+}

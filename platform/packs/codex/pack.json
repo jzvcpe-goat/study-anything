@@ -1,0 +1,36 @@
+{
+  "schema_version": "study-anything-platform-pack-v1",
+  "platform_id": "codex",
+  "name": "Study Anything Codex Skill Pack",
+  "integration_mode": "terminal_skill",
+  "description": "Use the repo-local Skill and CLI when Codex or another terminal-capable agent can run commands inside the Study Anything checkout.",
+  "entrypoints": {
+    "skill": "skills/study-anything/SKILL.md",
+    "cli": "scripts/study_anything_cli.py",
+    "demo": "scripts/run_skill_mode_demo.sh"
+  },
+  "import_assets": [
+    "platform/study-anything-platform-tools.json",
+    "platform/generated/study-anything-tool-catalog.md"
+  ],
+  "local_verification_commands": [
+    "./scripts/run_skill_mode_demo.sh",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py"
+  ],
+  "acceptance_evidence": [
+    "agent_audit.status == verified",
+    "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
+    "all required native gates pass",
+    "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+  ],
+  "must_not_log_or_share": [
+    "raw source text",
+    "learner answers",
+    "grading feedback",
+    "generated insights",
+    "agent endpoints",
+    "agent metadata",
+    "API keys or model secrets"
+  ]
+}
