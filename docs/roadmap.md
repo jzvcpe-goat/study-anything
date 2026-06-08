@@ -111,13 +111,20 @@
   catalog.
 - CI and release-check drift detection for generated platform Agent assets.
 
+## v0.2.13-alpha
+
+- Agent Eval release gates for redacted artifact adapters and external Promptfoo execution wrapper.
+- Copy-ready platform packs for Codex, Kimi-compatible agents, and WorkBuddy-style workspaces.
+- Platform ecosystem pack verifier tied to privacy and Agent audit/eval acceptance evidence.
+- Deterministic platform bundle manifest with sha256 hashes for platform packs, generated import
+  assets, key docs, and the repo-local Skill entrypoint.
+- CI and release-check drift detection for the platform bundle manifest.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
 - Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
   platform-specific submission docs.
-- Publish platform bundle manifests with release artifacts so ecosystem integrations can verify
-  copied assets by sha256.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
