@@ -34,6 +34,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Redacted Agent Eval artifact foundation that bridges invocation audit evidence into mature external eval tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
 - Machine-readable platform Agent tool manifest plus verifier for the minimum learning loop, mastery, Agent audit, and eval artifact endpoints.
+- Generated platform import assets: constrained OpenAPI, OpenAI-compatible function tools, and a checked-in tool catalog.
 - Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API learning flow.
 - Published release path for the current recovery, plugin-registry, Skill/API, and Bring Your Own Agent foundations.
 
@@ -52,7 +53,7 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 ## Suggested Branch Tracks
 
-- `codex/platform-agent-integrations`: Kimi/Codex/WorkBuddy-style packaging beyond the CLI, HTTP guide, and platform tool manifest.
+- `codex/platform-agent-integrations`: Kimi/Codex/WorkBuddy-style packaging beyond the CLI, HTTP guide, generic OpenAPI, and function-tool assets.
 - `codex/agent-eval-foundation`: Promptfoo, DeepEval, LangChain AgentEvals, and Ragas integration surfaces.
 - `codex/new-product-ui`: redesigned natural-language-first UI after API/Skill launch is stable.
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.

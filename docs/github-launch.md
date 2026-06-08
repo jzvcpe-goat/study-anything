@@ -17,6 +17,7 @@ Run:
 python3 scripts/setup_env.py --force --output /tmp/study-anything.env
 python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
+python3 scripts/generate_platform_agent_assets.py --check
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py
@@ -33,9 +34,9 @@ Confirm:
   insights, raw user identifiers, Agent metadata, or raw contact values.
 - `scripts/verify_backup_restore_drill.py` can create, mutate, restore, and clean up a disposable
   Docker stack.
-- `scripts/verify_published_image_launch.py --tag v0.2.11-alpha` can pull the public API image,
+- `scripts/verify_published_image_launch.py --tag v0.2.12-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
-- `docs/release-notes/v0.2.11-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.12-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -45,17 +46,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.11-alpha
-git push origin v0.2.11-alpha
+git tag v0.2.12-alpha
+git push origin v0.2.12-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.11-alpha \
+gh release create v0.2.12-alpha \
   --prerelease \
-  --title "Study Anything v0.2.11-alpha" \
-  --notes-file docs/release-notes/v0.2.11-alpha.md
+  --title "Study Anything v0.2.12-alpha" \
+  --notes-file docs/release-notes/v0.2.12-alpha.md
 ```
 
 ## GitHub Settings
@@ -72,13 +73,13 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.11-alpha
-python3 scripts/verify_published_image_launch.py --tag v0.2.11-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.12-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.12-alpha
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.11-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.12-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

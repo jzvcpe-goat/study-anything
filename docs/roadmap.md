@@ -103,12 +103,19 @@
 - Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
 - Acceptance gate requiring completed learning loops to return Agent audit and eval evidence.
 
+## v0.2.12-alpha
+
+- Machine-readable platform Agent tool manifest for Kimi/Codex/WorkBuddy-style wrappers.
+- Platform integration verifier that proves the manifest can complete a real local learning loop.
+- Generated platform import assets: constrained OpenAPI, OpenAI-compatible function tools, and tool
+  catalog.
+- CI and release-check drift detection for generated platform Agent assets.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Machine-readable platform Agent tool manifest for Kimi/Codex/WorkBuddy-style wrappers.
-- Platform integration verifier that proves the manifest can complete a real local learning loop.
-- Packaged platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills.
+- Packaged platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills beyond generic
+  OpenAPI/function-tool assets.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
