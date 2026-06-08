@@ -234,6 +234,14 @@ def cmd_events(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/sessions/{quote(args.session_id)}/events"))
 
 
+def cmd_agent_audit(args: argparse.Namespace) -> None:
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-audit"))
+
+
+def cmd_agent_eval(args: argparse.Namespace) -> None:
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/artifact"))
+
+
 def cmd_hitl(args: argparse.Namespace) -> None:
     emit(args, request("/v1/hitl"))
 
@@ -337,6 +345,14 @@ def build_parser() -> argparse.ArgumentParser:
     events = subparsers.add_parser("events", help="Show session events")
     add_session_id(events)
     events.set_defaults(func=cmd_events)
+
+    agent_audit = subparsers.add_parser("agent-audit", help="Show redacted Agent invocation proof")
+    add_session_id(agent_audit)
+    agent_audit.set_defaults(func=cmd_agent_audit)
+
+    agent_eval = subparsers.add_parser("agent-eval", help="Show redacted Agent eval artifact")
+    add_session_id(agent_eval)
+    agent_eval.set_defaults(func=cmd_agent_eval)
 
     hitl = subparsers.add_parser("hitl", help="List open human-review tasks")
     hitl.set_defaults(func=cmd_hitl)

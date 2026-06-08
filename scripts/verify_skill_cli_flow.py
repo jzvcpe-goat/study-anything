@@ -53,6 +53,23 @@ def main() -> None:
     if not any(item.get("type") == "session.completed" for item in events):
         raise RuntimeError(f"Completion event missing: {events}")
 
+    agent_audit: Dict[str, Any] = parsed("agent-audit", session_id)
+    if agent_audit.get("schema_version") != "agent-audit-v1":
+        raise RuntimeError(f"Unexpected Agent audit schema: {agent_audit}")
+    if agent_audit.get("status") != "verified":
+        raise RuntimeError(f"Agent audit did not verify required tasks: {agent_audit}")
+    if agent_audit.get("used_external_agent"):
+        raise RuntimeError(f"Skill demo should use the deterministic fake Agent: {agent_audit}")
+
+    agent_eval: Dict[str, Any] = parsed("agent-eval", session_id)
+    if agent_eval.get("schema_version") != "agent-eval-artifact-v1":
+        raise RuntimeError(f"Unexpected Agent eval artifact schema: {agent_eval}")
+    if agent_eval.get("status") != "ready_for_external_eval":
+        raise RuntimeError(f"Agent eval artifact is not ready: {agent_eval}")
+    required_gates = [gate for gate in agent_eval.get("native_gates", []) if gate.get("required")]
+    if not required_gates or any(gate.get("status") != "pass" for gate in required_gates):
+        raise RuntimeError(f"Agent eval required gates failed: {agent_eval}")
+
     refused = run_cli("discard", session_id, expect_ok=False)
     if refused.returncode == 0 or "explicit approval" not in refused.stderr:
         raise RuntimeError("Discard should require explicit approval.")
@@ -69,6 +86,8 @@ def main() -> None:
                 "completed_stage": completed["stage"],
                 "discarded_stage": discarded["stage"],
                 "event_count": len(events),
+                "agent_audit_status": agent_audit["status"],
+                "agent_eval_schema": agent_eval["schema_version"],
             },
             ensure_ascii=False,
         )

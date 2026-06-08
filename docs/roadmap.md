@@ -97,10 +97,16 @@
 - Promptfoo contract-gate template for completed learning sessions.
 - Mature eval adapter strategy for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 
+## v0.2.11-alpha
+
+- CLI and Skill commands for Agent invocation audit and Agent eval artifacts.
+- Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
+- Acceptance gate requiring completed learning loops to return Agent audit and eval evidence.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills.
+- Packaged platform-agent integrations for Kimi/Codex/WorkBuddy-style tools and skills.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.

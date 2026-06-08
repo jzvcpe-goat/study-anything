@@ -130,6 +130,10 @@ For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
 
 Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. Chat-only LLM products cannot run local scripts or reach `localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage, see `docs/skill-mode.md`.
 
+For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
+Platform integrations should return `agent-audit` and `agent-eval` evidence after each completed
+learning loop.
+
 ## Repository Layout
 
 ```text
