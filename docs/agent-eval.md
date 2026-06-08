@@ -23,17 +23,17 @@ feedback, insights, Agent endpoints, raw Agent metadata, API keys, or tool secre
 
 ## Open-Source Eval Selection
 
-GitHub metadata was checked on 2026-06-07.
+GitHub metadata was checked on 2026-06-08.
 
 | Project | Stars | License | Use In Study Anything |
 | --- | ---: | --- | --- |
-| [Promptfoo](https://github.com/promptfoo/promptfoo) | 21,980 | MIT | First CLI/CI adapter for HTTP contract checks, regression gates, and red-team assertions. |
-| [DeepEval](https://github.com/confident-ai/deepeval) | 15,970 | Apache-2.0 | Python eval harness for task completion, component-level metrics, and judge-model scoring. |
-| [Ragas](https://github.com/vibrantlabsai/ragas) | 14,272 | Apache-2.0 | Source grounding, answer relevance, context relevance, and citation-quality evaluation. |
-| [LangChain AgentEvals](https://github.com/langchain-ai/agentevals) | 609 | MIT | Trajectory matching for expected Agent/tool step order. |
-| [Phoenix](https://github.com/Arize-ai/phoenix) | 10,011 | Other | Observability/eval candidate, useful later if Study Anything needs a heavier local eval UI. |
-| [OpenAI Evals](https://github.com/openai/evals) | 18,624 | Other | Benchmark registry reference, not the first integration because license and workflow fit are weaker. |
-| [AgentBench](https://github.com/THUDM/AgentBench) | 3,472 | Apache-2.0 | Academic benchmark reference, not a product smoke/eval harness. |
+| [Promptfoo](https://github.com/promptfoo/promptfoo) | 21,992 | MIT | First CLI/CI adapter for HTTP contract checks, regression gates, and red-team assertions. |
+| [DeepEval](https://github.com/confident-ai/deepeval) | 15,974 | Apache-2.0 | Python eval harness for task completion, component-level metrics, and judge-model scoring. |
+| [Ragas](https://github.com/vibrantlabsai/ragas) | 14,278 | Apache-2.0 | Source grounding, answer relevance, context relevance, and citation-quality evaluation. |
+| [LangChain AgentEvals](https://github.com/langchain-ai/agentevals) | 610 | MIT | Trajectory matching for expected Agent/tool step order. |
+| [Phoenix](https://github.com/Arize-ai/phoenix) | 10,021 | Other | Observability/eval candidate, useful later if Study Anything needs a heavier local eval UI. |
+| [OpenAI Evals](https://github.com/openai/evals) | 18,627 | Other | Benchmark registry reference, not the first integration because license and workflow fit are weaker. |
+| [AgentBench](https://github.com/THUDM/AgentBench) | 3,473 | Apache-2.0 | Academic benchmark reference, not a product smoke/eval harness. |
 
 The first implementation path is:
 

@@ -1,0 +1,318 @@
+{
+  "schema_version": "study-anything-platform-tools-v1",
+  "name": "study-anything-learning-tools",
+  "description": "Minimal public tool contract for Codex, Kimi, WorkBuddy-style agents, and private agent workspaces that call Study Anything as a local-first learning engine.",
+  "default_api_base": "http://127.0.0.1:8000",
+  "api_base_env": "STUDY_ANYTHING_API_BASE",
+  "privacy_contract": {
+    "platform_agent_owns": [
+      "browser access",
+      "file access",
+      "external data lookup",
+      "video or application tooling",
+      "model credentials",
+      "user-facing conversation"
+    ],
+    "study_anything_owns": [
+      "source-bound session state",
+      "learning workflow orchestration",
+      "agent output validation",
+      "mastery state",
+      "HITL state",
+      "redacted agent audit",
+      "redacted eval artifact"
+    ],
+    "must_not_log_or_share": [
+      "raw source text",
+      "learner answers",
+      "grading feedback",
+      "generated insights",
+      "agent endpoints",
+      "agent metadata",
+      "API keys or model secrets"
+    ]
+  },
+  "acceptance_evidence": {
+    "required_after_learning_loop": [
+      "agent_audit.status == verified",
+      "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
+      "all required native gates pass",
+      "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+    ],
+    "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py"
+  },
+  "tools": [
+    {
+      "name": "study_anything_health",
+      "method": "GET",
+      "path_template": "/v1/health",
+      "description": "Check that the local Study Anything API is reachable before starting a learning loop.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "status == ok"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false
+      }
+    },
+    {
+      "name": "study_anything_create_session",
+      "method": "POST",
+      "path_template": "/v1/sessions",
+      "description": "Create a learning session for a local user. Use demo mode only for smoke tests.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "track"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "track": {
+            "type": "string",
+            "default": "ACADEMIC"
+          },
+          "workspace_id": {
+            "type": "string"
+          },
+          "use_demo_agent": {
+            "type": "boolean",
+            "description": "True only for local demos and CI smoke tests. Real learning should use the configured user-owned agent."
+          }
+        }
+      },
+      "output_requirements": [
+        "session_id is present",
+        "stage is initialized or awaiting_source"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false
+      }
+    },
+    {
+      "name": "study_anything_add_reading",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/reading",
+      "description": "Attach source material gathered by the platform agent to the learning session.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "source_type",
+          "reference",
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_type": {
+            "type": "string",
+            "default": "local_text"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Stable citation, URL, file reference, or platform-local source id."
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Source excerpt. Do not include secrets."
+          }
+        }
+      },
+      "output_requirements": [
+        "source.excerpt_hash is present"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "text",
+          "title"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_run",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/run",
+      "description": "Advance the Study Anything workflow after a source is attached or after HITL resolution.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "quiz_items contains at least one item, or open_hitl exists"
+      ],
+      "privacy": {
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "quiz_items",
+          "source",
+          "insights"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_answer",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/answers",
+      "description": "Submit the learner's answer to one or more quiz items and advance mastery evaluation.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "answers"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "answers": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Map of quiz item id to learner answer."
+          }
+        }
+      },
+      "output_requirements": [
+        "stage == completed or open HITL is returned",
+        "mastery.level is present"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "answers",
+          "grading_results",
+          "insights"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_mastery",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/mastery",
+      "description": "Read the compact mastery state for the completed learning loop.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "level is numeric",
+        "bloom is present"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false
+      }
+    },
+    {
+      "name": "study_anything_agent_audit",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/agent-audit",
+      "description": "Return redacted proof that Study Anything Agent providers handled the required learning tasks.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == agent-audit-v1",
+        "status == verified",
+        "observed_tasks includes quiz.generate, answer.grade, insight.synthesize"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "source text",
+          "answers",
+          "feedback",
+          "agent endpoints",
+          "raw agent metadata",
+          "secrets"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_agent_eval_artifact",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/agent-eval/artifact",
+      "description": "Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == agent-eval-artifact-v1",
+        "status == ready_for_external_eval",
+        "all required native_gates pass",
+        "adapter_strategy includes promptfoo, deepeval, langchain-agentevals, ragas"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "source text",
+          "answers",
+          "feedback",
+          "insights",
+          "agent endpoints",
+          "raw agent metadata",
+          "secrets"
+        ]
+      }
+    }
+  ]
+}

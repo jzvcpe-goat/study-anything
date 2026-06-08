@@ -16,6 +16,39 @@ scribe logs, HITL state, Agent audit, and eval artifacts.
 Study Anything should not store real model API keys. Keep keys inside the platform Agent or the
 user-owned HTTP gateway.
 
+## Machine-Readable Tool Contract
+
+Platform integrations should start from the repo-local manifest:
+
+```text
+platform/study-anything-platform-tools.json
+```
+
+The manifest declares the minimum tool surface for Codex, Kimi Work, WorkBuddy-style workspaces, and
+private Agent platforms:
+
+- API health
+- session creation
+- source attachment
+- workflow run/resume
+- answer submission
+- mastery lookup
+- redacted Agent audit
+- redacted Agent eval artifact
+
+It intentionally does not expose Agent provider configuration, deprecated model aliases, plugin
+installation, encrypted sync export, PMF export, or other management surfaces. Configure user-owned
+Agent gateways outside the platform learning tools, then let the platform Agent call only the learning
+contract.
+
+Validate a running integration with:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+```
+
+`./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
+
 ## Codex Or Terminal-Capable Agents
 
 Use the repo-local skill and CLI when the platform Agent can run shell commands in this repository:
@@ -79,6 +112,7 @@ Use the HTTP API contract when the platform can call local or private HTTP tools
 
 Minimum endpoints for a platform tool wrapper:
 
+- `GET /v1/health`
 - `POST /v1/sessions`
 - `POST /v1/sessions/{session_id}/reading`
 - `POST /v1/sessions/{session_id}/run`
@@ -104,4 +138,5 @@ For local validation:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 ```
