@@ -1,0 +1,47 @@
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+from _path import ROOT  # noqa: F401
+
+
+class PlatformBundleManifestTests(unittest.TestCase):
+    def test_platform_bundle_manifest_is_current(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "generate_platform_bundle_manifest.py"),
+                "--check",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
+    def test_platform_bundle_manifest_points_to_expected_assets(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        manifest_path = root / "platform" / "generated" / "study-anything-platform-bundle.json"
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(payload["schema_version"], "study-anything-platform-bundle-v1")
+        self.assertEqual(payload["platforms"], ["codex", "kimi", "workbuddy"])
+        file_paths = {item["path"] for item in payload["files"]}
+        self.assertIn("platform/study-anything-platform-tools.json", file_paths)
+        self.assertIn("platform/packs/codex/pack.json", file_paths)
+        self.assertIn("platform/packs/kimi/pack.json", file_paths)
+        self.assertIn("platform/packs/workbuddy/pack.json", file_paths)
+        self.assertIn("skills/study-anything/SKILL.md", file_paths)
+        for item in payload["files"]:
+            self.assertRegex(item["sha256"], r"^[a-f0-9]{64}$")
+            self.assertGreater(item["bytes"], 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

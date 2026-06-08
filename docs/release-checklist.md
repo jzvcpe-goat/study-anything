@@ -8,6 +8,7 @@
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
 - [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_ecosystem_packs.py`
+- [ ] `.venv/bin/python scripts/generate_platform_bundle_manifest.py --check`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`
 - [ ] `.venv/bin/python scripts/smoke_core.py`
 - [ ] `./scripts/run_skill_mode_demo.sh`

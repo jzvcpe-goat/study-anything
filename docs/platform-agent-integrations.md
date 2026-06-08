@@ -57,17 +57,19 @@ The checked-in generated files are derived from the manifest:
 platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
+platform/generated/study-anything-platform-bundle.json
 ```
 
 Use the OpenAPI file for HTTP tool importers. Use the OpenAI-compatible tools JSON for
 Kimi-compatible model APIs, Codex-style tool runners, and other function-calling Agent platforms that
 need tool names, descriptions, and JSON schemas.
 
-Regenerate and verify these assets after changing the manifest:
+Regenerate and verify these assets after changing the manifest, platform packs, or bundled docs:
 
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 
 ## Packaged Ecosystem Starters
@@ -87,7 +89,12 @@ Verify the packs against the source manifest:
 
 ```bash
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/generate_platform_bundle_manifest.py --check
 ```
+
+The bundle manifest records sha256 hashes and purposes for the platform manifest, generated import
+assets, ecosystem packs, key docs, and repo-local Skill entrypoint. Use it as the release artifact
+index when publishing platform integration assets.
 
 ## Codex Or Terminal-Capable Agents
 

@@ -143,6 +143,7 @@ Generated import assets are checked in for platforms that prefer OpenAPI or func
 platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
+platform/generated/study-anything-platform-bundle.json
 ```
 
 Copy-ready starter packs are checked in for platform ecosystems:
@@ -153,12 +154,13 @@ platform/packs/kimi
 platform/packs/workbuddy
 ```
 
-Regenerate them after editing the manifest:
+Regenerate or verify these assets after editing the manifest, platform packs, or bundled docs:
 
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 
 Validate a running platform-tool integration with:
