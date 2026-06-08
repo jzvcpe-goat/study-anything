@@ -49,6 +49,27 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 
 `./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
 
+## Generated Import Assets
+
+The checked-in generated files are derived from the manifest:
+
+```text
+platform/generated/study-anything-platform-openapi.json
+platform/generated/study-anything-openai-tools.json
+platform/generated/study-anything-tool-catalog.md
+```
+
+Use the OpenAPI file for HTTP tool importers. Use the OpenAI-compatible tools JSON for
+Kimi-compatible model APIs, Codex-style tool runners, and other function-calling Agent platforms that
+need tool names, descriptions, and JSON schemas.
+
+Regenerate and verify these assets after changing the manifest:
+
+```bash
+python3 scripts/generate_platform_agent_assets.py
+python3 scripts/generate_platform_agent_assets.py --check
+```
+
 ## Codex Or Terminal-Capable Agents
 
 Use the repo-local skill and CLI when the platform Agent can run shell commands in this repository:

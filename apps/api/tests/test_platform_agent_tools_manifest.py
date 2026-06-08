@@ -9,6 +9,10 @@ from _path import ROOT  # noqa: F401
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 MANIFEST_PATH = REPO_ROOT / "platform" / "study-anything-platform-tools.json"
+GENERATED_DIR = REPO_ROOT / "platform" / "generated"
+OPENAPI_PATH = GENERATED_DIR / "study-anything-platform-openapi.json"
+OPENAI_TOOLS_PATH = GENERATED_DIR / "study-anything-openai-tools.json"
+CATALOG_PATH = GENERATED_DIR / "study-anything-tool-catalog.md"
 REQUIRED_TOOLS = {
     "study_anything_health",
     "study_anything_create_session",
@@ -73,6 +77,42 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
                 self.assertIn("answers", must_not_return)
                 self.assertIn("agent endpoints", must_not_return)
                 self.assertIn("secrets", must_not_return)
+
+    def test_generated_openapi_matches_manifest_tools(self) -> None:
+        manifest = self._manifest()
+        openapi = json.loads(OPENAPI_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(openapi["openapi"], "3.1.0")
+        self.assertEqual(
+            openapi["x-study-anything-manifest"]["schema_version"],
+            manifest["schema_version"],
+        )
+        for tool in manifest["tools"]:
+            with self.subTest(tool=tool["name"]):
+                operation = openapi["paths"][tool["path_template"]][tool["method"].lower()]
+                self.assertEqual(operation["operationId"], tool["name"])
+                self.assertEqual(
+                    operation["x-study-anything-output-requirements"],
+                    tool["output_requirements"],
+                )
+                self.assertEqual(operation["x-study-anything-privacy"], tool["privacy"])
+
+    def test_generated_openai_tools_match_manifest_tools(self) -> None:
+        manifest = self._manifest()
+        openai_tools = json.loads(OPENAI_TOOLS_PATH.read_text(encoding="utf-8"))
+        by_name = {tool["function"]["name"]: tool for tool in openai_tools}
+        self.assertEqual(set(by_name), {tool["name"] for tool in manifest["tools"]})
+        for tool in manifest["tools"]:
+            with self.subTest(tool=tool["name"]):
+                generated = by_name[tool["name"]]
+                self.assertEqual(generated["type"], "function")
+                self.assertEqual(generated["function"]["parameters"], tool["input_schema"])
+                self.assertIn(tool["path_template"], generated["function"]["description"])
+
+    def test_generated_catalog_mentions_acceptance_and_privacy(self) -> None:
+        catalog = CATALOG_PATH.read_text(encoding="utf-8")
+        self.assertIn("verify_platform_agent_tools.py", catalog)
+        self.assertIn("raw source text", catalog)
+        self.assertIn("study_anything_agent_eval_artifact", catalog)
 
 
 if __name__ == "__main__":

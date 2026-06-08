@@ -1,0 +1,564 @@
+{
+  "info": {
+    "description": "Minimal public tool contract for Codex, Kimi, WorkBuddy-style agents, and private agent workspaces that call Study Anything as a local-first learning engine.",
+    "title": "Study Anything Platform Agent Tools",
+    "version": "study-anything-platform-tools-v1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "description": "Check that the local Study Anything API is reachable before starting a learning loop.",
+        "operationId": "study_anything_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Check that the local Study Anything API is reachable before starting a learning loop.",
+        "x-study-anything-output-requirements": [
+          "status == ok"
+        ],
+        "x-study-anything-privacy": {
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions": {
+      "post": {
+        "description": "Create a learning session for a local user. Use demo mode only for smoke tests.",
+        "operationId": "study_anything_create_session",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "track": {
+                    "default": "ACADEMIC",
+                    "type": "string"
+                  },
+                  "use_demo_agent": {
+                    "description": "True only for local demos and CI smoke tests. Real learning should use the configured user-owned agent.",
+                    "type": "boolean"
+                  },
+                  "user_id": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user_id",
+                  "track"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Create a learning session for a local user. Use demo mode only for smoke tests.",
+        "x-study-anything-output-requirements": [
+          "session_id is present",
+          "stage is initialized or awaiting_source"
+        ],
+        "x-study-anything-privacy": {
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/agent-audit": {
+      "get": {
+        "description": "Return redacted proof that Study Anything Agent providers handled the required learning tasks.",
+        "operationId": "study_anything_agent_audit",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return redacted proof that Study Anything Agent providers handled the required learning tasks.",
+        "x-study-anything-output-requirements": [
+          "schema_version == agent-audit-v1",
+          "status == verified",
+          "observed_tasks includes quiz.generate, answer.grade, insight.synthesize"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "source text",
+            "answers",
+            "feedback",
+            "agent endpoints",
+            "raw agent metadata",
+            "secrets"
+          ],
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/agent-eval/artifact": {
+      "get": {
+        "description": "Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.",
+        "operationId": "study_anything_agent_eval_artifact",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.",
+        "x-study-anything-output-requirements": [
+          "schema_version == agent-eval-artifact-v1",
+          "status == ready_for_external_eval",
+          "all required native_gates pass",
+          "adapter_strategy includes promptfoo, deepeval, langchain-agentevals, ragas"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "source text",
+            "answers",
+            "feedback",
+            "insights",
+            "agent endpoints",
+            "raw agent metadata",
+            "secrets"
+          ],
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/answers": {
+      "post": {
+        "description": "Submit the learner's answer to one or more quiz items and advance mastery evaluation.",
+        "operationId": "study_anything_answer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "answers": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Map of quiz item id to learner answer.",
+                    "minProperties": 1,
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "answers"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Submit the learner's answer to one or more quiz items and advance mastery evaluation.",
+        "x-study-anything-output-requirements": [
+          "stage == completed or open HITL is returned",
+          "mastery.level is present"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "answers",
+            "grading_results",
+            "insights"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/mastery": {
+      "get": {
+        "description": "Read the compact mastery state for the completed learning loop.",
+        "operationId": "study_anything_mastery",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Read the compact mastery state for the completed learning loop.",
+        "x-study-anything-output-requirements": [
+          "level is numeric",
+          "bloom is present"
+        ],
+        "x-study-anything-privacy": {
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/reading": {
+      "post": {
+        "description": "Attach source material gathered by the platform agent to the learning session.",
+        "operationId": "study_anything_add_reading",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "reference": {
+                    "description": "Stable citation, URL, file reference, or platform-local source id.",
+                    "type": "string"
+                  },
+                  "source_type": {
+                    "default": "local_text",
+                    "type": "string"
+                  },
+                  "text": {
+                    "description": "Source excerpt. Do not include secrets.",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_type",
+                  "reference",
+                  "text"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Attach source material gathered by the platform agent to the learning session.",
+        "x-study-anything-output-requirements": [
+          "source.excerpt_hash is present"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "text",
+            "title"
+          ],
+          "request_contains_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/run": {
+      "post": {
+        "description": "Advance the Study Anything workflow after a source is attached or after HITL resolution.",
+        "operationId": "study_anything_run",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {},
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Advance the Study Anything workflow after a source is attached or after HITL resolution.",
+        "x-study-anything-output-requirements": [
+          "quiz_items contains at least one item, or open_hitl exists"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "quiz_items",
+            "source",
+            "insights"
+          ],
+          "returns_private_learning_data": true
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Default local Study Anything API",
+      "url": "http://127.0.0.1:8000"
+    }
+  ],
+  "x-study-anything-manifest": {
+    "acceptance_evidence": {
+      "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+      "required_after_learning_loop": [
+        "agent_audit.status == verified",
+        "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
+        "all required native gates pass",
+        "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+      ]
+    },
+    "api_base_env": "STUDY_ANYTHING_API_BASE",
+    "name": "study-anything-learning-tools",
+    "privacy_contract": {
+      "must_not_log_or_share": [
+        "raw source text",
+        "learner answers",
+        "grading feedback",
+        "generated insights",
+        "agent endpoints",
+        "agent metadata",
+        "API keys or model secrets"
+      ],
+      "platform_agent_owns": [
+        "browser access",
+        "file access",
+        "external data lookup",
+        "video or application tooling",
+        "model credentials",
+        "user-facing conversation"
+      ],
+      "study_anything_owns": [
+        "source-bound session state",
+        "learning workflow orchestration",
+        "agent output validation",
+        "mastery state",
+        "HITL state",
+        "redacted agent audit",
+        "redacted eval artifact"
+      ]
+    },
+    "schema_version": "study-anything-platform-tools-v1"
+  }
+}

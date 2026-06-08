@@ -1,0 +1,194 @@
+[
+  {
+    "function": {
+      "description": "Check that the local Study Anything API is reachable before starting a learning loop. Method: GET /v1/health.",
+      "name": "study_anything_health",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a learning session for a local user. Use demo mode only for smoke tests. Method: POST /v1/sessions.",
+      "name": "study_anything_create_session",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "track": {
+            "default": "ACADEMIC",
+            "type": "string"
+          },
+          "use_demo_agent": {
+            "description": "True only for local demos and CI smoke tests. Real learning should use the configured user-owned agent.",
+            "type": "boolean"
+          },
+          "user_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "workspace_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "track"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Attach source material gathered by the platform agent to the learning session. Method: POST /v1/sessions/{session_id}/reading.",
+      "name": "study_anything_add_reading",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "reference": {
+            "description": "Stable citation, URL, file reference, or platform-local source id.",
+            "type": "string"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_type": {
+            "default": "local_text",
+            "type": "string"
+          },
+          "text": {
+            "description": "Source excerpt. Do not include secrets.",
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "source_type",
+          "reference",
+          "text"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Advance the Study Anything workflow after a source is attached or after HITL resolution. Method: POST /v1/sessions/{session_id}/run.",
+      "name": "study_anything_run",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Submit the learner's answer to one or more quiz items and advance mastery evaluation. Method: POST /v1/sessions/{session_id}/answers.",
+      "name": "study_anything_answer",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Map of quiz item id to learner answer.",
+            "minProperties": 1,
+            "type": "object"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "answers"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Read the compact mastery state for the completed learning loop. Method: GET /v1/sessions/{session_id}/mastery.",
+      "name": "study_anything_mastery",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return redacted proof that Study Anything Agent providers handled the required learning tasks. Method: GET /v1/sessions/{session_id}/agent-audit.",
+      "name": "study_anything_agent_audit",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. Method: GET /v1/sessions/{session_id}/agent-eval/artifact.",
+      "name": "study_anything_agent_eval_artifact",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  }
+]

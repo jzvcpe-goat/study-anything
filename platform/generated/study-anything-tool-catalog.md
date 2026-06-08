@@ -1,0 +1,222 @@
+# Study Anything Platform Tool Catalog
+
+Generated from `platform/study-anything-platform-tools.json`.
+
+## Purpose
+
+Minimal public tool contract for Codex, Kimi, WorkBuddy-style agents, and private agent workspaces that call Study Anything as a local-first learning engine.
+
+## Privacy Contract
+
+The platform Agent owns browsing, files, external data, application tooling, model credentials, and user-facing conversation.
+Study Anything owns source-bound learning state, workflow orchestration, output validation, mastery, HITL, redacted audit, and redacted eval artifacts.
+
+Never log or share:
+
+- raw source text
+- learner answers
+- grading feedback
+- generated insights
+- agent endpoints
+- agent metadata
+- API keys or model secrets
+
+## Generated Assets
+
+- `study-anything-platform-openapi.json`: constrained OpenAPI 3.1 document for HTTP tool importers.
+- `study-anything-openai-tools.json`: OpenAI-compatible function tool definitions for Kimi-compatible and other tool-calling agents.
+- `study-anything-tool-catalog.md`: this human-readable catalog.
+
+## Acceptance
+
+A platform wrapper is acceptable only when it completes the local verification command:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+```
+
+## Tools
+
+### `study_anything_health`
+
+- Method: `GET`
+- Path: `/v1/health`
+- Description: Check that the local Study Anything API is reachable before starting a learning loop.
+
+Output requirements:
+
+- status == ok
+
+Privacy:
+
+```json
+{
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_create_session`
+
+- Method: `POST`
+- Path: `/v1/sessions`
+- Description: Create a learning session for a local user. Use demo mode only for smoke tests.
+
+Output requirements:
+
+- session_id is present
+- stage is initialized or awaiting_source
+
+Privacy:
+
+```json
+{
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_add_reading`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/reading`
+- Description: Attach source material gathered by the platform agent to the learning session.
+
+Output requirements:
+
+- source.excerpt_hash is present
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "text",
+    "title"
+  ],
+  "request_contains_private_learning_data": true
+}
+```
+
+### `study_anything_run`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/run`
+- Description: Advance the Study Anything workflow after a source is attached or after HITL resolution.
+
+Output requirements:
+
+- quiz_items contains at least one item, or open_hitl exists
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "quiz_items",
+    "source",
+    "insights"
+  ],
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_answer`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/answers`
+- Description: Submit the learner's answer to one or more quiz items and advance mastery evaluation.
+
+Output requirements:
+
+- stage == completed or open HITL is returned
+- mastery.level is present
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "answers",
+    "grading_results",
+    "insights"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_mastery`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/mastery`
+- Description: Read the compact mastery state for the completed learning loop.
+
+Output requirements:
+
+- level is numeric
+- bloom is present
+
+Privacy:
+
+```json
+{
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_agent_audit`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/agent-audit`
+- Description: Return redacted proof that Study Anything Agent providers handled the required learning tasks.
+
+Output requirements:
+
+- schema_version == agent-audit-v1
+- status == verified
+- observed_tasks includes quiz.generate, answer.grade, insight.synthesize
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "feedback",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_agent_eval_artifact`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/agent-eval/artifact`
+- Description: Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
+
+Output requirements:
+
+- schema_version == agent-eval-artifact-v1
+- status == ready_for_external_eval
+- all required native_gates pass
+- adapter_strategy includes promptfoo, deepeval, langchain-agentevals, ragas
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "feedback",
+    "insights",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```
