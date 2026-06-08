@@ -1,0 +1,107 @@
+# Platform Agent Integrations
+
+Study Anything is designed to be called by a platform Agent rather than to replace one. The platform
+Agent owns browsing, files, apps, video tools, external data, user conversation, and model credentials.
+Study Anything owns the learning loop: source binding, quiz generation, answer grading, mastery,
+scribe logs, HITL state, Agent audit, and eval artifacts.
+
+## Recommended Split
+
+| Layer | Responsibility |
+| --- | --- |
+| Platform Agent | Find sources, operate browser/apps, call external tools, prepare source text or excerpts, explain results to the user. |
+| Study Anything API | Persist learning sessions, call the configured learning Agent, validate outputs, expose audit/eval evidence. |
+| User-Owned Agent Gateway | Use the user's chosen model, credentials, tools, and reasoning strategy for real learning tasks. |
+
+Study Anything should not store real model API keys. Keep keys inside the platform Agent or the
+user-owned HTTP gateway.
+
+## Codex Or Terminal-Capable Agents
+
+Use the repo-local skill and CLI when the platform Agent can run shell commands in this repository:
+
+```bash
+./scripts/launch_skill_mode.sh
+python3 scripts/study_anything_cli.py health
+python3 scripts/study_anything_cli.py start \
+  --title "Source title" \
+  --reference "local://source" \
+  --text "Paste source material here."
+python3 scripts/study_anything_cli.py answer SESSION_ID \
+  --text "Answer grounded in the source."
+python3 scripts/study_anything_cli.py agent-audit SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+```
+
+For Codex, symlink the skill:
+
+```bash
+ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-anything"
+```
+
+The platform Agent should report the mastery result plus whether `agent-audit.status` is `verified`.
+
+## Kimi
+
+Browser-only Kimi cannot run local scripts or reach `127.0.0.1`. Use Kimi as the user-owned reasoning
+model through an OpenAI-compatible gateway:
+
+```bash
+export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
+export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
+export AGENT_LLM_MODEL="kimi-k2.5"
+
+python3 scripts/openai_compatible_agent_gateway.py \
+  --host 127.0.0.1 \
+  --port 8787
+```
+
+Then register it from Study Anything:
+
+```bash
+python3 scripts/study_anything_cli.py agent-add-http \
+  --label "My Kimi gateway" \
+  --endpoint "http://127.0.0.1:8787/invoke" \
+  --set-default
+python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
+```
+
+See `docs/kimi-agent-gateway.md` for the full flow.
+
+## WorkBuddy Or Other Agent Workspaces
+
+Use the HTTP API contract when the platform can call local or private HTTP tools:
+
+1. Start Study Anything with Docker or Skill Mode.
+2. Expose only the needed API base to the platform Agent.
+3. Give the platform Agent the public endpoints in `docs/api.md`.
+4. Require it to call `agent-audit` and `agent-eval/artifact` after each completed learning loop.
+
+Minimum endpoints for a platform tool wrapper:
+
+- `POST /v1/sessions`
+- `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/sessions/{session_id}/run`
+- `POST /v1/sessions/{session_id}/answers`
+- `GET /v1/sessions/{session_id}/mastery`
+- `GET /v1/sessions/{session_id}/agent-audit`
+- `GET /v1/sessions/{session_id}/agent-eval/artifact`
+
+## Acceptance Gate
+
+A platform integration is acceptable when it can complete this sequence:
+
+1. Start or reach a Study Anything API.
+2. Submit a user-provided source with a reference.
+3. Complete one quiz/answer/mastery loop.
+4. Return `agent-audit.status=verified`.
+5. Return `agent-eval-artifact-v1` with all required native gates passing.
+6. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+   logs or shared artifacts.
+
+For local validation:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+```

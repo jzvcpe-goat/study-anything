@@ -9,6 +9,7 @@
 - `POST /v1/agents/{provider_id}/invoke`
 
 Agent request/response schemas are documented in `docs/agent-contract.md`.
+Platform-agent usage patterns are documented in `docs/platform-agent-integrations.md`.
 
 ## Deprecated Model Aliases
 

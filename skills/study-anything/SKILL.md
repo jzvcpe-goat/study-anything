@@ -61,8 +61,14 @@ python3 scripts/study_anything_cli.py show SESSION_ID
 python3 scripts/study_anything_cli.py resume SESSION_ID
 python3 scripts/study_anything_cli.py mastery SESSION_ID
 python3 scripts/study_anything_cli.py events SESSION_ID
+python3 scripts/study_anything_cli.py agent-audit SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py hitl
 ```
+
+Use `agent-audit` after every real learning loop when the user needs proof that Study Anything handled
+the required learning tasks. Use `agent-eval` when another platform or CI job needs a redacted artifact
+for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
 
 Resolve a HITL task only after obtaining the missing information or user decision:
 

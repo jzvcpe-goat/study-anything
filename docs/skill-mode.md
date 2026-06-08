@@ -81,7 +81,8 @@ python3 scripts/study_anything_cli.py answer SESSION_ID \
   --text "Effortful repeated recall strengthens durable learning."
 ```
 
-Run `show SESSION_ID`, `mastery SESSION_ID`, or `events SESSION_ID` to inspect the resulting state.
+Run `show SESSION_ID`, `mastery SESSION_ID`, `events SESSION_ID`, `agent-audit SESSION_ID`, or
+`agent-eval SESSION_ID` to inspect the resulting state and Agent proof.
 
 ## Connect Your Agent
 
@@ -117,3 +118,17 @@ The skill teaches an Agent to operate the same CLI, including HITL resolution an
 For another terminal-capable agent, provide `skills/study-anything/SKILL.md` as its operating
 instructions and keep the repository available as its working directory. If that agent does not support
 skills natively, ask it to follow the file as a runbook.
+
+## Prove The Agent Was Used
+
+After a learning loop completes, collect redacted proof:
+
+```bash
+python3 scripts/study_anything_cli.py agent-audit SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+```
+
+`agent-audit` verifies that `quiz.generate`, `answer.grade`, and `insight.synthesize` were handled by
+a Study Anything Agent provider. `agent-eval` emits the redacted `agent-eval-artifact-v1` bridge for
+Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. Neither command returns source text, answers,
+feedback bodies, Agent endpoints, or raw Agent metadata.
