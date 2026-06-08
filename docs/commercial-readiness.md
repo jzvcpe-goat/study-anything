@@ -1,6 +1,6 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 68% after removing the broken standalone Web UI from the launch path.
+Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 70% after removing the broken standalone Web UI from the launch path and hardening API/Skill/platform-agent distribution.
 
 ## What Is Ready
 
@@ -35,6 +35,9 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
 - Machine-readable platform Agent tool manifest plus verifier for the minimum learning loop, mastery, Agent audit, and eval artifact endpoints.
 - Generated platform import assets: constrained OpenAPI, OpenAI-compatible function tools, and a checked-in tool catalog.
+- Copy-ready platform packs for Codex, Kimi-compatible agents, and WorkBuddy-style HTTP tool workspaces.
+- Deterministic platform bundle manifest with sha256 hashes for platform packs, generated import
+  assets, key docs, and the repo-local Skill entrypoint.
 - Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API learning flow.
 - Published release path for the current recovery, plugin-registry, Skill/API, and Bring Your Own Agent foundations.
 
@@ -53,8 +56,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 
 ## Suggested Branch Tracks
 
-- `codex/platform-agent-integrations`: Kimi/Codex/WorkBuddy-style packaging beyond the CLI, HTTP guide, generic OpenAPI, and function-tool assets.
-- `codex/agent-eval-foundation`: Promptfoo, DeepEval, LangChain AgentEvals, and Ragas integration surfaces.
+- `codex/platform-agent-submissions`: platform-specific examples, submission docs, and real workspace import walkthroughs.
+- `codex/agent-eval-quality`: DeepEval, LangChain AgentEvals, and Ragas quality suites beyond native redacted artifact gates.
 - `codex/new-product-ui`: redesigned natural-language-first UI after API/Skill launch is stable.
 - `feature/accounts-workspaces`: local identity, workspace model, roles, and permissions.
 - `feature/hosted-sync-service`: remote storage, recovery, conflict resolution, and paid convenience boundary.
