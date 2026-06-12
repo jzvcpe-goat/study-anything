@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.2.26-alpha")
+        self.assertEqual(manifest["version"], "v0.2.27-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -55,6 +55,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/second-brain-handoff.md",
             "docs/obsidian-export.md",
             "docs/notebooklm-bridge.md",
+            "docs/plugin-sdk.md",
+            "docs/plugin-registry.md",
             "skills/study-anything/SKILL.md",
             "scripts/verify_external_adoption.py",
             "scripts/verify_platform_operator_drill.py",
@@ -83,6 +85,9 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("study_anything_enrichment_artifact_export", manifest["required_tool_names"])
         self.assertIn("study_anything_learning_package_export", manifest["required_tool_names"])
         self.assertIn("study_anything_second_brain_handoff_export", manifest["required_tool_names"])
+        self.assertIn("study_anything_plugin_sdk", manifest["required_tool_names"])
+        self.assertIn("study_anything_plugin_capabilities", manifest["required_tool_names"])
+        self.assertIn("study_anything_validate_plugin_package", manifest["required_tool_names"])
 
 
 if __name__ == "__main__":

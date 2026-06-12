@@ -252,6 +252,9 @@ Minimum endpoints for a platform tool wrapper:
 - `POST /v1/context-packages/validate` optional importer path
 - `POST /v1/sessions/from-context-package` optional importer path
 - `POST /v1/sessions/{session_id}/context-package` optional importer path
+- `GET /v1/plugins/sdk` optional plugin SDK contract
+- `GET /v1/plugins/capabilities` optional plugin capability index
+- `POST /v1/plugins/validate-package` optional local plugin package validation
 - `POST /v1/importers/{plugin_id}/run` optional local importer runtime
 - `GET /v1/retrieval/status` optional retrieval status
 - `POST /v1/sessions/{session_id}/retrieval/rebuild` optional retrieval projection
@@ -268,6 +271,7 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
+- `GET /v1/sessions/{session_id}/exports/second-brain-handoff`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
 
 ## Acceptance Gate

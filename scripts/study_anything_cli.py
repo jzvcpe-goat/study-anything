@@ -207,6 +207,18 @@ def cmd_agent_test(args: argparse.Namespace) -> None:
     emit(args, post("/v1/agents/test", {"provider_id": args.provider_id}))
 
 
+def cmd_plugin_sdk(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/plugins/sdk"))
+
+
+def cmd_plugin_capabilities(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/plugins/capabilities"))
+
+
+def cmd_plugin_validate(args: argparse.Namespace) -> None:
+    emit(args, post("/v1/plugins/validate-package", {"source_path": args.source_path}))
+
+
 def cmd_sessions(args: argparse.Namespace) -> None:
     sessions = request("/v1/sessions")
     if args.json:
@@ -687,6 +699,22 @@ def build_parser() -> argparse.ArgumentParser:
     test_agent = subparsers.add_parser("agent-test", help="Run an agent health check")
     test_agent.add_argument("provider_id")
     test_agent.set_defaults(func=cmd_agent_test)
+
+    plugin_sdk = subparsers.add_parser("plugin-sdk", help="Show the public Plugin SDK contract")
+    plugin_sdk.set_defaults(func=cmd_plugin_sdk)
+
+    plugin_capabilities = subparsers.add_parser(
+        "plugin-capabilities",
+        help="Show installed plugin hooks, capabilities, trust, and runtime contracts",
+    )
+    plugin_capabilities.set_defaults(func=cmd_plugin_capabilities)
+
+    plugin_validate = subparsers.add_parser(
+        "plugin-validate",
+        help="Validate a local plugin package without installing or executing it",
+    )
+    plugin_validate.add_argument("source_path")
+    plugin_validate.set_defaults(func=cmd_plugin_validate)
 
     sessions = subparsers.add_parser("sessions", help="List learning sessions")
     sessions.set_defaults(func=cmd_sessions)

@@ -15,7 +15,7 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-04"
       },
-      "sourceDigest": "sha256:d398a34ff2c25e82feec49e2141d41201136cce45cd2467821aea37ac8f75716"
+      "sourceDigest": "sha256:6eea9815c495f9c40c6e7773512c7553059327b55246665911a5502c04f70033"
     },
     {
       "id": "example-agent-provider",
@@ -29,7 +29,21 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-04"
       },
-      "sourceDigest": "sha256:465f5298c88539414538ccf69f2927401194d3834c13acfc538f7d6bd3a9883d"
+      "sourceDigest": "sha256:1876b371cbebb8ec0b93694b6bfb014a7ccca68df1b33f6486ffc64918b2af15"
+    },
+    {
+      "id": "example-enrichment-importer",
+      "name": "Example Enrichment Importer",
+      "version": "0.1.0",
+      "path": "plugins/example-enrichment-importer",
+      "category": "enrichment",
+      "status": "bundled",
+      "review": {
+        "status": "maintainer_reviewed",
+        "reviewedBy": "Study Anything maintainers",
+        "reviewedAt": "2026-06-12"
+      },
+      "sourceDigest": "sha256:5cb435c23be5b63152dcdef3ddaf0c05f755e27e59054ea17d70a97d1f50eeb7"
     },
     {
       "id": "example-web-importer",
@@ -43,7 +57,7 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:d1738056dc2287c920b44932a030b531bcb7b9ad236a04f6cf1e0d1abf9961b4"
+      "sourceDigest": "sha256:b4817b1ede8c480950c52932faaa6825d6882bc8783a0c494a127bdedaf170fe"
     },
     {
       "id": "example-note-importer",
@@ -57,7 +71,7 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:3d0ec06eb2d261922f88eb60cdfa82356223509ee513ddc2259b866bfc0f1a98"
+      "sourceDigest": "sha256:a7fdb2736d1abfaa1cd9d2a3b47cf8b3d41e59ad402f89564d04d5e2790740e1"
     }
   ]
 }

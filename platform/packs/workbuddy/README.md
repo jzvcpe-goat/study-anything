@@ -48,6 +48,7 @@ Study Anything should own:
 
 - source-bound learning state
 - Learning Context Package validation and import
+- Plugin SDK contract, capability index, and local package validation
 - confirmed local importer runtime
 - optional retrieval projection and retrieval-to-session flows
 - quiz, grading, mastery, scribe, HITL
@@ -114,6 +115,9 @@ documents, app context, Markdown/Obsidian notes, or video slices before the lear
 If the workspace uses a reviewed local importer plugin, call `POST /v1/importers/{plugin_id}/run` with
 exact permission confirmation, then import the returned package. Keep `allow_network=false` unless the
 user explicitly approves the importer's `network:http` permission.
+Before installation or invocation, call `GET /v1/plugins/sdk`, `GET /v1/plugins/capabilities`, and
+`POST /v1/plugins/validate-package`. These endpoints do not copy plugin packages or execute
+entrypoints.
 
 If optional retrieval is healthy, call `POST /v1/sessions/{session_id}/retrieval/rebuild`, then
 `POST /v1/sessions/{session_id}/retrieval/search`, call

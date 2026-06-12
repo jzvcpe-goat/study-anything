@@ -65,6 +65,33 @@ def main() -> None:
         raise RuntimeError(f"Plugin registry review must remain metadata-only: {registry_review}")
     if registry_review.get("verified_count", 0) < 1:
         raise RuntimeError(f"Plugin registry review did not count verified plugins: {registry_review}")
+    plugin_sdk = request("/v1/plugins/sdk")
+    if plugin_sdk.get("schema_version") != "plugin-sdk-v1":
+        raise RuntimeError(f"Plugin SDK schema is not plugin-sdk-v1: {plugin_sdk}")
+    if plugin_sdk.get("remote_code_downloads_allowed") or plugin_sdk.get("entrypoints_executed"):
+        raise RuntimeError(f"Plugin SDK contract must remain metadata-only: {plugin_sdk}")
+    plugin_capabilities = request("/v1/plugins/capabilities")
+    if plugin_capabilities.get("schema_version") != "plugin-capability-index-v1":
+        raise RuntimeError(f"Plugin capability index schema is invalid: {plugin_capabilities}")
+    if (plugin_capabilities.get("privacy") or {}).get("entrypoints_executed"):
+        raise RuntimeError(f"Plugin capability index executed entrypoints: {plugin_capabilities}")
+    plugin_ids = {
+        plugin.get("plugin_id")
+        for plugin in plugin_capabilities.get("items", [])
+        if isinstance(plugin, dict)
+    }
+    if "example-enrichment-importer" not in plugin_ids:
+        raise RuntimeError(f"Plugin capability index did not include enrichment sample: {plugin_capabilities}")
+    plugin_validation = request(
+        "/v1/plugins/validate-package",
+        {"source_path": "plugins/example-exporter"},
+    )
+    if plugin_validation.get("schema_version") != "plugin-package-validation-v1":
+        raise RuntimeError(f"Plugin package validation schema is invalid: {plugin_validation}")
+    if plugin_validation.get("status") != "valid":
+        raise RuntimeError(f"Plugin package validation did not pass: {plugin_validation}")
+    if plugin_validation.get("execution_allowed_by_validation"):
+        raise RuntimeError(f"Plugin package validation attempted execution: {plugin_validation}")
 
     agents = request("/v1/agents/status")
     if agents.get("schema_version") != "agent-v1":

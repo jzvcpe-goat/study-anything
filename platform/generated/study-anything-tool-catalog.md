@@ -187,6 +187,74 @@ Privacy:
 }
 ```
 
+### `study_anything_plugin_sdk`
+
+- Method: `GET`
+- Path: `/v1/plugins/sdk`
+- Description: Read the public Study Anything Plugin SDK contract without executing plugin code.
+
+Output requirements:
+
+- schema_version == plugin-sdk-v1
+- manifest_schema_version == plugin-manifest-v1
+- entrypoints_executed == false
+- remote_code_downloads_allowed == false
+
+Privacy:
+
+```json
+{
+  "returns_agent_secrets": false,
+  "returns_plugin_source_code": false,
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_plugin_capabilities`
+
+- Method: `GET`
+- Path: `/v1/plugins/capabilities`
+- Description: List installed plugin hooks, capabilities, trust summaries, and alpha runtime contracts without executing plugin code.
+
+Output requirements:
+
+- schema_version == plugin-capability-index-v1
+- privacy.entrypoints_executed == false
+- items include bundled importer/exporter examples
+
+Privacy:
+
+```json
+{
+  "returns_agent_secrets": false,
+  "returns_plugin_source_code": false,
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_validate_plugin_package`
+
+- Method: `POST`
+- Path: `/v1/plugins/validate-package`
+- Description: Validate one explicitly selected local plugin package against the SDK contract without installing or executing it.
+
+Output requirements:
+
+- schema_version == plugin-package-validation-v1
+- privacy.entrypoints_executed == false
+- privacy.package_copied == false
+- execution_allowed_by_validation == false
+
+Privacy:
+
+```json
+{
+  "returns_agent_secrets": false,
+  "returns_plugin_source_code": false,
+  "returns_private_learning_data": false
+}
+```
+
 ### `study_anything_run_importer`
 
 - Method: `POST`

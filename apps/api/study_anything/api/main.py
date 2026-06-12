@@ -43,6 +43,11 @@ from study_anything.core.learning_package import build_learning_package_export
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.obsidian_export import build_obsidian_markdown_export
 from study_anything.core.plugin_registry import PluginRegistry
+from study_anything.core.plugin_sdk import (
+    plugin_capability_index,
+    plugin_sdk_contract,
+    validate_plugin_package,
+)
 from study_anything.core.plugin_trust import plugin_trust_policy
 from study_anything.core.quality_eval import build_agent_quality_eval, quality_eval_case_export
 from study_anything.core.recovery import recovery_status
@@ -208,6 +213,10 @@ class ResolveHitlRequest(BaseModel):
 
 
 class PluginPreviewRequest(BaseModel):
+    source_path: str
+
+
+class PluginValidatePackageRequest(BaseModel):
     source_path: str
 
 
@@ -1265,6 +1274,14 @@ def create_app() -> FastAPI:
     def list_plugins() -> list[dict[str, object]]:
         return [status.public_dict() for status in plugins.discover()]
 
+    @app.get("/v1/plugins/sdk")
+    def get_plugin_sdk() -> dict[str, object]:
+        return plugin_sdk_contract()
+
+    @app.get("/v1/plugins/capabilities")
+    def get_plugin_capabilities() -> dict[str, object]:
+        return plugin_capability_index(plugins.discover())
+
     @app.get("/v1/plugins/trust-policy")
     def get_plugin_trust_policy() -> dict[str, object]:
         return plugin_trust_policy()
@@ -1281,6 +1298,10 @@ def create_app() -> FastAPI:
             "install_dir": str(plugin_install_dir),
             "requires_confirmation": bool(status.manifest and status.manifest.permissions),
         }
+
+    @app.post("/v1/plugins/validate-package")
+    def validate_plugin_package_endpoint(payload: PluginValidatePackageRequest) -> dict[str, object]:
+        return validate_plugin_package(Path(payload.source_path).expanduser(), plugins)
 
     @app.post("/v1/plugins/install")
     def install_plugin(payload: PluginInstallRequest) -> dict[str, object]:

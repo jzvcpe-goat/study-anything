@@ -1,10 +1,13 @@
 {
+  "schemaVersion": "plugin-manifest-v1",
   "id": "example-web-importer",
   "name": "Example Web Importer",
+  "description": "Template importer for user-approved web excerpts fetched by a platform Agent outside Study Anything.",
   "version": "0.1.0",
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["importer"],
+  "capabilities": ["import.context", "import.web_excerpt"],
   "permissions": ["write:context", "network:http"],
   "publisher": {
     "name": "Study Anything contributors",

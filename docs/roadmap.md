@@ -242,6 +242,20 @@
 - Extend importer, platform, ecosystem, operator, and adoption checks so second-brain handoff is part
   of external release evidence.
 
+## v0.2.27-alpha
+
+- Add `plugin-sdk-v1`, a machine-readable contract for importer, enrichment, exporter,
+  source-verifier, Agent-tool, Agent-panel, and Agent-provider hooks.
+- Add `plugin-capability-index-v1` so Kimi, Codex, WorkBuddy, and local operators can inspect
+  installed plugin capabilities and trust reports without executing plugin code.
+- Add `plugin-package-validation-v1` for local plugin package validation before install, with
+  `entrypoints_executed=false`, `package_copied=false`, and no plugin source or Agent secrets
+  returned.
+- Add `plugins/example-enrichment-importer` and extend `plugins/example-exporter` as second-brain
+  exporter sample plugins.
+- Split plugin documentation into SDK and registry trust guides while keeping the OSS core
+  local-first and marketplace-free.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

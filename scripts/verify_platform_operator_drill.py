@@ -59,6 +59,9 @@ REQUIRED_EXPORT_EVIDENCE = [
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
     "second_brain.schema_version == second-brain-handoff-v1",
+    "plugin_sdk.schema_version == plugin-sdk-v1",
+    "plugin_capability_index.schema_version == plugin-capability-index-v1",
+    "plugin_package_validation.schema_version == plugin-package-validation-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -341,6 +344,9 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "obsidian_export_schema": "obsidian-markdown-export-v1",
             "learning_package_schema": "learning-package-v1",
             "second_brain_schema": "second-brain-handoff-v1",
+            "plugin_sdk_schema": "plugin-sdk-v1",
+            "plugin_capability_index_schema": "plugin-capability-index-v1",
+            "plugin_package_validation_schema": "plugin-package-validation-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

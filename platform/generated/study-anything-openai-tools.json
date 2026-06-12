@@ -166,6 +166,51 @@
   },
   {
     "function": {
+      "description": "Read the public Study Anything Plugin SDK contract without executing plugin code. Method: GET /v1/plugins/sdk.",
+      "name": "study_anything_plugin_sdk",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "List installed plugin hooks, capabilities, trust summaries, and alpha runtime contracts without executing plugin code. Method: GET /v1/plugins/capabilities.",
+      "name": "study_anything_plugin_capabilities",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Validate one explicitly selected local plugin package against the SDK contract without installing or executing it. Method: POST /v1/plugins/validate-package.",
+      "name": "study_anything_validate_plugin_package",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "source_path": {
+            "description": "Local path visible to the Study Anything API host.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_path"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package. Method: POST /v1/importers/{plugin_id}/run.",
       "name": "study_anything_run_importer",
       "parameters": {

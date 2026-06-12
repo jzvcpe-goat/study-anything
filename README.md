@@ -102,7 +102,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.26-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.27-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -115,7 +115,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.26-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.27-alpha
 ```
 
 ## Bring Your Own Agent
@@ -247,22 +247,35 @@ retrieval-backed loops. Importer integrations should first validate `learning-co
 
 ```text
 apps/api/                  FastAPI app and learning engine
-docs/                      Architecture, roadmap, plugin API, commercial model
+docs/                      Architecture, roadmap, plugin SDK, commercial model
 evals/                     External eval tool templates
 infra/compose/             Docker Compose stack
 platform/                  Platform Agent tool manifest and generated import assets
 fixtures/notebooklm/       NotebookLM-style Learning Context Package fixtures
-plugins/example-exporter/  Example exporter manifest
+plugins/example-exporter/  Example exporter and second-brain handoff template
 plugins/example-agent-provider/ Example agent provider manifest
 plugins/example-web-importer/ Example web importer manifest
 plugins/example-note-importer/ Example Markdown/Obsidian importer manifest
+plugins/example-enrichment-importer/ Example importer plus enrichment template
 scripts/                   Local smoke helpers
 skills/study-anything/     Repo-local Agent skill for CLI learning flows
 ```
 
 ## Plugin Ecosystem
 
-The alpha plugin surface supports manifest validation, discovery, and permission-gated local installation for importers, agent providers, agent tools, source verifiers, quiz generators, graders, exporters, and future client panels. See `docs/plugins.md` and `plugins/example-exporter`.
+The alpha plugin surface supports SDK contracts, manifest validation, capability indexing, local
+package validation, discovery, registry digest review, and permission-gated local installation for
+importers, enrichment builders, agent providers, agent tools, source verifiers, quiz generators,
+graders, exporters, and future client panels. See `docs/plugin-sdk.md`, `docs/plugin-registry.md`,
+`docs/plugins.md`, and `plugins/example-exporter`.
+
+Inspect the SDK and validate a local package without executing plugin code:
+
+```bash
+python3 scripts/study_anything_cli.py plugin-sdk
+python3 scripts/study_anything_cli.py plugin-capabilities
+python3 scripts/study_anything_cli.py plugin-validate plugins/example-exporter
+```
 
 Install an explicitly selected local plugin with the CLI without downloading or executing remote code:
 

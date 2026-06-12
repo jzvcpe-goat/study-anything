@@ -1,5 +1,8 @@
 # Plugin API
 
+For the machine-readable SDK contract, see `docs/plugin-sdk.md`.
+For registry digest, review, and signature policy, see `docs/plugin-registry.md`.
+
 Plugins extend Study Anything without changing the core workflow.
 
 ## Manifest
@@ -36,6 +39,7 @@ Each plugin ships a `plugin.json` file:
 ```
 
 Only `id`, `name`, `version`, `apiVersion`, `entrypoint`, `hooks`, and `permissions` are required.
+New plugins should also include `schemaVersion: plugin-manifest-v1`, `description`, and `capabilities`.
 Trust metadata is optional in the alpha and is treated as review context, not proof of authenticity.
 
 Supported review statuses:
@@ -52,6 +56,7 @@ Supported review statuses:
 - `agent_provider`: register an agent provider.
 - `agent_tool`: expose a backend tool available to an agent adapter.
 - `agent_panel`: register a future client panel for agent status or configuration.
+- `enrichment`: build redacted learning enrichment artifacts.
 - `source_verifier`: validate ISBN, DOI, arXiv, repo, or local source references.
 - `quiz_generator`: generate source-bound quiz items.
 - `grader`: grade answers.
@@ -75,6 +80,14 @@ Bundled examples:
   `learning-context-package-v1`.
 - `plugins/example-note-importer`: an importer template that turns Markdown or Obsidian note excerpts
   into `learning-context-package-v1` with backlink metadata.
+- `plugins/example-enrichment-importer`: an importer plus enrichment template for micro-lesson
+  artifacts.
+
+## SDK Surfaces
+
+- `GET /v1/plugins/sdk`: typed hook contract, permissions, capabilities, and privacy boundary.
+- `GET /v1/plugins/capabilities`: installed plugin capability index with trust summaries.
+- `POST /v1/plugins/validate-package`: validate one local plugin path without install or execution.
 
 ## Importer SDK Shape
 

@@ -36,6 +36,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "docs/second-brain-handoff.md",
     "docs/obsidian-export.md",
     "docs/notebooklm-bridge.md",
+    "docs/plugin-sdk.md",
+    "docs/plugin-registry.md",
     "docs/use-with-kimi.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
@@ -198,6 +200,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/platform-agent-integrations.md",
                 "docs/second-brain-handoff.md",
                 "docs/notebooklm-bridge.md",
+                "docs/plugin-sdk.md",
+                "docs/plugin-registry.md",
             ]
         )
     required_terms = ["Kimi", "Codex", "WorkBuddy", "NotebookLM", "Obsidian"]
@@ -440,6 +444,9 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "obsidian_schema": value.get("obsidian_schema"),
             "learning_package_schema": value.get("learning_package_schema"),
             "second_brain_schema": value.get("second_brain_schema"),
+            "plugin_sdk_schema": value.get("plugin_sdk_schema"),
+            "plugin_capability_index_schema": value.get("plugin_capability_index_schema"),
+            "plugin_package_validation_schema": value.get("plugin_package_validation_schema"),
         }
     if label == "platform_tools":
         return {
@@ -448,6 +455,9 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "manifest_schema": value.get("manifest_schema"),
             "agent_audit_status": value.get("agent_audit_status"),
             "quality_schema": value.get("quality_schema"),
+            "plugin_sdk_schema": value.get("plugin_sdk_schema"),
+            "plugin_capability_index_schema": value.get("plugin_capability_index_schema"),
+            "plugin_package_validation_schema": value.get("plugin_package_validation_schema"),
         }
     if label == "operator_drill":
         return {

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Iterable, List, Mapping, Optional
 
+
+PLUGIN_MANIFEST_SCHEMA_VERSION = "plugin-manifest-v1"
 
 ALLOWED_HOOKS = {
     "importer",
@@ -12,11 +14,30 @@ ALLOWED_HOOKS = {
     "agent_provider",
     "agent_tool",
     "agent_panel",
+    "enrichment",
     "source_verifier",
     "quiz_generator",
     "grader",
     "exporter",
     "ui_panel",
+}
+
+ALLOWED_PLUGIN_CAPABILITIES = {
+    "agent.invoke_tool",
+    "agent.register_provider",
+    "enrich.micro_lesson",
+    "enrich.visual_html",
+    "export.markdown",
+    "export.obsidian_note",
+    "export.second_brain_handoff",
+    "import.context",
+    "import.markdown_note",
+    "import.obsidian_note",
+    "import.web_excerpt",
+    "quiz.generate",
+    "answer.grade",
+    "source.verify_reference",
+    "ui.register_panel",
 }
 
 ALLOWED_PERMISSIONS = {
@@ -136,6 +157,9 @@ class PluginManifest:
     entrypoint: str
     hooks: List[str]
     permissions: List[str]
+    schema_version: str = PLUGIN_MANIFEST_SCHEMA_VERSION
+    capabilities: List[str] = field(default_factory=list)
+    description: Optional[str] = None
     publisher: Optional[PluginPublisher] = None
     review: Optional[PluginReview] = None
     signature: Optional[PluginSignature] = None
@@ -175,6 +199,15 @@ def _require_list(values: Mapping[str, object], key: str) -> List[str]:
     value = values.get(key)
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         raise ValueError(f"Plugin manifest requires string list '{key}'.")
+    return list(value)
+
+
+def _optional_list(values: Mapping[str, object], key: str) -> List[str]:
+    value = values.get(key)
+    if value is None:
+        return []
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        raise ValueError(f"Plugin manifest field '{key}' must be a string list when present.")
     return list(value)
 
 
@@ -228,8 +261,18 @@ def _validate_signature(values: Mapping[str, object]) -> PluginSignature:
 def validate_manifest(values: Mapping[str, object]) -> PluginManifest:
     hooks = _require_list(values, "hooks")
     permissions = _require_list(values, "permissions")
+    capabilities = _optional_list(values, "capabilities")
+    schema_version = _optional_string(values, "schemaVersion") or PLUGIN_MANIFEST_SCHEMA_VERSION
+    if schema_version != PLUGIN_MANIFEST_SCHEMA_VERSION:
+        raise ValueError(
+            "Unsupported plugin manifest schemaVersion: "
+            + schema_version
+            + ". Supported schemaVersion: "
+            + PLUGIN_MANIFEST_SCHEMA_VERSION
+        )
     _validate_members(hooks, ALLOWED_HOOKS, "hooks")
     _validate_members(permissions, ALLOWED_PERMISSIONS, "permissions")
+    _validate_members(capabilities, ALLOWED_PLUGIN_CAPABILITIES, "capabilities")
     publisher_values = _optional_mapping(values, "publisher")
     review_values = _optional_mapping(values, "review")
     signature_values = _optional_mapping(values, "signature")
@@ -241,6 +284,9 @@ def validate_manifest(values: Mapping[str, object]) -> PluginManifest:
         entrypoint=_require_string(values, "entrypoint"),
         hooks=hooks,
         permissions=permissions,
+        schema_version=schema_version,
+        capabilities=capabilities,
+        description=_optional_string(values, "description"),
         publisher=_validate_publisher(publisher_values) if publisher_values else None,
         review=_validate_review(review_values) if review_values else None,
         signature=_validate_signature(signature_values) if signature_values else None,

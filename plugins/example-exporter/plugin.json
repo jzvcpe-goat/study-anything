@@ -1,10 +1,13 @@
 {
+  "schemaVersion": "plugin-manifest-v1",
   "id": "example-exporter",
   "name": "Example Exporter",
+  "description": "Template exporter for redacted Markdown and second-brain handoff artifacts.",
   "version": "0.1.0",
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["exporter"],
+  "capabilities": ["export.markdown", "export.obsidian_note", "export.second_brain_handoff"],
   "permissions": ["read:sessions"],
   "publisher": {
     "name": "Study Anything contributors",
