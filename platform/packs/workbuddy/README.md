@@ -35,6 +35,7 @@ The workspace Agent should own:
 Study Anything should own:
 
 - source-bound learning state
+- Learning Context Package validation and import
 - quiz, grading, mastery, scribe, HITL
 - redacted Agent audit and eval artifacts
 
@@ -44,6 +45,7 @@ Against a running API, verify the imported tool surface and redacted evidence:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
@@ -79,5 +81,7 @@ The Obsidian Markdown export is for the user's second-brain workflow. The learni
 platform-agent handoff, NotebookLM-style bridges, or local archives. The shared run summary should
 include only compact mastery and redacted evidence, not raw source prose or learner answers.
 
-Use `POST /v1/sessions/{session_id}/enrichment` when WorkBuddy has collected browser pages,
-documents, app context, or video slices before the learning loop.
+Use `POST /v1/context-packages/validate`, `POST /v1/sessions/from-context-package`, and
+`POST /v1/sessions/{session_id}/context-package` when WorkBuddy has collected browser pages,
+documents, app context, Markdown/Obsidian notes, or video slices before the learning loop. The older
+`POST /v1/sessions/{session_id}/enrichment` endpoint remains available for simple one-off excerpts.

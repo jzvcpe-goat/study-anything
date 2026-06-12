@@ -126,6 +126,58 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
         self.assertIn("glossary_layer", case_ids)
         self.assertIn("answer_grading", case_ids)
 
+    def test_obsidian_export_has_stable_frontmatter_backlinks_and_safe_filename(self) -> None:
+        title = 'CON:/Unsafe [Learning] #Note ^ With "Quotes" And A Very Long Title ' * 3
+        with TemporaryDirectory() as tmpdir:
+            client, stack = self._client(Path(tmpdir))
+            with stack, client:
+                created = client.post(
+                    "/v1/sessions/from-context-package",
+                    json={
+                        "user_id": "obsidian-stability-user",
+                        "package": {
+                            "schema_version": "learning-context-package-v1",
+                            "title": title,
+                            "reference": "obsidian://vault/unsafe",
+                            "track": "PRODUCT",
+                            "items": [
+                                {
+                                    "source_type": "obsidian_note",
+                                    "reference": "obsidian://vault/unsafe",
+                                    "title": "Unsafe Learning Note",
+                                    "text": "A bounded excerpt about stable backlinks.",
+                                    "metadata": {
+                                        "obsidian_backlinks": [
+                                            "[[AI PM]]",
+                                            "Concept | Alias",
+                                            "AI PM",
+                                        ]
+                                    },
+                                }
+                            ],
+                        },
+                    },
+                )
+                self.assertEqual(created.status_code, 200, created.text)
+                session_id = created.json()["session"]["session_id"]
+                obsidian = client.get(f"/v1/sessions/{session_id}/exports/obsidian")
+
+        self.assertEqual(obsidian.status_code, 200, obsidian.text)
+        body = obsidian.json()
+        filename = body["filename"]
+        markdown = body["markdown"]
+
+        self.assertTrue(filename.endswith(".md"))
+        self.assertLessEqual(len(filename), 128)
+        for character in '<>:"/\\|?*#^[]':
+            self.assertNotIn(character, filename)
+        self.assertIn('source_reference: "obsidian://vault/unsafe"', markdown)
+        self.assertIn("  - study-anything/product", markdown)
+        self.assertIn("related_notes:", markdown)
+        self.assertIn('  - "[[AI PM]]"', markdown)
+        self.assertIn("- [[Concept - Alias]]", markdown)
+        self.assertEqual(markdown.count("[[AI PM]]"), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

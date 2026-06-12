@@ -38,6 +38,24 @@ class PluginManifestTests(unittest.TestCase):
 
         self.assertIn("agent_provider", manifest.hooks)
 
+    def test_importer_hook_and_context_permissions_are_supported(self) -> None:
+        manifest = validate_manifest(
+            {
+                "id": "context-importer",
+                "name": "Context Importer",
+                "version": "0.1.0",
+                "apiVersion": "0.1",
+                "entrypoint": "plugin.py",
+                "hooks": ["importer"],
+                "permissions": ["read:context", "write:context"],
+            }
+        )
+
+        self.assertEqual(manifest.hooks, ["importer"])
+        details = describe_permissions(manifest.permissions)
+        self.assertEqual(details[1].permission, "write:context")
+        self.assertEqual(details[1].risk, "high")
+
     def test_accepts_optional_trust_metadata(self) -> None:
         manifest = validate_manifest(
             {

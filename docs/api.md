@@ -88,10 +88,21 @@ the quiz loop. Supported layer names are `overview`, `glossary`, `examples`, and
 to `teach.overview`, `teach.glossary`, `teach.examples`, and `note.scribe` Agent capabilities. This
 endpoint returns private learning content and should be redacted by platform wrappers before logging.
 
-`POST /v1/sessions/{session_id}/enrichment` lets a platform Agent attach web pages, documents, video
-slices, or app-context excerpts as a source bundle. The response returns references and excerpt hashes,
-not raw item text. Platform wrappers should still treat the request and session state as private
-learning data.
+`POST /v1/context-packages/validate` validates `learning-context-package-v1` before import. The package
+supports `web`, `document`, `video_slice`, `app_context`, `markdown_note`, and `obsidian_note` items.
+It may contain bounded excerpts gathered by the platform Agent, but it must not include Agent
+credentials, API keys, or broad unbounded app dumps. The validation response returns source types,
+hashes, and metadata keys without item text.
+
+`POST /v1/sessions/from-context-package` creates a session from a validated Learning Context Package.
+`POST /v1/sessions/{session_id}/context-package` expands an existing session with the same package
+format. These endpoints are the preferred importer path for Kimi, Codex, WorkBuddy, NotebookLM-style,
+Markdown, and Obsidian workflows.
+
+`POST /v1/sessions/{session_id}/enrichment` remains available for simple one-off bounded excerpts. It
+lets a platform Agent attach web pages, documents, video slices, or app-context excerpts as a source
+bundle. The response returns references and excerpt hashes, not raw item text. Platform wrappers should
+still treat the request and session state as private learning data.
 
 ## Learning
 

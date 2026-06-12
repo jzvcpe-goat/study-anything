@@ -226,6 +226,19 @@ class PluginTrustTests(unittest.TestCase):
             self.assertGreaterEqual(review["review_required_count"], 1)
             self.assertEqual(review["update_available_count"], 1)
 
+    def test_bundled_importer_plugins_are_registry_verified(self) -> None:
+        review = PluginRegistry([ROOT.parents[1] / "plugins"]).registry_review().public_dict()
+        items = {item["plugin_id"]: item for item in review["items"]}
+
+        self.assertIn("example-web-importer", items)
+        self.assertIn("example-note-importer", items)
+        self.assertEqual(items["example-web-importer"]["registry_status"], "digest_verified")
+        self.assertEqual(items["example-note-importer"]["registry_status"], "digest_verified")
+        self.assertEqual(items["example-web-importer"]["review_status"], "maintainer_reviewed")
+        self.assertEqual(items["example-note-importer"]["review_status"], "maintainer_reviewed")
+        self.assertEqual(items["example-web-importer"]["action"], "ready")
+        self.assertEqual(items["example-note-importer"]["action"], "ready")
+
     def test_policy_is_local_first(self) -> None:
         policy = plugin_trust_policy()
 

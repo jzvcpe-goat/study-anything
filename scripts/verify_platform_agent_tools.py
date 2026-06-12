@@ -22,6 +22,9 @@ REQUIRED_TOOLS = {
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_validate_context_package",
+    "study_anything_create_session_from_context_package",
+    "study_anything_append_context_package",
     "study_anything_add_enrichment",
     "study_anything_teaching_layers",
     "study_anything_run",
@@ -36,6 +39,7 @@ REQUIRED_TOOLS = {
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
 REQUIRED_PLATFORM_PACKS = {"codex", "kimi", "workbuddy"}
+NOTEBOOKLM_FIXTURE = ROOT / "fixtures" / "notebooklm" / "notebooklm-style-context-package.json"
 BANNED_TOOL_PATH_FRAGMENTS = (
     "/v1/agents/providers",
     "/v1/agents/defaults",
@@ -160,6 +164,57 @@ def main() -> None:
     health = call_tool(tools, "study_anything_health")
     if health.get("status") != "ok":
         raise VerificationError(f"Health tool did not return ok: {health}")
+
+    context_fixture = json.loads(NOTEBOOKLM_FIXTURE.read_text(encoding="utf-8"))
+    context_private_fragments = [
+        str(item.get("text") or "")
+        for item in context_fixture.get("items", [])
+        if isinstance(item, dict)
+    ]
+    context_validation = call_tool(
+        tools,
+        "study_anything_validate_context_package",
+        {"package": context_fixture},
+    )
+    if context_validation.get("schema_version") != "learning-context-package-v1":
+        raise VerificationError(f"Context package validation returned invalid schema: {context_validation}")
+    if context_validation.get("status") != "valid":
+        raise VerificationError(f"Context package validation failed: {context_validation}")
+    if any(fragment in json.dumps(context_validation, ensure_ascii=False) for fragment in context_private_fragments):
+        raise VerificationError("Context package validation leaked raw fixture text.")
+    context_created = call_tool(
+        tools,
+        "study_anything_create_session_from_context_package",
+        {
+            "user_id": "platform-context-tools-smoke-user",
+            "use_demo_agent": True,
+            "package": context_fixture,
+        },
+    )
+    if context_created.get("status") != "session_created":
+        raise VerificationError(f"Context package session creation failed: {context_created}")
+    context_session = context_created.get("session") or {}
+    context_session_id = context_session.get("session_id")
+    if not isinstance(context_session_id, str) or not context_session_id:
+        raise VerificationError(f"Context package creation did not return a session id: {context_created}")
+    context_source_types = {
+        item.get("source_type")
+        for item in context_session.get("enrichment_items", [])
+        if isinstance(item, dict)
+    }
+    assert_contains_all(
+        context_source_types,
+        ["web", "document", "video_slice", "app_context", "markdown_note", "obsidian_note"],
+        "context package imported source types",
+    )
+    context_appended = call_tool(
+        tools,
+        "study_anything_append_context_package",
+        {"package": context_fixture},
+        session_id=context_session_id,
+    )
+    if context_appended.get("status") != "session_expanded":
+        raise VerificationError(f"Context package append failed: {context_appended}")
 
     private_source_text = "Private platform tool smoke source text must stay out of audit artifacts."
     private_enrichment_text = "Private enrichment web and video context must stay out of redacted evidence."

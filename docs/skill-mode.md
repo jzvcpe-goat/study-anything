@@ -51,8 +51,8 @@ Leave that terminal running, then use another terminal, browser, or agent to cal
 `http://127.0.0.1:8000`. Stop the foreground API with `Ctrl-C`.
 
 The deterministic demo creates a source-bound question, submits a grounded answer, updates mastery, and synthesizes an insight.
-It also verifies Agent eval, platform tools, an enriched platform lesson, Obsidian export, and the
-portable learning package.
+It also verifies Agent eval, platform tools, an enriched platform lesson, an importer-based lesson,
+Obsidian export, and the portable learning package.
 
 ## Agent Runtime Boundary
 
@@ -103,6 +103,20 @@ python3 scripts/study_anything_cli.py teach SESSION_ID \
   --language zh \
   --level beginner
 ```
+
+For mixed-source imports, prefer a Learning Context Package:
+
+```bash
+python3 scripts/study_anything_cli.py context-validate \
+  fixtures/notebooklm/notebooklm-style-context-package.json
+
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json --session
+```
+
+The package supports `web`, `document`, `video_slice`, `app_context`, `markdown_note`, and
+`obsidian_note` items. Use this path when a platform Agent, Kimi workspace, Codex run, or WorkBuddy
+workspace has collected several pieces of context before Study Anything starts teaching.
 
 For one command that exercises the full learning-plugin path:
 

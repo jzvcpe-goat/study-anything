@@ -39,6 +39,7 @@ Additional gateway and release acceptance commands:
 
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+- API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 - python3 scripts/verify_clean_clone_adoption.py --repo .
@@ -103,6 +104,85 @@ Privacy:
     "title"
   ],
   "request_contains_private_learning_data": true
+}
+```
+
+### `study_anything_validate_context_package`
+
+- Method: `POST`
+- Path: `/v1/context-packages/validate`
+- Description: Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.
+
+Output requirements:
+
+- schema_version == learning-context-package-v1
+- status == valid
+- package.source_types include web, document, video_slice, app_context, markdown_note, or obsidian_note as applicable
+- response omits item text
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "package.items.text",
+    "package.items.title"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_create_session_from_context_package`
+
+- Method: `POST`
+- Path: `/v1/sessions/from-context-package`
+- Description: Create a learning session directly from a validated Learning Context Package.
+
+Output requirements:
+
+- schema_version == learning-context-package-v1
+- status == session_created
+- session.stage == enrichment_attached
+- session.enrichment_items include excerpt_hash values
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "package.items.text",
+    "session.source.text",
+    "session.enrichment_items.text"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_append_context_package`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/context-package`
+- Description: Expand an existing learning session with a Learning Context Package.
+
+Output requirements:
+
+- schema_version == learning-context-package-v1
+- status == session_expanded
+- session.enrichment_items include appended context
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "package.items.text",
+    "session.source.text",
+    "session.enrichment_items.text"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
 }
 ```
 

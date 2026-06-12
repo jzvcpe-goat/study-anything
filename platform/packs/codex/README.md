@@ -18,6 +18,10 @@ python3 scripts/verify_clean_clone_adoption.py --repo .
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py demo
+python3 scripts/study_anything_cli.py context-validate \
+  fixtures/notebooklm/notebooklm-style-context-package.json
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json --session
 python3 scripts/study_anything_cli.py lesson \
   --title "Learning notes" \
   --reference "local://notes" \
@@ -30,12 +34,17 @@ python3 scripts/study_anything_cli.py quality-eval SESSION_ID
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_importer_lesson_flow.py
+API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
 
-For enrichment-first work, Codex should gather external context itself, call
-`POST /v1/sessions/{session_id}/enrichment`, then run teaching layers, quiz, grading, quality eval,
-and the Obsidian Markdown export at `GET /v1/sessions/{session_id}/exports/obsidian`.
+For importer-first work, Codex should gather external context itself, produce a Learning Context Package,
+call `POST /v1/context-packages/validate`, then use
+`POST /v1/sessions/from-context-package` or `POST /v1/sessions/{session_id}/context-package`.
+The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
+excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
+export at `GET /v1/sessions/{session_id}/exports/obsidian`.
 Use `GET /v1/sessions/{session_id}/exports/learning-package` or the CLI `package-export` command
 to create a portable learning package when the next step is a NotebookLM-style bridge, local archive,
 or platform-agent handoff.
@@ -47,6 +56,7 @@ A Codex integration must return both:
 - `agent-audit.status == verified`
 - `agent-eval-artifact-v1` with all required native gates passing
 - `agent-quality-eval-v1` with status `pass`
+- `learning-context-package-v1` for importer-created Learning Context Package inputs
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
 

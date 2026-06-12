@@ -6,6 +6,73 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/v1/context-packages/validate": {
+      "post": {
+        "description": "Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.",
+        "operationId": "study_anything_validate_context_package",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "package": {
+                    "additionalProperties": true,
+                    "description": "learning-context-package-v1 JSON. It may include bounded source excerpts, but must not include Agent credentials or API keys.",
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "package"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.",
+        "x-study-anything-output-requirements": [
+          "schema_version == learning-context-package-v1",
+          "status == valid",
+          "package.source_types include web, document, video_slice, app_context, markdown_note, or obsidian_note as applicable",
+          "response omits item text"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "package.items.text",
+            "package.items.title"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/health": {
       "get": {
         "description": "Check that the local Study Anything API is reachable before starting a learning loop.",
@@ -112,6 +179,89 @@
         ],
         "x-study-anything-privacy": {
           "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/from-context-package": {
+      "post": {
+        "description": "Create a learning session directly from a validated Learning Context Package.",
+        "operationId": "study_anything_create_session_from_context_package",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "package": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "track": {
+                    "description": "Optional override. If omitted, Study Anything uses package.track or ACADEMIC.",
+                    "type": "string"
+                  },
+                  "use_demo_agent": {
+                    "description": "True only for local demos and CI smoke tests.",
+                    "type": "boolean"
+                  },
+                  "user_id": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "package",
+                  "user_id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Create a learning session directly from a validated Learning Context Package.",
+        "x-study-anything-output-requirements": [
+          "schema_version == learning-context-package-v1",
+          "status == session_created",
+          "session.stage == enrichment_attached",
+          "session.enrichment_items include excerpt_hash values"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "package.items.text",
+            "session.source.text",
+            "session.enrichment_items.text"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
         }
       }
     },
@@ -366,6 +516,82 @@
             "answers",
             "grading_results",
             "insights"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/context-package": {
+      "post": {
+        "description": "Expand an existing learning session with a Learning Context Package.",
+        "operationId": "study_anything_append_context_package",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "package": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "package"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Expand an existing learning session with a Learning Context Package.",
+        "x-study-anything-output-requirements": [
+          "schema_version == learning-context-package-v1",
+          "status == session_expanded",
+          "session.enrichment_items include appended context"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "package.items.text",
+            "session.source.text",
+            "session.enrichment_items.text"
           ],
           "request_contains_private_learning_data": true,
           "returns_private_learning_data": true
@@ -941,6 +1167,7 @@
       "clean_clone_adoption_command": "python3 scripts/verify_clean_clone_adoption.py --repo .",
       "diagnostics_command": "python3 scripts/diagnose_adoption.py",
       "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+      "importer_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
       "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
       "openai_compatible_gateway_dry_run_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
       "platform_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",

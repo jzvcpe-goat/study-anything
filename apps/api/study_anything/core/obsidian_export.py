@@ -3,9 +3,19 @@
 from __future__ import annotations
 
 import re
-from typing import Any
+import json
+from typing import Any, Optional
 
 from .workflow import LearningState
+
+WINDOWS_RESERVED_FILENAMES = {
+    "con",
+    "prn",
+    "aux",
+    "nul",
+    *(f"com{index}" for index in range(1, 10)),
+    *(f"lpt{index}" for index in range(1, 10)),
+}
 
 
 def build_obsidian_markdown_export(state: LearningState) -> dict[str, object]:
@@ -21,6 +31,7 @@ def build_obsidian_markdown_export(state: LearningState) -> dict[str, object]:
         "mastery",
         "insights",
         "enrichment",
+        "backlinks",
     ]
     markdown = "\n".join(_markdown_lines(state))
     return {
@@ -45,18 +56,23 @@ def _markdown_lines(state: LearningState) -> list[str]:
     source = state.source
     assert source is not None
     title = source.title or "Study Anything Session"
+    backlinks = _obsidian_backlinks(state)
     lines = [
         "---",
-        f"study_anything_session: {state.session_id}",
-        f"track: {state.track}",
-        f"stage: {state.stage}",
+        f"study_anything_session: {_yaml_string(state.session_id)}",
+        f"track: {_yaml_string(state.track)}",
+        f"stage: {_yaml_string(state.stage)}",
         f"mastery_level: {state.mastery.level}",
-        f"mastery_bloom: {state.mastery.bloom}",
-        f"source_reference: {source.reference}",
-        f"source_excerpt_hash: {source.excerpt_hash}",
+        f"mastery_bloom: {_yaml_string(state.mastery.bloom)}",
+        f"source_title: {_yaml_string(title)}",
+        f"source_type: {_yaml_string(source.source_type)}",
+        f"source_reference: {_yaml_string(source.reference)}",
+        f"source_excerpt_hash: {_yaml_string(source.excerpt_hash)}",
         "tags:",
         "  - study-anything",
-        f"  - study-anything/{state.track.lower()}",
+        f"  - study-anything/{_tag_part(state.track)}",
+        "related_notes:",
+        *[f"  - {_yaml_string(backlink)}" for backlink in backlinks],
         "---",
         "",
         f"# {title}",
@@ -124,6 +140,11 @@ def _markdown_lines(state: LearningState) -> list[str]:
             )
     else:
         lines.append("_No enrichment context attached._")
+    lines.extend(["", "## Backlinks", ""])
+    if backlinks:
+        lines.extend([f"- {backlink}" for backlink in backlinks])
+    else:
+        lines.append("_No Obsidian backlinks provided._")
     lines.extend(["", "## Review Cue", "", "- Re-answer the quiz without opening the source."])
     return lines
 
@@ -140,7 +161,55 @@ def _stringify(value: Any) -> str:
 def _filename(state: LearningState) -> str:
     source = state.source
     title = source.title if source else state.session_id
-    slug = re.sub(r"[^a-zA-Z0-9\u4e00-\u9fff]+", "-", title).strip("-").lower()
+    slug = re.sub(r'[<>:"/\\|?*\x00-\x1f#^\[\]]+', "-", title)
+    slug = re.sub(r"[^a-zA-Z0-9\u4e00-\u9fff._ -]+", "-", slug)
+    slug = re.sub(r"[\s._-]+", "-", slug).strip(" .-_").lower()
     if not slug:
         slug = "study-anything"
+    if slug in WINDOWS_RESERVED_FILENAMES:
+        slug = f"study-anything-{slug}"
+    slug = slug[:96].strip(" .-_") or "study-anything"
     return f"study-anything-{slug}-{state.session_id[:8]}.md"
+
+
+def _yaml_string(value: Any) -> str:
+    return json.dumps(str(value), ensure_ascii=False)
+
+
+def _tag_part(value: str) -> str:
+    tag = re.sub(r"[^a-zA-Z0-9_-]+", "-", value.lower()).strip("-")
+    return tag or "general"
+
+
+def _obsidian_backlinks(state: LearningState) -> list[str]:
+    links: list[str] = []
+    seen: set[str] = set()
+    for item in state.enrichment_items:
+        candidates: list[Any] = []
+        raw_backlinks = item.metadata.get("obsidian_backlinks")
+        raw_related = item.metadata.get("backlinks")
+        if isinstance(raw_backlinks, list):
+            candidates.extend(raw_backlinks)
+        if isinstance(raw_related, list):
+            candidates.extend(raw_related)
+        if item.source_type == "obsidian_note":
+            candidates.append(item.title)
+        for candidate in candidates:
+            link = _normalize_backlink(candidate)
+            if link and link not in seen:
+                seen.add(link)
+                links.append(link)
+    return links
+
+
+def _normalize_backlink(value: Any) -> Optional[str]:
+    text = re.sub(r"[\r\n]+", " ", str(value or "")).strip()
+    if not text:
+        return None
+    if text.startswith("[[") and text.endswith("]]"):
+        text = text[2:-2].strip()
+    text = re.sub(r"\s*\|\s*", " - ", text)
+    text = re.sub(r"[\[\]]+", "", text).strip()
+    if not text:
+        return None
+    return f"[[{text}]]"

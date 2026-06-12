@@ -178,12 +178,25 @@
 - Kimi, Codex, and WorkBuddy packs now require `learning-package-v1` and the enriched platform lesson
   verifier as release evidence.
 
+## v0.2.19-alpha
+
+- `learning-context-package-v1` defines the import boundary for platform-collected web, document,
+  video-slice, app-context, Markdown, and Obsidian material.
+- Public API and CLI can validate a Learning Context Package, create a session from it, or expand an
+  existing session with it.
+- Bundled web and note importer plugin examples pass manifest and registry trust review.
+- NotebookLM-style support now has a concrete fixture and verifier while remaining independent of an
+  official NotebookLM API.
+- Obsidian export preserves backlinks from imported context, stabilizes frontmatter, and uses
+  vault-safe filenames.
+- Kimi, Codex, and WorkBuddy packs now require the importer lesson release gate.
+
 ## v0.3 Next
 
-- Importer plugin SDK.
+- Runtime execution for reviewed importer plugins.
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
-- Add NotebookLM package import/export adapters when stable API or reliable platform-agent operation
-  paths exist.
+- Add live NotebookLM-style adapters only when stable API or reliable platform-agent operation paths
+  exist.
 - Expand Agent quality eval suites for LangChain AgentEvals, Ragas, retrieval quality, and
   judge-model scoring.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.

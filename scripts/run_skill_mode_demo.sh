@@ -49,4 +49,7 @@ API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_agent_
 printf "Verifying enriched platform lesson flow ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_lesson_flow.py
 
+printf "Verifying importer-based platform lesson flow ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_importer_lesson_flow.py
+
 printf "ok    Skill Mode demo completed. API was cleaned up.\n"

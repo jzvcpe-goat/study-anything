@@ -14,8 +14,10 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.18 packs add four user-facing learning capabilities on top of the core loop:
+v0.2.19 packs add five user-facing learning capabilities on top of the core loop:
 
+- Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
+  material gathered by the platform;
 - enrichment input for web, document, video-slice, and app-context excerpts gathered by the platform;
 - quality eval evidence that separates invocation proof, schema validity, and teaching-quality gates;
 - Obsidian-compatible markdown export for second-brain workflows;
@@ -41,6 +43,7 @@ For a running API:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py

@@ -20,10 +20,12 @@ REQUIRED_ACCEPTANCE = {
     "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
     "agent_quality_eval.status == pass",
+    "learning_context_package.schema_version == learning-context-package-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
+    "verify_importer_lesson_flow.py",
     "verify_platform_lesson_flow.py",
     "verify_platform_agent_tools.py",
     "verify_agent_eval_flow.py",
@@ -118,6 +120,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "agent-eval",
         "quality",
         "Obsidian",
+        "Learning Context Package",
         "learning package",
         "raw source",
     )

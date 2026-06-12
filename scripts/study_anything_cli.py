@@ -60,6 +60,19 @@ def post(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     return request(path, payload or {})
 
 
+def load_json_file(path: str) -> Dict[str, Any]:
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            values = json.load(handle)
+    except OSError as exc:
+        raise StudyAnythingError(f"Cannot read JSON file {path}: {exc}") from exc
+    except json.JSONDecodeError as exc:
+        raise StudyAnythingError(f"{path} is not valid JSON: {exc}") from exc
+    if not isinstance(values, dict):
+        raise StudyAnythingError(f"{path} must contain a JSON object.")
+    return values
+
+
 def first_unanswered_quiz(session: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     answered = {answer["item_id"] for answer in session.get("answers", [])}
     return next(
@@ -276,6 +289,36 @@ def cmd_enrich(args: argparse.Namespace) -> None:
         ],
     }
     emit(args, post(f"/v1/sessions/{quote(args.session_id)}/enrichment", payload))
+
+
+def cmd_context_validate(args: argparse.Namespace) -> None:
+    package = load_json_file(args.package)
+    emit(args, post("/v1/context-packages/validate", {"package": package}))
+
+
+def cmd_context_import(args: argparse.Namespace) -> None:
+    package = load_json_file(args.package)
+    if args.session_id:
+        response = post(
+            f"/v1/sessions/{quote(args.session_id)}/context-package",
+            {"package": package},
+        )
+    else:
+        response = post(
+            "/v1/sessions/from-context-package",
+            {
+                "package": package,
+                "user_id": args.user_id,
+                "track": args.track,
+                "use_demo_agent": args.agent_mode == "demo",
+            },
+        )
+    if args.session and not args.json:
+        session = response.get("session")
+        if isinstance(session, dict):
+            print_session(session)
+            return
+    emit(args, response)
 
 
 def cmd_teach(args: argparse.Namespace) -> None:
@@ -523,6 +566,29 @@ def build_parser() -> argparse.ArgumentParser:
     enrich.add_argument("--bundle-title", default="Learning Enrichment Bundle")
     enrich.add_argument("--bundle-reference")
     enrich.set_defaults(func=cmd_enrich)
+
+    context_validate = subparsers.add_parser(
+        "context-validate",
+        help="Validate a Learning Context Package JSON file",
+    )
+    context_validate.add_argument("package", help="Path to learning-context-package-v1 JSON")
+    context_validate.set_defaults(func=cmd_context_validate)
+
+    context_import = subparsers.add_parser(
+        "context-import",
+        help="Create or expand a session from a Learning Context Package JSON file",
+    )
+    context_import.add_argument("package", help="Path to learning-context-package-v1 JSON")
+    context_import.add_argument("--session-id", help="Expand an existing session instead of creating one")
+    context_import.add_argument("--user-id", default="context-import-user")
+    context_import.add_argument("--track")
+    context_import.add_argument("--agent-mode", choices=["demo", "configured"], default="demo")
+    context_import.add_argument(
+        "--session",
+        action="store_true",
+        help="Print a compact session summary when possible",
+    )
+    context_import.set_defaults(func=cmd_context_import)
 
     teach = subparsers.add_parser("teach", help="Generate source-bound teaching layers")
     add_session_id(teach)

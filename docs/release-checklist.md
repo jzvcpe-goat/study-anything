@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.2.18-alpha
+## v0.2.19-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -26,10 +26,13 @@
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/quality` returns `schema_version=agent-quality-eval-v1` and `status=pass` after overview, glossary, quiz, grading, and synthesis.
 - [ ] Verify `GET /v1/sessions/{session_id}/exports/obsidian` returns `schema_version=obsidian-markdown-export-v1` without raw source text, raw enrichment text, Agent endpoints, or secrets.
 - [ ] Verify `GET /v1/sessions/{session_id}/exports/learning-package` returns `schema_version=learning-package-v1`, includes NotebookLM-style bridge metadata, and does not include raw source or enrichment text.
+- [ ] Verify `POST /v1/context-packages/validate` accepts `fixtures/notebooklm/notebooklm-style-context-package.json`, returns `schema_version=learning-context-package-v1`, and omits item text.
+- [ ] Verify `POST /v1/sessions/from-context-package` and `POST /v1/sessions/{session_id}/context-package` create and expand sessions with web/document/video/app/Markdown/Obsidian context.
 - [ ] Verify `POST /v1/sessions/{session_id}/enrichment` accepts web/document/video/app-context items and returns only references plus excerpt hashes.
 - [ ] When Node/npm package installation is allowed, run `API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required`.
 - [ ] When Node/npm package installation is allowed in a disposable checkout, run `.venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo --promptfoo-required`.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py` and verify `platform/study-anything-platform-tools.json` matches the public learning tool contract.
+- [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py` and verify importer -> lesson -> quality -> Obsidian -> learning package passes.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py` and verify the enriched lesson, quality eval, Obsidian export, and learning package all pass.
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml config`
 - [ ] `./scripts/doctor.sh`
@@ -37,8 +40,8 @@
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up --build mock-http-agent`
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.2.18-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.2.18-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.18-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.2.19-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.2.19-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.19-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -59,4 +62,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.2.18-alpha`.
+- [ ] Tag `v0.2.19-alpha`.

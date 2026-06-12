@@ -94,6 +94,23 @@ python3 scripts/study_anything_cli.py start \
   --text "Paste the source material here."
 ```
 
+When Kimi or the surrounding platform Agent has gathered multiple sources, build a
+`learning-context-package-v1` first instead of flattening everything into one prompt. Validate and
+import it with:
+
+```bash
+python3 scripts/study_anything_cli.py context-validate \
+  fixtures/notebooklm/notebooklm-style-context-package.json
+
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json --session
+```
+
+The package can contain `web`, `document`, `video_slice`, `app_context`, `markdown_note`, and
+`obsidian_note` excerpts. It must not contain Kimi credentials, provider API keys, or hidden system
+instructions. Use `POST /v1/sessions/{session_id}/context-package` when adding this package to an
+existing Study Anything session.
+
 `agent-add-http --set-default` registers the gateway for teaching layers, quiz generation, answer
 grading, insight synthesis, scribe notes, source verification, and embedding tasks unless you pass
 explicit `--capability` values.
@@ -115,6 +132,7 @@ For a full local acceptance run against the real Study Anything API and dry-run 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 ```
 
 Use the Obsidian export for second-brain notes. Use `package-export` or

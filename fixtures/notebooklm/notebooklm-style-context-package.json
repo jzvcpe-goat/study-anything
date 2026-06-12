@@ -1,0 +1,76 @@
+{
+  "schema_version": "learning-context-package-v1",
+  "package_id": "lcp-notebooklm-style-demo",
+  "title": "NotebookLM Style Learning Context",
+  "reference": "notebooklm-style://manual/demo",
+  "producer": "platform-agent-fixture",
+  "language": "zh",
+  "track": "PRODUCT",
+  "metadata": {
+    "official_notebooklm_api_required": false,
+    "bridge_mode": "manual_export_import_fixture"
+  },
+  "items": [
+    {
+      "source_type": "web",
+      "reference": "https://example.test/learning-science",
+      "title": "Learning Science Article",
+      "text": "Private fixture web excerpt: retrieval practice improves durable recall when learners actively reconstruct source-bound ideas.",
+      "locator": "section=overview",
+      "metadata": {
+        "importer_plugin": "example-web-importer"
+      }
+    },
+    {
+      "source_type": "document",
+      "reference": "file://local/ai-product-manager.pdf",
+      "title": "AI Product Manager PDF",
+      "text": "Private fixture document excerpt: a product manager should connect technical mechanisms, user outcomes, and measurable adoption signals.",
+      "locator": "page=3",
+      "metadata": {
+        "document_kind": "pdf"
+      }
+    },
+    {
+      "source_type": "video_slice",
+      "reference": "video://local/lesson-01",
+      "title": "Lesson One Clip",
+      "text": "Private fixture video excerpt: explain the concept first, then isolate professional terms, then ask a source-bound question.",
+      "locator": "00:01:10-00:02:20",
+      "metadata": {
+        "transcript_language": "en"
+      }
+    },
+    {
+      "source_type": "app_context",
+      "reference": "app://kimi/workspace/demo",
+      "title": "Kimi Workspace Note",
+      "text": "Private fixture app context excerpt: the platform agent owns browsing and workspace access while Study Anything owns learner state.",
+      "metadata": {
+        "platform_agent": "kimi-compatible"
+      }
+    },
+    {
+      "source_type": "markdown_note",
+      "reference": "markdown://vault/learning-loop",
+      "title": "Learning Loop Markdown Note",
+      "text": "Private fixture markdown excerpt: convert rough notes into reviewable learning packages before long-term memory export.",
+      "metadata": {
+        "importer_plugin": "example-note-importer"
+      }
+    },
+    {
+      "source_type": "obsidian_note",
+      "reference": "obsidian://vault/AI PM/Study Anything",
+      "title": "Study Anything Obsidian Note",
+      "text": "Private fixture obsidian excerpt: backlinks should preserve second-brain structure without storing external agent secrets.",
+      "metadata": {
+        "obsidian_backlinks": [
+          "[[AI PM]]",
+          "[[Learning Systems]]",
+          "NotebookLM Bridge"
+        ]
+      }
+    }
+  ]
+}
