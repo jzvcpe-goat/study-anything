@@ -191,9 +191,20 @@
   vault-safe filenames.
 - Kimi, Codex, and WorkBuddy packs now require the importer lesson release gate.
 
+## v0.2.20-alpha
+
+- Reviewed local importer plugins can run through `POST /v1/importers/{plugin_id}/run` after exact
+  permission confirmation.
+- Importer execution defaults to no network access; `network:http` requires `allow_network=true`.
+- Optional retrieval projection adds `GET /v1/retrieval/status`, rebuild/search APIs, and
+  retrieval-to-session flows.
+- LanceDB is the optional durable retrieval adapter; `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory` is only
+  for local smoke and platform Agent development.
+- `scripts/verify_importer_runtime_retrieval_flow.py` proves importer runtime -> retrieval -> lesson
+  -> quality eval -> Obsidian/learning-package export.
+
 ## v0.3 Next
 
-- Runtime execution for reviewed importer plugins.
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
 - Add live NotebookLM-style adapters only when stable API or reliable platform-agent operation paths
   exist.
@@ -201,7 +212,7 @@
   judge-model scoring.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
-- LanceDB reading embedding index and retrieval API.
+- External Agent embeddings for retrieval and retrieval quality evals.
 
 ## PMF Track
 

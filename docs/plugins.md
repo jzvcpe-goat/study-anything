@@ -81,9 +81,24 @@ Bundled examples:
 Importer plugins should produce a Learning Context Package rather than mutating Study Anything state
 directly. The package is then passed to:
 
+- `POST /v1/importers/{plugin_id}/run`
 - `POST /v1/context-packages/validate`
 - `POST /v1/sessions/from-context-package`
 - `POST /v1/sessions/{session_id}/context-package`
+
+Discovery, preview, install, and registry review remain metadata-only. `POST /v1/importers/{plugin_id}/run`
+is the only alpha endpoint that executes an importer entrypoint. It requires:
+
+- the plugin manifest to be valid and locally discoverable
+- the `importer` hook
+- `write:context` permission
+- exact `confirmed_permissions`
+- `allow_network=true` when the manifest requests `network:http`
+- a valid `learning-context-package-v1` return value from `build_context_package(...)`
+
+This runtime is intentionally narrow. It does not download code, store model keys, or grant browser/file
+access to plugins. Platform Agents should gather external data first and pass bounded excerpts into the
+importer inputs.
 
 The stable package schema is `learning-context-package-v1`:
 

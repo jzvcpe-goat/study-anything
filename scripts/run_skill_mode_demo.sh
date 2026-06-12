@@ -6,6 +6,7 @@ cd "$ROOT"
 
 export STUDY_ANYTHING_DATA_DIR="${STUDY_ANYTHING_DATA_DIR:-$ROOT/data/skill-mode-demo}"
 export API_PORT="${API_PORT:-8012}"
+export STUDY_ANYTHING_RETRIEVAL_BACKEND="${STUDY_ANYTHING_RETRIEVAL_BACKEND:-memory}"
 api_host="${SKILL_API_HOST:-127.0.0.1}"
 export STUDY_ANYTHING_API_BASE="http://$api_host:$API_PORT"
 export API_BASE="$STUDY_ANYTHING_API_BASE"
@@ -51,5 +52,8 @@ API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_lesson
 
 printf "Verifying importer-based platform lesson flow ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_importer_lesson_flow.py
+
+printf "Verifying importer runtime and retrieval flow ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_importer_runtime_retrieval_flow.py
 
 printf "ok    Skill Mode demo completed. API was cleaned up.\n"

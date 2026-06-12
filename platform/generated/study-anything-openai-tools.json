@@ -166,6 +166,195 @@
   },
   {
     "function": {
+      "description": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package. Method: POST /v1/importers/{plugin_id}/run.",
+      "name": "study_anything_run_importer",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_network": {
+            "default": false,
+            "description": "Only true after the platform Agent has reviewed and accepted network:http.",
+            "type": "boolean"
+          },
+          "confirmed_permissions": {
+            "description": "Must match the importer manifest permissions exactly.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "include_text": {
+            "default": true,
+            "type": "boolean"
+          },
+          "inputs": {
+            "additionalProperties": true,
+            "description": "Keyword arguments passed to the importer's build_context_package function.",
+            "type": "object"
+          },
+          "plugin_id": {
+            "description": "Importer plugin id, such as example-note-importer.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "plugin_id",
+          "inputs",
+          "confirmed_permissions"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Check whether optional retrieval projection is disabled, healthy, or unavailable. Method: GET /v1/retrieval/status.",
+      "name": "study_anything_retrieval_status",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Rebuild the optional retrieval index for one session from canonical Study Anything session state. Method: POST /v1/sessions/{session_id}/retrieval/rebuild.",
+      "name": "study_anything_retrieval_rebuild",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Search the rebuilt retrieval index for one session and return minimal source snippets. Method: POST /v1/sessions/{session_id}/retrieval/search.",
+      "name": "study_anything_retrieval_search",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 5,
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a new learning session from retrieval results produced by an existing indexed session. Method: POST /v1/sessions/from-retrieval.",
+      "name": "study_anything_create_session_from_retrieval",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 5,
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_session_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "track": {
+            "type": "string"
+          },
+          "use_demo_agent": {
+            "description": "True only for local demos and CI smoke tests.",
+            "type": "boolean"
+          },
+          "user_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "workspace_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_session_id",
+          "query",
+          "user_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Expand an existing learning session with a Learning Context Package generated from retrieval results. Method: POST /v1/sessions/{session_id}/retrieval/context-package.",
+      "name": "study_anything_append_retrieval_context",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 5,
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "source_session_id",
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle. Method: POST /v1/sessions/{session_id}/enrichment.",
       "name": "study_anything_add_enrichment",
       "parameters": {

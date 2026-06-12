@@ -14,7 +14,7 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.19 packs add five user-facing learning capabilities on top of the core loop:
+v0.2.20 packs add importer runtime and retrieval capabilities on top of the core loop:
 
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;

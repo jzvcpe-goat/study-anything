@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.2.19-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.2.20-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.19-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.20-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -164,7 +164,7 @@ in plaintext.
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.19-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.20-alpha
 ```
 
 This pulls the published API image, checks the runtime version, completes the API learning loop, and
@@ -381,6 +381,33 @@ For source checkouts, the same local install path is available from the CLI:
 ```bash
 python3 scripts/install_local_plugin.py /path/to/plugin
 ```
+
+## Optional Retrieval
+
+Retrieval is a rebuildable projection, not the source of truth. Session state remains in Postgres or
+the local JSON store. LanceDB stores source references, excerpt hashes, locators, minimal snippets, and
+vectors under the Study Anything data directory.
+
+Default `.env.example` keeps retrieval off:
+
+```bash
+LANCEDB_ENABLED=false
+LANCEDB_URI=/data/study-anything/lancedb
+LANCEDB_TABLE=study_anything_retrieval
+LANCEDB_VECTOR_DIMENSIONS=32
+```
+
+For a production-like self-host stack, set `LANCEDB_ENABLED=true` and restart the API. For local smoke
+without installing or opening LanceDB, use the explicit in-memory backend:
+
+```bash
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory ./scripts/launch_skill_mode.sh
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_importer_runtime_retrieval_flow.py
+```
+
+Do not treat the in-memory backend as durable. It exists only for local acceptance checks and platform
+Agent integration development.
 
 ## Stop
 

@@ -80,10 +80,12 @@ def integration_matrix() -> List[IntegrationStatus]:
             name="LanceDB",
             category="semantic_retrieval",
             target="Local vector index",
-            status="adapter_stub" if package_available("lancedb") else "not_installed",
-            runtime_check="import lancedb",
-            product_surface="Roadmap",
-            next_step="Add reading embedding index and retrieval API.",
+            status="optional_runtime_adapter"
+            if package_available("lancedb")
+            else "declared_dependency",
+            runtime_check="GET /v1/retrieval/status",
+            product_surface="Retrieval rebuild/search APIs",
+            next_step="Soak LanceDB retrieval under real self-host usage and add external Agent embeddings.",
         ),
         IntegrationStatus(
             name="Mem0",

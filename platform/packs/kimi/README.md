@@ -25,9 +25,14 @@ http://127.0.0.1:8000
 
 The tool surface includes:
 
+- `study_anything_run_importer` for confirmed local importer runtime.
 - `study_anything_validate_context_package` for Learning Context Package checks before import.
 - `study_anything_create_session_from_context_package` for creating a session from Kimi-collected context.
 - `study_anything_append_context_package` for expanding an existing session with new context.
+- `study_anything_retrieval_status`, `study_anything_retrieval_rebuild`, and
+  `study_anything_retrieval_search` for optional retrieval projection.
+- `study_anything_create_session_from_retrieval` and `study_anything_append_retrieval_context` for
+  turning retrieval results into a focused lesson.
 - `study_anything_add_enrichment` for web/document/video-slice/app-context excerpts gathered by Kimi or the platform agent.
 - `study_anything_agent_quality_eval` for the minimum teaching-quality gate.
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
@@ -88,10 +93,22 @@ context, Markdown notes, or Obsidian notes. Validate it with `POST /v1/context-p
 then create or expand a session with the context-package session tools. Do not store Kimi credentials
 or raw model secrets in the package.
 
+When a local importer plugin is installed and reviewed, Kimi-compatible platforms can call
+`POST /v1/importers/{plugin_id}/run` instead of hand-building the package. Confirm every manifest
+permission exactly. Leave `allow_network=false` unless the surrounding platform Agent has explicitly
+reviewed the importer and accepted `network:http`.
+
+For retrieval-based follow-up lessons, first check `GET /v1/retrieval/status`. If it is healthy, rebuild
+the source session index, search for the focus query, and create a new lesson with
+`POST /v1/sessions/from-retrieval`. Browser-only Kimi still needs a terminal, workspace Agent, or
+private gateway to make localhost calls.
+
 For quality-gate smoke, run:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_importer_runtime_retrieval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
