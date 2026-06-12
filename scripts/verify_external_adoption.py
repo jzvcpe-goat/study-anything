@@ -36,8 +36,10 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",
     "scripts/verify_external_adoption.py",
+    "scripts/verify_agent_eval_baseline.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
+    "evals/baselines/study-anything-agent-eval-baseline.json",
     "fixtures/notebooklm/notebooklm-style-context-package.json",
 ]
 
@@ -338,6 +340,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "agent_eval_baseline",
+                [python_bin, "scripts/verify_agent_eval_baseline.py", "--check"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -443,6 +450,19 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "openapi_path_count": value.get("generated_tool_assets", {}).get("openapi_path_count"),
             "platforms": sorted(value.get("platforms", {}).keys()),
             "no_frontend_required": value.get("pack", {}).get("no_frontend_required"),
+        }
+    if label == "agent_eval_baseline":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "baseline_version": value.get("baseline_version"),
+            "current_version": value.get("current_version"),
+            "failed_checks": [
+                check.get("check_id")
+                for check in value.get("checks", [])
+                if isinstance(check, dict) and check.get("status") != "pass"
+            ],
+            "external_eval_policy": value.get("external_eval_policy"),
         }
     if label == "notebooklm_importer":
         return {

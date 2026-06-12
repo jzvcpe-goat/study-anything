@@ -13,12 +13,14 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-operator-drill-transcript.json`
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
+- `evals/baselines/study-anything-agent-eval-baseline.json`
 
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.23 packs add a deterministic operator drill on top of the distributable adoption archive,
-`adoption-proof-v1` verifier, importer, retrieval, and ecosystem eval capabilities:
+v0.2.24 packs add a deterministic Agent eval regression baseline on top of the operator drill,
+distributable adoption archive, `adoption-proof-v1` verifier, importer, retrieval, and ecosystem
+eval capabilities:
 
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
@@ -33,6 +35,8 @@ v0.2.23 packs add a deterministic operator drill on top of the distributable ado
   without requiring a standalone frontend.
 - `study-anything-operator-drill-v1` transcript evidence that proves the pack can be consumed as an
   external platform tool directory.
+- `study-anything-agent-eval-regression-report-v1` evidence that the native eval scorecard did not
+  regress against the committed baseline.
 
 ## Packs
 
@@ -49,6 +53,7 @@ v0.2.23 packs add a deterministic operator drill on top of the distributable ado
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check
+.venv/bin/python scripts/verify_agent_eval_baseline.py --check
 .venv/bin/python scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree

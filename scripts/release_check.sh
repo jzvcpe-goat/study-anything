@@ -49,6 +49,7 @@ fi
   --current-worktree \
   --python "$python_bin"
 "$python_bin" scripts/verify_agent_eval_assets.py
+"$python_bin" scripts/verify_agent_eval_baseline.py --check
 "$python_bin" scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 "$python_bin" scripts/diagnose_adoption.py --ghcr-timeout-seconds 5
 "$python_bin" -m unittest discover apps/api/tests

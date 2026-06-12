@@ -66,6 +66,7 @@ assembling commands:
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -89,6 +90,7 @@ platform/generated/study-anything-platform-bundle.json
 platform/generated/study-anything-operator-drill-transcript.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
+evals/baselines/study-anything-agent-eval-baseline.json
 ```
 
 Use the OpenAPI file for HTTP tool importers. Use the OpenAI-compatible tools JSON for
@@ -103,6 +105,7 @@ python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```
 

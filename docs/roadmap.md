@@ -217,18 +217,17 @@
   external eval adapters -> Obsidian and learning-package export.
 - Kimi, Codex, and WorkBuddy packs now include one-command ecosystem eval acceptance commands.
 
-## v0.2.23-alpha
+## v0.2.24-alpha
 
-- Add a deterministic external-platform operator drill that unpacks the adoption archive and verifies
-  Kimi/Codex/WorkBuddy packs as consumable tool directories, not just repository-local docs.
-- Include `study-anything-operator-drill-v1` transcript evidence in generated platform assets and the
-  distributable adoption pack.
-- Extend `adoption-proof-v1` with platform-consumption evidence before the runtime learning/eval/export
-  flow starts.
-- Keep the product direction API/Skill/platform-agent first: real models, browsing, files, video
-  slicing, outside tools, and credentials stay in the user's platform Agent.
-- Preserve the no-standalone-frontend path while making the operator runbook more explicit for Kimi
-  Work, Codex Skill, and WorkBuddy-style HTTP tool workspaces.
+- Add a committed deterministic Agent eval baseline and a regression comparison report so release
+  checks can detect adapter, trajectory, quality-score, retrieval-score, and privacy regressions.
+- Include `study-anything-agent-eval-regression-report-v1` in the local-first release gate without
+  requiring judge-model keys or external package installs.
+- Keep Promptfoo, DeepEval, LangChain AgentEvals, and Ragas as mature ecosystem targets while making
+  fast native gates the default CI path.
+- Extend `adoption-proof-v1` and the platform adoption pack with eval baseline evidence.
+- Keep real model, platform, and judge-model credentials in the user's Agent/eval environment, not in
+  Study Anything.
 
 ## v0.3 Next
 

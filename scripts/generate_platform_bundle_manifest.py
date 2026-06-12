@@ -132,6 +132,11 @@ FILES: list[tuple[str, str, str]] = [
         "Wrapper for mature external Agent eval runners such as Promptfoo, DeepEval, and retrieval quality gates.",
     ),
     (
+        "scripts/verify_agent_eval_baseline.py",
+        "verification",
+        "Deterministic Agent eval baseline and regression comparison gate.",
+    ),
+    (
         "scripts/generate_platform_adoption_pack.py",
         "verification",
         "Deterministic generator for the distributable external-platform adoption pack.",
@@ -160,6 +165,11 @@ FILES: list[tuple[str, str, str]] = [
         "evals/deepeval/study_anything_quality_eval.py",
         "eval",
         "DeepEval custom metric adapter for redacted Study Anything quality reports.",
+    ),
+    (
+        "evals/baselines/study-anything-agent-eval-baseline.json",
+        "eval",
+        "Committed fast native Agent eval regression baseline.",
     ),
     (
         "docs/adoption.md",
@@ -192,9 +202,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.23-alpha.md",
+        "docs/release-notes/v0.2.24-alpha.md",
         "docs",
-        "Release notes for the real external-platform adoption drill release.",
+        "Release notes for the Agent eval maturity release.",
     ),
     (
         "docs/plugins.md",
