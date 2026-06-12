@@ -40,6 +40,18 @@ shell tools may not preserve background processes. For a persistent local API, r
 desktop shell does not preserve background processes, use `./scripts/launch_skill_mode.sh --foreground`
 and keep that terminal open while a browser or another agent uses the API.
 
+## Adoption Smoke
+
+Maintainers and external testers can verify the project from a disposable clean clone:
+
+```bash
+python3 scripts/verify_clean_clone_adoption.py --repo .
+```
+
+This checks Skill Mode, the OpenAI-compatible gateway dry-run, teaching layers, quiz, grading,
+mastery, `agent-audit`, and `agent-eval/artifact`. See `docs/adoption.md` for Promptfoo, Kimi,
+Codex, WorkBuddy, diagnostics, and published-image fallback paths.
+
 ## Docker Self-Host
 
 Install Docker Desktop, start its daemon, then run:
@@ -73,7 +85,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.15-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.16-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -86,7 +98,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.15-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.16-alpha
 ```
 
 ## Bring Your Own Agent

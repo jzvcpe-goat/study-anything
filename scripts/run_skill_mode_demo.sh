@@ -8,6 +8,7 @@ export STUDY_ANYTHING_DATA_DIR="${STUDY_ANYTHING_DATA_DIR:-$ROOT/data/skill-mode
 export API_PORT="${API_PORT:-8012}"
 api_host="${SKILL_API_HOST:-127.0.0.1}"
 export STUDY_ANYTHING_API_BASE="http://$api_host:$API_PORT"
+export API_BASE="$STUDY_ANYTHING_API_BASE"
 
 cleanup() {
   ./scripts/stop_skill_mode.sh >/dev/null 2>&1 || true
@@ -37,6 +38,6 @@ printf "Verifying OpenAI-compatible gateway dry-run flow ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_openai_compatible_gateway.py
 
 printf "Verifying platform-agent tool manifest ...\n"
-"$python_bin" scripts/verify_platform_agent_tools.py
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_agent_tools.py
 
 printf "ok    Skill Mode demo completed. API was cleaned up.\n"

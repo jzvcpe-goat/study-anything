@@ -40,6 +40,9 @@ Additional gateway and release acceptance commands:
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+- python3 scripts/verify_clean_clone_adoption.py --repo .
+- python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
+- python3 scripts/diagnose_adoption.py
 
 ## Tools
 

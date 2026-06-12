@@ -150,6 +150,9 @@ def evidence_commands(evidence: Dict[str, Any]) -> List[str]:
         "local_verification_command",
         "openai_compatible_gateway_dry_run_command",
         "gateway_only_command",
+        "clean_clone_adoption_command",
+        "promptfoo_clean_clone_command",
+        "diagnostics_command",
     ]
     return [str(evidence[key]) for key in keys if evidence.get(key)]
 

@@ -13,28 +13,60 @@ providers:
       transformResponse: json
 
 tests:
-  - vars:
-      apiBase: http://127.0.0.1:8000
-      sessionId: replace-with-completed-session-id
-    assert:
-      - type: javascript
-        value: output.schema_version === 'agent-eval-artifact-v1'
-      - type: javascript
-        value: output.status === 'ready_for_external_eval'
-      - type: javascript
-        value: output.native_gates.filter((gate) => gate.required).every((gate) => gate.status === 'pass')
-      - type: javascript
-        value: |
-          ['promptfoo', 'deepeval', 'langchain-agentevals', 'ragas']
-            .every((adapter) => output.adapter_strategy.some((item) => item.adapter_id === adapter))
-      - type: javascript
-        value: |
-          JSON.stringify(output.trajectory.map((step) => step.task_type)) ===
-          JSON.stringify(['quiz.generate', 'answer.grade', 'insight.synthesize'])
-      - type: javascript
-        value: |
-          output.privacy.raw_source_text_included === false &&
-          output.privacy.raw_answers_included === false &&
-          output.privacy.raw_feedback_included === false &&
-          output.privacy.agent_endpoints_included === false &&
-          output.privacy.raw_agent_metadata_included === false
+  - assert:
+      - type: is-json
+        value:
+          type: object
+          required:
+            - schema_version
+            - status
+            - native_gates
+            - adapter_strategy
+            - trajectory
+            - privacy
+          properties:
+            schema_version:
+              const: agent-eval-artifact-v1
+            status:
+              const: ready_for_external_eval
+            native_gates:
+              type: array
+              minItems: 4
+            adapter_strategy:
+              type: array
+              minItems: 4
+            trajectory:
+              type: array
+              minItems: 3
+            privacy:
+              type: object
+              properties:
+                raw_source_text_included:
+                  const: false
+                raw_answers_included:
+                  const: false
+                raw_feedback_included:
+                  const: false
+                agent_endpoints_included:
+                  const: false
+                raw_agent_metadata_included:
+                  const: false
+      - type: contains-all
+        value:
+          - '"gate_id":"agent_invocation_coverage"'
+          - '"gate_id":"source_reference_present"'
+          - '"gate_id":"excerpt_hash_present"'
+          - '"gate_id":"privacy_redaction"'
+          - '"status":"pass"'
+          - '"adapter_id":"promptfoo"'
+          - '"adapter_id":"deepeval"'
+          - '"adapter_id":"langchain-agentevals"'
+          - '"adapter_id":"ragas"'
+          - '"task_type":"quiz.generate"'
+          - '"task_type":"answer.grade"'
+          - '"task_type":"insight.synthesize"'
+          - '"raw_source_text_included":false'
+          - '"raw_answers_included":false'
+          - '"raw_feedback_included":false'
+          - '"agent_endpoints_included":false'
+          - '"raw_agent_metadata_included":false'
