@@ -187,6 +187,21 @@ FILES: list[tuple[str, str, str]] = [
         "Learning Enrichment Layer context contract and micro-lesson export guide.",
     ),
     (
+        "docs/second-brain-handoff.md",
+        "docs",
+        "Strict Obsidian, NotebookLM-style, and local archive handoff guide.",
+    ),
+    (
+        "docs/obsidian-export.md",
+        "docs",
+        "Obsidian export privacy and second-brain note guide.",
+    ),
+    (
+        "docs/notebooklm-bridge.md",
+        "docs",
+        "NotebookLM-style manual bridge contract.",
+    ),
+    (
         "docs/kimi-agent-gateway.md",
         "docs",
         "Kimi-compatible user-owned HTTP Agent gateway guide.",
@@ -212,9 +227,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.25-alpha.md",
+        "docs/release-notes/v0.2.26-alpha.md",
         "docs",
-        "Release notes for the Learning Enrichment Layer release.",
+        "Release notes for the second-brain handoff release.",
     ),
     (
         "docs/plugins.md",

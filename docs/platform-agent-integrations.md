@@ -42,6 +42,7 @@ private Agent platforms:
 - redacted Markdown+HTML enrichment micro-lesson export
 - Obsidian-compatible markdown export
 - portable learning package export for NotebookLM-style bridges and platform-agent handoff
+- strict second-brain handoff export for Obsidian, NotebookLM-style manual import, and local archives
 
 It intentionally does not expose Agent provider configuration, deprecated model aliases, plugin
 installation, encrypted sync export, PMF export, or other management surfaces. Configure user-owned
@@ -154,6 +155,7 @@ python3 scripts/study_anything_cli.py quality-eval SESSION_ID
 python3 scripts/study_anything_cli.py enrichment-artifact SESSION_ID --markdown
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
+python3 scripts/study_anything_cli.py second-brain-handoff SESSION_ID --archive-dir /tmp/study-anything-archive
 ```
 
 For Codex, symlink the skill:
@@ -191,9 +193,9 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 ```
 
 The verifiers complete enriched and importer-based lessons, then fetch Agent audit, Agent eval, quality
-eval, Obsidian Markdown, and `learning-package-v1`. Use the learning package when the platform Agent
-needs to hand the result to a NotebookLM-style workflow, local archive, or later knowledge-base
-connector.
+eval, Obsidian Markdown, `learning-package-v1`, and `second-brain-handoff-v1`. Use the second-brain
+handoff when the platform Agent needs to hand the result to a NotebookLM-style workflow, Obsidian
+vault, local archive, or later knowledge-base connector without logging answers or grading feedback.
 
 `agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
 grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit

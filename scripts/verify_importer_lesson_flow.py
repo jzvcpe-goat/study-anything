@@ -152,9 +152,11 @@ def main() -> None:
     quality = request(f"/v1/sessions/{quote(session_id)}/agent-eval/quality")
     obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
     package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
+    second_brain = request(f"/v1/sessions/{quote(session_id)}/exports/second-brain-handoff")
     assert_schema(quality, "agent-quality-eval-v1", "quality eval")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(package, "learning-package-v1", "learning package")
+    assert_schema(second_brain, "second-brain-handoff-v1", "second-brain handoff")
     if quality.get("status") != "pass":
         raise ImporterLessonVerificationError(f"Quality eval did not pass: {quality}")
     if package.get("notebooklm_bridge", {}).get("raw_source_text_included") is not False:
@@ -167,6 +169,7 @@ def main() -> None:
             raise ImporterLessonVerificationError(f"Obsidian export missing backlink {expected_link}.")
     assert_no_leaks("obsidian raw fixture boundary", obsidian, private_fragments)
     assert_no_leaks("learning-package raw fixture boundary", package, private_fragments)
+    assert_no_leaks("second-brain strict fixture boundary", second_brain, private_fragments + [args.answer])
 
     print(
         json.dumps(
@@ -180,6 +183,7 @@ def main() -> None:
                 "quality_status": quality["status"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": package["schema_version"],
+                "second_brain_schema": second_brain["schema_version"],
                 "notebooklm_bridge_status": package["notebooklm_bridge"]["status"],
             },
             ensure_ascii=False,

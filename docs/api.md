@@ -125,6 +125,7 @@ Platform wrappers should still treat the request and session state as private le
 - `GET /v1/sessions/{session_id}/exports/obsidian`
 - `GET /v1/sessions/{session_id}/exports/enrichment-artifact`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
+- `GET /v1/sessions/{session_id}/exports/second-brain-handoff`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
 `agent-audit` proves redacted Agent invocation coverage. `agent-eval/artifact` converts that audit into
@@ -151,6 +152,13 @@ Agent handoff, NotebookLM-style bridges, Obsidian pipelines, and local archive w
 source references, excerpt hashes, teaching layers, quiz review, mastery, and insights. It does not
 include raw source or enrichment text; platform wrappers should still treat generated teaching content,
 answers, feedback, and insights as private learning data.
+
+`exports/second-brain-handoff` returns `second-brain-handoff-v1`, the strict redacted export for
+Obsidian, NotebookLM-style manual import, Kimi, Codex, WorkBuddy-style platform Agents, and local
+archive workflows. It contains a `second-brain-obsidian-note-v1`, `second-brain-archive-manifest-v1`,
+NotebookLM manual bridge metadata, and archive file payloads. It excludes raw source text, raw
+enrichment text, learner answers, grading feedback, Agent endpoints, raw Agent metadata, and secrets.
+Use this endpoint as the default platform-Agent handoff surface.
 
 ## Optional Learning Topology
 

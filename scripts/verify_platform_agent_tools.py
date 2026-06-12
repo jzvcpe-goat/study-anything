@@ -43,6 +43,7 @@ REQUIRED_TOOLS = {
     "study_anything_obsidian_export",
     "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
+    "study_anything_second_brain_handoff_export",
 }
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
@@ -479,8 +480,39 @@ def main() -> None:
     if private_enrichment_text in json.dumps(package, ensure_ascii=False):
         raise VerificationError("Learning package leaked raw enrichment text.")
 
+    second_brain = call_tool(
+        tools,
+        "study_anything_second_brain_handoff_export",
+        session_id=session_id,
+    )
+    if second_brain.get("schema_version") != "second-brain-handoff-v1":
+        raise VerificationError(f"Unexpected second-brain handoff schema: {second_brain}")
+    second_brain_privacy = second_brain.get("privacy") or {}
+    forbidden_second_brain_flags = [
+        "raw_source_text_included",
+        "raw_enrichment_text_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "agent_metadata_included",
+        "secrets_included",
+    ]
+    if any(second_brain_privacy.get(flag) for flag in forbidden_second_brain_flags):
+        raise VerificationError(f"Second-brain privacy flags are unsafe: {second_brain_privacy}")
+    archive_manifest = ((second_brain.get("local_archive") or {}).get("manifest") or {})
+    if archive_manifest.get("schema_version") != "second-brain-archive-manifest-v1":
+        raise VerificationError(f"Second-brain archive manifest is invalid: {second_brain}")
+    obsidian_note = second_brain.get("obsidian") or {}
+    if obsidian_note.get("schema_version") != "second-brain-obsidian-note-v1":
+        raise VerificationError(f"Second-brain Obsidian note is invalid: {second_brain}")
+    if private_answer in json.dumps(second_brain, ensure_ascii=False):
+        raise VerificationError("Second-brain handoff leaked learner answer.")
+    if private_source_text in json.dumps(second_brain, ensure_ascii=False):
+        raise VerificationError("Second-brain handoff leaked raw source text.")
+    if private_enrichment_text in json.dumps(second_brain, ensure_ascii=False):
+        raise VerificationError("Second-brain handoff leaked raw enrichment text.")
+
     serialized_evidence = json.dumps(
-        {"audit": audit, "artifact": artifact, "quality": quality},
+        {"audit": audit, "artifact": artifact, "quality": quality, "second_brain": second_brain},
         ensure_ascii=False,
     )
     forbidden_fragments = [
@@ -513,6 +545,7 @@ def main() -> None:
                 "obsidian_schema": obsidian["schema_version"],
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "learning_package_schema": package["schema_version"],
+                "second_brain_schema": second_brain["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,
                 "teaching_tasks": teaching_tasks,

@@ -92,6 +92,7 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                 obsidian = client.get(f"/v1/sessions/{session_id}/exports/obsidian")
                 package = client.get(f"/v1/sessions/{session_id}/exports/learning-package")
                 artifact = client.get(f"/v1/sessions/{session_id}/exports/enrichment-artifact")
+                second_brain = client.get(f"/v1/sessions/{session_id}/exports/second-brain-handoff")
 
         quality_body = quality.json()
         self.assertEqual(quality.status_code, 200)
@@ -139,6 +140,27 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
         self.assertEqual(artifact_body["privacy"]["raw_enrichment_text_included"], False)
         self.assertNotIn(private_web_text, artifact.text)
         self.assertNotIn(private_video_text, artifact.text)
+
+        second_brain_body = second_brain.json()
+        self.assertEqual(second_brain.status_code, 200, second_brain.text)
+        self.assertEqual(second_brain_body["schema_version"], "second-brain-handoff-v1")
+        self.assertEqual(
+            second_brain_body["obsidian"]["schema_version"],
+            "second-brain-obsidian-note-v1",
+        )
+        self.assertEqual(
+            second_brain_body["local_archive"]["manifest"]["schema_version"],
+            "second-brain-archive-manifest-v1",
+        )
+        self.assertEqual(second_brain_body["notebooklm_bridge"]["status"], "ready_for_manual_import")
+        self.assertFalse(second_brain_body["privacy"]["learner_answers_included"])
+        self.assertFalse(second_brain_body["privacy"]["grading_feedback_included"])
+        self.assertFalse(second_brain_body["privacy"]["agent_metadata_included"])
+        self.assertIn("## Review Queue", second_brain_body["obsidian"]["markdown"])
+        self.assertIn("Answer: _not included in second-brain handoff_", second_brain_body["obsidian"]["markdown"])
+        self.assertNotIn(private_web_text, second_brain.text)
+        self.assertNotIn(private_video_text, second_brain.text)
+        self.assertNotIn("Retrieval practice uses effortful recall.", second_brain.text)
 
     def test_quality_cases_endpoint_is_fixed_dataset_contract(self) -> None:
         with TemporaryDirectory() as tmpdir:

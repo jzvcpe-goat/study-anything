@@ -42,7 +42,8 @@
     "learning_context_package.schema_version == learning-context-package-v1",
     "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
-    "learning_package.schema_version == learning-package-v1"
+    "learning_package.schema_version == learning-package-v1",
+    "second_brain.schema_version == second-brain-handoff-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",

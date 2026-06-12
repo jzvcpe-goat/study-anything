@@ -184,6 +184,7 @@ python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
+python3 scripts/study_anything_cli.py second-brain-handoff SESSION_ID --archive-dir /tmp/study-anything-archive
 ```
 
 `agent-audit` verifies that `quiz.generate`, `answer.grade`, and `insight.synthesize` were handled by
@@ -191,6 +192,6 @@ a Study Anything Agent provider. `agent-eval` emits the redacted `agent-eval-art
 Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. Neither command returns source text, answers,
 feedback bodies, Agent endpoints, or raw Agent metadata.
 
-`quality-eval` adds deterministic teaching-quality gates. `obsidian-export` creates a Markdown note
-for second-brain workflows. `package-export` creates `learning-package-v1`, a portable JSON package
-for platform-agent handoff, NotebookLM-style bridges, or local archives.
+`quality-eval` adds deterministic teaching-quality gates. `obsidian-export` creates a user-owned
+Markdown note. `package-export` creates `learning-package-v1`. `second-brain-handoff` is the strict
+redacted Obsidian, NotebookLM-style, and local archive export for platform-agent handoff.

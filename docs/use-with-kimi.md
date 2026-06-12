@@ -49,9 +49,16 @@ platform/generated/study-anything-openai-tools.json
 - `study_anything_enrichment_artifact_export`
 - `study_anything_obsidian_export`
 - `study_anything_learning_package_export`
+- `study_anything_second_brain_handoff_export`
 
 This mode is the preferred early ecosystem path because it keeps the UX inside
 Kimi while Study Anything remains local-first.
+
+For long-term memory, Kimi should prefer
+`study_anything_second_brain_handoff_export`. It returns an Obsidian note,
+NotebookLM manual bridge metadata, and a local archive manifest without raw
+source text, learner answers, grading feedback, Agent metadata, endpoints, or
+secrets.
 
 ## Mode 3: Local Agent Gateway
 

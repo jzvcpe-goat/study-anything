@@ -255,12 +255,14 @@ def main() -> None:
     )
     obsidian = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/obsidian")
     learning_package = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/learning-package")
+    second_brain = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/second-brain-handoff")
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
     assert_schema(quality, "agent-quality-eval-v1", "agent quality")
     assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(learning_package, "learning-package-v1", "learning package")
+    assert_schema(second_brain, "second-brain-handoff-v1", "second-brain handoff")
     if audit.get("status") != "verified" or quality.get("status") != "pass":
         raise VerificationError(f"Audit/quality gates failed: audit={audit} quality={quality}")
 
@@ -292,8 +294,14 @@ def main() -> None:
             "enrichment_artifact": enrichment_artifact,
             "obsidian": obsidian,
             "learning_package": learning_package,
+            "second_brain": second_brain,
         },
         [],
+    )
+    assert_no_leaks(
+        "second-brain strict privacy boundary",
+        second_brain,
+        [private_importer_text, private_platform_context, private_answer, args.user_id],
     )
 
     print(
@@ -311,6 +319,7 @@ def main() -> None:
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": learning_package["schema_version"],
+                "second_brain_schema": second_brain["schema_version"],
             },
             ensure_ascii=False,
             sort_keys=True,

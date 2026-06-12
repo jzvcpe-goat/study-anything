@@ -96,12 +96,15 @@ GET /v1/sessions/{session_id}/agent-eval/quality
 GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package
+GET /v1/sessions/{session_id}/exports/second-brain-handoff
 ```
 
 The enrichment artifact is a redacted Markdown+HTML micro-lesson for the workspace conversation.
 The Obsidian Markdown export is for the user's second-brain workflow. The learning package is for
-platform-agent handoff, NotebookLM-style bridges, or local archives. The shared run summary should
-include only compact mastery and redacted evidence, not raw source prose or learner answers.
+platform-agent handoff, NotebookLM-style bridges, or local archives. The second-brain handoff is the
+preferred shared workspace export because it excludes learner answers and grading feedback. The
+shared run summary should include only compact mastery and redacted evidence, not raw source prose or
+learner answers.
 
 Use `POST /v1/context-packages/validate`, `POST /v1/sessions/from-context-package`, and
 `POST /v1/sessions/{session_id}/context-package` when WorkBuddy has collected browser pages,
