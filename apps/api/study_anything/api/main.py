@@ -49,6 +49,11 @@ from study_anything.core.retrieval import (
     RetrievalUnavailable,
     build_retrieval_index,
 )
+from study_anything.core.retrieval_eval import (
+    RetrievalQualityInput,
+    build_retrieval_quality_eval,
+    retrieval_quality_case_export,
+)
 from study_anything.core.store import create_session_store
 from study_anything.core.sync_package import (
     MIN_PASSPHRASE_LENGTH,
@@ -419,6 +424,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/evals/quality/cases")
     def get_quality_eval_cases() -> dict[str, object]:
         return quality_eval_case_export()
+
+    @app.get("/v1/evals/retrieval/cases")
+    def get_retrieval_eval_cases() -> dict[str, object]:
+        return retrieval_quality_case_export()
 
     @app.get("/v1/pmf/summary")
     def pmf_interest_summary() -> dict[str, object]:
@@ -936,6 +945,57 @@ def create_app() -> FastAPI:
                 query=payload.query,
                 limit=payload.limit,
             ).public_dict()
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.get("/v1/sessions/{session_id}/retrieval/eval")
+    def eval_retrieval(
+        session_id: str,
+        q: str,
+        limit: int = 5,
+    ) -> dict[str, object]:
+        try:
+            store.get(session_id)
+            result_set = retrieval_index.search(
+                session_id=session_id,
+                query=q,
+                limit=limit,
+            )
+            return build_retrieval_quality_eval(
+                RetrievalQualityInput(
+                    session_id=session_id,
+                    query=q,
+                    retrieval_status=retrieval_index.status().public_dict(),
+                    result_set=result_set,
+                )
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.post("/v1/sessions/{session_id}/retrieval/eval")
+    def eval_retrieval_post(
+        session_id: str,
+        payload: RetrievalSearchRequest,
+    ) -> dict[str, object]:
+        try:
+            store.get(session_id)
+            result_set = retrieval_index.search(
+                session_id=session_id,
+                query=payload.query,
+                limit=payload.limit,
+            )
+            return build_retrieval_quality_eval(
+                RetrievalQualityInput(
+                    session_id=session_id,
+                    query=payload.query,
+                    retrieval_status=retrieval_index.status().public_dict(),
+                    result_set=result_set,
+                )
+            )
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         except RetrievalUnavailable as exc:

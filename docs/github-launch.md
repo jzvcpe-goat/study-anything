@@ -49,9 +49,9 @@ Confirm:
 - `scripts/verify_importer_lesson_flow.py` succeeds against a running API, proving Learning Context
   Package import, NotebookLM-style fixture handling, Obsidian backlinks, quality eval, and
   `learning-package-v1`.
-- `scripts/verify_published_image_launch.py --tag v0.2.20-alpha` can pull the public API image,
+- `scripts/verify_published_image_launch.py --tag v0.2.21-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
-- `docs/release-notes/v0.2.20-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.21-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -61,17 +61,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.20-alpha
-git push origin v0.2.20-alpha
+git tag v0.2.21-alpha
+git push origin v0.2.21-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.20-alpha \
+gh release create v0.2.21-alpha \
   --prerelease \
-  --title "Study Anything v0.2.20-alpha" \
-  --notes-file docs/release-notes/v0.2.20-alpha.md
+  --title "Study Anything v0.2.21-alpha" \
+  --notes-file docs/release-notes/v0.2.21-alpha.md
 ```
 
 ## GitHub Settings
@@ -88,8 +88,8 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.20-alpha
-python3 scripts/verify_published_image_launch.py --tag v0.2.20-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.21-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.21-alpha
 ```
 
 If the local pull is too slow but the manifest and GitHub `docker-images` workflow are green, record
@@ -97,14 +97,14 @@ the diagnostic fallback instead of leaving the smoke ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.2.20-alpha \
+  --tag v0.2.21-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.20-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.21-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

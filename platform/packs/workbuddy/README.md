@@ -50,10 +50,14 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_runtime_retrieval_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
 
 If the workspace also wants a copy-ready user-owned HTTP Agent example, use the OpenAI-compatible
@@ -95,5 +99,6 @@ exact permission confirmation, then import the returned package. Keep `allow_net
 user explicitly approves the importer's `network:http` permission.
 
 If optional retrieval is healthy, call `POST /v1/sessions/{session_id}/retrieval/rebuild`, then
-`POST /v1/sessions/{session_id}/retrieval/search`, and use `POST /v1/sessions/from-retrieval` to start
-a focused follow-up lesson from minimal snippets.
+`POST /v1/sessions/{session_id}/retrieval/search`, call
+`POST /v1/sessions/{session_id}/retrieval/eval` for redacted retrieval/context quality gates, and use
+`POST /v1/sessions/from-retrieval` to start a focused follow-up lesson from minimal snippets.

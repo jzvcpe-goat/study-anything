@@ -19,6 +19,11 @@ from study_anything.core.retrieval import (
     documents_from_state,
     minimal_snippet,
 )
+from study_anything.core.retrieval_eval import (
+    RetrievalQualityInput,
+    build_retrieval_quality_eval,
+    retrieval_quality_case_export,
+)
 from study_anything.core.store import InMemorySessionStore
 from study_anything.core.workflow import LearningWorkflow, new_session, submit_reading
 from study_anything.core.workspace import LocalWorkspaceStore
@@ -73,6 +78,41 @@ class RetrievalTests(unittest.TestCase):
         with self.assertRaises(RetrievalUnavailable):
             index.search(session_id="missing", query="anything")
 
+    def test_retrieval_quality_eval_is_redacted_and_passes(self) -> None:
+        index = InMemoryRetrievalIndex(dimensions=16)
+        state = new_session("retrieval-user")
+        private_text = (
+            "Private source body about active recall and feedback should only appear "
+            "as a minimal retrieval snippet, not inside the eval report."
+        )
+        state = submit_reading(
+            state,
+            source_type="local_text",
+            reference="local://retrieval-eval",
+            title="Retrieval Eval",
+            text=private_text,
+        )
+        index.rebuild_session(state)
+        result_set = index.search(session_id=state.session_id, query="active recall feedback")
+
+        report = build_retrieval_quality_eval(
+            RetrievalQualityInput(
+                session_id=state.session_id,
+                query="active recall feedback",
+                retrieval_status=index.status().public_dict(),
+                result_set=result_set,
+            )
+        )
+
+        self.assertEqual(report["schema_version"], "retrieval-quality-eval-v1")
+        self.assertEqual(report["status"], "pass")
+        self.assertNotIn(private_text, str(report))
+        self.assertNotIn("snippet", report["retrieval"]["result_summaries"][0])
+        self.assertEqual(
+            retrieval_quality_case_export()["schema_version"],
+            "study-anything-retrieval-quality-cases-v1",
+        )
+
 
 class RetrievalApiTests(unittest.TestCase):
     def _client(self, retrieval_index: object, root: Path) -> tuple[TestClient, ExitStack]:
@@ -117,6 +157,10 @@ class RetrievalApiTests(unittest.TestCase):
                     f"/v1/sessions/{session_id}/retrieval/search",
                     params={"q": "source snippets follow-up", "limit": 2},
                 )
+                evaled = client.get(
+                    f"/v1/sessions/{session_id}/retrieval/eval",
+                    params={"q": "source snippets follow-up", "limit": 2},
+                )
                 created = client.post(
                     "/v1/sessions/from-retrieval",
                     json={
@@ -130,6 +174,10 @@ class RetrievalApiTests(unittest.TestCase):
         self.assertEqual(rebuilt.json()["indexed_count"], 1)
         self.assertEqual(searched.status_code, 200, searched.text)
         self.assertEqual(searched.json()["status"], "ready")
+        self.assertEqual(evaled.status_code, 200, evaled.text)
+        self.assertEqual(evaled.json()["schema_version"], "retrieval-quality-eval-v1")
+        self.assertEqual(evaled.json()["status"], "pass")
+        self.assertFalse(evaled.json()["privacy"]["result_snippets_included"])
         self.assertEqual(created.status_code, 200, created.text)
         self.assertEqual(created.json()["status"], "session_created")
         self.assertEqual(created.json()["session"]["stage"], "enrichment_attached")

@@ -31,6 +31,7 @@ The tool surface includes:
 - `study_anything_append_context_package` for expanding an existing session with new context.
 - `study_anything_retrieval_status`, `study_anything_retrieval_rebuild`, and
   `study_anything_retrieval_search` for optional retrieval projection.
+- `study_anything_retrieval_quality_eval` for redacted retrieval/context quality gates.
 - `study_anything_create_session_from_retrieval` and `study_anything_append_retrieval_context` for
   turning retrieval results into a focused lesson.
 - `study_anything_add_enrichment` for web/document/video-slice/app-context excerpts gathered by Kimi or the platform agent.
@@ -100,8 +101,9 @@ reviewed the importer and accepted `network:http`.
 
 For retrieval-based follow-up lessons, first check `GET /v1/retrieval/status`. If it is healthy, rebuild
 the source session index, search for the focus query, and create a new lesson with
-`POST /v1/sessions/from-retrieval`. Browser-only Kimi still needs a terminal, workspace Agent, or
-private gateway to make localhost calls.
+`POST /v1/sessions/from-retrieval`. Then call `POST /v1/sessions/{session_id}/retrieval/eval` against
+the indexed source session to prove retrieval/context quality without logging snippets. Browser-only
+Kimi still needs a terminal, workspace Agent, or private gateway to make localhost calls.
 
 For quality-gate smoke, run:
 
@@ -109,8 +111,12 @@ For quality-gate smoke, run:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_runtime_retrieval_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 

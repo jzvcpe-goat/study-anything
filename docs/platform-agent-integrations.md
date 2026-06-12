@@ -38,6 +38,7 @@ private Agent platforms:
 - redacted Agent audit
 - redacted Agent eval artifact
 - redacted teaching-quality eval
+- redacted retrieval/context quality eval
 - Obsidian-compatible markdown export
 - portable learning package export for NotebookLM-style bridges and platform-agent handoff
 
@@ -53,6 +54,8 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 ```
 
 `./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
@@ -223,6 +226,7 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/retrieval/status` optional retrieval status
 - `POST /v1/sessions/{session_id}/retrieval/rebuild` optional retrieval projection
 - `POST /v1/sessions/{session_id}/retrieval/search` optional retrieval search
+- `POST /v1/sessions/{session_id}/retrieval/eval` optional retrieval/context quality eval
 - `POST /v1/sessions/from-retrieval` optional retrieval-to-session path
 - `POST /v1/sessions/{session_id}/retrieval/context-package` optional retrieval append path
 - `POST /v1/sessions/{session_id}/enrichment` optional
@@ -252,7 +256,10 @@ A platform integration is acceptable when it can complete this sequence:
 9. Run `scripts/verify_importer_lesson_flow.py` for package-import release evidence.
 10. Run `scripts/verify_importer_runtime_retrieval_flow.py` with retrieval explicitly enabled when
    validating importer runtime plus retrieval.
-11. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+11. Run `scripts/verify_platform_ecosystem_eval_flow.py` when validating the full platform Agent path:
+   importer, enrichment, retrieval, retrieval eval, teaching, learning loop, external eval adapters,
+   Obsidian, and learning-package export.
+12. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -263,6 +270,8 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_runtime_retrieval_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```

@@ -14,12 +14,14 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.20 packs add importer runtime and retrieval capabilities on top of the core loop:
+v0.2.21 packs add importer runtime, retrieval, and ecosystem eval capabilities on top of the core loop:
 
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
 - enrichment input for web, document, video-slice, and app-context excerpts gathered by the platform;
 - quality eval evidence that separates invocation proof, schema validity, and teaching-quality gates;
+- retrieval/context quality eval evidence for source binding, snippet minimality, query relevance, and
+  Learning Context Package handoff;
 - Obsidian-compatible markdown export for second-brain workflows;
 - a portable learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and
   local archives.
@@ -44,10 +46,12 @@ For a running API:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
 
 For adoption troubleshooting:

@@ -38,6 +38,7 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("platform/packs/kimi/pack.json", file_paths)
         self.assertIn("platform/packs/workbuddy/pack.json", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
+        self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
         self.assertIn("fixtures/notebooklm/notebooklm-style-context-package.json", file_paths)
         self.assertIn("skills/study-anything/SKILL.md", file_paths)
         for item in payload["files"]:

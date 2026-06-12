@@ -1296,6 +1296,93 @@
         }
       }
     },
+    "/v1/sessions/{session_id}/retrieval/eval": {
+      "post": {
+        "description": "Return redacted retrieval/context quality gates for a rebuilt retrieval index and query.",
+        "operationId": "study_anything_retrieval_quality_eval",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 5,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "query": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return redacted retrieval/context quality gates for a rebuilt retrieval index and query.",
+        "x-study-anything-output-requirements": [
+          "schema_version == retrieval-quality-eval-v1",
+          "status == pass or needs_review",
+          "quality_score is numeric",
+          "gates include retrieval_available, result_count, source_binding, snippet_minimality, query_relevance, context_package_valid",
+          "privacy.result_snippets_included == false"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "full source text",
+            "answers",
+            "feedback",
+            "agent endpoints",
+            "raw agent metadata",
+            "secrets",
+            "retrieval snippets"
+          ],
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/sessions/{session_id}/retrieval/rebuild": {
       "post": {
         "description": "Rebuild the optional retrieval index for one session from canonical Study Anything session state.",
@@ -1634,7 +1721,8 @@
         "all required native gates pass",
         "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
         "learning_package.schema_version == learning-package-v1"
-      ]
+      ],
+      "retrieval_eval_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
     },
     "api_base_env": "STUDY_ANYTHING_API_BASE",
     "name": "study-anything-learning-tools",

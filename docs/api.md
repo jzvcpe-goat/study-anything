@@ -117,6 +117,8 @@ still treat the request and session state as private learning data.
 - `GET /v1/sessions/{session_id}/agent-audit`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/evals/quality/cases`
+- `GET /v1/evals/retrieval/cases`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
@@ -156,6 +158,8 @@ generated insights.
 - `POST /v1/sessions/{session_id}/retrieval/rebuild`
 - `GET /v1/sessions/{session_id}/retrieval/search?q=...`
 - `POST /v1/sessions/{session_id}/retrieval/search`
+- `GET /v1/sessions/{session_id}/retrieval/eval?q=...`
+- `POST /v1/sessions/{session_id}/retrieval/eval`
 - `POST /v1/sessions/from-retrieval`
 - `POST /v1/sessions/{session_id}/retrieval/context-package`
 
@@ -164,6 +168,12 @@ canonical session state. Retrieval stores source references, excerpt hashes, loc
 and deterministic vectors. It does not store Agent credentials. The POST search endpoint is preferred
 for platform tool wrappers; the GET endpoint is for local debugging. Retrieval-created sessions import
 minimal snippets as a new Learning Context Package.
+
+`retrieval/eval` returns `retrieval-quality-eval-v1`, a redacted quality gate for platform Agent and
+Ragas-style workflows. It checks retrieval availability, result count, source binding, snippet
+minimality, query relevance, and whether the result set can become a valid Learning Context Package.
+The eval report does not include raw source text, learner answers, grading feedback, Agent endpoints,
+secrets, or retrieval snippets.
 
 ## HITL and Events
 

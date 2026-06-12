@@ -127,6 +127,13 @@ def main() -> None:
     if searched.get("status") != "ready" or not searched.get("results"):
         raise VerificationError(f"Retrieval search returned no results: {searched}")
 
+    retrieval_quality = request(
+        f"/v1/sessions/{quote(source_session_id)}/retrieval/eval?{search_query}"
+    )
+    assert_schema(retrieval_quality, "retrieval-quality-eval-v1", "retrieval quality")
+    if retrieval_quality.get("status") != "pass":
+        raise VerificationError(f"Retrieval quality eval did not pass: {retrieval_quality}")
+
     created_lesson = request(
         "/v1/sessions/from-retrieval",
         {
@@ -167,6 +174,7 @@ def main() -> None:
     assert_no_secret_like_text("importer runtime retrieval flow", {
         "importer": importer,
         "retrieval": searched,
+        "retrieval_quality": retrieval_quality,
         "quality": quality,
         "obsidian": obsidian,
         "learning_package": learning_package,
@@ -182,6 +190,7 @@ def main() -> None:
                 "retrieval_status": retrieval_status["status"],
                 "indexed_count": rebuilt["indexed_count"],
                 "retrieval_result_count": len(searched["results"]),
+                "retrieval_quality_status": retrieval_quality["status"],
                 "lesson_stage": completed["stage"],
                 "quality_status": quality["status"],
                 "obsidian_schema": obsidian["schema_version"],

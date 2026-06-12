@@ -24,6 +24,7 @@ REQUIRED_TOOLS = {
     "study_anything_retrieval_status",
     "study_anything_retrieval_rebuild",
     "study_anything_retrieval_search",
+    "study_anything_retrieval_quality_eval",
     "study_anything_create_session_from_retrieval",
     "study_anything_append_retrieval_context",
     "study_anything_add_enrichment",
@@ -129,6 +130,7 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("study_anything_agent_eval_artifact", catalog)
         self.assertIn("study_anything_run_importer", catalog)
         self.assertIn("study_anything_retrieval_search", catalog)
+        self.assertIn("study_anything_retrieval_quality_eval", catalog)
 
 
 if __name__ == "__main__":

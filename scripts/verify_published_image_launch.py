@@ -191,7 +191,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tag",
-        default="v0.2.20-alpha",
+        default="v0.2.21-alpha",
         help="Published Study Anything image tag.",
     )
     parser.add_argument(

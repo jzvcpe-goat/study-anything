@@ -121,10 +121,13 @@ After answering, collect redacted proof:
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py retrieval-eval SOURCE_SESSION_ID --query "focus topic"
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
 
 For a full local acceptance run against the real Study Anything API and dry-run gateway:
@@ -133,6 +136,8 @@ For a full local acceptance run against the real Study Anything API and dry-run 
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 ```
 
 Use the Obsidian export for second-brain notes. Use `package-export` or

@@ -29,6 +29,7 @@ REQUIRED_TOOLS = {
     "study_anything_retrieval_status",
     "study_anything_retrieval_rebuild",
     "study_anything_retrieval_search",
+    "study_anything_retrieval_quality_eval",
     "study_anything_create_session_from_retrieval",
     "study_anything_append_retrieval_context",
     "study_anything_add_enrichment",
@@ -263,6 +264,24 @@ def main() -> None:
         )
         if searched.get("schema_version") != "retrieval-search-v1":
             raise VerificationError(f"Retrieval search returned invalid schema: {searched}")
+        retrieval_quality = call_tool(
+            tools,
+            "study_anything_retrieval_quality_eval",
+            {"query": "learning context package", "limit": 2},
+            session_id=context_session_id,
+        )
+        if retrieval_quality.get("schema_version") != "retrieval-quality-eval-v1":
+            raise VerificationError(
+                f"Retrieval quality eval returned invalid schema: {retrieval_quality}"
+            )
+        if retrieval_quality.get("status") != "pass":
+            raise VerificationError(
+                f"Retrieval quality eval did not pass: {retrieval_quality}"
+            )
+        if (retrieval_quality.get("privacy") or {}).get("result_snippets_included"):
+            raise VerificationError(
+                f"Retrieval quality eval returned snippet-bearing evidence: {retrieval_quality}"
+            )
 
     private_source_text = "Private platform tool smoke source text must stay out of audit artifacts."
     private_enrichment_text = "Private enrichment web and video context must stay out of redacted evidence."

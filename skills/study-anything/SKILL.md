@@ -98,6 +98,7 @@ follow-up lesson:
 python3 scripts/study_anything_cli.py retrieval-status
 python3 scripts/study_anything_cli.py retrieval-rebuild SESSION_ID
 python3 scripts/study_anything_cli.py retrieval-search SESSION_ID --query "focus topic"
+python3 scripts/study_anything_cli.py retrieval-eval SESSION_ID --query "focus topic"
 python3 scripts/study_anything_cli.py retrieval-import \
   --source-session-id SESSION_ID \
   --query "focus topic" \
@@ -142,6 +143,7 @@ python3 scripts/study_anything_cli.py events SESSION_ID
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py retrieval-eval SOURCE_SESSION_ID --query "focus topic"
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 python3 scripts/study_anything_cli.py hitl
@@ -152,6 +154,7 @@ the required learning tasks. Use `agent-eval` when another platform or CI job ne
 for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
 Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
 `package-export` for platform-agent, NotebookLM-style, or local archive handoff.
+Use `retrieval-eval` before claiming retrieval/context quality for follow-up lessons.
 
 Resolve a HITL task only after obtaining the missing information or user decision:
 
@@ -176,3 +179,12 @@ python3 scripts/study_anything_cli.py demo
 ```
 
 Do not present demo output as real model reasoning.
+
+For the full platform ecosystem gate, start Skill Mode with retrieval enabled and run:
+
+```bash
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory ./scripts/run_skill_mode_demo.sh
+```
+
+This includes importer runtime, platform enrichment, retrieval quality eval, DeepEval-compatible
+quality eval, Obsidian export, and learning-package export.

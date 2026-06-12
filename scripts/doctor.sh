@@ -10,7 +10,7 @@ cd "$ROOT"
 env_file="${ENV_FILE:-.env}"
 profile="${STACK_PROFILE:-core}"
 use_published_images="${USE_PUBLISHED_IMAGES:-false}"
-image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.20-alpha}"
+image_tag="${STUDY_ANYTHING_IMAGE_TAG:-v0.2.21-alpha}"
 docker_source_path="${STUDY_ANYTHING_DOCKER_SOURCE_PATH:-$ROOT}"
 
 is_true() {
@@ -78,6 +78,11 @@ fi
 env_value() {
   key="$1"
   default="$2"
+  eval "override=\${$key-}"
+  if [ -n "$override" ]; then
+    printf "%s\n" "$override"
+    return
+  fi
   if [ -f "$env_file" ] && command -v python3 >/dev/null 2>&1; then
     python3 - "$env_file" "$key" "$default" <<'PY'
 import sys

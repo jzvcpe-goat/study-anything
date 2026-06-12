@@ -47,6 +47,9 @@ fi
 "$python_bin" scripts/diagnose_adoption.py --ghcr-timeout-seconds 5
 "$python_bin" -m unittest discover apps/api/tests
 "$python_bin" scripts/smoke_core.py
+STUDY_ANYTHING_DATA_DIR="${TMPDIR:-/tmp}/study-anything-release-skill-mode" \
+  STUDY_ANYTHING_RETRIEVAL_BACKEND=memory \
+  ./scripts/run_skill_mode_demo.sh
 
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
   docker compose --env-file "$tmp_env" -f infra/compose/docker-compose.yml --profile full config >/dev/null
