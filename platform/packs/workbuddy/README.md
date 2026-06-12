@@ -22,6 +22,18 @@ Before importing into a real workspace, prove the repo works from a disposable c
 python3 scripts/verify_clean_clone_adoption.py --repo .
 ```
 
+For release or workspace handoff acceptance, verify the distributable adoption pack:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1` and proves the WorkBuddy-style HTTP tool path without
+requiring a standalone frontend.
+
 ## Runtime Boundary
 
 The workspace Agent should own:

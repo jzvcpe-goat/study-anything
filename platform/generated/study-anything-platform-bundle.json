@@ -4,6 +4,8 @@
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_platform_ecosystem_packs.py",
     "python3 scripts/generate_platform_bundle_manifest.py --check",
+    "python3 scripts/generate_platform_adoption_pack.py --check",
+    "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -47,18 +49,18 @@
       "sha256": "fede73fb74de83427ed623dc70dbebe0d0af750ca699714822bcf85a7b5341fa"
     },
     {
-      "bytes": 2915,
+      "bytes": 3450,
       "kind": "platform_pack",
       "path": "platform/packs/README.md",
       "purpose": "Index for copy-ready platform packs.",
-      "sha256": "ed60c1b5df1d99f6d348fa88fdb911035efb70b198188f7f79b259d8f2ce801f"
+      "sha256": "01a6abcb02f94a0d4823088e9f27de5f3dd695da76d68517ca9a47375d1bc193"
     },
     {
-      "bytes": 4941,
+      "bytes": 5445,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex and terminal-capable Agent setup guide.",
-      "sha256": "a25e0be9a56475e96c5018bf0a01bd85620cc0446cdaf92b274d039c320c15ed"
+      "sha256": "582abcd2f5e06aeb39c2ef7c4e3c1486278c5dc1f7c3731d4274e71d8397a13b"
     },
     {
       "bytes": 2567,
@@ -68,11 +70,11 @@
       "sha256": "c7cc18081cbe75fccff97fc264c46ceec54c4cec63f2199b17226c0d98d0e726"
     },
     {
-      "bytes": 5764,
+      "bytes": 6193,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/README.md",
       "purpose": "Kimi tool import and gateway setup guide.",
-      "sha256": "c31989871970f5a6bcd03ef145ed242754dbb10a4705b7d75a59aff390bd7ae9"
+      "sha256": "81982b7ec5879c595ac127df21fca7ae030d138fe3f78fefacd4e1cea7bf9d9c"
     },
     {
       "bytes": 3168,
@@ -82,11 +84,11 @@
       "sha256": "6bbac68ad1156e50f92b4862a9ca3b41886111005c631e519226f94f7aaaa099"
     },
     {
-      "bytes": 3983,
+      "bytes": 4404,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "c2bad6d9879899a4909608ede7d0c6c8fb4b75d6e2ef1e432a84331b94b4a1e8"
+      "sha256": "b6c93fff07e79f599022a765eff4fedf95556035044f44aa7d3ad7f26dc78e77"
     },
     {
       "bytes": 2669,
@@ -173,11 +175,25 @@
       "sha256": "e104ff05160eafdd23dfd84d4b613faef0e91e7696145457367e16a89f86f6e6"
     },
     {
+      "bytes": 14469,
+      "kind": "verification",
+      "path": "scripts/generate_platform_adoption_pack.py",
+      "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
+      "sha256": "82e5aa2f0f714be7e880496cd208c49ad866388c1808ed3f987ac49ef2988843"
+    },
+    {
+      "bytes": 20832,
+      "kind": "verification",
+      "path": "scripts/verify_external_adoption.py",
+      "purpose": "Adoption-proof-v1 verifier for external-platform operator handoff.",
+      "sha256": "f74e9e31a44c8251162be8a7d854d0115f701164b9dd87454e784197ed304f88"
+    },
+    {
       "bytes": 9472,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "b14c45d7a8e6cb5b9944d8d609f880dff3d1c9cfa2b69b4cb7db2da4836610cc"
+      "sha256": "36af9bab0edadde3e0cc182eb5c84c007f98dd4484a816ae7031edb40fe78b17"
     },
     {
       "bytes": 2177,
@@ -194,25 +210,25 @@
       "sha256": "8c5b01c80d4c92bf165b2c12e8feb2d3d4a515f6985ef7dc6b63c592a6d13fb0"
     },
     {
-      "bytes": 4090,
+      "bytes": 5307,
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "64e1de1e290c3380034918f7f2a7519ef1de95fd23a4e8b451d79c9a9e4a1dfe"
+      "sha256": "89ca2d2d25292e189be284b26704a72f21b469003fb95df7d9ed2519cfe97a55"
     },
     {
-      "bytes": 12373,
+      "bytes": 13397,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "43bf360c5656a2486581477eb549038463585b7f1c0229ed99a5b46f10cc3fdd"
+      "sha256": "5386993824a68ac5fea809b5b04a3dfbca629caf9a87edde7f812f6ff814c6d6"
     },
     {
-      "bytes": 6954,
+      "bytes": 7498,
       "kind": "docs",
       "path": "docs/kimi-agent-gateway.md",
       "purpose": "Kimi-compatible user-owned HTTP Agent gateway guide.",
-      "sha256": "9b7c85226e3fdad51c96c513c7cc5db855d89cf6c12aecce4d81aeb830a370a7"
+      "sha256": "79c97049c5b401abccba6998114c2477313d8ef0e23da726353e726535f28b3c"
     },
     {
       "bytes": 10241,
@@ -220,6 +236,13 @@
       "path": "docs/agent-eval.md",
       "purpose": "Agent eval and external evaluation guide.",
       "sha256": "f79ba77b3201f3569835348a063c6ce59ab5e47eccbdd11c099faef479babba4"
+    },
+    {
+      "bytes": 2237,
+      "kind": "docs",
+      "path": "docs/release-notes/v0.2.22-alpha.md",
+      "purpose": "Release notes for the external-adoption proof release.",
+      "sha256": "7555b2bed8bd8ce85bec456c46ff892bf66cd542c611e5b3940fc455cf929c9a"
     },
     {
       "bytes": 8476,
@@ -243,11 +266,11 @@
       "sha256": "b27ca73b6bb8d3406651d882c9dc4aeef2aafc5e92908e4e281cee6fdc34d529"
     },
     {
-      "bytes": 7583,
+      "bytes": 8064,
       "kind": "skill",
       "path": "skills/study-anything/SKILL.md",
       "purpose": "Repo-local Codex Skill entrypoint for terminal-capable agents.",
-      "sha256": "b7fb2b303b8267f45d1441113eba05590769339964e5c1a9f630deb1f3860dac"
+      "sha256": "05b988696aaafaee3c924e22119c11a661e6851ea60e459e534d38f8c118e73a"
     }
   ],
   "name": "study-anything-platform-bundle",

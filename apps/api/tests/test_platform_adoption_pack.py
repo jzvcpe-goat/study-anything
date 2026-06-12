@@ -1,0 +1,83 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+import sys
+import unittest
+import zipfile
+from pathlib import Path
+
+from _path import ROOT  # noqa: F401
+
+
+class PlatformAdoptionPackTests(unittest.TestCase):
+    def test_platform_adoption_pack_is_current(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "generate_platform_adoption_pack.py"),
+                "--check",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
+    def test_platform_adoption_pack_contains_external_operator_assets(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        manifest_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
+        archive_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
+        self.assertEqual(manifest["version"], "v0.2.22-alpha")
+        self.assertIs(manifest["no_frontend_required"], True)
+        self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
+        self.assertEqual(
+            manifest["archive_sha256"],
+            hashlib.sha256(archive_path.read_bytes()).hexdigest(),
+        )
+        self.assertIn("kimi-work", manifest["supported_platforms"])
+        self.assertIn("codex", manifest["supported_platforms"])
+        self.assertIn("workbuddy-style-http", manifest["supported_platforms"])
+
+        required_paths = {
+            "manifest.json",
+            "platform/generated/study-anything-platform-openapi.json",
+            "platform/generated/study-anything-openai-tools.json",
+            "platform/packs/kimi/README.md",
+            "platform/packs/codex/README.md",
+            "platform/packs/workbuddy/README.md",
+            "skills/study-anything/SKILL.md",
+            "scripts/verify_external_adoption.py",
+            "fixtures/notebooklm/notebooklm-style-context-package.json",
+        }
+        with zipfile.ZipFile(archive_path) as archive:
+            names = set(archive.namelist())
+            roots = {name.split("/", 1)[0] for name in names if "/" in name}
+            self.assertEqual(roots, {"study-anything-platform-adoption-pack"})
+            archive_root = "study-anything-platform-adoption-pack"
+            for path in required_paths:
+                self.assertIn(f"{archive_root}/{path}", names)
+            internal_manifest = json.loads(
+                archive.read(f"{archive_root}/manifest.json").decode("utf-8")
+            )
+            archive_paths = {item["archive_path"] for item in internal_manifest["files"]}
+            for item in internal_manifest["files"]:
+                self.assertRegex(item["sha256"], r"^[a-f0-9]{64}$")
+                self.assertGreater(item["bytes"], 0)
+            self.assertTrue(
+                all(f"{archive_root}/{path}" in archive_paths for path in required_paths if path != "manifest.json")
+            )
+
+        self.assertIn("study_anything_retrieval_quality_eval", manifest["required_tool_names"])
+        self.assertIn("study_anything_obsidian_export", manifest["required_tool_names"])
+        self.assertIn("study_anything_learning_package_export", manifest["required_tool_names"])
+
+
+if __name__ == "__main__":
+    unittest.main()

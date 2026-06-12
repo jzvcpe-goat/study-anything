@@ -42,6 +42,20 @@ and keep that terminal open while a browser or another agent uses the API.
 
 ## Adoption Smoke
 
+For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, or another platform Agent, verify the
+copy-ready adoption pack:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1`. It proves the platform tool assets, Skill Mode runtime,
+importer/enrichment/retrieval/teaching/eval loop, Obsidian export, and NotebookLM-style handoff
+without requiring the standalone frontend or storing real model keys in Study Anything.
+
 Maintainers and external testers can verify the project from a disposable clean clone:
 
 ```bash
@@ -85,7 +99,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.21-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.22-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -98,7 +112,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.21-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.22-alpha
 ```
 
 ## Bring Your Own Agent

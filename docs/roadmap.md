@@ -217,6 +217,19 @@
   external eval adapters -> Obsidian and learning-package export.
 - Kimi, Codex, and WorkBuddy packs now include one-command ecosystem eval acceptance commands.
 
+## v0.2.22-alpha
+
+- Distributable platform adoption pack ships OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy
+  packs, Skill files, gateway examples, fixtures, verifier scripts, docs, and SHA256 manifest.
+- `scripts/verify_external_adoption.py` emits `adoption-proof-v1` from current worktree, copied
+  worktree, or clean clone and proves external-platform usage without a standalone frontend.
+- Adoption proof covers importer, enrichment, retrieval, retrieval eval, teaching layers, agent eval,
+  Obsidian export, and NotebookLM-style learning-package export.
+- Diagnostics cover GHCR/Docker Hub availability, non-ASCII paths, port conflicts, Agent endpoints,
+  Node/npm, and optional Promptfoo failures with actionable remediation.
+- Product direction remains API/Skill/platform-agent first: real models, browsing, files, video
+  slicing, outside tools, and credentials stay in the user's platform Agent.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

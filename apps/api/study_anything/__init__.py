@@ -8,13 +8,13 @@ import tomllib
 
 
 def _resolve_version() -> str:
+    pyproject = Path(__file__).resolve().parents[3] / "pyproject.toml"
+    if pyproject.exists():
+        return tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["version"]
     try:
         return version("study-anything")
     except PackageNotFoundError:
-        pyproject = Path(__file__).resolve().parents[3] / "pyproject.toml"
-        if pyproject.exists():
-            return tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["version"]
-        return "0.2.21-alpha"
+        return "0.2.22-alpha"
 
 
 __version__ = _resolve_version()

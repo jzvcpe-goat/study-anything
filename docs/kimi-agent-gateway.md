@@ -140,6 +140,20 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
 ```
 
+For release or Kimi Work handoff acceptance, run the adoption pack verifier from a terminal-capable
+workspace:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+This emits `adoption-proof-v1` and verifies the same Kimi-compatible import assets, gateway examples,
+eval evidence, Obsidian export, and NotebookLM-style handoff while keeping real Kimi credentials
+outside Study Anything.
+
 Use the Obsidian export for second-brain notes. Use `package-export` or
 `GET /v1/sessions/{session_id}/exports/learning-package` when a Kimi-compatible platform agent needs
 to hand the learning state to a NotebookLM-style workflow or local archive.

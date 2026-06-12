@@ -10,6 +10,19 @@ Expose the repo-local skill to Codex:
 ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-anything"
 ```
 
+For release or external handoff acceptance, verify the distributable adoption pack:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1` and proves that a terminal-capable platform Agent can complete
+the learning loop, eval gates, Obsidian export, and NotebookLM-style handoff without a standalone
+frontend.
+
 ## Run
 
 ```bash

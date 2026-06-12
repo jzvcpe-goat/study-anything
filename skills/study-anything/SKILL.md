@@ -188,3 +188,16 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory ./scripts/run_skill_mode_demo.sh
 
 This includes importer runtime, platform enrichment, retrieval quality eval, DeepEval-compatible
 quality eval, Obsidian export, and learning-package export.
+
+For release, external platform handoff, or "can another Agent actually use this?" acceptance, run the
+adoption pack verifier:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1`. Treat that proof as the minimum evidence before claiming a
+Kimi/Codex/WorkBuddy-style integration works.

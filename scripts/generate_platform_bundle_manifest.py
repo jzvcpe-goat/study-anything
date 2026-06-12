@@ -127,6 +127,16 @@ FILES: list[tuple[str, str, str]] = [
         "Wrapper for mature external Agent eval runners such as Promptfoo, DeepEval, and retrieval quality gates.",
     ),
     (
+        "scripts/generate_platform_adoption_pack.py",
+        "verification",
+        "Deterministic generator for the distributable external-platform adoption pack.",
+    ),
+    (
+        "scripts/verify_external_adoption.py",
+        "verification",
+        "Adoption-proof-v1 verifier for external-platform operator handoff.",
+    ),
+    (
         "scripts/diagnose_adoption.py",
         "diagnostics",
         "Actionable diagnostics for common external-user adoption blockers.",
@@ -160,6 +170,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/agent-eval.md",
         "docs",
         "Agent eval and external evaluation guide.",
+    ),
+    (
+        "docs/release-notes/v0.2.22-alpha.md",
+        "docs",
+        "Release notes for the external-adoption proof release.",
     ),
     (
         "docs/plugins.md",
@@ -243,6 +258,11 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
+            "python3 scripts/generate_platform_adoption_pack.py --check",
+            (
+                "python3 scripts/verify_external_adoption.py --pack "
+                "platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+            ),
             "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
