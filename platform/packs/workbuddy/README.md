@@ -32,6 +32,21 @@ Study Anything should own:
 - quiz, grading, mastery, scribe, HITL
 - redacted Agent audit and eval artifacts
 
+## Local Acceptance
+
+Against a running API, verify the imported tool surface and redacted evidence:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+```
+
+If the workspace also wants a copy-ready user-owned HTTP Agent example, use the OpenAI-compatible
+gateway dry-run before replacing it with the workspace's private Agent endpoint:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+```
+
 ## Acceptance
 
 After every completed learning loop, the workspace Agent should fetch:

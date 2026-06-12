@@ -14,6 +14,7 @@ ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-a
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py demo
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID

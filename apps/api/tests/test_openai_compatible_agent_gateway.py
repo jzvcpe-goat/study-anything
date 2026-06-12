@@ -104,6 +104,39 @@ class OpenAICompatibleAgentGatewayTests(unittest.TestCase):
             with self.assertRaisesRegex(gateway.GatewayConfigurationError, "AGENT_LLM_BASE_URL"):
                 gateway._chat_completions_url()
 
+    def test_dry_run_gateway_needs_no_private_configuration(self) -> None:
+        task = {
+            "task_type": "teach.glossary",
+            "session_id": "dry-run",
+            "source": {
+                "reference": "local://dry-run",
+                "title": "Dry Run Source",
+                "text": "Retrieval practice and source evidence improve mastery.",
+                "excerpt_hash": "dry-run-hash",
+            },
+        }
+        with patch.dict(os.environ, {"AGENT_GATEWAY_MODE": "dry_run"}, clear=True):
+            result = gateway._invoke_agent(task)
+
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["metadata"]["gateway_mode"], "dry_run")
+        self.assertIsInstance(result["content"], list)
+        self.assertEqual(result["citations"][0]["reference"], "local://dry-run")
+
+    def test_dry_run_gateway_grades_answers_with_score(self) -> None:
+        task = {
+            "task_type": "answer.grade",
+            "session_id": "dry-run",
+            "source": {"reference": "local://dry-run"},
+            "answers": [{"item_id": "q1", "text": "A grounded answer."}],
+        }
+        with patch.dict(os.environ, {"AGENT_GATEWAY_MODE": "mock"}, clear=True):
+            result = gateway._invoke_agent(task)
+
+        self.assertEqual(result["status"], "ok")
+        self.assertGreater(result["score"], 0)
+        self.assertIn("source-grounded", result["feedback"])
+
 
 if __name__ == "__main__":
     unittest.main()

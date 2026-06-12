@@ -628,7 +628,9 @@
   ],
   "x-study-anything-manifest": {
     "acceptance_evidence": {
+      "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
       "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+      "openai_compatible_gateway_dry_run_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
       "required_after_learning_loop": [
         "agent_audit.status == verified",
         "agent_eval_artifact.schema_version == agent-eval-artifact-v1",

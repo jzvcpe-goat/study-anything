@@ -14,7 +14,17 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_API_BASE = "http://127.0.0.1:8000"
-CORE_CAPABILITIES = ["quiz.generate", "answer.grade", "insight.synthesize"]
+DEFAULT_HTTP_AGENT_CAPABILITIES = [
+    "teach.overview",
+    "teach.glossary",
+    "teach.examples",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+    "note.scribe",
+    "source.verify",
+    "embedding.create",
+]
 
 
 class StudyAnythingError(RuntimeError):
@@ -155,7 +165,7 @@ def cmd_agents(args: argparse.Namespace) -> None:
 
 
 def cmd_agent_add_http(args: argparse.Namespace) -> None:
-    capabilities = args.capability or CORE_CAPABILITIES
+    capabilities = args.capability or DEFAULT_HTTP_AGENT_CAPABILITIES
     provider = post(
         "/v1/agents/providers",
         {

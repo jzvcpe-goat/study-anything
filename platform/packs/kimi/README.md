@@ -25,10 +25,19 @@ http://127.0.0.1:8000
 
 ## Kimi As Reasoning Agent
 
+First verify the same gateway entrypoint without a real key:
+
+```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+```
+
+Then switch the gateway to real Kimi credentials:
+
 ```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
 export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
-export AGENT_LLM_MODEL="kimi-k2.5"
+export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 
 python3 scripts/openai_compatible_agent_gateway.py --host 127.0.0.1 --port 8787
 python3 scripts/study_anything_cli.py agent-add-http \
@@ -37,7 +46,9 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --set-default
 ```
 
-Keep Moonshot/Kimi credentials in the gateway environment, not in Study Anything.
+Keep Moonshot/Kimi credentials in the gateway environment, not in Study Anything. The default
+`agent-add-http --set-default` command registers teaching layers, quiz generation, grading, synthesis,
+scribe notes, source verification, and embedding tasks.
 
 ## Acceptance
 

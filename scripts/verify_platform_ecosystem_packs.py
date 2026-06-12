@@ -80,6 +80,8 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             )
     if pack_id == "codex" and "run_skill_mode_demo.sh" not in command_text:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
+    if pack_id == "kimi" and "verify_openai_compatible_gateway.py" not in command_text:
+        raise PackVerificationError("Kimi pack must verify the OpenAI-compatible gateway dry-run flow")
 
     acceptance = set(str(item) for item in pack.get("acceptance_evidence", []))
     missing_acceptance = REQUIRED_ACCEPTANCE - acceptance

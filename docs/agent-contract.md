@@ -147,7 +147,9 @@ HTTPServer(("127.0.0.1", 8787), Handler).serve_forever()
 When Study Anything runs in Docker, use `http://host.docker.internal:8787` as the endpoint for a host-local agent.
 
 The repository also includes `scripts/openai_compatible_agent_gateway.py` for user-owned
-OpenAI-compatible APIs, including Kimi. See `docs/kimi-agent-gateway.md`.
+OpenAI-compatible APIs, including Kimi. Run
+`python3 scripts/verify_openai_compatible_gateway.py --gateway-only` to verify the gateway contract
+without a model key, then see `docs/kimi-agent-gateway.md`.
 
 ## Security Rules
 

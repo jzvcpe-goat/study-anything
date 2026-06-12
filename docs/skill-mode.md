@@ -98,6 +98,16 @@ python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
 ```
 
 Use `--agent-mode configured` when starting a session with that gateway. Credentials, tools, and model choice remain inside the gateway.
+By default, `agent-add-http --set-default` registers the gateway for teaching layers, quiz
+generation, grading, synthesis, scribe notes, source verification, and embedding tasks. Use repeated
+`--capability` flags when you want split routing across multiple providers.
+
+For an OpenAI-compatible gateway dry-run that needs no model key:
+
+```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+```
 
 You can also avoid environment variables by passing `--api-base`:
 

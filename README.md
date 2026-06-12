@@ -73,7 +73,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.14-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.15-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -86,7 +86,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.14-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.15-alpha
 ```
 
 ## Bring Your Own Agent
@@ -101,6 +101,15 @@ Supported MVP provider shapes:
 - `mcp_agent`: plugin ecosystem extension point.
 
 The agent flow mirrors tools such as OpenClaw and Codex: the user controls the model, credentials, tools, and reasoning inside their own agent; Study Anything sends structured learning tasks and validates structured results.
+
+For Kimi/OpenAI-compatible providers, verify the local gateway without a real key first:
+
+```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+```
+
+Then replace dry-run mode with your own gateway, model, credentials, tools, and network policy.
 
 ## Agent Eval
 

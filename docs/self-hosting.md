@@ -98,7 +98,10 @@ Common recovery paths:
 - Port conflict: change the matching `*_PORT` value in `.env` and relaunch.
 - API unhealthy: check `api` and `app-postgres` logs first.
 - Agent gateway unreachable: use `STACK_PROFILE=smoke` to validate with the mock HTTP Agent, then switch
-  to your own gateway endpoint.
+  to your own gateway endpoint. For OpenAI-compatible providers, first run
+  `python3 scripts/verify_openai_compatible_gateway.py --gateway-only`, then run
+  `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py` against the
+  local API before adding real credentials.
 - Plugin install confusion: preview local plugin permissions before copying files; installed plugins
   live in the writable Study Anything data volume.
 - Risky upgrade or restore: run `python3 scripts/self_host_data.py backup` before changing volumes,
@@ -124,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.2.14-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.2.15-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.14-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.15-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -161,7 +164,7 @@ in plaintext.
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.14-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.15-alpha
 ```
 
 This pulls the published API image, checks the runtime version, completes the API learning loop, and
@@ -323,7 +326,8 @@ Common choices:
 
 - Local HTTP agent: `http://host.docker.internal:8787`
 - OpenClaw/Codex-style gateway: expose the Study Anything agent contract over HTTP and call any internal model/tool stack you choose.
-- Kimi: run `scripts/openai_compatible_agent_gateway.py` with your Moonshot API environment. See `docs/kimi-agent-gateway.md`.
+- Kimi/OpenAI-compatible: run `scripts/openai_compatible_agent_gateway.py` in dry-run mode first, then
+  add your Moonshot/Kimi or other compatible API environment. See `docs/kimi-agent-gateway.md`.
 - Ollama: supported through your own agent, not as a required Study Anything runtime.
 - Fake demo: deterministic agent for smoke testing.
 

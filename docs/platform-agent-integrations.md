@@ -46,6 +46,7 @@ Validate a running integration with:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
 
 `./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
@@ -70,6 +71,7 @@ Regenerate and verify these assets after changing the manifest, platform packs, 
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 
@@ -125,15 +127,25 @@ When the user asks for explanation before answering a quiz, the platform Agent c
 `POST /v1/sessions/{session_id}/teaching-layers` after source attachment and before `run`. Treat the
 returned layer content as private learning data.
 
+`agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
+grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit
+`--capability` values only when a provider should handle a smaller subset.
+
 ## Kimi
 
 Browser-only Kimi cannot run local scripts or reach `127.0.0.1`. Use Kimi as the user-owned reasoning
 model through an OpenAI-compatible gateway:
 
 ```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+```
+
+Then start the real gateway after adding credentials:
+
+```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
 export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
-export AGENT_LLM_MODEL="kimi-k2.5"
+export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 
 python3 scripts/openai_compatible_agent_gateway.py \
   --host 127.0.0.1 \
