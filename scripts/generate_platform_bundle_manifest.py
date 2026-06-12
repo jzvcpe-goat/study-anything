@@ -202,6 +202,16 @@ FILES: list[tuple[str, str, str]] = [
         "NotebookLM-style manual bridge contract.",
     ),
     (
+        "docs/plugin-sdk.md",
+        "docs",
+        "Plugin SDK hook, capability, and validation contract.",
+    ),
+    (
+        "docs/plugin-registry.md",
+        "docs",
+        "Plugin registry digest and local trust policy.",
+    ),
+    (
         "docs/kimi-agent-gateway.md",
         "docs",
         "Kimi-compatible user-owned HTTP Agent gateway guide.",
@@ -227,9 +237,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.26-alpha.md",
+        "docs/release-notes/v0.2.27-alpha.md",
         "docs",
-        "Release notes for the second-brain handoff release.",
+        "Release notes for the Plugin SDK trust release.",
     ),
     (
         "docs/plugins.md",

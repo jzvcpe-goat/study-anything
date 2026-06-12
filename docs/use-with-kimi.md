@@ -98,5 +98,10 @@ surface should be convenience and trust:
 - trusted plugin/importer ecosystem;
 - managed platform packs and integration support.
 
+For plugin ecosystem work, let Kimi call `GET /v1/plugins/sdk`,
+`GET /v1/plugins/capabilities`, and `POST /v1/plugins/validate-package` before
+asking the user to install anything. These endpoints are metadata-only: they do
+not execute plugin entrypoints, copy plugin packages, or expose model secrets.
+
 The open-source core stays useful without accounts, billing, hosted storage, or
 real model keys inside Study Anything.

@@ -207,6 +207,155 @@
         }
       }
     },
+    "/v1/plugins/capabilities": {
+      "get": {
+        "description": "List installed plugin hooks, capabilities, trust summaries, and alpha runtime contracts without executing plugin code.",
+        "operationId": "study_anything_plugin_capabilities",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "List installed plugin hooks, capabilities, trust summaries, and alpha runtime contracts without executing plugin code.",
+        "x-study-anything-output-requirements": [
+          "schema_version == plugin-capability-index-v1",
+          "privacy.entrypoints_executed == false",
+          "items include bundled importer/exporter examples"
+        ],
+        "x-study-anything-privacy": {
+          "returns_agent_secrets": false,
+          "returns_plugin_source_code": false,
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/plugins/sdk": {
+      "get": {
+        "description": "Read the public Study Anything Plugin SDK contract without executing plugin code.",
+        "operationId": "study_anything_plugin_sdk",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Read the public Study Anything Plugin SDK contract without executing plugin code.",
+        "x-study-anything-output-requirements": [
+          "schema_version == plugin-sdk-v1",
+          "manifest_schema_version == plugin-manifest-v1",
+          "entrypoints_executed == false",
+          "remote_code_downloads_allowed == false"
+        ],
+        "x-study-anything-privacy": {
+          "returns_agent_secrets": false,
+          "returns_plugin_source_code": false,
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/plugins/validate-package": {
+      "post": {
+        "description": "Validate one explicitly selected local plugin package against the SDK contract without installing or executing it.",
+        "operationId": "study_anything_validate_plugin_package",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "source_path": {
+                    "description": "Local path visible to the Study Anything API host.",
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_path"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Validate one explicitly selected local plugin package against the SDK contract without installing or executing it.",
+        "x-study-anything-output-requirements": [
+          "schema_version == plugin-package-validation-v1",
+          "privacy.entrypoints_executed == false",
+          "privacy.package_copied == false",
+          "execution_allowed_by_validation == false"
+        ],
+        "x-study-anything-privacy": {
+          "returns_agent_secrets": false,
+          "returns_plugin_source_code": false,
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/retrieval/status": {
       "get": {
         "description": "Check whether optional retrieval projection is disabled, healthy, or unavailable.",

@@ -18,7 +18,7 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.26 packs add the second-brain handoff layer on top of the Learning Enrichment Layer, operator drill, deterministic Agent
+v0.2.27 packs add Plugin SDK and trusted package validation on top of the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
 eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
 retrieval, and ecosystem eval capabilities:
 
@@ -35,6 +35,8 @@ retrieval, and ecosystem eval capabilities:
   local archives.
 - a strict `second-brain-handoff-v1` export with Obsidian note, NotebookLM manual bridge metadata,
   and local archive manifest that excludes learner answers and grading feedback.
+- a `plugin-sdk-v1` contract, `plugin-capability-index-v1` inventory, and
+  `plugin-package-validation-v1` package check for local plugin ecosystem handoff.
 - a copy-ready platform adoption pack that proves the Kimi/Codex/WorkBuddy-style tool surface works
   without requiring a standalone frontend.
 - `study-anything-operator-drill-v1` transcript evidence that proves the pack can be consumed as an

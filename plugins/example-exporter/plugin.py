@@ -14,3 +14,11 @@ def export_session(session: Mapping[str, object]) -> str:
     mastery = session.get("mastery", {})
     return f"# Study Anything Export\n\nSession: {title}\n\nMastery: {mastery}\n"
 
+
+def export_second_brain_handoff(handoff: Mapping[str, object]) -> str:
+    obsidian = handoff.get("obsidian", {})
+    if not isinstance(obsidian, Mapping):
+        obsidian = {}
+    filename = obsidian.get("filename", "study-anything-note.md")
+    markdown = obsidian.get("markdown", "")
+    return f"<!-- Study Anything second-brain export: {filename} -->\n\n{markdown}"

@@ -33,6 +33,9 @@ python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/study_anything_cli.py demo
 python3 scripts/study_anything_cli.py context-validate \
   fixtures/notebooklm/notebooklm-style-context-package.json
+python3 scripts/study_anything_cli.py plugin-sdk
+python3 scripts/study_anything_cli.py plugin-capabilities
+python3 scripts/study_anything_cli.py plugin-validate plugins/example-exporter
 python3 scripts/study_anything_cli.py context-import \
   fixtures/notebooklm/notebooklm-style-context-package.json --session
 python3 scripts/study_anything_cli.py importer-run example-note-importer \
@@ -77,6 +80,9 @@ call `POST /v1/context-packages/validate`, then use
 If a reviewed local importer exists, Codex can instead call `importer-run` or
 `POST /v1/importers/{plugin_id}/run` with exact permission confirmation. Keep network-capable importers
 blocked unless the user explicitly approves the network permission.
+Use `plugin-sdk`, `plugin-capabilities`, and `plugin-validate` before installing or invoking a new
+plugin package; those commands are metadata-only and do not execute entrypoints.
+This is the Plugin SDK path for terminal-capable agents.
 The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
 excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
 export at `GET /v1/sessions/{session_id}/exports/obsidian`.
@@ -106,6 +112,8 @@ A Codex integration must return both:
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
 - `second-brain-handoff-v1` for strict redacted Obsidian, NotebookLM-style, and archive handoff
+- `plugin-sdk-v1`, `plugin-capability-index-v1`, and `plugin-package-validation-v1` for trusted
+  plugin ecosystem handoff
 
 Do not paste raw source text, learner answers, grading feedback, Agent endpoints, or secrets into
 shared logs.

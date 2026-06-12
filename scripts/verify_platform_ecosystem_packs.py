@@ -27,6 +27,9 @@ REQUIRED_ACCEPTANCE = {
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
     "second_brain.schema_version == second-brain-handoff-v1",
+    "plugin_sdk.schema_version == plugin-sdk-v1",
+    "plugin_capability_index.schema_version == plugin-capability-index-v1",
+    "plugin_package_validation.schema_version == plugin-package-validation-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_importer_lesson_flow.py",
@@ -130,6 +133,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "Learning Context Package",
         "micro-lesson",
         "learning package",
+        "Plugin SDK",
         "raw source",
     )
     return pack

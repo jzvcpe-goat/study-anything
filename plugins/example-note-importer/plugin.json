@@ -1,10 +1,13 @@
 {
+  "schemaVersion": "plugin-manifest-v1",
   "id": "example-note-importer",
   "name": "Example Markdown And Obsidian Note Importer",
+  "description": "Template importer for bounded Markdown or Obsidian note excerpts with backlink metadata.",
   "version": "0.1.0",
   "apiVersion": "0.1",
   "entrypoint": "plugin.py",
   "hooks": ["importer"],
+  "capabilities": ["import.context", "import.markdown_note", "import.obsidian_note"],
   "permissions": ["write:context"],
   "publisher": {
     "name": "Study Anything contributors",

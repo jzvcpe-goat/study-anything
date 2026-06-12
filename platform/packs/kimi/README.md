@@ -25,6 +25,9 @@ http://127.0.0.1:8000
 
 The tool surface includes:
 
+- `study_anything_plugin_sdk` for the machine-readable Plugin SDK contract.
+- `study_anything_plugin_capabilities` for installed plugin hooks, capabilities, and trust summaries.
+- `study_anything_validate_plugin_package` for local plugin package validation before install.
 - `study_anything_run_importer` for confirmed local importer runtime.
 - `study_anything_validate_context_package` for Learning Context Package checks before import.
 - `study_anything_create_session_from_context_package` for creating a session from Kimi-collected context.
@@ -116,6 +119,8 @@ When a local importer plugin is installed and reviewed, Kimi-compatible platform
 `POST /v1/importers/{plugin_id}/run` instead of hand-building the package. Confirm every manifest
 permission exactly. Leave `allow_network=false` unless the surrounding platform Agent has explicitly
 reviewed the importer and accepted `network:http`.
+Before proposing a plugin install, call `GET /v1/plugins/sdk`, `GET /v1/plugins/capabilities`, and
+`POST /v1/plugins/validate-package`; these are metadata-only and never execute plugin entrypoints.
 
 For retrieval-based follow-up lessons, first check `GET /v1/retrieval/status`. If it is healthy, rebuild
 the source session index, search for the focus query, and create a new lesson with

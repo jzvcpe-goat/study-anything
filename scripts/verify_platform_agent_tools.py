@@ -25,6 +25,9 @@ REQUIRED_TOOLS = {
     "study_anything_validate_context_package",
     "study_anything_create_session_from_context_package",
     "study_anything_append_context_package",
+    "study_anything_plugin_sdk",
+    "study_anything_plugin_capabilities",
+    "study_anything_validate_plugin_package",
     "study_anything_run_importer",
     "study_anything_retrieval_status",
     "study_anything_retrieval_rebuild",
@@ -173,6 +176,60 @@ def main() -> None:
     health = call_tool(tools, "study_anything_health")
     if health.get("status") != "ok":
         raise VerificationError(f"Health tool did not return ok: {health}")
+
+    plugin_sdk = call_tool(tools, "study_anything_plugin_sdk")
+    if plugin_sdk.get("schema_version") != "plugin-sdk-v1":
+        raise VerificationError(f"Plugin SDK tool returned invalid schema: {plugin_sdk}")
+    if plugin_sdk.get("entrypoints_executed") is not False:
+        raise VerificationError(f"Plugin SDK tool must be metadata-only: {plugin_sdk}")
+    hook_names = {
+        item.get("hook")
+        for item in plugin_sdk.get("supported_hooks", [])
+        if isinstance(item, dict)
+    }
+    assert_contains_all(
+        [str(name) for name in hook_names if name],
+        ["importer", "enrichment", "exporter", "agent_tool", "agent_panel"],
+        "Plugin SDK hooks",
+    )
+
+    plugin_capabilities = call_tool(tools, "study_anything_plugin_capabilities")
+    if plugin_capabilities.get("schema_version") != "plugin-capability-index-v1":
+        raise VerificationError(
+            f"Plugin capabilities tool returned invalid schema: {plugin_capabilities}"
+        )
+    if (plugin_capabilities.get("privacy") or {}).get("entrypoints_executed") is not False:
+        raise VerificationError(
+            f"Plugin capabilities tool must not execute entrypoints: {plugin_capabilities}"
+        )
+    plugin_items = {
+        item.get("plugin_id"): item
+        for item in plugin_capabilities.get("items", [])
+        if isinstance(item, dict)
+    }
+    assert_contains_all(
+        [str(plugin_id) for plugin_id in plugin_items if plugin_id],
+        ["example-note-importer", "example-enrichment-importer", "example-exporter"],
+        "Plugin capabilities",
+    )
+    if "export.second_brain_handoff" not in plugin_items["example-exporter"].get("capabilities", []):
+        raise VerificationError(f"Second-brain exporter capability missing: {plugin_items['example-exporter']}")
+
+    plugin_validation = call_tool(
+        tools,
+        "study_anything_validate_plugin_package",
+        {"source_path": "plugins/example-exporter"},
+    )
+    if plugin_validation.get("schema_version") != "plugin-package-validation-v1":
+        raise VerificationError(f"Plugin package validation returned invalid schema: {plugin_validation}")
+    if plugin_validation.get("status") != "valid":
+        raise VerificationError(f"Plugin package validation failed: {plugin_validation}")
+    if plugin_validation.get("execution_allowed_by_validation") is not False:
+        raise VerificationError(
+            f"Plugin package validation should not execute plugins: {plugin_validation}"
+        )
+    if (plugin_validation.get("privacy") or {}).get("package_copied") is not False:
+        raise VerificationError(f"Plugin package validation copied files: {plugin_validation}")
 
     context_fixture = json.loads(NOTEBOOKLM_FIXTURE.read_text(encoding="utf-8"))
     context_private_fragments = [
@@ -546,6 +603,9 @@ def main() -> None:
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "learning_package_schema": package["schema_version"],
                 "second_brain_schema": second_brain["schema_version"],
+                "plugin_sdk_schema": plugin_sdk["schema_version"],
+                "plugin_capability_index_schema": plugin_capabilities["schema_version"],
+                "plugin_package_validation_schema": plugin_validation["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,
                 "teaching_tasks": teaching_tasks,

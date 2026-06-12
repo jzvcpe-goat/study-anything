@@ -114,6 +114,21 @@ def main() -> None:
     health = request("/v1/health")
     if health.get("status") != "ok":
         raise VerificationError(f"Health check failed: {health}")
+    plugin_sdk = request("/v1/plugins/sdk")
+    plugin_capabilities = request("/v1/plugins/capabilities")
+    plugin_validation = request(
+        "/v1/plugins/validate-package",
+        {"source_path": "plugins/example-enrichment-importer"},
+    )
+    assert_schema(plugin_sdk, "plugin-sdk-v1", "plugin SDK")
+    assert_schema(plugin_capabilities, "plugin-capability-index-v1", "plugin capabilities")
+    assert_schema(plugin_validation, "plugin-package-validation-v1", "plugin package validation")
+    if plugin_validation.get("status") != "valid":
+        raise VerificationError(f"Plugin package validation failed: {plugin_validation}")
+    if plugin_validation.get("execution_allowed_by_validation"):
+        raise VerificationError(f"Plugin validation should not execute plugin code: {plugin_validation}")
+    if (plugin_validation.get("privacy") or {}).get("package_copied"):
+        raise VerificationError(f"Plugin validation should not copy plugin packages: {plugin_validation}")
 
     retrieval_status = request("/v1/retrieval/status")
     if retrieval_status.get("status") != "healthy":
@@ -320,6 +335,9 @@ def main() -> None:
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": learning_package["schema_version"],
                 "second_brain_schema": second_brain["schema_version"],
+                "plugin_sdk_schema": plugin_sdk["schema_version"],
+                "plugin_capability_index_schema": plugin_capabilities["schema_version"],
+                "plugin_package_validation_schema": plugin_validation["schema_version"],
             },
             ensure_ascii=False,
             sort_keys=True,
