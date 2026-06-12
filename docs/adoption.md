@@ -20,6 +20,8 @@ OpenAI-compatible gateway dry-run path, and completes:
 - mastery update
 - `agent-audit`
 - `agent-eval/artifact`
+- `agent-eval/quality`
+- platform tool and enriched lesson smoke through Skill Mode
 
 For development before committing local edits, use:
 
@@ -77,7 +79,17 @@ platform/generated/study-anything-openai-tools.json
 ```
 
 Import one of those assets, set the API base to `http://127.0.0.1:8000`, and require the Agent to
-return `agent-audit` plus `agent-eval/artifact` after each learning loop.
+return `agent-audit`, `agent-eval/artifact`, `agent-eval/quality`, Obsidian export, and
+`learning-package-v1` after each learning loop.
+
+To prove the complete plugin-style lesson path against a running API:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+```
+
+This verifier runs source input, enrichment, overview/glossary teaching, quiz, answer grading, quality
+eval, Obsidian export, and the portable learning package.
 
 ## Diagnostics
 
@@ -102,7 +114,7 @@ Use `--strict` in CI-like environments where warnings should fail the run.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.17-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.18-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -110,11 +122,11 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.2.17-alpha \
+  --tag v0.2.18-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.17-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.18-alpha` shows `linux/amd64`
 and `linux/arm64`.

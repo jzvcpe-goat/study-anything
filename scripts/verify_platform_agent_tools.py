@@ -31,6 +31,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
     "study_anything_obsidian_export",
+    "study_anything_learning_package_export",
 }
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
@@ -313,6 +314,19 @@ def main() -> None:
     if private_source_text in markdown or private_enrichment_text in markdown:
         raise VerificationError("Obsidian export leaked raw source/enrichment text.")
 
+    package = call_tool(tools, "study_anything_learning_package_export", session_id=session_id)
+    if package.get("schema_version") != "learning-package-v1":
+        raise VerificationError(f"Unexpected learning package schema: {package}")
+    consumers = set(str(item) for item in package.get("intended_consumers", []))
+    assert_contains_all(consumers, ["platform_agent", "notebooklm_bridge", "obsidian_pipeline"], "learning package consumers")
+    package_privacy = package.get("privacy") or {}
+    if package_privacy.get("raw_source_text_included") or package_privacy.get("raw_enrichment_text_included"):
+        raise VerificationError(f"Learning package privacy flags are unsafe: {package_privacy}")
+    if private_source_text in json.dumps(package, ensure_ascii=False):
+        raise VerificationError("Learning package leaked raw source text.")
+    if private_enrichment_text in json.dumps(package, ensure_ascii=False):
+        raise VerificationError("Learning package leaked raw enrichment text.")
+
     serialized_evidence = json.dumps(
         {"audit": audit, "artifact": artifact, "quality": quality},
         ensure_ascii=False,
@@ -345,6 +359,7 @@ def main() -> None:
                 "eval_schema": artifact["schema_version"],
                 "quality_schema": quality["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
+                "learning_package_schema": package["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,
                 "teaching_tasks": teaching_tasks,

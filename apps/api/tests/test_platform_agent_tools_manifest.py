@@ -26,6 +26,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
     "study_anything_obsidian_export",
+    "study_anything_learning_package_export",
 }
 DISALLOWED_PATH_FRAGMENTS = (
     "/v1/agents/providers",

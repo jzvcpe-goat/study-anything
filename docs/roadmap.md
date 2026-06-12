@@ -167,10 +167,23 @@
 - Kimi, Codex, and WorkBuddy packs now include enrichment, quality eval, Obsidian export, and
   DeepEval smoke evidence.
 
+## v0.2.18-alpha
+
+- Portable `learning-package-v1` export gives platform agents, NotebookLM-style bridges, Obsidian
+  pipelines, and local archives a stable handoff artifact.
+- CLI and Skill Mode now expose enrichment, teaching layers, quality eval, Obsidian export, learning
+  package export, and one-command lesson completion.
+- `scripts/verify_platform_lesson_flow.py` proves an enriched lesson can complete through the public
+  API and return audit, eval, quality, Obsidian, and learning-package evidence.
+- Kimi, Codex, and WorkBuddy packs now require `learning-package-v1` and the enriched platform lesson
+  verifier as release evidence.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
+- Add NotebookLM package import/export adapters when stable API or reliable platform-agent operation
+  paths exist.
 - Expand Agent quality eval suites for LangChain AgentEvals, Ragas, retrieval quality, and
   judge-model scoring.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.

@@ -23,11 +23,13 @@ Set the API base to:
 http://127.0.0.1:8000
 ```
 
-The v0.2.17 tool surface includes:
+The v0.2.18 tool surface includes:
 
 - `study_anything_add_enrichment` for web/document/video-slice/app-context excerpts gathered by Kimi or the platform agent.
 - `study_anything_agent_quality_eval` for the minimum teaching-quality gate.
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
+- `study_anything_learning_package_export` for a portable package that a platform agent can pass into
+  NotebookLM-style or local knowledge workflows.
 
 Run the clean-clone adoption smoke before wiring real credentials:
 
@@ -71,15 +73,18 @@ GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
 GET /v1/sessions/{session_id}/exports/obsidian
+GET /v1/sessions/{session_id}/exports/learning-package
 ```
 
-The export is an Obsidian-compatible Markdown note for the user's second-brain workflow.
+The exports are an Obsidian-compatible Markdown note plus a portable learning package for the user's
+second-brain or NotebookLM-style workflow.
 
 For quality-gate smoke, run:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 
 Share only compact mastery and redacted evidence. Do not log raw source text, learner answers,

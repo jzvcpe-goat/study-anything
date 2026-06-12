@@ -21,8 +21,10 @@ REQUIRED_ACCEPTANCE = {
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
     "agent_quality_eval.status == pass",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
+    "learning_package.schema_version == learning-package-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
+    "verify_platform_lesson_flow.py",
     "verify_platform_agent_tools.py",
     "verify_agent_eval_flow.py",
     "run_external_agent_evals.py --tool deepeval",
@@ -110,7 +112,15 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             f"{pack_path.relative_to(ROOT)} privacy contract drifted: {sorted(pack_privacy)}"
         )
 
-    assert_text_contains(readme_path, "agent-audit", "agent-eval", "quality", "Obsidian", "raw source")
+    assert_text_contains(
+        readme_path,
+        "agent-audit",
+        "agent-eval",
+        "quality",
+        "Obsidian",
+        "learning package",
+        "raw source",
+    )
     return pack
 
 

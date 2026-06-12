@@ -102,6 +102,11 @@ FILES: list[tuple[str, str, str]] = [
         "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
     ),
     (
+        "scripts/verify_platform_lesson_flow.py",
+        "verification",
+        "End-to-end enriched lesson verifier for platform agents and learning-package export.",
+    ),
+    (
         "scripts/run_external_agent_evals.py",
         "verification",
         "Wrapper for mature external Agent eval runners such as Promptfoo and DeepEval.",
@@ -213,10 +218,11 @@ def build_manifest() -> dict[str, object]:
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
             (
-                "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
-                "--tool deepeval --create-session --allow-native-quality-fallback"
-            ),
-            "python3 scripts/diagnose_adoption.py",
+            "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
+            "--tool deepeval --create-session --allow-native-quality-fallback"
+        ),
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "python3 scripts/diagnose_adoption.py",
         ],
         "files": [file_record(*item) for item in FILES],
     }
