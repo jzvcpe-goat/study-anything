@@ -45,10 +45,32 @@ class MockAgentHandler(BaseHTTPRequestHandler):
         if task_type == "answer.grade":
             result["score"] = 0.84
             result["feedback"] = "Mock agent graded the answer as grounded."
+        elif task_type == "teach.overview":
+            title = source.get("title") or "the source"
+            result["content"] = {
+                "summary": f"{title} in the larger knowledge map.",
+                "key_points": ["source evidence", "learning objective", "review path"],
+            }
+        elif task_type == "teach.glossary":
+            result["content"] = [
+                {
+                    "term": "source evidence",
+                    "plain_language": "The part of the material that supports the answer.",
+                    "technical_definition": "A cited excerpt or reference used to ground learning output.",
+                    "example": "Quote or reference the source before explaining a concept.",
+                }
+            ]
+        elif task_type == "teach.examples":
+            result["content"] = {
+                "examples": ["Turn the cited idea into a concrete learner-facing example."]
+            }
         elif task_type == "insight.synthesize":
             title = source.get("title") or "the source"
             mastery = (task.get("constraints") or {}).get("mastery_level", 0.0)
             result["content"] = f"{title} reached mastery level {float(mastery):.1f}."
+        elif task_type == "note.scribe":
+            title = source.get("title") or "the source"
+            result["content"] = f"# {title}\n\n- Review source evidence with active recall."
         elif task_type == "source.verify":
             result["content"] = "Mock agent accepted the source reference."
             result["score"] = 1.0 if source.get("reference") else 0.0

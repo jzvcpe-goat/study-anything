@@ -21,9 +21,13 @@ from .security import redact_mapping
 
 
 class AgentCapability(str, Enum):
+    TEACH_OVERVIEW = "teach.overview"
+    TEACH_GLOSSARY = "teach.glossary"
+    TEACH_EXAMPLES = "teach.examples"
     QUIZ_GENERATE = "quiz.generate"
     ANSWER_GRADE = "answer.grade"
     INSIGHT_SYNTHESIZE = "insight.synthesize"
+    NOTE_SCRIBE = "note.scribe"
     SOURCE_VERIFY = "source.verify"
     MEMORY_RETRIEVE = "memory.retrieve"
     EMBEDDING_CREATE = "embedding.create"
@@ -127,9 +131,13 @@ class AgentHealth:
 
 
 ALL_AGENT_CAPABILITIES = [
+    AgentCapability.TEACH_OVERVIEW,
+    AgentCapability.TEACH_GLOSSARY,
+    AgentCapability.TEACH_EXAMPLES,
     AgentCapability.QUIZ_GENERATE,
     AgentCapability.ANSWER_GRADE,
     AgentCapability.INSIGHT_SYNTHESIZE,
+    AgentCapability.NOTE_SCRIBE,
     AgentCapability.SOURCE_VERIFY,
     AgentCapability.MEMORY_RETRIEVE,
     AgentCapability.EMBEDDING_CREATE,
@@ -179,10 +187,38 @@ class FakeAgentProvider:
             score = 0.82 if answer_text.strip() else 0.0
             content = "Answer is grounded and specific."
             feedback = content
+        elif task.task_type == AgentCapability.TEACH_OVERVIEW.value:
+            title = str(source.get("title") or "the source")
+            content = {
+                "summary": f"{title} explains {', '.join(terms)}.",
+                "key_points": [f"Understand how {term} connects to the source." for term in terms],
+                "learner_level": task.constraints.get("level", "beginner"),
+            }
+        elif task.task_type == AgentCapability.TEACH_GLOSSARY.value:
+            content = [
+                {
+                    "term": term,
+                    "plain_language": f"{term} is a key idea in this source.",
+                    "technical_definition": f"{term} should be interpreted only within the cited source context.",
+                    "example": f"Use {term} when explaining the source's main relationship.",
+                }
+                for term in terms
+            ]
+        elif task.task_type == AgentCapability.TEACH_EXAMPLES.value:
+            content = {
+                "examples": [
+                    f"A learner can test {term} by restating it with a source-backed implication."
+                    for term in terms
+                ],
+                "mode": task.constraints.get("example_mode", "mixed"),
+            }
         elif task.task_type == AgentCapability.INSIGHT_SYNTHESIZE.value:
             title = str(source.get("title") or "the source")
             mastery = task.constraints.get("mastery_level", 0.0)
             content = f"{title} is now linked to mastery level {float(mastery):.1f}."
+        elif task.task_type == AgentCapability.NOTE_SCRIBE.value:
+            title = str(source.get("title") or "the source")
+            content = f"# {title}\n\n- Source-bound focus: {', '.join(terms)}\n- Review with active recall."
         elif task.task_type == AgentCapability.SOURCE_VERIFY.value:
             content = "Source reference is present."
             score = 1.0 if source.get("reference") else 0.0
@@ -284,8 +320,12 @@ def validate_agent_result(
     content = values.get("content", "")
     if status == "ok":
         if task_type in {
+            AgentCapability.TEACH_OVERVIEW.value,
+            AgentCapability.TEACH_GLOSSARY.value,
+            AgentCapability.TEACH_EXAMPLES.value,
             AgentCapability.QUIZ_GENERATE.value,
             AgentCapability.INSIGHT_SYNTHESIZE.value,
+            AgentCapability.NOTE_SCRIBE.value,
         } and not str(content).strip():
             raise AgentResultInvalid(f"Agent result for {task_type} requires content.")
         if task_type == AgentCapability.ANSWER_GRADE.value and score is None:

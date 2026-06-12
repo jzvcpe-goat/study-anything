@@ -70,6 +70,15 @@ class ReadingRequest(BaseModel):
     text: str
 
 
+class TeachingLayersRequest(BaseModel):
+    layers: List[str] = Field(default_factory=lambda: ["overview", "glossary"])
+    language: str = Field(default="zh")
+    level: str = Field(default="beginner")
+    max_terms: int = Field(default=8)
+    example_mode: str = Field(default="mixed")
+    constraints: Dict[str, Any] = Field(default_factory=dict)
+
+
 class AgentProviderRequest(BaseModel):
     kind: str
     label: str
@@ -574,6 +583,37 @@ def create_app() -> FastAPI:
             trace_sink=trace_sink,
         )
         return store.save(state).public_dict()
+
+    @app.post("/v1/sessions/{session_id}/teaching-layers")
+    def generate_teaching_layers(
+        session_id: str,
+        payload: TeachingLayersRequest,
+    ) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            state = workflow.teaching_layers(
+                state,
+                layers=payload.layers,
+                constraints={
+                    "language": payload.language,
+                    "level": payload.level,
+                    "max_terms": payload.max_terms,
+                    "example_mode": payload.example_mode,
+                    **payload.constraints,
+                },
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        state = store.save(state)
+        return {
+            "schema_version": "teaching-layers-v1",
+            "session_id": state.session_id,
+            "layers": state.teaching_layers,
+            "stage": state.stage,
+            "open_hitl": [item.__dict__ for item in state.hitl_interrupts if item.status == "open"],
+        }
 
     @app.post("/v1/sessions/{session_id}/run")
     def run_session(session_id: str) -> dict[str, object]:

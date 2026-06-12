@@ -9,32 +9,32 @@
   "description": "Deterministic file manifest for distributing Study Anything platform packs, tool import assets, Skill instructions, and acceptance evidence.",
   "files": [
     {
-      "bytes": 9293,
+      "bytes": 11352,
       "kind": "source_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source contract for all platform learning tools.",
-      "sha256": "c584f0368899dd75863a9222bdd14995e5ba3e2732691f40293f5777a0e5ecba"
+      "sha256": "1656aeea1a0e8752d5af811d4df2f18c9ffd26f5a9e6f46fd36042645e34cd38"
     },
     {
-      "bytes": 17710,
+      "bytes": 21310,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 import asset for HTTP tool platforms.",
-      "sha256": "28d55e7077bdbc3e497546910e2af4d14536b7edc59b8bf57705b8bb5e12f26a"
+      "sha256": "196cbef1ad46591826471469ef6b4bbb127fbf50e93858a999789c3399980aba"
     },
     {
-      "bytes": 5307,
+      "bytes": 6917,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-openai-tools.json",
       "purpose": "OpenAI-compatible function tools for Kimi-compatible and other tool-calling agents.",
-      "sha256": "040c26ae565417930c9377c5c49f4ab5933688487f4e34f0a7e90aada64f2672"
+      "sha256": "957784fb77cab2086af21e6c2490691ca3f2b816ff19f0436826383c6f490008"
     },
     {
-      "bytes": 4748,
+      "bytes": 5359,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-tool-catalog.md",
       "purpose": "Human-readable tool catalog for platform operators.",
-      "sha256": "32e608086209a4a9301b57df59744105bd4f1c6e2d3b1f1452d488e6179fa817"
+      "sha256": "6526a6aaf57dcef25babff8b73072bffa47e6277eed3c4f2da0c40be0d1cd74d"
     },
     {
       "bytes": 1315,
@@ -86,11 +86,11 @@
       "sha256": "34391a44a77735e319a0af24a518ccc357117a222aea1b0408e874fa520dcbcf"
     },
     {
-      "bytes": 6571,
+      "bytes": 6992,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "a476efab2617018de147af60b706cb9e546ff9a4ccee4b64176cac5548110385"
+      "sha256": "f9c3f44c4465c262b8871381f02beaeec3d79d5b1aff8b929523500674e9b232"
     },
     {
       "bytes": 2883,
@@ -141,6 +141,7 @@
     "study_anything_owns": [
       "source-bound session state",
       "learning workflow orchestration",
+      "layered teaching output",
       "agent output validation",
       "mastery state",
       "HITL state",
@@ -150,5 +151,5 @@
   },
   "schema_version": "study-anything-platform-bundle-v1",
   "source_manifest": "platform/study-anything-platform-tools.json",
-  "source_manifest_sha256": "c584f0368899dd75863a9222bdd14995e5ba3e2732691f40293f5777a0e5ecba"
+  "source_manifest_sha256": "1656aeea1a0e8752d5af811d4df2f18c9ffd26f5a9e6f46fd36042645e34cd38"
 }

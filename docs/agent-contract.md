@@ -11,12 +11,23 @@ Study Anything uses Bring Your Own Agent. The app orchestrates learning state an
 
 ## Capabilities
 
+- `teach.overview`
+- `teach.glossary`
+- `teach.examples`
 - `quiz.generate`
 - `answer.grade`
 - `insight.synthesize`
+- `note.scribe`
 - `source.verify`
 - `memory.retrieve`
 - `embedding.create`
+
+Teaching capabilities are intentionally separate from the quiz loop so a user-owned
+Agent Gateway can route each layer to a different model. For example, it can send
+`teach.overview` to a strong reasoning model, `teach.glossary` to a cheaper fast
+model, and `teach.examples` to a multimodal or code-specialized model. Study
+Anything records only the provider id, task type, latency, status, confidence,
+and redacted token/cost metadata.
 
 ## AgentTask Input
 
@@ -73,7 +84,35 @@ The agent must return a single JSON object:
 }
 ```
 
-Allowed `status` values are `ok`, `needs_human`, and `error`. For `answer.grade`, `score` is required and must be a number from `0` to `1`. For `quiz.generate` and `insight.synthesize`, `content` is required.
+Allowed `status` values are `ok`, `needs_human`, and `error`. For `answer.grade`, `score` is required and must be a number from `0` to `1`. For `teach.overview`, `teach.glossary`, `teach.examples`, `quiz.generate`, `insight.synthesize`, and `note.scribe`, `content` is required.
+
+## Teaching Layer Tasks
+
+Use `POST /v1/sessions/{session_id}/teaching-layers` after attaching a reading source
+when a platform Agent wants layered teaching output before the quiz loop. The
+endpoint accepts layer names and routes each layer through capability defaults:
+
+```json
+{
+  "layers": ["overview", "glossary", "examples"],
+  "language": "zh",
+  "level": "beginner",
+  "max_terms": 8,
+  "example_mode": "mixed"
+}
+```
+
+Layer mapping:
+
+- `overview` -> `teach.overview`: whole-topic frame, key points, and learning path.
+- `glossary` -> `teach.glossary`: professional terms with plain-language explanation,
+  technical definition, and example.
+- `examples` -> `teach.examples`: concrete examples, analogies, HTML explainer ideas,
+  or code/business examples.
+- `scribe` -> `note.scribe`: compact Markdown note suitable for Obsidian-style review.
+
+The response contains private learning output and should not be logged by platform
+wrappers. Agent audit/eval artifacts return only redacted provider/task evidence.
 
 ## Minimal HTTP Agent Example
 
@@ -88,7 +127,11 @@ class Handler(BaseHTTPRequestHandler):
         task = json.loads(self.rfile.read(length))
         task_type = task.get("task_type")
         result = {"status": "ok", "content": "Focus on source evidence", "metadata": {}}
-        if task_type == "answer.grade":
+        if task_type == "teach.overview":
+            result["content"] = {"summary": "This source explains the main idea."}
+        elif task_type == "teach.glossary":
+            result["content"] = [{"term": "source evidence", "plain_language": "proof from the material"}]
+        elif task_type == "answer.grade":
             result.update({"score": 0.82, "feedback": "Grounded answer."})
         elif task_type == "insight.synthesize":
             result["content"] = "The reading is linked to current mastery."

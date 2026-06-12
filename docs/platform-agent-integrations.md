@@ -2,8 +2,8 @@
 
 Study Anything is designed to be called by a platform Agent rather than to replace one. The platform
 Agent owns browsing, files, apps, video tools, external data, user conversation, and model credentials.
-Study Anything owns the learning loop: source binding, quiz generation, answer grading, mastery,
-scribe logs, HITL state, Agent audit, and eval artifacts.
+Study Anything owns the learning loop: source binding, optional layered teaching output, quiz
+generation, answer grading, mastery, scribe logs, HITL state, Agent audit, and eval artifacts.
 
 ## Recommended Split
 
@@ -30,6 +30,7 @@ private Agent platforms:
 - API health
 - session creation
 - source attachment
+- optional teaching layers such as overview, glossary, examples, or Obsidian-style notes
 - workflow run/resume
 - answer submission
 - mastery lookup
@@ -120,6 +121,9 @@ ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-a
 ```
 
 The platform Agent should report the mastery result plus whether `agent-audit.status` is `verified`.
+When the user asks for explanation before answering a quiz, the platform Agent can call
+`POST /v1/sessions/{session_id}/teaching-layers` after source attachment and before `run`. Treat the
+returned layer content as private learning data.
 
 ## Kimi
 
@@ -162,6 +166,7 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/health`
 - `POST /v1/sessions`
 - `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/sessions/{session_id}/teaching-layers` optional
 - `POST /v1/sessions/{session_id}/run`
 - `POST /v1/sessions/{session_id}/answers`
 - `GET /v1/sessions/{session_id}/mastery`

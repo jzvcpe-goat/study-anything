@@ -511,6 +511,113 @@
           "returns_private_learning_data": true
         }
       }
+    },
+    "/v1/sessions/{session_id}/teaching-layers": {
+      "post": {
+        "description": "Generate layered teaching output such as whole-topic overview, glossary, examples, or Obsidian-style notes through user-owned Agent capabilities.",
+        "operationId": "study_anything_teaching_layers",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "constraints": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "example_mode": {
+                    "default": "mixed",
+                    "type": "string"
+                  },
+                  "language": {
+                    "default": "zh",
+                    "type": "string"
+                  },
+                  "layers": {
+                    "description": "Teaching layers to generate. Each layer routes to a separate Agent capability default.",
+                    "items": {
+                      "enum": [
+                        "overview",
+                        "glossary",
+                        "examples",
+                        "scribe"
+                      ],
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "level": {
+                    "default": "beginner",
+                    "type": "string"
+                  },
+                  "max_terms": {
+                    "default": 8,
+                    "maximum": 50,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "layers"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Generate layered teaching output such as whole-topic overview, glossary, examples, or Obsidian-style notes through user-owned Agent capabilities.",
+        "x-study-anything-output-requirements": [
+          "schema_version == teaching-layers-v1",
+          "layers contains each requested teaching layer",
+          "each layer includes agent.task_type and content"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "layers.content",
+            "layers.citations",
+            "source"
+          ],
+          "returns_private_learning_data": true
+        }
+      }
     }
   },
   "servers": [
@@ -552,6 +659,7 @@
       "study_anything_owns": [
         "source-bound session state",
         "learning workflow orchestration",
+        "layered teaching output",
         "agent output validation",
         "mastery state",
         "HITL state",

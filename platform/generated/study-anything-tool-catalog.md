@@ -119,6 +119,31 @@ Privacy:
 }
 ```
 
+### `study_anything_teaching_layers`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/teaching-layers`
+- Description: Generate layered teaching output such as whole-topic overview, glossary, examples, or Obsidian-style notes through user-owned Agent capabilities.
+
+Output requirements:
+
+- schema_version == teaching-layers-v1
+- layers contains each requested teaching layer
+- each layer includes agent.task_type and content
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "layers.content",
+    "layers.citations",
+    "source"
+  ],
+  "returns_private_learning_data": true
+}
+```
+
 ### `study_anything_answer`
 
 - Method: `POST`
