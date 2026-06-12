@@ -37,6 +37,11 @@ FILES: list[tuple[str, str, str]] = [
         "Human-readable tool catalog for platform operators.",
     ),
     (
+        "platform/generated/study-anything-operator-drill-transcript.json",
+        "generated_asset",
+        "Deterministic external-platform operator drill transcript.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -137,6 +142,11 @@ FILES: list[tuple[str, str, str]] = [
         "Adoption-proof-v1 verifier for external-platform operator handoff.",
     ),
     (
+        "scripts/verify_platform_operator_drill.py",
+        "verification",
+        "Verifier for external platform pack consumption and operator transcript evidence.",
+    ),
+    (
         "scripts/diagnose_adoption.py",
         "diagnostics",
         "Actionable diagnostics for common external-user adoption blockers.",
@@ -167,14 +177,24 @@ FILES: list[tuple[str, str, str]] = [
         "Kimi-compatible user-owned HTTP Agent gateway guide.",
     ),
     (
+        "docs/operator-drill.md",
+        "docs",
+        "External platform operator drill and transcript guide.",
+    ),
+    (
         "docs/agent-eval.md",
         "docs",
         "Agent eval and external evaluation guide.",
     ),
     (
-        "docs/release-notes/v0.2.22-alpha.md",
+        "docs/api.md",
         "docs",
-        "Release notes for the external-adoption proof release.",
+        "HTTP API reference for platform workspaces.",
+    ),
+    (
+        "docs/release-notes/v0.2.23-alpha.md",
+        "docs",
+        "Release notes for the real external-platform adoption drill release.",
     ),
     (
         "docs/plugins.md",

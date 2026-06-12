@@ -36,6 +36,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",
     "scripts/verify_external_adoption.py",
+    "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "fixtures/notebooklm/notebooklm-style-context-package.json",
 ]
@@ -327,6 +328,16 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
         command_results: dict[str, Any] = {}
         checks = [
             (
+                "operator_drill",
+                [
+                    python_bin,
+                    "scripts/verify_platform_operator_drill.py",
+                    "--pack",
+                    str(Path(args.pack).resolve()),
+                ],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -422,6 +433,16 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "manifest_schema": value.get("manifest_schema"),
             "agent_audit_status": value.get("agent_audit_status"),
             "quality_schema": value.get("quality_schema"),
+        }
+    if label == "operator_drill":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "pack_version": value.get("pack", {}).get("version"),
+            "openai_tool_count": value.get("generated_tool_assets", {}).get("openai_tool_count"),
+            "openapi_path_count": value.get("generated_tool_assets", {}).get("openapi_path_count"),
+            "platforms": sorted(value.get("platforms", {}).keys()),
+            "no_frontend_required": value.get("pack", {}).get("no_frontend_required"),
         }
     if label == "notebooklm_importer":
         return {

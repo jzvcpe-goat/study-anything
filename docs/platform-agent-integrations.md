@@ -65,14 +65,17 @@ assembling commands:
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
 ```
 
-The verifier emits `adoption-proof-v1` and proves that a fresh operator can start Study Anything in
-Skill Mode, use the platform tool surface, complete the importer/enrichment/retrieval/teaching/eval
-loop, and export Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
+The operator drill emits `study-anything-operator-drill-v1` and proves that the pack can be consumed
+as a platform tool directory before any runtime starts. The adoption verifier emits
+`adoption-proof-v1` and proves that a fresh operator can start Study Anything in Skill Mode, use the
+platform tool surface, complete the importer/enrichment/retrieval/teaching/eval loop, and export
+Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
 
 ## Generated Import Assets
 
@@ -83,6 +86,7 @@ platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
 platform/generated/study-anything-platform-bundle.json
+platform/generated/study-anything-operator-drill-transcript.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 ```
@@ -98,6 +102,7 @@ python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
+python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```
 

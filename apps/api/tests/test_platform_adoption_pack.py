@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.2.22-alpha")
+        self.assertEqual(manifest["version"], "v0.2.23-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -54,6 +54,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/packs/workbuddy/README.md",
             "skills/study-anything/SKILL.md",
             "scripts/verify_external_adoption.py",
+            "scripts/verify_platform_operator_drill.py",
             "fixtures/notebooklm/notebooklm-style-context-package.json",
         }
         with zipfile.ZipFile(archive_path) as archive:
