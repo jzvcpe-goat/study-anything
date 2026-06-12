@@ -4,9 +4,10 @@ Study Anything does not store model credentials or call real models directly. To
 included user-owned gateway as a separate local process.
 
 Kimi's official API is OpenAI-compatible and accepts Chat Completions requests at
-`https://api.moonshot.cn/v1/chat/completions`. The current Kimi documentation recommends
-`kimi-k2.5`. See the official [Kimi K2.5 quickstart](https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart)
-and [model list](https://platform.moonshot.cn/docs/intro).
+`https://api.moonshot.cn/v1/chat/completions`. The current Kimi quickstart uses
+`kimi-k2.6`; check the official [Kimi API quickstart](https://platform.moonshot.cn/docs/guide/start-using-kimi-api),
+[Chat Completions API](https://platform.moonshot.cn/docs/api/chat), and
+[model list](https://platform.moonshot.cn/docs/intro) before choosing a production model.
 
 ## Start Study Anything
 
@@ -24,6 +25,25 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
+## Verify The Gateway Without A Real Key
+
+Before adding Kimi credentials, prove that the same gateway entrypoint can satisfy the Study Anything
+Agent contract:
+
+```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+```
+
+With a running Study Anything API, run the end-to-end dry-run acceptance flow:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+```
+
+This starts `scripts/openai_compatible_agent_gateway.py` in `AGENT_GATEWAY_MODE=dry_run`, registers it
+as an HTTP Agent provider, and completes teaching layers, quiz, grading, mastery, `agent-audit`, and
+`agent-eval/artifact` without any model key.
+
 ## Start The User-Owned Kimi Gateway
 
 Run this in a separate terminal. The API key remains in the gateway process environment and is never
@@ -32,7 +52,7 @@ stored by Study Anything:
 ```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
 export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
-export AGENT_LLM_MODEL="kimi-k2.5"
+export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 export AGENT_LLM_EXTRA_BODY_JSON='{"thinking":{"type":"disabled"}}'
 
 python3 scripts/openai_compatible_agent_gateway.py \
@@ -72,6 +92,23 @@ python3 scripts/study_anything_cli.py start \
   --title "My notes" \
   --reference "local://my-notes" \
   --text "Paste the source material here."
+```
+
+`agent-add-http --set-default` registers the gateway for teaching layers, quiz generation, answer
+grading, insight synthesis, scribe notes, source verification, and embedding tasks unless you pass
+explicit `--capability` values.
+
+After answering, collect redacted proof:
+
+```bash
+python3 scripts/study_anything_cli.py agent-audit SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+```
+
+For a full local acceptance run against the real Study Anything API and dry-run gateway:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
 
 ## Browser-Only Kimi Limitation

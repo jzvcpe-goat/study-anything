@@ -36,6 +36,8 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Machine-readable platform Agent tool manifest plus verifier for the minimum learning loop, mastery, Agent audit, and eval artifact endpoints.
 - Generated platform import assets: constrained OpenAPI, OpenAI-compatible function tools, and a checked-in tool catalog.
 - Copy-ready platform packs for Codex, Kimi-compatible agents, and WorkBuddy-style HTTP tool workspaces.
+- OpenAI-compatible gateway dry-run verifier so users can prove Kimi/OpenAI-compatible wiring before
+  adding real model credentials.
 - Deterministic platform bundle manifest with sha256 hashes for platform packs, generated import
   assets, key docs, and the repo-local Skill entrypoint.
 - Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API learning flow.

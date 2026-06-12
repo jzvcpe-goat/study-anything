@@ -145,7 +145,17 @@ def markdown_list(items: Iterable[str]) -> str:
     return "\n".join(f"- {item}" for item in items)
 
 
+def evidence_commands(evidence: Dict[str, Any]) -> List[str]:
+    keys = [
+        "local_verification_command",
+        "openai_compatible_gateway_dry_run_command",
+        "gateway_only_command",
+    ]
+    return [str(evidence[key]) for key in keys if evidence.get(key)]
+
+
 def build_catalog(manifest: Dict[str, Any]) -> str:
+    acceptance_evidence = manifest.get("acceptance_evidence", {})
     lines: List[str] = [
         "# Study Anything Platform Tool Catalog",
         "",
@@ -175,11 +185,15 @@ def build_catalog(manifest: Dict[str, Any]) -> str:
         "A platform wrapper is acceptable only when it completes the local verification command:",
         "",
         "```bash",
-        manifest.get("acceptance_evidence", {}).get(
+        acceptance_evidence.get(
             "local_verification_command",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         ),
         "```",
+        "",
+        "Additional gateway and release acceptance commands:",
+        "",
+        markdown_list(evidence_commands(acceptance_evidence)) or "- none",
         "",
         "## Tools",
         "",

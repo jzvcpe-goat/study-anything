@@ -14,11 +14,14 @@ from urllib.request import Request, urlopen
 API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
 AGENT_ENDPOINT = os.getenv("AGENT_ENDPOINT", "http://127.0.0.1:8787").rstrip("/")
 CAPABILITIES = [
+    "teach.overview",
+    "teach.glossary",
+    "teach.examples",
     "quiz.generate",
     "answer.grade",
     "insight.synthesize",
+    "note.scribe",
     "source.verify",
-    "memory.retrieve",
     "embedding.create",
 ]
 
@@ -92,9 +95,26 @@ def main() -> None:
             "source_type": "local_text",
             "reference": "demo://mock-http-agent",
             "title": "Mock HTTP Agent Flow",
-            "text": "A user-owned agent should generate a quiz, grade an answer, and synthesize an insight.",
+            "text": (
+                "A user-owned agent should generate a quiz, grade an answer, "
+                "and synthesize an insight."
+            ),
         },
     )
+    teaching = request(
+        f"/v1/sessions/{session_id}/teaching-layers",
+        {"layers": ["overview", "glossary"], "language": "zh", "level": "beginner"},
+    )
+    if teaching.get("schema_version") != "teaching-layers-v1":
+        raise RuntimeError(f"Teaching layer schema mismatch: {teaching}")
+    teaching_tasks = [
+        layer.get("agent", {}).get("task_type")
+        for layer in teaching.get("layers", [])
+        if isinstance(layer, dict)
+    ]
+    for required_task in ["teach.overview", "teach.glossary"]:
+        if required_task not in teaching_tasks:
+            raise RuntimeError(f"Teaching layer missing {required_task}: {teaching}")
     running = request(f"/v1/sessions/{session_id}/run", {})
     quiz_id = running["quiz_items"][0]["item_id"]
     completed = request(
@@ -105,7 +125,9 @@ def main() -> None:
         raise RuntimeError(f"Expected completed stage, got {completed['stage']}")
     events = request(f"/v1/sessions/{session_id}/events")
     handled_by_agent = [
-        event for event in events if (event.get("payload") or {}).get("agent", {}).get("provider_id")
+        event
+        for event in events
+        if (event.get("payload") or {}).get("agent", {}).get("provider_id")
     ]
     if len(handled_by_agent) < 2:
         raise RuntimeError("Expected agent metadata in workflow events.")
@@ -118,11 +140,17 @@ def main() -> None:
         raise RuntimeError(f"Agent audit did not identify the user-owned HTTP agent: {agent_audit}")
     agent_eval_artifact = request(f"/v1/sessions/{session_id}/agent-eval/artifact")
     if agent_eval_artifact.get("schema_version") != "agent-eval-artifact-v1":
-        raise RuntimeError(f"Agent eval artifact schema is not agent-eval-artifact-v1: {agent_eval_artifact}")
+        raise RuntimeError(
+            f"Agent eval artifact schema is not agent-eval-artifact-v1: {agent_eval_artifact}"
+        )
     if agent_eval_artifact.get("status") != "ready_for_external_eval":
-        raise RuntimeError(f"Agent eval artifact is not ready for external eval: {agent_eval_artifact}")
+        raise RuntimeError(
+            f"Agent eval artifact is not ready for external eval: {agent_eval_artifact}"
+        )
     if not agent_eval_artifact.get("used_external_agent"):
-        raise RuntimeError(f"Agent eval artifact did not preserve external Agent proof: {agent_eval_artifact}")
+        raise RuntimeError(
+            f"Agent eval artifact did not preserve external Agent proof: {agent_eval_artifact}"
+        )
     required_eval_gates = [
         gate for gate in agent_eval_artifact.get("native_gates", []) if gate.get("required")
     ]
@@ -143,6 +171,7 @@ def main() -> None:
                 "agent_audit_used_external_agent": agent_audit["used_external_agent"],
                 "agent_eval_schema": agent_eval_artifact["schema_version"],
                 "agent_eval_used_external_agent": agent_eval_artifact["used_external_agent"],
+                "teaching_tasks": teaching_tasks,
             },
             ensure_ascii=False,
         )

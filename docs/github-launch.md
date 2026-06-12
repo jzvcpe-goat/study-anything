@@ -20,8 +20,10 @@ python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py
 curl -s http://127.0.0.1:8000/v1/metrics/pmf
 ./scripts/stop_self_host.sh
@@ -36,9 +38,9 @@ Confirm:
   insights, raw user identifiers, Agent metadata, or raw contact values.
 - `scripts/verify_backup_restore_drill.py` can create, mutate, restore, and clean up a disposable
   Docker stack.
-- `scripts/verify_published_image_launch.py --tag v0.2.14-alpha` can pull the public API image,
+- `scripts/verify_published_image_launch.py --tag v0.2.15-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
-- `docs/release-notes/v0.2.14-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.15-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -48,17 +50,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.14-alpha
-git push origin v0.2.14-alpha
+git tag v0.2.15-alpha
+git push origin v0.2.15-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.14-alpha \
+gh release create v0.2.15-alpha \
   --prerelease \
-  --title "Study Anything v0.2.14-alpha" \
-  --notes-file docs/release-notes/v0.2.14-alpha.md
+  --title "Study Anything v0.2.15-alpha" \
+  --notes-file docs/release-notes/v0.2.15-alpha.md
 ```
 
 ## GitHub Settings
@@ -75,13 +77,13 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.14-alpha
-python3 scripts/verify_published_image_launch.py --tag v0.2.14-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.15-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.15-alpha
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.14-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.15-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

@@ -130,11 +130,21 @@
 - Demo and mock HTTP Agents support `teach.overview`, `teach.glossary`, `teach.examples`, and
   `note.scribe`.
 
+## v0.2.15-alpha
+
+- OpenAI-compatible Agent gateway dry-run mode for Kimi/OpenAI-compatible provider setup without
+  storing model keys in Study Anything.
+- End-to-end verifier for gateway contract, provider registration, teaching layers, quiz, grading,
+  mastery, redacted `agent-audit`, and redacted `agent-eval/artifact`.
+- Platform packs and bundle manifest include Kimi/Codex/WorkBuddy acceptance commands for clean-clone
+  platform Agent setup.
+- CLI `agent-add-http --set-default` now registers teaching, quiz, grading, synthesis, scribe, source
+  verification, and embedding capabilities by default.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
-  platform-specific submission docs.
+- Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.

@@ -32,5 +32,6 @@ For a running API:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 ```

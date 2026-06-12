@@ -72,6 +72,16 @@ FILES: list[tuple[str, str, str]] = [
         "Machine-readable WorkBuddy pack metadata.",
     ),
     (
+        "scripts/openai_compatible_agent_gateway.py",
+        "gateway",
+        "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
+    ),
+    (
+        "scripts/verify_openai_compatible_gateway.py",
+        "verification",
+        "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
+    ),
+    (
         "docs/platform-agent-integrations.md",
         "docs",
         "General platform Agent integration guide.",
@@ -152,6 +162,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/generate_platform_agent_assets.py --check",
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
+            "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+            "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
         ],

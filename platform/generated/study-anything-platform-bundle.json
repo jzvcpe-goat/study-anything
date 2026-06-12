@@ -3,24 +3,26 @@
     "python3 scripts/generate_platform_agent_assets.py --check",
     "python3 scripts/verify_platform_ecosystem_packs.py",
     "python3 scripts/generate_platform_bundle_manifest.py --check",
+    "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py"
   ],
   "description": "Deterministic file manifest for distributing Study Anything platform packs, tool import assets, Skill instructions, and acceptance evidence.",
   "files": [
     {
-      "bytes": 11352,
+      "bytes": 11585,
       "kind": "source_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source contract for all platform learning tools.",
-      "sha256": "1656aeea1a0e8752d5af811d4df2f18c9ffd26f5a9e6f46fd36042645e34cd38"
+      "sha256": "992a46863dcf4de4e159947f0740ef13021e2970c6add875e764db58dfc3add4"
     },
     {
-      "bytes": 21310,
+      "bytes": 21547,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 import asset for HTTP tool platforms.",
-      "sha256": "196cbef1ad46591826471469ef6b4bbb127fbf50e93858a999789c3399980aba"
+      "sha256": "2a6b6bede9695d5eed4fb2bdd56f46992f39288489a9c799dff51db77eb71116"
     },
     {
       "bytes": 6917,
@@ -30,74 +32,88 @@
       "sha256": "957784fb77cab2086af21e6c2490691ca3f2b816ff19f0436826383c6f490008"
     },
     {
-      "bytes": 5359,
+      "bytes": 5647,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-tool-catalog.md",
       "purpose": "Human-readable tool catalog for platform operators.",
-      "sha256": "6526a6aaf57dcef25babff8b73072bffa47e6277eed3c4f2da0c40be0d1cd74d"
+      "sha256": "d86a27cae95bb4eef5bc0e121eab35e6ecc897644a10f131c29057dde7b8cb5d"
     },
     {
-      "bytes": 1315,
+      "bytes": 1398,
       "kind": "platform_pack",
       "path": "platform/packs/README.md",
       "purpose": "Index for copy-ready platform packs.",
-      "sha256": "d6ef2ebfa26e1a15c09ab572c37a820d47a8eaa1b7571cace6df1b153f0a7683"
+      "sha256": "6c16c6a46899b2d546dea8b663938581345c7232a1fac8d7983774d8fdc050eb"
     },
     {
-      "bytes": 765,
+      "bytes": 832,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex and terminal-capable Agent setup guide.",
-      "sha256": "951126ac78af1ac169d70e1abb83406813c19f2dfdd7a78315037492c84b51cf"
+      "sha256": "75a39648e5ed79698f3612f7906f8c3ced3194c7b61051b1e92e74c480fe0b96"
     },
     {
-      "bytes": 1334,
+      "bytes": 1408,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack metadata.",
-      "sha256": "6d476479a813046751dd78ca8e52ab404db3ba6303f06bf1c5b1218590f3215e"
+      "sha256": "abb441cbbbb21fe26b7d97407f6e3baac73cfd7ba0e74e0dc4d1014e3870f5c6"
     },
     {
-      "bytes": 1385,
+      "bytes": 1852,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/README.md",
       "purpose": "Kimi tool import and gateway setup guide.",
-      "sha256": "2ff5c840d140d9cddf3c17a1e49bea5e336818cc680c9ec6835e9a1f8c005d06"
+      "sha256": "e541f8f7b833026c5d4d3f362fc20a81465846179144e051a3d8fb2d0ba44ff9"
     },
     {
-      "bytes": 1728,
+      "bytes": 1963,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack metadata.",
-      "sha256": "7203d298f4869f31b467ddd1a0e4fd81944ff10329275bcbf214e57552a8ee1f"
+      "sha256": "eb87bef49e733b3abe22f78a9200107c7d4a51818d7fbe756c46a3392ff02ed9"
     },
     {
-      "bytes": 948,
+      "bytes": 1416,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "fe2f0904f3f1ae5af765c150e2d8fe1bdcef67659b715a5b94c659e20ce9b390"
+      "sha256": "fbcb1805d3db8d9ae63b39c730fb6841da8eb38404e1f1fdf01badff02aea12c"
     },
     {
-      "bytes": 1420,
+      "bytes": 1510,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "34391a44a77735e319a0af24a518ccc357117a222aea1b0408e874fa520dcbcf"
+      "sha256": "9985a04067f3842656564f66ae290adfa19340ca58eee22e1794f71ed29c1b6b"
     },
     {
-      "bytes": 6992,
+      "bytes": 11952,
+      "kind": "gateway",
+      "path": "scripts/openai_compatible_agent_gateway.py",
+      "purpose": "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
+      "sha256": "b3d5dc2a5e0c2f57a3b1fea9b365545635575f7f68e73e582286a92c10c6c0de"
+    },
+    {
+      "bytes": 12027,
+      "kind": "verification",
+      "path": "scripts/verify_openai_compatible_gateway.py",
+      "purpose": "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
+      "sha256": "a425329911a1a409c907f3a241562d590161d3c67fab670f678de33967269f40"
+    },
+    {
+      "bytes": 7577,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "f9c3f44c4465c262b8871381f02beaeec3d79d5b1aff8b929523500674e9b232"
+      "sha256": "e88545684d6656d48ae9031ec3ff4994f028085bf30de68d546408d9514b9bd0"
     },
     {
-      "bytes": 2883,
+      "bytes": 4258,
       "kind": "docs",
       "path": "docs/kimi-agent-gateway.md",
       "purpose": "Kimi-compatible user-owned HTTP Agent gateway guide.",
-      "sha256": "0cbbfb414198f37e307f031736d36d402df5335c109cd2a31d9ec1d83199bc2b"
+      "sha256": "d136f0779ffd3d45c4c081d6499b847f430c54f6fa6a067dcccd80505c84fe3d"
     },
     {
       "bytes": 6851,
@@ -151,5 +167,5 @@
   },
   "schema_version": "study-anything-platform-bundle-v1",
   "source_manifest": "platform/study-anything-platform-tools.json",
-  "source_manifest_sha256": "1656aeea1a0e8752d5af811d4df2f18c9ffd26f5a9e6f46fd36042645e34cd38"
+  "source_manifest_sha256": "992a46863dcf4de4e159947f0740ef13021e2970c6add875e764db58dfc3add4"
 }
