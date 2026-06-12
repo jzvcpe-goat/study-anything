@@ -111,6 +111,140 @@
         }
       }
     },
+    "/v1/importers/{plugin_id}/run": {
+      "post": {
+        "description": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package.",
+        "operationId": "study_anything_run_importer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plugin_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "allow_network": {
+                    "default": false,
+                    "description": "Only true after the platform Agent has reviewed and accepted network:http.",
+                    "type": "boolean"
+                  },
+                  "confirmed_permissions": {
+                    "description": "Must match the importer manifest permissions exactly.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "include_text": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "inputs": {
+                    "additionalProperties": true,
+                    "description": "Keyword arguments passed to the importer's build_context_package function.",
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "inputs",
+                  "confirmed_permissions"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package.",
+        "x-study-anything-output-requirements": [
+          "schema_version == importer-run-v1",
+          "status == package_created",
+          "package.schema_version == learning-context-package-v1",
+          "redacted_package omits item text"
+        ],
+        "x-study-anything-privacy": {
+          "network_disabled_by_default": true,
+          "platform_agent_should_redact_before_logging": [
+            "inputs",
+            "package.items.text",
+            "redacted_package.items.title"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/retrieval/status": {
+      "get": {
+        "description": "Check whether optional retrieval projection is disabled, healthy, or unavailable.",
+        "operationId": "study_anything_retrieval_status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Check whether optional retrieval projection is disabled, healthy, or unavailable.",
+        "x-study-anything-output-requirements": [
+          "status is disabled, healthy, or unavailable"
+        ],
+        "x-study-anything-privacy": {
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/sessions": {
       "post": {
         "description": "Create a learning session for a local user. Use demo mode only for smoke tests.",
@@ -259,6 +393,98 @@
             "package.items.text",
             "session.source.text",
             "session.enrichment_items.text"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/from-retrieval": {
+      "post": {
+        "description": "Create a new learning session from retrieval results produced by an existing indexed session.",
+        "operationId": "study_anything_create_session_from_retrieval",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 5,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "query": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_session_id": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "track": {
+                    "type": "string"
+                  },
+                  "use_demo_agent": {
+                    "description": "True only for local demos and CI smoke tests.",
+                    "type": "boolean"
+                  },
+                  "user_id": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_session_id",
+                  "query",
+                  "user_id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Create a new learning session from retrieval results produced by an existing indexed session.",
+        "x-study-anything-output-requirements": [
+          "schema_version == retrieval-session-v1",
+          "status == session_created",
+          "session.stage == enrichment_attached"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "query",
+            "retrieval.results.snippet",
+            "session.source.text"
           ],
           "request_contains_private_learning_data": true,
           "returns_private_learning_data": true
@@ -980,6 +1206,236 @@
             "title"
           ],
           "request_contains_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/retrieval/context-package": {
+      "post": {
+        "description": "Expand an existing learning session with a Learning Context Package generated from retrieval results.",
+        "operationId": "study_anything_append_retrieval_context",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 5,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "query": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_session_id": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_session_id",
+                  "query"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Expand an existing learning session with a Learning Context Package generated from retrieval results.",
+        "x-study-anything-output-requirements": [
+          "schema_version == retrieval-session-v1",
+          "status == session_expanded",
+          "session.enrichment_items include retrieval context"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "query",
+            "retrieval.results.snippet",
+            "session.source.text"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/retrieval/rebuild": {
+      "post": {
+        "description": "Rebuild the optional retrieval index for one session from canonical Study Anything session state.",
+        "operationId": "study_anything_retrieval_rebuild",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {},
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Rebuild the optional retrieval index for one session from canonical Study Anything session state.",
+        "x-study-anything-output-requirements": [
+          "status == rebuilt",
+          "indexed_count >= 1"
+        ],
+        "x-study-anything-privacy": {
+          "canonical_source": "session_state",
+          "returns_private_learning_data": false
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/retrieval/search": {
+      "post": {
+        "description": "Search the rebuilt retrieval index for one session and return minimal source snippets.",
+        "operationId": "study_anything_retrieval_search",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 5,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "query": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Search the rebuilt retrieval index for one session and return minimal source snippets.",
+        "x-study-anything-output-requirements": [
+          "schema_version == retrieval-search-v1",
+          "results include reference, excerpt_hash, locator, snippet, and score",
+          "full_source_text_returned == false"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "query",
+            "results.snippet"
+          ],
+          "request_contains_private_learning_data": false,
+          "returns_private_learning_data": true
         }
       }
     },

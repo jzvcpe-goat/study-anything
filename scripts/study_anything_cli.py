@@ -265,6 +265,41 @@ def cmd_agent_eval(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/artifact"))
 
 
+def cmd_retrieval_status(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/retrieval/status"))
+
+
+def cmd_retrieval_rebuild(args: argparse.Namespace) -> None:
+    emit(args, post(f"/v1/sessions/{quote(args.session_id)}/retrieval/rebuild"))
+
+
+def cmd_retrieval_search(args: argparse.Namespace) -> None:
+    query = urlencode({"q": args.query, "limit": args.limit})
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/retrieval/search?{query}"))
+
+
+def cmd_retrieval_import(args: argparse.Namespace) -> None:
+    payload = {
+        "source_session_id": args.source_session_id,
+        "query": args.query,
+        "limit": args.limit,
+        "user_id": args.user_id,
+        "track": args.track,
+        "use_demo_agent": args.agent_mode == "demo",
+    }
+    if args.session_id:
+        response = post(
+            f"/v1/sessions/{quote(args.session_id)}/retrieval/context-package",
+            payload,
+        )
+    else:
+        response = post("/v1/sessions/from-retrieval", payload)
+    if args.session and isinstance(response, dict) and isinstance(response.get("session"), dict):
+        print_session(response["session"])
+        return
+    emit(args, response)
+
+
 def cmd_enrich(args: argparse.Namespace) -> None:
     metadata: Dict[str, Any] = {}
     if args.metadata_json:
@@ -294,6 +329,63 @@ def cmd_enrich(args: argparse.Namespace) -> None:
 def cmd_context_validate(args: argparse.Namespace) -> None:
     package = load_json_file(args.package)
     emit(args, post("/v1/context-packages/validate", {"package": package}))
+
+
+def _importer_inputs(args: argparse.Namespace) -> Dict[str, Any]:
+    values: Dict[str, Any] = {}
+    if args.input_file:
+        values.update(load_json_file(args.input_file))
+    if args.input_json:
+        try:
+            parsed = json.loads(args.input_json)
+        except json.JSONDecodeError as exc:
+            raise StudyAnythingError(f"--input-json is not valid JSON: {exc}") from exc
+        if not isinstance(parsed, dict):
+            raise StudyAnythingError("--input-json must decode to an object.")
+        values.update(parsed)
+    return values
+
+
+def cmd_importer_run(args: argparse.Namespace) -> None:
+    run = post(
+        f"/v1/importers/{quote(args.plugin_id)}/run",
+        {
+            "inputs": _importer_inputs(args),
+            "confirmed_permissions": args.confirm_permission,
+            "allow_network": args.allow_network,
+            "include_text": True,
+        },
+    )
+    package = run.get("package")
+    if not isinstance(package, dict):
+        raise StudyAnythingError("Importer did not return a package object.")
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            json.dump(package, handle, ensure_ascii=False, indent=2, sort_keys=True)
+            handle.write("\n")
+    response: Any = run
+    if args.session_id:
+        response = post(
+            f"/v1/sessions/{quote(args.session_id)}/context-package",
+            {"package": package},
+        )
+    elif args.create_session:
+        response = post(
+            "/v1/sessions/from-context-package",
+            {
+                "package": package,
+                "user_id": args.user_id,
+                "track": args.track,
+                "use_demo_agent": args.agent_mode == "demo",
+            },
+        )
+    if args.session and isinstance(response, dict) and isinstance(response.get("session"), dict):
+        print_session(response["session"])
+        return
+    if args.output and response is run and not args.json:
+        print(f"wrote: {args.output}")
+        return
+    emit(args, response)
 
 
 def cmd_context_import(args: argparse.Namespace) -> None:
@@ -555,6 +647,39 @@ def build_parser() -> argparse.ArgumentParser:
     add_session_id(agent_eval)
     agent_eval.set_defaults(func=cmd_agent_eval)
 
+    retrieval_status = subparsers.add_parser("retrieval-status", help="Show retrieval adapter status")
+    retrieval_status.set_defaults(func=cmd_retrieval_status)
+
+    retrieval_rebuild = subparsers.add_parser(
+        "retrieval-rebuild",
+        help="Rebuild the retrieval index for a session",
+    )
+    add_session_id(retrieval_rebuild)
+    retrieval_rebuild.set_defaults(func=cmd_retrieval_rebuild)
+
+    retrieval_search = subparsers.add_parser(
+        "retrieval-search",
+        help="Search a rebuilt retrieval index for one session",
+    )
+    add_session_id(retrieval_search)
+    retrieval_search.add_argument("--query", required=True)
+    retrieval_search.add_argument("--limit", type=int, default=5)
+    retrieval_search.set_defaults(func=cmd_retrieval_search)
+
+    retrieval_import = subparsers.add_parser(
+        "retrieval-import",
+        help="Create or expand a session from retrieval results",
+    )
+    retrieval_import.add_argument("--source-session-id", required=True)
+    retrieval_import.add_argument("--query", required=True)
+    retrieval_import.add_argument("--limit", type=int, default=5)
+    retrieval_import.add_argument("--session-id", help="Expand an existing session instead of creating one")
+    retrieval_import.add_argument("--user-id", default="retrieval-import-user")
+    retrieval_import.add_argument("--track")
+    retrieval_import.add_argument("--agent-mode", choices=["demo", "configured"], default="demo")
+    retrieval_import.add_argument("--session", action="store_true")
+    retrieval_import.set_defaults(func=cmd_retrieval_import)
+
     enrich = subparsers.add_parser("enrich", help="Attach one enrichment item to a session")
     add_session_id(enrich)
     enrich.add_argument("--source-type", default="web")
@@ -573,6 +698,33 @@ def build_parser() -> argparse.ArgumentParser:
     )
     context_validate.add_argument("package", help="Path to learning-context-package-v1 JSON")
     context_validate.set_defaults(func=cmd_context_validate)
+
+    importer_run = subparsers.add_parser(
+        "importer-run",
+        help="Run a confirmed local importer plugin and optionally create or expand a session",
+    )
+    importer_run.add_argument("plugin_id")
+    importer_run.add_argument("--input-file", help="JSON object passed to build_context_package")
+    importer_run.add_argument("--input-json", help="JSON object passed to build_context_package")
+    importer_run.add_argument(
+        "--confirm-permission",
+        action="append",
+        default=[],
+        help="Manifest permission to confirm; repeat for every requested permission",
+    )
+    importer_run.add_argument("--allow-network", action="store_true")
+    importer_run.add_argument("--output", help="Write the generated Learning Context Package JSON")
+    importer_run.add_argument("--session-id", help="Expand an existing session with the generated package")
+    importer_run.add_argument("--create-session", action="store_true")
+    importer_run.add_argument("--user-id", default="importer-run-user")
+    importer_run.add_argument("--track")
+    importer_run.add_argument("--agent-mode", choices=["demo", "configured"], default="demo")
+    importer_run.add_argument(
+        "--session",
+        action="store_true",
+        help="Print a compact session summary when a session is created or expanded",
+    )
+    importer_run.set_defaults(func=cmd_importer_run)
 
     context_import = subparsers.add_parser(
         "context-import",

@@ -99,6 +99,11 @@ hashes, and metadata keys without item text.
 format. These endpoints are the preferred importer path for Kimi, Codex, WorkBuddy, NotebookLM-style,
 Markdown, and Obsidian workflows.
 
+`POST /v1/importers/{plugin_id}/run` runs a local importer plugin only after the caller confirms the
+exact manifest permissions. Network-capable importers remain blocked unless `allow_network=true` is
+explicitly sent. The response includes a validated `learning-context-package-v1` package plus a
+`redacted_package` summary without item text.
+
 `POST /v1/sessions/{session_id}/enrichment` remains available for simple one-off bounded excerpts. It
 lets a platform Agent attach web pages, documents, video slices, or app-context excerpts as a source
 bundle. The response returns references and excerpt hashes, not raw item text. Platform wrappers should
@@ -144,6 +149,21 @@ answers, feedback, and insights as private learning data.
 FalkorDB is an optional projection layer. These endpoints expose only source references, excerpt hashes,
 mastery metadata, and topology identifiers. They never expose reading prose, quiz content, answers, or
 generated insights.
+
+## Optional Retrieval
+
+- `GET /v1/retrieval/status`
+- `POST /v1/sessions/{session_id}/retrieval/rebuild`
+- `GET /v1/sessions/{session_id}/retrieval/search?q=...`
+- `POST /v1/sessions/{session_id}/retrieval/search`
+- `POST /v1/sessions/from-retrieval`
+- `POST /v1/sessions/{session_id}/retrieval/context-package`
+
+LanceDB is an optional local projection layer. It is disabled by default and can be rebuilt from
+canonical session state. Retrieval stores source references, excerpt hashes, locators, minimal snippets,
+and deterministic vectors. It does not store Agent credentials. The POST search endpoint is preferred
+for platform tool wrappers; the GET endpoint is for local debugging. Retrieval-created sessions import
+minimal snippets as a new Learning Context Package.
 
 ## HITL and Events
 

@@ -112,6 +112,11 @@ FILES: list[tuple[str, str, str]] = [
         "Importer-to-lesson verifier for Learning Context Package, NotebookLM-style, and Obsidian bridge flows.",
     ),
     (
+        "scripts/verify_importer_runtime_retrieval_flow.py",
+        "verification",
+        "Importer-runtime and retrieval verifier for local Agent platform flows.",
+    ),
+    (
         "scripts/run_external_agent_evals.py",
         "verification",
         "Wrapper for mature external Agent eval runners such as Promptfoo and DeepEval.",
@@ -237,6 +242,10 @@ def build_manifest() -> dict[str, object]:
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+            (
+                "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 "
+                "python3 scripts/verify_importer_runtime_retrieval_flow.py"
+            ),
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
             (
             "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "

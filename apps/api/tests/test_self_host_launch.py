@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.19-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.20-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(

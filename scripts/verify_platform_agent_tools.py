@@ -25,6 +25,12 @@ REQUIRED_TOOLS = {
     "study_anything_validate_context_package",
     "study_anything_create_session_from_context_package",
     "study_anything_append_context_package",
+    "study_anything_run_importer",
+    "study_anything_retrieval_status",
+    "study_anything_retrieval_rebuild",
+    "study_anything_retrieval_search",
+    "study_anything_create_session_from_retrieval",
+    "study_anything_append_retrieval_context",
     "study_anything_add_enrichment",
     "study_anything_teaching_layers",
     "study_anything_run",
@@ -215,6 +221,48 @@ def main() -> None:
     )
     if context_appended.get("status") != "session_expanded":
         raise VerificationError(f"Context package append failed: {context_appended}")
+
+    importer = call_tool(
+        tools,
+        "study_anything_run_importer",
+        {
+            "inputs": {
+                "note_reference": "obsidian://Platform Tools/Importer Smoke",
+                "title": "Importer Smoke",
+                "markdown_excerpt": "Importer runtime should produce a validated learning context package.",
+            },
+            "confirmed_permissions": ["write:context"],
+            "include_text": True,
+        },
+        plugin_id="example-note-importer",
+    )
+    if importer.get("schema_version") != "importer-run-v1":
+        raise VerificationError(f"Importer tool returned invalid schema: {importer}")
+    if (importer.get("package") or {}).get("schema_version") != "learning-context-package-v1":
+        raise VerificationError(f"Importer tool did not return a Learning Context Package: {importer}")
+    if "Importer runtime should produce" in json.dumps(importer.get("redacted_package"), ensure_ascii=False):
+        raise VerificationError("Importer redacted_package leaked raw importer text.")
+
+    retrieval_status = call_tool(tools, "study_anything_retrieval_status")
+    if retrieval_status.get("status") not in {"disabled", "healthy", "unavailable"}:
+        raise VerificationError(f"Retrieval status returned invalid state: {retrieval_status}")
+    if retrieval_status.get("status") == "healthy":
+        rebuilt = call_tool(
+            tools,
+            "study_anything_retrieval_rebuild",
+            {},
+            session_id=context_session_id,
+        )
+        if rebuilt.get("status") != "rebuilt":
+            raise VerificationError(f"Retrieval rebuild failed: {rebuilt}")
+        searched = call_tool(
+            tools,
+            "study_anything_retrieval_search",
+            {"query": "learning context package", "limit": 2},
+            session_id=context_session_id,
+        )
+        if searched.get("schema_version") != "retrieval-search-v1":
+            raise VerificationError(f"Retrieval search returned invalid schema: {searched}")
 
     private_source_text = "Private platform tool smoke source text must stay out of audit artifacts."
     private_enrichment_text = "Private enrichment web and video context must stay out of redacted evidence."

@@ -219,6 +219,12 @@ Minimum endpoints for a platform tool wrapper:
 - `POST /v1/context-packages/validate` optional importer path
 - `POST /v1/sessions/from-context-package` optional importer path
 - `POST /v1/sessions/{session_id}/context-package` optional importer path
+- `POST /v1/importers/{plugin_id}/run` optional local importer runtime
+- `GET /v1/retrieval/status` optional retrieval status
+- `POST /v1/sessions/{session_id}/retrieval/rebuild` optional retrieval projection
+- `POST /v1/sessions/{session_id}/retrieval/search` optional retrieval search
+- `POST /v1/sessions/from-retrieval` optional retrieval-to-session path
+- `POST /v1/sessions/{session_id}/retrieval/context-package` optional retrieval append path
 - `POST /v1/sessions/{session_id}/enrichment` optional
 - `POST /v1/sessions/{session_id}/teaching-layers` optional
 - `POST /v1/sessions/{session_id}/run`
@@ -235,15 +241,18 @@ Minimum endpoints for a platform tool wrapper:
 A platform integration is acceptable when it can complete this sequence:
 
 1. Start or reach a Study Anything API.
-2. Submit a user-provided source with a reference, or validate/import `learning-context-package-v1`.
+2. Submit a user-provided source with a reference, run a confirmed local importer, or validate/import
+   `learning-context-package-v1`.
 3. Complete one quiz/answer/mastery loop.
 4. Return `agent-audit.status=verified`.
 5. Return `agent-eval-artifact-v1` with all required native gates passing.
 6. Return `agent-quality-eval-v1` with `status=pass`.
 7. Return an Obsidian markdown export when the user asks for knowledge deposit.
 8. Return `learning-package-v1` when the user wants NotebookLM-style, platform-agent, or local archive handoff.
-9. Run `scripts/verify_importer_lesson_flow.py` for importer-based release evidence.
-10. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+9. Run `scripts/verify_importer_lesson_flow.py` for package-import release evidence.
+10. Run `scripts/verify_importer_runtime_retrieval_flow.py` with retrieval explicitly enabled when
+   validating importer runtime plus retrieval.
+11. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -253,6 +262,7 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_runtime_retrieval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```

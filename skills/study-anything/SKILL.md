@@ -77,6 +77,36 @@ The package schema is `learning-context-package-v1`. It supports `web`, `documen
 `app_context`, `markdown_note`, and `obsidian_note`. Do not put model keys, agent secrets, or broad
 unbounded workspace dumps into the package.
 
+When a reviewed local importer plugin is available, use the controlled importer runtime instead of
+manually assembling the package:
+
+```bash
+python3 scripts/study_anything_cli.py importer-run example-note-importer \
+  --confirm-permission write:context \
+  --input-json '{"note_reference":"obsidian://Study Anything/Lesson","title":"Learning notes","markdown_excerpt":"Paste bounded note context here."}' \
+  --create-session --session
+```
+
+Network-capable importers require both exact permission confirmation and `--allow-network`. Use that
+only after the user approves the network permission; the platform agent should normally gather browser,
+file, app, and video context itself.
+
+When retrieval is explicitly enabled, rebuild and search the source session before creating a focused
+follow-up lesson:
+
+```bash
+python3 scripts/study_anything_cli.py retrieval-status
+python3 scripts/study_anything_cli.py retrieval-rebuild SESSION_ID
+python3 scripts/study_anything_cli.py retrieval-search SESSION_ID --query "focus topic"
+python3 scripts/study_anything_cli.py retrieval-import \
+  --source-session-id SESSION_ID \
+  --query "focus topic" \
+  --session
+```
+
+Retrieval is optional and rebuildable. If `retrieval-status` reports `disabled`, continue with normal
+context package or enrichment flows unless the user asks to enable LanceDB or the local smoke backend.
+
 For a one-command lesson smoke, use:
 
 ```bash

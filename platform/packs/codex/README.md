@@ -22,6 +22,17 @@ python3 scripts/study_anything_cli.py context-validate \
   fixtures/notebooklm/notebooklm-style-context-package.json
 python3 scripts/study_anything_cli.py context-import \
   fixtures/notebooklm/notebooklm-style-context-package.json --session
+python3 scripts/study_anything_cli.py importer-run example-note-importer \
+  --confirm-permission write:context \
+  --input-json '{"note_reference":"obsidian://Study Anything/Lesson","title":"Learning notes","markdown_excerpt":"Paste bounded note context here."}' \
+  --create-session --session
+python3 scripts/study_anything_cli.py retrieval-status
+python3 scripts/study_anything_cli.py retrieval-rebuild SESSION_ID
+python3 scripts/study_anything_cli.py retrieval-search SESSION_ID --query "focus topic"
+python3 scripts/study_anything_cli.py retrieval-import \
+  --source-session-id SESSION_ID \
+  --query "focus topic" \
+  --session
 python3 scripts/study_anything_cli.py lesson \
   --title "Learning notes" \
   --reference "local://notes" \
@@ -35,6 +46,8 @@ python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_importer_runtime_retrieval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
@@ -42,12 +55,19 @@ API_BASE=http://127.0.0.1:8000 \
 For importer-first work, Codex should gather external context itself, produce a Learning Context Package,
 call `POST /v1/context-packages/validate`, then use
 `POST /v1/sessions/from-context-package` or `POST /v1/sessions/{session_id}/context-package`.
+If a reviewed local importer exists, Codex can instead call `importer-run` or
+`POST /v1/importers/{plugin_id}/run` with exact permission confirmation. Keep network-capable importers
+blocked unless the user explicitly approves the network permission.
 The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
 excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
 export at `GET /v1/sessions/{session_id}/exports/obsidian`.
 Use `GET /v1/sessions/{session_id}/exports/learning-package` or the CLI `package-export` command
 to create a portable learning package when the next step is a NotebookLM-style bridge, local archive,
 or platform-agent handoff.
+
+For retrieval-based follow-up lessons, enable LanceDB or the local smoke memory backend, rebuild the
+source session with `retrieval-rebuild`, then use `retrieval-import` to create or expand a focused
+learning session from minimal snippets.
 
 ## Acceptance
 
@@ -57,6 +77,8 @@ A Codex integration must return both:
 - `agent-eval-artifact-v1` with all required native gates passing
 - `agent-quality-eval-v1` with status `pass`
 - `learning-context-package-v1` for importer-created Learning Context Package inputs
+- `importer-run-v1` for reviewed local importer runtime
+- `retrieval-search-v1` when optional retrieval is enabled
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
 

@@ -20,6 +20,12 @@ REQUIRED_TOOLS = {
     "study_anything_validate_context_package",
     "study_anything_create_session_from_context_package",
     "study_anything_append_context_package",
+    "study_anything_run_importer",
+    "study_anything_retrieval_status",
+    "study_anything_retrieval_rebuild",
+    "study_anything_retrieval_search",
+    "study_anything_create_session_from_retrieval",
+    "study_anything_append_retrieval_context",
     "study_anything_add_enrichment",
     "study_anything_teaching_layers",
     "study_anything_run",
@@ -121,6 +127,8 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("verify_platform_agent_tools.py", catalog)
         self.assertIn("raw source text", catalog)
         self.assertIn("study_anything_agent_eval_artifact", catalog)
+        self.assertIn("study_anything_run_importer", catalog)
+        self.assertIn("study_anything_retrieval_search", catalog)
 
 
 if __name__ == "__main__":

@@ -186,6 +186,149 @@ Privacy:
 }
 ```
 
+### `study_anything_run_importer`
+
+- Method: `POST`
+- Path: `/v1/importers/{plugin_id}/run`
+- Description: Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package.
+
+Output requirements:
+
+- schema_version == importer-run-v1
+- status == package_created
+- package.schema_version == learning-context-package-v1
+- redacted_package omits item text
+
+Privacy:
+
+```json
+{
+  "network_disabled_by_default": true,
+  "platform_agent_should_redact_before_logging": [
+    "inputs",
+    "package.items.text",
+    "redacted_package.items.title"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_retrieval_status`
+
+- Method: `GET`
+- Path: `/v1/retrieval/status`
+- Description: Check whether optional retrieval projection is disabled, healthy, or unavailable.
+
+Output requirements:
+
+- status is disabled, healthy, or unavailable
+
+Privacy:
+
+```json
+{
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_retrieval_rebuild`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/retrieval/rebuild`
+- Description: Rebuild the optional retrieval index for one session from canonical Study Anything session state.
+
+Output requirements:
+
+- status == rebuilt
+- indexed_count >= 1
+
+Privacy:
+
+```json
+{
+  "canonical_source": "session_state",
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_retrieval_search`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/retrieval/search`
+- Description: Search the rebuilt retrieval index for one session and return minimal source snippets.
+
+Output requirements:
+
+- schema_version == retrieval-search-v1
+- results include reference, excerpt_hash, locator, snippet, and score
+- full_source_text_returned == false
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "query",
+    "results.snippet"
+  ],
+  "request_contains_private_learning_data": false,
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_create_session_from_retrieval`
+
+- Method: `POST`
+- Path: `/v1/sessions/from-retrieval`
+- Description: Create a new learning session from retrieval results produced by an existing indexed session.
+
+Output requirements:
+
+- schema_version == retrieval-session-v1
+- status == session_created
+- session.stage == enrichment_attached
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "query",
+    "retrieval.results.snippet",
+    "session.source.text"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_append_retrieval_context`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/retrieval/context-package`
+- Description: Expand an existing learning session with a Learning Context Package generated from retrieval results.
+
+Output requirements:
+
+- schema_version == retrieval-session-v1
+- status == session_expanded
+- session.enrichment_items include retrieval context
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "query",
+    "retrieval.results.snippet",
+    "session.source.text"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
 ### `study_anything_add_enrichment`
 
 - Method: `POST`

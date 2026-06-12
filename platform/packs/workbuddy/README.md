@@ -36,6 +36,8 @@ Study Anything should own:
 
 - source-bound learning state
 - Learning Context Package validation and import
+- confirmed local importer runtime
+- optional retrieval projection and retrieval-to-session flows
 - quiz, grading, mastery, scribe, HITL
 - redacted Agent audit and eval artifacts
 
@@ -46,6 +48,8 @@ Against a running API, verify the imported tool surface and redacted evidence:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_importer_runtime_retrieval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
@@ -85,3 +89,11 @@ Use `POST /v1/context-packages/validate`, `POST /v1/sessions/from-context-packag
 `POST /v1/sessions/{session_id}/context-package` when WorkBuddy has collected browser pages,
 documents, app context, Markdown/Obsidian notes, or video slices before the learning loop. The older
 `POST /v1/sessions/{session_id}/enrichment` endpoint remains available for simple one-off excerpts.
+
+If the workspace uses a reviewed local importer plugin, call `POST /v1/importers/{plugin_id}/run` with
+exact permission confirmation, then import the returned package. Keep `allow_network=false` unless the
+user explicitly approves the importer's `network:http` permission.
+
+If optional retrieval is healthy, call `POST /v1/sessions/{session_id}/retrieval/rebuild`, then
+`POST /v1/sessions/{session_id}/retrieval/search`, and use `POST /v1/sessions/from-retrieval` to start
+a focused follow-up lesson from minimal snippets.

@@ -278,6 +278,260 @@
       }
     },
     {
+      "name": "study_anything_run_importer",
+      "method": "POST",
+      "path_template": "/v1/importers/{plugin_id}/run",
+      "description": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "plugin_id",
+          "inputs",
+          "confirmed_permissions"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "plugin_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Importer plugin id, such as example-note-importer."
+          },
+          "inputs": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Keyword arguments passed to the importer's build_context_package function."
+          },
+          "confirmed_permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Must match the importer manifest permissions exactly."
+          },
+          "allow_network": {
+            "type": "boolean",
+            "default": false,
+            "description": "Only true after the platform Agent has reviewed and accepted network:http."
+          },
+          "include_text": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == importer-run-v1",
+        "status == package_created",
+        "package.schema_version == learning-context-package-v1",
+        "redacted_package omits item text"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "inputs",
+          "package.items.text",
+          "redacted_package.items.title"
+        ],
+        "network_disabled_by_default": true
+      }
+    },
+    {
+      "name": "study_anything_retrieval_status",
+      "method": "GET",
+      "path_template": "/v1/retrieval/status",
+      "description": "Check whether optional retrieval projection is disabled, healthy, or unavailable.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "status is disabled, healthy, or unavailable"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false
+      }
+    },
+    {
+      "name": "study_anything_retrieval_rebuild",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/retrieval/rebuild",
+      "description": "Rebuild the optional retrieval index for one session from canonical Study Anything session state.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "status == rebuilt",
+        "indexed_count >= 1"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "canonical_source": "session_state"
+      }
+    },
+    {
+      "name": "study_anything_retrieval_search",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/retrieval/search",
+      "description": "Search the rebuilt retrieval index for one session and return minimal source snippets.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "query"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 5
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == retrieval-search-v1",
+        "results include reference, excerpt_hash, locator, snippet, and score",
+        "full_source_text_returned == false"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": false,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "query",
+          "results.snippet"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_create_session_from_retrieval",
+      "method": "POST",
+      "path_template": "/v1/sessions/from-retrieval",
+      "description": "Create a new learning session from retrieval results produced by an existing indexed session.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "source_session_id",
+          "query",
+          "user_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source_session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 5
+          },
+          "user_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "track": {
+            "type": "string"
+          },
+          "workspace_id": {
+            "type": "string"
+          },
+          "use_demo_agent": {
+            "type": "boolean",
+            "description": "True only for local demos and CI smoke tests."
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == retrieval-session-v1",
+        "status == session_created",
+        "session.stage == enrichment_attached"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "query",
+          "retrieval.results.snippet",
+          "session.source.text"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_append_retrieval_context",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/retrieval/context-package",
+      "description": "Expand an existing learning session with a Learning Context Package generated from retrieval results.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "source_session_id",
+          "query"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 5
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == retrieval-session-v1",
+        "status == session_expanded",
+        "session.enrichment_items include retrieval context"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "query",
+          "retrieval.results.snippet",
+          "session.source.text"
+        ]
+      }
+    },
+    {
       "name": "study_anything_add_enrichment",
       "method": "POST",
       "path_template": "/v1/sessions/{session_id}/enrichment",

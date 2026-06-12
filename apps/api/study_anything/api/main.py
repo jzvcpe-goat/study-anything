@@ -21,6 +21,7 @@ from study_anything.core.agent_registry import (
     AgentTask,
 )
 from study_anything.core.integrations import integration_matrix
+from study_anything.core.importer_runtime import ImporterRuntime, ImporterRuntimeError
 from study_anything.core.langgraph_adapter import (
     LangGraphCheckpointResource,
     build_learning_workflow,
@@ -43,6 +44,11 @@ from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.plugin_trust import plugin_trust_policy
 from study_anything.core.quality_eval import build_agent_quality_eval, quality_eval_case_export
 from study_anything.core.recovery import recovery_status
+from study_anything.core.retrieval import (
+    RetrievalProjectionRequired,
+    RetrievalUnavailable,
+    build_retrieval_index,
+)
 from study_anything.core.store import create_session_store
 from study_anything.core.sync_package import (
     MIN_PASSPHRASE_LENGTH,
@@ -109,6 +115,29 @@ class LearningContextSessionRequest(BaseModel):
     use_demo_provider: bool = Field(default=True)
     use_demo_agent: Optional[bool] = None
     workspace_id: Optional[str] = None
+
+
+class ImporterRunRequest(BaseModel):
+    inputs: Dict[str, Any] = Field(default_factory=dict)
+    confirmed_permissions: List[str] = Field(default_factory=list)
+    allow_network: bool = Field(default=False)
+    include_text: bool = Field(default=True)
+
+
+class RetrievalSessionRequest(BaseModel):
+    source_session_id: str
+    query: str
+    limit: int = Field(default=5, ge=1, le=20)
+    user_id: str = Field(default="retrieval-user")
+    track: Optional[str] = None
+    use_demo_provider: bool = Field(default=True)
+    use_demo_agent: Optional[bool] = None
+    workspace_id: Optional[str] = None
+
+
+class RetrievalSearchRequest(BaseModel):
+    query: str
+    limit: int = Field(default=5, ge=1, le=20)
 
 
 class TeachingLayersRequest(BaseModel):
@@ -233,6 +262,7 @@ agent_router = AgentRouter(agent_registry)
 workspace_store = LocalWorkspaceStore(data_dir / "workspace_state.json")
 trace_sink = build_trace_sink()
 knowledge_graph_sink = build_knowledge_graph_sink()
+retrieval_index = build_retrieval_index(data_dir=data_dir)
 workflow_engine = os.getenv("WORKFLOW_ENGINE", "langgraph")
 langgraph_checkpoint: Optional[LangGraphCheckpointResource] = None
 if workflow_engine == "langgraph":
@@ -306,6 +336,7 @@ def create_app() -> FastAPI:
             "langgraph_checkpointer": langgraph_checkpoint.backend if langgraph_checkpoint else None,
             "telemetry_enabled": trace_sink.enabled,
             "knowledge_graph": knowledge_graph_sink.status().public_dict(),
+            "retrieval": retrieval_index.status().public_dict(),
             "sync": sync_status(),
             "agent_status": agent_registry.status(user_id),
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
@@ -473,6 +504,10 @@ def create_app() -> FastAPI:
     def knowledge_graph_status() -> dict[str, object]:
         return knowledge_graph_sink.status().public_dict()
 
+    @app.get("/v1/retrieval/status")
+    def retrieval_status() -> dict[str, object]:
+        return retrieval_index.status().public_dict()
+
     @app.get("/v1/agents/status")
     def agent_status(user_id: str = "local-user") -> dict[str, object]:
         return agent_registry.status(user_id)
@@ -597,6 +632,22 @@ def create_app() -> FastAPI:
             "status": "valid",
             "package": package.public_dict(),
         }
+
+    @app.post("/v1/importers/{plugin_id}/run")
+    def run_importer(
+        plugin_id: str,
+        payload: ImporterRunRequest,
+    ) -> dict[str, object]:
+        try:
+            result = ImporterRuntime(plugins).run(
+                plugin_id,
+                inputs=payload.inputs,
+                confirmed_permissions=payload.confirmed_permissions,
+                allow_network=payload.allow_network,
+            )
+        except ImporterRuntimeError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        return result.public_dict(include_text=payload.include_text)
 
     @app.post("/v1/sessions/from-context-package")
     def create_session_from_context_package(
@@ -842,6 +893,163 @@ def create_app() -> FastAPI:
             return knowledge_graph_sink.topology(session_id).public_dict()
         except KnowledgeGraphUnavailable as exc:
             raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.post("/v1/sessions/{session_id}/retrieval/rebuild")
+    def rebuild_retrieval(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            return retrieval_index.rebuild_session(state).public_dict()
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalProjectionRequired as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.get("/v1/sessions/{session_id}/retrieval/search")
+    def search_retrieval(
+        session_id: str,
+        q: str,
+        limit: int = 5,
+    ) -> dict[str, object]:
+        try:
+            store.get(session_id)
+            return retrieval_index.search(
+                session_id=session_id,
+                query=q,
+                limit=limit,
+            ).public_dict()
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.post("/v1/sessions/{session_id}/retrieval/search")
+    def search_retrieval_post(
+        session_id: str,
+        payload: RetrievalSearchRequest,
+    ) -> dict[str, object]:
+        try:
+            store.get(session_id)
+            return retrieval_index.search(
+                session_id=session_id,
+                query=payload.query,
+                limit=payload.limit,
+            ).public_dict()
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    @app.post("/v1/sessions/from-retrieval")
+    def create_session_from_retrieval(payload: RetrievalSessionRequest) -> dict[str, object]:
+        try:
+            store.get(payload.source_session_id)
+            result_set = retrieval_index.search(
+                session_id=payload.source_session_id,
+                query=payload.query,
+                limit=payload.limit,
+            )
+            package = validate_learning_context_package(
+                result_set.context_package(
+                    title=f"Retrieval: {payload.query}",
+                    reference=f"retrieval://{payload.source_session_id}",
+                )
+            )
+            use_demo = (
+                payload.use_demo_agent
+                if payload.use_demo_agent is not None
+                else payload.use_demo_provider
+            )
+            if payload.workspace_id:
+                workspace_store.assert_permission(
+                    payload.user_id,
+                    payload.workspace_id,
+                    "create_sessions",
+                )
+                workspace_id = payload.workspace_id
+            else:
+                workspace_id = workspace_store.ensure_default_workspace(
+                    payload.user_id
+                ).workspace_id
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        except RetrievalProjectionRequired as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        if use_demo:
+            agent_registry.set_demo_defaults(payload.user_id)
+        state = new_session(
+            payload.user_id,
+            payload.track or package.track or "ACADEMIC",
+            workspace_id=workspace_id,
+            trace_sink=trace_sink,
+        )
+        state = submit_enrichment(
+            state,
+            items=[item.enrichment_dict() for item in package.items],
+            title=package.title,
+            reference=package.reference,
+            trace_sink=trace_sink,
+        )
+        state = store.save(state)
+        return {
+            "schema_version": "retrieval-session-v1",
+            "status": "session_created",
+            "session": state.public_dict(),
+            "retrieval": result_set.public_dict(),
+            "package": package.public_dict(),
+        }
+
+    @app.post("/v1/sessions/{session_id}/retrieval/context-package")
+    def append_session_from_retrieval(
+        session_id: str,
+        payload: RetrievalSessionRequest,
+    ) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            store.get(payload.source_session_id)
+            result_set = retrieval_index.search(
+                session_id=payload.source_session_id,
+                query=payload.query,
+                limit=payload.limit,
+            )
+            package = validate_learning_context_package(
+                result_set.context_package(
+                    title=f"Retrieval: {payload.query}",
+                    reference=f"retrieval://{payload.source_session_id}",
+                )
+            )
+            state = submit_enrichment(
+                state,
+                items=[item.enrichment_dict() for item in package.items],
+                title=package.title,
+                reference=package.reference,
+                trace_sink=trace_sink,
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except RetrievalProjectionRequired as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except RetrievalUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        state = store.save(state)
+        return {
+            "schema_version": "retrieval-session-v1",
+            "status": "session_expanded",
+            "session": state.public_dict(),
+            "retrieval": result_set.public_dict(),
+            "package": package.public_dict(),
+        }
 
     @app.post("/v1/sessions/{session_id}/topology/rebuild")
     def rebuild_topology(session_id: str) -> dict[str, object]:
