@@ -44,6 +44,7 @@
     ],
     "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
     "platform_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+    "importer_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
     "openai_compatible_gateway_dry_run_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "clean_clone_adoption_command": "python3 scripts/verify_clean_clone_adoption.py --repo .",
@@ -151,6 +152,128 @@
         "platform_agent_should_redact_before_logging": [
           "text",
           "title"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_validate_context_package",
+      "method": "POST",
+      "path_template": "/v1/context-packages/validate",
+      "description": "Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "package"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "package": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "learning-context-package-v1 JSON. It may include bounded source excerpts, but must not include Agent credentials or API keys."
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-context-package-v1",
+        "status == valid",
+        "package.source_types include web, document, video_slice, app_context, markdown_note, or obsidian_note as applicable",
+        "response omits item text"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": false,
+        "platform_agent_should_redact_before_logging": [
+          "package.items.text",
+          "package.items.title"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_create_session_from_context_package",
+      "method": "POST",
+      "path_template": "/v1/sessions/from-context-package",
+      "description": "Create a learning session directly from a validated Learning Context Package.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "package",
+          "user_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "package": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "user_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "track": {
+            "type": "string",
+            "description": "Optional override. If omitted, Study Anything uses package.track or ACADEMIC."
+          },
+          "workspace_id": {
+            "type": "string"
+          },
+          "use_demo_agent": {
+            "type": "boolean",
+            "description": "True only for local demos and CI smoke tests."
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-context-package-v1",
+        "status == session_created",
+        "session.stage == enrichment_attached",
+        "session.enrichment_items include excerpt_hash values"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "package.items.text",
+          "session.source.text",
+          "session.enrichment_items.text"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_append_context_package",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/context-package",
+      "description": "Expand an existing learning session with a Learning Context Package.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "package"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "package": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-context-package-v1",
+        "status == session_expanded",
+        "session.enrichment_items include appended context"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "package.items.text",
+          "session.source.text",
+          "session.enrichment_items.text"
         ]
       }
     },

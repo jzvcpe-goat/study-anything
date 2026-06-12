@@ -58,6 +58,25 @@ python3 scripts/study_anything_cli.py teach SESSION_ID \
   --level beginner
 ```
 
+Prefer Learning Context Packages when the platform agent is importing mixed sources such as web pages,
+PDF excerpts, video slices, app context, Markdown notes, or Obsidian notes:
+
+```bash
+python3 scripts/study_anything_cli.py context-validate \
+  fixtures/notebooklm/notebooklm-style-context-package.json
+
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json --session
+
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json \
+  --session-id SESSION_ID
+```
+
+The package schema is `learning-context-package-v1`. It supports `web`, `document`, `video_slice`,
+`app_context`, `markdown_note`, and `obsidian_note`. Do not put model keys, agent secrets, or broad
+unbounded workspace dumps into the package.
+
 For a one-command lesson smoke, use:
 
 ```bash

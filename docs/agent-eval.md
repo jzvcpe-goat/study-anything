@@ -101,7 +101,7 @@ required gates, adapter matrix, and Agent trajectory are present.
 
 ## DeepEval
 
-DeepEval is the preferred Python quality harness after the native gates pass. v0.2.18 includes a
+DeepEval is the preferred Python quality harness after the native gates pass. v0.2.18+ includes a
 custom non-LLM metric adapter at:
 
 ```text

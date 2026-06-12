@@ -85,7 +85,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.18-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.19-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -98,7 +98,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.18-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.19-alpha
 ```
 
 ## Bring Your Own Agent
@@ -188,6 +188,7 @@ Validate a running platform-tool integration with:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 
@@ -204,9 +205,9 @@ The repo includes a standard-library CLI and a repo-local Codex skill:
 For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
 `python3 scripts/study_anything_cli.py demo`.
 
-Connect a user-owned HTTP agent, start source-bound sessions, attach enrichment, generate teaching
-layers, answer questions, inspect mastery, export Obsidian notes, and create portable learning
-packages through the same public API. Chat-only LLM products cannot run local scripts or reach
+Connect a user-owned HTTP agent, import Learning Context Packages, start source-bound sessions, attach
+enrichment, generate teaching layers, answer questions, inspect mastery, export Obsidian notes, and
+create portable learning packages through the same public API. Chat-only LLM products cannot run local scripts or reach
 `localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned
 reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local
 skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage,
@@ -214,7 +215,8 @@ see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
 Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`, Obsidian, and
-`learning-package-v1` evidence after each completed learning loop.
+`learning-package-v1` evidence after each completed learning loop. Importer integrations should first
+validate `learning-context-package-v1`.
 
 ## Repository Layout
 
@@ -224,8 +226,11 @@ docs/                      Architecture, roadmap, plugin API, commercial model
 evals/                     External eval tool templates
 infra/compose/             Docker Compose stack
 platform/                  Platform Agent tool manifest and generated import assets
+fixtures/notebooklm/       NotebookLM-style Learning Context Package fixtures
 plugins/example-exporter/  Example exporter manifest
 plugins/example-agent-provider/ Example agent provider manifest
+plugins/example-web-importer/ Example web importer manifest
+plugins/example-note-importer/ Example Markdown/Obsidian importer manifest
 scripts/                   Local smoke helpers
 skills/study-anything/     Repo-local Agent skill for CLI learning flows
 ```

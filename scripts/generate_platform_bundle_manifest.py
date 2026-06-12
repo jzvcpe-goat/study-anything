@@ -107,6 +107,11 @@ FILES: list[tuple[str, str, str]] = [
         "End-to-end enriched lesson verifier for platform agents and learning-package export.",
     ),
     (
+        "scripts/verify_importer_lesson_flow.py",
+        "verification",
+        "Importer-to-lesson verifier for Learning Context Package, NotebookLM-style, and Obsidian bridge flows.",
+    ),
+    (
         "scripts/run_external_agent_evals.py",
         "verification",
         "Wrapper for mature external Agent eval runners such as Promptfoo and DeepEval.",
@@ -145,6 +150,21 @@ FILES: list[tuple[str, str, str]] = [
         "docs/agent-eval.md",
         "docs",
         "Agent eval and external evaluation guide.",
+    ),
+    (
+        "docs/plugins.md",
+        "docs",
+        "Plugin and importer manifest guide.",
+    ),
+    (
+        "fixtures/notebooklm/README.md",
+        "fixture",
+        "NotebookLM-style import/export fixture notes.",
+    ),
+    (
+        "fixtures/notebooklm/notebooklm-style-context-package.json",
+        "fixture",
+        "Learning Context Package import fixture covering web, document, video, app, Markdown, and Obsidian sources.",
     ),
     (
         "skills/study-anything/SKILL.md",
@@ -216,6 +236,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+            "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
             (
             "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "

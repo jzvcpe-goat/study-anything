@@ -23,8 +23,11 @@ Set the API base to:
 http://127.0.0.1:8000
 ```
 
-The v0.2.18 tool surface includes:
+The tool surface includes:
 
+- `study_anything_validate_context_package` for Learning Context Package checks before import.
+- `study_anything_create_session_from_context_package` for creating a session from Kimi-collected context.
+- `study_anything_append_context_package` for expanding an existing session with new context.
 - `study_anything_add_enrichment` for web/document/video-slice/app-context excerpts gathered by Kimi or the platform agent.
 - `study_anything_agent_quality_eval` for the minimum teaching-quality gate.
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
@@ -79,9 +82,16 @@ GET /v1/sessions/{session_id}/exports/learning-package
 The exports are an Obsidian-compatible Markdown note plus a portable learning package for the user's
 second-brain or NotebookLM-style workflow.
 
+For importer flows, Kimi or the surrounding platform Agent should first build a
+`learning-context-package-v1` object from user-approved web pages, files, video slices, workspace
+context, Markdown notes, or Obsidian notes. Validate it with `POST /v1/context-packages/validate`,
+then create or expand a session with the context-package session tools. Do not store Kimi credentials
+or raw model secrets in the package.
+
 For quality-gate smoke, run:
 
 ```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py

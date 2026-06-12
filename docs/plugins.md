@@ -71,6 +71,49 @@ Bundled examples:
 
 - `plugins/example-exporter`: a read-only session exporter.
 - `plugins/example-agent-provider`: an agent provider template for a user-owned HTTP gateway.
+- `plugins/example-web-importer`: an importer template that turns a user-approved web excerpt into
+  `learning-context-package-v1`.
+- `plugins/example-note-importer`: an importer template that turns Markdown or Obsidian note excerpts
+  into `learning-context-package-v1` with backlink metadata.
+
+## Importer SDK Shape
+
+Importer plugins should produce a Learning Context Package rather than mutating Study Anything state
+directly. The package is then passed to:
+
+- `POST /v1/context-packages/validate`
+- `POST /v1/sessions/from-context-package`
+- `POST /v1/sessions/{session_id}/context-package`
+
+The stable package schema is `learning-context-package-v1`:
+
+```json
+{
+  "schema_version": "learning-context-package-v1",
+  "title": "NotebookLM Style Learning Context",
+  "reference": "notebooklm-style://manual/demo",
+  "producer": "platform-agent-or-plugin-id",
+  "language": "zh",
+  "track": "PRODUCT",
+  "items": [
+    {
+      "source_type": "web",
+      "reference": "https://example.invalid/source",
+      "title": "Source title",
+      "text": "Bounded excerpt selected by the user or platform Agent.",
+      "locator": "section=overview",
+      "metadata": {
+        "importer_plugin": "example-web-importer"
+      }
+    }
+  ]
+}
+```
+
+Supported `source_type` values are `web`, `document`, `video_slice`, `app_context`, `markdown_note`,
+and `obsidian_note`. Importers should keep excerpts bounded, preserve stable references and locators,
+and keep external Agent credentials outside the package. Obsidian importers may include
+`metadata.obsidian_backlinks`; the Obsidian export will preserve them as `[[Backlinks]]`.
 
 ## Permission Model
 

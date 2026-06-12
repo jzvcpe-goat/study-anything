@@ -136,20 +136,33 @@ When the user asks for explanation before answering a quiz, the platform Agent c
 `POST /v1/sessions/{session_id}/teaching-layers` after source attachment and before `run`. Treat the
 returned layer content as private learning data.
 
-When the platform Agent has gathered browser pages, PDFs, app state, or video slices, call
-`POST /v1/sessions/{session_id}/enrichment` instead of forcing the user to paste one flat text block.
-Study Anything turns those excerpts into a source-bound bundle, then the normal teaching/quiz/mastery
-loop runs against that bundle.
+When the platform Agent has gathered browser pages, PDFs, app state, Markdown notes, Obsidian notes,
+or video slices, prefer a Learning Context Package:
+
+```bash
+python3 scripts/study_anything_cli.py context-validate \
+  fixtures/notebooklm/notebooklm-style-context-package.json
+python3 scripts/study_anything_cli.py context-import \
+  fixtures/notebooklm/notebooklm-style-context-package.json --session
+```
+
+The HTTP equivalents are `POST /v1/context-packages/validate`,
+`POST /v1/sessions/from-context-package`, and `POST /v1/sessions/{session_id}/context-package`.
+Study Anything validates the package, turns the bounded excerpts into a source-bound bundle, then the
+normal teaching/quiz/mastery loop runs against that bundle. The older
+`POST /v1/sessions/{session_id}/enrichment` endpoint remains available for simple one-off excerpts.
 
 For a fixed platform-agent acceptance path, run:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 ```
 
-The verifier completes one enriched lesson and fetches Agent audit, Agent eval, quality eval,
-Obsidian Markdown, and `learning-package-v1`. Use the learning package when the platform Agent needs
-to hand the result to a NotebookLM-style workflow, local archive, or later knowledge-base connector.
+The verifiers complete enriched and importer-based lessons, then fetch Agent audit, Agent eval, quality
+eval, Obsidian Markdown, and `learning-package-v1`. Use the learning package when the platform Agent
+needs to hand the result to a NotebookLM-style workflow, local archive, or later knowledge-base
+connector.
 
 `agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
 grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit
@@ -203,6 +216,9 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/health`
 - `POST /v1/sessions`
 - `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/context-packages/validate` optional importer path
+- `POST /v1/sessions/from-context-package` optional importer path
+- `POST /v1/sessions/{session_id}/context-package` optional importer path
 - `POST /v1/sessions/{session_id}/enrichment` optional
 - `POST /v1/sessions/{session_id}/teaching-layers` optional
 - `POST /v1/sessions/{session_id}/run`
@@ -219,14 +235,15 @@ Minimum endpoints for a platform tool wrapper:
 A platform integration is acceptable when it can complete this sequence:
 
 1. Start or reach a Study Anything API.
-2. Submit a user-provided source with a reference.
+2. Submit a user-provided source with a reference, or validate/import `learning-context-package-v1`.
 3. Complete one quiz/answer/mastery loop.
 4. Return `agent-audit.status=verified`.
 5. Return `agent-eval-artifact-v1` with all required native gates passing.
 6. Return `agent-quality-eval-v1` with `status=pass`.
 7. Return an Obsidian markdown export when the user asks for knowledge deposit.
 8. Return `learning-package-v1` when the user wants NotebookLM-style, platform-agent, or local archive handoff.
-9. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+9. Run `scripts/verify_importer_lesson_flow.py` for importer-based release evidence.
+10. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -235,6 +252,7 @@ For local validation:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```

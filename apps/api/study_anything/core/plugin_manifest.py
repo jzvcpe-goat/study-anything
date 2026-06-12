@@ -28,6 +28,8 @@ ALLOWED_PERMISSIONS = {
     "write:models",
     "read:agents",
     "write:agents",
+    "read:context",
+    "write:context",
     "network:http",
     "ui:panel",
 }
@@ -72,6 +74,16 @@ PERMISSION_DETAILS = {
         "label": "Modify Agent settings",
         "risk": "high",
         "description": "Can add or update Agent provider configuration.",
+    },
+    "read:context": {
+        "label": "Read Learning Context Packages",
+        "risk": "medium",
+        "description": "Can read bounded source excerpts and metadata inside Learning Context Packages.",
+    },
+    "write:context": {
+        "label": "Create Learning Context Packages",
+        "risk": "high",
+        "description": "Can create or expand Learning Context Packages that become learning session material.",
     },
     "network:http": {
         "label": "Use HTTP network access",

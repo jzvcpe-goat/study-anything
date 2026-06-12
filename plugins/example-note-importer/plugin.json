@@ -1,0 +1,20 @@
+{
+  "id": "example-note-importer",
+  "name": "Example Markdown And Obsidian Note Importer",
+  "version": "0.1.0",
+  "apiVersion": "0.1",
+  "entrypoint": "plugin.py",
+  "hooks": ["importer"],
+  "permissions": ["write:context"],
+  "publisher": {
+    "name": "Study Anything contributors",
+    "url": "https://github.com/jzvcpe-goat/study-anything"
+  },
+  "review": {
+    "status": "maintainer_reviewed",
+    "reviewedBy": "Study Anything maintainers",
+    "reviewedAt": "2026-06-12",
+    "notesUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-note-importer"
+  },
+  "sourceUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-note-importer"
+}

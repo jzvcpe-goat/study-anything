@@ -30,6 +30,34 @@
         "reviewedAt": "2026-06-04"
       },
       "sourceDigest": "sha256:465f5298c88539414538ccf69f2927401194d3834c13acfc538f7d6bd3a9883d"
+    },
+    {
+      "id": "example-web-importer",
+      "name": "Example Web Importer",
+      "version": "0.1.0",
+      "path": "plugins/example-web-importer",
+      "category": "importer",
+      "status": "bundled",
+      "review": {
+        "status": "maintainer_reviewed",
+        "reviewedBy": "Study Anything maintainers",
+        "reviewedAt": "2026-06-12"
+      },
+      "sourceDigest": "sha256:ebcdc2bb58cbb7bf08bf864745e58819bc4e178f34fd42fb5834c6cf34ddbd72"
+    },
+    {
+      "id": "example-note-importer",
+      "name": "Example Markdown And Obsidian Note Importer",
+      "version": "0.1.0",
+      "path": "plugins/example-note-importer",
+      "category": "importer",
+      "status": "bundled",
+      "review": {
+        "status": "maintainer_reviewed",
+        "reviewedBy": "Study Anything maintainers",
+        "reviewedAt": "2026-06-12"
+      },
+      "sourceDigest": "sha256:e5ad060b672151b3a3ba75910cff8a74893f83f2f90ffaba7de65b40a4869191"
     }
   ]
 }

@@ -32,6 +32,10 @@ from study_anything.core.knowledge_graph import (
     build_knowledge_graph_sink,
     projection_from_state,
 )
+from study_anything.core.learning_context import (
+    LEARNING_CONTEXT_SCHEMA_VERSION,
+    validate_learning_context_package,
+)
 from study_anything.core.learning_package import build_learning_package_export
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.obsidian_export import build_obsidian_markdown_export
@@ -92,6 +96,19 @@ class EnrichmentRequest(BaseModel):
     title: str = Field(default="Learning Enrichment Bundle")
     reference: Optional[str] = None
     items: List[EnrichmentItemRequest]
+
+
+class LearningContextPackageRequest(BaseModel):
+    package: Dict[str, Any]
+
+
+class LearningContextSessionRequest(BaseModel):
+    package: Dict[str, Any]
+    user_id: str = Field(default="local-user")
+    track: Optional[str] = None
+    use_demo_provider: bool = Field(default=True)
+    use_demo_agent: Optional[bool] = None
+    workspace_id: Optional[str] = None
 
 
 class TeachingLayersRequest(BaseModel):
@@ -569,6 +586,71 @@ def create_app() -> FastAPI:
         )
         return state.public_dict()
 
+    @app.post("/v1/context-packages/validate")
+    def validate_context_package(payload: LearningContextPackageRequest) -> dict[str, object]:
+        try:
+            package = validate_learning_context_package(payload.package)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        return {
+            "schema_version": LEARNING_CONTEXT_SCHEMA_VERSION,
+            "status": "valid",
+            "package": package.public_dict(),
+        }
+
+    @app.post("/v1/sessions/from-context-package")
+    def create_session_from_context_package(
+        payload: LearningContextSessionRequest,
+    ) -> dict[str, object]:
+        try:
+            package = validate_learning_context_package(payload.package)
+            use_demo = (
+                payload.use_demo_agent
+                if payload.use_demo_agent is not None
+                else payload.use_demo_provider
+            )
+            if payload.workspace_id:
+                workspace_store.assert_permission(
+                    payload.user_id,
+                    payload.workspace_id,
+                    "create_sessions",
+                )
+                workspace_id = payload.workspace_id
+            else:
+                workspace_id = workspace_store.ensure_default_workspace(
+                    payload.user_id
+                ).workspace_id
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Workspace not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except WorkspaceError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        if use_demo:
+            agent_registry.set_demo_defaults(payload.user_id)
+        state = new_session(
+            payload.user_id,
+            payload.track or package.track or "ACADEMIC",
+            workspace_id=workspace_id,
+            trace_sink=trace_sink,
+        )
+        state = submit_enrichment(
+            state,
+            items=[item.enrichment_dict() for item in package.items],
+            title=package.title,
+            reference=package.reference,
+            trace_sink=trace_sink,
+        )
+        state = store.save(state)
+        return {
+            "schema_version": LEARNING_CONTEXT_SCHEMA_VERSION,
+            "status": "session_created",
+            "session": state.public_dict(),
+            "package": package.public_dict(),
+        }
+
     @app.get("/v1/sessions")
     def list_sessions(
         user_id: str = "local-user",
@@ -611,6 +693,33 @@ def create_app() -> FastAPI:
             trace_sink=trace_sink,
         )
         return store.save(state).public_dict()
+
+    @app.post("/v1/sessions/{session_id}/context-package")
+    def append_context_package(
+        session_id: str,
+        payload: LearningContextPackageRequest,
+    ) -> dict[str, object]:
+        try:
+            package = validate_learning_context_package(payload.package)
+            state = store.get(session_id)
+            state = submit_enrichment(
+                state,
+                items=[item.enrichment_dict() for item in package.items],
+                title=package.title,
+                reference=package.reference,
+                trace_sink=trace_sink,
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        state = store.save(state)
+        return {
+            "schema_version": LEARNING_CONTEXT_SCHEMA_VERSION,
+            "status": "session_expanded",
+            "session": state.public_dict(),
+            "package": package.public_dict(),
+        }
 
     @app.post("/v1/sessions/{session_id}/enrichment")
     def add_enrichment(session_id: str, payload: EnrichmentRequest) -> dict[str, object]:
