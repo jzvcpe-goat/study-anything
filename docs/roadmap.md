@@ -120,11 +120,19 @@
   assets, key docs, and the repo-local Skill entrypoint.
 - CI and release-check drift detection for the platform bundle manifest.
 
+## v0.2.14-alpha
+
+- Layered teaching orchestration so platform Agents can request source-bound overview, glossary,
+  examples, and Obsidian-style notes from separate user-owned Agent capabilities.
+- `POST /v1/sessions/{session_id}/teaching-layers` for optional pre-quiz teaching output.
+- Platform tool manifest, generated import assets, and verifier coverage for
+  `study_anything_teaching_layers`.
+- Demo and mock HTTP Agents support `teach.overview`, `teach.glossary`, `teach.examples`, and
+  `note.scribe`.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
-- Layered teaching orchestration so platform Agents can request source-bound overview, glossary,
-  examples, and Obsidian-style notes from separate user-owned Agent capabilities.
 - Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
   platform-specific submission docs.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.

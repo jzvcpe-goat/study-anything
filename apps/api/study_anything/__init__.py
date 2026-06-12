@@ -14,7 +14,7 @@ def _resolve_version() -> str:
         pyproject = Path(__file__).resolve().parents[3] / "pyproject.toml"
         if pyproject.exists():
             return tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["version"]
-        return "0.2.13-alpha"
+        return "0.2.14-alpha"
 
 
 __version__ = _resolve_version()
