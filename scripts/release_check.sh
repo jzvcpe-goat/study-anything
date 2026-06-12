@@ -42,6 +42,7 @@ fi
 "$python_bin" scripts/generate_platform_agent_assets.py --check
 "$python_bin" scripts/verify_platform_ecosystem_packs.py
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
+"$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
 "$python_bin" scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \

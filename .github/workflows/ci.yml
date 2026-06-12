@@ -23,6 +23,8 @@ jobs:
         run: python scripts/verify_platform_ecosystem_packs.py
       - name: Verify platform bundle manifest
         run: python scripts/generate_platform_bundle_manifest.py --check
+      - name: Verify platform operator drill
+        run: python scripts/verify_platform_operator_drill.py --check
       - name: Verify platform adoption pack
         run: python scripts/generate_platform_adoption_pack.py --check
       - name: Verify Agent eval assets

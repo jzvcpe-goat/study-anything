@@ -49,11 +49,18 @@
       "sha256": "fede73fb74de83427ed623dc70dbebe0d0af750ca699714822bcf85a7b5341fa"
     },
     {
-      "bytes": 3450,
+      "bytes": 11472,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-operator-drill-transcript.json",
+      "purpose": "Deterministic external-platform operator drill transcript.",
+      "sha256": "8aacf7c7b7c960a1bf1c1e2862c32342382a012dcb4dd6cfff47ac6652e1c44d"
+    },
+    {
+      "bytes": 3749,
       "kind": "platform_pack",
       "path": "platform/packs/README.md",
       "purpose": "Index for copy-ready platform packs.",
-      "sha256": "01a6abcb02f94a0d4823088e9f27de5f3dd695da76d68517ca9a47375d1bc193"
+      "sha256": "910a3fd25ee6314459d10c4f95fe0402fe46fafca0e2281849c6a1f51611ab9f"
     },
     {
       "bytes": 5445,
@@ -175,25 +182,32 @@
       "sha256": "e104ff05160eafdd23dfd84d4b613faef0e91e7696145457367e16a89f86f6e6"
     },
     {
-      "bytes": 14469,
+      "bytes": 14834,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "82e5aa2f0f714be7e880496cd208c49ad866388c1808ed3f987ac49ef2988843"
+      "sha256": "64b60e9afc2f607b352a20705289ab4c9b70d79752b01b657c81fb58493b4c4d"
     },
     {
-      "bytes": 20832,
+      "bytes": 21762,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Adoption-proof-v1 verifier for external-platform operator handoff.",
-      "sha256": "f74e9e31a44c8251162be8a7d854d0115f701164b9dd87454e784197ed304f88"
+      "sha256": "1049580ea27d563e24732bb24bb13ffced48118d6a2d75ef65fcf9ad9b072714"
+    },
+    {
+      "bytes": 16693,
+      "kind": "verification",
+      "path": "scripts/verify_platform_operator_drill.py",
+      "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
+      "sha256": "741b9ef004542c397c47a1f70b944996c837d4ae85167da2763ec6994bb120d5"
     },
     {
       "bytes": 9472,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "36af9bab0edadde3e0cc182eb5c84c007f98dd4484a816ae7031edb40fe78b17"
+      "sha256": "fa7234933871b759963b6f981fc2a0d02839c2f817f3dc263b47279df864464c"
     },
     {
       "bytes": 2177,
@@ -210,25 +224,32 @@
       "sha256": "8c5b01c80d4c92bf165b2c12e8feb2d3d4a515f6985ef7dc6b63c592a6d13fb0"
     },
     {
-      "bytes": 5307,
+      "bytes": 5513,
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "89ca2d2d25292e189be284b26704a72f21b469003fb95df7d9ed2519cfe97a55"
+      "sha256": "2b8e7f8cf07fe1c631c12b6b569bea937287b84298c21f1372001006d319187a"
     },
     {
-      "bytes": 13397,
+      "bytes": 13744,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "5386993824a68ac5fea809b5b04a3dfbca629caf9a87edde7f812f6ff814c6d6"
+      "sha256": "e953f2fcb91e2863785ecda4f88f5869b6d418c8fe91bfc83ec66529ae2a3892"
     },
     {
-      "bytes": 7498,
+      "bytes": 7575,
       "kind": "docs",
       "path": "docs/kimi-agent-gateway.md",
       "purpose": "Kimi-compatible user-owned HTTP Agent gateway guide.",
-      "sha256": "79c97049c5b401abccba6998114c2477313d8ef0e23da726353e726535f28b3c"
+      "sha256": "c7baa1ad7d9d77ff3c129ff0145e39c832e1da92d936d8462e06edd6b4d74f1d"
+    },
+    {
+      "bytes": 2653,
+      "kind": "docs",
+      "path": "docs/operator-drill.md",
+      "purpose": "External platform operator drill and transcript guide.",
+      "sha256": "f4197da8f97e71da96fbd24b83b4a2978b34472faa589d7ec85ea3fb2206b854"
     },
     {
       "bytes": 10241,
@@ -238,11 +259,18 @@
       "sha256": "f79ba77b3201f3569835348a063c6ce59ab5e47eccbdd11c099faef479babba4"
     },
     {
-      "bytes": 2237,
+      "bytes": 12390,
       "kind": "docs",
-      "path": "docs/release-notes/v0.2.22-alpha.md",
-      "purpose": "Release notes for the external-adoption proof release.",
-      "sha256": "7555b2bed8bd8ce85bec456c46ff892bf66cd542c611e5b3940fc455cf929c9a"
+      "path": "docs/api.md",
+      "purpose": "HTTP API reference for platform workspaces.",
+      "sha256": "5ed1571ad1a516ddc169e60bb03efcf3fb2ce4a0919413dfa961476e326279d7"
+    },
+    {
+      "bytes": 1978,
+      "kind": "docs",
+      "path": "docs/release-notes/v0.2.23-alpha.md",
+      "purpose": "Release notes for the real external-platform adoption drill release.",
+      "sha256": "7f330561cdd8455399f87db2f46a7d0035f52d9721c89531df3c8d27ef29dbde"
     },
     {
       "bytes": 8476,

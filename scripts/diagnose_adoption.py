@@ -21,7 +21,7 @@ DEFAULT_CAPABILITIES = [
     "answer.grade",
     "insight.synthesize",
 ]
-DEFAULT_IMAGE = "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.22-alpha"
+DEFAULT_IMAGE = "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.23-alpha"
 
 
 def request_json(url: str, *, timeout: int = 5) -> Any:

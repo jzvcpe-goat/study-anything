@@ -11,6 +11,7 @@ copy-ready adoption pack:
 ```bash
 python3 scripts/generate_platform_adoption_pack.py
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -18,8 +19,10 @@ python3 scripts/verify_external_adoption.py \
 
 The archive contains OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy packs, the repo-local
 Skill, gateway examples, mock agent, NotebookLM fixture, verifier scripts, and a SHA256 manifest.
-The verifier emits `adoption-proof-v1` and exercises importer, enrichment, retrieval, teaching
-layers, eval, Obsidian export, and NotebookLM-style learning-package export through Skill Mode.
+The operator drill emits `study-anything-operator-drill-v1` evidence that the pack can be consumed as
+an external platform tool directory. The adoption verifier emits `adoption-proof-v1` and exercises
+importer, enrichment, retrieval, teaching layers, eval, Obsidian export, and NotebookLM-style
+learning-package export through Skill Mode.
 
 Use this path before claiming a platform integration works. It does not require the standalone
 frontend, and it does not store real model keys in Study Anything.
@@ -142,7 +145,7 @@ Node/npm availability, and optional Promptfoo setup.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.22-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.23-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -150,11 +153,11 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.2.22-alpha \
+  --tag v0.2.23-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.22-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.23-alpha` shows `linux/amd64`
 and `linux/arm64`.
