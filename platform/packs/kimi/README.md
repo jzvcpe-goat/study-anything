@@ -46,6 +46,18 @@ Run the clean-clone adoption smoke before wiring real credentials:
 python3 scripts/verify_clean_clone_adoption.py --repo .
 ```
 
+For release or handoff acceptance, use the distributable adoption pack:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1` and proves the Kimi-compatible tool surface without requiring
+browser-only Kimi to call localhost directly.
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:

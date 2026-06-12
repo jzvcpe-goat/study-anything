@@ -23,6 +23,8 @@ jobs:
         run: python scripts/verify_platform_ecosystem_packs.py
       - name: Verify platform bundle manifest
         run: python scripts/generate_platform_bundle_manifest.py --check
+      - name: Verify platform adoption pack
+        run: python scripts/generate_platform_adoption_pack.py --check
       - name: Verify Agent eval assets
         run: python scripts/verify_agent_eval_assets.py
       - name: Run API tests
@@ -37,6 +39,13 @@ jobs:
           ./scripts/run_skill_mode_demo.sh
       - name: Verify clean-clone adoption smoke
         run: python scripts/verify_clean_clone_adoption.py --repo .
+      - name: Verify external platform adoption proof
+        run: |
+          python scripts/verify_external_adoption.py \
+            --pack platform/generated/study-anything-platform-adoption-pack.zip \
+            --current-worktree \
+            --python "$(python -c 'import sys; print(sys.executable)')" \
+            --venv "$(python -c 'import sys; print(sys.prefix)')"
 
   compose-smoke:
     runs-on: ubuntu-latest

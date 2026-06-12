@@ -60,6 +60,20 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
 
 `./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
 
+For a release or external-platform handoff, use the adoption pack verifier instead of manually
+assembling commands:
+
+```bash
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The verifier emits `adoption-proof-v1` and proves that a fresh operator can start Study Anything in
+Skill Mode, use the platform tool surface, complete the importer/enrichment/retrieval/teaching/eval
+loop, and export Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
+
 ## Generated Import Assets
 
 The checked-in generated files are derived from the manifest:
@@ -69,6 +83,8 @@ platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
 platform/generated/study-anything-platform-bundle.json
+platform/generated/study-anything-platform-adoption-pack.json
+platform/generated/study-anything-platform-adoption-pack.zip
 ```
 
 Use the OpenAPI file for HTTP tool importers. Use the OpenAI-compatible tools JSON for
@@ -82,6 +98,7 @@ python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
+python3 scripts/generate_platform_adoption_pack.py --check
 ```
 
 ## Packaged Ecosystem Starters
@@ -102,6 +119,7 @@ Verify the packs against the source manifest:
 ```bash
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
+python3 scripts/generate_platform_adoption_pack.py --check
 ```
 
 The bundle manifest records sha256 hashes and purposes for the platform manifest, generated import
@@ -259,7 +277,9 @@ A platform integration is acceptable when it can complete this sequence:
 11. Run `scripts/verify_platform_ecosystem_eval_flow.py` when validating the full platform Agent path:
    importer, enrichment, retrieval, retrieval eval, teaching, learning loop, external eval adapters,
    Obsidian, and learning-package export.
-12. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+12. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
+   handoff, GitHub prerelease, or external operator guide.
+13. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:

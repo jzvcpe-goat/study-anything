@@ -42,6 +42,11 @@ fi
 "$python_bin" scripts/generate_platform_agent_assets.py --check
 "$python_bin" scripts/verify_platform_ecosystem_packs.py
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
+"$python_bin" scripts/generate_platform_adoption_pack.py --check
+"$python_bin" scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --current-worktree \
+  --python "$python_bin"
 "$python_bin" scripts/verify_agent_eval_assets.py
 "$python_bin" scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 "$python_bin" scripts/diagnose_adoption.py --ghcr-timeout-seconds 5

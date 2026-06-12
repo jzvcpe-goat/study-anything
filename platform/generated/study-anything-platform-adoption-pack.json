@@ -1,0 +1,403 @@
+{
+  "acceptance": {
+    "command": "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+    "must_verify": [
+      "archive sha256 manifest",
+      "OpenAPI/OpenAI tool import assets",
+      "Kimi/Codex/WorkBuddy operator packs",
+      "Skill Mode or published-image runtime",
+      "external platform Agent learning flow",
+      "retrieval-quality-eval-v1",
+      "agent-quality-eval-v1",
+      "obsidian-markdown-export-v1",
+      "learning-package-v1"
+    ],
+    "proof_schema": "adoption-proof-v1",
+    "target_minutes": 15
+  },
+  "archive_bytes": 127114,
+  "archive_name": "study-anything-platform-adoption-pack.zip",
+  "archive_root": "study-anything-platform-adoption-pack",
+  "archive_sha256": "11dc2d015d079ef100cd471c4bd95317e62d17caecdbe9a06413f691e813f896",
+  "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
+  "files": [
+    {
+      "archive_path": "study-anything-platform-adoption-pack/README.md",
+      "bytes": 14363,
+      "kind": "root_doc",
+      "path": "README.md",
+      "purpose": "Repository overview and local-first launch entrypoint.",
+      "sha256": "fa3b6a85cc40e80420f8fb7f79d7af8c48f17ed4fadd4435ef4ec1ce9bb5cb73"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/adoption.md",
+      "bytes": 5307,
+      "kind": "operator_doc",
+      "path": "docs/adoption.md",
+      "purpose": "Clean-clone and published-image adoption guide.",
+      "sha256": "89ca2d2d25292e189be284b26704a72f21b469003fb95df7d9ed2519cfe97a55"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/platform-agent-integrations.md",
+      "bytes": 13397,
+      "kind": "operator_doc",
+      "path": "docs/platform-agent-integrations.md",
+      "purpose": "General external platform Agent integration guide.",
+      "sha256": "5386993824a68ac5fea809b5b04a3dfbca629caf9a87edde7f812f6ff814c6d6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/kimi-agent-gateway.md",
+      "bytes": 7498,
+      "kind": "operator_doc",
+      "path": "docs/kimi-agent-gateway.md",
+      "purpose": "Kimi-compatible HTTP Agent gateway guide.",
+      "sha256": "79c97049c5b401abccba6998114c2477313d8ef0e23da726353e726535f28b3c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/self-hosting.md",
+      "bytes": 17368,
+      "kind": "operator_doc",
+      "path": "docs/self-hosting.md",
+      "purpose": "Docker/Skill Mode self-hosting guide.",
+      "sha256": "41bc80c2852fd0e69608dc399cd540dbd59522d0638bc774df727122df56e0f8"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/agent-eval.md",
+      "bytes": 10241,
+      "kind": "operator_doc",
+      "path": "docs/agent-eval.md",
+      "purpose": "Agent and retrieval eval guide.",
+      "sha256": "f79ba77b3201f3569835348a063c6ce59ab5e47eccbdd11c099faef479babba4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/release-notes/v0.2.22-alpha.md",
+      "bytes": 2237,
+      "kind": "release_doc",
+      "path": "docs/release-notes/v0.2.22-alpha.md",
+      "purpose": "Release notes for this adoption pack.",
+      "sha256": "7555b2bed8bd8ce85bec456c46ff892bf66cd542c611e5b3940fc455cf929c9a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/study-anything-platform-tools.json",
+      "bytes": 32029,
+      "kind": "tool_manifest",
+      "path": "platform/study-anything-platform-tools.json",
+      "purpose": "Source platform tool contract.",
+      "sha256": "57f691fce97e7c5743ba08f2b81fb2cbeabea8087e962e029785f18256496922"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-openapi.json",
+      "bytes": 58415,
+      "kind": "tool_import",
+      "path": "platform/generated/study-anything-platform-openapi.json",
+      "purpose": "OpenAPI 3.1 import asset.",
+      "sha256": "dcda390c21f4d66ea13b29c0f7a5b380a3b80eedcad765a559d4554d8560f9b5"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-openai-tools.json",
+      "bytes": 19689,
+      "kind": "tool_import",
+      "path": "platform/generated/study-anything-openai-tools.json",
+      "purpose": "OpenAI-compatible function tools.",
+      "sha256": "8ded3317380aef73d6e043a8aa4b766e7fe7a7ecbd7688882adf55563a0492b5"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-tool-catalog.md",
+      "bytes": 15129,
+      "kind": "tool_catalog",
+      "path": "platform/generated/study-anything-tool-catalog.md",
+      "purpose": "Human-readable platform tool catalog.",
+      "sha256": "fede73fb74de83427ed623dc70dbebe0d0af750ca699714822bcf85a7b5341fa"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
+      "bytes": 13080,
+      "kind": "bundle_manifest",
+      "path": "platform/generated/study-anything-platform-bundle.json",
+      "purpose": "Source file manifest for platform assets.",
+      "sha256": "a737576b5a50acdb13edf32fcddc35849d2e072f90db83d49b97da55de8fe968"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/README.md",
+      "bytes": 3450,
+      "kind": "platform_pack",
+      "path": "platform/packs/README.md",
+      "purpose": "Platform pack index.",
+      "sha256": "01a6abcb02f94a0d4823088e9f27de5f3dd695da76d68517ca9a47375d1bc193"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/kimi/README.md",
+      "bytes": 6193,
+      "kind": "platform_pack",
+      "path": "platform/packs/kimi/README.md",
+      "purpose": "Kimi Work and Kimi-compatible setup.",
+      "sha256": "81982b7ec5879c595ac127df21fca7ae030d138fe3f78fefacd4e1cea7bf9d9c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/kimi/pack.json",
+      "bytes": 3168,
+      "kind": "platform_pack",
+      "path": "platform/packs/kimi/pack.json",
+      "purpose": "Machine-readable Kimi pack.",
+      "sha256": "6bbac68ad1156e50f92b4862a9ca3b41886111005c631e519226f94f7aaaa099"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/README.md",
+      "bytes": 5445,
+      "kind": "platform_pack",
+      "path": "platform/packs/codex/README.md",
+      "purpose": "Codex setup and command flow.",
+      "sha256": "582abcd2f5e06aeb39c2ef7c4e3c1486278c5dc1f7c3731d4274e71d8397a13b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/pack.json",
+      "bytes": 2567,
+      "kind": "platform_pack",
+      "path": "platform/packs/codex/pack.json",
+      "purpose": "Machine-readable Codex pack.",
+      "sha256": "c7cc18081cbe75fccff97fc264c46ceec54c4cec63f2199b17226c0d98d0e726"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/README.md",
+      "bytes": 4404,
+      "kind": "platform_pack",
+      "path": "platform/packs/workbuddy/README.md",
+      "purpose": "WorkBuddy-style HTTP workspace setup.",
+      "sha256": "b6c93fff07e79f599022a765eff4fedf95556035044f44aa7d3ad7f26dc78e77"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/pack.json",
+      "bytes": 2669,
+      "kind": "platform_pack",
+      "path": "platform/packs/workbuddy/pack.json",
+      "purpose": "Machine-readable WorkBuddy pack.",
+      "sha256": "fe1e15d074bd221eeffacc38c918727de47fd7ae46acc2048c12eb0a9c36d070"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/skills/study-anything/SKILL.md",
+      "bytes": 8064,
+      "kind": "skill",
+      "path": "skills/study-anything/SKILL.md",
+      "purpose": "Codex Skill entrypoint.",
+      "sha256": "05b988696aaafaee3c924e22119c11a661e6851ea60e459e534d38f8c118e73a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/skills/study-anything/agents/openai.yaml",
+      "bytes": 201,
+      "kind": "skill",
+      "path": "skills/study-anything/agents/openai.yaml",
+      "purpose": "OpenAI-compatible Skill agent metadata.",
+      "sha256": "5ac2f5a40ffa82109f0f524f5c350254f9dea6e4ca6d24eba6b84f9060a70bea"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/openai_compatible_agent_gateway.py",
+      "bytes": 14138,
+      "kind": "gateway",
+      "path": "scripts/openai_compatible_agent_gateway.py",
+      "purpose": "User-owned local HTTP Agent gateway.",
+      "sha256": "2d8ed6e169fd6cf5f2da57c8d04e8ea287400313d39e13172f111f260f53441a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/mock_http_agent.py",
+      "bytes": 4000,
+      "kind": "gateway",
+      "path": "scripts/mock_http_agent.py",
+      "purpose": "Deterministic mock HTTP Agent for smoke tests.",
+      "sha256": "d43e3c3d0d3102ee143fd2e9535403b02a04f413bd3bc18b236b9328fb3eb618"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/launch_skill_mode.sh",
+      "bytes": 3346,
+      "kind": "runtime",
+      "path": "scripts/launch_skill_mode.sh",
+      "purpose": "Local Skill Mode API launcher.",
+      "sha256": "792623959d4431a9dd30abc5ba37b7a615b51f959bb325c563e3c36a10040e80"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/stop_skill_mode.sh",
+      "bytes": 510,
+      "kind": "runtime",
+      "path": "scripts/stop_skill_mode.sh",
+      "purpose": "Local Skill Mode API stop helper.",
+      "sha256": "ee55ace6f6e5aff53893850ff45765c0efcf26e73da6da1f494c368c522faca0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/run_skill_mode_demo.sh",
+      "bytes": 2356,
+      "kind": "verification",
+      "path": "scripts/run_skill_mode_demo.sh",
+      "purpose": "One-command Skill Mode demo and eval gate.",
+      "sha256": "c81c1a0263feda98f5351f9abd12c40d7129313b9c6232683a83b6265a825be6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/study_anything_cli.py",
+      "bytes": 32014,
+      "kind": "cli",
+      "path": "scripts/study_anything_cli.py",
+      "purpose": "CLI for learning loop and evidence commands.",
+      "sha256": "e58db06e6dfaf89c759e0f489c4bb7cab250eea16464fd5dcafed9c3c7b95dbd"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_external_adoption.py",
+      "bytes": 20832,
+      "kind": "verification",
+      "path": "scripts/verify_external_adoption.py",
+      "purpose": "Adoption-proof-v1 verifier for external operators.",
+      "sha256": "f74e9e31a44c8251162be8a7d854d0115f701164b9dd87454e784197ed304f88"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_agent_tools.py",
+      "bytes": 22146,
+      "kind": "verification",
+      "path": "scripts/verify_platform_agent_tools.py",
+      "purpose": "Platform tool manifest runtime verifier.",
+      "sha256": "2ec2b1dacaa7c07105f28127d1d988b477176b77066c8bfbea073b57a2ded29f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_ecosystem_eval_flow.py",
+      "bytes": 12345,
+      "kind": "verification",
+      "path": "scripts/verify_platform_ecosystem_eval_flow.py",
+      "purpose": "Full platform ecosystem learning/eval/export verifier.",
+      "sha256": "fa2c0c30d98103365db70188483d3c0dcac87cb847e74e23d8b5363ad4a03647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_importer_lesson_flow.py",
+      "bytes": 8067,
+      "kind": "verification",
+      "path": "scripts/verify_importer_lesson_flow.py",
+      "purpose": "NotebookLM-style importer lesson verifier.",
+      "sha256": "25982f0612985f6fc2199113a245ec26f8f52ea91ccd89b641fbbdb69189b1ac"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_importer_runtime_retrieval_flow.py",
+      "bytes": 8831,
+      "kind": "verification",
+      "path": "scripts/verify_importer_runtime_retrieval_flow.py",
+      "purpose": "Importer runtime plus retrieval verifier.",
+      "sha256": "da25bae265c8bbd08329ebadebd18d0d4b390c66be796cbfb72325944789a1c7"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_lesson_flow.py",
+      "bytes": 7339,
+      "kind": "verification",
+      "path": "scripts/verify_platform_lesson_flow.py",
+      "purpose": "Enriched platform lesson verifier.",
+      "sha256": "7972bc1b36950415125b47220d0821dee6891a1d47938a96c288a03a13211a3b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_agent_eval_flow.py",
+      "bytes": 9060,
+      "kind": "verification",
+      "path": "scripts/verify_agent_eval_flow.py",
+      "purpose": "Agent eval artifact verifier.",
+      "sha256": "08548ba8e3b470b4eb554f906ec9822728d88835d76da26519d08aeb2f77202f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/run_external_agent_evals.py",
+      "bytes": 11983,
+      "kind": "verification",
+      "path": "scripts/run_external_agent_evals.py",
+      "purpose": "Promptfoo/DeepEval/retrieval eval runner.",
+      "sha256": "e104ff05160eafdd23dfd84d4b613faef0e91e7696145457367e16a89f86f6e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_openai_compatible_gateway.py",
+      "bytes": 12027,
+      "kind": "verification",
+      "path": "scripts/verify_openai_compatible_gateway.py",
+      "purpose": "OpenAI-compatible gateway dry-run verifier.",
+      "sha256": "a425329911a1a409c907f3a241562d590161d3c67fab670f678de33967269f40"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/diagnose_adoption.py",
+      "bytes": 9472,
+      "kind": "diagnostics",
+      "path": "scripts/diagnose_adoption.py",
+      "purpose": "Adoption diagnostics and remediation hints.",
+      "sha256": "36af9bab0edadde3e0cc182eb5c84c007f98dd4484a816ae7031edb40fe78b17"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/evals/promptfoo/agent-eval-artifact.yaml",
+      "bytes": 2177,
+      "kind": "eval",
+      "path": "evals/promptfoo/agent-eval-artifact.yaml",
+      "purpose": "Promptfoo eval config.",
+      "sha256": "d23066d2c381da60b52fa683d45b414ca95683b192c9a6ee6e7727c9e4d0453e"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/evals/deepeval/study_anything_quality_eval.py",
+      "bytes": 5267,
+      "kind": "eval",
+      "path": "evals/deepeval/study_anything_quality_eval.py",
+      "purpose": "DeepEval-compatible native quality adapter.",
+      "sha256": "8c5b01c80d4c92bf165b2c12e8feb2d3d4a515f6985ef7dc6b63c592a6d13fb0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/notebooklm/README.md",
+      "bytes": 757,
+      "kind": "fixture",
+      "path": "fixtures/notebooklm/README.md",
+      "purpose": "NotebookLM fixture notes.",
+      "sha256": "5c2273cfbbca51dad7ca5f293eb2b2510141fa6bad832052c9d8cc5cb658a1c8"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/notebooklm/notebooklm-style-context-package.json",
+      "bytes": 2751,
+      "kind": "fixture",
+      "path": "fixtures/notebooklm/notebooklm-style-context-package.json",
+      "purpose": "NotebookLM-style context package fixture.",
+      "sha256": "b27ca73b6bb8d3406651d882c9dc4aeef2aafc5e92908e4e281cee6fdc34d529"
+    }
+  ],
+  "name": "study-anything-platform-adoption-pack",
+  "no_frontend_required": true,
+  "privacy_contract": {
+    "must_not_store": [
+      "real model API keys",
+      "platform private browser traces",
+      "raw long source text in eval evidence",
+      "raw answer text in eval evidence",
+      "agent endpoint secrets"
+    ],
+    "user_owned_exports_may_include": [
+      "learner answers",
+      "review history",
+      "Obsidian markdown selected by the learner"
+    ]
+  },
+  "real_model_keys_stored_by_study_anything": false,
+  "required_tool_names": [
+    "study_anything_health",
+    "study_anything_create_session",
+    "study_anything_add_reading",
+    "study_anything_validate_context_package",
+    "study_anything_create_session_from_context_package",
+    "study_anything_append_context_package",
+    "study_anything_run_importer",
+    "study_anything_add_enrichment",
+    "study_anything_run",
+    "study_anything_answer",
+    "study_anything_mastery",
+    "study_anything_retrieval_search",
+    "study_anything_retrieval_quality_eval",
+    "study_anything_teaching_layers",
+    "study_anything_agent_audit",
+    "study_anything_agent_eval_artifact",
+    "study_anything_agent_quality_eval",
+    "study_anything_obsidian_export",
+    "study_anything_learning_package_export"
+  ],
+  "runtime_modes": [
+    "skill-mode",
+    "published-image"
+  ],
+  "schema_version": "study-anything-platform-adoption-pack-v1",
+  "supported_platforms": [
+    "kimi-work",
+    "codex",
+    "workbuddy-style-http",
+    "generic-http-tools"
+  ],
+  "version": "v0.2.22-alpha"
+}

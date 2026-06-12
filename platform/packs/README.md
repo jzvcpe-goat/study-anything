@@ -10,11 +10,14 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-openai-tools.json`
 - `platform/generated/study-anything-tool-catalog.md`
 - `platform/generated/study-anything-platform-bundle.json`
+- `platform/generated/study-anything-platform-adoption-pack.json`
+- `platform/generated/study-anything-platform-adoption-pack.zip`
 
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.21 packs add importer runtime, retrieval, and ecosystem eval capabilities on top of the core loop:
+v0.2.22 packs add a distributable adoption archive and `adoption-proof-v1` verifier on top of the
+importer, retrieval, and ecosystem eval capabilities:
 
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
@@ -25,6 +28,8 @@ v0.2.21 packs add importer runtime, retrieval, and ecosystem eval capabilities o
 - Obsidian-compatible markdown export for second-brain workflows;
 - a portable learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and
   local archives.
+- a copy-ready platform adoption pack that proves the Kimi/Codex/WorkBuddy-style tool surface works
+  without requiring a standalone frontend.
 
 ## Packs
 
@@ -39,6 +44,10 @@ v0.2.21 packs add importer runtime, retrieval, and ecosystem eval capabilities o
 .venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
+.venv/bin/python scripts/generate_platform_adoption_pack.py --check
+.venv/bin/python scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
 ```
 
 For a running API:
