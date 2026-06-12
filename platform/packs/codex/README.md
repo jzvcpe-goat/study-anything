@@ -83,6 +83,9 @@ export at `GET /v1/sessions/{session_id}/exports/obsidian`.
 Use `GET /v1/sessions/{session_id}/exports/learning-package` or the CLI `package-export` command
 to create a portable learning package when the next step is a NotebookLM-style bridge, local archive,
 or platform-agent handoff.
+Use `GET /v1/sessions/{session_id}/exports/second-brain-handoff` or the CLI `second-brain-handoff`
+command when Codex needs a stricter Obsidian/NotebookLM/local archive handoff that excludes learner
+answers, grading feedback, raw Agent metadata, endpoints, and secrets.
 
 For retrieval-based follow-up lessons, enable LanceDB or the local smoke memory backend, rebuild the
 source session with `retrieval-rebuild`, then use `retrieval-import` to create or expand a focused
@@ -102,6 +105,7 @@ A Codex integration must return both:
 - `learning-enrichment-artifact-v1` for redacted Markdown+HTML micro-lessons
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
+- `second-brain-handoff-v1` for strict redacted Obsidian, NotebookLM-style, and archive handoff
 
 Do not paste raw source text, learner answers, grading feedback, Agent endpoints, or secrets into
 shared logs.

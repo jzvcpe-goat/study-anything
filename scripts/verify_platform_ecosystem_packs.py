@@ -26,6 +26,7 @@ REQUIRED_ACCEPTANCE = {
     "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
+    "second_brain.schema_version == second-brain-handoff-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_importer_lesson_flow.py",

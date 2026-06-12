@@ -136,6 +136,7 @@ def main() -> None:
     obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
     package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
     enrichment_artifact = request(f"/v1/sessions/{quote(session_id)}/exports/enrichment-artifact")
+    second_brain = request(f"/v1/sessions/{quote(session_id)}/exports/second-brain-handoff")
 
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
@@ -143,6 +144,7 @@ def main() -> None:
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(package, "learning-package-v1", "learning package")
     assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
+    assert_schema(second_brain, "second-brain-handoff-v1", "second-brain handoff")
     if audit.get("status") != "verified":
         raise LessonVerificationError(f"Agent audit did not verify: {audit}")
     if quality.get("status") != "pass":
@@ -166,6 +168,11 @@ def main() -> None:
         enrichment_artifact,
         [private_source_text, private_enrichment_text, private_answer],
     )
+    assert_no_leaks(
+        "second-brain handoff strict privacy boundary",
+        second_brain,
+        [private_source_text, private_enrichment_text, private_answer],
+    )
 
     print(
         json.dumps(
@@ -179,6 +186,7 @@ def main() -> None:
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": package["schema_version"],
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
+                "second_brain_schema": second_brain["schema_version"],
                 "learning_package_consumers": package["intended_consumers"],
             },
             ensure_ascii=False,

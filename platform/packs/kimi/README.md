@@ -40,6 +40,8 @@ The tool surface includes:
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
 - `study_anything_learning_package_export` for a portable package that a platform agent can pass into
   NotebookLM-style or local knowledge workflows.
+- `study_anything_second_brain_handoff_export` for the strict redacted Obsidian, NotebookLM-style,
+  and local archive handoff Kimi should prefer for long-term memory.
 
 Run the clean-clone adoption smoke before wiring real credentials:
 
@@ -97,10 +99,12 @@ GET /v1/sessions/{session_id}/agent-eval/quality
 GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package
+GET /v1/sessions/{session_id}/exports/second-brain-handoff
 ```
 
-The exports are a redacted enrichment micro-lesson, an Obsidian-compatible Markdown note, and a
-portable learning package for the user's second-brain or NotebookLM-style workflow.
+The exports include a redacted enrichment micro-lesson, a user-owned Obsidian Markdown note, a
+portable learning package, and the strict second-brain handoff. Prefer the second-brain handoff for
+Kimi-visible long-term memory because it excludes learner answers and grading feedback.
 
 For importer flows, Kimi or the surrounding platform Agent should first build a
 `learning-context-package-v1` object from user-approved web pages, files, video slices, workspace

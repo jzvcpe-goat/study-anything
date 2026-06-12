@@ -229,6 +229,19 @@
 - Extend adoption-proof, platform packs, and release checks so enrichment artifacts become part of
   the external operator handoff.
 
+## v0.2.26-alpha
+
+- Add `second-brain-handoff-v1`, the strict redacted export for Obsidian, NotebookLM-style manual
+  import, Kimi, Codex, WorkBuddy-style platform Agents, and local archives.
+- Add `second-brain-obsidian-note-v1` with frontmatter, backlinks, note graph references, source map,
+  learning map, mastery snapshot, and review queue metadata.
+- Add `second-brain-archive-manifest-v1` with deterministic file hashes for Obsidian Markdown,
+  redacted learning package JSON, and enrichment Markdown/HTML artifacts.
+- Keep direct Obsidian and learning-package exports for user-owned workflows while steering shared
+  platform logs to `study_anything_second_brain_handoff_export`.
+- Extend importer, platform, ecosystem, operator, and adoption checks so second-brain handoff is part
+  of external release evidence.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

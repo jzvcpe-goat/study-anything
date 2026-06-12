@@ -58,6 +58,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
+    "second_brain.schema_version == second-brain-handoff-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -339,6 +340,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "enrichment_artifact_schema": "learning-enrichment-artifact-v1",
             "obsidian_export_schema": "obsidian-markdown-export-v1",
             "learning_package_schema": "learning-package-v1",
+            "second_brain_schema": "second-brain-handoff-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

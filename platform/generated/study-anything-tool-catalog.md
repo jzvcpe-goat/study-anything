@@ -665,3 +665,36 @@ Privacy:
   "returns_private_learning_data": true
 }
 ```
+
+### `study_anything_second_brain_handoff_export`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/exports/second-brain-handoff`
+- Description: Return the strict redacted second-brain handoff for Obsidian, NotebookLM-style manual import, local archives, Kimi, Codex, and WorkBuddy-style platform Agents.
+
+Output requirements:
+
+- schema_version == second-brain-handoff-v1
+- obsidian.schema_version == second-brain-obsidian-note-v1
+- notebooklm_bridge.status == ready_for_manual_import
+- local_archive.manifest.schema_version == second-brain-archive-manifest-v1
+- privacy.learner_answers_included == false
+- privacy.grading_feedback_included == false
+- privacy.agent_metadata_included == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "raw source text",
+    "raw enrichment text",
+    "learner answers",
+    "grading feedback",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```

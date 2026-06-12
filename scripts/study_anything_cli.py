@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import sys
+from pathlib import Path
 from typing import Any, Dict, Iterable, Optional
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
@@ -484,6 +485,54 @@ def cmd_learning_package(args: argparse.Namespace) -> None:
     emit(args, package)
 
 
+def cmd_second_brain_handoff(args: argparse.Namespace) -> None:
+    handoff = request(f"/v1/sessions/{quote(args.session_id)}/exports/second-brain-handoff")
+    if args.archive_dir:
+        archive_dir = Path(args.archive_dir)
+        archive = handoff.get("local_archive") or {}
+        manifest = archive.get("manifest") or {}
+        files = archive.get("files") or []
+        if not isinstance(files, list):
+            raise StudyAnythingError("Second-brain handoff did not return archive files.")
+        for item in files:
+            if not isinstance(item, dict):
+                continue
+            relative_path = Path(str(item.get("path") or ""))
+            if relative_path.is_absolute() or ".." in relative_path.parts:
+                raise StudyAnythingError(f"Unsafe archive path returned by API: {relative_path}")
+            target = archive_dir / relative_path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(str(item.get("content") or ""), encoding="utf-8")
+        manifest_path = archive_dir / "manifest.json"
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        if not args.json:
+            print(f"wrote: {archive_dir}")
+            return
+    if args.obsidian_markdown and not args.json:
+        obsidian = handoff.get("obsidian") or {}
+        if not isinstance(obsidian, dict):
+            raise StudyAnythingError("Second-brain handoff did not return an Obsidian note.")
+        print(str(obsidian.get("markdown") or ""))
+        return
+    if args.archive_manifest and not args.json:
+        archive = handoff.get("local_archive") or {}
+        if not isinstance(archive, dict):
+            raise StudyAnythingError("Second-brain handoff did not return a local archive.")
+        print(json.dumps(archive.get("manifest") or {}, ensure_ascii=False, indent=2, sort_keys=True))
+        return
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            json.dump(handoff, handle, ensure_ascii=False, indent=2, sort_keys=True)
+            handle.write("\n")
+        if not args.json:
+            print(f"wrote: {args.output}")
+            return
+    emit(args, handoff)
+
+
 def cmd_hitl(args: argparse.Namespace) -> None:
     emit(args, request("/v1/hitl"))
 
@@ -825,6 +874,17 @@ def build_parser() -> argparse.ArgumentParser:
     add_session_id(package_export)
     package_export.add_argument("--output", help="Write package JSON to a path")
     package_export.set_defaults(func=cmd_learning_package)
+
+    second_brain = subparsers.add_parser(
+        "second-brain-handoff",
+        help="Export a redacted Obsidian/NotebookLM/local archive handoff",
+    )
+    add_session_id(second_brain)
+    second_brain.add_argument("--output", help="Write full handoff JSON to a path")
+    second_brain.add_argument("--archive-dir", help="Write local archive files and manifest to a directory")
+    second_brain.add_argument("--obsidian-markdown", action="store_true", help="Print only the redacted Obsidian note")
+    second_brain.add_argument("--archive-manifest", action="store_true", help="Print only the local archive manifest")
+    second_brain.set_defaults(func=cmd_second_brain_handoff)
 
     hitl = subparsers.add_parser("hitl", help="List open human-review tasks")
     hitl.set_defaults(func=cmd_hitl)

@@ -56,6 +56,7 @@ from study_anything.core.retrieval_eval import (
     build_retrieval_quality_eval,
     retrieval_quality_case_export,
 )
+from study_anything.core.second_brain_handoff import build_second_brain_handoff
 from study_anything.core.store import create_session_store
 from study_anything.core.sync_package import (
     MIN_PASSPHRASE_LENGTH,
@@ -1245,6 +1246,16 @@ def create_app() -> FastAPI:
         try:
             state = store.get(session_id)
             return build_learning_enrichment_artifact(state)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @app.get("/v1/sessions/{session_id}/exports/second-brain-handoff")
+    def get_second_brain_handoff(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            return build_second_brain_handoff(state)
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         except ValueError as exc:

@@ -24,13 +24,16 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/adoption.md", "operator_doc", "Clean-clone and published-image adoption guide."),
     ("docs/platform-agent-integrations.md", "operator_doc", "General external platform Agent integration guide."),
     ("docs/learning-enrichment.md", "operator_doc", "Learning Enrichment Layer context contract and micro-lesson export guide."),
+    ("docs/second-brain-handoff.md", "operator_doc", "Strict Obsidian, NotebookLM-style, and local archive handoff guide."),
+    ("docs/obsidian-export.md", "operator_doc", "Obsidian export privacy and second-brain note guide."),
+    ("docs/notebooklm-bridge.md", "operator_doc", "NotebookLM-style manual bridge contract."),
     ("docs/kimi-agent-gateway.md", "operator_doc", "Kimi-compatible HTTP Agent gateway guide."),
     ("docs/use-with-kimi.md", "operator_doc", "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway."),
     ("docs/operator-drill.md", "operator_doc", "External platform operator drill and transcript guide."),
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.2.25-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.2.26-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
@@ -91,6 +94,7 @@ REQUIRED_PLATFORM_TOOLS = [
     "study_anything_obsidian_export",
     "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
+    "study_anything_second_brain_handoff_export",
 ]
 
 
@@ -193,7 +197,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.2.25-alpha",
+        "version": "v0.2.26-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -224,6 +228,7 @@ def manifest_payload() -> dict[str, object]:
                 "study-anything-agent-eval-regression-report-v1",
                 "obsidian-markdown-export-v1",
                 "learning-package-v1",
+                "second-brain-handoff-v1",
             ],
         },
         "privacy_contract": {

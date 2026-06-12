@@ -755,5 +755,25 @@
       }
     },
     "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return the strict redacted second-brain handoff for Obsidian, NotebookLM-style manual import, local archives, Kimi, Codex, and WorkBuddy-style platform Agents. Method: GET /v1/sessions/{session_id}/exports/second-brain-handoff.",
+      "name": "study_anything_second_brain_handoff_export",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
   }
 ]

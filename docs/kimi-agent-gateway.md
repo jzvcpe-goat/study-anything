@@ -157,9 +157,11 @@ This emits `study-anything-operator-drill-v1` for the Kimi-compatible pack direc
 `adoption-proof-v1` for runtime eval evidence, Obsidian export, and NotebookLM-style handoff while
 keeping real Kimi credentials outside Study Anything.
 
-Use the Obsidian export for second-brain notes. Use `package-export` or
-`GET /v1/sessions/{session_id}/exports/learning-package` when a Kimi-compatible platform agent needs
-to hand the learning state to a NotebookLM-style workflow or local archive.
+Use `second-brain-handoff` or
+`GET /v1/sessions/{session_id}/exports/second-brain-handoff` when a Kimi-compatible platform agent
+needs to hand learning state to Obsidian, a NotebookLM-style workflow, or a local archive without
+logging learner answers or grading feedback. Keep `obsidian-export` and `package-export` for
+explicit user-owned exports.
 
 ## DeepSeek-Compatible Gateway
 

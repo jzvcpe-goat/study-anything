@@ -33,6 +33,9 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/packs/codex/README.md",
     "platform/packs/workbuddy/README.md",
     "docs/learning-enrichment.md",
+    "docs/second-brain-handoff.md",
+    "docs/obsidian-export.md",
+    "docs/notebooklm-bridge.md",
     "docs/use-with-kimi.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
@@ -193,6 +196,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "platform/packs/codex/README.md",
                 "platform/packs/workbuddy/README.md",
                 "docs/platform-agent-integrations.md",
+                "docs/second-brain-handoff.md",
+                "docs/notebooklm-bridge.md",
             ]
         )
     required_terms = ["Kimi", "Codex", "WorkBuddy", "NotebookLM", "Obsidian"]
@@ -434,6 +439,7 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "deepeval_tool": value.get("deepeval_tool"),
             "obsidian_schema": value.get("obsidian_schema"),
             "learning_package_schema": value.get("learning_package_schema"),
+            "second_brain_schema": value.get("second_brain_schema"),
         }
     if label == "platform_tools":
         return {
@@ -473,6 +479,7 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "notebooklm_bridge_status": value.get("notebooklm_bridge_status"),
             "obsidian_schema": value.get("obsidian_schema"),
             "learning_package_schema": value.get("learning_package_schema"),
+            "second_brain_schema": value.get("second_brain_schema"),
         }
     return {
         "status": value.get("status"),

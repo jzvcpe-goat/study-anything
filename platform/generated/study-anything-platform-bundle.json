@@ -21,88 +21,88 @@
   "description": "Deterministic file manifest for distributing Study Anything platform packs, tool import assets, Skill instructions, and acceptance evidence.",
   "files": [
     {
-      "bytes": 35375,
+      "bytes": 36802,
       "kind": "source_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source contract for all platform learning tools.",
-      "sha256": "e84a11702e51d4859e8e6ef695a002748726d1948896b4a3cb673c14647ecd54"
+      "sha256": "36ee16bd28b983f8dc25fcae7cfae07ec6cc7dd63d732308aed7e2d433c00c0f"
     },
     {
-      "bytes": 63121,
+      "bytes": 65454,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 import asset for HTTP tool platforms.",
-      "sha256": "f36f09408e3a74ff134ebcb0bf02dacbd2524102d6066f170401081d281dbe08"
+      "sha256": "cd773827efb36eda24ffcc5f94dc85123e7d9a0636f1e8720ba3c2750213c1fd"
     },
     {
-      "bytes": 22288,
+      "bytes": 22937,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-openai-tools.json",
       "purpose": "OpenAI-compatible function tools for Kimi-compatible and other tool-calling agents.",
-      "sha256": "b50676a7c1b61536d3fbdcf51bf98ab55351769ff21a8e19cce7ab9657a9d4b9"
+      "sha256": "ef708a0fd35dd60de0fe12e372ccf8a0b8ecbce296d04e7cec0d514ec7764115"
     },
     {
-      "bytes": 16074,
+      "bytes": 17025,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-tool-catalog.md",
       "purpose": "Human-readable tool catalog for platform operators.",
-      "sha256": "f128fb5f0ff581c7282ec683a5a7f8b68506e9e87d06f78262a6d19c79391f0f"
+      "sha256": "ce03f874cf9d6dead122da5a5479ec07e4d99f6abdad16bea498f33b6eb63c03"
     },
     {
-      "bytes": 11592,
+      "bytes": 11698,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "3c3e03844a1340964d6bdb9288a1ac4506a71564bbec64ad62f8f88b425c0312"
+      "sha256": "5833895b1cae1e3f5b89dffc9d67de009e76a9af906dadcc0fa24e42a8cd3325"
     },
     {
-      "bytes": 4188,
+      "bytes": 4396,
       "kind": "platform_pack",
       "path": "platform/packs/README.md",
       "purpose": "Index for copy-ready platform packs.",
-      "sha256": "2a85a80c7d6820805f0c9a2af2c914b33d76558d0bf70cc174871e4de1f683ef"
+      "sha256": "1c04bac6914b52ce13251fe0871cac0e880fd78cb3578bf97c8bd19b32e80fe7"
     },
     {
-      "bytes": 5602,
+      "bytes": 5968,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex and terminal-capable Agent setup guide.",
-      "sha256": "de1161405b9a6984658a2b504b2bf39d832196bc97ddedfdb954b605feb566a4"
+      "sha256": "4919801b69e4a3b141519809685925c1538588163574ff77628fa445d50d44e0"
     },
     {
-      "bytes": 2644,
+      "bytes": 2706,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack metadata.",
-      "sha256": "bdda58bbf8009e45e018f7096ce7d4791b99c36e8605de58021a5ddf0f27155f"
+      "sha256": "bfb19aa29f11ec947663b6b5de8c2c33c5ca6298befb268997cbd625a7f234ac"
     },
     {
-      "bytes": 6431,
+      "bytes": 6761,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/README.md",
       "purpose": "Kimi tool import and gateway setup guide.",
-      "sha256": "067d67970352369702429fa8f0d6313922876ab658e771415fb2e9d4ec7f5697"
+      "sha256": "7b7111f280ae0e85859ad98bc359ad981b2d9f37c9db2994a320d60d10ea9caf"
     },
     {
-      "bytes": 3245,
+      "bytes": 3307,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack metadata.",
-      "sha256": "523b259b682d0be5032599d294560ebd355145f403d7217d7147aa8ece0a5a6d"
+      "sha256": "42e0a665d2acb791c4a85be97db01bc068ef09a289328cfb50a6e0971c11a3e4"
     },
     {
-      "bytes": 4559,
+      "bytes": 4742,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "2d46fffe8904c086b20957e1b321f7617ec43f281369139dc8f5463aa7967261"
+      "sha256": "2c84b6d621d052ed1a969a9e50b7c756d73d6ab90816fe553f3b3f4c61ed34d0"
     },
     {
-      "bytes": 2746,
+      "bytes": 2808,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "f1c78ea43d8bfc4ba37fde3c79c44e7186d04fb555175103f1a8428bec0634b4"
+      "sha256": "aa5521e40014d42ce1c2e9b0a93303fe75332cfabbfe3fc2c53ca0722bb7834c"
     },
     {
       "bytes": 14138,
@@ -126,11 +126,11 @@
       "sha256": "792623959d4431a9dd30abc5ba37b7a615b51f959bb325c563e3c36a10040e80"
     },
     {
-      "bytes": 34175,
+      "bytes": 37179,
       "kind": "cli",
       "path": "scripts/study_anything_cli.py",
       "purpose": "Command-line learning loop and Agent evidence entrypoint.",
-      "sha256": "19339b68d1f9ff84ab4c53012329671040eb317cdcdeb227f0f5ce0c54113f9b"
+      "sha256": "5aa27d47ec3752b30848d2cd45ac69cf6a53417f8a91360532252ac8cd8b03e7"
     },
     {
       "bytes": 11562,
@@ -147,18 +147,18 @@
       "sha256": "a425329911a1a409c907f3a241562d590161d3c67fab670f678de33967269f40"
     },
     {
-      "bytes": 8093,
+      "bytes": 8517,
       "kind": "verification",
       "path": "scripts/verify_platform_lesson_flow.py",
       "purpose": "End-to-end enriched lesson verifier for platform agents and learning-package export.",
-      "sha256": "2751a137dc56fe7d6437c30e1c2257b21bbbaeaf759107d853b87e5846b55fcb"
+      "sha256": "bf1d10fd7d500eec4af5fd761e67d40bdd1c5221420d4ec96c487eacd7168c18"
     },
     {
-      "bytes": 8067,
+      "bytes": 8423,
       "kind": "verification",
       "path": "scripts/verify_importer_lesson_flow.py",
       "purpose": "Importer-to-lesson verifier for Learning Context Package, NotebookLM-style, and Obsidian bridge flows.",
-      "sha256": "25982f0612985f6fc2199113a245ec26f8f52ea91ccd89b641fbbdb69189b1ac"
+      "sha256": "ab737100de85925ff133617af99a6622075212882a5aeab9568b76b3c4a661b1"
     },
     {
       "bytes": 8831,
@@ -168,11 +168,11 @@
       "sha256": "da25bae265c8bbd08329ebadebd18d0d4b390c66be796cbfb72325944789a1c7"
     },
     {
-      "bytes": 13396,
+      "bytes": 13878,
       "kind": "verification",
       "path": "scripts/verify_platform_ecosystem_eval_flow.py",
       "purpose": "Platform ecosystem verifier for importer, enrichment, retrieval quality, external eval adapters, and export.",
-      "sha256": "03d60f601c8cee51279d41eef749533d8374d61d63233e3eef67d8956d4869cb"
+      "sha256": "b2d2fca807549b54121e0855d85f04b9798f5b5265a7636a9832c56485ac7a87"
     },
     {
       "bytes": 11983,
@@ -186,35 +186,35 @@
       "kind": "verification",
       "path": "scripts/verify_agent_eval_baseline.py",
       "purpose": "Deterministic Agent eval baseline and regression comparison gate.",
-      "sha256": "71aa0a58c92e16f6331f8081618d0ed9651daa84a04cb5e41d463503f5e9731e"
+      "sha256": "e5622f633ccab3868b9230ebe9048b528affcd8299a3b369dabb2c4db63a4252"
     },
     {
-      "bytes": 15436,
+      "bytes": 15854,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "0cf4dfd867f944cb14bf76b7160c300d8d20ff5ea8dfe0c26a453c507052a408"
+      "sha256": "c290e3aea43d6de6bfc80b398ccaa9734f750b8a67faaa9f6d4920e90a462d1e"
     },
     {
-      "bytes": 22681,
+      "bytes": 23012,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Adoption-proof-v1 verifier for external-platform operator handoff.",
-      "sha256": "324518b50670443c35713f989abf01f33644dd29529b5d1a49f37b1e027508ea"
+      "sha256": "e3339467166563ea570f3044cba1f6e27986cba34c0a80a7f950764d5c2647fd"
     },
     {
-      "bytes": 16847,
+      "bytes": 16971,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
-      "sha256": "73d08ce9dc4cc78f685f8bb3cba2c01931aa75614748f54d427f5fd9e272eb9d"
+      "sha256": "8d4bb432555e5e3f00f2bf3984aa275452413c08e6b76c186f2b50694a6dae0f"
     },
     {
       "bytes": 9472,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "238c0798cf89b1e73bc5930f71d35d30c743585fa21875765743de6269e994c0"
+      "sha256": "12048b64e955f397a4188ccf90b7eaed9d92e40e1ac649173ebc964350954134"
     },
     {
       "bytes": 2177,
@@ -235,21 +235,21 @@
       "kind": "eval",
       "path": "evals/baselines/study-anything-agent-eval-baseline.json",
       "purpose": "Committed fast native Agent eval regression baseline.",
-      "sha256": "8128d80953221050557f3122a6437edafb136e9732a67c444022f81afe77ef02"
+      "sha256": "23a262729d05098ac25e2ef41fa3f6e4176793cd14f0b11103c295762bff1f13"
     },
     {
       "bytes": 5567,
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "6064574b5d5a3936d69fa3997b5393532ca937ced2a7b796abf0d903a3314484"
+      "sha256": "acd7816b7ed842616fa875746bc21e38ddd48d14ab1fd89ad3899b8e15294e1a"
     },
     {
-      "bytes": 14068,
+      "bytes": 14373,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "ae7498a7d2e39322a8c567953392cb9a6eccd21b4b61ae49fb15098f6d0c3bb8"
+      "sha256": "6426042e97334e8e39cd29343e3f95b47af3a71b76fdaa18a64997a67f1b174c"
     },
     {
       "bytes": 3393,
@@ -259,18 +259,39 @@
       "sha256": "035894114d09dfe478f01ccca6b662e70c5332fea7e58d7ac6d0092e4d00c420"
     },
     {
-      "bytes": 7709,
+      "bytes": 2505,
+      "kind": "docs",
+      "path": "docs/second-brain-handoff.md",
+      "purpose": "Strict Obsidian, NotebookLM-style, and local archive handoff guide.",
+      "sha256": "84d2e1d99eb802c611efcbd1617ab8448f687f337585c79d438114450b8d988a"
+    },
+    {
+      "bytes": 1673,
+      "kind": "docs",
+      "path": "docs/obsidian-export.md",
+      "purpose": "Obsidian export privacy and second-brain note guide.",
+      "sha256": "d75233f324a233999bb8ed1859cd381a4b673f852105c1a67fe19c72593c407b"
+    },
+    {
+      "bytes": 2233,
+      "kind": "docs",
+      "path": "docs/notebooklm-bridge.md",
+      "purpose": "NotebookLM-style manual bridge contract.",
+      "sha256": "93052d02c92aeba634f04a1ebf853c9c2e3b5719436e3f2270c390741f23ffbd"
+    },
+    {
+      "bytes": 7809,
       "kind": "docs",
       "path": "docs/kimi-agent-gateway.md",
       "purpose": "Kimi-compatible user-owned HTTP Agent gateway guide.",
-      "sha256": "c8a33ea9680696528986edaf25bc3f954804b55156b941bf76df526294dedd3b"
+      "sha256": "5eee365aa9dfdd5f475e974acd4feb96f16a02e8690925f21e13c2d9dd225c9d"
     },
     {
-      "bytes": 2883,
+      "bytes": 3210,
       "kind": "docs",
       "path": "docs/use-with-kimi.md",
       "purpose": "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
-      "sha256": "79badd1bf3167410e8cf8b5cbebe97d08c6366e244fb88201e22f5d6b784c128"
+      "sha256": "169c50610d27a07b70d948aa9754a821ad5e9f43e19b8b63dd27b0ca0a265e98"
     },
     {
       "bytes": 2653,
@@ -287,18 +308,18 @@
       "sha256": "d2a996da362b4531cd7a9508243deb2363d75f62ba259458d250c53922146f98"
     },
     {
-      "bytes": 13099,
+      "bytes": 13722,
       "kind": "docs",
       "path": "docs/api.md",
       "purpose": "HTTP API reference for platform workspaces.",
-      "sha256": "7f4cef7e0c7acab4807702fd8effa6f9c8c535a42893f2b54b044d78fdce8d9b"
+      "sha256": "70f69f02e715770162bc8fec44c3cea3e4ebe87261bce92a05114ca01142f4d6"
     },
     {
-      "bytes": 2272,
+      "bytes": 2590,
       "kind": "docs",
-      "path": "docs/release-notes/v0.2.25-alpha.md",
-      "purpose": "Release notes for the Learning Enrichment Layer release.",
-      "sha256": "afc7a06c89491aaed14f307cafbd0c9dae5ca206511e11c8cf0daeafeb920c0c"
+      "path": "docs/release-notes/v0.2.26-alpha.md",
+      "purpose": "Release notes for the second-brain handoff release.",
+      "sha256": "d04ad00eec41f0c033ba169f38cc85691b3459173d6c619cb8206bab91eeb108"
     },
     {
       "bytes": 8476,
@@ -367,5 +388,5 @@
   },
   "schema_version": "study-anything-platform-bundle-v1",
   "source_manifest": "platform/study-anything-platform-tools.json",
-  "source_manifest_sha256": "e84a11702e51d4859e8e6ef695a002748726d1948896b4a3cb673c14647ecd54"
+  "source_manifest_sha256": "36ee16bd28b983f8dc25fcae7cfae07ec6cc7dd63d732308aed7e2d433c00c0f"
 }
