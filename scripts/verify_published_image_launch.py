@@ -156,9 +156,9 @@ def cleanup_stack(env_file: Path) -> None:
     )
 
 
-def default_expected_version(tag: str) -> str:
+def default_expected_versions(tag: str) -> set[str]:
     value = tag[1:] if tag.startswith("v") else tag
-    return value.replace("-alpha", "a0")
+    return {value, value.replace("-alpha", "a0")}
 
 
 def pull_timeout_report(
@@ -225,7 +225,9 @@ def main() -> None:
     args = parser.parse_args()
 
     tag = args.tag
-    expected_version = args.expected_version or default_expected_version(tag)
+    expected_versions = (
+        {args.expected_version} if args.expected_version else default_expected_versions(tag)
+    )
     api_image = args.api_image or f"ghcr.io/jzvcpe-goat/study-anything/api:{tag}"
     project_name = f"study_anything_published_{int(time.time())}"
     work_dir = Path(tempfile.mkdtemp(prefix="study-anything-published-"))
@@ -266,11 +268,13 @@ def main() -> None:
 
         health = request_json(api_base, "/v1/health")
         system = request_json(api_base, "/v1/system/status")
-        if health.get("version") != expected_version or system.get("version") != expected_version:
+        health_version = health.get("version")
+        system_version = system.get("version")
+        if health_version not in expected_versions or system_version not in expected_versions:
             raise RuntimeError(
                 "Published image version mismatch: "
-                f"expected {expected_version}, health={health.get('version')}, "
-                f"system={system.get('version')}"
+                f"expected one of {sorted(expected_versions)}, "
+                f"health={health_version}, system={system_version}"
             )
 
         api_flow = verify_flow(api_base)
