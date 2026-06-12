@@ -136,11 +136,17 @@ class PublishedImageLaunchTests(unittest.TestCase):
         spec.loader.exec_module(module)
         return module
 
-    def test_default_expected_version_normalizes_alpha_tag(self) -> None:
+    def test_default_expected_versions_accepts_raw_and_normalized_alpha_tag(self) -> None:
         module = self._module()
 
-        self.assertEqual(module.default_expected_version("v0.2.16-alpha"), "0.2.16a0")
-        self.assertEqual(module.default_expected_version("0.2.16-alpha"), "0.2.16a0")
+        self.assertEqual(
+            module.default_expected_versions("v0.2.16-alpha"),
+            {"0.2.16-alpha", "0.2.16a0"},
+        )
+        self.assertEqual(
+            module.default_expected_versions("0.2.16-alpha"),
+            {"0.2.16-alpha", "0.2.16a0"},
+        )
 
     def test_pull_timeout_report_is_actionable(self) -> None:
         module = self._module()
