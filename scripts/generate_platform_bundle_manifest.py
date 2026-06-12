@@ -117,9 +117,14 @@ FILES: list[tuple[str, str, str]] = [
         "Importer-runtime and retrieval verifier for local Agent platform flows.",
     ),
     (
+        "scripts/verify_platform_ecosystem_eval_flow.py",
+        "verification",
+        "Platform ecosystem verifier for importer, enrichment, retrieval quality, external eval adapters, and export.",
+    ),
+    (
         "scripts/run_external_agent_evals.py",
         "verification",
-        "Wrapper for mature external Agent eval runners such as Promptfoo and DeepEval.",
+        "Wrapper for mature external Agent eval runners such as Promptfoo, DeepEval, and retrieval quality gates.",
     ),
     (
         "scripts/diagnose_adoption.py",
@@ -246,13 +251,21 @@ def build_manifest() -> dict[str, object]:
                 "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 "
                 "python3 scripts/verify_importer_runtime_retrieval_flow.py"
             ),
+            (
+                "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 "
+                "python3 scripts/verify_platform_ecosystem_eval_flow.py"
+            ),
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
             (
-            "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
-            "--tool deepeval --create-session --allow-native-quality-fallback"
-        ),
-        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
-        "python3 scripts/diagnose_adoption.py",
+                "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
+                "--tool deepeval --create-session --allow-native-quality-fallback"
+            ),
+            (
+                "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 "
+                "python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+            ),
+            "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+            "python3 scripts/diagnose_adoption.py",
         ],
         "files": [file_record(*item) for item in FILES],
     }

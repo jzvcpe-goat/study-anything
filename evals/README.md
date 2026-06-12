@@ -41,6 +41,20 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 
 Set `EXPECT_EXTERNAL_AGENT=true` when validating a user-owned HTTP Agent path.
 
+## Retrieval Context Quality
+
+For retrieval and Learning Context Package handoff quality, use the Ragas-compatible native gate:
+
+```bash
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
+```
+
+This consumes `retrieval-quality-eval-v1`. It checks result coverage, source binding, snippet
+minimality, query relevance, context-package validity, and privacy invariants without returning raw
+source text or retrieval snippets. A real Ragas suite can be layered on top outside Study Anything
+with user-owned evaluator credentials.
+
 ## Asset Drift Gate
 
 ```bash

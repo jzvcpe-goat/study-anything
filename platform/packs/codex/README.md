@@ -29,6 +29,7 @@ python3 scripts/study_anything_cli.py importer-run example-note-importer \
 python3 scripts/study_anything_cli.py retrieval-status
 python3 scripts/study_anything_cli.py retrieval-rebuild SESSION_ID
 python3 scripts/study_anything_cli.py retrieval-search SESSION_ID --query "focus topic"
+python3 scripts/study_anything_cli.py retrieval-eval SESSION_ID --query "focus topic"
 python3 scripts/study_anything_cli.py retrieval-import \
   --source-session-id SESSION_ID \
   --query "focus topic" \
@@ -48,8 +49,12 @@ API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_runtime_retrieval_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
 
 For importer-first work, Codex should gather external context itself, produce a Learning Context Package,
@@ -79,6 +84,7 @@ A Codex integration must return both:
 - `learning-context-package-v1` for importer-created Learning Context Package inputs
 - `importer-run-v1` for reviewed local importer runtime
 - `retrieval-search-v1` when optional retrieval is enabled
+- `retrieval-quality-eval-v1` when optional retrieval quality is scored
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
 

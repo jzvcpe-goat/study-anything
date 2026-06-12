@@ -15,15 +15,19 @@ usable without cloud accounts, judge-model API keys, or a mandatory eval service
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
 - `GET /v1/evals/quality/cases`
+- `GET /v1/evals/retrieval/cases`
+- `GET|POST /v1/sessions/{session_id}/retrieval/eval`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for invocation audit only
 
 `agent-audit` proves which provider handled `quiz.generate`, `answer.grade`, and
 `insight.synthesize`. `agent-eval/artifact` packages that proof for external eval tooling.
 `agent-eval/quality` adds the first deterministic teaching-quality layer: overview, glossary,
 quiz, grading, synthesis, grounding, enrichment readiness, and Obsidian readiness.
+`retrieval/eval` adds deterministic retrieval/context quality gates for source binding, snippet
+minimality, query relevance, and Learning Context Package handoff validity.
 
-Both endpoints are redacted. They do not return reading prose, source titles, answers, grading
-feedback, insights, Agent endpoints, raw Agent metadata, API keys, or tool secrets.
+These eval endpoints are redacted. They do not return reading prose, source titles, answers, grading
+feedback, insights, Agent endpoints, raw Agent metadata, API keys, retrieval snippets, or tool secrets.
 
 ## Open-Source Eval Selection
 
@@ -155,6 +159,17 @@ Ragas becomes important after Learning Enrichment Layer and LanceDB retrieval wo
 
 Do not use Ragas as proof that the Agent was called. That remains `agent-audit`.
 
+v0.2.21 adds a Ragas-compatible native retrieval gate. It is not a full Ragas run, but it gives Ragas
+and judge-model pipelines a redacted, stable report to consume:
+
+```bash
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
+```
+
+The report schema is `retrieval-quality-eval-v1`. It includes result metadata, scores, source
+references, excerpt hashes, and gate outcomes, but not raw source text or retrieval snippets.
+
 ## Local Smoke
 
 Against a running API:
@@ -162,6 +177,8 @@ Against a running API:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/verify_platform_ecosystem_eval_flow.py
 ```
 
 When checking a user-owned HTTP Agent path, set:
@@ -190,6 +207,8 @@ A release can claim Agent Eval foundation only when:
 - Promptfoo can be invoked through `scripts/run_external_agent_evals.py --tool promptfoo` when the
   release environment permits external Node package installation.
 - DeepEval or the labeled native fallback can consume `agent-eval/quality`.
+- Retrieval eval can consume rebuilt retrieval results through
+  `scripts/run_external_agent_evals.py --tool retrieval`.
 - Mock/user-owned HTTP Agent smoke verifies `agent-audit` and can optionally require external Agent usage.
 - Docs list the selected mature eval projects and explain why Study Anything does not run judge models by default.
 
@@ -200,6 +219,8 @@ A release can claim Agent Eval foundation only when:
   ready for external tools.
 - Promptfoo passing the bundled config means the artifact contract and native gates passed.
 - `agent-eval/quality.status=pass` means the deterministic minimum teaching-quality gates passed.
+- `retrieval-quality-eval.status=pass` means the retrieval/context handoff gates and privacy invariants
+  passed for the scored query.
 - A real DeepEval run means the quality report was consumed through DeepEval's metric interface.
-- LangChain AgentEvals, Ragas, or a judge-model suite are still required for stronger claims about
+- A real Ragas run or judge-model suite is still required for stronger claims about
   trajectory quality, source-grounding quality, and learning usefulness at scale.

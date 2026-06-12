@@ -203,6 +203,20 @@
 - `scripts/verify_importer_runtime_retrieval_flow.py` proves importer runtime -> retrieval -> lesson
   -> quality eval -> Obsidian/learning-package export.
 
+## v0.2.21-alpha
+
+- Platform tool packs expose redacted retrieval/context quality eval gates alongside Agent audit,
+  Agent eval, teaching quality, Obsidian export, and learning-package export.
+- `GET|POST /v1/sessions/{session_id}/retrieval/eval` returns
+  `retrieval-quality-eval-v1` for source binding, snippet minimality, query relevance, context package
+  validity, and privacy invariants.
+- `scripts/run_external_agent_evals.py --tool retrieval` adds a Ragas-compatible native retrieval
+  quality adapter while keeping Promptfoo and DeepEval paths available.
+- `scripts/verify_platform_ecosystem_eval_flow.py` proves platform Agent context collection ->
+  importer runtime -> enrichment -> retrieval -> retrieval eval -> teaching layers -> learning loop ->
+  external eval adapters -> Obsidian and learning-package export.
+- Kimi, Codex, and WorkBuddy packs now include one-command ecosystem eval acceptance commands.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

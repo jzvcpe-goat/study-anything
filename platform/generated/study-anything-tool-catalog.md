@@ -44,6 +44,7 @@ Additional gateway and release acceptance commands:
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 - python3 scripts/verify_clean_clone_adoption.py --repo .
 - python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
+- API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 - python3 scripts/diagnose_adoption.py
 
 ## Tools
@@ -274,6 +275,37 @@ Privacy:
   ],
   "request_contains_private_learning_data": false,
   "returns_private_learning_data": true
+}
+```
+
+### `study_anything_retrieval_quality_eval`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/retrieval/eval`
+- Description: Return redacted retrieval/context quality gates for a rebuilt retrieval index and query.
+
+Output requirements:
+
+- schema_version == retrieval-quality-eval-v1
+- status == pass or needs_review
+- quality_score is numeric
+- gates include retrieval_available, result_count, source_binding, snippet_minimality, query_relevance, context_package_valid
+- privacy.result_snippets_included == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "full source text",
+    "answers",
+    "feedback",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets",
+    "retrieval snippets"
+  ],
+  "returns_private_learning_data": false
 }
 ```
 

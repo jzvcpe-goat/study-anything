@@ -56,4 +56,7 @@ API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_importer_lesson
 printf "Verifying importer runtime and retrieval flow ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_importer_runtime_retrieval_flow.py
 
+printf "Verifying platform ecosystem eval flow ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_ecosystem_eval_flow.py
+
 printf "ok    Skill Mode demo completed. API was cleaned up.\n"

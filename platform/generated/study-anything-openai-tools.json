@@ -273,6 +273,37 @@
   },
   {
     "function": {
+      "description": "Return redacted retrieval/context quality gates for a rebuilt retrieval index and query. Method: POST /v1/sessions/{session_id}/retrieval/eval.",
+      "name": "study_anything_retrieval_quality_eval",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "default": 5,
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "query"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Create a new learning session from retrieval results produced by an existing indexed session. Method: POST /v1/sessions/from-retrieval.",
       "name": "study_anything_create_session_from_retrieval",
       "parameters": {

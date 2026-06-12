@@ -10,6 +10,7 @@ from .knowledge_graph import KnowledgeGraphSink
 from .tracing import TraceSink
 from .workflow import (
     Answer,
+    EnrichmentItem,
     GradingResult,
     HitlInterrupt,
     LearningState,
@@ -33,6 +34,7 @@ def _checkpoint_serializer() -> Any:
     return JsonPlusSerializer(
         allowed_msgpack_modules=[
             Answer,
+            EnrichmentItem,
             GradingResult,
             HitlInterrupt,
             LearningState,

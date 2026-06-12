@@ -154,6 +154,7 @@ def evidence_commands(evidence: Dict[str, Any]) -> List[str]:
         "gateway_only_command",
         "clean_clone_adoption_command",
         "promptfoo_clean_clone_command",
+        "retrieval_eval_command",
         "diagnostics_command",
     ]
     return [str(evidence[key]) for key in keys if evidence.get(key)]

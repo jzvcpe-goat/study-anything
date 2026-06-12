@@ -278,6 +278,11 @@ def cmd_retrieval_search(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/sessions/{quote(args.session_id)}/retrieval/search?{query}"))
 
 
+def cmd_retrieval_eval(args: argparse.Namespace) -> None:
+    query = urlencode({"q": args.query, "limit": args.limit})
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/retrieval/eval?{query}"))
+
+
 def cmd_retrieval_import(args: argparse.Namespace) -> None:
     payload = {
         "source_session_id": args.source_session_id,
@@ -665,6 +670,15 @@ def build_parser() -> argparse.ArgumentParser:
     retrieval_search.add_argument("--query", required=True)
     retrieval_search.add_argument("--limit", type=int, default=5)
     retrieval_search.set_defaults(func=cmd_retrieval_search)
+
+    retrieval_eval = subparsers.add_parser(
+        "retrieval-eval",
+        help="Show redacted retrieval/context quality gates",
+    )
+    add_session_id(retrieval_eval)
+    retrieval_eval.add_argument("--query", required=True)
+    retrieval_eval.add_argument("--limit", type=int, default=5)
+    retrieval_eval.set_defaults(func=cmd_retrieval_eval)
 
     retrieval_import = subparsers.add_parser(
         "retrieval-import",

@@ -21,7 +21,7 @@ class AdoptionDiagnosticsTests(unittest.TestCase):
     def test_default_image_tracks_release_tag(self) -> None:
         self.assertEqual(
             diagnose.DEFAULT_IMAGE,
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.20-alpha",
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.21-alpha",
         )
 
     def test_health_url_for_agent_invoke_endpoint(self) -> None:

@@ -85,7 +85,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.20-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.21-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -98,7 +98,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.20-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.21-alpha
 ```
 
 ## Bring Your Own Agent
@@ -128,7 +128,7 @@ Then replace dry-run mode with your own gateway, model, credentials, tools, and 
 Study Anything now emits a redacted Agent eval artifact that can be consumed by mature open-source
 eval tools instead of relying on a small homegrown judge. The foundation targets Promptfoo for
 HTTP/CI contract gates, DeepEval for Python task-completion and quality metrics, LangChain AgentEvals
-for trajectory matching, and Ragas for source grounding.
+for trajectory matching, and Ragas-style retrieval/context grounding.
 
 Against a running API:
 
@@ -145,6 +145,13 @@ API_BASE=http://127.0.0.1:8000 \
 ```
 
 See `docs/agent-eval.md` and `evals/promptfoo/agent-eval-artifact.yaml`.
+
+For retrieval/context quality gates:
+
+```bash
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
+  .venv/bin/python scripts/run_external_agent_evals.py --tool retrieval --create-session --required
+```
 
 ## Platform Agent Package
 
@@ -189,6 +196,7 @@ Validate a running platform-tool integration with:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 
@@ -214,9 +222,9 @@ skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For gener
 see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
-Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`, Obsidian, and
-`learning-package-v1` evidence after each completed learning loop. Importer integrations should first
-validate `learning-context-package-v1`.
+Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`,
+`retrieval-quality-eval`, Obsidian, and `learning-package-v1` evidence after completed learning and
+retrieval-backed loops. Importer integrations should first validate `learning-context-package-v1`.
 
 ## Repository Layout
 

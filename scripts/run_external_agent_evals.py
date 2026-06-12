@@ -11,6 +11,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -69,6 +70,40 @@ def create_eval_session(api_base: str, timeout_seconds: int) -> str:
     session_id = payload.get("session_id")
     if not isinstance(session_id, str) or not session_id:
         raise RuntimeError(f"verify_agent_eval_flow did not return a session_id: {payload}")
+    return session_id
+
+
+def create_retrieval_eval_session(api_base: str, query: str, timeout_seconds: int) -> str:
+    env = os.environ.copy()
+    env["API_BASE"] = api_base
+    completed = run(
+        [
+            sys.executable,
+            str(ROOT / "scripts" / "verify_importer_runtime_retrieval_flow.py"),
+            "--query",
+            query,
+        ],
+        env=env,
+        timeout_seconds=timeout_seconds,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(
+            "Could not create a Study Anything retrieval eval session.\n"
+            f"stdout:\n{completed.stdout}\n"
+            f"stderr:\n{completed.stderr}"
+        )
+    try:
+        payload = json.loads(completed.stdout.strip().splitlines()[-1])
+    except (IndexError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"Could not parse verify_importer_runtime_retrieval_flow output: {completed.stdout}"
+        ) from exc
+    session_id = payload.get("source_session_id")
+    if not isinstance(session_id, str) or not session_id:
+        raise RuntimeError(
+            "verify_importer_runtime_retrieval_flow did not return a source_session_id: "
+            f"{payload}"
+        )
     return session_id
 
 
@@ -193,9 +228,83 @@ def run_deepeval(args: argparse.Namespace) -> dict[str, Any]:
     return payload
 
 
+def run_retrieval_eval(args: argparse.Namespace) -> dict[str, Any]:
+    session_id = args.session_id
+    if args.create_session or not session_id:
+        session_id = create_retrieval_eval_session(
+            args.api_base,
+            args.query,
+            args.timeout_seconds,
+        )
+    query = urlencode({"q": args.query, "limit": args.limit})
+    path = (
+        f"{args.api_base.rstrip('/')}/v1/sessions/{session_id}/retrieval/eval"
+        f"?{query}"
+    )
+    completed = run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import json,sys,urllib.request;"
+                "u=sys.argv[1];"
+                "print(urllib.request.urlopen(u, timeout=int(sys.argv[2])).read().decode())"
+            ),
+            path,
+            str(args.timeout_seconds),
+        ],
+        timeout_seconds=args.timeout_seconds,
+    )
+    if completed.returncode != 0:
+        return {
+            "status": "failed",
+            "tool": "retrieval",
+            "reason": "Retrieval eval endpoint returned a non-zero exit code.",
+            "returncode": completed.returncode,
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+        }
+    try:
+        report = json.loads(completed.stdout.strip().splitlines()[-1])
+    except (IndexError, json.JSONDecodeError) as exc:
+        return {
+            "status": "failed",
+            "tool": "retrieval",
+            "reason": f"Could not parse retrieval eval output: {exc}",
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+        }
+    if report.get("schema_version") != "retrieval-quality-eval-v1":
+        return {
+            "status": "failed",
+            "tool": "retrieval",
+            "reason": f"Unexpected retrieval eval schema: {report.get('schema_version')}",
+            "session_id": session_id,
+            "report": report,
+        }
+    return {
+        "status": "ok" if report.get("status") == "pass" else "failed",
+        "tool": "retrieval",
+        "framework": "ragas-compatible-native",
+        "session_id": session_id,
+        "query": args.query,
+        "quality_score": report.get("quality_score"),
+        "threshold": report.get("threshold"),
+        "report_status": report.get("status"),
+        "schema_version": "study-anything-retrieval-eval-result-v1",
+        "privacy": report.get("privacy"),
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tool", choices=["promptfoo", "deepeval"], default="promptfoo")
+    parser.add_argument(
+        "--tool",
+        choices=["promptfoo", "deepeval", "retrieval"],
+        default="promptfoo",
+    )
     parser.add_argument("--api-base", default=DEFAULT_API_BASE)
     parser.add_argument("--session-id", default=os.getenv("SESSION_ID"))
     parser.add_argument(
@@ -209,6 +318,17 @@ def parse_args() -> argparse.Namespace:
         help="Return non-zero when the external eval tool is unavailable, times out, or fails.",
     )
     parser.add_argument("--promptfoo-version", default=DEFAULT_PROMPTFOO_VERSION)
+    parser.add_argument(
+        "--query",
+        default="AI product learning feedback vocabulary",
+        help="For --tool retrieval, query used when creating or evaluating a retrieval session.",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=3,
+        help="For --tool retrieval, maximum retrieval results to score.",
+    )
     parser.add_argument(
         "--allow-native-quality-fallback",
         action="store_true",
@@ -224,7 +344,12 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    result = run_promptfoo(args) if args.tool == "promptfoo" else run_deepeval(args)
+    if args.tool == "promptfoo":
+        result = run_promptfoo(args)
+    elif args.tool == "deepeval":
+        result = run_deepeval(args)
+    else:
+        result = run_retrieval_eval(args)
     print(json.dumps(result, ensure_ascii=False))
     if result["status"] == "failed" or (args.required and result["status"] != "ok"):
         raise SystemExit(1)

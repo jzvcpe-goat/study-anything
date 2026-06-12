@@ -145,8 +145,11 @@ def main() -> None:
     assert_contains(
         ROOT / "evals" / "README.md",
         "Promptfoo",
+        "Retrieval Context Quality",
         "scripts/run_external_agent_evals.py",
         "scripts/verify_agent_eval_flow.py",
+        "--tool retrieval",
+        "retrieval-quality-eval-v1",
     )
     assert_contains(
         ROOT / "docs" / "agent-eval.md",
@@ -155,6 +158,15 @@ def main() -> None:
         "Ragas",
         "LangChain AgentEvals",
         "scripts/run_external_agent_evals.py",
+        "scripts/verify_platform_ecosystem_eval_flow.py",
+        "--tool retrieval",
+        "retrieval-quality-eval-v1",
+    )
+    assert_contains(
+        ROOT / "scripts" / "run_external_agent_evals.py",
+        'choices=["promptfoo", "deepeval", "retrieval"]',
+        "ragas-compatible-native",
+        "study-anything-retrieval-eval-result-v1",
     )
 
     print(
@@ -164,6 +176,7 @@ def main() -> None:
                 "schema_version": artifact["schema_version"],
                 "adapter_ids": sorted(EXPECTED_ADAPTER_IDS),
                 "trajectory": EXPECTED_TRAJECTORY,
+                "retrieval_eval_schema": "retrieval-quality-eval-v1",
                 "promptfoo_config": str(promptfoo_config.relative_to(ROOT)),
             },
             ensure_ascii=False,

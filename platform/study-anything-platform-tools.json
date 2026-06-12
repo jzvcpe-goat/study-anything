@@ -49,6 +49,7 @@
     "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "clean_clone_adoption_command": "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "promptfoo_clean_clone_command": "python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo",
+    "retrieval_eval_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
     "diagnostics_command": "python3 scripts/diagnose_adoption.py"
   },
   "tools": [
@@ -420,6 +421,55 @@
         "platform_agent_should_redact_before_logging": [
           "query",
           "results.snippet"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_retrieval_quality_eval",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/retrieval/eval",
+      "description": "Return redacted retrieval/context quality gates for a rebuilt retrieval index and query.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "query"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 5
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == retrieval-quality-eval-v1",
+        "status == pass or needs_review",
+        "quality_score is numeric",
+        "gates include retrieval_available, result_count, source_binding, snippet_minimality, query_relevance, context_package_valid",
+        "privacy.result_snippets_included == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "full source text",
+          "answers",
+          "feedback",
+          "agent endpoints",
+          "raw agent metadata",
+          "secrets",
+          "retrieval snippets"
         ]
       }
     },
