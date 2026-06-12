@@ -85,7 +85,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.17-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.18-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -98,7 +98,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.17-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.18-alpha
 ```
 
 ## Bring Your Own Agent
@@ -188,9 +188,10 @@ Validate a running platform-tool integration with:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 
-`./scripts/run_skill_mode_demo.sh` runs this check automatically after the CLI smoke.
+`./scripts/run_skill_mode_demo.sh` runs these checks automatically after the CLI smoke.
 
 ## Skill Mode
 
@@ -203,11 +204,17 @@ The repo includes a standard-library CLI and a repo-local Codex skill:
 For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
 `python3 scripts/study_anything_cli.py demo`.
 
-Connect a user-owned HTTP agent, start source-bound sessions, answer questions, inspect mastery, and resolve HITL tasks through the same public API. Chat-only LLM products cannot run local scripts or reach `localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage, see `docs/skill-mode.md`.
+Connect a user-owned HTTP agent, start source-bound sessions, attach enrichment, generate teaching
+layers, answer questions, inspect mastery, export Obsidian notes, and create portable learning
+packages through the same public API. Chat-only LLM products cannot run local scripts or reach
+`localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned
+reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local
+skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage,
+see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
-Platform integrations should return `agent-audit` and `agent-eval` evidence after each completed
-learning loop.
+Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`, Obsidian, and
+`learning-package-v1` evidence after each completed learning loop.
 
 ## Repository Layout
 

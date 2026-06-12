@@ -77,6 +77,7 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                 self.assertEqual(completed.status_code, 200, completed.text)
                 quality = client.get(f"/v1/sessions/{session_id}/agent-eval/quality")
                 obsidian = client.get(f"/v1/sessions/{session_id}/exports/obsidian")
+                package = client.get(f"/v1/sessions/{session_id}/exports/learning-package")
 
         quality_body = quality.json()
         self.assertEqual(quality.status_code, 200)
@@ -97,6 +98,19 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
         self.assertIn("video://lesson/1", obsidian_body["markdown"])
         self.assertNotIn(private_web_text, obsidian_body["markdown"])
         self.assertNotIn(private_video_text, obsidian_body["markdown"])
+
+        package_body = package.json()
+        self.assertEqual(package.status_code, 200)
+        self.assertEqual(package_body["schema_version"], "learning-package-v1")
+        self.assertIn("notebooklm_bridge", package_body)
+        self.assertIn("notebooklm_bridge", package_body["intended_consumers"])
+        self.assertEqual(package_body["privacy"]["raw_source_text_included"], False)
+        self.assertEqual(package_body["privacy"]["raw_enrichment_text_included"], False)
+        self.assertNotIn(private_web_text, package.text)
+        self.assertNotIn(private_video_text, package.text)
+        references = package_body["source_references"]
+        self.assertTrue(any(item["reference"] == "https://example.test/retrieval" for item in references))
+        self.assertTrue(any(item["reference"] == "video://lesson/1" for item in references))
 
     def test_quality_cases_endpoint_is_fixed_dataset_contract(self) -> None:
         with TemporaryDirectory() as tmpdir:

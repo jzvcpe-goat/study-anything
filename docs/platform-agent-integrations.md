@@ -39,6 +39,7 @@ private Agent platforms:
 - redacted Agent eval artifact
 - redacted teaching-quality eval
 - Obsidian-compatible markdown export
+- portable learning package export for NotebookLM-style bridges and platform-agent handoff
 
 It intentionally does not expose Agent provider configuration, deprecated model aliases, plugin
 installation, encrypted sync export, PMF export, or other management surfaces. Configure user-owned
@@ -49,6 +50,7 @@ Validate a running integration with:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
@@ -118,6 +120,9 @@ python3 scripts/study_anything_cli.py answer SESSION_ID \
   --text "Answer grounded in the source."
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
+python3 scripts/study_anything_cli.py package-export SESSION_ID
 ```
 
 For Codex, symlink the skill:
@@ -135,6 +140,16 @@ When the platform Agent has gathered browser pages, PDFs, app state, or video sl
 `POST /v1/sessions/{session_id}/enrichment` instead of forcing the user to paste one flat text block.
 Study Anything turns those excerpts into a source-bound bundle, then the normal teaching/quiz/mastery
 loop runs against that bundle.
+
+For a fixed platform-agent acceptance path, run:
+
+```bash
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+```
+
+The verifier completes one enriched lesson and fetches Agent audit, Agent eval, quality eval,
+Obsidian Markdown, and `learning-package-v1`. Use the learning package when the platform Agent needs
+to hand the result to a NotebookLM-style workflow, local archive, or later knowledge-base connector.
 
 `agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
 grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit
@@ -197,6 +212,7 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
+- `GET /v1/sessions/{session_id}/exports/learning-package`
 
 ## Acceptance Gate
 
@@ -209,7 +225,8 @@ A platform integration is acceptable when it can complete this sequence:
 5. Return `agent-eval-artifact-v1` with all required native gates passing.
 6. Return `agent-quality-eval-v1` with `status=pass`.
 7. Return an Obsidian markdown export when the user asks for knowledge deposit.
-8. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+8. Return `learning-package-v1` when the user wants NotebookLM-style, platform-agent, or local archive handoff.
+9. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -218,5 +235,6 @@ For local validation:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```

@@ -360,5 +360,25 @@
       }
     },
     "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return a portable redacted learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows. Method: GET /v1/sessions/{session_id}/exports/learning-package.",
+      "name": "study_anything_learning_package_export",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
   }
 ]

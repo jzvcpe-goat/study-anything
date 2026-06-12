@@ -252,6 +252,74 @@ def cmd_agent_eval(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/artifact"))
 
 
+def cmd_enrich(args: argparse.Namespace) -> None:
+    metadata: Dict[str, Any] = {}
+    if args.metadata_json:
+        try:
+            metadata = json.loads(args.metadata_json)
+        except json.JSONDecodeError as exc:
+            raise StudyAnythingError(f"--metadata-json is not valid JSON: {exc}") from exc
+        if not isinstance(metadata, dict):
+            raise StudyAnythingError("--metadata-json must decode to an object.")
+    payload = {
+        "title": args.bundle_title,
+        "reference": args.bundle_reference,
+        "items": [
+            {
+                "source_type": args.source_type,
+                "reference": args.reference,
+                "title": args.title,
+                "text": args.text,
+                "locator": args.locator,
+                "metadata": metadata,
+            }
+        ],
+    }
+    emit(args, post(f"/v1/sessions/{quote(args.session_id)}/enrichment", payload))
+
+
+def cmd_teach(args: argparse.Namespace) -> None:
+    layers = args.layer or ["overview", "glossary"]
+    payload = {
+        "layers": layers,
+        "language": args.language,
+        "level": args.level,
+        "max_terms": args.max_terms,
+        "example_mode": args.example_mode,
+    }
+    emit(args, post(f"/v1/sessions/{quote(args.session_id)}/teaching-layers", payload))
+
+
+def cmd_quality_eval(args: argparse.Namespace) -> None:
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/quality"))
+
+
+def cmd_obsidian_export(args: argparse.Namespace) -> None:
+    export = request(f"/v1/sessions/{quote(args.session_id)}/exports/obsidian")
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            handle.write(str(export.get("markdown") or ""))
+        if not args.json:
+            print(f"wrote: {args.output}")
+            return
+    if args.markdown and not args.json:
+        print(str(export.get("markdown") or ""))
+        return
+    emit(args, export)
+
+
+def cmd_learning_package(args: argparse.Namespace) -> None:
+    package = request(f"/v1/sessions/{quote(args.session_id)}/exports/learning-package")
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            json.dump(package, handle, ensure_ascii=False, indent=2, sort_keys=True)
+            handle.write("\n")
+        if not args.json:
+            print(f"wrote: {args.output}")
+            return
+    emit(args, package)
+
+
 def cmd_hitl(args: argparse.Namespace) -> None:
     emit(args, request("/v1/hitl"))
 
@@ -289,6 +357,86 @@ def cmd_demo(args: argparse.Namespace) -> None:
     args.item_id = quiz["item_id"]
     args.text = "The learning loop uses source evidence to grade an answer and update mastery."
     cmd_answer(args)
+
+
+def cmd_lesson(args: argparse.Namespace) -> None:
+    session = post(
+        "/v1/sessions",
+        {
+            "user_id": args.user_id,
+            "track": args.track,
+            "use_demo_agent": args.agent_mode == "demo",
+        },
+    )
+    session_id = session["session_id"]
+    post(
+        f"/v1/sessions/{quote(session_id)}/reading",
+        {
+            "source_type": args.source_type,
+            "reference": args.reference,
+            "title": args.title,
+            "text": args.text,
+        },
+    )
+    if args.enrichment_text:
+        post(
+            f"/v1/sessions/{quote(session_id)}/enrichment",
+            {
+                "title": args.enrichment_bundle_title,
+                "items": [
+                    {
+                        "source_type": args.enrichment_source_type,
+                        "reference": args.enrichment_reference,
+                        "title": args.enrichment_title,
+                        "text": args.enrichment_text,
+                        "locator": args.enrichment_locator,
+                    }
+                ],
+            },
+        )
+    teaching = post(
+        f"/v1/sessions/{quote(session_id)}/teaching-layers",
+        {
+            "layers": args.layer or ["overview", "glossary"],
+            "language": args.language,
+            "level": args.level,
+        },
+    )
+    running = post(f"/v1/sessions/{quote(session_id)}/run")
+    quiz = first_unanswered_quiz(running)
+    if not quiz:
+        raise StudyAnythingError("Lesson flow did not produce an unanswered quiz item.")
+    completed = post(
+        f"/v1/sessions/{quote(session_id)}/answers",
+        {"answers": {quiz["item_id"]: args.answer}},
+    )
+    audit = request(f"/v1/sessions/{quote(session_id)}/agent-audit")
+    artifact = request(f"/v1/sessions/{quote(session_id)}/agent-eval/artifact")
+    quality = request(f"/v1/sessions/{quote(session_id)}/agent-eval/quality")
+    obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
+    package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
+    result = {
+        "status": "ok" if completed.get("stage") == "completed" else "needs_review",
+        "session": session_summary(completed),
+        "teaching_schema": teaching.get("schema_version"),
+        "agent_audit_status": audit.get("status"),
+        "agent_eval_schema": artifact.get("schema_version"),
+        "quality_status": quality.get("status"),
+        "quality_schema": quality.get("schema_version"),
+        "obsidian_schema": obsidian.get("schema_version"),
+        "obsidian_filename": obsidian.get("filename"),
+        "learning_package_schema": package.get("schema_version"),
+        "learning_package_filename": package.get("filename"),
+    }
+    if args.json:
+        emit(args, result)
+        return
+    print(f"session: {session_id}")
+    print(f"stage: {completed.get('stage')}")
+    print(f"agent_audit: {audit.get('status')}")
+    print(f"quality: {quality.get('status')} ({quality.get('quality_score')})")
+    print(f"obsidian: {obsidian.get('filename')}")
+    print(f"learning_package: {package.get('filename')}")
 
 
 def add_session_id(parser: argparse.ArgumentParser) -> None:
@@ -364,6 +512,42 @@ def build_parser() -> argparse.ArgumentParser:
     add_session_id(agent_eval)
     agent_eval.set_defaults(func=cmd_agent_eval)
 
+    enrich = subparsers.add_parser("enrich", help="Attach one enrichment item to a session")
+    add_session_id(enrich)
+    enrich.add_argument("--source-type", default="web")
+    enrich.add_argument("--reference", required=True)
+    enrich.add_argument("--title", required=True)
+    enrich.add_argument("--text", required=True)
+    enrich.add_argument("--locator")
+    enrich.add_argument("--metadata-json")
+    enrich.add_argument("--bundle-title", default="Learning Enrichment Bundle")
+    enrich.add_argument("--bundle-reference")
+    enrich.set_defaults(func=cmd_enrich)
+
+    teach = subparsers.add_parser("teach", help="Generate source-bound teaching layers")
+    add_session_id(teach)
+    teach.add_argument("--layer", action="append", choices=["overview", "glossary", "examples", "scribe"])
+    teach.add_argument("--language", default="zh")
+    teach.add_argument("--level", default="beginner")
+    teach.add_argument("--max-terms", type=int, default=8)
+    teach.add_argument("--example-mode", default="mixed")
+    teach.set_defaults(func=cmd_teach)
+
+    quality_eval = subparsers.add_parser("quality-eval", help="Show deterministic teaching-quality gates")
+    add_session_id(quality_eval)
+    quality_eval.set_defaults(func=cmd_quality_eval)
+
+    obsidian_export = subparsers.add_parser("obsidian-export", help="Export an Obsidian markdown note")
+    add_session_id(obsidian_export)
+    obsidian_export.add_argument("--markdown", action="store_true", help="Print only Markdown")
+    obsidian_export.add_argument("--output", help="Write Markdown to a path")
+    obsidian_export.set_defaults(func=cmd_obsidian_export)
+
+    package_export = subparsers.add_parser("package-export", help="Export a portable learning package")
+    add_session_id(package_export)
+    package_export.add_argument("--output", help="Write package JSON to a path")
+    package_export.set_defaults(func=cmd_learning_package)
+
     hitl = subparsers.add_parser("hitl", help="List open human-review tasks")
     hitl.set_defaults(func=cmd_hitl)
 
@@ -381,6 +565,26 @@ def build_parser() -> argparse.ArgumentParser:
     demo = subparsers.add_parser("demo", help="Complete a deterministic local demo")
     demo.add_argument("--user-id", default="skill-demo-user")
     demo.set_defaults(func=cmd_demo)
+
+    lesson = subparsers.add_parser("lesson", help="Complete one source-bound learning lesson")
+    lesson.add_argument("--title", required=True)
+    lesson.add_argument("--text", required=True)
+    lesson.add_argument("--reference", default="local://lesson")
+    lesson.add_argument("--source-type", default="local_text")
+    lesson.add_argument("--answer", required=True)
+    lesson.add_argument("--user-id", default="lesson-user")
+    lesson.add_argument("--track", default="ACADEMIC")
+    lesson.add_argument("--agent-mode", choices=["demo", "configured"], default="demo")
+    lesson.add_argument("--layer", action="append", choices=["overview", "glossary", "examples", "scribe"])
+    lesson.add_argument("--language", default="zh")
+    lesson.add_argument("--level", default="beginner")
+    lesson.add_argument("--enrichment-text")
+    lesson.add_argument("--enrichment-source-type", default="web")
+    lesson.add_argument("--enrichment-reference", default="https://example.test/lesson-enrichment")
+    lesson.add_argument("--enrichment-title", default="Lesson Enrichment")
+    lesson.add_argument("--enrichment-locator")
+    lesson.add_argument("--enrichment-bundle-title", default="Lesson Enrichment Bundle")
+    lesson.set_defaults(func=cmd_lesson)
     return parser
 
 

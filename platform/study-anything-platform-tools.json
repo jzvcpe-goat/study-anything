@@ -21,7 +21,8 @@
       "mastery state",
       "HITL state",
       "redacted agent audit",
-      "redacted eval artifact"
+      "redacted eval artifact",
+      "portable learning package"
     ],
     "must_not_log_or_share": [
       "raw source text",
@@ -38,9 +39,11 @@
       "agent_audit.status == verified",
       "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
       "all required native gates pass",
-      "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize"
+      "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
+      "learning_package.schema_version == learning-package-v1"
     ],
     "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+    "platform_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
     "openai_compatible_gateway_dry_run_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "clean_clone_adoption_command": "python3 scripts/verify_clean_clone_adoption.py --repo .",
@@ -545,6 +548,48 @@
         ],
         "must_not_return": [
           "raw source text",
+          "agent endpoints",
+          "secrets"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_learning_package_export",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/exports/learning-package",
+      "description": "Return a portable redacted learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-package-v1",
+        "intended_consumers include platform_agent, notebooklm_bridge, obsidian_pipeline",
+        "source_references include excerpt hashes",
+        "privacy.raw_source_text_included == false",
+        "privacy.raw_enrichment_text_included == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "teaching_layers",
+          "quiz_review",
+          "learner answers",
+          "grading feedback",
+          "insights"
+        ],
+        "must_not_return": [
+          "raw source text",
+          "raw enrichment text",
           "agent endpoints",
           "secrets"
         ]

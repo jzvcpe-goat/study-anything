@@ -46,4 +46,7 @@ API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_openai_compatib
 printf "Verifying platform-agent tool manifest ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_agent_tools.py
 
+printf "Verifying enriched platform lesson flow ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_platform_lesson_flow.py
+
 printf "ok    Skill Mode demo completed. API was cleaned up.\n"

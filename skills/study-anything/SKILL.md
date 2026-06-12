@@ -40,6 +40,35 @@ python3 scripts/study_anything_cli.py answer SESSION_ID \
   --text "Answer grounded in the source."
 ```
 
+When the platform agent has gathered extra web, document, video, or app context, attach it before the
+quiz loop:
+
+```bash
+python3 scripts/study_anything_cli.py enrich SESSION_ID \
+  --source-type video_slice \
+  --reference "video://lesson/clip-1" \
+  --title "Lesson clip" \
+  --locator "00:00:05-00:00:42" \
+  --text "Paste the bounded excerpt here."
+
+python3 scripts/study_anything_cli.py teach SESSION_ID \
+  --layer overview \
+  --layer glossary \
+  --language zh \
+  --level beginner
+```
+
+For a one-command lesson smoke, use:
+
+```bash
+python3 scripts/study_anything_cli.py lesson \
+  --title "Learning notes" \
+  --reference "local://notes" \
+  --text "Paste the source material here." \
+  --enrichment-text "Paste platform-collected context here." \
+  --answer "Answer the generated quiz in your own words."
+```
+
 ## Use A User-Owned HTTP Agent
 
 Keep model credentials, tools, and internal reasoning inside the user's agent gateway. Store only its endpoint and capabilities in Study Anything.
@@ -63,12 +92,17 @@ python3 scripts/study_anything_cli.py mastery SESSION_ID
 python3 scripts/study_anything_cli.py events SESSION_ID
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
+python3 scripts/study_anything_cli.py package-export SESSION_ID
 python3 scripts/study_anything_cli.py hitl
 ```
 
 Use `agent-audit` after every real learning loop when the user needs proof that Study Anything handled
 the required learning tasks. Use `agent-eval` when another platform or CI job needs a redacted artifact
 for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
+Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
+`package-export` for platform-agent, NotebookLM-style, or local archive handoff.
 
 Resolve a HITL task only after obtaining the missing information or user decision:
 

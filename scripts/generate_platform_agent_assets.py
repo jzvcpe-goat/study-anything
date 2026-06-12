@@ -148,6 +148,7 @@ def markdown_list(items: Iterable[str]) -> str:
 def evidence_commands(evidence: Dict[str, Any]) -> List[str]:
     keys = [
         "local_verification_command",
+        "platform_lesson_command",
         "openai_compatible_gateway_dry_run_command",
         "gateway_only_command",
         "clean_clone_adoption_command",

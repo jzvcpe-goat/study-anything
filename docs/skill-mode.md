@@ -51,6 +51,8 @@ Leave that terminal running, then use another terminal, browser, or agent to cal
 `http://127.0.0.1:8000`. Stop the foreground API with `Ctrl-C`.
 
 The deterministic demo creates a source-bound question, submits a grounded answer, updates mastery, and synthesizes an insight.
+It also verifies Agent eval, platform tools, an enriched platform lesson, Obsidian export, and the
+portable learning package.
 
 ## Agent Runtime Boundary
 
@@ -83,6 +85,35 @@ python3 scripts/study_anything_cli.py answer SESSION_ID \
 
 Run `show SESSION_ID`, `mastery SESSION_ID`, `events SESSION_ID`, `agent-audit SESSION_ID`, or
 `agent-eval SESSION_ID` to inspect the resulting state and Agent proof.
+
+When a platform agent has gathered browser pages, documents, app context, or video slices, attach that
+context before the quiz loop:
+
+```bash
+python3 scripts/study_anything_cli.py enrich SESSION_ID \
+  --source-type video_slice \
+  --reference "video://lesson/clip-1" \
+  --title "Lesson clip" \
+  --locator "00:00:05-00:00:42" \
+  --text "Paste the bounded excerpt here."
+
+python3 scripts/study_anything_cli.py teach SESSION_ID \
+  --layer overview \
+  --layer glossary \
+  --language zh \
+  --level beginner
+```
+
+For one command that exercises the full learning-plugin path:
+
+```bash
+python3 scripts/study_anything_cli.py lesson \
+  --title "Notes on retrieval practice" \
+  --reference "local://retrieval-practice" \
+  --text "Retrieval practice improves durable learning when recall is effortful and repeated." \
+  --enrichment-text "A video clip shows learners recalling before rereading." \
+  --answer "Effortful repeated recall strengthens durable learning."
+```
 
 ## Connect Your Agent
 
@@ -136,9 +167,16 @@ After a learning loop completes, collect redacted proof:
 ```bash
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
+python3 scripts/study_anything_cli.py package-export SESSION_ID
 ```
 
 `agent-audit` verifies that `quiz.generate`, `answer.grade`, and `insight.synthesize` were handled by
 a Study Anything Agent provider. `agent-eval` emits the redacted `agent-eval-artifact-v1` bridge for
 Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. Neither command returns source text, answers,
 feedback bodies, Agent endpoints, or raw Agent metadata.
+
+`quality-eval` adds deterministic teaching-quality gates. `obsidian-export` creates a Markdown note
+for second-brain workflows. `package-export` creates `learning-package-v1`, a portable JSON package
+for platform-agent handoff, NotebookLM-style bridges, or local archives.

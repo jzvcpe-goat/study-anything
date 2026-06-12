@@ -102,6 +102,7 @@ learning data.
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
+- `GET /v1/sessions/{session_id}/exports/learning-package`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
 `agent-audit` proves redacted Agent invocation coverage. `agent-eval/artifact` converts that audit into
@@ -116,6 +117,12 @@ does not return raw source text, answers, feedback, insights, endpoints, or secr
 `exports/obsidian` returns a user-controlled Markdown note with source references, teaching layers,
 quiz review, mastery, insights, and enrichment references. It never includes raw source text, but it can
 include learner answers and grading feedback, so platform wrappers should not log it by default.
+
+`exports/learning-package` returns `learning-package-v1`, a portable JSON package for platform
+Agent handoff, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows. It includes
+source references, excerpt hashes, teaching layers, quiz review, mastery, and insights. It does not
+include raw source or enrichment text; platform wrappers should still treat generated teaching content,
+answers, feedback, and insights as private learning data.
 
 ## Optional Learning Topology
 

@@ -32,6 +32,7 @@ from study_anything.core.knowledge_graph import (
     build_knowledge_graph_sink,
     projection_from_state,
 )
+from study_anything.core.learning_package import build_learning_package_export
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
 from study_anything.core.obsidian_export import build_obsidian_markdown_export
 from study_anything.core.plugin_registry import PluginRegistry
@@ -826,6 +827,16 @@ def create_app() -> FastAPI:
         try:
             state = store.get(session_id)
             return build_obsidian_markdown_export(state)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @app.get("/v1/sessions/{session_id}/exports/learning-package")
+    def get_learning_package_export(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            return build_learning_package_export(state)
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         except ValueError as exc:

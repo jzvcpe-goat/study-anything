@@ -38,6 +38,7 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 Additional gateway and release acceptance commands:
 
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+- API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 - python3 scripts/verify_clean_clone_adoption.py --repo .
@@ -337,6 +338,41 @@ Privacy:
     "markdown",
     "learner answers",
     "grading feedback"
+  ],
+  "returns_private_learning_data": true
+}
+```
+
+### `study_anything_learning_package_export`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/exports/learning-package`
+- Description: Return a portable redacted learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows.
+
+Output requirements:
+
+- schema_version == learning-package-v1
+- intended_consumers include platform_agent, notebooklm_bridge, obsidian_pipeline
+- source_references include excerpt hashes
+- privacy.raw_source_text_included == false
+- privacy.raw_enrichment_text_included == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "raw source text",
+    "raw enrichment text",
+    "agent endpoints",
+    "secrets"
+  ],
+  "platform_agent_should_redact_before_logging": [
+    "teaching_layers",
+    "quiz_review",
+    "learner answers",
+    "grading feedback",
+    "insights"
   ],
   "returns_private_learning_data": true
 }

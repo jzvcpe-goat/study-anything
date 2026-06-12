@@ -44,6 +44,7 @@ Against a running API, verify the imported tool surface and redacted evidence:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -71,9 +72,11 @@ GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
 GET /v1/sessions/{session_id}/exports/obsidian
+GET /v1/sessions/{session_id}/exports/learning-package
 ```
 
-The Obsidian Markdown export is for the user's second-brain workflow. The shared run summary should
+The Obsidian Markdown export is for the user's second-brain workflow. The learning package is for
+platform-agent handoff, NotebookLM-style bridges, or local archives. The shared run summary should
 include only compact mastery and redacted evidence, not raw source prose or learner answers.
 
 Use `POST /v1/sessions/{session_id}/enrichment` when WorkBuddy has collected browser pages,
