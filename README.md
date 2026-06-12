@@ -48,6 +48,7 @@ copy-ready adoption pack:
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -101,7 +102,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.23-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.24-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -114,7 +115,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.23-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.24-alpha
 ```
 
 ## Bring Your Own Agent

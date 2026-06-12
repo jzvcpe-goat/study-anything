@@ -170,12 +170,42 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
 The report schema is `retrieval-quality-eval-v1`. It includes result metadata, scores, source
 references, excerpt hashes, and gate outcomes, but not raw source text or retrieval snippets.
 
+## Regression Baseline
+
+v0.2.24 adds a committed fast native baseline at:
+
+```text
+evals/baselines/study-anything-agent-eval-baseline.json
+```
+
+Generate or verify it with:
+
+```bash
+.venv/bin/python scripts/verify_agent_eval_baseline.py --write
+.venv/bin/python scripts/verify_agent_eval_baseline.py --check
+```
+
+The check emits `study-anything-agent-eval-regression-report-v1`. It compares the current scorecard
+against the committed baseline for:
+
+- Promptfoo, DeepEval, LangChain AgentEvals, and Ragas adapter ids.
+- `quiz.generate -> answer.grade -> insight.synthesize` trajectory coverage.
+- required native eval gates.
+- `agent-quality-eval-v1` teaching quality score.
+- `retrieval-quality-eval-v1` retrieval/context quality score.
+- privacy invariants for source text, answers, feedback, endpoints, metadata, and model/judge keys.
+
+This is the default CI/release gate because it is deterministic and local-first. External eval tools
+remain available through `scripts/run_external_agent_evals.py`, but they are only blocking when the
+operator explicitly passes `--required` and accepts package install/network cost.
+
 ## Local Smoke
 
 Against a running API:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+python3 scripts/verify_agent_eval_baseline.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
@@ -203,6 +233,8 @@ A release can claim Agent Eval foundation only when:
 
 - API tests cover `agent-eval/artifact`.
 - `scripts/verify_agent_eval_assets.py` passes.
+- `scripts/verify_agent_eval_baseline.py --check` passes and emits
+  `study-anything-agent-eval-regression-report-v1`.
 - `scripts/verify_agent_eval_flow.py` passes on the fake demo path.
 - Promptfoo can be invoked through `scripts/run_external_agent_evals.py --tool promptfoo` when the
   release environment permits external Node package installation.
@@ -221,6 +253,8 @@ A release can claim Agent Eval foundation only when:
 - `agent-eval/quality.status=pass` means the deterministic minimum teaching-quality gates passed.
 - `retrieval-quality-eval.status=pass` means the retrieval/context handoff gates and privacy invariants
   passed for the scored query.
+- `study-anything-agent-eval-regression-report-v1.status=pass` means the current deterministic
+  scorecard did not regress against the committed baseline.
 - A real DeepEval run means the quality report was consumed through DeepEval's metric interface.
 - A real Ragas run or judge-model suite is still required for stronger claims about
   trajectory quality, source-grounding quality, and learning usefulness at scale.

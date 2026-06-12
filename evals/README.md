@@ -55,6 +55,20 @@ minimality, query relevance, context-package validity, and privacy invariants wi
 source text or retrieval snippets. A real Ragas suite can be layered on top outside Study Anything
 with user-owned evaluator credentials.
 
+## Agent Eval Baseline
+
+The fast release gate is the committed deterministic baseline:
+
+```bash
+.venv/bin/python scripts/verify_agent_eval_baseline.py --check
+```
+
+It emits `study-anything-agent-eval-regression-report-v1` and compares the current redacted
+scorecard against `evals/baselines/study-anything-agent-eval-baseline.json`. The comparison covers
+adapter ids, trajectory coverage, required native gates, teaching quality score, retrieval quality
+score, and privacy invariants. This gate is local-first and does not install Promptfoo, DeepEval,
+Ragas, or judge-model dependencies.
+
 ## Asset Drift Gate
 
 ```bash
@@ -62,4 +76,4 @@ with user-owned evaluator credentials.
 ```
 
 This release gate checks the API adapter matrix, redaction-safe sample artifact, Promptfoo config,
-and docs stay aligned.
+baseline, and docs stay aligned.

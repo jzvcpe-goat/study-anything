@@ -146,7 +146,9 @@ def main() -> None:
         ROOT / "evals" / "README.md",
         "Promptfoo",
         "Retrieval Context Quality",
+        "Agent Eval Baseline",
         "scripts/run_external_agent_evals.py",
+        "scripts/verify_agent_eval_baseline.py",
         "scripts/verify_agent_eval_flow.py",
         "--tool retrieval",
         "retrieval-quality-eval-v1",
@@ -158,6 +160,7 @@ def main() -> None:
         "Ragas",
         "LangChain AgentEvals",
         "scripts/run_external_agent_evals.py",
+        "scripts/verify_agent_eval_baseline.py",
         "scripts/verify_platform_ecosystem_eval_flow.py",
         "--tool retrieval",
         "retrieval-quality-eval-v1",
@@ -168,6 +171,24 @@ def main() -> None:
         "ragas-compatible-native",
         "study-anything-retrieval-eval-result-v1",
     )
+    assert_contains(
+        ROOT / "scripts" / "verify_agent_eval_baseline.py",
+        "study-anything-agent-eval-baseline-v1",
+        "study-anything-agent-eval-regression-report-v1",
+        "promptfoo",
+        "deepeval",
+        "langchain-agentevals",
+        "ragas",
+    )
+    baseline = json.loads(
+        (ROOT / "evals" / "baselines" / "study-anything-agent-eval-baseline.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    if baseline.get("schema_version") != "study-anything-agent-eval-baseline-v1":
+        fail(f"Agent eval baseline schema drifted: {baseline.get('schema_version')}")
+    if baseline.get("status") != "pass":
+        fail(f"Agent eval baseline does not pass: {baseline.get('status')}")
 
     print(
         json.dumps(
@@ -177,6 +198,7 @@ def main() -> None:
                 "adapter_ids": sorted(EXPECTED_ADAPTER_IDS),
                 "trajectory": EXPECTED_TRAJECTORY,
                 "retrieval_eval_schema": "retrieval-quality-eval-v1",
+                "baseline_schema": baseline["schema_version"],
                 "promptfoo_config": str(promptfoo_config.relative_to(ROOT)),
             },
             ensure_ascii=False,
