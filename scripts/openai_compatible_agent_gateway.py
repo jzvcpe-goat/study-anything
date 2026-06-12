@@ -189,6 +189,80 @@ def _clean_json_content(content: str) -> str:
     return value
 
 
+def _coerce_float(value: Any) -> float | None:
+    if isinstance(value, (int, float)):
+        number = float(value)
+    elif isinstance(value, str):
+        try:
+            number = float(value.strip())
+        except ValueError:
+            return None
+    else:
+        return None
+    if 0 <= number <= 1:
+        return number
+    return None
+
+
+def _normalise_agent_result(task: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
+    """Harden upstream model output into the Study Anything AgentResult contract."""
+
+    normalised = dict(result)
+    source = task.get("source") or {}
+    if not isinstance(source, dict):
+        source = {}
+
+    if source.get("reference"):
+        normalised["citations"] = [
+            {
+                "reference": source.get("reference"),
+                "excerpt_hash": source.get("excerpt_hash"),
+            }
+        ]
+    else:
+        citations = normalised.get("citations")
+        normalised["citations"] = [
+            {
+                "reference": item.get("reference"),
+                "excerpt_hash": item.get("excerpt_hash"),
+            }
+            for item in citations
+            if isinstance(citations, list) and isinstance(item, dict)
+        ] if isinstance(citations, list) else []
+
+    metadata = normalised.get("metadata")
+    normalised["metadata"] = metadata if isinstance(metadata, dict) else {}
+
+    confidence = _coerce_float(normalised.get("confidence"))
+    if confidence is not None:
+        normalised["confidence"] = confidence
+    elif "confidence" in normalised:
+        normalised.pop("confidence")
+
+    score = _coerce_float(normalised.get("score"))
+    if score is not None:
+        normalised["score"] = score
+    elif "score" in normalised:
+        normalised.pop("score")
+    if (
+        task.get("task_type") == "answer.grade"
+        and normalised.get("status") == "ok"
+        and "score" not in normalised
+    ):
+        normalised["score"] = 0.5 if task.get("answers") else 0.0
+        normalised["metadata"]["normalization_warning"] = "missing_score_defaulted"
+
+    feedback = normalised.get("feedback")
+    if feedback is not None and not isinstance(feedback, str):
+        normalised["feedback"] = str(feedback)
+    if task.get("task_type") == "answer.grade" and not normalised.get("feedback"):
+        normalised["feedback"] = str(
+            normalised.get("content") or "Agent returned a normalized grade."
+        )
+
+    return normalised
+
+
 def _invoke_upstream(task: dict[str, Any]) -> dict[str, Any]:
     request_body: dict[str, Any] = {
         "model": _model(),
@@ -238,15 +312,7 @@ def _invoke_upstream(task: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(result, dict):
         raise RuntimeError("Upstream LLM agent result must be a JSON object.")
 
-    source = task.get("source") or {}
-    if source.get("reference") and not result.get("citations"):
-        result["citations"] = [
-            {
-                "reference": source["reference"],
-                "excerpt_hash": source.get("excerpt_hash"),
-            }
-        ]
-    result.setdefault("metadata", {})
+    result = _normalise_agent_result(task, result)
     usage = upstream.get("usage") or {}
     if isinstance(result["metadata"], dict) and isinstance(usage, dict):
         result["metadata"]["tokens"] = {

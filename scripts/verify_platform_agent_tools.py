@@ -22,12 +22,15 @@ REQUIRED_TOOLS = {
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_add_enrichment",
     "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
+    "study_anything_agent_quality_eval",
+    "study_anything_obsidian_export",
 }
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
@@ -158,6 +161,7 @@ def main() -> None:
         raise VerificationError(f"Health tool did not return ok: {health}")
 
     private_source_text = "Private platform tool smoke source text must stay out of audit artifacts."
+    private_enrichment_text = "Private enrichment web and video context must stay out of redacted evidence."
     private_answer = "Private platform tool smoke answer."
     session = call_tool(
         tools,
@@ -186,6 +190,36 @@ def main() -> None:
     source = reading.get("source") or {}
     if not source.get("excerpt_hash"):
         raise VerificationError(f"Reading tool did not persist an excerpt hash: {reading}")
+
+    enrichment = call_tool(
+        tools,
+        "study_anything_add_enrichment",
+        {
+            "title": "Platform Tool Enrichment Bundle",
+            "items": [
+                {
+                    "source_type": "web",
+                    "reference": "https://example.test/platform-enrichment",
+                    "title": "Private Enrichment Web",
+                    "text": private_enrichment_text,
+                },
+                {
+                    "source_type": "video_slice",
+                    "reference": "video://platform-smoke/clip",
+                    "title": "Private Enrichment Clip",
+                    "locator": "00:00:08-00:00:21",
+                    "text": private_enrichment_text,
+                },
+            ],
+        },
+        session_id=session_id,
+    )
+    if enrichment.get("schema_version") != "learning-enrichment-v1":
+        raise VerificationError(f"Enrichment tool returned invalid schema: {enrichment}")
+    if private_enrichment_text in json.dumps(enrichment, ensure_ascii=False):
+        raise VerificationError("Enrichment tool response leaked raw enrichment text.")
+    if not (enrichment.get("source") or {}).get("excerpt_hash"):
+        raise VerificationError(f"Enrichment tool did not return a source excerpt hash: {enrichment}")
 
     teaching = call_tool(
         tools,
@@ -254,9 +288,38 @@ def main() -> None:
     trajectory = [step.get("task_type") for step in artifact.get("trajectory", [])]
     assert_contains_all(trajectory, REQUIRED_TRAJECTORY, "eval artifact trajectory")
 
-    serialized_evidence = json.dumps({"audit": audit, "artifact": artifact}, ensure_ascii=False)
+    quality = call_tool(tools, "study_anything_agent_quality_eval", session_id=session_id)
+    if quality.get("schema_version") != "agent-quality-eval-v1":
+        raise VerificationError(f"Unexpected quality eval schema: {quality}")
+    if quality.get("status") != "pass":
+        raise VerificationError(f"Quality eval did not pass minimum teaching gates: {quality}")
+    quality_gate_ids = {gate.get("gate_id") for gate in quality.get("gates", [])}
+    expected_quality_gates = {
+        "overview_quality",
+        "glossary_quality",
+        "quiz_quality",
+        "grading_quality",
+        "synthesis_quality",
+    }
+    assert_contains_all(quality_gate_ids, expected_quality_gates, "quality eval gates")
+
+    obsidian = call_tool(tools, "study_anything_obsidian_export", session_id=session_id)
+    if obsidian.get("schema_version") != "obsidian-markdown-export-v1":
+        raise VerificationError(f"Unexpected Obsidian export schema: {obsidian}")
+    markdown = str(obsidian.get("markdown") or "")
+    for heading in ["## Source", "## Quiz Review", "## Mastery", "## Enrichment Context"]:
+        if heading not in markdown:
+            raise VerificationError(f"Obsidian export missing heading {heading}: {markdown}")
+    if private_source_text in markdown or private_enrichment_text in markdown:
+        raise VerificationError("Obsidian export leaked raw source/enrichment text.")
+
+    serialized_evidence = json.dumps(
+        {"audit": audit, "artifact": artifact, "quality": quality},
+        ensure_ascii=False,
+    )
     forbidden_fragments = [
         private_source_text,
+        private_enrichment_text,
         private_answer,
         "Private Platform Tool Smoke",
         "platform-tools-smoke-user",
@@ -280,6 +343,8 @@ def main() -> None:
                 "session_id": session_id,
                 "agent_audit_status": audit["status"],
                 "eval_schema": artifact["schema_version"],
+                "quality_schema": quality["schema_version"],
+                "obsidian_schema": obsidian["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,
                 "teaching_tasks": teaching_tasks,

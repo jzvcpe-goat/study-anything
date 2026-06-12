@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Optional
 from .events import StudyEvent
 from .workflow import (
     Answer,
+    EnrichmentItem,
     GradingResult,
     HitlInterrupt,
     LearningState,
@@ -272,6 +273,9 @@ def learning_state_from_dict(values: Dict[str, Any]) -> LearningState:
         track=values.get("track", "ACADEMIC"),
         stage=values.get("stage", "created"),
         source=source,
+        enrichment_items=[
+            EnrichmentItem(**item) for item in values.get("enrichment_items", [])
+        ],
         teaching_layers=list(values.get("teaching_layers", [])),
         quiz_items=[QuizItem(**item) for item in values.get("quiz_items", [])],
         answers=[Answer(**item) for item in values.get("answers", [])],

@@ -99,6 +99,54 @@ class OpenAICompatibleAgentGatewayTests(unittest.TestCase):
             '{"status":"ok"}',
         )
 
+    def test_upstream_result_is_normalised_before_api_validation(self) -> None:
+        result = gateway._normalise_agent_result(
+            {
+                "task_type": "answer.grade",
+                "source": {
+                    "reference": "local://source",
+                    "excerpt_hash": "hash-123",
+                },
+            },
+            {
+                "status": "ok",
+                "content": "Good enough.",
+                "citations": "local://source",
+                "score": "0.82",
+                "confidence": "0.76",
+                "feedback": {"summary": "Grounded"},
+                "metadata": "not an object",
+            },
+        )
+
+        self.assertEqual(
+            result["citations"],
+            [{"reference": "local://source", "excerpt_hash": "hash-123"}],
+        )
+        self.assertEqual(result["score"], 0.82)
+        self.assertEqual(result["confidence"], 0.76)
+        self.assertEqual(result["feedback"], "{'summary': 'Grounded'}")
+        self.assertEqual(result["metadata"], {})
+
+    def test_answer_grade_missing_score_gets_conservative_default(self) -> None:
+        result = gateway._normalise_agent_result(
+            {
+                "task_type": "answer.grade",
+                "answers": [{"item_id": "q1", "text": "Learner answer"}],
+                "source": {"reference": "local://source"},
+            },
+            {
+                "status": "ok",
+                "content": "The answer is partially grounded.",
+                "citations": [],
+                "metadata": {},
+            },
+        )
+
+        self.assertEqual(result["score"], 0.5)
+        self.assertEqual(result["feedback"], "The answer is partially grounded.")
+        self.assertEqual(result["metadata"]["normalization_warning"], "missing_score_defaulted")
+
     def test_gateway_requires_private_configuration(self) -> None:
         with patch.dict(os.environ, {}, clear=True):
             with self.assertRaisesRegex(gateway.GatewayConfigurationError, "AGENT_LLM_BASE_URL"):

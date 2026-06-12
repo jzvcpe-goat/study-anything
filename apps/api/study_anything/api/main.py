@@ -33,8 +33,10 @@ from study_anything.core.knowledge_graph import (
     projection_from_state,
 )
 from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
+from study_anything.core.obsidian_export import build_obsidian_markdown_export
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.plugin_trust import plugin_trust_policy
+from study_anything.core.quality_eval import build_agent_quality_eval, quality_eval_case_export
 from study_anything.core.recovery import recovery_status
 from study_anything.core.store import create_session_store
 from study_anything.core.sync_package import (
@@ -47,7 +49,13 @@ from study_anything.core.sync_package import (
     sync_status,
 )
 from study_anything.core.tracing import build_trace_sink
-from study_anything.core.workflow import Answer, new_session, submit_answers, submit_reading
+from study_anything.core.workflow import (
+    Answer,
+    new_session,
+    submit_answers,
+    submit_enrichment,
+    submit_reading,
+)
 from study_anything.core.workspace import (
     LocalWorkspaceStore,
     WorkspaceAccessDenied,
@@ -68,6 +76,21 @@ class ReadingRequest(BaseModel):
     reference: str = Field(default="demo://source")
     title: str
     text: str
+
+
+class EnrichmentItemRequest(BaseModel):
+    source_type: str = Field(default="context")
+    reference: str
+    title: str
+    text: str
+    locator: Optional[str] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class EnrichmentRequest(BaseModel):
+    title: str = Field(default="Learning Enrichment Bundle")
+    reference: Optional[str] = None
+    items: List[EnrichmentItemRequest]
 
 
 class TeachingLayersRequest(BaseModel):
@@ -344,6 +367,10 @@ def create_app() -> FastAPI:
             pmf_interest_store.summary(),
         )
 
+    @app.get("/v1/evals/quality/cases")
+    def get_quality_eval_cases() -> dict[str, object]:
+        return quality_eval_case_export()
+
     @app.get("/v1/pmf/summary")
     def pmf_interest_summary() -> dict[str, object]:
         return pmf_interest_store.summary()
@@ -584,6 +611,47 @@ def create_app() -> FastAPI:
         )
         return store.save(state).public_dict()
 
+    @app.post("/v1/sessions/{session_id}/enrichment")
+    def add_enrichment(session_id: str, payload: EnrichmentRequest) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            state = submit_enrichment(
+                state,
+                items=[item.model_dump() for item in payload.items],
+                title=payload.title,
+                reference=payload.reference,
+                trace_sink=trace_sink,
+            )
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        state = store.save(state)
+        return {
+            "schema_version": "learning-enrichment-v1",
+            "session_id": state.session_id,
+            "source": {
+                "source_type": state.source.source_type,
+                "reference": state.source.reference,
+                "title": state.source.title,
+                "excerpt_hash": state.source.excerpt_hash,
+                "verified": state.source.verified,
+            } if state.source else None,
+            "item_count": len(state.enrichment_items),
+            "items": [
+                {
+                    "source_type": item.source_type,
+                    "reference": item.reference,
+                    "title": item.title,
+                    "excerpt_hash": item.excerpt_hash,
+                    "locator": item.locator,
+                    "metadata": item.metadata,
+                }
+                for item in state.enrichment_items
+            ],
+            "stage": state.stage,
+        }
+
     @app.post("/v1/sessions/{session_id}/teaching-layers")
     def generate_teaching_layers(
         session_id: str,
@@ -735,6 +803,33 @@ def create_app() -> FastAPI:
             agent_status=agent_registry.status(state.user_id),
         )
         return build_agent_eval_artifact(audit)
+
+    @app.get("/v1/sessions/{session_id}/agent-eval/quality")
+    def get_agent_quality_eval(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        audit = build_agent_audit(
+            state,
+            agent_status=agent_registry.status(state.user_id),
+        )
+        artifact = build_agent_eval_artifact(audit)
+        return build_agent_quality_eval(
+            state,
+            agent_audit=audit,
+            agent_eval_artifact=artifact,
+        )
+
+    @app.get("/v1/sessions/{session_id}/exports/obsidian")
+    def get_obsidian_export(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            return build_obsidian_markdown_export(state)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
 
     @app.get("/v1/plugins")
     def list_plugins() -> list[dict[str, object]]:

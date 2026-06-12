@@ -16,6 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
 DEFAULT_PROMPTFOO_VERSION = os.getenv("PROMPTFOO_VERSION", "0.121.15")
+DEEPEVAL_SCRIPT = ROOT / "evals" / "deepeval" / "study_anything_quality_eval.py"
 
 
 def output_text(value: str | bytes | None) -> str:
@@ -46,6 +47,8 @@ def run(
 def create_eval_session(api_base: str, timeout_seconds: int) -> str:
     env = os.environ.copy()
     env["API_BASE"] = api_base
+    env.setdefault("AGENT_EVAL_REQUEST_TIMEOUT_SECONDS", str(timeout_seconds))
+    env.setdefault("AGENT_PROVIDER_TIMEOUT_SECONDS", str(timeout_seconds))
     completed = run(
         [sys.executable, str(ROOT / "scripts" / "verify_agent_eval_flow.py")],
         env=env,
@@ -60,7 +63,9 @@ def create_eval_session(api_base: str, timeout_seconds: int) -> str:
     try:
         payload = json.loads(completed.stdout.strip().splitlines()[-1])
     except (IndexError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"Could not parse verify_agent_eval_flow output: {completed.stdout}") from exc
+        raise RuntimeError(
+            f"Could not parse verify_agent_eval_flow output: {completed.stdout}"
+        ) from exc
     session_id = payload.get("session_id")
     if not isinstance(session_id, str) or not session_id:
         raise RuntimeError(f"verify_agent_eval_flow did not return a session_id: {payload}")
@@ -133,9 +138,64 @@ def run_promptfoo(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def run_deepeval(args: argparse.Namespace) -> dict[str, Any]:
+    session_id = args.session_id
+    if args.create_session or not session_id:
+        session_id = create_eval_session(args.api_base, args.timeout_seconds)
+
+    command = [
+        sys.executable,
+        str(DEEPEVAL_SCRIPT),
+        "--api-base",
+        args.api_base,
+        "--session-id",
+        session_id,
+        "--timeout-seconds",
+        str(args.timeout_seconds),
+    ]
+    if args.allow_native_quality_fallback:
+        command.append("--allow-native-fallback")
+    try:
+        completed = run(command, timeout_seconds=args.timeout_seconds)
+    except subprocess.TimeoutExpired as exc:
+        return {
+            "status": "skipped",
+            "tool": "deepeval",
+            "reason": f"DeepEval adapter did not finish within {args.timeout_seconds}s.",
+            "required": args.required,
+            "session_id": session_id,
+            "stdout": output_text(exc.stdout),
+            "stderr": output_text(exc.stderr),
+            "command": " ".join(command),
+        }
+    if completed.returncode != 0:
+        return {
+            "status": "failed",
+            "tool": "deepeval",
+            "reason": "DeepEval adapter returned a non-zero exit code.",
+            "returncode": completed.returncode,
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+            "command": " ".join(command),
+        }
+    try:
+        payload = json.loads(completed.stdout.strip().splitlines()[-1])
+    except (IndexError, json.JSONDecodeError) as exc:
+        return {
+            "status": "failed",
+            "tool": "deepeval",
+            "reason": f"Could not parse DeepEval adapter output: {exc}",
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+        }
+    return payload
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tool", choices=["promptfoo"], default="promptfoo")
+    parser.add_argument("--tool", choices=["promptfoo", "deepeval"], default="promptfoo")
     parser.add_argument("--api-base", default=DEFAULT_API_BASE)
     parser.add_argument("--session-id", default=os.getenv("SESSION_ID"))
     parser.add_argument(
@@ -150,6 +210,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--promptfoo-version", default=DEFAULT_PROMPTFOO_VERSION)
     parser.add_argument(
+        "--allow-native-quality-fallback",
+        action="store_true",
+        help="For --tool deepeval, allow the deterministic quality report when deepeval is absent.",
+    )
+    parser.add_argument(
         "--timeout-seconds",
         type=int,
         default=int(os.getenv("EXTERNAL_EVAL_TIMEOUT_SECONDS", "180")),
@@ -159,7 +224,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    result = run_promptfoo(args)
+    result = run_promptfoo(args) if args.tool == "promptfoo" else run_deepeval(args)
     print(json.dumps(result, ensure_ascii=False))
     if result["status"] == "failed" or (args.required and result["status"] != "ok"):
         raise SystemExit(1)

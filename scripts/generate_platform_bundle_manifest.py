@@ -104,7 +104,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "scripts/run_external_agent_evals.py",
         "verification",
-        "Wrapper for mature external Agent eval runners such as Promptfoo.",
+        "Wrapper for mature external Agent eval runners such as Promptfoo and DeepEval.",
     ),
     (
         "scripts/diagnose_adoption.py",
@@ -115,6 +115,11 @@ FILES: list[tuple[str, str, str]] = [
         "evals/promptfoo/agent-eval-artifact.yaml",
         "eval",
         "Promptfoo config for the redacted Agent eval artifact contract.",
+    ),
+    (
+        "evals/deepeval/study_anything_quality_eval.py",
+        "eval",
+        "DeepEval custom metric adapter for redacted Study Anything quality reports.",
     ),
     (
         "docs/adoption.md",
@@ -207,6 +212,10 @@ def build_manifest() -> dict[str, object]:
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+            (
+                "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
+                "--tool deepeval --create-session --allow-native-quality-fallback"
+            ),
             "python3 scripts/diagnose_adoption.py",
         ],
         "files": [file_record(*item) for item in FILES],

@@ -13,10 +13,14 @@ usable without cloud accounts, judge-model API keys, or a mandatory eval service
 
 - `GET /v1/sessions/{session_id}/agent-audit`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
+- `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/evals/quality/cases`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for invocation audit only
 
 `agent-audit` proves which provider handled `quiz.generate`, `answer.grade`, and
 `insight.synthesize`. `agent-eval/artifact` packages that proof for external eval tooling.
+`agent-eval/quality` adds the first deterministic teaching-quality layer: overview, glossary,
+quiz, grading, synthesis, grounding, enrichment readiness, and Obsidian readiness.
 
 Both endpoints are redacted. They do not return reading prose, source titles, answers, grading
 feedback, insights, Agent endpoints, raw Agent metadata, API keys, or tool secrets.
@@ -97,7 +101,29 @@ required gates, adapter matrix, and Agent trajectory are present.
 
 ## DeepEval
 
-DeepEval is the preferred Python judge harness after the native gates pass. The first useful metrics are:
+DeepEval is the preferred Python quality harness after the native gates pass. v0.2.17 includes a
+custom non-LLM metric adapter at:
+
+```text
+evals/deepeval/study_anything_quality_eval.py
+```
+
+Run it through the shared wrapper:
+
+```bash
+API_BASE=http://127.0.0.1:8000 \
+  .venv/bin/python scripts/run_external_agent_evals.py \
+  --tool deepeval \
+  --create-session \
+  --allow-native-quality-fallback
+```
+
+When `deepeval` is installed, the adapter uses DeepEval's custom metric interface against
+`agent-eval/quality`. Without DeepEval, `--allow-native-quality-fallback` runs the same deterministic
+quality report directly and labels the result `deepeval-compatible-native`. Do not treat fallback as
+the same claim as a real DeepEval run.
+
+Future judge-model metrics should include:
 
 - `TaskCompletionMetric`: did the external Agent complete the learning task?
 - `GEval`: Study Anything-specific rubric, such as source-bound learning usefulness.
@@ -135,6 +161,7 @@ Against a running API:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
 
 When checking a user-owned HTTP Agent path, set:
@@ -162,6 +189,7 @@ A release can claim Agent Eval foundation only when:
 - `scripts/verify_agent_eval_flow.py` passes on the fake demo path.
 - Promptfoo can be invoked through `scripts/run_external_agent_evals.py --tool promptfoo` when the
   release environment permits external Node package installation.
+- DeepEval or the labeled native fallback can consume `agent-eval/quality`.
 - Mock/user-owned HTTP Agent smoke verifies `agent-audit` and can optionally require external Agent usage.
 - Docs list the selected mature eval projects and explain why Study Anything does not run judge models by default.
 
@@ -171,5 +199,7 @@ A release can claim Agent Eval foundation only when:
 - `agent-eval/artifact.status=ready_for_external_eval` means the redacted artifact is structurally
   ready for external tools.
 - Promptfoo passing the bundled config means the artifact contract and native gates passed.
-- DeepEval, LangChain AgentEvals, Ragas, or a judge-model suite are still required for stronger claims
-  about learning usefulness, teaching quality, trajectory quality, or source-grounding quality.
+- `agent-eval/quality.status=pass` means the deterministic minimum teaching-quality gates passed.
+- A real DeepEval run means the quality report was consumed through DeepEval's metric interface.
+- LangChain AgentEvals, Ragas, or a judge-model suite are still required for stronger claims about
+  trajectory quality, source-grounding quality, and learning usefulness at scale.

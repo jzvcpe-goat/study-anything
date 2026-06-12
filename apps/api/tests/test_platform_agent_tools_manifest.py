@@ -17,12 +17,15 @@ REQUIRED_TOOLS = {
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_add_enrichment",
     "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
+    "study_anything_agent_quality_eval",
+    "study_anything_obsidian_export",
 }
 DISALLOWED_PATH_FRAGMENTS = (
     "/v1/agents/providers",

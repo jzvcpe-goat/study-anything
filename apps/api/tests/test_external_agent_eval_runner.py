@@ -5,11 +5,46 @@ import os
 import stat
 import subprocess
 import sys
+import threading
 import unittest
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import Any, ClassVar
 
 from _path import ROOT  # noqa: F401
+
+
+class _QualityEvalHandler(BaseHTTPRequestHandler):
+    seen: ClassVar[list[str]] = []
+
+    def log_message(self, format: str, *args: Any) -> None:  # noqa: A002
+        return
+
+    def do_GET(self) -> None:
+        self.__class__.seen.append(self.path)
+        body = json.dumps(
+            {
+                "schema_version": "agent-quality-eval-v1",
+                "session_id": "session-for-quality",
+                "status": "pass",
+                "quality_score": 0.91,
+                "threshold": 0.72,
+                "gates": [
+                    {
+                        "gate_id": "agent_invocation_proof",
+                        "status": "pass",
+                        "required": True,
+                        "score": 1.0,
+                    }
+                ],
+            }
+        ).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
 
 class ExternalAgentEvalRunnerTests(unittest.TestCase):
@@ -60,6 +95,52 @@ class ExternalAgentEvalRunnerTests(unittest.TestCase):
             self.assertIn("evals/promptfoo/agent-eval-artifact.yaml", args)
             self.assertIn("apiBase=http://127.0.0.1:8000", args)
             self.assertIn("sessionId=session-for-promptfoo", args)
+
+    def test_deepeval_runner_invokes_quality_adapter(self) -> None:
+        _QualityEvalHandler.seen = []
+        server = HTTPServer(("127.0.0.1", 0), _QualityEvalHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            host, port = server.server_address
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(
+                        Path(__file__).resolve().parents[3]
+                        / "scripts"
+                        / "run_external_agent_evals.py"
+                    ),
+                    "--tool",
+                    "deepeval",
+                    "--api-base",
+                    f"http://{host}:{port}",
+                    "--session-id",
+                    "session-for-quality",
+                    "--required",
+                    "--allow-native-quality-fallback",
+                    "--timeout-seconds",
+                    "10",
+                ],
+                cwd=Path(__file__).resolve().parents[3],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
+        self.assertIn(
+            "/v1/sessions/session-for-quality/agent-eval/quality",
+            _QualityEvalHandler.seen,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["status"], "ok")
+        self.assertIn(result["tool"], {"deepeval", "deepeval-compatible-native"})
+        self.assertEqual(result["session_id"], "session-for-quality")
 
 
 if __name__ == "__main__":

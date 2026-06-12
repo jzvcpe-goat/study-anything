@@ -18,10 +18,14 @@ REQUIRED_ACCEPTANCE = {
     "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
     "all required native gates pass",
     "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
+    "agent_quality_eval.schema_version == agent-quality-eval-v1",
+    "agent_quality_eval.status == pass",
+    "obsidian_export.schema_version == obsidian-markdown-export-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_platform_agent_tools.py",
     "verify_agent_eval_flow.py",
+    "run_external_agent_evals.py --tool deepeval",
 }
 REQUIRED_ADOPTION_COMMAND_FRAGMENTS = {
     "verify_clean_clone_adoption.py",
@@ -106,7 +110,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             f"{pack_path.relative_to(ROOT)} privacy contract drifted: {sorted(pack_privacy)}"
         )
 
-    assert_text_contains(readme_path, "agent-audit", "agent-eval", "raw source")
+    assert_text_contains(readme_path, "agent-audit", "agent-eval", "quality", "Obsidian", "raw source")
     return pack
 
 

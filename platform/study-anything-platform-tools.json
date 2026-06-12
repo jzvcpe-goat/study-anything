@@ -152,6 +152,92 @@
       }
     },
     {
+      "name": "study_anything_add_enrichment",
+      "method": "POST",
+      "path_template": "/v1/sessions/{session_id}/enrichment",
+      "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id",
+          "items"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "default": "Learning Enrichment Bundle"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Optional stable reference for the whole enrichment bundle."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "source_type",
+                "reference",
+                "title",
+                "text"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "source_type": {
+                  "type": "string",
+                  "enum": [
+                    "web",
+                    "document",
+                    "video_slice",
+                    "app_context",
+                    "context"
+                  ]
+                },
+                "reference": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "locator": {
+                  "type": "string",
+                  "description": "Page, timestamp range, app object id, or other platform-local locator."
+                },
+                "metadata": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-enrichment-v1",
+        "source.excerpt_hash is present",
+        "items contain excerpt_hash but not raw text"
+      ],
+      "privacy": {
+        "request_contains_private_learning_data": true,
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "items.text",
+          "items.title",
+          "source.text"
+        ]
+      }
+    },
+    {
       "name": "study_anything_run",
       "method": "POST",
       "path_template": "/v1/sessions/{session_id}/run",
@@ -385,6 +471,81 @@
           "insights",
           "agent endpoints",
           "raw agent metadata",
+          "secrets"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_agent_quality_eval",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/agent-eval/quality",
+      "description": "Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == agent-quality-eval-v1",
+        "status == pass or needs_review",
+        "quality_score is numeric",
+        "gates include overview_quality, glossary_quality, quiz_quality, grading_quality, synthesis_quality"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "source text",
+          "answers",
+          "feedback",
+          "insights",
+          "agent endpoints",
+          "raw agent metadata",
+          "secrets"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_obsidian_export",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/exports/obsidian",
+      "description": "Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == obsidian-markdown-export-v1",
+        "format == markdown",
+        "markdown contains Source, Quiz Review, Mastery, and Enrichment sections",
+        "privacy.raw_source_text_included == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": true,
+        "platform_agent_should_redact_before_logging": [
+          "markdown",
+          "learner answers",
+          "grading feedback"
+        ],
+        "must_not_return": [
+          "raw source text",
+          "agent endpoints",
           "secrets"
         ]
       }

@@ -233,6 +233,66 @@
         }
       }
     },
+    "/v1/sessions/{session_id}/agent-eval/quality": {
+      "get": {
+        "description": "Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates.",
+        "operationId": "study_anything_agent_quality_eval",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates.",
+        "x-study-anything-output-requirements": [
+          "schema_version == agent-quality-eval-v1",
+          "status == pass or needs_review",
+          "quality_score is numeric",
+          "gates include overview_quality, glossary_quality, quiz_quality, grading_quality, synthesis_quality"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "source text",
+            "answers",
+            "feedback",
+            "insights",
+            "agent endpoints",
+            "raw agent metadata",
+            "secrets"
+          ],
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/sessions/{session_id}/answers": {
       "post": {
         "description": "Submit the learner's answer to one or more quiz items and advance mastery evaluation.",
@@ -308,6 +368,191 @@
             "insights"
           ],
           "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/enrichment": {
+      "post": {
+        "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+        "operationId": "study_anything_add_enrichment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "items": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "locator": {
+                          "description": "Page, timestamp range, app object id, or other platform-local locator.",
+                          "type": "string"
+                        },
+                        "metadata": {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        "reference": {
+                          "type": "string"
+                        },
+                        "source_type": {
+                          "enum": [
+                            "web",
+                            "document",
+                            "video_slice",
+                            "app_context",
+                            "context"
+                          ],
+                          "type": "string"
+                        },
+                        "text": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "source_type",
+                        "reference",
+                        "title",
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "reference": {
+                    "description": "Optional stable reference for the whole enrichment bundle.",
+                    "type": "string"
+                  },
+                  "title": {
+                    "default": "Learning Enrichment Bundle",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "items"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+        "x-study-anything-output-requirements": [
+          "schema_version == learning-enrichment-v1",
+          "source.excerpt_hash is present",
+          "items contain excerpt_hash but not raw text"
+        ],
+        "x-study-anything-privacy": {
+          "platform_agent_should_redact_before_logging": [
+            "items.text",
+            "items.title",
+            "source.text"
+          ],
+          "request_contains_private_learning_data": true,
+          "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/exports/obsidian": {
+      "get": {
+        "description": "Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references.",
+        "operationId": "study_anything_obsidian_export",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references.",
+        "x-study-anything-output-requirements": [
+          "schema_version == obsidian-markdown-export-v1",
+          "format == markdown",
+          "markdown contains Source, Quiz Review, Mastery, and Enrichment sections",
+          "privacy.raw_source_text_included == false"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "raw source text",
+            "agent endpoints",
+            "secrets"
+          ],
+          "platform_agent_should_redact_before_logging": [
+            "markdown",
+            "learner answers",
+            "grading feedback"
+          ],
           "returns_private_learning_data": true
         }
       }

@@ -30,12 +30,15 @@ private Agent platforms:
 - API health
 - session creation
 - source attachment
+- enrichment attachment for web, document, video-slice, and app-context excerpts
 - optional teaching layers such as overview, glossary, examples, or Obsidian-style notes
 - workflow run/resume
 - answer submission
 - mastery lookup
 - redacted Agent audit
 - redacted Agent eval artifact
+- redacted teaching-quality eval
+- Obsidian-compatible markdown export
 
 It intentionally does not expose Agent provider configuration, deprecated model aliases, plugin
 installation, encrypted sync export, PMF export, or other management surfaces. Configure user-owned
@@ -47,6 +50,7 @@ Validate a running integration with:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
 
 `./scripts/run_skill_mode_demo.sh` also runs this verifier after the CLI learning smoke.
@@ -127,6 +131,11 @@ When the user asks for explanation before answering a quiz, the platform Agent c
 `POST /v1/sessions/{session_id}/teaching-layers` after source attachment and before `run`. Treat the
 returned layer content as private learning data.
 
+When the platform Agent has gathered browser pages, PDFs, app state, or video slices, call
+`POST /v1/sessions/{session_id}/enrichment` instead of forcing the user to paste one flat text block.
+Study Anything turns those excerpts into a source-bound bundle, then the normal teaching/quiz/mastery
+loop runs against that bundle.
+
 `agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
 grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit
 `--capability` values only when a provider should handle a smaller subset.
@@ -172,18 +181,22 @@ Use the HTTP API contract when the platform can call local or private HTTP tools
 2. Expose only the needed API base to the platform Agent.
 3. Give the platform Agent the public endpoints in `docs/api.md`.
 4. Require it to call `agent-audit` and `agent-eval/artifact` after each completed learning loop.
+5. Optionally return `agent-eval/quality` and `exports/obsidian` for quality proof and second-brain notes.
 
 Minimum endpoints for a platform tool wrapper:
 
 - `GET /v1/health`
 - `POST /v1/sessions`
 - `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/sessions/{session_id}/enrichment` optional
 - `POST /v1/sessions/{session_id}/teaching-layers` optional
 - `POST /v1/sessions/{session_id}/run`
 - `POST /v1/sessions/{session_id}/answers`
 - `GET /v1/sessions/{session_id}/mastery`
 - `GET /v1/sessions/{session_id}/agent-audit`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
+- `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/sessions/{session_id}/exports/obsidian`
 
 ## Acceptance Gate
 
@@ -194,7 +207,9 @@ A platform integration is acceptable when it can complete this sequence:
 3. Complete one quiz/answer/mastery loop.
 4. Return `agent-audit.status=verified`.
 5. Return `agent-eval-artifact-v1` with all required native gates passing.
-6. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+6. Return `agent-quality-eval-v1` with `status=pass`.
+7. Return an Obsidian markdown export when the user asks for knowledge deposit.
+8. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -203,4 +218,5 @@ For local validation:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
