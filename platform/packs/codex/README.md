@@ -13,6 +13,7 @@ ln -s "$(pwd)/skills/study-anything" "${CODEX_HOME:-$HOME/.codex}/skills/study-a
 ## Run
 
 ```bash
+python3 scripts/verify_clean_clone_adoption.py --repo .
 ./scripts/run_skill_mode_demo.sh
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
@@ -30,3 +31,12 @@ A Codex integration must return both:
 
 Do not paste raw source text, learner answers, grading feedback, Agent endpoints, or secrets into
 shared logs.
+
+## Troubleshooting
+
+```bash
+python3 scripts/diagnose_adoption.py
+```
+
+Use the diagnostic output to distinguish API reachability, missing provider defaults, Agent endpoint
+health, Docker daemon state, and GHCR image visibility.

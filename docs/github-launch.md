@@ -18,9 +18,11 @@ python3 scripts/setup_env.py --force --output /tmp/study-anything.env
 python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 ./scripts/release_check.sh
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+python3 scripts/diagnose_adoption.py --ghcr-timeout-seconds 5
 STACK_PROFILE=smoke ./scripts/launch_self_host.sh
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
@@ -38,9 +40,12 @@ Confirm:
   insights, raw user identifiers, Agent metadata, or raw contact values.
 - `scripts/verify_backup_restore_drill.py` can create, mutate, restore, and clean up a disposable
   Docker stack.
-- `scripts/verify_published_image_launch.py --tag v0.2.15-alpha` can pull the public API image,
+- `scripts/verify_clean_clone_adoption.py --repo .` succeeds after the release candidate is committed,
+  proving Skill Mode, gateway dry-run, teaching layers, quiz, grading, mastery, Agent audit, and Agent
+  eval from a disposable checkout.
+- `scripts/verify_published_image_launch.py --tag v0.2.16-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
-- `docs/release-notes/v0.2.15-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.16-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -50,17 +55,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.15-alpha
-git push origin v0.2.15-alpha
+git tag v0.2.16-alpha
+git push origin v0.2.16-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.15-alpha \
+gh release create v0.2.16-alpha \
   --prerelease \
-  --title "Study Anything v0.2.15-alpha" \
-  --notes-file docs/release-notes/v0.2.15-alpha.md
+  --title "Study Anything v0.2.16-alpha" \
+  --notes-file docs/release-notes/v0.2.16-alpha.md
 ```
 
 ## GitHub Settings
@@ -77,13 +82,23 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.15-alpha
-python3 scripts/verify_published_image_launch.py --tag v0.2.15-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.16-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.16-alpha
+```
+
+If the local pull is too slow but the manifest and GitHub `docker-images` workflow are green, record
+the diagnostic fallback instead of leaving the smoke ambiguous:
+
+```bash
+python3 scripts/verify_published_image_launch.py \
+  --tag v0.2.16-alpha \
+  --pull-timeout-seconds 180 \
+  --allow-pull-timeout-report
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.15-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.16-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

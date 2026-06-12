@@ -35,6 +35,8 @@ jobs:
           export STUDY_ANYTHING_DATA_DIR="${RUNNER_TEMP}/study-anything-skill-mode"
           export API_PORT=8012
           ./scripts/run_skill_mode_demo.sh
+      - name: Verify clean-clone adoption smoke
+        run: python scripts/verify_clean_clone_adoption.py --repo .
 
   compose-smoke:
     runs-on: ubuntu-latest

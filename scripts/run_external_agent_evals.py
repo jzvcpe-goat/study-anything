@@ -18,6 +18,14 @@ DEFAULT_API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
 DEFAULT_PROMPTFOO_VERSION = os.getenv("PROMPTFOO_VERSION", "0.121.15")
 
 
+def output_text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
 def run(
     command: list[str],
     *,
@@ -98,8 +106,8 @@ def run_promptfoo(args: argparse.Namespace) -> dict[str, Any]:
             "reason": f"Promptfoo did not finish within {args.timeout_seconds}s.",
             "required": args.required,
             "session_id": session_id,
-            "stdout": exc.stdout or "",
-            "stderr": exc.stderr or "",
+            "stdout": output_text(exc.stdout),
+            "stderr": output_text(exc.stderr),
             "command": " ".join(command),
         }
 

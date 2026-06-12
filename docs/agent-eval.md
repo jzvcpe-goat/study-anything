@@ -75,6 +75,15 @@ The wrapper pins Promptfoo and applies a timeout. This avoids clean clones hangi
 `npx` package download while still using the mature Promptfoo runner when the operator enables the
 external gate.
 
+For the full adoption smoke from a disposable clone:
+
+```bash
+python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
+```
+
+If the output is `status=ok`, the Promptfoo path consumed the redacted artifact successfully. That is
+still a contract/evidence gate, not a claim that the Agent's teaching quality is good.
+
 You can also call Promptfoo directly:
 
 ```bash
@@ -155,3 +164,12 @@ A release can claim Agent Eval foundation only when:
   release environment permits external Node package installation.
 - Mock/user-owned HTTP Agent smoke verifies `agent-audit` and can optionally require external Agent usage.
 - Docs list the selected mature eval projects and explain why Study Anything does not run judge models by default.
+
+## Claim Boundaries
+
+- `agent-audit.status=verified` means Study Anything observed the required Agent task invocations.
+- `agent-eval/artifact.status=ready_for_external_eval` means the redacted artifact is structurally
+  ready for external tools.
+- Promptfoo passing the bundled config means the artifact contract and native gates passed.
+- DeepEval, LangChain AgentEvals, Ragas, or a judge-model suite are still required for stronger claims
+  about learning usefulness, teaching quality, trajectory quality, or source-grounding quality.

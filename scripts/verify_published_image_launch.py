@@ -44,6 +44,7 @@ def run(
     env: dict[str, str] | None = None,
     capture_output: bool = False,
     check: bool = True,
+    timeout: int | None = None,
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         command,
@@ -53,6 +54,7 @@ def run(
         text=True,
         stdout=subprocess.PIPE if capture_output else None,
         stderr=subprocess.PIPE if capture_output else None,
+        timeout=timeout,
     )
 
 
@@ -148,7 +150,10 @@ def verify_flow(api_base: str) -> dict[str, Any]:
 
 
 def cleanup_stack(env_file: Path) -> None:
-    run(compose(env_file, "down", "-v", "--remove-orphans", profiles=("smoke", "full")), check=False)
+    run(
+        compose(env_file, "down", "-v", "--remove-orphans", profiles=("smoke", "full")),
+        check=False,
+    )
 
 
 def default_expected_version(tag: str) -> str:
@@ -156,14 +161,66 @@ def default_expected_version(tag: str) -> str:
     return value.replace("-alpha", "a0")
 
 
+def pull_timeout_report(
+    *,
+    tag: str,
+    api_image: str,
+    timeout_seconds: int,
+    project_name: str,
+) -> dict[str, Any]:
+    return {
+        "status": "blocked_by_local_ghcr_pull",
+        "tag": tag,
+        "api_image": api_image,
+        "project": project_name,
+        "timeout_seconds": timeout_seconds,
+        "diagnostic": (
+            "The published API image exists, but this machine could not finish pulling it "
+            "within the configured timeout. Treat this as a local Docker/GHCR/network limit "
+            "unless docker manifest inspection or GitHub docker-images workflow also fails."
+        ),
+        "next_steps": [
+            f"docker manifest inspect {api_image}",
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --skip-pull",
+            "Retry from a faster network or verify from GitHub Actions.",
+        ],
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tag", default="v0.2.15-alpha", help="Published Study Anything image tag.")
-    parser.add_argument("--expected-version", help="Expected /v1/health and /v1/system/status version.")
+    parser.add_argument(
+        "--tag",
+        default="v0.2.16-alpha",
+        help="Published Study Anything image tag.",
+    )
+    parser.add_argument(
+        "--expected-version",
+        help="Expected /v1/health and /v1/system/status version.",
+    )
     parser.add_argument("--timeout", type=int, default=240, help="Seconds to wait for API health.")
+    parser.add_argument(
+        "--pull-timeout-seconds",
+        type=int,
+        default=0,
+        help="Optional timeout for docker compose pull. 0 means no timeout.",
+    )
+    parser.add_argument(
+        "--allow-pull-timeout-report",
+        action="store_true",
+        help="Return a JSON diagnostic instead of failing when docker pull is locally too slow.",
+    )
     parser.add_argument("--skip-pull", action="store_true", help="Use locally cached images.")
-    parser.add_argument("--keep-on-failure", action="store_true", help="Leave disposable stack for debugging.")
-    parser.add_argument("--keep-on-success", action="store_true", help="Leave disposable stack for inspection.")
+    parser.add_argument(
+        "--keep-on-failure",
+        action="store_true",
+        help="Leave disposable stack for debugging.",
+    )
+    parser.add_argument(
+        "--keep-on-success",
+        action="store_true",
+        help="Leave disposable stack for inspection.",
+    )
     parser.add_argument("--api-image", help="Exact API image to run.")
     args = parser.parse_args()
 
@@ -184,7 +241,26 @@ def main() -> None:
 
     try:
         if not args.skip_pull:
-            run(compose(env_file, "pull", "api"))
+            try:
+                run(
+                    compose(env_file, "pull", "api"),
+                    timeout=args.pull_timeout_seconds or None,
+                )
+            except subprocess.TimeoutExpired:
+                if args.allow_pull_timeout_report and args.pull_timeout_seconds > 0:
+                    print(
+                        json.dumps(
+                            pull_timeout_report(
+                                tag=tag,
+                                api_image=api_image,
+                                timeout_seconds=args.pull_timeout_seconds,
+                                project_name=project_name,
+                            ),
+                            ensure_ascii=False,
+                        )
+                    )
+                    return
+                raise
         run(compose(env_file, "up", "-d", "api"))
         wait_for_api(api_base, args.timeout)
 
@@ -216,12 +292,18 @@ def main() -> None:
             )
         )
         if args.keep_on_success:
-            print(f"Kept disposable published-image project for inspection: {project_name}", file=sys.stderr)
+            print(
+                f"Kept disposable published-image project for inspection: {project_name}",
+                file=sys.stderr,
+            )
             print(f"Disposable env: {env_file}", file=sys.stderr)
     except Exception:
         if args.keep_on_failure:
             cleanup = False
-            print(f"Kept disposable published-image project for debugging: {project_name}", file=sys.stderr)
+            print(
+                f"Kept disposable published-image project for debugging: {project_name}",
+                file=sys.stderr,
+            )
             print(f"Disposable env: {env_file}", file=sys.stderr)
         raise
     finally:
@@ -233,6 +315,12 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except (OSError, RuntimeError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+    except (
+        OSError,
+        RuntimeError,
+        subprocess.CalledProcessError,
+        subprocess.TimeoutExpired,
+        json.JSONDecodeError,
+    ) as exc:
         print(f"verify_published_image_launch failed: {exc}", file=sys.stderr)
         sys.exit(1)

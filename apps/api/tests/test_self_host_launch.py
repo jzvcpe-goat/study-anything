@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.15-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.16-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -120,20 +120,40 @@ class SelfHostLaunchTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 1)
         self.assertIn("checkout path contains non-ASCII characters", completed.stderr)
         self.assertIn("USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh", completed.stderr)
-        self.assertIn("ALLOW_NON_ASCII_DOCKER_BUILD=true ./scripts/launch_self_host.sh", completed.stderr)
+        self.assertIn(
+            "ALLOW_NON_ASCII_DOCKER_BUILD=true ./scripts/launch_self_host.sh",
+            completed.stderr,
+        )
         self.assertNotIn("docker compose", commands)
 
 
 class PublishedImageLaunchTests(unittest.TestCase):
-    def test_default_expected_version_normalizes_alpha_tag(self) -> None:
+    def _module(self):
         spec = spec_from_file_location("verify_published_image_launch", PUBLISHED_IMAGE_SCRIPT)
         self.assertIsNotNone(spec)
         self.assertIsNotNone(spec.loader)
         module = module_from_spec(spec)
         spec.loader.exec_module(module)
+        return module
 
-        self.assertEqual(module.default_expected_version("v0.2.15-alpha"), "0.2.15a0")
-        self.assertEqual(module.default_expected_version("0.2.15-alpha"), "0.2.15a0")
+    def test_default_expected_version_normalizes_alpha_tag(self) -> None:
+        module = self._module()
+
+        self.assertEqual(module.default_expected_version("v0.2.16-alpha"), "0.2.16a0")
+        self.assertEqual(module.default_expected_version("0.2.16-alpha"), "0.2.16a0")
+
+    def test_pull_timeout_report_is_actionable(self) -> None:
+        module = self._module()
+
+        report = module.pull_timeout_report(
+            tag="v0.2.16-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.2.16-alpha",
+            timeout_seconds=3,
+            project_name="study_anything_published_test",
+        )
+
+        self.assertEqual(report["status"], "blocked_by_local_ghcr_pull")
+        self.assertIn("docker manifest inspect", report["next_steps"][0])
 
 
 if __name__ == "__main__":

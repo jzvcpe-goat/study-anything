@@ -77,9 +77,49 @@ FILES: list[tuple[str, str, str]] = [
         "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
     ),
     (
+        "scripts/run_skill_mode_demo.sh",
+        "verification",
+        "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
+    ),
+    (
+        "scripts/launch_skill_mode.sh",
+        "runtime",
+        "Local API launcher for Skill Mode and adoption verification.",
+    ),
+    (
+        "scripts/study_anything_cli.py",
+        "cli",
+        "Command-line learning loop and Agent evidence entrypoint.",
+    ),
+    (
+        "scripts/verify_clean_clone_adoption.py",
+        "verification",
+        "Disposable clean-clone adoption verifier for external-user smoke testing.",
+    ),
+    (
         "scripts/verify_openai_compatible_gateway.py",
         "verification",
         "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
+    ),
+    (
+        "scripts/run_external_agent_evals.py",
+        "verification",
+        "Wrapper for mature external Agent eval runners such as Promptfoo.",
+    ),
+    (
+        "scripts/diagnose_adoption.py",
+        "diagnostics",
+        "Actionable diagnostics for common external-user adoption blockers.",
+    ),
+    (
+        "evals/promptfoo/agent-eval-artifact.yaml",
+        "eval",
+        "Promptfoo config for the redacted Agent eval artifact contract.",
+    ),
+    (
+        "docs/adoption.md",
+        "docs",
+        "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
     ),
     (
         "docs/platform-agent-integrations.md",
@@ -160,12 +200,14 @@ def build_manifest() -> dict[str, object]:
         "privacy_contract": source.get("privacy_contract", {}),
         "acceptance_commands": [
             "python3 scripts/generate_platform_agent_assets.py --check",
+            "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
             "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+            "python3 scripts/diagnose_adoption.py",
         ],
         "files": [file_record(*item) for item in FILES],
     }

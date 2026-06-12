@@ -23,6 +23,10 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_platform_agent_tools.py",
     "verify_agent_eval_flow.py",
 }
+REQUIRED_ADOPTION_COMMAND_FRAGMENTS = {
+    "verify_clean_clone_adoption.py",
+    "diagnose_adoption.py",
+}
 
 
 class PackVerificationError(RuntimeError):
@@ -73,6 +77,11 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(commands, list) or not commands:
         raise PackVerificationError(f"{pack_path.relative_to(ROOT)} must declare verification commands")
     command_text = "\n".join(str(command) for command in commands)
+    for fragment in REQUIRED_ADOPTION_COMMAND_FRAGMENTS:
+        if fragment not in command_text:
+            raise PackVerificationError(
+                f"{pack_path.relative_to(ROOT)} verification commands must include {fragment}"
+            )
     for fragment in REQUIRED_COMMAND_FRAGMENTS:
         if fragment not in command_text and pack_id != "codex":
             raise PackVerificationError(

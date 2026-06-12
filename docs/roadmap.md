@@ -141,6 +141,19 @@
 - CLI `agent-add-http --set-default` now registers teaching, quiz, grading, synthesis, scribe, source
   verification, and embedding capabilities by default.
 
+## v0.2.16-alpha
+
+- Clean-clone adoption verifier for external users: `.env` generation, Skill Mode, gateway dry-run,
+  teaching layers, quiz, grading, mastery, redacted `agent-audit`, and redacted `agent-eval/artifact`.
+- Promptfoo can be invoked from the adoption verifier as the first mature external eval runner while
+  docs separate invocation proof from quality evaluation.
+- Platform packs for Codex, Kimi-compatible agents, and WorkBuddy-style HTTP workspaces now carry
+  clean-clone adoption and diagnostics commands as machine-readable acceptance evidence.
+- Adoption diagnostics distinguish localhost API reachability, Docker daemon state, GHCR image
+  visibility, Agent endpoint health, and missing provider capability defaults.
+- Published-image smoke can produce an explicit slow-GHCR diagnostic fallback when local image pulls
+  are the bottleneck but release workflow and manifest evidence are healthy.
+
 ## v0.3 Next
 
 - Importer plugin SDK.

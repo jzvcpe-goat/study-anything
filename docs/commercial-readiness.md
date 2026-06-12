@@ -38,9 +38,15 @@ Study Anything is currently a public self-host Alpha foundation. A realistic com
 - Copy-ready platform packs for Codex, Kimi-compatible agents, and WorkBuddy-style HTTP tool workspaces.
 - OpenAI-compatible gateway dry-run verifier so users can prove Kimi/OpenAI-compatible wiring before
   adding real model credentials.
+- Disposable clean-clone adoption verifier that creates `.env`, runs Skill Mode, verifies the
+  OpenAI-compatible gateway dry-run, teaching layers, quiz, grading, mastery, Agent audit, and Agent
+  eval from a separate checkout.
+- Adoption diagnostics for localhost reachability, Docker daemon state, GHCR visibility, Agent
+  endpoint health, and provider capability defaults.
 - Deterministic platform bundle manifest with sha256 hashes for platform packs, generated import
   assets, key docs, and the repo-local Skill entrypoint.
-- Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API learning flow.
+- Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API
+  learning flow, with an explicit slow-GHCR diagnostic fallback for local network limits.
 - Published release path for the current recovery, plugin-registry, Skill/API, and Bring Your Own Agent foundations.
 
 ## What Blocks Commercial Launch

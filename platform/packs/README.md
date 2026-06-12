@@ -24,6 +24,7 @@ the user's platform Agent or user-owned HTTP Agent gateway.
 ## Verify
 
 ```bash
+.venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 ```
@@ -34,4 +35,10 @@ For a running API:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+```
+
+For adoption troubleshooting:
+
+```bash
+python3 scripts/diagnose_adoption.py
 ```

@@ -23,6 +23,12 @@ Set the API base to:
 http://127.0.0.1:8000
 ```
 
+Run the clean-clone adoption smoke before wiring real credentials:
+
+```bash
+python3 scripts/verify_clean_clone_adoption.py --repo .
+```
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:
@@ -61,3 +67,12 @@ GET /v1/sessions/{session_id}/agent-eval/artifact
 
 Share only compact mastery and redacted evidence. Do not log raw source text, learner answers,
 grading feedback, Agent endpoints, or model secrets.
+
+## Troubleshooting
+
+```bash
+python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke
+```
+
+If browser-only Kimi cannot call localhost, move the HTTP calls to a terminal-capable Agent, local
+gateway, or authenticated private gateway.

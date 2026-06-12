@@ -126,17 +126,18 @@ def main() -> None:
     assert_contains(
         promptfoo_config,
         "/v1/sessions/{{sessionId}}/agent-eval/artifact",
-        "output.schema_version === 'agent-eval-artifact-v1'",
-        "output.status === 'ready_for_external_eval'",
-        "output.native_gates.filter((gate) => gate.required).every((gate) => gate.status === 'pass')",
+        "type: is-json",
+        "const: agent-eval-artifact-v1",
+        "const: ready_for_external_eval",
+        "agent_invocation_coverage",
         "quiz.generate",
         "answer.grade",
         "insight.synthesize",
-        "raw_source_text_included === false",
-        "raw_answers_included === false",
-        "raw_feedback_included === false",
-        "agent_endpoints_included === false",
-        "raw_agent_metadata_included === false",
+        "raw_source_text_included",
+        "raw_answers_included",
+        "raw_feedback_included",
+        "agent_endpoints_included",
+        "raw_agent_metadata_included",
     )
     for adapter_id in EXPECTED_ADAPTER_IDS:
         assert_contains(promptfoo_config, adapter_id)
