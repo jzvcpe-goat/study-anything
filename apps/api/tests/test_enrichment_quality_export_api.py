@@ -1,0 +1,117 @@
+from __future__ import annotations
+
+import unittest
+from contextlib import ExitStack
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+
+from fastapi.testclient import TestClient
+
+from _path import ROOT  # noqa: F401
+
+from study_anything.api import main as api_main
+from study_anything.core.agent_registry import AgentRegistry, AgentRouter
+from study_anything.core.store import InMemorySessionStore
+from study_anything.core.workflow import LearningWorkflow
+from study_anything.core.workspace import LocalWorkspaceStore
+
+
+class EnrichmentQualityExportApiTests(unittest.TestCase):
+    def _client(self, root: Path) -> tuple[TestClient, ExitStack]:
+        stack = ExitStack()
+        registry = AgentRegistry(root / "agents.json")
+        workflow = LearningWorkflow(AgentRouter(registry))
+        stack.enter_context(patch.object(api_main, "store", InMemorySessionStore()))
+        stack.enter_context(patch.object(api_main, "agent_registry", registry))
+        stack.enter_context(patch.object(api_main, "workflow", workflow))
+        stack.enter_context(
+            patch.object(api_main, "workspace_store", LocalWorkspaceStore(root / "workspaces.json"))
+        )
+        return TestClient(api_main.create_app()), stack
+
+    def test_enrichment_drives_quality_eval_and_obsidian_export(self) -> None:
+        private_web_text = "Private web excerpt about retrieval practice and durable recall."
+        private_video_text = "Private video slice explaining desirable difficulty."
+        with TemporaryDirectory() as tmpdir:
+            client, stack = self._client(Path(tmpdir))
+            with stack, client:
+                session = client.post(
+                    "/v1/sessions",
+                    json={"user_id": "enrichment-export-user"},
+                ).json()
+                session_id = session["session_id"]
+                enrichment = client.post(
+                    f"/v1/sessions/{session_id}/enrichment",
+                    json={
+                        "title": "Retrieval Practice Enrichment",
+                        "items": [
+                            {
+                                "source_type": "web",
+                                "reference": "https://example.test/retrieval",
+                                "title": "Retrieval Article",
+                                "text": private_web_text,
+                            },
+                            {
+                                "source_type": "video_slice",
+                                "reference": "video://lesson/1",
+                                "title": "Lesson Clip",
+                                "locator": "00:01:12-00:02:04",
+                                "text": private_video_text,
+                            },
+                        ],
+                    },
+                )
+                self.assertEqual(enrichment.status_code, 200, enrichment.text)
+                teaching = client.post(
+                    f"/v1/sessions/{session_id}/teaching-layers",
+                    json={"layers": ["overview", "glossary", "scribe"]},
+                )
+                self.assertEqual(teaching.status_code, 200, teaching.text)
+                running = client.post(f"/v1/sessions/{session_id}/run").json()
+                quiz_id = running["quiz_items"][0]["item_id"]
+                completed = client.post(
+                    f"/v1/sessions/{session_id}/answers",
+                    json={"answers": {quiz_id: "Retrieval practice uses effortful recall."}},
+                )
+                self.assertEqual(completed.status_code, 200, completed.text)
+                quality = client.get(f"/v1/sessions/{session_id}/agent-eval/quality")
+                obsidian = client.get(f"/v1/sessions/{session_id}/exports/obsidian")
+
+        quality_body = quality.json()
+        self.assertEqual(quality.status_code, 200)
+        self.assertEqual(quality_body["schema_version"], "agent-quality-eval-v1")
+        self.assertEqual(quality_body["status"], "pass")
+        self.assertGreaterEqual(quality_body["quality_score"], quality_body["threshold"])
+        gate_ids = {gate["gate_id"] for gate in quality_body["gates"]}
+        self.assertIn("enrichment_ready", gate_ids)
+        self.assertNotIn(private_web_text, quality.text)
+        self.assertNotIn(private_video_text, quality.text)
+
+        obsidian_body = obsidian.json()
+        self.assertEqual(obsidian.status_code, 200)
+        self.assertEqual(obsidian_body["schema_version"], "obsidian-markdown-export-v1")
+        self.assertTrue(obsidian_body["filename"].endswith(".md"))
+        self.assertIn("## Quiz Review", obsidian_body["markdown"])
+        self.assertIn("https://example.test/retrieval", obsidian_body["markdown"])
+        self.assertIn("video://lesson/1", obsidian_body["markdown"])
+        self.assertNotIn(private_web_text, obsidian_body["markdown"])
+        self.assertNotIn(private_video_text, obsidian_body["markdown"])
+
+    def test_quality_cases_endpoint_is_fixed_dataset_contract(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            client, stack = self._client(Path(tmpdir))
+            with stack, client:
+                response = client.get("/v1/evals/quality/cases")
+
+        body = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(body["schema_version"], "study-anything-quality-cases-v1")
+        case_ids = {item["case_id"] for item in body["cases"]}
+        self.assertIn("overview_layer", case_ids)
+        self.assertIn("glossary_layer", case_ids)
+        self.assertIn("answer_grading", case_ids)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -14,6 +14,12 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
+v0.2.17 packs add three user-facing learning capabilities on top of the core loop:
+
+- enrichment input for web, document, video-slice, and app-context excerpts gathered by the platform;
+- quality eval evidence that separates invocation proof, schema validity, and teaching-quality gates;
+- Obsidian-compatible markdown export for second-brain workflows.
+
 ## Packs
 
 - `codex`: terminal-capable agents that can use the repo-local Skill and CLI.
@@ -35,6 +41,7 @@ For a running API:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
 
 For adoption troubleshooting:

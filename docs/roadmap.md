@@ -154,11 +154,25 @@
 - Published-image smoke can produce an explicit slow-GHCR diagnostic fallback when local image pulls
   are the bottleneck but release workflow and manifest evidence are healthy.
 
+## v0.2.17-alpha
+
+- Platform Agent tools now accept Learning Enrichment inputs from browser pages, documents, app
+  context, and video slices without exposing raw text in redacted evidence.
+- Redacted `agent-quality-eval-v1` reports prove minimum teaching quality across invocation proof,
+  overview, glossary, quiz generation, grading, synthesis, and source binding.
+- DeepEval adapter path added for mature external quality evaluation, with deterministic fallback for
+  local-first environments that have not installed DeepEval.
+- Obsidian-compatible Markdown export turns a completed learning loop into source references,
+  teaching layers, quiz review, mastery, insights, and enrichment references.
+- Kimi, Codex, and WorkBuddy packs now include enrichment, quality eval, Obsidian export, and
+  DeepEval smoke evidence.
+
 ## v0.3 Next
 
 - Importer plugin SDK.
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
-- Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
+- Expand Agent quality eval suites for LangChain AgentEvals, Ragas, retrieval quality, and
+  judge-model scoring.
 - Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
 - E2E Playwright tests.
 - LanceDB reading embedding index and retrieval API.

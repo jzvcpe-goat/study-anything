@@ -70,6 +70,7 @@ Agent endpoints, PMF contact values, or decrypted plugin inventory.
 - `GET /v1/sessions`
 - `GET /v1/sessions/{session_id}`
 - `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/sessions/{session_id}/enrichment`
 - `POST /v1/sessions/{session_id}/teaching-layers`
 - `POST /v1/sessions/{session_id}/run`
 - `POST /v1/sessions/{session_id}/resume`
@@ -87,6 +88,11 @@ the quiz loop. Supported layer names are `overview`, `glossary`, `examples`, and
 to `teach.overview`, `teach.glossary`, `teach.examples`, and `note.scribe` Agent capabilities. This
 endpoint returns private learning content and should be redacted by platform wrappers before logging.
 
+`POST /v1/sessions/{session_id}/enrichment` lets a platform Agent attach web pages, documents, video
+slices, or app-context excerpts as a source bundle. The response returns references and excerpt hashes,
+not raw item text. Platform wrappers should still treat the request and session state as private
+learning data.
+
 ## Learning
 
 - `POST /v1/sessions/{session_id}/answers`
@@ -94,12 +100,22 @@ endpoint returns private learning content and should be redacted by platform wra
 - `GET /v1/sessions/{session_id}/mastery`
 - `GET /v1/sessions/{session_id}/agent-audit`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
+- `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/sessions/{session_id}/exports/obsidian`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
 `agent-audit` proves redacted Agent invocation coverage. `agent-eval/artifact` converts that audit into
 a redacted record for external tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. It
 does not run judge models and does not return source text, answers, feedback, Agent endpoints, or raw
 Agent metadata.
+
+`agent-eval/quality` returns a deterministic minimum quality report for overview, glossary, quiz,
+grading, synthesis, source binding, enrichment readiness, and Obsidian readiness. It is redacted and
+does not return raw source text, answers, feedback, insights, endpoints, or secrets.
+
+`exports/obsidian` returns a user-controlled Markdown note with source references, teaching layers,
+quiz review, mastery, insights, and enrichment references. It never includes raw source text, but it can
+include learner answers and grading feedback, so platform wrappers should not log it by default.
 
 ## Optional Learning Topology
 

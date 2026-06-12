@@ -103,6 +103,8 @@ After answering, collect redacted proof:
 ```bash
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 ```
 
 For a full local acceptance run against the real Study Anything API and dry-run gateway:
@@ -110,6 +112,26 @@ For a full local acceptance run against the real Study Anything API and dry-run 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
+
+## DeepSeek-Compatible Gateway
+
+The same gateway can be used with DeepSeek or another OpenAI-compatible provider. Keep the provider
+key only in the gateway shell:
+
+```bash
+export AGENT_LLM_BASE_URL="https://api.deepseek.com"
+export AGENT_LLM_API_KEY="$DEEPSEEK_API_KEY"
+export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-deepseek-v4-flash}"
+export AGENT_LLM_EXTRA_BODY_JSON='{"thinking":{"type":"disabled"},"max_tokens":2048}'
+
+python3 scripts/openai_compatible_agent_gateway.py \
+  --host 127.0.0.1 \
+  --port 8787
+```
+
+DeepSeek's current OpenAI-format API supports `response_format={"type":"json_object"}`. The legacy
+`deepseek-chat` and `deepseek-reasoner` aliases are scheduled for deprecation, so new Study Anything
+examples should use `deepseek-v4-flash` or `deepseek-v4-pro`.
 
 ## Browser-Only Kimi Limitation
 

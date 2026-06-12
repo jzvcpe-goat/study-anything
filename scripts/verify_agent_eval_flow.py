@@ -15,8 +15,12 @@ from urllib.request import Request, urlopen
 API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
 AGENT_ENDPOINT = os.getenv("AGENT_ENDPOINT", "http://127.0.0.1:8787").rstrip("/")
 EXPECT_EXTERNAL_AGENT = os.getenv("EXPECT_EXTERNAL_AGENT", "false").lower() in {"1", "true", "yes"}
+REQUEST_TIMEOUT_SECONDS = int(os.getenv("AGENT_EVAL_REQUEST_TIMEOUT_SECONDS", "10"))
+PROVIDER_TIMEOUT_SECONDS = int(os.getenv("AGENT_PROVIDER_TIMEOUT_SECONDS", "15"))
 ADAPTER_IDS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
+TEACHING_CAPABILITIES = ["teach.overview", "teach.glossary"]
 CORE_CAPABILITIES = ["quiz.generate", "answer.grade", "insight.synthesize"]
+REQUIRED_CAPABILITIES = TEACHING_CAPABILITIES + CORE_CAPABILITIES
 
 
 def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
@@ -28,11 +32,42 @@ def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
         method="GET" if payload is None else "POST",
     )
     try:
-        with urlopen(req, timeout=10) as response:
+        with urlopen(req, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             return json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise RuntimeError(f"{exc.code} {path}: {detail}") from exc
+
+
+def session_failure_summary(value: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "session_id": value.get("session_id"),
+        "stage": value.get("stage"),
+        "source": {
+            "source_type": (value.get("source") or {}).get("source_type")
+            if isinstance(value.get("source"), dict)
+            else None,
+            "reference_present": bool((value.get("source") or {}).get("reference"))
+            if isinstance(value.get("source"), dict)
+            else False,
+            "excerpt_hash_present": bool((value.get("source") or {}).get("excerpt_hash"))
+            if isinstance(value.get("source"), dict)
+            else False,
+        },
+        "teaching_layer_count": len(value.get("teaching_layers") or []),
+        "quiz_item_count": len(value.get("quiz_items") or []),
+        "grading_result_count": len(value.get("grading_results") or []),
+        "insight_count": len(value.get("insights") or []),
+        "open_hitl": [
+            {
+                "kind": item.get("kind"),
+                "message": item.get("message"),
+            }
+            for item in value.get("hitl_interrupts", [])
+            if isinstance(item, dict) and item.get("status") == "open"
+        ],
+        "event_count": len(value.get("events") or []),
+    }
 
 
 def main() -> None:
@@ -44,14 +79,15 @@ def main() -> None:
                 "kind": "http_agent",
                 "label": "Agent Eval HTTP Smoke",
                 "endpoint": AGENT_ENDPOINT,
-                "capabilities": CORE_CAPABILITIES,
+                "capabilities": REQUIRED_CAPABILITIES,
+                "timeout_seconds": PROVIDER_TIMEOUT_SECONDS,
                 "metadata": {"source": "verify_agent_eval_flow"},
             },
         )
         health = request("/v1/agents/test", {"provider_id": provider["provider_id"]})
         if health.get("status") != "healthy":
             raise RuntimeError(f"HTTP Agent is not healthy for eval smoke: {health}")
-        for capability in CORE_CAPABILITIES:
+        for capability in REQUIRED_CAPABILITIES:
             request(
                 "/v1/agents/defaults",
                 {
@@ -80,6 +116,23 @@ def main() -> None:
             "text": "Private source text for eval smoke must never appear in eval artifacts.",
         },
     )
+    teaching = request(
+        f"/v1/sessions/{session_id}/teaching-layers",
+        {
+            "layers": ["overview", "glossary"],
+            "language": "zh",
+            "level": "beginner",
+        },
+    )
+    teaching_tasks = [
+        layer.get("agent", {}).get("task_type")
+        for layer in teaching.get("layers", [])
+        if isinstance(layer, dict)
+    ]
+    for task_type in TEACHING_CAPABILITIES:
+        if task_type not in teaching_tasks:
+            raise RuntimeError(f"Teaching layers did not include {task_type}: {teaching}")
+
     running = request(f"/v1/sessions/{session_id}/run", {})
     quiz_id = running["quiz_items"][0]["item_id"]
     completed = request(
@@ -87,7 +140,10 @@ def main() -> None:
         {"answers": {quiz_id: "Private eval smoke answer."}},
     )
     if completed.get("stage") != "completed":
-        raise RuntimeError(f"Expected completed session, got {completed.get('stage')}: {completed}")
+        raise RuntimeError(
+            "Expected completed session, got redacted summary: "
+            f"{session_failure_summary(completed)}"
+        )
 
     audit = request(f"/v1/sessions/{session_id}/agent-audit")
     if audit.get("schema_version") != "agent-audit-v1":
@@ -110,8 +166,15 @@ def main() -> None:
     if adapter_ids != ADAPTER_IDS:
         raise RuntimeError(f"Unexpected adapter strategy: {adapter_ids}")
     trajectory_tasks = [step.get("task_type") for step in artifact.get("trajectory", [])]
-    if trajectory_tasks != ["quiz.generate", "answer.grade", "insight.synthesize"]:
+    missing_trajectory_tasks = [task for task in CORE_CAPABILITIES if task not in trajectory_tasks]
+    if missing_trajectory_tasks:
         raise RuntimeError(f"Unexpected Agent trajectory: {trajectory_tasks}")
+
+    quality = request(f"/v1/sessions/{session_id}/agent-eval/quality")
+    if quality.get("schema_version") != "agent-quality-eval-v1":
+        raise RuntimeError(f"Unexpected quality eval schema: {quality}")
+    if quality.get("status") != "pass":
+        raise RuntimeError(f"Quality eval did not pass: {quality}")
 
     serialized = json.dumps(artifact, ensure_ascii=False)
     forbidden_fragments = [
@@ -135,9 +198,12 @@ def main() -> None:
                 "eval_schema": artifact["schema_version"],
                 "artifact_status": artifact["status"],
                 "agent_audit_status": audit["status"],
+                "quality_schema": quality["schema_version"],
+                "quality_status": quality["status"],
                 "used_external_agent": artifact["used_external_agent"],
                 "used_fake_agent": artifact["used_fake_agent"],
                 "adapter_ids": sorted(adapter_ids),
+                "teaching_tasks": teaching_tasks,
                 "trajectory_tasks": trajectory_tasks,
             },
             ensure_ascii=False,

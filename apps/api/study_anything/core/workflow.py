@@ -7,7 +7,7 @@ pure Python so the project can be tested without external services.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field, replace
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 from uuid import uuid4
 
 from .agent_registry import (
@@ -33,6 +33,17 @@ class ReadingSource:
     text: str
     excerpt_hash: str
     verified: bool = False
+
+
+@dataclass(frozen=True)
+class EnrichmentItem:
+    source_type: str
+    reference: str
+    title: str
+    text: str
+    excerpt_hash: str
+    locator: Optional[str] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -90,6 +101,7 @@ class LearningState:
     track: str = "ACADEMIC"
     stage: str = "created"
     source: Optional[ReadingSource] = None
+    enrichment_items: List[EnrichmentItem] = field(default_factory=list)
     teaching_layers: List[Dict[str, Any]] = field(default_factory=list)
     quiz_items: List[QuizItem] = field(default_factory=list)
     answers: List[Answer] = field(default_factory=list)
@@ -200,6 +212,82 @@ def submit_reading(
         event_type="reading.submitted",
         node="initialize_session",
         payload={"source_type": source_type, "has_reference": bool(reference.strip())},
+        trace_sink=trace_sink,
+    )
+
+
+def submit_enrichment(
+    state: LearningState,
+    *,
+    items: Iterable[Mapping[str, Any]],
+    title: str = "Learning Enrichment Bundle",
+    reference: Optional[str] = None,
+    trace_sink: Optional[TraceSink] = None,
+) -> LearningState:
+    """Attach platform-collected context as a source bundle for learning.
+
+    Platform agents own browsing, files, apps, and video slicing. Study Anything
+    only receives bounded excerpts and turns them into a source-bound learning
+    bundle.
+    """
+
+    normalized: List[EnrichmentItem] = []
+    source_parts: List[str] = []
+    for index, item in enumerate(items, start=1):
+        source_type = str(item.get("source_type") or "context")
+        item_reference = str(item.get("reference") or f"enrichment://{state.session_id}/{index}")
+        item_title = str(item.get("title") or f"Context {index}")
+        text = str(item.get("text") or "").strip()
+        if not text:
+            raise ValueError("Each enrichment item requires non-empty text.")
+        metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+        locator = item.get("locator")
+        locator_text = str(locator) if locator is not None else None
+        excerpt_hash = sha256_text(text[:2000])
+        normalized.append(
+            EnrichmentItem(
+                source_type=source_type,
+                reference=item_reference,
+                title=item_title,
+                text=text,
+                excerpt_hash=excerpt_hash,
+                locator=locator_text,
+                metadata=dict(metadata),
+            )
+        )
+        locator_line = f"\nLocator: {locator_text}" if locator_text else ""
+        source_parts.append(
+            f"[{index}] {item_title}\nType: {source_type}\nReference: {item_reference}"
+            f"{locator_line}\n\n{text}"
+        )
+    if not normalized:
+        raise ValueError("At least one enrichment item is required.")
+
+    combined_text = "\n\n---\n\n".join(source_parts)
+    source = ReadingSource(
+        source_type="enrichment_bundle",
+        reference=reference or f"enrichment://{state.session_id}",
+        title=title,
+        text=combined_text,
+        excerpt_hash=sha256_text(combined_text[:2000]),
+        verified=any(item.reference.strip() for item in normalized),
+    )
+    next_state = replace(
+        state,
+        source=source,
+        enrichment_items=state.enrichment_items + normalized,
+        stage="enrichment_attached",
+    )
+    return append_event(
+        next_state,
+        event_type="enrichment.attached",
+        node="enrichment_layer",
+        payload={
+            "item_count": len(normalized),
+            "source_types": sorted({item.source_type for item in normalized}),
+            "has_reference": bool(source.reference.strip()),
+            "excerpt_hash": source.excerpt_hash,
+        },
         trace_sink=trace_sink,
     )
 

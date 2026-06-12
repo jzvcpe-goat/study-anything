@@ -105,6 +105,32 @@ Privacy:
 }
 ```
 
+### `study_anything_add_enrichment`
+
+- Method: `POST`
+- Path: `/v1/sessions/{session_id}/enrichment`
+- Description: Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.
+
+Output requirements:
+
+- schema_version == learning-enrichment-v1
+- source.excerpt_hash is present
+- items contain excerpt_hash but not raw text
+
+Privacy:
+
+```json
+{
+  "platform_agent_should_redact_before_logging": [
+    "items.text",
+    "items.title",
+    "source.text"
+  ],
+  "request_contains_private_learning_data": true,
+  "returns_private_learning_data": true
+}
+```
+
 ### `study_anything_run`
 
 - Method: `POST`
@@ -252,5 +278,66 @@ Privacy:
     "secrets"
   ],
   "returns_private_learning_data": false
+}
+```
+
+### `study_anything_agent_quality_eval`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/agent-eval/quality`
+- Description: Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates.
+
+Output requirements:
+
+- schema_version == agent-quality-eval-v1
+- status == pass or needs_review
+- quality_score is numeric
+- gates include overview_quality, glossary_quality, quiz_quality, grading_quality, synthesis_quality
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "feedback",
+    "insights",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_obsidian_export`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/exports/obsidian`
+- Description: Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references.
+
+Output requirements:
+
+- schema_version == obsidian-markdown-export-v1
+- format == markdown
+- markdown contains Source, Quiz Review, Mastery, and Enrichment sections
+- privacy.raw_source_text_included == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "raw source text",
+    "agent endpoints",
+    "secrets"
+  ],
+  "platform_agent_should_redact_before_logging": [
+    "markdown",
+    "learner answers",
+    "grading feedback"
+  ],
+  "returns_private_learning_data": true
 }
 ```
