@@ -22,6 +22,7 @@ REQUIRED_TOOLS = {
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
@@ -186,6 +187,29 @@ def main() -> None:
     if not source.get("excerpt_hash"):
         raise VerificationError(f"Reading tool did not persist an excerpt hash: {reading}")
 
+    teaching = call_tool(
+        tools,
+        "study_anything_teaching_layers",
+        {
+            "layers": ["overview", "glossary"],
+            "language": "zh",
+            "level": "beginner",
+        },
+        session_id=session_id,
+    )
+    if teaching.get("schema_version") != "teaching-layers-v1":
+        raise VerificationError(f"Teaching layers tool returned invalid schema: {teaching}")
+    teaching_layers = teaching.get("layers") or []
+    layer_names = {item.get("layer") for item in teaching_layers if isinstance(item, dict)}
+    if not {"overview", "glossary"}.issubset(layer_names):
+        raise VerificationError(f"Teaching layers tool did not return requested layers: {teaching}")
+    teaching_tasks = [
+        item.get("agent", {}).get("task_type")
+        for item in teaching_layers
+        if isinstance(item, dict) and isinstance(item.get("agent"), dict)
+    ]
+    assert_contains_all(teaching_tasks, ["teach.overview", "teach.glossary"], "teaching layers")
+
     running = call_tool(tools, "study_anything_run", {}, session_id=session_id)
     quiz_items = running.get("quiz_items") or []
     if not quiz_items:
@@ -228,8 +252,7 @@ def main() -> None:
     if adapter_ids != REQUIRED_ADAPTERS:
         raise VerificationError(f"Eval adapter strategy mismatch: {sorted(adapter_ids)}")
     trajectory = [step.get("task_type") for step in artifact.get("trajectory", [])]
-    if trajectory != REQUIRED_TRAJECTORY:
-        raise VerificationError(f"Eval artifact trajectory mismatch: {trajectory}")
+    assert_contains_all(trajectory, REQUIRED_TRAJECTORY, "eval artifact trajectory")
 
     serialized_evidence = json.dumps({"audit": audit, "artifact": artifact}, ensure_ascii=False)
     forbidden_fragments = [
@@ -259,6 +282,7 @@ def main() -> None:
                 "eval_schema": artifact["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,
+                "teaching_tasks": teaching_tasks,
             },
             ensure_ascii=False,
             sort_keys=True,

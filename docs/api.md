@@ -70,6 +70,7 @@ Agent endpoints, PMF contact values, or decrypted plugin inventory.
 - `GET /v1/sessions`
 - `GET /v1/sessions/{session_id}`
 - `POST /v1/sessions/{session_id}/reading`
+- `POST /v1/sessions/{session_id}/teaching-layers`
 - `POST /v1/sessions/{session_id}/run`
 - `POST /v1/sessions/{session_id}/resume`
 
@@ -80,6 +81,11 @@ manifest against a running API with:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 ```
+
+`POST /v1/sessions/{session_id}/teaching-layers` generates optional layered teaching output before
+the quiz loop. Supported layer names are `overview`, `glossary`, `examples`, and `scribe`, which route
+to `teach.overview`, `teach.glossary`, `teach.examples`, and `note.scribe` Agent capabilities. This
+endpoint returns private learning content and should be redacted by platform wrappers before logging.
 
 ## Learning
 

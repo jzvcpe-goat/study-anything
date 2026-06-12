@@ -64,6 +64,14 @@ class Mastery:
     bloom: str = "remember"
 
 
+TEACHING_LAYER_CAPABILITIES = {
+    "overview": AgentCapability.TEACH_OVERVIEW,
+    "glossary": AgentCapability.TEACH_GLOSSARY,
+    "examples": AgentCapability.TEACH_EXAMPLES,
+    "scribe": AgentCapability.NOTE_SCRIBE,
+}
+
+
 @dataclass(frozen=True)
 class HitlInterrupt:
     task_id: str
@@ -82,6 +90,7 @@ class LearningState:
     track: str = "ACADEMIC"
     stage: str = "created"
     source: Optional[ReadingSource] = None
+    teaching_layers: List[Dict[str, Any]] = field(default_factory=list)
     quiz_items: List[QuizItem] = field(default_factory=list)
     answers: List[Answer] = field(default_factory=list)
     grading_results: List[GradingResult] = field(default_factory=list)
@@ -304,6 +313,95 @@ class LearningWorkflow:
             event_type="source.verified",
             node="gap_filler",
             payload={"excerpt_hash": state.source.excerpt_hash},
+        )
+
+    def teaching_layers(
+        self,
+        state: LearningState,
+        *,
+        layers: Optional[Iterable[str]] = None,
+        constraints: Optional[Dict[str, Any]] = None,
+    ) -> LearningState:
+        if state.source is None:
+            return self._interrupt(
+                state,
+                kind="reading.required",
+                message="Add a reading source before requesting teaching layers.",
+                node="teaching_layers",
+            )
+
+        requested_layers = list(layers or ("overview", "glossary"))
+        if not requested_layers:
+            raise ValueError("At least one teaching layer is required.")
+        unknown = [layer for layer in requested_layers if layer not in TEACHING_LAYER_CAPABILITIES]
+        if unknown:
+            raise ValueError(f"Unsupported teaching layer(s): {', '.join(sorted(unknown))}.")
+
+        base_constraints = {
+            "source_bound": True,
+            "language": "zh",
+            "level": "beginner",
+            **(constraints or {}),
+        }
+        generated_layers: List[Dict[str, Any]] = []
+        agent_events: List[dict[str, Any]] = []
+        for layer in requested_layers:
+            capability = TEACHING_LAYER_CAPABILITIES[layer]
+            try:
+                agent_result = self.agent_router.invoke(
+                    user_id=state.user_id,
+                    capability=capability,
+                    task=AgentTask(
+                        task_type=capability.value,
+                        session_id=state.session_id,
+                        track=state.track,
+                        source=asdict(state.source),
+                        quiz_items=[asdict(item) for item in state.quiz_items],
+                        answers=[asdict(answer) for answer in state.answers],
+                        constraints={
+                            **base_constraints,
+                            "layer": layer,
+                            "output_hint": _teaching_layer_output_hint(layer),
+                        },
+                        metadata={"layer": layer},
+                    ),
+                )
+            except (AgentConfigurationRequired, AgentProviderUnavailable, AgentResultInvalid) as exc:
+                return self._interrupt(
+                    state,
+                    kind="agent.configuration_required",
+                    message=str(exc),
+                    node="teaching_layers",
+                )
+            if agent_result.status != "ok":
+                return self._interrupt_from_agent(state, agent_result, node="teaching_layers")
+            generated_layers.append(
+                {
+                    "layer": layer,
+                    "task_type": capability.value,
+                    "content": agent_result.content,
+                    "citations": list(agent_result.citations),
+                    "confidence": agent_result.confidence,
+                    "agent": agent_result.public_metadata(),
+                }
+            )
+            agent_events.append(agent_result.public_metadata())
+
+        replaced = [item for item in state.teaching_layers if item.get("layer") not in requested_layers]
+        next_state = replace(
+            state,
+            teaching_layers=replaced + generated_layers,
+            stage="teaching_layered",
+        )
+        return self._append_event(
+            next_state,
+            event_type="teaching_layers.generated",
+            node="teaching_layers",
+            payload={
+                "layers": requested_layers,
+                "count": len(generated_layers),
+                "agents": agent_events,
+            },
         )
 
     def quiz_generator(self, state: LearningState) -> LearningState:
@@ -587,3 +685,13 @@ class LearningWorkflow:
         if not items:
             return 0.0
         return sum(items) / len(items)
+
+
+def _teaching_layer_output_hint(layer: str) -> str:
+    hints = {
+        "overview": "Return a source-bound overview with key points.",
+        "glossary": "Return terms with beginner explanation, technical definition, and example.",
+        "examples": "Return concrete examples or analogies grounded in the source.",
+        "scribe": "Return a compact Markdown note for Obsidian-style review.",
+    }
+    return hints[layer]

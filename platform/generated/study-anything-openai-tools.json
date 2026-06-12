@@ -104,6 +104,63 @@
   },
   {
     "function": {
+      "description": "Generate layered teaching output such as whole-topic overview, glossary, examples, or Obsidian-style notes through user-owned Agent capabilities. Method: POST /v1/sessions/{session_id}/teaching-layers.",
+      "name": "study_anything_teaching_layers",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "constraints": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "example_mode": {
+            "default": "mixed",
+            "type": "string"
+          },
+          "language": {
+            "default": "zh",
+            "type": "string"
+          },
+          "layers": {
+            "description": "Teaching layers to generate. Each layer routes to a separate Agent capability default.",
+            "items": {
+              "enum": [
+                "overview",
+                "glossary",
+                "examples",
+                "scribe"
+              ],
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "level": {
+            "default": "beginner",
+            "type": "string"
+          },
+          "max_terms": {
+            "default": 8,
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "layers"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Submit the learner's answer to one or more quiz items and advance mastery evaluation. Method: POST /v1/sessions/{session_id}/answers.",
       "name": "study_anything_answer",
       "parameters": {

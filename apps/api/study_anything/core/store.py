@@ -272,6 +272,7 @@ def learning_state_from_dict(values: Dict[str, Any]) -> LearningState:
         track=values.get("track", "ACADEMIC"),
         stage=values.get("stage", "created"),
         source=source,
+        teaching_layers=list(values.get("teaching_layers", [])),
         quiz_items=[QuizItem(**item) for item in values.get("quiz_items", [])],
         answers=[Answer(**item) for item in values.get("answers", [])],
         grading_results=[GradingResult(**item) for item in values.get("grading_results", [])],

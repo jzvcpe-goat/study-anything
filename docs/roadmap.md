@@ -123,6 +123,8 @@
 ## v0.3 Next
 
 - Importer plugin SDK.
+- Layered teaching orchestration so platform Agents can request source-bound overview, glossary,
+  examples, and Obsidian-style notes from separate user-owned Agent capabilities.
 - Expand the packaged Kimi/Codex/WorkBuddy platform-agent integrations into tested examples and
   platform-specific submission docs.
 - Mature Agent quality eval suites for DeepEval, LangChain AgentEvals, and Ragas.
