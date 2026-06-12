@@ -585,7 +585,7 @@
       "name": "study_anything_add_enrichment",
       "method": "POST",
       "path_template": "/v1/sessions/{session_id}/enrichment",
-      "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+      "description": "Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
       "input_schema": {
         "type": "object",
         "required": [
@@ -615,7 +615,10 @@
                 "source_type",
                 "reference",
                 "title",
-                "text"
+                "text",
+                "locator",
+                "provenance",
+                "redaction_policy"
               ],
               "additionalProperties": false,
               "properties": {
@@ -624,9 +627,12 @@
                   "enum": [
                     "web",
                     "document",
+                    "pdf",
                     "video_slice",
+                    "video",
                     "app_context",
-                    "context"
+                    "markdown_note",
+                    "obsidian_note"
                   ]
                 },
                 "reference": {
@@ -643,6 +649,53 @@
                   "type": "string",
                   "description": "Page, timestamp range, app object id, or other platform-local locator."
                 },
+                "excerpt_hash": {
+                  "type": "string",
+                  "description": "Optional sha256 hash supplied by the platform agent; Study Anything recomputes and rejects mismatches."
+                },
+                "provenance": {
+                  "type": "object",
+                  "required": [
+                    "collector",
+                    "capture_method"
+                  ],
+                  "additionalProperties": true,
+                  "properties": {
+                    "collector": {
+                      "type": "string"
+                    },
+                    "capture_method": {
+                      "type": "string",
+                      "enum": [
+                        "browser_excerpt",
+                        "document_excerpt",
+                        "video_transcript_slice",
+                        "app_selection",
+                        "markdown_excerpt",
+                        "obsidian_excerpt",
+                        "manual_excerpt",
+                        "retrieval_result",
+                        "importer_plugin"
+                      ]
+                    },
+                    "source_owner": {
+                      "type": "string",
+                      "default": "user"
+                    },
+                    "collected_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "redaction_policy": {
+                  "type": "string",
+                  "enum": [
+                    "reference_only",
+                    "hash_and_locator",
+                    "summary_only"
+                  ],
+                  "default": "reference_only"
+                },
                 "metadata": {
                   "type": "object",
                   "additionalProperties": true
@@ -655,6 +708,8 @@
       "output_requirements": [
         "schema_version == learning-enrichment-v1",
         "source.excerpt_hash is present",
+        "contract.requires_provenance == true",
+        "contract.requires_redaction_policy == true",
         "items contain excerpt_hash but not raw text"
       ],
       "privacy": {
@@ -976,6 +1031,44 @@
         "must_not_return": [
           "raw source text",
           "agent endpoints",
+          "secrets"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_enrichment_artifact_export",
+      "method": "GET",
+      "path_template": "/v1/sessions/{session_id}/exports/enrichment-artifact",
+      "description": "Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "output_requirements": [
+        "schema_version == learning-enrichment-artifact-v1",
+        "format == markdown+html",
+        "source_references include provenance and excerpt hashes",
+        "privacy.raw_source_text_included == false",
+        "privacy.raw_enrichment_text_included == false",
+        "privacy.agent_metadata_included == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "raw source text",
+          "raw enrichment text",
+          "learner answers",
+          "agent endpoints",
+          "raw agent metadata",
           "secrets"
         ]
       }

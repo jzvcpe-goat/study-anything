@@ -56,7 +56,7 @@ python3 scripts/verify_external_adoption.py \
 
 The operator drill emits `study-anything-operator-drill-v1`, proving the pack can be consumed as an
 external platform tool directory. The verifier emits `adoption-proof-v1`, proving the Skill Mode
-runtime, importer/enrichment/retrieval/teaching/eval loop, Obsidian export, and NotebookLM-style
+runtime, importer/enrichment/retrieval/teaching/eval loop, enrichment artifact, Obsidian export, and NotebookLM-style
 handoff without requiring the standalone frontend or storing real model keys in Study Anything.
 
 Maintainers and external testers can verify the project from a disposable clean clone:
@@ -102,7 +102,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.24-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.25-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -115,7 +115,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.24-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.25-alpha
 ```
 
 ## Bring Your Own Agent
@@ -232,7 +232,7 @@ For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
 
 Connect a user-owned HTTP agent, import Learning Context Packages, start source-bound sessions, attach
 enrichment, generate teaching layers, answer questions, inspect mastery, export Obsidian notes, and
-create portable learning packages through the same public API. Chat-only LLM products cannot run local scripts or reach
+create enrichment artifacts plus portable learning packages through the same public API. Chat-only LLM products cannot run local scripts or reach
 `localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned
 reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local
 skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage,
@@ -240,7 +240,7 @@ see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
 Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`,
-`retrieval-quality-eval`, Obsidian, and `learning-package-v1` evidence after completed learning and
+`retrieval-quality-eval`, `learning-enrichment-artifact-v1`, Obsidian, and `learning-package-v1` evidence after completed learning and
 retrieval-backed loops. Importer integrations should first validate `learning-context-package-v1`.
 
 ## Repository Layout

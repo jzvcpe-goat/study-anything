@@ -31,7 +31,13 @@ def build_context_package(
                 "reference": url,
                 "title": title,
                 "text": excerpt,
-                "locator": locator,
+                "locator": locator or "page-selection",
+                "provenance": {
+                    "collector": "example-web-importer",
+                    "capture_method": "browser_excerpt",
+                    "source_owner": "user",
+                },
+                "redaction_policy": "reference_only",
                 "metadata": {
                     "importer_plugin": "example-web-importer",
                     "user_approved_source": True,

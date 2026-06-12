@@ -182,9 +182,19 @@ FILES: list[tuple[str, str, str]] = [
         "General platform Agent integration guide.",
     ),
     (
+        "docs/learning-enrichment.md",
+        "docs",
+        "Learning Enrichment Layer context contract and micro-lesson export guide.",
+    ),
+    (
         "docs/kimi-agent-gateway.md",
         "docs",
         "Kimi-compatible user-owned HTTP Agent gateway guide.",
+    ),
+    (
+        "docs/use-with-kimi.md",
+        "docs",
+        "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
     ),
     (
         "docs/operator-drill.md",
@@ -202,9 +212,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.24-alpha.md",
+        "docs/release-notes/v0.2.25-alpha.md",
         "docs",
-        "Release notes for the Agent eval maturity release.",
+        "Release notes for the Learning Enrichment Layer release.",
     ),
     (
         "docs/plugins.md",

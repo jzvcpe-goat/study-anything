@@ -34,8 +34,9 @@ The tool surface includes:
 - `study_anything_retrieval_quality_eval` for redacted retrieval/context quality gates.
 - `study_anything_create_session_from_retrieval` and `study_anything_append_retrieval_context` for
   turning retrieval results into a focused lesson.
-- `study_anything_add_enrichment` for web/document/video-slice/app-context excerpts gathered by Kimi or the platform agent.
+- `study_anything_add_enrichment` for web/document/PDF/video-slice/app-context/Markdown/Obsidian excerpts gathered by Kimi or the platform agent.
 - `study_anything_agent_quality_eval` for the minimum teaching-quality gate.
+- `study_anything_enrichment_artifact_export` for a redacted Markdown+HTML micro-lesson Kimi can use in the conversation.
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
 - `study_anything_learning_package_export` for a portable package that a platform agent can pass into
   NotebookLM-style or local knowledge workflows.
@@ -93,12 +94,13 @@ After a completed learning loop, the platform Agent should fetch:
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
+GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package
 ```
 
-The exports are an Obsidian-compatible Markdown note plus a portable learning package for the user's
-second-brain or NotebookLM-style workflow.
+The exports are a redacted enrichment micro-lesson, an Obsidian-compatible Markdown note, and a
+portable learning package for the user's second-brain or NotebookLM-style workflow.
 
 For importer flows, Kimi or the surrounding platform Agent should first build a
 `learning-context-package-v1` object from user-approved web pages, files, video slices, workspace

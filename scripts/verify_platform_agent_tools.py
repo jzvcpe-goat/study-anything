@@ -41,6 +41,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
     "study_anything_obsidian_export",
+    "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
 }
 REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
@@ -324,7 +325,14 @@ def main() -> None:
                     "source_type": "web",
                     "reference": "https://example.test/platform-enrichment",
                     "title": "Private Enrichment Web",
+                    "locator": "section=platform-smoke",
                     "text": private_enrichment_text,
+                    "provenance": {
+                        "collector": "platform-agent-tool-smoke",
+                        "capture_method": "browser_excerpt",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "reference_only",
                 },
                 {
                     "source_type": "video_slice",
@@ -332,6 +340,12 @@ def main() -> None:
                     "title": "Private Enrichment Clip",
                     "locator": "00:00:08-00:00:21",
                     "text": private_enrichment_text,
+                    "provenance": {
+                        "collector": "platform-agent-tool-smoke",
+                        "capture_method": "video_transcript_slice",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "reference_only",
                 },
             ],
         },
@@ -436,6 +450,22 @@ def main() -> None:
     if private_source_text in markdown or private_enrichment_text in markdown:
         raise VerificationError("Obsidian export leaked raw source/enrichment text.")
 
+    enrichment_artifact = call_tool(
+        tools,
+        "study_anything_enrichment_artifact_export",
+        session_id=session_id,
+    )
+    if enrichment_artifact.get("schema_version") != "learning-enrichment-artifact-v1":
+        raise VerificationError(f"Unexpected enrichment artifact schema: {enrichment_artifact}")
+    if enrichment_artifact.get("format") != "markdown+html":
+        raise VerificationError(f"Unexpected enrichment artifact format: {enrichment_artifact}")
+    if "learning-enrichment-artifact-v1" not in str(enrichment_artifact.get("html") or ""):
+        raise VerificationError(f"Enrichment artifact HTML missing schema marker: {enrichment_artifact}")
+    if private_source_text in json.dumps(enrichment_artifact, ensure_ascii=False):
+        raise VerificationError("Enrichment artifact leaked raw source text.")
+    if private_enrichment_text in json.dumps(enrichment_artifact, ensure_ascii=False):
+        raise VerificationError("Enrichment artifact leaked raw enrichment text.")
+
     package = call_tool(tools, "study_anything_learning_package_export", session_id=session_id)
     if package.get("schema_version") != "learning-package-v1":
         raise VerificationError(f"Unexpected learning package schema: {package}")
@@ -481,6 +511,7 @@ def main() -> None:
                 "eval_schema": artifact["schema_version"],
                 "quality_schema": quality["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
+                "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "learning_package_schema": package["schema_version"],
                 "adapter_ids": sorted(adapter_ids),
                 "trajectory_tasks": trajectory,

@@ -55,6 +55,7 @@ PLATFORM_REQUIREMENTS = {
 REQUIRED_EXPORT_EVIDENCE = [
     "agent_audit.status == verified",
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
+    "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
 ]
@@ -335,6 +336,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
         },
         "handoff_contract": {
             "notebooklm_fixture": "fixtures/notebooklm/notebooklm-style-context-package.json",
+            "enrichment_artifact_schema": "learning-enrichment-artifact-v1",
             "obsidian_export_schema": "obsidian-markdown-export-v1",
             "learning_package_schema": "learning-package-v1",
             "shared_logs_are_redacted": True,

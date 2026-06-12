@@ -105,9 +105,12 @@ explicitly sent. The response includes a validated `learning-context-package-v1`
 `redacted_package` summary without item text.
 
 `POST /v1/sessions/{session_id}/enrichment` remains available for simple one-off bounded excerpts. It
-lets a platform Agent attach web pages, documents, video slices, or app-context excerpts as a source
-bundle. The response returns references and excerpt hashes, not raw item text. Platform wrappers should
-still treat the request and session state as private learning data.
+lets a platform Agent attach web pages, documents/PDFs, video slices, app context, Markdown notes, or
+Obsidian notes as a source bundle. Each item must include `locator`, `provenance`, and
+`redaction_policy`; Study Anything recomputes source hashes and rejects secret-like values. The
+response returns references, provenance, redaction policy, and excerpt hashes, not raw item text.
+Platform wrappers should still treat the request and session state as private learning data. See
+`docs/learning-enrichment.md`.
 
 ## Learning
 
@@ -120,6 +123,7 @@ still treat the request and session state as private learning data.
 - `GET /v1/evals/quality/cases`
 - `GET /v1/evals/retrieval/cases`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
+- `GET /v1/sessions/{session_id}/exports/enrichment-artifact`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
@@ -135,6 +139,12 @@ does not return raw source text, answers, feedback, insights, endpoints, or secr
 `exports/obsidian` returns a user-controlled Markdown note with source references, teaching layers,
 quiz review, mastery, insights, and enrichment references. It never includes raw source text, but it can
 include learner answers and grading feedback, so platform wrappers should not log it by default.
+
+`exports/enrichment-artifact` returns `learning-enrichment-artifact-v1`, a redacted Markdown+HTML
+micro-lesson built from primary and enrichment references. It includes source references, hashes,
+locators, provenance, redaction policies, and generated teaching content when available. It does not
+return raw source text, raw enrichment text, learner answers, Agent endpoints, raw Agent metadata, or
+secrets.
 
 `exports/learning-package` returns `learning-package-v1`, a portable JSON package for platform
 Agent handoff, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows. It includes

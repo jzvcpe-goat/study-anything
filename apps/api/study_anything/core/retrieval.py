@@ -124,7 +124,13 @@ class RetrievalSearchResultSet:
                     "reference": result.reference,
                     "title": f"Retrieval result {index}",
                     "text": result.snippet,
-                    "locator": result.locator,
+                    "locator": result.locator or f"retrieval-result={index}",
+                    "provenance": {
+                        "collector": "study-anything-retrieval",
+                        "capture_method": "retrieval_result",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "hash_and_locator",
                     "metadata": {
                         "source_session_id": result.session_id,
                         "retrieval_document_id": result.document_id,

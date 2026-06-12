@@ -826,7 +826,7 @@
     },
     "/v1/sessions/{session_id}/enrichment": {
       "post": {
-        "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+        "description": "Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
         "operationId": "study_anything_add_enrichment",
         "parameters": [
           {
@@ -849,6 +849,10 @@
                     "items": {
                       "additionalProperties": false,
                       "properties": {
+                        "excerpt_hash": {
+                          "description": "Optional sha256 hash supplied by the platform agent; Study Anything recomputes and rejects mismatches.",
+                          "type": "string"
+                        },
                         "locator": {
                           "description": "Page, timestamp range, app object id, or other platform-local locator.",
                           "type": "string"
@@ -857,6 +861,49 @@
                           "additionalProperties": true,
                           "type": "object"
                         },
+                        "provenance": {
+                          "additionalProperties": true,
+                          "properties": {
+                            "capture_method": {
+                              "enum": [
+                                "browser_excerpt",
+                                "document_excerpt",
+                                "video_transcript_slice",
+                                "app_selection",
+                                "markdown_excerpt",
+                                "obsidian_excerpt",
+                                "manual_excerpt",
+                                "retrieval_result",
+                                "importer_plugin"
+                              ],
+                              "type": "string"
+                            },
+                            "collected_at": {
+                              "type": "string"
+                            },
+                            "collector": {
+                              "type": "string"
+                            },
+                            "source_owner": {
+                              "default": "user",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "collector",
+                            "capture_method"
+                          ],
+                          "type": "object"
+                        },
+                        "redaction_policy": {
+                          "default": "reference_only",
+                          "enum": [
+                            "reference_only",
+                            "hash_and_locator",
+                            "summary_only"
+                          ],
+                          "type": "string"
+                        },
                         "reference": {
                           "type": "string"
                         },
@@ -864,9 +911,12 @@
                           "enum": [
                             "web",
                             "document",
+                            "pdf",
                             "video_slice",
+                            "video",
                             "app_context",
-                            "context"
+                            "markdown_note",
+                            "obsidian_note"
                           ],
                           "type": "string"
                         },
@@ -882,7 +932,10 @@
                         "source_type",
                         "reference",
                         "title",
-                        "text"
+                        "text",
+                        "locator",
+                        "provenance",
+                        "redaction_policy"
                       ],
                       "type": "object"
                     },
@@ -931,10 +984,12 @@
             "description": "Optional dependency unavailable"
           }
         },
-        "summary": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
+        "summary": "Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-enrichment-v1",
           "source.excerpt_hash is present",
+          "contract.requires_provenance == true",
+          "contract.requires_redaction_policy == true",
           "items contain excerpt_hash but not raw text"
         ],
         "x-study-anything-privacy": {
@@ -945,6 +1000,67 @@
           ],
           "request_contains_private_learning_data": true,
           "returns_private_learning_data": true
+        }
+      }
+    },
+    "/v1/sessions/{session_id}/exports/enrichment-artifact": {
+      "get": {
+        "description": "Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows.",
+        "operationId": "study_anything_enrichment_artifact_export",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows.",
+        "x-study-anything-output-requirements": [
+          "schema_version == learning-enrichment-artifact-v1",
+          "format == markdown+html",
+          "source_references include provenance and excerpt hashes",
+          "privacy.raw_source_text_included == false",
+          "privacy.raw_enrichment_text_included == false",
+          "privacy.agent_metadata_included == false"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "raw source text",
+            "raw enrichment text",
+            "learner answers",
+            "agent endpoints",
+            "raw agent metadata",
+            "secrets"
+          ],
+          "returns_private_learning_data": false
         }
       }
     },

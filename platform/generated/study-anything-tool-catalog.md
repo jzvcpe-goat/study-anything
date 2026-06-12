@@ -365,12 +365,14 @@ Privacy:
 
 - Method: `POST`
 - Path: `/v1/sessions/{session_id}/enrichment`
-- Description: Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.
+- Description: Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.
 
 Output requirements:
 
 - schema_version == learning-enrichment-v1
 - source.excerpt_hash is present
+- contract.requires_provenance == true
+- contract.requires_redaction_policy == true
 - items contain excerpt_hash but not raw text
 
 Privacy:
@@ -595,6 +597,37 @@ Privacy:
     "grading feedback"
   ],
   "returns_private_learning_data": true
+}
+```
+
+### `study_anything_enrichment_artifact_export`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/exports/enrichment-artifact`
+- Description: Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows.
+
+Output requirements:
+
+- schema_version == learning-enrichment-artifact-v1
+- format == markdown+html
+- source_references include provenance and excerpt hashes
+- privacy.raw_source_text_included == false
+- privacy.raw_enrichment_text_included == false
+- privacy.agent_metadata_included == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "raw source text",
+    "raw enrichment text",
+    "learner answers",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
 }
 ```
 

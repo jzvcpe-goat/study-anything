@@ -56,6 +56,7 @@ python3 scripts/study_anything_cli.py lesson \
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py enrichment-artifact SESSION_ID --markdown
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 API_BASE=http://127.0.0.1:8000 \
@@ -98,6 +99,7 @@ A Codex integration must return both:
 - `importer-run-v1` for reviewed local importer runtime
 - `retrieval-search-v1` when optional retrieval is enabled
 - `retrieval-quality-eval-v1` when optional retrieval quality is scored
+- `learning-enrichment-artifact-v1` for redacted Markdown+HTML micro-lessons
 - `obsidian-markdown-export-v1` for copy-ready Obsidian second-brain notes
 - `learning-package-v1` for platform-agent, NotebookLM-style, or local archive workflows
 

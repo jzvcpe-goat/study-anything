@@ -217,17 +217,17 @@
   external eval adapters -> Obsidian and learning-package export.
 - Kimi, Codex, and WorkBuddy packs now include one-command ecosystem eval acceptance commands.
 
-## v0.2.24-alpha
+## v0.2.25-alpha
 
-- Add a committed deterministic Agent eval baseline and a regression comparison report so release
-  checks can detect adapter, trajectory, quality-score, retrieval-score, and privacy regressions.
-- Include `study-anything-agent-eval-regression-report-v1` in the local-first release gate without
-  requiring judge-model keys or external package installs.
-- Keep Promptfoo, DeepEval, LangChain AgentEvals, and Ragas as mature ecosystem targets while making
-  fast native gates the default CI path.
-- Extend `adoption-proof-v1` and the platform adoption pack with eval baseline evidence.
-- Keep real model, platform, and judge-model credentials in the user's Agent/eval environment, not in
-  Study Anything.
+- Tighten the Learning Enrichment Layer contract around source type, locator, provenance, redaction
+  policy, source hashes, and secret-like value rejection.
+- Add `learning-enrichment-artifact-v1`, a redacted Markdown+HTML micro-lesson export for
+  Kimi/Codex/WorkBuddy conversations, NotebookLM-style bridges, and Obsidian pipelines.
+- Extend the constrained platform tool manifest with `study_anything_enrichment_artifact_export`.
+- Keep browser, file, app, video slicing, real model, and judge-model credentials in the user's
+  platform Agent or gateway, not in Study Anything.
+- Extend adoption-proof, platform packs, and release checks so enrichment artifacts become part of
+  the external operator handoff.
 
 ## v0.3 Next
 

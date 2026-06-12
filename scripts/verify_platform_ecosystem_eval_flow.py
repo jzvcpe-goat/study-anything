@@ -171,7 +171,14 @@ def main() -> None:
                     "source_type": "web",
                     "reference": "https://platform.local/browser/ai-pm-learning",
                     "title": "Browser Context",
+                    "locator": "section=ai-pm-learning",
                     "text": private_platform_context,
+                    "provenance": {
+                        "collector": "platform-agent-ecosystem-smoke",
+                        "capture_method": "browser_excerpt",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "reference_only",
                     "metadata": {"collector": "platform-agent"},
                 },
                 {
@@ -180,6 +187,12 @@ def main() -> None:
                     "title": "Video Slice Context",
                     "locator": "00:01:12-00:02:05",
                     "text": private_platform_context,
+                    "provenance": {
+                        "collector": "platform-agent-ecosystem-smoke",
+                        "capture_method": "video_transcript_slice",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "reference_only",
                     "metadata": {"collector": "platform-agent"},
                 },
             ],
@@ -237,11 +250,15 @@ def main() -> None:
     audit = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-audit")
     artifact = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/artifact")
     quality = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/quality")
+    enrichment_artifact = request(
+        f"/v1/sessions/{quote(lesson_session_id)}/exports/enrichment-artifact"
+    )
     obsidian = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/obsidian")
     learning_package = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/learning-package")
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
     assert_schema(quality, "agent-quality-eval-v1", "agent quality")
+    assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(learning_package, "learning-package-v1", "learning package")
     if audit.get("status") != "verified" or quality.get("status") != "pass":
@@ -271,7 +288,11 @@ def main() -> None:
     # they still must not accidentally contain credentials or secret-looking values.
     assert_no_leaks(
         "user-owned exports",
-        {"obsidian": obsidian, "learning_package": learning_package},
+        {
+            "enrichment_artifact": enrichment_artifact,
+            "obsidian": obsidian,
+            "learning_package": learning_package,
+        },
         [],
     )
 
@@ -287,6 +308,7 @@ def main() -> None:
                 "agent_quality_status": quality["status"],
                 "retrieval_eval_tool": retrieval_runner["framework"],
                 "deepeval_tool": deepeval_runner["tool"],
+                "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": learning_package["schema_version"],
             },

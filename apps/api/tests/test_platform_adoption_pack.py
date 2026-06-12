@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.2.24-alpha")
+        self.assertEqual(manifest["version"], "v0.2.25-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -77,6 +77,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
 
         self.assertIn("study_anything_retrieval_quality_eval", manifest["required_tool_names"])
         self.assertIn("study_anything_obsidian_export", manifest["required_tool_names"])
+        self.assertIn("study_anything_enrichment_artifact_export", manifest["required_tool_names"])
         self.assertIn("study_anything_learning_package_export", manifest["required_tool_names"])
 
 

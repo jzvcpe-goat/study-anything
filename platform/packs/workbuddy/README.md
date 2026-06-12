@@ -93,10 +93,12 @@ After every completed learning loop, the workspace Agent should fetch:
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
+GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package
 ```
 
+The enrichment artifact is a redacted Markdown+HTML micro-lesson for the workspace conversation.
 The Obsidian Markdown export is for the user's second-brain workflow. The learning package is for
 platform-agent handoff, NotebookLM-style bridges, or local archives. The shared run summary should
 include only compact mastery and redacted evidence, not raw source prose or learner answers.

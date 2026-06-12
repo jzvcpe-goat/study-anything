@@ -23,6 +23,7 @@ REQUIRED_ACCEPTANCE = {
     "retrieval_quality_eval.schema_version == retrieval-quality-eval-v1",
     "retrieval_quality_eval.status == pass",
     "learning_context_package.schema_version == learning-context-package-v1",
+    "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",
     "learning_package.schema_version == learning-package-v1",
 }
@@ -126,6 +127,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "retrieval",
         "Obsidian",
         "Learning Context Package",
+        "micro-lesson",
         "learning package",
         "raw source",
     )

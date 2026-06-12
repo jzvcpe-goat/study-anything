@@ -1,7 +1,7 @@
 {
   "generated_tool_assets": {
-    "openai_tool_count": 23,
-    "openapi_path_count": 23,
+    "openai_tool_count": 24,
+    "openapi_path_count": 24,
     "required_tools_present": [
       "study_anything_add_enrichment",
       "study_anything_add_reading",
@@ -12,6 +12,7 @@
       "study_anything_append_context_package",
       "study_anything_create_session",
       "study_anything_create_session_from_context_package",
+      "study_anything_enrichment_artifact_export",
       "study_anything_health",
       "study_anything_learning_package_export",
       "study_anything_mastery",
@@ -25,6 +26,7 @@
     ]
   },
   "handoff_contract": {
+    "enrichment_artifact_schema": "learning-enrichment-artifact-v1",
     "learning_package_schema": "learning-package-v1",
     "notebooklm_fixture": "fixtures/notebooklm/notebooklm-style-context-package.json",
     "obsidian_export_schema": "obsidian-markdown-export-v1",
@@ -115,15 +117,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 46,
+    "file_count": 48,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.2.24-alpha"
+    "version": "v0.2.25-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 11,
+      "acceptance_evidence_count": 12,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -152,7 +154,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 11,
+      "acceptance_evidence_count": 12,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -185,7 +187,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 11,
+      "acceptance_evidence_count": 12,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",

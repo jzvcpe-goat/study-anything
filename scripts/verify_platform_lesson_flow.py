@@ -90,6 +90,12 @@ def main() -> None:
                     "title": "Desirable Difficulty Clip",
                     "locator": "00:00:05-00:00:42",
                     "text": private_enrichment_text,
+                    "provenance": {
+                        "collector": "platform-agent-smoke",
+                        "capture_method": "video_transcript_slice",
+                        "source_owner": "user",
+                    },
+                    "redaction_policy": "reference_only",
                     "metadata": {"collector": "platform-agent-smoke"},
                 }
             ],
@@ -129,12 +135,14 @@ def main() -> None:
     quality = request(f"/v1/sessions/{quote(session_id)}/agent-eval/quality")
     obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
     package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
+    enrichment_artifact = request(f"/v1/sessions/{quote(session_id)}/exports/enrichment-artifact")
 
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
     assert_schema(quality, "agent-quality-eval-v1", "quality eval")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(package, "learning-package-v1", "learning package")
+    assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
     if audit.get("status") != "verified":
         raise LessonVerificationError(f"Agent audit did not verify: {audit}")
     if quality.get("status") != "pass":
@@ -153,6 +161,11 @@ def main() -> None:
     assert_no_leaks("quality eval", quality, redacted_forbidden)
     assert_no_leaks("learning package raw source boundary", package, [private_source_text, private_enrichment_text])
     assert_no_leaks("obsidian raw source boundary", obsidian, [private_source_text, private_enrichment_text])
+    assert_no_leaks(
+        "enrichment artifact raw source boundary",
+        enrichment_artifact,
+        [private_source_text, private_enrichment_text, private_answer],
+    )
 
     print(
         json.dumps(
@@ -165,6 +178,7 @@ def main() -> None:
                 "quality_status": quality["status"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": package["schema_version"],
+                "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "learning_package_consumers": package["intended_consumers"],
             },
             ensure_ascii=False,
