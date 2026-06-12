@@ -17,6 +17,12 @@
       "title": "Learning Science Article",
       "text": "Private fixture web excerpt: retrieval practice improves durable recall when learners actively reconstruct source-bound ideas.",
       "locator": "section=overview",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "browser_excerpt",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "importer_plugin": "example-web-importer"
       }
@@ -27,6 +33,12 @@
       "title": "AI Product Manager PDF",
       "text": "Private fixture document excerpt: a product manager should connect technical mechanisms, user outcomes, and measurable adoption signals.",
       "locator": "page=3",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "document_excerpt",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "document_kind": "pdf"
       }
@@ -37,6 +49,12 @@
       "title": "Lesson One Clip",
       "text": "Private fixture video excerpt: explain the concept first, then isolate professional terms, then ask a source-bound question.",
       "locator": "00:01:10-00:02:20",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "video_transcript_slice",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "transcript_language": "en"
       }
@@ -46,6 +64,13 @@
       "reference": "app://kimi/workspace/demo",
       "title": "Kimi Workspace Note",
       "text": "Private fixture app context excerpt: the platform agent owns browsing and workspace access while Study Anything owns learner state.",
+      "locator": "workspace=demo;selection=learning-note",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "app_selection",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "platform_agent": "kimi-compatible"
       }
@@ -55,6 +80,13 @@
       "reference": "markdown://vault/learning-loop",
       "title": "Learning Loop Markdown Note",
       "text": "Private fixture markdown excerpt: convert rough notes into reviewable learning packages before long-term memory export.",
+      "locator": "heading=Learning Loop",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "markdown_excerpt",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "importer_plugin": "example-note-importer"
       }
@@ -64,6 +96,13 @@
       "reference": "obsidian://vault/AI PM/Study Anything",
       "title": "Study Anything Obsidian Note",
       "text": "Private fixture obsidian excerpt: backlinks should preserve second-brain structure without storing external agent secrets.",
+      "locator": "note=AI PM/Study Anything;heading=Study Anything",
+      "provenance": {
+        "collector": "notebooklm-fixture",
+        "capture_method": "obsidian_excerpt",
+        "source_owner": "user"
+      },
+      "redaction_policy": "reference_only",
       "metadata": {
         "obsidian_backlinks": [
           "[[AI PM]]",

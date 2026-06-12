@@ -18,13 +18,15 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.24 packs add a deterministic Agent eval regression baseline on top of the operator drill,
-distributable adoption archive, `adoption-proof-v1` verifier, importer, retrieval, and ecosystem
-eval capabilities:
+v0.2.25 packs add the Learning Enrichment Layer on top of the operator drill, deterministic Agent
+eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
+retrieval, and ecosystem eval capabilities:
 
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
-- enrichment input for web, document, video-slice, and app-context excerpts gathered by the platform;
+- enrichment input for web, document/PDF, video-slice, app-context, Markdown, and Obsidian excerpts
+  gathered by the platform;
+- redacted Markdown+HTML enrichment micro-lessons for platform-agent teaching surfaces;
 - quality eval evidence that separates invocation proof, schema validity, and teaching-quality gates;
 - retrieval/context quality eval evidence for source binding, snippet minimality, query relevance, and
   Learning Context Package handoff;

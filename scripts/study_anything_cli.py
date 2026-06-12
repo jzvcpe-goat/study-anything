@@ -323,7 +323,13 @@ def cmd_enrich(args: argparse.Namespace) -> None:
                 "reference": args.reference,
                 "title": args.title,
                 "text": args.text,
-                "locator": args.locator,
+                "locator": args.locator or "cli-selection",
+                "provenance": {
+                    "collector": "study-anything-cli",
+                    "capture_method": args.capture_method,
+                    "source_owner": "user",
+                },
+                "redaction_policy": args.redaction_policy,
                 "metadata": metadata,
             }
         ],
@@ -448,6 +454,24 @@ def cmd_obsidian_export(args: argparse.Namespace) -> None:
     emit(args, export)
 
 
+def cmd_enrichment_artifact(args: argparse.Namespace) -> None:
+    export = request(f"/v1/sessions/{quote(args.session_id)}/exports/enrichment-artifact")
+    content_key = "html" if args.html else "markdown"
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            handle.write(str(export.get(content_key) or ""))
+        if not args.json:
+            print(f"wrote: {args.output}")
+            return
+    if args.markdown and not args.json:
+        print(str(export.get("markdown") or ""))
+        return
+    if args.html and not args.json:
+        print(str(export.get("html") or ""))
+        return
+    emit(args, export)
+
+
 def cmd_learning_package(args: argparse.Namespace) -> None:
     package = request(f"/v1/sessions/{quote(args.session_id)}/exports/learning-package")
     if args.output:
@@ -529,7 +553,13 @@ def cmd_lesson(args: argparse.Namespace) -> None:
                         "reference": args.enrichment_reference,
                         "title": args.enrichment_title,
                         "text": args.enrichment_text,
-                        "locator": args.enrichment_locator,
+                        "locator": args.enrichment_locator or "cli-selection",
+                        "provenance": {
+                            "collector": "study-anything-cli",
+                            "capture_method": args.enrichment_capture_method,
+                            "source_owner": "user",
+                        },
+                        "redaction_policy": "reference_only",
                     }
                 ],
             },
@@ -701,6 +731,12 @@ def build_parser() -> argparse.ArgumentParser:
     enrich.add_argument("--title", required=True)
     enrich.add_argument("--text", required=True)
     enrich.add_argument("--locator")
+    enrich.add_argument("--capture-method", default="manual_excerpt")
+    enrich.add_argument(
+        "--redaction-policy",
+        choices=["reference_only", "hash_and_locator", "summary_only"],
+        default="reference_only",
+    )
     enrich.add_argument("--metadata-json")
     enrich.add_argument("--bundle-title", default="Learning Enrichment Bundle")
     enrich.add_argument("--bundle-reference")
@@ -775,6 +811,16 @@ def build_parser() -> argparse.ArgumentParser:
     obsidian_export.add_argument("--output", help="Write Markdown to a path")
     obsidian_export.set_defaults(func=cmd_obsidian_export)
 
+    enrichment_artifact = subparsers.add_parser(
+        "enrichment-artifact",
+        help="Export a redacted Markdown/HTML enrichment micro-lesson",
+    )
+    add_session_id(enrichment_artifact)
+    enrichment_artifact.add_argument("--markdown", action="store_true", help="Print only Markdown")
+    enrichment_artifact.add_argument("--html", action="store_true", help="Print only HTML")
+    enrichment_artifact.add_argument("--output", help="Write Markdown or HTML to a path")
+    enrichment_artifact.set_defaults(func=cmd_enrichment_artifact)
+
     package_export = subparsers.add_parser("package-export", help="Export a portable learning package")
     add_session_id(package_export)
     package_export.add_argument("--output", help="Write package JSON to a path")
@@ -815,6 +861,7 @@ def build_parser() -> argparse.ArgumentParser:
     lesson.add_argument("--enrichment-reference", default="https://example.test/lesson-enrichment")
     lesson.add_argument("--enrichment-title", default="Lesson Enrichment")
     lesson.add_argument("--enrichment-locator")
+    lesson.add_argument("--enrichment-capture-method", default="manual_excerpt")
     lesson.add_argument("--enrichment-bundle-title", default="Lesson Enrichment Bundle")
     lesson.set_defaults(func=cmd_lesson)
     return parser

@@ -386,7 +386,7 @@
   },
   {
     "function": {
-      "description": "Attach web, document, video-slice, or app-context excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle. Method: POST /v1/sessions/{session_id}/enrichment.",
+      "description": "Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle. Method: POST /v1/sessions/{session_id}/enrichment.",
       "name": "study_anything_add_enrichment",
       "parameters": {
         "additionalProperties": false,
@@ -395,6 +395,10 @@
             "items": {
               "additionalProperties": false,
               "properties": {
+                "excerpt_hash": {
+                  "description": "Optional sha256 hash supplied by the platform agent; Study Anything recomputes and rejects mismatches.",
+                  "type": "string"
+                },
                 "locator": {
                   "description": "Page, timestamp range, app object id, or other platform-local locator.",
                   "type": "string"
@@ -403,6 +407,49 @@
                   "additionalProperties": true,
                   "type": "object"
                 },
+                "provenance": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "capture_method": {
+                      "enum": [
+                        "browser_excerpt",
+                        "document_excerpt",
+                        "video_transcript_slice",
+                        "app_selection",
+                        "markdown_excerpt",
+                        "obsidian_excerpt",
+                        "manual_excerpt",
+                        "retrieval_result",
+                        "importer_plugin"
+                      ],
+                      "type": "string"
+                    },
+                    "collected_at": {
+                      "type": "string"
+                    },
+                    "collector": {
+                      "type": "string"
+                    },
+                    "source_owner": {
+                      "default": "user",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "collector",
+                    "capture_method"
+                  ],
+                  "type": "object"
+                },
+                "redaction_policy": {
+                  "default": "reference_only",
+                  "enum": [
+                    "reference_only",
+                    "hash_and_locator",
+                    "summary_only"
+                  ],
+                  "type": "string"
+                },
                 "reference": {
                   "type": "string"
                 },
@@ -410,9 +457,12 @@
                   "enum": [
                     "web",
                     "document",
+                    "pdf",
                     "video_slice",
+                    "video",
                     "app_context",
-                    "context"
+                    "markdown_note",
+                    "obsidian_note"
                   ],
                   "type": "string"
                 },
@@ -428,7 +478,10 @@
                 "source_type",
                 "reference",
                 "title",
-                "text"
+                "text",
+                "locator",
+                "provenance",
+                "redaction_policy"
               ],
               "type": "object"
             },
@@ -647,6 +700,26 @@
     "function": {
       "description": "Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references. Method: GET /v1/sessions/{session_id}/exports/obsidian.",
       "name": "study_anything_obsidian_export",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows. Method: GET /v1/sessions/{session_id}/exports/enrichment-artifact.",
+      "name": "study_anything_enrichment_artifact_export",
       "parameters": {
         "additionalProperties": false,
         "properties": {

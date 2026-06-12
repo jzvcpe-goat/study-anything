@@ -28,6 +28,13 @@ def build_context_package(
                 "reference": note_reference,
                 "title": title,
                 "text": markdown_excerpt,
+                "locator": "note-selection",
+                "provenance": {
+                    "collector": "example-note-importer",
+                    "capture_method": "obsidian_excerpt" if backlinks else "markdown_excerpt",
+                    "source_owner": "user",
+                },
+                "redaction_policy": "reference_only",
                 "metadata": {
                     "importer_plugin": "example-note-importer",
                     "obsidian_backlinks": backlinks,

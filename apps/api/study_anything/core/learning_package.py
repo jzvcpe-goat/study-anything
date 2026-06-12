@@ -104,10 +104,26 @@ def _source_references(state: LearningState) -> list[dict[str, object]]:
                 "title": item.title,
                 "excerpt_hash": item.excerpt_hash,
                 "locator": item.locator,
+                "provenance": _public_provenance(item.metadata.get("provenance")),
+                "redaction_policy": item.metadata.get("redaction_policy") or "reference_only",
                 "metadata_keys": sorted(str(key) for key in item.metadata),
             }
         )
     return references
+
+
+def _public_provenance(value: Any) -> dict[str, object]:
+    if not isinstance(value, dict):
+        return {}
+    allowed = {
+        "collector",
+        "capture_method",
+        "source_owner",
+        "collected_at",
+        "importer_plugin",
+        "platform",
+    }
+    return {str(key): value[key] for key in sorted(value) if str(key) in allowed}
 
 
 def _teaching_layers(state: LearningState) -> list[dict[str, object]]:

@@ -50,7 +50,14 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                                 "source_type": "web",
                                 "reference": "https://example.test/retrieval",
                                 "title": "Retrieval Article",
+                                "locator": "section=retrieval",
                                 "text": private_web_text,
+                                "provenance": {
+                                    "collector": "test-platform-agent",
+                                    "capture_method": "browser_excerpt",
+                                    "source_owner": "user",
+                                },
+                                "redaction_policy": "reference_only",
                             },
                             {
                                 "source_type": "video_slice",
@@ -58,6 +65,12 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                                 "title": "Lesson Clip",
                                 "locator": "00:01:12-00:02:04",
                                 "text": private_video_text,
+                                "provenance": {
+                                    "collector": "test-platform-agent",
+                                    "capture_method": "video_transcript_slice",
+                                    "source_owner": "user",
+                                },
+                                "redaction_policy": "reference_only",
                             },
                         ],
                     },
@@ -78,6 +91,7 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                 quality = client.get(f"/v1/sessions/{session_id}/agent-eval/quality")
                 obsidian = client.get(f"/v1/sessions/{session_id}/exports/obsidian")
                 package = client.get(f"/v1/sessions/{session_id}/exports/learning-package")
+                artifact = client.get(f"/v1/sessions/{session_id}/exports/enrichment-artifact")
 
         quality_body = quality.json()
         self.assertEqual(quality.status_code, 200)
@@ -111,6 +125,20 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
         references = package_body["source_references"]
         self.assertTrue(any(item["reference"] == "https://example.test/retrieval" for item in references))
         self.assertTrue(any(item["reference"] == "video://lesson/1" for item in references))
+        enrichment_ref = next(item for item in references if item["reference"] == "https://example.test/retrieval")
+        self.assertEqual(enrichment_ref["provenance"]["capture_method"], "browser_excerpt")
+        self.assertEqual(enrichment_ref["redaction_policy"], "reference_only")
+
+        artifact_body = artifact.json()
+        self.assertEqual(artifact.status_code, 200)
+        self.assertEqual(artifact_body["schema_version"], "learning-enrichment-artifact-v1")
+        self.assertIn("markdown", artifact_body)
+        self.assertIn("html", artifact_body)
+        self.assertIn("https://example.test/retrieval", artifact_body["markdown"])
+        self.assertIn('data-schema="learning-enrichment-artifact-v1"', artifact_body["html"])
+        self.assertEqual(artifact_body["privacy"]["raw_enrichment_text_included"], False)
+        self.assertNotIn(private_web_text, artifact.text)
+        self.assertNotIn(private_video_text, artifact.text)
 
     def test_quality_cases_endpoint_is_fixed_dataset_contract(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -146,6 +174,13 @@ class EnrichmentQualityExportApiTests(unittest.TestCase):
                                     "reference": "obsidian://vault/unsafe",
                                     "title": "Unsafe Learning Note",
                                     "text": "A bounded excerpt about stable backlinks.",
+                                    "locator": "heading=Stable backlinks",
+                                    "provenance": {
+                                        "collector": "test-platform-agent",
+                                        "capture_method": "obsidian_excerpt",
+                                        "source_owner": "user",
+                                    },
+                                    "redaction_policy": "reference_only",
                                     "metadata": {
                                         "obsidian_backlinks": [
                                             "[[AI PM]]",

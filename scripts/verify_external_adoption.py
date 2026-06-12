@@ -32,6 +32,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/packs/kimi/README.md",
     "platform/packs/codex/README.md",
     "platform/packs/workbuddy/README.md",
+    "docs/learning-enrichment.md",
+    "docs/use-with-kimi.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",

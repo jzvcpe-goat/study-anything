@@ -33,7 +33,9 @@ from study_anything.core.knowledge_graph import (
     build_knowledge_graph_sink,
     projection_from_state,
 )
+from study_anything.core.learning_enrichment import build_learning_enrichment_artifact
 from study_anything.core.learning_context import (
+    LEARNING_ENRICHMENT_SCHEMA_VERSION,
     LEARNING_CONTEXT_SCHEMA_VERSION,
     validate_learning_context_package,
 )
@@ -95,11 +97,14 @@ class ReadingRequest(BaseModel):
 
 
 class EnrichmentItemRequest(BaseModel):
-    source_type: str = Field(default="context")
+    source_type: str = Field(default="web")
     reference: str
     title: str
     text: str
     locator: Optional[str] = None
+    excerpt_hash: Optional[str] = None
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+    redaction_policy: str = Field(default="reference_only")
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -798,7 +803,21 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         state = store.save(state)
         return {
-            "schema_version": "learning-enrichment-v1",
+            "schema_version": LEARNING_ENRICHMENT_SCHEMA_VERSION,
+            "contract": {
+                "source_types": [
+                    "web",
+                    "document",
+                    "video_slice",
+                    "app_context",
+                    "markdown_note",
+                    "obsidian_note",
+                ],
+                "requires_locator": True,
+                "requires_provenance": True,
+                "requires_redaction_policy": True,
+                "raw_text_returned": False,
+            },
             "session_id": state.session_id,
             "source": {
                 "source_type": state.source.source_type,
@@ -815,6 +834,8 @@ def create_app() -> FastAPI:
                     "title": item.title,
                     "excerpt_hash": item.excerpt_hash,
                     "locator": item.locator,
+                    "provenance": item.metadata.get("provenance") or {},
+                    "redaction_policy": item.metadata.get("redaction_policy") or "reference_only",
                     "metadata": item.metadata,
                 }
                 for item in state.enrichment_items
@@ -1214,6 +1235,16 @@ def create_app() -> FastAPI:
         try:
             state = store.get(session_id)
             return build_learning_package_export(state)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @app.get("/v1/sessions/{session_id}/exports/enrichment-artifact")
+    def get_learning_enrichment_artifact(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+            return build_learning_enrichment_artifact(state)
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
         except ValueError as exc:

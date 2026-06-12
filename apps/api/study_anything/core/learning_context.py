@@ -11,6 +11,7 @@ from .security import sha256_text
 
 
 LEARNING_CONTEXT_SCHEMA_VERSION = "learning-context-package-v1"
+LEARNING_ENRICHMENT_SCHEMA_VERSION = "learning-enrichment-v1"
 ALLOWED_CONTEXT_SOURCE_TYPES = {
     "web",
     "document",
@@ -18,6 +19,28 @@ ALLOWED_CONTEXT_SOURCE_TYPES = {
     "app_context",
     "markdown_note",
     "obsidian_note",
+}
+CONTEXT_SOURCE_TYPE_ALIASES = {
+    "pdf": "document",
+    "video": "video_slice",
+    "markdown": "markdown_note",
+    "obsidian": "obsidian_note",
+}
+ALLOWED_REDACTION_POLICIES = {
+    "reference_only",
+    "hash_and_locator",
+    "summary_only",
+}
+ALLOWED_CAPTURE_METHODS = {
+    "browser_excerpt",
+    "document_excerpt",
+    "video_transcript_slice",
+    "app_selection",
+    "markdown_excerpt",
+    "obsidian_excerpt",
+    "manual_excerpt",
+    "retrieval_result",
+    "importer_plugin",
 }
 MAX_CONTEXT_ITEMS = 50
 MAX_CONTEXT_TEXT_CHARS = 20000
@@ -36,6 +59,8 @@ class LearningContextItem:
     text: str
     excerpt_hash: str
     locator: Optional[str] = None
+    provenance: dict[str, Any] = field(default_factory=dict)
+    redaction_policy: str = "reference_only"
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def enrichment_dict(self) -> dict[str, Any]:
@@ -45,10 +70,14 @@ class LearningContextItem:
             "title": self.title,
             "text": self.text,
             "locator": self.locator,
+            "provenance": dict(self.provenance),
+            "redaction_policy": self.redaction_policy,
             "metadata": {
                 **self.metadata,
                 "learning_context_item_id": self.item_id,
                 "learning_context_excerpt_hash": self.excerpt_hash,
+                "provenance": dict(self.provenance),
+                "redaction_policy": self.redaction_policy,
             },
         }
 
@@ -155,8 +184,24 @@ def validate_learning_context_package(values: Mapping[str, Any]) -> LearningCont
     )
 
 
+def validate_enrichment_items(raw_items: Iterable[Mapping[str, Any]]) -> list[LearningContextItem]:
+    """Validate direct platform enrichment items with the same contract as packages."""
+
+    values = list(raw_items)
+    if not values:
+        raise ValueError("At least one enrichment item is required.")
+    if len(values) > MAX_CONTEXT_ITEMS:
+        raise ValueError(f"Learning enrichment supports at most {MAX_CONTEXT_ITEMS} items.")
+    items: list[LearningContextItem] = []
+    for index, raw_item in enumerate(values, start=1):
+        if not isinstance(raw_item, Mapping):
+            raise ValueError(f"Learning enrichment item {index} must be an object.")
+        items.append(_validate_item(raw_item, index))
+    return items
+
+
 def _validate_item(values: Mapping[str, Any], index: int) -> LearningContextItem:
-    source_type = _string(values, "source_type", required=True)
+    source_type = _normalize_source_type(_string(values, "source_type", required=True))
     if source_type not in ALLOWED_CONTEXT_SOURCE_TYPES:
         raise ValueError(
             f"Unsupported Learning Context item source_type {source_type!r}; "
@@ -172,6 +217,10 @@ def _validate_item(values: Mapping[str, Any], index: int) -> LearningContextItem
         )
     _reject_secret_like_text(f"items[{index}].text", text)
     locator = _optional_string(values, "locator")
+    if locator is None:
+        raise ValueError(f"Learning Context item {index} requires non-empty 'locator'.")
+    provenance = _provenance(values, index)
+    redaction_policy = _redaction_policy(values, index)
     metadata = _mapping(values, "metadata")
     _reject_secret_like_values(f"items[{index}].metadata", metadata)
     item_id = _string(
@@ -191,8 +240,46 @@ def _validate_item(values: Mapping[str, Any], index: int) -> LearningContextItem
         text=text,
         excerpt_hash=excerpt_hash,
         locator=locator,
+        provenance=provenance,
+        redaction_policy=redaction_policy,
         metadata=metadata,
     )
+
+
+def _normalize_source_type(source_type: str) -> str:
+    return CONTEXT_SOURCE_TYPE_ALIASES.get(source_type, source_type)
+
+
+def _provenance(values: Mapping[str, Any], index: int) -> dict[str, Any]:
+    provenance = _mapping(values, "provenance")
+    if not provenance:
+        raise ValueError(f"Learning Context item {index} requires non-empty 'provenance'.")
+    _reject_secret_like_values(f"items[{index}].provenance", provenance)
+    collector = str(provenance.get("collector") or "").strip()
+    capture_method = str(provenance.get("capture_method") or "").strip()
+    if not collector:
+        raise ValueError(f"Learning Context item {index} provenance requires 'collector'.")
+    if capture_method not in ALLOWED_CAPTURE_METHODS:
+        raise ValueError(
+            f"Learning Context item {index} provenance.capture_method must be one of "
+            f"{', '.join(sorted(ALLOWED_CAPTURE_METHODS))}."
+        )
+    for forbidden_key in ("raw_browser_trace", "agent_secret", "api_key", "token"):
+        if forbidden_key in provenance:
+            raise ValueError(
+                f"Learning Context item {index} provenance contains forbidden key '{forbidden_key}'."
+            )
+    return dict(provenance)
+
+
+def _redaction_policy(values: Mapping[str, Any], index: int) -> str:
+    policy = _string(values, "redaction_policy", required=True)
+    if policy not in ALLOWED_REDACTION_POLICIES:
+        raise ValueError(
+            f"Learning Context item {index} redaction_policy must be one of "
+            f"{', '.join(sorted(ALLOWED_REDACTION_POLICIES))}."
+        )
+    return policy
 
 
 def _stable_package_id(title: str, reference: str) -> str:

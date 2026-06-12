@@ -30,7 +30,7 @@ private Agent platforms:
 - API health
 - session creation
 - source attachment
-- enrichment attachment for web, document, video-slice, and app-context excerpts
+- enrichment attachment for web, document/PDF, video-slice, app-context, Markdown, and Obsidian excerpts
 - optional teaching layers such as overview, glossary, examples, or Obsidian-style notes
 - workflow run/resume
 - answer submission
@@ -39,6 +39,7 @@ private Agent platforms:
 - redacted Agent eval artifact
 - redacted teaching-quality eval
 - redacted retrieval/context quality eval
+- redacted Markdown+HTML enrichment micro-lesson export
 - Obsidian-compatible markdown export
 - portable learning package export for NotebookLM-style bridges and platform-agent handoff
 
@@ -150,6 +151,7 @@ python3 scripts/study_anything_cli.py answer SESSION_ID \
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
+python3 scripts/study_anything_cli.py enrichment-artifact SESSION_ID --markdown
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
 python3 scripts/study_anything_cli.py package-export SESSION_ID
 ```

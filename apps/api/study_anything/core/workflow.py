@@ -21,6 +21,7 @@ from .agent_registry import (
 )
 from .events import StudyEvent, utc_now
 from .knowledge_graph import KnowledgeGraphSink, NoopKnowledgeGraphSink, projection_from_state
+from .learning_context import validate_enrichment_items
 from .security import hash_user_id, sha256_text
 from .tracing import NoopTraceSink, TraceSink
 
@@ -231,37 +232,31 @@ def submit_enrichment(
     bundle.
     """
 
+    validated_items = validate_enrichment_items(items)
     normalized: List[EnrichmentItem] = []
     source_parts: List[str] = []
-    for index, item in enumerate(items, start=1):
-        source_type = str(item.get("source_type") or "context")
-        item_reference = str(item.get("reference") or f"enrichment://{state.session_id}/{index}")
-        item_title = str(item.get("title") or f"Context {index}")
-        text = str(item.get("text") or "").strip()
-        if not text:
-            raise ValueError("Each enrichment item requires non-empty text.")
-        metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
-        locator = item.get("locator")
-        locator_text = str(locator) if locator is not None else None
-        excerpt_hash = sha256_text(text[:2000])
+    for index, item in enumerate(validated_items, start=1):
+        metadata = {
+            **item.metadata,
+            "provenance": dict(item.provenance),
+            "redaction_policy": item.redaction_policy,
+        }
         normalized.append(
             EnrichmentItem(
-                source_type=source_type,
-                reference=item_reference,
-                title=item_title,
-                text=text,
-                excerpt_hash=excerpt_hash,
-                locator=locator_text,
-                metadata=dict(metadata),
+                source_type=item.source_type,
+                reference=item.reference,
+                title=item.title,
+                text=item.text,
+                excerpt_hash=item.excerpt_hash,
+                locator=item.locator,
+                metadata=metadata,
             )
         )
-        locator_line = f"\nLocator: {locator_text}" if locator_text else ""
+        locator_line = f"\nLocator: {item.locator}" if item.locator else ""
         source_parts.append(
-            f"[{index}] {item_title}\nType: {source_type}\nReference: {item_reference}"
-            f"{locator_line}\n\n{text}"
+            f"[{index}] {item.title}\nType: {item.source_type}\nReference: {item.reference}"
+            f"{locator_line}\n\n{item.text}"
         )
-    if not normalized:
-        raise ValueError("At least one enrichment item is required.")
 
     combined_text = "\n\n---\n\n".join(source_parts)
     source = ReadingSource(

@@ -43,7 +43,7 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:ebcdc2bb58cbb7bf08bf864745e58819bc4e178f34fd42fb5834c6cf34ddbd72"
+      "sourceDigest": "sha256:d1738056dc2287c920b44932a030b531bcb7b9ad236a04f6cf1e0d1abf9961b4"
     },
     {
       "id": "example-note-importer",
@@ -57,7 +57,7 @@
         "reviewedBy": "Study Anything maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:e5ad060b672151b3a3ba75910cff8a74893f83f2f90ffaba7de65b40a4869191"
+      "sourceDigest": "sha256:3d0ec06eb2d261922f88eb60cdfa82356223509ee513ddc2259b866bfc0f1a98"
     }
   ]
 }

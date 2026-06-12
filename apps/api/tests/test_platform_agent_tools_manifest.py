@@ -36,6 +36,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
     "study_anything_obsidian_export",
+    "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
 }
 DISALLOWED_PATH_FRAGMENTS = (
@@ -127,6 +128,7 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         catalog = CATALOG_PATH.read_text(encoding="utf-8")
         self.assertIn("verify_platform_agent_tools.py", catalog)
         self.assertIn("raw source text", catalog)
+        self.assertIn("study_anything_enrichment_artifact_export", catalog)
         self.assertIn("study_anything_agent_eval_artifact", catalog)
         self.assertIn("study_anything_run_importer", catalog)
         self.assertIn("study_anything_retrieval_search", catalog)

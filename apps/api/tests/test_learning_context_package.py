@@ -38,6 +38,12 @@ def context_package() -> dict[str, object]:
                 "title": f"{source_type} item",
                 "text": f"Bounded excerpt for {source_type} learning.",
                 "locator": "section=1",
+                "provenance": {
+                    "collector": "test-platform-agent",
+                    "capture_method": "manual_excerpt",
+                    "source_owner": "user",
+                },
+                "redaction_policy": "reference_only",
                 "metadata": {"importer": "test"},
             }
             for source_type in sorted(ALLOWED_CONTEXT_SOURCE_TYPES)
@@ -85,6 +91,28 @@ class LearningContextPackageTests(unittest.TestCase):
         values["items"] = [item]
 
         with self.assertRaises(ValueError):
+            validate_learning_context_package(values)
+
+    def test_rejects_missing_provenance(self) -> None:
+        values = context_package()
+        item = dict(values["items"][0])  # type: ignore[index]
+        item.pop("provenance")
+        values["items"] = [item]
+
+        with self.assertRaisesRegex(ValueError, "provenance"):
+            validate_learning_context_package(values)
+
+    def test_rejects_malicious_provenance(self) -> None:
+        values = context_package()
+        item = dict(values["items"][0])  # type: ignore[index]
+        item["provenance"] = {
+            "collector": "test-platform-agent",
+            "capture_method": "browser_excerpt",
+            "raw_browser_trace": "full private browser dump",
+        }
+        values["items"] = [item]
+
+        with self.assertRaisesRegex(ValueError, "forbidden key"):
             validate_learning_context_package(values)
 
 
