@@ -31,6 +31,11 @@
       "step_id": "export_learning_evidence"
     },
     {
+      "command": "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "review_plugin_ecosystem"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -49,6 +54,7 @@
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
+    "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/study-anything-platform-tools.json",
     "scripts/openai_compatible_agent_gateway.py",
@@ -60,7 +66,8 @@
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
-    "scripts/verify_platform_submission_dry_run.py"
+    "scripts/verify_platform_submission_dry_run.py",
+    "scripts/verify_plugin_ecosystem_adoption_kit.py"
   ],
   "existing_reports": {
     "operator_drill": {
@@ -90,6 +97,11 @@
     "import_tools": [
       "tool names start with study_anything_",
       "no API-key security scheme"
+    ],
+    "review_plugin_ecosystem": [
+      "plugin-ecosystem-adoption-kit-v1",
+      "all bundled plugin digests verified",
+      "entrypoints not executed"
     ],
     "run_first_lesson": [
       "stage completed",
@@ -220,6 +232,24 @@
       "step_id": "export_learning_evidence"
     },
     {
+      "command": "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+      "evidence_paths": [
+        "plugins/registry.json",
+        "docs/plugins.md",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json"
+      ],
+      "expected_outputs": [
+        "plugin-ecosystem-adoption-kit-v1",
+        "all bundled plugin digests verified",
+        "entrypoints not executed"
+      ],
+      "failure_remediation": [
+        "Run verify_plugin_quarantine.py and regenerate the adoption pack before submitting."
+      ],
+      "operator_action": "Review bundled plugin examples, registry digests, and quarantine-first trust policy before proposing any plugin install.",
+      "step_id": "review_plugin_ecosystem"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -239,7 +269,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -253,6 +283,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -279,7 +310,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -293,6 +324,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -323,7 +355,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -337,6 +369,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -377,7 +410,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.11-alpha"
+    "version": "v0.3.12-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -390,5 +423,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.11-alpha"
+  "version": "v0.3.12-alpha"
 }

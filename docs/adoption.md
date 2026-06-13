@@ -166,6 +166,7 @@ external platform, run:
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and proves the submission pack has no
@@ -177,6 +178,9 @@ model keys.
 The first lesson kit is the shareable teaching runbook for Kimi, Codex, WorkBuddy, and generic
 OpenAPI operators. It is safe to share because it uses placeholders and schema evidence instead of
 raw source, answers, endpoints, model keys, or private browser/video context.
+The plugin ecosystem adoption kit is the shareable plugin trust runbook. It proves the adoption pack
+contains bundled sample plugins, a digest-verified `plugins/registry.json`, quarantine-first install
+policy, platform-pack commands, and redacted evidence without executing plugin entrypoints.
 
 ## User-Owned Agent Gateway Hardening
 
@@ -217,7 +221,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.11-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.12-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -225,12 +229,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.11-alpha \
+  --tag v0.3.12-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.11-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.12-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.11-alpha"
+RELEASE_VERSION = "v0.3.12-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -28,6 +28,7 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-external-eval-harness.json",
+    "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
 ]
 REQUIRED_OPERATOR_ASSETS = [
     "platform/ecosystem-submission.json",
@@ -46,8 +47,10 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_external_eval_marketplace_harness.py",
+    "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
+    "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/study_anything_cli.py",
     "scripts/run_skill_mode_demo.sh",
@@ -215,6 +218,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
         "scripts/verify_first_lesson_authoring_kit.py",
         "platform/generated/study-anything-first-lesson-authoring-kit.json",
+        "scripts/verify_plugin_ecosystem_adoption_kit.py",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -312,6 +317,22 @@ def operator_steps() -> list[dict[str, Any]]:
             ],
             "evidence_paths": ["docs/second-brain-handoff.md", "docs/obsidian-export.md"],
             "failure_remediation": ["Keep user-owned exports local; share only redacted schema evidence."],
+        },
+        {
+            "step_id": "review_plugin_ecosystem",
+            "operator_action": "Review bundled plugin examples, registry digests, and quarantine-first trust policy before proposing any plugin install.",
+            "command": "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+            "expected_outputs": [
+                "plugin-ecosystem-adoption-kit-v1",
+                "all bundled plugin digests verified",
+                "entrypoints not executed",
+            ],
+            "evidence_paths": [
+                "plugins/registry.json",
+                "docs/plugins.md",
+                "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+            ],
+            "failure_remediation": ["Run verify_plugin_quarantine.py and regenerate the adoption pack before submitting."],
         },
         {
             "step_id": "collect_redacted_handoff",

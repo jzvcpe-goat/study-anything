@@ -50,6 +50,7 @@
     "platform_manual_submission_rehearsal_schema": "platform-manual-submission-rehearsal-v1",
     "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
     "plugin_capability_index_schema": "plugin-capability-index-v1",
+    "plugin_ecosystem_adoption_kit_schema": "plugin-ecosystem-adoption-kit-v1",
     "plugin_package_validation_schema": "plugin-package-validation-v1",
     "plugin_quarantine_schema": "plugin-quarantine-verification-v1",
     "plugin_sdk_schema": "plugin-sdk-v1",
@@ -142,15 +143,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 83,
+    "file_count": 98,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.11-alpha"
+    "version": "v0.3.12-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -175,6 +176,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -191,7 +193,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -220,6 +222,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -236,7 +239,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 35,
+      "acceptance_evidence_count": 36,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -262,6 +265,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",

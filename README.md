@@ -50,6 +50,7 @@ python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -61,7 +62,10 @@ external platform tool directory. The first lesson kit emits `first-run-lesson-a
 with copyable Kimi/Codex/WorkBuddy prompts, tool-call sequence, context-package template, local Agent
 setup, and export evidence. The external eval harness emits
 `external-eval-marketplace-harness-v1`, tying native eval gates, optional mature adapters, fixtures,
-timeouts, and redaction checks into one platform-submission contract. The verifier emits
+timeouts, and redaction checks into one platform-submission contract. The plugin ecosystem kit emits
+`plugin-ecosystem-adoption-kit-v1`, proving bundled sample plugins, registry digests,
+quarantine-first trust policy, platform-pack commands, and redacted evidence are aligned without
+executing plugin entrypoints. The verifier emits
 `adoption-proof-v1`, proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
 loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
 standalone frontend or storing real model keys in Study Anything.
@@ -115,7 +119,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.11-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.12-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -128,7 +132,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.11-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.12-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -225,6 +229,7 @@ platform/generated/study-anything-tool-catalog.md
 platform/ecosystem-submission.json
 platform/generated/study-anything-platform-bundle.json
 platform/generated/study-anything-first-lesson-authoring-kit.json
+platform/generated/study-anything-plugin-ecosystem-adoption-kit.json
 ```
 
 Copy-ready starter packs are checked in for platform ecosystems:
@@ -243,6 +248,7 @@ python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 
@@ -329,6 +335,18 @@ curl http://localhost:8000/v1/plugins/registry-review
 
 The registry review path reports digest/signature status, update candidates, blocked entries, and
 manual-review actions without downloading or executing plugin code.
+
+For external platform submissions, run:
+
+```bash
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+The report proves the adoption pack includes `plugins/registry.json`, all bundled sample plugin
+manifests and sources, digest-verified registry metadata, quarantine-first install policy, and
+redacted platform-pack evidence.
 
 ## Local PMF Signals
 

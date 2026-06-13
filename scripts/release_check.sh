@@ -48,6 +48,7 @@ fi
 "$python_bin" scripts/verify_platform_manual_submission_rehearsal.py --check
 "$python_bin" scripts/verify_first_lesson_authoring_kit.py --check
 "$python_bin" scripts/verify_external_eval_marketplace_harness.py --check
+"$python_bin" scripts/verify_plugin_ecosystem_adoption_kit.py --check
 "$python_bin" scripts/generate_platform_agent_assets.py --check
 "$python_bin" scripts/verify_commercial_readiness.py
 "$python_bin" scripts/verify_adoption_telemetry.py
