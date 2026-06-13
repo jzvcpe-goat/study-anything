@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import asdict, dataclass, field
-from typing import Any, Mapping, Optional
+from typing import Any, Iterable, Mapping, Optional
 from uuid import uuid4
 
 from .security import sha256_text
@@ -47,6 +47,13 @@ MAX_CONTEXT_TEXT_CHARS = 20000
 SECRET_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{20,}"),
     re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{16,}"),
+]
+HIDDEN_INSTRUCTION_PATTERNS = [
+    re.compile(r"(?i)\b(ignore|disregard)\s+(all\s+)?(previous|prior|above)\s+(instructions|messages)\b"),
+    re.compile(r"(?i)<\|/?(?:system|developer)\|>"),
+    re.compile(r"(?i)\[\s*/?\s*(?:system|developer)\s*\]"),
+    re.compile(r"(?i)BEGIN[_ -](?:SYSTEM|DEVELOPER)[_ -]PROMPT"),
+    re.compile(r"(?i)\bjailbreak\s+(?:instruction|prompt|mode)\b"),
 ]
 
 
@@ -170,6 +177,7 @@ def validate_learning_context_package(values: Mapping[str, Any]) -> LearningCont
         if not isinstance(raw_item, Mapping):
             raise ValueError(f"Learning Context item {index} must be an object.")
         items.append(_validate_item(raw_item, index))
+    items = _dedupe_items(items)
 
     return LearningContextPackage(
         package_id=package_id,
@@ -197,7 +205,7 @@ def validate_enrichment_items(raw_items: Iterable[Mapping[str, Any]]) -> list[Le
         if not isinstance(raw_item, Mapping):
             raise ValueError(f"Learning enrichment item {index} must be an object.")
         items.append(_validate_item(raw_item, index))
-    return items
+    return _dedupe_items(items)
 
 
 def _validate_item(values: Mapping[str, Any], index: int) -> LearningContextItem:
@@ -216,6 +224,7 @@ def _validate_item(values: Mapping[str, Any], index: int) -> LearningContextItem
             f"limit is {MAX_CONTEXT_TEXT_CHARS} characters."
         )
     _reject_secret_like_text(f"items[{index}].text", text)
+    _reject_hidden_instruction_text(f"items[{index}].text", text)
     locator = _optional_string(values, "locator")
     if locator is None:
         raise ValueError(f"Learning Context item {index} requires non-empty 'locator'.")
@@ -329,14 +338,39 @@ def _reject_secret_like_values(label: str, values: Mapping[str, Any]) -> None:
     for key, value in values.items():
         if _secret_like_key(str(key)):
             raise ValueError(f"Learning Context Package {label} contains secret-like key '{key}'.")
-        if isinstance(value, str):
-            _reject_secret_like_text(f"{label}.{key}", value)
+        for nested_label, text in _iter_string_values(f"{label}.{key}", value):
+            _reject_secret_like_text(nested_label, text)
+            _reject_hidden_instruction_text(nested_label, text)
 
 
 def _reject_secret_like_text(label: str, text: str) -> None:
     for pattern in SECRET_PATTERNS:
         if pattern.search(text):
             raise ValueError(f"Learning Context Package {label} contains secret-like text.")
+
+
+def _reject_hidden_instruction_text(label: str, text: str) -> None:
+    for pattern in HIDDEN_INSTRUCTION_PATTERNS:
+        if pattern.search(text):
+            raise ValueError(
+                f"Learning Context Package {label} contains hidden instruction-like text."
+            )
+
+
+def _iter_string_values(label: str, value: Any) -> Iterable[tuple[str, str]]:
+    if isinstance(value, str):
+        yield label, value
+    elif isinstance(value, Mapping):
+        for key, nested in value.items():
+            nested_label = f"{label}.{key}"
+            if _secret_like_key(str(key)):
+                raise ValueError(
+                    f"Learning Context Package {label} contains secret-like key '{key}'."
+                )
+            yield from _iter_string_values(nested_label, nested)
+    elif isinstance(value, list):
+        for index, nested in enumerate(value):
+            yield from _iter_string_values(f"{label}[{index}]", nested)
 
 
 def _secret_like_key(key: str) -> bool:
@@ -350,3 +384,24 @@ def _secret_like_key(key: str) -> bool:
         "authorization",
         "password",
     }
+
+
+def _dedupe_items(items: list[LearningContextItem]) -> list[LearningContextItem]:
+    by_item_id: dict[str, tuple[str, str, str, str | None]] = {}
+    seen_signatures: set[tuple[str, str, str | None, str]] = set()
+    deduped: list[LearningContextItem] = []
+    for item in items:
+        id_signature = (item.source_type, item.reference, item.excerpt_hash, item.locator)
+        existing = by_item_id.get(item.item_id)
+        if existing is not None and existing != id_signature:
+            raise ValueError(
+                f"Learning Context item_id {item.item_id!r} is duplicated with conflicting content."
+            )
+        by_item_id[item.item_id] = id_signature
+
+        signature = (item.source_type, item.reference, item.locator, item.excerpt_hash)
+        if signature in seen_signatures:
+            continue
+        seen_signatures.add(signature)
+        deduped.append(item)
+    return deduped

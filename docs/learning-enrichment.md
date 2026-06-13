@@ -95,7 +95,14 @@ learning brief into Obsidian.
 ## Verification
 
 ```bash
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/generate_platform_agent_assets.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
+
+The bridge hardening verifier covers the import boundary directly: exact
+duplicate context items are idempotent, conflicting duplicate `item_id` values
+are rejected, hidden/system prompt-like text is rejected in text and metadata,
+and generated handoff artifacts do not leak raw enrichment text or Agent
+endpoints.

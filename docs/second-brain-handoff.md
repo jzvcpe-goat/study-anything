@@ -52,11 +52,15 @@ learning data.
 Minimum acceptance:
 
 ```bash
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 ```
 
-The verifiers assert `second-brain-handoff-v1` and reject leaks of raw source
-text, raw enrichment text, learner answers, Agent endpoints, raw Agent metadata,
-or secret-like values.
+The offline verifier emits `notebooklm-obsidian-bridge-hardening-v1` and proves
+the NotebookLM fixture, Obsidian note, learning package, enrichment artifact,
+and local archive hashes before any server starts. The API verifiers assert
+`second-brain-handoff-v1` through a running learning loop and reject leaks of
+raw source text, raw enrichment text, learner answers, Agent endpoints, raw
+Agent metadata, or secret-like values.

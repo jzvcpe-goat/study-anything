@@ -73,6 +73,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
+    "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -362,6 +363,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "commercial_readiness_schema": "commercial-readiness-v1",
             "ecosystem_submission_schema": "ecosystem-submission-v1",
             "ecosystem_submission_verification_schema": "ecosystem-submission-verification-v1",
+            "notebooklm_obsidian_bridge_hardening_schema": "notebooklm-obsidian-bridge-hardening-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

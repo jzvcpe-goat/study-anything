@@ -122,6 +122,11 @@ FILES: list[tuple[str, str, str]] = [
         "User-owned Agent gateway hardening and privacy verifier.",
     ),
     (
+        "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "verification",
+        "NotebookLM, Obsidian, and Learning Enrichment bridge privacy verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -307,7 +312,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.3-alpha.md",
+        "docs/release-notes/v0.3.4-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -391,6 +396,7 @@ def build_manifest() -> dict[str, object]:
         "acceptance_commands": [
             "python3 scripts/generate_platform_agent_assets.py --check",
             "python3 scripts/verify_commercial_readiness.py",
+            "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

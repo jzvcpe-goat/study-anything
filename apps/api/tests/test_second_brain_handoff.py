@@ -6,6 +6,7 @@ import unittest
 
 from _path import ROOT  # noqa: F401
 
+from study_anything.core.learning_package import build_learning_package_export
 from study_anything.core.second_brain_handoff import build_second_brain_handoff
 from study_anything.core.workflow import (
     Answer,
@@ -63,7 +64,11 @@ class SecondBrainHandoffTests(unittest.TestCase):
                     "content": "A generated overview is safe to reuse.",
                     "citations": ["source-hash"],
                     "confidence": 0.8,
-                    "agent": {"provider_id": "private-agent-endpoint"},
+                    "agent": {
+                        "provider_id": "private-agent",
+                        "endpoint": "http://127.0.0.1:8787/private-agent",
+                        "metadata": {"endpoint": "http://127.0.0.1:8787/private-agent"},
+                    },
                 }
             ],
             quiz_items=[
@@ -88,8 +93,18 @@ class SecondBrainHandoffTests(unittest.TestCase):
             insights=["Generated insight is allowed in the user-owned handoff."],
         )
 
+        learning_package = build_learning_package_export(state)
         first = build_second_brain_handoff(state)
         second = build_second_brain_handoff(state)
+
+        package_serialized = json.dumps(learning_package, ensure_ascii=False)
+        self.assertNotIn("127.0.0.1:8787/private-agent", package_serialized)
+        self.assertEqual(
+            learning_package["teaching_layers"][0]["agent"]["provider_id"],
+            "private-agent",
+        )
+        self.assertFalse(learning_package["privacy"]["agent_endpoints_included"])
+        self.assertFalse(learning_package["privacy"]["agent_metadata_included"])
 
         self.assertEqual(first, second)
         self.assertEqual(first["schema_version"], "second-brain-handoff-v1")
@@ -109,7 +124,7 @@ class SecondBrainHandoffTests(unittest.TestCase):
         self.assertNotIn(private_enrichment, serialized)
         self.assertNotIn(private_answer, serialized)
         self.assertNotIn("Private grading feedback.", serialized)
-        self.assertNotIn("private-agent-endpoint", serialized)
+        self.assertNotIn("127.0.0.1:8787/private-agent", serialized)
         self.assertFalse(first["privacy"]["learner_answers_included"])
         self.assertFalse(first["privacy"]["grading_feedback_included"])
         self.assertFalse(first["privacy"]["agent_metadata_included"])

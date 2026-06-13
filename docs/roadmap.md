@@ -328,9 +328,22 @@
 - Include the gateway hardening verifier in release checks, external adoption proof, ecosystem
   submission, platform packs, and adoption pack assets.
 
+## v0.3.4-alpha
+
+- Add `notebooklm-obsidian-bridge-hardening-v1`, a local verifier for NotebookLM-style fixtures,
+  Obsidian handoff, Learning Enrichment artifacts, learning-package export, and strict
+  second-brain archive privacy.
+- Harden Learning Context Package validation against hidden/system prompt-like instructions in
+  text, metadata, provenance, and nested values.
+- Deduplicate exact repeated context items while rejecting reused `item_id` values with conflicting
+  source content.
+- Redact raw Agent metadata and endpoints from `learning-package-v1` teaching-layer exports while
+  keeping provider/task/status summary fields.
+- Include the bridge hardening verifier in release checks, external adoption proof, ecosystem
+  submission, platform packs, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.4`: NotebookLM, Obsidian, and Learning Enrichment bridge hardening.
 - `v0.3.5`: plugin trust registry and installer quarantine.
 - `v0.3.6`: security, recovery, and backup hardening.
 - `v0.3.7`: external platform submission dry-run packages.

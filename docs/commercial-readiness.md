@@ -9,6 +9,7 @@ Use:
 ```bash
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 ```
 
 or call:
@@ -31,6 +32,9 @@ SSO, remote accounts, or a standalone frontend are ready.
 The Agent gateway hardening verifier is part of the launch proof for this distribution path: it
 checks that real credentials remain outside Study Anything, unsafe provider config is rejected, and
 bad Agent output produces redacted diagnostics.
+The NotebookLM/Obsidian bridge verifier is the matching proof for the learning-context path: it
+checks bounded imports, duplicate/idempotency behavior, hidden instruction rejection, strict
+second-brain archive redaction, and `learning-package-v1` Agent metadata boundaries.
 
 For adoption and PMF review, call:
 
@@ -110,6 +114,9 @@ to user-owned local data, or a closed plugin channel as a requirement.
   maintainers, with no automatic upload and no private learning content.
 - API smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, local PMF metrics, and Agent audit boundaries.
 - Redacted Agent Eval artifact foundation that bridges invocation audit evidence into mature external eval tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
+- NotebookLM/Obsidian bridge hardening verifier for bounded context packages, source-type coverage,
+  hidden instruction rejection, idempotent duplicate handling, and strict second-brain handoff
+  privacy.
 - Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
 - Machine-readable platform Agent tool manifest plus verifier for the minimum learning loop, mastery, Agent audit, and eval artifact endpoints.
 - Generated platform import assets: constrained OpenAPI, OpenAI-compatible function tools, and a checked-in tool catalog.
