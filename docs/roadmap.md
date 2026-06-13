@@ -475,9 +475,24 @@
   WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, submission dry-run,
   and adoption pack assets.
 
+## v0.3.16-alpha
+
+- Add `platform-adoption-feedback-diagnostics-v1`, a redacted release and ecosystem-submission gate
+  for external platform import diagnostics.
+- Add `platform-feedback-package-v1`, a local-only feedback package for Kimi, Codex, WorkBuddy, and
+  generic OpenAPI operators.
+- Prove pack schema, OpenAPI/OpenAI tool import assets, version drift, missing commands, unsupported
+  platform capabilities, local endpoint health, Agent eval evidence, and privacy redaction are
+  diagnosable before public handoff.
+- Keep feedback packages free of raw source text, learner answers, Agent prompts, personal profiles,
+  Agent endpoint secrets, judge keys, model keys, and private browser/video context.
+- Wire diagnostics and feedback package evidence into release checks, external adoption proof,
+  ecosystem submission, Kimi/Codex/WorkBuddy packs, bundle manifest, manual rehearsal, operator
+  drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.16`: External adoption feedback loop and platform import diagnostics hardening.
+- `v0.3.17`: External adoption feedback loop field rehearsal and platform import diagnostics hardening.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

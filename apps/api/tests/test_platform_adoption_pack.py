@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.15-alpha")
+        self.assertEqual(manifest["version"], "v0.3.16-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -61,7 +61,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/plugin-registry.md",
             "docs/ecosystem-submission.md",
             "docs/eval-frameworks.md",
-            "docs/release-notes/v0.3.15-alpha.md",
+            "docs/release-notes/v0.3.16-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -69,6 +69,9 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-first-lesson-authoring-kit.json",
             "platform/generated/study-anything-external-eval-harness.json",
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+            "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+            "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-feedback-package.zip",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
             "skills/study-anything/SKILL.md",
             "scripts/doctor.sh",
@@ -85,6 +88,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "scripts/verify_first_lesson_authoring_kit.py",
             "scripts/verify_external_eval_marketplace_harness.py",
             "scripts/verify_agent_eval_marketplace_enforcement.py",
+            "scripts/verify_platform_adoption_feedback_diagnostics.py",
+            "scripts/generate_platform_feedback_package.py",
             "scripts/verify_learning_enrichment_bridge.py",
             "scripts/verify_agent_eval_assets.py",
             "scripts/verify_external_adoption.py",
@@ -125,6 +130,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("study_anything_second_brain_handoff_export", manifest["required_tool_names"])
         self.assertIn("learning-enrichment-bridge-verification-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("agent-eval-marketplace-enforcement-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("platform-adoption-feedback-diagnostics-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("platform-feedback-package-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("study_anything_plugin_sdk", manifest["required_tool_names"])
         self.assertIn("study_anything_plugin_capabilities", manifest["required_tool_names"])
         self.assertIn("study_anything_validate_plugin_package", manifest["required_tool_names"])

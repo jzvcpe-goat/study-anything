@@ -32,6 +32,8 @@
     "python3 scripts/verify_first_lesson_authoring_kit.py --check",
     "python3 scripts/verify_external_eval_marketplace_harness.py --check",
     "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+    "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+    "python3 scripts/generate_platform_feedback_package.py --check",
     "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
     "python3 scripts/verify_deployment_hardening.py --check",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -84,6 +86,8 @@
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
     "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
     "agent_eval_marketplace_enforcement.schema_version == agent-eval-marketplace-enforcement-v1",
+    "platform_adoption_feedback_diagnostics.schema_version == platform-adoption-feedback-diagnostics-v1",
+    "platform_feedback_package.schema_version == platform-feedback-package-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1"
   ],

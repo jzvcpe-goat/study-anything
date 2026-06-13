@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.3.15-alpha
+## v0.3.16-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -18,6 +18,8 @@
 - [ ] `.venv/bin/python scripts/verify_first_lesson_authoring_kit.py --check`
 - [ ] `.venv/bin/python scripts/verify_external_eval_marketplace_harness.py --check`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_marketplace_enforcement.py --check`
+- [ ] `.venv/bin/python scripts/verify_platform_adoption_feedback_diagnostics.py --check`
+- [ ] `.venv/bin/python scripts/generate_platform_feedback_package.py --check`
 - [ ] `.venv/bin/python scripts/verify_plugin_ecosystem_adoption_kit.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
 - [ ] `.venv/bin/python scripts/verify_commercial_readiness.py`
@@ -52,6 +54,8 @@
 - [ ] Run `python3 scripts/verify_first_lesson_authoring_kit.py --check` and verify `first-run-lesson-authoring-kit-v1` includes zh/en prompts, tool-call sequence, Learning Context Package template, HTTP Agent setup, expected schemas, export paths, remediation, time budget, and no raw source, answers, Agent endpoint secrets, real model keys, or browser/video private context.
 - [ ] Run `python3 scripts/verify_external_eval_marketplace_harness.py --check` and verify `external-eval-marketplace-harness-v1` includes required native gates, optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeout policy, sample eval cases, expected evidence schema, and no raw source, answers, Agent endpoints, model keys, judge keys, or browser/video private context.
 - [ ] Run `python3 scripts/verify_agent_eval_marketplace_enforcement.py --check` and verify `agent-eval-marketplace-enforcement-v1` covers native required gates, Promptfoo/DeepEval/LangChain AgentEvals/Ragas external judge contracts, optional skip diagnostics, required-mode non-zero failures, timeout controls, malformed judge output diagnostics, baseline regression, platform submission evidence, adoption-pack inclusion, and no raw source, learner answers, Agent endpoints, model keys, judge keys, or browser/video private context.
+- [ ] Run `python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check` and verify `platform-adoption-feedback-diagnostics-v1` covers pack schema, OpenAPI/OpenAI tool imports, version drift, missing commands, unsupported platform capabilities, local endpoint health, Agent eval evidence, feedback-package inclusion, and no source text, answers, prompts, personal profiles, endpoint secrets, model keys, or private browser/video context.
+- [ ] Run `python3 scripts/generate_platform_feedback_package.py --check` and verify `platform-feedback-package-v1` is local-only, redacted, and includes diagnostic summaries plus redacted logs without raw learning data or secrets.
 - [ ] Run `python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check` and verify `plugin-ecosystem-adoption-kit-v1` includes all five bundled sample plugins, digest-verified `plugins/registry.json`, quarantine-first trust policy, platform-pack commands, and no plugin entrypoint execution, raw source text, learner answers, Agent endpoint secrets, real model keys, or browser/video private context.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
@@ -89,8 +93,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.15-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.15-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.15-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.16-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -116,4 +120,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.15-alpha`.
+- [ ] Tag `v0.3.16-alpha`.

@@ -22,7 +22,7 @@ class AdoptionDiagnosticsTests(unittest.TestCase):
     def test_default_image_tracks_release_tag(self) -> None:
         self.assertEqual(
             diagnose.DEFAULT_IMAGE,
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.15-alpha",
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.16-alpha",
         )
 
     def test_env_file_check_reports_copyable_setup_command(self) -> None:
@@ -79,7 +79,7 @@ class AdoptionDiagnosticsTests(unittest.TestCase):
         self.assertEqual(plan["schema_version"], "adoption-diagnostic-plan-v1")
         self.assertEqual(plan["recommended_order"], ["prepare_env", "skill_mode", "api_smoke"])
         self.assertIn("./scripts/launch_skill_mode.sh", plan["commands"]["skill_mode"])
-        self.assertIn("v0.3.15-alpha", plan["commands"]["docker_published_image"])
+        self.assertIn("v0.3.16-alpha", plan["commands"]["docker_published_image"])
         self.assertIn("verify_adoption_telemetry.py", plan["commands"]["adoption_telemetry"])
 
 

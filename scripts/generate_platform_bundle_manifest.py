@@ -72,6 +72,21 @@ FILES: list[tuple[str, str, str]] = [
         "Agent eval marketplace enforcement report for optional and required external judge gates.",
     ),
     (
+        "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+        "generated_asset",
+        "Platform import diagnostics and redacted feedback boundary report.",
+    ),
+    (
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "generated_asset",
+        "Local-only redacted feedback package manifest for platform adoption support.",
+    ),
+    (
+        "platform/generated/study-anything-platform-feedback-package.zip",
+        "generated_asset",
+        "Local-only redacted feedback package archive for manual support handoff.",
+    ),
+    (
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "generated_asset",
         "Copy-ready plugin ecosystem adoption kit for platform submissions.",
@@ -215,6 +230,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_agent_eval_marketplace_enforcement.py",
         "verification",
         "Agent eval marketplace enforcement verifier.",
+    ),
+    (
+        "scripts/verify_platform_adoption_feedback_diagnostics.py",
+        "verification",
+        "Platform import diagnostics and feedback boundary verifier.",
+    ),
+    (
+        "scripts/generate_platform_feedback_package.py",
+        "diagnostics",
+        "Generate a local-only redacted platform feedback package.",
     ),
     (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
@@ -457,7 +482,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.15-alpha.md",
+        "docs/release-notes/v0.3.16-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -605,6 +630,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+            "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
             "python3 scripts/verify_deployment_hardening.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",

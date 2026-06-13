@@ -18,7 +18,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "agent-eval-marketplace-enforcement-v1"
-RELEASE_VERSION = "v0.3.15-alpha"
+RELEASE_VERSION = "v0.3.16-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-agent-eval-marketplace-enforcement.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
@@ -386,7 +386,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
     required = {
         "scripts/verify_agent_eval_marketplace_enforcement.py",
         "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
-        "docs/release-notes/v0.3.15-alpha.md",
+        "docs/release-notes/v0.3.16-alpha.md",
     }
     missing = required - paths
     if missing:

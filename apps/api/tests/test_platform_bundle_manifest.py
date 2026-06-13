@@ -45,6 +45,8 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/verify_ecosystem_submission_pack.py", file_paths)
         self.assertIn("scripts/verify_external_eval_marketplace_harness.py", file_paths)
         self.assertIn("scripts/verify_agent_eval_marketplace_enforcement.py", file_paths)
+        self.assertIn("scripts/verify_platform_adoption_feedback_diagnostics.py", file_paths)
+        self.assertIn("scripts/generate_platform_feedback_package.py", file_paths)
         self.assertIn("scripts/verify_learning_enrichment_bridge.py", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
@@ -53,6 +55,12 @@ class PlatformBundleManifestTests(unittest.TestCase):
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             file_paths,
         )
+        self.assertIn(
+            "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+            file_paths,
+        )
+        self.assertIn("platform/generated/study-anything-platform-feedback-package.json", file_paths)
+        self.assertIn("platform/generated/study-anything-platform-feedback-package.zip", file_paths)
         self.assertIn("platform/generated/study-anything-learning-enrichment-bridge.json", file_paths)
         self.assertIn("docs/commercial-readiness.md", file_paths)
         self.assertIn("docs/ecosystem-submission.md", file_paths)

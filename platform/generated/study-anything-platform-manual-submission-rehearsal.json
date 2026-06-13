@@ -51,6 +51,11 @@
       "step_id": "verify_agent_eval_marketplace_enforcement"
     },
     {
+      "command": "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check && python3 scripts/generate_platform_feedback_package.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "collect_platform_feedback_package"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -69,12 +74,16 @@
     "platform/generated/study-anything-learning-enrichment-bridge.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
+    "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
+    "platform/generated/study-anything-platform-feedback-package.json",
+    "platform/generated/study-anything-platform-feedback-package.zip",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/study-anything-platform-tools.json",
+    "scripts/generate_platform_feedback_package.py",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
@@ -85,6 +94,7 @@
     "scripts/verify_external_eval_marketplace_harness.py",
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_learning_enrichment_bridge.py",
+    "scripts/verify_platform_adoption_feedback_diagnostics.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_submission_dry_run.py",
@@ -107,12 +117,25 @@
       "schema_version": "study-anything-operator-drill-v1",
       "status": "ok"
     },
+    "platform_adoption_feedback_diagnostics": {
+      "schema_version": "platform-adoption-feedback-diagnostics-v1",
+      "status": "pass"
+    },
+    "platform_feedback_package": {
+      "schema_version": "platform-feedback-package-v1",
+      "status": "ready"
+    },
     "platform_submission_dry_run": {
       "schema_version": "platform-submission-dry-run-v1",
       "status": "pass"
     }
   },
   "expected_outputs": {
+    "collect_platform_feedback_package": [
+      "platform-adoption-feedback-diagnostics-v1",
+      "platform-feedback-package-v1",
+      "no source text, answers, prompts, personal profiles, or secrets"
+    ],
     "collect_redacted_handoff": [
       "platform-manual-submission-rehearsal-v1",
       "first-run-lesson-authoring-kit-v1",
@@ -355,6 +378,27 @@
       "step_id": "verify_agent_eval_marketplace_enforcement"
     },
     {
+      "command": "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check && python3 scripts/generate_platform_feedback_package.py --check",
+      "evidence_paths": [
+        "scripts/verify_platform_adoption_feedback_diagnostics.py",
+        "scripts/generate_platform_feedback_package.py",
+        "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-platform-feedback-package.zip",
+        "docs/adoption.md"
+      ],
+      "expected_outputs": [
+        "platform-adoption-feedback-diagnostics-v1",
+        "platform-feedback-package-v1",
+        "no source text, answers, prompts, personal profiles, or secrets"
+      ],
+      "failure_remediation": [
+        "Run diagnose_adoption.py first, then regenerate the feedback package after the import failure is categorized."
+      ],
+      "operator_action": "Verify platform import diagnostics and generate a local-only redacted feedback package before sharing adoption failures.",
+      "step_id": "collect_platform_feedback_package"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -374,7 +418,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 39,
+      "acceptance_evidence_count": 41,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -390,6 +434,8 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+        "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+        "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -418,7 +464,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 39,
+      "acceptance_evidence_count": 41,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -434,6 +480,8 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+        "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+        "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -466,7 +514,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 39,
+      "acceptance_evidence_count": 41,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -482,6 +530,8 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+        "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+        "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -524,7 +574,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.15-alpha"
+    "version": "v0.3.16-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -537,5 +587,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.15-alpha"
+  "version": "v0.3.16-alpha"
 }

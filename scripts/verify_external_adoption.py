@@ -67,6 +67,11 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-external-eval-harness.json",
     "scripts/verify_agent_eval_marketplace_enforcement.py",
     "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+    "scripts/verify_platform_adoption_feedback_diagnostics.py",
+    "scripts/generate_platform_feedback_package.py",
+    "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+    "platform/generated/study-anything-platform-feedback-package.json",
+    "platform/generated/study-anything-platform-feedback-package.zip",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "scripts/verify_deployment_hardening.py",
@@ -473,6 +478,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "platform_adoption_feedback_diagnostics",
+                [python_bin, "scripts/verify_platform_adoption_feedback_diagnostics.py"],
+                90,
+            ),
+            (
                 "plugin_ecosystem_adoption_kit",
                 [python_bin, "scripts/verify_plugin_ecosystem_adoption_kit.py"],
                 90,
@@ -689,6 +699,20 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "adoption_pack_included": (value.get("adoption_pack") or {}).get("included"),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
+            ),
+        }
+    if label == "platform_adoption_feedback_diagnostics":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "diagnostic_category_count": len(
+                (value.get("diagnostic_contract") or {}).get("diagnostic_categories", [])
+            ),
+            "feedback_package_included": (value.get("feedback_package") or {}).get("included"),
+            "adoption_pack_included": (value.get("adoption_pack") or {}).get("included"),
+            "feedback_package_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "feedback_package_is_redacted"
             ),
         }
     if label == "plugin_ecosystem_adoption_kit":

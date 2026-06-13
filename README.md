@@ -51,6 +51,8 @@ python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
+python3 scripts/generate_platform_feedback_package.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
@@ -131,7 +133,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.15-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.16-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -145,7 +147,7 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.15-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
