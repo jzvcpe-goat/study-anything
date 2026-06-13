@@ -38,9 +38,13 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.13-alpha")
+        self.assertEqual(report["version"], "v0.3.14-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertGreaterEqual(len(report["operator_steps"]), 7)
+        self.assertIn(
+            "learning_enrichment_bridge",
+            report["existing_reports"],
+        )
         self.assertEqual(report["time_budget"]["target_minutes"], 30)
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])

@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.13-alpha"
+RELEASE_VERSION = "v0.3.14-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -43,6 +43,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "docs/plugins.md",
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
             "platform/packs/kimi/README.md",
             "platform/packs/kimi/pack.json",
         ],
@@ -53,6 +54,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_external_eval_marketplace_harness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
+            "verify_learning_enrichment_bridge.py",
             "verify_openai_compatible_gateway.py --gateway-only",
             "verify_external_adoption.py",
         ],
@@ -79,6 +81,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "docs/plugins.md",
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
             "platform/packs/codex/README.md",
             "platform/packs/codex/pack.json",
         ],
@@ -89,6 +92,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_external_eval_marketplace_harness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
+            "verify_learning_enrichment_bridge.py",
             "run_skill_mode_demo.sh",
             "verify_external_adoption.py",
         ],
@@ -113,6 +117,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "docs/plugins.md",
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
             "platform/packs/workbuddy/README.md",
             "platform/packs/workbuddy/pack.json",
         ],
@@ -123,6 +128,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_external_eval_marketplace_harness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
+            "verify_learning_enrichment_bridge.py",
             "verify_platform_agent_tools.py",
             "verify_external_adoption.py",
         ],
@@ -148,6 +154,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "docs/plugins.md",
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
@@ -156,6 +163,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_external_eval_marketplace_harness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
+            "verify_learning_enrichment_bridge.py",
             "generate_platform_agent_assets.py --check",
             "verify_external_adoption.py",
         ],
@@ -251,6 +259,7 @@ def platform_report(
     pack_root: Path,
     submission: dict[str, Any],
     transcript_platform: dict[str, Any],
+    shared_assets: set[str],
 ) -> dict[str, Any]:
     required_assets = [str(item) for item in profile["required_assets"]]
     submission_entrypoints = submission.get("entrypoints") or {}
@@ -264,6 +273,7 @@ def platform_report(
         asset
         for asset in required_assets
         if asset not in import_assets
+        and asset not in shared_assets
         and asset not in pack_import_assets
         and asset not in entrypoint_assets
         and asset
@@ -322,6 +332,7 @@ def build_report(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
     transcript = build_transcript_for_root(pack_root, pack_path)
     submission = read_json(pack_root / "platform" / "ecosystem-submission.json")
     by_id = validate_submission_manifest(submission)
+    shared_assets = set(str(asset) for asset in submission.get("shared_assets", []))
     platforms: dict[str, Any] = {}
     for platform_id, profile in sorted(PLATFORM_PROFILES.items()):
         pack_id = str(profile["pack_id"])
@@ -331,6 +342,7 @@ def build_report(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             pack_root=pack_root,
             submission=by_id[platform_id],
             transcript_platform=transcript["platforms"][pack_id],
+            shared_assets=shared_assets,
         )
     blocked = [platform_id for platform_id, report in platforms.items() if report["status"] == "blocked"]
     report = {

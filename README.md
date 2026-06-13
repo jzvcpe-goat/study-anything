@@ -51,6 +51,7 @@ python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -65,7 +66,11 @@ setup, and export evidence. The external eval harness emits
 timeouts, and redaction checks into one platform-submission contract. The plugin ecosystem kit emits
 `plugin-ecosystem-adoption-kit-v1`, proving bundled sample plugins, registry digests,
 quarantine-first trust policy, platform-pack commands, and redacted evidence are aligned without
-executing plugin entrypoints. The verifier emits
+executing plugin entrypoints. The Learning Enrichment bridge verifier emits
+`learning-enrichment-bridge-verification-v1`, proving platform-collected web, document, app,
+video-slice, Markdown, and Obsidian context can become source-bound micro-lessons, NotebookLM-style
+manual bridge evidence, Obsidian handoff, and strict second-brain exports without a standalone
+frontend. The verifier emits
 `adoption-proof-v1`, proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
 loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
 standalone frontend or storing real model keys in Study Anything.
@@ -122,7 +127,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.13-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.14-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -136,7 +141,7 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.13-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.14-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -288,7 +293,8 @@ see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
 Platform integrations should return `agent-audit`, `agent-eval`, `agent-eval-report`, `agent-quality-eval`,
-`retrieval-quality-eval`, `learning-enrichment-artifact-v1`, Obsidian, and `learning-package-v1` evidence after completed learning and
+`retrieval-quality-eval`, `learning-enrichment-artifact-v1`,
+`learning-enrichment-bridge-verification-v1`, Obsidian, and `learning-package-v1` evidence after completed learning and
 retrieval-backed loops. Importer integrations should first validate `learning-context-package-v1`.
 
 ## Repository Layout

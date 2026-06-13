@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.13-alpha"
+RELEASE_VERSION = "v0.3.14-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -30,6 +30,7 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
+    "platform/generated/study-anything-learning-enrichment-bridge.json",
 ]
 REQUIRED_OPERATOR_ASSETS = [
     "platform/ecosystem-submission.json",
@@ -50,10 +51,12 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_external_eval_marketplace_harness.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
+    "scripts/verify_learning_enrichment_bridge.py",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
+    "platform/generated/study-anything-learning-enrichment-bridge.json",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/study_anything_cli.py",
     "scripts/run_skill_mode_demo.sh",
@@ -225,6 +228,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "scripts/verify_deployment_hardening.py",
         "platform/generated/study-anything-deployment-hardening.json",
+        "scripts/verify_learning_enrichment_bridge.py",
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -237,6 +242,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove manual rehearsal schema.")
     if "deployment-hardening-verification-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove deployment hardening schema.")
+    if "learning-enrichment-bridge-verification-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove learning enrichment bridge schema.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -262,6 +269,10 @@ def validate_existing_reports(root: Path) -> dict[str, Any]:
         "deployment_hardening": (
             "platform/generated/study-anything-deployment-hardening.json",
             "deployment-hardening-verification-v1",
+        ),
+        "learning_enrichment_bridge": (
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "learning-enrichment-bridge-verification-v1",
         ),
     }
     for label, (relative_path, schema) in expected.items():
@@ -360,6 +371,23 @@ def operator_steps() -> list[dict[str, Any]]:
                 "docs/self-hosting.md",
             ],
             "failure_remediation": ["Run scripts/diagnose_adoption.py and prefer Skill Mode or published images for first-run users."],
+        },
+        {
+            "step_id": "verify_learning_enrichment_bridge",
+            "operator_action": "Verify the platform Agent enrichment, HTML micro-lesson, NotebookLM manual bridge, Obsidian export, and second-brain handoff path.",
+            "command": "python3 scripts/verify_learning_enrichment_bridge.py --check",
+            "expected_outputs": [
+                "learning-enrichment-bridge-verification-v1",
+                "web/document/video/app/Markdown/Obsidian source coverage",
+                "strict second-brain handoff excludes learner answers",
+            ],
+            "evidence_paths": [
+                "scripts/verify_learning_enrichment_bridge.py",
+                "platform/generated/study-anything-learning-enrichment-bridge.json",
+                "docs/learning-enrichment.md",
+                "docs/notebooklm-bridge.md",
+            ],
+            "failure_remediation": ["Run verify_notebooklm_obsidian_bridge_hardening.py to isolate privacy validation failures."],
         },
         {
             "step_id": "collect_redacted_handoff",

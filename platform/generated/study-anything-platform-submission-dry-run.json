@@ -14,11 +14,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 106,
+    "file_count": 108,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.13-alpha"
+    "version": "v0.3.14-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -26,6 +26,7 @@
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -43,6 +44,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -90,6 +92,7 @@
         "docs/plugins.md",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/generated/study-anything-deployment-hardening.json",
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
         "platform/packs/codex/README.md",
         "platform/packs/codex/pack.json"
       ],
@@ -105,6 +108,7 @@
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -122,6 +126,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -167,7 +172,8 @@
         "platform/study-anything-platform-tools.json",
         "docs/plugins.md",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
-        "platform/generated/study-anything-deployment-hardening.json"
+        "platform/generated/study-anything-deployment-hardening.json",
+        "platform/generated/study-anything-learning-enrichment-bridge.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -183,6 +189,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -200,6 +207,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -248,6 +256,7 @@
         "docs/plugins.md",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/generated/study-anything-deployment-hardening.json",
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
         "platform/packs/kimi/README.md",
         "platform/packs/kimi/pack.json"
       ],
@@ -265,6 +274,7 @@
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -282,6 +292,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -327,6 +338,7 @@
         "docs/plugins.md",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/generated/study-anything-deployment-hardening.json",
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
         "platform/packs/workbuddy/README.md",
         "platform/packs/workbuddy/pack.json"
       ],
@@ -348,5 +360,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.13-alpha"
+  "version": "v0.3.14-alpha"
 }

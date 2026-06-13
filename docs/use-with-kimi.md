@@ -73,6 +73,7 @@ Before treating the Kimi integration as ready, run:
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -82,7 +83,10 @@ python3 scripts/verify_external_adoption.py \
 The first command emits `ecosystem-submission-verification-v1`; the manual rehearsal command emits
 `platform-manual-submission-rehearsal-v1`; the first lesson kit emits
 `first-run-lesson-authoring-kit-v1` with copyable Chinese and English prompts for Kimi-compatible
-operators; the telemetry command emits `adoption-telemetry-verification-v1`; the final command emits
+operators; the Learning Enrichment bridge command emits
+`learning-enrichment-bridge-verification-v1`, proving Kimi-collected web, document, app, video,
+Markdown, and Obsidian context can become safe micro-lessons plus NotebookLM/Obsidian handoff
+evidence; the telemetry command emits `adoption-telemetry-verification-v1`; the final command emits
 `adoption-proof-v1`.
 
 Start with `study_anything_deployment_guide` after the local API is reachable. It returns
@@ -133,6 +137,7 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
@@ -145,6 +150,8 @@ collect diagnostics without sharing raw learning data.
 The first lesson kit gives Kimi a bounded copy/paste workflow for turning user-provided materials
 into a Learning Context Package, running the Study Anything lesson tools, and exporting Obsidian plus
 NotebookLM-style evidence.
+The Learning Enrichment bridge report proves the same path also supports visual HTML micro-lessons,
+video slices, app context, Obsidian notes, local archive manifests, and strict redaction boundaries.
 The external eval marketplace harness gives Kimi a single redacted checklist for native eval gates,
 optional mature eval adapters, fixtures, timeouts, and evidence schemas before manual submission.
 The external Agent adapter verifier separately proves that Kimi-backed or Kimi-compatible HTTP

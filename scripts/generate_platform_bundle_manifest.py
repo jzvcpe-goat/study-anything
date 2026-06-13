@@ -77,6 +77,11 @@ FILES: list[tuple[str, str, str]] = [
         "Deployment hardening and clean-clone operator path report.",
     ),
     (
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
+        "generated_asset",
+        "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -210,6 +215,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_deployment_hardening.py",
         "verification",
         "Deployment hardening and published-image operator path verifier.",
+    ),
+    (
+        "scripts/verify_learning_enrichment_bridge.py",
+        "verification",
+        "Learning Enrichment operator bridge verifier for platform-agent, NotebookLM, Obsidian, and second-brain handoff.",
     ),
     (
         "scripts/verify_ecosystem_submission_pack.py",
@@ -437,7 +447,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.13-alpha.md",
+        "docs/release-notes/v0.3.14-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -577,6 +587,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/generate_platform_agent_assets.py --check",
             "python3 scripts/verify_commercial_readiness.py",
             "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+            "python3 scripts/verify_learning_enrichment_bridge.py --check",
             "python3 scripts/verify_plugin_quarantine.py",
             "python3 scripts/verify_security_recovery_hardening.py",
             "python3 scripts/verify_platform_submission_dry_run.py --check",

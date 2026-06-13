@@ -41,6 +41,11 @@
       "step_id": "review_deployment_path"
     },
     {
+      "command": "python3 scripts/verify_learning_enrichment_bridge.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "verify_learning_enrichment_bridge"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -55,6 +60,7 @@
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
+    "platform/generated/study-anything-learning-enrichment-bridge.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
@@ -71,6 +77,7 @@
     "scripts/verify_external_agent_adapter_hardening.py",
     "scripts/verify_external_eval_marketplace_harness.py",
     "scripts/verify_first_lesson_authoring_kit.py",
+    "scripts/verify_learning_enrichment_bridge.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_submission_dry_run.py",
@@ -79,6 +86,10 @@
   "existing_reports": {
     "deployment_hardening": {
       "schema_version": "deployment-hardening-verification-v1",
+      "status": "pass"
+    },
+    "learning_enrichment_bridge": {
+      "schema_version": "learning-enrichment-bridge-verification-v1",
       "status": "pass"
     },
     "operator_drill": {
@@ -130,6 +141,11 @@
     ],
     "unpack_adoption_pack": [
       "manifest schema study-anything-platform-adoption-pack-v1"
+    ],
+    "verify_learning_enrichment_bridge": [
+      "learning-enrichment-bridge-verification-v1",
+      "web/document/video/app/Markdown/Obsidian source coverage",
+      "strict second-brain handoff excludes learner answers"
     ]
   },
   "failure_remediation": {
@@ -284,6 +300,25 @@
       "step_id": "review_deployment_path"
     },
     {
+      "command": "python3 scripts/verify_learning_enrichment_bridge.py --check",
+      "evidence_paths": [
+        "scripts/verify_learning_enrichment_bridge.py",
+        "platform/generated/study-anything-learning-enrichment-bridge.json",
+        "docs/learning-enrichment.md",
+        "docs/notebooklm-bridge.md"
+      ],
+      "expected_outputs": [
+        "learning-enrichment-bridge-verification-v1",
+        "web/document/video/app/Markdown/Obsidian source coverage",
+        "strict second-brain handoff excludes learner answers"
+      ],
+      "failure_remediation": [
+        "Run verify_notebooklm_obsidian_bridge_hardening.py to isolate privacy validation failures."
+      ],
+      "operator_action": "Verify the platform Agent enrichment, HTML micro-lesson, NotebookLM manual bridge, Obsidian export, and second-brain handoff path.",
+      "step_id": "verify_learning_enrichment_bridge"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -303,7 +338,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -311,6 +346,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -345,7 +381,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -353,6 +389,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -391,7 +428,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -399,6 +436,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -447,7 +485,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.13-alpha"
+    "version": "v0.3.14-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -460,5 +498,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.13-alpha"
+  "version": "v0.3.14-alpha"
 }

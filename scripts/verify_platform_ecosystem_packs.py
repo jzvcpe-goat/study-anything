@@ -44,6 +44,7 @@ REQUIRED_ACCEPTANCE = {
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
+    "learning_enrichment_bridge.schema_version == learning-enrichment-bridge-verification-v1",
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
@@ -54,6 +55,7 @@ REQUIRED_ACCEPTANCE = {
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
+    "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
     "verify_security_recovery_hardening.py",

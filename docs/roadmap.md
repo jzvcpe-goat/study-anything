@@ -446,9 +446,23 @@
 - Wire the verifier into release checks, external adoption proof, ecosystem submission, platform
   packs, bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
 
+## v0.3.14-alpha
+
+- Add `learning-enrichment-bridge-verification-v1`, a redacted operator bridge report for Learning
+  Enrichment, NotebookLM-style manual import/export, Obsidian, and second-brain workflows.
+- Verify all supported external context source types: web, document, video slice, app context,
+  Markdown note, and Obsidian note.
+- Prove Markdown+HTML micro-lessons preserve source hashes, expose a safe `learning-enrichment-artifact-v1`
+  structure, and do not depend on scripts or raw source dumps.
+- Keep direct user-owned Obsidian and learning-package exports available while requiring strict
+  second-brain handoff evidence for shared platform logs.
+- Wire the verifier into release checks, external adoption proof, ecosystem submission, Kimi/Codex/
+  WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, and adoption pack
+  assets.
+
 ## v0.3 Next
 
-- `v0.3.14`: Learning Enrichment and NotebookLM/Obsidian operator bridge hardening.
+- `v0.3.15`: Agent eval marketplace enforcement and external judge hardening.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

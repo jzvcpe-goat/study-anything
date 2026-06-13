@@ -1,0 +1,184 @@
+{
+  "acceptance": {
+    "minimum_command": "python3 scripts/verify_learning_enrichment_bridge.py --check",
+    "pack_command": "python3 scripts/verify_learning_enrichment_bridge.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "adoption_pack": {
+    "bridge_assets_included": 3,
+    "included": true,
+    "schema_version": "study-anything-platform-adoption-pack-v1",
+    "version": "v0.3.14-alpha"
+  },
+  "context_contract": {
+    "allowed_source_types": [
+      "app_context",
+      "document",
+      "markdown_note",
+      "obsidian_note",
+      "video_slice",
+      "web"
+    ],
+    "item_count": 6,
+    "public_dict_includes_text": false,
+    "schema_version": "learning-context-package-v1",
+    "source_types": [
+      "app_context",
+      "document",
+      "markdown_note",
+      "obsidian_note",
+      "video_slice",
+      "web"
+    ]
+  },
+  "docs": {
+    "checked_docs": [
+      "docs/learning-enrichment.md",
+      "docs/notebooklm-bridge.md",
+      "docs/obsidian-export.md",
+      "docs/platform-agent-integrations.md",
+      "docs/second-brain-handoff.md",
+      "docs/use-with-kimi.md"
+    ],
+    "skill_first_positioning": true,
+    "standalone_frontend_required": false
+  },
+  "ecosystem_submission": {
+    "schema_version": "ecosystem-submission-v1",
+    "shared_assets_included": 5,
+    "version": "v0.3.14-alpha"
+  },
+  "exports": {
+    "html_artifact": {
+      "article_schema": "learning-enrichment-artifact-v1",
+      "contains_script_tag": false,
+      "embeddable_article": true,
+      "headings": [
+        "Teaching Brief",
+        "Professional Terms",
+        "Source Map",
+        "Practice"
+      ]
+    },
+    "local_archive": {
+      "file_count": 4,
+      "file_roles": [
+        "enrichment_html",
+        "enrichment_markdown",
+        "learning_package",
+        "obsidian_note"
+      ],
+      "schema_version": "second-brain-archive-manifest-v1"
+    },
+    "notebooklm_bridge": {
+      "manual_steps": 4,
+      "mode": "manual_export_import",
+      "official_notebooklm_api_required": false,
+      "status": "ready_for_manual_import"
+    },
+    "obsidian": {
+      "backlink_count": 2,
+      "direct_export_filename": "study-anything-learning-enrichment-operator-bridge-session-.md",
+      "strict_handoff_filename": "study-anything-second-brain-learning-enrichment-operator-bridge-session-.md"
+    },
+    "privacy": {
+      "agent_endpoints_included": false,
+      "agent_metadata_included": false,
+      "raw_enrichment_text_included": false,
+      "raw_source_text_included": false,
+      "secrets_included": false,
+      "strict_handoff_learner_answers_included": false
+    },
+    "schemas": {
+      "archive_manifest": "second-brain-archive-manifest-v1",
+      "context_package": "learning-context-package-v1",
+      "enrichment_artifact": "learning-enrichment-artifact-v1",
+      "learning_package": "learning-package-v1",
+      "obsidian": "obsidian-markdown-export-v1",
+      "second_brain": "second-brain-handoff-v1"
+    },
+    "source_hash_count": 6,
+    "source_types": [
+      "app_context",
+      "document",
+      "markdown_note",
+      "obsidian_note",
+      "video_slice",
+      "web"
+    ]
+  },
+  "operator_flow": [
+    {
+      "operator": "Platform Agent collects browser, document, video, app, Markdown, or Obsidian context.",
+      "step_id": "collect_context_outside_study_anything",
+      "study_anything_boundary": "Accept only bounded excerpts with references, locators, provenance, and hashes."
+    },
+    {
+      "operator": "Call validate/create/append context package tools.",
+      "step_id": "validate_or_import_context_package",
+      "study_anything_boundary": "Reject secrets, hidden instructions, unbounded dumps, and invalid provenance."
+    },
+    {
+      "operator": "Run teaching layers, quiz, answers, mastery, audit, and eval artifact.",
+      "step_id": "run_source_bound_learning",
+      "study_anything_boundary": "Persist learning state and citations; do not own external browsing/tools."
+    },
+    {
+      "operator": "Use Markdown/HTML artifact inside Kimi, Codex, WorkBuddy, or another host.",
+      "step_id": "export_enrichment_micro_lesson",
+      "study_anything_boundary": "Return source map, references, and generated teaching content without raw excerpts."
+    },
+    {
+      "operator": "Export Obsidian note, NotebookLM manual bridge, and local archive manifest.",
+      "step_id": "handoff_to_second_brain",
+      "study_anything_boundary": "Strict handoff excludes learner answers, grading feedback, Agent endpoints, and secrets."
+    }
+  ],
+  "platform_packs": {
+    "codex": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "terminal_skill"
+    },
+    "kimi": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "openai_compatible_tools"
+    },
+    "workbuddy": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "openapi_http_tools"
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_strict_handoff": false,
+    "raw_enrichment_text_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true
+  },
+  "schema_version": "learning-enrichment-bridge-verification-v1",
+  "status": "pass",
+  "tool_assets": {
+    "openai_tool_count": 34,
+    "openapi_path_count": 34,
+    "required_tools_present": [
+      "study_anything_add_enrichment",
+      "study_anything_agent_audit",
+      "study_anything_agent_eval_artifact",
+      "study_anything_append_context_package",
+      "study_anything_create_session_from_context_package",
+      "study_anything_enrichment_artifact_export",
+      "study_anything_learning_package_export",
+      "study_anything_obsidian_export",
+      "study_anything_second_brain_handoff_export",
+      "study_anything_teaching_layers",
+      "study_anything_validate_context_package"
+    ],
+    "tool_count": 34
+  },
+  "version": "v0.3.14-alpha"
+}
