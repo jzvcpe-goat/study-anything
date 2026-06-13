@@ -53,7 +53,9 @@
     "plugin_sdk.schema_version == plugin-sdk-v1",
     "plugin_capability_index.schema_version == plugin-capability-index-v1",
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
-    "deployment_guide.schema_version == deployment-guide-v1"
+    "deployment_guide.schema_version == deployment-guide-v1",
+    "ecosystem_submission.schema_version == ecosystem-submission-v1",
+    "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",

@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.0-alpha")
+        self.assertEqual(manifest["version"], "v0.3.1-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -58,12 +58,15 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/commercial-readiness.md",
             "docs/plugin-sdk.md",
             "docs/plugin-registry.md",
-            "docs/release-notes/v0.3.0-alpha.md",
+            "docs/ecosystem-submission.md",
+            "docs/release-notes/v0.3.1-alpha.md",
+            "platform/ecosystem-submission.json",
             "skills/study-anything/SKILL.md",
             "scripts/doctor.sh",
             "scripts/launch_self_host.sh",
             "scripts/stop_self_host.sh",
             "scripts/verify_published_image_launch.py",
+            "scripts/verify_ecosystem_submission_pack.py",
             "scripts/verify_external_adoption.py",
             "scripts/verify_platform_operator_drill.py",
             "evals/fixtures/fake-agent-learning-loop.json",

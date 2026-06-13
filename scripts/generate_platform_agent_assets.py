@@ -153,6 +153,7 @@ def evidence_commands(evidence: Dict[str, Any]) -> List[str]:
         "openai_compatible_gateway_dry_run_command",
         "gateway_only_command",
         "clean_clone_adoption_command",
+        "ecosystem_submission_command",
         "promptfoo_clean_clone_command",
         "retrieval_eval_command",
         "diagnostics_command",

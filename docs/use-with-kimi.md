@@ -35,6 +35,7 @@ Use this when Kimi Work or a Kimi-compatible platform can import HTTP tools.
 ```text
 platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
+platform/ecosystem-submission.json
 ```
 
 3. Let Kimi call the platform tools:
@@ -55,6 +56,18 @@ platform/generated/study-anything-openai-tools.json
 
 This mode is the preferred early ecosystem path because it keeps the UX inside
 Kimi while Study Anything remains local-first.
+
+Before treating the Kimi integration as ready, run:
+
+```bash
+python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The first command emits `ecosystem-submission-verification-v1`; the second emits
+`adoption-proof-v1`.
 
 Start with `study_anything_deployment_guide` after the local API is reachable. It returns
 `deployment-guide-v1`: launch commands, common first-run failure classes, and the privacy boundary

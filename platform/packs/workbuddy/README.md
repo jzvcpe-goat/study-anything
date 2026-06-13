@@ -26,6 +26,7 @@ For release or workspace handoff acceptance, verify the distributable adoption p
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -48,6 +49,8 @@ Study Anything should own:
 
 - deployment-guide-v1 launch guidance and first-run diagnostic boundaries
 - commercial-readiness-v1 launch boundaries, hosted-service contracts, and local-first invariants
+- ecosystem-submission-v1 metadata for no-frontend platform submission
+- ecosystem-submission-verification-v1 evidence for privacy and high-risk endpoint exclusions
 - source-bound learning state
 - Learning Context Package validation and import
 - Plugin SDK contract, capability index, and local package validation

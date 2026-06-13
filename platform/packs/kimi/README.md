@@ -29,6 +29,8 @@ The tool surface includes:
   diagnostics guide.
 - `study_anything_commercial_readiness` for `commercial-readiness-v1`, the OSS/local-first launch
   boundary and hosted-service non-goals.
+- `platform/ecosystem-submission.json` for `ecosystem-submission-v1`, the submission-ready
+  metadata that keeps Kimi as the conversation surface while Study Anything remains a local engine.
 - `study_anything_health` for local API reachability.
 - `study_anything_eval_policy` for `agent-eval-policy-v1`, the native release gate, optional
   external adapter policy, and failure classes.
@@ -65,6 +67,7 @@ For release or handoff acceptance, use the distributable adoption pack:
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -123,6 +126,9 @@ standalone app are not part of this alpha. The exports include a redacted enrich
 user-owned Obsidian Markdown note, a portable learning package, and the strict second-brain handoff.
 Prefer the second-brain handoff for Kimi-visible long-term memory because it excludes learner answers
 and grading feedback.
+The ecosystem submission verifier returns `ecosystem-submission-verification-v1` and proves the Kimi
+pack has no standalone frontend requirement, no Study Anything model-key custody, and no high-risk
+management endpoints in the imported tool surface.
 
 For importer flows, Kimi or the surrounding platform Agent should first build a
 `learning-context-package-v1` object from user-approved web pages, files, video slices, workspace

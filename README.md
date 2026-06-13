@@ -106,7 +106,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.0-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.1-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -119,7 +119,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.0-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.1-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` and
@@ -127,6 +127,8 @@ If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` and
 launch commands, failure classes, and the privacy boundary for user-owned Agents.
 `commercial-readiness-v1` states that the GitHub OSS/platform-Agent launch path is ready while hosted
 Sync, Publish, Teams, Catalyst, billing, SSO, and a standalone app remain future work.
+`ecosystem-submission-v1` is the v0.3.1 no-frontend submission contract for Kimi-compatible, Codex
+Skill, WorkBuddy-style HTTP, and generic OpenAPI platforms.
 
 ## Bring Your Own Agent
 
@@ -201,6 +203,7 @@ Generated import assets are checked in for platforms that prefer OpenAPI or func
 platform/generated/study-anything-platform-openapi.json
 platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
+platform/ecosystem-submission.json
 platform/generated/study-anything-platform-bundle.json
 ```
 
@@ -217,6 +220,7 @@ Regenerate or verify these assets after editing the manifest, platform packs, or
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 ```
@@ -360,9 +364,11 @@ yet a paid hosted app. Run:
 
 ```bash
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_ecosystem_submission_pack.py
 ```
 
-See `docs/commercial-readiness.md` for the hosted-service contracts and launch limits.
+See `docs/commercial-readiness.md` for the hosted-service contracts and launch limits. See
+`docs/ecosystem-submission.md` before publishing or submitting platform assets.
 
 ## GitHub Launch
 

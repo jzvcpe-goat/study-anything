@@ -36,6 +36,8 @@
   "handoff_contract": {
     "commercial_readiness_schema": "commercial-readiness-v1",
     "deployment_guide_schema": "deployment-guide-v1",
+    "ecosystem_submission_schema": "ecosystem-submission-v1",
+    "ecosystem_submission_verification_schema": "ecosystem-submission-verification-v1",
     "enrichment_artifact_schema": "learning-enrichment-artifact-v1",
     "learning_package_schema": "learning-package-v1",
     "notebooklm_fixture": "fixtures/notebooklm/notebooklm-style-context-package.json",
@@ -131,15 +133,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 60,
+    "file_count": 63,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.0-alpha"
+    "version": "v0.3.1-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 21,
+      "acceptance_evidence_count": 23,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -170,7 +172,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 21,
+      "acceptance_evidence_count": 23,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -205,7 +207,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 21,
+      "acceptance_evidence_count": 23,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",

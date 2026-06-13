@@ -31,6 +31,8 @@ private Agent platforms:
   privacy boundaries
 - commercial readiness contract for GitHub OSS launch, platform-Agent distribution, hosted-service
   non-goals, and PMF prerequisites
+- ecosystem submission metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic
+  OpenAPI platform review
 - API health
 - session creation
 - source attachment
@@ -58,6 +60,7 @@ Validate a running integration with:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_ecosystem_submission_pack.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -72,6 +75,7 @@ assembling commands:
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
@@ -84,6 +88,8 @@ as a platform tool directory before any runtime starts. The adoption verifier em
 `adoption-proof-v1` and proves that a fresh operator can start Study Anything in Skill Mode, use the
 platform tool surface, complete the importer/enrichment/retrieval/teaching/eval loop, and export
 Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
+The ecosystem submission verifier emits `ecosystem-submission-verification-v1`; use it before
+submitting assets to Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, or generic OpenAPI hosts.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide` and
 `study_anything_commercial_readiness` before the learning tools. `deployment-guide-v1` tells the
@@ -141,6 +147,7 @@ Verify the packs against the source manifest:
 
 ```bash
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```

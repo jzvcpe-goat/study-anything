@@ -69,6 +69,7 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         tools = {tool["name"]: tool for tool in manifest["tools"]}
         self.assertEqual(set(tools), REQUIRED_TOOLS)
         self.assertIn("verify_platform_agent_tools.py", manifest["acceptance_evidence"]["local_verification_command"])
+        self.assertIn("verify_ecosystem_submission_pack.py", manifest["acceptance_evidence"]["ecosystem_submission_command"])
 
     def test_manifest_does_not_expose_management_or_secret_surfaces(self) -> None:
         manifest = self._manifest()
@@ -138,6 +139,7 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("study_anything_deployment_guide", catalog)
         self.assertIn("deployment-guide-v1", catalog)
         self.assertIn("commercial-readiness-v1", catalog)
+        self.assertIn("verify_ecosystem_submission_pack.py", catalog)
         self.assertIn("study_anything_commercial_readiness", catalog)
         self.assertIn("agent-eval-policy-v1", catalog)
         self.assertIn("agent-eval-report-v1", catalog)
