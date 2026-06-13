@@ -39,6 +39,7 @@ if [ -f .env ]; then
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
+"$python_bin" scripts/verify_agent_gateway_hardening.py
 "$python_bin" scripts/generate_platform_agent_assets.py --check
 "$python_bin" scripts/verify_commercial_readiness.py
 "$python_bin" scripts/verify_adoption_telemetry.py

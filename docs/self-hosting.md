@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.3.2-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.3.3-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.2-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.3-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -147,6 +147,23 @@ Open:
 - Local encrypted sync status: http://localhost:8000/v1/sync/status
 - Local PMF metrics: http://localhost:8000/v1/metrics/pmf
 - Langfuse: http://localhost:3000
+
+## User-Owned Agent Gateway
+
+Study Anything does not store real model API keys. Keep Kimi/OpenAI-compatible credentials in the
+gateway process environment, then register only the local or private `/invoke` endpoint. For a
+host-local gateway used by Docker, prefer `http://host.docker.internal:8787/invoke`.
+
+Before using real credentials, run:
+
+```bash
+python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+python3 scripts/verify_agent_gateway_hardening.py
+```
+
+Do not put bearer tokens, cookies, signed URLs, or `api_key` query parameters into
+`POST /v1/agents/providers`; those configurations are rejected and should live inside the user's
+gateway instead.
 
 ## Post-Launch Verification
 
@@ -166,7 +183,7 @@ in plaintext.
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.2-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.3-alpha
 ```
 
 This pulls the published API image, checks the runtime version, completes the API learning loop, and

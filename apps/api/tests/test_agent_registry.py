@@ -75,17 +75,82 @@ class AgentRegistryTests(unittest.TestCase):
 
     def test_provider_status_redacts_secret_metadata(self) -> None:
         registry = AgentRegistry()
+        with self.assertRaises(ValueError):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Local Gateway",
+                endpoint="http://localhost:8787",
+                metadata={"api_key": "secret", "owner": "local"},
+            )
+
+    def test_provider_status_redacts_endpoint_query_secrets(self) -> None:
+        registry = AgentRegistry()
         provider = registry.configure_provider(
             kind="http_agent",
             label="Local Gateway",
-            endpoint="http://localhost:8787",
-            metadata={"api_key": "secret", "owner": "local"},
+            endpoint="http://localhost:8787/invoke?mode=local",
+            metadata={"owner": "local"},
         )
 
         public = provider.public_dict()
 
-        self.assertEqual(public["metadata"]["api_key"], "[redacted]")
+        self.assertEqual(public["endpoint"], "http://localhost:8787/invoke?mode=local")
         self.assertEqual(public["metadata"]["owner"], "local")
+
+    def test_rejects_agent_endpoint_inline_secrets(self) -> None:
+        registry = AgentRegistry()
+
+        with self.assertRaisesRegex(ValueError, "inline credentials"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Unsafe Gateway",
+                endpoint="http://user:secret@localhost:8787/invoke",
+                capabilities=["quiz.generate"],
+            )
+
+        with self.assertRaisesRegex(ValueError, "secret-like query"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Unsafe Gateway",
+                endpoint="http://localhost:8787/invoke?api_key=secret",
+                capabilities=["quiz.generate"],
+            )
+
+    def test_load_sanitizes_legacy_provider_secrets(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "agents.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "providers": [
+                            {
+                                "provider_id": "legacy",
+                                "kind": "http_agent",
+                                "label": "Legacy Agent",
+                                "endpoint": "http://user:secret@localhost:8787/invoke",
+                                "command": [],
+                                "capabilities": ["quiz.generate"],
+                                "timeout_seconds": 15,
+                                "enabled": True,
+                                "metadata": {"api_key": "old-secret", "owner": "local"},
+                            }
+                        ],
+                        "defaults": {},
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            registry = AgentRegistry(path)
+            status = registry.status("alice")
+            provider = next(item for item in status["providers"] if item["provider_id"] == "legacy")
+            saved = json.loads(path.read_text(encoding="utf-8"))
+
+            self.assertFalse(provider["enabled"])
+            self.assertEqual(provider["endpoint"], "http://localhost:8787/invoke")
+            self.assertNotIn("api_key", provider["metadata"])
+            self.assertNotIn("old-secret", json.dumps(saved))
+            self.assertNotIn("user:secret", json.dumps(saved))
 
     def test_registry_persists_providers_and_defaults(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -188,7 +253,51 @@ class AgentRegistryTests(unittest.TestCase):
         health = registry.test_provider(provider.provider_id)
 
         self.assertEqual(health.status, "unhealthy")
+        self.assertEqual(health.diagnostic_code, "provider_unavailable")
         self.assertIn("HTTP agent unavailable", health.message)
+
+    def test_http_agent_malformed_json_health_has_diagnostic_code(self) -> None:
+        with self._server(response="{not-json") as endpoint:
+            registry = AgentRegistry()
+            provider = registry.configure_provider(
+                kind="http_agent",
+                label="Bad Agent",
+                endpoint=endpoint,
+                capabilities=["source.verify"],
+            )
+
+            health = registry.test_provider(provider.provider_id)
+
+        self.assertEqual(health.status, "unhealthy")
+        self.assertEqual(health.diagnostic_code, "malformed_json")
+        self.assertFalse(health.public_dict()["privacy"]["secrets_returned"])
+
+    def test_http_agent_invalid_schema_health_has_diagnostic_code(self) -> None:
+        with self._server(response={"status": "maybe", "content": "invalid"}) as endpoint:
+            registry = AgentRegistry()
+            provider = registry.configure_provider(
+                kind="http_agent",
+                label="Invalid Agent",
+                endpoint=endpoint,
+                capabilities=["source.verify"],
+            )
+
+            health = registry.test_provider(provider.provider_id)
+
+        self.assertEqual(health.status, "unhealthy")
+        self.assertEqual(health.diagnostic_code, "invalid_status")
+
+    def test_set_default_rejects_capability_mismatch(self) -> None:
+        registry = AgentRegistry()
+        provider = registry.configure_provider(
+            kind="http_agent",
+            label="Quiz Only Agent",
+            endpoint="http://localhost:8787/invoke",
+            capabilities=["quiz.generate"],
+        )
+
+        with self.assertRaisesRegex(ValueError, "does not declare capability"):
+            registry.set_default("alice", AgentCapability.ANSWER_GRADE, provider.provider_id)
 
     def test_cli_agent_is_disabled_by_default(self) -> None:
         registry = AgentRegistry()

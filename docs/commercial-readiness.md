@@ -8,6 +8,7 @@ Use:
 
 ```bash
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_agent_gateway_hardening.py
 ```
 
 or call:
@@ -27,6 +28,9 @@ The response is `commercial-readiness-v1`. It is metadata-only and states:
 This means Study Anything can be distributed as an OSS local-first learning layer for Kimi, Codex,
 WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
 SSO, remote accounts, or a standalone frontend are ready.
+The Agent gateway hardening verifier is part of the launch proof for this distribution path: it
+checks that real credentials remain outside Study Anything, unsafe provider config is rejected, and
+bad Agent output produces redacted diagnostics.
 
 For adoption and PMF review, call:
 

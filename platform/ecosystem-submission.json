@@ -1,7 +1,7 @@
 {
   "schema_version": "ecosystem-submission-v1",
   "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.2-alpha",
+  "version": "v0.3.3-alpha",
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
   "project": {
     "repository": "https://github.com/jzvcpe-goat/study-anything",
@@ -76,7 +76,8 @@
     "docs/commercial-readiness.md",
     "docs/adoption.md",
     "docs/adoption-telemetry.md",
-    "scripts/verify_adoption_telemetry.py"
+    "scripts/verify_adoption_telemetry.py",
+    "scripts/verify_agent_gateway_hardening.py"
   ],
   "submissions": [
     {
@@ -101,6 +102,7 @@
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -205,6 +207,7 @@
       "python3 scripts/verify_ecosystem_submission_pack.py",
       "python3 scripts/verify_commercial_readiness.py",
       "python3 scripts/verify_adoption_telemetry.py",
+      "python3 scripts/verify_agent_gateway_hardening.py",
       "python3 scripts/verify_platform_ecosystem_packs.py",
       "python3 scripts/generate_platform_bundle_manifest.py --check",
       "python3 scripts/generate_platform_adoption_pack.py --check",
@@ -218,6 +221,7 @@
       "submission metadata declares no Study Anything model-key custody",
       "commercial-readiness-v1 remains linked",
       "adoption-telemetry-v1 remains aggregate-only",
+      "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
       "pmf-readiness-v1 keeps hosted paid services not_ready"
     ]
   },

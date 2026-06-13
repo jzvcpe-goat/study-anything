@@ -37,6 +37,27 @@ Task rules:
 """
 
 DRY_RUN_MODES = {"dry-run", "dry_run", "mock", "test"}
+GATEWAY_CAPABILITIES = [
+    "teach.overview",
+    "teach.glossary",
+    "teach.examples",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+    "note.scribe",
+    "source.verify",
+    "memory.retrieve",
+    "embedding.create",
+]
+
+
+def _privacy_contract() -> dict[str, Any]:
+    return {
+        "study_anything_stores_model_keys": False,
+        "gateway_keeps_keys_in_environment": True,
+        "raw_authorization_returned": False,
+        "raw_task_payload_returned_in_errors": False,
+    }
 
 
 def _gateway_mode() -> str:
@@ -324,9 +345,27 @@ def _invoke_upstream(task: dict[str, Any]) -> dict[str, Any]:
 
 
 def _invoke_agent(task: dict[str, Any]) -> dict[str, Any]:
+    _validate_agent_task(task)
     if _is_dry_run():
         return _dry_run_result(task)
     return _invoke_upstream(task)
+
+
+def _validate_agent_task(task: dict[str, Any]) -> None:
+    task_type = task.get("task_type")
+    if task_type not in GATEWAY_CAPABILITIES:
+        raise ValueError("Agent task_type is unsupported or missing.")
+    session_id = task.get("session_id")
+    if session_id is not None and not isinstance(session_id, str):
+        raise ValueError("Agent session_id must be a string when present.")
+    for collection_name in ("quiz_items", "answers"):
+        values = task.get(collection_name, [])
+        if values is not None and not isinstance(values, list):
+            raise ValueError(f"Agent {collection_name} must be a list when present.")
+    for mapping_name in ("source", "constraints", "metadata"):
+        values = task.get(mapping_name)
+        if values is not None and not isinstance(values, dict):
+            raise ValueError(f"Agent {mapping_name} must be an object when present.")
 
 
 class OpenAICompatibleAgentHandler(BaseHTTPRequestHandler):
@@ -345,6 +384,8 @@ class OpenAICompatibleAgentHandler(BaseHTTPRequestHandler):
                     "mode": "dry_run",
                     "model": "dry-run-deterministic",
                     "configured": True,
+                    "capabilities": GATEWAY_CAPABILITIES,
+                    "privacy": _privacy_contract(),
                 }
             )
             return
@@ -355,9 +396,19 @@ class OpenAICompatibleAgentHandler(BaseHTTPRequestHandler):
                 "mode": "upstream",
                 "model": _model(),
                 "configured": bool(_chat_completions_url() and _api_key()),
+                "capabilities": GATEWAY_CAPABILITIES,
+                "privacy": _privacy_contract(),
             }
         except GatewayConfigurationError as exc:
-            self._send({"status": "error", "message": str(exc)}, status_code=503)
+            self._send(
+                {
+                    "status": "error",
+                    "message": str(exc),
+                    "diagnostic_code": "configuration_required",
+                    "privacy": _privacy_contract(),
+                },
+                status_code=503,
+            )
             return
         self._send(payload)
 
@@ -372,10 +423,26 @@ class OpenAICompatibleAgentHandler(BaseHTTPRequestHandler):
                 raise ValueError("Agent task must be a JSON object.")
             result = _invoke_agent(task)
         except (GatewayConfigurationError, ValueError, json.JSONDecodeError) as exc:
-            self._send({"status": "error", "message": str(exc)}, status_code=400)
+            self._send(
+                {
+                    "status": "error",
+                    "message": str(exc),
+                    "diagnostic_code": "invalid_agent_task",
+                    "privacy": _privacy_contract(),
+                },
+                status_code=400,
+            )
             return
         except RuntimeError as exc:
-            self._send({"status": "error", "message": str(exc)}, status_code=502)
+            self._send(
+                {
+                    "status": "error",
+                    "message": str(exc),
+                    "diagnostic_code": "upstream_unavailable",
+                    "privacy": _privacy_contract(),
+                },
+                status_code=502,
+            )
             return
         self._send(result)
 

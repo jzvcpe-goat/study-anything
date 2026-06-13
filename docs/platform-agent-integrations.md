@@ -235,6 +235,7 @@ model through an OpenAI-compatible gateway:
 
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+python3 scripts/verify_agent_gateway_hardening.py
 ```
 
 Then start the real gateway after adding credentials:
@@ -260,6 +261,10 @@ python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
 ```
 
 See `docs/kimi-agent-gateway.md` for the full flow.
+
+Never put Kimi keys, bearer tokens, cookies, or signed query parameters in the Agent endpoint URL or
+provider metadata. Study Anything rejects those fields so model credentials stay inside the user's
+gateway or platform Agent environment.
 
 ## WorkBuddy Or Other Agent Workspaces
 

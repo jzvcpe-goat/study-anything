@@ -317,9 +317,19 @@
 - Maintain the privacy boundary: no source text, answers, insights, raw user ids, Agent endpoints,
   API keys, or browser/video/app private context in telemetry evidence.
 
+## v0.3.3-alpha
+
+- Add `agent-gateway-hardening-verification-v1`, a local verifier for user-owned HTTP Agent gateway
+  safety, health diagnostics, malformed output handling, and privacy boundaries.
+- Reject Agent provider endpoint credentials, secret-like query parameters, and secret metadata keys
+  so model credentials remain inside the user's gateway or platform Agent.
+- Add redacted Agent health diagnostics with stable `diagnostic_code` values for configuration
+  errors, unavailable gateways, malformed JSON, invalid schema, and successful contract acceptance.
+- Include the gateway hardening verifier in release checks, external adoption proof, ecosystem
+  submission, platform packs, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.3`: user-owned Agent gateway hardening, local security posture, and timeout/sandbox guidance.
 - `v0.3.4`: NotebookLM, Obsidian, and Learning Enrichment bridge hardening.
 - `v0.3.5`: plugin trust registry and installer quarantine.
 - `v0.3.6`: security, recovery, and backup hardening.

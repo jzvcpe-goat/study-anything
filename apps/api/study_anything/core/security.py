@@ -7,9 +7,23 @@ import hashlib
 import hmac
 import os
 from typing import Any, Mapping
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 
 REDACTED = "[redacted]"
+SECRET_KEY_MARKERS = (
+    "api_key",
+    "apikey",
+    "authorization",
+    "auth",
+    "bearer",
+    "cookie",
+    "credential",
+    "key",
+    "password",
+    "secret",
+    "token",
+)
 
 
 def hash_user_id(user_id: str, salt: str = "study-anything-alpha") -> str:
@@ -33,15 +47,53 @@ def _redact_value(value: Any) -> Any:
     return value
 
 
+def is_secret_key(key: str) -> bool:
+    value = key.lower()
+    return any(marker in value for marker in SECRET_KEY_MARKERS)
+
+
 def redact_mapping(values: Mapping[str, object]) -> dict[str, object]:
-    secret_markers = ("key", "secret", "token", "password", "credential")
     redacted: dict[str, object] = {}
     for key, value in values.items():
-        if any(marker in key.lower() for marker in secret_markers):
+        if is_secret_key(key):
             redacted[key] = REDACTED
         else:
             redacted[key] = _redact_value(value)
     return redacted
+
+
+def redact_url_secrets(value: str | None) -> str | None:
+    """Return a URL with credentials and secret-like query parameters removed."""
+
+    if value is None:
+        return None
+    parts = urlsplit(value)
+    if not parts.scheme or not parts.netloc:
+        return value
+    hostname = parts.hostname or ""
+    if ":" in hostname and not hostname.startswith("["):
+        hostname = f"[{hostname}]"
+    port = f":{parts.port}" if parts.port is not None else ""
+    netloc = f"{hostname}{port}"
+    safe_query = urlencode(
+        [
+            (key, REDACTED if is_secret_key(key) else query_value)
+            for key, query_value in parse_qsl(parts.query, keep_blank_values=True)
+        ],
+        doseq=True,
+    )
+    return urlunsplit((parts.scheme, netloc, parts.path, safe_query, parts.fragment))
+
+
+def url_contains_inline_secret(value: str | None) -> bool:
+    """Detect endpoint forms that would store secrets inside Study Anything."""
+
+    if not value:
+        return False
+    parts = urlsplit(value)
+    if parts.username or parts.password:
+        return True
+    return any(is_secret_key(key) for key, _query_value in parse_qsl(parts.query, keep_blank_values=True))
 
 
 def make_dev_encryption_key() -> str:

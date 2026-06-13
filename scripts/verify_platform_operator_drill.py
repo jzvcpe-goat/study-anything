@@ -72,6 +72,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
+    "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
