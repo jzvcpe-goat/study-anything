@@ -72,6 +72,11 @@ FILES: list[tuple[str, str, str]] = [
         "Copy-ready plugin ecosystem adoption kit for platform submissions.",
     ),
     (
+        "platform/generated/study-anything-deployment-hardening.json",
+        "generated_asset",
+        "Deployment hardening and clean-clone operator path report.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -110,6 +115,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/openai_compatible_agent_gateway.py",
         "gateway",
         "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
+    ),
+    (
+        "scripts/setup_env.py",
+        "runtime",
+        "Generate local .env files with development-safe local secrets.",
+    ),
+    (
+        "scripts/check_env.py",
+        "runtime",
+        "Validate required local environment variables before launch.",
     ),
     (
         "scripts/doctor.sh",
@@ -192,6 +207,11 @@ FILES: list[tuple[str, str, str]] = [
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
     ),
     (
+        "scripts/verify_deployment_hardening.py",
+        "verification",
+        "Deployment hardening and published-image operator path verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -225,6 +245,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_openai_compatible_gateway.py",
         "verification",
         "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
+    ),
+    (
+        "infra/compose/docker-compose.yml",
+        "runtime",
+        "Docker Compose source-build stack definition.",
+    ),
+    (
+        "infra/compose/docker-compose.images.yml",
+        "runtime",
+        "Docker Compose published-image override.",
     ),
     (
         "scripts/verify_platform_lesson_flow.py",
@@ -317,6 +347,11 @@ FILES: list[tuple[str, str, str]] = [
         "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
     ),
     (
+        "docs/github-launch.md",
+        "docs",
+        "GitHub launch, tag, release, and published-image verification guide.",
+    ),
+    (
         "docs/platform-agent-integrations.md",
         "docs",
         "General platform Agent integration guide.",
@@ -402,7 +437,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.12-alpha.md",
+        "docs/release-notes/v0.3.13-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -549,6 +584,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+            "python3 scripts/verify_deployment_hardening.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

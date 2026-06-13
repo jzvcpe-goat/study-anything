@@ -1,6 +1,6 @@
 [project]
 name = "study-anything"
-version = "0.3.12-alpha"
+version = "0.3.13-alpha"
 description = "Open-source, self-host-first AI-native learning system."
 readme = "README.md"
 requires-python = ">=3.11"

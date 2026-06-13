@@ -31,6 +31,9 @@ EXTERNAL_EVAL_HARNESS_PATH = (
 PLUGIN_ECOSYSTEM_KIT_PATH = (
     ROOT / "platform" / "generated" / "study-anything-plugin-ecosystem-adoption-kit.json"
 )
+DEPLOYMENT_HARDENING_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-deployment-hardening.json"
+)
 COMMERCIAL_DOC = ROOT / "docs" / "commercial-readiness.md"
 
 REQUIRED_PLATFORMS = {
@@ -64,12 +67,14 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_external_eval_marketplace_harness.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
+    "scripts/verify_deployment_hardening.py",
     "scripts/install_local_plugin.py",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+    "platform/generated/study-anything-deployment-hardening.json",
     "docs/plugins.md",
     "docs/plugin-sdk.md",
     "docs/plugin-registry.md",
@@ -99,6 +104,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_first_lesson_authoring_kit.py",
     "verify_external_eval_marketplace_harness.py",
     "verify_plugin_ecosystem_adoption_kit.py",
+    "verify_deployment_hardening.py",
     "verify_platform_ecosystem_packs.py",
     "generate_platform_bundle_manifest.py --check",
     "generate_platform_adoption_pack.py --check",
@@ -192,8 +198,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.12-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.12-alpha.")
+    if submission.get("version") != "v0.3.13-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.13-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -288,8 +294,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.12-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.12-alpha.")
+    if manifest.get("version") != "v0.3.13-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.13-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -305,6 +311,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_first_lesson_authoring_kit.py",
         "scripts/verify_external_eval_marketplace_harness.py",
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
+        "scripts/verify_deployment_hardening.py",
         "scripts/install_local_plugin.py",
         "platform/generated/study-anything-operator-drill-transcript.json",
         "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -312,8 +319,9 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-first-lesson-authoring-kit.json",
         "platform/generated/study-anything-external-eval-harness.json",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+        "platform/generated/study-anything-deployment-hardening.json",
         "docs/eval-frameworks.md",
-        "docs/release-notes/v0.3.12-alpha.md",
+        "docs/release-notes/v0.3.13-alpha.md",
         "docs/plugins.md",
         "docs/plugin-sdk.md",
         "docs/plugin-registry.md",
@@ -345,7 +353,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.12-alpha":
+    if report.get("version") != "v0.3.13-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -369,7 +377,7 @@ def verify_manual_rehearsal_report() -> None:
     report = load_json(MANUAL_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
         raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
-    if report.get("version") != "v0.3.12-alpha":
+    if report.get("version") != "v0.3.13-alpha":
         raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
@@ -391,7 +399,7 @@ def verify_first_lesson_kit_report() -> None:
     report = load_json(FIRST_LESSON_KIT_PATH)
     if report.get("schema_version") != "first-run-lesson-authoring-kit-v1":
         raise EcosystemSubmissionError("First lesson authoring kit schema drifted.")
-    if report.get("version") != "v0.3.12-alpha":
+    if report.get("version") != "v0.3.13-alpha":
         raise EcosystemSubmissionError("First lesson authoring kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("First lesson authoring kit must pass.")
@@ -418,7 +426,7 @@ def verify_external_eval_harness_report() -> None:
     report = load_json(EXTERNAL_EVAL_HARNESS_PATH)
     if report.get("schema_version") != "external-eval-marketplace-harness-v1":
         raise EcosystemSubmissionError("External eval marketplace harness schema drifted.")
-    if report.get("version") != "v0.3.12-alpha":
+    if report.get("version") != "v0.3.13-alpha":
         raise EcosystemSubmissionError("External eval marketplace harness version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("External eval marketplace harness must pass.")
@@ -455,7 +463,7 @@ def verify_plugin_ecosystem_kit_report() -> None:
     report = load_json(PLUGIN_ECOSYSTEM_KIT_PATH)
     if report.get("schema_version") != "plugin-ecosystem-adoption-kit-v1":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit schema drifted.")
-    if report.get("version") != "v0.3.12-alpha":
+    if report.get("version") != "v0.3.13-alpha":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit must pass.")
@@ -498,6 +506,41 @@ def verify_plugin_ecosystem_kit_report() -> None:
         raise EcosystemSubmissionError("Plugin ecosystem kit report must be redacted.")
 
 
+def verify_deployment_hardening_report() -> None:
+    report = load_json(DEPLOYMENT_HARDENING_PATH)
+    if report.get("schema_version") != "deployment-hardening-verification-v1":
+        raise EcosystemSubmissionError("Deployment hardening report schema drifted.")
+    if report.get("version") != "v0.3.13-alpha":
+        raise EcosystemSubmissionError("Deployment hardening report version drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Deployment hardening report must pass.")
+    modes = {str(item.get("id")) for item in report.get("deployment_modes", []) if isinstance(item, dict)}
+    if modes != {"skill_mode", "published_image", "source_build"}:
+        raise EcosystemSubmissionError(f"Deployment modes drifted: {sorted(modes)}")
+    published = report.get("published_image_smoke") or {}
+    if published.get("fallback_is_acceptance_when_ci_manifest_and_release_check_pass") is not True:
+        raise EcosystemSubmissionError("Deployment hardening must document pull-timeout fallback.")
+    required_platforms = set(str(item) for item in published.get("required_platforms", []))
+    if {"linux/amd64", "linux/arm64"} - required_platforms:
+        raise EcosystemSubmissionError("Deployment hardening must require amd64 and arm64 images.")
+    commands = report.get("operator_commands") or {}
+    for key in ("doctor", "skill_mode", "published_image", "published_image_smoke", "clean_clone"):
+        if key not in commands:
+            raise EcosystemSubmissionError(f"Deployment hardening command missing: {key}")
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "real_model_keys_stored_by_study_anything",
+        "agent_endpoint_secrets_in_report",
+        "raw_source_text_in_report",
+        "learner_answers_in_report",
+        "browser_video_private_context_in_report",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Deployment hardening privacy.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("Deployment hardening report must be redacted.")
+
+
 def main() -> None:
     submission = load_json(SUBMISSION_PATH)
     tool_manifest = load_json(TOOL_MANIFEST_PATH)
@@ -513,6 +556,7 @@ def main() -> None:
     verify_first_lesson_kit_report()
     verify_external_eval_harness_report()
     verify_plugin_ecosystem_kit_report()
+    verify_deployment_hardening_report()
     print(
         json.dumps(
             {
@@ -526,6 +570,7 @@ def main() -> None:
                 "commercial_readiness": "commercial-readiness-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "plugin_ecosystem_adoption_kit": "plugin-ecosystem-adoption-kit-v1",
+                "deployment_hardening": "deployment-hardening-verification-v1",
                 "no_frontend_required": True,
                 "real_model_keys_stored_by_study_anything": False,
             },

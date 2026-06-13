@@ -1,7 +1,7 @@
 {
   "schema_version": "ecosystem-submission-v1",
   "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.12-alpha",
+  "version": "v0.3.13-alpha",
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
   "project": {
     "repository": "https://github.com/jzvcpe-goat/study-anything",
@@ -78,6 +78,7 @@
     "docs/commercial-readiness.md",
     "docs/security.md",
     "docs/adoption.md",
+    "docs/self-hosting.md",
     "docs/adoption-telemetry.md",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
@@ -90,11 +91,13 @@
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_external_eval_marketplace_harness.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
+    "scripts/verify_deployment_hardening.py",
     "scripts/install_local_plugin.py",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+    "platform/generated/study-anything-deployment-hardening.json",
     "docs/eval-frameworks.md",
     "docs/plugins.md",
     "docs/plugin-sdk.md",
@@ -144,6 +147,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -183,6 +187,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -220,6 +225,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -256,6 +262,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -282,6 +289,7 @@
       "python3 scripts/verify_first_lesson_authoring_kit.py --check",
       "python3 scripts/verify_external_eval_marketplace_harness.py --check",
       "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+      "python3 scripts/verify_deployment_hardening.py --check",
       "python3 scripts/verify_platform_ecosystem_packs.py",
       "python3 scripts/generate_platform_bundle_manifest.py --check",
       "python3 scripts/generate_platform_adoption_pack.py --check",
@@ -305,6 +313,7 @@
       "first-run-lesson-authoring-kit-v1 proves Kimi/Codex/WorkBuddy operators have copyable bilingual first-lesson prompts, tool-call sequence, context-package template, Agent setup, export evidence, and privacy assertions",
       "external-eval-marketplace-harness-v1 proves native eval gates, optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeouts, redaction assertions, and marketplace-quality evidence are aligned",
       "plugin-ecosystem-adoption-kit-v1 proves bundled sample plugins, registry digests, quarantine-first trust policy, platform pack commands, and privacy evidence are aligned without executing plugin entrypoints",
+      "deployment-hardening-verification-v1 proves Skill Mode, published-image, source-build, Docker/Compose diagnostics, non-ASCII path recovery, port checks, GHCR manifest fallback, and local Agent endpoint guidance are aligned",
       "pmf-readiness-v1 keeps hosted paid services not_ready"
     ]
   },

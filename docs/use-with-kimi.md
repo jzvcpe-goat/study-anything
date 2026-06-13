@@ -30,6 +30,13 @@ Use this when Kimi Work or a Kimi-compatible platform can import HTTP tools.
 ./scripts/launch_skill_mode.sh
 ```
 
+Skill Mode is the lowest-friction first-run path for Kimi operators. When Docker
+is preferred, use the published image path instead of building from source:
+
+```bash
+USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+```
+
 2. Import the constrained tool contract:
 
 ```text

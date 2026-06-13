@@ -180,19 +180,19 @@
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "plugin_verifier_command_present": true
     },
     "kimi": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "plugin_verifier_command_present": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",
       "plugin_verifier_command_present": true
@@ -262,7 +262,7 @@
     "platform_count": 4,
     "plugin_assets_declared": 17,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.12-alpha"
+    "version": "v0.3.13-alpha"
   },
   "trust_policy": {
     "automatic_remote_plugin_downloads_enabled": false,
@@ -275,5 +275,5 @@
     "remote_marketplace_payments_enabled": false,
     "schema_version": "plugin-trust-v1"
   },
-  "version": "v0.3.12-alpha"
+  "version": "v0.3.13-alpha"
 }

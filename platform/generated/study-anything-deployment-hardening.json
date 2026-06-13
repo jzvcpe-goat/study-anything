@@ -1,0 +1,225 @@
+{
+  "adoption_pack": {
+    "deployment_assets_included": 3,
+    "schema": "study-anything-platform-adoption-pack-v1",
+    "version": "v0.3.13-alpha"
+  },
+  "checked_assets": [
+    {
+      "path": "README.md",
+      "status": "present"
+    },
+    {
+      "path": "docs/adoption.md",
+      "status": "present"
+    },
+    {
+      "path": "docs/self-hosting.md",
+      "status": "present"
+    },
+    {
+      "path": "docs/github-launch.md",
+      "status": "present"
+    },
+    {
+      "path": "docs/platform-agent-integrations.md",
+      "status": "present"
+    },
+    {
+      "path": "docs/use-with-kimi.md",
+      "status": "present"
+    },
+    {
+      "path": "scripts/launch_self_host.sh",
+      "status": "present"
+    },
+    {
+      "path": "scripts/doctor.sh",
+      "status": "present"
+    },
+    {
+      "path": "scripts/diagnose_adoption.py",
+      "status": "present"
+    },
+    {
+      "path": "scripts/verify_published_image_launch.py",
+      "status": "present"
+    },
+    {
+      "path": "scripts/verify_clean_clone_adoption.py",
+      "status": "present"
+    },
+    {
+      "path": "scripts/setup_env.py",
+      "status": "present"
+    },
+    {
+      "path": "scripts/check_env.py",
+      "status": "present"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "status": "present"
+    },
+    {
+      "path": "infra/compose/docker-compose.images.yml",
+      "status": "present"
+    },
+    {
+      "path": "platform/ecosystem-submission.json",
+      "status": "present"
+    },
+    {
+      "path": "platform/generated/study-anything-platform-adoption-pack.json",
+      "status": "present"
+    },
+    {
+      "path": "platform/generated/study-anything-platform-bundle.json",
+      "status": "present"
+    }
+  ],
+  "clean_clone_adoption": {
+    "checks": [
+      "clean_clone",
+      "env_generation",
+      "skill_mode_demo",
+      "gateway_dry_run",
+      "teaching_layers",
+      "agent_audit_eval"
+    ],
+    "default_runtime": "skill-mode",
+    "script": "scripts/verify_clean_clone_adoption.py"
+  },
+  "compose": {
+    "published_image_override": "infra/compose/docker-compose.images.yml",
+    "source_build_and_published_image_paths_are_separate": true,
+    "source_compose": "infra/compose/docker-compose.yml"
+  },
+  "deployment_modes": [
+    {
+      "command": "./scripts/launch_skill_mode.sh",
+      "id": "skill_mode",
+      "recommended_for": "external platform agents and first-run users",
+      "source_build_required": false
+    },
+    {
+      "command": "USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh",
+      "id": "published_image",
+      "recommended_for": "Docker users who want to avoid local builds",
+      "source_build_required": false
+    },
+    {
+      "command": "./scripts/launch_self_host.sh",
+      "id": "source_build",
+      "recommended_for": "contributors changing the API image",
+      "source_build_required": true
+    }
+  ],
+  "diagnostics": {
+    "covers": [
+      "env_file",
+      "localhost_api",
+      "docker_daemon",
+      "ghcr_manifest",
+      "agent_endpoint",
+      "provider_capabilities"
+    ],
+    "schema": "adoption-diagnostic-plan-v1",
+    "script": "scripts/diagnose_adoption.py"
+  },
+  "doctor": {
+    "checks": [
+      "docker",
+      "docker_compose",
+      "docker_daemon",
+      "env_file",
+      "non_ascii_source_path",
+      "ports",
+      "api_health",
+      "agent_gateway_hint",
+      "plugin_install_dir"
+    ],
+    "script": "scripts/doctor.sh"
+  },
+  "ecosystem_submission": {
+    "schema": "ecosystem-submission-v1",
+    "shared_assets_included": 3,
+    "version": "v0.3.13-alpha"
+  },
+  "failure_classes": [
+    "docker_missing_or_daemon_unreachable",
+    "docker_compose_missing",
+    "port_conflict",
+    "non_ascii_source_build_path",
+    "ghcr_manifest_unavailable",
+    "published_image_pull_timeout",
+    "api_health_timeout",
+    "agent_endpoint_unreachable",
+    "provider_defaults_missing"
+  ],
+  "launch_script": {
+    "guards_non_ascii_source_builds": true,
+    "published_image_default_tag": "v0.3.13-alpha",
+    "script": "scripts/launch_self_host.sh",
+    "source_build_requires_explicit_bypass_for_non_ascii": true,
+    "supports_cached_image_skip": true,
+    "supports_published_images": true
+  },
+  "operator_commands": {
+    "clean_clone": "python3 scripts/verify_clean_clone_adoption.py --repo .",
+    "diagnose": "python3 scripts/diagnose_adoption.py",
+    "doctor": "./scripts/doctor.sh",
+    "manifest": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.13-alpha",
+    "prepare_env": "python3 scripts/setup_env.py",
+    "published_image": "USE_PUBLISHED_IMAGES=true STUDY_ANYTHING_IMAGE_TAG=v0.3.13-alpha ./scripts/launch_self_host.sh",
+    "published_image_cached": "USE_PUBLISHED_IMAGES=true PULL_PUBLISHED_IMAGES=false ./scripts/launch_self_host.sh",
+    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.13-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "skill_mode": "./scripts/launch_skill_mode.sh",
+    "source_build": "./scripts/launch_self_host.sh"
+  },
+  "operator_docs": {
+    "checked_docs": [
+      "README.md",
+      "docs/adoption.md",
+      "docs/github-launch.md",
+      "docs/platform-agent-integrations.md",
+      "docs/self-hosting.md",
+      "docs/use-with-kimi.md"
+    ],
+    "operator_docs_are_copyable": true
+  },
+  "platform_packs": {
+    "codex": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true
+    },
+    "kimi": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true
+    },
+    "workbuddy": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true
+  },
+  "published_image_smoke": {
+    "fallback_is_acceptance_when_ci_manifest_and_release_check_pass": true,
+    "required_platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "schema_when_pull_blocks": "blocked_by_local_ghcr_pull",
+    "script": "scripts/verify_published_image_launch.py"
+  },
+  "schema_version": "deployment-hardening-verification-v1",
+  "status": "pass",
+  "version": "v0.3.13-alpha"
+}

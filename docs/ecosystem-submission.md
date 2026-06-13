@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.12-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.13-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -37,6 +37,7 @@ python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/verify_deployment_hardening.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and fails if the
@@ -48,6 +49,10 @@ submission checklist.
 The manual rehearsal emits `platform-manual-submission-rehearsal-v1`, a redacted
 operator handoff that covers unpacking, tool import, runtime health, user-owned
 HTTP Agent setup, first lesson, export evidence, diagnostics, and remediation.
+The deployment hardening report emits `deployment-hardening-verification-v1`,
+covering Skill Mode, published-image, and source-build paths plus Docker/Compose
+diagnostics, GHCR manifest fallback, non-ASCII path guidance, and local Agent
+endpoint recovery.
 The first lesson kit emits `first-run-lesson-authoring-kit-v1`, a copyable
 Kimi/Codex/WorkBuddy handoff with bilingual prompts, a tool-call sequence,
 Learning Context Package template, HTTP Agent setup, expected schemas, export
