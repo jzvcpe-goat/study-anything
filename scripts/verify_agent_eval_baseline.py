@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASELINE_PATH = ROOT / "evals" / "baselines" / "study-anything-agent-eval-baseline.json"
 BASELINE_SCHEMA = "study-anything-agent-eval-baseline-v1"
 REGRESSION_SCHEMA = "study-anything-agent-eval-regression-report-v1"
-BASELINE_VERSION = "v0.3.16-alpha"
+BASELINE_VERSION = "v0.3.17-alpha"
 EXPECTED_ADAPTERS = ["deepeval", "langchain-agentevals", "promptfoo", "ragas"]
 EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
 

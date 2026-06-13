@@ -1,0 +1,39 @@
+{
+  "diagnosis": {
+    "detection_signal": "Imported asset declares an unexpected schema_version or OpenAPI version.",
+    "likely_cause": "The platform imported an old adoption pack or a generated asset from another release.",
+    "next_commands": [
+      "python3 scripts/generate_platform_agent_assets.py --check",
+      "python3 scripts/verify_platform_field_rehearsal.py --check"
+    ]
+  },
+  "failure_id": "schema_mismatch",
+  "observed_error": {
+    "diagnostic_code": "schema_mismatch",
+    "message": "Simulated Schema mismatch during external platform import.",
+    "raw_error_redacted": true
+  },
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "safe_feedback_fields": [
+    "schema_version",
+    "asset_path",
+    "expected_version",
+    "found_version"
+  ],
+  "schema_version": "platform-import-failure-fixture-v1",
+  "status": "mock_failure_ready",
+  "version": "v0.3.17-alpha"
+}

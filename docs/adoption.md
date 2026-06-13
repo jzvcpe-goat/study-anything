@@ -18,6 +18,8 @@ python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -206,6 +208,22 @@ python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
 ```
 
+The field adoption rehearsal emits `platform-field-adoption-rehearsal-v1`.
+It packages Kimi, Codex, WorkBuddy, and generic OpenAPI rehearsal transcripts
+plus an import quirks catalog and mock failed-import fixtures using
+`platform-import-failure-fixture-v1`. Use it before handing the pack to an
+external tester:
+
+```bash
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
+```
+
+The fixtures cover schema mismatch, missing local gateway, unsupported auth
+mode, tool naming drift, timeout, browser localhost restrictions, package
+corruption, and version drift. They contain actionable next commands and
+redacted diagnostic fields only.
+
 The plugin ecosystem adoption kit is the shareable plugin trust runbook. It proves the adoption pack
 contains bundled sample plugins, a digest-verified `plugins/registry.json`, quarantine-first install
 policy, platform-pack commands, and redacted evidence without executing plugin entrypoints.
@@ -263,7 +281,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.17-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -271,12 +289,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.16-alpha \
+  --tag v0.3.17-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.16-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.17-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

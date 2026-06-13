@@ -79,6 +79,8 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -148,6 +150,12 @@ submitting assets to Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, or gene
 The deployment hardening verifier emits `deployment-hardening-verification-v1`; use it when the
 operator needs copyable proof that Skill Mode, published images, source builds, Docker diagnostics,
 GHCR fallback, and local Agent endpoint guidance are aligned.
+The field adoption rehearsal emits `platform-field-adoption-rehearsal-v1`.
+It gives Kimi, Codex, WorkBuddy, and generic OpenAPI operators a redacted
+rehearsal transcript, import quirks catalog, and failed import fixture set.
+Each failed import fixture uses `platform-import-failure-fixture-v1`, names the
+detection signal, and gives next commands without source text, learner answers,
+Agent prompts, real endpoints, or model secrets.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
 `study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and
@@ -174,6 +182,7 @@ platform/generated/study-anything-platform-manual-submission-rehearsal.json
 platform/generated/study-anything-first-lesson-authoring-kit.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
+platform/generated/study-anything-platform-field-rehearsal.json
 evals/baselines/study-anything-agent-eval-baseline.json
 ```
 
@@ -194,6 +203,8 @@ python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```

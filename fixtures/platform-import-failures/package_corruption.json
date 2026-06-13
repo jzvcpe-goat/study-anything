@@ -1,0 +1,38 @@
+{
+  "diagnosis": {
+    "detection_signal": "The adoption pack zip cannot be opened or its sha256 manifest does not match.",
+    "likely_cause": "The pack was edited manually, partially downloaded, or re-zipped by another tool.",
+    "next_commands": [
+      "python3 scripts/generate_platform_adoption_pack.py",
+      "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+    ]
+  },
+  "failure_id": "package_corruption",
+  "observed_error": {
+    "diagnostic_code": "package_corruption",
+    "message": "Simulated Package corruption during external platform import.",
+    "raw_error_redacted": true
+  },
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "safe_feedback_fields": [
+    "archive_name",
+    "expected_sha256",
+    "found_sha256"
+  ],
+  "schema_version": "platform-import-failure-fixture-v1",
+  "status": "mock_failure_ready",
+  "version": "v0.3.17-alpha"
+}

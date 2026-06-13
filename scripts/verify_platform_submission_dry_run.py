@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.16-alpha"
+RELEASE_VERSION = "v0.3.17-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -47,6 +47,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform/packs/kimi/README.md",
             "platform/packs/kimi/pack.json",
         ],
@@ -58,6 +59,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_agent_eval_marketplace_enforcement.py",
             "verify_platform_adoption_feedback_diagnostics.py",
             "generate_platform_feedback_package.py",
+            "generate_platform_field_rehearsal.py",
+            "verify_platform_field_rehearsal.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -91,6 +94,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform/packs/codex/README.md",
             "platform/packs/codex/pack.json",
         ],
@@ -102,6 +106,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_agent_eval_marketplace_enforcement.py",
             "verify_platform_adoption_feedback_diagnostics.py",
             "generate_platform_feedback_package.py",
+            "generate_platform_field_rehearsal.py",
+            "verify_platform_field_rehearsal.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -133,6 +139,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform/packs/workbuddy/README.md",
             "platform/packs/workbuddy/pack.json",
         ],
@@ -144,6 +151,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_agent_eval_marketplace_enforcement.py",
             "verify_platform_adoption_feedback_diagnostics.py",
             "generate_platform_feedback_package.py",
+            "generate_platform_field_rehearsal.py",
+            "verify_platform_field_rehearsal.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -176,6 +185,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
@@ -185,6 +195,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_agent_eval_marketplace_enforcement.py",
             "verify_platform_adoption_feedback_diagnostics.py",
             "generate_platform_feedback_package.py",
+            "generate_platform_field_rehearsal.py",
+            "verify_platform_field_rehearsal.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -310,6 +322,7 @@ def platform_report(
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
         }
     ]
 
