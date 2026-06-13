@@ -49,6 +49,7 @@ copy-ready adoption pack:
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -58,9 +59,12 @@ python3 scripts/verify_external_adoption.py \
 The operator drill emits `study-anything-operator-drill-v1`, proving the pack can be consumed as an
 external platform tool directory. The first lesson kit emits `first-run-lesson-authoring-kit-v1`,
 with copyable Kimi/Codex/WorkBuddy prompts, tool-call sequence, context-package template, local Agent
-setup, and export evidence. The verifier emits `adoption-proof-v1`, proving the Skill Mode
-runtime, importer/enrichment/retrieval/teaching/eval loop, enrichment artifact, Obsidian export, and NotebookLM-style
-handoff without requiring the standalone frontend or storing real model keys in Study Anything.
+setup, and export evidence. The external eval harness emits
+`external-eval-marketplace-harness-v1`, tying native eval gates, optional mature adapters, fixtures,
+timeouts, and redaction checks into one platform-submission contract. The verifier emits
+`adoption-proof-v1`, proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
+loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
+standalone frontend or storing real model keys in Study Anything.
 
 Maintainers and external testers can verify the project from a disposable clean clone:
 
@@ -111,7 +115,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.10-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.11-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -124,7 +128,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.10-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.11-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -180,6 +184,7 @@ Against a running API:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 .venv/bin/python scripts/verify_agent_eval_assets.py
+.venv/bin/python scripts/verify_external_eval_marketplace_harness.py --check
 API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool report --create-session --required
 ```
 
@@ -190,7 +195,7 @@ API_BASE=http://127.0.0.1:8000 \
   .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required
 ```
 
-See `docs/agent-eval.md` and `evals/promptfoo/agent-eval-artifact.yaml`.
+See `docs/agent-eval.md`, `docs/eval-frameworks.md`, and `evals/promptfoo/agent-eval-artifact.yaml`.
 
 For retrieval/context quality gates:
 

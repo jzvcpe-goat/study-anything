@@ -224,6 +224,15 @@ def main() -> None:
         "agent-eval-report-v1",
     )
     assert_contains(
+        ROOT / "docs" / "eval-frameworks.md",
+        "Promptfoo",
+        "DeepEval",
+        "LangChain AgentEvals",
+        "Ragas",
+        "external-eval-marketplace-harness-v1",
+        "Study Anything must not store judge or model keys",
+    )
+    assert_contains(
         ROOT / "scripts" / "run_external_agent_evals.py",
         'choices=["promptfoo", "deepeval", "retrieval", "report"]',
         "ragas-compatible-native",
@@ -234,6 +243,14 @@ def main() -> None:
         ROOT / "scripts" / "verify_agent_eval_baseline.py",
         "study-anything-agent-eval-baseline-v1",
         "study-anything-agent-eval-regression-report-v1",
+        "promptfoo",
+        "deepeval",
+        "langchain-agentevals",
+        "ragas",
+    )
+    assert_contains(
+        ROOT / "scripts" / "verify_external_eval_marketplace_harness.py",
+        "external-eval-marketplace-harness-v1",
         "promptfoo",
         "deepeval",
         "langchain-agentevals",

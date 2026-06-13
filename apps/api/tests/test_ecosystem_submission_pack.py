@@ -23,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.10-alpha")
+        self.assertEqual(payload["version"], "v0.3.11-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertIn("kimi-compatible", payload["platforms"])
@@ -38,7 +38,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.10-alpha")
+        self.assertEqual(submission["version"], "v0.3.11-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -65,13 +65,20 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             "platform/generated/study-anything-first-lesson-authoring-kit.json",
             submission["shared_assets"],
         )
+        self.assertIn(
+            "platform/generated/study-anything-external-eval-harness.json",
+            submission["shared_assets"],
+        )
+        self.assertIn("docs/eval-frameworks.md", submission["shared_assets"])
         self.assertIn("scripts/verify_external_agent_adapter_hardening.py", submission["shared_assets"])
         self.assertIn("scripts/verify_platform_manual_submission_rehearsal.py", submission["shared_assets"])
         self.assertIn("scripts/verify_first_lesson_authoring_kit.py", submission["shared_assets"])
+        self.assertIn("scripts/verify_external_eval_marketplace_harness.py", submission["shared_assets"])
         commands = "\n".join(submission["acceptance"]["minimum_commands"])
         self.assertIn("verify_platform_submission_dry_run.py", commands)
         self.assertIn("verify_platform_manual_submission_rehearsal.py", commands)
         self.assertIn("verify_first_lesson_authoring_kit.py", commands)
+        self.assertIn("verify_external_eval_marketplace_harness.py", commands)
         self.assertIn("verify_external_agent_adapter_hardening.py", commands)
 
 
@@ -99,7 +106,7 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-submission-dry-run-v1")
-        self.assertEqual(report["version"], "v0.3.10-alpha")
+        self.assertEqual(report["version"], "v0.3.11-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["blocked_platforms"], [])
         self.assertFalse(report["privacy"]["real_model_keys_stored_by_study_anything"])
@@ -142,7 +149,7 @@ class PlatformManualSubmissionRehearsalReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.10-alpha")
+        self.assertEqual(report["version"], "v0.3.11-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])
@@ -164,12 +171,34 @@ class FirstLessonAuthoringKitReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "first-run-lesson-authoring-kit-v1")
-        self.assertEqual(report["version"], "v0.3.10-alpha")
+        self.assertEqual(report["version"], "v0.3.11-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(set(report["copyable_prompts"]), {"en", "zh"})
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["learner_answers_returned"])
         self.assertFalse(report["privacy_assertions"]["agent_endpoint_secrets_returned"])
+        serialized = json.dumps(report)
+        self.assertNotIn("sk-", serialized)
+        self.assertNotIn("Private answer:", serialized)
+
+
+class ExternalEvalHarnessReportTests(unittest.TestCase):
+    def test_external_eval_harness_report_privacy(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        report = json.loads(
+            (
+                root / "platform" / "generated" / "study-anything-external-eval-harness.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(report["schema_version"], "external-eval-marketplace-harness-v1")
+        self.assertEqual(report["version"], "v0.3.11-alpha")
+        self.assertEqual(report["status"], "pass")
+        adapter_ids = {item["adapter_id"] for item in report["external_adapters"]}
+        self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})
+        self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
+        self.assertFalse(report["privacy_assertions"]["raw_source_text_in_eval_harness"])
+        self.assertFalse(report["privacy_assertions"]["learner_answers_in_eval_harness"])
+        self.assertFalse(report["privacy_assertions"]["agent_endpoint_secrets_in_eval_harness"])
         serialized = json.dumps(report)
         self.assertNotIn("sk-", serialized)
         self.assertNotIn("Private answer:", serialized)

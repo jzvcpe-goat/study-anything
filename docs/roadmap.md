@@ -412,9 +412,20 @@
 - Wire the kit into release checks, external adoption proof, ecosystem submission, platform packs,
   bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
 
+## v0.3.11-alpha
+
+- Add `external-eval-marketplace-harness-v1`, a redacted marketplace-quality eval contract for
+  external platform submissions.
+- Separate required native gates from optional Promptfoo, DeepEval, LangChain AgentEvals, and
+  Ragas-compatible adapters.
+- Include fixtures, sample eval cases, timeout policy, expected evidence schema, failure remediation,
+  and privacy assertions.
+- Wire the harness into release checks, external adoption proof, ecosystem submission, platform packs,
+  bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.11`: external eval harness marketplace-quality adapters and acceptance gates.
+- `v0.3.12`: plugin ecosystem sample importer and trust registry adoption kit.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

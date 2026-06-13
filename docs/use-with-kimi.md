@@ -125,6 +125,7 @@ Before sharing the Kimi-compatible pack for manual import, run:
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
@@ -137,6 +138,8 @@ collect diagnostics without sharing raw learning data.
 The first lesson kit gives Kimi a bounded copy/paste workflow for turning user-provided materials
 into a Learning Context Package, running the Study Anything lesson tools, and exporting Obsidian plus
 NotebookLM-style evidence.
+The external eval marketplace harness gives Kimi a single redacted checklist for native eval gates,
+optional mature eval adapters, fixtures, timeouts, and evidence schemas before manual submission.
 The external Agent adapter verifier separately proves that Kimi-backed or Kimi-compatible HTTP
 Agents produce redacted eval evidence and that bad outputs become explicit diagnostics.
 

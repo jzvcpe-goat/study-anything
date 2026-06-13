@@ -1,0 +1,247 @@
+{
+  "artifact_import_export": {
+    "adoption_pack": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "copyable_commands": [
+      "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+      "python3 scripts/verify_agent_eval_assets.py",
+      "python3 scripts/verify_agent_eval_baseline.py --check",
+      "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required"
+    ],
+    "operator_docs": [
+      "docs/agent-eval.md",
+      "docs/eval-frameworks.md"
+    ],
+    "source_report": "platform/generated/study-anything-external-eval-harness.json"
+  },
+  "eval_assets": {
+    "adapter_ids": [
+      "promptfoo",
+      "deepeval",
+      "langchain-agentevals",
+      "ragas"
+    ],
+    "baseline_schema": "study-anything-agent-eval-baseline-v1",
+    "baseline_version": "v0.3.11-alpha",
+    "fixtures": {
+      "fake-agent-learning-loop.json": {
+        "privacy_flags_clear": true,
+        "schema_version": "study-anything-agent-eval-fixture-v1",
+        "task_count": 3
+      },
+      "mock-http-agent-learning-loop.json": {
+        "privacy_flags_clear": true,
+        "schema_version": "study-anything-agent-eval-fixture-v1",
+        "task_count": 3
+      }
+    },
+    "trajectory": [
+      "quiz.generate",
+      "answer.grade",
+      "insight.synthesize"
+    ]
+  },
+  "expected_evidence_schema": {
+    "required_fields": [
+      "status",
+      "native_fast_gate",
+      "baseline_regression",
+      "adapter_results",
+      "privacy",
+      "artifact_paths"
+    ],
+    "required_statuses": [
+      "pass",
+      "skipped_optional"
+    ],
+    "schema_version": "external-eval-marketplace-harness-evidence-v1"
+  },
+  "external_adapters": [
+    {
+      "adapter_id": "promptfoo",
+      "artifact": "evals/promptfoo/agent-eval-artifact.yaml",
+      "command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool promptfoo --create-session",
+      "credentials_stored_by_study_anything": false,
+      "missing_runtime_behavior": "skipped_when_optional",
+      "mode": "optional_external_contract_gate",
+      "required_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool promptfoo --create-session --required",
+      "timeout_seconds": 180
+    },
+    {
+      "adapter_id": "deepeval",
+      "artifact": "evals/deepeval/study_anything_quality_eval.py",
+      "command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+      "credentials_stored_by_study_anything": false,
+      "missing_runtime_behavior": "native_quality_fallback_when_allowed",
+      "mode": "optional_external_or_native_quality_fallback",
+      "timeout_seconds": 180
+    },
+    {
+      "adapter_id": "langchain-agentevals",
+      "artifact": "agent-eval-artifact-v1 trajectory field",
+      "command": "Use agent_eval_artifact.trajectory with create_trajectory_match_evaluator.",
+      "credentials_stored_by_study_anything": false,
+      "missing_runtime_behavior": "adapter_descriptor_only_until_operator_installs_runtime",
+      "mode": "trajectory_contract_export",
+      "timeout_seconds": 180
+    },
+    {
+      "adapter_id": "ragas",
+      "artifact": "retrieval-quality-eval-v1",
+      "command": "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+      "credentials_stored_by_study_anything": false,
+      "missing_runtime_behavior": "native_retrieval_gate_first_full_ragas_later",
+      "mode": "ragas_compatible_native_retrieval_gate",
+      "timeout_seconds": 180
+    }
+  ],
+  "failure_remediation": {
+    "native_gate_failed": [
+      "Run verify_agent_eval_assets.py and verify_agent_eval_baseline.py --check first.",
+      "Use fake deterministic Agent to isolate Study Anything runtime regressions."
+    ],
+    "optional_adapter_missing": [
+      "Install the external runtime in the operator eval environment.",
+      "Keep the native fast gate as the release blocker until the optional adapter is required."
+    ],
+    "privacy_leak": [
+      "Stop release, inspect the offending artifact, and remove raw source, answer, endpoint, or key material.",
+      "Share only schema/status/hash/reference evidence in ecosystem submissions."
+    ],
+    "promptfoo_timeout": [
+      "Increase --timeout-seconds or prewarm npx promptfoo package installation.",
+      "Treat timeout as skipped only when the adapter is optional."
+    ]
+  },
+  "marketplace_quality_goal": "Give external platform Agents a copyable, redacted eval contract before any marketplace or ecosystem submission claims production readiness.",
+  "native_fast_gates": [
+    {
+      "command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+      "evidence_schema": "agent-eval-report-v1",
+      "gate_id": "native_maturity_report",
+      "passes_without_judge_model": true,
+      "required": true
+    },
+    {
+      "command": "python3 scripts/verify_agent_eval_assets.py",
+      "evidence_schema": "agent-eval-artifact-v1",
+      "gate_id": "asset_contract",
+      "passes_without_judge_model": true,
+      "required": true
+    },
+    {
+      "command": "python3 scripts/verify_agent_eval_baseline.py --check",
+      "evidence_schema": "study-anything-agent-eval-regression-report-v1",
+      "gate_id": "baseline_regression",
+      "passes_without_judge_model": true,
+      "required": true
+    },
+    {
+      "command": "python3 scripts/verify_external_agent_adapter_hardening.py",
+      "evidence_schema": "external-agent-adapter-hardening-v1",
+      "gate_id": "external_agent_adapter_hardening",
+      "passes_without_judge_model": true,
+      "required": true
+    }
+  ],
+  "platforms": {
+    "codex": {
+      "acceptance_evidence_count": 35,
+      "commands": [
+        "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+      ],
+      "integration_mode": "terminal_skill",
+      "platform_id": "codex"
+    },
+    "kimi": {
+      "acceptance_evidence_count": 35,
+      "commands": [
+        "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+      ],
+      "integration_mode": "openai_compatible_tools",
+      "platform_id": "kimi"
+    },
+    "workbuddy": {
+      "acceptance_evidence_count": 35,
+      "commands": [
+        "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+      ],
+      "integration_mode": "openapi_http_tools",
+      "platform_id": "workbuddy"
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_eval_harness": false,
+    "browser_video_private_context_in_eval_harness": false,
+    "learner_answers_in_eval_harness": false,
+    "raw_agent_metadata_in_eval_harness": false,
+    "raw_source_text_in_eval_harness": false,
+    "real_model_or_judge_keys_stored_by_study_anything": false,
+    "report_is_redacted": true
+  },
+  "sample_eval_cases": [
+    {
+      "case_id": "fake_agent_baseline_loop",
+      "expected": [
+        "agent-eval-artifact-v1",
+        "agent-eval-report-v1"
+      ],
+      "fixture": "evals/fixtures/fake-agent-learning-loop.json",
+      "purpose": "Fast deterministic invocation and privacy contract."
+    },
+    {
+      "case_id": "mock_http_agent_loop",
+      "expected": [
+        "agent-audit-v1",
+        "external-agent-adapter-hardening-v1"
+      ],
+      "fixture": "evals/fixtures/mock-http-agent-learning-loop.json",
+      "purpose": "User-owned HTTP Agent evidence separated from fake-agent evidence."
+    },
+    {
+      "case_id": "retrieval_grounding_gate",
+      "expected": [
+        "retrieval-quality-eval-v1"
+      ],
+      "fixture": "scripts/verify_platform_ecosystem_eval_flow.py",
+      "purpose": "Ragas-compatible retrieval/context quality without raw snippets in eval evidence."
+    },
+    {
+      "case_id": "marketplace_submission_pack",
+      "expected": [
+        "external-eval-marketplace-harness-v1"
+      ],
+      "fixture": "platform/ecosystem-submission.json",
+      "purpose": "Kimi/Codex/WorkBuddy submission assets include eval evidence and commands."
+    }
+  ],
+  "schema_version": "external-eval-marketplace-harness-v1",
+  "status": "pass",
+  "submission": {
+    "no_frontend_required": true,
+    "platform_count": 4,
+    "schema_version": "ecosystem-submission-v1",
+    "version": "v0.3.11-alpha"
+  },
+  "timeout_policy": {
+    "default_external_eval_timeout_seconds": 180,
+    "optional_adapter_timeout_result": "skipped_when_optional_not_failed",
+    "platform_ecosystem_eval_timeout_seconds": 60,
+    "required_adapter_timeout_result": "failed"
+  },
+  "version": "v0.3.11-alpha"
+}
