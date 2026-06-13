@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.3.8-alpha
+## v0.3.9-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -13,6 +13,7 @@
 - [ ] `.venv/bin/python scripts/verify_plugin_quarantine.py`
 - [ ] `.venv/bin/python scripts/verify_security_recovery_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_platform_submission_dry_run.py --check`
+- [ ] `.venv/bin/python scripts/verify_platform_manual_submission_rehearsal.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
 - [ ] `.venv/bin/python scripts/verify_commercial_readiness.py`
 - [ ] `.venv/bin/python scripts/verify_adoption_telemetry.py`
@@ -41,6 +42,7 @@
 - [ ] Run `python3 scripts/verify_plugin_quarantine.py` and verify it returns `schema_version=plugin-quarantine-verification-v1`, quarantines unknown plugins by default, installs only with `approve_install=true`, blocks registry digest mismatches before both quarantine and install copies, and keeps `entrypoints_executed=false`.
 - [ ] Run `python3 scripts/verify_security_recovery_hardening.py` and verify it returns `schema_version=security-recovery-hardening-verification-v1`, detects backup tampering, rejects unsafe manifest paths, rejects invalid digests and duplicate paths, redacts wrong-passphrase diagnostics, and keeps restore-preview count-only.
 - [ ] Run `python3 scripts/verify_platform_submission_dry_run.py --check` and verify `platform-submission-dry-run-v1` has no blocked platforms, includes Kimi/Codex/WorkBuddy/generic OpenAPI checklists, and reports no raw learning data, Agent endpoint secrets, or real model keys.
+- [ ] Run `python3 scripts/verify_platform_manual_submission_rehearsal.py --check` and verify `platform-manual-submission-rehearsal-v1` includes operator steps, commands, expected outputs, evidence paths, failure remediation, time budget, and no raw source, answers, Agent endpoint secrets, real model keys, or browser/video private context.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py` and verify `GET /v1/sessions/{session_id}/agent-eval/artifact` emits a redacted `agent-eval-artifact-v1` bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
@@ -75,8 +77,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.8-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.8-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.8-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.9-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.9-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.9-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -102,4 +104,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.8-alpha`.
+- [ ] Tag `v0.3.9-alpha`.

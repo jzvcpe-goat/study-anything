@@ -78,6 +78,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
+    "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -371,6 +372,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "notebooklm_obsidian_bridge_hardening_schema": "notebooklm-obsidian-bridge-hardening-v1",
             "security_recovery_hardening_schema": "security-recovery-hardening-verification-v1",
             "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
+            "platform_manual_submission_rehearsal_schema": "platform-manual-submission-rehearsal-v1",
             "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",
             "shared_logs_are_redacted": True,
         },

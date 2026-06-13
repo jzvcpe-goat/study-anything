@@ -55,7 +55,10 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/verify_plugin_quarantine.py",
     "scripts/verify_security_recovery_hardening.py",
     "scripts/verify_platform_submission_dry_run.py",
+    "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
+    "scripts/verify_platform_manual_submission_rehearsal.py",
+    "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -425,6 +428,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "platform_manual_submission_rehearsal",
+                [python_bin, "scripts/verify_platform_manual_submission_rehearsal.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -568,6 +576,17 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "blocked_platforms": value.get("blocked_platforms"),
             "platforms": sorted((value.get("platforms") or {}).keys()),
             "report_is_redacted": (value.get("privacy") or {}).get("report_is_redacted"),
+        }
+    if label == "platform_manual_submission_rehearsal":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "operator_step_count": len(value.get("operator_steps", [])),
+            "time_budget_minutes": (value.get("time_budget") or {}).get("target_minutes"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
         }
     if label == "external_agent_adapter_hardening":
         external_eval = value.get("external_agent_eval") or {}

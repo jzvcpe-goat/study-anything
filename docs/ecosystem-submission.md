@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.8-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.9-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -33,6 +33,7 @@ Run:
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and fails if the
@@ -41,6 +42,9 @@ platform pack privacy contract, or loses the `commercial-readiness-v1` link.
 The dry-run emits `platform-submission-dry-run-v1` with per-platform
 ready/warning/blocked status, import assets, acceptance commands, and a manual
 submission checklist.
+The manual rehearsal emits `platform-manual-submission-rehearsal-v1`, a redacted
+operator handoff that covers unpacking, tool import, runtime health, user-owned
+HTTP Agent setup, first lesson, export evidence, diagnostics, and remediation.
 
 ## Submission Targets
 
@@ -73,6 +77,7 @@ python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check

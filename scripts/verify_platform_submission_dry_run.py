@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.8-alpha"
+RELEASE_VERSION = "v0.3.9-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -45,6 +45,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
+            "verify_platform_manual_submission_rehearsal.py",
             "verify_openai_compatible_gateway.py --gateway-only",
             "verify_external_adoption.py",
         ],
@@ -73,6 +74,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
+            "verify_platform_manual_submission_rehearsal.py",
             "run_skill_mode_demo.sh",
             "verify_external_adoption.py",
         ],
@@ -99,6 +101,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
+            "verify_platform_manual_submission_rehearsal.py",
             "verify_platform_agent_tools.py",
             "verify_external_adoption.py",
         ],
@@ -124,6 +127,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
+            "verify_platform_manual_submission_rehearsal.py",
             "generate_platform_agent_assets.py --check",
             "verify_external_adoption.py",
         ],

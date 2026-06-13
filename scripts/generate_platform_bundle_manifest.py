@@ -52,6 +52,11 @@ FILES: list[tuple[str, str, str]] = [
         "External platform submission dry-run readiness report.",
     ),
     (
+        "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+        "generated_asset",
+        "Manual platform-submission rehearsal and redacted handoff report.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -150,6 +155,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_platform_submission_dry_run.py",
         "verification",
         "External platform submission dry-run verifier.",
+    ),
+    (
+        "scripts/verify_platform_manual_submission_rehearsal.py",
+        "verification",
+        "Manual platform-submission rehearsal verifier.",
     ),
     (
         "scripts/verify_ecosystem_submission_pack.py",
@@ -342,7 +352,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.8-alpha.md",
+        "docs/release-notes/v0.3.9-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

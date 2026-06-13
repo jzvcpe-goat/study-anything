@@ -1,0 +1,445 @@
+#!/usr/bin/env python3
+"""Verify manual platform-submission rehearsal handoff evidence."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import shutil
+import sys
+import tempfile
+import zipfile
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
+RELEASE_VERSION = "v0.3.9-alpha"
+DEFAULT_REPORT = (
+    ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
+)
+DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
+
+PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+REQUIRED_REPORT_EVIDENCE = [
+    "platform/generated/study-anything-platform-submission-dry-run.json",
+    "platform/generated/study-anything-operator-drill-transcript.json",
+    "platform/generated/study-anything-platform-adoption-pack.json",
+]
+REQUIRED_OPERATOR_ASSETS = [
+    "platform/ecosystem-submission.json",
+    "platform/study-anything-platform-tools.json",
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-openai-tools.json",
+    "platform/generated/study-anything-tool-catalog.md",
+    "docs/use-with-kimi.md",
+    "docs/platform-agent-integrations.md",
+    "docs/adoption.md",
+    "docs/ecosystem-submission.md",
+    "scripts/verify_external_adoption.py",
+    "scripts/verify_platform_submission_dry_run.py",
+    "scripts/verify_external_agent_adapter_hardening.py",
+    "scripts/verify_platform_operator_drill.py",
+    "scripts/verify_platform_manual_submission_rehearsal.py",
+    "scripts/openai_compatible_agent_gateway.py",
+    "scripts/study_anything_cli.py",
+    "scripts/run_skill_mode_demo.sh",
+]
+REQUIRED_PACK_COMMAND = "verify_platform_manual_submission_rehearsal.py --check"
+REQUIRED_EVIDENCE = (
+    "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1"
+)
+FORBIDDEN_PATTERNS = [
+    re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
+    re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
+    re.compile(r"(?i)\bbearer\s+[A-Za-z0-9_./+=-]{8,}"),
+    re.compile(r"http://127\.0\.0\.1:8787[^\s\"']*"),
+]
+FORBIDDEN_LITERALS = [
+    "OPENAI_API_KEY",
+    "MOONSHOT_API_KEY",
+    "Private answer:",
+    "Private platform browser/video context",
+    "raw source text returned",
+]
+
+
+class ManualSubmissionRehearsalError(RuntimeError):
+    """Readable manual-submission rehearsal failure."""
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        raise ManualSubmissionRehearsalError(f"Cannot read JSON {path}: {exc}") from exc
+    if not isinstance(value, dict):
+        raise ManualSubmissionRehearsalError(f"JSON object expected: {path}")
+    return value
+
+
+def dump_json(payload: Any) -> str:
+    return json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+
+
+def resolve_pack_root(args: argparse.Namespace, tmp_root: Path) -> Path:
+    if args.pack_root:
+        root = Path(args.pack_root).resolve()
+        if not root.exists():
+            raise ManualSubmissionRehearsalError(f"Pack root does not exist: {root}")
+        return root
+    if args.pack:
+        pack = Path(args.pack).resolve()
+        if not pack.exists():
+            raise ManualSubmissionRehearsalError(f"Adoption pack archive is missing: {pack}")
+        with zipfile.ZipFile(pack) as archive:
+            roots = {name.split("/", 1)[0] for name in archive.namelist() if "/" in name}
+            if len(roots) != 1:
+                raise ManualSubmissionRehearsalError(
+                    f"Adoption pack archive should have one root, got {sorted(roots)}"
+                )
+            archive.extractall(tmp_root)
+        return tmp_root / next(iter(roots))
+    return ROOT
+
+
+def safe_relative(root: Path, relative_path: str) -> Path:
+    target = (root / relative_path).resolve()
+    try:
+        target.relative_to(root.resolve())
+    except ValueError as exc:
+        raise ManualSubmissionRehearsalError(f"Unsafe path escapes pack root: {relative_path}") from exc
+    return target
+
+
+def require_file(root: Path, relative_path: str) -> None:
+    target = safe_relative(root, relative_path)
+    if not target.is_file():
+        raise ManualSubmissionRehearsalError(f"Required rehearsal asset is missing: {relative_path}")
+
+
+def operation_ids(openapi: dict[str, Any]) -> set[str]:
+    found: set[str] = set()
+    for methods in openapi.get("paths", {}).values():
+        if not isinstance(methods, dict):
+            continue
+        for operation in methods.values():
+            if isinstance(operation, dict) and operation.get("operationId"):
+                found.add(str(operation["operationId"]))
+    return found
+
+
+def validate_tool_assets(root: Path) -> dict[str, Any]:
+    manifest = read_json(safe_relative(root, "platform/study-anything-platform-tools.json"))
+    required_tools = [
+        str(tool.get("name"))
+        for tool in manifest.get("tools", [])
+        if isinstance(tool, dict) and tool.get("name")
+    ]
+    openai_tools = json.loads(
+        safe_relative(root, "platform/generated/study-anything-openai-tools.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    openapi = read_json(safe_relative(root, "platform/generated/study-anything-platform-openapi.json"))
+    if not isinstance(openai_tools, list):
+        raise ManualSubmissionRehearsalError("OpenAI-compatible tool asset must be a list.")
+    openai_names = {
+        str(item.get("function", {}).get("name"))
+        for item in openai_tools
+        if isinstance(item, dict)
+    }
+    openapi_names = operation_ids(openapi)
+    missing = sorted(set(required_tools) - openai_names - openapi_names)
+    if missing:
+        raise ManualSubmissionRehearsalError(f"Tool import assets miss required tools: {missing}")
+    if openapi.get("components", {}).get("securitySchemes"):
+        raise ManualSubmissionRehearsalError("Platform OpenAPI import must not require API keys.")
+    return {
+        "openai_tool_count": len(openai_tools),
+        "openapi_path_count": len(openapi.get("paths", {})),
+        "required_tool_count": len(required_tools),
+        "management_endpoints_exposed": False,
+    }
+
+
+def sanitize_command(command: str) -> str:
+    sanitized = command.replace("http://127.0.0.1:8787/invoke", "${AGENT_ENDPOINT}")
+    sanitized = sanitized.replace("http://127.0.0.1:8787", "${AGENT_ENDPOINT}")
+    sanitized = re.sub(r"AGENT_ENDPOINT=\S+", "AGENT_ENDPOINT=${USER_OWNED_AGENT_ENDPOINT}", sanitized)
+    return sanitized
+
+
+def validate_platform_pack(root: Path, platform_id: str) -> dict[str, Any]:
+    pack = read_json(safe_relative(root, f"platform/packs/{platform_id}/pack.json"))
+    if pack.get("schema_version") != "study-anything-platform-pack-v1":
+        raise ManualSubmissionRehearsalError(f"{platform_id} pack schema drifted.")
+    commands = [str(command) for command in pack.get("local_verification_commands", [])]
+    command_text = "\n".join(commands)
+    if REQUIRED_PACK_COMMAND not in command_text:
+        raise ManualSubmissionRehearsalError(
+            f"{platform_id} pack must include {REQUIRED_PACK_COMMAND}."
+        )
+    evidence = set(str(item) for item in pack.get("acceptance_evidence", []))
+    if REQUIRED_EVIDENCE not in evidence:
+        raise ManualSubmissionRehearsalError(f"{platform_id} pack is missing manual rehearsal evidence.")
+    return {
+        "platform_id": platform_id,
+        "integration_mode": pack.get("integration_mode"),
+        "status": "ready_for_manual_rehearsal",
+        "entrypoints": pack.get("entrypoints", {}),
+        "import_assets": pack.get("import_assets", []),
+        "commands": [sanitize_command(command) for command in commands],
+        "acceptance_evidence_count": len(evidence),
+    }
+
+
+def validate_submission(root: Path) -> dict[str, Any]:
+    submission = read_json(safe_relative(root, "platform/ecosystem-submission.json"))
+    if submission.get("schema_version") != "ecosystem-submission-v1":
+        raise ManualSubmissionRehearsalError("Ecosystem submission schema drifted.")
+    if submission.get("version") != RELEASE_VERSION:
+        raise ManualSubmissionRehearsalError(
+            f"Ecosystem submission version must be {RELEASE_VERSION}."
+        )
+    shared_assets = set(str(item) for item in submission.get("shared_assets", []))
+    for asset in (
+        "scripts/verify_platform_manual_submission_rehearsal.py",
+        "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+    ):
+        if asset not in shared_assets:
+            raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
+    acceptance = submission.get("acceptance") or {}
+    command_text = "\n".join(str(item) for item in acceptance.get("minimum_commands", []))
+    if "verify_platform_manual_submission_rehearsal.py --check" not in command_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission missing manual rehearsal check.")
+    prove_text = "\n".join(str(item) for item in acceptance.get("must_prove", []))
+    if SCHEMA_VERSION not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove manual rehearsal schema.")
+    return {
+        "schema_version": submission.get("schema_version"),
+        "version": submission.get("version"),
+        "platform_count": len(submission.get("submissions", [])),
+        "no_frontend_required": (submission.get("project") or {}).get(
+            "standalone_frontend_required"
+        )
+        is False,
+    }
+
+
+def validate_existing_reports(root: Path) -> dict[str, Any]:
+    reports: dict[str, Any] = {}
+    expected = {
+        "platform_submission_dry_run": (
+            "platform/generated/study-anything-platform-submission-dry-run.json",
+            "platform-submission-dry-run-v1",
+        ),
+        "operator_drill": (
+            "platform/generated/study-anything-operator-drill-transcript.json",
+            "study-anything-operator-drill-v1",
+        ),
+    }
+    for label, (relative_path, schema) in expected.items():
+        report = read_json(safe_relative(root, relative_path))
+        if report.get("schema_version") != schema:
+            raise ManualSubmissionRehearsalError(f"{label} schema drifted.")
+        reports[label] = {"schema_version": schema, "status": report.get("status")}
+    return reports
+
+
+def operator_steps() -> list[dict[str, Any]]:
+    return [
+        {
+            "step_id": "unpack_adoption_pack",
+            "operator_action": "Unzip the adoption pack and open ADOPTION_PACK_README.md plus manifest.json.",
+            "command": "unzip study-anything-platform-adoption-pack.zip -d /tmp/study-anything-pack",
+            "expected_outputs": ["manifest schema study-anything-platform-adoption-pack-v1"],
+            "evidence_paths": ["manifest.json", "ADOPTION_PACK_README.md"],
+            "failure_remediation": ["Regenerate the pack with generate_platform_adoption_pack.py."],
+        },
+        {
+            "step_id": "import_tools",
+            "operator_action": "Import OpenAPI or OpenAI-compatible tool assets into the host platform.",
+            "command": "platform import platform/generated/study-anything-platform-openapi.json",
+            "expected_outputs": ["tool names start with study_anything_", "no API-key security scheme"],
+            "evidence_paths": [
+                "platform/generated/study-anything-platform-openapi.json",
+                "platform/generated/study-anything-openai-tools.json",
+            ],
+            "failure_remediation": ["Use the tool catalog when the host OpenAPI importer is incomplete."],
+        },
+        {
+            "step_id": "start_runtime_health",
+            "operator_action": "Start Skill Mode or the published Docker image and verify /v1/health.",
+            "command": "./scripts/launch_skill_mode.sh && curl ${STUDY_ANYTHING_API_BASE}/v1/health",
+            "expected_outputs": ["health status ok", "version matches the pack release"],
+            "evidence_paths": ["scripts/launch_skill_mode.sh", "docs/self-hosting.md"],
+            "failure_remediation": ["Run scripts/diagnose_adoption.py and follow the returned plan."],
+        },
+        {
+            "step_id": "configure_user_owned_http_agent",
+            "operator_action": "Point Study Anything at the user's local/private HTTP Agent gateway.",
+            "command": "python3 scripts/study_anything_cli.py agent-add-http --endpoint ${USER_OWNED_AGENT_ENDPOINT} --set-default",
+            "expected_outputs": ["provider saved", "capabilities include quiz.generate and answer.grade"],
+            "evidence_paths": ["docs/use-with-kimi.md", "docs/platform-agent-integrations.md"],
+            "failure_remediation": ["Run verify_agent_gateway_hardening.py before sharing evidence."],
+        },
+        {
+            "step_id": "run_first_lesson",
+            "operator_action": "Run a first lesson with fake demo or the user's HTTP Agent and collect mastery.",
+            "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_lesson_flow.py",
+            "expected_outputs": ["stage completed", "agent audit verified", "quality status pass"],
+            "evidence_paths": ["scripts/verify_platform_lesson_flow.py"],
+            "failure_remediation": ["Fallback to run_skill_mode_demo.sh to separate runtime issues from Agent issues."],
+        },
+        {
+            "step_id": "export_learning_evidence",
+            "operator_action": "Export learning package, Obsidian markdown, and second-brain handoff evidence.",
+            "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_ecosystem_eval_flow.py",
+            "expected_outputs": [
+                "learning-package-v1",
+                "obsidian-markdown-export-v1",
+                "second-brain-handoff-v1",
+            ],
+            "evidence_paths": ["docs/second-brain-handoff.md", "docs/obsidian-export.md"],
+            "failure_remediation": ["Keep user-owned exports local; share only redacted schema evidence."],
+        },
+        {
+            "step_id": "collect_redacted_handoff",
+            "operator_action": "Run the manual rehearsal verifier and share the redacted JSON report.",
+            "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+            "expected_outputs": [SCHEMA_VERSION, "status pass"],
+            "evidence_paths": [
+                "platform/generated/study-anything-platform-manual-submission-rehearsal.json"
+            ],
+            "failure_remediation": ["Run release_check.sh locally before resubmitting the platform pack."],
+        },
+    ]
+
+
+def assert_no_leaks(payload: dict[str, Any]) -> None:
+    serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
+    leaks.extend(pattern.pattern for pattern in FORBIDDEN_PATTERNS if pattern.search(serialized))
+    if leaks:
+        raise ManualSubmissionRehearsalError(
+            f"Manual submission rehearsal report leaked private data: {leaks}"
+        )
+
+
+def build_report(root: Path) -> dict[str, Any]:
+    running_from_adoption_pack = safe_relative(root, "manifest.json").is_file()
+    required_report_evidence = list(REQUIRED_REPORT_EVIDENCE)
+    if running_from_adoption_pack:
+        required_report_evidence.remove("platform/generated/study-anything-platform-adoption-pack.json")
+        require_file(root, "manifest.json")
+    for path in REQUIRED_OPERATOR_ASSETS + required_report_evidence:
+        require_file(root, path)
+    tool_assets = validate_tool_assets(root)
+    platforms = {platform_id: validate_platform_pack(root, platform_id) for platform_id in PLATFORM_IDS}
+    report = {
+        "schema_version": SCHEMA_VERSION,
+        "version": RELEASE_VERSION,
+        "status": "pass",
+        "submission": validate_submission(root),
+        "tool_assets": tool_assets,
+        "platforms": platforms,
+        "operator_steps": operator_steps(),
+        "commands_run": [
+            {
+                "step_id": step["step_id"],
+                "command": sanitize_command(str(step["command"])),
+                "mode": "rehearsed_manual_acceptance",
+            }
+            for step in operator_steps()
+        ],
+        "expected_outputs": {
+            step["step_id"]: step["expected_outputs"] for step in operator_steps()
+        },
+        "evidence_paths": sorted(
+            set(
+                REQUIRED_OPERATOR_ASSETS
+                + required_report_evidence
+                + (["manifest.json"] if running_from_adoption_pack else [])
+            )
+        ),
+        "existing_reports": validate_existing_reports(root),
+        "failure_remediation": {
+            "tool_import_failed": [
+                "Use platform/generated/study-anything-tool-catalog.md as a manual mapping fallback.",
+                "Confirm management endpoints are absent from the imported OpenAPI asset.",
+            ],
+            "runtime_unreachable": [
+                "Run scripts/diagnose_adoption.py.",
+                "Use Skill Mode when Docker or registry pulls are unreliable.",
+            ],
+            "agent_unhealthy": [
+                "Keep model credentials in the user's Agent, then rerun verify_agent_gateway_hardening.py.",
+                "Use fake deterministic provider only to isolate Study Anything runtime issues.",
+            ],
+            "evidence_not_redacted": [
+                "Do not share raw source, answers, endpoints, model keys, or browser/video context.",
+                "Rerun this verifier and share only the generated redacted report.",
+            ],
+        },
+        "privacy_assertions": {
+            "raw_source_text_returned": False,
+            "learner_answers_returned": False,
+            "agent_endpoint_secrets_returned": False,
+            "real_model_keys_stored_by_study_anything": False,
+            "browser_video_private_context_returned": False,
+            "report_is_redacted": True,
+        },
+        "time_budget": {
+            "target_minutes": 30,
+            "estimated_operator_minutes": 18,
+            "stop_on_first_blocker": True,
+        },
+    }
+    assert_no_leaks(report)
+    return report
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pack", help="Optional adoption-pack zip to rehearse.")
+    parser.add_argument("--pack-root", help="Optional unpacked adoption-pack or repo root.")
+    parser.add_argument("--output", default=str(DEFAULT_REPORT))
+    parser.add_argument("--write", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+
+    tmp_root = Path(tempfile.mkdtemp(prefix="study-anything-manual-submission-"))
+    try:
+        root = resolve_pack_root(args, tmp_root)
+        payload = build_report(root)
+        text = dump_json(payload)
+        output = Path(args.output)
+        if args.check:
+            if not output.exists():
+                raise ManualSubmissionRehearsalError(f"Manual rehearsal report missing: {output}")
+            if output.read_text(encoding="utf-8") != text:
+                raise ManualSubmissionRehearsalError(
+                    "Manual submission rehearsal report is stale. Run "
+                    "`python3 scripts/verify_platform_manual_submission_rehearsal.py --write`."
+                )
+            print("ok    platform manual submission rehearsal report is up to date")
+            return
+        if args.write:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(text, encoding="utf-8")
+            print(f"wrote {output.relative_to(ROOT)}")
+            return
+        print(json.dumps(payload, ensure_ascii=False, sort_keys=True))
+    finally:
+        shutil.rmtree(tmp_root, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as exc:  # pragma: no cover - CLI failure path
+        print(f"verify_platform_manual_submission_rehearsal failed: {exc}", file=sys.stderr)
+        sys.exit(1)

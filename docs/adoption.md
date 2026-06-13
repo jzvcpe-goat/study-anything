@@ -13,6 +13,7 @@ python3 scripts/generate_platform_adoption_pack.py
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -23,8 +24,10 @@ The archive contains OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy pac
 Skill, gateway examples, mock agent, NotebookLM fixture, verifier scripts, and a SHA256 manifest.
 The operator drill emits `study-anything-operator-drill-v1` evidence that the pack can be consumed as
 an external platform tool directory. The submission dry-run emits `platform-submission-dry-run-v1`
-with ready/warning/blocked status for each target platform. The adoption verifier emits
-`adoption-proof-v1` and exercises
+with ready/warning/blocked status for each target platform. The manual rehearsal emits
+`platform-manual-submission-rehearsal-v1`, a redacted operator handoff covering tool import, runtime
+health, user-owned HTTP Agent setup, first lesson, export evidence, diagnostics, and failure
+remediation. The adoption verifier emits `adoption-proof-v1` and exercises
 importer, enrichment, retrieval, teaching layers, eval, Obsidian export, and NotebookLM-style
 learning-package export through Skill Mode.
 
@@ -154,11 +157,15 @@ external platform, run:
 
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and proves the submission pack has no
 standalone frontend requirement, no Study Anything custody of real model keys, no raw learning data
 in submission metadata, and no high-risk management endpoints in the imported platform tool surface.
+The manual rehearsal report is the shareable operator checklist for the same submission: share that
+redacted JSON instead of raw source text, learner answers, Agent endpoints, browser/video context, or
+model keys.
 
 ## User-Owned Agent Gateway Hardening
 
@@ -199,7 +206,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.8-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.9-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -207,12 +214,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.8-alpha \
+  --tag v0.3.9-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.8-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.9-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

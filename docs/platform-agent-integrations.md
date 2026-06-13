@@ -69,6 +69,7 @@ python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -83,6 +84,7 @@ assembling commands:
 
 ```bash
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -91,6 +93,10 @@ python3 scripts/verify_external_adoption.py \
 
 The dry-run report is the review artifact for manual Kimi-compatible, Codex
 Skill, WorkBuddy-style HTTP, and generic OpenAPI submissions.
+The manual rehearsal report emits `platform-manual-submission-rehearsal-v1` and
+turns the operator path into a redacted handoff checklist: unpack, import,
+health check, user-owned HTTP Agent setup, first lesson, export evidence, and
+diagnostics.
 The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
 that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
 status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
@@ -100,6 +106,7 @@ become deterministic diagnostics rather than silent learning-state corruption.
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
@@ -108,7 +115,9 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The operator drill emits `study-anything-operator-drill-v1` and proves that the pack can be consumed
-as a platform tool directory before any runtime starts. The adoption verifier emits
+as a platform tool directory before any runtime starts. The manual rehearsal emits
+`platform-manual-submission-rehearsal-v1` and verifies a shareable handoff report for platform
+operators. The adoption verifier emits
 `adoption-proof-v1` and proves that a fresh operator can start Study Anything in Skill Mode, use the
 platform tool surface, complete the importer/enrichment/retrieval/teaching/eval loop, and export
 Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
@@ -135,6 +144,8 @@ platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
 platform/generated/study-anything-platform-bundle.json
 platform/generated/study-anything-operator-drill-transcript.json
+platform/generated/study-anything-platform-submission-dry-run.json
+platform/generated/study-anything-platform-manual-submission-rehearsal.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 evals/baselines/study-anything-agent-eval-baseline.json
