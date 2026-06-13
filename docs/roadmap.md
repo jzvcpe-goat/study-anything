@@ -504,9 +504,25 @@
   Kimi/Codex/WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, and the
   adoption pack.
 
+## v0.3.18-alpha
+
+- Add `platform-support-triage-v1`, a GitHub-first support desk gate for external platform adoption
+  failures.
+- Add `platform-support-issue-template-v1` issue templates for platform import failures, local
+  gateway failures, published-image pull failures, Agent eval evidence failures, and docs confusion.
+- Add `platform-support-ticket-fixture-v1` mock tickets with version, platform, command, diagnostic
+  code, fixture id, redacted logs, next commands, and linked import failure fixtures.
+- Add maintainer playbook coverage for schema mismatch, missing local gateway, unsupported auth mode,
+  tool naming drift, timeout, browser localhost restrictions, package corruption, and version drift.
+- Keep support evidence manual, redacted, and free of raw source text, learner answers, Agent prompts,
+  Agent endpoints, model keys, personal profiles, and private browser/video/app context.
+- Wire support triage into release checks, external adoption proof, ecosystem submission, Kimi/Codex/
+  WorkBuddy packs, bundle manifest, docs, issue templates, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.18`: External platform support desk dry-run, issue templates, and maintainer triage loop.
+- `v0.3.19`: External adopter onboarding evidence, maintainer SLA readiness, release-blocker issue
+  fixtures, and public support status reporting.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

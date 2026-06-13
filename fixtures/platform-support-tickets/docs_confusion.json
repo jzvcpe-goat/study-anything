@@ -1,0 +1,41 @@
+{
+  "linked_import_failure_fixture": "fixtures/platform-import-failures/tool_naming_drift.json",
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "personal_profile_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "schema_version": "platform-support-ticket-fixture-v1",
+  "status": "mock_ticket_ready",
+  "support_bundle": {
+    "command_ran": "python3 scripts/verify_ecosystem_submission_pack.py",
+    "diagnostic_code": "docs_step_unclear",
+    "fixture_id": "tool_naming_drift",
+    "next_commands_tried": [
+      "python3 scripts/verify_ecosystem_submission_pack.py"
+    ],
+    "platform_id": "generic",
+    "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=docs_step_unclear\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
+    "release_version": "v0.3.18-alpha"
+  },
+  "support_category": "docs_confusion",
+  "ticket_id": "docs_confusion",
+  "triage": {
+    "close_when": "The user can import tools or has a documented platform limitation workaround.",
+    "escalate_when": "The fixture reproduces on main with a current release pack.",
+    "first_response": "Ask for the redacted support bundle and exact platform import surface.",
+    "reproduction": "Re-run the minimum command against the same adoption pack version."
+  },
+  "version": "v0.3.18-alpha"
+}

@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.17-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.18-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -41,6 +41,8 @@ python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
+python3 scripts/generate_platform_support_triage.py --check
+python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -85,6 +87,10 @@ turns Kimi, Codex, WorkBuddy, and generic OpenAPI platform import into a
 repeatable redacted rehearsal, and includes `platform-import-failure-fixture-v1`
 fixtures for schema mismatch, missing gateway, auth mode mismatch, tool naming
 drift, timeout, localhost restrictions, package corruption, and version drift.
+The support triage report emits `platform-support-triage-v1`, proving
+`platform-support-issue-template-v1` issue templates, `platform-support-ticket-fixture-v1`
+mock support tickets, support bundle fields, and maintainer response playbooks
+are ready for GitHub-first external support without private learning data.
 The plugin ecosystem adoption kit emits `plugin-ecosystem-adoption-kit-v1`, a
 copy-ready trust contract covering bundled sample plugins, registry
 `sourceDigest` verification, quarantine-first install policy, platform-pack
@@ -129,6 +135,8 @@ python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
+python3 scripts/generate_platform_support_triage.py --check
+python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check

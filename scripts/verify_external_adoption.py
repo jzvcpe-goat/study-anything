@@ -75,6 +75,20 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/generate_platform_field_rehearsal.py",
     "scripts/verify_platform_field_rehearsal.py",
     "platform/generated/study-anything-platform-field-rehearsal.json",
+    "scripts/generate_platform_support_triage.py",
+    "scripts/verify_platform_support_triage.py",
+    "platform/generated/study-anything-platform-support-triage.json",
+    ".github/ISSUE_TEMPLATE/platform_import_failure.md",
+    ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
+    ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
+    ".github/ISSUE_TEMPLATE/agent_eval_evidence_failure.md",
+    ".github/ISSUE_TEMPLATE/docs_confusion.md",
+    "fixtures/platform-support-tickets/platform_import_failure.json",
+    "fixtures/platform-support-tickets/local_gateway_failure.json",
+    "fixtures/platform-support-tickets/published_image_pull_failure.json",
+    "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
+    "fixtures/platform-support-tickets/docs_confusion.json",
+    "docs/support-desk.md",
     "fixtures/platform-import-failures/schema_mismatch.json",
     "fixtures/platform-import-failures/missing_local_gateway.json",
     "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -260,6 +274,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/adoption-telemetry.md",
                 "docs/plugin-sdk.md",
                 "docs/plugin-registry.md",
+                "docs/support-desk.md",
             ]
         )
     required_terms = [
@@ -496,6 +511,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "platform_field_rehearsal",
                 [python_bin, "scripts/verify_platform_field_rehearsal.py"],
+                90,
+            ),
+            (
+                "platform_support_triage",
+                [python_bin, "scripts/verify_platform_support_triage.py"],
                 90,
             ),
             (
@@ -741,6 +761,18 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "fixture_count": (value.get("field_rehearsal") or {}).get("fixture_count"),
             "feedback_upload_is_manual": (value.get("privacy_assertions") or {}).get(
                 "feedback_upload_is_manual"
+            ),
+        }
+    if label == "platform_support_triage":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "issue_template_count": (value.get("support_triage") or {}).get("issue_template_count"),
+            "ticket_fixture_count": (value.get("support_triage") or {}).get("ticket_fixture_count"),
+            "playbook_entry_count": (value.get("support_triage") or {}).get("playbook_entry_count"),
+            "support_upload_is_manual": (value.get("privacy_assertions") or {}).get(
+                "support_upload_is_manual"
             ),
         }
     if label == "plugin_ecosystem_adoption_kit":

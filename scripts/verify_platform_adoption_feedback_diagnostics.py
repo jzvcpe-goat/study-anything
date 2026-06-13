@@ -16,7 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-adoption-feedback-diagnostics-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.17-alpha"
+RELEASE_VERSION = "v0.3.18-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-adoption-feedback-diagnostics.json"
 )
@@ -453,7 +453,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "docs/release-notes/v0.3.17-alpha.md",
+        "docs/release-notes/v0.3.18-alpha.md",
     }
     missing = required - paths
     if missing:

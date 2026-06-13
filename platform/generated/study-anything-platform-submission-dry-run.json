@@ -14,11 +14,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 128,
+    "file_count": 142,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.17-alpha"
+    "version": "v0.3.18-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -38,6 +38,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -61,6 +63,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -134,6 +138,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
@@ -157,6 +163,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -229,6 +237,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -252,6 +262,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -328,6 +340,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -351,6 +365,8 @@
         "python3 scripts/generate_platform_feedback_package.py --check",
         "python3 scripts/verify_platform_field_rehearsal.py --check",
         "python3 scripts/generate_platform_field_rehearsal.py --check",
+        "python3 scripts/verify_platform_support_triage.py --check",
+        "python3 scripts/generate_platform_support_triage.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -416,5 +432,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.17-alpha"
+  "version": "v0.3.18-alpha"
 }

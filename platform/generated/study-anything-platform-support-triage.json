@@ -1,0 +1,191 @@
+{
+  "acceptance": {
+    "generate_command": "python3 scripts/generate_platform_support_triage.py --check",
+    "issue_template_count": 5,
+    "playbook_entry_count": 8,
+    "ticket_fixture_count": 5,
+    "verify_command": "python3 scripts/verify_platform_support_triage.py --check"
+  },
+  "issue_templates": [
+    {
+      "category_id": "platform_import_failure",
+      "minimum_command": "python3 scripts/verify_platform_field_rehearsal.py --check",
+      "path": ".github/ISSUE_TEMPLATE/platform_import_failure.md",
+      "schema_version": "platform-support-issue-template-v1"
+    },
+    {
+      "category_id": "local_gateway_failure",
+      "minimum_command": "python3 scripts/diagnose_adoption.py",
+      "path": ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
+      "schema_version": "platform-support-issue-template-v1"
+    },
+    {
+      "category_id": "published_image_pull_failure",
+      "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.18-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "path": ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
+      "schema_version": "platform-support-issue-template-v1"
+    },
+    {
+      "category_id": "agent_eval_evidence_failure",
+      "minimum_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "path": ".github/ISSUE_TEMPLATE/agent_eval_evidence_failure.md",
+      "schema_version": "platform-support-issue-template-v1"
+    },
+    {
+      "category_id": "docs_confusion",
+      "minimum_command": "python3 scripts/verify_ecosystem_submission_pack.py",
+      "path": ".github/ISSUE_TEMPLATE/docs_confusion.md",
+      "schema_version": "platform-support-issue-template-v1"
+    }
+  ],
+  "linked_assets": {
+    "adoption_pack": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "feedback_package": "platform/generated/study-anything-platform-feedback-package.zip",
+    "field_rehearsal": "platform/generated/study-anything-platform-field-rehearsal.json"
+  },
+  "maintainer_playbook": [
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "schema_mismatch",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/schema_mismatch.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "missing_local_gateway",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/missing_local_gateway.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "unsupported_auth_mode",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/unsupported_auth_mode.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "tool_naming_drift",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/tool_naming_drift.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "timeout",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/timeout.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "cors_localhost",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/cors_localhost.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "package_corruption",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/package_corruption.json and match the diagnostic code."
+      ]
+    },
+    {
+      "close_when": "The current adoption pack reproduces the documented workaround or the issue is fixed on main.",
+      "escalate_when": "The failure reproduces with current generated assets and no user-private data is needed.",
+      "failure_id": "version_drift",
+      "first_response": "Confirm release version, platform id, diagnostic code, fixture id, and redacted logs.",
+      "reproduction_steps": [
+        "Run python3 scripts/generate_platform_field_rehearsal.py --check.",
+        "Run python3 scripts/verify_platform_support_triage.py --check.",
+        "Open fixtures/platform-import-failures/version_drift.json and match the diagnostic code."
+      ]
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "fixtures_are_mock_only": true,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false
+  },
+  "purpose": "Turn field adoption rehearsal failures into a GitHub-first support desk triage loop that is actionable for maintainers and safe for users.",
+  "schema_version": "platform-support-triage-v1",
+  "status": "pass",
+  "support_bundle_contract": {
+    "automatic_upload": false,
+    "required_fields": [
+      "release_version",
+      "platform_id",
+      "command_ran",
+      "diagnostic_code",
+      "fixture_id",
+      "redacted_log_excerpt",
+      "next_commands_tried"
+    ],
+    "safe_handoff_only": true,
+    "schema_version": "platform-support-bundle-v1"
+  },
+  "support_ticket_fixtures": [
+    {
+      "path": "fixtures/platform-support-tickets/platform_import_failure.json",
+      "schema_version": "platform-support-ticket-fixture-v1",
+      "ticket_id": "platform_import_failure"
+    },
+    {
+      "path": "fixtures/platform-support-tickets/local_gateway_failure.json",
+      "schema_version": "platform-support-ticket-fixture-v1",
+      "ticket_id": "local_gateway_failure"
+    },
+    {
+      "path": "fixtures/platform-support-tickets/published_image_pull_failure.json",
+      "schema_version": "platform-support-ticket-fixture-v1",
+      "ticket_id": "published_image_pull_failure"
+    },
+    {
+      "path": "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
+      "schema_version": "platform-support-ticket-fixture-v1",
+      "ticket_id": "agent_eval_evidence_failure"
+    },
+    {
+      "path": "fixtures/platform-support-tickets/docs_confusion.json",
+      "schema_version": "platform-support-ticket-fixture-v1",
+      "ticket_id": "docs_confusion"
+    }
+  ],
+  "version": "v0.3.18-alpha"
+}
