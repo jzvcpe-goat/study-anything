@@ -43,6 +43,7 @@ fi
 "$python_bin" scripts/verify_notebooklm_obsidian_bridge_hardening.py
 "$python_bin" scripts/verify_plugin_quarantine.py
 "$python_bin" scripts/verify_security_recovery_hardening.py
+"$python_bin" scripts/verify_platform_submission_dry_run.py --check
 "$python_bin" scripts/generate_platform_agent_assets.py --check
 "$python_bin" scripts/verify_commercial_readiness.py
 "$python_bin" scripts/verify_adoption_telemetry.py

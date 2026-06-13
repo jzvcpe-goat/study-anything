@@ -67,6 +67,7 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
+python3 scripts/verify_platform_submission_dry_run.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -78,6 +79,16 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
 
 For a release or external-platform handoff, use the adoption pack verifier instead of manually
 assembling commands:
+
+```bash
+python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+The dry-run report is the review artifact for manual Kimi-compatible, Codex
+Skill, WorkBuddy-style HTTP, and generic OpenAPI submissions.
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check

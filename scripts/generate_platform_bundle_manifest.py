@@ -47,6 +47,11 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic external-platform operator drill transcript.",
     ),
     (
+        "platform/generated/study-anything-platform-submission-dry-run.json",
+        "generated_asset",
+        "External platform submission dry-run readiness report.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -135,6 +140,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_security_recovery_hardening.py",
         "verification",
         "Security recovery, backup manifest, and sync restore privacy verifier.",
+    ),
+    (
+        "scripts/verify_platform_submission_dry_run.py",
+        "verification",
+        "External platform submission dry-run verifier.",
     ),
     (
         "scripts/verify_ecosystem_submission_pack.py",
@@ -327,7 +337,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.6-alpha.md",
+        "docs/release-notes/v0.3.7-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -414,6 +424,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
             "python3 scripts/verify_plugin_quarantine.py",
             "python3 scripts/verify_security_recovery_hardening.py",
+            "python3 scripts/verify_platform_submission_dry_run.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
