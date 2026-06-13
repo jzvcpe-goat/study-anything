@@ -194,12 +194,13 @@ When a matching trusted public key is present in the local registry, Study Anyth
 
 ## Local Installation
 
-Install a plugin from an explicitly selected local directory in the Web Agent page:
+Review a plugin from an explicitly selected local directory:
 
 1. Paste a local or container-visible plugin directory path.
 2. Preview the manifest.
 3. Review and check every requested permission.
-4. Install only after the permission list is confirmed.
+4. Quarantine the plugin after the permission list is confirmed.
+5. Install only after reviewing the quarantined copy and sending explicit approval.
 
 The same flow is available through the API:
 
@@ -207,6 +208,9 @@ The same flow is available through the API:
 - `POST /v1/plugins/install`
 
 `/v1/plugins/install` requires the caller to send `confirmed_permissions` matching the manifest exactly. A missing or partial confirmation is rejected with `409`.
+By default the endpoint returns `lifecycle_status=quarantined`, copies the package to `STUDY_ANYTHING_PLUGIN_QUARANTINE_DIR`, executes no entrypoints, and does not make the plugin appear in `GET /v1/plugins`.
+Send `approve_install=true` only after manual review to copy the same source into `STUDY_ANYTHING_PLUGIN_INSTALL_DIR` and make it discoverable.
+Trust-policy blocks such as digest mismatches or invalid registry signatures return `409` before either copy is written.
 
 You can also use the CLI:
 
@@ -214,7 +218,13 @@ You can also use the CLI:
 python3 scripts/install_local_plugin.py /path/to/plugin
 ```
 
-The installer validates `plugin.json`, copies the directory into the local plugin data directory, excludes cache files, and refuses implicit overwrites. Use `--replace` only when you intentionally want to update an installed plugin.
+The CLI quarantines by default. Use `--approve-install` only after review:
+
+```bash
+python3 scripts/install_local_plugin.py /path/to/plugin --approve-install
+```
+
+The installer validates `plugin.json`, copies the directory into the quarantine or install directory, excludes cache files, and refuses implicit overwrites for approved installs. Use `--replace` only when you intentionally want to update an installed plugin.
 
 The alpha installer does not download code, execute plugin entrypoints, or bypass manifest permissions.
 Remote registries, review queues, update UX, and marketplace payments remain future trust-layer work.

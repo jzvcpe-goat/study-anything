@@ -24,18 +24,69 @@ def build_parser() -> argparse.ArgumentParser:
         default=ROOT / "data" / "plugins",
         help="Writable local plugin directory scanned by the API",
     )
+    parser.add_argument(
+        "--quarantine-destination",
+        type=Path,
+        default=ROOT / "data" / "plugins-quarantine",
+        help="Writable quarantine directory used before explicit approval",
+    )
     parser.add_argument("--replace", action="store_true", help="Replace an installed plugin")
+    parser.add_argument(
+        "--approve-install",
+        action="store_true",
+        help="Copy into the installed plugin directory instead of the quarantine directory",
+    )
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    status = PluginRegistry([]).install_local(
-        args.source,
-        args.destination,
-        replace_existing=args.replace,
+    registry = PluginRegistry([])
+    if args.approve_install:
+        preview = registry.preview_local(args.source)
+        if preview.manifest is None:
+            raise SystemExit(f"Cannot install invalid plugin: {preview.message}")
+        if preview.trust is not None and preview.trust.install_recommendation == "do_not_install":
+            raise SystemExit("Plugin trust policy blocks installation.")
+        quarantined_source = args.quarantine_destination / preview.manifest.plugin_id
+        if not quarantined_source.exists():
+            raise SystemExit(
+                "Plugin must be quarantined before approved installation. "
+                "Run without --approve-install first."
+            )
+        status = registry.install_local(
+            quarantined_source,
+            args.destination,
+            replace_existing=args.replace,
+        )
+        lifecycle_status = "installed"
+        destination = args.destination
+    else:
+        status = registry.quarantine_local(
+            args.source,
+            args.quarantine_destination,
+            replace_existing=True,
+        )
+        lifecycle_status = "quarantined"
+        destination = args.quarantine_destination
+    print(
+        json.dumps(
+            {
+                **status.public_dict(),
+                "schema_version": "plugin-install-result-v1",
+                "lifecycle_status": lifecycle_status,
+                "installed": lifecycle_status == "installed",
+                "quarantined": lifecycle_status == "quarantined",
+                "destination_dir": str(destination),
+                "install_dir": str(args.destination),
+                "quarantine_dir": str(args.quarantine_destination),
+                "entrypoints_executed": False,
+            },
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
     )
-    print(json.dumps(status.public_dict(), ensure_ascii=False, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

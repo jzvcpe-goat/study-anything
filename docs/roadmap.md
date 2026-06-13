@@ -342,9 +342,21 @@
 - Include the bridge hardening verifier in release checks, external adoption proof, ecosystem
   submission, platform packs, and adoption pack assets.
 
+## v0.3.5-alpha
+
+- Add quarantine-first plugin handling for local plugin packages.
+- Keep `POST /v1/plugins/install` metadata-first: confirmed permissions now quarantine by default,
+  while `approve_install=true` is required for the final install copy.
+- Add trust-policy lifecycle states for `previewed`, `quarantined`, `installed`, and `blocked`.
+- Block `do_not_install` recommendations before both quarantine and install copies, including
+  registry digest mismatches and invalid registry signatures.
+- Add `plugin-quarantine-verification-v1`, covering API default quarantine, CLI default quarantine,
+  explicit approved install, digest-mismatch blocking, and no entrypoint execution.
+- Include the plugin quarantine verifier in release checks, external adoption proof, ecosystem
+  submission, platform packs, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.5`: plugin trust registry and installer quarantine.
 - `v0.3.6`: security, recovery, and backup hardening.
 - `v0.3.7`: external platform submission dry-run packages.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.

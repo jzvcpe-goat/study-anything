@@ -242,6 +242,8 @@ class PluginInstallRequest(BaseModel):
     source_path: str
     confirmed_permissions: List[str] = Field(default_factory=list)
     replace_existing: bool = False
+    approve_install: bool = False
+    approval_note: Optional[str] = None
 
 
 class PmfInterestRequest(BaseModel):
@@ -323,6 +325,9 @@ store = create_session_store(
 )
 pmf_interest_store = LocalPmfInterestStore(data_dir / "pmf_interests.json")
 plugin_install_dir = Path(os.getenv("STUDY_ANYTHING_PLUGIN_INSTALL_DIR") or data_dir / "plugins")
+plugin_quarantine_dir = Path(
+    os.getenv("STUDY_ANYTHING_PLUGIN_QUARANTINE_DIR") or data_dir / "plugins-quarantine"
+)
 plugin_dirs = [
     Path(value)
     for value in _env(
@@ -1401,7 +1406,9 @@ def create_app() -> FastAPI:
         return {
             **status.public_dict(),
             "install_dir": str(plugin_install_dir),
+            "quarantine_dir": str(plugin_quarantine_dir),
             "requires_confirmation": bool(status.manifest and status.manifest.permissions),
+            "default_action": "quarantine",
         }
 
     @app.post("/v1/plugins/validate-package")
@@ -1425,19 +1432,50 @@ def create_app() -> FastAPI:
                     "confirmed_permissions": confirmed_permissions,
                 },
             )
+        if preview.trust is not None and preview.trust.install_recommendation == "do_not_install":
+            raise HTTPException(status_code=409, detail="Plugin trust policy blocks installation.")
         try:
-            status = plugins.install_local(
-                source_path,
-                plugin_install_dir,
-                replace_existing=payload.replace_existing,
-            )
+            if payload.approve_install:
+                quarantined_source = plugin_quarantine_dir / preview.manifest.plugin_id
+                if not quarantined_source.exists():
+                    raise ValueError("Plugin must be quarantined before approved installation.")
+                status = plugins.install_local(
+                    quarantined_source,
+                    plugin_install_dir,
+                    replace_existing=payload.replace_existing,
+                )
+                lifecycle_status = "installed"
+                destination = plugin_install_dir
+            else:
+                status = plugins.quarantine_local(
+                    source_path,
+                    plugin_quarantine_dir,
+                    replace_existing=True,
+                )
+                lifecycle_status = "quarantined"
+                destination = plugin_quarantine_dir
         except FileExistsError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         except (OSError, ValueError) as exc:
-            raise HTTPException(status_code=400, detail=str(exc)) from exc
+            raise HTTPException(
+                status_code=409
+                if "trust policy blocks" in str(exc) or "must be quarantined" in str(exc)
+                else 400,
+                detail=str(exc),
+            ) from exc
         return {
             **status.public_dict(),
+            "schema_version": "plugin-install-result-v1",
+            "lifecycle_status": lifecycle_status,
+            "installed": lifecycle_status == "installed",
+            "quarantined": lifecycle_status == "quarantined",
             "install_dir": str(plugin_install_dir),
+            "quarantine_dir": str(plugin_quarantine_dir),
+            "destination_dir": str(destination),
+            "manual_approval_required": lifecycle_status == "quarantined",
+            "manual_approval_recorded": bool(payload.approve_install),
+            "approval_note_recorded": bool(payload.approval_note),
+            "entrypoints_executed": False,
             "requires_confirmation": False,
         }
 

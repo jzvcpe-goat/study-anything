@@ -165,8 +165,22 @@ def plugin_trust_policy() -> dict[str, object]:
             "review_required",
             "do_not_install",
         ],
+        "lifecycle_statuses": [
+            "previewed",
+            "quarantined",
+            "installed",
+            "blocked",
+        ],
+        "default_install_action": "quarantine",
+        "quarantine": {
+            "copies_package": True,
+            "scanned_as_installed": False,
+            "entrypoints_executed": False,
+            "requires_explicit_approval_for_install": True,
+        },
         "notes": [
             "Plugins are installed only from explicitly selected local directories.",
+            "Confirmed permissions quarantine a plugin by default; installation requires explicit approval.",
             "Study Anything does not store model keys or agent secrets for plugins.",
             "Registry Ed25519 signatures are verified when a local registry provides trusted public keys.",
             "Registry review reads metadata only and does not download, update, or execute plugin code.",
