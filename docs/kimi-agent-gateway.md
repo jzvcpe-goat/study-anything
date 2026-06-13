@@ -32,6 +32,7 @@ Agent contract:
 
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+python3 scripts/verify_agent_gateway_hardening.py
 ```
 
 With a running Study Anything API, run the end-to-end dry-run acceptance flow:
@@ -43,6 +44,10 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.
 This starts `scripts/openai_compatible_agent_gateway.py` in `AGENT_GATEWAY_MODE=dry_run`, registers it
 as an HTTP Agent provider, and completes teaching layers, quiz, grading, mastery, `agent-audit`, and
 `agent-eval/artifact` without any model key.
+
+The hardening verifier additionally checks unsupported task types, malformed Agent outputs, unsafe
+provider endpoint secrets, provider metadata secrets, redacted health diagnostics, and API error
+boundaries.
 
 ## Start The User-Owned Kimi Gateway
 
@@ -72,6 +77,9 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --endpoint "http://127.0.0.1:8787/invoke" \
   --set-default
 ```
+
+Do not append Kimi keys, bearer tokens, cookies, or signed query parameters to the endpoint URL.
+Study Anything rejects those because credentials belong in the gateway process environment.
 
 For a Docker-hosted Study Anything API, use:
 
@@ -139,6 +147,7 @@ For a full local acceptance run against the real Study Anything API and dry-run 
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
+python3 scripts/verify_agent_gateway_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \

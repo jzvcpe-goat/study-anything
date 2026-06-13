@@ -25,6 +25,11 @@ model secrets, billing credentials, or raw contact data.
 
 Agent request/response schemas are documented in `docs/agent-contract.md`.
 Platform-agent usage patterns are documented in `docs/platform-agent-integrations.md`.
+Agent provider status redacts metadata and URL-level endpoint secrets.
+`POST /v1/agents/providers` rejects inline credentials, secret-like query parameters, and secret
+metadata keys. `POST /v1/agents/test` returns `diagnostic_code`, `latency_ms`, capabilities, and
+privacy flags so platform Agents can distinguish configuration errors, unavailable gateways,
+malformed JSON, invalid schema, and successful contract acceptance without seeing raw task payloads.
 
 ## Deprecated Model Aliases
 

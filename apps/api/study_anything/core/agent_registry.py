@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional
 from uuid import uuid4
 
-from .security import redact_mapping
+from .security import is_secret_key, redact_mapping, redact_url_secrets, url_contains_inline_secret
 
 
 class AgentCapability(str, Enum):
@@ -117,6 +117,7 @@ class AgentProviderConfig:
     def public_dict(self) -> dict[str, Any]:
         values = asdict(self)
         values["kind"] = self.kind.value
+        values["endpoint"] = redact_url_secrets(self.endpoint)
         values["capabilities"] = [capability.value for capability in self.capabilities]
         values["metadata"] = redact_mapping(self.metadata)
         return values
@@ -128,6 +129,23 @@ class AgentHealth:
     status: str
     message: str
     capabilities: List[str]
+    diagnostic_code: str = ""
+    latency_ms: Optional[int] = None
+
+    def public_dict(self) -> dict[str, Any]:
+        return {
+            "provider_id": self.provider_id,
+            "status": self.status,
+            "message": self.message,
+            "capabilities": self.capabilities,
+            "diagnostic_code": self.diagnostic_code,
+            "latency_ms": self.latency_ms,
+            "privacy": {
+                "secrets_returned": False,
+                "endpoint_secrets_returned": False,
+                "raw_task_payload_returned": False,
+            },
+        }
 
 
 ALL_AGENT_CAPABILITIES = [
@@ -168,6 +186,45 @@ def _normalise_capability(capability: str | AgentCapability) -> AgentCapability:
         "embed": AgentCapability.EMBEDDING_CREATE,
     }
     return legacy.get(capability, AgentCapability(capability))
+
+
+def _assert_safe_provider_storage(
+    *,
+    endpoint: Optional[str],
+    metadata: Mapping[str, Any],
+) -> None:
+    if url_contains_inline_secret(endpoint):
+        raise ValueError(
+            "Agent endpoint must not contain inline credentials or secret-like query parameters. "
+            "Keep real model credentials inside the user's gateway or platform Agent."
+        )
+    secret_metadata_keys = sorted(key for key in metadata if is_secret_key(str(key)))
+    if secret_metadata_keys:
+        raise ValueError(
+            "Agent provider metadata must not contain secrets. "
+            f"Move these fields into the user's gateway environment: {', '.join(secret_metadata_keys)}."
+        )
+
+
+def _health_failure_code(exc: Exception) -> str:
+    if isinstance(exc, AgentConfigurationRequired):
+        return "configuration_required"
+    if isinstance(exc, AgentProviderUnavailable):
+        return "provider_unavailable"
+    if isinstance(exc, AgentResultInvalid):
+        message = str(exc).lower()
+        if "malformed json" in message:
+            return "malformed_json"
+        if "status" in message:
+            return "invalid_status"
+        if "score" in message:
+            return "invalid_score"
+        if "confidence" in message:
+            return "invalid_confidence"
+        if "content" in message:
+            return "missing_content"
+        return "invalid_schema"
+    return "unknown"
 
 
 class FakeAgentProvider:
@@ -269,7 +326,7 @@ class HttpAgentProvider:
                 values = json.loads(response.read().decode("utf-8"))
         except json.JSONDecodeError as exc:
             raise AgentResultInvalid(f"Agent returned malformed JSON: {exc}") from exc
-        except (TimeoutError, urllib.error.URLError) as exc:
+        except (TimeoutError, urllib.error.URLError, OSError) as exc:
             raise AgentProviderUnavailable(f"HTTP agent unavailable: {exc}") from exc
         if not isinstance(values, dict):
             raise AgentResultInvalid("Agent response must be a JSON object.")
@@ -369,11 +426,15 @@ class AgentRegistry:
                 metadata={"purpose": "tests and local demo"},
             )
         )
+        sanitized_existing_config = False
         if self.storage_path is not None and self.storage_path.exists():
-            self._load()
+            sanitized_existing_config = self._load()
         self._suspend_save = False
+        if sanitized_existing_config:
+            self._save()
 
     def register_provider(self, provider: AgentProviderConfig) -> AgentProviderConfig:
+        _assert_safe_provider_storage(endpoint=provider.endpoint, metadata=provider.metadata)
         if not provider.provider_id:
             provider = replace(provider, provider_id=str(uuid4()))
         self._providers[provider.provider_id] = provider
@@ -396,6 +457,10 @@ class AgentRegistry:
     ) -> AgentProviderConfig:
         provider_kind = _normalise_kind(kind)
         provider_metadata = dict(metadata or {})
+        storage_endpoint = endpoint or base_url
+        _assert_safe_provider_storage(endpoint=storage_endpoint, metadata=provider_metadata)
+        if timeout_seconds < 1 or timeout_seconds > 300:
+            raise ValueError("Agent provider timeout_seconds must be between 1 and 300.")
         if kind != provider_kind.value:
             provider_metadata["legacy_kind"] = kind
             if legacy_fields.get("default_model"):
@@ -408,7 +473,7 @@ class AgentRegistry:
             provider_id=str(uuid4()),
             kind=provider_kind,
             label=label,
-            endpoint=endpoint or base_url,
+            endpoint=storage_endpoint,
             command=list(command or []),
             capabilities=provider_capabilities,
             timeout_seconds=timeout_seconds,
@@ -477,6 +542,8 @@ class AgentRegistry:
                 status="healthy",
                 message="Deterministic demo agent is available.",
                 capabilities=capabilities,
+                diagnostic_code="ok",
+                latency_ms=1,
             )
         if provider.kind == AgentProviderKind.HTTP_AGENT:
             if not provider.endpoint:
@@ -485,6 +552,7 @@ class AgentRegistry:
                     status="configuration_required",
                     message="HTTP agent requires an endpoint.",
                     capabilities=capabilities,
+                    diagnostic_code="endpoint_missing",
                 )
             health_capability = (
                 AgentCapability.SOURCE_VERIFY
@@ -492,6 +560,7 @@ class AgentRegistry:
                 else provider.capabilities[0]
             )
             task = self._health_task(health_capability)
+            started = time.monotonic()
             try:
                 HttpAgentProvider(provider).invoke(task)
             except (AgentConfigurationRequired, AgentProviderUnavailable, AgentResultInvalid) as exc:
@@ -500,12 +569,16 @@ class AgentRegistry:
                     status="unhealthy",
                     message=str(exc),
                     capabilities=capabilities,
+                    diagnostic_code=_health_failure_code(exc),
+                    latency_ms=int((time.monotonic() - started) * 1000),
                 )
             return AgentHealth(
                 provider_id=provider.provider_id,
                 status="healthy",
                 message="HTTP agent accepted the Study Anything contract.",
                 capabilities=capabilities,
+                diagnostic_code="ok",
+                latency_ms=int((time.monotonic() - started) * 1000),
             )
         if provider.kind == AgentProviderKind.CLI_AGENT:
             return AgentHealth(
@@ -513,12 +586,14 @@ class AgentRegistry:
                 status="disabled",
                 message="CLI agent adapter is disabled unless explicitly enabled with an allowlist.",
                 capabilities=capabilities,
+                diagnostic_code="cli_disabled",
             )
         return AgentHealth(
             provider_id=provider.provider_id,
             status="planned",
             message="MCP agent adapter is reserved for the plugin ecosystem.",
             capabilities=capabilities,
+            diagnostic_code="mcp_planned",
         )
 
     @staticmethod
@@ -573,14 +648,29 @@ class AgentRegistry:
             tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
             tmp.replace(self.storage_path)
 
-    def _load(self) -> None:
+    def _load(self) -> bool:
         payload = json.loads(self.storage_path.read_text(encoding="utf-8"))
+        sanitized = False
         for provider_values in payload.get("providers", []):
+            endpoint = provider_values.get("endpoint")
+            metadata = dict(provider_values.get("metadata", {}))
+            if url_contains_inline_secret(endpoint):
+                endpoint = redact_url_secrets(endpoint)
+                metadata["migration_warning"] = "unsafe endpoint secrets were redacted and provider was disabled"
+                provider_values["enabled"] = False
+                sanitized = True
+            secret_metadata_keys = [key for key in metadata if is_secret_key(str(key))]
+            if secret_metadata_keys:
+                for key in secret_metadata_keys:
+                    metadata.pop(key, None)
+                metadata["migration_warning"] = "unsafe provider metadata secrets were removed"
+                provider_values["enabled"] = False
+                sanitized = True
             provider = AgentProviderConfig(
                 provider_id=provider_values["provider_id"],
                 kind=AgentProviderKind(provider_values["kind"]),
                 label=provider_values["label"],
-                endpoint=provider_values.get("endpoint"),
+                endpoint=endpoint,
                 command=list(provider_values.get("command", [])),
                 capabilities=[
                     _normalise_capability(capability)
@@ -588,7 +678,7 @@ class AgentRegistry:
                 ],
                 timeout_seconds=int(provider_values.get("timeout_seconds", 15)),
                 enabled=bool(provider_values.get("enabled", True)),
-                metadata=dict(provider_values.get("metadata", {})),
+                metadata=metadata,
             )
             self._providers[provider.provider_id] = provider
         for user_id, defaults in payload.get("defaults", {}).items():
@@ -596,6 +686,7 @@ class AgentRegistry:
                 _normalise_capability(capability): provider_id
                 for capability, provider_id in defaults.items()
             }
+        return sanitized
 
 
 class AgentRouter:

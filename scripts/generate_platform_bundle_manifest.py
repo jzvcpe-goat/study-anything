@@ -117,6 +117,11 @@ FILES: list[tuple[str, str, str]] = [
         "Aggregate adoption telemetry and PMF readiness verifier.",
     ),
     (
+        "scripts/verify_agent_gateway_hardening.py",
+        "verification",
+        "User-owned Agent gateway hardening and privacy verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -302,7 +307,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.2-alpha.md",
+        "docs/release-notes/v0.3.3-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

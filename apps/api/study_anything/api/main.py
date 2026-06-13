@@ -20,7 +20,10 @@ from study_anything.core.agent_eval import (
 )
 from study_anything.core.agent_registry import (
     AgentCapability,
+    AgentConfigurationRequired,
+    AgentProviderUnavailable,
     AgentRegistry,
+    AgentResultInvalid,
     AgentRouter,
     AgentTask,
 )
@@ -588,7 +591,10 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/agents/providers")
     def add_agent_provider(payload: AgentProviderRequest) -> dict[str, object]:
-        provider = agent_registry.configure_provider(**payload.model_dump())
+        try:
+            provider = agent_registry.configure_provider(**payload.model_dump())
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
         return provider.public_dict()
 
     @app.post("/v1/agents/defaults")
@@ -602,8 +608,8 @@ def create_app() -> FastAPI:
     @app.post("/v1/agents/test")
     def test_agent_provider(payload: TestAgentProviderRequest) -> dict[str, object]:
         try:
-            return agent_registry.test_provider(payload.provider_id).__dict__
-        except (KeyError, ValueError) as exc:
+            return agent_registry.test_provider(payload.provider_id).public_dict()
+        except (KeyError, ValueError, AgentConfigurationRequired) as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.post("/v1/agents/{provider_id}/invoke")
@@ -626,6 +632,12 @@ def create_app() -> FastAPI:
                     metadata=payload.metadata,
                 ),
             )
+        except AgentConfigurationRequired as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        except AgentProviderUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except AgentResultInvalid as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
         except (KeyError, ValueError, RuntimeError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         return result.public_dict()
@@ -636,7 +648,10 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/models/providers")
     def add_model_provider(payload: AgentProviderRequest) -> dict[str, object]:
-        provider = agent_registry.configure_provider(**payload.model_dump())
+        try:
+            provider = agent_registry.configure_provider(**payload.model_dump())
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
         values = provider.public_dict()
         values["deprecated"] = True
         return values
@@ -652,10 +667,10 @@ def create_app() -> FastAPI:
     @app.post("/v1/models/test")
     def test_model_provider(payload: TestAgentProviderRequest) -> dict[str, object]:
         try:
-            values = agent_registry.test_provider(payload.provider_id).__dict__
+            values = agent_registry.test_provider(payload.provider_id).public_dict()
             values["deprecated"] = True
             return values
-        except (KeyError, ValueError) as exc:
+        except (KeyError, ValueError, AgentConfigurationRequired) as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.post("/v1/sessions")

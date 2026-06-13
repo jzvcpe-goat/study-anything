@@ -171,6 +171,21 @@ class OpenAICompatibleAgentGatewayTests(unittest.TestCase):
         self.assertIsInstance(result["content"], list)
         self.assertEqual(result["citations"][0]["reference"], "local://dry-run")
 
+    def test_gateway_health_declares_capabilities_and_privacy(self) -> None:
+        self.assertIn("quiz.generate", gateway.GATEWAY_CAPABILITIES)
+        privacy = gateway._privacy_contract()
+
+        self.assertFalse(privacy["study_anything_stores_model_keys"])
+        self.assertFalse(privacy["raw_authorization_returned"])
+
+    def test_gateway_rejects_invalid_agent_task_shape(self) -> None:
+        with self.assertRaisesRegex(ValueError, "task_type"):
+            gateway._validate_agent_task({"task_type": "unsupported"})
+        with self.assertRaisesRegex(ValueError, "answers"):
+            gateway._validate_agent_task({"task_type": "quiz.generate", "answers": {"bad": True}})
+        with self.assertRaisesRegex(ValueError, "source"):
+            gateway._validate_agent_task({"task_type": "quiz.generate", "source": "raw text"})
+
     def test_dry_run_gateway_grades_answers_with_score(self) -> None:
         task = {
             "task_type": "answer.grade",

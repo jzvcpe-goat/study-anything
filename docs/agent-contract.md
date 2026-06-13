@@ -155,5 +155,9 @@ without a model key, then see `docs/kimi-agent-gateway.md`.
 
 - Do not put real model API keys into Study Anything.
 - Keep provider secrets inside the user's agent process or its own secret manager.
+- Do not put credentials in Agent endpoint URLs, query parameters, or provider metadata.
+- `POST /v1/agents/providers` rejects endpoint credentials and secret-like metadata keys.
+- `GET /v1/agents/status` returns redacted provider metadata and URL-level endpoint redaction.
 - HTTP traces record provider id, task type, latency, status, token/cost metadata if supplied, and redacted metadata only.
 - CLI adapters are disabled until an operator explicitly enables a command allowlist and timeout policy.
+- Run `python3 scripts/verify_agent_gateway_hardening.py` before release or platform handoff.
