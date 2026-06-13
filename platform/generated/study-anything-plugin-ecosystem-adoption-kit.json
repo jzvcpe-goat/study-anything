@@ -1,0 +1,279 @@
+{
+  "artifact_import_export": {
+    "adoption_pack": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "copyable_commands": [
+      "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+      "python3 scripts/verify_plugin_quarantine.py",
+      "python3 scripts/study_anything_cli.py plugin-sdk",
+      "python3 scripts/study_anything_cli.py plugin-capabilities",
+      "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer"
+    ],
+    "sample_plugins": [
+      "plugins/example-agent-provider",
+      "plugins/example-enrichment-importer",
+      "plugins/example-exporter",
+      "plugins/example-note-importer",
+      "plugins/example-web-importer"
+    ],
+    "source_report": "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json"
+  },
+  "bundled_plugins": [
+    {
+      "capabilities": [
+        "agent.register_provider",
+        "ui.register_panel"
+      ],
+      "entrypoint": "plugin.py",
+      "entrypoint_executed_by_validation": false,
+      "hooks": [
+        "agent_panel",
+        "agent_provider"
+      ],
+      "name": "Example Agent Provider",
+      "path": "plugins/example-agent-provider",
+      "permissions": [
+        "network:http",
+        "read:agents",
+        "ui:panel",
+        "write:agents"
+      ],
+      "plugin_id": "example-agent-provider",
+      "registry_review_status": "maintainer_reviewed",
+      "registry_status": "digest_verified",
+      "review_status": "maintainer_reviewed",
+      "risk_level": "high",
+      "role": "agent_provider_template",
+      "source_digest": "sha256:1876b371cbebb8ec0b93694b6bfb014a7ccca68df1b33f6486ffc64918b2af15",
+      "version": "0.1.0"
+    },
+    {
+      "capabilities": [
+        "enrich.micro_lesson",
+        "enrich.visual_html",
+        "import.context",
+        "import.markdown_note"
+      ],
+      "entrypoint": "plugin.py",
+      "entrypoint_executed_by_validation": false,
+      "hooks": [
+        "enrichment",
+        "importer"
+      ],
+      "name": "Example Enrichment Importer",
+      "path": "plugins/example-enrichment-importer",
+      "permissions": [
+        "read:context",
+        "write:context"
+      ],
+      "plugin_id": "example-enrichment-importer",
+      "registry_review_status": "maintainer_reviewed",
+      "registry_status": "digest_verified",
+      "review_status": "maintainer_reviewed",
+      "risk_level": "high",
+      "role": "learning_enrichment",
+      "source_digest": "sha256:5cb435c23be5b63152dcdef3ddaf0c05f755e27e59054ea17d70a97d1f50eeb7",
+      "version": "0.1.0"
+    },
+    {
+      "capabilities": [
+        "export.markdown",
+        "export.obsidian_note",
+        "export.second_brain_handoff"
+      ],
+      "entrypoint": "plugin.py",
+      "entrypoint_executed_by_validation": false,
+      "hooks": [
+        "exporter"
+      ],
+      "name": "Example Exporter",
+      "path": "plugins/example-exporter",
+      "permissions": [
+        "read:sessions"
+      ],
+      "plugin_id": "example-exporter",
+      "registry_review_status": "maintainer_reviewed",
+      "registry_status": "digest_verified",
+      "review_status": "maintainer_reviewed",
+      "risk_level": "medium",
+      "role": "exporter",
+      "source_digest": "sha256:6eea9815c495f9c40c6e7773512c7553059327b55246665911a5502c04f70033",
+      "version": "0.1.0"
+    },
+    {
+      "capabilities": [
+        "import.context",
+        "import.markdown_note",
+        "import.obsidian_note"
+      ],
+      "entrypoint": "plugin.py",
+      "entrypoint_executed_by_validation": false,
+      "hooks": [
+        "importer"
+      ],
+      "name": "Example Markdown And Obsidian Note Importer",
+      "path": "plugins/example-note-importer",
+      "permissions": [
+        "write:context"
+      ],
+      "plugin_id": "example-note-importer",
+      "registry_review_status": "maintainer_reviewed",
+      "registry_status": "digest_verified",
+      "review_status": "maintainer_reviewed",
+      "risk_level": "high",
+      "role": "source_importer",
+      "source_digest": "sha256:a7fdb2736d1abfaa1cd9d2a3b47cf8b3d41e59ad402f89564d04d5e2790740e1",
+      "version": "0.1.0"
+    },
+    {
+      "capabilities": [
+        "import.context",
+        "import.web_excerpt"
+      ],
+      "entrypoint": "plugin.py",
+      "entrypoint_executed_by_validation": false,
+      "hooks": [
+        "importer"
+      ],
+      "name": "Example Web Importer",
+      "path": "plugins/example-web-importer",
+      "permissions": [
+        "network:http",
+        "write:context"
+      ],
+      "plugin_id": "example-web-importer",
+      "registry_review_status": "maintainer_reviewed",
+      "registry_status": "digest_verified",
+      "review_status": "maintainer_reviewed",
+      "risk_level": "high",
+      "role": "web_importer",
+      "source_digest": "sha256:b4817b1ede8c480950c52932faaa6825d6882bc8783a0c494a127bdedaf170fe",
+      "version": "0.1.0"
+    }
+  ],
+  "ecosystem_goal": "Give external platform Agents copyable plugin examples, trust metadata, and metadata-only validation gates before any hosted marketplace exists.",
+  "failure_remediation": {
+    "digest_mismatch": [
+      "Recompute sourceDigest only after reviewing the local plugin source.",
+      "Do not install or quarantine plugins whose registry digest mismatches."
+    ],
+    "manifest_invalid": [
+      "Run plugin-validate against the explicit local plugin directory.",
+      "Keep hooks, capabilities, and permissions inside the documented allowlists."
+    ],
+    "pack_missing_plugin_assets": [
+      "Regenerate the adoption pack after editing PACK_FILES.",
+      "Verify plugins/registry.json and every bundled plugin manifest/source are in the archive."
+    ],
+    "privacy_leak": [
+      "Remove raw source, learner answer, endpoint, or key material from generated evidence.",
+      "Share only manifest metadata, digests, schema names, and redacted status."
+    ]
+  },
+  "operator_docs": {
+    "docs_are_metadata_first": true,
+    "operator_docs": [
+      "docs/plugins.md",
+      "docs/plugin-sdk.md",
+      "docs/plugin-registry.md",
+      "docs/platform-agent-integrations.md"
+    ]
+  },
+  "platforms": {
+    "codex": {
+      "acceptance_evidence_count": 36,
+      "integration_mode": "terminal_skill",
+      "platform_id": "codex",
+      "plugin_verifier_command_present": true
+    },
+    "kimi": {
+      "acceptance_evidence_count": 36,
+      "integration_mode": "openai_compatible_tools",
+      "platform_id": "kimi",
+      "plugin_verifier_command_present": true
+    },
+    "workbuddy": {
+      "acceptance_evidence_count": 36,
+      "integration_mode": "openapi_http_tools",
+      "platform_id": "workbuddy",
+      "plugin_verifier_command_present": true
+    }
+  },
+  "plugin_registry": {
+    "automatic_updates_allowed": false,
+    "bundled_plugin_count": 5,
+    "digest_verified_count": 5,
+    "digest_verified_plugins": [
+      "example-agent-provider",
+      "example-enrichment-importer",
+      "example-exporter",
+      "example-note-importer",
+      "example-web-importer"
+    ],
+    "plugin_count": 5,
+    "remote_code_downloads_allowed": false,
+    "schema_version": "plugin-registry-v1",
+    "trusted_key_count": 0
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_plugin_registry": false,
+    "browser_video_private_context_in_adoption_kit": false,
+    "learner_answers_in_adoption_kit": false,
+    "plugin_entrypoints_executed_by_verifier": false,
+    "raw_source_text_in_adoption_kit": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "remote_code_downloads_allowed": false,
+    "report_is_redacted": true
+  },
+  "sample_flows": [
+    {
+      "command": "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer",
+      "entrypoints_executed": false,
+      "expected_schema": "plugin-package-validation-v1",
+      "flow_id": "validate_sample_plugin_without_execution"
+    },
+    {
+      "command": "python3 scripts/verify_plugin_quarantine.py",
+      "default_action": "quarantine",
+      "expected_schema": "plugin-quarantine-verification-v1",
+      "flow_id": "quarantine_unknown_plugin_by_default"
+    },
+    {
+      "command": "GET /v1/plugins/registry-review",
+      "downloads_remote_code": false,
+      "expected_schema": "plugin-registry-review-v1",
+      "flow_id": "review_trust_registry_before_install"
+    },
+    {
+      "expected_output_contract": "learning-enrichment-artifact-v1",
+      "flow_id": "copy_enrichment_template_for_platform_agent",
+      "platform_agent_owns_external_context": true,
+      "sample_plugin": "plugins/example-enrichment-importer"
+    },
+    {
+      "expected_output_contract": "second-brain-handoff-v1",
+      "flow_id": "export_second_brain_handoff",
+      "raw_answers_in_adoption_evidence": false,
+      "sample_plugin": "plugins/example-exporter"
+    }
+  ],
+  "schema_version": "plugin-ecosystem-adoption-kit-v1",
+  "status": "pass",
+  "submission": {
+    "platform_count": 4,
+    "plugin_assets_declared": 17,
+    "schema_version": "ecosystem-submission-v1",
+    "version": "v0.3.12-alpha"
+  },
+  "trust_policy": {
+    "automatic_remote_plugin_downloads_enabled": false,
+    "default_install_action": "quarantine",
+    "digest_mismatch_action": "do_not_install",
+    "entrypoints_executed_during_preview": false,
+    "entrypoints_executed_during_quarantine": false,
+    "explicit_approval_required_for_install": true,
+    "registry_review_reads_metadata_only": true,
+    "remote_marketplace_payments_enabled": false,
+    "schema_version": "plugin-trust-v1"
+  },
+  "version": "v0.3.12-alpha"
+}

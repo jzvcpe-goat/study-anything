@@ -14,11 +14,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 83,
+    "file_count": 98,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.11-alpha"
+    "version": "v0.3.12-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -32,6 +32,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
@@ -47,6 +48,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -83,6 +85,8 @@
         "scripts/study_anything_cli.py",
         "scripts/run_skill_mode_demo.sh",
         "platform/generated/study-anything-tool-catalog.md",
+        "docs/plugins.md",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/packs/codex/README.md",
         "platform/packs/codex/pack.json"
       ],
@@ -104,6 +108,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
@@ -119,6 +124,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -153,7 +159,9 @@
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
         "docs/platform-agent-integrations.md",
-        "platform/study-anything-platform-tools.json"
+        "platform/study-anything-platform-tools.json",
+        "docs/plugins.md",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -175,6 +183,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
@@ -190,6 +199,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -227,6 +237,8 @@
         "platform/generated/study-anything-tool-catalog.md",
         "scripts/openai_compatible_agent_gateway.py",
         "docs/use-with-kimi.md",
+        "docs/plugins.md",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/packs/kimi/README.md",
         "platform/packs/kimi/pack.json"
       ],
@@ -250,6 +262,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
@@ -265,6 +278,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -299,6 +313,8 @@
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
         "docs/api.md",
+        "docs/plugins.md",
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/packs/workbuddy/README.md",
         "platform/packs/workbuddy/pack.json"
       ],
@@ -320,5 +336,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.11-alpha"
+  "version": "v0.3.12-alpha"
 }

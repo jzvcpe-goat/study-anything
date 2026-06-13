@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.11-alpha"
+RELEASE_VERSION = "v0.3.12-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -40,6 +40,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-tool-catalog.md",
             "scripts/openai_compatible_agent_gateway.py",
             "docs/use-with-kimi.md",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/packs/kimi/README.md",
             "platform/packs/kimi/pack.json",
         ],
@@ -48,6 +50,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_plugin_ecosystem_adoption_kit.py",
             "verify_openai_compatible_gateway.py --gateway-only",
             "verify_external_adoption.py",
         ],
@@ -71,6 +74,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "scripts/study_anything_cli.py",
             "scripts/run_skill_mode_demo.sh",
             "platform/generated/study-anything-tool-catalog.md",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/packs/codex/README.md",
             "platform/packs/codex/pack.json",
         ],
@@ -79,6 +84,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_plugin_ecosystem_adoption_kit.py",
             "run_skill_mode_demo.sh",
             "verify_external_adoption.py",
         ],
@@ -100,6 +106,8 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-platform-openapi.json",
             "platform/generated/study-anything-tool-catalog.md",
             "docs/api.md",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/packs/workbuddy/README.md",
             "platform/packs/workbuddy/pack.json",
         ],
@@ -108,6 +116,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_plugin_ecosystem_adoption_kit.py",
             "verify_platform_agent_tools.py",
             "verify_external_adoption.py",
         ],
@@ -130,12 +139,15 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-tool-catalog.md",
             "docs/platform-agent-integrations.md",
             "platform/study-anything-platform-tools.json",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_plugin_ecosystem_adoption_kit.py",
             "generate_platform_agent_assets.py --check",
             "verify_external_adoption.py",
         ],
@@ -246,7 +258,13 @@ def platform_report(
         if asset not in import_assets
         and asset not in pack_import_assets
         and asset not in entrypoint_assets
-        and asset not in {"docs/api.md", "docs/platform-agent-integrations.md"}
+        and asset
+        not in {
+            "docs/api.md",
+            "docs/platform-agent-integrations.md",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+        }
     ]
 
     commands = [

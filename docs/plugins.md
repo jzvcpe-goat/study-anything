@@ -89,6 +89,21 @@ Bundled examples:
 - `GET /v1/plugins/capabilities`: installed plugin capability index with trust summaries.
 - `POST /v1/plugins/validate-package`: validate one local plugin path without install or execution.
 
+## Platform Adoption Kit
+
+The platform adoption pack includes `plugins/registry.json` and the bundled sample plugin manifests
+and sources. After editing a bundled plugin, its manifest, or registry metadata, run:
+
+```bash
+python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/verify_plugin_quarantine.py
+python3 scripts/generate_platform_adoption_pack.py --check
+```
+
+`plugin-ecosystem-adoption-kit-v1` proves the sample plugins remain digest-verified, the
+quarantine-first trust policy is intact, platform packs include the plugin evidence command, and no
+plugin entrypoint is executed during validation.
+
 ## Importer SDK Shape
 
 Importer plugins should produce a Learning Context Package rather than mutating Study Anything state

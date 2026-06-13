@@ -49,6 +49,7 @@ REQUIRED_ACCEPTANCE = {
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
     "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
+    "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
@@ -59,6 +60,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_platform_manual_submission_rehearsal.py",
     "verify_first_lesson_authoring_kit.py",
     "verify_external_eval_marketplace_harness.py",
+    "verify_plugin_ecosystem_adoption_kit.py",
     "verify_importer_lesson_flow.py",
     "verify_platform_lesson_flow.py",
     "verify_platform_ecosystem_eval_flow.py",

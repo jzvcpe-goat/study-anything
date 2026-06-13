@@ -157,6 +157,10 @@ For plugin ecosystem work, let Kimi call `GET /v1/plugins/sdk`,
 `GET /v1/plugins/capabilities`, and `POST /v1/plugins/validate-package` before
 asking the user to install anything. These endpoints are metadata-only: they do
 not execute plugin entrypoints, copy plugin packages, or expose model secrets.
+For platform submission or shared setup, also run
+`python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check`; it proves the
+pack includes bundled sample plugins, registry digests, quarantine-first policy,
+and redacted evidence without turning Kimi into a plugin installer.
 
 The open-source core stays useful without accounts, billing, hosted storage, or
 real model keys inside Study Anything.

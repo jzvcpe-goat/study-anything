@@ -67,6 +67,11 @@ FILES: list[tuple[str, str, str]] = [
         "Marketplace-quality external Agent eval harness for platform submissions.",
     ),
     (
+        "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+        "generated_asset",
+        "Copy-ready plugin ecosystem adoption kit for platform submissions.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -182,6 +187,11 @@ FILES: list[tuple[str, str, str]] = [
         "Marketplace-quality external Agent eval harness verifier.",
     ),
     (
+        "scripts/verify_plugin_ecosystem_adoption_kit.py",
+        "verification",
+        "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -200,6 +210,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/study_anything_cli.py",
         "cli",
         "Command-line learning loop and Agent evidence entrypoint.",
+    ),
+    (
+        "scripts/install_local_plugin.py",
+        "cli",
+        "CLI for explicit local plugin quarantine and approved install.",
     ),
     (
         "scripts/verify_clean_clone_adoption.py",
@@ -387,7 +402,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.11-alpha.md",
+        "docs/release-notes/v0.3.12-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -395,6 +410,61 @@ FILES: list[tuple[str, str, str]] = [
         "docs/plugins.md",
         "docs",
         "Plugin and importer manifest guide.",
+    ),
+    (
+        "plugins/registry.json",
+        "plugin_registry",
+        "Bundled sample plugin registry with source digests.",
+    ),
+    (
+        "plugins/example-note-importer/plugin.json",
+        "sample_plugin",
+        "Markdown and Obsidian importer manifest.",
+    ),
+    (
+        "plugins/example-note-importer/plugin.py",
+        "sample_plugin",
+        "Markdown and Obsidian importer template source.",
+    ),
+    (
+        "plugins/example-web-importer/plugin.json",
+        "sample_plugin",
+        "Web excerpt importer manifest.",
+    ),
+    (
+        "plugins/example-web-importer/plugin.py",
+        "sample_plugin",
+        "Web excerpt importer template source.",
+    ),
+    (
+        "plugins/example-enrichment-importer/plugin.json",
+        "sample_plugin",
+        "Learning enrichment importer manifest.",
+    ),
+    (
+        "plugins/example-enrichment-importer/plugin.py",
+        "sample_plugin",
+        "Learning enrichment importer template source.",
+    ),
+    (
+        "plugins/example-exporter/plugin.json",
+        "sample_plugin",
+        "Obsidian and second-brain exporter manifest.",
+    ),
+    (
+        "plugins/example-exporter/plugin.py",
+        "sample_plugin",
+        "Obsidian and second-brain exporter template source.",
+    ),
+    (
+        "plugins/example-agent-provider/plugin.json",
+        "sample_plugin",
+        "User-owned Agent provider manifest template.",
+    ),
+    (
+        "plugins/example-agent-provider/plugin.py",
+        "sample_plugin",
+        "User-owned Agent provider template source.",
     ),
     (
         "fixtures/notebooklm/README.md",
@@ -478,6 +548,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+            "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

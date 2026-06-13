@@ -27,6 +27,7 @@
     "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
     "python3 scripts/verify_first_lesson_authoring_kit.py --check",
     "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+    "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -73,7 +74,8 @@
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
-    "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1"
+    "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
+    "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",

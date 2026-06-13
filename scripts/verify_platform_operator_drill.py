@@ -81,6 +81,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
     "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
+    "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -376,6 +377,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
             "platform_manual_submission_rehearsal_schema": "platform-manual-submission-rehearsal-v1",
             "first_lesson_authoring_kit_schema": "first-run-lesson-authoring-kit-v1",
+            "plugin_ecosystem_adoption_kit_schema": "plugin-ecosystem-adoption-kit-v1",
             "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",
             "shared_logs_are_redacted": True,
         },

@@ -64,6 +64,19 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "scripts/verify_external_eval_marketplace_harness.py",
     "platform/generated/study-anything-external-eval-harness.json",
+    "scripts/verify_plugin_ecosystem_adoption_kit.py",
+    "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+    "plugins/registry.json",
+    "plugins/example-note-importer/plugin.json",
+    "plugins/example-note-importer/plugin.py",
+    "plugins/example-web-importer/plugin.json",
+    "plugins/example-web-importer/plugin.py",
+    "plugins/example-enrichment-importer/plugin.json",
+    "plugins/example-enrichment-importer/plugin.py",
+    "plugins/example-exporter/plugin.json",
+    "plugins/example-exporter/plugin.py",
+    "plugins/example-agent-provider/plugin.json",
+    "plugins/example-agent-provider/plugin.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -448,6 +461,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "plugin_ecosystem_adoption_kit",
+                [python_bin, "scripts/verify_plugin_ecosystem_adoption_kit.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -627,6 +645,19 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             ],
             "native_gate_count": len(value.get("native_fast_gates", [])),
             "sample_case_count": len(value.get("sample_eval_cases", [])),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
+    if label == "plugin_ecosystem_adoption_kit":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "bundled_plugin_count": len(value.get("bundled_plugins", [])),
+            "registry_schema": (value.get("plugin_registry") or {}).get("schema_version"),
+            "digest_verified_count": (value.get("plugin_registry") or {}).get("digest_verified_count"),
+            "default_install_action": (value.get("trust_policy") or {}).get("default_install_action"),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
             ),

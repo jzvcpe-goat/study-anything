@@ -412,7 +412,7 @@
 - Wire the kit into release checks, external adoption proof, ecosystem submission, platform packs,
   bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
 
-## v0.3.11-alpha
+## v0.3.12-alpha
 
 - Add `external-eval-marketplace-harness-v1`, a redacted marketplace-quality eval contract for
   external platform submissions.

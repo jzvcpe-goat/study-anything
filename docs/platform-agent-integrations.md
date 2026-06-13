@@ -353,6 +353,12 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/sessions/{session_id}/exports/second-brain-handoff`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
 
+For plugin ecosystem work, treat the Plugin SDK as a metadata-first review layer. A platform Agent
+should call `GET /v1/plugins/sdk`, `GET /v1/plugins/capabilities`, and
+`POST /v1/plugins/validate-package` before suggesting any local plugin install. Validation evidence
+must not include raw source text, learner answers, Agent endpoint secrets, or plugin source code, and
+must not execute plugin entrypoints.
+
 ## Acceptance Gate
 
 A platform integration is acceptable when it can complete this sequence:
