@@ -2,6 +2,7 @@
   "acceptance_commands": [
     "python3 scripts/generate_platform_agent_assets.py --check",
     "python3 scripts/verify_commercial_readiness.py",
+    "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "python3 scripts/verify_ecosystem_submission_pack.py",
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_platform_ecosystem_packs.py",
@@ -52,18 +53,18 @@
       "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
     },
     {
-      "bytes": 10933,
+      "bytes": 11501,
       "kind": "submission_manifest",
       "path": "platform/ecosystem-submission.json",
       "purpose": "Machine-readable ecosystem submission metadata for platform review.",
-      "sha256": "94d0daef086cd5177f06d4d7a54330e941cbb40d3a0e0d883673fcf4e87ab963"
+      "sha256": "5ef95027fc651560d4819f77dbbf270f1ddc2a6995a4700d73d7e2b4e3ce6b95"
     },
     {
-      "bytes": 13525,
+      "bytes": 13841,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "99029e63a81660ead8d068b4e354a69ec9ae139210ba3b4c935d2c1a2a51969c"
+      "sha256": "a7424c03a45be973ee11581d89cbfdbf545b54778dab6de7bd439408abe4d7f5"
     },
     {
       "bytes": 6094,
@@ -80,11 +81,11 @@
       "sha256": "705a499c48de60d4881e2b3291055aae221f6a60910fea98a2b83f3b598a6e36"
     },
     {
-      "bytes": 4079,
+      "bytes": 4251,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack metadata.",
-      "sha256": "977f7242a23c88dd3b51ae9c87522215e5420337369e90206b34b62691addd88"
+      "sha256": "0bd4a0631e9b7cdc8f4b91bc3394b4486a58fa2af4d6022059ea1ce25ff3005d"
     },
     {
       "bytes": 9076,
@@ -94,11 +95,11 @@
       "sha256": "6593be7f96fc85b91f5cb1e4826645a067756d8c628e2f62e7c236dd1203f317"
     },
     {
-      "bytes": 4680,
+      "bytes": 4852,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack metadata.",
-      "sha256": "4459d0f0d701efabb28a24138555e6457cbceca9d704260a7cb6ceefa37b4a84"
+      "sha256": "13e93ed4fb22cd888d21964a20fe19e56f8fafe2dca69fc74739166dbff42eed"
     },
     {
       "bytes": 6305,
@@ -108,11 +109,11 @@
       "sha256": "e24a38544bf527c0bd3f38a99d8c9468b4df0b20c70c13b93ea12c0eae6420f4"
     },
     {
-      "bytes": 4181,
+      "bytes": 4353,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "1c60dd482e878dac431629d8921fae0b7e0c102d46cfd787fcd23dee1dc1d70a"
+      "sha256": "743a8d0c119a47efe10cb67b50899fde3a4909e1db4f37ce853e2e157f4a5490"
     },
     {
       "bytes": 16456,
@@ -126,14 +127,14 @@
       "kind": "diagnostics",
       "path": "scripts/doctor.sh",
       "purpose": "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
-      "sha256": "ac341f79668a51fb2ee4ed23796c25de43449a59722c3b92342c45adf27211fb"
+      "sha256": "369cde26844c08fa1408dc387adb8cba94f62b43bdf09eedd50c4836ddedba40"
     },
     {
       "bytes": 4018,
       "kind": "runtime",
       "path": "scripts/launch_self_host.sh",
       "purpose": "Docker Compose self-host launcher for source builds and published GHCR images.",
-      "sha256": "8bea02e9e7b5786d83584b2a2ca7d2a4b0e76f90bb7f62d73445687903325519"
+      "sha256": "e4e87b156f40483d3ca21f4ae7b025539103914e716125247b502cab0a3a446c"
     },
     {
       "bytes": 250,
@@ -147,7 +148,7 @@
       "kind": "verification",
       "path": "scripts/verify_published_image_launch.py",
       "purpose": "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
-      "sha256": "de73706c9213bdb76e8deac97d5e43faa8c1f38daac6090ec2e0772f1b4b1167"
+      "sha256": "9f60d61417151de126ed2ef0f225fe6321010bad0ab695424147646aed01b570"
     },
     {
       "bytes": 9854,
@@ -171,11 +172,18 @@
       "sha256": "3201a13809d4f547e9da93de06e94aad018065f0247b16f784b03524c206e1ac"
     },
     {
-      "bytes": 13807,
+      "bytes": 15258,
+      "kind": "verification",
+      "path": "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+      "purpose": "NotebookLM, Obsidian, and Learning Enrichment bridge privacy verifier.",
+      "sha256": "febc5f458224b45b9410df0361e2a2f767e8a5baa6e57d50e77ba360f1cd6318"
+    },
+    {
+      "bytes": 13989,
       "kind": "verification",
       "path": "scripts/verify_ecosystem_submission_pack.py",
       "purpose": "Ecosystem submission pack verifier for external platform review readiness.",
-      "sha256": "d7ba92e7bf2d12310cde963e50616372a89a9b022f308d0304cbd7259b8f3b66"
+      "sha256": "be9758efe1edce9e603a4f2465a466210d957d23b36dcf3a8c9c428bab0b98db"
     },
     {
       "bytes": 2549,
@@ -252,35 +260,35 @@
       "kind": "verification",
       "path": "scripts/verify_agent_eval_baseline.py",
       "purpose": "Deterministic Agent eval baseline and regression comparison gate.",
-      "sha256": "eca9d2f4aa67803afb58e07685f70825bdd4ed575d7929f2d336840f59121b97"
+      "sha256": "bebc4d74e5ee570cc5ef5fb9d1f9d967f77a5822172dc0d1937604d6b135320b"
     },
     {
-      "bytes": 18520,
+      "bytes": 18733,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "f71a701c075bf34466d66eecf543917bab1c6775df03e24b45b1790582a683da"
+      "sha256": "46269e27b1e0232f2e34323bd400a8df0091ba248f06ab735f5b7d7c385411ff"
     },
     {
-      "bytes": 25774,
+      "bytes": 26764,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Adoption-proof-v1 verifier for external-platform operator handoff.",
-      "sha256": "7079efb9756f0df933acb6619fb8aa87e4af1a2a39f5dd2473c9c3e9e35f20cb"
+      "sha256": "797d5ae9108d51e137a5b8d408eaf832fa338a3cb14792fcf56c7ca7d5454f63"
     },
     {
-      "bytes": 18467,
+      "bytes": 18671,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
-      "sha256": "349421d3b9c002096f39e6f76129393c8fb6a08395d1fbc4133d16ed0f7fa245"
+      "sha256": "f4d3647cb0a046e13874257916183fc5fd697edd47591564ffbee6f3adcaefe7"
     },
     {
       "bytes": 13947,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "c28d9fa22a6cb32fa01bd052c2716de4d8b657b2bbb1cc2d3dae0345b5d759bc"
+      "sha256": "25f68b6c24ff27a97178402b97f8bc9c8ed361b5a0328cec6b4bf75e55a8f5af"
     },
     {
       "bytes": 2177,
@@ -322,21 +330,21 @@
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "dc327ea962f3052a72ff09708710a247e7219e4c124180327d5c514ac18b9fae"
+      "sha256": "4b5394c74c596b7c348d5eccb6c1e5a45ca1335d86aac91e306ee8d339d580cd"
     },
     {
-      "bytes": 17053,
+      "bytes": 17179,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "893b78bdf2bf6afec97ee5a8f4c9857dc9bc492ef01c894ef46f4422c2ddcc47"
+      "sha256": "7efc708122b5d081974e1c9767512ba555ca2e8df053456532e458bd995c94df"
     },
     {
-      "bytes": 11438,
+      "bytes": 11981,
       "kind": "docs",
       "path": "docs/commercial-readiness.md",
       "purpose": "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
-      "sha256": "5c69cc79dcfe422a67a507479bafac3411060fe323f253a23f564ef5b6074d14"
+      "sha256": "582336586dc6e0d03b5aeed6a0d38683ab0f21c0bc5033dc64d76a2d23119ab2"
     },
     {
       "bytes": 2366,
@@ -346,25 +354,25 @@
       "sha256": "42c24441ec50d635f79044ceaa8fbae44176b0b083c6bce8707cc0198e98fbee"
     },
     {
-      "bytes": 3371,
+      "bytes": 3434,
       "kind": "docs",
       "path": "docs/ecosystem-submission.md",
       "purpose": "Ecosystem submission metadata, verification, and no-frontend launch guide.",
-      "sha256": "b0d30f6f8c3bf03bbc2eb43826a5bae7413bb377cbb4be07de57b4a43d2bd586"
+      "sha256": "572c62c594034fb30b24dafaf6e4b92524ff48ba3f6528c41c0a83e79e09de4a"
     },
     {
-      "bytes": 3393,
+      "bytes": 3772,
       "kind": "docs",
       "path": "docs/learning-enrichment.md",
       "purpose": "Learning Enrichment Layer context contract and micro-lesson export guide.",
-      "sha256": "035894114d09dfe478f01ccca6b662e70c5332fea7e58d7ac6d0092e4d00c420"
+      "sha256": "5d5157b87301e4530da20615bcbdd1ff0b8d10fdeabfed01502d56e41c7abbba"
     },
     {
-      "bytes": 2505,
+      "bytes": 2813,
       "kind": "docs",
       "path": "docs/second-brain-handoff.md",
       "purpose": "Strict Obsidian, NotebookLM-style, and local archive handoff guide.",
-      "sha256": "84d2e1d99eb802c611efcbd1617ab8448f687f337585c79d438114450b8d988a"
+      "sha256": "40712dff1fcb5799f17737801e3a5baac8cf99c4c68c8dc608e3a089cd47f51b"
     },
     {
       "bytes": 1673,
@@ -374,11 +382,11 @@
       "sha256": "d75233f324a233999bb8ed1859cd381a4b673f852105c1a67fe19c72593c407b"
     },
     {
-      "bytes": 2233,
+      "bytes": 2582,
       "kind": "docs",
       "path": "docs/notebooklm-bridge.md",
       "purpose": "NotebookLM-style manual bridge contract.",
-      "sha256": "93052d02c92aeba634f04a1ebf853c9c2e3b5719436e3f2270c390741f23ffbd"
+      "sha256": "5c125ffc861f4228ce7eea4f786db2e1ffd8e8549f592df8cedd3b83a93a607b"
     },
     {
       "bytes": 3878,
@@ -430,11 +438,11 @@
       "sha256": "9206e6e26060fdc54e11a71d76888c1e01e6c930060e41adc0fc93ac67669fd4"
     },
     {
-      "bytes": 1683,
+      "bytes": 2048,
       "kind": "docs",
-      "path": "docs/release-notes/v0.3.3-alpha.md",
+      "path": "docs/release-notes/v0.3.4-alpha.md",
       "purpose": "Release notes for the ecosystem submission pack release.",
-      "sha256": "2c119434f80dee4e8d0883f721e3125e1e2955800a814757830c2a11d1088c4c"
+      "sha256": "ad87f9ae3d5089d2d893fd31f2dcd3e9be6f33653719ecf0ea5a5cf2e96518b4"
     },
     {
       "bytes": 9201,

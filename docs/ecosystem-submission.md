@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.3-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.4-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -64,6 +64,7 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_adoption_telemetry.py
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check

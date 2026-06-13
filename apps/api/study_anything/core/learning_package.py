@@ -76,6 +76,7 @@ def build_learning_package_export(state: LearningState) -> dict[str, object]:
             "grading_feedback_included": bool(state.grading_results),
             "generated_teaching_content_included": bool(state.teaching_layers),
             "agent_endpoints_included": False,
+            "agent_metadata_included": False,
             "secrets_included": False,
         },
     }
@@ -138,10 +139,31 @@ def _teaching_layers(state: LearningState) -> list[dict[str, object]]:
                 "content": layer.get("content"),
                 "citations": layer.get("citations") or [],
                 "confidence": layer.get("confidence"),
-                "agent": layer.get("agent") or {},
+                "agent": _public_agent_summary(layer.get("agent")),
             }
         )
     return layers
+
+
+def _public_agent_summary(value: object) -> dict[str, object]:
+    if not isinstance(value, dict):
+        return {}
+    summary: dict[str, object] = {}
+    for key in ("provider_id", "task_type", "status", "latency_ms", "confidence"):
+        candidate = value.get(key)
+        if candidate is not None:
+            summary[key] = candidate
+    metadata = value.get("metadata")
+    if isinstance(metadata, dict):
+        for key in ("tokens", "cost"):
+            candidate = metadata.get(key)
+            if candidate is not None:
+                summary[key] = candidate
+    for key in ("tokens", "cost"):
+        candidate = value.get(key)
+        if candidate is not None:
+            summary[key] = candidate
+    return summary
 
 
 def _quiz_review(state: LearningState) -> list[dict[str, object]]:

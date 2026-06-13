@@ -50,6 +50,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/verify_external_adoption.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_eval_baseline.py",
+    "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -394,6 +395,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "notebooklm_obsidian_bridge_hardening",
+                [python_bin, "scripts/verify_notebooklm_obsidian_bridge_hardening.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -538,6 +544,20 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
                 if isinstance(check, dict) and check.get("status") != "pass"
             ],
             "external_eval_policy": value.get("external_eval_policy"),
+        }
+    if label == "notebooklm_obsidian_bridge_hardening":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "context_item_count": value.get("context_item_count"),
+            "source_types": value.get("context_source_types"),
+            "archive_file_count": (value.get("exports") or {}).get("archive_file_count"),
+            "strict_second_brain_excludes_answers": (value.get("exports") or {}).get(
+                "strict_second_brain_excludes_answers"
+            ),
+            "agent_endpoint_redacted_from_learning_package": (value.get("exports") or {}).get(
+                "agent_endpoint_redacted_from_learning_package"
+            ),
         }
     if label == "notebooklm_importer":
         return {

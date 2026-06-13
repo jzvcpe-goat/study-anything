@@ -64,6 +64,7 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -131,6 +132,7 @@ python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_adoption_telemetry.py
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_agent_eval_baseline.py --check

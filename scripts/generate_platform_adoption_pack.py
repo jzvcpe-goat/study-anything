@@ -38,7 +38,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/ecosystem-submission.md", "operator_doc", "Ecosystem submission metadata, verification, and no-frontend launch guide."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.3.3-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.4-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/ecosystem-submission.json", "submission_manifest", "Machine-readable ecosystem submission metadata."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
@@ -67,6 +67,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_external_adoption.py", "verification", "Adoption-proof-v1 verifier for external operators."),
     ("scripts/verify_adoption_telemetry.py", "verification", "Aggregate adoption telemetry and PMF readiness verifier."),
     ("scripts/verify_agent_gateway_hardening.py", "verification", "User-owned Agent gateway hardening and privacy verifier."),
+    ("scripts/verify_notebooklm_obsidian_bridge_hardening.py", "verification", "NotebookLM, Obsidian, and Learning Enrichment bridge privacy verifier."),
     ("scripts/verify_ecosystem_submission_pack.py", "verification", "Ecosystem submission pack verifier for external platform review."),
     ("scripts/verify_platform_operator_drill.py", "verification", "External platform pack consumption verifier."),
     ("scripts/verify_platform_agent_tools.py", "verification", "Platform tool manifest runtime verifier."),
@@ -221,7 +222,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.3.3-alpha",
+        "version": "v0.3.4-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -264,6 +265,7 @@ def manifest_payload() -> dict[str, object]:
                 "pmf-readiness-v1",
                 "adoption-telemetry-verification-v1",
                 "agent-gateway-hardening-verification-v1",
+                "notebooklm-obsidian-bridge-hardening-v1",
                 "ecosystem-submission-v1",
                 "ecosystem-submission-verification-v1",
             ],

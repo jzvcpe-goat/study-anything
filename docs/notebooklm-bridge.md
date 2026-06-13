@@ -50,11 +50,18 @@ For NotebookLM use:
 ## Verification
 
 ```bash
+python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
 ```
 
-These checks validate the NotebookLM-style fixture, complete a learning loop,
-and assert `second-brain-handoff-v1` without raw source text, raw enrichment
-text, learner answers, Agent endpoints, raw Agent metadata, or secrets.
+`verify_notebooklm_obsidian_bridge_hardening.py` is the offline release gate. It
+validates the NotebookLM-style fixture, dedupes repeated context items, rejects
+hidden/system prompt-like text, rejects secret-like metadata, and proves the
+strict `second-brain-handoff-v1` archive without raw source text, raw
+enrichment text, learner answers, grading feedback, Agent endpoints, raw Agent
+metadata, or secrets.
+
+The API checks complete a learning loop and assert the same bridge schemas
+through the running server.
