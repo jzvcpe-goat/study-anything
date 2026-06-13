@@ -10,6 +10,7 @@ Use:
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
+python3 scripts/verify_plugin_quarantine.py
 ```
 
 or call:
@@ -35,6 +36,10 @@ bad Agent output produces redacted diagnostics.
 The NotebookLM/Obsidian bridge verifier is the matching proof for the learning-context path: it
 checks bounded imports, duplicate/idempotency behavior, hidden instruction rejection, strict
 second-brain archive redaction, and `learning-package-v1` Agent metadata boundaries.
+The plugin quarantine verifier is the matching proof for the extension path: it checks unknown
+plugins quarantine by default, explicit approval is required for installation, digest mismatches are
+blocked before any copy is written, and plugin entrypoints are not executed during preview or
+quarantine.
 
 For adoption and PMF review, call:
 

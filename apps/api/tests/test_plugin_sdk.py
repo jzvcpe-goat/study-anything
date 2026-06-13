@@ -57,6 +57,8 @@ class PluginSdkTests(unittest.TestCase):
         self.assertEqual(report["status"], "valid")
         self.assertIn("export.second_brain_handoff", report["capabilities"])
         self.assertEqual(report["required_permission_confirmations"], ["read:sessions"])
+        self.assertEqual(report["default_install_action"], "quarantine")
+        self.assertTrue(report["quarantine_required_before_install"])
         self.assertFalse(report["execution_allowed_by_validation"])
         self.assertFalse(report["privacy"]["entrypoints_executed"])
         self.assertFalse(report["privacy"]["package_copied"])

@@ -130,6 +130,36 @@ class StoreAndPluginTests(unittest.TestCase):
             discovered = PluginRegistry([install_dir]).discover()
             self.assertEqual(discovered[0].manifest.plugin_id if discovered[0].manifest else None, "demo-plugin")
 
+    def test_plugin_registry_quarantines_without_installing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            source_dir = root / "source" / "demo-plugin"
+            install_dir = root / "installed"
+            quarantine_dir = root / "quarantine"
+            source_dir.mkdir(parents=True)
+            (source_dir / "plugin.json").write_text(
+                json.dumps(
+                    {
+                        "id": "demo-plugin",
+                        "name": "Demo Plugin",
+                        "version": "0.1.0",
+                        "apiVersion": "0.1",
+                        "entrypoint": "plugin.py",
+                        "hooks": ["exporter"],
+                        "permissions": ["read:sessions"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (source_dir / "plugin.py").write_text("VALUE = 'quarantined'\n", encoding="utf-8")
+
+            status = PluginRegistry([]).quarantine_local(source_dir, quarantine_dir)
+
+            self.assertEqual(status.status, "ready")
+            self.assertTrue((quarantine_dir / "demo-plugin" / "plugin.py").exists())
+            self.assertFalse((install_dir / "demo-plugin").exists())
+            self.assertEqual(PluginRegistry([install_dir]).discover(), [])
+
     def test_plugin_registry_refuses_implicit_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

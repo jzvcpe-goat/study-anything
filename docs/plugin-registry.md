@@ -45,6 +45,22 @@ It compares discovered local plugins with local registry metadata and reports:
 The endpoint is metadata-only. It does not download code, install updates,
 execute entrypoints, contact a marketplace, or store secrets.
 
+## Quarantine-First Install Policy
+
+`GET /v1/plugins/trust-policy` returns `plugin-trust-v1` and declares the
+current lifecycle states: `previewed`, `quarantined`, `installed`, and
+`blocked`.
+
+The default install action is `quarantine`. `POST /v1/plugins/install` with
+matching `confirmed_permissions` copies the local package into the quarantine
+directory, does not execute entrypoints, and does not make the plugin
+discoverable as installed. A caller must send `approve_install=true` for the
+second step that copies the package into the installed plugin directory.
+
+Plugins with `install_recommendation=do_not_install` are blocked before both
+quarantine and install copies. This includes digest mismatches and invalid
+registry signatures. Quarantine is a review buffer, not a bypass.
+
 ## Digest Policy
 
 Source digests include install-relevant files and ignore generated or local-only
@@ -62,4 +78,3 @@ The alpha registry is intentionally free and local. A future hosted ecosystem
 may add maintainer review queues, signed distribution, and convenience hosting,
 but the OSS core must keep local install, local review, and local export paths
 usable without an account.
-

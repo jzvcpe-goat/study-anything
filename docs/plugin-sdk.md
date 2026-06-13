@@ -90,8 +90,12 @@ returns:
 - `execution_allowed_by_validation: false`
 - `privacy.entrypoints_executed: false`
 - `privacy.package_copied: false`
+- `default_install_action: quarantine`
+- `quarantine_required_before_install: true`
 
-Install remains a separate explicit action through `POST /v1/plugins/install`.
+Copying remains a separate explicit action through `POST /v1/plugins/install`,
+which quarantines by default. A final install requires `approve_install=true`
+after a user or operator has reviewed the quarantined package.
 
 ## Example Plugins
 
@@ -101,4 +105,3 @@ Install remains a separate explicit action through `POST /v1/plugins/install`.
   template.
 - `plugins/example-exporter`: Markdown and second-brain exporter template.
 - `plugins/example-agent-provider`: user-owned HTTP Agent gateway template.
-

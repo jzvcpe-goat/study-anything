@@ -246,6 +246,9 @@ class PluginTrustTests(unittest.TestCase):
         self.assertFalse(policy["remote_code_downloads_allowed"])
         self.assertFalse(policy["raw_secrets_allowed"])
         self.assertEqual(policy["registry_signature"]["supported_type"], "ed25519")
+        self.assertEqual(policy["default_install_action"], "quarantine")
+        self.assertIn("quarantined", policy["lifecycle_statuses"])
+        self.assertTrue(policy["quarantine"]["requires_explicit_approval_for_install"])
 
 
 if __name__ == "__main__":

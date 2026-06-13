@@ -51,6 +51,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_eval_baseline.py",
     "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+    "scripts/verify_plugin_quarantine.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -400,6 +401,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "plugin_quarantine",
+                [python_bin, "scripts/verify_plugin_quarantine.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -505,6 +511,20 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "plugin_sdk_schema": value.get("plugin_sdk_schema"),
             "plugin_capability_index_schema": value.get("plugin_capability_index_schema"),
             "plugin_package_validation_schema": value.get("plugin_package_validation_schema"),
+        }
+    if label == "plugin_quarantine":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "api_quarantine_lifecycle": (value.get("api") or {}).get("quarantine_lifecycle"),
+            "api_install_lifecycle": (value.get("api") or {}).get("install_lifecycle"),
+            "blocked_recommendation": (value.get("blocked_digest") or {}).get(
+                "install_recommendation"
+            ),
+            "cli_lifecycle_status": (value.get("cli") or {}).get("lifecycle_status"),
+            "cli_approved_lifecycle_status": (value.get("cli") or {}).get(
+                "approved_lifecycle_status"
+            ),
         }
     if label == "adoption_telemetry":
         return {

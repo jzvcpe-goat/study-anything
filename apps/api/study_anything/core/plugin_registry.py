@@ -120,22 +120,63 @@ class PluginRegistry:
     ) -> PluginStatus:
         """Validate and copy one explicitly selected local plugin directory."""
 
+        return self._copy_local_plugin(
+            source_dir,
+            install_dir,
+            replace_existing=replace_existing,
+            blocked_message="Plugin trust policy blocks installation.",
+        )
+
+    def quarantine_local(
+        self,
+        source_dir: Path,
+        quarantine_dir: Path,
+        *,
+        replace_existing: bool = True,
+    ) -> PluginStatus:
+        """Validate and copy one selected plugin into a quarantine directory.
+
+        Quarantine is still metadata-only: entrypoints are not executed and the
+        copied package is not scanned as an installed plugin unless the caller
+        explicitly includes the quarantine root in `plugin_dirs`.
+        """
+
+        return self._copy_local_plugin(
+            source_dir,
+            quarantine_dir,
+            replace_existing=replace_existing,
+            blocked_message="Plugin trust policy blocks quarantine copy.",
+        )
+
+    def _copy_local_plugin(
+        self,
+        source_dir: Path,
+        destination_dir: Path,
+        *,
+        replace_existing: bool,
+        blocked_message: str,
+    ) -> PluginStatus:
         source = source_dir.resolve()
         source_status = self._load_manifest(source / "plugin.json")
         if source_status.manifest is None:
             raise ValueError(f"Cannot install invalid plugin: {source_status.message}")
+        if (
+            source_status.trust is not None
+            and source_status.trust.install_recommendation == "do_not_install"
+        ):
+            raise ValueError(blocked_message)
 
-        install_root = install_dir.resolve()
-        target = install_root / source_status.manifest.plugin_id
+        destination_root = destination_dir.resolve()
+        target = destination_root / source_status.manifest.plugin_id
         if target == source or source in target.parents or target in source.parents:
-            raise ValueError("Plugin install destination must be outside the source directory.")
+            raise ValueError("Plugin destination must be outside the source directory.")
         if target.exists():
             if not replace_existing:
                 raise FileExistsError(
-                    f"Plugin '{source_status.manifest.plugin_id}' is already installed."
+                    f"Plugin '{source_status.manifest.plugin_id}' is already present."
                 )
             shutil.rmtree(target)
-        install_root.mkdir(parents=True, exist_ok=True)
+        destination_root.mkdir(parents=True, exist_ok=True)
         shutil.copytree(
             source,
             target,

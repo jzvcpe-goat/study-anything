@@ -263,6 +263,8 @@ def validate_plugin_package(source_dir: Path, registry: PluginRegistry) -> dict[
         "hook_contracts": _hook_contracts(manifest.hooks if manifest else []),
         "trust": trust,
         "installable_with_confirmation": installable,
+        "default_install_action": "quarantine",
+        "quarantine_required_before_install": True,
         "execution_allowed_by_validation": False,
         "validation_errors": validation_errors,
         "warnings": list(status.trust.warnings) if status.trust else [],

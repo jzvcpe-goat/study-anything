@@ -108,7 +108,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.4-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.5-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -121,7 +121,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.4-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.5-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -154,6 +154,7 @@ For Kimi/OpenAI-compatible providers, verify the local gateway without a real ke
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
+python3 scripts/verify_plugin_quarantine.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
 
