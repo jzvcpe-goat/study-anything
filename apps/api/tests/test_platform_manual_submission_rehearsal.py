@@ -38,7 +38,7 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.15-alpha")
+        self.assertEqual(report["version"], "v0.3.16-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertGreaterEqual(len(report["operator_steps"]), 7)
         self.assertIn(
@@ -49,6 +49,11 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
             "agent_eval_marketplace_enforcement",
             report["existing_reports"],
         )
+        self.assertIn(
+            "platform_adoption_feedback_diagnostics",
+            report["existing_reports"],
+        )
+        self.assertIn("platform_feedback_package", report["existing_reports"])
         self.assertEqual(report["time_budget"]["target_minutes"], 30)
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])

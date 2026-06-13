@@ -193,6 +193,19 @@ raw source, answers, endpoints, model keys, or private browser/video context.
 The Agent eval marketplace enforcement report is the shareable proof that native learning-Agent
 evaluation ran, optional external judge adapters are clearly diagnosed, required judge failures are
 blocking, and no external judge keys or real model credentials are stored by Study Anything.
+The platform adoption feedback diagnostics report emits
+`platform-adoption-feedback-diagnostics-v1`. It proves import failures, version drift, missing
+commands, unsupported platform capabilities, local endpoint health, and missing Agent eval evidence
+are diagnosable without sharing private learning data.
+The feedback package emits `platform-feedback-package-v1`. It is local-only by default and contains
+diagnostic summaries plus redacted logs, not raw source text, answers, Agent prompts, personal
+profiles, endpoint secrets, judge keys, or model keys. Generate or verify it with:
+
+```bash
+python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
+python3 scripts/generate_platform_feedback_package.py --check
+```
+
 The plugin ecosystem adoption kit is the shareable plugin trust runbook. It proves the adoption pack
 contains bundled sample plugins, a digest-verified `plugins/registry.json`, quarantine-first install
 policy, platform-pack commands, and redacted evidence without executing plugin entrypoints.
@@ -250,7 +263,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.15-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -258,12 +271,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.15-alpha \
+  --tag v0.3.16-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.15-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.16-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

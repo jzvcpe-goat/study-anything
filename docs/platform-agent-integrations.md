@@ -401,9 +401,12 @@ A platform integration is acceptable when it can complete this sequence:
    adapter readiness in a platform submission.
 14. Run `scripts/verify_agent_eval_marketplace_enforcement.py --check` before claiming external judge
    or marketplace eval readiness in a platform submission.
-15. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
+15. Run `scripts/verify_platform_adoption_feedback_diagnostics.py --check` and
+   `scripts/generate_platform_feedback_package.py --check` before sharing platform import failures.
+   The schemas are `platform-adoption-feedback-diagnostics-v1` and `platform-feedback-package-v1`.
+16. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
    handoff, GitHub prerelease, or external operator guide.
-16. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, external judge
+17. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, external judge
    keys, or model secrets in
    logs or shared artifacts.
 
@@ -414,6 +417,8 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
+python3 scripts/generate_platform_feedback_package.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_runtime_retrieval_flow.py
