@@ -38,6 +38,7 @@ Generate and validate the deterministic operator transcript:
 ```bash
 python3 scripts/verify_platform_operator_drill.py --write
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_platform_submission_dry_run.py --check
 ```
 
 Validate the full external adoption proof:
@@ -49,8 +50,9 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The first command verifies that the adoption pack can be consumed as an external
-platform tool directory. The second command starts the local runtime and proves
-the learning/eval/export loop.
+platform tool directory. The dry-run report summarizes per-platform submission
+readiness. The external adoption command starts the local runtime and proves the
+learning/eval/export loop.
 
 ## Acceptance Evidence
 
@@ -62,3 +64,5 @@ the learning/eval/export loop.
 - Obsidian export and learning package schemas are present.
 - No standalone frontend is required.
 - No real model keys are stored by Study Anything.
+- `platform-submission-dry-run-v1` has no blocked platform and no private
+  learning data.

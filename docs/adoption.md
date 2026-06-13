@@ -12,6 +12,7 @@ copy-ready adoption pack:
 python3 scripts/generate_platform_adoption_pack.py
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -21,7 +22,9 @@ python3 scripts/verify_external_adoption.py \
 The archive contains OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy packs, the repo-local
 Skill, gateway examples, mock agent, NotebookLM fixture, verifier scripts, and a SHA256 manifest.
 The operator drill emits `study-anything-operator-drill-v1` evidence that the pack can be consumed as
-an external platform tool directory. The adoption verifier emits `adoption-proof-v1` and exercises
+an external platform tool directory. The submission dry-run emits `platform-submission-dry-run-v1`
+with ready/warning/blocked status for each target platform. The adoption verifier emits
+`adoption-proof-v1` and exercises
 importer, enrichment, retrieval, teaching layers, eval, Obsidian export, and NotebookLM-style
 learning-package export through Skill Mode.
 
@@ -191,7 +194,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.6-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.7-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -199,12 +202,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.6-alpha \
+  --tag v0.3.7-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.6-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.7-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

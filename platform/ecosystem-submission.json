@@ -1,7 +1,7 @@
 {
   "schema_version": "ecosystem-submission-v1",
   "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.6-alpha",
+  "version": "v0.3.7-alpha",
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
   "project": {
     "repository": "https://github.com/jzvcpe-goat/study-anything",
@@ -69,6 +69,7 @@
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/generated/study-anything-platform-bundle.json",
+    "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-adoption-pack.zip",
     "docs/ecosystem-submission.md",
     "docs/platform-agent-integrations.md",
@@ -81,7 +82,8 @@
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "scripts/verify_plugin_quarantine.py",
-    "scripts/verify_security_recovery_hardening.py"
+    "scripts/verify_security_recovery_hardening.py",
+    "scripts/verify_platform_submission_dry_run.py"
   ],
   "submissions": [
     {
@@ -110,6 +112,7 @@
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -144,6 +147,7 @@
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -176,6 +180,7 @@
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -207,6 +212,7 @@
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -227,6 +233,7 @@
       "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
       "python3 scripts/verify_plugin_quarantine.py",
       "python3 scripts/verify_security_recovery_hardening.py",
+      "python3 scripts/verify_platform_submission_dry_run.py --check",
       "python3 scripts/verify_platform_ecosystem_packs.py",
       "python3 scripts/generate_platform_bundle_manifest.py --check",
       "python3 scripts/generate_platform_adoption_pack.py --check",
@@ -244,6 +251,7 @@
       "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
       "plugin-quarantine-verification-v1 proves unknown plugins quarantine by default, explicit approval installs, and digest mismatch blocks copies",
       "security-recovery-hardening-verification-v1 proves backup tamper detection, path traversal rejection, wrong passphrase redaction, and restore-preview privacy",
+      "platform-submission-dry-run-v1 proves Kimi, Codex, WorkBuddy-style, and generic OpenAPI packages are ready for manual submission without leaking private learning data",
       "pmf-readiness-v1 keeps hosted paid services not_ready"
     ]
   },

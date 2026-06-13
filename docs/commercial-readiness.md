@@ -12,6 +12,7 @@ python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
+python3 scripts/verify_platform_submission_dry_run.py --check
 ```
 
 or call:
@@ -44,6 +45,9 @@ quarantine.
 The security recovery verifier is the matching proof for the operator safety path: it checks backup
 manifest tamper detection, path traversal rejection, invalid digest rejection, wrong passphrase
 redaction, restore-preview privacy, and recovery status path redaction.
+The platform submission dry-run verifier is the matching proof for ecosystem distribution: it checks
+Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI packages before manual
+submission without turning Study Anything into a paid standalone app.
 
 For adoption and PMF review, call:
 

@@ -114,6 +114,15 @@ Kimi or the platform Agent still owns browsing, files, external data, and video
 slice creation. The local gateway owns model credentials and reasoning. Study
 Anything owns learning state, validation, audit, eval, and redacted exports.
 
+Before sharing the Kimi-compatible pack for manual import, run:
+
+```bash
+python3 scripts/verify_platform_submission_dry_run.py --check
+```
+
+The report verifies the OpenAI-compatible tools, OpenAPI asset, gateway guide,
+known limits, acceptance commands, and redacted Kimi submission checklist.
+
 ## What To Commercialize Later
 
 Do not sell a separate app before adoption is real. The early commercial

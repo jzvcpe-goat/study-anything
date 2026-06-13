@@ -369,9 +369,20 @@
 - Include the security recovery verifier in release checks, external adoption proof, ecosystem
   submission, platform packs, and adoption pack assets.
 
+## v0.3.7-alpha
+
+- Add `platform-submission-dry-run-v1`, a machine-readable dry-run report for Kimi-compatible,
+  Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI submission packages.
+- Verify per-platform import assets, entrypoints, acceptance commands, warnings, and manual
+  submission checklists before claiming ecosystem readiness.
+- Keep the report redacted: no raw source, answers, Agent endpoint secrets, real model keys, or
+  private platform context.
+- Include the dry-run verifier in release checks, external adoption proof, ecosystem submission,
+  platform packs, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.7`: external platform submission dry-run packages.
+- `v0.3.8`: real external Agent eval adapter hardening.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track
