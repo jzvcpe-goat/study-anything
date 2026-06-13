@@ -22,6 +22,7 @@
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
     "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
     "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
     "python3 scripts/diagnose_adoption.py"
@@ -33,6 +34,9 @@
     "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
     "agent_quality_eval.status == pass",
+    "agent_eval_policy.schema_version == agent-eval-policy-v1",
+    "agent_eval_report.schema_version == agent-eval-report-v1",
+    "agent_eval_report.native_fast_gate.status == pass",
     "retrieval_quality_eval.schema_version == retrieval-quality-eval-v1",
     "retrieval_quality_eval.status == pass",
     "learning_context_package.schema_version == learning-context-package-v1",

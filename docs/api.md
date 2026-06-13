@@ -118,8 +118,10 @@ Platform wrappers should still treat the request and session state as private le
 - `POST /v1/sessions/{session_id}/discard`
 - `GET /v1/sessions/{session_id}/mastery`
 - `GET /v1/sessions/{session_id}/agent-audit`
+- `GET /v1/evals/policy`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/sessions/{session_id}/agent-eval/report`
 - `GET /v1/evals/quality/cases`
 - `GET /v1/evals/retrieval/cases`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
@@ -128,14 +130,21 @@ Platform wrappers should still treat the request and session state as private le
 - `GET /v1/sessions/{session_id}/exports/second-brain-handoff`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for one alpha release
 
-`agent-audit` proves redacted Agent invocation coverage. `agent-eval/artifact` converts that audit into
-a redacted record for external tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. It
+`agent-audit` proves redacted Agent invocation coverage. `evals/policy` returns
+`agent-eval-policy-v1`, the machine-readable release gate, optional external adapter policy, failure
+classes, fixture paths, and privacy contract. `agent-eval/artifact` converts that audit into a
+redacted record for external tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas. It
 does not run judge models and does not return source text, answers, feedback, Agent endpoints, or raw
 Agent metadata.
 
 `agent-eval/quality` returns a deterministic minimum quality report for overview, glossary, quiz,
 grading, synthesis, source binding, enrichment readiness, and Obsidian readiness. It is redacted and
 does not return raw source text, answers, feedback, insights, endpoints, or secrets.
+
+`agent-eval/report` returns `agent-eval-report-v1`, the per-session maturity report for platform
+Agents. It combines invocation proof, trajectory coverage, teaching quality, optional retrieval
+grounding, export readiness, privacy redaction, and external adapter readiness. It is the quickest
+way for a platform Agent to prove that Study Anything's Agent workflow actually ran.
 
 `exports/obsidian` returns a user-controlled Markdown note with source references, teaching layers,
 quiz review, mastery, insights, and enrichment references. It never includes raw source text, but it can

@@ -16,6 +16,7 @@ CATALOG_PATH = GENERATED_DIR / "study-anything-tool-catalog.md"
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
     "study_anything_health",
+    "study_anything_eval_policy",
     "study_anything_create_session",
     "study_anything_add_reading",
     "study_anything_validate_context_package",
@@ -39,6 +40,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
+    "study_anything_agent_eval_report",
     "study_anything_obsidian_export",
     "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
@@ -134,10 +136,13 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("verify_platform_agent_tools.py", catalog)
         self.assertIn("study_anything_deployment_guide", catalog)
         self.assertIn("deployment-guide-v1", catalog)
+        self.assertIn("agent-eval-policy-v1", catalog)
+        self.assertIn("agent-eval-report-v1", catalog)
         self.assertIn("raw source text", catalog)
         self.assertIn("study_anything_enrichment_artifact_export", catalog)
         self.assertIn("study_anything_second_brain_handoff_export", catalog)
         self.assertIn("study_anything_agent_eval_artifact", catalog)
+        self.assertIn("study_anything_agent_eval_report", catalog)
         self.assertIn("study_anything_run_importer", catalog)
         self.assertIn("study_anything_retrieval_search", catalog)
         self.assertIn("study_anything_retrieval_quality_eval", catalog)

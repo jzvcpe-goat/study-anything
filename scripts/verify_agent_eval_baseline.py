@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASELINE_PATH = ROOT / "evals" / "baselines" / "study-anything-agent-eval-baseline.json"
 BASELINE_SCHEMA = "study-anything-agent-eval-baseline-v1"
 REGRESSION_SCHEMA = "study-anything-agent-eval-regression-report-v1"
-BASELINE_VERSION = "v0.2.28-alpha"
+BASELINE_VERSION = "v0.2.29-alpha"
 EXPECTED_ADAPTERS = ["deepeval", "langchain-agentevals", "promptfoo", "ragas"]
 EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
 
@@ -87,6 +87,7 @@ def build_current_baseline() -> dict[str, Any]:
     from study_anything.core.agent_eval import (  # noqa: PLC0415
         AGENT_EVAL_ADAPTERS,
         build_agent_eval_artifact,
+        build_agent_eval_report,
     )
     from study_anything.core.quality_eval import build_agent_quality_eval  # noqa: PLC0415
     from study_anything.core.retrieval import (  # noqa: PLC0415
@@ -209,10 +210,31 @@ def build_current_baseline() -> dict[str, Any]:
             result_set=result_set,
         )
     )
+    report = build_agent_eval_report(
+        agent_audit=audit,
+        agent_eval_artifact=artifact,
+        quality_eval=quality,
+        retrieval_eval=retrieval,
+        export_status={
+            "obsidian_ready": True,
+            "learning_package_ready": True,
+            "second_brain_ready": True,
+            "privacy": {
+                "raw_source_text_included": False,
+                "raw_enrichment_text_included": False,
+                "learner_answers_included": False,
+                "grading_feedback_included": False,
+                "generated_insights_included": False,
+                "agent_metadata_included": False,
+                "secrets_included": False,
+            },
+        },
+    )
     scorecard = build_scorecard(
         artifact=artifact,
         quality=quality,
         retrieval=retrieval,
+        report=report,
         adapters=[adapter.public_dict() for adapter in AGENT_EVAL_ADAPTERS],
     )
     payload = {
@@ -225,6 +247,7 @@ def build_current_baseline() -> dict[str, Any]:
             "agent_eval_artifact": summarize_agent_eval_artifact(artifact),
             "agent_quality_eval": summarize_quality_eval(quality),
             "retrieval_quality_eval": summarize_quality_eval(retrieval),
+            "agent_eval_report": summarize_agent_eval_report(report),
         },
         "frameworks": {
             "promptfoo": {
@@ -290,6 +313,24 @@ def summarize_quality_eval(report: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def summarize_agent_eval_report(report: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "schema_version": report.get("schema_version"),
+        "status": report.get("status"),
+        "native_fast_gate_status": (report.get("native_fast_gate") or {}).get("status"),
+        "dimension_statuses": {
+            item.get("dimension_id"): item.get("status")
+            for item in report.get("dimensions", [])
+            if isinstance(item, Mapping)
+        },
+        "adapter_ids": sorted(
+            str(item.get("adapter_id"))
+            for item in report.get("adapter_readiness", [])
+            if isinstance(item, Mapping)
+        ),
+    }
+
+
 def summarize_gates(gates: object) -> list[dict[str, Any]]:
     if not isinstance(gates, list):
         return []
@@ -311,6 +352,7 @@ def build_scorecard(
     artifact: Mapping[str, Any],
     quality: Mapping[str, Any],
     retrieval: Mapping[str, Any],
+    report: Mapping[str, Any],
     adapters: list[Mapping[str, Any]],
 ) -> dict[str, Any]:
     trajectory = [
@@ -375,6 +417,17 @@ def build_scorecard(
                 "retrieval": retrieval.get("privacy"),
             },
         ),
+        _check(
+            "agent_eval_report",
+            report.get("schema_version") == "agent-eval-report-v1"
+            and (report.get("native_fast_gate") or {}).get("status") == "pass"
+            and str(report.get("status") or "").startswith("pass"),
+            {
+                "schema_version": report.get("schema_version"),
+                "status": report.get("status"),
+                "native_fast_gate": report.get("native_fast_gate"),
+            },
+        ),
     ]
     status = "pass" if all(check["status"] == "pass" for check in checks) else "fail"
     return {
@@ -382,6 +435,7 @@ def build_scorecard(
         "checks": checks,
         "quality_score": quality.get("quality_score"),
         "retrieval_quality_score": retrieval.get("quality_score"),
+        "agent_eval_report_status": report.get("status"),
         "trajectory_coverage": round(len(set(trajectory) & set(EXPECTED_TRAJECTORY)) / len(EXPECTED_TRAJECTORY), 3),
         "adapter_ids": adapter_ids,
     }
@@ -461,6 +515,19 @@ def compare_to_baseline(current: Mapping[str, Any], baseline: Mapping[str, Any])
             {
                 "baseline": baseline.get("scorecard", {}).get("retrieval_quality_score"),
                 "current": current.get("scorecard", {}).get("retrieval_quality_score"),
+            },
+        ),
+        _check(
+            "agent_eval_report_not_regressed",
+            current.get("reports", {}).get("agent_eval_report", {}).get("schema_version")
+            == baseline.get("reports", {}).get("agent_eval_report", {}).get("schema_version")
+            == "agent-eval-report-v1"
+            and current.get("reports", {}).get("agent_eval_report", {}).get("native_fast_gate_status")
+            == baseline.get("reports", {}).get("agent_eval_report", {}).get("native_fast_gate_status")
+            == "pass",
+            {
+                "baseline": baseline.get("reports", {}).get("agent_eval_report"),
+                "current": current.get("reports", {}).get("agent_eval_report"),
             },
         ),
         _check(

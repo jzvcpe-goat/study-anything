@@ -85,7 +85,9 @@ def main() -> None:
     sys.path.insert(0, str(ROOT / "apps" / "api"))
     from study_anything.core.agent_eval import (  # noqa: PLC0415
         AGENT_EVAL_ADAPTERS,
+        agent_eval_policy,
         build_agent_eval_artifact,
+        build_agent_eval_report,
     )
 
     adapter_ids = {adapter.adapter_id for adapter in AGENT_EVAL_ADAPTERS}
@@ -108,6 +110,60 @@ def main() -> None:
     ]
     if failed_required:
         fail(f"Required native gates failed for sample artifact: {failed_required}")
+
+    policy = agent_eval_policy()
+    if policy.get("schema_version") != "agent-eval-policy-v1":
+        fail(f"Unexpected eval policy schema: {policy}")
+    if (policy.get("native_fast_gate") or {}).get("required_for_release") is not True:
+        fail(f"Eval policy native fast gate must be release-blocking: {policy}")
+    if {
+        item.get("adapter_id")
+        for item in policy.get("external_adapters", [])
+        if isinstance(item, dict)
+    } != EXPECTED_ADAPTER_IDS:
+        fail(f"Eval policy adapter strategy drifted: {policy.get('external_adapters')}")
+
+    sample_quality = {
+        "schema_version": "agent-quality-eval-v1",
+        "status": "pass",
+        "quality_score": 0.93,
+        "threshold": 0.72,
+        "gates": [
+            {"gate_id": "agent_invocation_proof", "status": "pass", "required": True},
+            {"gate_id": "overview_quality", "status": "pass", "required": True},
+            {"gate_id": "glossary_quality", "status": "pass", "required": True},
+        ],
+        "privacy": {
+            "raw_source_text_included": False,
+            "raw_answers_included": False,
+            "raw_feedback_included": False,
+            "agent_endpoints_included": False,
+            "raw_agent_metadata_included": False,
+        },
+    }
+    report = build_agent_eval_report(
+        agent_audit=sample_audit(),
+        agent_eval_artifact=artifact,
+        quality_eval=sample_quality,
+        export_status={
+            "obsidian_ready": True,
+            "learning_package_ready": True,
+            "second_brain_ready": True,
+            "privacy": {
+                "raw_source_text_included": False,
+                "raw_enrichment_text_included": False,
+                "learner_answers_included": False,
+                "grading_feedback_included": False,
+                "generated_insights_included": False,
+                "agent_metadata_included": False,
+                "secrets_included": False,
+            },
+        },
+    )
+    if report.get("schema_version") != "agent-eval-report-v1":
+        fail(f"Unexpected eval report schema: {report}")
+    if (report.get("native_fast_gate") or {}).get("status") != "pass":
+        fail(f"Sample eval report native gate did not pass: {report}")
 
     serialized = json.dumps(artifact, ensure_ascii=False)
     forbidden = [
@@ -164,11 +220,14 @@ def main() -> None:
         "scripts/verify_platform_ecosystem_eval_flow.py",
         "--tool retrieval",
         "retrieval-quality-eval-v1",
+        "agent-eval-policy-v1",
+        "agent-eval-report-v1",
     )
     assert_contains(
         ROOT / "scripts" / "run_external_agent_evals.py",
-        'choices=["promptfoo", "deepeval", "retrieval"]',
+        'choices=["promptfoo", "deepeval", "retrieval", "report"]',
         "ragas-compatible-native",
+        "study-anything-native-maturity-report",
         "study-anything-retrieval-eval-result-v1",
     )
     assert_contains(
@@ -190,15 +249,36 @@ def main() -> None:
     if baseline.get("status") != "pass":
         fail(f"Agent eval baseline does not pass: {baseline.get('status')}")
 
+    for fixture_name in [
+        "fake-agent-learning-loop.json",
+        "mock-http-agent-learning-loop.json",
+    ]:
+        fixture_path = ROOT / "evals" / "fixtures" / fixture_name
+        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        if fixture.get("schema_version") != "study-anything-agent-eval-fixture-v1":
+            fail(f"Agent eval fixture has invalid schema: {fixture_path}")
+        tasks = [
+            item.get("task_type")
+            for item in fixture.get("agent_tasks", [])
+            if isinstance(item, dict)
+        ]
+        if tasks != EXPECTED_TRAJECTORY:
+            fail(f"Agent eval fixture task trajectory drifted: {fixture_path}: {tasks}")
+        if any(bool(value) for value in (fixture.get("privacy") or {}).values()):
+            fail(f"Agent eval fixture privacy flags are unsafe: {fixture_path}")
+
     print(
         json.dumps(
             {
                 "status": "ok",
                 "schema_version": artifact["schema_version"],
+                "policy_schema_version": policy["schema_version"],
+                "report_schema_version": report["schema_version"],
                 "adapter_ids": sorted(EXPECTED_ADAPTER_IDS),
                 "trajectory": EXPECTED_TRAJECTORY,
                 "retrieval_eval_schema": "retrieval-quality-eval-v1",
                 "baseline_schema": baseline["schema_version"],
+                "fixture_count": 2,
                 "promptfoo_config": str(promptfoo_config.relative_to(ROOT)),
             },
             ensure_ascii=False,

@@ -270,6 +270,19 @@
 - Keep the launch target API/Skill Mode first; standalone frontend polish remains out of scope for
   this release track.
 
+## v0.2.29-alpha
+
+- Add `agent-eval-policy-v1`, the machine-readable Agent Eval release gate, external adapter policy,
+  failure classes, fixtures, and privacy contract for platform Agents.
+- Add `agent-eval-report-v1`, the per-session maturity report that combines invocation proof,
+  trajectory coverage, teaching quality, retrieval grounding status, export readiness, privacy
+  redaction, and external adapter readiness.
+- Extend CLI, Skill Mode, Kimi/Codex/WorkBuddy packs, generated platform tools, adoption pack, and
+  release checks so external operators can prove Study Anything's Agent workflow actually ran.
+- Add fake deterministic and mock HTTP/user-owned Agent eval fixtures for stable adapter tests.
+- Keep Promptfoo, DeepEval, LangChain AgentEvals, and Ragas optional unless an operator explicitly
+  requires those external gates in their own environment.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

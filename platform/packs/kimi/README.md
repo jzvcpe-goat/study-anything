@@ -28,6 +28,8 @@ The tool surface includes:
 - `study_anything_deployment_guide` for `deployment-guide-v1`, the redacted first-run launch and
   diagnostics guide.
 - `study_anything_health` for local API reachability.
+- `study_anything_eval_policy` for `agent-eval-policy-v1`, the native release gate, optional
+  external adapter policy, and failure classes.
 - `study_anything_plugin_sdk` for the machine-readable Plugin SDK contract.
 - `study_anything_plugin_capabilities` for installed plugin hooks, capabilities, and trust summaries.
 - `study_anything_validate_plugin_package` for local plugin package validation before install.
@@ -42,6 +44,8 @@ The tool surface includes:
   turning retrieval results into a focused lesson.
 - `study_anything_add_enrichment` for web/document/PDF/video-slice/app-context/Markdown/Obsidian excerpts gathered by Kimi or the platform agent.
 - `study_anything_agent_quality_eval` for the minimum teaching-quality gate.
+- `study_anything_agent_eval_report` for the per-session maturity report proving invocation,
+  trajectory, teaching quality, export readiness, privacy, and external adapter readiness.
 - `study_anything_enrichment_artifact_export` for a redacted Markdown+HTML micro-lesson Kimi can use in the conversation.
 - `study_anything_obsidian_export` for a copy-ready Obsidian Markdown note.
 - `study_anything_learning_package_export` for a portable package that a platform agent can pass into
@@ -99,9 +103,11 @@ scribe notes, source verification, and embedding tasks.
 After a completed learning loop, the platform Agent should fetch:
 
 ```text
+GET /v1/evals/policy
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
+GET /v1/sessions/{session_id}/agent-eval/report
 GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package

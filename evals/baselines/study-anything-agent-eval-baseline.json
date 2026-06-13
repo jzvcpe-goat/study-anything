@@ -83,6 +83,26 @@
       "used_external_agent": true,
       "used_fake_agent": false
     },
+    "agent_eval_report": {
+      "adapter_ids": [
+        "deepeval",
+        "langchain-agentevals",
+        "promptfoo",
+        "ragas"
+      ],
+      "dimension_statuses": {
+        "agent_invocation_coverage": "pass",
+        "export_readiness": "pass",
+        "external_adapter_readiness": "pass",
+        "privacy_redaction": "pass",
+        "retrieval_grounding": "pass",
+        "teaching_quality": "pass",
+        "trajectory_coverage": "pass"
+      },
+      "native_fast_gate_status": "pass",
+      "schema_version": "agent-eval-report-v1",
+      "status": "pass"
+    },
     "agent_quality_eval": {
       "gates": [
         {
@@ -230,6 +250,7 @@
       "promptfoo",
       "ragas"
     ],
+    "agent_eval_report_status": "pass",
     "checks": [
       {
         "check_id": "adapter_matrix",
@@ -321,6 +342,26 @@
           }
         },
         "status": "pass"
+      },
+      {
+        "check_id": "agent_eval_report",
+        "details": {
+          "native_fast_gate": {
+            "blocking": true,
+            "external_frameworks_required": false,
+            "failed_dimensions": [],
+            "required_dimensions": [
+              "agent_invocation_coverage",
+              "trajectory_coverage",
+              "teaching_quality",
+              "privacy_redaction"
+            ],
+            "status": "pass"
+          },
+          "schema_version": "agent-eval-report-v1",
+          "status": "pass"
+        },
+        "status": "pass"
       }
     ],
     "quality_score": 0.867,
@@ -329,5 +370,5 @@
     "trajectory_coverage": 1.0
   },
   "status": "pass",
-  "version": "v0.2.27-alpha"
+  "version": "v0.2.29-alpha"
 }

@@ -54,6 +54,9 @@ PLATFORM_REQUIREMENTS = {
 
 REQUIRED_EXPORT_EVIDENCE = [
     "agent_audit.status == verified",
+    "agent_eval_policy.schema_version == agent-eval-policy-v1",
+    "agent_eval_report.schema_version == agent-eval-report-v1",
+    "agent_eval_report.native_fast_gate.status == pass",
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
     "enrichment_artifact.schema_version == learning-enrichment-artifact-v1",
     "obsidian_export.schema_version == obsidian-markdown-export-v1",

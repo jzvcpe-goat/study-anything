@@ -13,7 +13,11 @@ from pydantic import BaseModel, Field
 
 from study_anything import __version__
 from study_anything.core.agent_audit import build_agent_audit
-from study_anything.core.agent_eval import build_agent_eval_artifact
+from study_anything.core.agent_eval import (
+    agent_eval_policy,
+    build_agent_eval_artifact,
+    build_agent_eval_report,
+)
 from study_anything.core.agent_registry import (
     AgentCapability,
     AgentRegistry,
@@ -444,6 +448,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/evals/quality/cases")
     def get_quality_eval_cases() -> dict[str, object]:
         return quality_eval_case_export()
+
+    @app.get("/v1/evals/policy")
+    def get_agent_eval_policy() -> dict[str, object]:
+        return agent_eval_policy()
 
     @app.get("/v1/evals/retrieval/cases")
     def get_retrieval_eval_cases() -> dict[str, object]:
@@ -1233,6 +1241,46 @@ def create_app() -> FastAPI:
             state,
             agent_audit=audit,
             agent_eval_artifact=artifact,
+        )
+
+    @app.get("/v1/sessions/{session_id}/agent-eval/report")
+    def get_agent_eval_report(session_id: str) -> dict[str, object]:
+        try:
+            state = store.get(session_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Session not found") from exc
+        audit = build_agent_audit(
+            state,
+            agent_status=agent_registry.status(state.user_id),
+        )
+        artifact = build_agent_eval_artifact(audit)
+        quality = build_agent_quality_eval(
+            state,
+            agent_audit=audit,
+            agent_eval_artifact=artifact,
+        )
+        export_status = {
+            "obsidian_ready": state.stage == "completed"
+            and bool(state.source and (state.scribe_log or state.insights)),
+            "learning_package_ready": state.stage == "completed"
+            and bool(state.source and state.quiz_items and state.grading_results),
+            "second_brain_ready": state.stage == "completed"
+            and bool(state.source and state.mastery and (state.insights or state.scribe_log)),
+            "privacy": {
+                "raw_source_text_included": False,
+                "raw_enrichment_text_included": False,
+                "learner_answers_included": False,
+                "grading_feedback_included": False,
+                "generated_insights_included": False,
+                "agent_metadata_included": False,
+                "secrets_included": False,
+            },
+        }
+        return build_agent_eval_report(
+            agent_audit=audit,
+            agent_eval_artifact=artifact,
+            quality_eval=quality,
+            export_status=export_status,
         )
 
     @app.get("/v1/sessions/{session_id}/exports/obsidian")

@@ -66,7 +66,7 @@ python3 scripts/verify_clean_clone_adoption.py --repo .
 ```
 
 This checks Skill Mode, the OpenAI-compatible gateway dry-run, teaching layers, quiz, grading,
-mastery, `agent-audit`, and `agent-eval/artifact`. See `docs/adoption.md` for Promptfoo, Kimi,
+mastery, `agent-audit`, `agent-eval/artifact`, and `agent-eval/report`. See `docs/adoption.md` for Promptfoo, Kimi,
 Codex, WorkBuddy, diagnostics, and published-image fallback paths.
 
 ## Docker Self-Host
@@ -98,12 +98,14 @@ Open:
 - Recovery status: http://localhost:8000/v1/recovery/status
 - Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
+- Agent eval policy: http://localhost:8000/v1/evals/policy
 - Agent eval artifact: `GET /v1/sessions/{session_id}/agent-eval/artifact`
+- Agent eval report: `GET /v1/sessions/{session_id}/agent-eval/report`
 - Langfuse: http://localhost:3000
 
 ## Published Images
 
-Use the multi-architecture `v0.2.28-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.29-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -116,7 +118,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.29-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` after the API is
@@ -148,7 +150,9 @@ Then replace dry-run mode with your own gateway, model, credentials, tools, and 
 ## Agent Eval
 
 Study Anything now emits a redacted Agent eval artifact that can be consumed by mature open-source
-eval tools instead of relying on a small homegrown judge. The foundation targets Promptfoo for
+eval tools instead of relying on a small homegrown judge. It also emits `agent-eval-policy-v1` and
+`agent-eval-report-v1` so platform Agents can prove the Study Anything Agent workflow actually ran.
+The foundation targets Promptfoo for
 HTTP/CI contract gates, DeepEval for Python task-completion and quality metrics, LangChain AgentEvals
 for trajectory matching, and Ragas-style retrieval/context grounding.
 
@@ -157,6 +161,7 @@ Against a running API:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 .venv/bin/python scripts/verify_agent_eval_assets.py
+API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool report --create-session --required
 ```
 
 When Node/npm package installation is allowed, run the Promptfoo adapter directly through the wrapper:
@@ -244,7 +249,7 @@ skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For gener
 see `docs/skill-mode.md`.
 
 For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
-Platform integrations should return `agent-audit`, `agent-eval`, `agent-quality-eval`,
+Platform integrations should return `agent-audit`, `agent-eval`, `agent-eval-report`, `agent-quality-eval`,
 `retrieval-quality-eval`, `learning-enrichment-artifact-v1`, Obsidian, and `learning-package-v1` evidence after completed learning and
 retrieval-backed loops. Importer integrations should first validate `learning-context-package-v1`.
 

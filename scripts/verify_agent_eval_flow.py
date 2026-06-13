@@ -176,7 +176,13 @@ def main() -> None:
     if quality.get("status") != "pass":
         raise RuntimeError(f"Quality eval did not pass: {quality}")
 
-    serialized = json.dumps(artifact, ensure_ascii=False)
+    report = request(f"/v1/sessions/{session_id}/agent-eval/report")
+    if report.get("schema_version") != "agent-eval-report-v1":
+        raise RuntimeError(f"Unexpected Agent eval report schema: {report}")
+    if (report.get("native_fast_gate") or {}).get("status") != "pass":
+        raise RuntimeError(f"Agent eval report native gate failed: {report}")
+
+    serialized = json.dumps({"artifact": artifact, "report": report}, ensure_ascii=False)
     forbidden_fragments = [
         "Private Agent Eval Smoke",
         "Private source text",
@@ -200,6 +206,8 @@ def main() -> None:
                 "agent_audit_status": audit["status"],
                 "quality_schema": quality["schema_version"],
                 "quality_status": quality["status"],
+                "eval_report_schema": report["schema_version"],
+                "eval_report_status": report["status"],
                 "used_external_agent": artifact["used_external_agent"],
                 "used_fake_agent": artifact["used_fake_agent"],
                 "adapter_ids": sorted(adapter_ids),

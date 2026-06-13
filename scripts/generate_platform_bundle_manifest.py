@@ -192,6 +192,16 @@ FILES: list[tuple[str, str, str]] = [
         "Committed fast native Agent eval regression baseline.",
     ),
     (
+        "evals/fixtures/fake-agent-learning-loop.json",
+        "eval_fixture",
+        "Fake deterministic Agent eval fixture.",
+    ),
+    (
+        "evals/fixtures/mock-http-agent-learning-loop.json",
+        "eval_fixture",
+        "Mock HTTP/user-owned Agent eval fixture.",
+    ),
+    (
         "docs/adoption.md",
         "docs",
         "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
@@ -257,9 +267,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.28-alpha.md",
+        "docs/release-notes/v0.2.29-alpha.md",
         "docs",
-        "Release notes for the deployment and first-run hardening release.",
+        "Release notes for the Agent eval maturity release.",
     ),
     (
         "docs/plugins.md",
@@ -361,6 +371,10 @@ def build_manifest() -> dict[str, object]:
                 "python3 scripts/verify_platform_ecosystem_eval_flow.py"
             ),
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+            (
+                "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
+                "--tool report --create-session --required"
+            ),
             (
                 "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py "
                 "--tool deepeval --create-session --allow-native-quality-fallback"

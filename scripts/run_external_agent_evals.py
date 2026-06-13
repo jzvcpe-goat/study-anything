@@ -298,11 +298,75 @@ def run_retrieval_eval(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def run_agent_eval_report(args: argparse.Namespace) -> dict[str, Any]:
+    session_id = args.session_id
+    if args.create_session or not session_id:
+        session_id = create_eval_session(args.api_base, args.timeout_seconds)
+    path = f"{args.api_base.rstrip('/')}/v1/sessions/{session_id}/agent-eval/report"
+    completed = run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import json,sys,urllib.request;"
+                "u=sys.argv[1];"
+                "print(urllib.request.urlopen(u, timeout=int(sys.argv[2])).read().decode())"
+            ),
+            path,
+            str(args.timeout_seconds),
+        ],
+        timeout_seconds=args.timeout_seconds,
+    )
+    if completed.returncode != 0:
+        return {
+            "status": "failed",
+            "tool": "report",
+            "reason": "Agent eval report endpoint returned a non-zero exit code.",
+            "returncode": completed.returncode,
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+        }
+    try:
+        report = json.loads(completed.stdout.strip().splitlines()[-1])
+    except (IndexError, json.JSONDecodeError) as exc:
+        return {
+            "status": "failed",
+            "tool": "report",
+            "reason": f"Could not parse Agent eval report output: {exc}",
+            "session_id": session_id,
+            "stdout": completed.stdout,
+            "stderr": completed.stderr,
+        }
+    if report.get("schema_version") != "agent-eval-report-v1":
+        return {
+            "status": "failed",
+            "tool": "report",
+            "reason": f"Unexpected Agent eval report schema: {report.get('schema_version')}",
+            "session_id": session_id,
+            "report": report,
+        }
+    native_gate = report.get("native_fast_gate") or {}
+    report_status = str(report.get("status") or "")
+    return {
+        "status": "ok"
+        if native_gate.get("status") == "pass" and report_status.startswith("pass")
+        else "failed",
+        "tool": "report",
+        "framework": "study-anything-native-maturity-report",
+        "session_id": session_id,
+        "report_status": report.get("status"),
+        "schema_version": report.get("schema_version"),
+        "native_fast_gate": native_gate,
+        "privacy": report.get("privacy"),
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tool",
-        choices=["promptfoo", "deepeval", "retrieval"],
+        choices=["promptfoo", "deepeval", "retrieval", "report"],
         default="promptfoo",
     )
     parser.add_argument("--api-base", default=DEFAULT_API_BASE)
@@ -348,8 +412,10 @@ def main() -> None:
         result = run_promptfoo(args)
     elif args.tool == "deepeval":
         result = run_deepeval(args)
-    else:
+    elif args.tool == "retrieval":
         result = run_retrieval_eval(args)
+    else:
+        result = run_agent_eval_report(args)
     print(json.dumps(result, ensure_ascii=False))
     if result["status"] == "failed" or (args.required and result["status"] != "ok"):
         raise SystemExit(1)

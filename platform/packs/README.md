@@ -14,11 +14,13 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
+- `evals/fixtures/fake-agent-learning-loop.json`
+- `evals/fixtures/mock-http-agent-learning-loop.json`
 
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.28 packs add deployment and first-run hardening on top of Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
+v0.2.29 packs add Agent Eval maturity on top of Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
 eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
 retrieval, and ecosystem eval capabilities:
 
@@ -30,6 +32,8 @@ retrieval, and ecosystem eval capabilities:
   gathered by the platform;
 - redacted Markdown+HTML enrichment micro-lessons for platform-agent teaching surfaces;
 - quality eval evidence that separates invocation proof, schema validity, and teaching-quality gates;
+- `agent-eval-policy-v1` and `agent-eval-report-v1` evidence that platform Agents can prove the
+  Study Anything Agent workflow actually ran and passed native release gates;
 - retrieval/context quality eval evidence for source binding, snippet minimality, query relevance, and
   Learning Context Package handoff;
 - Obsidian-compatible markdown export for second-brain workflows;

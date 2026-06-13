@@ -61,6 +61,7 @@ Against a running API, verify the imported tool surface and redacted evidence:
 
 ```bash
 curl http://127.0.0.1:8000/v1/deployment/guide
+curl http://127.0.0.1:8000/v1/evals/policy
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
@@ -69,6 +70,8 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool report --create-session --required
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
@@ -93,9 +96,11 @@ python3 scripts/diagnose_adoption.py
 After every completed learning loop, the workspace Agent should fetch:
 
 ```text
+GET /v1/evals/policy
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
+GET /v1/sessions/{session_id}/agent-eval/report
 GET /v1/sessions/{session_id}/exports/enrichment-artifact
 GET /v1/sessions/{session_id}/exports/obsidian
 GET /v1/sessions/{session_id}/exports/learning-package

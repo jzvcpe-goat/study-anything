@@ -35,6 +35,12 @@ printf "Running deterministic Skill Mode CLI flow ...\n"
 printf "Verifying Agent eval artifact flow ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/verify_agent_eval_flow.py
 
+printf "Verifying Agent eval maturity report ...\n"
+API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/run_external_agent_evals.py \
+  --tool report \
+  --create-session \
+  --required
+
 printf "Verifying Agent quality eval runner ...\n"
 API_BASE="$STUDY_ANYTHING_API_BASE" "$python_bin" scripts/run_external_agent_evals.py \
   --tool deepeval \

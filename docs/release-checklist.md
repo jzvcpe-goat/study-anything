@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.2.28-alpha
+## v0.2.29-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -15,6 +15,7 @@
 - [ ] `.venv/bin/python scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_baseline.py --check`
+- [ ] `API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool report --create-session --required`
 - [ ] `API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback`
 - [ ] `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool retrieval --create-session --required`
 - [ ] `.venv/bin/python scripts/verify_clean_clone_adoption.py --repo .`
@@ -29,6 +30,8 @@
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py` and verify `GET /v1/sessions/{session_id}/agent-eval/artifact` emits a redacted `agent-eval-artifact-v1` bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/quality` returns `schema_version=agent-quality-eval-v1` and `status=pass` after overview, glossary, quiz, grading, and synthesis.
+- [ ] Verify `GET /v1/evals/policy` returns `schema_version=agent-eval-policy-v1`, four optional external adapters, failure classes, and no model keys.
+- [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/report` returns `schema_version=agent-eval-report-v1`, `native_fast_gate.status=pass`, and no source text, answers, endpoints, or secrets.
 - [ ] Verify `GET|POST /v1/sessions/{session_id}/retrieval/eval` returns `schema_version=retrieval-quality-eval-v1`, `status=pass`, and no retrieval snippets or raw source text.
 - [ ] Verify `GET /v1/sessions/{session_id}/exports/enrichment-artifact` returns `schema_version=learning-enrichment-artifact-v1`, Markdown+HTML content, provenance, excerpt hashes, and no raw source or enrichment text.
 - [ ] Verify `GET /v1/sessions/{session_id}/exports/obsidian` returns `schema_version=obsidian-markdown-export-v1` without raw source text, raw enrichment text, Agent endpoints, or secrets.
@@ -51,8 +54,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.28-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.2.29-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.2.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.29-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -76,4 +79,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.2.28-alpha`.
+- [ ] Tag `v0.2.29-alpha`.

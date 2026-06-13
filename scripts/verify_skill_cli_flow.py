@@ -38,6 +38,10 @@ def main() -> None:
     if health.get("status") != "ok":
         raise RuntimeError(f"API health is not ok: {health}")
 
+    eval_policy: Dict[str, Any] = parsed("eval-policy")
+    if eval_policy.get("schema_version") != "agent-eval-policy-v1":
+        raise RuntimeError(f"Unexpected Agent eval policy schema: {eval_policy}")
+
     completed: Dict[str, Any] = parsed("demo", "--user-id", "skill-smoke-user")
     if completed.get("stage") != "completed":
         raise RuntimeError(f"Expected completed CLI demo, got: {completed}")
@@ -70,6 +74,10 @@ def main() -> None:
     if not required_gates or any(gate.get("status") != "pass" for gate in required_gates):
         raise RuntimeError(f"Agent eval required gates failed: {agent_eval}")
 
+    agent_eval_report: Dict[str, Any] = parsed("agent-eval-report", session_id)
+    if agent_eval_report.get("schema_version") != "agent-eval-report-v1":
+        raise RuntimeError(f"Unexpected Agent eval report schema: {agent_eval_report}")
+
     refused = run_cli("discard", session_id, expect_ok=False)
     if refused.returncode == 0 or "explicit approval" not in refused.stderr:
         raise RuntimeError("Discard should require explicit approval.")
@@ -88,6 +96,8 @@ def main() -> None:
                 "event_count": len(events),
                 "agent_audit_status": agent_audit["status"],
                 "agent_eval_schema": agent_eval["schema_version"],
+                "agent_eval_policy_schema": eval_policy["schema_version"],
+                "agent_eval_report_schema": agent_eval_report["schema_version"],
             },
             ensure_ascii=False,
         )
