@@ -167,11 +167,16 @@ Before connecting Kimi, OpenAI-compatible providers, or another private Agent ga
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
 The hardening verifier emits `agent-gateway-hardening-verification-v1` and proves unsafe endpoint
 secrets, secret metadata, malformed Agent output, unsupported tasks, and raw task payload leakage are
 blocked or redacted.
+The adapter hardening verifier emits `external-agent-adapter-hardening-v1` and proves the real
+external Agent eval path is separated from fake demo evidence while malformed JSON, invalid status,
+missing content, invalid score/confidence, timeouts, missing citations, and missing capabilities are
+diagnosed without leaking source text, answers, endpoints, or model keys.
 
 ## Adoption Telemetry And PMF Readiness
 
@@ -194,7 +199,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.7-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.8-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -202,12 +207,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.7-alpha \
+  --tag v0.3.8-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.7-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.8-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

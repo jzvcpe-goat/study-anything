@@ -127,6 +127,11 @@ FILES: list[tuple[str, str, str]] = [
         "User-owned Agent gateway hardening and privacy verifier.",
     ),
     (
+        "scripts/verify_external_agent_adapter_hardening.py",
+        "verification",
+        "External Agent eval adapter hardening and bad-output diagnostics verifier.",
+    ),
+    (
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "verification",
         "NotebookLM, Obsidian, and Learning Enrichment bridge privacy verifier.",
@@ -337,7 +342,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.7-alpha.md",
+        "docs/release-notes/v0.3.8-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

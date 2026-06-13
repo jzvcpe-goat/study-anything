@@ -14,11 +14,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 72,
+    "file_count": 73,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.7-alpha"
+    "version": "v0.3.8-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -36,6 +36,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -101,6 +102,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -153,6 +155,7 @@
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -164,6 +167,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -232,6 +236,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -291,5 +296,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.7-alpha"
+  "version": "v0.3.8-alpha"
 }

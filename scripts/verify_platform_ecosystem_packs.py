@@ -42,12 +42,14 @@ REQUIRED_ACCEPTANCE = {
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
+    "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
+    "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
     "verify_security_recovery_hardening.py",
     "verify_platform_submission_dry_run.py",

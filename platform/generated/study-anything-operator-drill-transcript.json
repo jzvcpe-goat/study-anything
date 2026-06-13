@@ -41,6 +41,7 @@
     "ecosystem_submission_schema": "ecosystem-submission-v1",
     "ecosystem_submission_verification_schema": "ecosystem-submission-verification-v1",
     "enrichment_artifact_schema": "learning-enrichment-artifact-v1",
+    "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",
     "learning_package_schema": "learning-package-v1",
     "notebooklm_fixture": "fixtures/notebooklm/notebooklm-style-context-package.json",
     "notebooklm_obsidian_bridge_hardening_schema": "notebooklm-obsidian-bridge-hardening-v1",
@@ -139,15 +140,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 72,
+    "file_count": 73,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.7-alpha"
+    "version": "v0.3.8-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 31,
+      "acceptance_evidence_count": 32,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -164,6 +165,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -184,7 +186,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 31,
+      "acceptance_evidence_count": 32,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -205,6 +207,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
@@ -225,7 +228,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 31,
+      "acceptance_evidence_count": 32,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -243,6 +246,7 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",

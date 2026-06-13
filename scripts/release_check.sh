@@ -40,6 +40,7 @@ fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/verify_agent_gateway_hardening.py
+"$python_bin" scripts/verify_external_agent_adapter_hardening.py
 "$python_bin" scripts/verify_notebooklm_obsidian_bridge_hardening.py
 "$python_bin" scripts/verify_plugin_quarantine.py
 "$python_bin" scripts/verify_security_recovery_hardening.py

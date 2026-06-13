@@ -23,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.7-alpha")
+        self.assertEqual(payload["version"], "v0.3.8-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertIn("kimi-compatible", payload["platforms"])
@@ -38,7 +38,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.7-alpha")
+        self.assertEqual(submission["version"], "v0.3.8-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -57,8 +57,10 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         self.assertIs(submission["adoption_telemetry"]["aggregate_only"], True)
         self.assertIs(submission["adoption_telemetry"]["automatic_upload"], False)
         self.assertIn("platform/generated/study-anything-platform-submission-dry-run.json", submission["shared_assets"])
+        self.assertIn("scripts/verify_external_agent_adapter_hardening.py", submission["shared_assets"])
         commands = "\n".join(submission["acceptance"]["minimum_commands"])
         self.assertIn("verify_platform_submission_dry_run.py", commands)
+        self.assertIn("verify_external_agent_adapter_hardening.py", commands)
 
 
 class PlatformSubmissionDryRunTests(unittest.TestCase):
@@ -85,7 +87,7 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-submission-dry-run-v1")
-        self.assertEqual(report["version"], "v0.3.7-alpha")
+        self.assertEqual(report["version"], "v0.3.8-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["blocked_platforms"], [])
         self.assertFalse(report["privacy"]["real_model_keys_stored_by_study_anything"])
