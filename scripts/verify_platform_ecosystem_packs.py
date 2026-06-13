@@ -14,6 +14,7 @@ MANIFEST_PATH = ROOT / "platform" / "study-anything-platform-tools.json"
 PACKS_DIR = ROOT / "platform" / "packs"
 REQUIRED_PACKS = {"codex", "kimi", "workbuddy"}
 REQUIRED_ACCEPTANCE = {
+    "commercial_readiness.schema_version == commercial-readiness-v1",
     "agent_audit.status == verified",
     "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
     "all required native gates pass",
@@ -46,6 +47,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "run_external_agent_evals.py --tool retrieval",
 }
 REQUIRED_ADOPTION_COMMAND_FRAGMENTS = {
+    "verify_commercial_readiness.py",
     "verify_clean_clone_adoption.py",
     "diagnose_adoption.py",
 }
@@ -140,6 +142,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "learning package",
         "Plugin SDK",
         "deployment-guide-v1",
+        "commercial-readiness-v1",
         "raw source",
     )
     return pack

@@ -15,6 +15,7 @@ OPENAI_TOOLS_PATH = GENERATED_DIR / "study-anything-openai-tools.json"
 CATALOG_PATH = GENERATED_DIR / "study-anything-tool-catalog.md"
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
+    "study_anything_commercial_readiness",
     "study_anything_health",
     "study_anything_eval_policy",
     "study_anything_create_session",
@@ -136,6 +137,8 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("verify_platform_agent_tools.py", catalog)
         self.assertIn("study_anything_deployment_guide", catalog)
         self.assertIn("deployment-guide-v1", catalog)
+        self.assertIn("commercial-readiness-v1", catalog)
+        self.assertIn("study_anything_commercial_readiness", catalog)
         self.assertIn("agent-eval-policy-v1", catalog)
         self.assertIn("agent-eval-report-v1", catalog)
         self.assertIn("raw source text", catalog)

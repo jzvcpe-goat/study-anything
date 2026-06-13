@@ -13,6 +13,18 @@
   },
   {
     "function": {
+      "description": "Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits. Method: GET /v1/commercial/readiness.",
+      "name": "study_anything_commercial_readiness",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Check that the local Study Anything API is reachable before starting a learning loop. Method: GET /v1/health.",
       "name": "study_anything_health",
       "parameters": {

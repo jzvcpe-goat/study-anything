@@ -11,6 +11,7 @@ Use the repository CLI from the Study Anything project root. First ensure the lo
 ./scripts/run_skill_mode_demo.sh
 ./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
+python3 scripts/study_anything_cli.py commercial-readiness
 ```
 
 Use `run_skill_mode_demo.sh` first when operating through a shell tool that may not preserve
@@ -141,6 +142,7 @@ python3 scripts/study_anything_cli.py resume SESSION_ID
 python3 scripts/study_anything_cli.py mastery SESSION_ID
 python3 scripts/study_anything_cli.py events SESSION_ID
 python3 scripts/study_anything_cli.py eval-policy
+python3 scripts/study_anything_cli.py commercial-readiness
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval-report SESSION_ID
@@ -155,6 +157,8 @@ Use `agent-audit` after every real learning loop when the user needs proof that 
 the required learning tasks. Use `agent-eval` when another platform or CI job needs a redacted artifact
 for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
 Use `eval-policy` to inspect release-gate rules and optional external adapter policy. Use
+`commercial-readiness` to inspect the OSS/local-first launch boundary, hosted-service contracts, and
+commercial non-goals before describing what can be sold or deployed. Use
 `agent-eval-report` when another platform needs a per-session maturity report with
 `native_fast_gate.status`. Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
 `package-export` for platform-agent, NotebookLM-style, or local archive handoff.

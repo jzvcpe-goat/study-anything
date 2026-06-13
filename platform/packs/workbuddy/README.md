@@ -47,6 +47,7 @@ The workspace Agent should own:
 Study Anything should own:
 
 - deployment-guide-v1 launch guidance and first-run diagnostic boundaries
+- commercial-readiness-v1 launch boundaries, hosted-service contracts, and local-first invariants
 - source-bound learning state
 - Learning Context Package validation and import
 - Plugin SDK contract, capability index, and local package validation
@@ -61,7 +62,9 @@ Against a running API, verify the imported tool surface and redacted evidence:
 
 ```bash
 curl http://127.0.0.1:8000/v1/deployment/guide
+curl http://127.0.0.1:8000/v1/commercial/readiness
 curl http://127.0.0.1:8000/v1/evals/policy
+python3 scripts/verify_commercial_readiness.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
@@ -97,6 +100,7 @@ After every completed learning loop, the workspace Agent should fetch:
 
 ```text
 GET /v1/evals/policy
+GET /v1/commercial/readiness
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
@@ -107,12 +111,14 @@ GET /v1/sessions/{session_id}/exports/learning-package
 GET /v1/sessions/{session_id}/exports/second-brain-handoff
 ```
 
-The enrichment artifact is a redacted Markdown+HTML micro-lesson for the workspace conversation.
-The Obsidian Markdown export is for the user's second-brain workflow. The learning package is for
-platform-agent handoff, NotebookLM-style bridges, or local archives. The second-brain handoff is the
-preferred shared workspace export because it excludes learner answers and grading feedback. The
-shared run summary should include only compact mastery and redacted evidence, not raw source prose or
-learner answers.
+The commercial readiness response is `commercial-readiness-v1`, which marks the local OSS and
+platform-Agent launch path ready while keeping hosted paid services, billing, SSO, remote accounts,
+and standalone app work out of scope. The enrichment artifact is a redacted Markdown+HTML
+micro-lesson for the workspace conversation. The Obsidian Markdown export is for the user's
+second-brain workflow. The learning package is for platform-agent handoff, NotebookLM-style bridges,
+or local archives. The second-brain handoff is the preferred shared workspace export because it
+excludes learner answers and grading feedback. The shared run summary should include only compact
+mastery and redacted evidence, not raw source prose or learner answers.
 
 Use `POST /v1/context-packages/validate`, `POST /v1/sessions/from-context-package`, and
 `POST /v1/sessions/{session_id}/context-package` when WorkBuddy has collected browser pages,

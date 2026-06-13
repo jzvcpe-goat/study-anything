@@ -283,16 +283,25 @@
 - Keep Promptfoo, DeepEval, LangChain AgentEvals, and Ragas optional unless an operator explicitly
   requires those external gates in their own environment.
 
+## v0.3.0-alpha
+
+- Add `commercial-readiness-v1`, the machine-readable OSS/local-first commercial readiness contract
+  for platform Agents, release checks, and external operators.
+- Expose `GET /v1/commercial/readiness` and `study_anything commercial-readiness` so Kimi, Codex,
+  WorkBuddy, or a local Agent can answer what is ready for GitHub launch and what remains future
+  hosted-service work.
+- Keep hosted Sync, Publish, Teams, Catalyst billing, remote accounts, SSO, and standalone app
+  commercialization as `contract_only` or `not_ready` while preserving the free local core.
+- Add commercial readiness verification to release checks, generated platform assets, adoption pack,
+  and platform tool validation.
+
 ## v0.3 Next
 
-- Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.
-- Add live NotebookLM-style adapters only when stable API or reliable platform-agent operation paths
-  exist.
-- Expand Agent quality eval suites for LangChain AgentEvals, Ragas, retrieval quality, and
-  judge-model scoring.
-- Hosted-account design for Sync/Teams on top of the local workspace and encrypted package boundaries.
-- E2E Playwright tests.
-- External Agent embeddings for retrieval and retrieval quality evals.
+- `v0.3.1`: platform-specific ecosystem submission packs for Kimi/Codex/WorkBuddy-style wrappers.
+- `v0.3.2`: adoption telemetry, local PMF readout, and maintainer feedback workflow.
+- `v0.3.3`: user-owned Agent gateway hardening, local security posture, and timeout/sandbox guidance.
+- `v0.3.4`: NotebookLM, Obsidian, and Learning Enrichment bridge hardening.
+- Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track
 

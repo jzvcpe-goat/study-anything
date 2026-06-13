@@ -1,5 +1,20 @@
 # API Surface
 
+## System And Commercial Readiness
+
+- `GET /v1/health`
+- `GET /v1/system/status`
+- `GET /v1/deployment/guide`
+- `GET /v1/commercial/readiness`
+
+`GET /v1/commercial/readiness` returns `commercial-readiness-v1`: the machine-readable answer to
+what can be launched now and what remains contract-only. The current alpha is ready for GitHub OSS,
+self-host, Skill Mode, and platform-Agent distribution. Hosted Sync, Publish, Teams, Catalyst billing,
+SSO, remote accounts, and standalone app commercialization are explicitly not implemented.
+
+The report is metadata-only. It must not include raw source text, learner answers, Agent endpoints,
+model secrets, billing credentials, or raw contact data.
+
 ## Agents
 
 - `GET /v1/agents/status`

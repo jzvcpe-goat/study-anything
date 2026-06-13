@@ -38,6 +38,12 @@ def main() -> None:
     if health.get("status") != "ok":
         raise RuntimeError(f"API health is not ok: {health}")
 
+    commercial_readiness: Dict[str, Any] = parsed("commercial-readiness")
+    if commercial_readiness.get("schema_version") != "commercial-readiness-v1":
+        raise RuntimeError(f"Unexpected commercial readiness schema: {commercial_readiness}")
+    if commercial_readiness.get("launch_assessment", {}).get("hosted_paid_services") != "not_ready":
+        raise RuntimeError(f"Hosted paid services should remain not ready: {commercial_readiness}")
+
     eval_policy: Dict[str, Any] = parsed("eval-policy")
     if eval_policy.get("schema_version") != "agent-eval-policy-v1":
         raise RuntimeError(f"Unexpected Agent eval policy schema: {eval_policy}")
@@ -98,6 +104,7 @@ def main() -> None:
                 "agent_eval_schema": agent_eval["schema_version"],
                 "agent_eval_policy_schema": eval_policy["schema_version"],
                 "agent_eval_report_schema": agent_eval_report["schema_version"],
+                "commercial_readiness_schema": commercial_readiness["schema_version"],
             },
             ensure_ascii=False,
         )

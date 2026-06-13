@@ -20,6 +20,7 @@ PACKS_DIR = ROOT / "platform" / "packs"
 API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://127.0.0.1:8000")).rstrip("/")
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
+    "study_anything_commercial_readiness",
     "study_anything_health",
     "study_anything_eval_policy",
     "study_anything_create_session",
@@ -197,6 +198,43 @@ def main() -> None:
     )
     if (deployment.get("privacy") or {}).get("real_model_keys_stored_by_study_anything") is not False:
         raise VerificationError(f"Deployment guide must not store model keys: {deployment}")
+
+    commercial = call_tool(tools, "study_anything_commercial_readiness")
+    if commercial.get("schema_version") != "commercial-readiness-v1":
+        raise VerificationError(f"Commercial readiness returned invalid schema: {commercial}")
+    if commercial.get("status") != "architecture_ready_for_oss_platform_alpha":
+        raise VerificationError(f"Commercial readiness returned invalid status: {commercial}")
+    assessment = commercial.get("launch_assessment") or {}
+    if assessment.get("github_oss_launch") != "ready":
+        raise VerificationError(f"GitHub OSS launch should be ready: {commercial}")
+    if assessment.get("platform_agent_distribution") != "ready":
+        raise VerificationError(f"Platform Agent distribution should be ready: {commercial}")
+    if assessment.get("hosted_paid_services") != "not_ready":
+        raise VerificationError(f"Hosted paid services must remain not ready: {commercial}")
+    invariant_failures = [
+        item
+        for item in commercial.get("local_core_invariants", [])
+        if isinstance(item, dict) and item.get("status") != "pass"
+    ]
+    if invariant_failures:
+        raise VerificationError(f"Commercial readiness local invariants failed: {invariant_failures}")
+    hosted_statuses = {
+        item.get("service_id"): item.get("status")
+        for item in commercial.get("hosted_service_contracts", [])
+        if isinstance(item, dict)
+    }
+    if hosted_statuses != {
+        "neural_sync": "contract_only",
+        "neural_publish": "contract_only",
+        "neural_teams": "contract_only",
+        "catalyst": "contract_only",
+    }:
+        raise VerificationError(f"Hosted service contracts are unsafe: {commercial}")
+    commercial_privacy = commercial.get("privacy") or {}
+    if commercial_privacy.get("real_model_keys_stored_by_study_anything") is not False:
+        raise VerificationError(f"Commercial readiness must not store model keys: {commercial}")
+    if commercial_privacy.get("billing_required_for_local_core") is not False:
+        raise VerificationError(f"Commercial readiness must not require billing locally: {commercial}")
 
     eval_policy = call_tool(tools, "study_anything_eval_policy")
     if eval_policy.get("schema_version") != "agent-eval-policy-v1":
@@ -672,6 +710,7 @@ def main() -> None:
                 "api_base": API_BASE,
                 "session_id": session_id,
                 "agent_audit_status": audit["status"],
+                "commercial_readiness_schema": commercial["schema_version"],
                 "eval_schema": artifact["schema_version"],
                 "quality_schema": quality["schema_version"],
                 "eval_policy_schema": eval_policy["schema_version"],

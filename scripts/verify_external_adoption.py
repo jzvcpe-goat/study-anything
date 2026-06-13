@@ -204,11 +204,20 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/platform-agent-integrations.md",
                 "docs/second-brain-handoff.md",
                 "docs/notebooklm-bridge.md",
+                "docs/commercial-readiness.md",
                 "docs/plugin-sdk.md",
                 "docs/plugin-registry.md",
             ]
         )
-    required_terms = ["Kimi", "Codex", "WorkBuddy", "NotebookLM", "Obsidian", "deployment-guide-v1"]
+    required_terms = [
+        "Kimi",
+        "Codex",
+        "WorkBuddy",
+        "NotebookLM",
+        "Obsidian",
+        "deployment-guide-v1",
+        "commercial-readiness-v1",
+    ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
         raise AdoptionProofError(f"Adoption pack operator docs missing terms: {missing_terms}")
@@ -360,6 +369,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "commercial_readiness",
+                [python_bin, "scripts/verify_commercial_readiness.py", "--api-base", env["API_BASE"]],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -458,10 +472,19 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "tool_count": value.get("tool_count"),
             "manifest_schema": value.get("manifest_schema"),
             "agent_audit_status": value.get("agent_audit_status"),
+            "commercial_readiness_schema": value.get("commercial_readiness_schema"),
             "quality_schema": value.get("quality_schema"),
             "plugin_sdk_schema": value.get("plugin_sdk_schema"),
             "plugin_capability_index_schema": value.get("plugin_capability_index_schema"),
             "plugin_package_validation_schema": value.get("plugin_package_validation_schema"),
+        }
+    if label == "commercial_readiness":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "readiness_schema": value.get("readiness_schema"),
+            "readiness_status": value.get("readiness_status"),
+            "hosted_paid_services": value.get("hosted_paid_services"),
         }
     if label == "operator_drill":
         return {

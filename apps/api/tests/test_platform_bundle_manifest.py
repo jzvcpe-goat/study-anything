@@ -40,8 +40,10 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/doctor.sh", file_paths)
         self.assertIn("scripts/launch_self_host.sh", file_paths)
         self.assertIn("scripts/verify_published_image_launch.py", file_paths)
+        self.assertIn("scripts/verify_commercial_readiness.py", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
+        self.assertIn("docs/commercial-readiness.md", file_paths)
         self.assertIn("fixtures/notebooklm/notebooklm-style-context-package.json", file_paths)
         self.assertIn("skills/study-anything/SKILL.md", file_paths)
         for item in payload["files"]:

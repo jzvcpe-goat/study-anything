@@ -6,6 +6,62 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/v1/commercial/readiness": {
+      "get": {
+        "description": "Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits.",
+        "operationId": "study_anything_commercial_readiness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Study Anything tool response. See docs/api.md for endpoint-specific response details."
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Session or resource not found"
+          },
+          "409": {
+            "description": "Workflow state conflict"
+          },
+          "503": {
+            "description": "Optional dependency unavailable"
+          }
+        },
+        "summary": "Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits.",
+        "x-study-anything-output-requirements": [
+          "commercial-readiness-v1",
+          "status == architecture_ready_for_oss_platform_alpha",
+          "launch_assessment.github_oss_launch == ready",
+          "launch_assessment.platform_agent_distribution == ready",
+          "launch_assessment.hosted_paid_services == not_ready",
+          "all local_core_invariants status == pass",
+          "hosted_service_contracts include neural_sync, neural_publish, neural_teams, catalyst",
+          "hosted_service_contracts status == contract_only",
+          "privacy.real_model_keys_stored_by_study_anything == false",
+          "privacy.billing_required_for_local_core == false"
+        ],
+        "x-study-anything-privacy": {
+          "must_not_return": [
+            "source text",
+            "answers",
+            "agent endpoints",
+            "API keys",
+            "model secrets",
+            "billing credentials",
+            "raw contacts"
+          ],
+          "returns_private_learning_data": false
+        }
+      }
+    },
     "/v1/context-packages/validate": {
       "post": {
         "description": "Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.",
@@ -2201,6 +2257,7 @@
       "platform_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
       "promptfoo_clean_clone_command": "python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo",
       "required_after_learning_loop": [
+        "commercial_readiness.schema_version == commercial-readiness-v1",
         "agent_audit.status == verified",
         "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
         "all required native gates pass",
@@ -2238,7 +2295,8 @@
         "HITL state",
         "redacted agent audit",
         "redacted eval artifact",
-        "portable learning package"
+        "portable learning package",
+        "commercial readiness boundaries"
       ]
     },
     "schema_version": "study-anything-platform-tools-v1"

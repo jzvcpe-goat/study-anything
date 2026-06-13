@@ -22,7 +22,8 @@
       "HITL state",
       "redacted agent audit",
       "redacted eval artifact",
-      "portable learning package"
+      "portable learning package",
+      "commercial readiness boundaries"
     ],
     "must_not_log_or_share": [
       "raw source text",
@@ -36,6 +37,7 @@
   },
   "acceptance_evidence": {
     "required_after_learning_loop": [
+      "commercial_readiness.schema_version == commercial-readiness-v1",
       "agent_audit.status == verified",
       "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
       "all required native gates pass",
@@ -76,6 +78,41 @@
           "agent endpoint secrets",
           "raw source text",
           "learner answers"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_commercial_readiness",
+      "method": "GET",
+      "path_template": "/v1/commercial/readiness",
+      "description": "Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "commercial-readiness-v1",
+        "status == architecture_ready_for_oss_platform_alpha",
+        "launch_assessment.github_oss_launch == ready",
+        "launch_assessment.platform_agent_distribution == ready",
+        "launch_assessment.hosted_paid_services == not_ready",
+        "all local_core_invariants status == pass",
+        "hosted_service_contracts include neural_sync, neural_publish, neural_teams, catalyst",
+        "hosted_service_contracts status == contract_only",
+        "privacy.real_model_keys_stored_by_study_anything == false",
+        "privacy.billing_required_for_local_core == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "source text",
+          "answers",
+          "agent endpoints",
+          "API keys",
+          "model secrets",
+          "billing credentials",
+          "raw contacts"
         ]
       }
     },

@@ -20,12 +20,14 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.29 packs add Agent Eval maturity on top of Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
+v0.3.0 packs add commercial readiness boundaries on top of Agent Eval maturity, Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
 eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
 retrieval, and ecosystem eval capabilities:
 
 - `deployment-guide-v1` gives platform Agents a redacted, copyable launch guide for Skill Mode,
   Docker source builds, published GHCR images, diagnostics, and privacy boundaries.
+- `commercial-readiness-v1` tells platform Agents which launch paths are ready, which hosted
+  services remain contract-only, and why billing/SSO/standalone app work is outside this alpha.
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
 - enrichment input for web, document/PDF, video-slice, app-context, Markdown, and Obsidian excerpts
@@ -61,6 +63,7 @@ retrieval, and ecosystem eval capabilities:
 
 ```bash
 .venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
+.venv/bin/python scripts/verify_commercial_readiness.py
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
