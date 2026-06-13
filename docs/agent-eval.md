@@ -68,6 +68,26 @@ flags clean, and are external adapter datasets available?
 
 For framework-by-framework boundaries, see `docs/eval-frameworks.md`.
 
+## Agent Eval Marketplace Enforcement
+
+`agent-eval-marketplace-enforcement-v1` is the release and ecosystem-submission gate for proving
+that Study Anything eval evidence is actually enforceable by platform Agents. It keeps the native
+fast gate required for release, while Promptfoo, DeepEval, LangChain AgentEvals, and Ragas remain
+optional external judge integrations unless an operator explicitly runs them in required mode.
+
+```bash
+python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+```
+
+The verifier checks the external eval runner contract, timeout controls, malformed judge-output
+diagnostics, missing-runtime behavior, baseline regression, platform-pack evidence, adoption-pack
+inclusion, and privacy redaction. Optional external judge failures produce readable skipped evidence;
+required external judge failures must exit non-zero so a marketplace submission cannot silently pass.
+Judge/model credentials stay in the operator's Agent, CI environment, or external eval workspace.
+Study Anything records provider/task evidence only and does not store judge API keys, model keys,
+Agent endpoint secrets, raw source text, learner answers, or private browser/video context in the
+shared report.
+
 ## External Agent Adapter Hardening
 
 Before treating a user-owned HTTP Agent as production-ready, run:

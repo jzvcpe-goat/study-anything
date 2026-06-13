@@ -82,6 +82,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
     "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
+    "agent_eval_marketplace_enforcement.schema_version == agent-eval-marketplace-enforcement-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
 ]
@@ -315,6 +316,11 @@ def operator_steps(platform_id: str, platform: dict[str, Any]) -> list[dict[str,
             "acceptance": "learning-enrichment-bridge-verification-v1 confirms all enrichment source types, HTML artifact structure, strict second-brain privacy, and platform pack evidence.",
         },
         {
+            "step": "verify_agent_eval_marketplace_enforcement",
+            "operator_action": "Run python3 scripts/verify_agent_eval_marketplace_enforcement.py --check before claiming external judge or marketplace eval readiness.",
+            "acceptance": "agent-eval-marketplace-enforcement-v1 confirms native gates, optional external judges, required-mode failures, timeout diagnostics, baseline regression, and redacted platform evidence.",
+        },
+        {
             "step": "run_learning_loop",
             "operator_action": first_command,
             "acceptance": "The platform can create/import context, run learning, answer, and fetch mastery.",
@@ -390,6 +396,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
             "platform_manual_submission_rehearsal_schema": "platform-manual-submission-rehearsal-v1",
             "first_lesson_authoring_kit_schema": "first-run-lesson-authoring-kit-v1",
+            "agent_eval_marketplace_enforcement_schema": "agent-eval-marketplace-enforcement-v1",
             "plugin_ecosystem_adoption_kit_schema": "plugin-ecosystem-adoption-kit-v1",
             "deployment_hardening_schema": "deployment-hardening-verification-v1",
             "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",

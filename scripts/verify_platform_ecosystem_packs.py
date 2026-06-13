@@ -50,6 +50,7 @@ REQUIRED_ACCEPTANCE = {
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
     "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
+    "agent_eval_marketplace_enforcement.schema_version == agent-eval-marketplace-enforcement-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
 }
@@ -63,6 +64,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_platform_manual_submission_rehearsal.py",
     "verify_first_lesson_authoring_kit.py",
     "verify_external_eval_marketplace_harness.py",
+    "verify_agent_eval_marketplace_enforcement.py",
     "verify_plugin_ecosystem_adoption_kit.py",
     "verify_deployment_hardening.py",
     "verify_importer_lesson_flow.py",

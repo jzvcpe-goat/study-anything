@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.14-alpha"
+RELEASE_VERSION = "v0.3.15-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -28,6 +28,7 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-external-eval-harness.json",
+    "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -49,11 +50,13 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_external_eval_marketplace_harness.py",
+    "scripts/verify_agent_eval_marketplace_enforcement.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/verify_learning_enrichment_bridge.py",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
+    "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -230,6 +233,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-deployment-hardening.json",
         "scripts/verify_learning_enrichment_bridge.py",
         "platform/generated/study-anything-learning-enrichment-bridge.json",
+        "scripts/verify_agent_eval_marketplace_enforcement.py",
+        "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -244,6 +249,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove deployment hardening schema.")
     if "learning-enrichment-bridge-verification-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove learning enrichment bridge schema.")
+    if "agent-eval-marketplace-enforcement-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove Agent eval marketplace enforcement schema.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -273,6 +280,10 @@ def validate_existing_reports(root: Path) -> dict[str, Any]:
         "learning_enrichment_bridge": (
             "platform/generated/study-anything-learning-enrichment-bridge.json",
             "learning-enrichment-bridge-verification-v1",
+        ),
+        "agent_eval_marketplace_enforcement": (
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+            "agent-eval-marketplace-enforcement-v1",
         ),
     }
     for label, (relative_path, schema) in expected.items():
@@ -388,6 +399,26 @@ def operator_steps() -> list[dict[str, Any]]:
                 "docs/notebooklm-bridge.md",
             ],
             "failure_remediation": ["Run verify_notebooklm_obsidian_bridge_hardening.py to isolate privacy validation failures."],
+        },
+        {
+            "step_id": "verify_agent_eval_marketplace_enforcement",
+            "operator_action": "Verify native Agent eval gates and optional external judge contracts before submitting to an external platform or marketplace.",
+            "command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+            "expected_outputs": [
+                "agent-eval-marketplace-enforcement-v1",
+                "optional external judge runtimes fail as skipped evidence unless required",
+                "required judge mode exits non-zero when a configured judge is missing or invalid",
+            ],
+            "evidence_paths": [
+                "scripts/verify_agent_eval_marketplace_enforcement.py",
+                "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+                "docs/agent-eval.md",
+                "docs/eval-frameworks.md",
+            ],
+            "failure_remediation": [
+                "Keep judge and model credentials in the operator's Agent environment.",
+                "Use native fast gates as the baseline and rerun run_external_agent_evals.py with --required only after the external judge runtime is installed.",
+            ],
         },
         {
             "step_id": "collect_redacted_handoff",

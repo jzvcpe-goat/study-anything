@@ -36,6 +36,7 @@
     ]
   },
   "handoff_contract": {
+    "agent_eval_marketplace_enforcement_schema": "agent-eval-marketplace-enforcement-v1",
     "commercial_readiness_schema": "commercial-readiness-v1",
     "deployment_guide_schema": "deployment-guide-v1",
     "deployment_hardening_schema": "deployment-hardening-verification-v1",
@@ -88,6 +89,11 @@
         "step": "verify_learning_enrichment_bridge"
       },
       {
+        "acceptance": "agent-eval-marketplace-enforcement-v1 confirms native gates, optional external judges, required-mode failures, timeout diagnostics, baseline regression, and redacted platform evidence.",
+        "operator_action": "Run python3 scripts/verify_agent_eval_marketplace_enforcement.py --check before claiming external judge or marketplace eval readiness.",
+        "step": "verify_agent_eval_marketplace_enforcement"
+      },
+      {
         "acceptance": "The platform can create/import context, run learning, answer, and fetch mastery.",
         "operator_action": "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "step": "run_learning_loop"
@@ -123,6 +129,11 @@
         "acceptance": "learning-enrichment-bridge-verification-v1 confirms all enrichment source types, HTML artifact structure, strict second-brain privacy, and platform pack evidence.",
         "operator_action": "Run python3 scripts/verify_learning_enrichment_bridge.py --check before claiming NotebookLM, Obsidian, or HTML micro-lesson handoff works.",
         "step": "verify_learning_enrichment_bridge"
+      },
+      {
+        "acceptance": "agent-eval-marketplace-enforcement-v1 confirms native gates, optional external judges, required-mode failures, timeout diagnostics, baseline regression, and redacted platform evidence.",
+        "operator_action": "Run python3 scripts/verify_agent_eval_marketplace_enforcement.py --check before claiming external judge or marketplace eval readiness.",
+        "step": "verify_agent_eval_marketplace_enforcement"
       },
       {
         "acceptance": "The platform can create/import context, run learning, answer, and fetch mastery.",
@@ -162,6 +173,11 @@
         "step": "verify_learning_enrichment_bridge"
       },
       {
+        "acceptance": "agent-eval-marketplace-enforcement-v1 confirms native gates, optional external judges, required-mode failures, timeout diagnostics, baseline regression, and redacted platform evidence.",
+        "operator_action": "Run python3 scripts/verify_agent_eval_marketplace_enforcement.py --check before claiming external judge or marketplace eval readiness.",
+        "step": "verify_agent_eval_marketplace_enforcement"
+      },
+      {
         "acceptance": "The platform can create/import context, run learning, answer, and fetch mastery.",
         "operator_action": "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "step": "run_learning_loop"
@@ -175,15 +191,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 108,
+    "file_count": 110,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.14-alpha"
+    "version": "v0.3.15-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -209,6 +225,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -227,7 +244,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -257,6 +274,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -275,7 +293,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -302,6 +320,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",

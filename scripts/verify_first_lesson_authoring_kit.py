@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "first-run-lesson-authoring-kit-v1"
-RELEASE_VERSION = "v0.3.14-alpha"
+RELEASE_VERSION = "v0.3.15-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-first-lesson-authoring-kit.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 

@@ -40,6 +40,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "docs/plugin-registry.md",
     "docs/use-with-kimi.md",
     "docs/adoption-telemetry.md",
+    "docs/agent-eval.md",
     "docs/eval-frameworks.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
@@ -64,10 +65,14 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "scripts/verify_external_eval_marketplace_harness.py",
     "platform/generated/study-anything-external-eval-harness.json",
+    "scripts/verify_agent_eval_marketplace_enforcement.py",
+    "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "scripts/verify_deployment_hardening.py",
     "platform/generated/study-anything-deployment-hardening.json",
+    "scripts/verify_learning_enrichment_bridge.py",
+    "platform/generated/study-anything-learning-enrichment-bridge.json",
     "plugins/registry.json",
     "plugins/example-note-importer/plugin.json",
     "plugins/example-note-importer/plugin.py",
@@ -463,6 +468,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "agent_eval_marketplace_enforcement",
+                [python_bin, "scripts/verify_agent_eval_marketplace_enforcement.py"],
+                90,
+            ),
+            (
                 "plugin_ecosystem_adoption_kit",
                 [python_bin, "scripts/verify_plugin_ecosystem_adoption_kit.py"],
                 90,
@@ -470,6 +480,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "deployment_hardening",
                 [python_bin, "scripts/verify_deployment_hardening.py"],
+                90,
+            ),
+            (
+                "learning_enrichment_bridge",
+                [python_bin, "scripts/verify_learning_enrichment_bridge.py"],
                 90,
             ),
             (
@@ -656,6 +671,26 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
                 "report_is_redacted"
             ),
         }
+    if label == "agent_eval_marketplace_enforcement":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "adapter_ids": [
+                item.get("adapter_id")
+                for item in value.get("external_judge_contracts", [])
+                if isinstance(item, dict)
+            ],
+            "required_exit_nonzero": (
+                (value.get("runtime_diagnostics") or {})
+                .get("promptfoo_missing_runtime", {})
+                .get("required_exit_nonzero")
+            ),
+            "adoption_pack_included": (value.get("adoption_pack") or {}).get("included"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
     if label == "plugin_ecosystem_adoption_kit":
         return {
             "status": value.get("status"),
@@ -665,6 +700,21 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "registry_schema": (value.get("plugin_registry") or {}).get("schema_version"),
             "digest_verified_count": (value.get("plugin_registry") or {}).get("digest_verified_count"),
             "default_install_action": (value.get("trust_policy") or {}).get("default_install_action"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
+    if label == "learning_enrichment_bridge":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "source_types": sorted(
+                (value.get("context_contract") or {}).get("source_types", [])
+            ),
+            "html_article_schema": (
+                (value.get("exports") or {}).get("html_artifact", {}).get("article_schema")
+            ),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
             ),

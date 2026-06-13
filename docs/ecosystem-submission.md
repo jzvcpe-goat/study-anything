@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.14-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.15-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -36,6 +36,7 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -61,6 +62,11 @@ The external eval harness emits `external-eval-marketplace-harness-v1`, a
 marketplace-quality eval contract covering native release gates, optional
 Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeouts,
 sample eval cases, expected evidence, and redaction assertions.
+The Agent eval marketplace enforcement report emits
+`agent-eval-marketplace-enforcement-v1`, proving optional external judge
+adapters have explicit skip diagnostics, required judge mode fails closed, the
+baseline and harness have not drifted, and Study Anything stores no judge or
+model keys.
 The plugin ecosystem adoption kit emits `plugin-ecosystem-adoption-kit-v1`, a
 copy-ready trust contract covering bundled sample plugins, registry
 `sourceDigest` verification, quarantine-first install policy, platform-pack
@@ -100,6 +106,7 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
