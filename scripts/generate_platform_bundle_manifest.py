@@ -67,6 +67,11 @@ FILES: list[tuple[str, str, str]] = [
         "Marketplace-quality external Agent eval harness for platform submissions.",
     ),
     (
+        "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+        "generated_asset",
+        "Agent eval marketplace enforcement report for optional and required external judge gates.",
+    ),
+    (
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "generated_asset",
         "Copy-ready plugin ecosystem adoption kit for platform submissions.",
@@ -205,6 +210,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_external_eval_marketplace_harness.py",
         "verification",
         "Marketplace-quality external Agent eval harness verifier.",
+    ),
+    (
+        "scripts/verify_agent_eval_marketplace_enforcement.py",
+        "verification",
+        "Agent eval marketplace enforcement verifier.",
     ),
     (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
@@ -447,7 +457,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.14-alpha.md",
+        "docs/release-notes/v0.3.15-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -594,6 +604,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+            "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
             "python3 scripts/verify_deployment_hardening.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",

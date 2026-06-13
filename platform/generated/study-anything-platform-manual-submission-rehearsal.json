@@ -46,6 +46,11 @@
       "step_id": "verify_learning_enrichment_bridge"
     },
     {
+      "command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "verify_agent_eval_marketplace_enforcement"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -57,6 +62,7 @@
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "platform/ecosystem-submission.json",
+    "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
@@ -72,6 +78,7 @@
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
+    "scripts/verify_agent_eval_marketplace_enforcement.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -84,6 +91,10 @@
     "scripts/verify_plugin_ecosystem_adoption_kit.py"
   ],
   "existing_reports": {
+    "agent_eval_marketplace_enforcement": {
+      "schema_version": "agent-eval-marketplace-enforcement-v1",
+      "status": "pass"
+    },
     "deployment_hardening": {
       "schema_version": "deployment-hardening-verification-v1",
       "status": "pass"
@@ -141,6 +152,11 @@
     ],
     "unpack_adoption_pack": [
       "manifest schema study-anything-platform-adoption-pack-v1"
+    ],
+    "verify_agent_eval_marketplace_enforcement": [
+      "agent-eval-marketplace-enforcement-v1",
+      "optional external judge runtimes fail as skipped evidence unless required",
+      "required judge mode exits non-zero when a configured judge is missing or invalid"
     ],
     "verify_learning_enrichment_bridge": [
       "learning-enrichment-bridge-verification-v1",
@@ -319,6 +335,26 @@
       "step_id": "verify_learning_enrichment_bridge"
     },
     {
+      "command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "evidence_paths": [
+        "scripts/verify_agent_eval_marketplace_enforcement.py",
+        "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+        "docs/agent-eval.md",
+        "docs/eval-frameworks.md"
+      ],
+      "expected_outputs": [
+        "agent-eval-marketplace-enforcement-v1",
+        "optional external judge runtimes fail as skipped evidence unless required",
+        "required judge mode exits non-zero when a configured judge is missing or invalid"
+      ],
+      "failure_remediation": [
+        "Keep judge and model credentials in the operator's Agent environment.",
+        "Use native fast gates as the baseline and rerun run_external_agent_evals.py with --required only after the external judge runtime is installed."
+      ],
+      "operator_action": "Verify native Agent eval gates and optional external judge contracts before submitting to an external platform or marketplace.",
+      "step_id": "verify_agent_eval_marketplace_enforcement"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -338,7 +374,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -353,6 +389,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -381,7 +418,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -396,6 +433,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -428,7 +466,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 38,
+      "acceptance_evidence_count": 39,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -443,6 +481,7 @@
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -485,7 +524,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.14-alpha"
+    "version": "v0.3.15-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -498,5 +537,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.14-alpha"
+  "version": "v0.3.15-alpha"
 }

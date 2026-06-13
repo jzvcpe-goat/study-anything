@@ -78,6 +78,7 @@ python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -111,6 +112,11 @@ The first lesson kit emits `first-run-lesson-authoring-kit-v1` and turns the
 first user session into copyable platform-Agent instructions: bilingual
 prompts, tool-call order, context-package template, Agent setup, expected
 schemas, export paths, and remediation.
+The Agent eval marketplace enforcement report emits
+`agent-eval-marketplace-enforcement-v1`; it proves native fast gates are
+required, optional external judge adapters have readable skip/failure
+diagnostics, required judge mode fails closed, and no external judge keys or
+model credentials enter Study Anything.
 The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
 that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
 status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
@@ -393,9 +399,12 @@ A platform integration is acceptable when it can complete this sequence:
    Obsidian, and learning-package export.
 13. Run `scripts/verify_external_eval_marketplace_harness.py --check` before claiming mature eval
    adapter readiness in a platform submission.
-14. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
+14. Run `scripts/verify_agent_eval_marketplace_enforcement.py --check` before claiming external judge
+   or marketplace eval readiness in a platform submission.
+15. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
    handoff, GitHub prerelease, or external operator guide.
-15. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+16. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, external judge
+   keys, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -404,6 +413,7 @@ For local validation:
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_runtime_retrieval_flow.py

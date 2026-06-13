@@ -28,6 +28,12 @@ FIRST_LESSON_KIT_PATH = (
 EXTERNAL_EVAL_HARNESS_PATH = (
     ROOT / "platform" / "generated" / "study-anything-external-eval-harness.json"
 )
+AGENT_EVAL_MARKETPLACE_ENFORCEMENT_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-agent-eval-marketplace-enforcement.json"
+)
 PLUGIN_ECOSYSTEM_KIT_PATH = (
     ROOT / "platform" / "generated" / "study-anything-plugin-ecosystem-adoption-kit.json"
 )
@@ -61,6 +67,7 @@ REQUIRED_SHARED_ASSETS = {
     "docs/learning-enrichment.md",
     "docs/notebooklm-bridge.md",
     "docs/second-brain-handoff.md",
+    "docs/agent-eval.md",
     "docs/eval-frameworks.md",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
@@ -73,6 +80,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_external_eval_marketplace_harness.py",
+    "scripts/verify_agent_eval_marketplace_enforcement.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/install_local_plugin.py",
@@ -80,6 +88,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-external-eval-harness.json",
+    "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -112,6 +121,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_platform_manual_submission_rehearsal.py",
     "verify_first_lesson_authoring_kit.py",
     "verify_external_eval_marketplace_harness.py",
+    "verify_agent_eval_marketplace_enforcement.py",
     "verify_plugin_ecosystem_adoption_kit.py",
     "verify_deployment_hardening.py",
     "verify_platform_ecosystem_packs.py",
@@ -207,8 +217,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.14-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.14-alpha.")
+    if submission.get("version") != "v0.3.15-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.15-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -303,8 +313,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.14-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.14-alpha.")
+    if manifest.get("version") != "v0.3.15-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.15-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -320,6 +330,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_platform_manual_submission_rehearsal.py",
         "scripts/verify_first_lesson_authoring_kit.py",
         "scripts/verify_external_eval_marketplace_harness.py",
+        "scripts/verify_agent_eval_marketplace_enforcement.py",
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "scripts/verify_deployment_hardening.py",
         "scripts/install_local_plugin.py",
@@ -328,11 +339,13 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
         "platform/generated/study-anything-first-lesson-authoring-kit.json",
         "platform/generated/study-anything-external-eval-harness.json",
+        "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/generated/study-anything-deployment-hardening.json",
         "platform/generated/study-anything-learning-enrichment-bridge.json",
+        "docs/agent-eval.md",
         "docs/eval-frameworks.md",
-        "docs/release-notes/v0.3.14-alpha.md",
+        "docs/release-notes/v0.3.15-alpha.md",
         "docs/plugins.md",
         "docs/plugin-sdk.md",
         "docs/plugin-registry.md",
@@ -364,7 +377,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -388,7 +401,7 @@ def verify_manual_rehearsal_report() -> None:
     report = load_json(MANUAL_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
         raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
@@ -410,7 +423,7 @@ def verify_first_lesson_kit_report() -> None:
     report = load_json(FIRST_LESSON_KIT_PATH)
     if report.get("schema_version") != "first-run-lesson-authoring-kit-v1":
         raise EcosystemSubmissionError("First lesson authoring kit schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("First lesson authoring kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("First lesson authoring kit must pass.")
@@ -437,7 +450,7 @@ def verify_external_eval_harness_report() -> None:
     report = load_json(EXTERNAL_EVAL_HARNESS_PATH)
     if report.get("schema_version") != "external-eval-marketplace-harness-v1":
         raise EcosystemSubmissionError("External eval marketplace harness schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("External eval marketplace harness version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("External eval marketplace harness must pass.")
@@ -470,11 +483,75 @@ def verify_external_eval_harness_report() -> None:
         raise EcosystemSubmissionError("External eval harness report must be redacted.")
 
 
+def verify_agent_eval_marketplace_enforcement_report() -> None:
+    report = load_json(AGENT_EVAL_MARKETPLACE_ENFORCEMENT_PATH)
+    if report.get("schema_version") != "agent-eval-marketplace-enforcement-v1":
+        raise EcosystemSubmissionError("Agent eval marketplace enforcement schema drifted.")
+    if report.get("version") != "v0.3.15-alpha":
+        raise EcosystemSubmissionError("Agent eval marketplace enforcement version drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Agent eval marketplace enforcement must pass.")
+
+    runner = report.get("runner_contract") or {}
+    if runner.get("required_flag_blocks_non_ok") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement must prove required-mode failures block.")
+    if runner.get("timeout_flag_present") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement must prove timeout controls.")
+    if runner.get("missing_runtime_diagnostic_present") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement must prove missing-runtime diagnostics.")
+
+    baseline = report.get("baseline_and_harness") or {}
+    if baseline.get("harness_schema") != "external-eval-marketplace-harness-v1":
+        raise EcosystemSubmissionError("Agent eval enforcement harness linkage drifted.")
+    adapter_ids = set(str(item) for item in baseline.get("adapter_ids", []))
+    expected_adapters = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
+    if adapter_ids != expected_adapters:
+        raise EcosystemSubmissionError(
+            f"Agent eval enforcement adapter inventory drifted: {sorted(adapter_ids)}"
+        )
+
+    runtime = ((report.get("runtime_diagnostics") or {}).get("promptfoo_missing_runtime") or {})
+    if runtime.get("required_exit_nonzero") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement must prove required Promptfoo failure.")
+    if runtime.get("optional_status") not in {"skipped", "not_run_against_pack"}:
+        raise EcosystemSubmissionError("Agent eval enforcement optional Promptfoo diagnostic drifted.")
+
+    contracts = report.get("external_judge_contracts")
+    if not isinstance(contracts, list) or len(contracts) != len(expected_adapters):
+        raise EcosystemSubmissionError("Agent eval enforcement external judge contracts drifted.")
+    contract_ids = {str(item.get("adapter_id")) for item in contracts if isinstance(item, dict)}
+    if contract_ids != expected_adapters:
+        raise EcosystemSubmissionError(f"Agent eval enforcement contract IDs drifted: {sorted(contract_ids)}")
+    for item in contracts:
+        if not isinstance(item, dict):
+            continue
+        if item.get("credentials_stored_by_study_anything") is not False:
+            raise EcosystemSubmissionError("Agent eval enforcement must keep judge credentials outside.")
+
+    adoption_pack = report.get("adoption_pack") or {}
+    if adoption_pack.get("included") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement must be included in the adoption pack.")
+
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "real_model_or_judge_keys_stored_by_study_anything",
+        "judge_api_keys_in_report",
+        "raw_source_text_in_report",
+        "learner_answers_in_report",
+        "agent_endpoint_secrets_in_report",
+        "browser_video_private_context_in_report",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Agent eval enforcement privacy.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("Agent eval enforcement report must be redacted.")
+
+
 def verify_plugin_ecosystem_kit_report() -> None:
     report = load_json(PLUGIN_ECOSYSTEM_KIT_PATH)
     if report.get("schema_version") != "plugin-ecosystem-adoption-kit-v1":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit must pass.")
@@ -521,7 +598,7 @@ def verify_deployment_hardening_report() -> None:
     report = load_json(DEPLOYMENT_HARDENING_PATH)
     if report.get("schema_version") != "deployment-hardening-verification-v1":
         raise EcosystemSubmissionError("Deployment hardening report schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("Deployment hardening report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Deployment hardening report must pass.")
@@ -556,7 +633,7 @@ def verify_learning_enrichment_bridge_report() -> None:
     report = load_json(LEARNING_ENRICHMENT_BRIDGE_PATH)
     if report.get("schema_version") != "learning-enrichment-bridge-verification-v1":
         raise EcosystemSubmissionError("Learning enrichment bridge report schema drifted.")
-    if report.get("version") != "v0.3.14-alpha":
+    if report.get("version") != "v0.3.15-alpha":
         raise EcosystemSubmissionError("Learning enrichment bridge report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Learning enrichment bridge report must pass.")
@@ -616,6 +693,7 @@ def main() -> None:
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
     verify_external_eval_harness_report()
+    verify_agent_eval_marketplace_enforcement_report()
     verify_plugin_ecosystem_kit_report()
     verify_deployment_hardening_report()
     verify_learning_enrichment_bridge_report()
@@ -631,6 +709,7 @@ def main() -> None:
                 "privacy_items": len(privacy),
                 "commercial_readiness": "commercial-readiness-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
+                "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "plugin_ecosystem_adoption_kit": "plugin-ecosystem-adoption-kit-v1",
                 "deployment_hardening": "deployment-hardening-verification-v1",
                 "learning_enrichment_bridge": "learning-enrichment-bridge-verification-v1",

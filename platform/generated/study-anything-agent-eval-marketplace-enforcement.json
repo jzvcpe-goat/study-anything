@@ -1,0 +1,139 @@
+{
+  "acceptance": {
+    "minimum_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+    "pack_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "adoption_pack": {
+    "enforcement_assets_included": 3,
+    "included": true,
+    "schema_version": "study-anything-platform-adoption-pack-v1",
+    "version": "v0.3.15-alpha"
+  },
+  "baseline_and_harness": {
+    "adapter_ids": [
+      "deepeval",
+      "langchain-agentevals",
+      "promptfoo",
+      "ragas"
+    ],
+    "baseline_schema": "study-anything-agent-eval-baseline-v1",
+    "baseline_status": "pass",
+    "baseline_version": "v0.3.15-alpha",
+    "harness_schema": "external-eval-marketplace-harness-v1",
+    "harness_status": "pass"
+  },
+  "docs": {
+    "checked_docs": [
+      "docs/adoption.md",
+      "docs/agent-eval.md",
+      "docs/platform-agent-integrations.md"
+    ],
+    "external_judge_keys_stay_outside": true
+  },
+  "ecosystem_submission": {
+    "schema_version": "ecosystem-submission-v1",
+    "shared_assets_included": 4,
+    "submission_count": 4,
+    "version": "v0.3.15-alpha"
+  },
+  "external_judge_contracts": [
+    {
+      "adapter_id": "promptfoo",
+      "credentials_stored_by_study_anything": false,
+      "external_project": "promptfoo",
+      "missing_runtime_optional_result": "skipped",
+      "missing_runtime_required_result": "failed_exit",
+      "optional_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool promptfoo --create-session",
+      "required_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool promptfoo --create-session --required"
+    },
+    {
+      "adapter_id": "deepeval",
+      "credentials_stored_by_study_anything": false,
+      "external_project": "deepeval",
+      "missing_runtime_optional_result": "native_quality_fallback_when_allowed",
+      "missing_runtime_required_result": "failed_exit_unless_deepeval_installed",
+      "optional_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+      "required_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --required"
+    },
+    {
+      "adapter_id": "langchain-agentevals",
+      "credentials_stored_by_study_anything": false,
+      "external_project": "langchain-ai/agentevals",
+      "missing_runtime_optional_result": "descriptor_only",
+      "missing_runtime_required_result": "operator_environment_failure",
+      "optional_command": "Export agent-eval-artifact-v1 trajectory and expected task sequence.",
+      "required_command": "Operator runs trajectory match outside Study Anything using agent-eval-artifact-v1."
+    },
+    {
+      "adapter_id": "ragas",
+      "credentials_stored_by_study_anything": false,
+      "external_project": "ragas",
+      "missing_runtime_optional_result": "native_retrieval_gate_available",
+      "missing_runtime_required_result": "failed_exit_if_retrieval_gate_fails",
+      "optional_command": "Use retrieval-quality-eval-v1 as the redacted Ragas-compatible input.",
+      "required_command": "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+    }
+  ],
+  "platform_packs": {
+    "codex": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "terminal_skill"
+    },
+    "kimi": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "openai_compatible_tools"
+    },
+    "workbuddy": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "openapi_http_tools"
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "browser_video_private_context_in_report": false,
+    "judge_api_keys_in_report": false,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_or_judge_keys_stored_by_study_anything": false,
+    "report_is_redacted": true
+  },
+  "purpose": "Make external judge usage enforceable for ecosystem submissions while keeping native Study Anything gates local-first and keeping model or judge keys outside Study Anything.",
+  "runner_contract": {
+    "malformed_output_diagnostics": [
+      "deepeval_parse_error",
+      "retrieval_parse_error",
+      "agent_eval_report_parse_error"
+    ],
+    "missing_runtime_diagnostic_present": true,
+    "required_flag_blocks_non_ok": true,
+    "timeout_flag_present": true
+  },
+  "runtime_diagnostics": {
+    "malformed_judge_output": [
+      "deepeval_parse_error",
+      "retrieval_parse_error",
+      "agent_eval_report_parse_error"
+    ],
+    "promptfoo_missing_runtime": {
+      "adapter_id": "promptfoo",
+      "missing_runtime_reason": "npx is not available; install Node.js or run in CI with setup-node.",
+      "optional_exit_code": 0,
+      "optional_status": "skipped",
+      "redacted": true,
+      "required_exit_nonzero": true,
+      "required_status": "skipped"
+    },
+    "timeout_policy": {
+      "default_timeout_seconds": 180,
+      "optional_external_timeout_result": "skipped",
+      "required_external_timeout_result": "failed_exit"
+    }
+  },
+  "schema_version": "agent-eval-marketplace-enforcement-v1",
+  "status": "pass",
+  "version": "v0.3.15-alpha"
+}

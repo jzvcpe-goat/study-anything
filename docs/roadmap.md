@@ -460,9 +460,24 @@
   WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, and adoption pack
   assets.
 
+## v0.3.15-alpha
+
+- Add `agent-eval-marketplace-enforcement-v1`, a redacted release and ecosystem-submission gate for
+  Agent eval marketplace readiness.
+- Prove native Agent eval gates remain required while Promptfoo, DeepEval, LangChain AgentEvals, and
+  Ragas stay optional external judge integrations unless an operator explicitly uses required mode.
+- Verify missing-runtime diagnostics, timeout controls, malformed judge output diagnostics,
+  required-mode non-zero failures, baseline regression, platform-pack evidence, ecosystem submission
+  evidence, and adoption-pack inclusion.
+- Keep external judge keys, model keys, Agent endpoint secrets, raw source text, learner answers, and
+  private browser/video context out of shared eval evidence.
+- Wire the verifier into release checks, external adoption proof, ecosystem submission, Kimi/Codex/
+  WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, submission dry-run,
+  and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.15`: Agent eval marketplace enforcement and external judge hardening.
+- `v0.3.16`: External adoption feedback loop and platform import diagnostics hardening.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

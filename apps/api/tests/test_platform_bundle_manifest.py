@@ -44,10 +44,15 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/verify_commercial_readiness.py", file_paths)
         self.assertIn("scripts/verify_ecosystem_submission_pack.py", file_paths)
         self.assertIn("scripts/verify_external_eval_marketplace_harness.py", file_paths)
+        self.assertIn("scripts/verify_agent_eval_marketplace_enforcement.py", file_paths)
         self.assertIn("scripts/verify_learning_enrichment_bridge.py", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
         self.assertIn("platform/generated/study-anything-external-eval-harness.json", file_paths)
+        self.assertIn(
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+            file_paths,
+        )
         self.assertIn("platform/generated/study-anything-learning-enrichment-bridge.json", file_paths)
         self.assertIn("docs/commercial-readiness.md", file_paths)
         self.assertIn("docs/ecosystem-submission.md", file_paths)

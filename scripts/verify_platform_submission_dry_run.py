@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.14-alpha"
+RELEASE_VERSION = "v0.3.15-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -44,6 +44,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/packs/kimi/README.md",
             "platform/packs/kimi/pack.json",
         ],
@@ -52,6 +53,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_agent_eval_marketplace_enforcement.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -82,6 +84,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/packs/codex/README.md",
             "platform/packs/codex/pack.json",
         ],
@@ -90,6 +93,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_agent_eval_marketplace_enforcement.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -118,6 +122,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             "platform/packs/workbuddy/README.md",
             "platform/packs/workbuddy/pack.json",
         ],
@@ -126,6 +131,7 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_agent_eval_marketplace_enforcement.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -155,12 +161,14 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
             "verify_platform_manual_submission_rehearsal.py",
             "verify_first_lesson_authoring_kit.py",
             "verify_external_eval_marketplace_harness.py",
+            "verify_agent_eval_marketplace_enforcement.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -283,6 +291,7 @@ def platform_report(
             "docs/plugins.md",
             "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
             "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         }
     ]
 
