@@ -43,10 +43,12 @@ REQUIRED_ACCEPTANCE = {
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
+    "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
     "verify_plugin_quarantine.py",
+    "verify_security_recovery_hardening.py",
     "verify_importer_lesson_flow.py",
     "verify_platform_lesson_flow.py",
     "verify_platform_ecosystem_eval_flow.py",

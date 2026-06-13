@@ -33,12 +33,14 @@ REQUIRED_SHARED_ASSETS = {
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
+    "docs/security.md",
     "docs/adoption.md",
     "docs/adoption-telemetry.md",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "scripts/verify_plugin_quarantine.py",
+    "scripts/verify_security_recovery_hardening.py",
 }
 REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_ecosystem_submission_pack.py",
@@ -47,6 +49,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_agent_gateway_hardening.py",
     "verify_notebooklm_obsidian_bridge_hardening.py",
     "verify_plugin_quarantine.py",
+    "verify_security_recovery_hardening.py",
     "verify_platform_ecosystem_packs.py",
     "generate_platform_bundle_manifest.py --check",
     "generate_platform_adoption_pack.py --check",
@@ -140,8 +143,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.5-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.5-alpha.")
+    if submission.get("version") != "v0.3.6-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.6-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -236,8 +239,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.5-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.5-alpha.")
+    if manifest.get("version") != "v0.3.6-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.6-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -247,7 +250,8 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "scripts/verify_plugin_quarantine.py",
-        "docs/release-notes/v0.3.5-alpha.md",
+        "scripts/verify_security_recovery_hardening.py",
+        "docs/release-notes/v0.3.6-alpha.md",
     }
     missing = required - paths
     if missing:

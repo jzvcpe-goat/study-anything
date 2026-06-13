@@ -132,6 +132,11 @@ FILES: list[tuple[str, str, str]] = [
         "Plugin trust quarantine and explicit approval verifier.",
     ),
     (
+        "scripts/verify_security_recovery_hardening.py",
+        "verification",
+        "Security recovery, backup manifest, and sync restore privacy verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -252,6 +257,11 @@ FILES: list[tuple[str, str, str]] = [
         "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
     ),
     (
+        "docs/security.md",
+        "docs",
+        "Local-first security model and recovery hardening guide.",
+    ),
+    (
         "docs/adoption-telemetry.md",
         "docs",
         "Local aggregate adoption telemetry and PMF readiness privacy contract.",
@@ -317,7 +327,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.5-alpha.md",
+        "docs/release-notes/v0.3.6-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -403,6 +413,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_commercial_readiness.py",
             "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
             "python3 scripts/verify_plugin_quarantine.py",
+            "python3 scripts/verify_security_recovery_hardening.py",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

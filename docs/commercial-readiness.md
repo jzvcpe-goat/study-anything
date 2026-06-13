@@ -11,6 +11,7 @@ python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
+python3 scripts/verify_security_recovery_hardening.py
 ```
 
 or call:
@@ -40,6 +41,9 @@ The plugin quarantine verifier is the matching proof for the extension path: it 
 plugins quarantine by default, explicit approval is required for installation, digest mismatches are
 blocked before any copy is written, and plugin entrypoints are not executed during preview or
 quarantine.
+The security recovery verifier is the matching proof for the operator safety path: it checks backup
+manifest tamper detection, path traversal rejection, invalid digest rejection, wrong passphrase
+redaction, restore-preview privacy, and recovery status path redaction.
 
 For adoption and PMF review, call:
 

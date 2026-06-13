@@ -355,9 +355,22 @@
 - Include the plugin quarantine verifier in release checks, external adoption proof, ecosystem
   submission, platform packs, and adoption pack assets.
 
+## v0.3.6-alpha
+
+- Add `security-recovery-hardening-verification-v1`, an offline verifier for backup manifest,
+  recovery status, and encrypted sync restore-preview safety.
+- Harden backup manifest verification against path traversal, absolute paths, invalid sha256 values,
+  duplicate records, missing files, and tampered files.
+- Keep backup/restore diagnostics shareable by returning relative backup member names instead of
+  absolute local paths.
+- Verify wrong passphrases and ciphertext tampering produce redacted sync-package diagnostics.
+- Verify restore-preview stays count-only and never returns source text, answers, Agent endpoints,
+  passphrases, PMF contacts, or absolute paths.
+- Include the security recovery verifier in release checks, external adoption proof, ecosystem
+  submission, platform packs, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.6`: security, recovery, and backup hardening.
 - `v0.3.7`: external platform submission dry-run packages.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 

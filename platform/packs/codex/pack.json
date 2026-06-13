@@ -20,6 +20,7 @@
     "python3 scripts/verify_agent_gateway_hardening.py",
     "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "python3 scripts/verify_plugin_quarantine.py",
+    "python3 scripts/verify_security_recovery_hardening.py",
     "./scripts/run_skill_mode_demo.sh",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -61,7 +62,8 @@
     "pmf_readiness.schema_version == pmf-readiness-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
-    "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1"
+    "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
+    "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",

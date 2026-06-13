@@ -50,6 +50,7 @@
     "plugin_quarantine_schema": "plugin-quarantine-verification-v1",
     "plugin_sdk_schema": "plugin-sdk-v1",
     "second_brain_schema": "second-brain-handoff-v1",
+    "security_recovery_hardening_schema": "security-recovery-hardening-verification-v1",
     "shared_logs_are_redacted": true
   },
   "operator_drills": {
@@ -137,15 +138,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 68,
+    "file_count": 70,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.5-alpha"
+    "version": "v0.3.6-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 29,
+      "acceptance_evidence_count": 30,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -164,6 +165,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -180,7 +182,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 29,
+      "acceptance_evidence_count": 30,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -203,6 +205,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -219,7 +222,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 29,
+      "acceptance_evidence_count": 30,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -239,6 +242,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
         "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",

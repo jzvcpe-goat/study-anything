@@ -52,6 +52,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/verify_agent_eval_baseline.py",
     "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "scripts/verify_plugin_quarantine.py",
+    "scripts/verify_security_recovery_hardening.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -406,6 +407,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "security_recovery_hardening",
+                [python_bin, "scripts/verify_security_recovery_hardening.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -524,6 +530,21 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "cli_lifecycle_status": (value.get("cli") or {}).get("lifecycle_status"),
             "cli_approved_lifecycle_status": (value.get("cli") or {}).get(
                 "approved_lifecycle_status"
+            ),
+        }
+    if label == "security_recovery_hardening":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "tamper_detected": (value.get("backup_manifest") or {}).get("tamper_detected"),
+            "path_traversal_rejected": (value.get("backup_manifest") or {}).get(
+                "path_traversal_rejected"
+            ),
+            "restore_preview_schema": (value.get("sync_restore_preview") or {}).get(
+                "restore_preview_schema"
+            ),
+            "restore_api_enabled": (value.get("recovery_status") or {}).get(
+                "restore_api_enabled"
             ),
         }
     if label == "adoption_telemetry":
