@@ -12,33 +12,66 @@ usable without cloud accounts, judge-model API keys, or a mandatory eval service
 ## Current Public Surface
 
 - `GET /v1/sessions/{session_id}/agent-audit`
+- `GET /v1/evals/policy`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/sessions/{session_id}/agent-eval/report`
 - `GET /v1/evals/quality/cases`
 - `GET /v1/evals/retrieval/cases`
 - `GET|POST /v1/sessions/{session_id}/retrieval/eval`
 - `GET /v1/sessions/{session_id}/agent-eval` deprecated alias for invocation audit only
 
 `agent-audit` proves which provider handled `quiz.generate`, `answer.grade`, and
-`insight.synthesize`. `agent-eval/artifact` packages that proof for external eval tooling.
+`insight.synthesize`. `evals/policy` returns `agent-eval-policy-v1`: the machine-readable release
+gate, optional external adapter rules, failure classes, fixture paths, and privacy contract.
+`agent-eval/artifact` packages invocation proof for external eval tooling.
 `agent-eval/quality` adds the first deterministic teaching-quality layer: overview, glossary,
 quiz, grading, synthesis, grounding, enrichment readiness, and Obsidian readiness.
+`agent-eval/report` returns `agent-eval-report-v1`: the per-session maturity report that combines
+invocation proof, trajectory coverage, teaching quality, optional retrieval grounding, export
+readiness, privacy redaction, and optional external adapter readiness.
 `retrieval/eval` adds deterministic retrieval/context quality gates for source binding, snippet
 minimality, query relevance, and Learning Context Package handoff validity.
 
 These eval endpoints are redacted. They do not return reading prose, source titles, answers, grading
 feedback, insights, Agent endpoints, raw Agent metadata, API keys, retrieval snippets, or tool secrets.
 
+## Eval Policy And Report
+
+`agent-eval-policy-v1` is the stable rulebook for platform Agents and release scripts:
+
+- native fast gate is required for release and does not need judge-model credentials
+- Promptfoo, DeepEval, LangChain AgentEvals, and Ragas are optional external adapters unless an
+  operator explicitly passes `--required`
+- missing runtimes, missing judge credentials, and timeouts are reported as explainable `skipped`
+  outcomes when the adapter is optional
+- schema mismatches, failed native gates, and privacy leaks are failures
+- fake deterministic and mock HTTP/user-owned Agent fixtures live under `evals/fixtures/`
+
+`agent-eval-report-v1` is the per-session result that a Kimi/Codex/WorkBuddy-style platform Agent
+should fetch after learning:
+
+```bash
+curl http://127.0.0.1:8000/v1/evals/policy
+curl http://127.0.0.1:8000/v1/sessions/<session-id>/agent-eval/report
+API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool report --create-session --required
+```
+
+The report is not an LLM judge. It is the redacted release-gate summary that answers: did Study
+Anything invoke its Agent workflow, did minimum teaching quality pass, are exports ready, are privacy
+flags clean, and are external adapter datasets available?
+
 ## Open-Source Eval Selection
 
-GitHub metadata was checked on 2026-06-08.
+GitHub metadata was checked on 2026-06-12.
 
 | Project | Stars | License | Use In Study Anything |
 | --- | ---: | --- | --- |
-| [Promptfoo](https://github.com/promptfoo/promptfoo) | 21,992 | MIT | First CLI/CI adapter for HTTP contract checks, regression gates, and red-team assertions. |
-| [DeepEval](https://github.com/confident-ai/deepeval) | 15,974 | Apache-2.0 | Python eval harness for task completion, component-level metrics, and judge-model scoring. |
-| [Ragas](https://github.com/vibrantlabsai/ragas) | 14,278 | Apache-2.0 | Source grounding, answer relevance, context relevance, and citation-quality evaluation. |
-| [LangChain AgentEvals](https://github.com/langchain-ai/agentevals) | 610 | MIT | Trajectory matching for expected Agent/tool step order. |
+| [Promptfoo](https://github.com/promptfoo/promptfoo) | ~22,200 | MIT | First CLI/CI adapter for HTTP contract checks, regression gates, and red-team assertions. |
+| [DeepEval](https://github.com/confident-ai/deepeval) | ~16,100 | Apache-2.0 | Python eval harness for task completion, component-level metrics, and judge-model scoring. |
+| [Ragas](https://github.com/explodinggradients/ragas) | ~14,400 | Apache-2.0 | Source grounding, answer relevance, context relevance, and citation-quality evaluation. |
+| [LangChain AgentEvals](https://github.com/langchain-ai/agentevals) | ~617 | MIT | Trajectory matching for expected Agent/tool step order. |
 | [Phoenix](https://github.com/Arize-ai/phoenix) | 10,021 | Other | Observability/eval candidate, useful later if Study Anything needs a heavier local eval UI. |
 | [OpenAI Evals](https://github.com/openai/evals) | 18,627 | Other | Benchmark registry reference, not the first integration because license and workflow fit are weaker. |
 | [AgentBench](https://github.com/THUDM/AgentBench) | 3,473 | Apache-2.0 | Academic benchmark reference, not a product smoke/eval harness. |
@@ -206,6 +239,7 @@ Against a running API:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
 python3 scripts/verify_agent_eval_baseline.py --check
+API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
@@ -232,10 +266,13 @@ To prevent drift between the API artifact, Promptfoo config, docs, and release c
 A release can claim Agent Eval foundation only when:
 
 - API tests cover `agent-eval/artifact`.
+- API tests cover `evals/policy` and `agent-eval/report`.
 - `scripts/verify_agent_eval_assets.py` passes.
 - `scripts/verify_agent_eval_baseline.py --check` passes and emits
   `study-anything-agent-eval-regression-report-v1`.
 - `scripts/verify_agent_eval_flow.py` passes on the fake demo path.
+- `scripts/run_external_agent_evals.py --tool report --create-session --required` passes against a
+  running local API.
 - Promptfoo can be invoked through `scripts/run_external_agent_evals.py --tool promptfoo` when the
   release environment permits external Node package installation.
 - DeepEval or the labeled native fallback can consume `agent-eval/quality`.
@@ -247,8 +284,12 @@ A release can claim Agent Eval foundation only when:
 ## Claim Boundaries
 
 - `agent-audit.status=verified` means Study Anything observed the required Agent task invocations.
+- `agent-eval-policy-v1` means the release gate, optional external adapters, failure classes,
+  fixtures, and privacy contract are machine-readable.
 - `agent-eval/artifact.status=ready_for_external_eval` means the redacted artifact is structurally
   ready for external tools.
+- `agent-eval-report-v1.native_fast_gate.status=pass` means invocation, trajectory, teaching
+  quality, and privacy redaction are release-gate ready for that session.
 - Promptfoo passing the bundled config means the artifact contract and native gates passed.
 - `agent-eval/quality.status=pass` means the deterministic minimum teaching-quality gates passed.
 - `retrieval-quality-eval.status=pass` means the retrieval/context handoff gates and privacy invariants

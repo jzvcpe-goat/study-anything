@@ -35,7 +35,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.2.28-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.2.29-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
@@ -75,6 +75,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("evals/promptfoo/agent-eval-artifact.yaml", "eval", "Promptfoo eval config."),
     ("evals/deepeval/study_anything_quality_eval.py", "eval", "DeepEval-compatible native quality adapter."),
     ("evals/baselines/study-anything-agent-eval-baseline.json", "eval", "Deterministic Agent eval regression baseline."),
+    ("evals/fixtures/fake-agent-learning-loop.json", "eval_fixture", "Fake deterministic Agent eval fixture."),
+    ("evals/fixtures/mock-http-agent-learning-loop.json", "eval_fixture", "Mock HTTP/user-owned Agent eval fixture."),
     ("fixtures/notebooklm/README.md", "fixture", "NotebookLM fixture notes."),
     ("fixtures/notebooklm/notebooklm-style-context-package.json", "fixture", "NotebookLM-style context package fixture."),
 ]
@@ -82,6 +84,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
 REQUIRED_PLATFORM_TOOLS = [
     "study_anything_deployment_guide",
     "study_anything_health",
+    "study_anything_eval_policy",
     "study_anything_create_session",
     "study_anything_add_reading",
     "study_anything_validate_context_package",
@@ -101,6 +104,7 @@ REQUIRED_PLATFORM_TOOLS = [
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
+    "study_anything_agent_eval_report",
     "study_anything_obsidian_export",
     "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
@@ -207,7 +211,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.2.28-alpha",
+        "version": "v0.2.29-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -234,6 +238,8 @@ def manifest_payload() -> dict[str, object]:
                 "external platform Agent learning flow",
                 "external platform pack consumption drill",
                 "retrieval-quality-eval-v1",
+                "agent-eval-policy-v1",
+                "agent-eval-report-v1",
                 "agent-quality-eval-v1",
                 "study-anything-agent-eval-regression-report-v1",
                 "obsidian-markdown-export-v1",

@@ -114,12 +114,14 @@ def main() -> None:
     health = request("/v1/health")
     if health.get("status") != "ok":
         raise VerificationError(f"Health check failed: {health}")
+    eval_policy = request("/v1/evals/policy")
     plugin_sdk = request("/v1/plugins/sdk")
     plugin_capabilities = request("/v1/plugins/capabilities")
     plugin_validation = request(
         "/v1/plugins/validate-package",
         {"source_path": "plugins/example-enrichment-importer"},
     )
+    assert_schema(eval_policy, "agent-eval-policy-v1", "Agent eval policy")
     assert_schema(plugin_sdk, "plugin-sdk-v1", "plugin SDK")
     assert_schema(plugin_capabilities, "plugin-capability-index-v1", "plugin capabilities")
     assert_schema(plugin_validation, "plugin-package-validation-v1", "plugin package validation")
@@ -265,6 +267,7 @@ def main() -> None:
     audit = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-audit")
     artifact = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/artifact")
     quality = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/quality")
+    eval_report = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/report")
     enrichment_artifact = request(
         f"/v1/sessions/{quote(lesson_session_id)}/exports/enrichment-artifact"
     )
@@ -274,26 +277,38 @@ def main() -> None:
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
     assert_schema(quality, "agent-quality-eval-v1", "agent quality")
+    assert_schema(eval_report, "agent-eval-report-v1", "Agent eval report")
     assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(learning_package, "learning-package-v1", "learning package")
     assert_schema(second_brain, "second-brain-handoff-v1", "second-brain handoff")
     if audit.get("status") != "verified" or quality.get("status") != "pass":
         raise VerificationError(f"Audit/quality gates failed: audit={audit} quality={quality}")
+    if (eval_report.get("native_fast_gate") or {}).get("status") != "pass":
+        raise VerificationError(f"Agent eval report native gate failed: {eval_report}")
 
     retrieval_runner = run_external_eval("retrieval", source_session_id, query=args.query)
+    report_runner = run_external_eval("report", lesson_session_id)
     deepeval_runner = run_external_eval("deepeval", lesson_session_id)
-    if retrieval_runner.get("status") != "ok" or deepeval_runner.get("status") != "ok":
+    if (
+        retrieval_runner.get("status") != "ok"
+        or report_runner.get("status") != "ok"
+        or deepeval_runner.get("status") != "ok"
+    ):
         raise VerificationError(
-            f"External eval adapters did not pass: retrieval={retrieval_runner}, deepeval={deepeval_runner}"
+            "External eval adapters did not pass: "
+            f"retrieval={retrieval_runner}, report={report_runner}, deepeval={deepeval_runner}"
         )
 
     redacted_eval_surfaces = {
         "audit": audit,
         "artifact": artifact,
         "quality": quality,
+        "eval_policy": eval_policy,
+        "eval_report": eval_report,
         "retrieval_quality": retrieval_quality,
         "retrieval_runner": retrieval_runner,
+        "report_runner": report_runner,
         "deepeval_runner": deepeval_runner,
     }
     assert_no_leaks(
@@ -329,7 +344,10 @@ def main() -> None:
                 "indexed_count": rebuilt["indexed_count"],
                 "retrieval_quality_status": retrieval_quality["status"],
                 "agent_quality_status": quality["status"],
+                "agent_eval_policy_schema": eval_policy["schema_version"],
+                "agent_eval_report_schema": eval_report["schema_version"],
                 "retrieval_eval_tool": retrieval_runner["framework"],
+                "report_eval_tool": report_runner["framework"],
                 "deepeval_tool": deepeval_runner["tool"],
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],

@@ -282,6 +282,14 @@ def cmd_agent_eval(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/artifact"))
 
 
+def cmd_eval_policy(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/evals/policy"))
+
+
+def cmd_agent_eval_report(args: argparse.Namespace) -> None:
+    emit(args, request(f"/v1/sessions/{quote(args.session_id)}/agent-eval/report"))
+
+
 def cmd_retrieval_status(args: argparse.Namespace) -> None:
     emit(args, request("/v1/retrieval/status"))
 
@@ -648,6 +656,7 @@ def cmd_lesson(args: argparse.Namespace) -> None:
     audit = request(f"/v1/sessions/{quote(session_id)}/agent-audit")
     artifact = request(f"/v1/sessions/{quote(session_id)}/agent-eval/artifact")
     quality = request(f"/v1/sessions/{quote(session_id)}/agent-eval/quality")
+    report = request(f"/v1/sessions/{quote(session_id)}/agent-eval/report")
     obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
     package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
     result = {
@@ -656,6 +665,8 @@ def cmd_lesson(args: argparse.Namespace) -> None:
         "teaching_schema": teaching.get("schema_version"),
         "agent_audit_status": audit.get("status"),
         "agent_eval_schema": artifact.get("schema_version"),
+        "agent_eval_report_schema": report.get("schema_version"),
+        "agent_eval_report_status": report.get("status"),
         "quality_status": quality.get("status"),
         "quality_schema": quality.get("schema_version"),
         "obsidian_schema": obsidian.get("schema_version"),
@@ -768,6 +779,16 @@ def build_parser() -> argparse.ArgumentParser:
     agent_eval = subparsers.add_parser("agent-eval", help="Show redacted Agent eval artifact")
     add_session_id(agent_eval)
     agent_eval.set_defaults(func=cmd_agent_eval)
+
+    eval_policy = subparsers.add_parser("eval-policy", help="Show Agent eval maturity policy")
+    eval_policy.set_defaults(func=cmd_eval_policy)
+
+    agent_eval_report = subparsers.add_parser(
+        "agent-eval-report",
+        help="Show redacted Agent eval maturity report",
+    )
+    add_session_id(agent_eval_report)
+    agent_eval_report.set_defaults(func=cmd_agent_eval_report)
 
     retrieval_status = subparsers.add_parser("retrieval-status", help="Show retrieval adapter status")
     retrieval_status.set_defaults(func=cmd_retrieval_status)

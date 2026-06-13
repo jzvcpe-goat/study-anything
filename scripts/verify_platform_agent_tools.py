@@ -21,6 +21,7 @@ API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://12
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
     "study_anything_health",
+    "study_anything_eval_policy",
     "study_anything_create_session",
     "study_anything_add_reading",
     "study_anything_validate_context_package",
@@ -44,6 +45,7 @@ REQUIRED_TOOLS = {
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
     "study_anything_agent_quality_eval",
+    "study_anything_agent_eval_report",
     "study_anything_obsidian_export",
     "study_anything_enrichment_artifact_export",
     "study_anything_learning_package_export",
@@ -195,6 +197,21 @@ def main() -> None:
     )
     if (deployment.get("privacy") or {}).get("real_model_keys_stored_by_study_anything") is not False:
         raise VerificationError(f"Deployment guide must not store model keys: {deployment}")
+
+    eval_policy = call_tool(tools, "study_anything_eval_policy")
+    if eval_policy.get("schema_version") != "agent-eval-policy-v1":
+        raise VerificationError(f"Eval policy returned invalid schema: {eval_policy}")
+    policy_adapter_ids = {
+        item.get("adapter_id")
+        for item in eval_policy.get("external_adapters", [])
+        if isinstance(item, dict)
+    }
+    if policy_adapter_ids != REQUIRED_ADAPTERS:
+        raise VerificationError(f"Eval policy adapter strategy mismatch: {sorted(policy_adapter_ids)}")
+    if (eval_policy.get("native_fast_gate") or {}).get("required_for_release") is not True:
+        raise VerificationError(f"Eval policy native gate must be release-blocking: {eval_policy}")
+    if (eval_policy.get("privacy") or {}).get("real_model_keys_stored_by_study_anything") is not False:
+        raise VerificationError(f"Eval policy must not store model keys: {eval_policy}")
 
     plugin_sdk = call_tool(tools, "study_anything_plugin_sdk")
     if plugin_sdk.get("schema_version") != "plugin-sdk-v1":
@@ -517,6 +534,39 @@ def main() -> None:
     }
     assert_contains_all(quality_gate_ids, expected_quality_gates, "quality eval gates")
 
+    eval_report = call_tool(tools, "study_anything_agent_eval_report", session_id=session_id)
+    if eval_report.get("schema_version") != "agent-eval-report-v1":
+        raise VerificationError(f"Unexpected Agent eval report schema: {eval_report}")
+    if eval_report.get("policy_schema_version") != "agent-eval-policy-v1":
+        raise VerificationError(f"Agent eval report policy schema mismatch: {eval_report}")
+    if (eval_report.get("native_fast_gate") or {}).get("status") != "pass":
+        raise VerificationError(f"Agent eval native fast gate did not pass: {eval_report}")
+    dimensions = {
+        item.get("dimension_id"): item
+        for item in eval_report.get("dimensions", [])
+        if isinstance(item, dict)
+    }
+    assert_contains_all(
+        [str(name) for name in dimensions if name],
+        [
+            "agent_invocation_coverage",
+            "trajectory_coverage",
+            "teaching_quality",
+            "retrieval_grounding",
+            "export_readiness",
+            "privacy_redaction",
+            "external_adapter_readiness",
+        ],
+        "Agent eval report dimensions",
+    )
+    report_adapter_ids = {
+        item.get("adapter_id")
+        for item in eval_report.get("adapter_readiness", [])
+        if isinstance(item, dict)
+    }
+    if report_adapter_ids != REQUIRED_ADAPTERS:
+        raise VerificationError(f"Agent eval report adapter readiness mismatch: {eval_report}")
+
     obsidian = call_tool(tools, "study_anything_obsidian_export", session_id=session_id)
     if obsidian.get("schema_version") != "obsidian-markdown-export-v1":
         raise VerificationError(f"Unexpected Obsidian export schema: {obsidian}")
@@ -588,7 +638,13 @@ def main() -> None:
         raise VerificationError("Second-brain handoff leaked raw enrichment text.")
 
     serialized_evidence = json.dumps(
-        {"audit": audit, "artifact": artifact, "quality": quality, "second_brain": second_brain},
+        {
+            "audit": audit,
+            "artifact": artifact,
+            "quality": quality,
+            "eval_report": eval_report,
+            "second_brain": second_brain,
+        },
         ensure_ascii=False,
     )
     forbidden_fragments = [
@@ -618,6 +674,8 @@ def main() -> None:
                 "agent_audit_status": audit["status"],
                 "eval_schema": artifact["schema_version"],
                 "quality_schema": quality["schema_version"],
+                "eval_policy_schema": eval_policy["schema_version"],
+                "eval_report_schema": eval_report["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],
                 "learning_package_schema": package["schema_version"],

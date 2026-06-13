@@ -164,18 +164,23 @@ def main() -> None:
         raise VerificationError(f"Lesson did not complete: {completed}")
 
     quality = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/quality")
+    eval_report = request(f"/v1/sessions/{quote(lesson_session_id)}/agent-eval/report")
     obsidian = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/obsidian")
     learning_package = request(f"/v1/sessions/{quote(lesson_session_id)}/exports/learning-package")
     assert_schema(quality, "agent-quality-eval-v1", "quality eval")
+    assert_schema(eval_report, "agent-eval-report-v1", "Agent eval report")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(learning_package, "learning-package-v1", "learning package")
     if quality.get("status") != "pass":
         raise VerificationError(f"Quality eval did not pass: {quality}")
+    if (eval_report.get("native_fast_gate") or {}).get("status") != "pass":
+        raise VerificationError(f"Agent eval report native gate failed: {eval_report}")
     assert_no_secret_like_text("importer runtime retrieval flow", {
         "importer": importer,
         "retrieval": searched,
         "retrieval_quality": retrieval_quality,
         "quality": quality,
+        "eval_report": eval_report,
         "obsidian": obsidian,
         "learning_package": learning_package,
     })
@@ -193,6 +198,7 @@ def main() -> None:
                 "retrieval_quality_status": retrieval_quality["status"],
                 "lesson_stage": completed["stage"],
                 "quality_status": quality["status"],
+                "agent_eval_report_schema": eval_report["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": learning_package["schema_version"],
             },

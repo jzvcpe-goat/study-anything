@@ -31,6 +31,7 @@ python3 scripts/verify_clean_clone_adoption.py --repo .
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
 curl http://127.0.0.1:8000/v1/deployment/guide
+python3 scripts/study_anything_cli.py eval-policy
 python3 scripts/study_anything_cli.py demo
 python3 scripts/study_anything_cli.py context-validate \
   fixtures/notebooklm/notebooklm-style-context-package.json
@@ -59,6 +60,7 @@ python3 scripts/study_anything_cli.py lesson \
   --answer "Answer the generated quiz in your own words."
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval-report SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
 python3 scripts/study_anything_cli.py enrichment-artifact SESSION_ID --markdown
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
@@ -69,6 +71,8 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_importer_runtime_retrieval_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/verify_platform_ecosystem_eval_flow.py
+API_BASE=http://127.0.0.1:8000 \
+  python3 scripts/run_external_agent_evals.py --tool report --create-session --required
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
@@ -105,8 +109,11 @@ learning session from minimal snippets.
 A Codex integration must return both:
 
 - `agent-audit.status == verified`
+- `agent-eval-policy-v1` for the native release gate, optional adapters, fixtures, failure classes,
+  and privacy contract
 - `agent-eval-artifact-v1` with all required native gates passing
 - `agent-quality-eval-v1` with status `pass`
+- `agent-eval-report-v1` with `native_fast_gate.status == pass`
 - `learning-context-package-v1` for importer-created Learning Context Package inputs
 - `importer-run-v1` for reviewed local importer runtime
 - `retrieval-search-v1` when optional retrieval is enabled

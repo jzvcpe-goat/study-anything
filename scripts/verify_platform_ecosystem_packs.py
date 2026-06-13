@@ -20,6 +20,9 @@ REQUIRED_ACCEPTANCE = {
     "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
     "agent_quality_eval.schema_version == agent-quality-eval-v1",
     "agent_quality_eval.status == pass",
+    "agent_eval_policy.schema_version == agent-eval-policy-v1",
+    "agent_eval_report.schema_version == agent-eval-report-v1",
+    "agent_eval_report.native_fast_gate.status == pass",
     "retrieval_quality_eval.schema_version == retrieval-quality-eval-v1",
     "retrieval_quality_eval.status == pass",
     "learning_context_package.schema_version == learning-context-package-v1",
@@ -38,6 +41,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_platform_ecosystem_eval_flow.py",
     "verify_platform_agent_tools.py",
     "verify_agent_eval_flow.py",
+    "run_external_agent_evals.py --tool report",
     "run_external_agent_evals.py --tool deepeval",
     "run_external_agent_evals.py --tool retrieval",
 }

@@ -84,6 +84,39 @@ class _RetrievalEvalHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
 
+class _AgentEvalReportHandler(BaseHTTPRequestHandler):
+    seen: ClassVar[list[str]] = []
+
+    def log_message(self, format: str, *args: Any) -> None:  # noqa: A002
+        return
+
+    def do_GET(self) -> None:
+        self.__class__.seen.append(self.path)
+        body = json.dumps(
+            {
+                "schema_version": "agent-eval-report-v1",
+                "policy_schema_version": "agent-eval-policy-v1",
+                "session_id": "session-for-report",
+                "status": "pass_with_optional_external_evals",
+                "native_fast_gate": {
+                    "status": "pass",
+                    "blocking": True,
+                    "failed_dimensions": [],
+                },
+                "privacy": {
+                    "raw_source_text_returned": False,
+                    "learner_answers_returned": False,
+                    "secrets_returned": False,
+                },
+            }
+        ).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+
 class ExternalAgentEvalRunnerTests(unittest.TestCase):
     def test_promptfoo_runner_invokes_pinned_external_tool(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -228,6 +261,52 @@ class ExternalAgentEvalRunnerTests(unittest.TestCase):
         self.assertEqual(result["tool"], "retrieval")
         self.assertEqual(result["framework"], "ragas-compatible-native")
         self.assertEqual(result["session_id"], "session-for-retrieval")
+
+    def test_report_runner_invokes_agent_eval_report(self) -> None:
+        _AgentEvalReportHandler.seen = []
+        server = HTTPServer(("127.0.0.1", 0), _AgentEvalReportHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            host, port = server.server_address
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(
+                        Path(__file__).resolve().parents[3]
+                        / "scripts"
+                        / "run_external_agent_evals.py"
+                    ),
+                    "--tool",
+                    "report",
+                    "--api-base",
+                    f"http://{host}:{port}",
+                    "--session-id",
+                    "session-for-report",
+                    "--required",
+                    "--timeout-seconds",
+                    "10",
+                ],
+                cwd=Path(__file__).resolve().parents[3],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
+        self.assertIn(
+            "/v1/sessions/session-for-report/agent-eval/report",
+            _AgentEvalReportHandler.seen,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["tool"], "report")
+        self.assertEqual(result["framework"], "study-anything-native-maturity-report")
+        self.assertEqual(result["session_id"], "session-for-report")
 
 
 if __name__ == "__main__":

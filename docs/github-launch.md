@@ -56,9 +56,9 @@ Confirm:
 - `scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
   emits `adoption-proof-v1`, proving the distributable Kimi/Codex/WorkBuddy platform pack can be used
   by an external operator without the standalone frontend.
-- `scripts/verify_published_image_launch.py --tag v0.2.28-alpha` can pull the public API image,
+- `scripts/verify_published_image_launch.py --tag v0.2.29-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
-- `docs/release-notes/v0.2.28-alpha.md` lists known limitations.
+- `docs/release-notes/v0.2.29-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
 
 ## Tag And Push
@@ -68,17 +68,17 @@ Merge the release candidate PR, sync `main`, then tag the exact merge commit:
 ```bash
 git switch main
 git pull --ff-only
-git tag v0.2.28-alpha
-git push origin v0.2.28-alpha
+git tag v0.2.29-alpha
+git push origin v0.2.29-alpha
 ```
 
 Create the prerelease after the tag is pushed:
 
 ```bash
-gh release create v0.2.28-alpha \
+gh release create v0.2.29-alpha \
   --prerelease \
-  --title "Study Anything v0.2.28-alpha" \
-  --notes-file docs/release-notes/v0.2.28-alpha.md
+  --title "Study Anything v0.2.29-alpha" \
+  --notes-file docs/release-notes/v0.2.29-alpha.md
 ```
 
 ## GitHub Settings
@@ -95,8 +95,8 @@ Recommended repository settings:
   `linux/arm64` manifests:
 
 ```bash
-docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.28-alpha
-python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha
+docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.29-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.29-alpha
 ```
 
 If the local pull is too slow but the manifest and GitHub `docker-images` workflow are green, record
@@ -104,14 +104,14 @@ the diagnostic fallback instead of leaving the smoke ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.2.28-alpha \
+  --tag v0.2.29-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 ## Release Notes
 
-Use `docs/release-notes/v0.2.28-alpha.md` as the GitHub Release body. Keep the matching file in the
+Use `docs/release-notes/v0.2.29-alpha.md` as the GitHub Release body. Keep the matching file in the
 repository so self-host users can inspect upgrade notes before pulling an image.
 
 ## What Is Intentionally Not Hosted Yet

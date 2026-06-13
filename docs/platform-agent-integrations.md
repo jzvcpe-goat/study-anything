@@ -248,12 +248,14 @@ Use the HTTP API contract when the platform can call local or private HTTP tools
 1. Start Study Anything with Docker or Skill Mode.
 2. Expose only the needed API base to the platform Agent.
 3. Give the platform Agent the public endpoints in `docs/api.md`.
-4. Require it to call `agent-audit` and `agent-eval/artifact` after each completed learning loop.
-5. Optionally return `agent-eval/quality` and `exports/obsidian` for quality proof and second-brain notes.
+4. Require it to call `evals/policy`, `agent-audit`, `agent-eval/artifact`, and
+   `agent-eval/report` after each completed learning loop.
+5. Return `agent-eval/quality` and `exports/obsidian` for quality proof and second-brain notes.
 
 Minimum endpoints for a platform tool wrapper:
 
 - `GET /v1/health`
+- `GET /v1/evals/policy`
 - `POST /v1/sessions`
 - `POST /v1/sessions/{session_id}/reading`
 - `POST /v1/context-packages/validate` optional importer path
@@ -277,6 +279,7 @@ Minimum endpoints for a platform tool wrapper:
 - `GET /v1/sessions/{session_id}/agent-audit`
 - `GET /v1/sessions/{session_id}/agent-eval/artifact`
 - `GET /v1/sessions/{session_id}/agent-eval/quality`
+- `GET /v1/sessions/{session_id}/agent-eval/report`
 - `GET /v1/sessions/{session_id}/exports/obsidian`
 - `GET /v1/sessions/{session_id}/exports/second-brain-handoff`
 - `GET /v1/sessions/{session_id}/exports/learning-package`
@@ -292,17 +295,18 @@ A platform integration is acceptable when it can complete this sequence:
 4. Return `agent-audit.status=verified`.
 5. Return `agent-eval-artifact-v1` with all required native gates passing.
 6. Return `agent-quality-eval-v1` with `status=pass`.
-7. Return an Obsidian markdown export when the user asks for knowledge deposit.
-8. Return `learning-package-v1` when the user wants NotebookLM-style, platform-agent, or local archive handoff.
-9. Run `scripts/verify_importer_lesson_flow.py` for package-import release evidence.
-10. Run `scripts/verify_importer_runtime_retrieval_flow.py` with retrieval explicitly enabled when
+7. Return `agent-eval-policy-v1` and `agent-eval-report-v1` with `native_fast_gate.status=pass`.
+8. Return an Obsidian markdown export when the user asks for knowledge deposit.
+9. Return `learning-package-v1` when the user wants NotebookLM-style, platform-agent, or local archive handoff.
+10. Run `scripts/verify_importer_lesson_flow.py` for package-import release evidence.
+11. Run `scripts/verify_importer_runtime_retrieval_flow.py` with retrieval explicitly enabled when
    validating importer runtime plus retrieval.
-11. Run `scripts/verify_platform_ecosystem_eval_flow.py` when validating the full platform Agent path:
+12. Run `scripts/verify_platform_ecosystem_eval_flow.py` when validating the full platform Agent path:
    importer, enrichment, retrieval, retrieval eval, teaching, learning loop, external eval adapters,
    Obsidian, and learning-package export.
-12. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
+13. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
    handoff, GitHub prerelease, or external operator guide.
-13. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+14. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:

@@ -25,6 +25,18 @@
   },
   {
     "function": {
+      "description": "Read the redacted Agent eval maturity policy, native release gates, optional external adapter policy, fixtures, and failure classes. Method: GET /v1/evals/policy.",
+      "name": "study_anything_eval_policy",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Create a learning session for a local user. Use demo mode only for smoke tests. Method: POST /v1/sessions.",
       "name": "study_anything_create_session",
       "parameters": {
@@ -737,6 +749,26 @@
     "function": {
       "description": "Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates. Method: GET /v1/sessions/{session_id}/agent-eval/quality.",
       "name": "study_anything_agent_quality_eval",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Return the redacted Agent eval maturity report that combines invocation proof, trajectory, teaching quality, export readiness, privacy, and optional external adapter readiness. Method: GET /v1/sessions/{session_id}/agent-eval/report.",
+      "name": "study_anything_agent_eval_report",
       "parameters": {
         "additionalProperties": false,
         "properties": {

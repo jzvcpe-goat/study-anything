@@ -1,0 +1,47 @@
+{
+  "schema_version": "study-anything-agent-eval-fixture-v1",
+  "fixture_id": "mock-http-agent-learning-loop",
+  "provider_kind": "http_agent",
+  "session": {
+    "session_id": "fixture-http-agent-session",
+    "track": "PRODUCT",
+    "stage": "completed",
+    "source": {
+      "source_type": "learning_context_package",
+      "reference": "demo://fixtures/mock-http-agent-learning-loop",
+      "excerpt_hash": "sha256:redacted-http-agent-excerpt"
+    }
+  },
+  "agent_tasks": [
+    {
+      "task_type": "quiz.generate",
+      "provider_kind": "http_agent",
+      "status": "ok"
+    },
+    {
+      "task_type": "answer.grade",
+      "provider_kind": "http_agent",
+      "status": "ok"
+    },
+    {
+      "task_type": "insight.synthesize",
+      "provider_kind": "http_agent",
+      "status": "ok"
+    }
+  ],
+  "expected_reports": {
+    "agent_eval_artifact": "agent-eval-artifact-v1",
+    "agent_quality_eval": "agent-quality-eval-v1",
+    "agent_eval_report": "agent-eval-report-v1",
+    "external_agent_used": true
+  },
+  "privacy": {
+    "raw_source_text_included": false,
+    "learner_answers_included": false,
+    "grading_feedback_included": false,
+    "generated_insights_included": false,
+    "agent_endpoints_included": false,
+    "raw_agent_metadata_included": false,
+    "secrets_included": false
+  }
+}

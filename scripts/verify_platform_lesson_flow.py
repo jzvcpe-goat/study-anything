@@ -133,6 +133,7 @@ def main() -> None:
     audit = request(f"/v1/sessions/{quote(session_id)}/agent-audit")
     artifact = request(f"/v1/sessions/{quote(session_id)}/agent-eval/artifact")
     quality = request(f"/v1/sessions/{quote(session_id)}/agent-eval/quality")
+    eval_report = request(f"/v1/sessions/{quote(session_id)}/agent-eval/report")
     obsidian = request(f"/v1/sessions/{quote(session_id)}/exports/obsidian")
     package = request(f"/v1/sessions/{quote(session_id)}/exports/learning-package")
     enrichment_artifact = request(f"/v1/sessions/{quote(session_id)}/exports/enrichment-artifact")
@@ -141,6 +142,7 @@ def main() -> None:
     assert_schema(audit, "agent-audit-v1", "agent audit")
     assert_schema(artifact, "agent-eval-artifact-v1", "agent eval artifact")
     assert_schema(quality, "agent-quality-eval-v1", "quality eval")
+    assert_schema(eval_report, "agent-eval-report-v1", "Agent eval report")
     assert_schema(obsidian, "obsidian-markdown-export-v1", "obsidian export")
     assert_schema(package, "learning-package-v1", "learning package")
     assert_schema(enrichment_artifact, "learning-enrichment-artifact-v1", "enrichment artifact")
@@ -149,6 +151,8 @@ def main() -> None:
         raise LessonVerificationError(f"Agent audit did not verify: {audit}")
     if quality.get("status") != "pass":
         raise LessonVerificationError(f"Quality eval did not pass: {quality}")
+    if (eval_report.get("native_fast_gate") or {}).get("status") != "pass":
+        raise LessonVerificationError(f"Agent eval report native gate failed: {eval_report}")
 
     redacted_forbidden = [
         private_source_text,
@@ -161,6 +165,7 @@ def main() -> None:
     assert_no_leaks("agent audit", audit, redacted_forbidden)
     assert_no_leaks("agent eval artifact", artifact, redacted_forbidden)
     assert_no_leaks("quality eval", quality, redacted_forbidden)
+    assert_no_leaks("Agent eval report", eval_report, redacted_forbidden)
     assert_no_leaks("learning package raw source boundary", package, [private_source_text, private_enrichment_text])
     assert_no_leaks("obsidian raw source boundary", obsidian, [private_source_text, private_enrichment_text])
     assert_no_leaks(
@@ -183,6 +188,7 @@ def main() -> None:
                 "stage": completed["stage"],
                 "agent_audit_status": audit["status"],
                 "quality_status": quality["status"],
+                "agent_eval_report_schema": eval_report["schema_version"],
                 "obsidian_schema": obsidian["schema_version"],
                 "learning_package_schema": package["schema_version"],
                 "enrichment_artifact_schema": enrichment_artifact["schema_version"],

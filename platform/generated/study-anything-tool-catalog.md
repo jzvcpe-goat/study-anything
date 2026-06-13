@@ -94,6 +94,35 @@ Privacy:
 }
 ```
 
+### `study_anything_eval_policy`
+
+- Method: `GET`
+- Path: `/v1/evals/policy`
+- Description: Read the redacted Agent eval maturity policy, native release gates, optional external adapter policy, fixtures, and failure classes.
+
+Output requirements:
+
+- schema_version == agent-eval-policy-v1
+- native_fast_gate.required_for_release == true
+- external_adapters include promptfoo, deepeval, langchain-agentevals, ragas
+- external_adapters are optional unless explicitly required by release operator
+- privacy.real_model_keys_stored_by_study_anything == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "agent endpoints",
+    "API keys",
+    "model secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
 ### `study_anything_create_session`
 
 - Method: `POST`
@@ -646,6 +675,37 @@ Output requirements:
 - status == pass or needs_review
 - quality_score is numeric
 - gates include overview_quality, glossary_quality, quiz_quality, grading_quality, synthesis_quality
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "feedback",
+    "insights",
+    "agent endpoints",
+    "raw agent metadata",
+    "secrets"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_agent_eval_report`
+
+- Method: `GET`
+- Path: `/v1/sessions/{session_id}/agent-eval/report`
+- Description: Return the redacted Agent eval maturity report that combines invocation proof, trajectory, teaching quality, export readiness, privacy, and optional external adapter readiness.
+
+Output requirements:
+
+- schema_version == agent-eval-report-v1
+- policy_schema_version == agent-eval-policy-v1
+- native_fast_gate.status == pass
+- dimensions include agent_invocation_coverage, trajectory_coverage, teaching_quality, retrieval_grounding, export_readiness, privacy_redaction, external_adapter_readiness
+- adapter_readiness includes promptfoo, deepeval, langchain-agentevals, ragas
 
 Privacy:
 

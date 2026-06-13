@@ -140,8 +140,10 @@ python3 scripts/study_anything_cli.py show SESSION_ID
 python3 scripts/study_anything_cli.py resume SESSION_ID
 python3 scripts/study_anything_cli.py mastery SESSION_ID
 python3 scripts/study_anything_cli.py events SESSION_ID
+python3 scripts/study_anything_cli.py eval-policy
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
+python3 scripts/study_anything_cli.py agent-eval-report SESSION_ID
 python3 scripts/study_anything_cli.py quality-eval SESSION_ID
 python3 scripts/study_anything_cli.py retrieval-eval SOURCE_SESSION_ID --query "focus topic"
 python3 scripts/study_anything_cli.py obsidian-export SESSION_ID --markdown
@@ -152,7 +154,9 @@ python3 scripts/study_anything_cli.py hitl
 Use `agent-audit` after every real learning loop when the user needs proof that Study Anything handled
 the required learning tasks. Use `agent-eval` when another platform or CI job needs a redacted artifact
 for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
-Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
+Use `eval-policy` to inspect release-gate rules and optional external adapter policy. Use
+`agent-eval-report` when another platform needs a per-session maturity report with
+`native_fast_gate.status`. Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
 `package-export` for platform-agent, NotebookLM-style, or local archive handoff.
 Use `retrieval-eval` before claiming retrieval/context quality for follow-up lessons.
 
