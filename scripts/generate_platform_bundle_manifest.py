@@ -112,6 +112,11 @@ FILES: list[tuple[str, str, str]] = [
         "Commercial-readiness contract verifier for OSS/local-first launch boundaries.",
     ),
     (
+        "scripts/verify_adoption_telemetry.py",
+        "verification",
+        "Aggregate adoption telemetry and PMF readiness verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -232,6 +237,11 @@ FILES: list[tuple[str, str, str]] = [
         "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
     ),
     (
+        "docs/adoption-telemetry.md",
+        "docs",
+        "Local aggregate adoption telemetry and PMF readiness privacy contract.",
+    ),
+    (
         "docs/ecosystem-submission.md",
         "docs",
         "Ecosystem submission metadata, verification, and no-frontend launch guide.",
@@ -292,7 +302,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.1-alpha.md",
+        "docs/release-notes/v0.3.2-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

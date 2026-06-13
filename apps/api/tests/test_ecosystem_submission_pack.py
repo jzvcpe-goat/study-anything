@@ -23,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.1-alpha")
+        self.assertEqual(payload["version"], "v0.3.2-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertIn("kimi-compatible", payload["platforms"])
@@ -38,7 +38,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.1-alpha")
+        self.assertEqual(submission["version"], "v0.3.2-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -52,6 +52,10 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         self.assertEqual(submission["commercial_readiness"]["contract"], "commercial-readiness-v1")
         self.assertIn("platform_agent_distribution", submission["commercial_readiness"]["ready_paths"])
         self.assertIn("hosted_paid_services", submission["commercial_readiness"]["not_ready_paths"])
+        self.assertEqual(submission["adoption_telemetry"]["contract"], "adoption-telemetry-v1")
+        self.assertEqual(submission["adoption_telemetry"]["readiness_contract"], "pmf-readiness-v1")
+        self.assertIs(submission["adoption_telemetry"]["aggregate_only"], True)
+        self.assertIs(submission["adoption_telemetry"]["automatic_upload"], False)
 
 
 if __name__ == "__main__":

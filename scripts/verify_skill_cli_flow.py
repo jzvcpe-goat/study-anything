@@ -44,6 +44,18 @@ def main() -> None:
     if commercial_readiness.get("launch_assessment", {}).get("hosted_paid_services") != "not_ready":
         raise RuntimeError(f"Hosted paid services should remain not ready: {commercial_readiness}")
 
+    adoption_telemetry: Dict[str, Any] = parsed("adoption-telemetry")
+    if adoption_telemetry.get("schema_version") != "adoption-telemetry-v1":
+        raise RuntimeError(f"Unexpected adoption telemetry schema: {adoption_telemetry}")
+    if adoption_telemetry.get("privacy", {}).get("aggregate_only") is not True:
+        raise RuntimeError(f"Adoption telemetry must be aggregate-only: {adoption_telemetry}")
+
+    pmf_readiness: Dict[str, Any] = parsed("pmf-readiness")
+    if pmf_readiness.get("schema_version") != "pmf-readiness-v1":
+        raise RuntimeError(f"Unexpected PMF readiness schema: {pmf_readiness}")
+    if pmf_readiness.get("commercial_boundary", {}).get("hosted_paid_services_status") != "not_ready":
+        raise RuntimeError(f"Hosted paid services should remain not ready: {pmf_readiness}")
+
     eval_policy: Dict[str, Any] = parsed("eval-policy")
     if eval_policy.get("schema_version") != "agent-eval-policy-v1":
         raise RuntimeError(f"Unexpected Agent eval policy schema: {eval_policy}")
@@ -105,6 +117,8 @@ def main() -> None:
                 "agent_eval_policy_schema": eval_policy["schema_version"],
                 "agent_eval_report_schema": agent_eval_report["schema_version"],
                 "commercial_readiness_schema": commercial_readiness["schema_version"],
+                "adoption_telemetry_schema": adoption_telemetry["schema_version"],
+                "pmf_readiness_schema": pmf_readiness["schema_version"],
             },
             ensure_ascii=False,
         )

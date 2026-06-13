@@ -25,6 +25,30 @@
   },
   {
     "function": {
+      "description": "Read local aggregate adoption telemetry for clean-clone proof, runtime mode, tool import, Agent eval, repeat learning, plugin validation, and explicit opt-in feedback counts. Method: GET /v1/adoption/telemetry.",
+      "name": "study_anything_adoption_telemetry",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Read a local PMF readiness summary derived from aggregate adoption telemetry; confirms hosted paid services remain not ready before PMF. Method: GET /v1/pmf/readiness.",
+      "name": "study_anything_pmf_readiness",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
       "description": "Check that the local Study Anything API is reachable before starting a learning loop. Method: GET /v1/health.",
       "name": "study_anything_health",
       "parameters": {

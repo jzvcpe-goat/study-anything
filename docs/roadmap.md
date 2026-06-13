@@ -305,11 +305,25 @@
 - Include the submission manifest, verifier, docs, and release notes in the generated platform
   bundle and adoption pack.
 
+## v0.3.2-alpha
+
+- Add `adoption-telemetry-v1`, a local aggregate telemetry contract for clean-clone proof, runtime
+  mode, platform tool import success, Agent eval pass/fail, repeat local sessions, plugin validation,
+  and explicit opt-in feedback counts.
+- Add `pmf-readiness-v1`, a local PMF readout that keeps hosted paid services and standalone app
+  monetization out of the launch path until adoption evidence is stronger.
+- Add `scripts/verify_adoption_telemetry.py` and wire adoption telemetry into platform tools,
+  adoption proof, ecosystem submission, release checks, and PMF export.
+- Maintain the privacy boundary: no source text, answers, insights, raw user ids, Agent endpoints,
+  API keys, or browser/video/app private context in telemetry evidence.
+
 ## v0.3 Next
 
-- `v0.3.2`: adoption telemetry, local PMF readout, and maintainer feedback workflow.
 - `v0.3.3`: user-owned Agent gateway hardening, local security posture, and timeout/sandbox guidance.
 - `v0.3.4`: NotebookLM, Obsidian, and Learning Enrichment bridge hardening.
+- `v0.3.5`: plugin trust registry and installer quarantine.
+- `v0.3.6`: security, recovery, and backup hardening.
+- `v0.3.7`: external platform submission dry-run packages.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

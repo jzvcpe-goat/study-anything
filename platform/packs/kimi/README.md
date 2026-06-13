@@ -129,6 +129,10 @@ and grading feedback.
 The ecosystem submission verifier returns `ecosystem-submission-verification-v1` and proves the Kimi
 pack has no standalone frontend requirement, no Study Anything model-key custody, and no high-risk
 management endpoints in the imported tool surface.
+`GET /v1/adoption/telemetry` returns `adoption-telemetry-v1` and `GET /v1/pmf/readiness` returns
+`pmf-readiness-v1`; use them for aggregate local adoption evidence and PMF review without logging
+source text, answers, insights, raw user ids, Agent endpoints, API keys, or browser/video/app private
+context.
 
 For importer flows, Kimi or the surrounding platform Agent should first build a
 `learning-context-package-v1` object from user-approved web pages, files, video slices, workspace
@@ -162,6 +166,7 @@ API_BASE=http://127.0.0.1:8000 \
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
+python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 ```
 
 Share only compact mastery and redacted evidence. Do not log raw source text, learner answers,

@@ -16,6 +16,8 @@ CATALOG_PATH = GENERATED_DIR / "study-anything-tool-catalog.md"
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
     "study_anything_commercial_readiness",
+    "study_anything_adoption_telemetry",
+    "study_anything_pmf_readiness",
     "study_anything_health",
     "study_anything_eval_policy",
     "study_anything_create_session",
@@ -89,6 +91,8 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
         self.assertIn("raw source text", forbidden)
         self.assertIn("API keys or model secrets", forbidden)
         self.assertIn("agent endpoints", forbidden)
+        self.assertIn("raw user ids", forbidden)
+        self.assertIn("browser/video/app private context", forbidden)
 
     def test_audit_and_eval_tools_are_marked_redacted(self) -> None:
         manifest = self._manifest()

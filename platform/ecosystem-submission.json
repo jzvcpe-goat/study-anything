@@ -1,7 +1,7 @@
 {
   "schema_version": "ecosystem-submission-v1",
   "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.1-alpha",
+  "version": "v0.3.2-alpha",
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
   "project": {
     "repository": "https://github.com/jzvcpe-goat/study-anything",
@@ -19,7 +19,9 @@
       "mastery state",
       "redacted audit and eval evidence",
       "retrieval quality checks",
-      "Obsidian and NotebookLM-style exports"
+      "Obsidian and NotebookLM-style exports",
+      "aggregate adoption telemetry",
+      "PMF readiness summary"
     ],
     "platform_agent_owns": [
       "browser access",
@@ -42,7 +44,9 @@
       "generated insights",
       "agent endpoints",
       "agent metadata",
-      "API keys or model secrets"
+      "API keys or model secrets",
+      "raw user ids",
+      "browser/video/app private context"
     ]
   },
   "commercial_readiness": {
@@ -70,7 +74,9 @@
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
-    "docs/adoption.md"
+    "docs/adoption.md",
+    "docs/adoption-telemetry.md",
+    "scripts/verify_adoption_telemetry.py"
   ],
   "submissions": [
     {
@@ -94,6 +100,7 @@
       ],
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -124,6 +131,7 @@
       ],
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -152,6 +160,7 @@
       ],
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -179,6 +188,7 @@
       ],
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -194,6 +204,7 @@
     "minimum_commands": [
       "python3 scripts/verify_ecosystem_submission_pack.py",
       "python3 scripts/verify_commercial_readiness.py",
+      "python3 scripts/verify_adoption_telemetry.py",
       "python3 scripts/verify_platform_ecosystem_packs.py",
       "python3 scripts/generate_platform_bundle_manifest.py --check",
       "python3 scripts/generate_platform_adoption_pack.py --check",
@@ -205,7 +216,27 @@
       "platform tool manifest excludes management endpoints",
       "submission metadata declares no standalone frontend requirement",
       "submission metadata declares no Study Anything model-key custody",
-      "commercial-readiness-v1 remains linked"
+      "commercial-readiness-v1 remains linked",
+      "adoption-telemetry-v1 remains aggregate-only",
+      "pmf-readiness-v1 keeps hosted paid services not_ready"
+    ]
+  },
+  "adoption_telemetry": {
+    "contract": "adoption-telemetry-v1",
+    "endpoint": "/v1/adoption/telemetry",
+    "readiness_contract": "pmf-readiness-v1",
+    "readiness_endpoint": "/v1/pmf/readiness",
+    "verifier": "scripts/verify_adoption_telemetry.py",
+    "aggregate_only": true,
+    "automatic_upload": false,
+    "forbidden_fields": [
+      "source text",
+      "learner answers",
+      "generated insights",
+      "raw user ids",
+      "agent endpoints",
+      "API keys",
+      "browser/video/app private context"
     ]
   }
 }

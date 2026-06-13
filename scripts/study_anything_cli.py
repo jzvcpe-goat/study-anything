@@ -182,6 +182,14 @@ def cmd_commercial_readiness(args: argparse.Namespace) -> None:
     emit(args, request("/v1/commercial/readiness"))
 
 
+def cmd_adoption_telemetry(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/adoption/telemetry"))
+
+
+def cmd_pmf_readiness(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/pmf/readiness"))
+
+
 def cmd_agents(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/agents/status?{urlencode({'user_id': args.user_id})}"))
 
@@ -713,6 +721,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Show OSS/local-first commercial readiness, hosted-service contracts, and launch limits",
     )
     commercial_readiness.set_defaults(func=cmd_commercial_readiness)
+
+    adoption_telemetry = subparsers.add_parser(
+        "adoption-telemetry",
+        help="Show local aggregate adoption telemetry without private learning content",
+    )
+    adoption_telemetry.set_defaults(func=cmd_adoption_telemetry)
+
+    pmf_readiness = subparsers.add_parser(
+        "pmf-readiness",
+        help="Show local PMF readiness and hosted-service boundary status",
+    )
+    pmf_readiness.set_defaults(func=cmd_pmf_readiness)
 
     agents = subparsers.add_parser("agents", help="List configured agent providers")
     agents.add_argument("--user-id", default="local-user")

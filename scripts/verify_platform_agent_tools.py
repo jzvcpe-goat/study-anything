@@ -21,6 +21,8 @@ API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://12
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
     "study_anything_commercial_readiness",
+    "study_anything_adoption_telemetry",
+    "study_anything_pmf_readiness",
     "study_anything_health",
     "study_anything_eval_policy",
     "study_anything_create_session",
@@ -235,6 +237,35 @@ def main() -> None:
         raise VerificationError(f"Commercial readiness must not store model keys: {commercial}")
     if commercial_privacy.get("billing_required_for_local_core") is not False:
         raise VerificationError(f"Commercial readiness must not require billing locally: {commercial}")
+
+    adoption_telemetry = call_tool(tools, "study_anything_adoption_telemetry")
+    if adoption_telemetry.get("schema_version") != "adoption-telemetry-v1":
+        raise VerificationError(f"Adoption telemetry returned invalid schema: {adoption_telemetry}")
+    telemetry_privacy = adoption_telemetry.get("privacy") or {}
+    if telemetry_privacy.get("aggregate_only") is not True:
+        raise VerificationError(f"Adoption telemetry must be aggregate-only: {adoption_telemetry}")
+    for key in (
+        "source_text_included",
+        "answers_included",
+        "insights_included",
+        "raw_user_ids_included",
+        "agent_endpoints_included",
+        "api_keys_included",
+        "browser_video_app_context_included",
+    ):
+        if telemetry_privacy.get(key) is not False:
+            raise VerificationError(f"Adoption telemetry privacy.{key} must be false.")
+    if (adoption_telemetry.get("collection") or {}).get("automatic_upload") is not False:
+        raise VerificationError(f"Adoption telemetry must not auto-upload: {adoption_telemetry}")
+
+    pmf_readiness = call_tool(tools, "study_anything_pmf_readiness")
+    if pmf_readiness.get("schema_version") != "pmf-readiness-v1":
+        raise VerificationError(f"PMF readiness returned invalid schema: {pmf_readiness}")
+    boundary = pmf_readiness.get("commercial_boundary") or {}
+    if boundary.get("sell_standalone_app_now") is not False:
+        raise VerificationError(f"PMF readiness must not recommend selling standalone app: {pmf_readiness}")
+    if boundary.get("hosted_paid_services_status") != "not_ready":
+        raise VerificationError(f"Hosted paid services must remain not_ready: {pmf_readiness}")
 
     eval_policy = call_tool(tools, "study_anything_eval_policy")
     if eval_policy.get("schema_version") != "agent-eval-policy-v1":
@@ -681,6 +712,8 @@ def main() -> None:
             "artifact": artifact,
             "quality": quality,
             "eval_report": eval_report,
+            "adoption_telemetry": adoption_telemetry,
+            "pmf_readiness": pmf_readiness,
             "second_brain": second_brain,
         },
         ensure_ascii=False,
@@ -711,6 +744,8 @@ def main() -> None:
                 "session_id": session_id,
                 "agent_audit_status": audit["status"],
                 "commercial_readiness_schema": commercial["schema_version"],
+                "adoption_telemetry_schema": adoption_telemetry["schema_version"],
+                "pmf_readiness_schema": pmf_readiness["schema_version"],
                 "eval_schema": artifact["schema_version"],
                 "quality_schema": quality["schema_version"],
                 "eval_policy_schema": eval_policy["schema_version"],

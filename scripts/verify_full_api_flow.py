@@ -163,6 +163,17 @@ def main() -> None:
         raise RuntimeError(f"PMF metrics schema is not pmf-v1: {metrics}")
     if metrics.get("sessions", {}).get("completed", 0) < 1:
         raise RuntimeError(f"PMF metrics did not count the completed smoke session: {metrics}")
+    adoption_telemetry = request("/v1/adoption/telemetry")
+    if adoption_telemetry.get("schema_version") != "adoption-telemetry-v1":
+        raise RuntimeError(f"Adoption telemetry schema is not adoption-telemetry-v1: {adoption_telemetry}")
+    telemetry_privacy = adoption_telemetry.get("privacy") or {}
+    if telemetry_privacy.get("aggregate_only") is not True or telemetry_privacy.get("automatic_upload") is not False:
+        raise RuntimeError(f"Adoption telemetry privacy contract is unsafe: {adoption_telemetry}")
+    pmf_readiness = request("/v1/pmf/readiness")
+    if pmf_readiness.get("schema_version") != "pmf-readiness-v1":
+        raise RuntimeError(f"PMF readiness schema is not pmf-readiness-v1: {pmf_readiness}")
+    if pmf_readiness.get("commercial_boundary", {}).get("hosted_paid_services_status") != "not_ready":
+        raise RuntimeError(f"PMF readiness should keep hosted services not_ready: {pmf_readiness}")
     intent = request(
         "/v1/pmf/interest",
         {
@@ -190,6 +201,10 @@ def main() -> None:
     )
     if export.get("schema_version") != "pmf-export-v1":
         raise RuntimeError(f"PMF export schema is not pmf-export-v1: {export}")
+    if export.get("adoption_telemetry", {}).get("schema_version") != "adoption-telemetry-v1":
+        raise RuntimeError(f"PMF export did not include adoption telemetry: {export}")
+    if export.get("pmf_readiness", {}).get("schema_version") != "pmf-readiness-v1":
+        raise RuntimeError(f"PMF export did not include PMF readiness: {export}")
     serialized_export = json.dumps(export, ensure_ascii=False)
     if "Smoke export note" in serialized_export or "smoke-user" in serialized_export:
         raise RuntimeError(f"PMF export leaked private smoke data: {export}")
@@ -261,6 +276,8 @@ def main() -> None:
                 "pmf_completed_sessions": metrics["sessions"]["completed"],
                 "pmf_interest_total": pmf_summary["total"],
                 "pmf_export_schema": export["schema_version"],
+                "adoption_telemetry_schema": adoption_telemetry["schema_version"],
+                "pmf_readiness_schema": pmf_readiness["schema_version"],
                 "sync_package_schema": sync_export["package"]["schema_version"],
                 "sync_session_count": sync_inspect["payload_summary"]["session_count"],
                 "sync_restore_preview_schema": sync_restore_preview["schema_version"],

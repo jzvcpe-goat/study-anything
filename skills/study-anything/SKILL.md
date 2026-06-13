@@ -143,6 +143,8 @@ python3 scripts/study_anything_cli.py mastery SESSION_ID
 python3 scripts/study_anything_cli.py events SESSION_ID
 python3 scripts/study_anything_cli.py eval-policy
 python3 scripts/study_anything_cli.py commercial-readiness
+python3 scripts/study_anything_cli.py adoption-telemetry
+python3 scripts/study_anything_cli.py pmf-readiness
 python3 scripts/study_anything_cli.py agent-audit SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval SESSION_ID
 python3 scripts/study_anything_cli.py agent-eval-report SESSION_ID
@@ -158,7 +160,9 @@ the required learning tasks. Use `agent-eval` when another platform or CI job ne
 for Promptfoo, DeepEval, LangChain AgentEvals, or Ragas.
 Use `eval-policy` to inspect release-gate rules and optional external adapter policy. Use
 `commercial-readiness` to inspect the OSS/local-first launch boundary, hosted-service contracts, and
-commercial non-goals before describing what can be sold or deployed. Use
+commercial non-goals before describing what can be sold or deployed. Use adoption telemetry and PMF
+readiness only for aggregate local evidence; they must not include source text, answers, insights,
+raw user ids, Agent endpoints, API keys, or browser/video/app private context. Use
 `agent-eval-report` when another platform needs a per-session maturity report with
 `native_fast_gate.status`. Use `quality-eval` before claiming teaching quality. Use `obsidian-export` for second-brain notes and
 `package-export` for platform-agent, NotebookLM-style, or local archive handoff.
@@ -202,6 +206,7 @@ adoption pack verifier:
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_adoption_telemetry.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree

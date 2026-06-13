@@ -96,6 +96,9 @@ launch path, diagnostics, and platform-Agent privacy boundary.
 `GET /v1/commercial/readiness` returns `commercial-readiness-v1`: GitHub OSS, self-host, and
 platform-Agent distribution are ready; hosted paid services, billing, SSO, remote accounts, and a
 standalone app are not in this alpha launch path.
+`GET /v1/adoption/telemetry` returns `adoption-telemetry-v1` and `GET /v1/pmf/readiness` returns
+`pmf-readiness-v1`: aggregate local adoption and PMF evidence only, with no source text, answers,
+insights, raw user ids, Agent endpoints, API keys, or browser/video/app private context.
 The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
 excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
 export at `GET /v1/sessions/{session_id}/exports/obsidian`.
@@ -116,6 +119,8 @@ A Codex integration must return both:
 
 - `agent-audit.status == verified`
 - `commercial-readiness-v1` for local-first launch boundaries and hosted-service non-goals
+- `adoption-telemetry-v1` and `pmf-readiness-v1` for aggregate adoption and PMF evidence
+- `adoption-telemetry-verification-v1` for telemetry privacy verification
 - `ecosystem-submission-v1` for Kimi/Codex/WorkBuddy/generic OpenAPI submission metadata
 - `ecosystem-submission-verification-v1` for no-frontend, privacy, and high-risk endpoint checks
 - `agent-eval-policy-v1` for the native release gate, optional adapters, fixtures, failure classes,

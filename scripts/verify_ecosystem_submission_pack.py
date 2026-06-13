@@ -34,10 +34,13 @@ REQUIRED_SHARED_ASSETS = {
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
     "docs/adoption.md",
+    "docs/adoption-telemetry.md",
+    "scripts/verify_adoption_telemetry.py",
 }
 REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_ecosystem_submission_pack.py",
     "verify_commercial_readiness.py",
+    "verify_adoption_telemetry.py",
     "verify_platform_ecosystem_packs.py",
     "generate_platform_bundle_manifest.py --check",
     "generate_platform_adoption_pack.py --check",
@@ -131,8 +134,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.1-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.1-alpha.")
+    if submission.get("version") != "v0.3.2-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.2-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -149,6 +152,18 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         raise EcosystemSubmissionError("Commercial readiness endpoint drifted.")
     if "hosted_paid_services" not in set(commercial.get("not_ready_paths", [])):
         raise EcosystemSubmissionError("Hosted paid services must remain not ready for this submission.")
+
+    telemetry = submission.get("adoption_telemetry")
+    if not isinstance(telemetry, dict):
+        raise EcosystemSubmissionError("Submission must link adoption telemetry.")
+    if telemetry.get("contract") != "adoption-telemetry-v1":
+        raise EcosystemSubmissionError("Submission adoption telemetry contract drifted.")
+    if telemetry.get("endpoint") != "/v1/adoption/telemetry":
+        raise EcosystemSubmissionError("Submission adoption telemetry endpoint drifted.")
+    if telemetry.get("readiness_contract") != "pmf-readiness-v1":
+        raise EcosystemSubmissionError("Submission PMF readiness contract drifted.")
+    if telemetry.get("aggregate_only") is not True or telemetry.get("automatic_upload") is not False:
+        raise EcosystemSubmissionError("Submission adoption telemetry privacy boundary is unsafe.")
 
     shared_assets = submission.get("shared_assets")
     if not isinstance(shared_assets, list):
@@ -215,14 +230,16 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.1-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.1-alpha.")
+    if manifest.get("version") != "v0.3.2-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.2-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
         "docs/ecosystem-submission.md",
+        "docs/adoption-telemetry.md",
         "scripts/verify_ecosystem_submission_pack.py",
-        "docs/release-notes/v0.3.1-alpha.md",
+        "scripts/verify_adoption_telemetry.py",
+        "docs/release-notes/v0.3.2-alpha.md",
     }
     missing = required - paths
     if missing:

@@ -157,12 +157,28 @@ The verifier emits `ecosystem-submission-verification-v1` and proves the submiss
 standalone frontend requirement, no Study Anything custody of real model keys, no raw learning data
 in submission metadata, and no high-risk management endpoints in the imported platform tool surface.
 
+## Adoption Telemetry And PMF Readiness
+
+After the API is reachable, verify the local aggregate adoption contracts:
+
+```bash
+python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
+curl http://127.0.0.1:8000/v1/adoption/telemetry
+curl http://127.0.0.1:8000/v1/pmf/readiness
+```
+
+The verifier emits `adoption-telemetry-verification-v1`. The API contracts are
+`adoption-telemetry-v1` and `pmf-readiness-v1`; they report aggregate clean-clone/runtime/tool/eval,
+repeat-learning, plugin-validation, and explicit opt-in feedback counts only. They do not include raw
+source text, answers, insights, user ids, Agent endpoints, API keys, browser context, app context, or
+video transcripts.
+
 ## Published Image Fallback
 
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.1-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.2-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -170,12 +186,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.1-alpha \
+  --tag v0.3.2-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.1-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.2-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.
