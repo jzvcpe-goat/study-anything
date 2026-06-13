@@ -19,6 +19,9 @@ ADOPTION_PACK_PATH = ROOT / "platform" / "generated" / "study-anything-platform-
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
+MANUAL_REHEARSAL_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
+)
 COMMERCIAL_DOC = ROOT / "docs" / "commercial-readiness.md"
 
 REQUIRED_PLATFORMS = {
@@ -32,6 +35,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-tool-catalog.md",
+    "platform/generated/study-anything-operator-drill-transcript.json",
     "docs/ecosystem-submission.md",
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
@@ -46,7 +50,9 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_plugin_quarantine.py",
     "scripts/verify_security_recovery_hardening.py",
     "scripts/verify_platform_submission_dry_run.py",
+    "scripts/verify_platform_manual_submission_rehearsal.py",
     "platform/generated/study-anything-platform-submission-dry-run.json",
+    "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
 }
 REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_ecosystem_submission_pack.py",
@@ -58,6 +64,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_plugin_quarantine.py",
     "verify_security_recovery_hardening.py",
     "verify_platform_submission_dry_run.py",
+    "verify_platform_manual_submission_rehearsal.py",
     "verify_platform_ecosystem_packs.py",
     "generate_platform_bundle_manifest.py --check",
     "generate_platform_adoption_pack.py --check",
@@ -151,8 +158,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.8-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.8-alpha.")
+    if submission.get("version") != "v0.3.9-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.9-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -247,8 +254,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.8-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.8-alpha.")
+    if manifest.get("version") != "v0.3.9-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.9-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -260,8 +267,11 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_plugin_quarantine.py",
         "scripts/verify_security_recovery_hardening.py",
         "scripts/verify_platform_submission_dry_run.py",
+        "scripts/verify_platform_manual_submission_rehearsal.py",
+        "platform/generated/study-anything-operator-drill-transcript.json",
         "platform/generated/study-anything-platform-submission-dry-run.json",
-        "docs/release-notes/v0.3.8-alpha.md",
+        "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+        "docs/release-notes/v0.3.9-alpha.md",
     }
     missing = required - paths
     if missing:
@@ -279,7 +289,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.8-alpha":
+    if report.get("version") != "v0.3.9-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -299,6 +309,28 @@ def verify_submission_dry_run_report() -> None:
             raise EcosystemSubmissionError(f"Platform submission dry-run privacy.{key} must be false.")
 
 
+def verify_manual_rehearsal_report() -> None:
+    report = load_json(MANUAL_REHEARSAL_PATH)
+    if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
+        raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
+    if report.get("version") != "v0.3.9-alpha":
+        raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "raw_source_text_returned",
+        "learner_answers_returned",
+        "agent_endpoint_secrets_returned",
+        "real_model_keys_stored_by_study_anything",
+        "browser_video_private_context_returned",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Manual rehearsal privacy.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("Manual rehearsal report must be redacted.")
+
+
 def main() -> None:
     submission = load_json(SUBMISSION_PATH)
     tool_manifest = load_json(TOOL_MANIFEST_PATH)
@@ -310,6 +342,7 @@ def main() -> None:
     verify_pack_in_generated_adoption()
     verify_docs()
     verify_submission_dry_run_report()
+    verify_manual_rehearsal_report()
     print(
         json.dumps(
             {

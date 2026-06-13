@@ -29,16 +29,17 @@
       "notebooklm-obsidian-bridge-hardening-v1",
       "security-recovery-hardening-verification-v1",
       "platform-submission-dry-run-v1",
+      "platform-manual-submission-rehearsal-v1",
       "ecosystem-submission-v1",
       "ecosystem-submission-verification-v1"
     ],
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 247162,
+  "archive_bytes": 260008,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "f877154d68bebc505240fd0b2624343ffcaa05c94f5cd5f66d39daef22182295",
+  "archive_sha256": "6a040f0f8e0f43d6148816d635efcd3df9a223c727f4e0d29e0876ab8561e1df",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -47,23 +48,23 @@
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Repository overview and local-first launch entrypoint.",
-      "sha256": "b3267215f48bd7e4f749f2f0370e6fb7cd69bc51dcb745521410a18b05c3d9f1"
+      "sha256": "45fc4fc4bb0de8fe3a23f5284ae3e11c9f498ac45b17ee8c350a26872a0f8753"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/adoption.md",
-      "bytes": 8244,
+      "bytes": 8834,
       "kind": "operator_doc",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone and published-image adoption guide.",
-      "sha256": "19d9bf117e1eb17dd4f4191e876b29f1aa3d6830f7b2406911f205fbbc925b94"
+      "sha256": "fa4e40253e646ee0321bab0d446434086da4bcc335f50b8470c7ad0b481b348d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/platform-agent-integrations.md",
-      "bytes": 18400,
+      "bytes": 19135,
       "kind": "operator_doc",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General external platform Agent integration guide.",
-      "sha256": "b70fde51b8b8621ab731d0558a7531244530c1d85a2a62afbff0ff64ef07655c"
+      "sha256": "a41237bbc7ad7ef534df1338b2eadb831043af8bc9795de618125b0eb69e9d68"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/learning-enrichment.md",
@@ -123,11 +124,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/use-with-kimi.md",
-      "bytes": 5298,
+      "bytes": 5808,
       "kind": "operator_doc",
       "path": "docs/use-with-kimi.md",
       "purpose": "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
-      "sha256": "efbcc2636f28b15a60d1d95ef77862c6d46b2685e0338aae08f80a22142b2d7c"
+      "sha256": "8f52f44ab91aeb29a96497a0f599a3a8a2c98c786ffd09e3251e75137d70cba5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-drill.md",
@@ -143,7 +144,7 @@
       "kind": "operator_doc",
       "path": "docs/self-hosting.md",
       "purpose": "Docker/Skill Mode self-hosting guide.",
-      "sha256": "1118caa07a16bb15eceac9700afbab2d00bec4395199d66516a732a43bfc8849"
+      "sha256": "4a1f6f92a56dc17893767490a74a2fea2fd19b71d1b564f55a38e6d3101c9b6c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/security.md",
@@ -171,11 +172,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/ecosystem-submission.md",
-      "bytes": 3885,
+      "bytes": 4267,
       "kind": "operator_doc",
       "path": "docs/ecosystem-submission.md",
       "purpose": "Ecosystem submission metadata, verification, and no-frontend launch guide.",
-      "sha256": "f9d08f7f3057f1b149fb74e99b7db4582e7bbb4d53e697e100c2c1b11049bc1e"
+      "sha256": "f06c9f5eda81a10c30cf26473048234432cfa4c87f1d119d06a445171963c1fa"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/agent-eval.md",
@@ -194,12 +195,12 @@
       "sha256": "9206e6e26060fdc54e11a71d76888c1e01e6c930060e41adc0fc93ac67669fd4"
     },
     {
-      "archive_path": "study-anything-platform-adoption-pack/docs/release-notes/v0.3.8-alpha.md",
-      "bytes": 1807,
+      "archive_path": "study-anything-platform-adoption-pack/docs/release-notes/v0.3.9-alpha.md",
+      "bytes": 1638,
       "kind": "release_doc",
-      "path": "docs/release-notes/v0.3.8-alpha.md",
+      "path": "docs/release-notes/v0.3.9-alpha.md",
       "purpose": "Release notes for this adoption pack.",
-      "sha256": "26a4628a19e83dd13582c6dafc9d717fdf4f4f965f77aa1364abab44112af352"
+      "sha256": "e7f17e63c37689b6651f637d7bd187c74bb5819a74d9ffa13b844f14f18399ef"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/study-anything-platform-tools.json",
@@ -211,11 +212,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/ecosystem-submission.json",
-      "bytes": 13580,
+      "bytes": 14405,
       "kind": "submission_manifest",
       "path": "platform/ecosystem-submission.json",
       "purpose": "Machine-readable ecosystem submission metadata.",
-      "sha256": "b52227a6155bff303f57451d6b6216b0052f0fb6856743448bc213aada782627"
+      "sha256": "5f3e504164320daea6b0e0f97adc04668670de10cbed05cd1bd5254f9ec1ba88"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-openapi.json",
@@ -243,19 +244,35 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 23301,
+      "bytes": 23918,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "da55f44171e1acde97a93f08cfef03f9d787265df98bb1a8eb9620daab149b29"
+      "sha256": "df95c731f90fc1ab26b84e123cad83b10cc3fa390633a35ead7c596f1d1cd8a4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-operator-drill-transcript.json",
+      "bytes": 15290,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-operator-drill-transcript.json",
+      "purpose": "External platform operator drill transcript.",
+      "sha256": "65574eee3b9d26f309b2b0db39b4001313ab22b5fd24167a169f4ea9f8c37666"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
-      "bytes": 17555,
+      "bytes": 18211,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "692db224fa78e3c0d5bc6b73feff39b20cce8cd0a948db150c0e6ae4ca472643"
+      "sha256": "1797ed239ed8e4be590289fac305cf9313c5269473a51e338a98912457a61d19"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+      "bytes": 17063,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+      "purpose": "Manual platform-submission rehearsal and redacted handoff report.",
+      "sha256": "e888792b7406c895b126edb35e8d14d4d7e1344ff37bb011e4713fd46754d94b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/README.md",
@@ -275,11 +292,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/kimi/pack.json",
-      "bytes": 5451,
+      "bytes": 5631,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack.",
-      "sha256": "7271ddf59afb0012e21ad47b61bb321d4f655cbbedc19043d2c7248f84a00037"
+      "sha256": "60ef2ae52f760d12f920a0a4031ebc7dbfe00c0b30e0f112aa6585a819c07d5b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/README.md",
@@ -291,11 +308,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/pack.json",
-      "bytes": 4850,
+      "bytes": 5030,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack.",
-      "sha256": "38378e1cf12aa042709715fef6713bca2f8d35a72adfeabbfd18392e9eac8e92"
+      "sha256": "367b8d5237f84f50ab37d042b6ad04759ac89236a3828b38c43a78f9405ecf19"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/README.md",
@@ -307,11 +324,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/pack.json",
-      "bytes": 4952,
+      "bytes": 5132,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack.",
-      "sha256": "a17ceb1a9ba1e7a754a60c225df38aa133a769546bddfd14f6803b378c0b3c46"
+      "sha256": "f68252788b15c1276168da11dc3840bdac415c193667728d2d1d7fba7f27a9c6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/skills/study-anything/SKILL.md",
@@ -351,7 +368,7 @@
       "kind": "diagnostics",
       "path": "scripts/doctor.sh",
       "purpose": "Self-host doctor for Docker, ports, env, and Compose config.",
-      "sha256": "49b3f85ed19079873b414f428c17edef12e134297c3e911ad37ff5cadc94fb42"
+      "sha256": "6d6001fcf957ff64503f389153e38ef46d2dda6cda0a28771a98422b6d4034c1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/launch_self_host.sh",
@@ -359,7 +376,7 @@
       "kind": "runtime",
       "path": "scripts/launch_self_host.sh",
       "purpose": "Docker Compose self-host launcher.",
-      "sha256": "fa1e40497a886f71beb70c367f7085257b1159418cb2b8d64fcd192f7dfc77df"
+      "sha256": "20c0af92dacbc5d6d20bc1d33d95dd52b73cf1f9eca3a2a3536af3f012d940de"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/stop_self_host.sh",
@@ -375,7 +392,7 @@
       "kind": "verification",
       "path": "scripts/verify_published_image_launch.py",
       "purpose": "Disposable GHCR published-image launch verifier.",
-      "sha256": "e25990185bd797e7c1daedd611d2782c38f2025cf7a819877eb3d508d7d5fbfe"
+      "sha256": "11654c6fbcc0e8bfd47bc48adb9000a7eccfde8f66c08f0c5c5505221be32332"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/launch_skill_mode.sh",
@@ -411,11 +428,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_external_adoption.py",
-      "bytes": 30388,
+      "bytes": 31323,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Adoption-proof-v1 verifier for external operators.",
-      "sha256": "1a2936e5a0dce9c7d39bc5de83ff4a5e9d581e0fdeac6bfb32984803500903d4"
+      "sha256": "8f6f660b25b6acef52e55c349131ed5ad6ad51cddb8c7bb776074b1fd2b0d99b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_adoption_telemetry.py",
@@ -439,7 +456,7 @@
       "kind": "verification",
       "path": "scripts/verify_external_agent_adapter_hardening.py",
       "purpose": "External Agent eval adapter hardening and bad-output diagnostics verifier.",
-      "sha256": "8de46a77d0eabe229bc8923bc3d1f6091edae1072c2074e37b340ac04843b4c4"
+      "sha256": "f114f6de14f53363ee13f62151150b0c345b31dff8084ed58ad917deee1e512a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -467,27 +484,35 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_submission_dry_run.py",
-      "bytes": 16783,
+      "bytes": 17031,
       "kind": "verification",
       "path": "scripts/verify_platform_submission_dry_run.py",
       "purpose": "External platform submission dry-run verifier.",
-      "sha256": "d38e9f9ba4b23c328f33cbfbf845546b074829e24ea5b8bda038480254db6c1e"
+      "sha256": "f492399cd5ba410874bca8dc1a7ec22b4c7e069ffcfebd2af63eda8696f88e69"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_manual_submission_rehearsal.py",
+      "bytes": 20241,
+      "kind": "verification",
+      "path": "scripts/verify_platform_manual_submission_rehearsal.py",
+      "purpose": "Manual platform-submission rehearsal verifier.",
+      "sha256": "9f380ca1d2ab05728848136a0c15d8216c19d8a353fcbf33c0e07c5e38e32c6f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_ecosystem_submission_pack.py",
-      "bytes": 16162,
+      "bytes": 17929,
       "kind": "verification",
       "path": "scripts/verify_ecosystem_submission_pack.py",
       "purpose": "Ecosystem submission pack verifier for external platform review.",
-      "sha256": "42cf42166b6b998b6da50e1a3d1f51d69eadf6e555485e7d00b4ca6a3f1a140b"
+      "sha256": "10d9bee199c27f4639bf360bd3e05abecb9c78c115ec4323ec2bff3e751c5be9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_operator_drill.py",
-      "bytes": 19375,
+      "bytes": 19579,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "External platform pack consumption verifier.",
-      "sha256": "450ea77e7627cf273762f475b39ca675ae571d3316a260231f93a338d8d9d9ed"
+      "sha256": "9f382b8226b1db04d0d4a2418306e2055071272192611f878459389ed184cb36"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_agent_tools.py",
@@ -543,7 +568,7 @@
       "kind": "verification",
       "path": "scripts/verify_agent_eval_baseline.py",
       "purpose": "Agent eval baseline and regression gate verifier.",
-      "sha256": "6142d846bc04923d958cdfc19fc680d5f370f39fbbd9b4085a693cfd9da8c15f"
+      "sha256": "5f24ab7acea3df5b608b023340f689118bc23cfc56aedb164260a75cac478185"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/run_external_agent_evals.py",
@@ -567,7 +592,7 @@
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Adoption diagnostics and remediation hints.",
-      "sha256": "29341daa041570593a47c97d6c697ec5c7e8a4b2c62970ba9d036e511eca3737"
+      "sha256": "03c6de6e8ca8bafe4624f304866b20147846afc2bd790b5d81b64fc717b54f67"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/evals/promptfoo/agent-eval-artifact.yaml",
@@ -591,7 +616,7 @@
       "kind": "eval",
       "path": "evals/baselines/study-anything-agent-eval-baseline.json",
       "purpose": "Deterministic Agent eval regression baseline.",
-      "sha256": "38ee2e6ddc5a3b402e6ebb4c591fa4d7014a080995b2d3c6c6a1c995fef81204"
+      "sha256": "7b6bc8af43efeed9f740e77484535da23fd4ba9566c369e6eabc270c79113d04"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/evals/fixtures/fake-agent-learning-loop.json",
@@ -686,5 +711,5 @@
     "workbuddy-style-http",
     "generic-http-tools"
   ],
-  "version": "v0.3.8-alpha"
+  "version": "v0.3.9-alpha"
 }

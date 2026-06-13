@@ -23,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.8-alpha")
+        self.assertEqual(payload["version"], "v0.3.9-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertIn("kimi-compatible", payload["platforms"])
@@ -38,7 +38,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.8-alpha")
+        self.assertEqual(submission["version"], "v0.3.9-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -57,9 +57,15 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         self.assertIs(submission["adoption_telemetry"]["aggregate_only"], True)
         self.assertIs(submission["adoption_telemetry"]["automatic_upload"], False)
         self.assertIn("platform/generated/study-anything-platform-submission-dry-run.json", submission["shared_assets"])
+        self.assertIn(
+            "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+            submission["shared_assets"],
+        )
         self.assertIn("scripts/verify_external_agent_adapter_hardening.py", submission["shared_assets"])
+        self.assertIn("scripts/verify_platform_manual_submission_rehearsal.py", submission["shared_assets"])
         commands = "\n".join(submission["acceptance"]["minimum_commands"])
         self.assertIn("verify_platform_submission_dry_run.py", commands)
+        self.assertIn("verify_platform_manual_submission_rehearsal.py", commands)
         self.assertIn("verify_external_agent_adapter_hardening.py", commands)
 
 
@@ -87,7 +93,7 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-submission-dry-run-v1")
-        self.assertEqual(report["version"], "v0.3.8-alpha")
+        self.assertEqual(report["version"], "v0.3.9-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["blocked_platforms"], [])
         self.assertFalse(report["privacy"]["real_model_keys_stored_by_study_anything"])
@@ -101,6 +107,46 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
         serialized = json.dumps(report)
         self.assertNotIn("sk-", serialized)
         self.assertNotIn("Private answer:", serialized)
+
+
+class PlatformManualSubmissionRehearsalReportTests(unittest.TestCase):
+    def test_manual_submission_rehearsal_report_is_current(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "verify_platform_manual_submission_rehearsal.py"),
+                "--check",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+
+    def test_manual_submission_rehearsal_report_privacy(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        report = json.loads(
+            (
+                root
+                / "platform"
+                / "generated"
+                / "study-anything-platform-manual-submission-rehearsal.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
+        self.assertEqual(report["version"], "v0.3.9-alpha")
+        self.assertEqual(report["status"], "pass")
+        self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
+        self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])
+        self.assertFalse(report["privacy_assertions"]["learner_answers_returned"])
+        self.assertFalse(report["privacy_assertions"]["agent_endpoint_secrets_returned"])
+        self.assertIn("runtime_unreachable", report["failure_remediation"])
+        serialized = json.dumps(report)
+        self.assertNotIn("sk-", serialized)
+        self.assertNotIn("Private answer:", serialized)
+        self.assertNotIn("http://127.0.0.1:8787", serialized)
 
 
 if __name__ == "__main__":

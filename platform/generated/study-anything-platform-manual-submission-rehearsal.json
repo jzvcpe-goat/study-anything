@@ -1,0 +1,381 @@
+{
+  "commands_run": [
+    {
+      "command": "unzip study-anything-platform-adoption-pack.zip -d /tmp/study-anything-pack",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "unpack_adoption_pack"
+    },
+    {
+      "command": "platform import platform/generated/study-anything-platform-openapi.json",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "import_tools"
+    },
+    {
+      "command": "./scripts/launch_skill_mode.sh && curl ${STUDY_ANYTHING_API_BASE}/v1/health",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "start_runtime_health"
+    },
+    {
+      "command": "python3 scripts/study_anything_cli.py agent-add-http --endpoint ${USER_OWNED_AGENT_ENDPOINT} --set-default",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "configure_user_owned_http_agent"
+    },
+    {
+      "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_lesson_flow.py",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "run_first_lesson"
+    },
+    {
+      "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_ecosystem_eval_flow.py",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "export_learning_evidence"
+    },
+    {
+      "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "collect_redacted_handoff"
+    }
+  ],
+  "evidence_paths": [
+    "docs/adoption.md",
+    "docs/ecosystem-submission.md",
+    "docs/platform-agent-integrations.md",
+    "docs/use-with-kimi.md",
+    "platform/ecosystem-submission.json",
+    "platform/generated/study-anything-openai-tools.json",
+    "platform/generated/study-anything-operator-drill-transcript.json",
+    "platform/generated/study-anything-platform-adoption-pack.json",
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-platform-submission-dry-run.json",
+    "platform/generated/study-anything-tool-catalog.md",
+    "platform/study-anything-platform-tools.json",
+    "scripts/openai_compatible_agent_gateway.py",
+    "scripts/run_skill_mode_demo.sh",
+    "scripts/study_anything_cli.py",
+    "scripts/verify_external_adoption.py",
+    "scripts/verify_external_agent_adapter_hardening.py",
+    "scripts/verify_platform_manual_submission_rehearsal.py",
+    "scripts/verify_platform_operator_drill.py",
+    "scripts/verify_platform_submission_dry_run.py"
+  ],
+  "existing_reports": {
+    "operator_drill": {
+      "schema_version": "study-anything-operator-drill-v1",
+      "status": "ok"
+    },
+    "platform_submission_dry_run": {
+      "schema_version": "platform-submission-dry-run-v1",
+      "status": "pass"
+    }
+  },
+  "expected_outputs": {
+    "collect_redacted_handoff": [
+      "platform-manual-submission-rehearsal-v1",
+      "status pass"
+    ],
+    "configure_user_owned_http_agent": [
+      "provider saved",
+      "capabilities include quiz.generate and answer.grade"
+    ],
+    "export_learning_evidence": [
+      "learning-package-v1",
+      "obsidian-markdown-export-v1",
+      "second-brain-handoff-v1"
+    ],
+    "import_tools": [
+      "tool names start with study_anything_",
+      "no API-key security scheme"
+    ],
+    "run_first_lesson": [
+      "stage completed",
+      "agent audit verified",
+      "quality status pass"
+    ],
+    "start_runtime_health": [
+      "health status ok",
+      "version matches the pack release"
+    ],
+    "unpack_adoption_pack": [
+      "manifest schema study-anything-platform-adoption-pack-v1"
+    ]
+  },
+  "failure_remediation": {
+    "agent_unhealthy": [
+      "Keep model credentials in the user's Agent, then rerun verify_agent_gateway_hardening.py.",
+      "Use fake deterministic provider only to isolate Study Anything runtime issues."
+    ],
+    "evidence_not_redacted": [
+      "Do not share raw source, answers, endpoints, model keys, or browser/video context.",
+      "Rerun this verifier and share only the generated redacted report."
+    ],
+    "runtime_unreachable": [
+      "Run scripts/diagnose_adoption.py.",
+      "Use Skill Mode when Docker or registry pulls are unreliable."
+    ],
+    "tool_import_failed": [
+      "Use platform/generated/study-anything-tool-catalog.md as a manual mapping fallback.",
+      "Confirm management endpoints are absent from the imported OpenAPI asset."
+    ]
+  },
+  "operator_steps": [
+    {
+      "command": "unzip study-anything-platform-adoption-pack.zip -d /tmp/study-anything-pack",
+      "evidence_paths": [
+        "manifest.json",
+        "ADOPTION_PACK_README.md"
+      ],
+      "expected_outputs": [
+        "manifest schema study-anything-platform-adoption-pack-v1"
+      ],
+      "failure_remediation": [
+        "Regenerate the pack with generate_platform_adoption_pack.py."
+      ],
+      "operator_action": "Unzip the adoption pack and open ADOPTION_PACK_README.md plus manifest.json.",
+      "step_id": "unpack_adoption_pack"
+    },
+    {
+      "command": "platform import platform/generated/study-anything-platform-openapi.json",
+      "evidence_paths": [
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-openai-tools.json"
+      ],
+      "expected_outputs": [
+        "tool names start with study_anything_",
+        "no API-key security scheme"
+      ],
+      "failure_remediation": [
+        "Use the tool catalog when the host OpenAPI importer is incomplete."
+      ],
+      "operator_action": "Import OpenAPI or OpenAI-compatible tool assets into the host platform.",
+      "step_id": "import_tools"
+    },
+    {
+      "command": "./scripts/launch_skill_mode.sh && curl ${STUDY_ANYTHING_API_BASE}/v1/health",
+      "evidence_paths": [
+        "scripts/launch_skill_mode.sh",
+        "docs/self-hosting.md"
+      ],
+      "expected_outputs": [
+        "health status ok",
+        "version matches the pack release"
+      ],
+      "failure_remediation": [
+        "Run scripts/diagnose_adoption.py and follow the returned plan."
+      ],
+      "operator_action": "Start Skill Mode or the published Docker image and verify /v1/health.",
+      "step_id": "start_runtime_health"
+    },
+    {
+      "command": "python3 scripts/study_anything_cli.py agent-add-http --endpoint ${USER_OWNED_AGENT_ENDPOINT} --set-default",
+      "evidence_paths": [
+        "docs/use-with-kimi.md",
+        "docs/platform-agent-integrations.md"
+      ],
+      "expected_outputs": [
+        "provider saved",
+        "capabilities include quiz.generate and answer.grade"
+      ],
+      "failure_remediation": [
+        "Run verify_agent_gateway_hardening.py before sharing evidence."
+      ],
+      "operator_action": "Point Study Anything at the user's local/private HTTP Agent gateway.",
+      "step_id": "configure_user_owned_http_agent"
+    },
+    {
+      "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_lesson_flow.py",
+      "evidence_paths": [
+        "scripts/verify_platform_lesson_flow.py"
+      ],
+      "expected_outputs": [
+        "stage completed",
+        "agent audit verified",
+        "quality status pass"
+      ],
+      "failure_remediation": [
+        "Fallback to run_skill_mode_demo.sh to separate runtime issues from Agent issues."
+      ],
+      "operator_action": "Run a first lesson with fake demo or the user's HTTP Agent and collect mastery.",
+      "step_id": "run_first_lesson"
+    },
+    {
+      "command": "API_BASE=${STUDY_ANYTHING_API_BASE} python3 scripts/verify_platform_ecosystem_eval_flow.py",
+      "evidence_paths": [
+        "docs/second-brain-handoff.md",
+        "docs/obsidian-export.md"
+      ],
+      "expected_outputs": [
+        "learning-package-v1",
+        "obsidian-markdown-export-v1",
+        "second-brain-handoff-v1"
+      ],
+      "failure_remediation": [
+        "Keep user-owned exports local; share only redacted schema evidence."
+      ],
+      "operator_action": "Export learning package, Obsidian markdown, and second-brain handoff evidence.",
+      "step_id": "export_learning_evidence"
+    },
+    {
+      "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+      "evidence_paths": [
+        "platform/generated/study-anything-platform-manual-submission-rehearsal.json"
+      ],
+      "expected_outputs": [
+        "platform-manual-submission-rehearsal-v1",
+        "status pass"
+      ],
+      "failure_remediation": [
+        "Run release_check.sh locally before resubmitting the platform pack."
+      ],
+      "operator_action": "Run the manual rehearsal verifier and share the redacted JSON report.",
+      "step_id": "collect_redacted_handoff"
+    }
+  ],
+  "platforms": {
+    "codex": {
+      "acceptance_evidence_count": 33,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "./scripts/run_skill_mode_demo.sh",
+        "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "entrypoints": {
+        "cli": "scripts/study_anything_cli.py",
+        "demo": "scripts/run_skill_mode_demo.sh",
+        "skill": "skills/study-anything/SKILL.md"
+      },
+      "import_assets": [
+        "platform/study-anything-platform-tools.json",
+        "platform/generated/study-anything-tool-catalog.md"
+      ],
+      "integration_mode": "terminal_skill",
+      "platform_id": "codex",
+      "status": "ready_for_manual_rehearsal"
+    },
+    "kimi": {
+      "acceptance_evidence_count": 33,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py --agent-endpoint ${AGENT_ENDPOINT}"
+      ],
+      "entrypoints": {
+        "gateway": "scripts/openai_compatible_agent_gateway.py",
+        "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
+        "guide": "docs/kimi-agent-gateway.md",
+        "openai_tools": "platform/generated/study-anything-openai-tools.json",
+        "openapi": "platform/generated/study-anything-platform-openapi.json"
+      },
+      "import_assets": [
+        "platform/study-anything-platform-tools.json",
+        "platform/generated/study-anything-openai-tools.json",
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-tool-catalog.md"
+      ],
+      "integration_mode": "openai_compatible_tools",
+      "platform_id": "kimi",
+      "status": "ready_for_manual_rehearsal"
+    },
+    "workbuddy": {
+      "acceptance_evidence_count": 33,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "entrypoints": {
+        "api_docs": "docs/api.md",
+        "openapi": "platform/generated/study-anything-platform-openapi.json",
+        "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
+      },
+      "import_assets": [
+        "platform/study-anything-platform-tools.json",
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-tool-catalog.md"
+      ],
+      "integration_mode": "openapi_http_tools",
+      "platform_id": "workbuddy",
+      "status": "ready_for_manual_rehearsal"
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_returned": false,
+    "browser_video_private_context_returned": false,
+    "learner_answers_returned": false,
+    "raw_source_text_returned": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true
+  },
+  "schema_version": "platform-manual-submission-rehearsal-v1",
+  "status": "pass",
+  "submission": {
+    "no_frontend_required": true,
+    "platform_count": 4,
+    "schema_version": "ecosystem-submission-v1",
+    "version": "v0.3.9-alpha"
+  },
+  "time_budget": {
+    "estimated_operator_minutes": 18,
+    "stop_on_first_blocker": true,
+    "target_minutes": 30
+  },
+  "tool_assets": {
+    "management_endpoints_exposed": false,
+    "openai_tool_count": 34,
+    "openapi_path_count": 34,
+    "required_tool_count": 34
+  },
+  "version": "v0.3.9-alpha"
+}

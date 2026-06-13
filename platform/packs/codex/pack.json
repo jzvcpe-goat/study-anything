@@ -23,6 +23,7 @@
     "python3 scripts/verify_plugin_quarantine.py",
     "python3 scripts/verify_security_recovery_hardening.py",
     "python3 scripts/verify_platform_submission_dry_run.py --check",
+    "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
     "./scripts/run_skill_mode_demo.sh",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -67,7 +68,8 @@
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
-    "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1"
+    "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
+    "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",

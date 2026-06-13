@@ -393,9 +393,18 @@
 - Include the verifier in release checks, external adoption proof, ecosystem submission, platform
   packs, operator drill evidence, and adoption pack assets.
 
+## v0.3.9-alpha
+
+- Add `platform-manual-submission-rehearsal-v1`, a redacted handoff report for external platform
+  operators.
+- Verify the manual path from adoption-pack unpacking through tool import, runtime health,
+  user-owned HTTP Agent setup, first lesson, export evidence, diagnostics, and failure remediation.
+- Include the report in release checks, external adoption proof, ecosystem submission, platform packs,
+  bundle manifest, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.9`: external platform pack manual submission rehearsal and onboarding polish.
+- `v0.3.10`: first-run lesson authoring kit and Kimi/Codex copyable workflow polish.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track
