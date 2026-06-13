@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.10-alpha")
+        self.assertEqual(manifest["version"], "v0.3.11-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -60,12 +60,14 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/plugin-sdk.md",
             "docs/plugin-registry.md",
             "docs/ecosystem-submission.md",
-            "docs/release-notes/v0.3.10-alpha.md",
+            "docs/eval-frameworks.md",
+            "docs/release-notes/v0.3.11-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
             "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
             "platform/generated/study-anything-first-lesson-authoring-kit.json",
+            "platform/generated/study-anything-external-eval-harness.json",
             "skills/study-anything/SKILL.md",
             "scripts/doctor.sh",
             "scripts/launch_self_host.sh",
@@ -79,8 +81,11 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "scripts/verify_platform_submission_dry_run.py",
             "scripts/verify_platform_manual_submission_rehearsal.py",
             "scripts/verify_first_lesson_authoring_kit.py",
+            "scripts/verify_external_eval_marketplace_harness.py",
+            "scripts/verify_agent_eval_assets.py",
             "scripts/verify_external_adoption.py",
             "scripts/verify_platform_operator_drill.py",
+            "evals/README.md",
             "evals/fixtures/fake-agent-learning-loop.json",
             "evals/fixtures/mock-http-agent-learning-loop.json",
             "fixtures/notebooklm/notebooklm-style-context-package.json",

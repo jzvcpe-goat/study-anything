@@ -43,10 +43,13 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/verify_published_image_launch.py", file_paths)
         self.assertIn("scripts/verify_commercial_readiness.py", file_paths)
         self.assertIn("scripts/verify_ecosystem_submission_pack.py", file_paths)
+        self.assertIn("scripts/verify_external_eval_marketplace_harness.py", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
+        self.assertIn("platform/generated/study-anything-external-eval-harness.json", file_paths)
         self.assertIn("docs/commercial-readiness.md", file_paths)
         self.assertIn("docs/ecosystem-submission.md", file_paths)
+        self.assertIn("docs/eval-frameworks.md", file_paths)
         self.assertIn("fixtures/notebooklm/notebooklm-style-context-package.json", file_paths)
         self.assertIn("skills/study-anything/SKILL.md", file_paths)
         for item in payload["files"]:

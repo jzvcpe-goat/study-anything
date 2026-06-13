@@ -40,6 +40,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "docs/plugin-registry.md",
     "docs/use-with-kimi.md",
     "docs/adoption-telemetry.md",
+    "docs/eval-frameworks.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",
@@ -61,6 +62,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "scripts/verify_first_lesson_authoring_kit.py",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
+    "scripts/verify_external_eval_marketplace_harness.py",
+    "platform/generated/study-anything-external-eval-harness.json",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -440,6 +443,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "external_eval_marketplace_harness",
+                [python_bin, "scripts/verify_external_eval_marketplace_harness.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -603,6 +611,22 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "prompt_languages": sorted((value.get("copyable_prompts") or {}).keys()),
             "tool_call_count": len(value.get("tool_call_sequence", [])),
             "time_budget_minutes": (value.get("time_budget") or {}).get("target_minutes"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
+    if label == "external_eval_marketplace_harness":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "adapter_ids": [
+                item.get("adapter_id")
+                for item in value.get("external_adapters", [])
+                if isinstance(item, dict)
+            ],
+            "native_gate_count": len(value.get("native_fast_gates", [])),
+            "sample_case_count": len(value.get("sample_eval_cases", [])),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
             ),

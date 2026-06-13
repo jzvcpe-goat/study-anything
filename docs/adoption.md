@@ -15,6 +15,7 @@ python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -30,10 +31,12 @@ with ready/warning/blocked status for each target platform. The manual rehearsal
 health, user-owned HTTP Agent setup, first lesson, export evidence, diagnostics, and failure
 remediation. The first lesson authoring kit emits `first-run-lesson-authoring-kit-v1`, with bilingual
 copyable platform-Agent prompts, a tool-call sequence, Learning Context Package template, user-owned
-HTTP Agent setup, expected output schemas, export paths, and privacy assertions. The adoption
-verifier emits `adoption-proof-v1` and exercises
-importer, enrichment, retrieval, teaching layers, eval, Obsidian export, and NotebookLM-style
-learning-package export through Skill Mode.
+HTTP Agent setup, expected output schemas, export paths, and privacy assertions. The external eval
+marketplace harness emits `external-eval-marketplace-harness-v1`, tying native release gates,
+optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeout policy, and
+redaction assertions into one platform-submission contract. The adoption verifier emits
+`adoption-proof-v1` and exercises importer, enrichment, retrieval, teaching layers, eval, Obsidian
+export, and NotebookLM-style learning-package export through Skill Mode.
 
 Use this path before claiming a platform integration works. It does not require the standalone
 frontend, and it does not store real model keys in Study Anything.
@@ -214,7 +217,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.10-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.11-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -222,12 +225,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.10-alpha \
+  --tag v0.3.11-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.10-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.11-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

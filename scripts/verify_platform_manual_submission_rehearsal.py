@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.10-alpha"
+RELEASE_VERSION = "v0.3.11-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -27,6 +27,7 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
+    "platform/generated/study-anything-external-eval-harness.json",
 ]
 REQUIRED_OPERATOR_ASSETS = [
     "platform/ecosystem-submission.json",
@@ -44,7 +45,9 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_first_lesson_authoring_kit.py",
+    "scripts/verify_external_eval_marketplace_harness.py",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
+    "platform/generated/study-anything-external-eval-harness.json",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/study_anything_cli.py",
     "scripts/run_skill_mode_demo.sh",

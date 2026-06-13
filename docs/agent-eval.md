@@ -32,6 +32,9 @@ invocation proof, trajectory coverage, teaching quality, optional retrieval grou
 readiness, privacy redaction, and optional external adapter readiness.
 `retrieval/eval` adds deterministic retrieval/context quality gates for source binding, snippet
 minimality, query relevance, and Learning Context Package handoff validity.
+`external-eval-marketplace-harness-v1` is the copyable submission contract that ties the native
+release gates, optional mature adapters, fixtures, timeout policy, sample eval cases, and privacy
+assertions together for Kimi, Codex, WorkBuddy-style, and generic OpenAPI platform Agents.
 
 These eval endpoints are redacted. They do not return reading prose, source titles, answers, grading
 feedback, insights, Agent endpoints, raw Agent metadata, API keys, retrieval snippets, or tool secrets.
@@ -56,11 +59,14 @@ curl http://127.0.0.1:8000/v1/evals/policy
 curl http://127.0.0.1:8000/v1/sessions/<session-id>/agent-eval/report
 API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool report --create-session --required
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 ```
 
 The report is not an LLM judge. It is the redacted release-gate summary that answers: did Study
 Anything invoke its Agent workflow, did minimum teaching quality pass, are exports ready, are privacy
 flags clean, and are external adapter datasets available?
+
+For framework-by-framework boundaries, see `docs/eval-frameworks.md`.
 
 ## External Agent Adapter Hardening
 

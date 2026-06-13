@@ -80,6 +80,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
     "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
+    "external_eval_marketplace_harness.schema_version == external-eval-marketplace-harness-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [

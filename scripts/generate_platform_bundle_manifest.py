@@ -62,6 +62,11 @@ FILES: list[tuple[str, str, str]] = [
         "Copyable first-run lesson authoring kit for platform Agents.",
     ),
     (
+        "platform/generated/study-anything-external-eval-harness.json",
+        "generated_asset",
+        "Marketplace-quality external Agent eval harness for platform submissions.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -172,6 +177,11 @@ FILES: list[tuple[str, str, str]] = [
         "Copyable first-run lesson authoring kit verifier.",
     ),
     (
+        "scripts/verify_external_eval_marketplace_harness.py",
+        "verification",
+        "Marketplace-quality external Agent eval harness verifier.",
+    ),
+    (
         "scripts/verify_ecosystem_submission_pack.py",
         "verification",
         "Ecosystem submission pack verifier for external platform review readiness.",
@@ -232,6 +242,11 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic Agent eval baseline and regression comparison gate.",
     ),
     (
+        "scripts/verify_agent_eval_assets.py",
+        "verification",
+        "Agent eval asset and adapter contract verifier.",
+    ),
+    (
         "scripts/generate_platform_adoption_pack.py",
         "verification",
         "Deterministic generator for the distributable external-platform adoption pack.",
@@ -255,6 +270,11 @@ FILES: list[tuple[str, str, str]] = [
         "evals/promptfoo/agent-eval-artifact.yaml",
         "eval",
         "Promptfoo config for the redacted Agent eval artifact contract.",
+    ),
+    (
+        "evals/README.md",
+        "eval",
+        "External eval overview and native/optional adapter guide.",
     ),
     (
         "evals/deepeval/study_anything_quality_eval.py",
@@ -357,12 +377,17 @@ FILES: list[tuple[str, str, str]] = [
         "Agent eval and external evaluation guide.",
     ),
     (
+        "docs/eval-frameworks.md",
+        "docs",
+        "External eval framework selection, adapter boundary, and marketplace harness guide.",
+    ),
+    (
         "docs/api.md",
         "docs",
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.10-alpha.md",
+        "docs/release-notes/v0.3.11-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -452,6 +477,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_platform_submission_dry_run.py --check",
             "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
+            "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

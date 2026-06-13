@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.10-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.11-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -35,6 +35,7 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and fails if the
@@ -50,6 +51,10 @@ The first lesson kit emits `first-run-lesson-authoring-kit-v1`, a copyable
 Kimi/Codex/WorkBuddy handoff with bilingual prompts, a tool-call sequence,
 Learning Context Package template, HTTP Agent setup, expected schemas, export
 paths, remediation, and privacy assertions.
+The external eval harness emits `external-eval-marketplace-harness-v1`, a
+marketplace-quality eval contract covering native release gates, optional
+Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeouts,
+sample eval cases, expected evidence, and redaction assertions.
 
 ## Submission Targets
 
@@ -84,6 +89,7 @@ python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check

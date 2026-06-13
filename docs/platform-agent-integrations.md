@@ -373,9 +373,11 @@ A platform integration is acceptable when it can complete this sequence:
 12. Run `scripts/verify_platform_ecosystem_eval_flow.py` when validating the full platform Agent path:
    importer, enrichment, retrieval, retrieval eval, teaching, learning loop, external eval adapters,
    Obsidian, and learning-package export.
-13. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
+13. Run `scripts/verify_external_eval_marketplace_harness.py --check` before claiming mature eval
+   adapter readiness in a platform submission.
+14. Run `scripts/verify_external_adoption.py` against the adoption pack before publishing a platform
    handoff, GitHub prerelease, or external operator guide.
-14. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
+15. Avoid returning source prose, answers, feedback, endpoints, raw Agent metadata, or model secrets in
    logs or shared artifacts.
 
 For local validation:
@@ -383,6 +385,7 @@ For local validation:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
+python3 scripts/verify_external_eval_marketplace_harness.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_runtime_retrieval_flow.py
