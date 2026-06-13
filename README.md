@@ -48,6 +48,7 @@ copy-ready adoption pack:
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -55,7 +56,9 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The operator drill emits `study-anything-operator-drill-v1`, proving the pack can be consumed as an
-external platform tool directory. The verifier emits `adoption-proof-v1`, proving the Skill Mode
+external platform tool directory. The first lesson kit emits `first-run-lesson-authoring-kit-v1`,
+with copyable Kimi/Codex/WorkBuddy prompts, tool-call sequence, context-package template, local Agent
+setup, and export evidence. The verifier emits `adoption-proof-v1`, proving the Skill Mode
 runtime, importer/enrichment/retrieval/teaching/eval loop, enrichment artifact, Obsidian export, and NotebookLM-style
 handoff without requiring the standalone frontend or storing real model keys in Study Anything.
 
@@ -108,7 +111,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.9-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.10-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -121,7 +124,7 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.9-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.10-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -216,6 +219,7 @@ platform/generated/study-anything-openai-tools.json
 platform/generated/study-anything-tool-catalog.md
 platform/ecosystem-submission.json
 platform/generated/study-anything-platform-bundle.json
+platform/generated/study-anything-first-lesson-authoring-kit.json
 ```
 
 Copy-ready starter packs are checked in for platform ecosystems:
@@ -233,6 +237,7 @@ python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 

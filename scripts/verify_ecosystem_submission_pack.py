@@ -22,6 +22,9 @@ SUBMISSION_DRY_RUN_PATH = (
 MANUAL_REHEARSAL_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
+FIRST_LESSON_KIT_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-first-lesson-authoring-kit.json"
+)
 COMMERCIAL_DOC = ROOT / "docs" / "commercial-readiness.md"
 
 REQUIRED_PLATFORMS = {
@@ -51,8 +54,10 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_security_recovery_hardening.py",
     "scripts/verify_platform_submission_dry_run.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
+    "scripts/verify_first_lesson_authoring_kit.py",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+    "platform/generated/study-anything-first-lesson-authoring-kit.json",
 }
 REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_ecosystem_submission_pack.py",
@@ -65,6 +70,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_security_recovery_hardening.py",
     "verify_platform_submission_dry_run.py",
     "verify_platform_manual_submission_rehearsal.py",
+    "verify_first_lesson_authoring_kit.py",
     "verify_platform_ecosystem_packs.py",
     "generate_platform_bundle_manifest.py --check",
     "generate_platform_adoption_pack.py --check",
@@ -158,8 +164,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.9-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.9-alpha.")
+    if submission.get("version") != "v0.3.10-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.10-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -254,8 +260,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.9-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.9-alpha.")
+    if manifest.get("version") != "v0.3.10-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.10-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -268,10 +274,12 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_security_recovery_hardening.py",
         "scripts/verify_platform_submission_dry_run.py",
         "scripts/verify_platform_manual_submission_rehearsal.py",
+        "scripts/verify_first_lesson_authoring_kit.py",
         "platform/generated/study-anything-operator-drill-transcript.json",
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
-        "docs/release-notes/v0.3.9-alpha.md",
+        "platform/generated/study-anything-first-lesson-authoring-kit.json",
+        "docs/release-notes/v0.3.10-alpha.md",
     }
     missing = required - paths
     if missing:
@@ -289,7 +297,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.9-alpha":
+    if report.get("version") != "v0.3.10-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -313,7 +321,7 @@ def verify_manual_rehearsal_report() -> None:
     report = load_json(MANUAL_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
         raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
-    if report.get("version") != "v0.3.9-alpha":
+    if report.get("version") != "v0.3.10-alpha":
         raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
@@ -331,6 +339,33 @@ def verify_manual_rehearsal_report() -> None:
         raise EcosystemSubmissionError("Manual rehearsal report must be redacted.")
 
 
+def verify_first_lesson_kit_report() -> None:
+    report = load_json(FIRST_LESSON_KIT_PATH)
+    if report.get("schema_version") != "first-run-lesson-authoring-kit-v1":
+        raise EcosystemSubmissionError("First lesson authoring kit schema drifted.")
+    if report.get("version") != "v0.3.10-alpha":
+        raise EcosystemSubmissionError("First lesson authoring kit version drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("First lesson authoring kit must pass.")
+    prompts = report.get("copyable_prompts") or {}
+    if set(prompts) != {"en", "zh"}:
+        raise EcosystemSubmissionError("First lesson kit must include zh and en copyable prompts.")
+    if len(report.get("tool_call_sequence", [])) < 10:
+        raise EcosystemSubmissionError("First lesson kit tool call sequence is too short.")
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "copyable_prompts_include_real_model_keys",
+        "context_template_contains_raw_source",
+        "agent_endpoint_secrets_returned",
+        "learner_answers_returned",
+        "browser_video_private_context_returned",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"First lesson kit privacy.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("First lesson kit report must be redacted.")
+
+
 def main() -> None:
     submission = load_json(SUBMISSION_PATH)
     tool_manifest = load_json(TOOL_MANIFEST_PATH)
@@ -343,6 +378,7 @@ def main() -> None:
     verify_docs()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
+    verify_first_lesson_kit_report()
     print(
         json.dumps(
             {

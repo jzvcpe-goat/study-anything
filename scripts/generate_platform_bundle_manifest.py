@@ -57,6 +57,11 @@ FILES: list[tuple[str, str, str]] = [
         "Manual platform-submission rehearsal and redacted handoff report.",
     ),
     (
+        "platform/generated/study-anything-first-lesson-authoring-kit.json",
+        "generated_asset",
+        "Copyable first-run lesson authoring kit for platform Agents.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -160,6 +165,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_platform_manual_submission_rehearsal.py",
         "verification",
         "Manual platform-submission rehearsal verifier.",
+    ),
+    (
+        "scripts/verify_first_lesson_authoring_kit.py",
+        "verification",
+        "Copyable first-run lesson authoring kit verifier.",
     ),
     (
         "scripts/verify_ecosystem_submission_pack.py",
@@ -352,7 +362,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.9-alpha.md",
+        "docs/release-notes/v0.3.10-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -440,6 +450,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_plugin_quarantine.py",
             "python3 scripts/verify_security_recovery_hardening.py",
             "python3 scripts/verify_platform_submission_dry_run.py --check",
+            "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+            "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",

@@ -59,6 +59,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+    "scripts/verify_first_lesson_authoring_kit.py",
+    "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
     "evals/baselines/study-anything-agent-eval-baseline.json",
@@ -433,6 +435,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "first_lesson_authoring_kit",
+                [python_bin, "scripts/verify_first_lesson_authoring_kit.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -583,6 +590,18 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "schema_version": value.get("schema_version"),
             "version": value.get("version"),
             "operator_step_count": len(value.get("operator_steps", [])),
+            "time_budget_minutes": (value.get("time_budget") or {}).get("target_minutes"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
+    if label == "first_lesson_authoring_kit":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "prompt_languages": sorted((value.get("copyable_prompts") or {}).keys()),
+            "tool_call_count": len(value.get("tool_call_sequence", [])),
             "time_budget_minutes": (value.get("time_budget") or {}).get("target_minutes"),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"

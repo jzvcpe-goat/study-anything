@@ -70,6 +70,7 @@ python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -85,6 +86,7 @@ assembling commands:
 ```bash
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -97,6 +99,10 @@ The manual rehearsal report emits `platform-manual-submission-rehearsal-v1` and
 turns the operator path into a redacted handoff checklist: unpack, import,
 health check, user-owned HTTP Agent setup, first lesson, export evidence, and
 diagnostics.
+The first lesson kit emits `first-run-lesson-authoring-kit-v1` and turns the
+first user session into copyable platform-Agent instructions: bilingual
+prompts, tool-call order, context-package template, Agent setup, expected
+schemas, export paths, and remediation.
 The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
 that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
 status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
@@ -107,6 +113,7 @@ python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
@@ -146,6 +153,7 @@ platform/generated/study-anything-platform-bundle.json
 platform/generated/study-anything-operator-drill-transcript.json
 platform/generated/study-anything-platform-submission-dry-run.json
 platform/generated/study-anything-platform-manual-submission-rehearsal.json
+platform/generated/study-anything-first-lesson-authoring-kit.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 evals/baselines/study-anything-agent-eval-baseline.json
