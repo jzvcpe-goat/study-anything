@@ -305,25 +305,65 @@ def write_manifest(backup_dir: Path, manifest: dict[str, Any]) -> None:
 def verify_manifest(backup_dir: Path) -> dict[str, Any]:
     manifest_path = backup_dir / MANIFEST_NAME
     if not manifest_path.exists():
-        raise RuntimeError(f"Missing {manifest_path}.")
+        raise RuntimeError(f"Missing {MANIFEST_NAME}.")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("schema_version") != SCHEMA_VERSION:
         raise RuntimeError("Unsupported backup manifest schema.")
-    for item in manifest.get("files", []):
-        path = backup_dir / item["path"]
+    files = manifest.get("files")
+    if not isinstance(files, list):
+        raise RuntimeError("Backup manifest files must be a list.")
+    seen_paths: set[str] = set()
+    for item in files:
+        if not isinstance(item, dict):
+            raise RuntimeError("Backup manifest file records must be objects.")
+        relative_path = item.get("path")
+        checksum = item.get("sha256")
+        if not isinstance(relative_path, str) or not relative_path.strip():
+            raise RuntimeError("Backup manifest file record is missing a safe path.")
+        if relative_path in seen_paths:
+            raise RuntimeError(f"Duplicate backup file in manifest: {relative_path}.")
+        seen_paths.add(relative_path)
+        if not _is_sha256(checksum):
+            raise RuntimeError(f"Invalid sha256 for backup file: {relative_path}.")
+        path = safe_backup_member_path(backup_dir, relative_path)
         if not path.is_file():
-            raise RuntimeError(f"Missing backup file {path}.")
-        if sha256(path) != item["sha256"]:
-            raise RuntimeError(f"Checksum mismatch for {path}.")
+            raise RuntimeError(f"Missing backup file: {relative_path}.")
+        if sha256(path) != checksum:
+            raise RuntimeError(f"Checksum mismatch for backup file: {relative_path}.")
     return manifest
 
 
 def file_record(backup_dir: Path, path: Path, *, role: str) -> dict[str, str]:
+    try:
+        relative_path = path.resolve().relative_to(backup_dir.resolve())
+    except ValueError as exc:
+        raise RuntimeError("Backup file records must stay inside the backup directory.") from exc
     return {
-        "path": str(path.relative_to(backup_dir)),
+        "path": relative_path.as_posix(),
         "role": role,
         "sha256": sha256(path),
     }
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def safe_backup_member_path(backup_dir: Path, relative_path: str) -> Path:
+    if "\\" in relative_path:
+        raise RuntimeError(f"Unsafe backup file path: {relative_path}.")
+    candidate = Path(relative_path)
+    if candidate.is_absolute() or any(part in {"", ".", ".."} for part in candidate.parts):
+        raise RuntimeError(f"Unsafe backup file path: {relative_path}.")
+    root = backup_dir.resolve()
+    target = (root / candidate).resolve()
+    if target == root or root not in target.parents:
+        raise RuntimeError(f"Unsafe backup file path: {relative_path}.")
+    return target
 
 
 def default_backup_dir() -> Path:

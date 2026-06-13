@@ -19,6 +19,7 @@ from self_host_data import (  # noqa: E402
     file_record,
     parse_env,
     restore_env_snapshot,
+    safe_backup_member_path,
     verify_manifest,
     wait_for_postgres,
     write_manifest,
@@ -56,6 +57,57 @@ class SelfHostDataTests(unittest.TestCase):
             payload.write_text("tampered", encoding="utf-8")
             with self.assertRaisesRegex(RuntimeError, "Checksum mismatch"):
                 verify_manifest(backup_dir)
+            with self.assertRaisesRegex(RuntimeError, "payload.txt"):
+                verify_manifest(backup_dir)
+
+    def test_verify_manifest_rejects_unsafe_paths_and_invalid_records(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            backup_dir = Path(temp_dir)
+            payload = backup_dir / "payload.txt"
+            payload.write_text("original", encoding="utf-8")
+            valid = file_record(backup_dir, payload, role="test")
+
+            cases = [
+                {"path": "../escape.txt", "sha256": valid["sha256"]},
+                {"path": "/tmp/escape.txt", "sha256": valid["sha256"]},
+                {"path": "nested\\escape.txt", "sha256": valid["sha256"]},
+                {"path": "payload.txt", "sha256": "not-a-digest"},
+            ]
+            for record in cases:
+                write_manifest(
+                    backup_dir,
+                    {"schema_version": SCHEMA_VERSION, "files": [record]},
+                )
+                with self.assertRaises(RuntimeError):
+                    verify_manifest(backup_dir)
+
+            write_manifest(
+                backup_dir,
+                {"schema_version": SCHEMA_VERSION, "files": [valid, valid]},
+            )
+            with self.assertRaisesRegex(RuntimeError, "Duplicate backup file"):
+                verify_manifest(backup_dir)
+
+    def test_safe_backup_member_path_stays_inside_backup_dir(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            backup_dir = Path(temp_dir)
+            self.assertEqual(
+                safe_backup_member_path(backup_dir, "volumes/study_anything_data.tar.gz"),
+                (backup_dir / "volumes" / "study_anything_data.tar.gz").resolve(),
+            )
+            with self.assertRaisesRegex(RuntimeError, "Unsafe backup file path"):
+                safe_backup_member_path(backup_dir, "../env.snapshot")
+
+    def test_file_record_rejects_files_outside_backup_dir(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            backup_dir = root / "backup"
+            backup_dir.mkdir()
+            outside = root / "outside.txt"
+            outside.write_text("private", encoding="utf-8")
+
+            with self.assertRaisesRegex(RuntimeError, "inside the backup directory"):
+                file_record(backup_dir, outside, role="outside")
 
     def test_restore_env_snapshot_requires_explicit_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
