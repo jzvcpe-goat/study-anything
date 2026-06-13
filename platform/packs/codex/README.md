@@ -27,10 +27,12 @@ frontend.
 
 ```bash
 python3 scripts/verify_clean_clone_adoption.py --repo .
+python3 scripts/verify_commercial_readiness.py
 ./scripts/run_skill_mode_demo.sh
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
 curl http://127.0.0.1:8000/v1/deployment/guide
+python3 scripts/study_anything_cli.py commercial-readiness
 python3 scripts/study_anything_cli.py eval-policy
 python3 scripts/study_anything_cli.py demo
 python3 scripts/study_anything_cli.py context-validate \
@@ -90,6 +92,9 @@ plugin package; those commands are metadata-only and do not execute entrypoints.
 This is the Plugin SDK path for terminal-capable agents.
 After the API is reachable, `GET /v1/deployment/guide` returns `deployment-guide-v1`: the redacted
 launch path, diagnostics, and platform-Agent privacy boundary.
+`GET /v1/commercial/readiness` returns `commercial-readiness-v1`: GitHub OSS, self-host, and
+platform-Agent distribution are ready; hosted paid services, billing, SSO, remote accounts, and a
+standalone app are not in this alpha launch path.
 The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
 excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
 export at `GET /v1/sessions/{session_id}/exports/obsidian`.
@@ -109,6 +114,7 @@ learning session from minimal snippets.
 A Codex integration must return both:
 
 - `agent-audit.status == verified`
+- `commercial-readiness-v1` for local-first launch boundaries and hosted-service non-goals
 - `agent-eval-policy-v1` for the native release gate, optional adapters, fixtures, failure classes,
   and privacy contract
 - `agent-eval-artifact-v1` with all required native gates passing

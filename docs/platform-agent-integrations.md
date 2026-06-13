@@ -29,6 +29,8 @@ private Agent platforms:
 
 - deployment guide for Skill Mode, Docker source builds, published GHCR images, diagnostics, and
   privacy boundaries
+- commercial readiness contract for GitHub OSS launch, platform-Agent distribution, hosted-service
+  non-goals, and PMF prerequisites
 - API health
 - session creation
 - source attachment
@@ -55,6 +57,7 @@ Validate a running integration with:
 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
+python3 scripts/verify_commercial_readiness.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -82,10 +85,12 @@ as a platform tool directory before any runtime starts. The adoption verifier em
 platform tool surface, complete the importer/enrichment/retrieval/teaching/eval loop, and export
 Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
 
-After the API is reachable, platform Agents should call `study_anything_deployment_guide` before the
-learning tools. It returns `deployment-guide-v1`, which is metadata-only and tells the platform which
-local command path was intended, how to recover from first-run failures, and which data must stay out
-of platform logs.
+After the API is reachable, platform Agents should call `study_anything_deployment_guide` and
+`study_anything_commercial_readiness` before the learning tools. `deployment-guide-v1` tells the
+platform which local command path was intended, how to recover from first-run failures, and which data
+must stay out of platform logs. `commercial-readiness-v1` tells the platform that GitHub OSS,
+self-host, and platform-Agent distribution are ready while hosted paid services, billing, SSO, remote
+accounts, and a standalone app remain out of the current launch path.
 
 ## Generated Import Assets
 
@@ -111,6 +116,7 @@ Regenerate and verify these assets after changing the manifest, platform packs, 
 ```bash
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
+python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check

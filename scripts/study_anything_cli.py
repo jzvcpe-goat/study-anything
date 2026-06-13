@@ -178,6 +178,10 @@ def cmd_deployment_guide(args: argparse.Namespace) -> None:
     emit(args, request("/v1/deployment/guide"))
 
 
+def cmd_commercial_readiness(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/commercial/readiness"))
+
+
 def cmd_agents(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/agents/status?{urlencode({'user_id': args.user_id})}"))
 
@@ -703,6 +707,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Show first-run launch paths, diagnostics, and platform-agent privacy boundaries",
     )
     deployment_guide.set_defaults(func=cmd_deployment_guide)
+
+    commercial_readiness = subparsers.add_parser(
+        "commercial-readiness",
+        help="Show OSS/local-first commercial readiness, hosted-service contracts, and launch limits",
+    )
+    commercial_readiness.set_defaults(func=cmd_commercial_readiness)
 
     agents = subparsers.add_parser("agents", help="List configured agent providers")
     agents.add_argument("--user-id", default="local-user")

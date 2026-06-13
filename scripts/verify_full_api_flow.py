@@ -35,6 +35,16 @@ def main() -> None:
     if health.get("status") != "ok":
         raise RuntimeError(f"API health is not ok: {health}")
 
+    commercial_readiness = request("/v1/commercial/readiness")
+    if commercial_readiness.get("schema_version") != "commercial-readiness-v1":
+        raise RuntimeError(
+            f"Commercial readiness schema is not commercial-readiness-v1: {commercial_readiness}"
+        )
+    if commercial_readiness.get("launch_assessment", {}).get("hosted_paid_services") != "not_ready":
+        raise RuntimeError(f"Hosted paid services should not be ready in local alpha: {commercial_readiness}")
+    if (commercial_readiness.get("privacy") or {}).get("real_model_keys_stored_by_study_anything"):
+        raise RuntimeError(f"Commercial readiness reported stored model keys: {commercial_readiness}")
+
     recovery = request("/v1/recovery/status")
     if recovery.get("schema_version") != "recovery-status-v1":
         raise RuntimeError(f"Recovery status schema is not recovery-status-v1: {recovery}")
@@ -244,6 +254,7 @@ def main() -> None:
                 "stage": completed["stage"],
                 "mastery": completed["mastery"],
                 "agent_schema": agents["schema_version"],
+                "commercial_readiness_schema": commercial_readiness["schema_version"],
                 "agent_audit_status": agent_audit["status"],
                 "agent_eval_schema": agent_eval_artifact["schema_version"],
                 "plugins": len(plugins),

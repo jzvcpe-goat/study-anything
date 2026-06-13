@@ -24,6 +24,10 @@ from study_anything.core.agent_registry import (
     AgentRouter,
     AgentTask,
 )
+from study_anything.core.commercial_readiness import (
+    build_commercial_readiness,
+    summarize_commercial_readiness,
+)
 from study_anything.core.deployment import build_deployment_guide
 from study_anything.core.integrations import integration_matrix
 from study_anything.core.importer_runtime import ImporterRuntime, ImporterRuntimeError
@@ -349,6 +353,7 @@ def create_app() -> FastAPI:
 
     @app.get("/v1/system/status")
     def system_status(user_id: str = "local-user") -> dict[str, object]:
+        commercial_readiness = build_commercial_readiness(version=__version__)
         return {
             "status": "ok",
             "version": __version__,
@@ -367,6 +372,7 @@ def create_app() -> FastAPI:
             "model_status": {**agent_registry.status(user_id), "deprecated": True},
             "workspace_status": workspace_store.status(user_id),
             "recovery": recovery_status(project_root),
+            "commercial_readiness": summarize_commercial_readiness(commercial_readiness),
             "plugin_count": len(plugins.discover()),
             "pmf_metrics": compute_pmf_metrics(
                 store.list_sessions(),
@@ -382,6 +388,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/deployment/guide")
     def deployment_guide() -> dict[str, object]:
         return build_deployment_guide(project_root, version=__version__)
+
+    @app.get("/v1/commercial/readiness")
+    def commercial_readiness() -> dict[str, object]:
+        return build_commercial_readiness(version=__version__)
 
     @app.get("/v1/recovery/status")
     def get_recovery_status() -> dict[str, object]:

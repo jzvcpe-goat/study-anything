@@ -95,6 +95,7 @@ Open:
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
 - Deployment guide: http://localhost:8000/v1/deployment/guide
+- Commercial readiness: http://localhost:8000/v1/commercial/readiness
 - Recovery status: http://localhost:8000/v1/recovery/status
 - Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
@@ -105,7 +106,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.29-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.0-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -118,12 +119,14 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.29-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.0-alpha
 ```
 
-If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` after the API is
-reachable. The response is `deployment-guide-v1`: copyable launch commands, failure classes, and the
-privacy boundary for user-owned Agents without exposing model keys or raw learning content.
+If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` and
+`GET /v1/commercial/readiness` after the API is reachable. `deployment-guide-v1` gives copyable
+launch commands, failure classes, and the privacy boundary for user-owned Agents.
+`commercial-readiness-v1` states that the GitHub OSS/platform-Agent launch path is ready while hosted
+Sync, Publish, Teams, Catalyst, billing, SSO, and a standalone app remain future work.
 
 ## Bring Your Own Agent
 
@@ -351,7 +354,15 @@ curl -X POST http://localhost:8000/v1/sync/restore-preview \
 
 ## Commercial Readiness
 
-Study Anything is a public self-host Alpha foundation, roughly 68% of the way to a complete commercial product after removing the broken standalone Web UI from the launch path. See `docs/commercial-readiness.md` for the gap analysis and suggested branch tracks.
+Study Anything is now a public self-host Alpha foundation with a machine-readable commercial
+readiness contract. The current commercial path is GitHub OSS plus platform-Agent adoption; it is not
+yet a paid hosted app. Run:
+
+```bash
+python3 scripts/verify_commercial_readiness.py
+```
+
+See `docs/commercial-readiness.md` for the hosted-service contracts and launch limits.
 
 ## GitHub Launch
 

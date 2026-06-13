@@ -40,6 +40,7 @@ fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/generate_platform_agent_assets.py --check
+"$python_bin" scripts/verify_commercial_readiness.py
 "$python_bin" scripts/verify_platform_ecosystem_packs.py
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check

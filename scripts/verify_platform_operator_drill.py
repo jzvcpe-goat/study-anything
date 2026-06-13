@@ -53,6 +53,7 @@ PLATFORM_REQUIREMENTS = {
 }
 
 REQUIRED_EXPORT_EVIDENCE = [
+    "commercial_readiness.schema_version == commercial-readiness-v1",
     "agent_audit.status == verified",
     "agent_eval_policy.schema_version == agent-eval-policy-v1",
     "agent_eval_report.schema_version == agent-eval-report-v1",
@@ -352,6 +353,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "plugin_capability_index_schema": "plugin-capability-index-v1",
             "plugin_package_validation_schema": "plugin-package-validation-v1",
             "deployment_guide_schema": "deployment-guide-v1",
+            "commercial_readiness_schema": "commercial-readiness-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

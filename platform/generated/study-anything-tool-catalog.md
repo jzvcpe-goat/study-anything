@@ -76,6 +76,42 @@ Privacy:
 }
 ```
 
+### `study_anything_commercial_readiness`
+
+- Method: `GET`
+- Path: `/v1/commercial/readiness`
+- Description: Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits.
+
+Output requirements:
+
+- commercial-readiness-v1
+- status == architecture_ready_for_oss_platform_alpha
+- launch_assessment.github_oss_launch == ready
+- launch_assessment.platform_agent_distribution == ready
+- launch_assessment.hosted_paid_services == not_ready
+- all local_core_invariants status == pass
+- hosted_service_contracts include neural_sync, neural_publish, neural_teams, catalyst
+- hosted_service_contracts status == contract_only
+- privacy.real_model_keys_stored_by_study_anything == false
+- privacy.billing_required_for_local_core == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "source text",
+    "answers",
+    "agent endpoints",
+    "API keys",
+    "model secrets",
+    "billing credentials",
+    "raw contacts"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
 ### `study_anything_health`
 
 - Method: `GET`

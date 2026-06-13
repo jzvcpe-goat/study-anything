@@ -15,6 +15,7 @@
   ],
   "local_verification_commands": [
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
+    "python3 scripts/verify_commercial_readiness.py",
     "./scripts/run_skill_mode_demo.sh",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -28,6 +29,7 @@
     "python3 scripts/diagnose_adoption.py"
   ],
   "acceptance_evidence": [
+    "commercial_readiness.schema_version == commercial-readiness-v1",
     "agent_audit.status == verified",
     "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
     "all required native gates pass",

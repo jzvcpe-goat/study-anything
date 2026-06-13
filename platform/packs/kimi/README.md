@@ -27,6 +27,8 @@ The tool surface includes:
 
 - `study_anything_deployment_guide` for `deployment-guide-v1`, the redacted first-run launch and
   diagnostics guide.
+- `study_anything_commercial_readiness` for `commercial-readiness-v1`, the OSS/local-first launch
+  boundary and hosted-service non-goals.
 - `study_anything_health` for local API reachability.
 - `study_anything_eval_policy` for `agent-eval-policy-v1`, the native release gate, optional
   external adapter policy, and failure classes.
@@ -104,6 +106,7 @@ After a completed learning loop, the platform Agent should fetch:
 
 ```text
 GET /v1/evals/policy
+GET /v1/commercial/readiness
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
@@ -114,9 +117,12 @@ GET /v1/sessions/{session_id}/exports/learning-package
 GET /v1/sessions/{session_id}/exports/second-brain-handoff
 ```
 
-The exports include a redacted enrichment micro-lesson, a user-owned Obsidian Markdown note, a
-portable learning package, and the strict second-brain handoff. Prefer the second-brain handoff for
-Kimi-visible long-term memory because it excludes learner answers and grading feedback.
+The commercial readiness response is `commercial-readiness-v1`: GitHub OSS, self-host, and
+platform-Agent distribution are ready; hosted paid services, billing, SSO, remote accounts, and a
+standalone app are not part of this alpha. The exports include a redacted enrichment micro-lesson, a
+user-owned Obsidian Markdown note, a portable learning package, and the strict second-brain handoff.
+Prefer the second-brain handoff for Kimi-visible long-term memory because it excludes learner answers
+and grading feedback.
 
 For importer flows, Kimi or the surrounding platform Agent should first build a
 `learning-context-package-v1` object from user-approved web pages, files, video slices, workspace

@@ -33,9 +33,10 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/use-with-kimi.md", "operator_doc", "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway."),
     ("docs/operator-drill.md", "operator_doc", "External platform operator drill and transcript guide."),
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
+    ("docs/commercial-readiness.md", "operator_doc", "Commercial readiness contract, hosted-service boundaries, and local-first launch limits."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.2.29-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.0-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
@@ -83,6 +84,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
 
 REQUIRED_PLATFORM_TOOLS = [
     "study_anything_deployment_guide",
+    "study_anything_commercial_readiness",
     "study_anything_health",
     "study_anything_eval_policy",
     "study_anything_create_session",
@@ -211,7 +213,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.2.29-alpha",
+        "version": "v0.3.0-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -249,6 +251,7 @@ def manifest_payload() -> dict[str, object]:
                 "plugin-capability-index-v1",
                 "plugin-package-validation-v1",
                 "deployment-guide-v1",
+                "commercial-readiness-v1",
             ],
         },
         "privacy_contract": {

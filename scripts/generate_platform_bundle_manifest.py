@@ -102,6 +102,11 @@ FILES: list[tuple[str, str, str]] = [
         "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
     ),
     (
+        "scripts/verify_commercial_readiness.py",
+        "verification",
+        "Commercial-readiness contract verifier for OSS/local-first launch boundaries.",
+    ),
+    (
         "scripts/run_skill_mode_demo.sh",
         "verification",
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
@@ -212,6 +217,11 @@ FILES: list[tuple[str, str, str]] = [
         "General platform Agent integration guide.",
     ),
     (
+        "docs/commercial-readiness.md",
+        "docs",
+        "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
+    ),
+    (
         "docs/learning-enrichment.md",
         "docs",
         "Learning Enrichment Layer context contract and micro-lesson export guide.",
@@ -267,9 +277,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.29-alpha.md",
+        "docs/release-notes/v0.3.0-alpha.md",
         "docs",
-        "Release notes for the Agent eval maturity release.",
+        "Release notes for the commercial readiness architecture release.",
     ),
     (
         "docs/plugins.md",
@@ -350,6 +360,7 @@ def build_manifest() -> dict[str, object]:
         "privacy_contract": source.get("privacy_contract", {}),
         "acceptance_commands": [
             "python3 scripts/generate_platform_agent_assets.py --check",
+            "python3 scripts/verify_commercial_readiness.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_bundle_manifest.py --check",

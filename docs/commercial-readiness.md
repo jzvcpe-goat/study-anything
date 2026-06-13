@@ -1,6 +1,64 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation. A realistic commercial-readiness estimate is about 70% after removing the broken standalone Web UI from the launch path and hardening API/Skill/platform-agent distribution.
+Study Anything is currently a public self-host Alpha foundation with a machine-readable commercial
+readiness contract. The current launch path is GitHub OSS plus platform-Agent adoption, not a paid
+standalone app.
+
+Use:
+
+```bash
+python3 scripts/verify_commercial_readiness.py
+```
+
+or call:
+
+```bash
+curl http://127.0.0.1:8000/v1/commercial/readiness
+```
+
+The response is `commercial-readiness-v1`. It is metadata-only and states:
+
+- `github_oss_launch=ready`
+- `platform_agent_distribution=ready`
+- `self_host_alpha=ready`
+- `standalone_app=not_in_launch_path`
+- `hosted_paid_services=not_ready`
+
+This means Study Anything can be distributed as an OSS local-first learning layer for Kimi, Codex,
+WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
+SSO, remote accounts, or a standalone frontend are ready.
+
+## Local Core Invariants
+
+The commercial contract treats these as release-blocking local-first invariants:
+
+- No account required for local learning.
+- No real model credentials stored by Study Anything.
+- User-owned local data, encrypted sync packages, Obsidian export, NotebookLM-style handoff, and
+  archive export remain available without hosted services.
+- Future hosted services never block Skill Mode, API use, fake demo Agent, user-owned HTTP Agent, or
+  local exports.
+- Platform-agent distribution remains the main adoption path before PMF.
+
+## Hosted-Service Contracts
+
+These services are designed as future convenience products and remain `contract_only` in v0.3.0:
+
+- `Neural Sync`: encrypted backup and multi-device learning-state sync. The local foundation is
+  `sync-package-v1`; remote encrypted storage, conflict resolution, account recovery, support, and
+  security review are still required before sale.
+- `Neural Publish`: selected learning maps, reading trails, decks, or reports. The local foundation is
+  `learning-package-v1` and `second-brain-handoff-v1`; publish consent, sharing controls, abuse
+  handling, and artifact versioning are still required.
+- `Neural Teams`: shared courses, private workspaces, admin controls, audit/export. The local
+  foundation is workspace metadata; tenant isolation, retention controls, billing, support, and
+  enterprise security posture are still required.
+- `Catalyst`: one-time supporter tier for early builds and roadmap voting. It must not lock the core
+  workflow or community plugins behind payment.
+
+Paid services should sell convenience, reliability, collaboration, hosting, and trust operations.
+They must not sell lock-in to the core learning workflow, hosted custody of real model keys, access
+to user-owned local data, or a closed plugin channel as a requirement.
 
 ## What Is Ready
 
