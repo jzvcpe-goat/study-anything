@@ -33,6 +33,7 @@ Agent contract:
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
 With a running Study Anything API, run the end-to-end dry-run acceptance flow:
@@ -148,6 +149,7 @@ For a full local acceptance run against the real Study Anything API and dry-run 
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \

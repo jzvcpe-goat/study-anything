@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.3.7-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.3.8-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.7-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.8-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -159,6 +159,7 @@ Before using real credentials, run:
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
 Do not put bearer tokens, cookies, signed URLs, or `api_key` query parameters into
@@ -183,7 +184,7 @@ in plaintext.
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.7-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.8-alpha
 ```
 
 This pulls the published API image, checks the runtime version, completes the API learning loop, and

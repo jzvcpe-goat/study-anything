@@ -9,6 +9,7 @@ Use:
 ```bash
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
@@ -48,6 +49,9 @@ redaction, restore-preview privacy, and recovery status path redaction.
 The platform submission dry-run verifier is the matching proof for ecosystem distribution: it checks
 Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI packages before manual
 submission without turning Study Anything into a paid standalone app.
+The external Agent adapter hardening verifier is the matching proof for user-owned model execution:
+it separates fake and external Agent evidence, diagnoses bad external Agent outputs, and redacts
+secret-looking metadata values before eval evidence is shared.
 
 For adoption and PMF review, call:
 

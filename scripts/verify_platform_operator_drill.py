@@ -74,6 +74,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
+    "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
     "notebooklm_obsidian_bridge_hardening.schema_version == notebooklm-obsidian-bridge-hardening-v1",
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
@@ -370,6 +371,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "notebooklm_obsidian_bridge_hardening_schema": "notebooklm-obsidian-bridge-hardening-v1",
             "security_recovery_hardening_schema": "security-recovery-hardening-verification-v1",
             "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
+            "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

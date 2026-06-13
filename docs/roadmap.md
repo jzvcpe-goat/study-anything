@@ -380,9 +380,22 @@
 - Include the dry-run verifier in release checks, external adoption proof, ecosystem submission,
   platform packs, operator drill evidence, and adoption pack assets.
 
+## v0.3.8-alpha
+
+- Add `external-agent-adapter-hardening-v1`, a release gate for real external HTTP Agent eval
+  evidence.
+- Separate fake deterministic Agent evidence from user-owned external Agent evidence in the
+  hardening report.
+- Cover malformed JSON, invalid status, missing content, invalid score, invalid confidence,
+  timeouts, missing citations, and missing declared capabilities.
+- Redact secret-looking string values in Agent metadata even when the field name itself is not a
+  secret-like key.
+- Include the verifier in release checks, external adoption proof, ecosystem submission, platform
+  packs, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.8`: real external Agent eval adapter hardening.
+- `v0.3.9`: external platform pack manual submission rehearsal and onboarding polish.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

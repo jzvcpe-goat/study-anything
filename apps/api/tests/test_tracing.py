@@ -66,6 +66,19 @@ class TracingTests(unittest.TestCase):
         self.assertEqual(redacted["nested"]["api_token"], REDACTED)  # type: ignore[index]
         self.assertEqual(redacted["items"][0]["password"], REDACTED)  # type: ignore[index]
 
+    def test_secret_looking_values_are_redacted_even_under_safe_keys(self) -> None:
+        redacted = redact_mapping(
+            {
+                "note": "sk-proj-agentVerifierSecretToken000000",
+                "headers": {"safe": "Bearer agentVerifierSecretToken000000"},
+                "safe": "plain value",
+            }
+        )
+
+        self.assertEqual(redacted["note"], REDACTED)
+        self.assertEqual(redacted["headers"]["safe"], REDACTED)  # type: ignore[index]
+        self.assertEqual(redacted["safe"], "plain value")
+
     def test_trace_metadata_omits_learning_prose(self) -> None:
         sanitized = sanitize_trace_metadata(
             {

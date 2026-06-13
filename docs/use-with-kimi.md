@@ -118,10 +118,13 @@ Before sharing the Kimi-compatible pack for manual import, run:
 
 ```bash
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
 The report verifies the OpenAI-compatible tools, OpenAPI asset, gateway guide,
 known limits, acceptance commands, and redacted Kimi submission checklist.
+The external Agent adapter verifier separately proves that Kimi-backed or Kimi-compatible HTTP
+Agents produce redacted eval evidence and that bad outputs become explicit diagnostics.
 
 ## What To Commercialize Later
 

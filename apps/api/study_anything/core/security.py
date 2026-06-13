@@ -6,6 +6,7 @@ import base64
 import hashlib
 import hmac
 import os
+import re
 from typing import Any, Mapping
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
@@ -23,6 +24,11 @@ SECRET_KEY_MARKERS = (
     "password",
     "secret",
     "token",
+)
+SECRET_VALUE_PATTERNS = (
+    re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
+    re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
+    re.compile(r"(?i)\bbearer\s+[A-Za-z0-9_./+=-]{8,}"),
 )
 
 
@@ -44,12 +50,18 @@ def _redact_value(value: Any) -> Any:
         return [_redact_value(item) for item in value]
     if isinstance(value, tuple):
         return tuple(_redact_value(item) for item in value)
+    if isinstance(value, str) and looks_like_secret_value(value):
+        return REDACTED
     return value
 
 
 def is_secret_key(key: str) -> bool:
     value = key.lower()
     return any(marker in value for marker in SECRET_KEY_MARKERS)
+
+
+def looks_like_secret_value(value: str) -> bool:
+    return any(pattern.search(value) for pattern in SECRET_VALUE_PATTERNS)
 
 
 def redact_mapping(values: Mapping[str, object]) -> dict[str, object]:

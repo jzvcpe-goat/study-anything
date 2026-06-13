@@ -64,6 +64,7 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
@@ -82,6 +83,7 @@ assembling commands:
 
 ```bash
 python3 scripts/verify_platform_submission_dry_run.py --check
+python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -89,11 +91,16 @@ python3 scripts/verify_external_adoption.py \
 
 The dry-run report is the review artifact for manual Kimi-compatible, Codex
 Skill, WorkBuddy-style HTTP, and generic OpenAPI submissions.
+The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
+that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
+status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
+become deterministic diagnostics rather than silent learning-state corruption.
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -253,6 +260,7 @@ model through an OpenAI-compatible gateway:
 ```bash
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
+python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
 Then start the real gateway after adding credentials:

@@ -50,6 +50,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/verify_external_adoption.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_eval_baseline.py",
+    "scripts/verify_external_agent_adapter_hardening.py",
     "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
     "scripts/verify_plugin_quarantine.py",
     "scripts/verify_security_recovery_hardening.py",
@@ -399,6 +400,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "external_agent_adapter_hardening",
+                [python_bin, "scripts/verify_external_agent_adapter_hardening.py"],
+                90,
+            ),
+            (
                 "notebooklm_obsidian_bridge_hardening",
                 [python_bin, "scripts/verify_notebooklm_obsidian_bridge_hardening.py"],
                 90,
@@ -562,6 +568,22 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "blocked_platforms": value.get("blocked_platforms"),
             "platforms": sorted((value.get("platforms") or {}).keys()),
             "report_is_redacted": (value.get("privacy") or {}).get("report_is_redacted"),
+        }
+    if label == "external_agent_adapter_hardening":
+        external_eval = value.get("external_agent_eval") or {}
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "used_external_agent": external_eval.get("used_external_agent"),
+            "used_fake_agent": external_eval.get("used_fake_agent"),
+            "native_fast_gate_status": external_eval.get("native_fast_gate_status"),
+            "bad_output_diagnostics_covered": (value.get("release_gate") or {}).get(
+                "bad_output_diagnostics_covered"
+            ),
+            "secret_like_metadata_values_redacted": (value.get("privacy") or {}).get(
+                "secret_like_metadata_values_redacted"
+            ),
         }
     if label == "adoption_telemetry":
         return {

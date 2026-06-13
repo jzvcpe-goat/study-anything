@@ -62,6 +62,21 @@ The report is not an LLM judge. It is the redacted release-gate summary that ans
 Anything invoke its Agent workflow, did minimum teaching quality pass, are exports ready, are privacy
 flags clean, and are external adapter datasets available?
 
+## External Agent Adapter Hardening
+
+Before treating a user-owned HTTP Agent as production-ready, run:
+
+```bash
+python3 scripts/verify_external_agent_adapter_hardening.py
+```
+
+The verifier emits `external-agent-adapter-hardening-v1`. It creates a mock-real HTTP Agent, proves
+external Agent evidence is separated from fake deterministic evidence, and covers bad-output
+diagnostics for malformed JSON, invalid status, missing content, invalid score, invalid confidence,
+timeouts, missing citations, and missing declared capabilities. The report is redacted and must not
+return source text, learner answers, Agent endpoints, real model keys, or secret-looking metadata
+values.
+
 ## Open-Source Eval Selection
 
 GitHub metadata was checked on 2026-06-12.
