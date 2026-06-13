@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.16-alpha"
+RELEASE_VERSION = "v0.3.17-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -32,6 +32,7 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
+    "platform/generated/study-anything-platform-field-rehearsal.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -56,6 +57,8 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_agent_eval_marketplace_enforcement.py",
     "scripts/verify_platform_adoption_feedback_diagnostics.py",
     "scripts/generate_platform_feedback_package.py",
+    "scripts/generate_platform_field_rehearsal.py",
+    "scripts/verify_platform_field_rehearsal.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/verify_learning_enrichment_bridge.py",
@@ -65,6 +68,15 @@ REQUIRED_OPERATOR_ASSETS = [
     "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
+    "platform/generated/study-anything-platform-field-rehearsal.json",
+    "fixtures/platform-import-failures/schema_mismatch.json",
+    "fixtures/platform-import-failures/missing_local_gateway.json",
+    "fixtures/platform-import-failures/unsupported_auth_mode.json",
+    "fixtures/platform-import-failures/tool_naming_drift.json",
+    "fixtures/platform-import-failures/timeout.json",
+    "fixtures/platform-import-failures/cors_localhost.json",
+    "fixtures/platform-import-failures/package_corruption.json",
+    "fixtures/platform-import-failures/version_drift.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -245,9 +257,12 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         "scripts/verify_platform_adoption_feedback_diagnostics.py",
         "scripts/generate_platform_feedback_package.py",
+        "scripts/generate_platform_field_rehearsal.py",
+        "scripts/verify_platform_field_rehearsal.py",
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-feedback-package.zip",
+        "platform/generated/study-anything-platform-field-rehearsal.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -268,6 +283,10 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform adoption feedback diagnostics schema.")
     if "platform-feedback-package-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform feedback package schema.")
+    if "platform-field-adoption-rehearsal-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform field rehearsal schema.")
+    if "platform-import-failure-fixture-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform import failure fixture schema.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -309,6 +328,10 @@ def validate_existing_reports(root: Path) -> dict[str, Any]:
         "platform_feedback_package": (
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform-feedback-package-v1",
+        ),
+        "platform_field_rehearsal": (
+            "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform-field-adoption-rehearsal-v1",
         ),
     }
     for label, (relative_path, schema) in expected.items():
@@ -464,6 +487,28 @@ def operator_steps() -> list[dict[str, Any]]:
             ],
             "failure_remediation": [
                 "Run diagnose_adoption.py first, then regenerate the feedback package after the import failure is categorized.",
+            ],
+        },
+        {
+            "step_id": "run_platform_field_rehearsal",
+            "operator_action": "Verify Kimi, Codex, WorkBuddy, and generic OpenAPI import rehearsals plus the mock failed-import fixture catalog before sharing the pack with external users.",
+            "command": "python3 scripts/generate_platform_field_rehearsal.py --check && python3 scripts/verify_platform_field_rehearsal.py --check",
+            "expected_outputs": [
+                "platform-field-adoption-rehearsal-v1",
+                "platform-import-failure-fixture-v1",
+                "schema mismatch, gateway, auth, naming, timeout, localhost, package corruption, and version drift fixtures",
+            ],
+            "evidence_paths": [
+                "scripts/generate_platform_field_rehearsal.py",
+                "scripts/verify_platform_field_rehearsal.py",
+                "platform/generated/study-anything-platform-field-rehearsal.json",
+                "fixtures/platform-import-failures/schema_mismatch.json",
+                "fixtures/platform-import-failures/version_drift.json",
+                "docs/platform-agent-integrations.md",
+            ],
+            "failure_remediation": [
+                "Run verify_platform_field_rehearsal.py without --check to print the current mismatch summary.",
+                "Regenerate fixtures only after confirming they remain mock-only and redacted.",
             ],
         },
         {

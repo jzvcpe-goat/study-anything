@@ -53,6 +53,8 @@ python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
@@ -72,7 +74,11 @@ are optional until explicitly required, required judge mode fails closed, baseli
 and no judge/model keys are stored by Study Anything. The plugin ecosystem kit emits
 `plugin-ecosystem-adoption-kit-v1`, proving bundled sample plugins, registry digests,
 quarantine-first trust policy, platform-pack commands, and redacted evidence are aligned without
-executing plugin entrypoints. The Learning Enrichment bridge verifier emits
+executing plugin entrypoints. The field adoption rehearsal emits
+`platform-field-adoption-rehearsal-v1` and includes `platform-import-failure-fixture-v1` mock
+fixtures for common platform import failures such as schema mismatch, missing local gateway,
+unsupported auth mode, tool naming drift, timeout, localhost restrictions, package corruption, and
+version drift. The Learning Enrichment bridge verifier emits
 `learning-enrichment-bridge-verification-v1`, proving platform-collected web, document, app,
 video-slice, Markdown, and Obsidian context can become source-bound micro-lessons, NotebookLM-style
 manual bridge evidence, Obsidian handoff, and strict second-brain exports without a standalone
@@ -133,7 +139,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.16-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.17-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -147,7 +153,7 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.16-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.17-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
@@ -246,6 +252,8 @@ platform/ecosystem-submission.json
 platform/generated/study-anything-platform-bundle.json
 platform/generated/study-anything-first-lesson-authoring-kit.json
 platform/generated/study-anything-plugin-ecosystem-adoption-kit.json
+platform/generated/study-anything-platform-field-rehearsal.json
+fixtures/platform-import-failures/*.json
 ```
 
 Copy-ready starter packs are checked in for platform ecosystems:
@@ -265,6 +273,8 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
 ```
 

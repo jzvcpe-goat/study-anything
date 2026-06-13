@@ -1,0 +1,39 @@
+{
+  "diagnosis": {
+    "detection_signal": "The platform cannot reach the local Study Anything API or user-owned Agent gateway.",
+    "likely_cause": "Skill Mode, Docker Compose, or the user's external Agent gateway is not running.",
+    "next_commands": [
+      "./scripts/launch_skill_mode.sh",
+      "python3 scripts/diagnose_adoption.py"
+    ]
+  },
+  "failure_id": "missing_local_gateway",
+  "observed_error": {
+    "diagnostic_code": "missing_local_gateway",
+    "message": "Simulated Missing local gateway during external platform import.",
+    "raw_error_redacted": true
+  },
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "safe_feedback_fields": [
+    "platform_id",
+    "api_base",
+    "gateway_mode",
+    "diagnostic_code"
+  ],
+  "schema_version": "platform-import-failure-fixture-v1",
+  "status": "mock_failure_ready",
+  "version": "v0.3.17-alpha"
+}

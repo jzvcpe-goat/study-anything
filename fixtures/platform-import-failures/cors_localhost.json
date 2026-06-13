@@ -1,0 +1,38 @@
+{
+  "diagnosis": {
+    "detection_signal": "Browser-based platform import cannot call localhost directly.",
+    "likely_cause": "The platform runs in a browser sandbox without local network permission.",
+    "next_commands": [
+      "python3 scripts/openai_compatible_agent_gateway.py --help",
+      "python3 scripts/diagnose_adoption.py"
+    ]
+  },
+  "failure_id": "cors_localhost",
+  "observed_error": {
+    "diagnostic_code": "cors_localhost",
+    "message": "Simulated CORS or localhost restriction during external platform import.",
+    "raw_error_redacted": true
+  },
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "safe_feedback_fields": [
+    "platform_id",
+    "runtime_surface",
+    "blocked_origin"
+  ],
+  "schema_version": "platform-import-failure-fixture-v1",
+  "status": "mock_failure_ready",
+  "version": "v0.3.17-alpha"
+}

@@ -87,6 +87,51 @@ FILES: list[tuple[str, str, str]] = [
         "Local-only redacted feedback package archive for manual support handoff.",
     ),
     (
+        "platform/generated/study-anything-platform-field-rehearsal.json",
+        "generated_asset",
+        "Redacted field-adoption rehearsal transcript and import quirks report.",
+    ),
+    (
+        "fixtures/platform-import-failures/schema_mismatch.json",
+        "fixture",
+        "Mock platform import failure fixture for schema mismatch.",
+    ),
+    (
+        "fixtures/platform-import-failures/missing_local_gateway.json",
+        "fixture",
+        "Mock platform import failure fixture for missing local gateway.",
+    ),
+    (
+        "fixtures/platform-import-failures/unsupported_auth_mode.json",
+        "fixture",
+        "Mock platform import failure fixture for unsupported auth mode.",
+    ),
+    (
+        "fixtures/platform-import-failures/tool_naming_drift.json",
+        "fixture",
+        "Mock platform import failure fixture for tool naming drift.",
+    ),
+    (
+        "fixtures/platform-import-failures/timeout.json",
+        "fixture",
+        "Mock platform import failure fixture for timeout diagnostics.",
+    ),
+    (
+        "fixtures/platform-import-failures/cors_localhost.json",
+        "fixture",
+        "Mock platform import failure fixture for browser localhost restrictions.",
+    ),
+    (
+        "fixtures/platform-import-failures/package_corruption.json",
+        "fixture",
+        "Mock platform import failure fixture for corrupted adoption packages.",
+    ),
+    (
+        "fixtures/platform-import-failures/version_drift.json",
+        "fixture",
+        "Mock platform import failure fixture for version drift.",
+    ),
+    (
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "generated_asset",
         "Copy-ready plugin ecosystem adoption kit for platform submissions.",
@@ -240,6 +285,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/generate_platform_feedback_package.py",
         "diagnostics",
         "Generate a local-only redacted platform feedback package.",
+    ),
+    (
+        "scripts/generate_platform_field_rehearsal.py",
+        "diagnostics",
+        "Generate redacted field-adoption rehearsal transcripts and failed-import fixtures.",
+    ),
+    (
+        "scripts/verify_platform_field_rehearsal.py",
+        "verification",
+        "Verify field-adoption rehearsals, import quirks, failed-import fixtures, and pack inclusion.",
     ),
     (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
@@ -422,6 +477,16 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission metadata, verification, and no-frontend launch guide.",
     ),
     (
+        "docs/release-checklist.md",
+        "docs",
+        "Release gate checklist for platform adoption evidence.",
+    ),
+    (
+        "docs/roadmap.md",
+        "docs",
+        "Roadmap and release track for platform adoption goals.",
+    ),
+    (
         "docs/learning-enrichment.md",
         "docs",
         "Learning Enrichment Layer context contract and micro-lesson export guide.",
@@ -482,7 +547,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.16-alpha.md",
+        "docs/release-notes/v0.3.17-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

@@ -56,6 +56,11 @@
       "step_id": "collect_platform_feedback_package"
     },
     {
+      "command": "python3 scripts/generate_platform_field_rehearsal.py --check && python3 scripts/verify_platform_field_rehearsal.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "run_platform_field_rehearsal"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -66,6 +71,14 @@
     "docs/ecosystem-submission.md",
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
+    "fixtures/platform-import-failures/cors_localhost.json",
+    "fixtures/platform-import-failures/missing_local_gateway.json",
+    "fixtures/platform-import-failures/package_corruption.json",
+    "fixtures/platform-import-failures/schema_mismatch.json",
+    "fixtures/platform-import-failures/timeout.json",
+    "fixtures/platform-import-failures/tool_naming_drift.json",
+    "fixtures/platform-import-failures/unsupported_auth_mode.json",
+    "fixtures/platform-import-failures/version_drift.json",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-deployment-hardening.json",
@@ -78,12 +91,14 @@
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
+    "platform/generated/study-anything-platform-field-rehearsal.json",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/study-anything-platform-tools.json",
     "scripts/generate_platform_feedback_package.py",
+    "scripts/generate_platform_field_rehearsal.py",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
@@ -95,6 +110,7 @@
     "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_learning_enrichment_bridge.py",
     "scripts/verify_platform_adoption_feedback_diagnostics.py",
+    "scripts/verify_platform_field_rehearsal.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_submission_dry_run.py",
@@ -124,6 +140,10 @@
     "platform_feedback_package": {
       "schema_version": "platform-feedback-package-v1",
       "status": "ready"
+    },
+    "platform_field_rehearsal": {
+      "schema_version": "platform-field-adoption-rehearsal-v1",
+      "status": "pass"
     },
     "platform_submission_dry_run": {
       "schema_version": "platform-submission-dry-run-v1",
@@ -168,6 +188,11 @@
       "stage completed",
       "agent audit verified",
       "quality status pass"
+    ],
+    "run_platform_field_rehearsal": [
+      "platform-field-adoption-rehearsal-v1",
+      "platform-import-failure-fixture-v1",
+      "schema mismatch, gateway, auth, naming, timeout, localhost, package corruption, and version drift fixtures"
     ],
     "start_runtime_health": [
       "health status ok",
@@ -399,6 +424,28 @@
       "step_id": "collect_platform_feedback_package"
     },
     {
+      "command": "python3 scripts/generate_platform_field_rehearsal.py --check && python3 scripts/verify_platform_field_rehearsal.py --check",
+      "evidence_paths": [
+        "scripts/generate_platform_field_rehearsal.py",
+        "scripts/verify_platform_field_rehearsal.py",
+        "platform/generated/study-anything-platform-field-rehearsal.json",
+        "fixtures/platform-import-failures/schema_mismatch.json",
+        "fixtures/platform-import-failures/version_drift.json",
+        "docs/platform-agent-integrations.md"
+      ],
+      "expected_outputs": [
+        "platform-field-adoption-rehearsal-v1",
+        "platform-import-failure-fixture-v1",
+        "schema mismatch, gateway, auth, naming, timeout, localhost, package corruption, and version drift fixtures"
+      ],
+      "failure_remediation": [
+        "Run verify_platform_field_rehearsal.py without --check to print the current mismatch summary.",
+        "Regenerate fixtures only after confirming they remain mock-only and redacted."
+      ],
+      "operator_action": "Verify Kimi, Codex, WorkBuddy, and generic OpenAPI import rehearsals plus the mock failed-import fixture catalog before sharing the pack with external users.",
+      "step_id": "run_platform_field_rehearsal"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -418,7 +465,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 41,
+      "acceptance_evidence_count": 43,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -436,6 +483,8 @@
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
         "python3 scripts/generate_platform_feedback_package.py --check",
+        "python3 scripts/verify_platform_field_rehearsal.py --check",
+        "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -464,7 +513,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 41,
+      "acceptance_evidence_count": 43,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -482,6 +531,8 @@
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
         "python3 scripts/generate_platform_feedback_package.py --check",
+        "python3 scripts/verify_platform_field_rehearsal.py --check",
+        "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -514,7 +565,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 41,
+      "acceptance_evidence_count": 43,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -532,6 +583,8 @@
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
         "python3 scripts/generate_platform_feedback_package.py --check",
+        "python3 scripts/verify_platform_field_rehearsal.py --check",
+        "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -574,7 +627,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.16-alpha"
+    "version": "v0.3.17-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -587,5 +640,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.16-alpha"
+  "version": "v0.3.17-alpha"
 }

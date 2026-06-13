@@ -72,6 +72,17 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
+    "scripts/generate_platform_field_rehearsal.py",
+    "scripts/verify_platform_field_rehearsal.py",
+    "platform/generated/study-anything-platform-field-rehearsal.json",
+    "fixtures/platform-import-failures/schema_mismatch.json",
+    "fixtures/platform-import-failures/missing_local_gateway.json",
+    "fixtures/platform-import-failures/unsupported_auth_mode.json",
+    "fixtures/platform-import-failures/tool_naming_drift.json",
+    "fixtures/platform-import-failures/timeout.json",
+    "fixtures/platform-import-failures/cors_localhost.json",
+    "fixtures/platform-import-failures/package_corruption.json",
+    "fixtures/platform-import-failures/version_drift.json",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "scripts/verify_deployment_hardening.py",
@@ -483,6 +494,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "platform_field_rehearsal",
+                [python_bin, "scripts/verify_platform_field_rehearsal.py"],
+                90,
+            ),
+            (
                 "plugin_ecosystem_adoption_kit",
                 [python_bin, "scripts/verify_plugin_ecosystem_adoption_kit.py"],
                 90,
@@ -713,6 +729,18 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "adoption_pack_included": (value.get("adoption_pack") or {}).get("included"),
             "feedback_package_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "feedback_package_is_redacted"
+            ),
+        }
+    if label == "platform_field_rehearsal":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "platform_count": (value.get("field_rehearsal") or {}).get("platform_count"),
+            "quirk_count": (value.get("field_rehearsal") or {}).get("quirk_count"),
+            "fixture_count": (value.get("field_rehearsal") or {}).get("fixture_count"),
+            "feedback_upload_is_manual": (value.get("privacy_assertions") or {}).get(
+                "feedback_upload_is_manual"
             ),
         }
     if label == "plugin_ecosystem_adoption_kit":

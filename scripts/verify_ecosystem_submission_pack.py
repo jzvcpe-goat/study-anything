@@ -46,6 +46,9 @@ PLATFORM_FEEDBACK_PACKAGE_PATH = (
 PLATFORM_FEEDBACK_PACKAGE_ARCHIVE = (
     ROOT / "platform" / "generated" / "study-anything-platform-feedback-package.zip"
 )
+PLATFORM_FIELD_REHEARSAL_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
+)
 PLUGIN_ECOSYSTEM_KIT_PATH = (
     ROOT / "platform" / "generated" / "study-anything-plugin-ecosystem-adoption-kit.json"
 )
@@ -70,6 +73,8 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-tool-catalog.md",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "docs/ecosystem-submission.md",
+    "docs/release-checklist.md",
+    "docs/roadmap.md",
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
@@ -95,6 +100,8 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_agent_eval_marketplace_enforcement.py",
     "scripts/verify_platform_adoption_feedback_diagnostics.py",
     "scripts/generate_platform_feedback_package.py",
+    "scripts/generate_platform_field_rehearsal.py",
+    "scripts/verify_platform_field_rehearsal.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/install_local_plugin.py",
@@ -106,6 +113,15 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
+    "platform/generated/study-anything-platform-field-rehearsal.json",
+    "fixtures/platform-import-failures/schema_mismatch.json",
+    "fixtures/platform-import-failures/missing_local_gateway.json",
+    "fixtures/platform-import-failures/unsupported_auth_mode.json",
+    "fixtures/platform-import-failures/tool_naming_drift.json",
+    "fixtures/platform-import-failures/timeout.json",
+    "fixtures/platform-import-failures/cors_localhost.json",
+    "fixtures/platform-import-failures/package_corruption.json",
+    "fixtures/platform-import-failures/version_drift.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -141,6 +157,8 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_agent_eval_marketplace_enforcement.py",
     "verify_platform_adoption_feedback_diagnostics.py",
     "generate_platform_feedback_package.py",
+    "generate_platform_field_rehearsal.py",
+    "verify_platform_field_rehearsal.py",
     "verify_plugin_ecosystem_adoption_kit.py",
     "verify_deployment_hardening.py",
     "verify_platform_ecosystem_packs.py",
@@ -236,8 +254,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.16-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.16-alpha.")
+    if submission.get("version") != "v0.3.17-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.17-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -326,18 +344,34 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             raise EcosystemSubmissionError(f"{pack_id} pack schema drifted.")
         if pack.get("platform_id") != pack_id:
             raise EcosystemSubmissionError(f"{pack_id} pack platform_id drifted.")
+        commands = "\n".join(str(item) for item in pack.get("local_verification_commands", []))
+        for command in (
+            "generate_platform_field_rehearsal.py --check",
+            "verify_platform_field_rehearsal.py --check",
+        ):
+            if command not in commands:
+                raise EcosystemSubmissionError(f"{pack_id} pack missing field rehearsal command {command}.")
+        evidence = set(str(item) for item in pack.get("acceptance_evidence", []))
+        for item in (
+            "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+            "platform_import_failure_fixture.schema_version == platform-import-failure-fixture-v1",
+        ):
+            if item not in evidence:
+                raise EcosystemSubmissionError(f"{pack_id} pack missing field rehearsal evidence {item}.")
 
 
 def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.16-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.16-alpha.")
+    if manifest.get("version") != "v0.3.17-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.17-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
         "docs/ecosystem-submission.md",
+        "docs/release-checklist.md",
+        "docs/roadmap.md",
         "docs/adoption-telemetry.md",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
@@ -352,6 +386,8 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_agent_eval_marketplace_enforcement.py",
         "scripts/verify_platform_adoption_feedback_diagnostics.py",
         "scripts/generate_platform_feedback_package.py",
+        "scripts/generate_platform_field_rehearsal.py",
+        "scripts/verify_platform_field_rehearsal.py",
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "scripts/verify_deployment_hardening.py",
         "scripts/install_local_plugin.py",
@@ -364,12 +400,21 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-feedback-package.zip",
+        "platform/generated/study-anything-platform-field-rehearsal.json",
+        "fixtures/platform-import-failures/schema_mismatch.json",
+        "fixtures/platform-import-failures/missing_local_gateway.json",
+        "fixtures/platform-import-failures/unsupported_auth_mode.json",
+        "fixtures/platform-import-failures/tool_naming_drift.json",
+        "fixtures/platform-import-failures/timeout.json",
+        "fixtures/platform-import-failures/cors_localhost.json",
+        "fixtures/platform-import-failures/package_corruption.json",
+        "fixtures/platform-import-failures/version_drift.json",
         "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
         "platform/generated/study-anything-deployment-hardening.json",
         "platform/generated/study-anything-learning-enrichment-bridge.json",
         "docs/agent-eval.md",
         "docs/eval-frameworks.md",
-        "docs/release-notes/v0.3.16-alpha.md",
+        "docs/release-notes/v0.3.17-alpha.md",
         "docs/plugins.md",
         "docs/plugin-sdk.md",
         "docs/plugin-registry.md",
@@ -401,7 +446,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -425,7 +470,7 @@ def verify_manual_rehearsal_report() -> None:
     report = load_json(MANUAL_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
         raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
@@ -447,7 +492,7 @@ def verify_first_lesson_kit_report() -> None:
     report = load_json(FIRST_LESSON_KIT_PATH)
     if report.get("schema_version") != "first-run-lesson-authoring-kit-v1":
         raise EcosystemSubmissionError("First lesson authoring kit schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("First lesson authoring kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("First lesson authoring kit must pass.")
@@ -474,7 +519,7 @@ def verify_external_eval_harness_report() -> None:
     report = load_json(EXTERNAL_EVAL_HARNESS_PATH)
     if report.get("schema_version") != "external-eval-marketplace-harness-v1":
         raise EcosystemSubmissionError("External eval marketplace harness schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("External eval marketplace harness version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("External eval marketplace harness must pass.")
@@ -511,7 +556,7 @@ def verify_agent_eval_marketplace_enforcement_report() -> None:
     report = load_json(AGENT_EVAL_MARKETPLACE_ENFORCEMENT_PATH)
     if report.get("schema_version") != "agent-eval-marketplace-enforcement-v1":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement must pass.")
@@ -575,7 +620,7 @@ def verify_platform_adoption_feedback_diagnostics_report() -> None:
     report = load_json(PLATFORM_ADOPTION_FEEDBACK_DIAGNOSTICS_PATH)
     if report.get("schema_version") != "platform-adoption-feedback-diagnostics-v1":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics must pass.")
@@ -627,7 +672,7 @@ def verify_platform_feedback_package() -> None:
     package = load_json(PLATFORM_FEEDBACK_PACKAGE_PATH)
     if package.get("schema_version") != "platform-feedback-package-v1":
         raise EcosystemSubmissionError("Platform feedback package schema drifted.")
-    if package.get("version") != "v0.3.16-alpha":
+    if package.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Platform feedback package version drifted.")
     if not PLATFORM_FEEDBACK_PACKAGE_ARCHIVE.is_file():
         raise EcosystemSubmissionError("Platform feedback package archive missing.")
@@ -650,11 +695,59 @@ def verify_platform_feedback_package() -> None:
         raise EcosystemSubmissionError("Platform feedback package must be redacted.")
 
 
+def verify_platform_field_rehearsal_report() -> None:
+    report = load_json(PLATFORM_FIELD_REHEARSAL_PATH)
+    if report.get("schema_version") != "platform-field-adoption-rehearsal-v1":
+        raise EcosystemSubmissionError("Platform field rehearsal schema drifted.")
+    if report.get("version") != "v0.3.17-alpha":
+        raise EcosystemSubmissionError("Platform field rehearsal version drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Platform field rehearsal report must pass.")
+    platforms = report.get("platforms")
+    if not isinstance(platforms, list) or len(platforms) != 4:
+        raise EcosystemSubmissionError("Platform field rehearsal must cover four platform modes.")
+    platform_ids = {str(item.get("platform_id")) for item in platforms if isinstance(item, dict)}
+    if platform_ids != {"kimi", "codex", "workbuddy", "generic"}:
+        raise EcosystemSubmissionError(f"Platform field rehearsal platform ids drifted: {sorted(platform_ids)}")
+    quirks = report.get("quirks_catalog")
+    if not isinstance(quirks, list) or len(quirks) < 8:
+        raise EcosystemSubmissionError("Platform field rehearsal must include an import quirks catalog.")
+    fixtures = report.get("failed_import_fixtures")
+    if not isinstance(fixtures, list) or len(fixtures) != len(quirks):
+        raise EcosystemSubmissionError("Platform field rehearsal fixture count must match quirks catalog.")
+    for fixture in fixtures:
+        if not isinstance(fixture, dict):
+            raise EcosystemSubmissionError("Platform field rehearsal fixtures must be objects.")
+        path = fixture.get("path")
+        if not isinstance(path, str):
+            raise EcosystemSubmissionError("Platform field rehearsal fixture path missing.")
+        require_file(path, label="platform_field_rehearsal.fixture")
+        payload = load_json(ROOT / path)
+        if payload.get("schema_version") != "platform-import-failure-fixture-v1":
+            raise EcosystemSubmissionError(f"Platform import failure fixture schema drifted: {path}")
+        diagnosis = payload.get("diagnosis") or {}
+        if not diagnosis.get("detection_signal") or not diagnosis.get("next_commands"):
+            raise EcosystemSubmissionError(f"Platform import failure fixture is not actionable: {path}")
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "real_model_keys_in_report",
+        "agent_endpoint_secrets_in_report",
+        "raw_source_text_in_report",
+        "learner_answers_in_report",
+        "agent_prompts_in_report",
+        "browser_video_private_context_in_report",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Platform field rehearsal privacy.{key} must be false.")
+    if privacy.get("fixtures_are_mock_only") is not True:
+        raise EcosystemSubmissionError("Platform import failure fixtures must be mock-only.")
+
+
 def verify_plugin_ecosystem_kit_report() -> None:
     report = load_json(PLUGIN_ECOSYSTEM_KIT_PATH)
     if report.get("schema_version") != "plugin-ecosystem-adoption-kit-v1":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit must pass.")
@@ -701,7 +794,7 @@ def verify_deployment_hardening_report() -> None:
     report = load_json(DEPLOYMENT_HARDENING_PATH)
     if report.get("schema_version") != "deployment-hardening-verification-v1":
         raise EcosystemSubmissionError("Deployment hardening report schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Deployment hardening report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Deployment hardening report must pass.")
@@ -736,7 +829,7 @@ def verify_learning_enrichment_bridge_report() -> None:
     report = load_json(LEARNING_ENRICHMENT_BRIDGE_PATH)
     if report.get("schema_version") != "learning-enrichment-bridge-verification-v1":
         raise EcosystemSubmissionError("Learning enrichment bridge report schema drifted.")
-    if report.get("version") != "v0.3.16-alpha":
+    if report.get("version") != "v0.3.17-alpha":
         raise EcosystemSubmissionError("Learning enrichment bridge report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Learning enrichment bridge report must pass.")
@@ -799,6 +892,7 @@ def main() -> None:
     verify_agent_eval_marketplace_enforcement_report()
     verify_platform_adoption_feedback_diagnostics_report()
     verify_platform_feedback_package()
+    verify_platform_field_rehearsal_report()
     verify_plugin_ecosystem_kit_report()
     verify_deployment_hardening_report()
     verify_learning_enrichment_bridge_report()
@@ -817,6 +911,8 @@ def main() -> None:
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
                 "platform_feedback_package": "platform-feedback-package-v1",
+                "platform_field_rehearsal": "platform-field-adoption-rehearsal-v1",
+                "platform_import_failure_fixture": "platform-import-failure-fixture-v1",
                 "plugin_ecosystem_adoption_kit": "plugin-ecosystem-adoption-kit-v1",
                 "deployment_hardening": "deployment-hardening-verification-v1",
                 "learning_enrichment_bridge": "learning-enrichment-bridge-verification-v1",

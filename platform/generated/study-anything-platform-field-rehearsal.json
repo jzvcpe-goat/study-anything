@@ -1,0 +1,364 @@
+{
+  "acceptance": {
+    "fixture_count": 8,
+    "fixture_paths": [
+      "fixtures/platform-import-failures/schema_mismatch.json",
+      "fixtures/platform-import-failures/missing_local_gateway.json",
+      "fixtures/platform-import-failures/unsupported_auth_mode.json",
+      "fixtures/platform-import-failures/tool_naming_drift.json",
+      "fixtures/platform-import-failures/timeout.json",
+      "fixtures/platform-import-failures/cors_localhost.json",
+      "fixtures/platform-import-failures/package_corruption.json",
+      "fixtures/platform-import-failures/version_drift.json"
+    ],
+    "generate_command": "python3 scripts/generate_platform_field_rehearsal.py --check",
+    "verify_command": "python3 scripts/verify_platform_field_rehearsal.py --check"
+  },
+  "failed_import_fixtures": [
+    {
+      "failure_id": "schema_mismatch",
+      "path": "fixtures/platform-import-failures/schema_mismatch.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "missing_local_gateway",
+      "path": "fixtures/platform-import-failures/missing_local_gateway.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "unsupported_auth_mode",
+      "path": "fixtures/platform-import-failures/unsupported_auth_mode.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "tool_naming_drift",
+      "path": "fixtures/platform-import-failures/tool_naming_drift.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "timeout",
+      "path": "fixtures/platform-import-failures/timeout.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "cors_localhost",
+      "path": "fixtures/platform-import-failures/cors_localhost.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "package_corruption",
+      "path": "fixtures/platform-import-failures/package_corruption.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    },
+    {
+      "failure_id": "version_drift",
+      "path": "fixtures/platform-import-failures/version_drift.json",
+      "schema_version": "platform-import-failure-fixture-v1"
+    }
+  ],
+  "platforms": [
+    {
+      "events": [
+        {
+          "actor": "operator",
+          "evidence": "study-anything-platform-adoption-pack.zip opened and manifest sha256 checked",
+          "step": "download_pack"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "platform/generated/study-anything-openai-tools.json selected without exposing management endpoints",
+          "step": "import_tools"
+        },
+        {
+          "actor": "operator",
+          "evidence": "Skill Mode, source Compose, or published-image runtime started locally",
+          "step": "start_local_runtime"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "health, tool catalog, and deterministic fake-agent lesson flow checked",
+          "step": "run_safe_probe"
+        },
+        {
+          "actor": "operator",
+          "evidence": "redacted feedback package available for manual support handoff",
+          "step": "collect_feedback"
+        }
+      ],
+      "expected_evidence": [
+        "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+        "platform_feedback_package.schema_version == platform-feedback-package-v1",
+        "no raw source text, learner answers, or model secrets in transcript"
+      ],
+      "import_asset": "platform/generated/study-anything-openai-tools.json",
+      "platform_id": "kimi",
+      "platform_name": "Kimi-compatible tool workspace",
+      "status": "ready_for_field_rehearsal"
+    },
+    {
+      "events": [
+        {
+          "actor": "operator",
+          "evidence": "study-anything-platform-adoption-pack.zip opened and manifest sha256 checked",
+          "step": "download_pack"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "skills/study-anything/SKILL.md selected without exposing management endpoints",
+          "step": "import_tools"
+        },
+        {
+          "actor": "operator",
+          "evidence": "Skill Mode, source Compose, or published-image runtime started locally",
+          "step": "start_local_runtime"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "health, tool catalog, and deterministic fake-agent lesson flow checked",
+          "step": "run_safe_probe"
+        },
+        {
+          "actor": "operator",
+          "evidence": "redacted feedback package available for manual support handoff",
+          "step": "collect_feedback"
+        }
+      ],
+      "expected_evidence": [
+        "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+        "platform_feedback_package.schema_version == platform-feedback-package-v1",
+        "no raw source text, learner answers, or model secrets in transcript"
+      ],
+      "import_asset": "skills/study-anything/SKILL.md",
+      "platform_id": "codex",
+      "platform_name": "Codex Skill workspace",
+      "status": "ready_for_field_rehearsal"
+    },
+    {
+      "events": [
+        {
+          "actor": "operator",
+          "evidence": "study-anything-platform-adoption-pack.zip opened and manifest sha256 checked",
+          "step": "download_pack"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "platform/generated/study-anything-platform-openapi.json selected without exposing management endpoints",
+          "step": "import_tools"
+        },
+        {
+          "actor": "operator",
+          "evidence": "Skill Mode, source Compose, or published-image runtime started locally",
+          "step": "start_local_runtime"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "health, tool catalog, and deterministic fake-agent lesson flow checked",
+          "step": "run_safe_probe"
+        },
+        {
+          "actor": "operator",
+          "evidence": "redacted feedback package available for manual support handoff",
+          "step": "collect_feedback"
+        }
+      ],
+      "expected_evidence": [
+        "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+        "platform_feedback_package.schema_version == platform-feedback-package-v1",
+        "no raw source text, learner answers, or model secrets in transcript"
+      ],
+      "import_asset": "platform/generated/study-anything-platform-openapi.json",
+      "platform_id": "workbuddy",
+      "platform_name": "WorkBuddy-style HTTP workspace",
+      "status": "ready_for_field_rehearsal"
+    },
+    {
+      "events": [
+        {
+          "actor": "operator",
+          "evidence": "study-anything-platform-adoption-pack.zip opened and manifest sha256 checked",
+          "step": "download_pack"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "platform/generated/study-anything-platform-openapi.json selected without exposing management endpoints",
+          "step": "import_tools"
+        },
+        {
+          "actor": "operator",
+          "evidence": "Skill Mode, source Compose, or published-image runtime started locally",
+          "step": "start_local_runtime"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "health, tool catalog, and deterministic fake-agent lesson flow checked",
+          "step": "run_safe_probe"
+        },
+        {
+          "actor": "operator",
+          "evidence": "redacted feedback package available for manual support handoff",
+          "step": "collect_feedback"
+        }
+      ],
+      "expected_evidence": [
+        "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+        "platform_feedback_package.schema_version == platform-feedback-package-v1",
+        "no raw source text, learner answers, or model secrets in transcript"
+      ],
+      "import_asset": "platform/generated/study-anything-platform-openapi.json",
+      "platform_id": "generic",
+      "platform_name": "Generic OpenAPI or MCP-capable platform",
+      "status": "ready_for_field_rehearsal"
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "browser_video_private_context_in_report": false,
+    "fixtures_are_mock_only": true,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false
+  },
+  "purpose": "Turn platform adoption diagnostics into reusable Kimi, Codex, WorkBuddy, and generic OpenAPI import rehearsals with actionable failed-import fixtures.",
+  "quirks_catalog": [
+    {
+      "detection_signal": "Imported asset declares an unexpected schema_version or OpenAPI version.",
+      "id": "schema_mismatch",
+      "likely_cause": "The platform imported an old adoption pack or a generated asset from another release.",
+      "next_commands": [
+        "python3 scripts/generate_platform_agent_assets.py --check",
+        "python3 scripts/verify_platform_field_rehearsal.py --check"
+      ],
+      "safe_feedback_fields": [
+        "schema_version",
+        "asset_path",
+        "expected_version",
+        "found_version"
+      ],
+      "title": "Schema mismatch"
+    },
+    {
+      "detection_signal": "The platform cannot reach the local Study Anything API or user-owned Agent gateway.",
+      "id": "missing_local_gateway",
+      "likely_cause": "Skill Mode, Docker Compose, or the user's external Agent gateway is not running.",
+      "next_commands": [
+        "./scripts/launch_skill_mode.sh",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "safe_feedback_fields": [
+        "platform_id",
+        "api_base",
+        "gateway_mode",
+        "diagnostic_code"
+      ],
+      "title": "Missing local gateway"
+    },
+    {
+      "detection_signal": "The platform requests API key auth for Study Anything platform tools.",
+      "id": "unsupported_auth_mode",
+      "likely_cause": "The import flow confused user-owned Agent credentials with Study Anything tools.",
+      "next_commands": [
+        "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check"
+      ],
+      "safe_feedback_fields": [
+        "platform_id",
+        "auth_mode",
+        "tool_asset"
+      ],
+      "title": "Unsupported auth mode"
+    },
+    {
+      "detection_signal": "Imported tool names or OpenAPI operationIds differ from the source manifest.",
+      "id": "tool_naming_drift",
+      "likely_cause": "The platform renamed tools during import or mixed OpenAI tools with OpenAPI paths.",
+      "next_commands": [
+        "python3 scripts/generate_platform_bundle_manifest.py --check",
+        "python3 scripts/verify_ecosystem_submission_pack.py"
+      ],
+      "safe_feedback_fields": [
+        "platform_id",
+        "missing_tool",
+        "import_asset"
+      ],
+      "title": "Tool naming drift"
+    },
+    {
+      "detection_signal": "A platform tool call exceeds the platform or local gateway timeout.",
+      "id": "timeout",
+      "likely_cause": "First-run dependency setup, slow Docker pull, or a cold user-owned Agent gateway.",
+      "next_commands": [
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_clean_clone_adoption.py --repo ."
+      ],
+      "safe_feedback_fields": [
+        "platform_id",
+        "tool_name",
+        "timeout_seconds",
+        "diagnostic_code"
+      ],
+      "title": "Timeout"
+    },
+    {
+      "detection_signal": "Browser-based platform import cannot call localhost directly.",
+      "id": "cors_localhost",
+      "likely_cause": "The platform runs in a browser sandbox without local network permission.",
+      "next_commands": [
+        "python3 scripts/openai_compatible_agent_gateway.py --help",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "safe_feedback_fields": [
+        "platform_id",
+        "runtime_surface",
+        "blocked_origin"
+      ],
+      "title": "CORS or localhost restriction"
+    },
+    {
+      "detection_signal": "The adoption pack zip cannot be opened or its sha256 manifest does not match.",
+      "id": "package_corruption",
+      "likely_cause": "The pack was edited manually, partially downloaded, or re-zipped by another tool.",
+      "next_commands": [
+        "python3 scripts/generate_platform_adoption_pack.py",
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+      ],
+      "safe_feedback_fields": [
+        "archive_name",
+        "expected_sha256",
+        "found_sha256"
+      ],
+      "title": "Package corruption"
+    },
+    {
+      "detection_signal": "The platform pack, generated report, release notes, or ecosystem submission versions differ.",
+      "id": "version_drift",
+      "likely_cause": "A branch mixed artifacts from multiple alpha releases.",
+      "next_commands": [
+        "python3 scripts/verify_platform_field_rehearsal.py --check",
+        "./scripts/release_check.sh"
+      ],
+      "safe_feedback_fields": [
+        "expected_version",
+        "found_version",
+        "asset_path"
+      ],
+      "title": "Version drift"
+    }
+  ],
+  "schema_version": "platform-field-adoption-rehearsal-v1",
+  "status": "pass",
+  "support_handoff": {
+    "automatic_upload": false,
+    "feedback_package": "platform/generated/study-anything-platform-feedback-package.zip",
+    "manual_only": true,
+    "safe_fields": [
+      "platform_id",
+      "release_version",
+      "diagnostic_code",
+      "asset_path",
+      "redacted_log_sample",
+      "reproduction_commands"
+    ]
+  },
+  "version": "v0.3.17-alpha"
+}

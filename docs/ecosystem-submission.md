@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.16-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.17-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -39,6 +39,8 @@ python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -78,6 +80,11 @@ The feedback package emits `platform-feedback-package-v1`, a local-only package
 containing diagnostic summaries and redacted logs without source text, learner
 answers, Agent prompts, endpoint secrets, model keys, personal profiles, or
 browser/video private context.
+The field adoption rehearsal emits `platform-field-adoption-rehearsal-v1`. It
+turns Kimi, Codex, WorkBuddy, and generic OpenAPI platform import into a
+repeatable redacted rehearsal, and includes `platform-import-failure-fixture-v1`
+fixtures for schema mismatch, missing gateway, auth mode mismatch, tool naming
+drift, timeout, localhost restrictions, package corruption, and version drift.
 The plugin ecosystem adoption kit emits `plugin-ecosystem-adoption-kit-v1`, a
 copy-ready trust contract covering bundled sample plugins, registry
 `sourceDigest` verification, quarantine-first install policy, platform-pack
@@ -120,6 +127,8 @@ python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
 python3 scripts/generate_platform_feedback_package.py --check
+python3 scripts/generate_platform_field_rehearsal.py --check
+python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check

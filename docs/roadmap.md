@@ -490,9 +490,23 @@
   ecosystem submission, Kimi/Codex/WorkBuddy packs, bundle manifest, manual rehearsal, operator
   drill evidence, and adoption pack assets.
 
+## v0.3.17-alpha
+
+- Add `platform-field-adoption-rehearsal-v1`, a redacted field rehearsal report for Kimi, Codex,
+  WorkBuddy, and generic OpenAPI platform import.
+- Add `platform-import-failure-fixture-v1` mock failed-import fixtures covering schema mismatch,
+  missing local gateway, unsupported auth mode, tool naming drift, timeout, browser localhost
+  restrictions, package corruption, and version drift.
+- Keep fixtures actionable with detection signals, likely causes, safe feedback fields, and next
+  commands while excluding raw source text, learner answers, Agent prompts, real endpoints, model
+  keys, and browser/video private context.
+- Wire field rehearsal evidence into release checks, external adoption proof, ecosystem submission,
+  Kimi/Codex/WorkBuddy packs, bundle manifest, manual rehearsal, operator drill evidence, and the
+  adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.17`: External adoption feedback loop field rehearsal and platform import diagnostics hardening.
+- `v0.3.18`: External platform support desk dry-run, issue templates, and maintainer triage loop.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

@@ -52,6 +52,8 @@ fi
 "$python_bin" scripts/verify_agent_eval_marketplace_enforcement.py --check
 "$python_bin" scripts/verify_platform_adoption_feedback_diagnostics.py --check
 "$python_bin" scripts/generate_platform_feedback_package.py --check
+"$python_bin" scripts/generate_platform_field_rehearsal.py --check
+"$python_bin" scripts/verify_platform_field_rehearsal.py --check
 "$python_bin" scripts/verify_plugin_ecosystem_adoption_kit.py --check
 "$python_bin" scripts/verify_deployment_hardening.py --check
 "$python_bin" scripts/generate_platform_agent_assets.py --check

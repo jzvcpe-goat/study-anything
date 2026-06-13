@@ -1,0 +1,38 @@
+{
+  "diagnosis": {
+    "detection_signal": "Imported tool names or OpenAPI operationIds differ from the source manifest.",
+    "likely_cause": "The platform renamed tools during import or mixed OpenAI tools with OpenAPI paths.",
+    "next_commands": [
+      "python3 scripts/generate_platform_bundle_manifest.py --check",
+      "python3 scripts/verify_ecosystem_submission_pack.py"
+    ]
+  },
+  "failure_id": "tool_naming_drift",
+  "observed_error": {
+    "diagnostic_code": "tool_naming_drift",
+    "message": "Simulated Tool naming drift during external platform import.",
+    "raw_error_redacted": true
+  },
+  "platform_ids": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic"
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "safe_feedback_fields": [
+    "platform_id",
+    "missing_tool",
+    "import_asset"
+  ],
+  "schema_version": "platform-import-failure-fixture-v1",
+  "status": "mock_failure_ready",
+  "version": "v0.3.17-alpha"
+}
