@@ -79,6 +79,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
+    "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -373,6 +374,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "security_recovery_hardening_schema": "security-recovery-hardening-verification-v1",
             "platform_submission_dry_run_schema": "platform-submission-dry-run-v1",
             "platform_manual_submission_rehearsal_schema": "platform-manual-submission-rehearsal-v1",
+            "first_lesson_authoring_kit_schema": "first-run-lesson-authoring-kit-v1",
             "external_agent_adapter_hardening_schema": "external-agent-adapter-hardening-v1",
             "shared_logs_are_redacted": True,
         },

@@ -65,6 +65,10 @@ class PlatformOperatorDrillTests(unittest.TestCase):
             payload["handoff_contract"]["platform_manual_submission_rehearsal_schema"],
             "platform-manual-submission-rehearsal-v1",
         )
+        self.assertEqual(
+            payload["handoff_contract"]["first_lesson_authoring_kit_schema"],
+            "first-run-lesson-authoring-kit-v1",
+        )
         serialized = json.dumps(payload)
         self.assertNotIn("OPENAI_API_KEY", serialized)
         self.assertNotIn("MOONSHOT_API_KEY", serialized)

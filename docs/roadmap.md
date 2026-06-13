@@ -402,9 +402,19 @@
 - Include the report in release checks, external adoption proof, ecosystem submission, platform packs,
   bundle manifest, operator drill evidence, and adoption pack assets.
 
+## v0.3.10-alpha
+
+- Add `first-run-lesson-authoring-kit-v1`, a redacted first-lesson kit for Kimi/Codex/WorkBuddy and
+  generic OpenAPI platform Agents.
+- Include bilingual copyable prompts, a tool-call sequence, Learning Context Package template,
+  user-owned HTTP Agent setup, expected output schemas, export evidence, remediation, and privacy
+  assertions.
+- Wire the kit into release checks, external adoption proof, ecosystem submission, platform packs,
+  bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.10`: first-run lesson authoring kit and Kimi/Codex copyable workflow polish.
+- `v0.3.11`: external eval harness marketplace-quality adapters and acceptance gates.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

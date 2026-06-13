@@ -1,0 +1,320 @@
+{
+  "context_package_template": {
+    "constraints": {
+      "avoid": [
+        "raw credentials",
+        "private browser traces",
+        "unbounded source dumps"
+      ],
+      "language": "${zh_or_en}",
+      "preferred_outputs": [
+        "source-bound quiz",
+        "professional term explanation",
+        "Obsidian note",
+        "NotebookLM-style learning package"
+      ]
+    },
+    "learner_goal": "${WHAT_THE_USER_WANTS_TO_UNDERSTAND_OR_DO}",
+    "schema_version": "learning-context-package-v1",
+    "source_items": [
+      {
+        "excerpt": "${BOUNDED_EXCERPT_OR_SUMMARY_200_TO_800_WORDS}",
+        "reference": "${USER_OWNED_SOURCE_REFERENCE}",
+        "source_type": "document",
+        "why_it_matters": "${WHY_THIS_SOURCE_IS_RELEVANT}"
+      },
+      {
+        "excerpt": "${OPTIONAL_REDACTED_CONTEXT_SUMMARY}",
+        "reference": "${OPTIONAL_BROWSER_APP_OR_VIDEO_SLICE_REFERENCE}",
+        "source_type": "app_context",
+        "why_it_matters": "${OPTIONAL_CONTEXT_ROLE}"
+      }
+    ],
+    "title": "${LEARNING_TOPIC}"
+  },
+  "copyable_prompts": {
+    "en": {
+      "prompt": "You are my platform Agent. Do not send real model secrets, private browser context, or full raw source dumps into Study Anything. Build a learning-context-package-v1 from the bounded material I provide, then call Study Anything tools to complete the first lesson: health check, validate context package, create session, add enrichment if available, run the learning workflow, ask me for quiz answers, submit answers, fetch mastery/audit/eval evidence, and export the enrichment artifact, learning package, Obsidian note, and second-brain handoff. Report only schemas, session_id, mastery, cited references, and local evidence paths.",
+      "title": "Study Anything first lesson kickoff prompt"
+    },
+    "zh": {
+      "prompt": "你是我的平台 Agent。请不要把真实模型密钥、浏览器私有上下文或完整原文写入 Study Anything。先根据我给出的材料生成 learning-context-package-v1，然后调用 Study Anything 工具完成第一课：1. 检查 /v1/health；2. validate context package；3. create session from context package；4. add enrichment（如有网页、视频切片、Obsidian 笔记或应用上下文）；5. run 学习流；6. 让我回答 quiz；7. submit answers；8. 获取 mastery、agent audit、eval artifact；9. 导出 enrichment artifact、learning package、Obsidian note 和 second-brain handoff。最后只汇报 schema、session_id、掌握度、引用来源和本地证据路径。",
+      "title": "Study Anything 第一课启动提示词"
+    }
+  },
+  "evidence_export_paths": [
+    "platform/generated/study-anything-first-lesson-authoring-kit.json",
+    "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+    "platform/generated/study-anything-operator-drill-transcript.json",
+    "platform/generated/study-anything-platform-adoption-pack.json"
+  ],
+  "expected_outputs": [
+    "learning-context-package-v1",
+    "learning-enrichment-artifact-v1",
+    "agent-audit-v1",
+    "agent-eval-artifact-v1",
+    "mastery response",
+    "obsidian-markdown-export-v1",
+    "learning-package-v1",
+    "second-brain-handoff-v1"
+  ],
+  "failure_remediation": {
+    "agent_output_invalid": [
+      "Run verify_external_agent_adapter_hardening.py.",
+      "Fallback to fake deterministic Agent to isolate Study Anything runtime issues."
+    ],
+    "context_package_invalid": [
+      "Keep excerpts bounded and references explicit.",
+      "Do not include secrets, cookies, signed URLs, or private browser traces."
+    ],
+    "exports_too_sensitive": [
+      "Share only schema/version/status evidence.",
+      "Keep Obsidian and learning-package contents in the user's local vault/archive."
+    ],
+    "platform_cannot_call_localhost": [
+      "Use a terminal-capable Agent, local gateway, or private HTTP tool host.",
+      "Browser-only chat can follow the copy-only prompt but cannot run the local tools directly."
+    ]
+  },
+  "http_agent_setup": {
+    "credentials_boundary": "Credentials stay in the user's Agent or host platform environment.",
+    "gateway_command": "python3 scripts/openai_compatible_agent_gateway.py --dry-run --port ${AGENT_PORT}",
+    "recommended_mode": "user_owned_http_agent",
+    "register_command": "python3 scripts/study_anything_cli.py agent-add-http --endpoint ${USER_OWNED_AGENT_ENDPOINT} --set-default"
+  },
+  "operator_checklist": [
+    {
+      "expected_output": "learning-context-package-v1 draft with references and bounded excerpts",
+      "operator_action": "Collect a bounded excerpt, file summary, video slice summary, or app-context summary outside Study Anything.",
+      "step_id": "collect_bounded_material"
+    },
+    {
+      "expected_output": "GET /v1/health returns ok and version matches the pack",
+      "operator_action": "Start Skill Mode or Docker Compose and verify health.",
+      "step_id": "start_local_runtime"
+    },
+    {
+      "expected_output": "Agent capabilities include quiz.generate, answer.grade, insight.synthesize",
+      "operator_action": "If using a real model, configure the user's own local/private HTTP Agent endpoint.",
+      "step_id": "configure_optional_http_agent"
+    },
+    {
+      "expected_output": "mastery, audit, eval, and source-bound citations are available",
+      "operator_action": "Create a session from the context package, run the learning flow, and submit answers.",
+      "step_id": "run_source_bound_lesson"
+    },
+    {
+      "expected_output": "redacted schemas are present; raw source and learner answers stay local/user-owned",
+      "operator_action": "Export Obsidian, NotebookLM-style learning package, and second-brain handoff evidence.",
+      "step_id": "export_memory_evidence"
+    }
+  ],
+  "platforms": {
+    "codex": {
+      "acceptance_evidence_count": 34,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
+        "./scripts/run_skill_mode_demo.sh",
+        "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "entrypoints": {
+        "cli": "scripts/study_anything_cli.py",
+        "demo": "scripts/run_skill_mode_demo.sh",
+        "skill": "skills/study-anything/SKILL.md"
+      },
+      "integration_mode": "terminal_skill",
+      "platform_id": "codex"
+    },
+    "kimi": {
+      "acceptance_evidence_count": 34,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
+        "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py --agent-endpoint ${USER_OWNED_AGENT_ENDPOINT}"
+      ],
+      "entrypoints": {
+        "gateway": "scripts/openai_compatible_agent_gateway.py",
+        "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
+        "guide": "docs/kimi-agent-gateway.md",
+        "openai_tools": "platform/generated/study-anything-openai-tools.json",
+        "openapi": "platform/generated/study-anything-platform-openapi.json"
+      },
+      "integration_mode": "openai_compatible_tools",
+      "platform_id": "kimi"
+    },
+    "workbuddy": {
+      "acceptance_evidence_count": 34,
+      "commands": [
+        "python3 scripts/verify_clean_clone_adoption.py --repo .",
+        "python3 scripts/verify_commercial_readiness.py",
+        "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
+        "python3 scripts/verify_agent_gateway_hardening.py",
+        "python3 scripts/verify_external_agent_adapter_hardening.py",
+        "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_platform_submission_dry_run.py --check",
+        "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
+        "python3 scripts/diagnose_adoption.py"
+      ],
+      "entrypoints": {
+        "api_docs": "docs/api.md",
+        "openapi": "platform/generated/study-anything-platform-openapi.json",
+        "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
+      },
+      "integration_mode": "openapi_http_tools",
+      "platform_id": "workbuddy"
+    }
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_returned": false,
+    "browser_video_private_context_returned": false,
+    "context_template_contains_raw_source": false,
+    "copyable_prompts_include_real_model_keys": false,
+    "learner_answers_returned": false,
+    "report_is_redacted": true
+  },
+  "schema_version": "first-run-lesson-authoring-kit-v1",
+  "status": "pass",
+  "submission": {
+    "no_frontend_required": true,
+    "platform_count": 4,
+    "schema_version": "ecosystem-submission-v1",
+    "version": "v0.3.10-alpha"
+  },
+  "time_budget": {
+    "estimated_operator_minutes": 12,
+    "stop_on_first_blocker": true,
+    "target_minutes": 20
+  },
+  "tool_assets": {
+    "openai_tool_count": 34,
+    "openapi_path_count": 34,
+    "required_tool_count": 12,
+    "required_tools_present": [
+      "study_anything_health",
+      "study_anything_validate_context_package",
+      "study_anything_create_session_from_context_package",
+      "study_anything_add_enrichment",
+      "study_anything_run",
+      "study_anything_answer",
+      "study_anything_mastery",
+      "study_anything_agent_audit",
+      "study_anything_agent_eval_artifact",
+      "study_anything_enrichment_artifact_export",
+      "study_anything_learning_package_export",
+      "study_anything_second_brain_handoff_export"
+    ]
+  },
+  "tool_call_sequence": [
+    {
+      "expected_schema": "health response",
+      "order": "01",
+      "tool": "study_anything_health"
+    },
+    {
+      "expected_schema": "learning-context-package-v1",
+      "order": "02",
+      "tool": "study_anything_validate_context_package"
+    },
+    {
+      "expected_schema": "learning-context-package-v1",
+      "order": "03",
+      "tool": "study_anything_create_session_from_context_package"
+    },
+    {
+      "expected_schema": "learning-enrichment-item-v1",
+      "order": "04",
+      "tool": "study_anything_add_enrichment"
+    },
+    {
+      "expected_schema": "session event stream",
+      "order": "05",
+      "tool": "study_anything_run"
+    },
+    {
+      "expected_schema": "graded answer result",
+      "order": "06",
+      "tool": "study_anything_answer"
+    },
+    {
+      "expected_schema": "mastery response",
+      "order": "07",
+      "tool": "study_anything_mastery"
+    },
+    {
+      "expected_schema": "agent-audit-v1",
+      "order": "08",
+      "tool": "study_anything_agent_audit"
+    },
+    {
+      "expected_schema": "agent-eval-artifact-v1",
+      "order": "09",
+      "tool": "study_anything_agent_eval_artifact"
+    },
+    {
+      "expected_schema": "learning-enrichment-artifact-v1",
+      "order": "10",
+      "tool": "study_anything_enrichment_artifact_export"
+    },
+    {
+      "expected_schema": "learning-package-v1",
+      "order": "11",
+      "tool": "study_anything_learning_package_export"
+    },
+    {
+      "expected_schema": "second-brain-handoff-v1",
+      "order": "12",
+      "tool": "study_anything_second_brain_handoff_export"
+    }
+  ],
+  "version": "v0.3.10-alpha"
+}

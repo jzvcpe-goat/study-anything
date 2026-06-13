@@ -42,6 +42,7 @@
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "platform/ecosystem-submission.json",
+    "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
@@ -54,6 +55,7 @@
     "scripts/study_anything_cli.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_external_agent_adapter_hardening.py",
+    "scripts/verify_first_lesson_authoring_kit.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_submission_dry_run.py"
@@ -71,6 +73,7 @@
   "expected_outputs": {
     "collect_redacted_handoff": [
       "platform-manual-submission-rehearsal-v1",
+      "first-run-lesson-authoring-kit-v1",
       "status pass"
     ],
     "configure_user_owned_http_agent": [
@@ -217,10 +220,12 @@
     {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
-        "platform/generated/study-anything-platform-manual-submission-rehearsal.json"
+        "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+        "platform/generated/study-anything-first-lesson-authoring-kit.json"
       ],
       "expected_outputs": [
         "platform-manual-submission-rehearsal-v1",
+        "first-run-lesson-authoring-kit-v1",
         "status pass"
       ],
       "failure_remediation": [
@@ -232,7 +237,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 33,
+      "acceptance_evidence_count": 34,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -244,6 +249,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -270,7 +276,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 33,
+      "acceptance_evidence_count": 34,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -282,6 +288,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -312,7 +319,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 33,
+      "acceptance_evidence_count": 34,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -324,6 +331,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -364,7 +372,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.9-alpha"
+    "version": "v0.3.10-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -377,5 +385,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.9-alpha"
+  "version": "v0.3.10-alpha"
 }

@@ -47,6 +47,7 @@ REQUIRED_ACCEPTANCE = {
     "security_recovery_hardening.schema_version == security-recovery-hardening-verification-v1",
     "platform_submission_dry_run.schema_version == platform-submission-dry-run-v1",
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1",
+    "first_lesson_authoring_kit.schema_version == first-run-lesson-authoring-kit-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
@@ -55,6 +56,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_security_recovery_hardening.py",
     "verify_platform_submission_dry_run.py",
     "verify_platform_manual_submission_rehearsal.py",
+    "verify_first_lesson_authoring_kit.py",
     "verify_importer_lesson_flow.py",
     "verify_platform_lesson_flow.py",
     "verify_platform_ecosystem_eval_flow.py",

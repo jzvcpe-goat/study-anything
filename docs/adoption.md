@@ -14,6 +14,7 @@ python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -27,7 +28,10 @@ an external platform tool directory. The submission dry-run emits `platform-subm
 with ready/warning/blocked status for each target platform. The manual rehearsal emits
 `platform-manual-submission-rehearsal-v1`, a redacted operator handoff covering tool import, runtime
 health, user-owned HTTP Agent setup, first lesson, export evidence, diagnostics, and failure
-remediation. The adoption verifier emits `adoption-proof-v1` and exercises
+remediation. The first lesson authoring kit emits `first-run-lesson-authoring-kit-v1`, with bilingual
+copyable platform-Agent prompts, a tool-call sequence, Learning Context Package template, user-owned
+HTTP Agent setup, expected output schemas, export paths, and privacy assertions. The adoption
+verifier emits `adoption-proof-v1` and exercises
 importer, enrichment, retrieval, teaching layers, eval, Obsidian export, and NotebookLM-style
 learning-package export through Skill Mode.
 
@@ -158,6 +162,7 @@ external platform, run:
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and proves the submission pack has no
@@ -166,6 +171,9 @@ in submission metadata, and no high-risk management endpoints in the imported pl
 The manual rehearsal report is the shareable operator checklist for the same submission: share that
 redacted JSON instead of raw source text, learner answers, Agent endpoints, browser/video context, or
 model keys.
+The first lesson kit is the shareable teaching runbook for Kimi, Codex, WorkBuddy, and generic
+OpenAPI operators. It is safe to share because it uses placeholders and schema evidence instead of
+raw source, answers, endpoints, model keys, or private browser/video context.
 
 ## User-Owned Agent Gateway Hardening
 
@@ -206,7 +214,7 @@ video transcripts.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.9-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.10-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -214,12 +222,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.9-alpha \
+  --tag v0.3.10-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.9-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.10-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

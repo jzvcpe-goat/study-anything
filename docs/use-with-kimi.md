@@ -65,6 +65,7 @@ Before treating the Kimi integration as ready, run:
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -72,8 +73,10 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The first command emits `ecosystem-submission-verification-v1`; the manual rehearsal command emits
-`platform-manual-submission-rehearsal-v1`; the telemetry command emits
-`adoption-telemetry-verification-v1`; the final command emits `adoption-proof-v1`.
+`platform-manual-submission-rehearsal-v1`; the first lesson kit emits
+`first-run-lesson-authoring-kit-v1` with copyable Chinese and English prompts for Kimi-compatible
+operators; the telemetry command emits `adoption-telemetry-verification-v1`; the final command emits
+`adoption-proof-v1`.
 
 Start with `study_anything_deployment_guide` after the local API is reachable. It returns
 `deployment-guide-v1`: launch commands, common first-run failure classes, and the privacy boundary
@@ -121,6 +124,7 @@ Before sharing the Kimi-compatible pack for manual import, run:
 ```bash
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
+python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 ```
 
@@ -130,6 +134,9 @@ The manual rehearsal report adds a copyable operator handoff: unpack the pack,
 import tools, start the local runtime, configure the user-owned HTTP Agent, run
 a first lesson, export Obsidian/learning-package/second-brain evidence, and
 collect diagnostics without sharing raw learning data.
+The first lesson kit gives Kimi a bounded copy/paste workflow for turning user-provided materials
+into a Learning Context Package, running the Study Anything lesson tools, and exporting Obsidian plus
+NotebookLM-style evidence.
 The external Agent adapter verifier separately proves that Kimi-backed or Kimi-compatible HTTP
 Agents produce redacted eval evidence and that bad outputs become explicit diagnostics.
 

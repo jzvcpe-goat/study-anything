@@ -1,7 +1,7 @@
 {
   "schema_version": "ecosystem-submission-v1",
   "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.9-alpha",
+  "version": "v0.3.10-alpha",
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
   "project": {
     "repository": "https://github.com/jzvcpe-goat/study-anything",
@@ -87,7 +87,9 @@
     "scripts/verify_security_recovery_hardening.py",
     "scripts/verify_platform_submission_dry_run.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
-    "platform/generated/study-anything-platform-manual-submission-rehearsal.json"
+    "scripts/verify_first_lesson_authoring_kit.py",
+    "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+    "platform/generated/study-anything-first-lesson-authoring-kit.json"
   ],
   "submissions": [
     {
@@ -119,6 +121,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -155,6 +158,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -189,6 +193,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -222,6 +227,7 @@
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
         "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+        "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
@@ -245,6 +251,7 @@
       "python3 scripts/verify_security_recovery_hardening.py",
       "python3 scripts/verify_platform_submission_dry_run.py --check",
       "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+      "python3 scripts/verify_first_lesson_authoring_kit.py --check",
       "python3 scripts/verify_platform_ecosystem_packs.py",
       "python3 scripts/generate_platform_bundle_manifest.py --check",
       "python3 scripts/generate_platform_adoption_pack.py --check",
@@ -265,6 +272,7 @@
       "security-recovery-hardening-verification-v1 proves backup tamper detection, path traversal rejection, wrong passphrase redaction, and restore-preview privacy",
       "platform-submission-dry-run-v1 proves Kimi, Codex, WorkBuddy-style, and generic OpenAPI packages are ready for manual submission without leaking private learning data",
       "platform-manual-submission-rehearsal-v1 proves an operator can follow a redacted handoff checklist from unpacking through first lesson, external Agent setup, export evidence, and diagnostics",
+      "first-run-lesson-authoring-kit-v1 proves Kimi/Codex/WorkBuddy operators have copyable bilingual first-lesson prompts, tool-call sequence, context-package template, Agent setup, export evidence, and privacy assertions",
       "pmf-readiness-v1 keeps hosted paid services not_ready"
     ]
   },

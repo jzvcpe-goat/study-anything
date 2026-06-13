@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.9-alpha"
+RELEASE_VERSION = "v0.3.10-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -43,6 +43,8 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_external_agent_adapter_hardening.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
+    "scripts/verify_first_lesson_authoring_kit.py",
+    "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/study_anything_cli.py",
     "scripts/run_skill_mode_demo.sh",
@@ -208,6 +210,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
     for asset in (
         "scripts/verify_platform_manual_submission_rehearsal.py",
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+        "scripts/verify_first_lesson_authoring_kit.py",
+        "platform/generated/study-anything-first-lesson-authoring-kit.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -310,9 +314,14 @@ def operator_steps() -> list[dict[str, Any]]:
             "step_id": "collect_redacted_handoff",
             "operator_action": "Run the manual rehearsal verifier and share the redacted JSON report.",
             "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
-            "expected_outputs": [SCHEMA_VERSION, "status pass"],
+            "expected_outputs": [
+                SCHEMA_VERSION,
+                "first-run-lesson-authoring-kit-v1",
+                "status pass",
+            ],
             "evidence_paths": [
-                "platform/generated/study-anything-platform-manual-submission-rehearsal.json"
+                "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
+                "platform/generated/study-anything-first-lesson-authoring-kit.json",
             ],
             "failure_remediation": ["Run release_check.sh locally before resubmitting the platform pack."],
         },
