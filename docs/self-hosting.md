@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.2.27-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.2.28-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.27-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.2.28-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -140,6 +140,7 @@ Open:
 
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Deployment guide: http://localhost:8000/v1/deployment/guide
 - System status: http://localhost:8000/v1/system/status
 - Recovery status: http://localhost:8000/v1/recovery/status
 - Local encrypted sync status: http://localhost:8000/v1/sync/status
@@ -164,7 +165,7 @@ in plaintext.
 Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.27-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha
 ```
 
 This pulls the published API image, checks the runtime version, completes the API learning loop, and
@@ -177,7 +178,9 @@ python3 scripts/diagnose_adoption.py
 ```
 
 It distinguishes localhost reachability, Docker daemon state, GHCR image visibility, HTTP Agent
-health, and missing provider capability defaults.
+health, missing `.env`, and missing provider capability defaults. The output includes
+`adoption-diagnostics-v1` plus `adoption-diagnostic-plan-v1`, a copyable recovery plan for platform
+Agents and human operators.
 
 For platform-agent distribution, maintainers should also verify the adoption pack:
 

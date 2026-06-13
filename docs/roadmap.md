@@ -256,6 +256,20 @@
 - Split plugin documentation into SDK and registry trust guides while keeping the OSS core
   local-first and marketplace-free.
 
+## v0.2.28-alpha
+
+- Add `deployment-guide-v1`, a redacted API contract that gives Kimi, Codex, WorkBuddy, and local
+  operators copyable launch paths for Skill Mode, Docker source builds, and published GHCR images.
+- Extend adoption diagnostics with `adoption-diagnostics-v1` and `adoption-diagnostic-plan-v1`, so
+  first-run failures distinguish Docker missing, daemon unavailable, `.env` missing, API unreachable,
+  Agent endpoint unavailable, provider defaults missing, and GHCR pull timeouts.
+- Add manifest-backed fallback evidence to published-image verification when local GHCR layer pulls
+  are too slow but the multi-arch image and GitHub docker workflow are healthy.
+- Include self-host launch, stop, doctor, diagnostics, and published-image verification scripts in
+  the platform adoption pack.
+- Keep the launch target API/Skill Mode first; standalone frontend polish remains out of scope for
+  this release track.
+
 ## v0.3 Next
 
 - Add platform-specific submission docs and hosted examples for Kimi/Codex/WorkBuddy-style wrappers.

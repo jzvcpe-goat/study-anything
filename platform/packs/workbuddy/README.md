@@ -46,6 +46,7 @@ The workspace Agent should own:
 
 Study Anything should own:
 
+- deployment-guide-v1 launch guidance and first-run diagnostic boundaries
 - source-bound learning state
 - Learning Context Package validation and import
 - Plugin SDK contract, capability index, and local package validation
@@ -59,6 +60,7 @@ Study Anything should own:
 Against a running API, verify the imported tool surface and redacted evidence:
 
 ```bash
+curl http://127.0.0.1:8000/v1/deployment/guide
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \

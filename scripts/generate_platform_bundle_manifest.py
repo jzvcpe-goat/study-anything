@@ -82,6 +82,26 @@ FILES: list[tuple[str, str, str]] = [
         "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
     ),
     (
+        "scripts/doctor.sh",
+        "diagnostics",
+        "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
+    ),
+    (
+        "scripts/launch_self_host.sh",
+        "runtime",
+        "Docker Compose self-host launcher for source builds and published GHCR images.",
+    ),
+    (
+        "scripts/stop_self_host.sh",
+        "runtime",
+        "Docker Compose self-host stop helper.",
+    ),
+    (
+        "scripts/verify_published_image_launch.py",
+        "verification",
+        "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
+    ),
+    (
         "scripts/run_skill_mode_demo.sh",
         "verification",
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
@@ -237,9 +257,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.2.27-alpha.md",
+        "docs/release-notes/v0.2.28-alpha.md",
         "docs",
-        "Release notes for the Plugin SDK trust release.",
+        "Release notes for the deployment and first-run hardening release.",
     ),
     (
         "docs/plugins.md",

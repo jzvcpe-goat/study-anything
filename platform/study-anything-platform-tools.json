@@ -54,6 +54,32 @@
   },
   "tools": [
     {
+      "name": "study_anything_deployment_guide",
+      "method": "GET",
+      "path_template": "/v1/deployment/guide",
+      "description": "Read the redacted first-run deployment guide, local launch commands, failure classes, and platform-agent privacy boundary.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "schema_version == deployment-guide-v1",
+        "no_frontend_required == true",
+        "entrypoints include skill_mode, docker_source, and published_image",
+        "privacy.real_model_keys_stored_by_study_anything == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "must_not_return": [
+          "API keys",
+          "agent endpoint secrets",
+          "raw source text",
+          "learner answers"
+        ]
+      }
+    },
+    {
       "name": "study_anything_health",
       "method": "GET",
       "path_template": "/v1/health",

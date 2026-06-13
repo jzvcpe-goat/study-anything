@@ -30,6 +30,7 @@ REQUIRED_ACCEPTANCE = {
     "plugin_sdk.schema_version == plugin-sdk-v1",
     "plugin_capability_index.schema_version == plugin-capability-index-v1",
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
+    "deployment_guide.schema_version == deployment-guide-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_importer_lesson_flow.py",
@@ -134,6 +135,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "micro-lesson",
         "learning package",
         "Plugin SDK",
+        "deployment-guide-v1",
         "raw source",
     )
     return pack

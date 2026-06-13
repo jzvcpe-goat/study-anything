@@ -161,12 +161,64 @@ def default_expected_versions(tag: str) -> set[str]:
     return {value, value.replace("-alpha", "a0")}
 
 
+def inspect_manifest_platforms(image: str, *, timeout_seconds: int = 20) -> dict[str, Any]:
+    if shutil.which("docker") is None:
+        return {
+            "status": "unavailable",
+            "reason": "docker_missing",
+            "command": f"docker manifest inspect {image}",
+        }
+    try:
+        completed = run(
+            ["docker", "manifest", "inspect", image],
+            capture_output=True,
+            check=False,
+            timeout=timeout_seconds,
+        )
+    except subprocess.TimeoutExpired:
+        return {
+            "status": "unavailable",
+            "reason": "manifest_inspect_timeout",
+            "command": f"docker manifest inspect {image}",
+            "timeout_seconds": timeout_seconds,
+        }
+    if completed.returncode != 0:
+        return {
+            "status": "unavailable",
+            "reason": "manifest_inspect_failed",
+            "command": f"docker manifest inspect {image}",
+            "stderr": completed.stderr[-1000:],
+        }
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        return {
+            "status": "unavailable",
+            "reason": "manifest_inspect_invalid_json",
+            "command": f"docker manifest inspect {image}",
+        }
+    platforms = sorted(
+        {
+            f"{item.get('platform', {}).get('os')}/{item.get('platform', {}).get('architecture')}"
+            for item in payload.get("manifests", [])
+            if item.get("platform", {}).get("os") != "unknown"
+        }
+    )
+    return {
+        "status": "ok" if {"linux/amd64", "linux/arm64"}.issubset(platforms) else "incomplete",
+        "command": f"docker manifest inspect {image}",
+        "platforms": platforms,
+        "required_platforms": ["linux/amd64", "linux/arm64"],
+    }
+
+
 def pull_timeout_report(
     *,
     tag: str,
     api_image: str,
     timeout_seconds: int,
     project_name: str,
+    manifest_evidence: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     return {
         "status": "blocked_by_local_ghcr_pull",
@@ -179,6 +231,19 @@ def pull_timeout_report(
             "within the configured timeout. Treat this as a local Docker/GHCR/network limit "
             "unless docker manifest inspection or GitHub docker-images workflow also fails."
         ),
+        "fallback_acceptance": {
+            "acceptable_when": [
+                "GitHub Actions docker-images workflow succeeded for the same tag or commit.",
+                "docker manifest inspect shows linux/amd64 and linux/arm64 for the published API image.",
+                "release_check.sh and external adoption proof passed before tagging.",
+            ],
+            "not_acceptable_when": [
+                "manifest inspection fails",
+                "required platforms are missing",
+                "GitHub docker-images workflow failed",
+            ],
+        },
+        "manifest_evidence": manifest_evidence or inspect_manifest_platforms(api_image),
         "next_steps": [
             f"docker manifest inspect {api_image}",
             f"python3 scripts/verify_published_image_launch.py --tag {tag} --skip-pull",
@@ -191,7 +256,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tag",
-        default="v0.2.27-alpha",
+        default="v0.2.28-alpha",
         help="Published Study Anything image tag.",
     )
     parser.add_argument(
@@ -250,6 +315,7 @@ def main() -> None:
                 )
             except subprocess.TimeoutExpired:
                 if args.allow_pull_timeout_report and args.pull_timeout_seconds > 0:
+                    manifest_evidence = inspect_manifest_platforms(api_image)
                     print(
                         json.dumps(
                             pull_timeout_report(
@@ -257,6 +323,7 @@ def main() -> None:
                                 api_image=api_image,
                                 timeout_seconds=args.pull_timeout_seconds,
                                 project_name=project_name,
+                                manifest_evidence=manifest_evidence,
                             ),
                             ensure_ascii=False,
                         )

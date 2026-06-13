@@ -174,6 +174,10 @@ def cmd_health(args: argparse.Namespace) -> None:
     emit(args, request("/v1/health"))
 
 
+def cmd_deployment_guide(args: argparse.Namespace) -> None:
+    emit(args, request("/v1/deployment/guide"))
+
+
 def cmd_agents(args: argparse.Namespace) -> None:
     emit(args, request(f"/v1/agents/status?{urlencode({'user_id': args.user_id})}"))
 
@@ -682,6 +686,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     health = subparsers.add_parser("health", help="Check API health")
     health.set_defaults(func=cmd_health)
+
+    deployment_guide = subparsers.add_parser(
+        "deployment-guide",
+        help="Show first-run launch paths, diagnostics, and platform-agent privacy boundaries",
+    )
+    deployment_guide.set_defaults(func=cmd_deployment_guide)
 
     agents = subparsers.add_parser("agents", help="List configured agent providers")
     agents.add_argument("--user-id", default="local-user")

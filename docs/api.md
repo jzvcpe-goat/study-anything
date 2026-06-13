@@ -203,6 +203,7 @@ secrets, or retrieval snippets.
 
 - `GET /v1/system/status`
 - `GET /v1/system/integrations`
+- `GET /v1/deployment/guide`
 - `GET /v1/recovery/status`
 - `GET /v1/plugins`
 - `GET /v1/plugins/sdk`
@@ -217,6 +218,11 @@ Plugin install is local-first. Preview validates a user-selected local directory
 permission details, trust summary, and target install directory without copying or executing plugin code.
 Install requires the caller to echo the exact manifest permission list as `confirmed_permissions`;
 otherwise the API returns `409`.
+
+`GET /v1/deployment/guide` returns `deployment-guide-v1`: Skill Mode, Docker source-build, and GHCR
+published-image launch commands; diagnostic failure classes; and the platform-agent privacy boundary.
+It is metadata-only, does not execute commands, does not expose host secrets, and does not require the
+standalone frontend.
 
 `GET /v1/plugins/sdk` returns `plugin-sdk-v1`: typed hook contracts, manifest schema,
 permission descriptions, allowed capabilities, bundled sample plugin ids, and privacy flags proving

@@ -94,6 +94,7 @@ Open:
 
 - API docs: http://localhost:8000/docs
 - API health: http://localhost:8000/v1/health
+- Deployment guide: http://localhost:8000/v1/deployment/guide
 - Recovery status: http://localhost:8000/v1/recovery/status
 - Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
@@ -102,7 +103,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.2.27-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.2.28-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -115,8 +116,12 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.27-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha
 ```
+
+If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` after the API is
+reachable. The response is `deployment-guide-v1`: copyable launch commands, failure classes, and the
+privacy boundary for user-owned Agents without exposing model keys or raw learning content.
 
 ## Bring Your Own Agent
 

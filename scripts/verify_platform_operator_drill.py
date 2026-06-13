@@ -62,6 +62,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "plugin_sdk.schema_version == plugin-sdk-v1",
     "plugin_capability_index.schema_version == plugin-capability-index-v1",
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
+    "deployment_guide.schema_version == deployment-guide-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -347,6 +348,7 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "plugin_sdk_schema": "plugin-sdk-v1",
             "plugin_capability_index_schema": "plugin-capability-index-v1",
             "plugin_package_validation_schema": "plugin-package-validation-v1",
+            "deployment_guide_schema": "deployment-guide-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

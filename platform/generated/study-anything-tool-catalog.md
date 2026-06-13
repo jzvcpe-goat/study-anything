@@ -49,6 +49,33 @@ Additional gateway and release acceptance commands:
 
 ## Tools
 
+### `study_anything_deployment_guide`
+
+- Method: `GET`
+- Path: `/v1/deployment/guide`
+- Description: Read the redacted first-run deployment guide, local launch commands, failure classes, and platform-agent privacy boundary.
+
+Output requirements:
+
+- schema_version == deployment-guide-v1
+- no_frontend_required == true
+- entrypoints include skill_mode, docker_source, and published_image
+- privacy.real_model_keys_stored_by_study_anything == false
+
+Privacy:
+
+```json
+{
+  "must_not_return": [
+    "API keys",
+    "agent endpoint secrets",
+    "raw source text",
+    "learner answers"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
 ### `study_anything_health`
 
 - Method: `GET`
