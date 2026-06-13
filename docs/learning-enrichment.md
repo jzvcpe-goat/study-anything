@@ -79,7 +79,8 @@ After enrichment and optional teaching layers, call:
 GET /v1/sessions/{session_id}/exports/enrichment-artifact
 ```
 
-The response schema is `learning-enrichment-artifact-v1`. It includes:
+The response schema is `learning-enrichment-artifact-v1`. It is a Markdown +
+HTML micro-lesson designed for platform-agent teaching surfaces. It includes:
 
 - `markdown`: a compact source map and teaching brief.
 - `html`: a small embeddable teaching snippet.
@@ -96,6 +97,7 @@ learning brief into Obsidian.
 
 ```bash
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/generate_platform_agent_assets.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py

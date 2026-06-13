@@ -16,6 +16,7 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_eval_marketplace_harness.py --check
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -34,7 +35,11 @@ copyable platform-Agent prompts, a tool-call sequence, Learning Context Package 
 HTTP Agent setup, expected output schemas, export paths, and privacy assertions. The external eval
 marketplace harness emits `external-eval-marketplace-harness-v1`, tying native release gates,
 optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeout policy, and
-redaction assertions into one platform-submission contract. The adoption verifier emits
+redaction assertions into one platform-submission contract. The Learning Enrichment bridge verifier
+emits `learning-enrichment-bridge-verification-v1`; it proves platform-collected web, document,
+video-slice, app-context, Markdown, and Obsidian inputs can be transformed into redacted Markdown+HTML
+micro-lessons, NotebookLM-style manual bridge metadata, Obsidian handoff, and strict second-brain
+archive evidence. The adoption verifier emits
 `adoption-proof-v1` and exercises importer, enrichment, retrieval, teaching layers, eval, Obsidian
 export, and NotebookLM-style learning-package export through Skill Mode.
 
@@ -167,6 +172,7 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/verify_learning_enrichment_bridge.py --check
 ```
 
 The verifier emits `ecosystem-submission-verification-v1` and proves the submission pack has no
@@ -181,6 +187,9 @@ raw source, answers, endpoints, model keys, or private browser/video context.
 The plugin ecosystem adoption kit is the shareable plugin trust runbook. It proves the adoption pack
 contains bundled sample plugins, a digest-verified `plugins/registry.json`, quarantine-first install
 policy, platform-pack commands, and redacted evidence without executing plugin entrypoints.
+The Learning Enrichment bridge report is the shareable proof that external platform context,
+NotebookLM-style workflows, Obsidian notes, and strict second-brain archives are connected through
+source hashes and redaction rules rather than through a separate Study Anything frontend.
 
 ## User-Owned Agent Gateway Hardening
 
@@ -232,7 +241,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.13-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.14-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -240,12 +249,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.13-alpha \
+  --tag v0.3.14-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.13-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.14-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

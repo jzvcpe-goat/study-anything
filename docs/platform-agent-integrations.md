@@ -52,6 +52,12 @@ private Agent platforms:
 - portable learning package export for NotebookLM-style bridges and platform-agent handoff
 - strict second-brain handoff export for Obsidian, NotebookLM-style manual import, and local archives
 
+The Learning Enrichment Layer is the bridge for platform-collected web,
+document, video, app, Markdown, and Obsidian context. It turns bounded excerpts
+into source hashes, a Markdown+HTML micro-lesson, NotebookLM manual bridge
+metadata, Obsidian notes, and strict second-brain handoff evidence without
+requiring a standalone frontend.
+
 It intentionally does not expose Agent provider configuration, deprecated model aliases, plugin
 installation, encrypted sync export, PMF export, or other management surfaces. Configure user-owned
 Agent gateways outside the platform learning tools, then let the platform Agent call only the learning
@@ -66,6 +72,7 @@ python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
@@ -88,6 +95,7 @@ python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -115,6 +123,7 @@ python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
+python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \

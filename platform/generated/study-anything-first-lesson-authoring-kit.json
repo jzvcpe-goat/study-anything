@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -119,6 +119,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -148,7 +149,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -156,6 +157,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -187,7 +189,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 37,
+      "acceptance_evidence_count": 38,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -195,6 +197,7 @@
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+        "python3 scripts/verify_learning_enrichment_bridge.py --check",
         "python3 scripts/verify_plugin_quarantine.py",
         "python3 scripts/verify_security_recovery_hardening.py",
         "python3 scripts/verify_platform_submission_dry_run.py --check",
@@ -237,7 +240,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.13-alpha"
+    "version": "v0.3.14-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 12,
@@ -325,5 +328,5 @@
       "tool": "study_anything_second_brain_handoff_export"
     }
   ],
-  "version": "v0.3.13-alpha"
+  "version": "v0.3.14-alpha"
 }
