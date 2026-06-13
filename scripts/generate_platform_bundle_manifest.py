@@ -92,6 +92,61 @@ FILES: list[tuple[str, str, str]] = [
         "Redacted field-adoption rehearsal transcript and import quirks report.",
     ),
     (
+        "platform/generated/study-anything-platform-support-triage.json",
+        "generated_asset",
+        "GitHub-first support triage, issue template, and maintainer response playbook report.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/platform_import_failure.md",
+        "support_template",
+        "GitHub issue template for external platform import failures.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
+        "support_template",
+        "GitHub issue template for local Agent gateway failures.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
+        "support_template",
+        "GitHub issue template for published-image pull failures.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/agent_eval_evidence_failure.md",
+        "support_template",
+        "GitHub issue template for Agent eval evidence failures.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/docs_confusion.md",
+        "support_template",
+        "GitHub issue template for docs confusion reports.",
+    ),
+    (
+        "fixtures/platform-support-tickets/platform_import_failure.json",
+        "support_fixture",
+        "Mock privacy-safe support ticket fixture for platform import failure triage.",
+    ),
+    (
+        "fixtures/platform-support-tickets/local_gateway_failure.json",
+        "support_fixture",
+        "Mock privacy-safe support ticket fixture for local Agent gateway triage.",
+    ),
+    (
+        "fixtures/platform-support-tickets/published_image_pull_failure.json",
+        "support_fixture",
+        "Mock privacy-safe support ticket fixture for published-image pull triage.",
+    ),
+    (
+        "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
+        "support_fixture",
+        "Mock privacy-safe support ticket fixture for Agent eval evidence triage.",
+    ),
+    (
+        "fixtures/platform-support-tickets/docs_confusion.json",
+        "support_fixture",
+        "Mock privacy-safe support ticket fixture for docs confusion triage.",
+    ),
+    (
         "fixtures/platform-import-failures/schema_mismatch.json",
         "fixture",
         "Mock platform import failure fixture for schema mismatch.",
@@ -297,6 +352,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify field-adoption rehearsals, import quirks, failed-import fixtures, and pack inclusion.",
     ),
     (
+        "scripts/generate_platform_support_triage.py",
+        "diagnostics",
+        "Generate GitHub-first issue templates, support ticket fixtures, and maintainer triage report.",
+    ),
+    (
+        "scripts/verify_platform_support_triage.py",
+        "verification",
+        "Verify support triage assets, redaction, platform packs, ecosystem metadata, and adoption pack inclusion.",
+    ),
+    (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "verification",
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
@@ -477,6 +542,11 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission metadata, verification, and no-frontend launch guide.",
     ),
     (
+        "docs/support-desk.md",
+        "docs",
+        "GitHub-first support desk, support bundle, and maintainer triage playbook.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -547,7 +617,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.17-alpha.md",
+        "docs/release-notes/v0.3.18-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

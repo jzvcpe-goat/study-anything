@@ -44,7 +44,7 @@ from study_anything.core.workflow import (  # noqa: E402
 
 
 SCHEMA_VERSION = "learning-enrichment-bridge-verification-v1"
-RELEASE_VERSION = "v0.3.17-alpha"
+RELEASE_VERSION = "v0.3.18-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-learning-enrichment-bridge.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
@@ -607,7 +607,7 @@ def verify_adoption_pack_manifest(root: Path) -> dict[str, Any]:
     required = {
         "scripts/verify_learning_enrichment_bridge.py",
         "platform/generated/study-anything-learning-enrichment-bridge.json",
-        "docs/release-notes/v0.3.17-alpha.md",
+        "docs/release-notes/v0.3.18-alpha.md",
     }
     missing = required - paths
     if missing:

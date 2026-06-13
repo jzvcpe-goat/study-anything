@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.17-alpha")
+        self.assertEqual(manifest["version"], "v0.3.18-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -63,7 +63,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/eval-frameworks.md",
             "docs/release-checklist.md",
             "docs/roadmap.md",
-            "docs/release-notes/v0.3.17-alpha.md",
+            "docs/release-notes/v0.3.18-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -75,6 +75,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-feedback-package.zip",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
             "fixtures/platform-import-failures/schema_mismatch.json",
             "fixtures/platform-import-failures/missing_local_gateway.json",
@@ -84,6 +85,17 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "fixtures/platform-import-failures/cors_localhost.json",
             "fixtures/platform-import-failures/package_corruption.json",
             "fixtures/platform-import-failures/version_drift.json",
+            ".github/ISSUE_TEMPLATE/platform_import_failure.md",
+            ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
+            ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
+            ".github/ISSUE_TEMPLATE/agent_eval_evidence_failure.md",
+            ".github/ISSUE_TEMPLATE/docs_confusion.md",
+            "fixtures/platform-support-tickets/platform_import_failure.json",
+            "fixtures/platform-support-tickets/local_gateway_failure.json",
+            "fixtures/platform-support-tickets/published_image_pull_failure.json",
+            "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
+            "fixtures/platform-support-tickets/docs_confusion.json",
+            "docs/support-desk.md",
             "skills/study-anything/SKILL.md",
             "scripts/doctor.sh",
             "scripts/launch_self_host.sh",
@@ -103,6 +115,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "scripts/generate_platform_feedback_package.py",
             "scripts/generate_platform_field_rehearsal.py",
             "scripts/verify_platform_field_rehearsal.py",
+            "scripts/generate_platform_support_triage.py",
+            "scripts/verify_platform_support_triage.py",
             "scripts/verify_learning_enrichment_bridge.py",
             "scripts/verify_agent_eval_assets.py",
             "scripts/verify_external_adoption.py",
@@ -147,6 +161,9 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("platform-feedback-package-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-field-adoption-rehearsal-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-import-failure-fixture-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("platform-support-triage-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("platform-support-ticket-fixture-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("platform-support-issue-template-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("study_anything_plugin_sdk", manifest["required_tool_names"])
         self.assertIn("study_anything_plugin_capabilities", manifest["required_tool_names"])
         self.assertIn("study_anything_validate_plugin_package", manifest["required_tool_names"])

@@ -32,6 +32,8 @@
     "python3 scripts/generate_platform_feedback_package.py --check",
     "python3 scripts/verify_platform_field_rehearsal.py --check",
     "python3 scripts/generate_platform_field_rehearsal.py --check",
+    "python3 scripts/verify_platform_support_triage.py --check",
+    "python3 scripts/generate_platform_support_triage.py --check",
     "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
     "python3 scripts/verify_deployment_hardening.py --check",
     "./scripts/run_skill_mode_demo.sh",
@@ -88,6 +90,8 @@
     "platform_feedback_package.schema_version == platform-feedback-package-v1",
     "platform_import_failure_fixture.schema_version == platform-import-failure-fixture-v1",
     "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+    "platform_support_triage.schema_version == platform-support-triage-v1",
+    "platform_support_ticket_fixture.schema_version == platform-support-ticket-fixture-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1"
   ],

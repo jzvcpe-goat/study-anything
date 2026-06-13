@@ -38,7 +38,7 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.17-alpha")
+        self.assertEqual(report["version"], "v0.3.18-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertGreaterEqual(len(report["operator_steps"]), 7)
         self.assertIn(

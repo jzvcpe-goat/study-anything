@@ -81,6 +81,8 @@ python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
+python3 scripts/generate_platform_support_triage.py --check
+python3 scripts/verify_platform_support_triage.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -133,6 +135,8 @@ python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
+python3 scripts/generate_platform_support_triage.py --check
+python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -156,6 +160,11 @@ rehearsal transcript, import quirks catalog, and failed import fixture set.
 Each failed import fixture uses `platform-import-failure-fixture-v1`, names the
 detection signal, and gives next commands without source text, learner answers,
 Agent prompts, real endpoints, or model secrets.
+The support desk verifier emits `platform-support-triage-v1` and makes those
+failures actionable through GitHub issue templates, `platform-support-ticket-fixture-v1`
+mock tickets, support bundle fields, and maintainer playbook entries. Use it
+before handing a pack to an external tester so failure reports stay reproducible
+and redacted.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
 `study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and
@@ -183,6 +192,7 @@ platform/generated/study-anything-first-lesson-authoring-kit.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 platform/generated/study-anything-platform-field-rehearsal.json
+platform/generated/study-anything-platform-support-triage.json
 evals/baselines/study-anything-agent-eval-baseline.json
 ```
 
@@ -205,6 +215,8 @@ python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
+python3 scripts/generate_platform_support_triage.py --check
+python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```
@@ -314,13 +326,13 @@ python3 scripts/verify_external_agent_adapter_hardening.py
 Then start the real gateway after adding credentials:
 
 ```bash
-export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
-export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
-export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
+export AGENT_LLM_BASE_URL="<your OpenAI-compatible base URL>"
+export AGENT_LLM_API_KEY="<your provider key kept outside Study Anything>"
+export AGENT_LLM_MODEL="<your model name>"
 
 python3 scripts/openai_compatible_agent_gateway.py \
   --host 127.0.0.1 \
-  --port 8787
+  --port <agent-port>
 ```
 
 Then register it from Study Anything:
@@ -328,7 +340,7 @@ Then register it from Study Anything:
 ```bash
 python3 scripts/study_anything_cli.py agent-add-http \
   --label "My Kimi gateway" \
-  --endpoint "http://127.0.0.1:8787/invoke" \
+  --endpoint "http://127.0.0.1:<agent-port>/invoke" \
   --set-default
 python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
 ```
