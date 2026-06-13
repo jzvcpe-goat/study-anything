@@ -2250,6 +2250,7 @@
     "acceptance_evidence": {
       "clean_clone_adoption_command": "python3 scripts/verify_clean_clone_adoption.py --repo .",
       "diagnostics_command": "python3 scripts/diagnose_adoption.py",
+      "ecosystem_submission_command": "python3 scripts/verify_ecosystem_submission_pack.py",
       "gateway_only_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
       "importer_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
       "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -2296,7 +2297,8 @@
         "redacted agent audit",
         "redacted eval artifact",
         "portable learning package",
-        "commercial readiness boundaries"
+        "commercial readiness boundaries",
+        "ecosystem submission boundaries"
       ]
     },
     "schema_version": "study-anything-platform-tools-v1"

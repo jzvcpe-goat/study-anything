@@ -295,9 +295,18 @@
 - Add commercial readiness verification to release checks, generated platform assets, adoption pack,
   and platform tool validation.
 
+## v0.3.1-alpha
+
+- Add `ecosystem-submission-v1`, the machine-readable submission metadata for Kimi-compatible,
+  Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI platform handoff.
+- Add `ecosystem-submission-verification-v1` so release checks prove no standalone frontend
+  requirement, no Study Anything model-key custody, no raw learning data in submission assets, and no
+  high-risk management endpoints in the imported platform tool surface.
+- Include the submission manifest, verifier, docs, and release notes in the generated platform
+  bundle and adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.1`: platform-specific ecosystem submission packs for Kimi/Codex/WorkBuddy-style wrappers.
 - `v0.3.2`: adoption telemetry, local PMF readout, and maintainer feedback workflow.
 - `v0.3.3`: user-owned Agent gateway hardening, local security posture, and timeout/sandbox guidance.
 - `v0.3.4`: NotebookLM, Obsidian, and Learning Enrichment bridge hardening.

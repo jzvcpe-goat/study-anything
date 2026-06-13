@@ -9,6 +9,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-platform-openapi.json`
 - `platform/generated/study-anything-openai-tools.json`
 - `platform/generated/study-anything-tool-catalog.md`
+- `platform/ecosystem-submission.json`
 - `platform/generated/study-anything-platform-bundle.json`
 - `platform/generated/study-anything-operator-drill-transcript.json`
 - `platform/generated/study-anything-platform-adoption-pack.json`
@@ -20,7 +21,7 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.3.0 packs add commercial readiness boundaries on top of Agent Eval maturity, Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
+v0.3.1 packs add ecosystem submission metadata and commercial readiness boundaries on top of Agent Eval maturity, Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
 eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
 retrieval, and ecosystem eval capabilities:
 
@@ -28,6 +29,11 @@ retrieval, and ecosystem eval capabilities:
   Docker source builds, published GHCR images, diagnostics, and privacy boundaries.
 - `commercial-readiness-v1` tells platform Agents which launch paths are ready, which hosted
   services remain contract-only, and why billing/SSO/standalone app work is outside this alpha.
+- `ecosystem-submission-v1` turns the Kimi/Codex/WorkBuddy/generic OpenAPI assets into a
+  submission-ready package with no standalone frontend requirement, no billing requirement, and no
+  Study Anything custody of real model keys.
+- `ecosystem-submission-verification-v1` proves the submission metadata, generated assets, privacy
+  boundary, and high-risk endpoint exclusions are still aligned.
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
 - enrichment input for web, document/PDF, video-slice, app-context, Markdown, and Obsidian excerpts
@@ -64,6 +70,7 @@ retrieval, and ecosystem eval capabilities:
 ```bash
 .venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 .venv/bin/python scripts/verify_commercial_readiness.py
+.venv/bin/python scripts/verify_ecosystem_submission_pack.py
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check

@@ -2,6 +2,7 @@
   "acceptance_commands": [
     "python3 scripts/generate_platform_agent_assets.py --check",
     "python3 scripts/verify_commercial_readiness.py",
+    "python3 scripts/verify_ecosystem_submission_pack.py",
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_platform_ecosystem_packs.py",
     "python3 scripts/generate_platform_bundle_manifest.py --check",
@@ -23,18 +24,18 @@
   "description": "Deterministic file manifest for distributing Study Anything platform packs, tool import assets, Skill instructions, and acceptance evidence.",
   "files": [
     {
-      "bytes": 44156,
+      "bytes": 44288,
       "kind": "source_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source contract for all platform learning tools.",
-      "sha256": "4c2319d1980191e9c0d5ba0e0ee2bf075c3c6700d45ade3858122f01281a615d"
+      "sha256": "4657585559b12605153d3b12f7979f79205e462c13129432d5a84cc77560c41e"
     },
     {
-      "bytes": 78827,
+      "bytes": 78963,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 import asset for HTTP tool platforms.",
-      "sha256": "e74cb97fbab5d4a511788fb349ea1ca4ea5cb9f09eb92f26ab48365a1cd024f0"
+      "sha256": "6582ce7097093701515b77bba18138e3458e4214c60f6ac98d5ce5b2c7f2b166"
     },
     {
       "bytes": 26233,
@@ -44,67 +45,74 @@
       "sha256": "2b7232b307d86d97c5b71318411d41e6ffd12b17718f9bce9ff7fadc5f4c8780"
     },
     {
-      "bytes": 21933,
+      "bytes": 21987,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-tool-catalog.md",
       "purpose": "Human-readable tool catalog for platform operators.",
-      "sha256": "423710fbb6c1f4a418eeae9d34024c6d3279ae3d38294f25295fb13a2a4373fc"
+      "sha256": "1b054a6dedd1ba4eefeaede87207449b0ce1ec5af92abbf5153cb352f409487e"
     },
     {
-      "bytes": 12844,
+      "bytes": 9390,
+      "kind": "submission_manifest",
+      "path": "platform/ecosystem-submission.json",
+      "purpose": "Machine-readable ecosystem submission metadata for platform review.",
+      "sha256": "6e3b2f893307d0fa6d72fc980b481eee331710b86aa1d51431e3c73f3ab284d7"
+    },
+    {
+      "bytes": 12994,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "6662d9e63fc799bd4417dadbf280d9aca185fcdc35f96ac86fe73c7163ff6150"
+      "sha256": "f63a3c44403e7c7e55bdf3fab59fb2a01200da08376b1a35952366a328463c8f"
     },
     {
-      "bytes": 5563,
+      "bytes": 6094,
       "kind": "platform_pack",
       "path": "platform/packs/README.md",
       "purpose": "Index for copy-ready platform packs.",
-      "sha256": "101c80f0f7013a9b1c5fc5d073f9edb8282aedd4b64486d8f04cbaf9be7babcb"
+      "sha256": "492b25adffbc6f310764d4ae13f1c25db59976e7b82acd8a91003dbddbbfb16e"
     },
     {
-      "bytes": 7586,
+      "bytes": 7824,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex and terminal-capable Agent setup guide.",
-      "sha256": "5f4a7e3d39db831b1bc06244ea14319d89ee2ed47f3de037b2ce9093f4e7f119"
+      "sha256": "2efa79f2f2c2f4f0acf9ed45a2837bce2712a2624bef2918d88b67670d1cac22"
     },
     {
-      "bytes": 3407,
+      "bytes": 3573,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack metadata.",
-      "sha256": "9afc7b461361564aa4ad86f2bd47fafdcbfe011a5f4f456fd246b77dfb61a006"
+      "sha256": "726fa14be4637c00e1035b5758089b3d7406f2b8e647976499070d1746552192"
     },
     {
-      "bytes": 8198,
+      "bytes": 8692,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/README.md",
       "purpose": "Kimi tool import and gateway setup guide.",
-      "sha256": "c4cc5f2fa749ebca24a192d8595deb46332db321c86e1fbf170c752313b12b08"
+      "sha256": "c86df1be77de493f12d99ca56897a645c5e1cd9bb707c47ecff5d52fadf05710"
     },
     {
-      "bytes": 4008,
+      "bytes": 4174,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack metadata.",
-      "sha256": "5094bc6234390877d88fc9f123132af528504ffcc3808f7dc57726184f04a9bc"
+      "sha256": "638a7087ffd6ab702b19a86adbf504200ec895830f98a0794bfea65ce9155928"
     },
     {
-      "bytes": 5827,
+      "bytes": 6044,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "e8cabc67deee9f0ee537291a4102e2b14f85b1031ac51fd10979902053ec00a8"
+      "sha256": "90809b74540ae65f80e5b769a2e3d414475255ccad74f23b28eb84b3dc647b5d"
     },
     {
-      "bytes": 3509,
+      "bytes": 3675,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "2961f4ffbe959688e6db80fbf943ed614e5150938bfba4f412c2bff34ebd19ef"
+      "sha256": "96c04a26d4dbfeb8c1dffe9d37a5ef0854c1b712177d2d14615555b8579cb0e6"
     },
     {
       "bytes": 14138,
@@ -118,14 +126,14 @@
       "kind": "diagnostics",
       "path": "scripts/doctor.sh",
       "purpose": "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
-      "sha256": "d0ec67ed75c83d2283b47d3beefad18aa1bdc798777477148bc06ba9bb2854fc"
+      "sha256": "e891a04d1e6f4f0bc92a9895164dd80f85617e67f32559d151eb96e9cbd13774"
     },
     {
       "bytes": 4018,
       "kind": "runtime",
       "path": "scripts/launch_self_host.sh",
       "purpose": "Docker Compose self-host launcher for source builds and published GHCR images.",
-      "sha256": "f663d5eea4c76778a331e42f62b339fa8d0d250c507e3bf4100e2198bc8de674"
+      "sha256": "5c27df8d2dcf30428988b621f9ae2eaaf32ad6c5454a0486f778c92c25a2b3fb"
     },
     {
       "bytes": 250,
@@ -139,7 +147,7 @@
       "kind": "verification",
       "path": "scripts/verify_published_image_launch.py",
       "purpose": "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
-      "sha256": "24120da89622eaa07fdc281f34db5e3210b2cf67629c77508c4947d812df8f20"
+      "sha256": "d05856540b77f7b2aa774d3dde8ab7bfc0d709b0788205a322a0b527f37ce0e9"
     },
     {
       "bytes": 9854,
@@ -147,6 +155,13 @@
       "path": "scripts/verify_commercial_readiness.py",
       "purpose": "Commercial-readiness contract verifier for OSS/local-first launch boundaries.",
       "sha256": "5b874be2277aaf420f477b1a51c4d315293d18afebb245285f9bedf1fc72656d"
+    },
+    {
+      "bytes": 12684,
+      "kind": "verification",
+      "path": "scripts/verify_ecosystem_submission_pack.py",
+      "purpose": "Ecosystem submission pack verifier for external platform review readiness.",
+      "sha256": "b529c3283cc8c43d152b318c31868929b13f4501853f86daaec78f99d7c57909"
     },
     {
       "bytes": 2549,
@@ -223,14 +238,14 @@
       "kind": "verification",
       "path": "scripts/verify_agent_eval_baseline.py",
       "purpose": "Deterministic Agent eval baseline and regression comparison gate.",
-      "sha256": "55b04080cfaab5fd30280904a398ddd0a17e3131045776ab1970d3afeb8eca43"
+      "sha256": "1f1316dd8a8c1b38cb21b8d3f283cd16e3cdbd51d6fc89e7427100d4c6f7d4b0"
     },
     {
-      "bytes": 17392,
+      "bytes": 17878,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "1b2f35b2e7815bd906918181d90443e6318ac5c23585b7e8d3763a93c3a15f3e"
+      "sha256": "b90d278bcabaf7284949aaeb730f85a76122d5a3d4fdae64ec5b0d8f08a04f31"
     },
     {
       "bytes": 24597,
@@ -240,18 +255,18 @@
       "sha256": "c5a8c25501349f852b0d1778b149680642bdc712c4f7f692cd73d493e932ebf9"
     },
     {
-      "bytes": 17832,
+      "bytes": 18164,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
-      "sha256": "8dd359673081d9f39e368b9eb5d73360ec1ef35a360bde331e9053b2f07f2d15"
+      "sha256": "9f5abf11ebaedcb0bacd126044674f49fe3122dd0c47914f0f4760020d9bf010"
     },
     {
       "bytes": 13800,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "15cd5ef18f0a8e6624486b846bdce44af903589bbe2deaec245013c6ae2e2dfc"
+      "sha256": "59ab4b7b23b2302470d29aebec2bd9f1442e387b3afd2d6cf3f28376d77ddd98"
     },
     {
       "bytes": 2177,
@@ -272,7 +287,7 @@
       "kind": "eval",
       "path": "evals/baselines/study-anything-agent-eval-baseline.json",
       "purpose": "Committed fast native Agent eval regression baseline.",
-      "sha256": "26d1554655bcfd9a793700bf6eacf4494fe0ccc5be082b9a4776eb5b709a2d8a"
+      "sha256": "4d3756cdc3f639d334a5f5a32e880825ad19d00704929f0105fb0da605a6b2b8"
     },
     {
       "bytes": 1252,
@@ -289,18 +304,18 @@
       "sha256": "7641aa3f98d05174da84bf0d47b3f75ff50a4fe0c7464864ed4569437e3fce62"
     },
     {
-      "bytes": 5921,
+      "bytes": 6442,
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "10e81fc4c20ba578bac019dd2c4fc8a8ad12d3b075ee7982435550dfbc86a4f8"
+      "sha256": "061b63daf07a66da2ba5054414417d5c7c0933174911cd3e5cabb17c146d7a3d"
     },
     {
-      "bytes": 15746,
+      "bytes": 16221,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "df5928b1252a21937fbd42edbca42bb7995714f8783dab878a2d5548df48d797"
+      "sha256": "fa62ee7535ad02d9057e893b74e07bf30709f5273c0824b0cebd0f59c1b4d278"
     },
     {
       "bytes": 10352,
@@ -308,6 +323,13 @@
       "path": "docs/commercial-readiness.md",
       "purpose": "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
       "sha256": "6f03161f08fc2df41aa0bde5e6a05dee45fac2d9afd63a89e3c47396c8788c24"
+    },
+    {
+      "bytes": 3147,
+      "kind": "docs",
+      "path": "docs/ecosystem-submission.md",
+      "purpose": "Ecosystem submission metadata, verification, and no-frontend launch guide.",
+      "sha256": "be154e9c9848eff22e2df78272cf5bffe77048b5eea5b18790ccad6c45bb23aa"
     },
     {
       "bytes": 3393,
@@ -359,11 +381,11 @@
       "sha256": "b773cdfe7183cc5d99825b4506204c65c0ed8ff60bb1d2b93f3daf58573c0724"
     },
     {
-      "bytes": 3829,
+      "bytes": 4221,
       "kind": "docs",
       "path": "docs/use-with-kimi.md",
       "purpose": "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
-      "sha256": "ff9e1fcd09ede8170ddcf83a4897e0b395b3fe29daa6adf718476b65d36cd9a8"
+      "sha256": "4f45889b37a8f349aa61dfcdac2c52dd76c97cf4fab5f3c131787944c152f7f3"
     },
     {
       "bytes": 2653,
@@ -387,11 +409,11 @@
       "sha256": "fdde3735ca385edf170f8c0b3baad57e9073344e5f0c70e00d390999f00c0c1d"
     },
     {
-      "bytes": 2438,
+      "bytes": 1402,
       "kind": "docs",
-      "path": "docs/release-notes/v0.3.0-alpha.md",
-      "purpose": "Release notes for the commercial readiness architecture release.",
-      "sha256": "1d46809f752c39941284987c76a7abb8768d2bfdcad7249c77a6d45a45307619"
+      "path": "docs/release-notes/v0.3.1-alpha.md",
+      "purpose": "Release notes for the ecosystem submission pack release.",
+      "sha256": "433701a8526a52bb1233c26449e5b38b789d9cce9083f58ba3da7b137a8f9746"
     },
     {
       "bytes": 9201,
@@ -456,10 +478,11 @@
       "redacted agent audit",
       "redacted eval artifact",
       "portable learning package",
-      "commercial readiness boundaries"
+      "commercial readiness boundaries",
+      "ecosystem submission boundaries"
     ]
   },
   "schema_version": "study-anything-platform-bundle-v1",
   "source_manifest": "platform/study-anything-platform-tools.json",
-  "source_manifest_sha256": "4c2319d1980191e9c0d5ba0e0ee2bf075c3c6700d45ade3858122f01281a615d"
+  "source_manifest_sha256": "4657585559b12605153d3b12f7979f79205e462c13129432d5a84cc77560c41e"
 }

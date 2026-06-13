@@ -67,6 +67,8 @@ REQUIRED_EXPORT_EVIDENCE = [
     "plugin_capability_index.schema_version == plugin-capability-index-v1",
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
     "deployment_guide.schema_version == deployment-guide-v1",
+    "ecosystem_submission.schema_version == ecosystem-submission-v1",
+    "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -354,6 +356,8 @@ def build_transcript(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "plugin_package_validation_schema": "plugin-package-validation-v1",
             "deployment_guide_schema": "deployment-guide-v1",
             "commercial_readiness_schema": "commercial-readiness-v1",
+            "ecosystem_submission_schema": "ecosystem-submission-v1",
+            "ecosystem_submission_verification_schema": "ecosystem-submission-verification-v1",
             "shared_logs_are_redacted": True,
         },
         "privacy": {

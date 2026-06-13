@@ -35,6 +35,8 @@ REQUIRED_ACCEPTANCE = {
     "plugin_capability_index.schema_version == plugin-capability-index-v1",
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
     "deployment_guide.schema_version == deployment-guide-v1",
+    "ecosystem_submission.schema_version == ecosystem-submission-v1",
+    "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_importer_lesson_flow.py",
@@ -143,6 +145,8 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "Plugin SDK",
         "deployment-guide-v1",
         "commercial-readiness-v1",
+        "ecosystem-submission-v1",
+        "ecosystem-submission-verification-v1",
         "raw source",
     )
     return pack

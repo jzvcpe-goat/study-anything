@@ -43,6 +43,7 @@ Additional gateway and release acceptance commands:
 - API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 - python3 scripts/verify_clean_clone_adoption.py --repo .
+- python3 scripts/verify_ecosystem_submission_pack.py
 - python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
 - API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 - python3 scripts/diagnose_adoption.py

@@ -37,6 +37,11 @@ FILES: list[tuple[str, str, str]] = [
         "Human-readable tool catalog for platform operators.",
     ),
     (
+        "platform/ecosystem-submission.json",
+        "submission_manifest",
+        "Machine-readable ecosystem submission metadata for platform review.",
+    ),
+    (
         "platform/generated/study-anything-operator-drill-transcript.json",
         "generated_asset",
         "Deterministic external-platform operator drill transcript.",
@@ -105,6 +110,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_commercial_readiness.py",
         "verification",
         "Commercial-readiness contract verifier for OSS/local-first launch boundaries.",
+    ),
+    (
+        "scripts/verify_ecosystem_submission_pack.py",
+        "verification",
+        "Ecosystem submission pack verifier for external platform review readiness.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",
@@ -222,6 +232,11 @@ FILES: list[tuple[str, str, str]] = [
         "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
     ),
     (
+        "docs/ecosystem-submission.md",
+        "docs",
+        "Ecosystem submission metadata, verification, and no-frontend launch guide.",
+    ),
+    (
         "docs/learning-enrichment.md",
         "docs",
         "Learning Enrichment Layer context contract and micro-lesson export guide.",
@@ -277,9 +292,9 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.0-alpha.md",
+        "docs/release-notes/v0.3.1-alpha.md",
         "docs",
-        "Release notes for the commercial readiness architecture release.",
+        "Release notes for the ecosystem submission pack release.",
     ),
     (
         "docs/plugins.md",
@@ -361,6 +376,7 @@ def build_manifest() -> dict[str, object]:
         "acceptance_commands": [
             "python3 scripts/generate_platform_agent_assets.py --check",
             "python3 scripts/verify_commercial_readiness.py",
+            "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_bundle_manifest.py --check",

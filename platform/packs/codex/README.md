@@ -14,6 +14,7 @@ For release or external handoff acceptance, verify the distributable adoption pa
 
 ```bash
 python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -115,6 +116,8 @@ A Codex integration must return both:
 
 - `agent-audit.status == verified`
 - `commercial-readiness-v1` for local-first launch boundaries and hosted-service non-goals
+- `ecosystem-submission-v1` for Kimi/Codex/WorkBuddy/generic OpenAPI submission metadata
+- `ecosystem-submission-verification-v1` for no-frontend, privacy, and high-risk endpoint checks
 - `agent-eval-policy-v1` for the native release gate, optional adapters, fixtures, failure classes,
   and privacy contract
 - `agent-eval-artifact-v1` with all required native gates passing

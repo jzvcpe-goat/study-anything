@@ -56,6 +56,11 @@ class PlatformOperatorDrillTests(unittest.TestCase):
         self.assertIn("kimi", payload["platforms"])
         self.assertIn("codex", payload["platforms"])
         self.assertIn("workbuddy", payload["platforms"])
+        self.assertEqual(payload["handoff_contract"]["ecosystem_submission_schema"], "ecosystem-submission-v1")
+        self.assertEqual(
+            payload["handoff_contract"]["ecosystem_submission_verification_schema"],
+            "ecosystem-submission-verification-v1",
+        )
         serialized = json.dumps(payload)
         self.assertNotIn("OPENAI_API_KEY", serialized)
         self.assertNotIn("MOONSHOT_API_KEY", serialized)

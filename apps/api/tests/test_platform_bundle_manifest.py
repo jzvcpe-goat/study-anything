@@ -34,6 +34,7 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertEqual(payload["platforms"], ["codex", "kimi", "workbuddy"])
         file_paths = {item["path"] for item in payload["files"]}
         self.assertIn("platform/study-anything-platform-tools.json", file_paths)
+        self.assertIn("platform/ecosystem-submission.json", file_paths)
         self.assertIn("platform/packs/codex/pack.json", file_paths)
         self.assertIn("platform/packs/kimi/pack.json", file_paths)
         self.assertIn("platform/packs/workbuddy/pack.json", file_paths)
@@ -41,9 +42,11 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/launch_self_host.sh", file_paths)
         self.assertIn("scripts/verify_published_image_launch.py", file_paths)
         self.assertIn("scripts/verify_commercial_readiness.py", file_paths)
+        self.assertIn("scripts/verify_ecosystem_submission_pack.py", file_paths)
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
         self.assertIn("docs/commercial-readiness.md", file_paths)
+        self.assertIn("docs/ecosystem-submission.md", file_paths)
         self.assertIn("fixtures/notebooklm/notebooklm-style-context-package.json", file_paths)
         self.assertIn("skills/study-anything/SKILL.md", file_paths)
         for item in payload["files"]:
