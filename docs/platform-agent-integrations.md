@@ -130,6 +130,9 @@ platform tool surface, complete the importer/enrichment/retrieval/teaching/eval 
 Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
 The ecosystem submission verifier emits `ecosystem-submission-verification-v1`; use it before
 submitting assets to Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, or generic OpenAPI hosts.
+The deployment hardening verifier emits `deployment-hardening-verification-v1`; use it when the
+operator needs copyable proof that Skill Mode, published images, source builds, Docker diagnostics,
+GHCR fallback, and local Agent endpoint guidance are aligned.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
 `study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and

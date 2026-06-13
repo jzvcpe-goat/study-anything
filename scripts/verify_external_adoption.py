@@ -66,6 +66,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-external-eval-harness.json",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+    "scripts/verify_deployment_hardening.py",
+    "platform/generated/study-anything-deployment-hardening.json",
     "plugins/registry.json",
     "plugins/example-note-importer/plugin.json",
     "plugins/example-note-importer/plugin.py",
@@ -466,6 +468,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "deployment_hardening",
+                [python_bin, "scripts/verify_deployment_hardening.py"],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -658,6 +665,24 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "registry_schema": (value.get("plugin_registry") or {}).get("schema_version"),
             "digest_verified_count": (value.get("plugin_registry") or {}).get("digest_verified_count"),
             "default_install_action": (value.get("trust_policy") or {}).get("default_install_action"),
+            "report_is_redacted": (value.get("privacy_assertions") or {}).get(
+                "report_is_redacted"
+            ),
+        }
+    if label == "deployment_hardening":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "deployment_modes": [
+                item.get("id")
+                for item in value.get("deployment_modes", [])
+                if isinstance(item, dict)
+            ],
+            "published_image_fallback": (value.get("published_image_smoke") or {}).get(
+                "fallback_is_acceptance_when_ci_manifest_and_release_check_pass"
+            ),
+            "failure_class_count": len(value.get("failure_classes", [])),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
             ),

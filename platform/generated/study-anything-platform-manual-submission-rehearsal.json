@@ -36,6 +36,11 @@
       "step_id": "review_plugin_ecosystem"
     },
     {
+      "command": "python3 scripts/verify_deployment_hardening.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "review_deployment_path"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -47,6 +52,7 @@
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "platform/ecosystem-submission.json",
+    "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-external-eval-harness.json",
     "platform/generated/study-anything-first-lesson-authoring-kit.json",
     "platform/generated/study-anything-openai-tools.json",
@@ -60,6 +66,7 @@
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
+    "scripts/verify_deployment_hardening.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_external_agent_adapter_hardening.py",
     "scripts/verify_external_eval_marketplace_harness.py",
@@ -70,6 +77,10 @@
     "scripts/verify_plugin_ecosystem_adoption_kit.py"
   ],
   "existing_reports": {
+    "deployment_hardening": {
+      "schema_version": "deployment-hardening-verification-v1",
+      "status": "pass"
+    },
     "operator_drill": {
       "schema_version": "study-anything-operator-drill-v1",
       "status": "ok"
@@ -97,6 +108,11 @@
     "import_tools": [
       "tool names start with study_anything_",
       "no API-key security scheme"
+    ],
+    "review_deployment_path": [
+      "deployment-hardening-verification-v1",
+      "Skill Mode, published image, and source build modes present",
+      "GHCR pull timeout fallback documented"
     ],
     "review_plugin_ecosystem": [
       "plugin-ecosystem-adoption-kit-v1",
@@ -250,6 +266,24 @@
       "step_id": "review_plugin_ecosystem"
     },
     {
+      "command": "python3 scripts/verify_deployment_hardening.py --check",
+      "evidence_paths": [
+        "scripts/verify_deployment_hardening.py",
+        "platform/generated/study-anything-deployment-hardening.json",
+        "docs/self-hosting.md"
+      ],
+      "expected_outputs": [
+        "deployment-hardening-verification-v1",
+        "Skill Mode, published image, and source build modes present",
+        "GHCR pull timeout fallback documented"
+      ],
+      "failure_remediation": [
+        "Run scripts/diagnose_adoption.py and prefer Skill Mode or published images for first-run users."
+      ],
+      "operator_action": "Verify Skill Mode, published-image, source-build, Docker/Compose diagnostics, GHCR fallback, and Agent endpoint recovery before asking an external platform user to deploy.",
+      "step_id": "review_deployment_path"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -269,7 +303,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -284,6 +318,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -310,7 +345,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -325,6 +360,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -355,7 +391,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 36,
+      "acceptance_evidence_count": 37,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -370,6 +406,7 @@
         "python3 scripts/verify_first_lesson_authoring_kit.py --check",
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+        "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
@@ -410,7 +447,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.12-alpha"
+    "version": "v0.3.13-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -423,5 +460,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.12-alpha"
+  "version": "v0.3.13-alpha"
 }

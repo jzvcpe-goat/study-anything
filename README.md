@@ -74,11 +74,14 @@ Maintainers and external testers can verify the project from a disposable clean 
 
 ```bash
 python3 scripts/verify_clean_clone_adoption.py --repo .
+python3 scripts/verify_deployment_hardening.py --check
 ```
 
 This checks Skill Mode, the OpenAI-compatible gateway dry-run, teaching layers, quiz, grading,
-mastery, `agent-audit`, `agent-eval/artifact`, and `agent-eval/report`. See `docs/adoption.md` for Promptfoo, Kimi,
-Codex, WorkBuddy, diagnostics, and published-image fallback paths.
+mastery, `agent-audit`, `agent-eval/artifact`, `agent-eval/report`, and the deployment-hardening
+contract for Skill Mode, published images, source builds, Docker diagnostics, GHCR fallback, and
+operator pack inclusion. See `docs/adoption.md` for Promptfoo, Kimi, Codex, WorkBuddy, diagnostics,
+and published-image fallback paths.
 
 ## Docker Self-Host
 
@@ -119,7 +122,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.12-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.13-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -132,7 +135,8 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.12-alpha
+python3 scripts/verify_deployment_hardening.py --check
+python3 scripts/verify_published_image_launch.py --tag v0.3.13-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,

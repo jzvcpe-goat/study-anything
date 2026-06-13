@@ -218,10 +218,21 @@ video transcripts.
 
 ## Published Image Fallback
 
+Before publishing or handing the project to another operator, run the deployment hardening verifier:
+
+```bash
+python3 scripts/verify_deployment_hardening.py --check
+python3 scripts/verify_deployment_hardening.py --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+It emits `deployment-hardening-verification-v1`, covering Skill Mode, published-image, source-build,
+Docker/Compose diagnostics, non-ASCII path recovery, port checks, GHCR manifest fallback, local Agent
+endpoint guidance, and platform-pack inclusion.
+
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.12-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.13-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -229,12 +240,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.12-alpha \
+  --tag v0.3.13-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.12-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.13-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

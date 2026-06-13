@@ -412,7 +412,7 @@
 - Wire the kit into release checks, external adoption proof, ecosystem submission, platform packs,
   bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
 
-## v0.3.12-alpha
+## v0.3.11-alpha
 
 - Add `external-eval-marketplace-harness-v1`, a redacted marketplace-quality eval contract for
   external platform submissions.
@@ -423,9 +423,32 @@
 - Wire the harness into release checks, external adoption proof, ecosystem submission, platform packs,
   bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
 
+## v0.3.12-alpha
+
+- Add `plugin-ecosystem-adoption-kit-v1`, a copy-ready plugin ecosystem adoption kit for Kimi,
+  Codex, WorkBuddy, and generic platform Agents.
+- Verify bundled importer/exporter/Agent-provider sample plugins, registry digests, permissions,
+  quarantine-first install policy, platform-pack commands, and privacy assertions.
+- Keep plugin review metadata-first: sample plugin entrypoints are not executed during adoption
+  verification and third-party plugins are not downloaded automatically.
+- Wire the kit into release checks, external adoption proof, ecosystem submission, platform packs,
+  bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
+
+## v0.3.13-alpha
+
+- Add `deployment-hardening-verification-v1`, a redacted deployment adoption report for external
+  operators and platform Agents.
+- Verify Skill Mode, published-image, and source-build paths; Docker/Compose diagnostics; non-ASCII
+  checkout guidance; port conflict checks; GHCR manifest evidence; local pull-timeout fallback; and
+  user-owned HTTP Agent endpoint recovery.
+- Prefer published images or Skill Mode for first-run users, while keeping source builds as the
+  contributor path.
+- Wire the verifier into release checks, external adoption proof, ecosystem submission, platform
+  packs, bundle manifest, manual rehearsal, operator drill evidence, and adoption pack assets.
+
 ## v0.3 Next
 
-- `v0.3.12`: plugin ecosystem sample importer and trust registry adoption kit.
+- `v0.3.14`: Learning Enrichment and NotebookLM/Obsidian operator bridge hardening.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track
