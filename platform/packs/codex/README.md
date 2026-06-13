@@ -30,6 +30,7 @@ python3 scripts/verify_clean_clone_adoption.py --repo .
 ./scripts/run_skill_mode_demo.sh
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh
+curl http://127.0.0.1:8000/v1/deployment/guide
 python3 scripts/study_anything_cli.py demo
 python3 scripts/study_anything_cli.py context-validate \
   fixtures/notebooklm/notebooklm-style-context-package.json
@@ -83,6 +84,8 @@ blocked unless the user explicitly approves the network permission.
 Use `plugin-sdk`, `plugin-capabilities`, and `plugin-validate` before installing or invoking a new
 plugin package; those commands are metadata-only and do not execute entrypoints.
 This is the Plugin SDK path for terminal-capable agents.
+After the API is reachable, `GET /v1/deployment/guide` returns `deployment-guide-v1`: the redacted
+launch path, diagnostics, and platform-Agent privacy boundary.
 The older `POST /v1/sessions/{session_id}/enrichment` path remains available for one-off bounded
 excerpts. After import, run teaching layers, quiz, grading, quality eval, and the Obsidian Markdown
 export at `GET /v1/sessions/{session_id}/exports/obsidian`.

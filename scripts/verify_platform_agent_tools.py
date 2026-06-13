@@ -19,6 +19,7 @@ DEFAULT_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 PACKS_DIR = ROOT / "platform" / "packs"
 API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://127.0.0.1:8000")).rstrip("/")
 REQUIRED_TOOLS = {
+    "study_anything_deployment_guide",
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
@@ -176,6 +177,24 @@ def main() -> None:
     health = call_tool(tools, "study_anything_health")
     if health.get("status") != "ok":
         raise VerificationError(f"Health tool did not return ok: {health}")
+
+    deployment = call_tool(tools, "study_anything_deployment_guide")
+    if deployment.get("schema_version") != "deployment-guide-v1":
+        raise VerificationError(f"Deployment guide returned invalid schema: {deployment}")
+    if deployment.get("no_frontend_required") is not True:
+        raise VerificationError(f"Deployment guide must not require the standalone frontend: {deployment}")
+    entrypoint_ids = [
+        str(item.get("id"))
+        for item in deployment.get("entrypoints", [])
+        if isinstance(item, dict)
+    ]
+    assert_contains_all(
+        entrypoint_ids,
+        ["skill_mode", "docker_source", "published_image"],
+        "Deployment guide entrypoints",
+    )
+    if (deployment.get("privacy") or {}).get("real_model_keys_stored_by_study_anything") is not False:
+        raise VerificationError(f"Deployment guide must not store model keys: {deployment}")
 
     plugin_sdk = call_tool(tools, "study_anything_plugin_sdk")
     if plugin_sdk.get("schema_version") != "plugin-sdk-v1":

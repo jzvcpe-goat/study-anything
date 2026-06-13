@@ -27,6 +27,8 @@ platform/study-anything-platform-tools.json
 The manifest declares the minimum tool surface for Codex, Kimi Work, WorkBuddy-style workspaces, and
 private Agent platforms:
 
+- deployment guide for Skill Mode, Docker source builds, published GHCR images, diagnostics, and
+  privacy boundaries
 - API health
 - session creation
 - source attachment
@@ -79,6 +81,11 @@ as a platform tool directory before any runtime starts. The adoption verifier em
 `adoption-proof-v1` and proves that a fresh operator can start Study Anything in Skill Mode, use the
 platform tool surface, complete the importer/enrichment/retrieval/teaching/eval loop, and export
 Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
+
+After the API is reachable, platform Agents should call `study_anything_deployment_guide` before the
+learning tools. It returns `deployment-guide-v1`, which is metadata-only and tells the platform which
+local command path was intended, how to recover from first-run failures, and which data must stay out
+of platform logs.
 
 ## Generated Import Assets
 

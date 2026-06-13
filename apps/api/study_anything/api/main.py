@@ -20,6 +20,7 @@ from study_anything.core.agent_registry import (
     AgentRouter,
     AgentTask,
 )
+from study_anything.core.deployment import build_deployment_guide
 from study_anything.core.integrations import integration_matrix
 from study_anything.core.importer_runtime import ImporterRuntime, ImporterRuntimeError
 from study_anything.core.langgraph_adapter import (
@@ -373,6 +374,10 @@ def create_app() -> FastAPI:
     @app.get("/v1/system/integrations")
     def system_integrations() -> list[dict[str, str]]:
         return [item.public_dict() for item in integration_matrix()]
+
+    @app.get("/v1/deployment/guide")
+    def deployment_guide() -> dict[str, object]:
+        return build_deployment_guide(project_root, version=__version__)
 
     @app.get("/v1/recovery/status")
     def get_recovery_status() -> dict[str, object]:

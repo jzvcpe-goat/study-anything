@@ -129,6 +129,7 @@ python3 scripts/diagnose_adoption.py
 
 It checks:
 
+- missing `.env` and copyable setup command
 - localhost API reachability
 - Docker daemon availability
 - GHCR manifest visibility
@@ -136,6 +137,8 @@ It checks:
 - provider capability defaults
 
 Use `--strict` in CI-like environments where warnings should fail the run.
+The JSON payload is `adoption-diagnostics-v1` and includes `adoption-diagnostic-plan-v1`, a
+platform-agent-friendly next-command plan.
 
 Common remediation classes are included in `adoption-proof-v1` and `diagnose_adoption.py`: GHCR or
 Docker Hub availability, non-ASCII checkout paths, port conflicts, local Agent endpoint reachability,
@@ -146,7 +149,7 @@ Node/npm availability, and optional Promptfoo setup.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.2.27-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.2.28-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -154,11 +157,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.2.27-alpha \
+  --tag v0.2.28-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.27-alpha` shows `linux/amd64`
-and `linux/arm64`.
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.2.28-alpha` shows `linux/amd64`
+and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
+conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

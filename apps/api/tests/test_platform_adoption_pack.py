@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.2.27-alpha")
+        self.assertEqual(manifest["version"], "v0.2.28-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -57,7 +57,12 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/notebooklm-bridge.md",
             "docs/plugin-sdk.md",
             "docs/plugin-registry.md",
+            "docs/release-notes/v0.2.28-alpha.md",
             "skills/study-anything/SKILL.md",
+            "scripts/doctor.sh",
+            "scripts/launch_self_host.sh",
+            "scripts/stop_self_host.sh",
+            "scripts/verify_published_image_launch.py",
             "scripts/verify_external_adoption.py",
             "scripts/verify_platform_operator_drill.py",
             "fixtures/notebooklm/notebooklm-style-context-package.json",
@@ -80,6 +85,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
                 all(f"{archive_root}/{path}" in archive_paths for path in required_paths if path != "manifest.json")
             )
 
+        self.assertIn("study_anything_deployment_guide", manifest["required_tool_names"])
         self.assertIn("study_anything_retrieval_quality_eval", manifest["required_tool_names"])
         self.assertIn("study_anything_obsidian_export", manifest["required_tool_names"])
         self.assertIn("study_anything_enrichment_artifact_export", manifest["required_tool_names"])

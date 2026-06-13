@@ -35,7 +35,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.2.27-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.2.28-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
@@ -52,6 +52,10 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("skills/study-anything/agents/openai.yaml", "skill", "OpenAI-compatible Skill agent metadata."),
     ("scripts/openai_compatible_agent_gateway.py", "gateway", "User-owned local HTTP Agent gateway."),
     ("scripts/mock_http_agent.py", "gateway", "Deterministic mock HTTP Agent for smoke tests."),
+    ("scripts/doctor.sh", "diagnostics", "Self-host doctor for Docker, ports, env, and Compose config."),
+    ("scripts/launch_self_host.sh", "runtime", "Docker Compose self-host launcher."),
+    ("scripts/stop_self_host.sh", "runtime", "Docker Compose self-host stop helper."),
+    ("scripts/verify_published_image_launch.py", "verification", "Disposable GHCR published-image launch verifier."),
     ("scripts/launch_skill_mode.sh", "runtime", "Local Skill Mode API launcher."),
     ("scripts/stop_skill_mode.sh", "runtime", "Local Skill Mode API stop helper."),
     ("scripts/run_skill_mode_demo.sh", "verification", "One-command Skill Mode demo and eval gate."),
@@ -76,6 +80,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
 ]
 
 REQUIRED_PLATFORM_TOOLS = [
+    "study_anything_deployment_guide",
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
@@ -202,7 +207,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.2.27-alpha",
+        "version": "v0.2.28-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -237,6 +242,7 @@ def manifest_payload() -> dict[str, object]:
                 "plugin-sdk-v1",
                 "plugin-capability-index-v1",
                 "plugin-package-validation-v1",
+                "deployment-guide-v1",
             ],
         },
         "privacy_contract": {

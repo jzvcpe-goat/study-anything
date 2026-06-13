@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.27-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.28-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -156,10 +156,16 @@ class PublishedImageLaunchTests(unittest.TestCase):
             api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.2.16-alpha",
             timeout_seconds=3,
             project_name="study_anything_published_test",
+            manifest_evidence={
+                "status": "ok",
+                "platforms": ["linux/amd64", "linux/arm64"],
+            },
         )
 
         self.assertEqual(report["status"], "blocked_by_local_ghcr_pull")
         self.assertIn("docker manifest inspect", report["next_steps"][0])
+        self.assertEqual(report["manifest_evidence"]["status"], "ok")
+        self.assertIn("GitHub Actions docker-images workflow succeeded", report["fallback_acceptance"]["acceptable_when"][0])
 
 
 if __name__ == "__main__":

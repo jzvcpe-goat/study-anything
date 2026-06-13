@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -21,8 +22,16 @@ class AdoptionDiagnosticsTests(unittest.TestCase):
     def test_default_image_tracks_release_tag(self) -> None:
         self.assertEqual(
             diagnose.DEFAULT_IMAGE,
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.27-alpha",
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.2.28-alpha",
         )
+
+    def test_env_file_check_reports_copyable_setup_command(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            result = diagnose.check_env_file(Path(tmp) / ".env")
+
+        self.assertEqual(result["status"], "warning")
+        self.assertEqual(result["code"], "env_missing")
+        self.assertEqual(result["next_command"], "python3 scripts/setup_env.py")
 
     def test_health_url_for_agent_invoke_endpoint(self) -> None:
         self.assertEqual(
@@ -54,6 +63,23 @@ class AdoptionDiagnosticsTests(unittest.TestCase):
 
         self.assertEqual(result["status"], "warning")
         self.assertEqual(result["missing_defaults"], ["answer.grade"])
+
+    def test_recovery_plan_prefers_skill_mode_without_docker(self) -> None:
+        checks = [
+            {"status": "warning", "code": "docker_missing"},
+            {"status": "warning", "code": "api_unreachable"},
+        ]
+
+        plan = diagnose.build_recovery_plan(
+            api_base="http://127.0.0.1:8000",
+            image=diagnose.DEFAULT_IMAGE,
+            checks=checks,
+        )
+
+        self.assertEqual(plan["schema_version"], "adoption-diagnostic-plan-v1")
+        self.assertEqual(plan["recommended_order"], ["prepare_env", "skill_mode", "api_smoke"])
+        self.assertIn("./scripts/launch_skill_mode.sh", plan["commands"]["skill_mode"])
+        self.assertIn("v0.2.28-alpha", plan["commands"]["docker_published_image"])
 
 
 if __name__ == "__main__":

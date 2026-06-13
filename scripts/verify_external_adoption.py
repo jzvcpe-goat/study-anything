@@ -42,6 +42,10 @@ REQUIRED_ARCHIVE_PATHS = [
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",
+    "scripts/doctor.sh",
+    "scripts/launch_self_host.sh",
+    "scripts/stop_self_host.sh",
+    "scripts/verify_published_image_launch.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_agent_eval_baseline.py",
     "scripts/verify_platform_operator_drill.py",
@@ -204,7 +208,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/plugin-registry.md",
             ]
         )
-    required_terms = ["Kimi", "Codex", "WorkBuddy", "NotebookLM", "Obsidian"]
+    required_terms = ["Kimi", "Codex", "WorkBuddy", "NotebookLM", "Obsidian", "deployment-guide-v1"]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
         raise AdoptionProofError(f"Adoption pack operator docs missing terms: {missing_terms}")

@@ -14,6 +14,7 @@ OPENAPI_PATH = GENERATED_DIR / "study-anything-platform-openapi.json"
 OPENAI_TOOLS_PATH = GENERATED_DIR / "study-anything-openai-tools.json"
 CATALOG_PATH = GENERATED_DIR / "study-anything-tool-catalog.md"
 REQUIRED_TOOLS = {
+    "study_anything_deployment_guide",
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
@@ -131,6 +132,8 @@ class PlatformAgentToolsManifestTests(unittest.TestCase):
     def test_generated_catalog_mentions_acceptance_and_privacy(self) -> None:
         catalog = CATALOG_PATH.read_text(encoding="utf-8")
         self.assertIn("verify_platform_agent_tools.py", catalog)
+        self.assertIn("study_anything_deployment_guide", catalog)
+        self.assertIn("deployment-guide-v1", catalog)
         self.assertIn("raw source text", catalog)
         self.assertIn("study_anything_enrichment_artifact_export", catalog)
         self.assertIn("study_anything_second_brain_handoff_export", catalog)

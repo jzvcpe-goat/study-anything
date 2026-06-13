@@ -25,6 +25,9 @@ http://127.0.0.1:8000
 
 The tool surface includes:
 
+- `study_anything_deployment_guide` for `deployment-guide-v1`, the redacted first-run launch and
+  diagnostics guide.
+- `study_anything_health` for local API reachability.
 - `study_anything_plugin_sdk` for the machine-readable Plugin SDK contract.
 - `study_anything_plugin_capabilities` for installed plugin hooks, capabilities, and trust summaries.
 - `study_anything_validate_plugin_package` for local plugin package validation before install.

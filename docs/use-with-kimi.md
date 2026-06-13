@@ -39,6 +39,8 @@ platform/generated/study-anything-openai-tools.json
 
 3. Let Kimi call the platform tools:
 
+- `study_anything_deployment_guide`
+- `study_anything_health`
 - `study_anything_create_session`
 - `study_anything_validate_context_package`
 - `study_anything_add_enrichment`
@@ -53,6 +55,10 @@ platform/generated/study-anything-openai-tools.json
 
 This mode is the preferred early ecosystem path because it keeps the UX inside
 Kimi while Study Anything remains local-first.
+
+Start with `study_anything_deployment_guide` after the local API is reachable. It returns
+`deployment-guide-v1`: launch commands, common first-run failure classes, and the privacy boundary
+between Kimi, the user-owned Agent gateway, and Study Anything.
 
 For long-term memory, Kimi should prefer
 `study_anything_second_brain_handoff_export`. It returns an Obsidian note,

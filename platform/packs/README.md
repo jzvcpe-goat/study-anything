@@ -18,10 +18,12 @@ Each pack points back to the same constrained public contract:
 The packs do not configure real model credentials. Keep model keys and browsing/tool access inside
 the user's platform Agent or user-owned HTTP Agent gateway.
 
-v0.2.27 packs add Plugin SDK and trusted package validation on top of the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
+v0.2.28 packs add deployment and first-run hardening on top of Plugin SDK, trusted package validation, the second-brain handoff layer, Learning Enrichment Layer, operator drill, deterministic Agent
 eval regression baseline, distributable adoption archive, `adoption-proof-v1` verifier, importer,
 retrieval, and ecosystem eval capabilities:
 
+- `deployment-guide-v1` gives platform Agents a redacted, copyable launch guide for Skill Mode,
+  Docker source builds, published GHCR images, diagnostics, and privacy boundaries.
 - Learning Context Package import for web, document, video-slice, app-context, Markdown, and Obsidian
   material gathered by the platform;
 - enrichment input for web, document/PDF, video-slice, app-context, Markdown, and Obsidian excerpts
@@ -83,3 +85,7 @@ For adoption troubleshooting:
 ```bash
 python3 scripts/diagnose_adoption.py
 ```
+
+The diagnostic output includes `adoption-diagnostic-plan-v1`, a copyable next-command plan that
+separates missing Docker, slow GHCR pulls, missing `.env`, API reachability, Agent endpoint, and
+provider-default issues.
