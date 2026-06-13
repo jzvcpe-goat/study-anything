@@ -24,7 +24,9 @@
       "redacted eval artifact",
       "portable learning package",
       "commercial readiness boundaries",
-      "ecosystem submission boundaries"
+      "ecosystem submission boundaries",
+      "aggregate adoption telemetry",
+      "PMF readiness summary"
     ],
     "must_not_log_or_share": [
       "raw source text",
@@ -33,7 +35,9 @@
       "generated insights",
       "agent endpoints",
       "agent metadata",
-      "API keys or model secrets"
+      "API keys or model secrets",
+      "raw user ids",
+      "browser/video/app private context"
     ]
   },
   "acceptance_evidence": {
@@ -43,7 +47,11 @@
       "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
       "all required native gates pass",
       "agent_eval_artifact.trajectory includes quiz.generate, answer.grade, insight.synthesize",
-      "learning_package.schema_version == learning-package-v1"
+      "learning_package.schema_version == learning-package-v1",
+      "adoption_telemetry.schema_version == adoption-telemetry-v1",
+      "pmf_readiness.schema_version == pmf-readiness-v1",
+      "adoption_telemetry.privacy.aggregate_only == true",
+      "adoption_telemetry.privacy.automatic_upload == false"
     ],
     "local_verification_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
     "platform_lesson_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
@@ -54,7 +62,8 @@
     "ecosystem_submission_command": "python3 scripts/verify_ecosystem_submission_pack.py",
     "promptfoo_clean_clone_command": "python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo",
     "retrieval_eval_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-    "diagnostics_command": "python3 scripts/diagnose_adoption.py"
+    "diagnostics_command": "python3 scripts/diagnose_adoption.py",
+    "adoption_telemetry_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000"
   },
   "tools": [
     {
@@ -115,6 +124,76 @@
           "model secrets",
           "billing credentials",
           "raw contacts"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_adoption_telemetry",
+      "method": "GET",
+      "path_template": "/v1/adoption/telemetry",
+      "description": "Read local aggregate adoption telemetry for clean-clone proof, runtime mode, tool import, Agent eval, repeat learning, plugin validation, and explicit opt-in feedback counts.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "schema_version == adoption-telemetry-v1",
+        "collection.local_only == true",
+        "collection.aggregate_only == true",
+        "collection.automatic_upload == false",
+        "privacy.source_text_included == false",
+        "privacy.answers_included == false",
+        "privacy.insights_included == false",
+        "privacy.raw_user_ids_included == false",
+        "privacy.agent_endpoints_included == false",
+        "privacy.api_keys_included == false",
+        "privacy.browser_video_app_context_included == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "aggregate_only": true,
+        "automatic_upload": false,
+        "must_not_return": [
+          "source text",
+          "learner answers",
+          "generated insights",
+          "raw user ids",
+          "agent endpoints",
+          "API keys",
+          "browser/video/app private context"
+        ]
+      }
+    },
+    {
+      "name": "study_anything_pmf_readiness",
+      "method": "GET",
+      "path_template": "/v1/pmf/readiness",
+      "description": "Read a local PMF readiness summary derived from aggregate adoption telemetry; confirms hosted paid services remain not ready before PMF.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "output_requirements": [
+        "schema_version == pmf-readiness-v1",
+        "commercial_boundary.sell_standalone_app_now == false",
+        "commercial_boundary.hosted_paid_services_status == not_ready",
+        "privacy.aggregate_only == true",
+        "privacy.automatic_upload == false"
+      ],
+      "privacy": {
+        "returns_private_learning_data": false,
+        "aggregate_only": true,
+        "automatic_upload": false,
+        "must_not_return": [
+          "source text",
+          "learner answers",
+          "generated insights",
+          "raw user ids",
+          "agent endpoints",
+          "API keys",
+          "browser/video/app private context"
         ]
       }
     },

@@ -39,6 +39,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "docs/plugin-sdk.md",
     "docs/plugin-registry.md",
     "docs/use-with-kimi.md",
+    "docs/adoption-telemetry.md",
     "skills/study-anything/SKILL.md",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/mock_http_agent.py",
@@ -47,6 +48,7 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/stop_self_host.sh",
     "scripts/verify_published_image_launch.py",
     "scripts/verify_external_adoption.py",
+    "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_eval_baseline.py",
     "scripts/verify_platform_operator_drill.py",
     "scripts/verify_platform_ecosystem_eval_flow.py",
@@ -205,6 +207,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/second-brain-handoff.md",
                 "docs/notebooklm-bridge.md",
                 "docs/commercial-readiness.md",
+                "docs/adoption-telemetry.md",
                 "docs/plugin-sdk.md",
                 "docs/plugin-registry.md",
             ]
@@ -217,6 +220,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "Obsidian",
         "deployment-guide-v1",
         "commercial-readiness-v1",
+        "adoption-telemetry-v1",
+        "pmf-readiness-v1",
     ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
@@ -374,6 +379,16 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
                 90,
             ),
             (
+                "adoption_telemetry",
+                [
+                    python_bin,
+                    "scripts/verify_adoption_telemetry.py",
+                    "--api-base",
+                    env["API_BASE"],
+                ],
+                90,
+            ),
+            (
                 "platform_tools",
                 [python_bin, "scripts/verify_platform_agent_tools.py"],
                 args.timeout_seconds,
@@ -473,10 +488,20 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "manifest_schema": value.get("manifest_schema"),
             "agent_audit_status": value.get("agent_audit_status"),
             "commercial_readiness_schema": value.get("commercial_readiness_schema"),
+            "adoption_telemetry_schema": value.get("adoption_telemetry_schema"),
+            "pmf_readiness_schema": value.get("pmf_readiness_schema"),
             "quality_schema": value.get("quality_schema"),
             "plugin_sdk_schema": value.get("plugin_sdk_schema"),
             "plugin_capability_index_schema": value.get("plugin_capability_index_schema"),
             "plugin_package_validation_schema": value.get("plugin_package_validation_schema"),
+        }
+    if label == "adoption_telemetry":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "api_checked": value.get("api_checked"),
+            "telemetry_schema": (value.get("core") or {}).get("telemetry_schema"),
+            "readiness_schema": (value.get("core") or {}).get("readiness_schema"),
         }
     if label == "commercial_readiness":
         return {

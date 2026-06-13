@@ -22,7 +22,7 @@ DEFAULT_CAPABILITIES = [
     "answer.grade",
     "insight.synthesize",
 ]
-DEFAULT_TAG = "v0.3.1-alpha"
+DEFAULT_TAG = "v0.3.2-alpha"
 DEFAULT_IMAGE = f"ghcr.io/jzvcpe-goat/study-anything/api:{DEFAULT_TAG}"
 
 
@@ -302,6 +302,9 @@ def build_recovery_plan(
         "platform_tools_smoke": (
             f"API_BASE={api_base} python3 scripts/verify_platform_agent_tools.py"
         ),
+        "adoption_telemetry": (
+            f"python3 scripts/verify_adoption_telemetry.py --api-base {api_base}"
+        ),
         "published_image_smoke": (
             f"python3 scripts/verify_published_image_launch.py --tag {release_tag} "
             "--pull-timeout-seconds 180 --allow-pull-timeout-report"
@@ -317,7 +320,7 @@ def build_recovery_plan(
     elif "provider_defaults_missing" in failed_codes:
         recommended = ["platform_tools_smoke"]
     else:
-        recommended = ["doctor", "api_smoke", "platform_tools_smoke"]
+        recommended = ["doctor", "api_smoke", "platform_tools_smoke", "adoption_telemetry"]
     return {
         "schema_version": "adoption-diagnostic-plan-v1",
         "summary": "Copyable next commands for local-first Study Anything adoption.",

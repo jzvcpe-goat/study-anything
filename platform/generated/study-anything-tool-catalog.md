@@ -20,6 +20,8 @@ Never log or share:
 - agent endpoints
 - agent metadata
 - API keys or model secrets
+- raw user ids
+- browser/video/app private context
 
 ## Generated Assets
 
@@ -44,6 +46,7 @@ Additional gateway and release acceptance commands:
 - python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 - python3 scripts/verify_clean_clone_adoption.py --repo .
 - python3 scripts/verify_ecosystem_submission_pack.py
+- API_BASE=http://127.0.0.1:8000 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 - python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
 - API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 - python3 scripts/diagnose_adoption.py
@@ -108,6 +111,78 @@ Privacy:
     "model secrets",
     "billing credentials",
     "raw contacts"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_adoption_telemetry`
+
+- Method: `GET`
+- Path: `/v1/adoption/telemetry`
+- Description: Read local aggregate adoption telemetry for clean-clone proof, runtime mode, tool import, Agent eval, repeat learning, plugin validation, and explicit opt-in feedback counts.
+
+Output requirements:
+
+- schema_version == adoption-telemetry-v1
+- collection.local_only == true
+- collection.aggregate_only == true
+- collection.automatic_upload == false
+- privacy.source_text_included == false
+- privacy.answers_included == false
+- privacy.insights_included == false
+- privacy.raw_user_ids_included == false
+- privacy.agent_endpoints_included == false
+- privacy.api_keys_included == false
+- privacy.browser_video_app_context_included == false
+
+Privacy:
+
+```json
+{
+  "aggregate_only": true,
+  "automatic_upload": false,
+  "must_not_return": [
+    "source text",
+    "learner answers",
+    "generated insights",
+    "raw user ids",
+    "agent endpoints",
+    "API keys",
+    "browser/video/app private context"
+  ],
+  "returns_private_learning_data": false
+}
+```
+
+### `study_anything_pmf_readiness`
+
+- Method: `GET`
+- Path: `/v1/pmf/readiness`
+- Description: Read a local PMF readiness summary derived from aggregate adoption telemetry; confirms hosted paid services remain not ready before PMF.
+
+Output requirements:
+
+- schema_version == pmf-readiness-v1
+- commercial_boundary.sell_standalone_app_now == false
+- commercial_boundary.hosted_paid_services_status == not_ready
+- privacy.aggregate_only == true
+- privacy.automatic_upload == false
+
+Privacy:
+
+```json
+{
+  "aggregate_only": true,
+  "automatic_upload": false,
+  "must_not_return": [
+    "source text",
+    "learner answers",
+    "generated insights",
+    "raw user ids",
+    "agent endpoints",
+    "API keys",
+    "browser/video/app private context"
   ],
   "returns_private_learning_data": false
 }

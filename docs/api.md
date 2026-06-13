@@ -280,6 +280,8 @@ does not expose absolute local paths, and keeps destructive restore out of the W
 ## Local PMF and Launch Signals
 
 - `GET /v1/metrics/pmf`
+- `GET /v1/adoption/telemetry`
+- `GET /v1/pmf/readiness`
 - `GET /v1/pmf/summary`
 - `POST /v1/pmf/interest`
 - `POST /v1/pmf/export`
@@ -289,6 +291,13 @@ loops, active learner hashes, repeat usage, mastery delta, ready plugins, and op
 interest. The response does not include session IDs, user IDs, user hashes, source titles, reading prose,
 quiz prompts, answers, grading feedback, insights, scribe logs, Agent metadata, or raw contact values.
 
+`GET /v1/adoption/telemetry` returns `adoption-telemetry-v1`: local aggregate clean-clone/runtime/tool
+import, Agent eval, repeat-learning, plugin-validation, and explicit feedback evidence. `GET
+/v1/pmf/readiness` returns `pmf-readiness-v1`: a local PMF readout that keeps hosted paid services and
+standalone app commercialization out of the launch path until adoption evidence improves. Both
+responses set `automatic_upload=false` and exclude source text, answers, insights, raw user ids, Agent
+endpoints, API keys, and browser/video/app private context.
+
 `POST /v1/pmf/interest` records an explicit local intent for future convenience services such as
 `neural_sync`, `neural_publish`, `neural_teams`, `catalyst`, `plugin_marketplace`, or `hosted_alpha`.
 Optional contact values are hashed before storage; optional comments are reduced to a boolean
@@ -297,6 +306,6 @@ Optional contact values are hashed before storage; optional comments are reduced
 `POST /v1/pmf/export` creates a shareable aggregate package only when `consent_to_share=true`.
 Supported destinations are `self_archive`, `github_discussion`, `email_to_maintainers`,
 `hosted_waitlist`, and `research_report`. The export includes aggregate PMF metrics, service-interest
-counts, the consent statement, and privacy flags. It does not include source text, quiz prompts, answers,
-feedback, insights, scribe logs, Agent metadata, raw user IDs, user hashes, raw contact values, contact
-hashes, or freeform comments.
+counts, `adoption-telemetry-v1`, `pmf-readiness-v1`, the consent statement, and privacy flags. It does
+not include source text, quiz prompts, answers, feedback, insights, scribe logs, Agent metadata, raw
+user IDs, user hashes, raw contact values, contact hashes, or freeform comments.

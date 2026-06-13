@@ -54,6 +54,8 @@ PLATFORM_REQUIREMENTS = {
 
 REQUIRED_EXPORT_EVIDENCE = [
     "commercial_readiness.schema_version == commercial-readiness-v1",
+    "adoption_telemetry.schema_version == adoption-telemetry-v1",
+    "pmf_readiness.schema_version == pmf-readiness-v1",
     "agent_audit.status == verified",
     "agent_eval_policy.schema_version == agent-eval-policy-v1",
     "agent_eval_report.schema_version == agent-eval-report-v1",
@@ -69,6 +71,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "deployment_guide.schema_version == deployment-guide-v1",
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
+    "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [

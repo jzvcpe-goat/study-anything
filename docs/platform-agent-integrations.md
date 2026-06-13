@@ -31,6 +31,8 @@ private Agent platforms:
   privacy boundaries
 - commercial readiness contract for GitHub OSS launch, platform-Agent distribution, hosted-service
   non-goals, and PMF prerequisites
+- aggregate adoption telemetry and PMF readiness contracts for local evidence, opt-in feedback
+  counts, and commercial boundary checks
 - ecosystem submission metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic
   OpenAPI platform review
 - API health
@@ -60,6 +62,7 @@ Validate a running integration with:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_ecosystem_submission_pack.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
@@ -91,12 +94,15 @@ Obsidian plus NotebookLM-style handoff artifacts without a standalone frontend.
 The ecosystem submission verifier emits `ecosystem-submission-verification-v1`; use it before
 submitting assets to Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, or generic OpenAPI hosts.
 
-After the API is reachable, platform Agents should call `study_anything_deployment_guide` and
-`study_anything_commercial_readiness` before the learning tools. `deployment-guide-v1` tells the
-platform which local command path was intended, how to recover from first-run failures, and which data
-must stay out of platform logs. `commercial-readiness-v1` tells the platform that GitHub OSS,
-self-host, and platform-Agent distribution are ready while hosted paid services, billing, SSO, remote
-accounts, and a standalone app remain out of the current launch path.
+After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
+`study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and
+`study_anything_pmf_readiness` before the learning tools. `deployment-guide-v1` tells the platform
+which local command path was intended, how to recover from first-run failures, and which data must stay
+out of platform logs. `commercial-readiness-v1` tells the platform that GitHub OSS, self-host, and
+platform-Agent distribution are ready while hosted paid services, billing, SSO, remote accounts, and a
+standalone app remain out of the current launch path. `adoption-telemetry-v1` and `pmf-readiness-v1`
+return local aggregate evidence only and never include source text, answers, insights, raw user ids,
+Agent endpoints, API keys, or browser/video/app private context.
 
 ## Generated Import Assets
 
@@ -123,6 +129,7 @@ Regenerate and verify these assets after changing the manifest, platform packs, 
 python3 scripts/generate_platform_agent_assets.py
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_adoption_telemetry.py
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/verify_platform_operator_drill.py --check

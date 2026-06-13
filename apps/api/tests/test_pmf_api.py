@@ -137,6 +137,42 @@ class PmfApiTests(unittest.TestCase):
         self.assertNotIn("Private export", serialized)
         self.assertNotIn("contact_hash", body["hosted_interest"])
 
+    def test_adoption_telemetry_and_pmf_readiness_routes_are_redacted(self) -> None:
+        store = InMemorySessionStore()
+        state = replace(
+            new_session("telemetry-user"),
+            stage="completed",
+            answers=[Answer(item_id="q1", text="Private telemetry answer")],
+            mastery=Mastery(level=0.6, bloom="apply"),
+            insights=["Private telemetry insight"],
+        )
+        store.save(state)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            interest_store = LocalPmfInterestStore(Path(tmpdir) / "pmf.json")
+            interest_store.record(
+                user_id="telemetry-user",
+                services=["neural_sync"],
+                contact="telemetry@example.com",
+                comment="Private telemetry comment",
+                source="skill-mode",
+            )
+            client, stack = self._client(store, interest_store)
+            with stack, client:
+                telemetry = client.get("/v1/adoption/telemetry")
+                readiness = client.get("/v1/pmf/readiness")
+
+        self.assertEqual(telemetry.status_code, 200)
+        self.assertEqual(readiness.status_code, 200)
+        self.assertEqual(telemetry.json()["schema_version"], "adoption-telemetry-v1")
+        self.assertEqual(readiness.json()["schema_version"], "pmf-readiness-v1")
+        self.assertTrue(telemetry.json()["privacy"]["aggregate_only"])
+        self.assertFalse(telemetry.json()["collection"]["automatic_upload"])
+        self.assertFalse(readiness.json()["commercial_boundary"]["sell_standalone_app_now"])
+        serialized = telemetry.text + readiness.text
+        self.assertNotIn("telemetry-user", serialized)
+        self.assertNotIn("telemetry@example.com", serialized)
+        self.assertNotIn("Private telemetry", serialized)
+
 
 if __name__ == "__main__":
     unittest.main()

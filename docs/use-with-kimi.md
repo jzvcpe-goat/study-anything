@@ -41,6 +41,9 @@ platform/ecosystem-submission.json
 3. Let Kimi call the platform tools:
 
 - `study_anything_deployment_guide`
+- `study_anything_commercial_readiness`
+- `study_anything_adoption_telemetry`
+- `study_anything_pmf_readiness`
 - `study_anything_health`
 - `study_anything_create_session`
 - `study_anything_validate_context_package`
@@ -61,17 +64,21 @@ Before treating the Kimi integration as ready, run:
 
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
 ```
 
-The first command emits `ecosystem-submission-verification-v1`; the second emits
-`adoption-proof-v1`.
+The first command emits `ecosystem-submission-verification-v1`; the telemetry command emits
+`adoption-telemetry-verification-v1`; the final command emits `adoption-proof-v1`.
 
 Start with `study_anything_deployment_guide` after the local API is reachable. It returns
 `deployment-guide-v1`: launch commands, common first-run failure classes, and the privacy boundary
 between Kimi, the user-owned Agent gateway, and Study Anything.
+Then call `study_anything_adoption_telemetry` and `study_anything_pmf_readiness` when Kimi needs
+aggregate local adoption or PMF evidence. These tools must not return source text, answers, insights,
+raw user ids, Agent endpoints, API keys, or browser/video/app private context.
 
 For long-term memory, Kimi should prefer
 `study_anything_second_brain_handoff_export`. It returns an Obsidian note,

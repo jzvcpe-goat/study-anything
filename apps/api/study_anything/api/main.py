@@ -49,7 +49,13 @@ from study_anything.core.learning_context import (
     validate_learning_context_package,
 )
 from study_anything.core.learning_package import build_learning_package_export
-from study_anything.core.pmf import LocalPmfInterestStore, build_pmf_export, compute_pmf_metrics
+from study_anything.core.pmf import (
+    LocalPmfInterestStore,
+    build_adoption_telemetry,
+    build_pmf_export,
+    build_pmf_readiness,
+    compute_pmf_metrics,
+)
 from study_anything.core.obsidian_export import build_obsidian_markdown_export
 from study_anything.core.plugin_registry import PluginRegistry
 from study_anything.core.plugin_sdk import (
@@ -454,6 +460,27 @@ def create_app() -> FastAPI:
             plugins.discover(),
             pmf_interest_store.summary(),
         )
+
+    @app.get("/v1/adoption/telemetry")
+    def adoption_telemetry() -> dict[str, object]:
+        interest_summary = pmf_interest_store.summary()
+        metrics = compute_pmf_metrics(
+            store.list_sessions(),
+            plugins.discover(),
+            interest_summary,
+        )
+        return build_adoption_telemetry(metrics, interest_summary)
+
+    @app.get("/v1/pmf/readiness")
+    def pmf_readiness() -> dict[str, object]:
+        interest_summary = pmf_interest_store.summary()
+        metrics = compute_pmf_metrics(
+            store.list_sessions(),
+            plugins.discover(),
+            interest_summary,
+        )
+        telemetry = build_adoption_telemetry(metrics, interest_summary)
+        return build_pmf_readiness(telemetry)
 
     @app.get("/v1/evals/quality/cases")
     def get_quality_eval_cases() -> dict[str, object]:

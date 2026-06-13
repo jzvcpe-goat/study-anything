@@ -104,6 +104,8 @@ After every completed learning loop, the workspace Agent should fetch:
 ```text
 GET /v1/evals/policy
 GET /v1/commercial/readiness
+GET /v1/adoption/telemetry
+GET /v1/pmf/readiness
 GET /v1/sessions/{session_id}/agent-audit
 GET /v1/sessions/{session_id}/agent-eval/artifact
 GET /v1/sessions/{session_id}/agent-eval/quality
@@ -122,6 +124,9 @@ second-brain workflow. The learning package is for platform-agent handoff, Noteb
 or local archives. The second-brain handoff is the preferred shared workspace export because it
 excludes learner answers and grading feedback. The shared run summary should include only compact
 mastery and redacted evidence, not raw source prose or learner answers.
+`adoption-telemetry-v1` and `pmf-readiness-v1` add aggregate local adoption and PMF evidence without
+source text, answers, insights, raw user ids, Agent endpoints, API keys, or browser/video/app private
+context.
 
 Use `POST /v1/context-packages/validate`, `POST /v1/sessions/from-context-package`, and
 `POST /v1/sessions/{session_id}/context-package` when WorkBuddy has collected browser pages,

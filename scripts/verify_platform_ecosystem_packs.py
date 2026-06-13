@@ -15,6 +15,8 @@ PACKS_DIR = ROOT / "platform" / "packs"
 REQUIRED_PACKS = {"codex", "kimi", "workbuddy"}
 REQUIRED_ACCEPTANCE = {
     "commercial_readiness.schema_version == commercial-readiness-v1",
+    "adoption_telemetry.schema_version == adoption-telemetry-v1",
+    "pmf_readiness.schema_version == pmf-readiness-v1",
     "agent_audit.status == verified",
     "agent_eval_artifact.schema_version == agent-eval-artifact-v1",
     "all required native gates pass",
@@ -37,6 +39,7 @@ REQUIRED_ACCEPTANCE = {
     "deployment_guide.schema_version == deployment-guide-v1",
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
+    "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_importer_lesson_flow.py",
@@ -50,6 +53,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
 }
 REQUIRED_ADOPTION_COMMAND_FRAGMENTS = {
     "verify_commercial_readiness.py",
+    "verify_adoption_telemetry.py",
     "verify_clean_clone_adoption.py",
     "diagnose_adoption.py",
 }
@@ -145,6 +149,8 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "Plugin SDK",
         "deployment-guide-v1",
         "commercial-readiness-v1",
+        "adoption-telemetry-v1",
+        "pmf-readiness-v1",
         "ecosystem-submission-v1",
         "ecosystem-submission-verification-v1",
         "raw source",

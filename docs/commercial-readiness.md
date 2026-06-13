@@ -28,6 +28,19 @@ This means Study Anything can be distributed as an OSS local-first learning laye
 WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
 SSO, remote accounts, or a standalone frontend are ready.
 
+For adoption and PMF review, call:
+
+```bash
+curl http://127.0.0.1:8000/v1/adoption/telemetry
+curl http://127.0.0.1:8000/v1/pmf/readiness
+```
+
+Those responses are `adoption-telemetry-v1` and `pmf-readiness-v1`. They contain aggregate local
+evidence only: adoption proof status, runtime modes, tool import success, Agent eval pass/fail,
+repeat session counts, plugin validation counts, and explicit opt-in feedback counts. They do not
+include source text, answers, insights, raw user ids, Agent endpoints, API keys, or browser/video/app
+private context.
+
 ## Local Core Invariants
 
 The commercial contract treats these as release-blocking local-first invariants:
@@ -42,7 +55,8 @@ The commercial contract treats these as release-blocking local-first invariants:
 
 ## Hosted-Service Contracts
 
-These services are designed as future convenience products and remain `contract_only` in v0.3.0:
+These services are designed as future convenience products and remain `contract_only` in the current
+alpha:
 
 - `Neural Sync`: encrypted backup and multi-device learning-state sync. The local foundation is
   `sync-package-v1`; remote encrypted storage, conflict resolution, account recovery, support, and
@@ -88,6 +102,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Privacy-preserving local PMF metrics for completion rate, active learner hashes, repeat usage, mastery delta, plugin readiness, and hosted-service intent.
 - Opt-in local future-service interest capture that hashes contact values and never uploads by default.
 - Explicit-consent PMF export package for community PMF readouts and hosted waitlist review, with aggregate data only.
+- Local aggregate adoption telemetry and PMF readiness contracts for platform-Agent operators and
+  maintainers, with no automatic upload and no private learning content.
 - API smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, local PMF metrics, and Agent audit boundaries.
 - Redacted Agent Eval artifact foundation that bridges invocation audit evidence into mature external eval tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - Platform-agent integration guide for Codex, Kimi, WorkBuddy-style tools, and terminal-capable Agents.
@@ -116,7 +132,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Plugin marketplace trust model beyond local installs: hosted signed registry distribution, maintainer review queues, automatic update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
-- PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by cohort, plugin activation, and hosted waitlist conversion.
+- PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by
+  cohort, plugin activation, explicit feedback, and hosted waitlist conversion.
 - Product delivery layer: no standalone frontend is currently shippable; the launch path depends on API/Skill/platform-agent integrations until a new UI is designed.
 - Non-developer polish beyond first-run: upgrade confidence, support docs, and guided recovery for rare edge cases.
 
@@ -139,5 +156,6 @@ Reach 75% readiness by making the self-host Alpha dependable for real learners w
 - Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.
 - Documented recovery drill walkthroughs for non-developer self-host operators.
 - Hosted signed plugin registry distribution, maintainer review queue, and explicit update install workflow.
-- Public PMF sharing workflow: documented collection norms, maintainer review process, and cohort readout templates.
+- Public PMF sharing workflow: documented collection norms, maintainer review process, cohort readout
+  templates, and opt-in adoption telemetry review.
 - Mature Agent quality eval suites wired into CI or documented operator workflows.

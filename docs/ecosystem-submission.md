@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.1-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.2-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -9,7 +9,8 @@ Agent keeps the conversation, browsing, files, external data lookup, video or
 application tooling, and real model credentials. Study Anything runs as a
 local learning engine that provides source-bound study workflows, Agent output
 validation, mastery state, redacted eval evidence, retrieval quality checks,
-and portable Obsidian or NotebookLM-style exports.
+aggregate adoption telemetry, PMF readiness checks, and portable Obsidian or
+NotebookLM-style exports.
 
 ## Machine-Readable Contract
 
@@ -24,6 +25,7 @@ submission metadata. It declares:
 - no managed hosted service in the MVP
 - no Study Anything custody of real model API keys
 - no raw learning data or Agent endpoints in the submission package
+- `adoption-telemetry-v1` and `pmf-readiness-v1` as aggregate local evidence
 - the exact assets and verification commands each target should use
 
 Run:
@@ -60,6 +62,7 @@ Before calling a platform integration ready, run:
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_adoption_telemetry.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check

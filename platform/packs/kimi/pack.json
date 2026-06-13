@@ -20,6 +20,7 @@
   "local_verification_commands": [
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_commercial_readiness.py",
+    "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
     "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -55,7 +56,10 @@
     "plugin_package_validation.schema_version == plugin-package-validation-v1",
     "deployment_guide.schema_version == deployment-guide-v1",
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
-    "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1"
+    "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
+    "adoption_telemetry.schema_version == adoption-telemetry-v1",
+    "pmf_readiness.schema_version == pmf-readiness-v1",
+    "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -64,7 +68,9 @@
     "generated insights",
     "agent endpoints",
     "agent metadata",
-    "API keys or model secrets"
+    "API keys or model secrets",
+    "raw user ids",
+    "browser/video/app private context"
   ],
   "notes": [
     "Browser-only Kimi chat cannot reach localhost directly.",

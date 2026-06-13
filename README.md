@@ -96,6 +96,8 @@ Open:
 - API health: http://localhost:8000/v1/health
 - Deployment guide: http://localhost:8000/v1/deployment/guide
 - Commercial readiness: http://localhost:8000/v1/commercial/readiness
+- Adoption telemetry: http://localhost:8000/v1/adoption/telemetry
+- PMF readiness: http://localhost:8000/v1/pmf/readiness
 - Recovery status: http://localhost:8000/v1/recovery/status
 - Encrypted sync status: http://localhost:8000/v1/sync/status
 - Knowledge graph status: http://localhost:8000/v1/graph/status
@@ -106,7 +108,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.1-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.2-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -119,16 +121,19 @@ understandable on slower connections. The release image supports `linux/amd64` a
 Maintainers can verify the public images with:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.1-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.2-alpha
 ```
 
-If a platform Agent is driving setup, it can call `GET /v1/deployment/guide` and
-`GET /v1/commercial/readiness` after the API is reachable. `deployment-guide-v1` gives copyable
-launch commands, failure classes, and the privacy boundary for user-owned Agents.
+If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
+`GET /v1/commercial/readiness`, `GET /v1/adoption/telemetry`, and `GET /v1/pmf/readiness` after the
+API is reachable. `deployment-guide-v1` gives copyable launch commands, failure classes, and the
+privacy boundary for user-owned Agents.
 `commercial-readiness-v1` states that the GitHub OSS/platform-Agent launch path is ready while hosted
 Sync, Publish, Teams, Catalyst, billing, SSO, and a standalone app remain future work.
-`ecosystem-submission-v1` is the v0.3.1 no-frontend submission contract for Kimi-compatible, Codex
-Skill, WorkBuddy-style HTTP, and generic OpenAPI platforms.
+`adoption-telemetry-v1` and `pmf-readiness-v1` expose local aggregate evidence only; no source text,
+answers, insights, raw user ids, Agent endpoints, API keys, or browser/video/app private context are
+included. `ecosystem-submission-v1` is the v0.3.2 no-frontend submission contract for
+Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI platforms.
 
 ## Bring Your Own Agent
 
