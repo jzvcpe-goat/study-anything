@@ -83,11 +83,24 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-platform-onboarding-readiness.json",
     "platform/generated/study-anything-platform-triage-dashboard.json",
     "platform/generated/study-anything-platform-triage-dashboard.md",
+    "scripts/generate_platform_public_support_status.py",
+    "scripts/verify_platform_public_support_status.py",
+    "platform/generated/study-anything-public-support-status.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "docs/public-support-status.md",
     "fixtures/platform-release-blockers/tool_import_blocker.json",
     "fixtures/platform-release-blockers/local_gateway_blocker.json",
     "fixtures/platform-release-blockers/published_image_blocker.json",
     "fixtures/platform-release-blockers/agent_eval_blocker.json",
     "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+    "fixtures/platform-status-links/intake.json",
+    "fixtures/platform-status-links/needs-repro.json",
+    "fixtures/platform-status-links/confirmed.json",
+    "fixtures/platform-status-links/blocked-by-platform.json",
+    "fixtures/platform-status-links/docs-fix.json",
+    "fixtures/platform-status-links/release-blocker.json",
+    "fixtures/platform-status-links/resolved.json",
     ".github/ISSUE_TEMPLATE/platform_import_failure.md",
     ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
     ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
@@ -289,6 +302,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/support-desk.md",
                 "docs/adopter-onboarding.md",
                 "docs/maintainer-rotation.md",
+                "docs/public-support-status.md",
             ]
         )
     required_terms = [
@@ -303,6 +317,9 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "pmf-readiness-v1",
         "platform-onboarding-readiness-v1",
         "platform-triage-dashboard-v1",
+        "public-support-status-v1",
+        "public-maintainer-dashboard-v1",
+        "public-status-linkage-fixture-v1",
     ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
@@ -537,6 +554,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "platform_onboarding_readiness",
                 [python_bin, "scripts/verify_platform_onboarding_readiness.py"],
+                90,
+            ),
+            (
+                "platform_public_support_status",
+                [python_bin, "scripts/verify_platform_public_support_status.py"],
                 90,
             ),
             (

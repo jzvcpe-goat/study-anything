@@ -112,6 +112,21 @@ FILES: list[tuple[str, str, str]] = [
         "Generated platform triage dashboard Markdown.",
     ),
     (
+        "platform/generated/study-anything-public-support-status.json",
+        "generated_asset",
+        "Public support status report.",
+    ),
+    (
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "generated_asset",
+        "Public maintainer dashboard JSON.",
+    ),
+    (
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "generated_asset",
+        "Public maintainer dashboard Markdown.",
+    ),
+    (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
         "support_template",
         "GitHub issue template for external platform import failures.",
@@ -185,6 +200,41 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
         "release_blocker_fixture",
         "Mock release blocker fixture for support bundle privacy failures.",
+    ),
+    (
+        "fixtures/platform-status-links/intake.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for intake issues.",
+    ),
+    (
+        "fixtures/platform-status-links/needs-repro.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for needs-repro issues.",
+    ),
+    (
+        "fixtures/platform-status-links/confirmed.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for confirmed issues.",
+    ),
+    (
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for blocked-by-platform issues.",
+    ),
+    (
+        "fixtures/platform-status-links/docs-fix.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for docs-fix issues.",
+    ),
+    (
+        "fixtures/platform-status-links/release-blocker.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for release-blocker issues.",
+    ),
+    (
+        "fixtures/platform-status-links/resolved.json",
+        "status_linkage_fixture",
+        "Public status linkage fixture for resolved issues.",
     ),
     (
         "fixtures/platform-import-failures/schema_mismatch.json",
@@ -412,6 +462,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify onboarding readiness, SLA labels, dashboard, release blockers, packs, submission, and docs.",
     ),
     (
+        "scripts/generate_platform_public_support_status.py",
+        "diagnostics",
+        "Generate public support status, maintainer dashboard, and status-linkage fixtures.",
+    ),
+    (
+        "scripts/verify_platform_public_support_status.py",
+        "verification",
+        "Verify public support status, dashboard, status-linkage fixtures, packs, submission, and docs.",
+    ),
+    (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "verification",
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
@@ -607,6 +667,11 @@ FILES: list[tuple[str, str, str]] = [
         "Maintainer SLA labels, release-blocker handling, and rotation checklist.",
     ),
     (
+        "docs/public-support-status.md",
+        "docs",
+        "Public support status and maintainer dashboard publishing guide.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -677,7 +742,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.19-alpha.md",
+        "docs/release-notes/v0.3.20-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

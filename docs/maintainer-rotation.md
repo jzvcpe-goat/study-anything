@@ -1,6 +1,6 @@
 # Maintainer Rotation
 
-Study Anything v0.3.19-alpha defines `maintainer-sla-labels-v1` and
+Study Anything v0.3.20-alpha defines `maintainer-sla-labels-v1` and
 `maintainer-rotation-checklist-v1` so external adopter issues can be handled
 when the original author is not present.
 
@@ -14,6 +14,7 @@ Then open:
 
 ```text
 platform/generated/study-anything-platform-triage-dashboard.md
+platform/generated/study-anything-public-maintainer-dashboard.md
 ```
 
 ## SLA Labels
@@ -33,6 +34,7 @@ platform/generated/study-anything-platform-triage-dashboard.md
 3. Review every fixture under `fixtures/platform-release-blockers/`.
 4. Confirm each support category can be reproduced without private user data.
 5. Close only with a verified command, documented platform limitation, or merged fix.
+6. Run `python3 scripts/verify_platform_public_support_status.py --check` before publishing a public dashboard.
 
 ## Close Standard
 
@@ -46,3 +48,10 @@ Every issue should close with one of these:
 Never ask for raw source text, learner answers, Agent prompts, real Agent
 endpoints, model keys, browser context, app context, video context, or personal
 profile data.
+
+## Public Dashboard
+
+`public-support-status-v1` maps the SLA labels above into
+`public-status-linkage-fixture-v1` fixtures. The public dashboard can publish
+platform status, known blocker fixture ids, fixture hashes, labels, and
+verification commands, but not the private support bundle payload.

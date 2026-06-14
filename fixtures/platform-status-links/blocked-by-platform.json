@@ -1,0 +1,34 @@
+{
+  "example_public_note": "`blocked-by-platform` issues may publish label, status, command, and fixture references only.",
+  "label": "blocked-by-platform",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "personal_profile_data_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "private_fields_excluded": [
+    "raw_source_text",
+    "learner_answers",
+    "agent_prompts",
+    "real_agent_endpoints",
+    "real_model_keys",
+    "browser_video_app_private_context",
+    "personal_profile_data",
+    "full_support_bundle_payload"
+  ],
+  "public_fields": {
+    "label": "blocked-by-platform",
+    "linked_schema": "public-support-status-v1",
+    "next_public_action": "python3 scripts/diagnose_adoption.py",
+    "status": "host_platform_limitation_documented",
+    "verification_command": "python3 scripts/diagnose_adoption.py"
+  },
+  "public_status": "host_platform_limitation_documented",
+  "schema_version": "public-status-linkage-fixture-v1",
+  "version": "v0.3.20-alpha"
+}

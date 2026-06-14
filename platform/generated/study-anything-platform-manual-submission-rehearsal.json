@@ -61,6 +61,11 @@
       "step_id": "run_platform_field_rehearsal"
     },
     {
+      "command": "python3 scripts/generate_platform_public_support_status.py --check && python3 scripts/verify_platform_public_support_status.py --check",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "publish_public_support_status"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -70,6 +75,7 @@
     "docs/adoption.md",
     "docs/ecosystem-submission.md",
     "docs/platform-agent-integrations.md",
+    "docs/public-support-status.md",
     "docs/use-with-kimi.md",
     "fixtures/platform-import-failures/cors_localhost.json",
     "fixtures/platform-import-failures/missing_local_gateway.json",
@@ -79,6 +85,13 @@
     "fixtures/platform-import-failures/tool_naming_drift.json",
     "fixtures/platform-import-failures/unsupported_auth_mode.json",
     "fixtures/platform-import-failures/version_drift.json",
+    "fixtures/platform-status-links/blocked-by-platform.json",
+    "fixtures/platform-status-links/confirmed.json",
+    "fixtures/platform-status-links/docs-fix.json",
+    "fixtures/platform-status-links/intake.json",
+    "fixtures/platform-status-links/needs-repro.json",
+    "fixtures/platform-status-links/release-blocker.json",
+    "fixtures/platform-status-links/resolved.json",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
     "platform/generated/study-anything-deployment-hardening.json",
@@ -95,10 +108,14 @@
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/study-anything-platform-tools.json",
     "scripts/generate_platform_feedback_package.py",
     "scripts/generate_platform_field_rehearsal.py",
+    "scripts/generate_platform_public_support_status.py",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
@@ -113,6 +130,7 @@
     "scripts/verify_platform_field_rehearsal.py",
     "scripts/verify_platform_manual_submission_rehearsal.py",
     "scripts/verify_platform_operator_drill.py",
+    "scripts/verify_platform_public_support_status.py",
     "scripts/verify_platform_submission_dry_run.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py"
   ],
@@ -148,6 +166,14 @@
     "platform_submission_dry_run": {
       "schema_version": "platform-submission-dry-run-v1",
       "status": "pass"
+    },
+    "public_maintainer_dashboard": {
+      "schema_version": "public-maintainer-dashboard-v1",
+      "status": "pass"
+    },
+    "public_support_status": {
+      "schema_version": "public-support-status-v1",
+      "status": "pass"
     }
   },
   "expected_outputs": {
@@ -173,6 +199,12 @@
     "import_tools": [
       "tool names start with study_anything_",
       "no API-key security scheme"
+    ],
+    "publish_public_support_status": [
+      "public-support-status-v1",
+      "public-maintainer-dashboard-v1",
+      "public-status-linkage-fixture-v1",
+      "no raw source, answers, prompts, Agent endpoints, model keys, or private platform context"
     ],
     "review_deployment_path": [
       "deployment-hardening-verification-v1",
@@ -446,6 +478,27 @@
       "step_id": "run_platform_field_rehearsal"
     },
     {
+      "command": "python3 scripts/generate_platform_public_support_status.py --check && python3 scripts/verify_platform_public_support_status.py --check",
+      "evidence_paths": [
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md"
+      ],
+      "expected_outputs": [
+        "public-support-status-v1",
+        "public-maintainer-dashboard-v1",
+        "public-status-linkage-fixture-v1",
+        "no raw source, answers, prompts, Agent endpoints, model keys, or private platform context"
+      ],
+      "failure_remediation": [
+        "Run verify_platform_public_support_status.py without --check to print the current mismatch summary.",
+        "Publish only labels, schema names, fixture hashes, and copyable commands."
+      ],
+      "operator_action": "Verify and publish the metadata-only public maintainer status report before asking external users to rely on the pack.",
+      "step_id": "publish_public_support_status"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -465,7 +518,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 48,
+      "acceptance_evidence_count": 51,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -501,7 +554,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py"
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -517,7 +572,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 48,
+      "acceptance_evidence_count": 51,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -553,7 +608,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py --agent-endpoint ${AGENT_ENDPOINT}"
+        "python3 scripts/diagnose_adoption.py --agent-endpoint ${AGENT_ENDPOINT}",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -573,7 +630,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 48,
+      "acceptance_evidence_count": 51,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -608,7 +665,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py"
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -639,7 +698,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.19-alpha"
+    "version": "v0.3.20-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -652,5 +711,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.19-alpha"
+  "version": "v0.3.20-alpha"
 }

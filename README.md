@@ -59,6 +59,8 @@ python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
 python3 scripts/verify_platform_onboarding_readiness.py --check
+python3 scripts/generate_platform_public_support_status.py --check
+python3 scripts/verify_platform_public_support_status.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
@@ -91,7 +93,10 @@ mock support tickets, support bundle fields, and maintainer playbook entries are
 for external platform failures. The onboarding readiness verifier emits
 `platform-onboarding-readiness-v1` and `platform-triage-dashboard-v1`, proving first external
 adopter walkthroughs, maintainer SLA labels, release-blocker fixtures, and privacy-safe triage
-dashboard evidence are included before handoff. The adoption verifier emits `adoption-proof-v1`,
+dashboard evidence are included before handoff. The public support status verifier emits
+`public-support-status-v1` and `public-maintainer-dashboard-v1`, proving maintainers can publish
+platform status, known blocker fixtures, SLA labels, commands, and fixture hashes without exposing
+support bundle private fields. The adoption verifier emits `adoption-proof-v1`,
 proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
 loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
 standalone frontend or storing real model keys in Study Anything.
@@ -148,7 +153,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.19-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.20-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -162,7 +167,7 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,

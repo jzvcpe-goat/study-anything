@@ -1,17 +1,117 @@
 {
-  "schema_version": "ecosystem-submission-v1",
-  "name": "Study Anything Ecosystem Submission Pack",
-  "version": "v0.3.19-alpha",
-  "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "project": {
-    "repository": "https://github.com/jzvcpe-goat/study-anything",
-    "license": "Apache-2.0",
-    "distribution_model": "open-source local-first core",
-    "standalone_frontend_required": false,
-    "billing_required": false,
-    "hosted_services_in_mvp": false
+  "acceptance": {
+    "minimum_commands": [
+      "python3 scripts/verify_ecosystem_submission_pack.py",
+      "python3 scripts/verify_commercial_readiness.py",
+      "python3 scripts/verify_adoption_telemetry.py",
+      "python3 scripts/verify_agent_gateway_hardening.py",
+      "python3 scripts/verify_external_agent_adapter_hardening.py",
+      "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+      "python3 scripts/verify_learning_enrichment_bridge.py --check",
+      "python3 scripts/verify_plugin_quarantine.py",
+      "python3 scripts/verify_security_recovery_hardening.py",
+      "python3 scripts/verify_platform_submission_dry_run.py --check",
+      "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
+      "python3 scripts/verify_first_lesson_authoring_kit.py --check",
+      "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+      "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+      "python3 scripts/generate_platform_feedback_package.py --check",
+      "python3 scripts/verify_platform_field_rehearsal.py --check",
+      "python3 scripts/generate_platform_field_rehearsal.py --check",
+      "python3 scripts/verify_platform_support_triage.py --check",
+      "python3 scripts/generate_platform_support_triage.py --check",
+      "python3 scripts/verify_platform_onboarding_readiness.py --check",
+      "python3 scripts/generate_platform_onboarding_readiness.py --check",
+      "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
+      "python3 scripts/verify_deployment_hardening.py --check",
+      "python3 scripts/verify_platform_ecosystem_packs.py",
+      "python3 scripts/generate_platform_bundle_manifest.py --check",
+      "python3 scripts/generate_platform_adoption_pack.py --check",
+      "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+      "python3 scripts/verify_platform_public_support_status.py --check",
+      "python3 scripts/generate_platform_public_support_status.py --check"
+    ],
+    "must_prove": [
+      "all submission assets exist",
+      "all platform packs remain aligned",
+      "platform tool manifest excludes management endpoints",
+      "submission metadata declares no standalone frontend requirement",
+      "submission metadata declares no Study Anything model-key custody",
+      "commercial-readiness-v1 remains linked",
+      "adoption-telemetry-v1 remains aggregate-only",
+      "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
+      "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
+      "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
+      "learning-enrichment-bridge-verification-v1 proves platform Agent enrichment inputs, Markdown/HTML micro-lessons, NotebookLM manual bridge, Obsidian/second-brain handoff, source hashes, and privacy evidence are aligned",
+      "plugin-quarantine-verification-v1 proves unknown plugins quarantine by default, explicit approval installs, and digest mismatch blocks copies",
+      "security-recovery-hardening-verification-v1 proves backup tamper detection, path traversal rejection, wrong passphrase redaction, and restore-preview privacy",
+      "platform-submission-dry-run-v1 proves Kimi, Codex, WorkBuddy-style, and generic OpenAPI packages are ready for manual submission without leaking private learning data",
+      "platform-manual-submission-rehearsal-v1 proves an operator can follow a redacted handoff checklist from unpacking through first lesson, external Agent setup, export evidence, and diagnostics",
+      "first-run-lesson-authoring-kit-v1 proves Kimi/Codex/WorkBuddy operators have copyable bilingual first-lesson prompts, tool-call sequence, context-package template, Agent setup, export evidence, and privacy assertions",
+      "external-eval-marketplace-harness-v1 proves native eval gates, optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeouts, redaction assertions, and marketplace-quality evidence are aligned",
+      "agent-eval-marketplace-enforcement-v1 proves optional and required external judge behavior, missing-runtime diagnostics, timeout policy, baseline regression, and privacy redaction are aligned",
+      "platform-adoption-feedback-diagnostics-v1 proves platform import failures, version drift, unsupported capability, local endpoint, missing command, and Agent eval evidence problems are diagnosable without private data",
+      "platform-feedback-package-v1 proves local-only feedback packages contain diagnostic summaries and redacted logs without source text, answers, prompts, personal profiles, or secrets",
+      "platform-import-failure-fixture-v1 proves common platform import failures are actionable and exclude source text, learner answers, agent prompts, endpoints, browser/video context, and model secrets",
+      "platform-field-adoption-rehearsal-v1 proves Kimi, Codex, WorkBuddy, and generic OpenAPI field rehearsals, import quirks, mock failed-import fixtures, and redacted support handoff are aligned",
+      "platform-support-triage-v1 proves GitHub-first support issue templates, support bundle contracts, maintainer response playbooks, and redacted support ticket fixtures are aligned",
+      "platform-support-ticket-fixture-v1 proves mock support tickets contain version, platform, command, diagnostic code, fixture id, redacted logs, and next commands without private learning data",
+      "platform-support-issue-template-v1 proves support templates ask for actionable diagnostics while forbidding raw source text, learner answers, Agent endpoints, model keys, and private browser/video context",
+      "platform-onboarding-readiness-v1 proves first external adopter walkthroughs, maintainer SLA labels, rotation checklists, release-blocker fixtures, and pack inclusion are aligned",
+      "platform-triage-dashboard-v1 proves support bundle completeness, diagnostic distribution, fixture coverage, privacy scan, and release blocker evidence are generated",
+      "platform-release-blocker-fixture-v1 proves release blockers are linked to support categories and can be reproduced without private learning data",
+      "plugin-ecosystem-adoption-kit-v1 proves bundled sample plugins, registry digests, quarantine-first trust policy, platform pack commands, and privacy evidence are aligned without executing plugin entrypoints",
+      "deployment-hardening-verification-v1 proves Skill Mode, published-image, source-build, Docker/Compose diagnostics, non-ASCII path recovery, port checks, GHCR manifest fallback, and local Agent endpoint guidance are aligned",
+      "pmf-readiness-v1 keeps hosted paid services not_ready",
+      "public-support-status-v1 proves public platform status, known blocker fixtures, SLA labels, commands, fixture hashes, and release readiness can be published without private support bundle or learning data",
+      "public-maintainer-dashboard-v1 proves a generated JSON/Markdown maintainer dashboard is metadata-only and privacy-safe",
+      "public-status-linkage-fixture-v1 proves SLA labels map to public status without exposing private support bundle fields"
+    ],
+    "schema": "ecosystem-submission-verification-v1"
   },
+  "adoption_telemetry": {
+    "aggregate_only": true,
+    "automatic_upload": false,
+    "contract": "adoption-telemetry-v1",
+    "endpoint": "/v1/adoption/telemetry",
+    "forbidden_fields": [
+      "source text",
+      "learner answers",
+      "generated insights",
+      "raw user ids",
+      "agent endpoints",
+      "API keys",
+      "browser/video/app private context"
+    ],
+    "readiness_contract": "pmf-readiness-v1",
+    "readiness_endpoint": "/v1/pmf/readiness",
+    "verifier": "scripts/verify_adoption_telemetry.py"
+  },
+  "commercial_readiness": {
+    "contract": "commercial-readiness-v1",
+    "endpoint": "/v1/commercial/readiness",
+    "monetization_boundary": "Do not sell a standalone app during this phase. Commercial work should prepare future hosted sync, hosted publishing, team workspaces, and a trusted plugin ecosystem without locking the OSS workflow.",
+    "not_ready_paths": [
+      "hosted_paid_services",
+      "managed_sync",
+      "managed_teams"
+    ],
+    "ready_paths": [
+      "github_oss_launch",
+      "platform_agent_distribution"
+    ]
+  },
+  "name": "Study Anything Ecosystem Submission Pack",
   "positioning": {
+    "platform_agent_owns": [
+      "browser access",
+      "file and application access",
+      "external data lookup",
+      "video slicing and media tooling",
+      "real model credentials",
+      "user-facing conversation"
+    ],
     "primary_user_experience": "The external platform Agent remains the user's conversation, browsing, file, and tool surface. Study Anything runs as a local learning engine behind platform tools or a Codex Skill.",
     "study_anything_owns": [
       "source-bound learning workflow",
@@ -22,20 +122,10 @@
       "Obsidian and NotebookLM-style exports",
       "aggregate adoption telemetry",
       "PMF readiness summary"
-    ],
-    "platform_agent_owns": [
-      "browser access",
-      "file and application access",
-      "external data lookup",
-      "video slicing and media tooling",
-      "real model credentials",
-      "user-facing conversation"
     ]
   },
   "privacy": {
-    "real_model_keys_stored_by_study_anything": false,
     "agent_endpoints_in_submission": false,
-    "raw_learning_data_in_submission": false,
     "management_endpoints_exposed_to_platform_tools": false,
     "must_not_log_or_share": [
       "raw source text",
@@ -47,22 +137,19 @@
       "API keys or model secrets",
       "raw user ids",
       "browser/video/app private context"
-    ]
-  },
-  "commercial_readiness": {
-    "contract": "commercial-readiness-v1",
-    "endpoint": "/v1/commercial/readiness",
-    "ready_paths": [
-      "github_oss_launch",
-      "platform_agent_distribution"
     ],
-    "not_ready_paths": [
-      "hosted_paid_services",
-      "managed_sync",
-      "managed_teams"
-    ],
-    "monetization_boundary": "Do not sell a standalone app during this phase. Commercial work should prepare future hosted sync, hosted publishing, team workspaces, and a trusted plugin ecosystem without locking the OSS workflow."
+    "raw_learning_data_in_submission": false,
+    "real_model_keys_stored_by_study_anything": false
   },
+  "project": {
+    "billing_required": false,
+    "distribution_model": "open-source local-first core",
+    "hosted_services_in_mvp": false,
+    "license": "Apache-2.0",
+    "repository": "https://github.com/jzvcpe-goat/study-anything",
+    "standalone_frontend_required": false
+  },
+  "schema_version": "ecosystem-submission-v1",
   "shared_assets": [
     "platform/study-anything-platform-tools.json",
     "platform/generated/study-anything-platform-openapi.json",
@@ -164,20 +251,29 @@
     "plugins/example-exporter/plugin.json",
     "plugins/example-exporter/plugin.py",
     "plugins/example-agent-provider/plugin.json",
-    "plugins/example-agent-provider/plugin.py"
+    "plugins/example-agent-provider/plugin.py",
+    "scripts/generate_platform_public_support_status.py",
+    "scripts/verify_platform_public_support_status.py",
+    "platform/generated/study-anything-public-support-status.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "docs/public-support-status.md",
+    "fixtures/platform-status-links/intake.json",
+    "fixtures/platform-status-links/needs-repro.json",
+    "fixtures/platform-status-links/confirmed.json",
+    "fixtures/platform-status-links/blocked-by-platform.json",
+    "fixtures/platform-status-links/docs-fix.json",
+    "fixtures/platform-status-links/release-blocker.json",
+    "fixtures/platform-status-links/resolved.json"
   ],
   "submissions": [
     {
-      "platform_id": "kimi-compatible",
       "display_name": "Kimi-compatible Tool Workspace",
-      "submission_status": "ready_for_manual_submission",
-      "integration_mode": "openai_compatible_tools",
-      "no_frontend_required": true,
       "entrypoints": {
-        "openai_tools": "platform/generated/study-anything-openai-tools.json",
-        "openapi": "platform/generated/study-anything-platform-openapi.json",
         "gateway": "scripts/openai_compatible_agent_gateway.py",
         "guide": "docs/use-with-kimi.md",
+        "openai_tools": "platform/generated/study-anything-openai-tools.json",
+        "openapi": "platform/generated/study-anything-platform-openapi.json",
         "pack": "platform/packs/kimi/pack.json"
       },
       "import_assets": [
@@ -186,6 +282,15 @@
         "platform/generated/study-anything-tool-catalog.md",
         "platform/packs/kimi/README.md"
       ],
+      "integration_mode": "openai_compatible_tools",
+      "known_limits": [
+        "Browser-only Kimi chat cannot reach localhost directly.",
+        "Kimi or Moonshot credentials stay in the user's gateway or platform environment.",
+        "The submission pack does not include raw learning content or private platform context."
+      ],
+      "no_frontend_required": true,
+      "platform_id": "kimi-compatible",
+      "submission_status": "ready_for_manual_submission",
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -212,25 +317,18 @@
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
-        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
-      ],
-      "known_limits": [
-        "Browser-only Kimi chat cannot reach localhost directly.",
-        "Kimi or Moonshot credentials stay in the user's gateway or platform environment.",
-        "The submission pack does not include raw learning content or private platform context."
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ]
     },
     {
-      "platform_id": "codex-skill",
       "display_name": "Codex Skill",
-      "submission_status": "ready_for_repo_local_use",
-      "integration_mode": "terminal_skill",
-      "no_frontend_required": true,
       "entrypoints": {
-        "skill": "skills/study-anything/SKILL.md",
         "cli": "scripts/study_anything_cli.py",
         "demo": "scripts/run_skill_mode_demo.sh",
-        "pack": "platform/packs/codex/pack.json"
+        "pack": "platform/packs/codex/pack.json",
+        "skill": "skills/study-anything/SKILL.md"
       },
       "import_assets": [
         "skills/study-anything/SKILL.md",
@@ -238,6 +336,14 @@
         "platform/generated/study-anything-tool-catalog.md",
         "platform/packs/codex/README.md"
       ],
+      "integration_mode": "terminal_skill",
+      "known_limits": [
+        "Requires a terminal-capable Agent with local checkout access.",
+        "The Skill launches or calls a local Study Anything API instead of becoming a standalone chat product."
+      ],
+      "no_frontend_required": true,
+      "platform_id": "codex-skill",
+      "submission_status": "ready_for_repo_local_use",
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -262,30 +368,32 @@
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
-        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
-      ],
-      "known_limits": [
-        "Requires a terminal-capable Agent with local checkout access.",
-        "The Skill launches or calls a local Study Anything API instead of becoming a standalone chat product."
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ]
     },
     {
-      "platform_id": "workbuddy-style-http",
       "display_name": "WorkBuddy-style HTTP Workspace",
-      "submission_status": "ready_for_manual_submission",
-      "integration_mode": "openapi_http_tools",
-      "no_frontend_required": true,
       "entrypoints": {
-        "openapi": "platform/generated/study-anything-platform-openapi.json",
-        "tool_catalog": "platform/generated/study-anything-tool-catalog.md",
         "api_docs": "docs/api.md",
-        "pack": "platform/packs/workbuddy/pack.json"
+        "openapi": "platform/generated/study-anything-platform-openapi.json",
+        "pack": "platform/packs/workbuddy/pack.json",
+        "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
       },
       "import_assets": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
         "platform/packs/workbuddy/README.md"
       ],
+      "integration_mode": "openapi_http_tools",
+      "known_limits": [
+        "The workspace must be able to call a local or private HTTP endpoint.",
+        "Admin, provider setup, sync export, restore preview, and PMF export endpoints are intentionally excluded."
+      ],
+      "no_frontend_required": true,
+      "platform_id": "workbuddy-style-http",
+      "submission_status": "ready_for_manual_submission",
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -310,29 +418,31 @@
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
-        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
-      ],
-      "known_limits": [
-        "The workspace must be able to call a local or private HTTP endpoint.",
-        "Admin, provider setup, sync export, restore preview, and PMF export endpoints are intentionally excluded."
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ]
     },
     {
-      "platform_id": "generic-openapi-tools",
       "display_name": "Generic OpenAPI Tool Platform",
-      "submission_status": "ready_for_manual_submission",
-      "integration_mode": "generic_openapi_tools",
-      "no_frontend_required": true,
       "entrypoints": {
+        "integration_guide": "docs/platform-agent-integrations.md",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
-        "tool_catalog": "platform/generated/study-anything-tool-catalog.md",
-        "integration_guide": "docs/platform-agent-integrations.md"
+        "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
       },
       "import_assets": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
         "docs/platform-agent-integrations.md"
       ],
+      "integration_mode": "generic_openapi_tools",
+      "known_limits": [
+        "OpenAPI import behavior differs by host platform; use the tool catalog as the fallback mapping.",
+        "The pack is for local-first OSS adoption, not managed hosting or marketplace payments."
+      ],
+      "no_frontend_required": true,
+      "platform_id": "generic-openapi-tools",
+      "submission_status": "ready_for_manual_submission",
       "verification_commands": [
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -357,96 +467,12 @@
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
-        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
-      ],
-      "known_limits": [
-        "OpenAPI import behavior differs by host platform; use the tool catalog as the fallback mapping.",
-        "The pack is for local-first OSS adoption, not managed hosting or marketplace payments."
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ]
     }
   ],
-  "acceptance": {
-    "schema": "ecosystem-submission-verification-v1",
-    "minimum_commands": [
-      "python3 scripts/verify_ecosystem_submission_pack.py",
-      "python3 scripts/verify_commercial_readiness.py",
-      "python3 scripts/verify_adoption_telemetry.py",
-      "python3 scripts/verify_agent_gateway_hardening.py",
-      "python3 scripts/verify_external_agent_adapter_hardening.py",
-      "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
-      "python3 scripts/verify_learning_enrichment_bridge.py --check",
-      "python3 scripts/verify_plugin_quarantine.py",
-      "python3 scripts/verify_security_recovery_hardening.py",
-      "python3 scripts/verify_platform_submission_dry_run.py --check",
-      "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
-      "python3 scripts/verify_first_lesson_authoring_kit.py --check",
-      "python3 scripts/verify_external_eval_marketplace_harness.py --check",
-      "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
-      "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
-      "python3 scripts/generate_platform_feedback_package.py --check",
-      "python3 scripts/verify_platform_field_rehearsal.py --check",
-      "python3 scripts/generate_platform_field_rehearsal.py --check",
-      "python3 scripts/verify_platform_support_triage.py --check",
-      "python3 scripts/generate_platform_support_triage.py --check",
-      "python3 scripts/verify_platform_onboarding_readiness.py --check",
-      "python3 scripts/generate_platform_onboarding_readiness.py --check",
-      "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
-      "python3 scripts/verify_deployment_hardening.py --check",
-      "python3 scripts/verify_platform_ecosystem_packs.py",
-      "python3 scripts/generate_platform_bundle_manifest.py --check",
-      "python3 scripts/generate_platform_adoption_pack.py --check",
-      "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
-    ],
-    "must_prove": [
-      "all submission assets exist",
-      "all platform packs remain aligned",
-      "platform tool manifest excludes management endpoints",
-      "submission metadata declares no standalone frontend requirement",
-      "submission metadata declares no Study Anything model-key custody",
-      "commercial-readiness-v1 remains linked",
-      "adoption-telemetry-v1 remains aggregate-only",
-      "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
-      "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
-      "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
-      "learning-enrichment-bridge-verification-v1 proves platform Agent enrichment inputs, Markdown/HTML micro-lessons, NotebookLM manual bridge, Obsidian/second-brain handoff, source hashes, and privacy evidence are aligned",
-      "plugin-quarantine-verification-v1 proves unknown plugins quarantine by default, explicit approval installs, and digest mismatch blocks copies",
-      "security-recovery-hardening-verification-v1 proves backup tamper detection, path traversal rejection, wrong passphrase redaction, and restore-preview privacy",
-      "platform-submission-dry-run-v1 proves Kimi, Codex, WorkBuddy-style, and generic OpenAPI packages are ready for manual submission without leaking private learning data",
-      "platform-manual-submission-rehearsal-v1 proves an operator can follow a redacted handoff checklist from unpacking through first lesson, external Agent setup, export evidence, and diagnostics",
-      "first-run-lesson-authoring-kit-v1 proves Kimi/Codex/WorkBuddy operators have copyable bilingual first-lesson prompts, tool-call sequence, context-package template, Agent setup, export evidence, and privacy assertions",
-      "external-eval-marketplace-harness-v1 proves native eval gates, optional Promptfoo/DeepEval/LangChain AgentEvals/Ragas adapters, fixtures, timeouts, redaction assertions, and marketplace-quality evidence are aligned",
-      "agent-eval-marketplace-enforcement-v1 proves optional and required external judge behavior, missing-runtime diagnostics, timeout policy, baseline regression, and privacy redaction are aligned",
-      "platform-adoption-feedback-diagnostics-v1 proves platform import failures, version drift, unsupported capability, local endpoint, missing command, and Agent eval evidence problems are diagnosable without private data",
-      "platform-feedback-package-v1 proves local-only feedback packages contain diagnostic summaries and redacted logs without source text, answers, prompts, personal profiles, or secrets",
-      "platform-import-failure-fixture-v1 proves common platform import failures are actionable and exclude source text, learner answers, agent prompts, endpoints, browser/video context, and model secrets",
-      "platform-field-adoption-rehearsal-v1 proves Kimi, Codex, WorkBuddy, and generic OpenAPI field rehearsals, import quirks, mock failed-import fixtures, and redacted support handoff are aligned",
-      "platform-support-triage-v1 proves GitHub-first support issue templates, support bundle contracts, maintainer response playbooks, and redacted support ticket fixtures are aligned",
-      "platform-support-ticket-fixture-v1 proves mock support tickets contain version, platform, command, diagnostic code, fixture id, redacted logs, and next commands without private learning data",
-      "platform-support-issue-template-v1 proves support templates ask for actionable diagnostics while forbidding raw source text, learner answers, Agent endpoints, model keys, and private browser/video context",
-      "platform-onboarding-readiness-v1 proves first external adopter walkthroughs, maintainer SLA labels, rotation checklists, release-blocker fixtures, and pack inclusion are aligned",
-      "platform-triage-dashboard-v1 proves support bundle completeness, diagnostic distribution, fixture coverage, privacy scan, and release blocker evidence are generated",
-      "platform-release-blocker-fixture-v1 proves release blockers are linked to support categories and can be reproduced without private learning data",
-      "plugin-ecosystem-adoption-kit-v1 proves bundled sample plugins, registry digests, quarantine-first trust policy, platform pack commands, and privacy evidence are aligned without executing plugin entrypoints",
-      "deployment-hardening-verification-v1 proves Skill Mode, published-image, source-build, Docker/Compose diagnostics, non-ASCII path recovery, port checks, GHCR manifest fallback, and local Agent endpoint guidance are aligned",
-      "pmf-readiness-v1 keeps hosted paid services not_ready"
-    ]
-  },
-  "adoption_telemetry": {
-    "contract": "adoption-telemetry-v1",
-    "endpoint": "/v1/adoption/telemetry",
-    "readiness_contract": "pmf-readiness-v1",
-    "readiness_endpoint": "/v1/pmf/readiness",
-    "verifier": "scripts/verify_adoption_telemetry.py",
-    "aggregate_only": true,
-    "automatic_upload": false,
-    "forbidden_fields": [
-      "source text",
-      "learner answers",
-      "generated insights",
-      "raw user ids",
-      "agent endpoints",
-      "API keys",
-      "browser/video/app private context"
-    ]
-  }
+  "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
+  "version": "v0.3.20-alpha"
 }

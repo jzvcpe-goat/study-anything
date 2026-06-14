@@ -2,6 +2,9 @@
   "acceptance": {
     "minimum_command": "python3 scripts/verify_platform_submission_dry_run.py --check",
     "operator_drill_schema": "study-anything-operator-drill-v1",
+    "public_maintainer_dashboard_schema": "public-maintainer-dashboard-v1",
+    "public_status_linkage_fixture_schema": "public-status-linkage-fixture-v1",
+    "public_support_status_schema": "public-support-status-v1",
     "required_report_schema": "platform-submission-dry-run-v1"
   },
   "blocked_platforms": [],
@@ -14,11 +17,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 154,
+    "file_count": 167,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.19-alpha"
+    "version": "v0.3.20-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -47,6 +50,8 @@
         "./scripts/run_skill_mode_demo.sh",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -81,7 +86,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py"
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "display": "Codex Skill",
       "expected_mode": "terminal_skill",
@@ -119,7 +126,20 @@
         "platform/generated/study-anything-platform-onboarding-readiness.json",
         "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/codex/README.md",
-        "platform/packs/codex/pack.json"
+        "platform/packs/codex/pack.json",
+        "scripts/generate_platform_public_support_status.py",
+        "scripts/verify_platform_public_support_status.py",
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md",
+        "fixtures/platform-status-links/intake.json",
+        "fixtures/platform-status-links/needs-repro.json",
+        "fixtures/platform-status-links/confirmed.json",
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "fixtures/platform-status-links/docs-fix.json",
+        "fixtures/platform-status-links/release-blocker.json",
+        "fixtures/platform-status-links/resolved.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -154,6 +174,8 @@
         "python3 scripts/generate_platform_agent_assets.py --check",
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -187,7 +209,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py"
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "display": "Generic OpenAPI Tool Platform",
       "expected_mode": "generic_openapi_tools",
@@ -223,7 +247,20 @@
         "platform/generated/study-anything-platform-field-rehearsal.json",
         "platform/generated/study-anything-platform-support-triage.json",
         "platform/generated/study-anything-platform-onboarding-readiness.json",
-        "platform/generated/study-anything-platform-triage-dashboard.json"
+        "platform/generated/study-anything-platform-triage-dashboard.json",
+        "scripts/generate_platform_public_support_status.py",
+        "scripts/verify_platform_public_support_status.py",
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md",
+        "fixtures/platform-status-links/intake.json",
+        "fixtures/platform-status-links/needs-repro.json",
+        "fixtures/platform-status-links/confirmed.json",
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "fixtures/platform-status-links/docs-fix.json",
+        "fixtures/platform-status-links/release-blocker.json",
+        "fixtures/platform-status-links/resolved.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -260,6 +297,8 @@
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -294,7 +333,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke"
+        "python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "display": "Kimi-compatible Tool Workspace",
       "expected_mode": "openai_compatible_tools",
@@ -333,7 +374,20 @@
         "platform/generated/study-anything-platform-onboarding-readiness.json",
         "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/kimi/README.md",
-        "platform/packs/kimi/pack.json"
+        "platform/packs/kimi/pack.json",
+        "scripts/generate_platform_public_support_status.py",
+        "scripts/verify_platform_public_support_status.py",
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md",
+        "fixtures/platform-status-links/intake.json",
+        "fixtures/platform-status-links/needs-repro.json",
+        "fixtures/platform-status-links/confirmed.json",
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "fixtures/platform-status-links/docs-fix.json",
+        "fixtures/platform-status-links/release-blocker.json",
+        "fixtures/platform-status-links/resolved.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -370,6 +424,8 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
@@ -403,7 +459,9 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
-        "python3 scripts/diagnose_adoption.py"
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_platform_public_support_status.py --check",
+        "python3 scripts/generate_platform_public_support_status.py --check"
       ],
       "display": "WorkBuddy-style HTTP Workspace",
       "expected_mode": "openapi_http_tools",
@@ -440,7 +498,20 @@
         "platform/generated/study-anything-platform-onboarding-readiness.json",
         "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/workbuddy/README.md",
-        "platform/packs/workbuddy/pack.json"
+        "platform/packs/workbuddy/pack.json",
+        "scripts/generate_platform_public_support_status.py",
+        "scripts/verify_platform_public_support_status.py",
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md",
+        "fixtures/platform-status-links/intake.json",
+        "fixtures/platform-status-links/needs-repro.json",
+        "fixtures/platform-status-links/confirmed.json",
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "fixtures/platform-status-links/docs-fix.json",
+        "fixtures/platform-status-links/release-blocker.json",
+        "fixtures/platform-status-links/resolved.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -460,5 +531,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.19-alpha"
+  "version": "v0.3.20-alpha"
 }

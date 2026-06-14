@@ -35,7 +35,7 @@ class FirstLessonAuthoringKitTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "first-run-lesson-authoring-kit-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(set(report["copyable_prompts"]), {"en", "zh"})
         self.assertIn("第一课", report["copyable_prompts"]["zh"]["title"])

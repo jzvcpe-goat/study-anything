@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.19-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.20-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -45,6 +45,8 @@ python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
 python3 scripts/verify_platform_onboarding_readiness.py --check
+python3 scripts/generate_platform_public_support_status.py --check
+python3 scripts/verify_platform_public_support_status.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -97,6 +99,10 @@ The onboarding readiness report emits `platform-onboarding-readiness-v1`, provin
 first adopter walkthroughs, maintainer SLA labels, `platform-triage-dashboard-v1`,
 and `platform-release-blocker-fixture-v1` fixtures are ready before the pack is
 shared outside the maintainer group.
+The public support status report emits `public-support-status-v1` plus
+`public-maintainer-dashboard-v1`, proving status labels, known blocker fixture
+hashes, public commands, and documented platform limitations can be shared
+without exposing private support bundle fields.
 The plugin ecosystem adoption kit emits `plugin-ecosystem-adoption-kit-v1`, a
 copy-ready trust contract covering bundled sample plugins, registry
 `sourceDigest` verification, quarantine-first install policy, platform-pack

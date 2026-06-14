@@ -173,6 +173,11 @@ The first adopter readiness verifier emits `platform-onboarding-readiness-v1`
 and `platform-triage-dashboard-v1`. Use it before an external handoff to prove
 the Kimi, Codex, WorkBuddy, and generic OpenAPI/MCP shortest paths, failure
 fallbacks, maintainer SLA labels, and release-blocker fixtures are all present.
+The public support status verifier emits `public-support-status-v1` and
+`public-maintainer-dashboard-v1`. Use it when a platform Agent, maintainer, or
+external adopter needs a public support snapshot with platform statuses, known
+blocker fixtures, SLA labels, fixture hashes, and copyable commands, without
+publishing support bundle private fields or learning content.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
 `study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and

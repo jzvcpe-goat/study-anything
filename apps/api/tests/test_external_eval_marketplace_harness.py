@@ -36,7 +36,7 @@ class ExternalEvalMarketplaceHarnessTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "external-eval-marketplace-harness-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         adapter_ids = {item["adapter_id"] for item in report["external_adapters"]}
         self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})
