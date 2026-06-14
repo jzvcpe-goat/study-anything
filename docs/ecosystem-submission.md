@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.18-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.19-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -43,6 +43,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -91,6 +93,10 @@ The support triage report emits `platform-support-triage-v1`, proving
 `platform-support-issue-template-v1` issue templates, `platform-support-ticket-fixture-v1`
 mock support tickets, support bundle fields, and maintainer response playbooks
 are ready for GitHub-first external support without private learning data.
+The onboarding readiness report emits `platform-onboarding-readiness-v1`, proving
+first adopter walkthroughs, maintainer SLA labels, `platform-triage-dashboard-v1`,
+and `platform-release-blocker-fixture-v1` fixtures are ready before the pack is
+shared outside the maintainer group.
 The plugin ecosystem adoption kit emits `plugin-ecosystem-adoption-kit-v1`, a
 copy-ready trust contract covering bundled sample plugins, registry
 `sourceDigest` verification, quarantine-first install policy, platform-pack
@@ -137,6 +143,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check

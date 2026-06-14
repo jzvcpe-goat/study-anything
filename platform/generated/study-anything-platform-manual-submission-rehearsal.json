@@ -465,7 +465,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 45,
+      "acceptance_evidence_count": 48,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -487,6 +487,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -515,7 +517,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 45,
+      "acceptance_evidence_count": 48,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -537,6 +539,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -569,7 +573,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 45,
+      "acceptance_evidence_count": 48,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -591,6 +595,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -633,7 +639,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.18-alpha"
+    "version": "v0.3.19-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -646,5 +652,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.18-alpha"
+  "version": "v0.3.19-alpha"
 }

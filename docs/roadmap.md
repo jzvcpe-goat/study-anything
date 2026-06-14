@@ -519,10 +519,24 @@
 - Wire support triage into release checks, external adoption proof, ecosystem submission, Kimi/Codex/
   WorkBuddy packs, bundle manifest, docs, issue templates, and the adoption pack.
 
+## v0.3.19-alpha
+
+- Add `platform-onboarding-readiness-v1`, a first external adopter onboarding gate for Kimi, Codex,
+  WorkBuddy, and generic OpenAPI/MCP platform use.
+- Add `first-external-adopter-walkthrough-v1` shortest success paths and failure fallback paths for
+  each supported platform shape.
+- Add `maintainer-sla-labels-v1` and `maintainer-rotation-checklist-v1` so maintainers can triage
+  intake, needs-repro, confirmed, blocked-by-platform, docs-fix, release-blocker, and resolved states.
+- Add `platform-triage-dashboard-v1` generated JSON/Markdown for support bundle completeness,
+  diagnostic distribution, fixture coverage, privacy scan, and release blockers.
+- Add `platform-release-blocker-fixture-v1` mock fixtures for tool import, local gateway, published
+  image, Agent eval, and support-bundle privacy blockers.
+- Wire onboarding readiness into release checks, external adoption proof, ecosystem submission,
+  Kimi/Codex/WorkBuddy packs, bundle manifest, docs, release notes, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.19`: External adopter onboarding evidence, maintainer SLA readiness, release-blocker issue
-  fixtures, and public support status reporting.
+- `v0.3.20`: External support status reporting and public maintainer dashboard publishing.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

@@ -1,0 +1,36 @@
+{
+  "blocker_id": "tool_import_blocker",
+  "close_when": "The current release assets pass the minimum reproduction command and the affected platform walkthrough is updated.",
+  "escalate_when": "The blocker affects a documented shortest success path for Kimi, Codex, WorkBuddy, or generic OpenAPI/MCP.",
+  "linked_support_category": "platform_import_failure",
+  "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "required_labels": [
+    "intake",
+    "needs-repro",
+    "release-blocker"
+  ],
+  "schema_version": "platform-release-blocker-fixture-v1",
+  "status": "mock_release_blocker_ready",
+  "support_bundle": {
+    "command_ran": "python3 scripts/verify_ecosystem_submission_pack.py",
+    "diagnostic_code": "tool_import_blocker",
+    "fixture_id": "tool_import_blocker",
+    "next_commands_tried": [
+      "python3 scripts/verify_ecosystem_submission_pack.py",
+      "python3 scripts/verify_platform_support_triage.py --check"
+    ],
+    "platform_id": "generic",
+    "redacted_log_excerpt": "status=release_blocker\ndiagnostic_code=tool_import_blocker\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
+    "release_version": "v0.3.19-alpha"
+  },
+  "version": "v0.3.19-alpha"
+}

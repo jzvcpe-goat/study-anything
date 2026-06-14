@@ -1,7 +1,7 @@
 {
-  "archive_bytes": 1880,
+  "archive_bytes": 1879,
   "archive_name": "study-anything-platform-feedback-package.zip",
-  "archive_sha256": "055d9976448e3dc35fe741222ab7cd2fcdb2d9f3625edc4c35a2b32764201aa1",
+  "archive_sha256": "63eafccc0df7f1ba4aba09d55e157f85480e78fbc8c706210ebb50c833e1fad5",
   "diagnostic_categories": [
     "pack_schema_invalid",
     "required_file_missing",
@@ -60,5 +60,5 @@
     "workbuddy-style-http",
     "generic-http-tools"
   ],
-  "version": "v0.3.18-alpha"
+  "version": "v0.3.19-alpha"
 }

@@ -78,6 +78,16 @@ REQUIRED_ARCHIVE_PATHS = [
     "scripts/generate_platform_support_triage.py",
     "scripts/verify_platform_support_triage.py",
     "platform/generated/study-anything-platform-support-triage.json",
+    "scripts/generate_platform_onboarding_readiness.py",
+    "scripts/verify_platform_onboarding_readiness.py",
+    "platform/generated/study-anything-platform-onboarding-readiness.json",
+    "platform/generated/study-anything-platform-triage-dashboard.json",
+    "platform/generated/study-anything-platform-triage-dashboard.md",
+    "fixtures/platform-release-blockers/tool_import_blocker.json",
+    "fixtures/platform-release-blockers/local_gateway_blocker.json",
+    "fixtures/platform-release-blockers/published_image_blocker.json",
+    "fixtures/platform-release-blockers/agent_eval_blocker.json",
+    "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
     ".github/ISSUE_TEMPLATE/platform_import_failure.md",
     ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
     ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
@@ -89,6 +99,8 @@ REQUIRED_ARCHIVE_PATHS = [
     "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
     "fixtures/platform-support-tickets/docs_confusion.json",
     "docs/support-desk.md",
+    "docs/adopter-onboarding.md",
+    "docs/maintainer-rotation.md",
     "fixtures/platform-import-failures/schema_mismatch.json",
     "fixtures/platform-import-failures/missing_local_gateway.json",
     "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -275,6 +287,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/plugin-sdk.md",
                 "docs/plugin-registry.md",
                 "docs/support-desk.md",
+                "docs/adopter-onboarding.md",
+                "docs/maintainer-rotation.md",
             ]
         )
     required_terms = [
@@ -287,6 +301,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "commercial-readiness-v1",
         "adoption-telemetry-v1",
         "pmf-readiness-v1",
+        "platform-onboarding-readiness-v1",
+        "platform-triage-dashboard-v1",
     ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
@@ -516,6 +532,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "platform_support_triage",
                 [python_bin, "scripts/verify_platform_support_triage.py"],
+                90,
+            ),
+            (
+                "platform_onboarding_readiness",
+                [python_bin, "scripts/verify_platform_onboarding_readiness.py"],
                 90,
             ),
             (
@@ -771,6 +792,25 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "issue_template_count": (value.get("support_triage") or {}).get("issue_template_count"),
             "ticket_fixture_count": (value.get("support_triage") or {}).get("ticket_fixture_count"),
             "playbook_entry_count": (value.get("support_triage") or {}).get("playbook_entry_count"),
+            "support_upload_is_manual": (value.get("privacy_assertions") or {}).get(
+                "support_upload_is_manual"
+            ),
+        }
+    if label == "platform_onboarding_readiness":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "walkthrough_count": (value.get("onboarding_readiness") or {}).get(
+                "walkthrough_count"
+            ),
+            "sla_label_count": (value.get("onboarding_readiness") or {}).get(
+                "sla_label_count"
+            ),
+            "release_blocker_fixture_count": (
+                value.get("onboarding_readiness") or {}
+            ).get("release_blocker_fixture_count"),
+            "dashboard_schema": (value.get("triage_dashboard") or {}).get("schema_version"),
             "support_upload_is_manual": (value.get("privacy_assertions") or {}).get(
                 "support_upload_is_manual"
             ),

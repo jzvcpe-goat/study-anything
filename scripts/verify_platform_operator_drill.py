@@ -87,6 +87,11 @@ REQUIRED_EXPORT_EVIDENCE = [
     "platform_feedback_package.schema_version == platform-feedback-package-v1",
     "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
     "platform_import_failure_fixture.schema_version == platform-import-failure-fixture-v1",
+    "platform_support_triage.schema_version == platform-support-triage-v1",
+    "platform_support_ticket_fixture.schema_version == platform-support-ticket-fixture-v1",
+    "platform_onboarding_readiness.schema_version == platform-onboarding-readiness-v1",
+    "platform_triage_dashboard.schema_version == platform-triage-dashboard-v1",
+    "platform_release_blocker_fixture.schema_version == platform-release-blocker-fixture-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
 ]

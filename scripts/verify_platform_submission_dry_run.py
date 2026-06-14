@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.18-alpha"
+RELEASE_VERSION = "v0.3.19-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
@@ -48,6 +48,9 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
             "platform/packs/kimi/README.md",
             "platform/packs/kimi/pack.json",
         ],
@@ -61,6 +64,10 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "generate_platform_feedback_package.py",
             "generate_platform_field_rehearsal.py",
             "verify_platform_field_rehearsal.py",
+            "generate_platform_support_triage.py",
+            "verify_platform_support_triage.py",
+            "generate_platform_onboarding_readiness.py",
+            "verify_platform_onboarding_readiness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -95,6 +102,9 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
             "platform/packs/codex/README.md",
             "platform/packs/codex/pack.json",
         ],
@@ -108,6 +118,10 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "generate_platform_feedback_package.py",
             "generate_platform_field_rehearsal.py",
             "verify_platform_field_rehearsal.py",
+            "generate_platform_support_triage.py",
+            "verify_platform_support_triage.py",
+            "generate_platform_onboarding_readiness.py",
+            "verify_platform_onboarding_readiness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -140,6 +154,9 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
             "platform/packs/workbuddy/README.md",
             "platform/packs/workbuddy/pack.json",
         ],
@@ -153,6 +170,10 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "generate_platform_feedback_package.py",
             "generate_platform_field_rehearsal.py",
             "verify_platform_field_rehearsal.py",
+            "generate_platform_support_triage.py",
+            "verify_platform_support_triage.py",
+            "generate_platform_onboarding_readiness.py",
+            "verify_platform_onboarding_readiness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -186,6 +207,9 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
         ],
         "required_commands": [
             "verify_platform_submission_dry_run.py",
@@ -197,6 +221,10 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "generate_platform_feedback_package.py",
             "generate_platform_field_rehearsal.py",
             "verify_platform_field_rehearsal.py",
+            "generate_platform_support_triage.py",
+            "verify_platform_support_triage.py",
+            "generate_platform_onboarding_readiness.py",
+            "verify_platform_onboarding_readiness.py",
             "verify_plugin_ecosystem_adoption_kit.py",
             "verify_deployment_hardening.py",
             "verify_learning_enrichment_bridge.py",
@@ -323,6 +351,9 @@ def platform_report(
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
         }
     ]
 

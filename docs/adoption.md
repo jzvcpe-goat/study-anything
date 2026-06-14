@@ -22,6 +22,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -51,6 +53,10 @@ micro-lessons, NotebookLM-style manual bridge metadata, Obsidian handoff, and st
 archive evidence. The adoption verifier emits
 `adoption-proof-v1` and exercises importer, enrichment, retrieval, teaching layers, eval, Obsidian
 export, and NotebookLM-style learning-package export through Skill Mode.
+The onboarding readiness verifier emits `platform-onboarding-readiness-v1` plus
+`platform-triage-dashboard-v1`; it proves first external adopter walkthroughs, maintainer SLA labels,
+release-blocker fixtures, dashboard privacy checks, ecosystem metadata, and adoption-pack inclusion
+are aligned before an external handoff.
 
 Use this path before claiming a platform integration works. It does not require the standalone
 frontend, and it does not store real model keys in Study Anything.
@@ -236,11 +242,21 @@ python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
 ```
 
 Issue reports should include version, platform, command, diagnostic code, fixture id, redacted log
 excerpt, and next commands tried. They should not include source text, learner answers, Agent
 prompts, Agent endpoints, model keys, personal profiles, or private browser/video/app context.
+
+The first adopter onboarding verifier emits `platform-onboarding-readiness-v1`. It adds
+`first-external-adopter-walkthrough-v1`, `maintainer-sla-labels-v1`,
+`platform-triage-dashboard-v1`, and `platform-release-blocker-fixture-v1` on top of the support desk
+so Kimi, Codex, WorkBuddy, and generic OpenAPI/MCP operators can follow the shortest success path,
+fall back to a redacted issue, and have maintainers close with verified evidence.
 
 The plugin ecosystem adoption kit is the shareable plugin trust runbook. It proves the adoption pack
 contains bundled sample plugins, a digest-verified `plugins/registry.json`, quarantine-first install
@@ -299,7 +315,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.18-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -307,12 +323,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.18-alpha \
+  --tag v0.3.19-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.18-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.19-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

@@ -34,7 +34,7 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "agent-eval-marketplace-enforcement-v1")
-        self.assertEqual(report["version"], "v0.3.18-alpha")
+        self.assertEqual(report["version"], "v0.3.19-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["runner_contract"]["required_flag_blocks_non_ok"])
         self.assertTrue(report["runner_contract"]["timeout_flag_present"])
@@ -64,7 +64,7 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertTrue(report["adoption_pack"]["included"])
-        self.assertEqual(report["adoption_pack"]["version"], "v0.3.18-alpha")
+        self.assertEqual(report["adoption_pack"]["version"], "v0.3.19-alpha")
         self.assertEqual(
             report["runtime_diagnostics"]["promptfoo_missing_runtime"]["optional_status"],
             "not_run_against_pack",

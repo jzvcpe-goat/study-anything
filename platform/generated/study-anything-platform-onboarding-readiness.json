@@ -1,0 +1,256 @@
+{
+  "acceptance": {
+    "generate_command": "python3 scripts/generate_platform_onboarding_readiness.py --check",
+    "pack_command": "python3 scripts/verify_platform_onboarding_readiness.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
+    "release_blocker_fixture_count": 5,
+    "sla_label_count": 7,
+    "verify_command": "python3 scripts/verify_platform_onboarding_readiness.py --check",
+    "walkthrough_count": 4
+  },
+  "linked_assets": {
+    "adoption_pack": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "support_triage": "platform/generated/study-anything-platform-support-triage.json",
+    "triage_dashboard_json": "platform/generated/study-anything-platform-triage-dashboard.json",
+    "triage_dashboard_markdown": "platform/generated/study-anything-platform-triage-dashboard.md"
+  },
+  "maintainer_rotation": {
+    "checklist": [
+      "Run python3 scripts/verify_platform_onboarding_readiness.py --check.",
+      "Open platform/generated/study-anything-platform-triage-dashboard.md.",
+      "Review every release-blocker fixture under fixtures/platform-release-blockers/.",
+      "Confirm at least one maintainer can reproduce each support category without private user data.",
+      "Close only with a verified command, documented platform limitation, or merged docs/code fix."
+    ],
+    "handoff_window": "weekly_or_before_release",
+    "required_labels": [
+      "intake",
+      "needs-repro",
+      "confirmed",
+      "blocked-by-platform",
+      "docs-fix",
+      "release-blocker",
+      "resolved"
+    ],
+    "schema_version": "maintainer-rotation-checklist-v1",
+    "version": "v0.3.19-alpha"
+  },
+  "maintainer_sla": {
+    "labels": [
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "intake",
+        "meaning": "New external adopter issue needs support bundle completeness check.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 24
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "needs-repro",
+        "meaning": "Maintainer needs a fixture-backed reproduction.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 48
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "confirmed",
+        "meaning": "Maintainer reproduced the issue with current generated assets.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 48
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "blocked-by-platform",
+        "meaning": "A host platform capability or localhost policy blocks the path.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 72
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "docs-fix",
+        "meaning": "Documentation or copyable command fix is enough to close.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 48
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "release-blocker",
+        "meaning": "A supported happy path fails with current release assets.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 24
+      },
+      {
+        "close_when": "The linked verification command passes or the issue is documented as a platform limitation.",
+        "label": "resolved",
+        "meaning": "Reporter or maintainer verified the closing command.",
+        "schema_version": "maintainer-sla-labels-v1",
+        "target_first_response_hours": 0
+      }
+    ],
+    "release_blocker_first_response_hours": 24,
+    "schema_version": "maintainer-sla-labels-v1"
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "fixtures_are_mock_only": true,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false
+  },
+  "purpose": "Turn support desk triage into a first-adopter onboarding path and maintainer SLA loop that can be verified before an alpha release is promoted.",
+  "release_blocker_fixtures": [
+    {
+      "blocker_id": "tool_import_blocker",
+      "linked_support_category": "platform_import_failure",
+      "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
+      "schema_version": "platform-release-blocker-fixture-v1"
+    },
+    {
+      "blocker_id": "local_gateway_blocker",
+      "linked_support_category": "local_gateway_failure",
+      "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
+      "schema_version": "platform-release-blocker-fixture-v1"
+    },
+    {
+      "blocker_id": "published_image_blocker",
+      "linked_support_category": "published_image_pull_failure",
+      "path": "fixtures/platform-release-blockers/published_image_blocker.json",
+      "schema_version": "platform-release-blocker-fixture-v1"
+    },
+    {
+      "blocker_id": "agent_eval_blocker",
+      "linked_support_category": "agent_eval_evidence_failure",
+      "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
+      "schema_version": "platform-release-blocker-fixture-v1"
+    },
+    {
+      "blocker_id": "support_bundle_privacy_blocker",
+      "linked_support_category": "docs_confusion",
+      "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+      "schema_version": "platform-release-blocker-fixture-v1"
+    }
+  ],
+  "schema_version": "platform-onboarding-readiness-v1",
+  "status": "pass",
+  "version": "v0.3.19-alpha",
+  "walkthrough": {
+    "platforms": [
+      {
+        "display_name": "Kimi-compatible workspace",
+        "failure_fallback_path": [
+          "Run python3 scripts/diagnose_adoption.py.",
+          "Run python3 scripts/verify_platform_support_triage.py --check.",
+          "Attach only the redacted platform-support-bundle-v1 fields to the matching GitHub issue template."
+        ],
+        "must_not_request": [
+          "raw source text",
+          "learner answers",
+          "real Agent endpoint secrets",
+          "model keys",
+          "browser or video private context"
+        ],
+        "platform_id": "kimi",
+        "schema_version": "first-external-adopter-walkthrough-v1",
+        "shortest_success_path": [
+          "Start Study Anything with Skill Mode or the published image.",
+          "Import the generated OpenAPI or OpenAI-compatible tools from the adoption pack.",
+          "Ask the platform Agent to create one session, add one cited reading, run quiz generation, answer once, and check mastery.",
+          "Run python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree."
+        ],
+        "success_evidence": [
+          "adoption-proof-v1",
+          "platform-onboarding-readiness-v1",
+          "platform-triage-dashboard-v1"
+        ]
+      },
+      {
+        "display_name": "Codex Skill workspace",
+        "failure_fallback_path": [
+          "Run python3 scripts/diagnose_adoption.py.",
+          "Run python3 scripts/verify_platform_support_triage.py --check.",
+          "Attach only the redacted platform-support-bundle-v1 fields to the matching GitHub issue template."
+        ],
+        "must_not_request": [
+          "raw source text",
+          "learner answers",
+          "real Agent endpoint secrets",
+          "model keys",
+          "browser or video private context"
+        ],
+        "platform_id": "codex",
+        "schema_version": "first-external-adopter-walkthrough-v1",
+        "shortest_success_path": [
+          "Start Study Anything with Skill Mode or the published image.",
+          "Import the generated OpenAPI or OpenAI-compatible tools from the adoption pack.",
+          "Ask the platform Agent to create one session, add one cited reading, run quiz generation, answer once, and check mastery.",
+          "Run python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree."
+        ],
+        "success_evidence": [
+          "adoption-proof-v1",
+          "platform-onboarding-readiness-v1",
+          "platform-triage-dashboard-v1"
+        ]
+      },
+      {
+        "display_name": "WorkBuddy-style HTTP workspace",
+        "failure_fallback_path": [
+          "Run python3 scripts/diagnose_adoption.py.",
+          "Run python3 scripts/verify_platform_support_triage.py --check.",
+          "Attach only the redacted platform-support-bundle-v1 fields to the matching GitHub issue template."
+        ],
+        "must_not_request": [
+          "raw source text",
+          "learner answers",
+          "real Agent endpoint secrets",
+          "model keys",
+          "browser or video private context"
+        ],
+        "platform_id": "workbuddy",
+        "schema_version": "first-external-adopter-walkthrough-v1",
+        "shortest_success_path": [
+          "Start Study Anything with Skill Mode or the published image.",
+          "Import the generated OpenAPI or OpenAI-compatible tools from the adoption pack.",
+          "Ask the platform Agent to create one session, add one cited reading, run quiz generation, answer once, and check mastery.",
+          "Run python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree."
+        ],
+        "success_evidence": [
+          "adoption-proof-v1",
+          "platform-onboarding-readiness-v1",
+          "platform-triage-dashboard-v1"
+        ]
+      },
+      {
+        "display_name": "Generic OpenAPI/MCP-capable workspace",
+        "failure_fallback_path": [
+          "Run python3 scripts/diagnose_adoption.py.",
+          "Run python3 scripts/verify_platform_support_triage.py --check.",
+          "Attach only the redacted platform-support-bundle-v1 fields to the matching GitHub issue template."
+        ],
+        "must_not_request": [
+          "raw source text",
+          "learner answers",
+          "real Agent endpoint secrets",
+          "model keys",
+          "browser or video private context"
+        ],
+        "platform_id": "generic",
+        "schema_version": "first-external-adopter-walkthrough-v1",
+        "shortest_success_path": [
+          "Start Study Anything with Skill Mode or the published image.",
+          "Import the generated OpenAPI or OpenAI-compatible tools from the adoption pack.",
+          "Ask the platform Agent to create one session, add one cited reading, run quiz generation, answer once, and check mastery.",
+          "Run python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree."
+        ],
+        "success_evidence": [
+          "adoption-proof-v1",
+          "platform-onboarding-readiness-v1",
+          "platform-triage-dashboard-v1"
+        ]
+      }
+    ],
+    "schema_version": "first-external-adopter-walkthrough-v1",
+    "shortest_success_path_minutes_target": 15
+  }
+}
