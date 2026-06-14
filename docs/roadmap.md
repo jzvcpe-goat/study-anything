@@ -577,7 +577,7 @@
   platform packs, bundle manifest, adopter evidence archive, docs, release notes, and the adoption
   pack.
 
-## v0.3.24-alpha
+## v0.3.25-alpha
 
 - Add `release-asset-adoption-v1`, a public evidence layer for GitHub Release asset adoption replay.
 - Add `release-asset-adoption-fixture-v1` fixtures for asset-only pass, missing asset, digest

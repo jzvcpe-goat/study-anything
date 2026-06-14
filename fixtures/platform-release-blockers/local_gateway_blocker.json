@@ -30,7 +30,7 @@
     ],
     "platform_id": "generic",
     "redacted_log_excerpt": "status=release_blocker\ndiagnostic_code=local_gateway_blocker\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.24-alpha"
+    "release_version": "v0.3.25-alpha"
   },
-  "version": "v0.3.24-alpha"
+  "version": "v0.3.25-alpha"
 }

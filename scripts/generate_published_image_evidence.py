@@ -25,7 +25,7 @@ ARCHIVE_ROOT = "study-anything-published-image-evidence"
 
 SCHEMA_VERSION = "published-image-evidence-v1"
 FIXTURE_SCHEMA_VERSION = "published-image-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.24-alpha"
+RELEASE_VERSION = "v0.3.25-alpha"
 API_IMAGE = f"ghcr.io/jzvcpe-goat/study-anything/api:{RELEASE_VERSION}"
 REQUIRED_PLATFORMS = ("linux/amd64", "linux/arm64")
 

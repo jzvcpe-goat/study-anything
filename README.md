@@ -466,7 +466,7 @@ For external operators who start from GitHub instead of a checkout, use
 `docs/release-asset-adoption.md` and run:
 
 ```bash
-python3 scripts/verify_release_asset_adoption.py --tag v0.3.24-alpha --runtime metadata-only
+python3 scripts/verify_release_asset_adoption.py --tag v0.3.25-alpha --runtime metadata-only
 ```
 
 ## GitHub Launch
