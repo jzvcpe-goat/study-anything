@@ -60,7 +60,9 @@
     "release_asset_adoption_proof.schema_version == release-asset-adoption-proof-v1",
     "release_asset_bootstrap.schema_version == release-asset-bootstrap-v1",
     "release_asset_bootstrap_transcript.schema_version == release-asset-bootstrap-transcript-v1",
-    "platform_agent_release_replay.schema_version == platform-agent-release-replay-v1"
+    "platform_agent_release_replay.schema_version == platform-agent-release-replay-v1",
+    "release_cleanroom_bootstrap.schema_version == release-cleanroom-bootstrap-v1",
+    "release_cleanroom_bootstrap_evidence.schema_version == release-cleanroom-bootstrap-evidence-v1"
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
@@ -68,13 +70,17 @@
     "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
     "guide": "docs/kimi-agent-gateway.md",
     "openai_tools": "platform/generated/study-anything-openai-tools.json",
-    "openapi": "platform/generated/study-anything-platform-openapi.json"
+    "openapi": "platform/generated/study-anything-platform-openapi.json",
+    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py"
   },
   "import_assets": [
     "platform/study-anything-platform-tools.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-platform-openapi.json",
-    "platform/generated/study-anything-tool-catalog.md"
+    "platform/generated/study-anything-tool-catalog.md",
+    "platform/bootstrap/study_anything_release_bootstrap.py",
+    "docs/release-cleanroom-bootstrap.md",
+    "platform/generated/study-anything-release-cleanroom-bootstrap.json"
   ],
   "integration_mode": "openai_compatible_tools",
   "local_verification_commands": [
@@ -124,7 +130,9 @@
     "python3 scripts/generate_platform_agent_replay.py --check",
     "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
     "python3 scripts/verify_adopter_evidence_archive.py --check",
-    "python3 scripts/generate_adopter_evidence_archive.py --check"
+    "python3 scripts/generate_adopter_evidence_archive.py --check",
+    "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+    "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
   ],
   "must_not_log_or_share": [
     "raw source text",

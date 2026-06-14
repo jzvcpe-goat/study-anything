@@ -321,7 +321,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.26-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.27-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -329,13 +329,13 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.26-alpha \
+  --tag v0.3.27-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.
 
@@ -358,7 +358,7 @@ For platform operators who start from the GitHub Release page, publish and verif
 ```bash
 python3 scripts/generate_release_asset_adoption.py --check
 python3 scripts/verify_release_asset_adoption.py \
-  --tag v0.3.26-alpha \
+  --tag v0.3.27-alpha \
   --runtime metadata-only
 ```
 
@@ -376,9 +376,27 @@ zip assets, sha256 digests, adoption-pack manifest hashes, and embedded
 published-image evidence without storing learning content, Agent endpoints,
 local paths, model keys, or private support payloads.
 
+## Release Cleanroom Bootstrap
+
+For adopters who do not have a repository checkout, use the standalone
+cleanroom bootloader from the release assets:
+
+```bash
+python3 study_anything_release_bootstrap.py \
+  --tag v0.3.27-alpha \
+  --platform kimi \
+  --runtime metadata-only \
+  --output-dir study-anything-cleanroom-report
+```
+
+The bootloader emits `release-cleanroom-bootstrap-v1` JSON plus a Markdown
+report with a copyable GitHub issue body. Metadata-only mode uses only Python
+standard library. Runtime modes can download the matching tag source archive
+into a temporary directory, so the adopter does not need a prepared checkout.
+
 ## Adopter Evidence Archive
 
-For v0.3.26-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
+For v0.3.27-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
 packages public support status hashes, platform pack checksums, Docker manifest commands, local GHCR
 pull-timeout fallback evidence, known limitations, and maintainer checklist items.
 

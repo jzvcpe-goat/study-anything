@@ -603,10 +603,26 @@
 - Wire platform-agent release replay into release checks, ecosystem submission, platform packs,
   bundle manifest, docs, release notes, and the adoption pack.
 
+## v0.3.27-alpha
+
+- Add `release-cleanroom-bootstrap-v1`, a release-only bootloader report for external adopters and
+  platform Agents that start from the GitHub Release page instead of a prepared checkout.
+- Add `platform/bootstrap/study_anything_release_bootstrap.py`, a standalone Python standard-library
+  entrypoint for downloading release assets, verifying GitHub sha256 digests, validating platform
+  tool imports, and producing redacted JSON/Markdown reports.
+- Add `release-cleanroom-bootstrap-evidence-v1` generated assets with example reports, a
+  classification matrix, recovery steps, and copyable GitHub issue body boundaries.
+- Support metadata-only, Skill Mode, published-image, and external-API runtime modes. Runtime replay
+  can download the matching tag source archive when no local source directory is provided.
+- Keep reports redacted, excluding raw source text, learner answers, Agent prompts, Agent endpoints,
+  model keys, support bundle private payloads, and local absolute paths.
+- Wire release cleanroom bootstrap into release checks, ecosystem submission, platform packs, bundle
+  manifest, docs, release notes, release-asset bootstrap, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.27`: Real release-asset replay against GitHub prerelease plus published-image runtime
-  fallback hardening, depending on which external operator path fails first.
+- `v0.3.28`: External adopter issue-to-fix loop with public support fixtures generated from
+  cleanroom bootstrap reports.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

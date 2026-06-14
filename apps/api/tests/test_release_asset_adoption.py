@@ -99,7 +99,7 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-asset-adoption-v1")
-        self.assertEqual(report["version"], "v0.3.26-alpha")
+        self.assertEqual(report["version"], "v0.3.27-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["verification"]["proof_schema"], "release-asset-adoption-proof-v1")
         self.assertEqual(
@@ -126,7 +126,7 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "release-asset-adoption-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.26-alpha")
+            self.assertEqual(payload["version"], "v0.3.27-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             classifications.add(payload["classification"])
             for key, value in payload["privacy"].items():

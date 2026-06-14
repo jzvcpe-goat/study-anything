@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 104734,
+    "bytes": 105480,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "776e605379a92aca145f469d61d59256e2765293b57baa557ad1740ce77c592d",
+    "sha256": "c1f3601aa1a8d31cf10de7baceca3b97c6fdff1abafde810e060be7f4c292bf4",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -48,37 +48,37 @@
       "bytes": 2243,
       "fixture_id": "asset-only-pass",
       "path": "fixtures/release-asset-adoption/asset-only-pass.json",
-      "sha256": "2a231784816f2791dbc119802479ed9ed36f02e2c716b3e430a14cf507a243ab"
+      "sha256": "0e2358a1c348f7d83190997814440d5a9ae453359647c383d214ff2db7f45459"
     },
     {
       "bytes": 798,
       "fixture_id": "asset-missing",
       "path": "fixtures/release-asset-adoption/asset-missing.json",
-      "sha256": "42d60f60b8a998fa6b0c94446599f4570ab63d6a201fa16fa99ec033d3d37a9a"
+      "sha256": "5a9c79a3f6cfae4e96277aceb6a737ab1861a3933faf8faa885fa2876d1396c1"
     },
     {
       "bytes": 2327,
       "fixture_id": "digest-mismatch",
       "path": "fixtures/release-asset-adoption/digest-mismatch.json",
-      "sha256": "bbb4e1a8d4c6c3060cc0bd7dc0c69a9d4855a019ba398c7433a4d1f643d83530"
+      "sha256": "db596e0d62b7143fe9f07fe0c79f0ada0959dcc42a2a19d31a8b0fb3b06d93c1"
     },
     {
       "bytes": 2240,
       "fixture_id": "pack-corrupted",
       "path": "fixtures/release-asset-adoption/pack-corrupted.json",
-      "sha256": "d333cfa1069e48d98410f6fd19aaa213b920b682f2aed43bb4e8923d263292a3"
+      "sha256": "5733a7b688fe9ae1a8be2569c8fe44b02cf54da9fbb9ff9360b7a6e5d576534c"
     },
     {
       "bytes": 2249,
       "fixture_id": "published-evidence-missing",
       "path": "fixtures/release-asset-adoption/published-evidence-missing.json",
-      "sha256": "b4ff5c72d6962110562fa1f8563a3f93d4e56d31f1b7c9f572c4bd44372e7b8f"
+      "sha256": "d97d9963edb5b8b6fc456d506efed9c0b26d64a78ae026a0db9ea79f0f6e8729"
     },
     {
       "bytes": 855,
       "fixture_id": "network-unavailable",
       "path": "fixtures/release-asset-adoption/network-unavailable.json",
-      "sha256": "cc46f458ca049828b02dd097f5911c9672d34d431ff5b8ea6f8916935baaf804"
+      "sha256": "5d06e9db1581691e03201c55a701c694f129558e9ba9741c03aa6249fc93b91a"
     }
   ],
   "privacy_assertions": {
@@ -95,77 +95,77 @@
     {
       "bytes": 23052,
       "path": "README.md",
-      "sha256": "97e2952a2b53eb12403e4c740bb616b25e0bf5e2b6bc93ffae6fce05c80c4b45"
+      "sha256": "259e7700db96ced26ea37826803eea0b9170f3785171d9d94127be1b7bed3511"
     },
     {
-      "bytes": 18676,
+      "bytes": 19313,
       "path": "docs/adoption.md",
-      "sha256": "6ce22172e59874a468b672f83d90be7f52388a46959d2f9e2befa0edb3b863f8"
+      "sha256": "c80809208b3001ad8d67dbe2d664bef6bb3d8b8dd9a8d7f45f9e9efcbb54a023"
     },
     {
       "bytes": 6571,
       "path": "docs/github-launch.md",
-      "sha256": "8ea9c2b17b9d9dff2682c2d5656e2c3409b082c51c97f919326b6656296b9d1e"
+      "sha256": "b01ab893b166cbdc51db53de2a9442c0d0fd7403ae349ae01380a435772d32c3"
     },
     {
       "bytes": 11215,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "f7ceb554e4e8a160c35f2836db5d415922b032cb78e60b43bef425dfee00c141"
+      "sha256": "f18210448eba43ba44f9f051a368d585368968ab2afacc998584c25252a04b37"
     },
     {
       "bytes": 3259,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "f4b01925b9c0be656f1108cf6803f9262fd16104b726cbbc8bbd0f410bc33e7d"
+      "sha256": "543b70b0d87166dc516ecec40c84dce6aa1b2c6a149635d779a1a31e80e010ed"
     },
     {
       "bytes": 3611,
       "path": "docs/platform-agent-release-replay.md",
-      "sha256": "968710a4f083ab67b68f830cd6afdcbc3c965d45710073cb1b1bacd7ee4a239b"
+      "sha256": "2187bb9202e39bef14e81cee41ce28c9036d96b09385fdbf3d8246de0145e522"
     },
     {
-      "bytes": 25899,
+      "bytes": 26703,
       "path": "docs/release-checklist.md",
-      "sha256": "b6edffc39a0090bd751b98de12605226a41cc4bcc4d223c1b3b9a23ccac2bee5"
+      "sha256": "8f92f022eb4e6de6838d8511433f6a617561929f3a01e6064fdb71fd82db7830"
     },
     {
-      "bytes": 37396,
+      "bytes": 38538,
       "path": "docs/roadmap.md",
-      "sha256": "66b9e00e67eae387fe03abec8e32d0e886c5e0a129de373f3a67eb42200a3c44"
+      "sha256": "4230222a9285e4c98c49e6671ec75fda4777ce111bdf91f3ddd93434cc31cc8f"
     },
     {
-      "bytes": 35616,
+      "bytes": 37687,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "a164912560c9dc2d182b1f5c4a88ea6cd8d543e0b12917671ee44956c83f5b7f"
+      "sha256": "f4c7fce0f48cc5c8ad9e03d23950cd30b96d3fb5e357477d9cca7e725a2dcfa3"
     },
     {
-      "bytes": 11077,
+      "bytes": 11079,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "d981993dc26242183bfc7dee01982f12b24f678880878d5642b83c6a60c973da"
+      "sha256": "1e7074816c9bf1e09e05fd2ca9199220c2fd8d5b4d8abab2984c28eb344ed98b"
     },
     {
       "bytes": 6367,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "a3cb48526ecb64d2f46ee1e7f34c3dfaf3c7ed04066248dbabfa7eb4c05b17ef"
+      "sha256": "e10bc5396553bad14efc941ace47bbe76bee31dde225d839bf74d7dff4a3647d"
     },
     {
       "bytes": 21139,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "775ddc79ea68ae38ac12ccbe51c1652226515ca197dd656ee300a66f93633e6f"
+      "sha256": "cac7a160e08e3f3863c14b32d1e3daff7c630e3fb7064cc146bb97986c1d1ba4"
     },
     {
       "bytes": 28634,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "128486dac7875dc00b96ea7dc79347797214e64131ec04237afbd40e67f0d288"
+      "sha256": "30a3964b0c3966f0aec3d73f78db43639ba583f44ce8c3eed7841247fe763c0c"
     },
     {
       "bytes": 13105,
       "path": "scripts/generate_platform_agent_replay.py",
-      "sha256": "06d5d9d852bda43e149ba4ebfcc4183a0171a845569fd6772edaa86257da9694"
+      "sha256": "c6eb1e9fcfcc6773e984a6fb1cfc540d653eb93a17e20f7074dd6825371a5493"
     },
     {
       "bytes": 18793,
       "path": "scripts/generate_release_asset_adoption.py",
-      "sha256": "e5c0986a7dad3f9f6fa95f8419ad8fb2260646c3d3ef35a1e098db28cb84c8e5"
+      "sha256": "c1e462328b101fd20b84d9433d73be84e0f9e16b958d753c8e3c2bbeb24ddf05"
     },
     {
       "bytes": 50409,
@@ -175,17 +175,17 @@
     {
       "bytes": 21216,
       "path": "scripts/verify_published_image_evidence.py",
-      "sha256": "e30a46c8dbd4c7814f28b2b31a77b87cf007de728f5b5dbad2f26c874be406bc"
+      "sha256": "45499da7aafe8e507016bf043247d499f0d3ce1a8b5ad261b5f3f6c8d6d02ff6"
     },
     {
       "bytes": 19399,
       "path": "scripts/verify_published_image_launch.py",
-      "sha256": "fe16f23d2a87c689349453a7bd0c020d44b051e3df9edf3b0327349227372d2f"
+      "sha256": "368c55e6d86f73dc7d94336d0496aedb207ef10855feba9a5a413768a9961675"
     }
   ],
   "purpose": "Prove that GitHub Release zip attachments are enough for external platform operators to validate and replay Study Anything adoption without treating a local development checkout as the entrypoint.",
   "release_identity": {
-    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.26-alpha",
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.27-alpha",
     "required_asset_names": [
       "study-anything-platform-adoption-pack.zip",
       "study-anything-published-image-evidence.zip",
@@ -194,7 +194,7 @@
       "study-anything-release-asset-bootstrap.zip",
       "study-anything-platform-agent-replay.zip"
     ],
-    "tag": "v0.3.26-alpha"
+    "tag": "v0.3.27-alpha"
   },
   "schema_requirements": {
     "adoption_pack": "study-anything-platform-adoption-pack-v1",
@@ -203,10 +203,10 @@
   "schema_version": "release-asset-adoption-v1",
   "status": "pass",
   "verification": {
-    "metadata_only_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.26-alpha --runtime metadata-only",
+    "metadata_only_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.27-alpha --runtime metadata-only",
     "proof_schema": "release-asset-adoption-proof-v1",
-    "published_image_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.26-alpha --runtime published-image --skip-pull",
-    "skill_mode_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.26-alpha --runtime skill-mode"
+    "published_image_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.27-alpha --runtime published-image --skip-pull",
+    "skill_mode_command": "python3 scripts/verify_release_asset_adoption.py --tag v0.3.27-alpha --runtime skill-mode"
   },
-  "version": "v0.3.26-alpha"
+  "version": "v0.3.27-alpha"
 }

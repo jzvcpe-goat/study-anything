@@ -1,0 +1,208 @@
+{
+  "archive": {
+    "archive_root": "study-anything-release-cleanroom-bootstrap",
+    "bytes": 54134,
+    "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
+    "sha256": "52c962131206bff42d14d04bf1e5bb14f413f7740be5c161b1324cf5d7a8f8b4",
+    "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
+  },
+  "classification_matrix": [
+    {
+      "classification": "cleanroom_bootstrap_ready",
+      "meaning": "Release assets, platform imports, and selected runtime path are usable from a clean directory.",
+      "release_gate": "pass"
+    },
+    {
+      "classification": "release_asset_missing",
+      "meaning": "One or more required public zip assets are absent from the GitHub Release.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_digest_mismatch",
+      "meaning": "A downloaded asset does not match GitHub sha256 metadata.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_pack_corrupted",
+      "meaning": "The platform adoption pack cannot be unpacked safely.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "tool_import_invalid",
+      "meaning": "OpenAI tools or OpenAPI operation IDs are malformed or incomplete.",
+      "release_gate": "block_platform_submission"
+    },
+    {
+      "classification": "platform_entrypoint_missing",
+      "meaning": "The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing.",
+      "release_gate": "block_platform_submission"
+    },
+    {
+      "classification": "source_download_failed",
+      "meaning": "Runtime replay needs source code but the GitHub tag source archive could not be downloaded.",
+      "release_gate": "needs_network_or_source_dir"
+    },
+    {
+      "classification": "runtime_launch_failed",
+      "meaning": "The selected Skill Mode, external API, or published-image runtime could not be launched.",
+      "release_gate": "needs_runtime_triage"
+    },
+    {
+      "classification": "api_unavailable",
+      "meaning": "The Study Anything API was not reachable for tool replay.",
+      "release_gate": "needs_runtime_triage"
+    },
+    {
+      "classification": "schema_mismatch",
+      "meaning": "A runtime response did not match the expected learning/eval schema.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "privacy_leak",
+      "meaning": "A report included source text, answers, local paths, prompts, endpoints, or keys.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "network_unavailable",
+      "meaning": "GitHub release metadata or assets could not be fetched.",
+      "release_gate": "needs_independent_recheck"
+    },
+    {
+      "classification": "cleanroom_bootstrap_failed",
+      "meaning": "The bootloader failed outside a more specific classification.",
+      "release_gate": "needs_triage"
+    }
+  ],
+  "commands": {
+    "fixture_metadata_only": "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+    "metadata_only": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform kimi --runtime metadata-only",
+    "published_image": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform generic-openapi --runtime published-image",
+    "skill_mode": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform kimi --runtime skill-mode"
+  },
+  "example_report": {
+    "adoption_pack": {
+      "no_frontend_required": true,
+      "real_model_keys_stored_by_study_anything": false,
+      "schema_version": "study-anything-platform-adoption-pack-v1",
+      "tool_count": 30,
+      "version": "v0.3.27-alpha"
+    },
+    "classification": "cleanroom_bootstrap_ready",
+    "diagnostic": "Cleanroom bootloader completed.",
+    "platform": "kimi",
+    "privacy": {
+      "agent_endpoint_secrets_included": false,
+      "agent_prompts_included": false,
+      "automatic_upload": false,
+      "learner_answers_included": false,
+      "local_absolute_paths_included": false,
+      "raw_source_text_included": false,
+      "real_model_keys_included": false,
+      "support_bundle_private_payload_included": false
+    },
+    "release_assets": {
+      "asset_count": 6,
+      "github_digest_verified_count": 6
+    },
+    "repo": "jzvcpe-goat/study-anything",
+    "runtime": {
+      "mode": "metadata-only",
+      "requested": "metadata-only",
+      "status": "skipped"
+    },
+    "schema_version": "release-cleanroom-bootstrap-v1",
+    "status": "ok",
+    "tag": "v0.3.27-alpha"
+  },
+  "platforms": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic-openapi"
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "public_assets": [
+    {
+      "bytes": 35005,
+      "path": "platform/bootstrap/study_anything_release_bootstrap.py",
+      "sha256": "0eea36bf67184f91a043d31b45bb3fa90f479005e75a6bb6825e2f53c033910f"
+    },
+    {
+      "bytes": 2926,
+      "path": "docs/release-cleanroom-bootstrap.md",
+      "sha256": "dcb3a3db960936d9ff43d1f7de26f8998e4c918de9dd28ac7c33808f1a254602"
+    },
+    {
+      "bytes": 3891,
+      "path": "docs/release-asset-bootstrap.md",
+      "sha256": "b9ca2c12b28874d7da59254778d55c0ff33489b7885072a942144c463806cfa2"
+    },
+    {
+      "bytes": 3259,
+      "path": "docs/release-asset-adoption.md",
+      "sha256": "543b70b0d87166dc516ecec40c84dce6aa1b2c6a149635d779a1a31e80e010ed"
+    },
+    {
+      "bytes": 3611,
+      "path": "docs/platform-agent-release-replay.md",
+      "sha256": "2187bb9202e39bef14e81cee41ce28c9036d96b09385fdbf3d8246de0145e522"
+    },
+    {
+      "bytes": 19313,
+      "path": "docs/adoption.md",
+      "sha256": "c80809208b3001ad8d67dbe2d664bef6bb3d8b8dd9a8d7f45f9e9efcbb54a023"
+    },
+    {
+      "bytes": 19724,
+      "path": "docs/self-hosting.md",
+      "sha256": "77ea0598bfc00530006ee0ac14b7a72b85fb4359f19a6b4c012836ab54f324ab"
+    },
+    {
+      "bytes": 26717,
+      "path": "docs/platform-agent-integrations.md",
+      "sha256": "34bce5ff403558319545ad3c89906f721683caa2ea47271dc278bf44ee6e30ec"
+    },
+    {
+      "bytes": 20083,
+      "path": "scripts/bootstrap_from_release.py",
+      "sha256": "f721cbe1cd6875c9477d30ae88f97858ad9997ff03331ee9853feeb167547a38"
+    },
+    {
+      "bytes": 28634,
+      "path": "scripts/replay_platform_agent_from_release.py",
+      "sha256": "30a3964b0c3966f0aec3d73f78db43639ba583f44ce8c3eed7841247fe763c0c"
+    }
+  ],
+  "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",
+  "release_identity": {
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.27-alpha",
+    "repo": "jzvcpe-goat/study-anything",
+    "tag": "v0.3.27-alpha"
+  },
+  "required_release_assets": [
+    "study-anything-adopter-evidence-archive.zip",
+    "study-anything-platform-adoption-pack.zip",
+    "study-anything-platform-agent-replay.zip",
+    "study-anything-platform-feedback-package.zip",
+    "study-anything-published-image-evidence.zip",
+    "study-anything-release-asset-bootstrap.zip"
+  ],
+  "runtime_modes": [
+    "metadata-only",
+    "skill-mode",
+    "published-image",
+    "external-api"
+  ],
+  "schema_version": "release-cleanroom-bootstrap-evidence-v1",
+  "status": "pass",
+  "version": "v0.3.27-alpha"
+}

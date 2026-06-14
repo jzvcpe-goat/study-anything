@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 61,
+      "acceptance_evidence_count": 63,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -159,9 +159,12 @@
         "python3 scripts/generate_platform_agent_replay.py --check",
         "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform codex --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
-        "python3 scripts/generate_adopter_evidence_archive.py --check"
+        "python3 scripts/generate_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ],
       "entrypoints": {
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
         "cli": "scripts/study_anything_cli.py",
         "demo": "scripts/run_skill_mode_demo.sh",
         "skill": "skills/study-anything/SKILL.md"
@@ -170,7 +173,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 61,
+      "acceptance_evidence_count": 63,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -218,9 +221,12 @@
         "python3 scripts/generate_platform_agent_replay.py --check",
         "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
-        "python3 scripts/generate_adopter_evidence_archive.py --check"
+        "python3 scripts/generate_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ],
       "entrypoints": {
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
         "gateway": "scripts/openai_compatible_agent_gateway.py",
         "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
         "guide": "docs/kimi-agent-gateway.md",
@@ -231,7 +237,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 61,
+      "acceptance_evidence_count": 63,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -278,10 +284,13 @@
         "python3 scripts/generate_platform_agent_replay.py --check",
         "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform workbuddy --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
-        "python3 scripts/generate_adopter_evidence_archive.py --check"
+        "python3 scripts/generate_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
         "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
       },
@@ -303,7 +312,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.26-alpha"
+    "version": "v0.3.27-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 12,
@@ -391,5 +400,5 @@
       "tool": "study_anything_second_brain_handoff_export"
     }
   ],
-  "version": "v0.3.26-alpha"
+  "version": "v0.3.27-alpha"
 }

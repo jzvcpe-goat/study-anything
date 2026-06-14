@@ -23,7 +23,7 @@ CHECKSUM_PATH = OUTPUT_DIR / "study-anything-platform-agent-replay.sha256"
 ARCHIVE_ROOT = "study-anything-platform-agent-replay"
 
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
-RELEASE_VERSION = "v0.3.26-alpha"
+RELEASE_VERSION = "v0.3.27-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 REQUIRED_TOOLS = [

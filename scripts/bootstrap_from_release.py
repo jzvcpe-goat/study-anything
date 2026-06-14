@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.26-alpha"
+DEFAULT_TAG = "v0.3.27-alpha"
 
 PLATFORM_PACKS = {
     "kimi": {

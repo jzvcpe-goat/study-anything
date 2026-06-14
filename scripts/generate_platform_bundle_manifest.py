@@ -207,6 +207,26 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub Release asset bootstrap evidence checksum.",
     ),
     (
+        "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+        "generated_asset",
+        "Release-only cleanroom bootstrap evidence JSON.",
+    ),
+    (
+        "platform/generated/study-anything-release-cleanroom-bootstrap.md",
+        "generated_asset",
+        "Release-only cleanroom bootstrap evidence Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
+        "generated_asset",
+        "Release-only cleanroom bootstrap evidence archive.",
+    ),
+    (
+        "platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
+        "generated_asset",
+        "Release-only cleanroom bootstrap evidence checksum.",
+    ),
+    (
         "platform/generated/study-anything-platform-agent-replay.json",
         "generated_asset",
         "Platform Agent release replay evidence JSON.",
@@ -232,9 +252,19 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub Release asset bootstrap guide for external platform Agents.",
     ),
     (
+        "docs/release-cleanroom-bootstrap.md",
+        "operator_doc",
+        "Release-only cleanroom bootstrap guide for external platform Agents.",
+    ),
+    (
         "docs/platform-agent-release-replay.md",
         "operator_doc",
         "Platform Agent release replay guide for external tool hosts.",
+    ),
+    (
+        "platform/bootstrap/study_anything_release_bootstrap.py",
+        "verification",
+        "Standalone release-only cleanroom bootloader.",
     ),
     (
         "scripts/bootstrap_from_release.py",
@@ -245,6 +275,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/generate_release_asset_bootstrap.py",
         "diagnostics",
         "Generate GitHub Release asset bootstrap evidence.",
+    ),
+    (
+        "scripts/generate_release_cleanroom_bootstrap.py",
+        "diagnostics",
+        "Generate release-only cleanroom bootstrap evidence.",
     ),
     (
         "scripts/replay_platform_agent_from_release.py",
@@ -992,7 +1027,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.26-alpha.md",
+        "docs/release-notes/v0.3.27-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -1147,6 +1182,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
+            "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+            "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
             "python3 scripts/generate_platform_adoption_pack.py --check",
             (

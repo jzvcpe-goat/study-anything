@@ -40,7 +40,9 @@
       "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
       "python3 scripts/generate_platform_agent_replay.py --check",
       "python3 scripts/verify_adopter_evidence_archive.py --check",
-      "python3 scripts/generate_adopter_evidence_archive.py --check"
+      "python3 scripts/generate_adopter_evidence_archive.py --check",
+      "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+      "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
     ],
     "must_prove": [
       "all submission assets exist",
@@ -86,7 +88,9 @@
       "release-asset-bootstrap-transcript-v1 proves the bootstrap command emits a redacted machine-readable adoption transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts",
       "platform-agent-release-replay-v1 proves external platform Agents can import release asset tools and replay the minimum learning tool chain against a running Study Anything API without leaking source text, answers, Agent secrets, model keys, or local paths",
       "adopter-evidence-archive-v1 proves release proof, CI commands, Docker manifest evidence, platform pack checksums, public status hashes, known limitations, and maintainer handoff are packaged without private learning data",
-      "adopter-evidence-fixture-v1 proves successful release, local GHCR pull timeout, needs-repro, release-blocker, platform-blocked, and resolved support states map to public archive evidence"
+      "adopter-evidence-fixture-v1 proves successful release, local GHCR pull timeout, needs-repro, release-blocker, platform-blocked, and resolved support states map to public archive evidence",
+      "release-cleanroom-bootstrap-v1 proves external operators can start from GitHub Release assets without a prepared checkout, validate platform imports, run selected runtime paths, and emit a redacted issue-ready report",
+      "release-cleanroom-bootstrap-evidence-v1 proves the standalone bootloader, example report, classification matrix, recovery steps, and privacy boundary are packaged for external platform adoption"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -340,7 +344,14 @@
     "fixtures/release-asset-adoption/digest-mismatch.json",
     "fixtures/release-asset-adoption/pack-corrupted.json",
     "fixtures/release-asset-adoption/published-evidence-missing.json",
-    "fixtures/release-asset-adoption/network-unavailable.json"
+    "fixtures/release-asset-adoption/network-unavailable.json",
+    "docs/release-cleanroom-bootstrap.md",
+    "platform/bootstrap/study_anything_release_bootstrap.py",
+    "scripts/generate_release_cleanroom_bootstrap.py",
+    "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+    "platform/generated/study-anything-release-cleanroom-bootstrap.md",
+    "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
+    "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   ],
   "submissions": [
     {
@@ -350,13 +361,15 @@
         "guide": "docs/use-with-kimi.md",
         "openai_tools": "platform/generated/study-anything-openai-tools.json",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
-        "pack": "platform/packs/kimi/pack.json"
+        "pack": "platform/packs/kimi/pack.json",
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py"
       },
       "import_assets": [
         "platform/generated/study-anything-openai-tools.json",
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
-        "platform/packs/kimi/README.md"
+        "platform/packs/kimi/README.md",
+        "platform/bootstrap/study_anything_release_bootstrap.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -395,7 +408,8 @@
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ]
     },
     {
@@ -446,7 +460,8 @@
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ]
     },
     {
@@ -496,7 +511,8 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ]
     },
     {
@@ -545,10 +561,11 @@
         "python3 scripts/verify_platform_operator_drill.py --check",
         "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
       ]
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.26-alpha"
+  "version": "v0.3.27-alpha"
 }

@@ -33,7 +33,7 @@ class PluginEcosystemAdoptionKitTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "plugin-ecosystem-adoption-kit-v1")
-        self.assertEqual(report["version"], "v0.3.26-alpha")
+        self.assertEqual(report["version"], "v0.3.27-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["plugin_registry"]["digest_verified_count"], 5)
         self.assertFalse(report["trust_policy"]["entrypoints_executed_during_preview"])
