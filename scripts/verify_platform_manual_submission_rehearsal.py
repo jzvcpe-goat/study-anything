@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.22-alpha"
+RELEASE_VERSION = "v0.3.23-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -44,6 +44,10 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-adopter-evidence-archive.md",
     "platform/generated/study-anything-adopter-evidence-archive.zip",
     "platform/generated/study-anything-adopter-evidence-archive.sha256",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -76,6 +80,8 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_published_image_evidence.py",
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
+    "scripts/generate_release_asset_adoption.py",
+    "scripts/verify_release_asset_adoption.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/verify_learning_enrichment_bridge.py",
@@ -100,6 +106,11 @@ REQUIRED_OPERATOR_ASSETS = [
     "platform/generated/study-anything-adopter-evidence-archive.zip",
     "platform/generated/study-anything-adopter-evidence-archive.sha256",
     "docs/adopter-evidence-archive.md",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
+    "docs/release-asset-adoption.md",
     "fixtures/platform-status-links/intake.json",
     "fixtures/platform-status-links/needs-repro.json",
     "fixtures/platform-status-links/confirmed.json",
@@ -113,6 +124,12 @@ REQUIRED_OPERATOR_ASSETS = [
     "fixtures/adopter-evidence-archive/release-blocker.json",
     "fixtures/adopter-evidence-archive/platform-blocked.json",
     "fixtures/adopter-evidence-archive/resolved-support-case.json",
+    "fixtures/release-asset-adoption/asset-only-pass.json",
+    "fixtures/release-asset-adoption/asset-missing.json",
+    "fixtures/release-asset-adoption/digest-mismatch.json",
+    "fixtures/release-asset-adoption/pack-corrupted.json",
+    "fixtures/release-asset-adoption/published-evidence-missing.json",
+    "fixtures/release-asset-adoption/network-unavailable.json",
     "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
     "fixtures/published-image-evidence/manifest-missing-platform.json",
     "fixtures/published-image-evidence/docker-images-failed.json",
@@ -146,6 +163,9 @@ PUBLIC_STATUS_EVIDENCE = (
     "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
     "adopter_evidence_archive.schema_version == adopter-evidence-archive-v1",
     "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1",
+    "release_asset_adoption.schema_version == release-asset-adoption-v1",
+    "release_asset_adoption_fixture.schema_version == release-asset-adoption-fixture-v1",
+    "release_asset_adoption_proof.schema_version == release-asset-adoption-proof-v1",
 )
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
@@ -402,10 +422,22 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove adopter evidence archive schema.")
     if "adopter-evidence-fixture-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove adopter evidence fixture schema.")
+    if "release-asset-adoption-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove release asset adoption schema.")
+    if "release-asset-adoption-fixture-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError(
+            "Ecosystem submission must prove release asset adoption fixture schema."
+        )
+    if "release-asset-adoption-proof-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError(
+            "Ecosystem submission must prove release asset adoption proof schema."
+        )
     if "verify_platform_public_support_status.py --check" not in command_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission missing public support status check.")
     if "verify_published_image_evidence.py --check" not in command_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission missing published-image evidence check.")
+    if "verify_release_asset_adoption.py" not in command_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission missing release asset adoption check.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -702,6 +734,28 @@ def operator_steps() -> list[dict[str, Any]]:
             "failure_remediation": [
                 "Run verify_adopter_evidence_archive.py without --check to print the current mismatch summary.",
                 "Share only the archive checksum, public command, known limitation, and release URL.",
+            ],
+        },
+        {
+            "step_id": "verify_release_asset_adoption",
+            "operator_action": "Generate and verify public GitHub Release asset replay evidence before release or platform handoff.",
+            "command": "python3 scripts/generate_release_asset_adoption.py --check && python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+            "expected_outputs": [
+                "release-asset-adoption-v1",
+                "release-asset-adoption-fixture-v1",
+                "release-asset-adoption-proof-v1",
+                "required release zip assets and pack manifest hashes are metadata-only",
+            ],
+            "evidence_paths": [
+                "platform/generated/study-anything-release-asset-adoption.json",
+                "platform/generated/study-anything-release-asset-adoption.md",
+                "platform/generated/study-anything-release-asset-adoption.zip",
+                "platform/generated/study-anything-release-asset-adoption.sha256",
+                "docs/release-asset-adoption.md",
+            ],
+            "failure_remediation": [
+                "Run verify_release_asset_adoption.py without --check to print the current release asset mismatch summary.",
+                "Do not claim GitHub Release asset adoption until the published release zip assets are downloadable and digest-verified.",
             ],
         },
         {

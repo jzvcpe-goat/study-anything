@@ -462,6 +462,12 @@ python3 scripts/verify_ecosystem_submission_pack.py
 
 See `docs/commercial-readiness.md` for the hosted-service contracts and launch limits. See
 `docs/ecosystem-submission.md` before publishing or submitting platform assets.
+For external operators who start from GitHub instead of a checkout, use
+`docs/release-asset-adoption.md` and run:
+
+```bash
+python3 scripts/verify_release_asset_adoption.py --tag v0.3.23-alpha --runtime metadata-only
+```
 
 ## GitHub Launch
 

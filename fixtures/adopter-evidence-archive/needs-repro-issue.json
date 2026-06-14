@@ -27,5 +27,5 @@
   "public_note": "Issue needs a copyable command, diagnostic code, and redacted logs.",
   "public_status": "waiting_for_reproduction",
   "schema_version": "adopter-evidence-fixture-v1",
-  "version": "v0.3.22-alpha"
+  "version": "v0.3.23-alpha"
 }

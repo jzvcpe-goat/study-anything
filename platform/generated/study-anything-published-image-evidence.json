@@ -7,20 +7,20 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 97885,
+    "bytes": 99143,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "2f41431dc8f11ea94d551b6f31a33fd76a30287246df050f75434143e6a33453",
+    "sha256": "bbc5410a7bb078ea0daba5ab02e69409252a13666ce5a4c5a536ba991bcf9f9c",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
     "failure_classification": "ci_image_publish_failed",
     "required_workflows": [
       "docker-images on main",
-      "docker-images on v0.3.22-alpha"
+      "docker-images on v0.3.23-alpha"
     ],
     "verification_commands": [
       "gh run list --workflow docker-images --branch main --limit 1",
-      "gh run list --workflow docker-images --branch v0.3.22-alpha --limit 1"
+      "gh run list --workflow docker-images --branch v0.3.23-alpha --limit 1"
     ]
   },
   "classification_matrix": [
@@ -60,41 +60,41 @@
       "bytes": 1183,
       "fixture_id": "manifest-pass-local-pull-timeout",
       "path": "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
-      "sha256": "9c93fa6de6a0f0e64da8d3175229e8a59b3e45a47e1fd0bffe5ed03e358531c5"
+      "sha256": "c4430883c1be80811ddf1c81373d0580eabf3802a9a60dd1deb111849540daec"
     },
     {
       "bytes": 1100,
       "fixture_id": "manifest-missing-platform",
       "path": "fixtures/published-image-evidence/manifest-missing-platform.json",
-      "sha256": "430068299decf2b297f78beed5e6a0f3f6b5c778c0a77263ea7fc9e07fd4b509"
+      "sha256": "c96bf519d5aa5d1b90fe2d324687374bbba7f74097cde75639ec1d6a175e3691"
     },
     {
       "bytes": 1045,
       "fixture_id": "docker-images-failed",
       "path": "fixtures/published-image-evidence/docker-images-failed.json",
-      "sha256": "e695a983b212004fe842ce467dbca0ba6e3182b8743e8cbb054ad3b2c6fec98c"
+      "sha256": "7202361270d7e5cc5982403ce8b01a1f44b6642cd41002c09e3dd5fccdfa6ae6"
     },
     {
       "bytes": 1062,
       "fixture_id": "ghcr-unavailable",
       "path": "fixtures/published-image-evidence/ghcr-unavailable.json",
-      "sha256": "192a00b80cf40fa5de7535dfea2bee31bd12270b5840b30182f6ac5756f9bf1d"
+      "sha256": "7b0254a405917dbc741392393f9599a6e90bce025ad146d3a1ee9e36fc450de1"
     },
     {
       "bytes": 1052,
       "fixture_id": "remote-smoke-pass",
       "path": "fixtures/published-image-evidence/remote-smoke-pass.json",
-      "sha256": "30f49bec6c89b243b9ee6228b51423618b991f0e43fe006c874104c73baa4abc"
+      "sha256": "7e62b2c60314352e6f9d6a1500cf08c5b2f5be405e25faff46af38a477b1dcd6"
     },
     {
       "bytes": 1099,
       "fixture_id": "remote-smoke-failed",
       "path": "fixtures/published-image-evidence/remote-smoke-failed.json",
-      "sha256": "ed2c1e4393b3191d4fb6f106e9528f46d21899b1626a42a602f2f9c984f04047"
+      "sha256": "4921947b98d78ca8eed79cb7b7c1d2d7f59a5fe8afae86fb5c629c73a91ea593"
     }
   ],
   "local_smoke_evidence": {
-    "command": "python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
+    "command": "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
     "success_status": "ok",
     "timeout_is_acceptable_only_when": [
       "manifest inspection shows linux/amd64 and linux/arm64",
@@ -104,7 +104,7 @@
     "timeout_status": "blocked_by_local_ghcr_pull"
   },
   "manifest_evidence": {
-    "command": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.22-alpha",
+    "command": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.23-alpha",
     "missing_platform_classification": "published_image_platform_gap",
     "pass_condition": "all required platforms are present",
     "required_platforms": [
@@ -124,19 +124,19 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 22832,
+      "bytes": 23052,
       "path": "README.md",
-      "sha256": "a931254bb04f6cda50423cabc1f1fcc2ab43a383056e09ba9d39f271a7869bd7"
+      "sha256": "4786e2d8c9edc066a1b7f03819c4033410e50fa5f8c512ed935ea86d9a810e14"
     },
     {
-      "bytes": 17772,
+      "bytes": 18676,
       "path": "docs/adoption.md",
-      "sha256": "5df7095614ab814acd9dcbc59178cf02d94aa65edc51416ee794e804d2295c59"
+      "sha256": "c7b1b65dc8c1c1696b7007bcc6a0cb0830b944ad3bdc158b26f19d04354fd5b9"
     },
     {
       "bytes": 19123,
       "path": "docs/self-hosting.md",
-      "sha256": "20a899eb702e1ad1d26adf3b33ee76244b35252427882219793377ed67960876"
+      "sha256": "73c668f406c1cb919d1d8d42a989cd2a75fbbed72ec9f0fe8a2270f41ee9adbf"
     },
     {
       "bytes": 25593,
@@ -144,54 +144,54 @@
       "sha256": "148c3f6ec1a864e83b9d746cc70cc9a2921e534c1c08a15b73768bd6559d2b91"
     },
     {
-      "bytes": 10682,
+      "bytes": 11215,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "14c971d779e15e40f5664e69311db970d79452b46206d92ff8ebbac4853733e9"
+      "sha256": "b9ab08e6dca6b6ad3a8ad7ee17d9d5434a81a86da6fae4faf8f0341be77017b0"
     },
     {
-      "bytes": 24343,
+      "bytes": 25099,
       "path": "docs/release-checklist.md",
-      "sha256": "2ca4293c1890e5021e05b56e0eaf9fe410a50ae08bbcbee28f65559967f2491a"
+      "sha256": "7b8ff41253706ca173276bb1cb22177bcb1e64cb72094aba1727094f7c06e3a0"
     },
     {
-      "bytes": 35492,
+      "bytes": 36421,
       "path": "docs/roadmap.md",
-      "sha256": "0ff2c25896a1e3bad7cbca17b467c02adedbe70a2f5ea22110c7712c39b5a32b"
+      "sha256": "dbf76763ef44f21f14119a19c557871d3216c2a50dcf823d574822f31afe758e"
     },
     {
       "bytes": 2514,
       "path": "docs/published-image-evidence.md",
-      "sha256": "3199fbc33f53fc507fab48c9adf3c295af8849768b86c912c19a6d5e2664d919"
+      "sha256": "435f5bc6b96e2e4731a60e403312848ad586394afdb7e708b33e8e19b0e8a279"
     },
     {
       "bytes": 13532,
       "path": "scripts/verify_published_image_launch.py",
-      "sha256": "13a01ede7c1b04438d9c9f98dcd289228b26b9a310192d79bc4d1e562292daa7"
+      "sha256": "986ca402deeaeefb02d9e0dec4b02d86af1b536e64bce781b95f95b123dcb7f1"
     },
     {
       "bytes": 20808,
       "path": "scripts/generate_published_image_evidence.py",
-      "sha256": "10328af29e7a57c4189ff1a3892d1a9f37bea13017593fd0844a1448a49f2814"
+      "sha256": "c8508831432f464c0e729bb96ade08ae508a3fc278475d778fe74bc73100e7c2"
     },
     {
       "bytes": 21023,
       "path": "scripts/verify_published_image_evidence.py",
-      "sha256": "544f3f2cbc94970d7797598c2a60c3fb340e6be6b1e1c11785643ce471c8bc09"
+      "sha256": "7795eff5d444fd2de747d8948f372dc94d11a5c0d959669bac44b7c0bb75632c"
     },
     {
       "bytes": 13948,
       "path": "scripts/diagnose_adoption.py",
-      "sha256": "959962c73e2d832be811dbb8af6b5e0e9f655a71a311ccbb0e3f3bfbae2eb9cd"
+      "sha256": "dc1afad6ba2428d2661f2ff59bec432c5ebef523c774393ba527f824fcc23968"
     },
     {
       "bytes": 4019,
       "path": "scripts/launch_self_host.sh",
-      "sha256": "6c5eac0cd120b0c175c5da60a3e0915af357e0bb29311dfaf7f301d90f3265ab"
+      "sha256": "94b87284a820606e6041c7ac7d834f384f31725e249e65c938955006cf57bdcd"
     },
     {
       "bytes": 8317,
       "path": "scripts/doctor.sh",
-      "sha256": "b4ae6faaea8c4aa0a1d68e01c4e36c96b1fb32a251a495e0c790c4a7124b7afe"
+      "sha256": "bbb270a9a639246b0882f2a776899083d049a79fdbacafc985bb5d252fb60daa"
     },
     {
       "bytes": 9665,
@@ -204,37 +204,37 @@
       "sha256": "cc0ecc5dd2a8a27083f7cef2835b4e07fb5e33841e9ac10e6d0f301ab82801f6"
     },
     {
-      "bytes": 31828,
+      "bytes": 33416,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "36b59c6918a24ced9fcd54c2a2d17375c3e64c6454366b2be3dc27960eca55f7"
+      "sha256": "90842754d91d19aa470671c73f70ac94264e723cc467b9d983f32dfabab4b955"
     },
     {
-      "bytes": 8336,
+      "bytes": 8826,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "d361490a697245b31512d00762201a4aa966dce90d8c2971fb5735ec7bec9e88"
+      "sha256": "21bcda5684737b6abd79145736416b636fec4425d1ddc772cb9e003e101bf977"
     },
     {
-      "bytes": 8937,
+      "bytes": 9427,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "17dd076b1cc62f5720c3fd8b38117d0c491fa3d85b3caec34d679fc329513466"
+      "sha256": "36e46c731851c0a00917c46d91df637512b8eee4fba50cecf4c7323b6bc93ef9"
     },
     {
-      "bytes": 8438,
+      "bytes": 8928,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "7564b91f5ea3e5751d8d39a56c0c87f70736144e5cdcd7c5492751cd3b4d5601"
+      "sha256": "91aa6959b72d2e508748cebd93b93872e3c61bbae111ea55d0d6e12246bea40d"
     }
   ],
   "purpose": "Give external adopters and platform maintainers a deterministic way to decide whether a published Study Anything image is ready, blocked, or only limited by local Docker/GHCR pull conditions.",
   "release_identity": {
-    "api_image": "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.22-alpha",
-    "release_view_command": "gh release view v0.3.22-alpha",
+    "api_image": "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.23-alpha",
+    "release_view_command": "gh release view v0.3.23-alpha",
     "source_ref": "main",
-    "tag": "v0.3.22-alpha"
+    "tag": "v0.3.23-alpha"
   },
   "remote_replay": {
     "commands": [
-      "python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha --skip-pull",
-      "python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report"
+      "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --skip-pull",
+      "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report"
     ],
     "failure_classification": "published_image_runtime_failed",
     "optional": true,
@@ -243,5 +243,5 @@
   },
   "schema_version": "published-image-evidence-v1",
   "status": "pass",
-  "version": "v0.3.22-alpha"
+  "version": "v0.3.23-alpha"
 }

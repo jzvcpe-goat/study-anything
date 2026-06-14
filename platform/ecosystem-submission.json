@@ -33,6 +33,8 @@
       "python3 scripts/generate_platform_public_support_status.py --check",
       "python3 scripts/verify_published_image_evidence.py --check",
       "python3 scripts/generate_published_image_evidence.py --check",
+      "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+      "python3 scripts/generate_release_asset_adoption.py --check",
       "python3 scripts/verify_adopter_evidence_archive.py --check",
       "python3 scripts/generate_adopter_evidence_archive.py --check"
     ],
@@ -73,6 +75,9 @@
       "public-status-linkage-fixture-v1 proves SLA labels map to public status without exposing private support bundle fields",
       "published-image-evidence-v1 proves manifest platforms, docker-images workflow, local pull timeout fallback, optional remote smoke replay, and release-blocking classifications are metadata-only",
       "published-image-evidence-fixture-v1 proves manifest pass with local pull timeout, missing platform, docker-images failure, GHCR unavailable, remote smoke pass, and remote smoke failure states map to public release evidence",
+      "release-asset-adoption-v1 proves GitHub Release zip assets, sha256 digests, adoption-pack manifest hashes, published-image evidence, and replay commands are metadata-only",
+      "release-asset-adoption-fixture-v1 proves asset-only pass, missing asset, digest mismatch, corrupted pack, missing published-image evidence, and network-unavailable states map to public release evidence",
+      "release-asset-adoption-proof-v1 proves release asset replay can emit a redacted machine-readable result for metadata-only, published-image, and Skill Mode paths",
       "adopter-evidence-archive-v1 proves release proof, CI commands, Docker manifest evidence, platform pack checksums, public status hashes, known limitations, and maintainer handoff are packaged without private learning data",
       "adopter-evidence-fixture-v1 proves successful release, local GHCR pull timeout, needs-repro, release-blocker, platform-blocked, and resolved support states map to public archive evidence"
     ],
@@ -273,6 +278,13 @@
     "platform/generated/study-anything-published-image-evidence.zip",
     "platform/generated/study-anything-published-image-evidence.sha256",
     "docs/published-image-evidence.md",
+    "scripts/generate_release_asset_adoption.py",
+    "scripts/verify_release_asset_adoption.py",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
+    "docs/release-asset-adoption.md",
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
     "platform/generated/study-anything-adopter-evidence-archive.json",
@@ -298,7 +310,13 @@
     "fixtures/published-image-evidence/docker-images-failed.json",
     "fixtures/published-image-evidence/ghcr-unavailable.json",
     "fixtures/published-image-evidence/remote-smoke-pass.json",
-    "fixtures/published-image-evidence/remote-smoke-failed.json"
+    "fixtures/published-image-evidence/remote-smoke-failed.json",
+    "fixtures/release-asset-adoption/asset-only-pass.json",
+    "fixtures/release-asset-adoption/asset-missing.json",
+    "fixtures/release-asset-adoption/digest-mismatch.json",
+    "fixtures/release-asset-adoption/pack-corrupted.json",
+    "fixtures/release-asset-adoption/published-evidence-missing.json",
+    "fixtures/release-asset-adoption/network-unavailable.json"
   ],
   "submissions": [
     {
@@ -508,5 +526,5 @@
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.22-alpha"
+  "version": "v0.3.23-alpha"
 }

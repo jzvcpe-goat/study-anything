@@ -25,12 +25,13 @@ ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.22-alpha"
+RELEASE_VERSION = "v0.3.23-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
 PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION = "published-image-evidence-v1"
+RELEASE_ASSET_ADOPTION_SCHEMA_VERSION = "release-asset-adoption-v1"
 
 FIXTURES = (
     "successful-release",
@@ -53,7 +54,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/ecosystem-submission.md",
     "docs/release-checklist.md",
     "docs/roadmap.md",
-    "docs/release-notes/v0.3.22-alpha.md",
+    "docs/release-notes/v0.3.23-alpha.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-public-maintainer-dashboard.json",
@@ -62,6 +63,10 @@ PUBLIC_ASSET_PATHS = (
     "platform/generated/study-anything-published-image-evidence.md",
     "platform/generated/study-anything-published-image-evidence.zip",
     "platform/generated/study-anything-published-image-evidence.sha256",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/packs/codex/pack.json",
@@ -151,7 +156,7 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
         ),
         "local-ghcr-pull-timeout": (
             "local_environment_limit",
-            "python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
+            "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
             "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
         ),
         "needs-repro-issue": (
@@ -224,6 +229,9 @@ def schema_source_refs() -> dict[str, Any]:
     published_image_evidence = read_json(
         ROOT / "platform/generated/study-anything-published-image-evidence.json"
     )
+    release_asset_adoption = read_json(
+        ROOT / "platform/generated/study-anything-release-asset-adoption.json"
+    )
     adoption_pack = read_json(ROOT / "platform/generated/study-anything-platform-adoption-pack.json")
     ecosystem_submission = read_json(ROOT / "platform/ecosystem-submission.json")
     return {
@@ -239,6 +247,15 @@ def schema_source_refs() -> dict[str, Any]:
             "schema_version": published_image_evidence.get("schema_version"),
             "ref": public_file_ref("platform/generated/study-anything-published-image-evidence.json"),
             "verification_command": "python3 scripts/verify_published_image_evidence.py --check",
+        },
+        "release_asset_adoption": {
+            "schema_version": release_asset_adoption.get("schema_version"),
+            "ref": public_file_ref("platform/generated/study-anything-release-asset-adoption.json"),
+            "verification_command": (
+                "python3 scripts/verify_release_asset_adoption.py "
+                "--fixture fixtures/release-asset-adoption/asset-only-pass.json "
+                "--asset-dir platform/generated --runtime metadata-only"
+            ),
         },
         "platform_adoption_pack": {
             "schema_version": adoption_pack.get("schema_version"),
@@ -310,6 +327,8 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
                 "python3 scripts/generate_adopter_evidence_archive.py --check",
                 "python3 scripts/verify_published_image_evidence.py --check",
                 "python3 scripts/generate_published_image_evidence.py --check",
+                "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+                "python3 scripts/generate_release_asset_adoption.py --check",
                 "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
                 "python3 scripts/verify_platform_public_support_status.py --check",
                 "scripts/release_check.sh",

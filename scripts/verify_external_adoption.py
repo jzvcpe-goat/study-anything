@@ -103,6 +103,19 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-adopter-evidence-archive.zip",
     "platform/generated/study-anything-adopter-evidence-archive.sha256",
     "docs/adopter-evidence-archive.md",
+    "scripts/generate_release_asset_adoption.py",
+    "scripts/verify_release_asset_adoption.py",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
+    "docs/release-asset-adoption.md",
+    "fixtures/release-asset-adoption/asset-only-pass.json",
+    "fixtures/release-asset-adoption/asset-missing.json",
+    "fixtures/release-asset-adoption/digest-mismatch.json",
+    "fixtures/release-asset-adoption/pack-corrupted.json",
+    "fixtures/release-asset-adoption/published-evidence-missing.json",
+    "fixtures/release-asset-adoption/network-unavailable.json",
     "fixtures/platform-release-blockers/tool_import_blocker.json",
     "fixtures/platform-release-blockers/local_gateway_blocker.json",
     "fixtures/platform-release-blockers/published_image_blocker.json",
@@ -331,6 +344,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/public-support-status.md",
                 "docs/adopter-evidence-archive.md",
                 "docs/published-image-evidence.md",
+                "docs/release-asset-adoption.md",
             ]
         )
     required_terms = [
@@ -352,6 +366,9 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "published-image-evidence-fixture-v1",
         "adopter-evidence-archive-v1",
         "adopter-evidence-fixture-v1",
+        "release-asset-adoption-v1",
+        "release-asset-adoption-fixture-v1",
+        "release-asset-adoption-proof-v1",
     ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:
@@ -596,6 +613,20 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "published_image_evidence",
                 [python_bin, "scripts/verify_published_image_evidence.py"],
+                90,
+            ),
+            (
+                "release_asset_adoption",
+                [
+                    python_bin,
+                    "scripts/verify_release_asset_adoption.py",
+                    "--fixture",
+                    "fixtures/release-asset-adoption/asset-only-pass.json",
+                    "--asset-dir",
+                    "platform/generated",
+                    "--runtime",
+                    "metadata-only",
+                ],
                 90,
             ),
             (
@@ -931,6 +962,20 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "classification_count": evidence.get("classification_count"),
             "local_paths_in_report": (value.get("privacy_assertions") or {}).get(
                 "local_absolute_paths_in_report"
+            ),
+        }
+    if label == "release_asset_adoption":
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "classification": value.get("classification"),
+            "evidence_schema": (value.get("acceptance") or {}).get("evidence_schema"),
+            "fixture_schema": (value.get("acceptance") or {}).get("fixture_schema"),
+            "runtime": (value.get("acceptance") or {}).get("runtime"),
+            "asset_count": value.get("asset_count"),
+            "pack_schema": (value.get("pack") or {}).get("schema_version"),
+            "published_image_evidence_schema": (value.get("pack") or {}).get(
+                "published_image_evidence_schema"
             ),
         }
     if label == "external_agent_adapter_hardening":

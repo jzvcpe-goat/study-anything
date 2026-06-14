@@ -1,0 +1,41 @@
+{
+  "classification": "release_asset_digest_mismatch",
+  "fixture_id": "digest-mismatch",
+  "operator_next_step": "A downloaded release asset does not match the GitHub sha256 digest.",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "release": {
+    "assets": [
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-platform-adoption-pack.zip",
+        "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "name": "study-anything-platform-adoption-pack.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-published-image-evidence.zip",
+        "name": "study-anything-published-image-evidence.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-adopter-evidence-archive.zip",
+        "name": "study-anything-adopter-evidence-archive.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-platform-feedback-package.zip",
+        "name": "study-anything-platform-feedback-package.zip"
+      }
+    ],
+    "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha",
+    "tag_name": "v0.3.23-alpha"
+  },
+  "release_gate": "block_release_claim",
+  "schema_version": "release-asset-adoption-fixture-v1",
+  "version": "v0.3.23-alpha"
+}

@@ -19,12 +19,13 @@ DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-adopter-evide
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.22-alpha"
+RELEASE_VERSION = "v0.3.23-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
 PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION = "published-image-evidence-v1"
+RELEASE_ASSET_ADOPTION_SCHEMA_VERSION = "release-asset-adoption-v1"
 ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 FIXTURES = {
@@ -48,6 +49,13 @@ REQUIRED_REPORT_ASSETS = {
     "platform/generated/study-anything-published-image-evidence.md",
     "platform/generated/study-anything-published-image-evidence.zip",
     "platform/generated/study-anything-published-image-evidence.sha256",
+    "scripts/generate_release_asset_adoption.py",
+    "scripts/verify_release_asset_adoption.py",
+    "docs/release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.zip",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
     "platform/generated/study-anything-adopter-evidence-archive.json",
     "platform/generated/study-anything-adopter-evidence-archive.md",
     "platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -208,6 +216,7 @@ def validate_report(root: Path) -> dict[str, Any]:
         "public_support_status": PUBLIC_STATUS_SCHEMA_VERSION,
         "public_maintainer_dashboard": PUBLIC_DASHBOARD_SCHEMA_VERSION,
         "published_image_evidence": PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION,
+        "release_asset_adoption": RELEASE_ASSET_ADOPTION_SCHEMA_VERSION,
         "platform_adoption_pack": ADOPTION_PACK_SCHEMA_VERSION,
         "ecosystem_submission": ECOSYSTEM_SUBMISSION_SCHEMA_VERSION,
     }
@@ -244,6 +253,8 @@ def validate_report(root: Path) -> dict[str, Any]:
         REQUIRED_GENERATOR_COMMAND,
         "verify_published_image_evidence.py --check",
         "generate_published_image_evidence.py --check",
+        "verify_release_asset_adoption.py",
+        "generate_release_asset_adoption.py --check",
     ):
         if command not in commands:
             raise AdopterEvidenceArchiveError(f"Archive reproduction commands missing {command}.")
@@ -304,6 +315,9 @@ def validate_platform_packs(root: Path) -> dict[str, Any]:
             "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1",
             "published_image_evidence.schema_version == published-image-evidence-v1",
             "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
+            "release_asset_adoption.schema_version == release-asset-adoption-v1",
+            "release_asset_adoption_fixture.schema_version == release-asset-adoption-fixture-v1",
+            "release_asset_adoption_proof.schema_version == release-asset-adoption-proof-v1",
         ):
             if item not in evidence:
                 raise AdopterEvidenceArchiveError(f"{platform_id} pack missing {item}.")
@@ -327,7 +341,7 @@ def validate_submission(root: Path) -> dict[str, Any]:
     for command in (REQUIRED_COMMAND, REQUIRED_GENERATOR_COMMAND):
         if command not in commands:
             raise AdopterEvidenceArchiveError(f"Ecosystem submission missing {command}.")
-    for schema in (SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION):
+    for schema in (SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION, RELEASE_ASSET_ADOPTION_SCHEMA_VERSION):
         if schema not in must_prove:
             raise AdopterEvidenceArchiveError(f"Ecosystem submission must prove {schema}.")
     return {"schema_version": submission.get("schema_version"), "version": submission.get("version")}
@@ -347,7 +361,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
     if missing:
         raise AdopterEvidenceArchiveError(f"Adoption pack missing adopter evidence assets: {missing}")
     must_verify = set(str(item) for item in (manifest.get("acceptance") or {}).get("must_verify", []))
-    for schema in (SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION):
+    for schema in (SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION, RELEASE_ASSET_ADOPTION_SCHEMA_VERSION):
         if schema not in must_verify:
             raise AdopterEvidenceArchiveError(f"Adoption pack must verify {schema}.")
     return {"schema_version": manifest.get("schema_version"), "version": manifest.get("version")}
@@ -357,6 +371,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
     checked = {
         "docs/adopter-evidence-archive.md": [SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION, REQUIRED_COMMAND],
         "docs/published-image-evidence.md": [PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION],
+        "docs/release-asset-adoption.md": [RELEASE_ASSET_ADOPTION_SCHEMA_VERSION],
         "docs/adoption.md": [SCHEMA_VERSION, "verify_adopter_evidence_archive.py"],
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "evidence archive"],
         "docs/support-desk.md": [SCHEMA_VERSION, "handoff"],
@@ -364,7 +379,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/maintainer-rotation.md": [SCHEMA_VERSION, "maintainer handoff"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "Adopter Evidence Archive"],
         "docs/release-checklist.md": ["verify_adopter_evidence_archive.py --check"],
-        "docs/roadmap.md": ["v0.3.22-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.23-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

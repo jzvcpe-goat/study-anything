@@ -1,7 +1,7 @@
 # Study Anything Adopter Evidence Archive
 
 Schema: `adopter-evidence-archive-v1`
-Version: `v0.3.22-alpha`
+Version: `v0.3.23-alpha`
 Status: `pass`
 
 This archive is a public, metadata-only handoff bundle for external adopters and
@@ -11,7 +11,7 @@ handoff steps without copying private learning data.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `83b21e35c467bf0ef79ef1767f50ecdad71a05def3e5570495041bcc43f32908`
+- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `c5a73eacfb3a35f400a8e9f99b3fe2dbac1b300572920a34c4db878c14897ceb`
 
 ## Reproduction Commands
 
@@ -19,6 +19,8 @@ handoff steps without copying private learning data.
 - `python3 scripts/generate_adopter_evidence_archive.py --check`
 - `python3 scripts/verify_published_image_evidence.py --check`
 - `python3 scripts/generate_published_image_evidence.py --check`
+- `python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`
+- `python3 scripts/generate_release_asset_adoption.py --check`
 - `python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - `python3 scripts/verify_platform_public_support_status.py --check`
 - `scripts/release_check.sh`
@@ -31,12 +33,12 @@ handoff steps without copying private learning data.
 
 ## Fixture Hashes
 
-- `successful-release`: `5740e24a238c7ac5dc25cfb9feba213de34445b96a8add34471053381dcbe9a5`
-- `local-ghcr-pull-timeout`: `d691ddd9861cfd0756acffc92f7d8cd9a724b9c752b47737194a31d736227ee8`
-- `needs-repro-issue`: `f01e49759a28320fddc561e68693b9c1267324a5291366a208a91576d7f9d3e6`
-- `release-blocker`: `da85e9ef55aac1f17169b7c9fc2675c271d93896e1a78b5bb0b0afc4b19d1c01`
-- `platform-blocked`: `931377d0a3d046ba359d8845e0b8793327d6d41ddf6c0088999b27eb4cd4294b`
-- `resolved-support-case`: `7e656fdc0cec1603263e64491b9e7a966316251691371e77b7366f2db77122bd`
+- `successful-release`: `08fd5bdc0d711cf0d658e88935967ef0ee502d7868ea4b3a8933ea9cf7a5c87c`
+- `local-ghcr-pull-timeout`: `63343dee489195be68b295b7a2240b3de3f4a5bdf87de38667773ea8cae0c11d`
+- `needs-repro-issue`: `5999991504607ced979742118db53db9185b58b095f47d94f7693ce91190fcda`
+- `release-blocker`: `fc71e06b598ebb73e851355830667b53498488ab6fc1cc1fcae32a8b33fba9f2`
+- `platform-blocked`: `353d05c515e82b00a10729a5e753dbdb493313ae7952bfb686af3a8732033823`
+- `resolved-support-case`: `54769d613f36367010f65e22cd998bd7045d9ee6c01069f615b649ebd4851bc5`
 
 ## Privacy
 

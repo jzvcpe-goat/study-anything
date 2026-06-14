@@ -321,7 +321,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -329,13 +329,13 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.22-alpha \
+  --tag v0.3.23-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.22-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.23-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.
 
@@ -350,9 +350,35 @@ This evidence layer records manifest platform requirements, docker-images workfl
 local pull-timeout fallback rules, optional remote smoke replay commands, and release-blocking
 classifications without storing learning content, Agent endpoints, local paths, or model secrets.
 
+## Release Asset Adoption
+
+For platform operators who start from the GitHub Release page, publish and verify
+`release-asset-adoption-v1` alongside the platform adoption pack:
+
+```bash
+python3 scripts/generate_release_asset_adoption.py --check
+python3 scripts/verify_release_asset_adoption.py \
+  --tag v0.3.23-alpha \
+  --runtime metadata-only
+```
+
+Before the tag exists, maintainers can run the offline generated-asset path:
+
+```bash
+python3 scripts/verify_release_asset_adoption.py \
+  --fixture fixtures/release-asset-adoption/asset-only-pass.json \
+  --asset-dir platform/generated \
+  --runtime metadata-only
+```
+
+This emits `release-asset-adoption-proof-v1` and verifies required GitHub Release
+zip assets, sha256 digests, adoption-pack manifest hashes, and embedded
+published-image evidence without storing learning content, Agent endpoints,
+local paths, model keys, or private support payloads.
+
 ## Adopter Evidence Archive
 
-For v0.3.22-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
+For v0.3.23-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
 packages public support status hashes, platform pack checksums, Docker manifest commands, local GHCR
 pull-timeout fallback evidence, known limitations, and maintainer checklist items.
 

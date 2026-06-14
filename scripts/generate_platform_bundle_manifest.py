@@ -167,6 +167,26 @@ FILES: list[tuple[str, str, str]] = [
         "External adopter evidence archive checksum.",
     ),
     (
+        "platform/generated/study-anything-release-asset-adoption.json",
+        "generated_asset",
+        "GitHub Release asset adoption replay evidence JSON.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-adoption.md",
+        "generated_asset",
+        "GitHub Release asset adoption replay evidence Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-adoption.zip",
+        "generated_asset",
+        "GitHub Release asset adoption replay evidence archive.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-adoption.sha256",
+        "generated_asset",
+        "GitHub Release asset adoption replay evidence checksum.",
+    ),
+    (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
         "support_template",
         "GitHub issue template for external platform import failures.",
@@ -592,6 +612,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify adopter evidence archive, fixtures, platform packs, submission, adoption pack, and docs.",
     ),
     (
+        "scripts/generate_release_asset_adoption.py",
+        "diagnostics",
+        "Generate GitHub Release asset adoption replay evidence, fixtures, checksum, and archive.",
+    ),
+    (
+        "scripts/verify_release_asset_adoption.py",
+        "verification",
+        "Verify release assets, sha256 digests, adoption-pack manifest hashes, and replay modes.",
+    ),
+    (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "verification",
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
@@ -802,6 +832,11 @@ FILES: list[tuple[str, str, str]] = [
         "Published-image evidence and pull-timeout fallback classification guide.",
     ),
     (
+        "docs/release-asset-adoption.md",
+        "docs",
+        "GitHub Release asset replay verification guide for external platform operators.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -872,7 +907,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.22-alpha.md",
+        "docs/release-notes/v0.3.23-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
