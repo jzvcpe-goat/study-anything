@@ -25,12 +25,15 @@ ARCHIVE_ROOT = "study-anything-published-image-evidence"
 
 SCHEMA_VERSION = "published-image-evidence-v1"
 FIXTURE_SCHEMA_VERSION = "published-image-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.23-alpha"
+RELEASE_VERSION = "v0.3.24-alpha"
 API_IMAGE = f"ghcr.io/jzvcpe-goat/study-anything/api:{RELEASE_VERSION}"
 REQUIRED_PLATFORMS = ("linux/amd64", "linux/arm64")
 
 FIXTURES = (
     "manifest-pass-local-pull-timeout",
+    "cached-image-missing",
+    "compose-up-timeout",
+    "manifest-only-runtime-unverified",
     "manifest-missing-platform",
     "docker-images-failed",
     "ghcr-unavailable",
@@ -135,6 +138,33 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
             "local_smoke": {"status": "blocked_by_local_ghcr_pull"},
             "remote_smoke": {"status": "not_required"},
             "operator_next_step": "Verify manifest platforms and docker-images success, then retry pull from a faster network if needed.",
+        },
+        "cached-image-missing": {
+            "classification": "cached_image_missing",
+            "release_gate": "needs_pull_or_manifest_only_recheck",
+            "manifest": {"status": "ok", "platforms": list(REQUIRED_PLATFORMS)},
+            "docker_images_workflow": {"status": "success"},
+            "local_smoke": {"status": "cached_image_missing"},
+            "remote_smoke": {"status": "not_attempted"},
+            "operator_next_step": "Run docker pull or manifest-only verification; cached-only mode cannot prove runtime without the local image.",
+        },
+        "compose-up-timeout": {
+            "classification": "compose_up_timeout",
+            "release_gate": "needs_independent_recheck",
+            "manifest": {"status": "ok", "platforms": list(REQUIRED_PLATFORMS)},
+            "docker_images_workflow": {"status": "success"},
+            "local_smoke": {"status": "compose_up_timeout"},
+            "remote_smoke": {"status": "not_attempted"},
+            "operator_next_step": "Treat as local Docker startup or implicit pull slowness; pair manifest evidence with CI and retry from another runner.",
+        },
+        "manifest-only-runtime-unverified": {
+            "classification": "manifest_available_runtime_unverified",
+            "release_gate": "acceptable_only_with_successful_ci_and_release_check",
+            "manifest": {"status": "ok", "platforms": list(REQUIRED_PLATFORMS)},
+            "docker_images_workflow": {"status": "success"},
+            "local_smoke": {"status": "manifest_available_runtime_unverified"},
+            "remote_smoke": {"status": "not_attempted"},
+            "operator_next_step": "Use this only when local runtime smoke is impossible; it proves distribution, not container behavior.",
         },
         "manifest-missing-platform": {
             "classification": "published_image_platform_gap",
@@ -260,6 +290,9 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
             ),
             "success_status": "ok",
             "timeout_status": "blocked_by_local_ghcr_pull",
+            "cached_only_missing_status": "cached_image_missing",
+            "compose_timeout_status": "compose_up_timeout",
+            "manifest_only_status": "manifest_available_runtime_unverified",
             "timeout_is_acceptable_only_when": [
                 "manifest inspection shows linux/amd64 and linux/arm64",
                 "docker-images workflow succeeded for the release tag",
@@ -271,6 +304,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
             "purpose": "Run the same published-image smoke from a network or CI runner with reliable GHCR pulls.",
             "commands": [
                 f"python3 scripts/verify_published_image_launch.py --tag {RELEASE_VERSION} --skip-pull",
+                f"python3 scripts/verify_published_image_launch.py --tag {RELEASE_VERSION} --manifest-only",
                 f"python3 scripts/verify_published_image_launch.py --tag {RELEASE_VERSION} --pull-timeout-seconds 600 --allow-pull-timeout-report",
             ],
             "pass_classification": "published_image_ready",
@@ -286,6 +320,21 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
                 "classification": "local_pull_timeout_with_valid_release_evidence",
                 "release_gate": "acceptable_with_manifest_and_ci",
                 "meaning": "Local Docker/GHCR pull timed out, but independent manifest and CI evidence are valid.",
+            },
+            {
+                "classification": "cached_image_missing",
+                "release_gate": "needs_pull_or_manifest_only_recheck",
+                "meaning": "Cached-only verification was requested, but the local machine does not have the image.",
+            },
+            {
+                "classification": "compose_up_timeout",
+                "release_gate": "needs_independent_recheck",
+                "meaning": "docker compose up did not finish within the bounded verifier timeout.",
+            },
+            {
+                "classification": "manifest_available_runtime_unverified",
+                "release_gate": "acceptable_only_with_successful_ci_and_release_check",
+                "meaning": "Manifest platforms are available, but no local runtime smoke was executed.",
             },
             {
                 "classification": "published_image_platform_gap",

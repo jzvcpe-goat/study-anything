@@ -23,7 +23,7 @@ ROTATION_SCHEMA_VERSION = "maintainer-rotation-checklist-v1"
 DASHBOARD_SCHEMA_VERSION = "platform-triage-dashboard-v1"
 RELEASE_BLOCKER_SCHEMA_VERSION = "platform-release-blocker-fixture-v1"
 SUPPORT_TRIAGE_SCHEMA_VERSION = "platform-support-triage-v1"
-RELEASE_VERSION = "v0.3.23-alpha"
+RELEASE_VERSION = "v0.3.24-alpha"
 PLATFORMS = {"kimi", "codex", "workbuddy", "generic"}
 SLA_LABELS = {
     "intake",
@@ -405,7 +405,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-platform-triage-dashboard.md",
         "docs/adopter-onboarding.md",
         "docs/maintainer-rotation.md",
-        "docs/release-notes/v0.3.23-alpha.md",
+        "docs/release-notes/v0.3.24-alpha.md",
         *[f"fixtures/platform-release-blockers/{blocker_id}.json" for blocker_id in RELEASE_BLOCKER_IDS],
     }
     missing = sorted(required_paths - paths)
@@ -443,7 +443,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "first adopter"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "onboarding readiness"],
         "docs/release-checklist.md": ["verify_platform_onboarding_readiness.py --check"],
-        "docs/roadmap.md": ["v0.3.23-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.24-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

@@ -209,6 +209,9 @@ REQUIRED_SHARED_ASSETS = {
     "fixtures/adopter-evidence-archive/platform-blocked.json",
     "fixtures/adopter-evidence-archive/resolved-support-case.json",
     "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+    "fixtures/published-image-evidence/cached-image-missing.json",
+    "fixtures/published-image-evidence/compose-up-timeout.json",
+    "fixtures/published-image-evidence/manifest-only-runtime-unverified.json",
     "fixtures/published-image-evidence/manifest-missing-platform.json",
     "fixtures/published-image-evidence/docker-images-failed.json",
     "fixtures/published-image-evidence/ghcr-unavailable.json",
@@ -368,8 +371,8 @@ def verify_generated_assets(tool_count: int) -> None:
 def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
     if submission.get("schema_version") != "ecosystem-submission-v1":
         raise EcosystemSubmissionError("Submission has invalid schema_version.")
-    if submission.get("version") != "v0.3.23-alpha":
-        raise EcosystemSubmissionError("Submission version must be v0.3.23-alpha.")
+    if submission.get("version") != "v0.3.24-alpha":
+        raise EcosystemSubmissionError("Submission version must be v0.3.24-alpha.")
 
     project = submission.get("project")
     if not isinstance(project, dict):
@@ -520,8 +523,8 @@ def verify_pack_in_generated_adoption() -> None:
     manifest = load_json(ADOPTION_PACK_PATH)
     if manifest.get("schema_version") != "study-anything-platform-adoption-pack-v1":
         raise EcosystemSubmissionError("Generated adoption pack schema drifted.")
-    if manifest.get("version") != "v0.3.23-alpha":
-        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.23-alpha.")
+    if manifest.get("version") != "v0.3.24-alpha":
+        raise EcosystemSubmissionError("Generated adoption pack must be updated to v0.3.24-alpha.")
     paths = {item.get("path") for item in manifest.get("files", []) if isinstance(item, dict)}
     required = {
         "platform/ecosystem-submission.json",
@@ -627,6 +630,9 @@ def verify_pack_in_generated_adoption() -> None:
         "fixtures/adopter-evidence-archive/platform-blocked.json",
         "fixtures/adopter-evidence-archive/resolved-support-case.json",
         "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+        "fixtures/published-image-evidence/cached-image-missing.json",
+        "fixtures/published-image-evidence/compose-up-timeout.json",
+        "fixtures/published-image-evidence/manifest-only-runtime-unverified.json",
         "fixtures/published-image-evidence/manifest-missing-platform.json",
         "fixtures/published-image-evidence/docker-images-failed.json",
         "fixtures/published-image-evidence/ghcr-unavailable.json",
@@ -648,7 +654,7 @@ def verify_pack_in_generated_adoption() -> None:
         "docs/maintainer-rotation.md",
         "docs/public-support-status.md",
         "docs/adopter-evidence-archive.md",
-        "docs/release-notes/v0.3.23-alpha.md",
+        "docs/release-notes/v0.3.24-alpha.md",
         "docs/plugins.md",
         "docs/plugin-sdk.md",
         "docs/plugin-registry.md",
@@ -680,7 +686,7 @@ def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
         raise EcosystemSubmissionError("Platform submission dry-run report schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform submission dry-run report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform submission dry-run report must pass.")
@@ -704,7 +710,7 @@ def verify_manual_rehearsal_report() -> None:
     report = load_json(MANUAL_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-manual-submission-rehearsal-v1":
         raise EcosystemSubmissionError("Manual submission rehearsal report schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Manual submission rehearsal report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Manual submission rehearsal report must pass.")
@@ -726,7 +732,7 @@ def verify_first_lesson_kit_report() -> None:
     report = load_json(FIRST_LESSON_KIT_PATH)
     if report.get("schema_version") != "first-run-lesson-authoring-kit-v1":
         raise EcosystemSubmissionError("First lesson authoring kit schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("First lesson authoring kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("First lesson authoring kit must pass.")
@@ -753,7 +759,7 @@ def verify_external_eval_harness_report() -> None:
     report = load_json(EXTERNAL_EVAL_HARNESS_PATH)
     if report.get("schema_version") != "external-eval-marketplace-harness-v1":
         raise EcosystemSubmissionError("External eval marketplace harness schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("External eval marketplace harness version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("External eval marketplace harness must pass.")
@@ -790,7 +796,7 @@ def verify_agent_eval_marketplace_enforcement_report() -> None:
     report = load_json(AGENT_EVAL_MARKETPLACE_ENFORCEMENT_PATH)
     if report.get("schema_version") != "agent-eval-marketplace-enforcement-v1":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Agent eval marketplace enforcement must pass.")
@@ -854,7 +860,7 @@ def verify_platform_adoption_feedback_diagnostics_report() -> None:
     report = load_json(PLATFORM_ADOPTION_FEEDBACK_DIAGNOSTICS_PATH)
     if report.get("schema_version") != "platform-adoption-feedback-diagnostics-v1":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform adoption feedback diagnostics must pass.")
@@ -906,7 +912,7 @@ def verify_platform_feedback_package() -> None:
     package = load_json(PLATFORM_FEEDBACK_PACKAGE_PATH)
     if package.get("schema_version") != "platform-feedback-package-v1":
         raise EcosystemSubmissionError("Platform feedback package schema drifted.")
-    if package.get("version") != "v0.3.23-alpha":
+    if package.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform feedback package version drifted.")
     if not PLATFORM_FEEDBACK_PACKAGE_ARCHIVE.is_file():
         raise EcosystemSubmissionError("Platform feedback package archive missing.")
@@ -933,7 +939,7 @@ def verify_platform_field_rehearsal_report() -> None:
     report = load_json(PLATFORM_FIELD_REHEARSAL_PATH)
     if report.get("schema_version") != "platform-field-adoption-rehearsal-v1":
         raise EcosystemSubmissionError("Platform field rehearsal schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform field rehearsal version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform field rehearsal report must pass.")
@@ -981,7 +987,7 @@ def verify_platform_support_triage_report() -> None:
     report = load_json(PLATFORM_SUPPORT_TRIAGE_PATH)
     if report.get("schema_version") != "platform-support-triage-v1":
         raise EcosystemSubmissionError("Platform support triage schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform support triage version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform support triage report must pass.")
@@ -1051,7 +1057,7 @@ def verify_platform_onboarding_readiness_report() -> None:
     report = load_json(PLATFORM_ONBOARDING_READINESS_PATH)
     if report.get("schema_version") != "platform-onboarding-readiness-v1":
         raise EcosystemSubmissionError("Platform onboarding readiness schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform onboarding readiness version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform onboarding readiness report must pass.")
@@ -1088,7 +1094,7 @@ def verify_platform_onboarding_readiness_report() -> None:
     dashboard = load_json(PLATFORM_TRIAGE_DASHBOARD_PATH)
     if dashboard.get("schema_version") != "platform-triage-dashboard-v1":
         raise EcosystemSubmissionError("Platform triage dashboard schema drifted.")
-    if dashboard.get("version") != "v0.3.23-alpha":
+    if dashboard.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Platform triage dashboard version drifted.")
     blockers = report.get("release_blocker_fixtures")
     if not isinstance(blockers, list) or len(blockers) != 5:
@@ -1132,7 +1138,7 @@ def verify_public_support_status_report() -> None:
     report = load_json(PUBLIC_SUPPORT_STATUS_PATH)
     if report.get("schema_version") != "public-support-status-v1":
         raise EcosystemSubmissionError("Public support status schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Public support status version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Public support status must pass.")
@@ -1182,12 +1188,12 @@ def verify_public_support_status_report() -> None:
         payload = load_json(ROOT / "fixtures" / "platform-status-links" / f"{label}.json")
         if payload.get("schema_version") != "public-status-linkage-fixture-v1":
             raise EcosystemSubmissionError(f"Public status linkage schema drifted: {label}")
-        if payload.get("version") != "v0.3.23-alpha":
+        if payload.get("version") != "v0.3.24-alpha":
             raise EcosystemSubmissionError(f"Public status linkage version drifted: {label}")
     dashboard = load_json(PUBLIC_MAINTAINER_DASHBOARD_PATH)
     if dashboard.get("schema_version") != "public-maintainer-dashboard-v1":
         raise EcosystemSubmissionError("Public maintainer dashboard schema drifted.")
-    if dashboard.get("version") != "v0.3.23-alpha":
+    if dashboard.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Public maintainer dashboard version drifted.")
     privacy = report.get("privacy_assertions") or {}
     for key in (
@@ -1209,12 +1215,12 @@ def verify_adopter_evidence_archive_report() -> None:
     report = load_json(ADOPTER_EVIDENCE_ARCHIVE_PATH)
     if report.get("schema_version") != "adopter-evidence-archive-v1":
         raise EcosystemSubmissionError("Adopter evidence archive schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Adopter evidence archive version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Adopter evidence archive must pass.")
     release_identity = report.get("release_identity") or {}
-    if release_identity.get("tag") != "v0.3.23-alpha":
+    if release_identity.get("tag") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Adopter evidence archive release tag drifted.")
     source_schemas = report.get("source_schemas") or {}
     expected_sources = {
@@ -1246,7 +1252,7 @@ def verify_adopter_evidence_archive_report() -> None:
         payload = load_json(ROOT / "fixtures" / "adopter-evidence-archive" / f"{fixture_id}.json")
         if payload.get("schema_version") != "adopter-evidence-fixture-v1":
             raise EcosystemSubmissionError(f"Adopter evidence fixture schema drifted: {fixture_id}")
-        if payload.get("version") != "v0.3.23-alpha":
+        if payload.get("version") != "v0.3.24-alpha":
             raise EcosystemSubmissionError(f"Adopter evidence fixture version drifted: {fixture_id}")
     archive = report.get("archive") or {}
     archive_path = ROOT / "platform" / "generated" / "study-anything-adopter-evidence-archive.zip"
@@ -1284,12 +1290,12 @@ def verify_published_image_evidence_report() -> None:
     report = load_json(PUBLISHED_IMAGE_EVIDENCE_PATH)
     if report.get("schema_version") != "published-image-evidence-v1":
         raise EcosystemSubmissionError("Published-image evidence schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Published-image evidence version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Published-image evidence must pass.")
     release_identity = report.get("release_identity") or {}
-    if release_identity.get("tag") != "v0.3.23-alpha":
+    if release_identity.get("tag") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Published-image evidence release tag drifted.")
     manifest = report.get("manifest_evidence") or {}
     if set(str(item) for item in manifest.get("required_platforms", [])) != {"linux/amd64", "linux/arm64"}:
@@ -1300,6 +1306,9 @@ def verify_published_image_evidence_report() -> None:
     expected_classifications = {
         "published_image_ready",
         "local_pull_timeout_with_valid_release_evidence",
+        "cached_image_missing",
+        "compose_up_timeout",
+        "manifest_available_runtime_unverified",
         "published_image_platform_gap",
         "ci_image_publish_failed",
         "registry_or_network_unavailable",
@@ -1316,6 +1325,9 @@ def verify_published_image_evidence_report() -> None:
     }
     expected_fixtures = {
         "manifest-pass-local-pull-timeout",
+        "cached-image-missing",
+        "compose-up-timeout",
+        "manifest-only-runtime-unverified",
         "manifest-missing-platform",
         "docker-images-failed",
         "ghcr-unavailable",
@@ -1328,7 +1340,7 @@ def verify_published_image_evidence_report() -> None:
         payload = load_json(ROOT / "fixtures" / "published-image-evidence" / f"{fixture_id}.json")
         if payload.get("schema_version") != "published-image-evidence-fixture-v1":
             raise EcosystemSubmissionError(f"Published-image fixture schema drifted: {fixture_id}")
-        if payload.get("version") != "v0.3.23-alpha":
+        if payload.get("version") != "v0.3.24-alpha":
             raise EcosystemSubmissionError(f"Published-image fixture version drifted: {fixture_id}")
         if payload.get("classification") not in expected_classifications:
             raise EcosystemSubmissionError(f"Published-image fixture classification drifted: {fixture_id}")
@@ -1358,12 +1370,12 @@ def verify_release_asset_adoption_report() -> None:
     report = load_json(RELEASE_ASSET_ADOPTION_PATH)
     if report.get("schema_version") != "release-asset-adoption-v1":
         raise EcosystemSubmissionError("Release asset adoption schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Release asset adoption version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Release asset adoption report must pass.")
     identity = report.get("release_identity") or {}
-    if identity.get("tag") != "v0.3.23-alpha":
+    if identity.get("tag") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Release asset adoption tag drifted.")
     required_assets = set(str(item) for item in identity.get("required_asset_names", []))
     expected_assets = {
@@ -1408,7 +1420,7 @@ def verify_release_asset_adoption_report() -> None:
         payload = load_json(ROOT / "fixtures" / "release-asset-adoption" / f"{fixture_id}.json")
         if payload.get("schema_version") != "release-asset-adoption-fixture-v1":
             raise EcosystemSubmissionError(f"Release asset fixture schema drifted: {fixture_id}")
-        if payload.get("version") != "v0.3.23-alpha":
+        if payload.get("version") != "v0.3.24-alpha":
             raise EcosystemSubmissionError(f"Release asset fixture version drifted: {fixture_id}")
         if payload.get("classification") not in expected_classifications:
             raise EcosystemSubmissionError(f"Release asset fixture classification drifted: {fixture_id}")
@@ -1438,7 +1450,7 @@ def verify_plugin_ecosystem_kit_report() -> None:
     report = load_json(PLUGIN_ECOSYSTEM_KIT_PATH)
     if report.get("schema_version") != "plugin-ecosystem-adoption-kit-v1":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Plugin ecosystem adoption kit must pass.")
@@ -1485,7 +1497,7 @@ def verify_deployment_hardening_report() -> None:
     report = load_json(DEPLOYMENT_HARDENING_PATH)
     if report.get("schema_version") != "deployment-hardening-verification-v1":
         raise EcosystemSubmissionError("Deployment hardening report schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Deployment hardening report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Deployment hardening report must pass.")
@@ -1520,7 +1532,7 @@ def verify_learning_enrichment_bridge_report() -> None:
     report = load_json(LEARNING_ENRICHMENT_BRIDGE_PATH)
     if report.get("schema_version") != "learning-enrichment-bridge-verification-v1":
         raise EcosystemSubmissionError("Learning enrichment bridge report schema drifted.")
-    if report.get("version") != "v0.3.23-alpha":
+    if report.get("version") != "v0.3.24-alpha":
         raise EcosystemSubmissionError("Learning enrichment bridge report version drifted.")
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Learning enrichment bridge report must pass.")

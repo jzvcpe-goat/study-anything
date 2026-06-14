@@ -222,6 +222,7 @@ def pull_timeout_report(
 ) -> dict[str, Any]:
     return {
         "status": "blocked_by_local_ghcr_pull",
+        "classification": "blocked_by_local_ghcr_pull",
         "tag": tag,
         "api_image": api_image,
         "project": project_name,
@@ -252,11 +253,98 @@ def pull_timeout_report(
     }
 
 
+def compose_up_timeout_report(
+    *,
+    tag: str,
+    api_image: str,
+    timeout_seconds: int,
+    project_name: str,
+    manifest_evidence: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "status": "compose_up_timeout",
+        "classification": "compose_up_timeout",
+        "tag": tag,
+        "api_image": api_image,
+        "project": project_name,
+        "timeout_seconds": timeout_seconds,
+        "diagnostic": (
+            "docker compose up did not finish within the configured timeout. This often means "
+            "Compose was still pulling a missing image layer or Docker was slow to create the "
+            "container. The verifier cleaned up the disposable project after reporting."
+        ),
+        "manifest_evidence": manifest_evidence or inspect_manifest_platforms(api_image),
+        "next_steps": [
+            f"docker manifest inspect {api_image}",
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --manifest-only",
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --skip-pull",
+        ],
+    }
+
+
+def cached_image_missing_report(
+    *,
+    tag: str,
+    api_image: str,
+    project_name: str,
+    stderr: str,
+    manifest_evidence: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "status": "cached_image_missing",
+        "classification": "cached_image_missing",
+        "tag": tag,
+        "api_image": api_image,
+        "project": project_name,
+        "diagnostic": (
+            "--skip-pull requested cached-only verification, but Docker could not start the "
+            "published API image from the local cache."
+        ),
+        "compose_stderr_tail": stderr[-1200:],
+        "manifest_evidence": manifest_evidence or inspect_manifest_platforms(api_image),
+        "next_steps": [
+            f"docker pull {api_image}",
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --pull-timeout-seconds 180 --allow-pull-timeout-report",
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --manifest-only",
+        ],
+    }
+
+
+def manifest_only_report(
+    *,
+    tag: str,
+    api_image: str,
+    manifest_evidence: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "status": "manifest_available_runtime_unverified",
+        "classification": "manifest_available_runtime_unverified",
+        "tag": tag,
+        "api_image": api_image,
+        "diagnostic": (
+            "The published image manifest is available with required platforms, but this mode "
+            "does not start the container or run the API smoke."
+        ),
+        "release_gate": "acceptable_only_with_successful_docker_images_workflow_and_release_check",
+        "manifest_evidence": manifest_evidence,
+        "next_steps": [
+            f"python3 scripts/verify_published_image_launch.py --tag {tag} --pull-timeout-seconds 180 --allow-pull-timeout-report",
+            "Verify the matching GitHub Actions docker-images workflow succeeded.",
+        ],
+    }
+
+
+def compose_up_args(*, skip_pull: bool) -> tuple[str, ...]:
+    if skip_pull:
+        return ("up", "--pull", "never", "-d", "api")
+    return ("up", "-d", "api")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tag",
-        default="v0.3.23-alpha",
+        default="v0.3.24-alpha",
         help="Published Study Anything image tag.",
     )
     parser.add_argument(
@@ -277,6 +365,17 @@ def main() -> None:
     )
     parser.add_argument("--skip-pull", action="store_true", help="Use locally cached images.")
     parser.add_argument(
+        "--compose-up-timeout-seconds",
+        type=int,
+        default=300,
+        help="Timeout for docker compose up. 0 means no timeout.",
+    )
+    parser.add_argument(
+        "--manifest-only",
+        action="store_true",
+        help="Only verify the published manifest platforms; do not pull, start, or smoke the container.",
+    )
+    parser.add_argument(
         "--keep-on-failure",
         action="store_true",
         help="Leave disposable stack for debugging.",
@@ -294,6 +393,22 @@ def main() -> None:
         {args.expected_version} if args.expected_version else default_expected_versions(tag)
     )
     api_image = args.api_image or f"ghcr.io/jzvcpe-goat/study-anything/api:{tag}"
+    if args.manifest_only:
+        manifest_evidence = inspect_manifest_platforms(api_image)
+        if manifest_evidence.get("status") != "ok":
+            raise RuntimeError(f"Published image manifest is not ready: {manifest_evidence}")
+        print(
+            json.dumps(
+                manifest_only_report(
+                    tag=tag,
+                    api_image=api_image,
+                    manifest_evidence=manifest_evidence,
+                ),
+                ensure_ascii=False,
+            )
+        )
+        return
+
     project_name = f"study_anything_published_{int(time.time())}"
     work_dir = Path(tempfile.mkdtemp(prefix="study-anything-published-"))
     env_file = create_disposable_env(
@@ -330,7 +445,50 @@ def main() -> None:
                     )
                     return
                 raise
-        run(compose(env_file, "up", "-d", "api"))
+        try:
+            up = run(
+                compose(env_file, *compose_up_args(skip_pull=args.skip_pull)),
+                capture_output=True,
+                check=False,
+                timeout=args.compose_up_timeout_seconds or None,
+            )
+        except subprocess.TimeoutExpired:
+            if args.allow_pull_timeout_report and args.compose_up_timeout_seconds > 0:
+                print(
+                    json.dumps(
+                        compose_up_timeout_report(
+                            tag=tag,
+                            api_image=api_image,
+                            timeout_seconds=args.compose_up_timeout_seconds,
+                            project_name=project_name,
+                            manifest_evidence=inspect_manifest_platforms(api_image),
+                        ),
+                        ensure_ascii=False,
+                    )
+                )
+                return
+            raise
+        if up.returncode != 0:
+            if args.allow_pull_timeout_report and args.skip_pull:
+                print(
+                    json.dumps(
+                        cached_image_missing_report(
+                            tag=tag,
+                            api_image=api_image,
+                            project_name=project_name,
+                            stderr=up.stderr or "",
+                            manifest_evidence=inspect_manifest_platforms(api_image),
+                        ),
+                        ensure_ascii=False,
+                    )
+                )
+                return
+            raise subprocess.CalledProcessError(
+                up.returncode,
+                up.args,
+                output=up.stdout,
+                stderr=up.stderr,
+            )
         wait_for_api(api_base, args.timeout)
 
         health = request_json(api_base, "/v1/health")

@@ -22,6 +22,9 @@ ADOPTION_PACK = REPO / "platform" / "generated" / "study-anything-platform-adopt
 
 FIXTURE_IDS = {
     "manifest-pass-local-pull-timeout",
+    "cached-image-missing",
+    "compose-up-timeout",
+    "manifest-only-runtime-unverified",
     "manifest-missing-platform",
     "docker-images-failed",
     "ghcr-unavailable",
@@ -30,6 +33,9 @@ FIXTURE_IDS = {
 }
 CLASSIFICATIONS = {
     "local_pull_timeout_with_valid_release_evidence",
+    "cached_image_missing",
+    "compose_up_timeout",
+    "manifest_available_runtime_unverified",
     "published_image_platform_gap",
     "ci_image_publish_failed",
     "registry_or_network_unavailable",
@@ -86,9 +92,9 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "published-image-evidence-v1")
-        self.assertEqual(report["version"], "v0.3.23-alpha")
+        self.assertEqual(report["version"], "v0.3.24-alpha")
         self.assertEqual(report["status"], "pass")
-        self.assertEqual(report["release_identity"]["tag"], "v0.3.23-alpha")
+        self.assertEqual(report["release_identity"]["tag"], "v0.3.24-alpha")
         self.assertEqual(
             set(report["manifest_evidence"]["required_platforms"]),
             {"linux/amd64", "linux/arm64"},
@@ -121,7 +127,7 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "published-image-evidence-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.23-alpha")
+            self.assertEqual(payload["version"], "v0.3.24-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             classifications.add(payload["classification"])
             self.assertTrue(payload["operator_next_step"])
@@ -138,7 +144,7 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "published-image-evidence-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["published_image_evidence"]["fixture_count"], 6)
+        self.assertEqual(payload["published_image_evidence"]["fixture_count"], len(FIXTURE_IDS))
 
     def test_missing_pack_root_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

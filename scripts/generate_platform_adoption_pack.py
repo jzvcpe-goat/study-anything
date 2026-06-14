@@ -51,7 +51,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/eval-frameworks.md", "operator_doc", "External eval framework selection, adapter boundary, and marketplace harness guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.3.23-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.24-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("evals/README.md", "eval", "External eval overview and native/optional adapter guide."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/ecosystem-submission.json", "submission_manifest", "Machine-readable ecosystem submission metadata."),
@@ -125,6 +125,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/adopter-evidence-archive/platform-blocked.json", "adopter_evidence_fixture", "Public evidence fixture for platform-blocked support state."),
     ("fixtures/adopter-evidence-archive/resolved-support-case.json", "adopter_evidence_fixture", "Public evidence fixture for resolved support state."),
     ("fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json", "published_image_evidence_fixture", "Published-image evidence fixture for local pull timeout fallback."),
+    ("fixtures/published-image-evidence/cached-image-missing.json", "published_image_evidence_fixture", "Published-image evidence fixture for cached-only local image misses."),
+    ("fixtures/published-image-evidence/compose-up-timeout.json", "published_image_evidence_fixture", "Published-image evidence fixture for bounded Compose startup timeouts."),
+    ("fixtures/published-image-evidence/manifest-only-runtime-unverified.json", "published_image_evidence_fixture", "Published-image evidence fixture for manifest-only runtime-unverified handoff."),
     ("fixtures/published-image-evidence/manifest-missing-platform.json", "published_image_evidence_fixture", "Published-image evidence fixture for a missing manifest platform."),
     ("fixtures/published-image-evidence/docker-images-failed.json", "published_image_evidence_fixture", "Published-image evidence fixture for failed docker-images publishing."),
     ("fixtures/published-image-evidence/ghcr-unavailable.json", "published_image_evidence_fixture", "Published-image evidence fixture for GHCR or network unavailability."),
@@ -364,7 +367,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.3.23-alpha",
+        "version": "v0.3.24-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (

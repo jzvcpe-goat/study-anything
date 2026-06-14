@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.23-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -163,9 +163,64 @@ class PublishedImageLaunchTests(unittest.TestCase):
         )
 
         self.assertEqual(report["status"], "blocked_by_local_ghcr_pull")
+        self.assertEqual(report["classification"], "blocked_by_local_ghcr_pull")
         self.assertIn("docker manifest inspect", report["next_steps"][0])
         self.assertEqual(report["manifest_evidence"]["status"], "ok")
         self.assertIn("GitHub Actions docker-images workflow succeeded", report["fallback_acceptance"]["acceptable_when"][0])
+
+    def test_skip_pull_uses_cached_only_compose_policy(self) -> None:
+        module = self._module()
+
+        self.assertEqual(module.compose_up_args(skip_pull=False), ("up", "-d", "api"))
+        self.assertEqual(
+            module.compose_up_args(skip_pull=True),
+            ("up", "--pull", "never", "-d", "api"),
+        )
+
+    def test_cached_image_missing_report_is_actionable(self) -> None:
+        module = self._module()
+
+        report = module.cached_image_missing_report(
+            tag="v0.3.24-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
+            project_name="study_anything_published_test",
+            stderr="No such image: ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
+            manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
+        )
+
+        self.assertEqual(report["status"], "cached_image_missing")
+        self.assertEqual(report["classification"], "cached_image_missing")
+        self.assertIn("docker pull", report["next_steps"][0])
+        self.assertEqual(report["manifest_evidence"]["status"], "ok")
+
+    def test_compose_up_timeout_report_is_actionable(self) -> None:
+        module = self._module()
+
+        report = module.compose_up_timeout_report(
+            tag="v0.3.24-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
+            timeout_seconds=2,
+            project_name="study_anything_published_test",
+            manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
+        )
+
+        self.assertEqual(report["status"], "compose_up_timeout")
+        self.assertEqual(report["classification"], "compose_up_timeout")
+        self.assertEqual(report["timeout_seconds"], 2)
+        self.assertIn("--manifest-only", report["next_steps"][1])
+
+    def test_manifest_only_report_marks_runtime_unverified(self) -> None:
+        module = self._module()
+
+        report = module.manifest_only_report(
+            tag="v0.3.24-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
+            manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
+        )
+
+        self.assertEqual(report["status"], "manifest_available_runtime_unverified")
+        self.assertEqual(report["classification"], "manifest_available_runtime_unverified")
+        self.assertIn("does not start the container", report["diagnostic"])
 
 
 if __name__ == "__main__":

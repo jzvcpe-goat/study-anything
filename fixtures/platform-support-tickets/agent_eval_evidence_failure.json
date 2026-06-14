@@ -27,7 +27,7 @@
     ],
     "platform_id": "generic",
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=agent_eval_evidence_missing\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.23-alpha"
+    "release_version": "v0.3.24-alpha"
   },
   "support_category": "agent_eval_evidence_failure",
   "ticket_id": "agent_eval_evidence_failure",
@@ -37,5 +37,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.23-alpha"
+  "version": "v0.3.24-alpha"
 }
