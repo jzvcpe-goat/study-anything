@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.25-alpha")
+        self.assertEqual(manifest["version"], "v0.3.26-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -63,7 +63,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/eval-frameworks.md",
             "docs/release-checklist.md",
             "docs/roadmap.md",
-            "docs/release-notes/v0.3.25-alpha.md",
+            "docs/release-notes/v0.3.26-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -119,10 +119,13 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/public-support-status.md",
             "docs/release-asset-adoption.md",
             "docs/release-asset-bootstrap.md",
+            "docs/platform-agent-release-replay.md",
             "scripts/generate_release_asset_adoption.py",
             "scripts/verify_release_asset_adoption.py",
             "scripts/bootstrap_from_release.py",
             "scripts/generate_release_asset_bootstrap.py",
+            "scripts/replay_platform_agent_from_release.py",
+            "scripts/generate_platform_agent_replay.py",
             "platform/generated/study-anything-release-asset-adoption.json",
             "platform/generated/study-anything-release-asset-adoption.md",
             "platform/generated/study-anything-release-asset-adoption.zip",
@@ -131,6 +134,10 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-release-asset-bootstrap.md",
             "platform/generated/study-anything-release-asset-bootstrap.zip",
             "platform/generated/study-anything-release-asset-bootstrap.sha256",
+            "platform/generated/study-anything-platform-agent-replay.json",
+            "platform/generated/study-anything-platform-agent-replay.md",
+            "platform/generated/study-anything-platform-agent-replay.zip",
+            "platform/generated/study-anything-platform-agent-replay.sha256",
             "fixtures/release-asset-adoption/asset-only-pass.json",
             "fixtures/release-asset-adoption/asset-missing.json",
             "fixtures/release-asset-adoption/digest-mismatch.json",

@@ -319,12 +319,16 @@ For a fixed platform-agent acceptance path, run:
 ```bash
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
+python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only
 ```
 
-The verifiers complete enriched and importer-based lessons, then fetch Agent audit, Agent eval, quality
-eval, Obsidian Markdown, `learning-package-v1`, and `second-brain-handoff-v1`. Use the second-brain
-handoff when the platform Agent needs to hand the result to a NotebookLM-style workflow, Obsidian
-vault, local archive, or later knowledge-base connector without logging answers or grading feedback.
+The runtime verifiers complete enriched and importer-based lessons, then fetch Agent audit, Agent
+eval, quality eval, Obsidian Markdown, `learning-package-v1`, and `second-brain-handoff-v1`. The
+release replay simulator starts from release assets, imports the Kimi/Codex/WorkBuddy tool contract,
+and proves the minimum platform-agent call chain can be replayed without logging source text,
+answers, Agent secrets, model keys, or local paths. Use the second-brain handoff when the platform
+Agent needs to hand the result to a NotebookLM-style workflow, Obsidian vault, local archive, or
+later knowledge-base connector without logging answers or grading feedback.
 
 `agent-add-http --set-default` registers a user-owned HTTP Agent for teaching layers, quiz generation,
 grading, synthesis, scribe notes, source verification, and embedding tasks by default. Pass explicit

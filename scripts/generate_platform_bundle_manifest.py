@@ -207,9 +207,34 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub Release asset bootstrap evidence checksum.",
     ),
     (
+        "platform/generated/study-anything-platform-agent-replay.json",
+        "generated_asset",
+        "Platform Agent release replay evidence JSON.",
+    ),
+    (
+        "platform/generated/study-anything-platform-agent-replay.md",
+        "generated_asset",
+        "Platform Agent release replay evidence Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-platform-agent-replay.zip",
+        "generated_asset",
+        "Platform Agent release replay evidence archive.",
+    ),
+    (
+        "platform/generated/study-anything-platform-agent-replay.sha256",
+        "generated_asset",
+        "Platform Agent release replay evidence checksum.",
+    ),
+    (
         "docs/release-asset-bootstrap.md",
         "operator_doc",
         "GitHub Release asset bootstrap guide for external platform Agents.",
+    ),
+    (
+        "docs/platform-agent-release-replay.md",
+        "operator_doc",
+        "Platform Agent release replay guide for external tool hosts.",
     ),
     (
         "scripts/bootstrap_from_release.py",
@@ -220,6 +245,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/generate_release_asset_bootstrap.py",
         "diagnostics",
         "Generate GitHub Release asset bootstrap evidence.",
+    ),
+    (
+        "scripts/replay_platform_agent_from_release.py",
+        "verification",
+        "Replay platform Agent tool calls from public GitHub Release assets.",
+    ),
+    (
+        "scripts/generate_platform_agent_replay.py",
+        "diagnostics",
+        "Generate platform Agent release replay evidence.",
     ),
     (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
@@ -957,7 +992,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.25-alpha.md",
+        "docs/release-notes/v0.3.26-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

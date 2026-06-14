@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 58,
+      "acceptance_evidence_count": 61,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -701,6 +701,10 @@
         "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/generate_release_asset_adoption.py --check",
+        "python3 scripts/generate_release_asset_bootstrap.py --check",
+        "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_platform_agent_replay.py --check",
+        "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform codex --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -718,7 +722,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 58,
+      "acceptance_evidence_count": 61,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -761,6 +765,10 @@
         "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/generate_release_asset_adoption.py --check",
+        "python3 scripts/generate_release_asset_bootstrap.py --check",
+        "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_platform_agent_replay.py --check",
+        "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -782,7 +790,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 58,
+      "acceptance_evidence_count": 61,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -824,6 +832,10 @@
         "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/generate_release_asset_adoption.py --check",
+        "python3 scripts/generate_release_asset_bootstrap.py --check",
+        "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_platform_agent_replay.py --check",
+        "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform workbuddy --runtime metadata-only",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -856,7 +868,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.25-alpha"
+    "version": "v0.3.26-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -869,5 +881,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.25-alpha"
+  "version": "v0.3.26-alpha"
 }

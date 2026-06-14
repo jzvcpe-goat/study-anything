@@ -590,10 +590,23 @@
 - Wire release-asset adoption proof into release checks, external adoption proof, ecosystem
   submission, platform packs, bundle manifest, docs, release notes, and the adoption pack.
 
+## v0.3.26-alpha
+
+- Add `platform-agent-release-replay-v1`, a public evidence layer for importing platform-agent tool
+  contracts from GitHub Release assets and replaying the minimum Study Anything learning tool chain.
+- Add `scripts/replay_platform_agent_from_release.py` with Kimi, Codex, WorkBuddy, and generic
+  OpenAPI profiles plus metadata-only, Skill Mode, external API, and published-image runtime modes.
+- Promote `study-anything-platform-agent-replay.zip` to a top-level release asset so external
+  operators can verify tool import and replay evidence directly from the Release page.
+- Keep replay transcripts redacted, excluding raw source text, learner answers, Agent prompts,
+  Agent endpoints, model keys, support bundle private payloads, and local absolute paths.
+- Wire platform-agent release replay into release checks, ecosystem submission, platform packs,
+  bundle manifest, docs, release notes, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.24`: Remote runner smoke replay or platform-submission field evidence, depending on which
-  external operator path fails first.
+- `v0.3.27`: Real release-asset replay against GitHub prerelease plus published-image runtime
+  fallback hardening, depending on which external operator path fails first.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

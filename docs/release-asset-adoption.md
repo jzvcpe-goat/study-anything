@@ -1,12 +1,12 @@
 # Release Asset Adoption
 
-Study Anything v0.3.25-alpha adds `release-asset-adoption-v1` so a platform
+Study Anything v0.3.26-alpha adds `release-asset-adoption-v1` so a platform
 operator can start from the GitHub Release page instead of a local development
 checkout.
 
 The release entrypoint is the set of public zip assets attached to:
 
-`https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.25-alpha`
+`https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.26-alpha`
 
 Required assets:
 
@@ -15,6 +15,7 @@ Required assets:
 - `study-anything-adopter-evidence-archive.zip`
 - `study-anything-platform-feedback-package.zip`
 - `study-anything-release-asset-bootstrap.zip`
+- `study-anything-platform-agent-replay.zip`
 
 Schema contract:
 
@@ -35,7 +36,7 @@ pack:
 
 ```bash
 python3 scripts/verify_release_asset_adoption.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime metadata-only
 ```
 
@@ -44,7 +45,7 @@ Docker image smoke from the extracted adoption pack:
 
 ```bash
 python3 scripts/verify_release_asset_adoption.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime published-image \
   --skip-pull
 ```
@@ -54,7 +55,7 @@ disposable local Skill Mode runtime from the current source checkout:
 
 ```bash
 python3 scripts/verify_release_asset_adoption.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime skill-mode
 ```
 

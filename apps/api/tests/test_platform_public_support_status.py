@@ -86,7 +86,7 @@ class PlatformPublicSupportStatusTests(unittest.TestCase):
         dashboard_md = DASHBOARD_MD.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "public-support-status-v1")
-        self.assertEqual(report["version"], "v0.3.25-alpha")
+        self.assertEqual(report["version"], "v0.3.26-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(
             report["source_reports"]["onboarding_readiness_schema"],
@@ -134,7 +134,7 @@ class PlatformPublicSupportStatusTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "public-status-linkage-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.25-alpha")
+            self.assertEqual(payload["version"], "v0.3.26-alpha")
             self.assertEqual(payload["label"], path.stem)
             self.assertEqual(payload["public_fields"]["linked_schema"], "public-support-status-v1")
             self.assertIn("full_support_bundle_payload", payload["private_fields_excluded"])
