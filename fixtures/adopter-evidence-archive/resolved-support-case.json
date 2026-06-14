@@ -1,0 +1,31 @@
+{
+  "evidence_mapping": {
+    "allowed_public_fields": [
+      "schema_version",
+      "version",
+      "fixture_id",
+      "public_status",
+      "required_public_command",
+      "file_hashes",
+      "known_limitation"
+    ],
+    "linked_archive_schema": "adopter-evidence-archive-v1",
+    "required_public_command": "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+  },
+  "fixture_id": "resolved-support-case",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "personal_profile_data_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "public_note": "Closing evidence includes a passing command or documented platform limitation.",
+  "public_status": "resolved_with_public_evidence",
+  "schema_version": "adopter-evidence-fixture-v1",
+  "version": "v0.3.21-alpha"
+}

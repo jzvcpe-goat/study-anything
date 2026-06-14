@@ -89,6 +89,13 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
     "docs/public-support-status.md",
+    "scripts/generate_adopter_evidence_archive.py",
+    "scripts/verify_adopter_evidence_archive.py",
+    "platform/generated/study-anything-adopter-evidence-archive.json",
+    "platform/generated/study-anything-adopter-evidence-archive.md",
+    "platform/generated/study-anything-adopter-evidence-archive.zip",
+    "platform/generated/study-anything-adopter-evidence-archive.sha256",
+    "docs/adopter-evidence-archive.md",
     "fixtures/platform-release-blockers/tool_import_blocker.json",
     "fixtures/platform-release-blockers/local_gateway_blocker.json",
     "fixtures/platform-release-blockers/published_image_blocker.json",
@@ -101,6 +108,12 @@ REQUIRED_ARCHIVE_PATHS = [
     "fixtures/platform-status-links/docs-fix.json",
     "fixtures/platform-status-links/release-blocker.json",
     "fixtures/platform-status-links/resolved.json",
+    "fixtures/adopter-evidence-archive/successful-release.json",
+    "fixtures/adopter-evidence-archive/local-ghcr-pull-timeout.json",
+    "fixtures/adopter-evidence-archive/needs-repro-issue.json",
+    "fixtures/adopter-evidence-archive/release-blocker.json",
+    "fixtures/adopter-evidence-archive/platform-blocked.json",
+    "fixtures/adopter-evidence-archive/resolved-support-case.json",
     ".github/ISSUE_TEMPLATE/platform_import_failure.md",
     ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
     ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
@@ -303,6 +316,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/adopter-onboarding.md",
                 "docs/maintainer-rotation.md",
                 "docs/public-support-status.md",
+                "docs/adopter-evidence-archive.md",
             ]
         )
     required_terms = [
@@ -320,6 +334,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "public-support-status-v1",
         "public-maintainer-dashboard-v1",
         "public-status-linkage-fixture-v1",
+        "adopter-evidence-archive-v1",
+        "adopter-evidence-fixture-v1",
     ]
     missing_terms = [term for term in required_terms if term not in pack_text]
     if missing_terms:

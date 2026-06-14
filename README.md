@@ -153,7 +153,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.20-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.21-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -167,7 +167,14 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha
+```
+
+Release handoff evidence is packaged as `adopter-evidence-archive-v1`:
+
+```bash
+python3 scripts/generate_adopter_evidence_archive.py --check
+python3 scripts/verify_adopter_evidence_archive.py --check
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,

@@ -34,7 +34,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.20-alpha")
+        self.assertEqual(manifest["version"], "v0.3.21-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -63,7 +63,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/eval-frameworks.md",
             "docs/release-checklist.md",
             "docs/roadmap.md",
-            "docs/release-notes/v0.3.20-alpha.md",
+            "docs/release-notes/v0.3.21-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",

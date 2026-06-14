@@ -19,7 +19,7 @@ TICKET_SCHEMA_VERSION = "platform-support-ticket-fixture-v1"
 ISSUE_TEMPLATE_SCHEMA_VERSION = "platform-support-issue-template-v1"
 FIELD_REHEARSAL_SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.20-alpha"
+RELEASE_VERSION = "v0.3.21-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-support-triage.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SUPPORT_CATEGORY_IDS = (
@@ -367,7 +367,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "scripts/verify_platform_support_triage.py",
         "platform/generated/study-anything-platform-support-triage.json",
         "docs/support-desk.md",
-        "docs/release-notes/v0.3.20-alpha.md",
+        "docs/release-notes/v0.3.21-alpha.md",
         *[f".github/ISSUE_TEMPLATE/{category_id}.md" for category_id in SUPPORT_CATEGORY_IDS],
         *[f"fixtures/platform-support-tickets/{category_id}.json" for category_id in SUPPORT_CATEGORY_IDS],
     }
@@ -397,7 +397,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "support desk"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "support triage"],
         "docs/release-checklist.md": ["verify_platform_support_triage.py --check"],
-        "docs/roadmap.md": ["v0.3.20-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.21-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

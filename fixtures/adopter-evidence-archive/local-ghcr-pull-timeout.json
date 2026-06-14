@@ -1,0 +1,31 @@
+{
+  "evidence_mapping": {
+    "allowed_public_fields": [
+      "schema_version",
+      "version",
+      "fixture_id",
+      "public_status",
+      "required_public_command",
+      "file_hashes",
+      "known_limitation"
+    ],
+    "linked_archive_schema": "adopter-evidence-archive-v1",
+    "required_public_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report"
+  },
+  "fixture_id": "local-ghcr-pull-timeout",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "personal_profile_data_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "public_note": "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
+  "public_status": "local_environment_limit",
+  "schema_version": "adopter-evidence-fixture-v1",
+  "version": "v0.3.21-alpha"
+}

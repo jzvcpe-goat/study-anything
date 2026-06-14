@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.20-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.21-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -170,3 +170,20 @@ stay local-first and free to inspect, fork, and self-host. Commercial work
 should prepare future hosted sync, hosted publishing, team collaboration, and a
 trusted plugin ecosystem. Those services sell convenience and reliability, not
 access to the core learning workflow.
+
+## Adopter Evidence Archive
+
+The ecosystem submission includes `adopter-evidence-archive-v1` as the public, metadata-only proof
+bundle for external review. It packages platform pack checksums, public support status hashes, Docker
+manifest commands, local GHCR pull-timeout fallback evidence, known limitations, and maintainer
+handoff checklist.
+
+```bash
+python3 scripts/verify_adopter_evidence_archive.py --check
+python3 scripts/verify_adopter_evidence_archive.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+The matching `adopter-evidence-fixture-v1` fixtures cover successful release, local GHCR pull
+timeout, needs-repro, release-blocker, platform-blocked, and resolved support states without private
+learning data.
