@@ -1,6 +1,6 @@
 # Maintainer Rotation
 
-Study Anything v0.3.20-alpha defines `maintainer-sla-labels-v1` and
+Study Anything v0.3.21-alpha defines `maintainer-sla-labels-v1` and
 `maintainer-rotation-checklist-v1` so external adopter issues can be handled
 when the original author is not present.
 
@@ -55,3 +55,10 @@ profile data.
 `public-status-linkage-fixture-v1` fixtures. The public dashboard can publish
 platform status, known blocker fixture ids, fixture hashes, labels, and
 verification commands, but not the private support bundle payload.
+
+## Maintainer Handoff Archive
+
+`adopter-evidence-archive-v1` is the v0.3.21-alpha maintainer handoff package.
+Run `python3 scripts/verify_adopter_evidence_archive.py --check` before a release, public retry
+request, or platform submission. Link the `adopter-evidence-fixture-v1` fixture id for the current
+state, then attach only the archive checksum, public command, public limitation, and release URL.

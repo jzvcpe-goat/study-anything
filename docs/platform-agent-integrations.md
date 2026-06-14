@@ -468,3 +468,8 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
+
+For release handoff, run `python3 scripts/verify_adopter_evidence_archive.py --check` and attach the
+`adopter-evidence-archive-v1` evidence archive. The evidence archive is the platform maintainer's
+metadata-only proof bundle for checksums, public status, Docker manifest commands, and known
+limitations.

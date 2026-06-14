@@ -43,12 +43,13 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/adopter-onboarding.md", "operator_doc", "First external adopter walkthrough and failure fallback guide."),
     ("docs/maintainer-rotation.md", "operator_doc", "Maintainer SLA labels, release blocker handling, and rotation checklist."),
     ("docs/public-support-status.md", "operator_doc", "Public support status and maintainer dashboard publishing guide."),
+    ("docs/adopter-evidence-archive.md", "operator_doc", "External adopter evidence archive and maintainer handoff guide."),
     ("docs/release-checklist.md", "operator_doc", "Release gate checklist for platform adoption evidence."),
     ("docs/roadmap.md", "operator_doc", "Roadmap and release track for platform adoption goals."),
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/eval-frameworks.md", "operator_doc", "External eval framework selection, adapter boundary, and marketplace harness guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.3.20-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.21-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("evals/README.md", "eval", "External eval overview and native/optional adapter guide."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/ecosystem-submission.json", "submission_manifest", "Machine-readable ecosystem submission metadata."),
@@ -73,6 +74,10 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-public-support-status.json", "submission_report", "Public support status report."),
     ("platform/generated/study-anything-public-maintainer-dashboard.json", "submission_report", "Public maintainer dashboard JSON."),
     ("platform/generated/study-anything-public-maintainer-dashboard.md", "submission_report", "Public maintainer dashboard Markdown."),
+    ("platform/generated/study-anything-adopter-evidence-archive.json", "submission_report", "External adopter evidence archive JSON."),
+    ("platform/generated/study-anything-adopter-evidence-archive.md", "submission_report", "External adopter evidence archive Markdown."),
+    ("platform/generated/study-anything-adopter-evidence-archive.zip", "submission_report", "External adopter evidence archive package."),
+    ("platform/generated/study-anything-adopter-evidence-archive.sha256", "submission_report", "External adopter evidence archive checksum."),
     ("fixtures/platform-import-failures/schema_mismatch.json", "fixture", "Mock platform import failure fixture for schema mismatch."),
     ("fixtures/platform-import-failures/missing_local_gateway.json", "fixture", "Mock platform import failure fixture for missing local gateway."),
     ("fixtures/platform-import-failures/unsupported_auth_mode.json", "fixture", "Mock platform import failure fixture for unsupported auth mode."),
@@ -103,6 +108,12 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/platform-status-links/docs-fix.json", "status_linkage_fixture", "Public status linkage fixture for docs-fix issues."),
     ("fixtures/platform-status-links/release-blocker.json", "status_linkage_fixture", "Public status linkage fixture for release-blocker issues."),
     ("fixtures/platform-status-links/resolved.json", "status_linkage_fixture", "Public status linkage fixture for resolved issues."),
+    ("fixtures/adopter-evidence-archive/successful-release.json", "adopter_evidence_fixture", "Public evidence fixture for a successful release handoff."),
+    ("fixtures/adopter-evidence-archive/local-ghcr-pull-timeout.json", "adopter_evidence_fixture", "Public evidence fixture for local GHCR pull timeout fallback."),
+    ("fixtures/adopter-evidence-archive/needs-repro-issue.json", "adopter_evidence_fixture", "Public evidence fixture for needs-repro support state."),
+    ("fixtures/adopter-evidence-archive/release-blocker.json", "adopter_evidence_fixture", "Public evidence fixture for release-blocker support state."),
+    ("fixtures/adopter-evidence-archive/platform-blocked.json", "adopter_evidence_fixture", "Public evidence fixture for platform-blocked support state."),
+    ("fixtures/adopter-evidence-archive/resolved-support-case.json", "adopter_evidence_fixture", "Public evidence fixture for resolved support state."),
     ("platform/generated/study-anything-plugin-ecosystem-adoption-kit.json", "submission_report", "Copy-ready plugin ecosystem adoption kit for platform submissions."),
     ("platform/generated/study-anything-deployment-hardening.json", "submission_report", "Deployment hardening and clean-clone operator path report."),
     ("platform/generated/study-anything-learning-enrichment-bridge.json", "submission_report", "Learning Enrichment operator bridge report for platform Agents, NotebookLM, Obsidian, and second-brain handoff."),
@@ -151,6 +162,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_platform_onboarding_readiness.py", "verification", "Verify onboarding readiness, SLA labels, dashboard, release blockers, packs, submission, and docs."),
     ("scripts/generate_platform_public_support_status.py", "diagnostics", "Generate public support status, maintainer dashboard, and status-linkage fixtures."),
     ("scripts/verify_platform_public_support_status.py", "verification", "Verify public support status, dashboard, status-linkage fixtures, packs, submission, and docs."),
+    ("scripts/generate_adopter_evidence_archive.py", "diagnostics", "Generate external adopter evidence archive, checksum, and maintainer handoff fixtures."),
+    ("scripts/verify_adopter_evidence_archive.py", "verification", "Verify adopter evidence archive, fixtures, platform packs, submission, adoption pack, and docs."),
     ("scripts/verify_plugin_ecosystem_adoption_kit.py", "verification", "Plugin ecosystem sample, registry, and trust-policy adoption verifier."),
     ("scripts/verify_deployment_hardening.py", "verification", "Deployment hardening and published-image operator path verifier."),
     ("scripts/verify_learning_enrichment_bridge.py", "verification", "Learning Enrichment operator bridge verifier."),
@@ -304,6 +317,9 @@ python3 scripts/verify_external_adoption.py --pack platform/generated/study-anyt
 
 The verifier emits `adoption-proof-v1` JSON. Treat that JSON as the minimum
 acceptance evidence before claiming an external platform integration works.
+The generated `adopter-evidence-archive-v1` package is the public maintainer
+handoff bundle for release proof, checksums, and local GHCR pull-timeout
+fallback evidence.
 
 ## Privacy
 
@@ -322,7 +338,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.3.20-alpha",
+        "version": "v0.3.21-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -390,6 +406,8 @@ def manifest_payload() -> dict[str, object]:
                 "public-support-status-v1",
                 "public-maintainer-dashboard-v1",
                 "public-status-linkage-fixture-v1",
+                "adopter-evidence-archive-v1",
+                "adopter-evidence-fixture-v1",
                 "plugin-ecosystem-adoption-kit-v1",
                 "deployment-hardening-verification-v1",
                 "ecosystem-submission-v1",

@@ -321,7 +321,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -329,12 +329,29 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.20-alpha \
+  --tag v0.3.21-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.20-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.21-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.
+
+## Adopter Evidence Archive
+
+For v0.3.21-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
+packages public support status hashes, platform pack checksums, Docker manifest commands, local GHCR
+pull-timeout fallback evidence, known limitations, and maintainer checklist items.
+
+```bash
+python3 scripts/generate_adopter_evidence_archive.py --check
+python3 scripts/verify_adopter_evidence_archive.py --check
+python3 scripts/verify_adopter_evidence_archive.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+The archive is metadata-only and must not include raw source text, learner answers, Agent prompts,
+Agent endpoint secrets, model keys, support bundle private payloads, personal profile data, or
+browser/video/app private context.

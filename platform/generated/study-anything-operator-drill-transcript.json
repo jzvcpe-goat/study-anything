@@ -36,6 +36,8 @@
     ]
   },
   "handoff_contract": {
+    "adopter_evidence_archive_schema": "adopter-evidence-archive-v1",
+    "adopter_evidence_fixture_schema": "adopter-evidence-fixture-v1",
     "agent_eval_marketplace_enforcement_schema": "agent-eval-marketplace-enforcement-v1",
     "commercial_readiness_schema": "commercial-readiness-v1",
     "deployment_guide_schema": "deployment-guide-v1",
@@ -111,6 +113,11 @@
         "step": "publish_public_support_status"
       },
       {
+        "acceptance": "adopter-evidence-archive-v1 and adopter-evidence-fixture-v1 confirm release proof, checksums, Docker manifest evidence, known limitations, and maintainer handoff are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_adopter_evidence_archive.py --check and python3 scripts/verify_adopter_evidence_archive.py --check before public handoff.",
+        "step": "package_adopter_evidence_archive"
+      },
+      {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
         "operator_action": "Run python3 scripts/generate_platform_field_rehearsal.py --check and python3 scripts/verify_platform_field_rehearsal.py --check before asking external users to try a platform import.",
         "step": "verify_platform_field_rehearsal"
@@ -122,7 +129,7 @@
       },
       {
         "acceptance": "The shared transcript contains audit/eval/export schemas, not raw source, answers, endpoints, or keys.",
-        "operator_action": "python3 scripts/generate_platform_public_support_status.py --check",
+        "operator_action": "python3 scripts/generate_adopter_evidence_archive.py --check",
         "step": "collect_redacted_evidence"
       }
     ],
@@ -168,6 +175,11 @@
         "step": "publish_public_support_status"
       },
       {
+        "acceptance": "adopter-evidence-archive-v1 and adopter-evidence-fixture-v1 confirm release proof, checksums, Docker manifest evidence, known limitations, and maintainer handoff are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_adopter_evidence_archive.py --check and python3 scripts/verify_adopter_evidence_archive.py --check before public handoff.",
+        "step": "package_adopter_evidence_archive"
+      },
+      {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
         "operator_action": "Run python3 scripts/generate_platform_field_rehearsal.py --check and python3 scripts/verify_platform_field_rehearsal.py --check before asking external users to try a platform import.",
         "step": "verify_platform_field_rehearsal"
@@ -179,7 +191,7 @@
       },
       {
         "acceptance": "The shared transcript contains audit/eval/export schemas, not raw source, answers, endpoints, or keys.",
-        "operator_action": "python3 scripts/generate_platform_public_support_status.py --check",
+        "operator_action": "python3 scripts/generate_adopter_evidence_archive.py --check",
         "step": "collect_redacted_evidence"
       }
     ],
@@ -225,6 +237,11 @@
         "step": "publish_public_support_status"
       },
       {
+        "acceptance": "adopter-evidence-archive-v1 and adopter-evidence-fixture-v1 confirm release proof, checksums, Docker manifest evidence, known limitations, and maintainer handoff are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_adopter_evidence_archive.py --check and python3 scripts/verify_adopter_evidence_archive.py --check before public handoff.",
+        "step": "package_adopter_evidence_archive"
+      },
+      {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
         "operator_action": "Run python3 scripts/generate_platform_field_rehearsal.py --check and python3 scripts/verify_platform_field_rehearsal.py --check before asking external users to try a platform import.",
         "step": "verify_platform_field_rehearsal"
@@ -236,22 +253,22 @@
       },
       {
         "acceptance": "The shared transcript contains audit/eval/export schemas, not raw source, answers, endpoints, or keys.",
-        "operator_action": "python3 scripts/generate_platform_public_support_status.py --check",
+        "operator_action": "python3 scripts/generate_adopter_evidence_archive.py --check",
         "step": "collect_redacted_evidence"
       }
     ]
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 167,
+    "file_count": 180,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.20-alpha"
+    "version": "v0.3.21-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -300,13 +317,15 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "platform_id": "codex",
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -359,13 +378,15 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "platform_id": "kimi",
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -414,7 +435,9 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "platform_id": "workbuddy",
       "privacy_forbids_model_secrets": true

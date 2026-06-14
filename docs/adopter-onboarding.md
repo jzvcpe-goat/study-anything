@@ -1,6 +1,6 @@
 # External Adopter Onboarding
 
-Study Anything v0.3.20-alpha adds `platform-onboarding-readiness-v1` as the
+Study Anything v0.3.21-alpha adds `platform-onboarding-readiness-v1` as the
 first-adopter proof layer. It sits after the support desk: support triage proves
 failures are reportable, while onboarding readiness proves a new operator can
 complete the shortest happy path and knows what to send when it fails.
@@ -85,3 +85,15 @@ A platform handoff is ready only when:
 - `public-support-status-v1` can publish platform status without private support fields.
 - `adoption-proof-v1` completes from the adoption pack.
 - No real model keys or private learning material are stored by Study Anything.
+
+## External Adopter Evidence
+
+The v0.3.21-alpha onboarding closeout is `adopter-evidence-archive-v1`. It gives an external adopter
+one metadata-only archive with public support status hashes, platform pack checksums, Docker manifest
+commands, known limitations, and maintainer handoff checklist.
+
+```bash
+python3 scripts/verify_adopter_evidence_archive.py --check
+```
+
+Use it after the first successful walkthrough or when handing a blocked case to a platform maintainer.

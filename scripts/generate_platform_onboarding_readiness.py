@@ -24,7 +24,7 @@ SLA_SCHEMA_VERSION = "maintainer-sla-labels-v1"
 ROTATION_SCHEMA_VERSION = "maintainer-rotation-checklist-v1"
 DASHBOARD_SCHEMA_VERSION = "platform-triage-dashboard-v1"
 RELEASE_BLOCKER_SCHEMA_VERSION = "platform-release-blocker-fixture-v1"
-RELEASE_VERSION = "v0.3.20-alpha"
+RELEASE_VERSION = "v0.3.21-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SUPPORT_CATEGORIES = (
     "platform_import_failure",
@@ -155,7 +155,7 @@ def release_blocker_payload(blocker_id: str) -> dict[str, Any]:
     command_by_blocker = {
         "tool_import_blocker": "python3 scripts/verify_ecosystem_submission_pack.py",
         "local_gateway_blocker": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
-        "published_image_blocker": "python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+        "published_image_blocker": "python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
         "agent_eval_blocker": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "support_bundle_privacy_blocker": "python3 scripts/verify_platform_onboarding_readiness.py --check",
     }

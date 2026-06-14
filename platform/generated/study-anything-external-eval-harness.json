@@ -21,7 +21,7 @@
       "ragas"
     ],
     "baseline_schema": "study-anything-agent-eval-baseline-v1",
-    "baseline_version": "v0.3.20-alpha",
+    "baseline_version": "v0.3.21-alpha",
     "fixtures": {
       "fake-agent-learning-loop.json": {
         "privacy_flags_clear": true,
@@ -145,7 +145,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
@@ -159,7 +159,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
@@ -173,7 +173,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_external_eval_marketplace_harness.py --check",
         "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
@@ -238,7 +238,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.20-alpha"
+    "version": "v0.3.21-alpha"
   },
   "timeout_policy": {
     "default_external_eval_timeout_seconds": 180,
@@ -246,5 +246,5 @@
     "platform_ecosystem_eval_timeout_seconds": 60,
     "required_adapter_timeout_result": "failed"
   },
-  "version": "v0.3.20-alpha"
+  "version": "v0.3.21-alpha"
 }

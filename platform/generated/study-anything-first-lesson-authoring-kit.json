@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -149,7 +149,9 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -160,7 +162,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -198,7 +200,9 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py --agent-endpoint ${USER_OWNED_AGENT_ENDPOINT}",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -211,7 +215,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 51,
+      "acceptance_evidence_count": 53,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -248,7 +252,9 @@
         "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
-        "python3 scripts/generate_platform_public_support_status.py --check"
+        "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_adopter_evidence_archive.py --check",
+        "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -273,7 +279,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.20-alpha"
+    "version": "v0.3.21-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 12,
@@ -361,5 +367,5 @@
       "tool": "study_anything_second_brain_handoff_export"
     }
   ],
-  "version": "v0.3.20-alpha"
+  "version": "v0.3.21-alpha"
 }

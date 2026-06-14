@@ -548,9 +548,23 @@
 - Wire public support status into release checks, external adoption proof, ecosystem submission,
   platform packs, bundle manifest, docs, release notes, and the adoption pack.
 
+## v0.3.21-alpha
+
+- Add `adopter-evidence-archive-v1`, a single external adopter evidence archive and maintainer
+  handoff package.
+- Add `adopter-evidence-fixture-v1` fixtures for successful release, local GHCR pull timeout,
+  needs-repro, release-blocker, platform-blocked, and resolved support states.
+- Package public support status, maintainer dashboard, CI commands, Docker manifest evidence,
+  platform pack checksums, adoption pack checksum, known limitations, and handoff checklist.
+- Keep the archive metadata-only, excluding raw source text, learner answers, Agent prompts, Agent
+  endpoints, model keys, personal profiles, support bundle private payloads, and browser/video/app
+  private context.
+- Wire adopter evidence archive into release checks, external adoption proof, ecosystem submission,
+  platform packs, bundle manifest, docs, release notes, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.21`: External adopter evidence archive and maintainer handoff packaging.
+- `v0.3.22`: Published-image verification resilience and remote smoke replay evidence.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

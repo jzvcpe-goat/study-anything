@@ -34,7 +34,7 @@ class LearningEnrichmentBridgeTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "learning-enrichment-bridge-verification-v1")
-        self.assertEqual(report["version"], "v0.3.20-alpha")
+        self.assertEqual(report["version"], "v0.3.21-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(
             set(report["context_contract"]["source_types"]),
@@ -61,7 +61,7 @@ class LearningEnrichmentBridgeTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertTrue(report["adoption_pack"]["included"])
-        self.assertEqual(report["adoption_pack"]["version"], "v0.3.20-alpha")
+        self.assertEqual(report["adoption_pack"]["version"], "v0.3.21-alpha")
 
     def test_missing_pack_root_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

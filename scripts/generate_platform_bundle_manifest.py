@@ -127,6 +127,26 @@ FILES: list[tuple[str, str, str]] = [
         "Public maintainer dashboard Markdown.",
     ),
     (
+        "platform/generated/study-anything-adopter-evidence-archive.json",
+        "generated_asset",
+        "External adopter evidence archive JSON.",
+    ),
+    (
+        "platform/generated/study-anything-adopter-evidence-archive.md",
+        "generated_asset",
+        "External adopter evidence archive Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-adopter-evidence-archive.zip",
+        "generated_asset",
+        "External adopter evidence archive package.",
+    ),
+    (
+        "platform/generated/study-anything-adopter-evidence-archive.sha256",
+        "generated_asset",
+        "External adopter evidence archive checksum.",
+    ),
+    (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
         "support_template",
         "GitHub issue template for external platform import failures.",
@@ -235,6 +255,36 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/platform-status-links/resolved.json",
         "status_linkage_fixture",
         "Public status linkage fixture for resolved issues.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/successful-release.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for a successful release handoff.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/local-ghcr-pull-timeout.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for local GHCR pull timeout fallback.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/needs-repro-issue.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for needs-repro support state.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/release-blocker.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for release blocker support state.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/platform-blocked.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for platform-blocked support state.",
+    ),
+    (
+        "fixtures/adopter-evidence-archive/resolved-support-case.json",
+        "adopter_evidence_fixture",
+        "Public evidence fixture for resolved support state.",
     ),
     (
         "fixtures/platform-import-failures/schema_mismatch.json",
@@ -472,6 +522,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify public support status, dashboard, status-linkage fixtures, packs, submission, and docs.",
     ),
     (
+        "scripts/generate_adopter_evidence_archive.py",
+        "diagnostics",
+        "Generate external adopter evidence archive, checksum, and maintainer handoff fixtures.",
+    ),
+    (
+        "scripts/verify_adopter_evidence_archive.py",
+        "verification",
+        "Verify adopter evidence archive, fixtures, platform packs, submission, adoption pack, and docs.",
+    ),
+    (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "verification",
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
@@ -672,6 +732,11 @@ FILES: list[tuple[str, str, str]] = [
         "Public support status and maintainer dashboard publishing guide.",
     ),
     (
+        "docs/adopter-evidence-archive.md",
+        "docs",
+        "External adopter evidence archive and maintainer handoff guide.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -742,7 +807,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.20-alpha.md",
+        "docs/release-notes/v0.3.21-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

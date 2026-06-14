@@ -30,7 +30,9 @@
       "python3 scripts/generate_platform_adoption_pack.py --check",
       "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
       "python3 scripts/verify_platform_public_support_status.py --check",
-      "python3 scripts/generate_platform_public_support_status.py --check"
+      "python3 scripts/generate_platform_public_support_status.py --check",
+      "python3 scripts/verify_adopter_evidence_archive.py --check",
+      "python3 scripts/generate_adopter_evidence_archive.py --check"
     ],
     "must_prove": [
       "all submission assets exist",
@@ -66,7 +68,9 @@
       "pmf-readiness-v1 keeps hosted paid services not_ready",
       "public-support-status-v1 proves public platform status, known blocker fixtures, SLA labels, commands, fixture hashes, and release readiness can be published without private support bundle or learning data",
       "public-maintainer-dashboard-v1 proves a generated JSON/Markdown maintainer dashboard is metadata-only and privacy-safe",
-      "public-status-linkage-fixture-v1 proves SLA labels map to public status without exposing private support bundle fields"
+      "public-status-linkage-fixture-v1 proves SLA labels map to public status without exposing private support bundle fields",
+      "adopter-evidence-archive-v1 proves release proof, CI commands, Docker manifest evidence, platform pack checksums, public status hashes, known limitations, and maintainer handoff are packaged without private learning data",
+      "adopter-evidence-fixture-v1 proves successful release, local GHCR pull timeout, needs-repro, release-blocker, platform-blocked, and resolved support states map to public archive evidence"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -258,13 +262,26 @@
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
     "docs/public-support-status.md",
+    "scripts/generate_adopter_evidence_archive.py",
+    "scripts/verify_adopter_evidence_archive.py",
+    "platform/generated/study-anything-adopter-evidence-archive.json",
+    "platform/generated/study-anything-adopter-evidence-archive.md",
+    "platform/generated/study-anything-adopter-evidence-archive.zip",
+    "platform/generated/study-anything-adopter-evidence-archive.sha256",
+    "docs/adopter-evidence-archive.md",
     "fixtures/platform-status-links/intake.json",
     "fixtures/platform-status-links/needs-repro.json",
     "fixtures/platform-status-links/confirmed.json",
     "fixtures/platform-status-links/blocked-by-platform.json",
     "fixtures/platform-status-links/docs-fix.json",
     "fixtures/platform-status-links/release-blocker.json",
-    "fixtures/platform-status-links/resolved.json"
+    "fixtures/platform-status-links/resolved.json",
+    "fixtures/adopter-evidence-archive/successful-release.json",
+    "fixtures/adopter-evidence-archive/local-ghcr-pull-timeout.json",
+    "fixtures/adopter-evidence-archive/needs-repro-issue.json",
+    "fixtures/adopter-evidence-archive/release-blocker.json",
+    "fixtures/adopter-evidence-archive/platform-blocked.json",
+    "fixtures/adopter-evidence-archive/resolved-support-case.json"
   ],
   "submissions": [
     {
@@ -474,5 +491,5 @@
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.20-alpha"
+  "version": "v0.3.21-alpha"
 }

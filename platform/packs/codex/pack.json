@@ -50,7 +50,9 @@
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
     "public_support_status.schema_version == public-support-status-v1",
     "public_maintainer_dashboard.schema_version == public-maintainer-dashboard-v1",
-    "public_status_linkage_fixture.schema_version == public-status-linkage-fixture-v1"
+    "public_status_linkage_fixture.schema_version == public-status-linkage-fixture-v1",
+    "adopter_evidence_archive.schema_version == adopter-evidence-archive-v1",
+    "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1"
   ],
   "description": "Use the repo-local Skill and CLI when Codex or another terminal-capable agent can run commands inside the Study Anything checkout.",
   "entrypoints": {
@@ -100,7 +102,9 @@
     "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required",
     "python3 scripts/diagnose_adoption.py",
     "python3 scripts/verify_platform_public_support_status.py --check",
-    "python3 scripts/generate_platform_public_support_status.py --check"
+    "python3 scripts/generate_platform_public_support_status.py --check",
+    "python3 scripts/verify_adopter_evidence_archive.py --check",
+    "python3 scripts/generate_adopter_evidence_archive.py --check"
   ],
   "must_not_log_or_share": [
     "raw source text",
