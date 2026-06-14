@@ -35,7 +35,7 @@ from study_anything.core.agent_registry import (  # noqa: E402
 
 
 SCHEMA_VERSION = "external-agent-adapter-hardening-v1"
-RELEASE_VERSION = "v0.3.23-alpha"
+RELEASE_VERSION = "v0.3.24-alpha"
 PROVIDER_ID = "mock-real-agent-hardening"
 SECRET_FRAGMENT = "sk-proj-agentVerifierSecretToken000000"
 PRIVATE_SOURCE = "Private external Agent hardening source text."

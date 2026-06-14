@@ -1,7 +1,7 @@
 {
-  "classification": "ci_image_publish_failed",
-  "fixture_id": "docker-images-failed",
-  "operator_next_step": "Fix docker-images CI and publish a fresh tag before external handoff.",
+  "classification": "manifest_available_runtime_unverified",
+  "fixture_id": "manifest-only-runtime-unverified",
+  "operator_next_step": "Use this only when local runtime smoke is impossible; it proves distribution, not container behavior.",
   "privacy": {
     "agent_endpoint_secrets_included": false,
     "agent_prompts_included": false,
@@ -12,19 +12,22 @@
     "real_model_keys_included": false,
     "support_bundle_private_payload_included": false
   },
-  "release_gate": "block_release_claim",
+  "release_gate": "acceptable_only_with_successful_ci_and_release_check",
   "schema_version": "published-image-evidence-fixture-v1",
   "signals": {
     "api_image": "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
     "docker_images_workflow": {
-      "status": "failure"
+      "status": "success"
     },
     "local_smoke": {
-      "status": "not_attempted"
+      "status": "manifest_available_runtime_unverified"
     },
     "manifest": {
-      "platforms": [],
-      "status": "unknown"
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "status": "ok"
     },
     "remote_smoke": {
       "status": "not_attempted"

@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.23-alpha"
+RELEASE_VERSION = "v0.3.24-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )

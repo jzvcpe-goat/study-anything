@@ -2,7 +2,7 @@
   "adoption_pack": {
     "deployment_assets_included": 3,
     "schema": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.23-alpha"
+    "version": "v0.3.24-alpha"
   },
   "checked_assets": [
     {
@@ -144,7 +144,7 @@
   "ecosystem_submission": {
     "schema": "ecosystem-submission-v1",
     "shared_assets_included": 3,
-    "version": "v0.3.23-alpha"
+    "version": "v0.3.24-alpha"
   },
   "failure_classes": [
     "docker_missing_or_daemon_unreachable",
@@ -159,7 +159,7 @@
   ],
   "launch_script": {
     "guards_non_ascii_source_builds": true,
-    "published_image_default_tag": "v0.3.23-alpha",
+    "published_image_default_tag": "v0.3.24-alpha",
     "script": "scripts/launch_self_host.sh",
     "source_build_requires_explicit_bypass_for_non_ascii": true,
     "supports_cached_image_skip": true,
@@ -169,11 +169,11 @@
     "clean_clone": "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "diagnose": "python3 scripts/diagnose_adoption.py",
     "doctor": "./scripts/doctor.sh",
-    "manifest": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.23-alpha",
+    "manifest": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.24-alpha",
     "prepare_env": "python3 scripts/setup_env.py",
-    "published_image": "USE_PUBLISHED_IMAGES=true STUDY_ANYTHING_IMAGE_TAG=v0.3.23-alpha ./scripts/launch_self_host.sh",
+    "published_image": "USE_PUBLISHED_IMAGES=true STUDY_ANYTHING_IMAGE_TAG=v0.3.24-alpha ./scripts/launch_self_host.sh",
     "published_image_cached": "USE_PUBLISHED_IMAGES=true PULL_PUBLISHED_IMAGES=false ./scripts/launch_self_host.sh",
-    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.24-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
     "skill_mode": "./scripts/launch_skill_mode.sh",
     "source_build": "./scripts/launch_self_host.sh"
   },
@@ -221,5 +221,5 @@
   },
   "schema_version": "deployment-hardening-verification-v1",
   "status": "pass",
-  "version": "v0.3.23-alpha"
+  "version": "v0.3.24-alpha"
 }

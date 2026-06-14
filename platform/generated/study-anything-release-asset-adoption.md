@@ -1,7 +1,7 @@
 # Study Anything Release Asset Adoption
 
 Schema: `release-asset-adoption-v1`
-Version: `v0.3.23-alpha`
+Version: `v0.3.24-alpha`
 Status: `pass`
 
 This evidence bundle makes the GitHub Release page the adoption entrypoint:
@@ -10,13 +10,13 @@ pack, then replay metadata-only, published-image, or Skill Mode checks.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `25aaada5315eb1274ae30b0f5c5325e750eab9f0b1da9bc7ada501264556f66a`
+- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `3f4429de197f8046e11421c5925c21b22469c1dd556e9668aaa794c78b52bdc0`
 
 ## Commands
 
-- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.23-alpha --runtime metadata-only`
-- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.23-alpha --runtime published-image --skip-pull`
-- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.23-alpha --runtime skill-mode`
+- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.24-alpha --runtime metadata-only`
+- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.24-alpha --runtime published-image --skip-pull`
+- `python3 scripts/verify_release_asset_adoption.py --tag v0.3.24-alpha --runtime skill-mode`
 - `release-asset-adoption-proof-v1`
 
 ## Classification Matrix
@@ -30,12 +30,12 @@ pack, then replay metadata-only, published-image, or Skill Mode checks.
 
 ## Fixture Hashes
 
-- `asset-only-pass`: `cfd242c2a1fc1ad4b0762c65aa010aa429bf4d1a494645f89c9d0379f4a26c4a`
-- `asset-missing`: `53a084158efa4099940fe7cdf17aa8ed222e08ab75ef5cd496e1070b98425782`
-- `digest-mismatch`: `6101d93d6b784651af9c7cc255ade0c4e60a1400f6d160c275e7fa1c9aa0371c`
-- `pack-corrupted`: `ff8f1832c88cfaedcd523d76b3e667e541f7cb8aa2bdea2d46c177084a42c841`
-- `published-evidence-missing`: `8a7346f925bee96be91390d0d2b7d5b670ae2197fcc036a25f945d4e1714129b`
-- `network-unavailable`: `dcf50dc3e53839c5f7729e0552f609a5a2280ff528565ca7f8e3487d9290ed6b`
+- `asset-only-pass`: `fc2984a8abc63c5448d0ce3e899aef667bf78cbeae184a575b8388e6b414143c`
+- `asset-missing`: `e3ce1fa990b11f9e91eca569330b449bd67936f24ee224587baf4ba41ad9c0e7`
+- `digest-mismatch`: `3ae1f83b6a6981c910c7da1993ee2a0dd2aebf6115e4d7a95be3266923b4a43d`
+- `pack-corrupted`: `a3b51b809f750d231e80b381968d45dd3f8e87c7d474165d336412569db890db`
+- `published-evidence-missing`: `5aa222c729147611fc2d3e9012da5a99fdc85aad492240567ae97b6f2aa9564f`
+- `network-unavailable`: `f78d9200c23dee7aaf931148c0ae86daac6a75fa5ce40be528ef1933a757e05e`
 
 ## Privacy
 

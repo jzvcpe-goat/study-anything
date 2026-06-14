@@ -10,7 +10,7 @@
       "blocker_id": "tool_import_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
-        "sha256": "05c7fb2be491d546f0c60c77570626b7554a3921f84f351003b29bea619f2c00"
+        "sha256": "0a19cad553d93b6ac6f2d92b6b12daa357bbfcf871239d0117e7e614f955c73c"
       },
       "linked_support_category": "platform_import_failure",
       "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py",
@@ -25,7 +25,7 @@
       "blocker_id": "local_gateway_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
-        "sha256": "ca62c357dac307d50686a44255bac5a3d1f669dea32e200394a606dae2b3b18c"
+        "sha256": "b8f4a731fe5a6a2c95f5e586ced09cd1f29ce66ffd1f2b799d3b265b44381cf9"
       },
       "linked_support_category": "local_gateway_failure",
       "minimum_reproduction_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -40,10 +40,10 @@
       "blocker_id": "published_image_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/published_image_blocker.json",
-        "sha256": "27acba00c95b7189f65aad3c41ff21ee64b4544058fc945e8c34c9bc4a2c8545"
+        "sha256": "6bbe360b3c7a57707f8666ae2571c3b6c9dfee757f22f80a00755a6a2dfba72e"
       },
       "linked_support_category": "published_image_pull_failure",
-      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.24-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
       "public_status": "mock_fixture_ready_no_open_blocker",
       "required_labels": [
         "intake",
@@ -55,7 +55,7 @@
       "blocker_id": "agent_eval_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
-        "sha256": "528c828f4e5e84adde0cf9bdca2a465f98da304fa068cf67be3ed1a8297a3791"
+        "sha256": "bb335f732c09e639668cb113479ef39a86f22c48700f00610c683ba4b3b553f9"
       },
       "linked_support_category": "agent_eval_evidence_failure",
       "minimum_reproduction_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
@@ -70,7 +70,7 @@
       "blocker_id": "support_bundle_privacy_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
-        "sha256": "3a30d24eaa626a22065161acba5403c2ddc0b2c3c1a40f76178d983160dacafd"
+        "sha256": "977c6f936bb4e1e50765637ec4bdcb61662c56c8aca150af4b4e1daf3c2a70c5"
       },
       "linked_support_category": "docs_confusion",
       "minimum_reproduction_command": "python3 scripts/verify_platform_onboarding_readiness.py --check",
@@ -106,37 +106,37 @@
       {
         "label": "intake",
         "path": "fixtures/platform-status-links/intake.json",
-        "sha256": "9f7f2430ebe8d28dc7f7f346f87eba50df775457384acc93403ce05daba05753"
+        "sha256": "b788d163702d88780800f6d436fe916284644b4946468b72b52fba35f703aa85"
       },
       {
         "label": "needs-repro",
         "path": "fixtures/platform-status-links/needs-repro.json",
-        "sha256": "8fe0dfb6c0ce41056dd5c49ddcee2cf7b7a87ff3122b30d9dacf421e050ca606"
+        "sha256": "8fd30d1447023cf8a34f7f36edf3f76f9ab884de9dc8a8b9a4c35b023195dbc0"
       },
       {
         "label": "confirmed",
         "path": "fixtures/platform-status-links/confirmed.json",
-        "sha256": "ad644e871c1ca85d8e05100e7eb5c463a0517bc9a0ca553d53a176be524514c6"
+        "sha256": "0cefd6687f2ad3d4decc5dc82f3bc941dfcefceccdca6fbaa4e8ee0e8ff62301"
       },
       {
         "label": "blocked-by-platform",
         "path": "fixtures/platform-status-links/blocked-by-platform.json",
-        "sha256": "31e297cca33808541be25746ef20254b1a577d90c9cfed193f326dddc542040a"
+        "sha256": "e91e1401d774ea23e95518c39a20e614259a4ddfc301b7d9b7174be494714ade"
       },
       {
         "label": "docs-fix",
         "path": "fixtures/platform-status-links/docs-fix.json",
-        "sha256": "f92bfee950eaf936c621cd6699d27214475fcd0f530c9bd1c43c1cbfa6b5b535"
+        "sha256": "aedd95971c9a5591ecdd2e0d93fccbec981eaa32e3fb1b0dabc3eb5067c52a12"
       },
       {
         "label": "release-blocker",
         "path": "fixtures/platform-status-links/release-blocker.json",
-        "sha256": "b6dbc78983fa8dad15e6810d4f91cae43a2dd92bd39cd907436d493400211e18"
+        "sha256": "f3c18c75ea468105d3b33bb56d7f439c841bf125d2a2225adfd135602af74c1e"
       },
       {
         "label": "resolved",
         "path": "fixtures/platform-status-links/resolved.json",
-        "sha256": "ec828c662c2d62e307cd95b66bb9c603f803c2a6b42037c1003dfdbf5f9346aa"
+        "sha256": "513095ca55f0eca390a5f9adc7349553b6586b53f465796c2882be8d74168050"
       }
     ],
     "status_linkage_schema": "public-status-linkage-fixture-v1"
@@ -214,7 +214,7 @@
   "purpose": "Publish maintainer-readable support status without exposing support bundles, learning content, Agent secrets, or private platform context.",
   "release_readiness": {
     "current_status": "ready_when_release_gates_pass",
-    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.23-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.24-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
     "release_gate": "scripts/release_check.sh",
     "required_ci": [
       "main ci",
@@ -228,20 +228,20 @@
     "public_refs": [
       {
         "path": "platform/generated/study-anything-platform-onboarding-readiness.json",
-        "sha256": "760cd15b284cff62aee4a1a025779e5cb065459adf1543c0a49e3d019d2115b9"
+        "sha256": "23decd7a21a3cae21cd60368f152bc089ea5f90182e1126e8a65d328c7ba47cf"
       },
       {
         "path": "platform/generated/study-anything-platform-support-triage.json",
-        "sha256": "ec4ad34ee96b78f22ba6b539c2077f094bdb1c8e343e5b8c51498d915a61e578"
+        "sha256": "5d5290fd0916cc0a2b94c68a0e221875f058bb54c1623aa497ad26d53925ef09"
       },
       {
         "path": "platform/generated/study-anything-platform-triage-dashboard.json",
-        "sha256": "06076de9a82868f8cda380d0ea6d9b66b2846924c8a2851df93a5127dd0ffb93"
+        "sha256": "1ddfe0143ccc4abbd9f85295c9fa8a4e020c890c90bbbb4a26c8bc303ee16a2b"
       }
     ],
     "support_triage_schema": "platform-support-triage-v1",
     "triage_dashboard_schema": "platform-triage-dashboard-v1"
   },
   "status": "pass",
-  "version": "v0.3.23-alpha"
+  "version": "v0.3.24-alpha"
 }

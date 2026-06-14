@@ -332,6 +332,21 @@ FILES: list[tuple[str, str, str]] = [
         "Published-image evidence fixture for local pull timeout fallback.",
     ),
     (
+        "fixtures/published-image-evidence/cached-image-missing.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for cached-only local image misses.",
+    ),
+    (
+        "fixtures/published-image-evidence/compose-up-timeout.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for bounded Compose startup timeouts.",
+    ),
+    (
+        "fixtures/published-image-evidence/manifest-only-runtime-unverified.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for manifest-only runtime-unverified handoff.",
+    ),
+    (
         "fixtures/published-image-evidence/manifest-missing-platform.json",
         "published_image_evidence_fixture",
         "Published-image evidence fixture for a missing manifest platform.",
@@ -907,7 +922,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.23-alpha.md",
+        "docs/release-notes/v0.3.24-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

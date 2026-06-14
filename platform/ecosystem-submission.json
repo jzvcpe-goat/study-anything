@@ -306,6 +306,9 @@
     "fixtures/adopter-evidence-archive/platform-blocked.json",
     "fixtures/adopter-evidence-archive/resolved-support-case.json",
     "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+    "fixtures/published-image-evidence/cached-image-missing.json",
+    "fixtures/published-image-evidence/compose-up-timeout.json",
+    "fixtures/published-image-evidence/manifest-only-runtime-unverified.json",
     "fixtures/published-image-evidence/manifest-missing-platform.json",
     "fixtures/published-image-evidence/docker-images-failed.json",
     "fixtures/published-image-evidence/ghcr-unavailable.json",
@@ -526,5 +529,5 @@
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.23-alpha"
+  "version": "v0.3.24-alpha"
 }
