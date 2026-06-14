@@ -1,6 +1,6 @@
 # Support Desk
 
-Study Anything v0.3.18-alpha uses a GitHub-first support desk for external platform adoption. The
+Study Anything v0.3.19-alpha uses a GitHub-first support desk for external platform adoption. The
 goal is simple: when a Kimi-compatible, Codex, WorkBuddy-style HTTP, or generic OpenAPI setup fails,
 the user can file a useful issue without exposing private learning data or user-owned Agent secrets.
 
@@ -92,3 +92,26 @@ assets pass local verification.
 `scripts/release_check.sh` runs both support triage commands. A release is not ready if the report,
 issue templates, ticket fixtures, platform packs, ecosystem submission metadata, adoption pack, or
 docs drift from the support desk contract.
+
+## Onboarding Readiness And SLA
+
+v0.3.19-alpha adds `platform-onboarding-readiness-v1` on top of support triage. It proves first
+external adopter walkthroughs, `maintainer-sla-labels-v1`, `maintainer-rotation-checklist-v1`,
+`platform-triage-dashboard-v1`, and `platform-release-blocker-fixture-v1` fixtures are present.
+
+```bash
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+Use `docs/adopter-onboarding.md` for the first adopter path and
+`docs/maintainer-rotation.md` for SLA labels. The dashboard is generated at:
+
+```text
+platform/generated/study-anything-platform-triage-dashboard.md
+```
+
+The SLA labels are `intake`, `needs-repro`, `confirmed`, `blocked-by-platform`, `docs-fix`,
+`release-blocker`, and `resolved`.

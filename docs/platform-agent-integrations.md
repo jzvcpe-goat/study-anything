@@ -83,6 +83,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback
@@ -137,6 +139,8 @@ python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
@@ -165,6 +169,10 @@ failures actionable through GitHub issue templates, `platform-support-ticket-fix
 mock tickets, support bundle fields, and maintainer playbook entries. Use it
 before handing a pack to an external tester so failure reports stay reproducible
 and redacted.
+The first adopter readiness verifier emits `platform-onboarding-readiness-v1`
+and `platform-triage-dashboard-v1`. Use it before an external handoff to prove
+the Kimi, Codex, WorkBuddy, and generic OpenAPI/MCP shortest paths, failure
+fallbacks, maintainer SLA labels, and release-blocker fixtures are all present.
 
 After the API is reachable, platform Agents should call `study_anything_deployment_guide`,
 `study_anything_commercial_readiness`, `study_anything_adoption_telemetry`, and
@@ -193,6 +201,9 @@ platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 platform/generated/study-anything-platform-field-rehearsal.json
 platform/generated/study-anything-platform-support-triage.json
+platform/generated/study-anything-platform-onboarding-readiness.json
+platform/generated/study-anything-platform-triage-dashboard.json
+platform/generated/study-anything-platform-triage-dashboard.md
 evals/baselines/study-anything-agent-eval-baseline.json
 ```
 
@@ -217,6 +228,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 ```

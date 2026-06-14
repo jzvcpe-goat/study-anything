@@ -8,7 +8,7 @@ assignees: ""
 
 <!--
 schema_version: platform-support-issue-template-v1
-release_target: v0.3.18-alpha
+release_target: v0.3.19-alpha
 Do not paste raw source text, learner answers, Agent prompts, Agent endpoints, model keys,
 browser/video private context, or personal profile data.
 -->
@@ -18,13 +18,13 @@ browser/video private context, or personal profile data.
 ## Platform
 
 - Platform id: <!-- kimi | codex | workbuddy | generic -->
-- Study Anything release: v0.3.18-alpha
+- Study Anything release: v0.3.19-alpha
 - Runtime mode: <!-- skill-mode | published-image | source-compose | other -->
 
 ## Command Ran
 
 ```sh
-python3 scripts/verify_published_image_launch.py --tag v0.3.18-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report
+python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report
 ```
 
 ## Diagnostic Code

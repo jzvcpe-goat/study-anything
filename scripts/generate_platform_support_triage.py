@@ -18,7 +18,7 @@ ISSUE_TEMPLATE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
 SCHEMA_VERSION = "platform-support-triage-v1"
 TICKET_SCHEMA_VERSION = "platform-support-ticket-fixture-v1"
 ISSUE_TEMPLATE_SCHEMA_VERSION = "platform-support-issue-template-v1"
-RELEASE_VERSION = "v0.3.18-alpha"
+RELEASE_VERSION = "v0.3.19-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SUPPORT_CATEGORY_IDS = (
     "platform_import_failure",
@@ -90,7 +90,7 @@ SUPPORT_CATEGORIES: list[dict[str, Any]] = [
         "title": "Published image pull failure",
         "labels": ["support", "deployment"],
         "diagnostic_codes": ["timeout", "package_corruption", "version_drift"],
-        "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.18-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+        "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
         "fixture_id": "timeout",
     },
     {

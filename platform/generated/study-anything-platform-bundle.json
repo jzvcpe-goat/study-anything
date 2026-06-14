@@ -65,235 +65,291 @@
       "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
     },
     {
-      "bytes": 25033,
+      "bytes": 27054,
       "kind": "submission_manifest",
       "path": "platform/ecosystem-submission.json",
       "purpose": "Machine-readable ecosystem submission metadata for platform review.",
-      "sha256": "a6911bb2371b9ef43d6a3ab6bfe7c9b41f9b7072fb501ed6d83cc683fade8de2"
+      "sha256": "90f6cd4b644481cd1540bfff39c6bdf6cec2a341ed263813ea9407144415b87a"
     },
     {
-      "bytes": 25473,
+      "bytes": 25929,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "6bf0e50dece908e9e8a5f0c70bf057f411eac4fbbf14c9b39c9c012654c9fac8"
+      "sha256": "02f6d05f481aa96de050b4731af44c3d4887110980ae826d12f01d26e4929693"
     },
     {
-      "bytes": 27598,
+      "bytes": 29734,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "e311cbfa9326dbce92f8e0c21c2a128d3cdc1697069a4233d14c6c60fe5ce5e7"
+      "sha256": "395f90ce8c99495f3af57c332d77dfdf8311a63672f9326f12b4906100e5a398"
     },
     {
-      "bytes": 31135,
+      "bytes": 31591,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
       "purpose": "Manual platform-submission rehearsal and redacted handoff report.",
-      "sha256": "fbe545592790952ff8adb7ab6e366892601f982a0aefc047220fd8d3c71bb324"
+      "sha256": "dc96adf4c6ce4ba1cfaa7c2ac5315571695ff7d2160d507a032f7a6592995bdb"
     },
     {
-      "bytes": 18194,
+      "bytes": 18650,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-first-lesson-authoring-kit.json",
       "purpose": "Copyable first-run lesson authoring kit for platform Agents.",
-      "sha256": "9d53d290f4f642b717d33e2a34d7b2a4237a3d474532136e5b812ab5868221cf"
+      "sha256": "495826b843608b28fb3a57f7ea6f7bf0bc2c029acc6f04165b75ed1a423f32b7"
     },
     {
       "bytes": 10995,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-external-eval-harness.json",
       "purpose": "Marketplace-quality external Agent eval harness for platform submissions.",
-      "sha256": "689730aabb898d41febe6cefe357d048527406ac42c40cef33deed3f6c46c7e3"
+      "sha256": "d9ac620e2b14323b65bbfc42218fcd33900b6137f8f2a8afbf1f0e04acc28790"
     },
     {
       "bytes": 5590,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
       "purpose": "Agent eval marketplace enforcement report for optional and required external judge gates.",
-      "sha256": "eeac19cfb27c8604a64cc3d53e12d38ed60cea1da68c95b94d247ff2bf7daca8"
+      "sha256": "9478a6ae23ac24506fc63b413a74b8f5e30dbb40778b4cd11f5022479a3e4e50"
     },
     {
       "bytes": 3972,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
       "purpose": "Platform import diagnostics and redacted feedback boundary report.",
-      "sha256": "f870f83174eaadda860121e2a35051401fc77bb1893515b73583ddd5974229b8"
+      "sha256": "b0aa49d9ab28e738e7872a79e5964438afa8c91c61006635185b6a22fc7f594c"
     },
     {
       "bytes": 2198,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-feedback-package.json",
       "purpose": "Local-only redacted feedback package manifest for platform adoption support.",
-      "sha256": "e223c61d7e2aaa66a4fd522dced8a94290c68f6022f897be9d07fd5b32bafe28"
+      "sha256": "9c5cd2528f4892e2ef58c3c3b77562bba6ae0c00ec210806a54f5c20211d02cf"
     },
     {
-      "bytes": 1880,
+      "bytes": 1879,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-feedback-package.zip",
       "purpose": "Local-only redacted feedback package archive for manual support handoff.",
-      "sha256": "055d9976448e3dc35fe741222ab7cd2fcdb2d9f3625edc4c35a2b32764201aa1"
+      "sha256": "63eafccc0df7f1ba4aba09d55e157f85480e78fbc8c706210ebb50c833e1fad5"
     },
     {
       "bytes": 13849,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-field-rehearsal.json",
       "purpose": "Redacted field-adoption rehearsal transcript and import quirks report.",
-      "sha256": "9be9b77d98dee3967e113f5a21a8573549fe0150c03e55cc819064b3fb6111bd"
+      "sha256": "2ba9a0acbde6313fb98ef619fd50a14896a403ae40e773aed880c7f316c8360f"
     },
     {
       "bytes": 9560,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-support-triage.json",
       "purpose": "GitHub-first support triage, issue template, and maintainer response playbook report.",
-      "sha256": "3e6d0274d487900ba0eeb869d36f35077f6e164e1ff3a7a92eb4fa2416da5c84"
+      "sha256": "fb2814de98c56b9b3f62aaab04f8117d067fb7280f0897a9b897c0af853882eb"
+    },
+    {
+      "bytes": 11614,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-platform-onboarding-readiness.json",
+      "purpose": "First external adopter onboarding readiness and maintainer SLA report.",
+      "sha256": "71d0a592a8ea8d5e201dccedb041e6ad8fe47ec4ea1a13d447f709a306e303b4"
+    },
+    {
+      "bytes": 2613,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-platform-triage-dashboard.json",
+      "purpose": "Generated platform triage dashboard JSON.",
+      "sha256": "e04b9e8462731a4315d797c4cdcf7cc82b02874afb9356c64fb68ca8bcb3d754"
+    },
+    {
+      "bytes": 1252,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-platform-triage-dashboard.md",
+      "purpose": "Generated platform triage dashboard Markdown.",
+      "sha256": "a5ee464920f892fd165ef75bb1fdc55b2a0bc792fc4c8b9e09c64371672cd210"
     },
     {
       "bytes": 1328,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/platform_import_failure.md",
       "purpose": "GitHub issue template for external platform import failures.",
-      "sha256": "f7e31bb437ec9f1e73a5df6b58e081a2d298b62841af0516e8a1ca9be671e6b9"
+      "sha256": "fa5ee5710efffe190f82b49c2b41ac2f797d319712b1eb155305dd9037a4f1b1"
     },
     {
       "bytes": 1206,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
       "purpose": "GitHub issue template for local Agent gateway failures.",
-      "sha256": "bd972aee6e901909ba5683bd06f4670c9b174d930d02e74a38c317864caa4701"
+      "sha256": "4266bf419dab804dc387883f0dbbba3c96d4611b90076752fca62a21e3dbf414"
     },
     {
       "bytes": 1300,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
       "purpose": "GitHub issue template for published-image pull failures.",
-      "sha256": "5dd3b4ab602f7c43214d5b5bd4445579e6996305ac5cde4cc472119712200f8c"
+      "sha256": "829210616379b06896d2b38e1a64dc90ba7b311fcd8adebbf91fc93433727838"
     },
     {
       "bytes": 1269,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/agent_eval_evidence_failure.md",
       "purpose": "GitHub issue template for Agent eval evidence failures.",
-      "sha256": "f4508a755827b0e34fd0bd9c0bfdfe0d0f793404e8226ca7371b6b6f08da2fc2"
+      "sha256": "375529808c36ecd4cb6b93145118cc97f308136b9272ef2fabe65ef0d276f9ed"
     },
     {
       "bytes": 1228,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/docs_confusion.md",
       "purpose": "GitHub issue template for docs confusion reports.",
-      "sha256": "906afba60c8733e7eb07fb245736001acf987c2c768b7ed6dc50b2486b17c66f"
+      "sha256": "ab820ad99d387d49270f406cd276c06044f5efec781df633615eb6edccd2154f"
     },
     {
       "bytes": 1679,
       "kind": "support_fixture",
       "path": "fixtures/platform-support-tickets/platform_import_failure.json",
       "purpose": "Mock privacy-safe support ticket fixture for platform import failure triage.",
-      "sha256": "254a1040410872cfe831953ae16963d437a8b82475f1524c9892be915d9d2699"
+      "sha256": "98093c2f08db65a45ac3cbbc8b1b567f7d18e6519302a5a98101de233a0e98fb"
     },
     {
       "bytes": 1655,
       "kind": "support_fixture",
       "path": "fixtures/platform-support-tickets/local_gateway_failure.json",
       "purpose": "Mock privacy-safe support ticket fixture for local Agent gateway triage.",
-      "sha256": "1b5eed9da405697370682e0e53a2ca64706777c557a608240323d1a26dee6338"
+      "sha256": "59afd167401de184cf038f6686619ee67c22c4838c9c3dc350fa28a3f085292a"
     },
     {
       "bytes": 1787,
       "kind": "support_fixture",
       "path": "fixtures/platform-support-tickets/published_image_pull_failure.json",
       "purpose": "Mock privacy-safe support ticket fixture for published-image pull triage.",
-      "sha256": "be08b2e436676fcb69ef8c9c114e5dd045f52ab62c72d98a921c7b459152ef9e"
+      "sha256": "785affa744987e21cd53de37822d6d29d78f1bf6c455e96474bf331eb8400481"
     },
     {
       "bytes": 1727,
       "kind": "support_fixture",
       "path": "fixtures/platform-support-tickets/agent_eval_evidence_failure.json",
       "purpose": "Mock privacy-safe support ticket fixture for Agent eval evidence triage.",
-      "sha256": "978a473bc3c82b382d420b836c901f53d38583a21b2e409691bf15b21ed9e775"
+      "sha256": "04407183ad89199cd503c5c7e599ef69664810501d4c8d70faef64e149976bd1"
     },
     {
       "bytes": 1655,
       "kind": "support_fixture",
       "path": "fixtures/platform-support-tickets/docs_confusion.json",
       "purpose": "Mock privacy-safe support ticket fixture for docs confusion triage.",
-      "sha256": "1f04ae742198a4b2e1a5f3bd4d218d2159780b2fe741c99c0271707c1311ecc8"
+      "sha256": "dbcd2cb52b01a05538c778068ec12a95e87ca0db3b8d680b39426c066a133c83"
+    },
+    {
+      "bytes": 1592,
+      "kind": "release_blocker_fixture",
+      "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
+      "purpose": "Mock release blocker fixture for tool import failures.",
+      "sha256": "c857cf1844e3fe322feed973d66630a9784c68d44d5a567b54bb7a3f4b2129fc"
+    },
+    {
+      "bytes": 1643,
+      "kind": "release_blocker_fixture",
+      "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
+      "purpose": "Mock release blocker fixture for local gateway failures.",
+      "sha256": "927d2c45f70d159f03afec5ae81af47532a93e818a40ebaa5470c2514b7c7a18"
+    },
+    {
+      "bytes": 1829,
+      "kind": "release_blocker_fixture",
+      "path": "fixtures/platform-release-blockers/published_image_blocker.json",
+      "purpose": "Mock release blocker fixture for published-image failures.",
+      "sha256": "8b9ba5a69d63458640d9b429430c9e4db8e96d74caf1dd8569ba555db00286f9"
+    },
+    {
+      "bytes": 1643,
+      "kind": "release_blocker_fixture",
+      "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
+      "purpose": "Mock release blocker fixture for Agent eval evidence failures.",
+      "sha256": "572f4bc92b1f4a377be06a7aba45e3dcecfbaf9112e485eea8bd6792abfc313c"
+    },
+    {
+      "bytes": 1663,
+      "kind": "release_blocker_fixture",
+      "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+      "purpose": "Mock release blocker fixture for support bundle privacy failures.",
+      "sha256": "8d4fc16ecb8d5190a1e1f9c5d4fcdf4b514929be7a0ca8cd52002df12853f72d"
     },
     {
       "bytes": 1201,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/schema_mismatch.json",
       "purpose": "Mock platform import failure fixture for schema mismatch.",
-      "sha256": "db9c592064bc30306d3745d7e9cfce2c4a322d3e6a0865cf5e3b3ed49f8885ad"
+      "sha256": "3b6694ea07607f17e3d8ed49ecd0e1c84792fc22fb72ef813614f7e3b464c397"
     },
     {
       "bytes": 1169,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/missing_local_gateway.json",
       "purpose": "Mock platform import failure fixture for missing local gateway.",
-      "sha256": "bf2749cba08536f5616c488649c50ccc64b8a78adae9d65671c743d6406eb52d"
+      "sha256": "85cf31833a0a8deb3d186894ec257817abab6e604ec014cd4a94bd2c9e87fda8"
     },
     {
       "bytes": 1188,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/unsupported_auth_mode.json",
       "purpose": "Mock platform import failure fixture for unsupported auth mode.",
-      "sha256": "6fc682739d059fee2c68f7d82821ae50b10193f703715e024c19ade46eb7e533"
+      "sha256": "12b2cce40f77443ddc3478bb0166561169140cfae76cd8fb293542f334db6326"
     },
     {
       "bytes": 1178,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/tool_naming_drift.json",
       "purpose": "Mock platform import failure fixture for tool naming drift.",
-      "sha256": "dce552ac335d32b433fe7be0ad76e5deaf3c36699cc7de11b0982af7b7d56c10"
+      "sha256": "e8c27e15b0ab8c1a4d868b5f9320567c4e245a0bc2e7eb659d770ffa481ad9b4"
     },
     {
       "bytes": 1141,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/timeout.json",
       "purpose": "Mock platform import failure fixture for timeout diagnostics.",
-      "sha256": "9c9a19af012b0b92875844167275b65cc09da098c5dc3226d55092c063d6ca0f"
+      "sha256": "83e123ec192888bfa6d8ab89e64ff33d77397fa3a404f49b54717ad105cc96e6"
     },
     {
       "bytes": 1146,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/cors_localhost.json",
       "purpose": "Mock platform import failure fixture for browser localhost restrictions.",
-      "sha256": "cd4830f7024d9d3ab17866f8975e82e58b85b5e8646249ebed78a18317a3e593"
+      "sha256": "5ab674b39b7b6cb5f9764ae3796e483f1e9132c9ee47fa6036519859840bbd41"
     },
     {
       "bytes": 1251,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/package_corruption.json",
       "purpose": "Mock platform import failure fixture for corrupted adoption packages.",
-      "sha256": "1b829c8f76b7299e72b5c0d3620e84718498bc95568090a61066f179efecfebb"
+      "sha256": "c0381ec1840445500f9937c5e589bbff2aa0ec4a86e4a791f6d9e3089fcc1487"
     },
     {
       "bytes": 1131,
       "kind": "fixture",
       "path": "fixtures/platform-import-failures/version_drift.json",
       "purpose": "Mock platform import failure fixture for version drift.",
-      "sha256": "93cc158fc0cf0cd29bc999551db6f90f74baaff14098f6c8227c03f9aec4858a"
+      "sha256": "580b77cfe0fe2b23a2be68c5eaf1b0d335ffa8691c9e0f1e280939751c24465b"
     },
     {
       "bytes": 9544,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
       "purpose": "Copy-ready plugin ecosystem adoption kit for platform submissions.",
-      "sha256": "e6d54b5013847982488766bcaf35c52d835c34d35a1c85d203678ab679a24b89"
+      "sha256": "2ca22a8d670afc63283e8112cdcc09293aa9851d75201faeb708707631ee930e"
     },
     {
       "bytes": 6373,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-deployment-hardening.json",
       "purpose": "Deployment hardening and clean-clone operator path report.",
-      "sha256": "9a544b2294f2017641edd1f6ad238a1acfd385cde08e33edf9385cde33e9e2bf"
+      "sha256": "f03f4069187d97ca59c2bfca0c90dc359f41ab4fcd60ba1d08abc59c2bbb5951"
     },
     {
       "bytes": 6194,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-learning-enrichment-bridge.json",
       "purpose": "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
-      "sha256": "31793b70a72df9f2e6942f14e10f766f3e460274d855d2c8daa82df45ee6b27d"
+      "sha256": "ad9126bea520e340f1a588e8df7020705ffcce9b628d126c1aed5e49480818aa"
     },
     {
       "bytes": 6094,
@@ -310,11 +366,11 @@
       "sha256": "705a499c48de60d4881e2b3291055aae221f6a60910fea98a2b83f3b598a6e36"
     },
     {
-      "bytes": 6944,
+      "bytes": 7350,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack metadata.",
-      "sha256": "a671fad7ee583e44f63b123f1b96a0f2750597edfd76b1de333e27c9e5dfc8cc"
+      "sha256": "bd39bfdc9d86f30c65bfdffa939dc52d903a89522acfb12ba3168e6050e880f3"
     },
     {
       "bytes": 9076,
@@ -324,11 +380,11 @@
       "sha256": "6593be7f96fc85b91f5cb1e4826645a067756d8c628e2f62e7c236dd1203f317"
     },
     {
-      "bytes": 7545,
+      "bytes": 7951,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack metadata.",
-      "sha256": "00b76be16c1d2949a978cc9dd57ac3ede73fadbdfa85d19b32bdc9866e5f8c74"
+      "sha256": "9adc372d810ff04ebd5ecc4b4adf7d21d39f36c83848110c7d0872a3c0413cc2"
     },
     {
       "bytes": 6305,
@@ -338,11 +394,11 @@
       "sha256": "e24a38544bf527c0bd3f38a99d8c9468b4df0b20c70c13b93ea12c0eae6420f4"
     },
     {
-      "bytes": 7046,
+      "bytes": 7452,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "966368aeb2c0fc5e49f2d701cbe11d4bbed3549db62151a31c4271d249dbcdbd"
+      "sha256": "9eca565de0d7e6cd005a27a18626476544694cfd76a9ac0ca46232f6d085ec69"
     },
     {
       "bytes": 16456,
@@ -370,14 +426,14 @@
       "kind": "diagnostics",
       "path": "scripts/doctor.sh",
       "purpose": "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
-      "sha256": "de36caf8b06b46aa8c1fad15a6216092f61aa7b527b0abe2113da4008193676c"
+      "sha256": "5707b73ce48d6ab76a39d21c9b486409d6b0024173598b54daf7fc3b0a39f1b9"
     },
     {
       "bytes": 4019,
       "kind": "runtime",
       "path": "scripts/launch_self_host.sh",
       "purpose": "Docker Compose self-host launcher for source builds and published GHCR images.",
-      "sha256": "38a70b737ea0953c7dfb65fb5eefedcf28425c10c2a81e3083ada0220ac10799"
+      "sha256": "dcbf26aba81842fcc6c8e4631dabd6c2dd24accf14399cc45d51cee31653660a"
     },
     {
       "bytes": 250,
@@ -391,7 +447,7 @@
       "kind": "verification",
       "path": "scripts/verify_published_image_launch.py",
       "purpose": "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
-      "sha256": "006758e2d2d1095e436fa5fb6a1c4101f1b45b597cbe61f3b78f11f44182b1c2"
+      "sha256": "1836ffc1ac25af57c3b9cba8e956c180384f7f9bbd41949b7d95d60a1e0c2500"
     },
     {
       "bytes": 9854,
@@ -419,7 +475,7 @@
       "kind": "verification",
       "path": "scripts/verify_external_agent_adapter_hardening.py",
       "purpose": "External Agent eval adapter hardening and bad-output diagnostics verifier.",
-      "sha256": "3523f1ef29a5b768533871d45c50cb3f5f6689bf4d8317c6ffc11e02cf677dfd"
+      "sha256": "8dffa097bbae72be44966089cdbc4199ff3378435a4ef2a9c2874b08e54f6314"
     },
     {
       "bytes": 15258,
@@ -443,109 +499,123 @@
       "sha256": "86db3f29ca6d9a34ce3de45bacc4294c7a46ad56f75cee4ce0cf81f89bf74f4c"
     },
     {
-      "bytes": 22420,
+      "bytes": 24478,
       "kind": "verification",
       "path": "scripts/verify_platform_submission_dry_run.py",
       "purpose": "External platform submission dry-run verifier.",
-      "sha256": "f9fb1a896192b67303079c72da84885d7ef212bb4bc143688f9a4ab9051f4616"
+      "sha256": "09a0bd63609b1bcdd1ff076c2500e057c37b2b6f2b06ce36e13da948c674c005"
     },
     {
       "bytes": 33299,
       "kind": "verification",
       "path": "scripts/verify_platform_manual_submission_rehearsal.py",
       "purpose": "Manual platform-submission rehearsal verifier.",
-      "sha256": "8833a3f1805b872ad603539bb5a876a9d6b97491c99612760760b771e7f23b62"
+      "sha256": "2f5ee2a72b38f349f9ea4321ab88327e3c542a604a79d7798f5ca1081c8474bf"
     },
     {
       "bytes": 22204,
       "kind": "verification",
       "path": "scripts/verify_first_lesson_authoring_kit.py",
       "purpose": "Copyable first-run lesson authoring kit verifier.",
-      "sha256": "545a452bf9ea84e9f45ef81d04740e424037fabe052f95146e7519180ff533f9"
+      "sha256": "45992623e4624d831402db26fcbaf80ef690fbe1ba8527412e30c2b3998fd5c0"
     },
     {
       "bytes": 22492,
       "kind": "verification",
       "path": "scripts/verify_external_eval_marketplace_harness.py",
       "purpose": "Marketplace-quality external Agent eval harness verifier.",
-      "sha256": "ab6785d0acd6d066c13a10018953a4caaefb4dd93063eecf7c525789c2272a5a"
+      "sha256": "f057149211368206e975c5cebabb7c30e94c51c169e85ac90ca2f87dc0b24b68"
     },
     {
       "bytes": 21938,
       "kind": "verification",
       "path": "scripts/verify_agent_eval_marketplace_enforcement.py",
       "purpose": "Agent eval marketplace enforcement verifier.",
-      "sha256": "b36a51bbde2dc34886d7bf9aa717f155e7b0ffdced4624914adce5eb3ea145e1"
+      "sha256": "3a3ac2bf318acd94f74ebcb2a87da0738e1b5ecd6a02138fd733f024f0d73a00"
     },
     {
       "bytes": 24095,
       "kind": "verification",
       "path": "scripts/verify_platform_adoption_feedback_diagnostics.py",
       "purpose": "Platform import diagnostics and feedback boundary verifier.",
-      "sha256": "27275cc7a21e71487436d52808ff6aa5217962811b8a6c01b0f3db9480d75ba4"
+      "sha256": "c7b016bad9c22e6609a458d2b8e989abb8ce89596d5ed4e560ce9044063c0e30"
     },
     {
       "bytes": 6911,
       "kind": "diagnostics",
       "path": "scripts/generate_platform_feedback_package.py",
       "purpose": "Generate a local-only redacted platform feedback package.",
-      "sha256": "f689522b22f96bc244ab475d5a7e655e3a679acda483577a905b1d3cc0374208"
+      "sha256": "ffff4b43610d31c7135b7e3ec5f0062dcf62c6c9173c29b04d4f9b9d051c1259"
     },
     {
       "bytes": 13508,
       "kind": "diagnostics",
       "path": "scripts/generate_platform_field_rehearsal.py",
       "purpose": "Generate redacted field-adoption rehearsal transcripts and failed-import fixtures.",
-      "sha256": "358246070f26d45ca95d982621fff9a74cf22d949dea2de2e716b0f614b4dc91"
+      "sha256": "3f8835439a9201a5a820516b83590ca2f34f05abd6661231325c6d2bd54d4909"
     },
     {
       "bytes": 20111,
       "kind": "verification",
       "path": "scripts/verify_platform_field_rehearsal.py",
       "purpose": "Verify field-adoption rehearsals, import quirks, failed-import fixtures, and pack inclusion.",
-      "sha256": "142b7f072e1b73f79eb809b02864846aa3d7e614bd9892dc380318c1eb48a46a"
+      "sha256": "0e00192a149db5db4d9e687301f2fd90983138bcebc6e818aa77fa0a6062342a"
     },
     {
       "bytes": 12918,
       "kind": "diagnostics",
       "path": "scripts/generate_platform_support_triage.py",
       "purpose": "Generate GitHub-first issue templates, support ticket fixtures, and maintainer triage report.",
-      "sha256": "1538f5b413fe7e97a644433de469a404a6d1e91b341ec2d951414eac77464795"
+      "sha256": "d18db4c6a1c8d5d0fa0f1902f82e885aaac2992f7dbc1e3af6f185798594a511"
     },
     {
       "bytes": 22286,
       "kind": "verification",
       "path": "scripts/verify_platform_support_triage.py",
       "purpose": "Verify support triage assets, redaction, platform packs, ecosystem metadata, and adoption pack inclusion.",
-      "sha256": "08d69f5a033bfb19979dfa2db4967e36972026559492fbc3a18fea75b44df78b"
+      "sha256": "cca53ff7c7f9603f0ce056d2eec7f18f4fa39800a4f02c4026222799407c1f11"
+    },
+    {
+      "bytes": 16738,
+      "kind": "diagnostics",
+      "path": "scripts/generate_platform_onboarding_readiness.py",
+      "purpose": "Generate onboarding readiness, triage dashboard, and release-blocker fixtures.",
+      "sha256": "885c2174fedd6bb927dcdf9745f819a554871d1d12cc5a09d8d78f95180cc7d8"
+    },
+    {
+      "bytes": 24972,
+      "kind": "verification",
+      "path": "scripts/verify_platform_onboarding_readiness.py",
+      "purpose": "Verify onboarding readiness, SLA labels, dashboard, release blockers, packs, submission, and docs.",
+      "sha256": "c51347060e699d473d772e7accfbe2da9298797cfad55a7cc7a35d65d0565c62"
     },
     {
       "bytes": 24746,
       "kind": "verification",
       "path": "scripts/verify_plugin_ecosystem_adoption_kit.py",
       "purpose": "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
-      "sha256": "d8c108a09af00268ecbdd7f0bfcde6270fa516cf630c26ed8f3f382a77e9c74d"
+      "sha256": "28ee50c428986fc46fc2f61b347ff67712494f4dba19a74a28109ec15f39d649"
     },
     {
       "bytes": 19759,
       "kind": "verification",
       "path": "scripts/verify_deployment_hardening.py",
       "purpose": "Deployment hardening and published-image operator path verifier.",
-      "sha256": "376dfd52faa8c1c292e47ec9523f8502d5bde643bd4c1da7d99dcb7ff184f518"
+      "sha256": "66ceb6fd4ccfb1389aa408096c5c25f77e2fd684f33829a74cc350e7433ec630"
     },
     {
       "bytes": 31444,
       "kind": "verification",
       "path": "scripts/verify_learning_enrichment_bridge.py",
       "purpose": "Learning Enrichment operator bridge verifier for platform-agent, NotebookLM, Obsidian, and second-brain handoff.",
-      "sha256": "3829876aaf1cecad1ed864f6f756ba2149048a46496292b4ab4d0545989d7e99"
+      "sha256": "69fc2675f637638efadda959782d76c5374b40d373e84a60656c876fc98253ef"
     },
     {
-      "bytes": 54225,
+      "bytes": 60777,
       "kind": "verification",
       "path": "scripts/verify_ecosystem_submission_pack.py",
       "purpose": "Ecosystem submission pack verifier for external platform review readiness.",
-      "sha256": "99f0fa1fbbdcdb202ba900d5ca4dfb467e6eaf2db1f93e554cd30d91590fcd49"
+      "sha256": "04f50ab8d368af07627482c9e160f4e2e2e70af5cea29745d7b050e5cd5c8b4a"
     },
     {
       "bytes": 2549,
@@ -643,7 +713,7 @@
       "kind": "verification",
       "path": "scripts/verify_agent_eval_baseline.py",
       "purpose": "Deterministic Agent eval baseline and regression comparison gate.",
-      "sha256": "27772fe959b88472d5c2d0fe2e37cd5ffbf871282f844d32c0ae2f2517225513"
+      "sha256": "37f03044695fdda7617a09729846d8174aded85cc63ea9c2f222cb21567c6f90"
     },
     {
       "bytes": 11439,
@@ -653,32 +723,32 @@
       "sha256": "fb50ec6b7626c93dbe62afdeab1aa7227ef521b7af0af960960cc1692aa50d22"
     },
     {
-      "bytes": 29846,
+      "bytes": 32021,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "2ad32c883e66581abc4fd810ccc2c955d3019c39c6d05f026c0b73465778e236"
+      "sha256": "eb85b64060ed19321e082d8ad6b7662f6e900aecb4d6e4a8d625242544e24801"
     },
     {
-      "bytes": 42433,
+      "bytes": 44411,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Adoption-proof-v1 verifier for external-platform operator handoff.",
-      "sha256": "d682229586ac09b0ee7e2e6255d19b8b3d3060d5199c13b359d6e45be97f5c5a"
+      "sha256": "88f07331e31e6eabe66aeb532b5cd4e4fa9b2eaf040afd8154d8b5dcee535e84"
     },
     {
-      "bytes": 23653,
+      "bytes": 24083,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
-      "sha256": "46a19021257d3d9266d89f6e575a9f004a4409cd5aae83d3ad38d25f6ad4f464"
+      "sha256": "34eef5db361c96f587dab142fcb9b10106d7dadeb7722ebe9c9ef7cbb59335e7"
     },
     {
       "bytes": 13948,
       "kind": "diagnostics",
       "path": "scripts/diagnose_adoption.py",
       "purpose": "Actionable diagnostics for common external-user adoption blockers.",
-      "sha256": "b672450eefcdfcd456761aaeee0192ce9527fc51743553677743798eb9b5296d"
+      "sha256": "be80067be62c5d0716945091ce50bc2212175794f82168ee0a373e337cc5965b"
     },
     {
       "bytes": 2177,
@@ -706,7 +776,7 @@
       "kind": "eval",
       "path": "evals/baselines/study-anything-agent-eval-baseline.json",
       "purpose": "Committed fast native Agent eval regression baseline.",
-      "sha256": "13ab09955508c31ef3558caf9c34d00c50ebca8fdae4ba66ba6abb65d0414952"
+      "sha256": "c10643e7c80bb5fe19c4d4a15376dfe39cc295b2a51e74c86eeed696f7f7a353"
     },
     {
       "bytes": 1252,
@@ -723,25 +793,25 @@
       "sha256": "7641aa3f98d05174da84bf0d47b3f75ff50a4fe0c7464864ed4569437e3fce62"
     },
     {
-      "bytes": 14851,
+      "bytes": 16001,
       "kind": "docs",
       "path": "docs/adoption.md",
       "purpose": "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
-      "sha256": "475f01fd09006161e5140c3fceb6db353286856cd6e95eec2a70fbfcf3fdf482"
+      "sha256": "29884dc68da7c445df9c575abaaa70cab4bc8ce6508f857438d439f0124caf44"
     },
     {
       "bytes": 6341,
       "kind": "docs",
       "path": "docs/github-launch.md",
       "purpose": "GitHub launch, tag, release, and published-image verification guide.",
-      "sha256": "85b760de8b51644e8338ac2a773b9b0e6dcef722feb0db5ce31a32abf71fd723"
+      "sha256": "d71d4c73b1fecea3b477cbf4cb7a0b4999732b8859c625c08636a63dfd98a35e"
     },
     {
-      "bytes": 23629,
+      "bytes": 24529,
       "kind": "docs",
       "path": "docs/platform-agent-integrations.md",
       "purpose": "General platform Agent integration guide.",
-      "sha256": "9d0211efac4f6796879a43b24045b57614ad18c27ad4358f9aa1d40a926a09e8"
+      "sha256": "f2686aa6d9b63b188f8ef6367bcfeb400c6a84735385ed77953bc81eb8d23d3f"
     },
     {
       "bytes": 13296,
@@ -765,32 +835,46 @@
       "sha256": "42c24441ec50d635f79044ceaa8fbae44176b0b083c6bce8707cc0198e98fbee"
     },
     {
-      "bytes": 8256,
+      "bytes": 8798,
       "kind": "docs",
       "path": "docs/ecosystem-submission.md",
       "purpose": "Ecosystem submission metadata, verification, and no-frontend launch guide.",
-      "sha256": "39770693296e3c1a11a031d7c146ce1b378754dad67b4451a692401ca8bbd9ad"
+      "sha256": "4c7cf2c90ee9732fbf25c79a3b75fb9907aee6ac788286a9731e2f508e6ae15f"
     },
     {
-      "bytes": 3061,
+      "bytes": 3999,
       "kind": "docs",
       "path": "docs/support-desk.md",
       "purpose": "GitHub-first support desk, support bundle, and maintainer triage playbook.",
-      "sha256": "b4d86b612060094024acb8f24bee01a43af2a4df86f407ebaa31d25c0cbe2abb"
+      "sha256": "a4e7dbbf7d89689f2a4e3f048cc9cfe126e63ce173cecdc93374661a313627e9"
     },
     {
-      "bytes": 20806,
+      "bytes": 3020,
+      "kind": "docs",
+      "path": "docs/adopter-onboarding.md",
+      "purpose": "First external adopter walkthrough and failure fallback guide.",
+      "sha256": "3e6824906230931ed3eab427c37494733c8bd8b0824ab8b69fde47c0861ead26"
+    },
+    {
+      "bytes": 1783,
+      "kind": "docs",
+      "path": "docs/maintainer-rotation.md",
+      "purpose": "Maintainer SLA labels, release-blocker handling, and rotation checklist.",
+      "sha256": "e40bbd487ed0c5e95886b98735cfb6d76a392bc13499fb8a799971d1ecf9e866"
+    },
+    {
+      "bytes": 21848,
       "kind": "docs",
       "path": "docs/release-checklist.md",
       "purpose": "Release gate checklist for platform adoption evidence.",
-      "sha256": "f69788d3084de7eee35120553363609682dd941f63a5a8cf7b7b0efa8a752d91"
+      "sha256": "8d32d43d63131d9d62535eaa0a0c520b72b274042cdbad0476ecd8161f25c421"
     },
     {
-      "bytes": 31710,
+      "bytes": 32677,
       "kind": "docs",
       "path": "docs/roadmap.md",
       "purpose": "Roadmap and release track for platform adoption goals.",
-      "sha256": "2496b827f14e5b6976ead03d89d6628ac08c8d11a650b95251be65353a41c028"
+      "sha256": "5cd3c4e6889d419aec15ab563479601e900bfe71d6ba5e24bcd072931d0b5f42"
     },
     {
       "bytes": 3917,
@@ -877,11 +961,11 @@
       "sha256": "9206e6e26060fdc54e11a71d76888c1e01e6c930060e41adc0fc93ac67669fd4"
     },
     {
-      "bytes": 1579,
+      "bytes": 1261,
       "kind": "docs",
-      "path": "docs/release-notes/v0.3.18-alpha.md",
+      "path": "docs/release-notes/v0.3.19-alpha.md",
       "purpose": "Release notes for the ecosystem submission pack release.",
-      "sha256": "dded488dfd22623b171c6a6666e281951d483bb729a2a2163d01df5d29bea044"
+      "sha256": "464f1fa15680df589bbfbc73853c8dc887eadfeeefd0e72cb56bf638069f690a"
     },
     {
       "bytes": 10566,

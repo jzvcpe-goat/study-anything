@@ -97,6 +97,21 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub-first support triage, issue template, and maintainer response playbook report.",
     ),
     (
+        "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "generated_asset",
+        "First external adopter onboarding readiness and maintainer SLA report.",
+    ),
+    (
+        "platform/generated/study-anything-platform-triage-dashboard.json",
+        "generated_asset",
+        "Generated platform triage dashboard JSON.",
+    ),
+    (
+        "platform/generated/study-anything-platform-triage-dashboard.md",
+        "generated_asset",
+        "Generated platform triage dashboard Markdown.",
+    ),
+    (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
         "support_template",
         "GitHub issue template for external platform import failures.",
@@ -145,6 +160,31 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/platform-support-tickets/docs_confusion.json",
         "support_fixture",
         "Mock privacy-safe support ticket fixture for docs confusion triage.",
+    ),
+    (
+        "fixtures/platform-release-blockers/tool_import_blocker.json",
+        "release_blocker_fixture",
+        "Mock release blocker fixture for tool import failures.",
+    ),
+    (
+        "fixtures/platform-release-blockers/local_gateway_blocker.json",
+        "release_blocker_fixture",
+        "Mock release blocker fixture for local gateway failures.",
+    ),
+    (
+        "fixtures/platform-release-blockers/published_image_blocker.json",
+        "release_blocker_fixture",
+        "Mock release blocker fixture for published-image failures.",
+    ),
+    (
+        "fixtures/platform-release-blockers/agent_eval_blocker.json",
+        "release_blocker_fixture",
+        "Mock release blocker fixture for Agent eval evidence failures.",
+    ),
+    (
+        "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+        "release_blocker_fixture",
+        "Mock release blocker fixture for support bundle privacy failures.",
     ),
     (
         "fixtures/platform-import-failures/schema_mismatch.json",
@@ -362,6 +402,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify support triage assets, redaction, platform packs, ecosystem metadata, and adoption pack inclusion.",
     ),
     (
+        "scripts/generate_platform_onboarding_readiness.py",
+        "diagnostics",
+        "Generate onboarding readiness, triage dashboard, and release-blocker fixtures.",
+    ),
+    (
+        "scripts/verify_platform_onboarding_readiness.py",
+        "verification",
+        "Verify onboarding readiness, SLA labels, dashboard, release blockers, packs, submission, and docs.",
+    ),
+    (
         "scripts/verify_plugin_ecosystem_adoption_kit.py",
         "verification",
         "Plugin ecosystem sample, registry, and trust-policy adoption verifier.",
@@ -547,6 +597,16 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub-first support desk, support bundle, and maintainer triage playbook.",
     ),
     (
+        "docs/adopter-onboarding.md",
+        "docs",
+        "First external adopter walkthrough and failure fallback guide.",
+    ),
+    (
+        "docs/maintainer-rotation.md",
+        "docs",
+        "Maintainer SLA labels, release-blocker handling, and rotation checklist.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -617,7 +677,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.18-alpha.md",
+        "docs/release-notes/v0.3.19-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

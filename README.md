@@ -57,6 +57,8 @@ python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
+python3 scripts/generate_platform_onboarding_readiness.py --check
+python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
@@ -84,11 +86,13 @@ version drift. The Learning Enrichment bridge verifier emits
 `learning-enrichment-bridge-verification-v1`, proving platform-collected web, document, app,
 video-slice, Markdown, and Obsidian context can become source-bound micro-lessons, NotebookLM-style
 manual bridge evidence, Obsidian handoff, and strict second-brain exports without a standalone
-frontend. The verifier emits
-The support triage verifier emits `platform-support-triage-v1`, proving GitHub issue templates,
+frontend. The support triage verifier emits `platform-support-triage-v1`, proving GitHub issue templates,
 mock support tickets, support bundle fields, and maintainer playbook entries are present and redacted
-for external platform failures.
-`adoption-proof-v1`, proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
+for external platform failures. The onboarding readiness verifier emits
+`platform-onboarding-readiness-v1` and `platform-triage-dashboard-v1`, proving first external
+adopter walkthroughs, maintainer SLA labels, release-blocker fixtures, and privacy-safe triage
+dashboard evidence are included before handoff. The adoption verifier emits `adoption-proof-v1`,
+proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
 loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
 standalone frontend or storing real model keys in Study Anything.
 
@@ -144,7 +148,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.18-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.19-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -158,7 +162,7 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.18-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha
 ```
 
 If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,

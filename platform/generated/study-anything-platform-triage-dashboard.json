@@ -1,0 +1,83 @@
+{
+  "diagnostic_code_distribution": {
+    "agent_eval_evidence_failure": 1,
+    "docs_confusion": 1,
+    "local_gateway_failure": 1,
+    "platform_import_failure": 1,
+    "published_image_pull_failure": 1
+  },
+  "fixture_coverage": {
+    "platform_walkthroughs": [
+      "kimi",
+      "codex",
+      "workbuddy",
+      "generic"
+    ],
+    "release_blockers": [
+      "tool_import_blocker",
+      "local_gateway_blocker",
+      "published_image_blocker",
+      "agent_eval_blocker",
+      "support_bundle_privacy_blocker"
+    ],
+    "support_categories": [
+      "platform_import_failure",
+      "local_gateway_failure",
+      "published_image_pull_failure",
+      "agent_eval_evidence_failure",
+      "docs_confusion"
+    ]
+  },
+  "privacy_scan": {
+    "agent_endpoint_secrets_found": false,
+    "automatic_upload": false,
+    "learner_answers_found": false,
+    "raw_source_text_found": false,
+    "real_model_keys_found": false,
+    "status": "pass"
+  },
+  "release_blockers": [
+    {
+      "blocker_id": "tool_import_blocker",
+      "linked_support_category": "platform_import_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py"
+    },
+    {
+      "blocker_id": "local_gateway_blocker",
+      "linked_support_category": "local_gateway_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only"
+    },
+    {
+      "blocker_id": "published_image_blocker",
+      "linked_support_category": "published_image_pull_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
+    },
+    {
+      "blocker_id": "agent_eval_blocker",
+      "linked_support_category": "agent_eval_evidence_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check"
+    },
+    {
+      "blocker_id": "support_bundle_privacy_blocker",
+      "linked_support_category": "docs_confusion",
+      "minimum_reproduction_command": "python3 scripts/verify_platform_onboarding_readiness.py --check"
+    }
+  ],
+  "schema_version": "platform-triage-dashboard-v1",
+  "status": "pass",
+  "support_bundle_completeness": {
+    "complete_fixture_count": 10,
+    "release_blocker_fixture_count": 5,
+    "required_fields": [
+      "release_version",
+      "platform_id",
+      "command_ran",
+      "diagnostic_code",
+      "fixture_id",
+      "redacted_log_excerpt",
+      "next_commands_tried"
+    ],
+    "support_ticket_fixture_count": 5
+  },
+  "version": "v0.3.19-alpha"
+}

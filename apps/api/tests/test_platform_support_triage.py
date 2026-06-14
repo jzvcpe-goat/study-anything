@@ -79,7 +79,7 @@ class PlatformSupportTriageTests(unittest.TestCase):
         report = json.loads(REPORT.read_text(encoding="utf-8"))
 
         self.assertEqual(report["schema_version"], "platform-support-triage-v1")
-        self.assertEqual(report["version"], "v0.3.18-alpha")
+        self.assertEqual(report["version"], "v0.3.19-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(
             {item["category_id"] for item in report["issue_templates"]},
@@ -116,7 +116,7 @@ class PlatformSupportTriageTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "platform-support-ticket-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.18-alpha")
+            self.assertEqual(payload["version"], "v0.3.19-alpha")
             self.assertEqual(payload["ticket_id"], path.stem)
             self.assertEqual(payload["status"], "mock_ticket_ready")
             self.assertTrue(payload["linked_import_failure_fixture"].startswith("fixtures/platform-import-failures/"))

@@ -14,11 +14,11 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 142,
+    "file_count": 154,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.18-alpha"
+    "version": "v0.3.19-alpha"
   },
   "platforms": {
     "codex-skill": {
@@ -40,6 +40,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -65,6 +67,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "./scripts/run_skill_mode_demo.sh",
@@ -111,6 +115,9 @@
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-field-rehearsal.json",
+        "platform/generated/study-anything-platform-support-triage.json",
+        "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/codex/README.md",
         "platform/packs/codex/pack.json"
       ],
@@ -140,6 +147,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/generate_platform_agent_assets.py --check",
@@ -165,6 +174,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -209,7 +220,10 @@
         "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
-        "platform/generated/study-anything-platform-field-rehearsal.json"
+        "platform/generated/study-anything-platform-field-rehearsal.json",
+        "platform/generated/study-anything-platform-support-triage.json",
+        "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "platform/generated/study-anything-platform-triage-dashboard.json"
       ],
       "status": "ready_with_warnings",
       "warnings": [
@@ -239,6 +253,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -264,6 +280,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -311,6 +329,9 @@
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-field-rehearsal.json",
+        "platform/generated/study-anything-platform-support-triage.json",
+        "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/kimi/README.md",
         "platform/packs/kimi/pack.json"
       ],
@@ -342,6 +363,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -367,6 +390,8 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check",
+        "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
         "python3 scripts/verify_deployment_hardening.py --check",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
@@ -411,6 +436,9 @@
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-field-rehearsal.json",
+        "platform/generated/study-anything-platform-support-triage.json",
+        "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "platform/generated/study-anything-platform-triage-dashboard.json",
         "platform/packs/workbuddy/README.md",
         "platform/packs/workbuddy/pack.json"
       ],
@@ -432,5 +460,5 @@
   "schema_version": "platform-submission-dry-run-v1",
   "status": "pass",
   "submission_schema": "ecosystem-submission-v1",
-  "version": "v0.3.18-alpha"
+  "version": "v0.3.19-alpha"
 }
