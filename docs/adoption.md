@@ -24,6 +24,8 @@ python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
 python3 scripts/verify_platform_onboarding_readiness.py --check
+python3 scripts/generate_platform_public_support_status.py --check
+python3 scripts/verify_platform_public_support_status.py --check
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -57,6 +59,10 @@ The onboarding readiness verifier emits `platform-onboarding-readiness-v1` plus
 `platform-triage-dashboard-v1`; it proves first external adopter walkthroughs, maintainer SLA labels,
 release-blocker fixtures, dashboard privacy checks, ecosystem metadata, and adoption-pack inclusion
 are aligned before an external handoff.
+The public support status verifier emits `public-support-status-v1` and
+`public-maintainer-dashboard-v1`; it proves platform status, known blocker fixtures, SLA labels,
+fixture hashes, and public commands can be published without source text, learner answers, Agent
+prompts, Agent endpoints, model keys, private context, or full support bundle payloads.
 
 Use this path before claiming a platform integration works. It does not require the standalone
 frontend, and it does not store real model keys in Study Anything.
@@ -315,7 +321,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -323,12 +329,12 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.19-alpha \
+  --tag v0.3.20-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.19-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.20-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.

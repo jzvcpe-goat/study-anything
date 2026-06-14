@@ -26,8 +26,27 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.19-alpha"
+RELEASE_VERSION = "v0.3.20-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
+PUBLIC_SUPPORT_ASSETS = [
+    "scripts/generate_platform_public_support_status.py",
+    "scripts/verify_platform_public_support_status.py",
+    "platform/generated/study-anything-public-support-status.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "docs/public-support-status.md",
+    "fixtures/platform-status-links/intake.json",
+    "fixtures/platform-status-links/needs-repro.json",
+    "fixtures/platform-status-links/confirmed.json",
+    "fixtures/platform-status-links/blocked-by-platform.json",
+    "fixtures/platform-status-links/docs-fix.json",
+    "fixtures/platform-status-links/release-blocker.json",
+    "fixtures/platform-status-links/resolved.json",
+]
+PUBLIC_SUPPORT_COMMANDS = [
+    "generate_platform_public_support_status.py",
+    "verify_platform_public_support_status.py",
+]
 
 PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
     "kimi-compatible": {
@@ -325,7 +344,7 @@ def platform_report(
     transcript_platform: dict[str, Any],
     shared_assets: set[str],
 ) -> dict[str, Any]:
-    required_assets = [str(item) for item in profile["required_assets"]]
+    required_assets = [str(item) for item in profile["required_assets"]] + PUBLIC_SUPPORT_ASSETS
     submission_entrypoints = submission.get("entrypoints") or {}
     import_assets = set(str(item) for item in submission.get("import_assets", []))
     pack_import_assets = set(str(item) for item in transcript_platform.get("import_assets", []))
@@ -366,7 +385,9 @@ def platform_report(
     ]
     command_text = "\n".join(commands)
     missing_commands = [
-        fragment for fragment in profile["required_commands"] if fragment not in command_text
+        fragment
+        for fragment in list(profile["required_commands"]) + PUBLIC_SUPPORT_COMMANDS
+        if fragment not in command_text
     ]
 
     integration_mode = submission.get("integration_mode")
@@ -450,6 +471,9 @@ def build_report(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
         "acceptance": {
             "operator_drill_schema": transcript["schema_version"],
             "required_report_schema": SCHEMA_VERSION,
+            "public_support_status_schema": "public-support-status-v1",
+            "public_maintainer_dashboard_schema": "public-maintainer-dashboard-v1",
+            "public_status_linkage_fixture_schema": "public-status-linkage-fixture-v1",
             "minimum_command": "python3 scripts/verify_platform_submission_dry_run.py --check",
         },
     }

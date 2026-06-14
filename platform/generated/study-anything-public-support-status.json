@@ -1,0 +1,247 @@
+{
+  "acceptance": {
+    "generate_command": "python3 scripts/generate_platform_public_support_status.py --check",
+    "minimum_command": "python3 scripts/verify_platform_public_support_status.py --check",
+    "pack_command": "python3 scripts/verify_platform_public_support_status.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "known_blockers": [
+    {
+      "blocker_id": "tool_import_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
+        "sha256": "2d787160bec81284940d3e789b288dcff8c7df9fa0232564ce894b569c6a3e83"
+      },
+      "linked_support_category": "platform_import_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "local_gateway_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
+        "sha256": "ecc944269bdd0c74cbccd57284e2b8285476065a76c49c53952ffee25c435992"
+      },
+      "linked_support_category": "local_gateway_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "published_image_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/published_image_blocker.json",
+        "sha256": "0eba760547bbfa753a80b2c08c356c879cc80a4824bc37ef219e0cf92dd3fc5f"
+      },
+      "linked_support_category": "published_image_pull_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "agent_eval_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
+        "sha256": "9500463ab41e3eb98fb7452922c8590d5774e95c47888c8a55fd9ea468731271"
+      },
+      "linked_support_category": "agent_eval_evidence_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "support_bundle_privacy_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+        "sha256": "0490cc9c57ae491e2620ae86b06c6efe48b2ce7e67f0fd238b09ac024ff0d6cf"
+      },
+      "linked_support_category": "docs_confusion",
+      "minimum_reproduction_command": "python3 scripts/verify_platform_onboarding_readiness.py --check",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    }
+  ],
+  "maintainer_rotation": {
+    "public_rotation_checklist": [
+      "Run the public support status verifier before publishing status.",
+      "Publish only status labels, commands, schema names, and fixture hashes.",
+      "Escalate release blockers only when a documented first-adopter path fails.",
+      "Close public status items only with a verified command or documented platform limitation."
+    ],
+    "schema_version": "maintainer-rotation-checklist-v1"
+  },
+  "maintainer_sla": {
+    "labels": [
+      "intake",
+      "needs-repro",
+      "confirmed",
+      "blocked-by-platform",
+      "docs-fix",
+      "release-blocker",
+      "resolved"
+    ],
+    "schema_version": "maintainer-sla-labels-v1",
+    "status_linkage_refs": [
+      {
+        "label": "intake",
+        "path": "fixtures/platform-status-links/intake.json",
+        "sha256": "cf789cc87c1bcaa98260404d0dd0e57dc033fa1e66659ba0e6e7e38abafe9672"
+      },
+      {
+        "label": "needs-repro",
+        "path": "fixtures/platform-status-links/needs-repro.json",
+        "sha256": "ebdc0db5cece69bcb5bbf4a66332d6ec4faf7b319cb43bcf67e05372a8ded8d4"
+      },
+      {
+        "label": "confirmed",
+        "path": "fixtures/platform-status-links/confirmed.json",
+        "sha256": "5da168c16b36166d1f1a8e9c2b19dbffd4cdfb8df610251e5d9b2bf23794c948"
+      },
+      {
+        "label": "blocked-by-platform",
+        "path": "fixtures/platform-status-links/blocked-by-platform.json",
+        "sha256": "f26f18448ad491124056159068c6a643ef9eff08e6aababbb513c5d2afb0244e"
+      },
+      {
+        "label": "docs-fix",
+        "path": "fixtures/platform-status-links/docs-fix.json",
+        "sha256": "901904c44049f02bb203a321178cf30c4f25f932871dc7c9589d455be697e3ee"
+      },
+      {
+        "label": "release-blocker",
+        "path": "fixtures/platform-status-links/release-blocker.json",
+        "sha256": "6cf3691a2fd85c0a6551e804c4bcbb016d8824e51b1c8b7764f16a2118817e25"
+      },
+      {
+        "label": "resolved",
+        "path": "fixtures/platform-status-links/resolved.json",
+        "sha256": "70574099eaf50bc00f02f9780c515183f04e1b99197de57552a04e0538647189"
+      }
+    ],
+    "status_linkage_schema": "public-status-linkage-fixture-v1"
+  },
+  "platform_statuses": [
+    {
+      "display_name": "Kimi-compatible workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "kimi",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "Codex Skill workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "codex",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "WorkBuddy-style HTTP workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "workbuddy",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "Generic OpenAPI/MCP-capable workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "generic",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_report": false,
+    "personal_profile_data_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false,
+    "support_bundle_private_fields_in_report": false
+  },
+  "public_dashboard": {
+    "json_path": "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "markdown_path": "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "schema_version": "public-maintainer-dashboard-v1"
+  },
+  "purpose": "Publish maintainer-readable support status without exposing support bundles, learning content, Agent secrets, or private platform context.",
+  "release_readiness": {
+    "current_status": "ready_when_release_gates_pass",
+    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "release_gate": "scripts/release_check.sh",
+    "required_ci": [
+      "main ci",
+      "main docker-images",
+      "tag docker-images"
+    ]
+  },
+  "schema_version": "public-support-status-v1",
+  "source_reports": {
+    "onboarding_readiness_schema": "platform-onboarding-readiness-v1",
+    "public_refs": [
+      {
+        "path": "platform/generated/study-anything-platform-onboarding-readiness.json",
+        "sha256": "47aa44afc3f2aeb9643cdd9ff5ea3bf7dba758480bd9275ddfc4d21bc0f06ec5"
+      },
+      {
+        "path": "platform/generated/study-anything-platform-support-triage.json",
+        "sha256": "1aa1b70115cbb26d9806d16f01450b38b30c26590149e056d9e9c650702816a9"
+      },
+      {
+        "path": "platform/generated/study-anything-platform-triage-dashboard.json",
+        "sha256": "8c12aacf4ec2109b8d3d62a69a65af335d9c5e6e0a0c68cb1821ad6875efe267"
+      }
+    ],
+    "support_triage_schema": "platform-support-triage-v1",
+    "triage_dashboard_schema": "platform-triage-dashboard-v1"
+  },
+  "status": "pass",
+  "version": "v0.3.20-alpha"
+}

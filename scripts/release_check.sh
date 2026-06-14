@@ -58,6 +58,8 @@ fi
 "$python_bin" scripts/verify_platform_support_triage.py --check
 "$python_bin" scripts/generate_platform_onboarding_readiness.py --check
 "$python_bin" scripts/verify_platform_onboarding_readiness.py --check
+"$python_bin" scripts/generate_platform_public_support_status.py --check
+"$python_bin" scripts/verify_platform_public_support_status.py --check
 "$python_bin" scripts/verify_plugin_ecosystem_adoption_kit.py --check
 "$python_bin" scripts/verify_deployment_hardening.py --check
 "$python_bin" scripts/generate_platform_agent_assets.py --check

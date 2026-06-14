@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.19-alpha"
+RELEASE_VERSION = "v0.3.20-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -33,6 +33,9 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
     "platform/generated/study-anything-platform-field-rehearsal.json",
+    "platform/generated/study-anything-public-support-status.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
     "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
     "platform/generated/study-anything-deployment-hardening.json",
     "platform/generated/study-anything-learning-enrichment-bridge.json",
@@ -59,6 +62,8 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/generate_platform_feedback_package.py",
     "scripts/generate_platform_field_rehearsal.py",
     "scripts/verify_platform_field_rehearsal.py",
+    "scripts/generate_platform_public_support_status.py",
+    "scripts/verify_platform_public_support_status.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
     "scripts/verify_deployment_hardening.py",
     "scripts/verify_learning_enrichment_bridge.py",
@@ -69,6 +74,17 @@ REQUIRED_OPERATOR_ASSETS = [
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
     "platform/generated/study-anything-platform-field-rehearsal.json",
+    "platform/generated/study-anything-public-support-status.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.json",
+    "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "docs/public-support-status.md",
+    "fixtures/platform-status-links/intake.json",
+    "fixtures/platform-status-links/needs-repro.json",
+    "fixtures/platform-status-links/confirmed.json",
+    "fixtures/platform-status-links/blocked-by-platform.json",
+    "fixtures/platform-status-links/docs-fix.json",
+    "fixtures/platform-status-links/release-blocker.json",
+    "fixtures/platform-status-links/resolved.json",
     "fixtures/platform-import-failures/schema_mismatch.json",
     "fixtures/platform-import-failures/missing_local_gateway.json",
     "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -87,6 +103,11 @@ REQUIRED_OPERATOR_ASSETS = [
 REQUIRED_PACK_COMMAND = "verify_platform_manual_submission_rehearsal.py --check"
 REQUIRED_EVIDENCE = (
     "platform_manual_submission_rehearsal.schema_version == platform-manual-submission-rehearsal-v1"
+)
+PUBLIC_STATUS_EVIDENCE = (
+    "public_support_status.schema_version == public-support-status-v1",
+    "public_maintainer_dashboard.schema_version == public-maintainer-dashboard-v1",
+    "public_status_linkage_fixture.schema_version == public-status-linkage-fixture-v1",
 )
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
@@ -222,6 +243,9 @@ def validate_platform_pack(root: Path, platform_id: str) -> dict[str, Any]:
     evidence = set(str(item) for item in pack.get("acceptance_evidence", []))
     if REQUIRED_EVIDENCE not in evidence:
         raise ManualSubmissionRehearsalError(f"{platform_id} pack is missing manual rehearsal evidence.")
+    for item in PUBLIC_STATUS_EVIDENCE:
+        if item not in evidence:
+            raise ManualSubmissionRehearsalError(f"{platform_id} pack is missing public status evidence {item}.")
     return {
         "platform_id": platform_id,
         "integration_mode": pack.get("integration_mode"),
@@ -259,10 +283,23 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "scripts/generate_platform_feedback_package.py",
         "scripts/generate_platform_field_rehearsal.py",
         "scripts/verify_platform_field_rehearsal.py",
+        "scripts/generate_platform_public_support_status.py",
+        "scripts/verify_platform_public_support_status.py",
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-feedback-package.zip",
         "platform/generated/study-anything-platform-field-rehearsal.json",
+        "platform/generated/study-anything-public-support-status.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.json",
+        "platform/generated/study-anything-public-maintainer-dashboard.md",
+        "docs/public-support-status.md",
+        "fixtures/platform-status-links/intake.json",
+        "fixtures/platform-status-links/needs-repro.json",
+        "fixtures/platform-status-links/confirmed.json",
+        "fixtures/platform-status-links/blocked-by-platform.json",
+        "fixtures/platform-status-links/docs-fix.json",
+        "fixtures/platform-status-links/release-blocker.json",
+        "fixtures/platform-status-links/resolved.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -287,6 +324,14 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform field rehearsal schema.")
     if "platform-import-failure-fixture-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove platform import failure fixture schema.")
+    if "public-support-status-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove public support status schema.")
+    if "public-maintainer-dashboard-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove public maintainer dashboard schema.")
+    if "public-status-linkage-fixture-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove public status linkage schema.")
+    if "verify_platform_public_support_status.py --check" not in command_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission missing public support status check.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -332,6 +377,14 @@ def validate_existing_reports(root: Path) -> dict[str, Any]:
         "platform_field_rehearsal": (
             "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform-field-adoption-rehearsal-v1",
+        ),
+        "public_support_status": (
+            "platform/generated/study-anything-public-support-status.json",
+            "public-support-status-v1",
+        ),
+        "public_maintainer_dashboard": (
+            "platform/generated/study-anything-public-maintainer-dashboard.json",
+            "public-maintainer-dashboard-v1",
         ),
     }
     for label, (relative_path, schema) in expected.items():
@@ -509,6 +562,27 @@ def operator_steps() -> list[dict[str, Any]]:
             "failure_remediation": [
                 "Run verify_platform_field_rehearsal.py without --check to print the current mismatch summary.",
                 "Regenerate fixtures only after confirming they remain mock-only and redacted.",
+            ],
+        },
+        {
+            "step_id": "publish_public_support_status",
+            "operator_action": "Verify and publish the metadata-only public maintainer status report before asking external users to rely on the pack.",
+            "command": "python3 scripts/generate_platform_public_support_status.py --check && python3 scripts/verify_platform_public_support_status.py --check",
+            "expected_outputs": [
+                "public-support-status-v1",
+                "public-maintainer-dashboard-v1",
+                "public-status-linkage-fixture-v1",
+                "no raw source, answers, prompts, Agent endpoints, model keys, or private platform context",
+            ],
+            "evidence_paths": [
+                "platform/generated/study-anything-public-support-status.json",
+                "platform/generated/study-anything-public-maintainer-dashboard.json",
+                "platform/generated/study-anything-public-maintainer-dashboard.md",
+                "docs/public-support-status.md",
+            ],
+            "failure_remediation": [
+                "Run verify_platform_public_support_status.py without --check to print the current mismatch summary.",
+                "Publish only labels, schema names, fixture hashes, and copyable commands.",
             ],
         },
         {

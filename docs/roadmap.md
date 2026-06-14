@@ -534,9 +534,23 @@
 - Wire onboarding readiness into release checks, external adoption proof, ecosystem submission,
   Kimi/Codex/WorkBuddy packs, bundle manifest, docs, release notes, and the adoption pack.
 
+## v0.3.20-alpha
+
+- Add `public-support-status-v1`, a publishable support-status report for external adopters and
+  maintainers.
+- Add `public-maintainer-dashboard-v1` JSON and Markdown generated dashboards.
+- Add `public-status-linkage-fixture-v1` fixtures mapping intake, needs-repro, confirmed,
+  blocked-by-platform, docs-fix, release-blocker, and resolved labels into public statuses.
+- Keep public status metadata-only: schema names, release version, platform status, fixture ids,
+  fixture hashes, commands, labels, and documented limitations.
+- Explicitly exclude raw source text, learner answers, Agent prompts, real Agent endpoints, model
+  keys, personal profiles, full support bundle payloads, and browser/video/app private context.
+- Wire public support status into release checks, external adoption proof, ecosystem submission,
+  platform packs, bundle manifest, docs, release notes, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.20`: External support status reporting and public maintainer dashboard publishing.
+- `v0.3.21`: External adopter evidence archive and maintainer handoff packaging.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track

@@ -1,0 +1,169 @@
+{
+  "known_blockers": [
+    {
+      "blocker_id": "tool_import_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
+        "sha256": "2d787160bec81284940d3e789b288dcff8c7df9fa0232564ce894b569c6a3e83"
+      },
+      "linked_support_category": "platform_import_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "local_gateway_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
+        "sha256": "ecc944269bdd0c74cbccd57284e2b8285476065a76c49c53952ffee25c435992"
+      },
+      "linked_support_category": "local_gateway_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "published_image_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/published_image_blocker.json",
+        "sha256": "0eba760547bbfa753a80b2c08c356c879cc80a4824bc37ef219e0cf92dd3fc5f"
+      },
+      "linked_support_category": "published_image_pull_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "agent_eval_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
+        "sha256": "9500463ab41e3eb98fb7452922c8590d5774e95c47888c8a55fd9ea468731271"
+      },
+      "linked_support_category": "agent_eval_evidence_failure",
+      "minimum_reproduction_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    },
+    {
+      "blocker_id": "support_bundle_privacy_blocker",
+      "fixture_ref": {
+        "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
+        "sha256": "0490cc9c57ae491e2620ae86b06c6efe48b2ce7e67f0fd238b09ac024ff0d6cf"
+      },
+      "linked_support_category": "docs_confusion",
+      "minimum_reproduction_command": "python3 scripts/verify_platform_onboarding_readiness.py --check",
+      "public_status": "mock_fixture_ready_no_open_blocker",
+      "required_labels": [
+        "intake",
+        "needs-repro",
+        "release-blocker"
+      ]
+    }
+  ],
+  "last_verified_commands": [
+    "python3 scripts/verify_platform_public_support_status.py --check",
+    "python3 scripts/generate_platform_public_support_status.py --check",
+    "python3 scripts/verify_platform_onboarding_readiness.py --check",
+    "python3 scripts/verify_platform_support_triage.py --check"
+  ],
+  "maintainer_labels": [
+    "intake",
+    "needs-repro",
+    "confirmed",
+    "blocked-by-platform",
+    "docs-fix",
+    "release-blocker",
+    "resolved"
+  ],
+  "platforms": [
+    {
+      "display_name": "Kimi-compatible workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "kimi",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "Codex Skill workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "codex",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "WorkBuddy-style HTTP workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "workbuddy",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    },
+    {
+      "display_name": "Generic OpenAPI/MCP-capable workspace",
+      "last_verified_commands": [
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+        "python3 scripts/verify_platform_onboarding_readiness.py --check"
+      ],
+      "platform_id": "generic",
+      "public_status": "supported_for_first_adopter",
+      "visible_limitations": [
+        "Localhost access depends on the host platform.",
+        "Real model credentials stay inside the user's own Agent or platform runtime."
+      ]
+    }
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_report": false,
+    "personal_profile_data_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false,
+    "support_bundle_private_fields_in_report": false
+  },
+  "schema_version": "public-maintainer-dashboard-v1",
+  "status": "pass",
+  "summary": {
+    "known_blocker_count": 5,
+    "platform_count": 4,
+    "public_release_readiness": "ready_when_release_gates_pass",
+    "sla_label_count": 7,
+    "status_linkage_fixture_count": 7
+  },
+  "version": "v0.3.20-alpha"
+}

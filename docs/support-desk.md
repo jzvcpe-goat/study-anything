@@ -1,6 +1,6 @@
 # Support Desk
 
-Study Anything v0.3.19-alpha uses a GitHub-first support desk for external platform adoption. The
+Study Anything v0.3.20-alpha uses a GitHub-first support desk for external platform adoption. The
 goal is simple: when a Kimi-compatible, Codex, WorkBuddy-style HTTP, or generic OpenAPI setup fails,
 the user can file a useful issue without exposing private learning data or user-owned Agent secrets.
 
@@ -95,7 +95,7 @@ docs drift from the support desk contract.
 
 ## Onboarding Readiness And SLA
 
-v0.3.19-alpha adds `platform-onboarding-readiness-v1` on top of support triage. It proves first
+v0.3.20-alpha adds `platform-onboarding-readiness-v1` on top of support triage. It proves first
 external adopter walkthroughs, `maintainer-sla-labels-v1`, `maintainer-rotation-checklist-v1`,
 `platform-triage-dashboard-v1`, and `platform-release-blocker-fixture-v1` fixtures are present.
 
@@ -115,3 +115,27 @@ platform/generated/study-anything-platform-triage-dashboard.md
 
 The SLA labels are `intake`, `needs-repro`, `confirmed`, `blocked-by-platform`, `docs-fix`,
 `release-blocker`, and `resolved`.
+
+## Public Maintainer Status
+
+v0.3.20-alpha adds `public-support-status-v1` and `public-maintainer-dashboard-v1`. This layer is
+safe to publish because it includes only platform status, schema names, copyable verification
+commands, release-blocker fixture ids and hashes, SLA labels, and documented limitations.
+Treat this as the public maintainer status surface, not as a support bundle dump.
+
+```bash
+python3 scripts/generate_platform_public_support_status.py --check
+python3 scripts/verify_platform_public_support_status.py --check
+python3 scripts/verify_platform_public_support_status.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
+
+The public dashboard is generated at:
+
+```text
+platform/generated/study-anything-public-maintainer-dashboard.md
+```
+
+Use `docs/public-support-status.md` for the public status contract. Never publish raw source text,
+learner answers, Agent prompts, real Agent endpoints, model keys, private browser/video/app context,
+personal profile data, or full support bundle payloads.

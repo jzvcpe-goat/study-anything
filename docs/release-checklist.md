@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.3.19-alpha
+## v0.3.20-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -26,6 +26,8 @@
 - [ ] `.venv/bin/python scripts/verify_platform_support_triage.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_onboarding_readiness.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_onboarding_readiness.py --check`
+- [ ] `.venv/bin/python scripts/generate_platform_public_support_status.py --check`
+- [ ] `.venv/bin/python scripts/verify_platform_public_support_status.py --check`
 - [ ] `.venv/bin/python scripts/verify_plugin_ecosystem_adoption_kit.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_agent_assets.py --check`
 - [ ] `.venv/bin/python scripts/verify_commercial_readiness.py`
@@ -67,6 +69,8 @@
 - [ ] Run `python3 scripts/verify_platform_support_triage.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same support desk assets and release notes.
 - [ ] Run `python3 scripts/generate_platform_onboarding_readiness.py --check` and `python3 scripts/verify_platform_onboarding_readiness.py --check`; verify `platform-onboarding-readiness-v1` covers Kimi/Codex/WorkBuddy/generic first adopter walkthroughs, `maintainer-sla-labels-v1`, `maintainer-rotation-checklist-v1`, `platform-triage-dashboard-v1`, `platform-release-blocker-fixture-v1`, platform-pack inclusion, ecosystem submission inclusion, adoption-pack inclusion, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, or private browser/video/app context.
 - [ ] Run `python3 scripts/verify_platform_onboarding_readiness.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same onboarding readiness report, dashboard, release-blocker fixtures, docs, and release notes.
+- [ ] Run `python3 scripts/generate_platform_public_support_status.py --check` and `python3 scripts/verify_platform_public_support_status.py --check`; verify `public-support-status-v1` covers Kimi/Codex/WorkBuddy/generic platform statuses, known blocker fixtures, `public-maintainer-dashboard-v1`, `public-status-linkage-fixture-v1`, platform-pack inclusion, ecosystem submission inclusion, adoption-pack inclusion, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, full support bundle payloads, or private browser/video/app context.
+- [ ] Run `python3 scripts/verify_platform_public_support_status.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same public support status report, dashboard, status-linkage fixtures, docs, and release notes.
 - [ ] Run `python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check` and verify `plugin-ecosystem-adoption-kit-v1` includes all five bundled sample plugins, digest-verified `plugins/registry.json`, quarantine-first trust policy, platform-pack commands, and no plugin entrypoint execution, raw source text, learner answers, Agent endpoint secrets, real model keys, or browser/video private context.
 - [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<mock-agent-endpoint> ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
@@ -104,8 +108,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<compose-mock-agent-endpoint> python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.19-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.19-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.20-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.20-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -131,4 +135,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.19-alpha`.
+- [ ] Tag `v0.3.20-alpha`.

@@ -23,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.19-alpha")
+        self.assertEqual(payload["version"], "v0.3.20-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertEqual(
@@ -58,6 +58,9 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             payload["platform_release_blocker_fixture"],
             "platform-release-blocker-fixture-v1",
         )
+        self.assertEqual(payload["public_support_status"], "public-support-status-v1")
+        self.assertEqual(payload["public_maintainer_dashboard"], "public-maintainer-dashboard-v1")
+        self.assertEqual(payload["public_status_linkage_fixture"], "public-status-linkage-fixture-v1")
         self.assertIn("kimi-compatible", payload["platforms"])
         self.assertIn("codex-skill", payload["platforms"])
         self.assertIn("workbuddy-style-http", payload["platforms"])
@@ -70,7 +73,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.19-alpha")
+        self.assertEqual(submission["version"], "v0.3.20-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -137,6 +140,21 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             "platform/generated/study-anything-platform-triage-dashboard.md",
             submission["shared_assets"],
         )
+        self.assertIn(
+            "platform/generated/study-anything-public-support-status.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-public-maintainer-dashboard.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-public-maintainer-dashboard.md",
+            submission["shared_assets"],
+        )
+        self.assertIn("docs/public-support-status.md", submission["shared_assets"])
+        self.assertIn("fixtures/platform-status-links/intake.json", submission["shared_assets"])
+        self.assertIn("fixtures/platform-status-links/release-blocker.json", submission["shared_assets"])
         self.assertIn("docs/support-desk.md", submission["shared_assets"])
         self.assertIn("docs/adopter-onboarding.md", submission["shared_assets"])
         self.assertIn("docs/maintainer-rotation.md", submission["shared_assets"])
@@ -193,8 +211,14 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         self.assertIn("verify_platform_support_triage.py", commands)
         self.assertIn("generate_platform_onboarding_readiness.py", commands)
         self.assertIn("verify_platform_onboarding_readiness.py", commands)
+        self.assertIn("generate_platform_public_support_status.py", commands)
+        self.assertIn("verify_platform_public_support_status.py", commands)
         self.assertIn("verify_external_agent_adapter_hardening.py", commands)
         self.assertIn("verify_learning_enrichment_bridge.py", commands)
+        prove = "\n".join(submission["acceptance"]["must_prove"])
+        self.assertIn("public-support-status-v1", prove)
+        self.assertIn("public-maintainer-dashboard-v1", prove)
+        self.assertIn("public-status-linkage-fixture-v1", prove)
 
 
 class PlatformSubmissionDryRunTests(unittest.TestCase):
@@ -221,7 +245,7 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-submission-dry-run-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["blocked_platforms"], [])
         self.assertFalse(report["privacy"]["real_model_keys_stored_by_study_anything"])
@@ -271,7 +295,7 @@ class PlatformManualSubmissionRehearsalReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])
@@ -293,7 +317,7 @@ class FirstLessonAuthoringKitReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "first-run-lesson-authoring-kit-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(set(report["copyable_prompts"]), {"en", "zh"})
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
@@ -313,7 +337,7 @@ class ExternalEvalHarnessReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "external-eval-marketplace-harness-v1")
-        self.assertEqual(report["version"], "v0.3.19-alpha")
+        self.assertEqual(report["version"], "v0.3.20-alpha")
         self.assertEqual(report["status"], "pass")
         adapter_ids = {item["adapter_id"] for item in report["external_adapters"]}
         self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})

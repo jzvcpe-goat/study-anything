@@ -1,6 +1,6 @@
 # External Adopter Onboarding
 
-Study Anything v0.3.19-alpha adds `platform-onboarding-readiness-v1` as the
+Study Anything v0.3.20-alpha adds `platform-onboarding-readiness-v1` as the
 first-adopter proof layer. It sits after the support desk: support triage proves
 failures are reportable, while onboarding readiness proves a new operator can
 complete the shortest happy path and knows what to send when it fails.
@@ -42,7 +42,10 @@ OpenAPI/MCP-capable workspaces:
 4. Run `python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`.
 
 The expected evidence is `adoption-proof-v1`,
-`platform-onboarding-readiness-v1`, and `platform-triage-dashboard-v1`.
+`platform-onboarding-readiness-v1`, `platform-triage-dashboard-v1`, and
+`public-support-status-v1`.
+Use the public status report to show external adopters current platform support
+without exposing support bundle private fields.
 
 ## Failure Fallback Path
 
@@ -79,5 +82,6 @@ A platform handoff is ready only when:
 - `platform-onboarding-readiness-v1` passes.
 - `platform-triage-dashboard-v1` has release blocker and privacy scan evidence.
 - `platform-release-blocker-fixture-v1` fixtures are included in the adoption pack.
+- `public-support-status-v1` can publish platform status without private support fields.
 - `adoption-proof-v1` completes from the adoption pack.
 - No real model keys or private learning material are stored by Study Anything.
