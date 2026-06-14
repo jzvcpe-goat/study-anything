@@ -153,7 +153,7 @@ Open:
 
 ## Published Images
 
-Use the multi-architecture `v0.3.21-alpha` API image when you want to skip local API builds:
+Use the multi-architecture `v0.3.22-alpha` API image when you want to skip local API builds:
 
 ```bash
 python3 scripts/setup_env.py
@@ -167,8 +167,14 @@ Maintainers can verify the public images with:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha
+python3 scripts/generate_published_image_evidence.py --check
+python3 scripts/verify_published_image_evidence.py --check
 ```
+
+`published-image-evidence-v1` records manifest platforms, docker-images workflow evidence,
+local pull-timeout fallback rules, optional remote smoke replay, and release-blocking
+classifications without learning data, Agent endpoints, local paths, or model secrets.
 
 Release handoff evidence is packaged as `adopter-evidence-archive-v1`:
 

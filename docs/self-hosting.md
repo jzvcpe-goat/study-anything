@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.3.21-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.3.22-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.21-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.22-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -185,7 +185,7 @@ Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha
 ```
 
 The first command verifies the deployment operator path and adoption pack evidence. The second pulls
@@ -453,3 +453,17 @@ Agent integration development.
 ```
 
 Use `docker volume ls` and `docker volume rm` only when you intentionally want to delete local data.
+
+## Published Image Evidence
+
+Before telling another operator that the published image is deployable, generate the
+`published-image-evidence-v1` bundle:
+
+```bash
+python3 scripts/generate_published_image_evidence.py --check
+python3 scripts/verify_published_image_evidence.py --check
+```
+
+This published-image evidence separates a local GHCR pull timeout from a missing manifest platform,
+failed docker-images workflow, unavailable registry, or runtime smoke failure. It is metadata-only and
+does not include learning content, Agent endpoints, local absolute paths, or model secrets.

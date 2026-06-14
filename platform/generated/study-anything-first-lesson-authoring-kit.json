@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 53,
+      "acceptance_evidence_count": 55,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -150,6 +150,8 @@
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
         "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_published_image_evidence.py --check",
+        "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -162,7 +164,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 53,
+      "acceptance_evidence_count": 55,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -201,6 +203,8 @@
         "python3 scripts/diagnose_adoption.py --agent-endpoint ${USER_OWNED_AGENT_ENDPOINT}",
         "python3 scripts/verify_platform_public_support_status.py --check",
         "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_published_image_evidence.py --check",
+        "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -215,7 +219,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 53,
+      "acceptance_evidence_count": 55,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -253,6 +257,8 @@
         "python3 scripts/diagnose_adoption.py",
         "python3 scripts/verify_platform_public_support_status.py --check",
         "python3 scripts/generate_platform_public_support_status.py --check",
+        "python3 scripts/verify_published_image_evidence.py --check",
+        "python3 scripts/generate_published_image_evidence.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -279,7 +285,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.21-alpha"
+    "version": "v0.3.22-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 12,
@@ -367,5 +373,5 @@
       "tool": "study_anything_second_brain_handoff_export"
     }
   ],
-  "version": "v0.3.21-alpha"
+  "version": "v0.3.22-alpha"
 }

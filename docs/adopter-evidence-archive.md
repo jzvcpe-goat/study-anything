@@ -1,6 +1,6 @@
 # Adopter Evidence Archive
 
-Study Anything v0.3.21-alpha adds `adopter-evidence-archive-v1` as a
+Study Anything v0.3.22-alpha adds `adopter-evidence-archive-v1` as a
 metadata-only handoff bundle for external adopters, platform maintainers, and
 reviewers.
 
@@ -11,6 +11,7 @@ The archive turns release proof into one reproducible package:
 - Kimi, Codex, and WorkBuddy pack checksums
 - CI and docker image verification commands
 - local GHCR pull-timeout fallback evidence
+- `published-image-evidence-v1` report hashes and verification command for image readiness
 - `adopter-evidence-fixture-v1` fixtures for common support states
 - maintainer handoff checklist and release reproduction commands
 

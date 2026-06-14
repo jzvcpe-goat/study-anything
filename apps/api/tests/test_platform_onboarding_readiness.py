@@ -80,7 +80,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         report = json.loads(REPORT.read_text(encoding="utf-8"))
 
         self.assertEqual(report["schema_version"], "platform-onboarding-readiness-v1")
-        self.assertEqual(report["version"], "v0.3.21-alpha")
+        self.assertEqual(report["version"], "v0.3.22-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["walkthrough"]["schema_version"], "first-external-adopter-walkthrough-v1")
         self.assertEqual(
@@ -119,7 +119,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         dashboard = json.loads(DASHBOARD.read_text(encoding="utf-8"))
 
         self.assertEqual(dashboard["schema_version"], "platform-triage-dashboard-v1")
-        self.assertEqual(dashboard["version"], "v0.3.21-alpha")
+        self.assertEqual(dashboard["version"], "v0.3.22-alpha")
         self.assertEqual(dashboard["status"], "pass")
         self.assertEqual(
             set(dashboard["support_bundle_completeness"]["required_fields"]),
@@ -145,7 +145,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "platform-release-blocker-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.21-alpha")
+            self.assertEqual(payload["version"], "v0.3.22-alpha")
             self.assertEqual(payload["blocker_id"], path.stem)
             self.assertEqual(payload["status"], "mock_release_blocker_ready")
             self.assertIn(payload["linked_support_category"], {

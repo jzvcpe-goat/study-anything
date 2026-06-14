@@ -562,9 +562,25 @@
 - Wire adopter evidence archive into release checks, external adoption proof, ecosystem submission,
   platform packs, bundle manifest, docs, release notes, and the adoption pack.
 
+## v0.3.22-alpha
+
+- Add `published-image-evidence-v1`, a public evidence layer for GHCR published-image readiness.
+- Add `published-image-evidence-fixture-v1` fixtures for manifest pass with local pull timeout,
+  missing manifest platform, docker-images failure, GHCR unavailable, remote smoke pass, and remote
+  smoke failure.
+- Separate local Docker/GHCR pull slowness from true release blockers by recording manifest
+  platforms, docker-images workflow evidence, local smoke status, optional remote replay commands, and
+  release-gate classifications.
+- Keep published-image evidence metadata-only, excluding raw source text, learner answers, Agent
+  prompts, Agent endpoints, model keys, support bundle private payloads, and local absolute paths.
+- Wire published-image evidence into release checks, external adoption proof, ecosystem submission,
+  platform packs, bundle manifest, adopter evidence archive, docs, release notes, and the adoption
+  pack.
+
 ## v0.3 Next
 
-- `v0.3.22`: Published-image verification resilience and remote smoke replay evidence.
+- `v0.3.23`: Remote runner smoke replay or platform-submission field evidence, depending on which
+  external operator path fails first.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 
 ## PMF Track
