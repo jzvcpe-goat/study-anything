@@ -1,6 +1,6 @@
 # Public Support Status
 
-Study Anything v0.3.27-alpha adds `public-support-status-v1` as the
+Study Anything v0.3.28-alpha adds `public-support-status-v1` as the
 publishable maintainer status layer. It turns the private support desk and
 onboarding dashboard into a public summary that early adopters can read without
 sharing learning content or Agent secrets.

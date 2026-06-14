@@ -489,7 +489,7 @@ release asset:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.27-alpha \
+  --tag v0.3.28-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

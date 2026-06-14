@@ -262,7 +262,7 @@
     "platform_count": 4,
     "plugin_assets_declared": 17,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.27-alpha"
+    "version": "v0.3.28-alpha"
   },
   "trust_policy": {
     "automatic_remote_plugin_downloads_enabled": false,
@@ -275,5 +275,5 @@
     "remote_marketplace_payments_enabled": false,
     "schema_version": "plugin-trust-v1"
   },
-  "version": "v0.3.27-alpha"
+  "version": "v0.3.28-alpha"
 }

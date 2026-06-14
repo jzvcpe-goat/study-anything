@@ -19,7 +19,7 @@ ARCHIVE_PATH = OUTPUT_DIR / "study-anything-platform-feedback-package.zip"
 ARCHIVE_ROOT = "study-anything-platform-feedback-package"
 SCHEMA_VERSION = "platform-feedback-package-v1"
 DIAGNOSTICS_SCHEMA = "platform-adoption-feedback-diagnostics-v1"
-RELEASE_VERSION = "v0.3.27-alpha"
+RELEASE_VERSION = "v0.3.28-alpha"
 DIAGNOSTIC_CATEGORIES = [
     "pack_schema_invalid",
     "required_file_missing",

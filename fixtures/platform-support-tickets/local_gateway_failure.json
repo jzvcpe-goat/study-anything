@@ -27,7 +27,7 @@
     ],
     "platform_id": "generic",
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=missing_local_gateway\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.27-alpha"
+    "release_version": "v0.3.28-alpha"
   },
   "support_category": "local_gateway_failure",
   "ticket_id": "local_gateway_failure",
@@ -37,5 +37,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.27-alpha"
+  "version": "v0.3.28-alpha"
 }

@@ -21,7 +21,7 @@ STATUS_LINKAGE_DIR = ROOT / "fixtures" / "platform-status-links"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 STATUS_LINKAGE_SCHEMA_VERSION = "public-status-linkage-fixture-v1"
-RELEASE_VERSION = "v0.3.27-alpha"
+RELEASE_VERSION = "v0.3.28-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SLA_LABELS = (
     "intake",
@@ -258,7 +258,7 @@ def build_public_status() -> dict[str, Any]:
         "release_readiness": {
             "release_gate": "scripts/release_check.sh",
             "required_ci": ["main ci", "main docker-images", "tag docker-images"],
-            "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.27-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+            "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
             "current_status": "ready_when_release_gates_pass",
         },
         "privacy_assertions": {

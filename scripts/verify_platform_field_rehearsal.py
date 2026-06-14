@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FIXTURE_SCHEMA_VERSION = "platform-import-failure-fixture-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.27-alpha"
+RELEASE_VERSION = "v0.3.28-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
@@ -311,7 +311,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "scripts/generate_platform_field_rehearsal.py",
         "scripts/verify_platform_field_rehearsal.py",
         "platform/generated/study-anything-platform-field-rehearsal.json",
-        "docs/release-notes/v0.3.27-alpha.md",
+        "docs/release-notes/v0.3.28-alpha.md",
         *[f"fixtures/platform-import-failures/{failure_id}.json" for failure_id in QUIRK_IDS],
     }
     missing = sorted(required_paths - paths)
@@ -349,7 +349,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
             "verify_platform_field_rehearsal.py --check",
             "generate_platform_field_rehearsal.py --check",
         ],
-        "docs/roadmap.md": ["v0.3.27-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.28-alpha", SCHEMA_VERSION],
     }
     for path, needles in checked.items():
         assert_contains(root, path, *needles)

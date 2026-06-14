@@ -1,6 +1,6 @@
 # Release Cleanroom Bootstrap
 
-Study Anything v0.3.27-alpha adds a release-only cleanroom bootloader for
+Study Anything v0.3.28-alpha adds a release-only cleanroom bootloader for
 external operators and platform Agents. The goal is simple: start from the
 GitHub Release page, not from a prepared repository checkout.
 
@@ -24,7 +24,7 @@ Use this when you only want to verify release assets and platform imports:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.27-alpha \
+  --tag v0.3.28-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report
@@ -38,7 +38,7 @@ Use this when you want the bootloader to run the minimal learning chain:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.27-alpha \
+  --tag v0.3.28-alpha \
   --platform kimi \
   --runtime skill-mode \
   --output-dir study-anything-cleanroom-report
@@ -55,7 +55,7 @@ Use this when Docker is available and the release image should be checked:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.27-alpha \
+  --tag v0.3.28-alpha \
   --platform generic-openapi \
   --runtime published-image \
   --output-dir study-anything-cleanroom-report

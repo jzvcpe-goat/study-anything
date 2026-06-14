@@ -499,7 +499,7 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
 
 def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Namespace) -> dict[str, Any]:
     started = time.monotonic()
-    run(["./scripts/launch_skill_mode.sh"], cwd=workspace, env=env, timeout_seconds=args.timeout_seconds)
+    run(["sh", "scripts/launch_skill_mode.sh"], cwd=workspace, env=env, timeout_seconds=args.timeout_seconds)
     wait_for_api(env["API_BASE"], 60)
     python_bin = python_for_workspace(workspace, args)
     try:
@@ -719,7 +719,7 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             "diagnostics": summarize_diagnostics(diagnosis),
         }
     finally:
-        run(["./scripts/stop_skill_mode.sh"], cwd=workspace, env=env, timeout_seconds=30, required=False)
+        run(["sh", "scripts/stop_skill_mode.sh"], cwd=workspace, env=env, timeout_seconds=30, required=False)
 
 
 def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any]:

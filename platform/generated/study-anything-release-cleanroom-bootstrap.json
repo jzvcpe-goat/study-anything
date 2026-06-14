@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 54134,
+    "bytes": 54139,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "52c962131206bff42d14d04bf1e5bb14f413f7740be5c161b1324cf5d7a8f8b4",
+    "sha256": "a54c8043f8dfa5c7bfc4e86f7defa9925f338d45b81bbac74ca50567c622e9fc",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -75,9 +75,9 @@
   ],
   "commands": {
     "fixture_metadata_only": "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
-    "metadata_only": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform kimi --runtime metadata-only",
-    "published_image": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform generic-openapi --runtime published-image",
-    "skill_mode": "python3 study_anything_release_bootstrap.py --tag v0.3.27-alpha --platform kimi --runtime skill-mode"
+    "metadata_only": "python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only",
+    "published_image": "python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform generic-openapi --runtime published-image",
+    "skill_mode": "python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime skill-mode"
   },
   "example_report": {
     "adoption_pack": {
@@ -85,7 +85,7 @@
       "real_model_keys_stored_by_study_anything": false,
       "schema_version": "study-anything-platform-adoption-pack-v1",
       "tool_count": 30,
-      "version": "v0.3.27-alpha"
+      "version": "v0.3.28-alpha"
     },
     "classification": "cleanroom_bootstrap_ready",
     "diagnostic": "Cleanroom bootloader completed.",
@@ -112,7 +112,7 @@
     },
     "schema_version": "release-cleanroom-bootstrap-v1",
     "status": "ok",
-    "tag": "v0.3.27-alpha"
+    "tag": "v0.3.28-alpha"
   },
   "platforms": [
     "kimi",
@@ -134,59 +134,59 @@
     {
       "bytes": 35005,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "0eea36bf67184f91a043d31b45bb3fa90f479005e75a6bb6825e2f53c033910f"
+      "sha256": "e2cff20f525de02728e39aa4073eaa173911f6bd0fab03ab5337009aeb2b497d"
     },
     {
       "bytes": 2926,
       "path": "docs/release-cleanroom-bootstrap.md",
-      "sha256": "dcb3a3db960936d9ff43d1f7de26f8998e4c918de9dd28ac7c33808f1a254602"
+      "sha256": "fca9322cd68a4a3f05ff0234c632395ed0de7f548f9183e7770481e72a707fbb"
     },
     {
       "bytes": 3891,
       "path": "docs/release-asset-bootstrap.md",
-      "sha256": "b9ca2c12b28874d7da59254778d55c0ff33489b7885072a942144c463806cfa2"
+      "sha256": "5e7e0eadf0f6931c57707cdb52e18e3135a476a99373bf4a9a8e25de1755ad5e"
     },
     {
       "bytes": 3259,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "543b70b0d87166dc516ecec40c84dce6aa1b2c6a149635d779a1a31e80e010ed"
+      "sha256": "8c36d1ef1996a82fe84ebaef8f5a711acdb31c8d53f40cdbbafff611f08da36e"
     },
     {
       "bytes": 3611,
       "path": "docs/platform-agent-release-replay.md",
-      "sha256": "2187bb9202e39bef14e81cee41ce28c9036d96b09385fdbf3d8246de0145e522"
+      "sha256": "049ff99463376c6cf11974ce16d35a9da294f7adae2ba93db955ddac4168ba81"
     },
     {
       "bytes": 19313,
       "path": "docs/adoption.md",
-      "sha256": "c80809208b3001ad8d67dbe2d664bef6bb3d8b8dd9a8d7f45f9e9efcbb54a023"
+      "sha256": "51eecd74cad0201bc8734a10b810ebc1ba9c9a306892236fe882051f4d698bfb"
     },
     {
       "bytes": 19724,
       "path": "docs/self-hosting.md",
-      "sha256": "77ea0598bfc00530006ee0ac14b7a72b85fb4359f19a6b4c012836ab54f324ab"
+      "sha256": "a17c0e69945e2fba94989035eca4f1b3a6ee63ec8559a5964c723c337e7d57b5"
     },
     {
       "bytes": 26717,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "34bce5ff403558319545ad3c89906f721683caa2ea47271dc278bf44ee6e30ec"
+      "sha256": "690c78e455ed064b07cd957c4e93cdfbb50b1a388f340ae1641402eaeb890764"
     },
     {
       "bytes": 20083,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "f721cbe1cd6875c9477d30ae88f97858ad9997ff03331ee9853feeb167547a38"
+      "sha256": "76c279964db663878412ec7fb40e2f837abd9a0a098f652f413e64d211ebeb34"
     },
     {
-      "bytes": 28634,
+      "bytes": 28642,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "30a3964b0c3966f0aec3d73f78db43639ba583f44ce8c3eed7841247fe763c0c"
+      "sha256": "368be58bbb05afcd2ac3535920b892437dda26bf5ab2577d85879a9704d63739"
     }
   ],
   "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",
   "release_identity": {
-    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.27-alpha",
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.28-alpha",
     "repo": "jzvcpe-goat/study-anything",
-    "tag": "v0.3.27-alpha"
+    "tag": "v0.3.28-alpha"
   },
   "required_release_assets": [
     "study-anything-adopter-evidence-archive.zip",
@@ -204,5 +204,5 @@
   ],
   "schema_version": "release-cleanroom-bootstrap-evidence-v1",
   "status": "pass",
-  "version": "v0.3.27-alpha"
+  "version": "v0.3.28-alpha"
 }
