@@ -68,6 +68,9 @@
     "public_support_status_schema": "public-support-status-v1",
     "published_image_evidence_fixture_schema": "published-image-evidence-fixture-v1",
     "published_image_evidence_schema": "published-image-evidence-v1",
+    "release_asset_adoption_fixture_schema": "release-asset-adoption-fixture-v1",
+    "release_asset_adoption_proof_schema": "release-asset-adoption-proof-v1",
+    "release_asset_adoption_schema": "release-asset-adoption-v1",
     "second_brain_schema": "second-brain-handoff-v1",
     "security_recovery_hardening_schema": "security-recovery-hardening-verification-v1",
     "shared_logs_are_redacted": true
@@ -123,6 +126,11 @@
         "acceptance": "adopter-evidence-archive-v1 and adopter-evidence-fixture-v1 confirm release proof, checksums, Docker manifest evidence, known limitations, and maintainer handoff are metadata-only.",
         "operator_action": "Run python3 scripts/generate_adopter_evidence_archive.py --check and python3 scripts/verify_adopter_evidence_archive.py --check before public handoff.",
         "step": "package_adopter_evidence_archive"
+      },
+      {
+        "acceptance": "release-asset-adoption-v1, release-asset-adoption-fixture-v1, and release-asset-adoption-proof-v1 confirm required release zip assets, digest checks, adoption-pack manifest hashes, and replay classifications are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_release_asset_adoption.py --check and python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only before telling platform operators to use GitHub Release assets.",
+        "step": "verify_release_asset_adoption"
       },
       {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
@@ -192,6 +200,11 @@
         "step": "package_adopter_evidence_archive"
       },
       {
+        "acceptance": "release-asset-adoption-v1, release-asset-adoption-fixture-v1, and release-asset-adoption-proof-v1 confirm required release zip assets, digest checks, adoption-pack manifest hashes, and replay classifications are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_release_asset_adoption.py --check and python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only before telling platform operators to use GitHub Release assets.",
+        "step": "verify_release_asset_adoption"
+      },
+      {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
         "operator_action": "Run python3 scripts/generate_platform_field_rehearsal.py --check and python3 scripts/verify_platform_field_rehearsal.py --check before asking external users to try a platform import.",
         "step": "verify_platform_field_rehearsal"
@@ -259,6 +272,11 @@
         "step": "package_adopter_evidence_archive"
       },
       {
+        "acceptance": "release-asset-adoption-v1, release-asset-adoption-fixture-v1, and release-asset-adoption-proof-v1 confirm required release zip assets, digest checks, adoption-pack manifest hashes, and replay classifications are metadata-only.",
+        "operator_action": "Run python3 scripts/generate_release_asset_adoption.py --check and python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only before telling platform operators to use GitHub Release assets.",
+        "step": "verify_release_asset_adoption"
+      },
+      {
         "acceptance": "platform-field-adoption-rehearsal-v1 and platform-import-failure-fixture-v1 confirm Kimi, Codex, WorkBuddy, generic OpenAPI rehearsals, import quirks, and mock failure fixtures are actionable and redacted.",
         "operator_action": "Run python3 scripts/generate_platform_field_rehearsal.py --check and python3 scripts/verify_platform_field_rehearsal.py --check before asking external users to try a platform import.",
         "step": "verify_platform_field_rehearsal"
@@ -277,15 +295,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 193,
+    "file_count": 206,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.22-alpha"
+    "version": "v0.3.23-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cli": "scripts/study_anything_cli.py",
@@ -337,6 +355,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -344,7 +364,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "gateway": "scripts/openai_compatible_agent_gateway.py",
@@ -400,6 +420,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -407,7 +429,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -459,6 +481,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],

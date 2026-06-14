@@ -1,0 +1,23 @@
+{
+  "classification": "release_asset_missing",
+  "fixture_id": "asset-missing",
+  "operator_next_step": "The GitHub release is missing a required zip asset.",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "release": {
+    "assets": [],
+    "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha",
+    "tag_name": "v0.3.23-alpha"
+  },
+  "release_gate": "block_release_claim",
+  "schema_version": "release-asset-adoption-fixture-v1",
+  "version": "v0.3.23-alpha"
+}

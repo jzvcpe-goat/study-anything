@@ -40,7 +40,7 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
             report["schema_version"],
             "platform-adoption-feedback-diagnostics-v1",
         )
-        self.assertEqual(report["version"], "v0.3.22-alpha")
+        self.assertEqual(report["version"], "v0.3.23-alpha")
         self.assertEqual(report["status"], "pass")
         categories = set(report["diagnostic_contract"]["diagnostic_categories"])
         self.assertIn("openapi_import_missing_operation", categories)
@@ -70,7 +70,7 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
         payload = json.loads(FEEDBACK_MANIFEST.read_text(encoding="utf-8"))
 
         self.assertEqual(payload["schema_version"], "platform-feedback-package-v1")
-        self.assertEqual(payload["version"], "v0.3.22-alpha")
+        self.assertEqual(payload["version"], "v0.3.23-alpha")
         self.assertTrue(payload["privacy"]["redacted"])
         self.assertFalse(payload["privacy"]["automatic_upload"])
         self.assertFalse(payload["privacy"]["raw_source_text_included"])
@@ -92,7 +92,7 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
         report = json.loads(completed.stdout)
         self.assertTrue(report["feedback_package"]["included"])
         self.assertTrue(report["adoption_pack"]["included"])
-        self.assertEqual(report["feedback_package"]["version"], "v0.3.22-alpha")
+        self.assertEqual(report["feedback_package"]["version"], "v0.3.23-alpha")
 
     def test_missing_pack_root_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

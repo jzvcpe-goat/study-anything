@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.22-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.23-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -47,6 +47,11 @@ python3 scripts/generate_platform_onboarding_readiness.py --check
 python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/generate_platform_public_support_status.py --check
 python3 scripts/verify_platform_public_support_status.py --check
+python3 scripts/generate_release_asset_adoption.py --check
+python3 scripts/verify_release_asset_adoption.py \
+  --fixture fixtures/release-asset-adoption/asset-only-pass.json \
+  --asset-dir platform/generated \
+  --runtime metadata-only
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/verify_deployment_hardening.py --check
 ```
@@ -64,6 +69,10 @@ The deployment hardening report emits `deployment-hardening-verification-v1`,
 covering Skill Mode, published-image, and source-build paths plus Docker/Compose
 diagnostics, GHCR manifest fallback, non-ASCII path guidance, and local Agent
 endpoint recovery.
+The release asset adoption evidence emits `release-asset-adoption-v1` and
+`release-asset-adoption-proof-v1`, proving GitHub Release zip assets, sha256
+digests, adoption-pack manifest hashes, and embedded published-image evidence
+are enough for platform operators to start from the release page.
 The first lesson kit emits `first-run-lesson-authoring-kit-v1`, a copyable
 Kimi/Codex/WorkBuddy handoff with bilingual prompts, a tool-call sequence,
 Learning Context Package template, HTTP Agent setup, expected schemas, export

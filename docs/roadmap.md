@@ -577,9 +577,22 @@
   platform packs, bundle manifest, adopter evidence archive, docs, release notes, and the adoption
   pack.
 
+## v0.3.23-alpha
+
+- Add `release-asset-adoption-v1`, a public evidence layer for GitHub Release asset adoption replay.
+- Add `release-asset-adoption-fixture-v1` fixtures for asset-only pass, missing asset, digest
+  mismatch, corrupted pack, missing published-image evidence, and network-unavailable states.
+- Make the GitHub Release page the external platform entrypoint by validating release zip assets,
+  GitHub sha256 digests, adoption-pack manifests, embedded published-image evidence, and optional
+  published-image or Skill Mode runtime replay.
+- Keep release-asset evidence metadata-only, excluding raw source text, learner answers, Agent
+  prompts, Agent endpoints, model keys, support bundle private payloads, and local absolute paths.
+- Wire release-asset adoption proof into release checks, external adoption proof, ecosystem
+  submission, platform packs, bundle manifest, docs, release notes, and the adoption pack.
+
 ## v0.3 Next
 
-- `v0.3.23`: Remote runner smoke replay or platform-submission field evidence, depending on which
+- `v0.3.24`: Remote runner smoke replay or platform-submission field evidence, depending on which
   external operator path fails first.
 - Later: standalone UI rebuild only after the API/Skill/platform-agent route is stable.
 

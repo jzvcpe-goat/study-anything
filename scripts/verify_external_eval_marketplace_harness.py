@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "external-eval-marketplace-harness-v1"
-RELEASE_VERSION = "v0.3.22-alpha"
+RELEASE_VERSION = "v0.3.23-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-external-eval-harness.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 

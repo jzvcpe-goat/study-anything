@@ -30,7 +30,7 @@
     ],
     "platform_id": "generic",
     "redacted_log_excerpt": "status=release_blocker\ndiagnostic_code=support_bundle_privacy_blocker\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.22-alpha"
+    "release_version": "v0.3.23-alpha"
   },
-  "version": "v0.3.22-alpha"
+  "version": "v0.3.23-alpha"
 }

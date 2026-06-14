@@ -62,6 +62,11 @@ fi
 "$python_bin" scripts/verify_platform_public_support_status.py --check
 "$python_bin" scripts/generate_published_image_evidence.py --check
 "$python_bin" scripts/verify_published_image_evidence.py --check
+"$python_bin" scripts/generate_release_asset_adoption.py --check
+"$python_bin" scripts/verify_release_asset_adoption.py \
+  --fixture fixtures/release-asset-adoption/asset-only-pass.json \
+  --asset-dir platform/generated \
+  --runtime metadata-only
 "$python_bin" scripts/generate_adopter_evidence_archive.py --check
 "$python_bin" scripts/verify_adopter_evidence_archive.py --check
 "$python_bin" scripts/verify_plugin_ecosystem_adoption_kit.py --check

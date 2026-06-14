@@ -76,6 +76,11 @@
       "step_id": "package_adopter_evidence_archive"
     },
     {
+      "command": "python3 scripts/generate_release_asset_adoption.py --check && python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+      "mode": "rehearsed_manual_acceptance",
+      "step_id": "verify_release_asset_adoption"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "mode": "rehearsed_manual_acceptance",
       "step_id": "collect_redacted_handoff"
@@ -88,6 +93,7 @@
     "docs/platform-agent-integrations.md",
     "docs/public-support-status.md",
     "docs/published-image-evidence.md",
+    "docs/release-asset-adoption.md",
     "docs/use-with-kimi.md",
     "fixtures/adopter-evidence-archive/local-ghcr-pull-timeout.json",
     "fixtures/adopter-evidence-archive/needs-repro-issue.json",
@@ -116,6 +122,12 @@
     "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
     "fixtures/published-image-evidence/remote-smoke-failed.json",
     "fixtures/published-image-evidence/remote-smoke-pass.json",
+    "fixtures/release-asset-adoption/asset-missing.json",
+    "fixtures/release-asset-adoption/asset-only-pass.json",
+    "fixtures/release-asset-adoption/digest-mismatch.json",
+    "fixtures/release-asset-adoption/network-unavailable.json",
+    "fixtures/release-asset-adoption/pack-corrupted.json",
+    "fixtures/release-asset-adoption/published-evidence-missing.json",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-adopter-evidence-archive.json",
     "platform/generated/study-anything-adopter-evidence-archive.md",
@@ -143,6 +155,10 @@
     "platform/generated/study-anything-published-image-evidence.md",
     "platform/generated/study-anything-published-image-evidence.sha256",
     "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-release-asset-adoption.md",
+    "platform/generated/study-anything-release-asset-adoption.sha256",
+    "platform/generated/study-anything-release-asset-adoption.zip",
     "platform/generated/study-anything-tool-catalog.md",
     "platform/study-anything-platform-tools.json",
     "scripts/generate_adopter_evidence_archive.py",
@@ -150,6 +166,7 @@
     "scripts/generate_platform_field_rehearsal.py",
     "scripts/generate_platform_public_support_status.py",
     "scripts/generate_published_image_evidence.py",
+    "scripts/generate_release_asset_adoption.py",
     "scripts/openai_compatible_agent_gateway.py",
     "scripts/run_skill_mode_demo.sh",
     "scripts/study_anything_cli.py",
@@ -168,7 +185,8 @@
     "scripts/verify_platform_public_support_status.py",
     "scripts/verify_platform_submission_dry_run.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
-    "scripts/verify_published_image_evidence.py"
+    "scripts/verify_published_image_evidence.py",
+    "scripts/verify_release_asset_adoption.py"
   ],
   "existing_reports": {
     "agent_eval_marketplace_enforcement": {
@@ -291,6 +309,12 @@
       "learning-enrichment-bridge-verification-v1",
       "web/document/video/app/Markdown/Obsidian source coverage",
       "strict second-brain handoff excludes learner answers"
+    ],
+    "verify_release_asset_adoption": [
+      "release-asset-adoption-v1",
+      "release-asset-adoption-fixture-v1",
+      "release-asset-adoption-proof-v1",
+      "required release zip assets and pack manifest hashes are metadata-only"
     ]
   },
   "failure_remediation": {
@@ -593,6 +617,28 @@
       "step_id": "package_adopter_evidence_archive"
     },
     {
+      "command": "python3 scripts/generate_release_asset_adoption.py --check && python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+      "evidence_paths": [
+        "platform/generated/study-anything-release-asset-adoption.json",
+        "platform/generated/study-anything-release-asset-adoption.md",
+        "platform/generated/study-anything-release-asset-adoption.zip",
+        "platform/generated/study-anything-release-asset-adoption.sha256",
+        "docs/release-asset-adoption.md"
+      ],
+      "expected_outputs": [
+        "release-asset-adoption-v1",
+        "release-asset-adoption-fixture-v1",
+        "release-asset-adoption-proof-v1",
+        "required release zip assets and pack manifest hashes are metadata-only"
+      ],
+      "failure_remediation": [
+        "Run verify_release_asset_adoption.py without --check to print the current release asset mismatch summary.",
+        "Do not claim GitHub Release asset adoption until the published release zip assets are downloadable and digest-verified."
+      ],
+      "operator_action": "Generate and verify public GitHub Release asset replay evidence before release or platform handoff.",
+      "step_id": "verify_release_asset_adoption"
+    },
+    {
       "command": "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
       "evidence_paths": [
         "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -612,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -653,6 +699,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -670,7 +718,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -711,6 +759,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -732,7 +782,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 55,
+      "acceptance_evidence_count": 58,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_commercial_readiness.py",
@@ -772,6 +822,8 @@
         "python3 scripts/generate_platform_public_support_status.py --check",
         "python3 scripts/verify_published_image_evidence.py --check",
         "python3 scripts/generate_published_image_evidence.py --check",
+        "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+        "python3 scripts/generate_release_asset_adoption.py --check",
         "python3 scripts/verify_adopter_evidence_archive.py --check",
         "python3 scripts/generate_adopter_evidence_archive.py --check"
       ],
@@ -804,7 +856,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.22-alpha"
+    "version": "v0.3.23-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 18,
@@ -817,5 +869,5 @@
     "openapi_path_count": 34,
     "required_tool_count": 34
   },
-  "version": "v0.3.22-alpha"
+  "version": "v0.3.23-alpha"
 }
