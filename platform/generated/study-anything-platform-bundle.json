@@ -223,56 +223,56 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "13a6e995e246ee588939c7255f42ded45e94ec87bd5e7da361d99d18f3f6c646"
+      "sha256": "f1717291e8299e8af323e13b0c7f3ae09e2b7047e203dcd8164aa1adfc8fd0f8"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "de96c345778ad234e6dfef6e15d5f91daaf549664207e73e514812e53f2c932c"
+      "sha256": "2d994c4bd9f4b8e1c097934c4a14950de9be084d5f741cad4626b754a4bf1d32"
     },
     {
-      "bytes": 276531,
+      "bytes": 276550,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "c5a73eacfb3a35f400a8e9f99b3fe2dbac1b300572920a34c4db878c14897ceb"
+      "sha256": "b7b5310a8f10e4f32ec48da8b31db4a5976c5006dc64c55977956cc0a65105dc"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "768a04b7a85bd3d23d6a5c3466a2c534c31c1c0683cd18cc58a09676d656c5d6"
+      "sha256": "743cecfa6d6c82a50230f143b257a1a2c141a03510aeaa2e962119fb73fdf643"
     },
     {
       "bytes": 7294,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "363475aada3b393ad5271482dadb1c68de5b209f4d5c149b3c646910d2c64047"
+      "sha256": "0d68de0d767231216279669d065b3e80f2beaf6a1d4df52b3d8c0c8b08951bc5"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "0c4a7192d302632b8a0377ebc45831d245b857032bdd4a373dff49ec5b75f5bb"
+      "sha256": "d77b6e2842d2e3a4124352121aef696e3e1a3cf78054a239e1efdb19514d2cab"
     },
     {
-      "bytes": 86210,
+      "bytes": 86225,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "c8d75b236b7c53574165a379ad18aa0573337022a1ffb858f9f4d4d7af4f21f5"
+      "sha256": "25aaada5315eb1274ae30b0f5c5325e750eab9f0b1da9bc7ada501264556f66a"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "a5a55faf461557c6bf5b3b7cf6eb84a280377b64795c9086688fe69d4b35a293"
+      "sha256": "325c69fddc7cb765f4a4fb4e23b0d3dc13423391ff2ab0407790051f73c665b1"
     },
     {
       "bytes": 1328,
@@ -870,11 +870,11 @@
       "sha256": "9bb4e199fad752bac27baa893980e5853442a4f4fb1e58e4be0eab041fa54430"
     },
     {
-      "bytes": 18497,
+      "bytes": 18717,
       "kind": "diagnostics",
       "path": "scripts/generate_release_asset_adoption.py",
       "purpose": "Generate GitHub Release asset adoption replay evidence, fixtures, checksum, and archive.",
-      "sha256": "b968b67082eadae0b3ee1379407dc79207043663916d68950ecd5b29057e38a6"
+      "sha256": "fcee399a81326aff2933e2849bbba14260cae1d99eccf6f4353a9e88785dc31f"
     },
     {
       "bytes": 20153,

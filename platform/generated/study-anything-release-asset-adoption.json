@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 86210,
+    "bytes": 86225,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "c8d75b236b7c53574165a379ad18aa0573337022a1ffb858f9f4d4d7af4f21f5",
+    "sha256": "25aaada5315eb1274ae30b0f5c5325e750eab9f0b1da9bc7ada501264556f66a",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -45,10 +45,10 @@
   ],
   "fixture_refs": [
     {
-      "bytes": 1795,
+      "bytes": 1779,
       "fixture_id": "asset-only-pass",
       "path": "fixtures/release-asset-adoption/asset-only-pass.json",
-      "sha256": "bed7084f9e03360161701e1d7e3fd29f35a2801234a2bc5f2117b613bb4a4766"
+      "sha256": "cfd242c2a1fc1ad4b0762c65aa010aa429bf4d1a494645f89c9d0379f4a26c4a"
     },
     {
       "bytes": 798,
@@ -57,22 +57,22 @@
       "sha256": "53a084158efa4099940fe7cdf17aa8ed222e08ab75ef5cd496e1070b98425782"
     },
     {
-      "bytes": 1879,
+      "bytes": 1863,
       "fixture_id": "digest-mismatch",
       "path": "fixtures/release-asset-adoption/digest-mismatch.json",
-      "sha256": "b8d6942b5f196f8316a46b47737b2e699a9d9db2c2abba1c8a7d440158535d3c"
+      "sha256": "6101d93d6b784651af9c7cc255ade0c4e60a1400f6d160c275e7fa1c9aa0371c"
     },
     {
-      "bytes": 1792,
+      "bytes": 1776,
       "fixture_id": "pack-corrupted",
       "path": "fixtures/release-asset-adoption/pack-corrupted.json",
-      "sha256": "866f8a11fc3651ad2ae7f81596622944ab8cec4156867974b8fdcc3833df0101"
+      "sha256": "ff8f1832c88cfaedcd523d76b3e667e541f7cb8aa2bdea2d46c177084a42c841"
     },
     {
-      "bytes": 1801,
+      "bytes": 1785,
       "fixture_id": "published-evidence-missing",
       "path": "fixtures/release-asset-adoption/published-evidence-missing.json",
-      "sha256": "779ef66d6086e5215ec71b6e1e2bf2f7ebb3d60a4343fcb072761d95cfa4940c"
+      "sha256": "8a7346f925bee96be91390d0d2b7d5b670ae2197fcc036a25f945d4e1714129b"
     },
     {
       "bytes": 855,
@@ -143,9 +143,9 @@
       "sha256": "37d1e40368c349159044726b3d3a0b1c478436b9abf9a0748d8c1bee3fd92945"
     },
     {
-      "bytes": 18497,
+      "bytes": 18717,
       "path": "scripts/generate_release_asset_adoption.py",
-      "sha256": "b968b67082eadae0b3ee1379407dc79207043663916d68950ecd5b29057e38a6"
+      "sha256": "fcee399a81326aff2933e2849bbba14260cae1d99eccf6f4353a9e88785dc31f"
     },
     {
       "bytes": 50409,

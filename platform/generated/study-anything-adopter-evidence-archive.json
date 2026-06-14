@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 276531,
+    "bytes": 276550,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "c5a73eacfb3a35f400a8e9f99b3fe2dbac1b300572920a34c4db878c14897ceb",
+    "sha256": "b7b5310a8f10e4f32ec48da8b31db4a5976c5006dc64c55977956cc0a65105dc",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -231,22 +231,22 @@
     {
       "bytes": 7294,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "363475aada3b393ad5271482dadb1c68de5b209f4d5c149b3c646910d2c64047"
+      "sha256": "0d68de0d767231216279669d065b3e80f2beaf6a1d4df52b3d8c0c8b08951bc5"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "0c4a7192d302632b8a0377ebc45831d245b857032bdd4a373dff49ec5b75f5bb"
+      "sha256": "d77b6e2842d2e3a4124352121aef696e3e1a3cf78054a239e1efdb19514d2cab"
     },
     {
-      "bytes": 86210,
+      "bytes": 86225,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "c8d75b236b7c53574165a379ad18aa0573337022a1ffb858f9f4d4d7af4f21f5"
+      "sha256": "25aaada5315eb1274ae30b0f5c5325e750eab9f0b1da9bc7ada501264556f66a"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "a5a55faf461557c6bf5b3b7cf6eb84a280377b64795c9086688fe69d4b35a293"
+      "sha256": "325c69fddc7cb765f4a4fb4e23b0d3dc13423391ff2ab0407790051f73c665b1"
     },
     {
       "bytes": 35058,
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 7294,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "363475aada3b393ad5271482dadb1c68de5b209f4d5c149b3c646910d2c64047"
+        "sha256": "0d68de0d767231216279669d065b3e80f2beaf6a1d4df52b3d8c0c8b08951bc5"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"

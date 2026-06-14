@@ -26,7 +26,8 @@ ARCHIVE_ROOT = "study-anything-release-asset-adoption"
 SCHEMA_VERSION = "release-asset-adoption-v1"
 FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
 RELEASE_VERSION = "v0.3.23-alpha"
-RELEASE_URL = f"https://github.com/jzvcpe-goat/study-anything/releases/tag/{RELEASE_VERSION}"
+RELEASE_REPO = "jzvcpe-goat/study-anything"
+RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 VERIFIER_SCHEMA_VERSION = "release-asset-adoption-proof-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 PUBLISHED_IMAGE_SCHEMA_VERSION = "published-image-evidence-v1"
@@ -174,12 +175,15 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
             assets.append(
                 {
                     "name": name,
-                    "browser_download_url": f"{RELEASE_URL}/download/{name}",
+                    "browser_download_url": f"https://github.com/{RELEASE_REPO}/releases/download/{RELEASE_VERSION}/{name}",
                 }
             )
     elif fixture_id == "digest-mismatch":
         for name in REQUIRED_RELEASE_ASSETS:
-            asset = {"name": name, "browser_download_url": f"{RELEASE_URL}/download/{name}"}
+            asset = {
+                "name": name,
+                "browser_download_url": f"https://github.com/{RELEASE_REPO}/releases/download/{RELEASE_VERSION}/{name}",
+            }
             if name == REQUIRED_RELEASE_ASSETS[0]:
                 asset["digest"] = f"sha256:{'0' * 64}"
             assets.append(asset)
@@ -188,7 +192,7 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
             assets.append(
                 {
                     "name": name,
-                    "browser_download_url": f"{RELEASE_URL}/download/{name}",
+                    "browser_download_url": f"https://github.com/{RELEASE_REPO}/releases/download/{RELEASE_VERSION}/{name}",
                 }
             )
     payload = {
