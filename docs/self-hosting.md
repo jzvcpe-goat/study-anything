@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.3.26-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.3.27-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.26-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.27-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -185,7 +185,7 @@ Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.26-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.27-alpha
 ```
 
 The first command verifies the deployment operator path and adoption pack evidence. The second pulls
@@ -467,3 +467,21 @@ python3 scripts/verify_published_image_evidence.py --check
 This published-image evidence separates a local GHCR pull timeout from a missing manifest platform,
 failed docker-images workflow, unavailable registry, or runtime smoke failure. It is metadata-only and
 does not include learning content, Agent endpoints, local absolute paths, or model secrets.
+
+## Release-Only Bootstrap
+
+If an external operator starts from the GitHub Release page instead of a source
+checkout, use the cleanroom bootloader:
+
+```bash
+python3 study_anything_release_bootstrap.py \
+  --tag v0.3.27-alpha \
+  --platform generic-openapi \
+  --runtime metadata-only \
+  --output-dir study-anything-cleanroom-report
+```
+
+For runtime validation, switch to `--runtime skill-mode` or
+`--runtime published-image`. The bootloader downloads release assets, verifies
+digests, validates the platform adoption pack, and writes redacted reports
+without storing model keys or raw learning data.

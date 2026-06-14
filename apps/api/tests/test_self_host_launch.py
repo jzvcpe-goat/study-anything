@@ -85,7 +85,7 @@ class SelfHostLaunchTests(unittest.TestCase):
         output = self.run_launch(USE_PUBLISHED_IMAGES="true")
         api_pull = (
             "docker pull "
-            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha"
+            "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha"
         )
         self.assertIn(api_pull, output)
         self.assertIn(
@@ -181,10 +181,10 @@ class PublishedImageLaunchTests(unittest.TestCase):
         module = self._module()
 
         report = module.cached_image_missing_report(
-            tag="v0.3.26-alpha",
-            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha",
+            tag="v0.3.27-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha",
             project_name="study_anything_published_test",
-            stderr="No such image: ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha",
+            stderr="No such image: ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha",
             manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
         )
 
@@ -197,8 +197,8 @@ class PublishedImageLaunchTests(unittest.TestCase):
         module = self._module()
 
         report = module.compose_up_timeout_report(
-            tag="v0.3.26-alpha",
-            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha",
+            tag="v0.3.27-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha",
             timeout_seconds=2,
             project_name="study_anything_published_test",
             manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
@@ -213,8 +213,8 @@ class PublishedImageLaunchTests(unittest.TestCase):
         module = self._module()
 
         report = module.manifest_only_report(
-            tag="v0.3.26-alpha",
-            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.26-alpha",
+            tag="v0.3.27-alpha",
+            api_image="ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha",
             manifest_evidence={"status": "ok", "platforms": ["linux/amd64", "linux/arm64"]},
         )
 

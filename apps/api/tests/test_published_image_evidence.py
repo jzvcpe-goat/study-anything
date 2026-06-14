@@ -92,9 +92,9 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "published-image-evidence-v1")
-        self.assertEqual(report["version"], "v0.3.26-alpha")
+        self.assertEqual(report["version"], "v0.3.27-alpha")
         self.assertEqual(report["status"], "pass")
-        self.assertEqual(report["release_identity"]["tag"], "v0.3.26-alpha")
+        self.assertEqual(report["release_identity"]["tag"], "v0.3.27-alpha")
         self.assertEqual(
             set(report["manifest_evidence"]["required_platforms"]),
             {"linux/amd64", "linux/arm64"},
@@ -127,7 +127,7 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "published-image-evidence-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.26-alpha")
+            self.assertEqual(payload["version"], "v0.3.27-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             classifications.add(payload["classification"])
             self.assertTrue(payload["operator_next_step"])

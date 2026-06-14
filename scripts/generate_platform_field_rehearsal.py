@@ -16,7 +16,7 @@ OUTPUT_PATH = ROOT / "platform" / "generated" / "study-anything-platform-field-r
 FIXTURE_DIR = ROOT / "fixtures" / "platform-import-failures"
 SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FIXTURE_SCHEMA_VERSION = "platform-import-failure-fixture-v1"
-RELEASE_VERSION = "v0.3.26-alpha"
+RELEASE_VERSION = "v0.3.27-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),

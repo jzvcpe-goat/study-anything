@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 51144,
+    "bytes": 51355,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "818939c8722c6ae0682360449a48edff60a2854034198f96455b499a726f386e",
+    "sha256": "fdd4ea2e038ea0d253a97f1d6516c34889ba3354ca06831a47e7cfbf6794b94c",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -59,10 +59,10 @@
     }
   ],
   "commands": {
-    "external_api": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000",
+    "external_api": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.27-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000",
     "fixture_metadata_only": "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
-    "metadata_only": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime metadata-only",
-    "skill_mode": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime skill-mode"
+    "metadata_only": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.27-alpha --platform kimi --runtime metadata-only",
+    "skill_mode": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.27-alpha --platform kimi --runtime skill-mode"
   },
   "platforms": [
     "kimi",
@@ -84,32 +84,32 @@
     {
       "bytes": 3611,
       "path": "docs/platform-agent-release-replay.md",
-      "sha256": "968710a4f083ab67b68f830cd6afdcbc3c965d45710073cb1b1bacd7ee4a239b"
+      "sha256": "2187bb9202e39bef14e81cee41ce28c9036d96b09385fdbf3d8246de0145e522"
     },
     {
       "bytes": 3891,
       "path": "docs/release-asset-bootstrap.md",
-      "sha256": "bfa5859d0e431bba24b4acfeee9516b60f43e73cd46bc4a8f884e20441343546"
+      "sha256": "b9ca2c12b28874d7da59254778d55c0ff33489b7885072a942144c463806cfa2"
     },
     {
       "bytes": 3259,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "f4b01925b9c0be656f1108cf6803f9262fd16104b726cbbc8bbd0f410bc33e7d"
+      "sha256": "543b70b0d87166dc516ecec40c84dce6aa1b2c6a149635d779a1a31e80e010ed"
     },
     {
-      "bytes": 26040,
+      "bytes": 26717,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "01fa4df0b5cb9cd85493903fe4bb337c76efb4adb50e49dd8a194f8bb9bf3a2e"
+      "sha256": "34bce5ff403558319545ad3c89906f721683caa2ea47271dc278bf44ee6e30ec"
     },
     {
       "bytes": 28634,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "128486dac7875dc00b96ea7dc79347797214e64131ec04237afbd40e67f0d288"
+      "sha256": "30a3964b0c3966f0aec3d73f78db43639ba583f44ce8c3eed7841247fe763c0c"
     },
     {
       "bytes": 20083,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "d1987ff30507c0632e0b3a928de41c7f61949db72e1d76b58c4111771150bacd"
+      "sha256": "f721cbe1cd6875c9477d30ae88f97858ad9997ff03331ee9853feeb167547a38"
     },
     {
       "bytes": 83732,
@@ -139,9 +139,9 @@
   ],
   "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",
   "release_identity": {
-    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.26-alpha",
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.27-alpha",
     "repo": "jzvcpe-goat/study-anything",
-    "tag": "v0.3.26-alpha"
+    "tag": "v0.3.27-alpha"
   },
   "required_tools": [
     "study_anything_health",
@@ -161,5 +161,5 @@
   ],
   "schema_version": "platform-agent-release-replay-v1",
   "status": "pass",
-  "version": "v0.3.26-alpha"
+  "version": "v0.3.27-alpha"
 }

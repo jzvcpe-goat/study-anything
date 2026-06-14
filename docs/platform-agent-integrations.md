@@ -482,3 +482,21 @@ For published image readiness, run `python3 scripts/verify_published_image_evide
 attach `published-image-evidence-v1` beside the adopter archive. This published-image evidence lets a
 platform Agent distinguish a valid release with slow local GHCR pulls from a missing manifest
 platform, failed docker-images workflow, registry/network outage, or runtime smoke failure.
+
+For release-only cleanroom adoption, give the platform Agent
+`platform/bootstrap/study_anything_release_bootstrap.py` or the copy from the
+release asset:
+
+```bash
+python3 study_anything_release_bootstrap.py \
+  --tag v0.3.27-alpha \
+  --platform kimi \
+  --runtime metadata-only \
+  --output-dir study-anything-cleanroom-report
+```
+
+The resulting `release-cleanroom-bootstrap-v1` report is safe to attach to a
+GitHub issue. It includes environment summary, release asset status, tool import
+status, runtime status, failure classification, recovery steps, and a redacted
+issue body without source text, learner answers, prompts, endpoints, model keys,
+or local absolute paths.
