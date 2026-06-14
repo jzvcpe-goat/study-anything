@@ -22,7 +22,7 @@ DEFAULT_CAPABILITIES = [
     "answer.grade",
     "insight.synthesize",
 ]
-DEFAULT_TAG = "v0.3.27-alpha"
+DEFAULT_TAG = "v0.3.28-alpha"
 DEFAULT_IMAGE = f"ghcr.io/jzvcpe-goat/study-anything/api:{DEFAULT_TAG}"
 
 

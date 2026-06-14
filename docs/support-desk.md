@@ -1,6 +1,6 @@
 # Support Desk
 
-Study Anything v0.3.27-alpha uses a GitHub-first support desk for external platform adoption. The
+Study Anything v0.3.28-alpha uses a GitHub-first support desk for external platform adoption. The
 goal is simple: when a Kimi-compatible, Codex, WorkBuddy-style HTTP, or generic OpenAPI setup fails,
 the user can file a useful issue without exposing private learning data or user-owned Agent secrets.
 
@@ -95,7 +95,7 @@ docs drift from the support desk contract.
 
 ## Onboarding Readiness And SLA
 
-v0.3.27-alpha adds `platform-onboarding-readiness-v1` on top of support triage. It proves first
+v0.3.28-alpha adds `platform-onboarding-readiness-v1` on top of support triage. It proves first
 external adopter walkthroughs, `maintainer-sla-labels-v1`, `maintainer-rotation-checklist-v1`,
 `platform-triage-dashboard-v1`, and `platform-release-blocker-fixture-v1` fixtures are present.
 
@@ -118,7 +118,7 @@ The SLA labels are `intake`, `needs-repro`, `confirmed`, `blocked-by-platform`, 
 
 ## Public Maintainer Status
 
-v0.3.27-alpha adds `public-support-status-v1` and `public-maintainer-dashboard-v1`. This layer is
+v0.3.28-alpha adds `public-support-status-v1` and `public-maintainer-dashboard-v1`. This layer is
 safe to publish because it includes only platform status, schema names, copyable verification
 commands, release-blocker fixture ids and hashes, SLA labels, and documented limitations.
 Treat this as the public maintainer status surface, not as a support bundle dump.
@@ -142,7 +142,7 @@ personal profile data, or full support bundle payloads.
 
 ## Evidence Archive Handoff
 
-v0.3.27-alpha adds `adopter-evidence-archive-v1` for support handoff. Before closing a release or
+v0.3.28-alpha adds `adopter-evidence-archive-v1` for support handoff. Before closing a release or
 asking an external adopter to retry, run:
 
 ```bash

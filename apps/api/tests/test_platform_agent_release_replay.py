@@ -70,7 +70,7 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         if self.path == "/v1/health":
-            self._json(200, {"status": "ok", "version": "0.3.27-alpha"})
+            self._json(200, {"status": "ok", "version": "0.3.28-alpha"})
             return
         if self.path == "/v1/sessions/mock-session/mastery":
             if getattr(self.server, "schema_mismatch", False):
@@ -255,7 +255,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "platform-agent-release-replay-v1")
-        self.assertEqual(report["version"], "v0.3.27-alpha")
+        self.assertEqual(report["version"], "v0.3.28-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertRegex(report["archive"]["sha256"], r"^[a-f0-9]{64}$")
         self.assertIn(report["archive"]["sha256"], checksum)

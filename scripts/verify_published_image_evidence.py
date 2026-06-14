@@ -19,7 +19,7 @@ DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-published-ima
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SCHEMA_VERSION = "published-image-evidence-v1"
 FIXTURE_SCHEMA_VERSION = "published-image-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.27-alpha"
+RELEASE_VERSION = "v0.3.28-alpha"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
 ARCHIVE_ROOT = "study-anything-published-image-evidence"
@@ -357,7 +357,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "published-image evidence"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "Published Image Evidence"],
         "docs/release-checklist.md": ["verify_published_image_evidence.py --check"],
-        "docs/roadmap.md": ["v0.3.27-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.28-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

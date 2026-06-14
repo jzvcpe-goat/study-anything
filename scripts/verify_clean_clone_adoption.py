@@ -174,7 +174,7 @@ def make_env(clone: Path, work_dir: Path, *, api_port: int) -> dict[str, str]:
 
 def run_skill_mode_demo(clone: Path, env: dict[str, str], *, timeout_seconds: int) -> str:
     completed = run(
-        ["./scripts/run_skill_mode_demo.sh"],
+        ["sh", "scripts/run_skill_mode_demo.sh"],
         cwd=clone,
         env=env,
         timeout_seconds=timeout_seconds,

@@ -50,7 +50,7 @@
     {
       "blocker_id": "published_image_blocker",
       "linked_support_category": "published_image_pull_failure",
-      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.27-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
     },
     {
       "blocker_id": "agent_eval_blocker",
@@ -79,5 +79,5 @@
     ],
     "support_ticket_fixture_count": 5
   },
-  "version": "v0.3.27-alpha"
+  "version": "v0.3.28-alpha"
 }

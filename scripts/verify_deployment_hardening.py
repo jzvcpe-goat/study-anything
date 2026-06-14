@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "deployment-hardening-verification-v1"
-RELEASE_VERSION = "v0.3.27-alpha"
+RELEASE_VERSION = "v0.3.28-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-deployment-hardening.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
@@ -360,7 +360,7 @@ def verify_generated_pack(root: Path) -> dict[str, Any]:
     required = {
         "scripts/verify_deployment_hardening.py",
         "platform/generated/study-anything-deployment-hardening.json",
-        "docs/release-notes/v0.3.27-alpha.md",
+        "docs/release-notes/v0.3.28-alpha.md",
     }
     missing = required - paths
     if missing:

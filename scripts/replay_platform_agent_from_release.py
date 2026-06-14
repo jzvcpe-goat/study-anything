@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.27-alpha"
+DEFAULT_TAG = "v0.3.28-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_TOOLS = [
     "study_anything_health",
@@ -531,7 +531,7 @@ def launch_skill_mode(args: argparse.Namespace) -> tuple[str, dict[str, str]]:
     if (ROOT / ".venv").exists():
         env["STUDY_ANYTHING_VENV"] = str(ROOT / ".venv")
     try:
-        run_command(["./scripts/launch_skill_mode.sh"], cwd=ROOT, env=env, timeout_seconds=args.timeout_seconds)
+        run_command(["sh", "scripts/launch_skill_mode.sh"], cwd=ROOT, env=env, timeout_seconds=args.timeout_seconds)
         wait_for_api(env["API_BASE"], 60)
     except Exception as exc:
         raise ReplayError(f"Runtime launch failed for Skill Mode: {exc}") from exc
@@ -540,7 +540,7 @@ def launch_skill_mode(args: argparse.Namespace) -> tuple[str, dict[str, str]]:
 
 def stop_skill_mode(env: dict[str, str]) -> None:
     subprocess.run(
-        ["./scripts/stop_skill_mode.sh"],
+        ["sh", "scripts/stop_skill_mode.sh"],
         cwd=ROOT,
         env=env,
         text=True,

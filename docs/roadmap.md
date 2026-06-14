@@ -603,7 +603,7 @@
 - Wire platform-agent release replay into release checks, ecosystem submission, platform packs,
   bundle manifest, docs, release notes, and the adoption pack.
 
-## v0.3.27-alpha
+## v0.3.28-alpha
 
 - Add `release-cleanroom-bootstrap-v1`, a release-only bootloader report for external adopters and
   platform Agents that start from the GitHub Release page instead of a prepared checkout.

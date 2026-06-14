@@ -12,13 +12,13 @@ export STUDY_ANYTHING_API_BASE="http://$api_host:$API_PORT"
 export API_BASE="$STUDY_ANYTHING_API_BASE"
 
 cleanup() {
-  ./scripts/stop_skill_mode.sh >/dev/null 2>&1 || true
+  sh ./scripts/stop_skill_mode.sh >/dev/null 2>&1 || true
 }
 
 trap cleanup EXIT HUP INT TERM
 
 printf "Starting disposable Study Anything Skill Mode at %s ...\n" "$STUDY_ANYTHING_API_BASE"
-./scripts/launch_skill_mode.sh
+sh ./scripts/launch_skill_mode.sh
 
 venv_dir="${STUDY_ANYTHING_VENV:-$ROOT/.venv}"
 if [ -x "$venv_dir/bin/python3" ]; then

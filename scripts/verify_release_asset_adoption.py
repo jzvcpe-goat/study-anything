@@ -32,7 +32,7 @@ FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 PUBLISHED_IMAGE_SCHEMA_VERSION = "published-image-evidence-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.27-alpha"
+DEFAULT_TAG = "v0.3.28-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_ASSETS = {
     "study-anything-platform-adoption-pack.zip": "platform_adoption_pack",

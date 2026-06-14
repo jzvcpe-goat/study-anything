@@ -64,7 +64,7 @@ class PlatformFieldRehearsalTests(unittest.TestCase):
         report = json.loads(REPORT.read_text(encoding="utf-8"))
 
         self.assertEqual(report["schema_version"], "platform-field-adoption-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.27-alpha")
+        self.assertEqual(report["version"], "v0.3.28-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual({item["platform_id"] for item in report["platforms"]}, PLATFORM_IDS)
         self.assertEqual({item["id"] for item in report["quirks_catalog"]}, QUIRK_IDS)
@@ -93,7 +93,7 @@ class PlatformFieldRehearsalTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "platform-import-failure-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.27-alpha")
+            self.assertEqual(payload["version"], "v0.3.28-alpha")
             self.assertEqual(payload["failure_id"], path.stem)
             self.assertEqual(payload["status"], "mock_failure_ready")
             self.assertEqual(set(payload["platform_ids"]), PLATFORM_IDS)

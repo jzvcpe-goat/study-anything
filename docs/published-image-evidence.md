@@ -1,6 +1,6 @@
 # Published Image Evidence
 
-Study Anything v0.3.27-alpha adds `published-image-evidence-v1` so an external
+Study Anything v0.3.28-alpha adds `published-image-evidence-v1` so an external
 operator can tell the difference between a broken release and a slow local
 Docker/GHCR pull.
 
@@ -48,7 +48,7 @@ The generated assets are:
 
 A local pull timeout is acceptable only when all three are true:
 
-- `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.27-alpha` shows `linux/amd64` and `linux/arm64`.
+- `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.28-alpha` shows `linux/amd64` and `linux/arm64`.
 - GitHub Actions `docker-images` succeeded for the release tag.
 - `scripts/release_check.sh` and external adoption proof passed before tagging.
 
