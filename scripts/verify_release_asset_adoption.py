@@ -32,13 +32,14 @@ FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 PUBLISHED_IMAGE_SCHEMA_VERSION = "published-image-evidence-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.24-alpha"
+DEFAULT_TAG = "v0.3.25-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_ASSETS = {
     "study-anything-platform-adoption-pack.zip": "platform_adoption_pack",
     "study-anything-published-image-evidence.zip": "published_image_evidence",
     "study-anything-adopter-evidence-archive.zip": "adopter_evidence_archive",
     "study-anything-platform-feedback-package.zip": "platform_feedback_package",
+    "study-anything-release-asset-bootstrap.zip": "release_asset_bootstrap",
 }
 REQUIRED_PACK_PATHS = {
     "manifest.json",
@@ -51,6 +52,13 @@ REQUIRED_PACK_PATHS = {
     "platform/generated/study-anything-release-asset-adoption.md",
     "platform/generated/study-anything-release-asset-adoption.zip",
     "platform/generated/study-anything-release-asset-adoption.sha256",
+    "platform/generated/study-anything-release-asset-bootstrap.json",
+    "platform/generated/study-anything-release-asset-bootstrap.md",
+    "platform/generated/study-anything-release-asset-bootstrap.zip",
+    "platform/generated/study-anything-release-asset-bootstrap.sha256",
+    "scripts/bootstrap_from_release.py",
+    "scripts/generate_release_asset_bootstrap.py",
+    "docs/release-asset-bootstrap.md",
     "scripts/generate_release_asset_adoption.py",
     "scripts/verify_release_asset_adoption.py",
     "docs/release-asset-adoption.md",

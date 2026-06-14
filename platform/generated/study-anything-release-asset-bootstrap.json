@@ -1,0 +1,165 @@
+{
+  "acceptance": {
+    "fixture_command": "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+    "generate_command": "python3 scripts/generate_release_asset_bootstrap.py --check",
+    "minimum_command": "python3 scripts/bootstrap_from_release.py --runtime metadata-only",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "archive": {
+    "archive_root": "study-anything-release-asset-bootstrap",
+    "bytes": 50695,
+    "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
+    "sha256": "a2c74a6d3ee1f6296928d84620d4a214460a439a890b25bb41bcb65594e87126",
+    "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
+  },
+  "classification_matrix": [
+    {
+      "classification": "release_asset_bootstrap_ready",
+      "meaning": "Release assets, pack digests, platform imports, and selected runtime replay are usable.",
+      "release_gate": "pass"
+    },
+    {
+      "classification": "release_asset_missing",
+      "meaning": "Attach all required public release zip assets before announcing external adoption.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_digest_mismatch",
+      "meaning": "Delete local downloads and recreate the release asset from the matching main commit.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_pack_corrupted",
+      "meaning": "Re-download or regenerate the platform adoption pack.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_published_evidence_missing",
+      "meaning": "Regenerate published-image evidence before packaging the adoption pack.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_network_unavailable",
+      "meaning": "Retry from another network or use a safely mirrored asset directory.",
+      "release_gate": "needs_independent_recheck"
+    },
+    {
+      "classification": "tool_manifest_invalid",
+      "meaning": "Regenerate platform tool assets and adoption pack before importing into Kimi/Codex/WorkBuddy.",
+      "release_gate": "block_platform_submission"
+    },
+    {
+      "classification": "local_api_unavailable",
+      "meaning": "Launch Skill Mode or Docker self-host before running live platform tools.",
+      "release_gate": "runtime_recheck_required"
+    },
+    {
+      "classification": "published_image_unavailable",
+      "meaning": "Check GHCR manifest and docker-images workflow before claiming published-image readiness.",
+      "release_gate": "runtime_recheck_required"
+    },
+    {
+      "classification": "non_ascii_path_risk",
+      "meaning": "Use Skill Mode or published images, or move source builds into an ASCII-only path.",
+      "release_gate": "operator_environment_warning"
+    },
+    {
+      "classification": "bootstrap_failed",
+      "meaning": "Run the lower-level release asset verifier and attach the redacted transcript to GitHub.",
+      "release_gate": "needs_triage"
+    }
+  ],
+  "commands": {
+    "metadata_only": "python3 scripts/bootstrap_from_release.py --tag v0.3.25-alpha --runtime metadata-only",
+    "offline_fixture": "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+    "published_image": "python3 scripts/bootstrap_from_release.py --tag v0.3.25-alpha --runtime published-image",
+    "skill_mode": "python3 scripts/bootstrap_from_release.py --tag v0.3.25-alpha --runtime skill-mode"
+  },
+  "platform_imports": {
+    "codex": "Skill entrypoint plus CLI/demo commands.",
+    "kimi": "OpenAI-compatible tools plus local HTTP API endpoint.",
+    "workbuddy": "OpenAPI import plus tool catalog."
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "learner_answers_in_report": false,
+    "local_absolute_paths_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false,
+    "support_bundle_private_payload_in_report": false
+  },
+  "public_asset_refs": [
+    {
+      "bytes": 3846,
+      "path": "docs/release-asset-bootstrap.md",
+      "sha256": "a5a1f3a61a927882af69559d9326679ea9155343b878e001a644b924a2e4ad80"
+    },
+    {
+      "bytes": 3214,
+      "path": "docs/release-asset-adoption.md",
+      "sha256": "fbbab47f1dc9c63c84405eb312f1d0732035c54df980a5bdf26f96f43a749902"
+    },
+    {
+      "bytes": 18676,
+      "path": "docs/adoption.md",
+      "sha256": "6362b7ff08a833b7190ebc39d0f23528e6726b9f27fe31ab2fd7cf5a6e1e33a6"
+    },
+    {
+      "bytes": 6571,
+      "path": "docs/github-launch.md",
+      "sha256": "6356eafd60d160dcbeb7fa9e1a419b42277625b32fecde03dc55e4a4b8dcc92f"
+    },
+    {
+      "bytes": 11215,
+      "path": "docs/ecosystem-submission.md",
+      "sha256": "4eb36e2e84650daf6a90de9a2ce26e511aa7ba2ec873c212f86e83b4faa66184"
+    },
+    {
+      "bytes": 19932,
+      "path": "scripts/bootstrap_from_release.py",
+      "sha256": "48beffe1e899482eb37df28d2e891d382aa9bf1ae2227c1575826ca1aec2ff84"
+    },
+    {
+      "bytes": 20640,
+      "path": "scripts/verify_release_asset_adoption.py",
+      "sha256": "9b3f1736593e70576df4302426ced8cc5ba15d504ac660b5d2c1808941619c45"
+    },
+    {
+      "bytes": 15398,
+      "path": "scripts/generate_release_asset_bootstrap.py",
+      "sha256": "4bd0f884d1624d0160f6afbed539e210c9039bc3df6785aff36ce22e75186a45"
+    },
+    {
+      "bytes": 7347,
+      "path": "platform/generated/study-anything-release-asset-adoption.json",
+      "sha256": "d6e2b72f74b63367ae92bf441de60ddac89e9daa0075ef6f372e86e651a245da"
+    },
+    {
+      "bytes": 83732,
+      "path": "platform/generated/study-anything-platform-openapi.json",
+      "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
+    },
+    {
+      "bytes": 27111,
+      "path": "platform/generated/study-anything-openai-tools.json",
+      "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
+    }
+  ],
+  "purpose": "Make the GitHub Release page a complete external adoption entrypoint: download assets, verify digests, inspect platform import manifests, and emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts.",
+  "release_identity": {
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.25-alpha",
+    "repo": "jzvcpe-goat/study-anything",
+    "tag": "v0.3.25-alpha"
+  },
+  "schema_version": "release-asset-bootstrap-v1",
+  "schemas": {
+    "adoption_pack": "study-anything-platform-adoption-pack-v1",
+    "bootstrap": "release-asset-bootstrap-v1",
+    "release_asset_proof": "release-asset-adoption-proof-v1",
+    "transcript": "release-asset-bootstrap-transcript-v1"
+  },
+  "status": "pass",
+  "version": "v0.3.25-alpha"
+}

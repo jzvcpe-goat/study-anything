@@ -187,6 +187,41 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub Release asset adoption replay evidence checksum.",
     ),
     (
+        "platform/generated/study-anything-release-asset-bootstrap.json",
+        "generated_asset",
+        "GitHub Release asset bootstrap evidence JSON.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-bootstrap.md",
+        "generated_asset",
+        "GitHub Release asset bootstrap evidence Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-bootstrap.zip",
+        "generated_asset",
+        "GitHub Release asset bootstrap evidence archive.",
+    ),
+    (
+        "platform/generated/study-anything-release-asset-bootstrap.sha256",
+        "generated_asset",
+        "GitHub Release asset bootstrap evidence checksum.",
+    ),
+    (
+        "docs/release-asset-bootstrap.md",
+        "operator_doc",
+        "GitHub Release asset bootstrap guide for external platform Agents.",
+    ),
+    (
+        "scripts/bootstrap_from_release.py",
+        "verification",
+        "Bootstrap external platform adoption from public GitHub Release assets.",
+    ),
+    (
+        "scripts/generate_release_asset_bootstrap.py",
+        "diagnostics",
+        "Generate GitHub Release asset bootstrap evidence.",
+    ),
+    (
         ".github/ISSUE_TEMPLATE/platform_import_failure.md",
         "support_template",
         "GitHub issue template for external platform import failures.",
@@ -922,7 +957,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.24-alpha.md",
+        "docs/release-notes/v0.3.25-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

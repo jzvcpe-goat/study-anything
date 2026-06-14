@@ -27,5 +27,5 @@
   "public_note": "The platform cannot reach localhost or import tools without a user-side bridge.",
   "public_status": "blocked_by_platform_runtime",
   "schema_version": "adopter-evidence-fixture-v1",
-  "version": "v0.3.24-alpha"
+  "version": "v0.3.25-alpha"
 }
