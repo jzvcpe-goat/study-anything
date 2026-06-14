@@ -89,6 +89,13 @@ REQUIRED_ARCHIVE_PATHS = [
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
     "docs/public-support-status.md",
+    "scripts/generate_published_image_evidence.py",
+    "scripts/verify_published_image_evidence.py",
+    "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-published-image-evidence.sha256",
+    "docs/published-image-evidence.md",
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
     "platform/generated/study-anything-adopter-evidence-archive.json",
@@ -114,6 +121,12 @@ REQUIRED_ARCHIVE_PATHS = [
     "fixtures/adopter-evidence-archive/release-blocker.json",
     "fixtures/adopter-evidence-archive/platform-blocked.json",
     "fixtures/adopter-evidence-archive/resolved-support-case.json",
+    "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+    "fixtures/published-image-evidence/manifest-missing-platform.json",
+    "fixtures/published-image-evidence/docker-images-failed.json",
+    "fixtures/published-image-evidence/ghcr-unavailable.json",
+    "fixtures/published-image-evidence/remote-smoke-pass.json",
+    "fixtures/published-image-evidence/remote-smoke-failed.json",
     ".github/ISSUE_TEMPLATE/platform_import_failure.md",
     ".github/ISSUE_TEMPLATE/local_gateway_failure.md",
     ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
@@ -317,6 +330,7 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
                 "docs/maintainer-rotation.md",
                 "docs/public-support-status.md",
                 "docs/adopter-evidence-archive.md",
+                "docs/published-image-evidence.md",
             ]
         )
     required_terms = [
@@ -334,6 +348,8 @@ def validate_adoption_pack(pack_path: Path, manifest_path: Path | None) -> dict[
         "public-support-status-v1",
         "public-maintainer-dashboard-v1",
         "public-status-linkage-fixture-v1",
+        "published-image-evidence-v1",
+        "published-image-evidence-fixture-v1",
         "adopter-evidence-archive-v1",
         "adopter-evidence-fixture-v1",
     ]
@@ -575,6 +591,11 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             (
                 "platform_public_support_status",
                 [python_bin, "scripts/verify_platform_public_support_status.py"],
+                90,
+            ),
+            (
+                "published_image_evidence",
+                [python_bin, "scripts/verify_published_image_evidence.py"],
                 90,
             ),
             (
@@ -897,6 +918,19 @@ def summarize_command_result(label: str, value: dict[str, Any]) -> dict[str, Any
             "failure_class_count": len(value.get("failure_classes", [])),
             "report_is_redacted": (value.get("privacy_assertions") or {}).get(
                 "report_is_redacted"
+            ),
+        }
+    if label == "published_image_evidence":
+        evidence = value.get("published_image_evidence") or {}
+        return {
+            "status": value.get("status"),
+            "schema_version": value.get("schema_version"),
+            "version": value.get("version"),
+            "evidence_schema": evidence.get("schema_version"),
+            "fixture_count": evidence.get("fixture_count"),
+            "classification_count": evidence.get("classification_count"),
+            "local_paths_in_report": (value.get("privacy_assertions") or {}).get(
+                "local_absolute_paths_in_report"
             ),
         }
     if label == "external_agent_adapter_hardening":

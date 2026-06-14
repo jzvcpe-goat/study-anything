@@ -35,5 +35,5 @@
   ],
   "schema_version": "platform-import-failure-fixture-v1",
   "status": "mock_failure_ready",
-  "version": "v0.3.21-alpha"
+  "version": "v0.3.22-alpha"
 }

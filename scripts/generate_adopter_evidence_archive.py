@@ -25,11 +25,12 @@ ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.21-alpha"
+RELEASE_VERSION = "v0.3.22-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
+PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION = "published-image-evidence-v1"
 
 FIXTURES = (
     "successful-release",
@@ -44,6 +45,7 @@ PUBLIC_ASSET_PATHS = (
     "README.md",
     "docs/adoption.md",
     "docs/adopter-evidence-archive.md",
+    "docs/published-image-evidence.md",
     "docs/platform-agent-integrations.md",
     "docs/support-desk.md",
     "docs/adopter-onboarding.md",
@@ -51,11 +53,15 @@ PUBLIC_ASSET_PATHS = (
     "docs/ecosystem-submission.md",
     "docs/release-checklist.md",
     "docs/roadmap.md",
-    "docs/release-notes/v0.3.21-alpha.md",
+    "docs/release-notes/v0.3.22-alpha.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-published-image-evidence.sha256",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/packs/codex/pack.json",
@@ -145,7 +151,7 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
         ),
         "local-ghcr-pull-timeout": (
             "local_environment_limit",
-            "python3 scripts/verify_published_image_launch.py --tag v0.3.21-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
+            "python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
             "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
         ),
         "needs-repro-issue": (
@@ -215,6 +221,9 @@ def fixture_refs() -> list[dict[str, Any]]:
 def schema_source_refs() -> dict[str, Any]:
     public_status = read_json(ROOT / "platform/generated/study-anything-public-support-status.json")
     public_dashboard = read_json(ROOT / "platform/generated/study-anything-public-maintainer-dashboard.json")
+    published_image_evidence = read_json(
+        ROOT / "platform/generated/study-anything-published-image-evidence.json"
+    )
     adoption_pack = read_json(ROOT / "platform/generated/study-anything-platform-adoption-pack.json")
     ecosystem_submission = read_json(ROOT / "platform/ecosystem-submission.json")
     return {
@@ -225,6 +234,11 @@ def schema_source_refs() -> dict[str, Any]:
         "public_maintainer_dashboard": {
             "schema_version": public_dashboard.get("schema_version"),
             "ref": public_file_ref("platform/generated/study-anything-public-maintainer-dashboard.json"),
+        },
+        "published_image_evidence": {
+            "schema_version": published_image_evidence.get("schema_version"),
+            "ref": public_file_ref("platform/generated/study-anything-published-image-evidence.json"),
+            "verification_command": "python3 scripts/verify_published_image_evidence.py --check",
         },
         "platform_adoption_pack": {
             "schema_version": adoption_pack.get("schema_version"),
@@ -282,6 +296,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
                 f"python3 scripts/verify_published_image_launch.py --tag {RELEASE_VERSION} "
                 "--pull-timeout-seconds 600 --allow-pull-timeout-report"
             ),
+            "published_image_evidence": "python3 scripts/verify_published_image_evidence.py --check",
             "local_pull_timeout_fallback_allowed": True,
         },
         "platform_pack_checksums": [
@@ -293,6 +308,8 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
             "minimum_commands": [
                 "python3 scripts/verify_adopter_evidence_archive.py --check",
                 "python3 scripts/generate_adopter_evidence_archive.py --check",
+                "python3 scripts/verify_published_image_evidence.py --check",
+                "python3 scripts/generate_published_image_evidence.py --check",
                 "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
                 "python3 scripts/verify_platform_public_support_status.py --check",
                 "scripts/release_check.sh",

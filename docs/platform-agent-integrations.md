@@ -473,3 +473,8 @@ For release handoff, run `python3 scripts/verify_adopter_evidence_archive.py --c
 `adopter-evidence-archive-v1` evidence archive. The evidence archive is the platform maintainer's
 metadata-only proof bundle for checksums, public status, Docker manifest commands, and known
 limitations.
+
+For published image readiness, run `python3 scripts/verify_published_image_evidence.py --check` and
+attach `published-image-evidence-v1` beside the adopter archive. This published-image evidence lets a
+platform Agent distinguish a valid release with slow local GHCR pulls from a missing manifest
+platform, failed docker-images workflow, registry/network outage, or runtime smoke failure.

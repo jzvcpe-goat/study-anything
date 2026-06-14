@@ -16,7 +16,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.21-alpha"
+RELEASE_VERSION = "v0.3.22-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -36,6 +36,10 @@ REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
+    "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-published-image-evidence.sha256",
     "platform/generated/study-anything-adopter-evidence-archive.json",
     "platform/generated/study-anything-adopter-evidence-archive.md",
     "platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -68,6 +72,8 @@ REQUIRED_OPERATOR_ASSETS = [
     "scripts/verify_platform_field_rehearsal.py",
     "scripts/generate_platform_public_support_status.py",
     "scripts/verify_platform_public_support_status.py",
+    "scripts/generate_published_image_evidence.py",
+    "scripts/verify_published_image_evidence.py",
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
     "scripts/verify_plugin_ecosystem_adoption_kit.py",
@@ -84,6 +90,11 @@ REQUIRED_OPERATOR_ASSETS = [
     "platform/generated/study-anything-public-maintainer-dashboard.json",
     "platform/generated/study-anything-public-maintainer-dashboard.md",
     "docs/public-support-status.md",
+    "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-published-image-evidence.sha256",
+    "docs/published-image-evidence.md",
     "platform/generated/study-anything-adopter-evidence-archive.json",
     "platform/generated/study-anything-adopter-evidence-archive.md",
     "platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -102,6 +113,12 @@ REQUIRED_OPERATOR_ASSETS = [
     "fixtures/adopter-evidence-archive/release-blocker.json",
     "fixtures/adopter-evidence-archive/platform-blocked.json",
     "fixtures/adopter-evidence-archive/resolved-support-case.json",
+    "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+    "fixtures/published-image-evidence/manifest-missing-platform.json",
+    "fixtures/published-image-evidence/docker-images-failed.json",
+    "fixtures/published-image-evidence/ghcr-unavailable.json",
+    "fixtures/published-image-evidence/remote-smoke-pass.json",
+    "fixtures/published-image-evidence/remote-smoke-failed.json",
     "fixtures/platform-import-failures/schema_mismatch.json",
     "fixtures/platform-import-failures/missing_local_gateway.json",
     "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -125,6 +142,8 @@ PUBLIC_STATUS_EVIDENCE = (
     "public_support_status.schema_version == public-support-status-v1",
     "public_maintainer_dashboard.schema_version == public-maintainer-dashboard-v1",
     "public_status_linkage_fixture.schema_version == public-status-linkage-fixture-v1",
+    "published_image_evidence.schema_version == published-image-evidence-v1",
+    "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
     "adopter_evidence_archive.schema_version == adopter-evidence-archive-v1",
     "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1",
 )
@@ -304,6 +323,8 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "scripts/verify_platform_field_rehearsal.py",
         "scripts/generate_platform_public_support_status.py",
         "scripts/verify_platform_public_support_status.py",
+        "scripts/generate_published_image_evidence.py",
+        "scripts/verify_published_image_evidence.py",
         "scripts/generate_adopter_evidence_archive.py",
         "scripts/verify_adopter_evidence_archive.py",
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
@@ -314,6 +335,11 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-public-maintainer-dashboard.json",
         "platform/generated/study-anything-public-maintainer-dashboard.md",
         "docs/public-support-status.md",
+        "platform/generated/study-anything-published-image-evidence.json",
+        "platform/generated/study-anything-published-image-evidence.md",
+        "platform/generated/study-anything-published-image-evidence.zip",
+        "platform/generated/study-anything-published-image-evidence.sha256",
+        "docs/published-image-evidence.md",
         "platform/generated/study-anything-adopter-evidence-archive.json",
         "platform/generated/study-anything-adopter-evidence-archive.md",
         "platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -332,6 +358,12 @@ def validate_submission(root: Path) -> dict[str, Any]:
         "fixtures/adopter-evidence-archive/release-blocker.json",
         "fixtures/adopter-evidence-archive/platform-blocked.json",
         "fixtures/adopter-evidence-archive/resolved-support-case.json",
+        "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+        "fixtures/published-image-evidence/manifest-missing-platform.json",
+        "fixtures/published-image-evidence/docker-images-failed.json",
+        "fixtures/published-image-evidence/ghcr-unavailable.json",
+        "fixtures/published-image-evidence/remote-smoke-pass.json",
+        "fixtures/published-image-evidence/remote-smoke-failed.json",
     ):
         if asset not in shared_assets:
             raise ManualSubmissionRehearsalError(f"Ecosystem submission missing shared asset {asset}.")
@@ -362,12 +394,18 @@ def validate_submission(root: Path) -> dict[str, Any]:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove public maintainer dashboard schema.")
     if "public-status-linkage-fixture-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove public status linkage schema.")
+    if "published-image-evidence-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove published-image evidence schema.")
+    if "published-image-evidence-fixture-v1" not in prove_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission must prove published-image evidence fixture schema.")
     if "adopter-evidence-archive-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove adopter evidence archive schema.")
     if "adopter-evidence-fixture-v1" not in prove_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission must prove adopter evidence fixture schema.")
     if "verify_platform_public_support_status.py --check" not in command_text:
         raise ManualSubmissionRehearsalError("Ecosystem submission missing public support status check.")
+    if "verify_published_image_evidence.py --check" not in command_text:
+        raise ManualSubmissionRehearsalError("Ecosystem submission missing published-image evidence check.")
     return {
         "schema_version": submission.get("schema_version"),
         "version": submission.get("version"),
@@ -619,6 +657,29 @@ def operator_steps() -> list[dict[str, Any]]:
             "failure_remediation": [
                 "Run verify_platform_public_support_status.py without --check to print the current mismatch summary.",
                 "Publish only labels, schema names, fixture hashes, and copyable commands.",
+            ],
+        },
+        {
+            "step_id": "package_published_image_evidence",
+            "operator_action": "Generate and verify the public published-image evidence before release or platform handoff.",
+            "command": "python3 scripts/generate_published_image_evidence.py --check && python3 scripts/verify_published_image_evidence.py --check",
+            "expected_outputs": [
+                "published-image-evidence-v1",
+                "published-image-evidence-fixture-v1",
+                "blocked_by_local_ghcr_pull",
+                "manifest platforms and docker-images workflow classifications",
+                "no raw source, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths",
+            ],
+            "evidence_paths": [
+                "platform/generated/study-anything-published-image-evidence.json",
+                "platform/generated/study-anything-published-image-evidence.md",
+                "platform/generated/study-anything-published-image-evidence.zip",
+                "platform/generated/study-anything-published-image-evidence.sha256",
+                "docs/published-image-evidence.md",
+            ],
+            "failure_remediation": [
+                "Run verify_published_image_evidence.py without --check to print the current mismatch summary.",
+                "Do not treat local pull timeout as failure when manifest and docker-images evidence are valid.",
             ],
         },
         {

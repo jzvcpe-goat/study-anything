@@ -1,7 +1,7 @@
 # Study Anything Adopter Evidence Archive
 
 Schema: `adopter-evidence-archive-v1`
-Version: `v0.3.21-alpha`
+Version: `v0.3.22-alpha`
 Status: `pass`
 
 This archive is a public, metadata-only handoff bundle for external adopters and
@@ -11,12 +11,14 @@ handoff steps without copying private learning data.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `8a3de5a5759fa717c5b8b9c65f2408c04183f8e6fcf1021488cb4f0e307d8e5c`
+- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `83b21e35c467bf0ef79ef1767f50ecdad71a05def3e5570495041bcc43f32908`
 
 ## Reproduction Commands
 
 - `python3 scripts/verify_adopter_evidence_archive.py --check`
 - `python3 scripts/generate_adopter_evidence_archive.py --check`
+- `python3 scripts/verify_published_image_evidence.py --check`
+- `python3 scripts/generate_published_image_evidence.py --check`
 - `python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - `python3 scripts/verify_platform_public_support_status.py --check`
 - `scripts/release_check.sh`
@@ -29,12 +31,12 @@ handoff steps without copying private learning data.
 
 ## Fixture Hashes
 
-- `successful-release`: `0b026c0c8984ed920f5b569865604a3590270571ce0f580fb452de842497c423`
-- `local-ghcr-pull-timeout`: `cd5832798db34aff1a66a839a2516acee411b46b4f30603dc4c49272e8e278a9`
-- `needs-repro-issue`: `f9f9fe636a70575cd0a7d0a8bc3f810399f625263b574a70c9eb6dfbead8b788`
-- `release-blocker`: `dbb440437431aa10e5956d9314d2bccc3921785c20cda75570943e22fceb1eba`
-- `platform-blocked`: `ebf2c90f53eed7cd7ec800145ddbb26de6278206619fa58988a8d44862b5b59c`
-- `resolved-support-case`: `c1e430df763b04a7fc38043654b521a08d93d4fcfa3e3be41c224ebd592756ef`
+- `successful-release`: `5740e24a238c7ac5dc25cfb9feba213de34445b96a8add34471053381dcbe9a5`
+- `local-ghcr-pull-timeout`: `d691ddd9861cfd0756acffc92f7d8cd9a724b9c752b47737194a31d736227ee8`
+- `needs-repro-issue`: `f01e49759a28320fddc561e68693b9c1267324a5291366a208a91576d7f9d3e6`
+- `release-blocker`: `da85e9ef55aac1f17169b7c9fc2675c271d93896e1a78b5bb0b0afc4b19d1c01`
+- `platform-blocked`: `931377d0a3d046ba359d8845e0b8793327d6d41ddf6c0088999b27eb4cd4294b`
+- `resolved-support-case`: `7e656fdc0cec1603263e64491b9e7a966316251691371e77b7366f2db77122bd`
 
 ## Privacy
 

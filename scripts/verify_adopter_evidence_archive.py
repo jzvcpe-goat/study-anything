@@ -19,11 +19,12 @@ DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-adopter-evide
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.21-alpha"
+RELEASE_VERSION = "v0.3.22-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
+PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION = "published-image-evidence-v1"
 ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 FIXTURES = {
@@ -39,7 +40,14 @@ PLATFORMS = {"codex", "kimi", "workbuddy"}
 REQUIRED_REPORT_ASSETS = {
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
+    "scripts/generate_published_image_evidence.py",
+    "scripts/verify_published_image_evidence.py",
     "docs/adopter-evidence-archive.md",
+    "docs/published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-published-image-evidence.md",
+    "platform/generated/study-anything-published-image-evidence.zip",
+    "platform/generated/study-anything-published-image-evidence.sha256",
     "platform/generated/study-anything-adopter-evidence-archive.json",
     "platform/generated/study-anything-adopter-evidence-archive.md",
     "platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -199,6 +207,7 @@ def validate_report(root: Path) -> dict[str, Any]:
     expected_sources = {
         "public_support_status": PUBLIC_STATUS_SCHEMA_VERSION,
         "public_maintainer_dashboard": PUBLIC_DASHBOARD_SCHEMA_VERSION,
+        "published_image_evidence": PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION,
         "platform_adoption_pack": ADOPTION_PACK_SCHEMA_VERSION,
         "ecosystem_submission": ECOSYSTEM_SUBMISSION_SCHEMA_VERSION,
     }
@@ -230,7 +239,12 @@ def validate_report(root: Path) -> dict[str, Any]:
     if fixture_ids != FIXTURES:
         raise AdopterEvidenceArchiveError("Adopter evidence fixture coverage drifted.")
     commands = "\n".join(str(item) for item in (report.get("operator_reproduction") or {}).get("minimum_commands", []))
-    for command in (REQUIRED_COMMAND, REQUIRED_GENERATOR_COMMAND):
+    for command in (
+        REQUIRED_COMMAND,
+        REQUIRED_GENERATOR_COMMAND,
+        "verify_published_image_evidence.py --check",
+        "generate_published_image_evidence.py --check",
+    ):
         if command not in commands:
             raise AdopterEvidenceArchiveError(f"Archive reproduction commands missing {command}.")
     privacy = report.get("privacy_assertions") or {}
@@ -288,6 +302,8 @@ def validate_platform_packs(root: Path) -> dict[str, Any]:
         for item in (
             "adopter_evidence_archive.schema_version == adopter-evidence-archive-v1",
             "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1",
+            "published_image_evidence.schema_version == published-image-evidence-v1",
+            "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
         ):
             if item not in evidence:
                 raise AdopterEvidenceArchiveError(f"{platform_id} pack missing {item}.")
@@ -340,6 +356,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
 def validate_docs(root: Path) -> dict[str, Any]:
     checked = {
         "docs/adopter-evidence-archive.md": [SCHEMA_VERSION, FIXTURE_SCHEMA_VERSION, REQUIRED_COMMAND],
+        "docs/published-image-evidence.md": [PUBLISHED_IMAGE_EVIDENCE_SCHEMA_VERSION],
         "docs/adoption.md": [SCHEMA_VERSION, "verify_adopter_evidence_archive.py"],
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "evidence archive"],
         "docs/support-desk.md": [SCHEMA_VERSION, "handoff"],
@@ -347,7 +364,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/maintainer-rotation.md": [SCHEMA_VERSION, "maintainer handoff"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "Adopter Evidence Archive"],
         "docs/release-checklist.md": ["verify_adopter_evidence_archive.py --check"],
-        "docs/roadmap.md": ["v0.3.21-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.22-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

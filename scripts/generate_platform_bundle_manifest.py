@@ -127,6 +127,26 @@ FILES: list[tuple[str, str, str]] = [
         "Public maintainer dashboard Markdown.",
     ),
     (
+        "platform/generated/study-anything-published-image-evidence.json",
+        "generated_asset",
+        "Published-image evidence JSON.",
+    ),
+    (
+        "platform/generated/study-anything-published-image-evidence.md",
+        "generated_asset",
+        "Published-image evidence Markdown.",
+    ),
+    (
+        "platform/generated/study-anything-published-image-evidence.zip",
+        "generated_asset",
+        "Published-image evidence package.",
+    ),
+    (
+        "platform/generated/study-anything-published-image-evidence.sha256",
+        "generated_asset",
+        "Published-image evidence checksum.",
+    ),
+    (
         "platform/generated/study-anything-adopter-evidence-archive.json",
         "generated_asset",
         "External adopter evidence archive JSON.",
@@ -285,6 +305,36 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/adopter-evidence-archive/resolved-support-case.json",
         "adopter_evidence_fixture",
         "Public evidence fixture for resolved support state.",
+    ),
+    (
+        "fixtures/published-image-evidence/manifest-pass-local-pull-timeout.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for local pull timeout fallback.",
+    ),
+    (
+        "fixtures/published-image-evidence/manifest-missing-platform.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for a missing manifest platform.",
+    ),
+    (
+        "fixtures/published-image-evidence/docker-images-failed.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for failed docker-images publishing.",
+    ),
+    (
+        "fixtures/published-image-evidence/ghcr-unavailable.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for GHCR or network unavailability.",
+    ),
+    (
+        "fixtures/published-image-evidence/remote-smoke-pass.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for a passing remote smoke replay.",
+    ),
+    (
+        "fixtures/published-image-evidence/remote-smoke-failed.json",
+        "published_image_evidence_fixture",
+        "Published-image evidence fixture for runtime smoke failure.",
     ),
     (
         "fixtures/platform-import-failures/schema_mismatch.json",
@@ -522,6 +572,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify public support status, dashboard, status-linkage fixtures, packs, submission, and docs.",
     ),
     (
+        "scripts/generate_published_image_evidence.py",
+        "diagnostics",
+        "Generate published-image evidence, checksum, and release fallback fixtures.",
+    ),
+    (
+        "scripts/verify_published_image_evidence.py",
+        "verification",
+        "Verify published-image evidence, fixtures, platform packs, submission, adoption pack, and docs.",
+    ),
+    (
         "scripts/generate_adopter_evidence_archive.py",
         "diagnostics",
         "Generate external adopter evidence archive, checksum, and maintainer handoff fixtures.",
@@ -737,6 +797,11 @@ FILES: list[tuple[str, str, str]] = [
         "External adopter evidence archive and maintainer handoff guide.",
     ),
     (
+        "docs/published-image-evidence.md",
+        "docs",
+        "Published-image evidence and pull-timeout fallback classification guide.",
+    ),
+    (
         "docs/release-checklist.md",
         "docs",
         "Release gate checklist for platform adoption evidence.",
@@ -807,7 +872,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.21-alpha.md",
+        "docs/release-notes/v0.3.22-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

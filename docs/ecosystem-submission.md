@@ -1,6 +1,6 @@
 # Ecosystem Submission Pack
 
-Study Anything v0.3.21-alpha treats Kimi-compatible tools, Codex Skill usage,
+Study Anything v0.3.22-alpha treats Kimi-compatible tools, Codex Skill usage,
 WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
 public distribution surface.
 
@@ -152,6 +152,8 @@ python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
 python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
+python3 scripts/generate_published_image_evidence.py --check
+python3 scripts/verify_published_image_evidence.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
@@ -187,3 +189,16 @@ python3 scripts/verify_adopter_evidence_archive.py \
 The matching `adopter-evidence-fixture-v1` fixtures cover successful release, local GHCR pull
 timeout, needs-repro, release-blocker, platform-blocked, and resolved support states without private
 learning data.
+
+## Published Image Evidence
+
+The ecosystem submission also includes `published-image-evidence-v1`. This Published Image Evidence
+bundle classifies GHCR manifest platform gaps, docker-images workflow failures, local pull timeout
+fallbacks, optional remote smoke replay, registry unavailability, and runtime smoke failures without
+including learning data, Agent endpoints, local absolute paths, or model secrets.
+
+```bash
+python3 scripts/verify_published_image_evidence.py --check
+python3 scripts/verify_published_image_evidence.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip
+```
