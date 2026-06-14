@@ -145,18 +145,26 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         self.assertEqual(payload["status"], "expected_failure")
         self.assertEqual(payload["classification"], "release_asset_missing")
 
-    def test_missing_asset_dir_fails_readably(self) -> None:
+    def test_corrupted_asset_dir_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            missing = Path(tmp_dir) / "missing"
+            asset_dir = Path(tmp_dir)
+            for name in (
+                "study-anything-platform-adoption-pack.zip",
+                "study-anything-published-image-evidence.zip",
+                "study-anything-adopter-evidence-archive.zip",
+                "study-anything-platform-feedback-package.zip",
+            ):
+                (asset_dir / name).write_bytes(b"not a zip archive")
             completed = run_script(
                 VERIFIER,
                 "--fixture",
                 "fixtures/release-asset-adoption/asset-only-pass.json",
                 "--asset-dir",
-                str(missing),
+                str(asset_dir),
             )
         self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("Could not download", completed.stderr)
+        self.assertIn("verify_release_asset_adoption failed:", completed.stderr)
+        self.assertIn("Release adoption pack zip is corrupted", completed.stderr)
 
 
 if __name__ == "__main__":

@@ -65,10 +65,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 1028719,
+  "archive_bytes": 1028751,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "edeb49ff525dcdcbd22e199b4ba74ca14810421b9e9fb6cfbdb414738f2b3acc",
+  "archive_sha256": "f9f2250655b86f2f4ac171008b656c715567ba055a155baef5f770c0178c3326",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -381,7 +381,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "523306a8ed3fd0928b9b7ad62c6c7212b1981a45066af8e456435ab74a3c1528"
+      "sha256": "6bb63d5eb163563eae1f13570e9e4eeb7d8c328cd7b7d2db9026e3ece7e76733"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-operator-drill-transcript.json",
@@ -557,7 +557,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "363475aada3b393ad5271482dadb1c68de5b209f4d5c149b3c646910d2c64047"
+      "sha256": "0d68de0d767231216279669d065b3e80f2beaf6a1d4df52b3d8c0c8b08951bc5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.md",
@@ -565,15 +565,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "0c4a7192d302632b8a0377ebc45831d245b857032bdd4a373dff49ec5b75f5bb"
+      "sha256": "d77b6e2842d2e3a4124352121aef696e3e1a3cf78054a239e1efdb19514d2cab"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.zip",
-      "bytes": 86210,
+      "bytes": 86225,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence package.",
-      "sha256": "c8d75b236b7c53574165a379ad18aa0573337022a1ffb858f9f4d4d7af4f21f5"
+      "sha256": "25aaada5315eb1274ae30b0f5c5325e750eab9f0b1da9bc7ada501264556f66a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.sha256",
@@ -581,7 +581,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "a5a55faf461557c6bf5b3b7cf6eb84a280377b64795c9086688fe69d4b35a293"
+      "sha256": "325c69fddc7cb765f4a4fb4e23b0d3dc13423391ff2ab0407790051f73c665b1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.json",
@@ -589,7 +589,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "13a6e995e246ee588939c7255f42ded45e94ec87bd5e7da361d99d18f3f6c646"
+      "sha256": "f1717291e8299e8af323e13b0c7f3ae09e2b7047e203dcd8164aa1adfc8fd0f8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -597,15 +597,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "de96c345778ad234e6dfef6e15d5f91daaf549664207e73e514812e53f2c932c"
+      "sha256": "2d994c4bd9f4b8e1c097934c4a14950de9be084d5f741cad4626b754a4bf1d32"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 276531,
+      "bytes": 276550,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "c5a73eacfb3a35f400a8e9f99b3fe2dbac1b300572920a34c4db878c14897ceb"
+      "sha256": "b7b5310a8f10e4f32ec48da8b31db4a5976c5006dc64c55977956cc0a65105dc"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -613,7 +613,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "768a04b7a85bd3d23d6a5c3466a2c534c31c1c0683cd18cc58a09676d656c5d6"
+      "sha256": "743cecfa6d6c82a50230f143b257a1a2c141a03510aeaa2e962119fb73fdf643"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -953,11 +953,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/asset-only-pass.json",
-      "bytes": 1795,
+      "bytes": 1779,
       "kind": "release_asset_adoption_fixture",
       "path": "fixtures/release-asset-adoption/asset-only-pass.json",
       "purpose": "Release asset adoption fixture for a passing asset-only replay.",
-      "sha256": "bed7084f9e03360161701e1d7e3fd29f35a2801234a2bc5f2117b613bb4a4766"
+      "sha256": "cfd242c2a1fc1ad4b0762c65aa010aa429bf4d1a494645f89c9d0379f4a26c4a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/asset-missing.json",
@@ -969,27 +969,27 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/digest-mismatch.json",
-      "bytes": 1879,
+      "bytes": 1863,
       "kind": "release_asset_adoption_fixture",
       "path": "fixtures/release-asset-adoption/digest-mismatch.json",
       "purpose": "Release asset adoption fixture for digest mismatch.",
-      "sha256": "b8d6942b5f196f8316a46b47737b2e699a9d9db2c2abba1c8a7d440158535d3c"
+      "sha256": "6101d93d6b784651af9c7cc255ade0c4e60a1400f6d160c275e7fa1c9aa0371c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/pack-corrupted.json",
-      "bytes": 1792,
+      "bytes": 1776,
       "kind": "release_asset_adoption_fixture",
       "path": "fixtures/release-asset-adoption/pack-corrupted.json",
       "purpose": "Release asset adoption fixture for a corrupted adoption pack.",
-      "sha256": "866f8a11fc3651ad2ae7f81596622944ab8cec4156867974b8fdcc3833df0101"
+      "sha256": "ff8f1832c88cfaedcd523d76b3e667e541f7cb8aa2bdea2d46c177084a42c841"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/published-evidence-missing.json",
-      "bytes": 1801,
+      "bytes": 1785,
       "kind": "release_asset_adoption_fixture",
       "path": "fixtures/release-asset-adoption/published-evidence-missing.json",
       "purpose": "Release asset adoption fixture for missing published-image evidence.",
-      "sha256": "779ef66d6086e5215ec71b6e1e2bf2f7ebb3d60a4343fcb072761d95cfa4940c"
+      "sha256": "8a7346f925bee96be91390d0d2b7d5b670ae2197fcc036a25f945d4e1714129b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/release-asset-adoption/network-unavailable.json",
@@ -1401,11 +1401,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_release_asset_adoption.py",
-      "bytes": 18497,
+      "bytes": 18717,
       "kind": "diagnostics",
       "path": "scripts/generate_release_asset_adoption.py",
       "purpose": "Generate GitHub Release asset adoption replay evidence and fixtures.",
-      "sha256": "b968b67082eadae0b3ee1379407dc79207043663916d68950ecd5b29057e38a6"
+      "sha256": "fcee399a81326aff2933e2849bbba14260cae1d99eccf6f4353a9e88785dc31f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_release_asset_adoption.py",

@@ -15,20 +15,20 @@
   "release": {
     "assets": [
       {
-        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-platform-adoption-pack.zip",
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.23-alpha/study-anything-platform-adoption-pack.zip",
         "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
         "name": "study-anything-platform-adoption-pack.zip"
       },
       {
-        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-published-image-evidence.zip",
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.23-alpha/study-anything-published-image-evidence.zip",
         "name": "study-anything-published-image-evidence.zip"
       },
       {
-        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-adopter-evidence-archive.zip",
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.23-alpha/study-anything-adopter-evidence-archive.zip",
         "name": "study-anything-adopter-evidence-archive.zip"
       },
       {
-        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.23-alpha/download/study-anything-platform-feedback-package.zip",
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.23-alpha/study-anything-platform-feedback-package.zip",
         "name": "study-anything-platform-feedback-package.zip"
       }
     ],
