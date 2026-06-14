@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.25-alpha"
+DEFAULT_TAG = "v0.3.26-alpha"
 
 PLATFORM_PACKS = {
     "kimi": {
@@ -248,6 +248,7 @@ def command_set(tag: str) -> dict[str, str]:
         "bootstrap_skill_mode": f"python3 scripts/bootstrap_from_release.py --tag {tag} --runtime skill-mode",
         "bootstrap_published_image": f"python3 scripts/bootstrap_from_release.py --tag {tag} --runtime published-image",
         "lower_level_release_asset_verifier": f"python3 scripts/verify_release_asset_adoption.py --tag {tag} --runtime metadata-only",
+        "platform_agent_release_replay": f"python3 scripts/replay_platform_agent_from_release.py --tag {tag} --platform kimi --runtime metadata-only",
         "published_image_manifest_only": f"python3 scripts/verify_published_image_launch.py --tag {tag} --manifest-only",
     }
 

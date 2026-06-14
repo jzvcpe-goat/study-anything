@@ -73,7 +73,7 @@ class ReleaseAssetBootstrapTests(unittest.TestCase):
         self.assertEqual(payload["classification"], "release_asset_bootstrap_ready")
         self.assertEqual(payload["adoption_pack"]["schema_version"], "study-anything-platform-adoption-pack-v1")
         self.assertEqual(payload["runtime"]["proof_classification"], "release_asset_adoption_ready")
-        self.assertEqual(payload["release_assets"]["asset_count"], 5)
+        self.assertEqual(payload["release_assets"]["asset_count"], 6)
         self.assertEqual(payload["platform_import_preflight"]["status"], "ready")
         self.assertIn("kimi", payload["platform_import_preflight"]["platforms"])
         self.assertIn("codex", payload["platform_import_preflight"]["platforms"])
@@ -104,7 +104,7 @@ class ReleaseAssetBootstrapTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-asset-bootstrap-v1")
-        self.assertEqual(report["version"], "v0.3.25-alpha")
+        self.assertEqual(report["version"], "v0.3.26-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["schemas"]["transcript"], "release-asset-bootstrap-transcript-v1")
         self.assertIn("release_asset_bootstrap_ready", {item["classification"] for item in report["classification_matrix"]})

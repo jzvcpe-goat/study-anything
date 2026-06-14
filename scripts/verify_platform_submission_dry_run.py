@@ -26,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.25-alpha"
+RELEASE_VERSION = "v0.3.26-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 PUBLIC_SUPPORT_ASSETS = [
     "scripts/generate_platform_public_support_status.py",

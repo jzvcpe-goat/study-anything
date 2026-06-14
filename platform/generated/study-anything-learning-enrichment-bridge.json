@@ -8,7 +8,7 @@
     "bridge_assets_included": 3,
     "included": true,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.25-alpha"
+    "version": "v0.3.26-alpha"
   },
   "context_contract": {
     "allowed_source_types": [
@@ -46,7 +46,7 @@
   "ecosystem_submission": {
     "schema_version": "ecosystem-submission-v1",
     "shared_assets_included": 5,
-    "version": "v0.3.25-alpha"
+    "version": "v0.3.26-alpha"
   },
   "exports": {
     "html_artifact": {
@@ -180,5 +180,5 @@
     ],
     "tool_count": 34
   },
-  "version": "v0.3.25-alpha"
+  "version": "v0.3.26-alpha"
 }

@@ -25,7 +25,7 @@ ARCHIVE_ROOT = "study-anything-release-asset-adoption"
 
 SCHEMA_VERSION = "release-asset-adoption-v1"
 FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
-RELEASE_VERSION = "v0.3.25-alpha"
+RELEASE_VERSION = "v0.3.26-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 VERIFIER_SCHEMA_VERSION = "release-asset-adoption-proof-v1"
@@ -54,6 +54,7 @@ REQUIRED_RELEASE_ASSETS = (
     "study-anything-adopter-evidence-archive.zip",
     "study-anything-platform-feedback-package.zip",
     "study-anything-release-asset-bootstrap.zip",
+    "study-anything-platform-agent-replay.zip",
 )
 PUBLIC_ASSET_PATHS = (
     "README.md",
@@ -61,11 +62,15 @@ PUBLIC_ASSET_PATHS = (
     "docs/github-launch.md",
     "docs/ecosystem-submission.md",
     "docs/release-asset-adoption.md",
+    "docs/platform-agent-release-replay.md",
     "docs/release-checklist.md",
     "docs/roadmap.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-published-image-evidence.json",
+    "platform/generated/study-anything-platform-agent-replay.json",
     "scripts/verify_release_asset_adoption.py",
+    "scripts/replay_platform_agent_from_release.py",
+    "scripts/generate_platform_agent_replay.py",
     "scripts/generate_release_asset_adoption.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_published_image_evidence.py",

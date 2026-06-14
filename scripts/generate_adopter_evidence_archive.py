@@ -25,7 +25,7 @@ ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.25-alpha"
+RELEASE_VERSION = "v0.3.26-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
@@ -54,7 +54,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/ecosystem-submission.md",
     "docs/release-checklist.md",
     "docs/roadmap.md",
-    "docs/release-notes/v0.3.25-alpha.md",
+    "docs/release-notes/v0.3.26-alpha.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-public-maintainer-dashboard.json",
@@ -156,7 +156,7 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
         ),
         "local-ghcr-pull-timeout": (
             "local_environment_limit",
-            "python3 scripts/verify_published_image_launch.py --tag v0.3.25-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
+            "python3 scripts/verify_published_image_launch.py --tag v0.3.26-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
             "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
         ),
         "needs-repro-issue": (

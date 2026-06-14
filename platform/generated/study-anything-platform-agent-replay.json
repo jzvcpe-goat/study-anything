@@ -1,0 +1,165 @@
+{
+  "archive": {
+    "archive_root": "study-anything-platform-agent-replay",
+    "bytes": 51144,
+    "path": "platform/generated/study-anything-platform-agent-replay.zip",
+    "sha256": "818939c8722c6ae0682360449a48edff60a2854034198f96455b499a726f386e",
+    "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
+  },
+  "classification_matrix": [
+    {
+      "classification": "platform_agent_replay_ready",
+      "meaning": "Release assets were unpacked, platform tool import succeeded, and the minimal learning tool chain completed against a running API.",
+      "release_gate": "pass"
+    },
+    {
+      "classification": "platform_agent_replay_metadata_ready",
+      "meaning": "Release assets and tool imports are valid, but no API runtime was called.",
+      "release_gate": "metadata_only"
+    },
+    {
+      "classification": "tool_import_invalid",
+      "meaning": "OpenAI tools or OpenAPI operations are malformed, missing required tools, or expose unsafe security schemes.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "api_unavailable",
+      "meaning": "The selected runtime did not expose a reachable Study Anything API.",
+      "release_gate": "needs_runtime"
+    },
+    {
+      "classification": "runtime_launch_failed",
+      "meaning": "The local Skill Mode runtime could not be launched.",
+      "release_gate": "needs_runtime"
+    },
+    {
+      "classification": "tool_call_failed",
+      "meaning": "A required platform tool call failed after import.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "schema_mismatch",
+      "meaning": "A tool response did not match the expected schema or state.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "privacy_leak",
+      "meaning": "The replay transcript included private source text, answers, secrets, or local paths.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "platform_entrypoint_missing",
+      "meaning": "The selected platform pack entrypoint is missing from the adoption pack.",
+      "release_gate": "block_release_claim"
+    },
+    {
+      "classification": "release_asset_invalid",
+      "meaning": "The release assets could not be downloaded, verified, or unpacked.",
+      "release_gate": "block_release_claim"
+    }
+  ],
+  "commands": {
+    "external_api": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000",
+    "fixture_metadata_only": "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
+    "metadata_only": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime metadata-only",
+    "skill_mode": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.26-alpha --platform kimi --runtime skill-mode"
+  },
+  "platforms": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "generic-openapi"
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "support_bundle_private_payload_included": false
+  },
+  "public_assets": [
+    {
+      "bytes": 3611,
+      "path": "docs/platform-agent-release-replay.md",
+      "sha256": "968710a4f083ab67b68f830cd6afdcbc3c965d45710073cb1b1bacd7ee4a239b"
+    },
+    {
+      "bytes": 3891,
+      "path": "docs/release-asset-bootstrap.md",
+      "sha256": "bfa5859d0e431bba24b4acfeee9516b60f43e73cd46bc4a8f884e20441343546"
+    },
+    {
+      "bytes": 3259,
+      "path": "docs/release-asset-adoption.md",
+      "sha256": "f4b01925b9c0be656f1108cf6803f9262fd16104b726cbbc8bbd0f410bc33e7d"
+    },
+    {
+      "bytes": 26040,
+      "path": "docs/platform-agent-integrations.md",
+      "sha256": "01fa4df0b5cb9cd85493903fe4bb337c76efb4adb50e49dd8a194f8bb9bf3a2e"
+    },
+    {
+      "bytes": 28634,
+      "path": "scripts/replay_platform_agent_from_release.py",
+      "sha256": "128486dac7875dc00b96ea7dc79347797214e64131ec04237afbd40e67f0d288"
+    },
+    {
+      "bytes": 20083,
+      "path": "scripts/bootstrap_from_release.py",
+      "sha256": "d1987ff30507c0632e0b3a928de41c7f61949db72e1d76b58c4111771150bacd"
+    },
+    {
+      "bytes": 83732,
+      "path": "platform/generated/study-anything-platform-openapi.json",
+      "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
+    },
+    {
+      "bytes": 27111,
+      "path": "platform/generated/study-anything-openai-tools.json",
+      "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
+    },
+    {
+      "bytes": 9076,
+      "path": "platform/packs/kimi/README.md",
+      "sha256": "6593be7f96fc85b91f5cb1e4826645a067756d8c628e2f62e7c236dd1203f317"
+    },
+    {
+      "bytes": 8271,
+      "path": "platform/packs/codex/README.md",
+      "sha256": "705a499c48de60d4881e2b3291055aae221f6a60910fea98a2b83f3b598a6e36"
+    },
+    {
+      "bytes": 6305,
+      "path": "platform/packs/workbuddy/README.md",
+      "sha256": "e24a38544bf527c0bd3f38a99d8c9468b4df0b20c70c13b93ea12c0eae6420f4"
+    }
+  ],
+  "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",
+  "release_identity": {
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.26-alpha",
+    "repo": "jzvcpe-goat/study-anything",
+    "tag": "v0.3.26-alpha"
+  },
+  "required_tools": [
+    "study_anything_health",
+    "study_anything_create_session",
+    "study_anything_add_reading",
+    "study_anything_run",
+    "study_anything_answer",
+    "study_anything_mastery",
+    "study_anything_agent_audit",
+    "study_anything_agent_eval_artifact"
+  ],
+  "runtime_modes": [
+    "metadata-only",
+    "skill-mode",
+    "external-api",
+    "published-image"
+  ],
+  "schema_version": "platform-agent-release-replay-v1",
+  "status": "pass",
+  "version": "v0.3.26-alpha"
+}

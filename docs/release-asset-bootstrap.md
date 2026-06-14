@@ -1,6 +1,6 @@
 # Release Asset Bootstrap
 
-Study Anything v0.3.25-alpha adds `release-asset-bootstrap-v1` as the
+Study Anything v0.3.26-alpha adds `release-asset-bootstrap-v1` as the
 operator-friendly entrypoint for external platform Agents. It starts from the
 GitHub Release page, not a local development checkout.
 
@@ -15,6 +15,7 @@ Required release assets:
 - `study-anything-adopter-evidence-archive.zip`
 - `study-anything-platform-feedback-package.zip`
 - `study-anything-release-asset-bootstrap.zip`
+- `study-anything-platform-agent-replay.zip`
 
 Schema contract:
 
@@ -33,7 +34,7 @@ redacted transcript:
 
 ```bash
 python3 scripts/bootstrap_from_release.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime metadata-only
 ```
 
@@ -42,7 +43,7 @@ tool checks:
 
 ```bash
 python3 scripts/bootstrap_from_release.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime skill-mode
 ```
 
@@ -51,7 +52,7 @@ Docker image verifier:
 
 ```bash
 python3 scripts/bootstrap_from_release.py \
-  --tag v0.3.25-alpha \
+  --tag v0.3.26-alpha \
   --runtime published-image
 ```
 

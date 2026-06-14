@@ -72,6 +72,12 @@ fi
   --fixture fixtures/release-asset-adoption/asset-only-pass.json \
   --asset-dir platform/generated \
   --runtime metadata-only
+"$python_bin" scripts/generate_platform_agent_replay.py --check
+"$python_bin" scripts/replay_platform_agent_from_release.py \
+  --fixture fixtures/release-asset-adoption/asset-only-pass.json \
+  --asset-dir platform/generated \
+  --platform kimi \
+  --runtime metadata-only
 "$python_bin" scripts/generate_adopter_evidence_archive.py --check
 "$python_bin" scripts/verify_adopter_evidence_archive.py --check
 "$python_bin" scripts/verify_plugin_ecosystem_adoption_kit.py --check

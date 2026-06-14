@@ -37,6 +37,8 @@
       "python3 scripts/generate_release_asset_adoption.py --check",
       "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
       "python3 scripts/generate_release_asset_bootstrap.py --check",
+      "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
+      "python3 scripts/generate_platform_agent_replay.py --check",
       "python3 scripts/verify_adopter_evidence_archive.py --check",
       "python3 scripts/generate_adopter_evidence_archive.py --check"
     ],
@@ -82,6 +84,7 @@
       "release-asset-adoption-proof-v1 proves release asset replay can emit a redacted machine-readable result for metadata-only, published-image, and Skill Mode paths",
       "release-asset-bootstrap-v1 proves external platform Agents can start from GitHub Release assets, verify import manifests, choose runtime mode, and get recovery commands without a development checkout",
       "release-asset-bootstrap-transcript-v1 proves the bootstrap command emits a redacted machine-readable adoption transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts",
+      "platform-agent-release-replay-v1 proves external platform Agents can import release asset tools and replay the minimum learning tool chain against a running Study Anything API without leaking source text, answers, Agent secrets, model keys, or local paths",
       "adopter-evidence-archive-v1 proves release proof, CI commands, Docker manifest evidence, platform pack checksums, public status hashes, known limitations, and maintainer handoff are packaged without private learning data",
       "adopter-evidence-fixture-v1 proves successful release, local GHCR pull timeout, needs-repro, release-blocker, platform-blocked, and resolved support states map to public archive evidence"
     ],
@@ -296,6 +299,13 @@
     "platform/generated/study-anything-release-asset-bootstrap.zip",
     "platform/generated/study-anything-release-asset-bootstrap.sha256",
     "docs/release-asset-bootstrap.md",
+    "scripts/replay_platform_agent_from_release.py",
+    "scripts/generate_platform_agent_replay.py",
+    "platform/generated/study-anything-platform-agent-replay.json",
+    "platform/generated/study-anything-platform-agent-replay.md",
+    "platform/generated/study-anything-platform-agent-replay.zip",
+    "platform/generated/study-anything-platform-agent-replay.sha256",
+    "docs/platform-agent-release-replay.md",
     "scripts/generate_adopter_evidence_archive.py",
     "scripts/verify_adopter_evidence_archive.py",
     "platform/generated/study-anything-adopter-evidence-archive.json",
@@ -540,5 +550,5 @@
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.25-alpha"
+  "version": "v0.3.26-alpha"
 }

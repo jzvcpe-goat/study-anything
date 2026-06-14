@@ -33,7 +33,7 @@ class DeploymentHardeningTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "deployment-hardening-verification-v1")
-        self.assertEqual(report["version"], "v0.3.25-alpha")
+        self.assertEqual(report["version"], "v0.3.26-alpha")
         self.assertEqual(report["status"], "pass")
         modes = {item["id"] for item in report["deployment_modes"]}
         self.assertEqual(modes, {"skill_mode", "published_image", "source_build"})
@@ -54,7 +54,7 @@ class DeploymentHardeningTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "deployment-hardening-verification-v1")
-        self.assertEqual(report["adoption_pack"]["version"], "v0.3.25-alpha")
+        self.assertEqual(report["adoption_pack"]["version"], "v0.3.26-alpha")
         self.assertIn("manifest.json", {item["path"] for item in report["checked_assets"]})
 
     def test_missing_pack_root_fails_readably(self) -> None:

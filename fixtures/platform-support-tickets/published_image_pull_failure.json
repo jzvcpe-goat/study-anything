@@ -19,15 +19,15 @@
   "schema_version": "platform-support-ticket-fixture-v1",
   "status": "mock_ticket_ready",
   "support_bundle": {
-    "command_ran": "python3 scripts/verify_published_image_launch.py --tag v0.3.25-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "command_ran": "python3 scripts/verify_published_image_launch.py --tag v0.3.26-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
     "diagnostic_code": "timeout",
     "fixture_id": "timeout",
     "next_commands_tried": [
-      "python3 scripts/verify_published_image_launch.py --tag v0.3.25-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
+      "python3 scripts/verify_published_image_launch.py --tag v0.3.26-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
     ],
     "platform_id": "generic",
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=timeout\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.25-alpha"
+    "release_version": "v0.3.26-alpha"
   },
   "support_category": "published_image_pull_failure",
   "ticket_id": "published_image_pull_failure",
@@ -37,5 +37,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.25-alpha"
+  "version": "v0.3.26-alpha"
 }
