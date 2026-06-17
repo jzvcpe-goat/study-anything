@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 54139,
+    "bytes": 54445,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "a54c8043f8dfa5c7bfc4e86f7defa9925f338d45b81bbac74ca50567c622e9fc",
+    "sha256": "1b6885d0409f550077de82aeec64c4710b6e577777c1175ce51b496a68b10989",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -132,9 +132,9 @@
   },
   "public_assets": [
     {
-      "bytes": 35005,
+      "bytes": 35043,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "e2cff20f525de02728e39aa4073eaa173911f6bd0fab03ab5337009aeb2b497d"
+      "sha256": "72b71ef292e5319ef1e1c249b0c35f4bd6a4bd4304d8d89a316dbf5d178269f9"
     },
     {
       "bytes": 2926,
@@ -167,9 +167,9 @@
       "sha256": "a17c0e69945e2fba94989035eca4f1b3a6ee63ec8559a5964c723c337e7d57b5"
     },
     {
-      "bytes": 26717,
+      "bytes": 27275,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "690c78e455ed064b07cd957c4e93cdfbb50b1a388f340ae1641402eaeb890764"
+      "sha256": "21b11238094dba6c88c871ae7b2f02ad1f19c63439b283672b5efba896456564"
     },
     {
       "bytes": 20083,
@@ -177,9 +177,9 @@
       "sha256": "76c279964db663878412ec7fb40e2f837abd9a0a098f652f413e64d211ebeb34"
     },
     {
-      "bytes": 28642,
+      "bytes": 29302,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "368be58bbb05afcd2ac3535920b892437dda26bf5ab2577d85879a9704d63739"
+      "sha256": "287ecd3b5575454c793cb5eab914e47b1d6bbb0db9552b3902cf02e8c1c4bd9d"
     }
   ],
   "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",

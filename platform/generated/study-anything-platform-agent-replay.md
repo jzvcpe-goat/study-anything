@@ -10,7 +10,7 @@ emit a redacted transcript that is safe to attach to GitHub issues.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `a63eb9f582300f4977ec7e83b6a035b70cfa4b87494205067d97be44f65b12bb`
+- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `30b08e377a4052ce4a1ef544d64439897f9a35771f85a85505c21125769e26cf`
 
 ## Commands
 
@@ -24,6 +24,7 @@ emit a redacted transcript that is safe to attach to GitHub issues.
 - `study_anything_health`
 - `study_anything_create_session`
 - `study_anything_add_reading`
+- `study_anything_teaching_layers`
 - `study_anything_run`
 - `study_anything_answer`
 - `study_anything_mastery`

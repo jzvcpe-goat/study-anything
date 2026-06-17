@@ -22,7 +22,13 @@ DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adopti
 
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
 EXPECTED_ADAPTERS = ("promptfoo", "deepeval", "langchain-agentevals", "ragas")
-EXPECTED_TRAJECTORY = ("quiz.generate", "answer.grade", "insight.synthesize")
+EXPECTED_TRAJECTORY = (
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+)
 REQUIRED_OPERATOR_ASSETS = [
     "docs/agent-eval.md",
     "docs/eval-frameworks.md",

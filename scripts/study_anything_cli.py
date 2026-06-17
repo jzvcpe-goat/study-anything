@@ -598,11 +598,33 @@ def cmd_demo(args: argparse.Namespace) -> None:
         "A learning loop should bind a question to its source, grade a grounded answer, "
         "update mastery, and synthesize a reusable insight."
     )
-    session = create_session(args)
+    created = post(
+        "/v1/sessions",
+        {
+            "user_id": args.user_id,
+            "track": args.track,
+            "use_demo_agent": True,
+        },
+    )
+    session_id = created["session_id"]
+    post(
+        f"/v1/sessions/{quote(session_id)}/reading",
+        {
+            "source_type": args.source_type,
+            "reference": args.reference,
+            "title": args.title,
+            "text": args.text,
+        },
+    )
+    post(
+        f"/v1/sessions/{quote(session_id)}/teaching-layers",
+        {"layers": ["overview", "glossary"]},
+    )
+    session = post(f"/v1/sessions/{quote(session_id)}/run")
     quiz = first_unanswered_quiz(session)
     if not quiz:
         raise StudyAnythingError("Demo agent did not create a quiz item.")
-    args.session_id = session["session_id"]
+    args.session_id = session_id
     args.item_id = quiz["item_id"]
     args.text = "The learning loop uses source evidence to grade an answer and update mastery."
     cmd_answer(args)

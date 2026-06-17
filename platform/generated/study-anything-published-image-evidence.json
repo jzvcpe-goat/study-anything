@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 96648,
+    "bytes": 97110,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "77b7e77402222f290570b48b49cdf0df0ea4cda8f266c697f31dd3bd39a40ab2",
+    "sha256": "b50ade70602d90afc2eae07087534635de942b1111893617f9a8aac882e92050",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -160,9 +160,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 11550,
+      "bytes": 11611,
       "path": "README.md",
-      "sha256": "fdf38acacc2aed5efdea80f012986bc369f82994fa80fe3fcf3dbb8cf216a9e3"
+      "sha256": "6437b98f700ca96fda7486881405dd7b9d7a83b9682cfc3b3b9e1045ce794eff"
     },
     {
       "bytes": 19313,
@@ -175,9 +175,9 @@
       "sha256": "a17c0e69945e2fba94989035eca4f1b3a6ee63ec8559a5964c723c337e7d57b5"
     },
     {
-      "bytes": 26717,
+      "bytes": 27275,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "690c78e455ed064b07cd957c4e93cdfbb50b1a388f340ae1641402eaeb890764"
+      "sha256": "21b11238094dba6c88c871ae7b2f02ad1f19c63439b283672b5efba896456564"
     },
     {
       "bytes": 11215,
@@ -185,14 +185,14 @@
       "sha256": "ed39da6091b4193dc5550a827f9a2d66dfbbf7fbcdb45f308ffb0643233e61b7"
     },
     {
-      "bytes": 26703,
+      "bytes": 27607,
       "path": "docs/release-checklist.md",
-      "sha256": "244a386a06861b23f644d45d2192fe54e6e7e1a08254fff962353eb3d2c8e15a"
+      "sha256": "ce5ae88a17478ea26702d56073c4f0ad714522cdd1fc84d847a9d3b482af3d54"
     },
     {
-      "bytes": 8770,
+      "bytes": 8831,
       "path": "docs/roadmap.md",
-      "sha256": "d1b7273cf05e7ab784fbfd3f1760a146f915f67251656ab5136ccd4d90679718"
+      "sha256": "24bcd6d810294830b856e453c041836f6e8861935aa27f61ddaadf25d040d004"
     },
     {
       "bytes": 2514,

@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 96235,
+    "bytes": 96696,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "fb545c3ac97ba8c8cb084f17873adb631fecd63077b1aba9fff7c15d33876b9d",
+    "sha256": "cafc182eaa571d5d187b9ca48cce39b67e79f94476e4d40dc42f47d50212997a",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 11550,
+      "bytes": 11611,
       "path": "README.md",
-      "sha256": "fdf38acacc2aed5efdea80f012986bc369f82994fa80fe3fcf3dbb8cf216a9e3"
+      "sha256": "6437b98f700ca96fda7486881405dd7b9d7a83b9682cfc3b3b9e1045ce794eff"
     },
     {
       "bytes": 19313,
@@ -123,14 +123,14 @@
       "sha256": "049ff99463376c6cf11974ce16d35a9da294f7adae2ba93db955ddac4168ba81"
     },
     {
-      "bytes": 26703,
+      "bytes": 27607,
       "path": "docs/release-checklist.md",
-      "sha256": "244a386a06861b23f644d45d2192fe54e6e7e1a08254fff962353eb3d2c8e15a"
+      "sha256": "ce5ae88a17478ea26702d56073c4f0ad714522cdd1fc84d847a9d3b482af3d54"
     },
     {
-      "bytes": 8770,
+      "bytes": 8831,
       "path": "docs/roadmap.md",
-      "sha256": "d1b7273cf05e7ab784fbfd3f1760a146f915f67251656ab5136ccd4d90679718"
+      "sha256": "24bcd6d810294830b856e453c041836f6e8861935aa27f61ddaadf25d040d004"
     },
     {
       "bytes": 37687,
@@ -140,12 +140,12 @@
     {
       "bytes": 11077,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "96c33e69c7c8423303691d9b8dfdb3dc7219df798c0df71dfd5d9993bfefb9fd"
+      "sha256": "036c01fe04b66cf3db032d8de4fb1376217ee94c3768a99f660031aba9c112fd"
     },
     {
-      "bytes": 6367,
+      "bytes": 6405,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "a62b34ee04c84856a67193c6150c080cf3ba8cef5f50eb9e2df1f17786318f4d"
+      "sha256": "bd84989f6a0863fb649f938c23eab2abe5fb9e39bbdd62196cfae69214b4d7a5"
     },
     {
       "bytes": 21139,
@@ -153,14 +153,14 @@
       "sha256": "b898dbc2aedea5db8a4e093b5b22c90fe75f531e8e82d1af6616486d851a64d5"
     },
     {
-      "bytes": 28642,
+      "bytes": 29302,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "368be58bbb05afcd2ac3535920b892437dda26bf5ab2577d85879a9704d63739"
+      "sha256": "287ecd3b5575454c793cb5eab914e47b1d6bbb0db9552b3902cf02e8c1c4bd9d"
     },
     {
-      "bytes": 13105,
+      "bytes": 13143,
       "path": "scripts/generate_platform_agent_replay.py",
-      "sha256": "e58c39561c85b4e425bb2a478f57a2beabd001c586513995b313ccd3b0f53022"
+      "sha256": "91a527c1c0e4f016d932b3730df54f57764b090c5701d30d1b1753ed33342368"
     },
     {
       "bytes": 18793,

@@ -17,7 +17,13 @@ BASELINE_SCHEMA = "study-anything-agent-eval-baseline-v1"
 REGRESSION_SCHEMA = "study-anything-agent-eval-regression-report-v1"
 BASELINE_VERSION = "v0.3.28-alpha"
 EXPECTED_ADAPTERS = ["deepeval", "langchain-agentevals", "promptfoo", "ragas"]
-EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
+EXPECTED_TRAJECTORY = [
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+]
 
 
 class AgentEvalBaselineError(RuntimeError):
@@ -51,6 +57,24 @@ def sample_audit() -> dict[str, Any]:
             "raw_agent_metadata_returned": False,
         },
         "evidence": [
+            {
+                "node": "teaching_layers",
+                "task_type": "teach.overview",
+                "provider_id": "external-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 9,
+                "confidence": 0.9,
+            },
+            {
+                "node": "teaching_layers",
+                "task_type": "teach.glossary",
+                "provider_id": "external-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 10,
+                "confidence": 0.9,
+            },
             {
                 "node": "quiz",
                 "task_type": "quiz.generate",

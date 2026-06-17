@@ -13,7 +13,7 @@ Already present:
 - Deterministic demo Agent and Bring Your Own Agent HTTP gateway.
 - Source-bound learning loop with teaching layers, quiz, grading, mastery, synthesis, scribe logs, and discard/keep.
 - Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI hosts.
-- Agent audit/eval evidence and optional mature eval adapters.
+- Agent audit/eval evidence, multi-teacher attribution gates, and optional mature eval adapters.
 - Learning Enrichment, Obsidian export, NotebookLM-style manual bridge, and second-brain handoff.
 - Local encrypted sync package foundation, plugin trust boundaries, support diagnostics, and release adoption evidence.
 
@@ -24,7 +24,7 @@ Already present:
 - 确定性 demo Agent 和 Bring Your Own Agent HTTP gateway。
 - 基于来源的学习闭环：分层教学、测验、评分、掌握度、综合洞察、scribe log、保留或丢弃。
 - 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP 和通用 OpenAPI 平台的 Agent 接入包。
-- Agent audit/eval 证据和可选成熟 eval 适配。
+- Agent audit/eval 证据、多层教学归因验收和可选成熟 eval 适配。
 - Learning Enrichment、Obsidian 导出、NotebookLM 式手动桥接和 second-brain handoff。
 - 本地加密同步包基础、插件信任边界、support diagnostics 和 release adoption evidence。
 

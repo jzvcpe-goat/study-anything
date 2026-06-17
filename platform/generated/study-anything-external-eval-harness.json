@@ -26,15 +26,17 @@
       "fake-agent-learning-loop.json": {
         "privacy_flags_clear": true,
         "schema_version": "study-anything-agent-eval-fixture-v1",
-        "task_count": 3
+        "task_count": 5
       },
       "mock-http-agent-learning-loop.json": {
         "privacy_flags_clear": true,
         "schema_version": "study-anything-agent-eval-fixture-v1",
-        "task_count": 3
+        "task_count": 5
       }
     },
     "trajectory": [
+      "teach.overview",
+      "teach.glossary",
       "quiz.generate",
       "answer.grade",
       "insight.synthesize"

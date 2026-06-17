@@ -1654,6 +1654,7 @@ def verify_platform_agent_replay_report() -> None:
         "study_anything_health",
         "study_anything_create_session",
         "study_anything_add_reading",
+        "study_anything_teaching_layers",
         "study_anything_run",
         "study_anything_answer",
         "study_anything_mastery",

@@ -12,7 +12,13 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 EXPECTED_ADAPTER_IDS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
-EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
+EXPECTED_TRAJECTORY = [
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+]
 
 
 def fail(message: str) -> None:
@@ -50,6 +56,24 @@ def sample_audit() -> dict[str, Any]:
             "raw_agent_metadata_returned": False,
         },
         "evidence": [
+            {
+                "node": "teaching_layers",
+                "task_type": "teach.overview",
+                "provider_id": "http-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 10,
+                "confidence": 0.9,
+            },
+            {
+                "node": "teaching_layers",
+                "task_type": "teach.glossary",
+                "provider_id": "http-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 11,
+                "confidence": 0.9,
+            },
             {
                 "node": "quiz",
                 "task_type": "quiz.generate",
@@ -186,6 +210,8 @@ def main() -> None:
         "const: agent-eval-artifact-v1",
         "const: ready_for_external_eval",
         "agent_invocation_coverage",
+        "teach.overview",
+        "teach.glossary",
         "quiz.generate",
         "answer.grade",
         "insight.synthesize",

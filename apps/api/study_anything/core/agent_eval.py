@@ -9,7 +9,13 @@ from typing import Any, Mapping
 AGENT_EVAL_ARTIFACT_SCHEMA_VERSION = "agent-eval-artifact-v1"
 AGENT_EVAL_POLICY_SCHEMA_VERSION = "agent-eval-policy-v1"
 AGENT_EVAL_REPORT_SCHEMA_VERSION = "agent-eval-report-v1"
-AGENT_EVAL_REQUIRED_TASKS = ["quiz.generate", "answer.grade", "insight.synthesize"]
+AGENT_EVAL_REQUIRED_TASKS = [
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+]
 AGENT_EVAL_FIXTURES = [
     "evals/fixtures/fake-agent-learning-loop.json",
     "evals/fixtures/mock-http-agent-learning-loop.json",

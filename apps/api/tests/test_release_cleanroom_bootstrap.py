@@ -110,7 +110,7 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
         self.assertEqual(payload["classification"], "cleanroom_bootstrap_ready")
         self.assertTrue(payload["acceptance"]["runtime_verified"])
         self.assertEqual(payload["runtime"]["payload"]["classification"], "platform_agent_replay_ready")
-        self.assertEqual(payload["runtime"]["payload"]["tool_call_count"], 8)
+        self.assertEqual(payload["runtime"]["payload"]["tool_call_count"], 9)
 
     def test_expected_failure_fixtures_are_redacted_and_classified(self) -> None:
         cases = [

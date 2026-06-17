@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 51361,
+    "bytes": 51681,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "a63eb9f582300f4977ec7e83b6a035b70cfa4b87494205067d97be44f65b12bb",
+    "sha256": "30b08e377a4052ce4a1ef544d64439897f9a35771f85a85505c21125769e26cf",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -97,14 +97,14 @@
       "sha256": "8c36d1ef1996a82fe84ebaef8f5a711acdb31c8d53f40cdbbafff611f08da36e"
     },
     {
-      "bytes": 26717,
+      "bytes": 27275,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "690c78e455ed064b07cd957c4e93cdfbb50b1a388f340ae1641402eaeb890764"
+      "sha256": "21b11238094dba6c88c871ae7b2f02ad1f19c63439b283672b5efba896456564"
     },
     {
-      "bytes": 28642,
+      "bytes": 29302,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "368be58bbb05afcd2ac3535920b892437dda26bf5ab2577d85879a9704d63739"
+      "sha256": "287ecd3b5575454c793cb5eab914e47b1d6bbb0db9552b3902cf02e8c1c4bd9d"
     },
     {
       "bytes": 20083,
@@ -147,6 +147,7 @@
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
