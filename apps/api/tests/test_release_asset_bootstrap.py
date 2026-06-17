@@ -104,7 +104,7 @@ class ReleaseAssetBootstrapTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-asset-bootstrap-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.30-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["schemas"]["transcript"], "release-asset-bootstrap-transcript-v1")
         self.assertIn("release_asset_bootstrap_ready", {item["classification"] for item in report["classification_matrix"]})

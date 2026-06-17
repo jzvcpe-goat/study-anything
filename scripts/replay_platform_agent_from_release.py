@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.28-alpha"
+DEFAULT_TAG = "v0.3.30-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_TOOLS = [
     "study_anything_health",

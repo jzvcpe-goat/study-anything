@@ -1,7 +1,7 @@
 # Study Anything Adopter Evidence Archive
 
 Schema: `adopter-evidence-archive-v1`
-Version: `v0.3.28-alpha`
+Version: `v0.3.30-alpha`
 Status: `pass`
 
 This archive is a public, metadata-only handoff bundle for external adopters and
@@ -11,7 +11,7 @@ handoff steps without copying private learning data.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `4ca11676c21a827cfed651aae96dd1a9d0baa2e2d0d7ed60b1877197d671698c`
+- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `66709aebef0ad1e362ac972a79fdf33f3d83c5260e4791570b529f822067e9ad`
 
 ## Reproduction Commands
 
@@ -33,12 +33,12 @@ handoff steps without copying private learning data.
 
 ## Fixture Hashes
 
-- `successful-release`: `70baea7547b1f96c7899b1fc8f77b94c49c912bf771974a051a00bdc1f3a0e53`
-- `local-ghcr-pull-timeout`: `79f00eb378f32cc7d6abebfb0d47cb8049473140df2b8b6985aff16c8fae921f`
-- `needs-repro-issue`: `2a86cfd687b7c045b3d43ec82b0324283b2d11c0e3e59ad447014671f1c216c3`
-- `release-blocker`: `fa6f447c61b1f350caa50de01066b855d261a8709177ae4c5516602e24da2691`
-- `platform-blocked`: `0e3dc29e3c47a31590a3d4104c1647ddcd05607442050c7de5925abed5dc34ae`
-- `resolved-support-case`: `99660a3da6ce3cedc1cf7c44f01fc985eab0145c426a328434b57764ab71c71d`
+- `successful-release`: `10abb78eb6357b9f596085af00329c3620fcf72730b69f03ba1f096d7c9e781c`
+- `local-ghcr-pull-timeout`: `1e2c8eda8494590efa90bdb31aafd8b75352cd7cf9576f390716d18311ae8b04`
+- `needs-repro-issue`: `f66a5bf25f68abcf5168d6a69acb2637f0ec629f807d6bd1bb347102d86c9964`
+- `release-blocker`: `505c40ab4c92a678ebfd009a91d1ecdd21bc6fe13dc24f66550f60ef3e4f9f62`
+- `platform-blocked`: `aaaecec325311bff261091b919216931c528a49281d2f841b722afe183da7fda`
+- `resolved-support-case`: `f061bb8de333a888ebc83dce163b7c0f28427d04f1a50fcd16535182119b598e`
 
 ## Privacy
 

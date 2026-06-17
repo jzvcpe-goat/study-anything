@@ -1,6 +1,6 @@
 # Release Checklist
 
-## v0.3.28-alpha
+## v0.3.30-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
@@ -78,9 +78,9 @@
 - [ ] Run `python3 scripts/generate_release_asset_adoption.py --check` and `python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-asset-adoption-v1` covers GitHub Release zip assets, sha256 digests, adoption-pack manifest hashes, embedded published-image evidence, `release-asset-adoption-fixture-v1`, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_release_cleanroom_bootstrap.py --check` and `python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-cleanroom-bootstrap-v1` covers repo-free release asset verification, platform import validation, redacted issue body generation, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_platform_agent_replay.py --check` and `python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only`; verify `platform-agent-release-replay-v1` covers release-asset tool import, Kimi/Codex/WorkBuddy/generic platform entrypoints, the nine-tool learning replay chain including `study_anything_teaching_layers`, failure classifications, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.28-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.30-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
 - [ ] Run `python3 scripts/generate_adopter_evidence_archive.py --check` and `python3 scripts/verify_adopter_evidence_archive.py --check`; verify `adopter-evidence-archive-v1` carries release identity, CI commands, Docker manifest evidence, public status hashes, platform pack checksums, known limitations, maintainer handoff checklist, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, personal profiles, or browser/video/app context.
 - [ ] Run `python3 scripts/verify_adopter_evidence_archive.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same evidence archive, checksum, docs, and `adopter-evidence-fixture-v1` fixtures.
 - [ ] Run `python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check` and verify `plugin-ecosystem-adoption-kit-v1` includes all five bundled sample plugins, digest-verified `plugins/registry.json`, quarantine-first trust policy, platform-pack commands, and no plugin entrypoint execution, raw source text, learner answers, Agent endpoint secrets, real model keys, or browser/video private context.
@@ -120,8 +120,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<compose-mock-agent-endpoint> python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.28-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.30-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -147,4 +147,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.28-alpha`.
+- [ ] Tag `v0.3.30-alpha`.

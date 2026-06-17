@@ -1,15 +1,15 @@
 # Study Anything Release Cleanroom Bootstrap
 
-Version: `v0.3.28-alpha`
+Version: `v0.3.30-alpha`
 
 `release-cleanroom-bootstrap-evidence-v1` proves that Study Anything can be bootstrapped
 from GitHub Release assets without assuming an existing repository checkout.
 
 ## Commands
 
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only`
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime skill-mode`
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform generic-openapi --runtime published-image`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.30-alpha --platform kimi --runtime skill-mode`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.30-alpha --platform generic-openapi --runtime published-image`
 - `python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`
 
 ## Classification Matrix
@@ -38,4 +38,4 @@ from GitHub Release assets without assuming an existing repository checkout.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `1b6885d0409f550077de82aeec64c4710b6e577777c1175ce51b496a68b10989`
+- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `7686820dd762bed0dbb5a7ef7f86b9ea5dc4f3b1a35fb9112fda570712ed8702`

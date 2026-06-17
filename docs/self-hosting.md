@@ -127,9 +127,9 @@ common Linux servers and Apple Silicon Docker Desktop.
 For a pinned or mirrored deployment, override the tag or exact image names:
 
 ```bash
-STUDY_ANYTHING_IMAGE_TAG=v0.3.28-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+STUDY_ANYTHING_IMAGE_TAG=v0.3.30-alpha USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 
-STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.28-alpha \
+STUDY_ANYTHING_API_IMAGE=registry.example/study-anything/api:v0.3.30-alpha \
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
 ```
 
@@ -185,7 +185,7 @@ Maintainers can validate the public GHCR images with a disposable stack:
 
 ```bash
 python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha
 ```
 
 The first command verifies the deployment operator path and adoption pack evidence. The second pulls
@@ -475,7 +475,7 @@ checkout, use the cleanroom bootloader:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.28-alpha \
+  --tag v0.3.30-alpha \
   --platform generic-openapi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

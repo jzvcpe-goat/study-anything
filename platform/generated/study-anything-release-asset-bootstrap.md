@@ -1,7 +1,7 @@
 # Study Anything Release Asset Bootstrap
 
 Schema: `release-asset-bootstrap-v1`
-Version: `v0.3.28-alpha`
+Version: `v0.3.30-alpha`
 Status: `pass`
 
 This evidence makes the GitHub Release page the first adoption surface for
@@ -10,13 +10,13 @@ runtime choices without requiring a development checkout as the starting point.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `3383086780f033d8d6087ceb194d6bec975ce5ab1ca42c7ab7901542d468bb85`
+- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `c5b77c78232448d17f126c70b3d8a2a0c637f63752e3da848278e4555729d818`
 
 ## Commands
 
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime metadata-only`
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime skill-mode`
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime published-image`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.30-alpha --runtime metadata-only`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.30-alpha --runtime skill-mode`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.30-alpha --runtime published-image`
 - `python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`
 
 ## Classification Matrix

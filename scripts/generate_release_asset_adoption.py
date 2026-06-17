@@ -25,7 +25,7 @@ ARCHIVE_ROOT = "study-anything-release-asset-adoption"
 
 SCHEMA_VERSION = "release-asset-adoption-v1"
 FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.30-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 VERIFIER_SCHEMA_VERSION = "release-asset-adoption-proof-v1"

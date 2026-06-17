@@ -14,10 +14,10 @@
   },
   "release": {
     "assets": [],
-    "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.28-alpha",
-    "tag_name": "v0.3.28-alpha"
+    "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.30-alpha",
+    "tag_name": "v0.3.30-alpha"
   },
   "release_gate": "needs_independent_recheck",
   "schema_version": "release-asset-adoption-fixture-v1",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.30-alpha"
 }

@@ -54,7 +54,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/eval-frameworks.md", "operator_doc", "External eval framework selection, adapter boundary, and marketplace harness guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.3.28-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.30-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("evals/README.md", "eval", "External eval overview and native/optional adapter guide."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/ecosystem-submission.json", "submission_manifest", "Machine-readable ecosystem submission metadata."),
@@ -388,7 +388,7 @@ def manifest_payload() -> dict[str, object]:
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.3.28-alpha",
+        "version": "v0.3.30-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
