@@ -48,6 +48,20 @@ The current alpha already ships a local-first Study Anything foundation:
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
 
+## Feasibility And Boundary
+
+This pivot is feasible as a public positioning and architecture reset because the repo already contains a working local learning adapter, platform-Agent adoption assets, eval/audit evidence, privacy boundaries, and self-host paths. It is **not** a claim that the full Cognitive Loop runtime has shipped.
+
+这次 pivot 适合作为公开定位和架构重置，因为仓库已经有可运行的本地学习适配层、平台 Agent 接入资产、eval/audit 证据、隐私边界和自托管路径。它 **不表示** 完整 Cognitive Loop runtime 已经交付。
+
+Current shipped surface: Study Anything API, Skill Mode, platform-Agent packs, Docker self-host, learning/eval/export flows.
+
+Planned surface: Mastra runtime, project watchers, DecisionCard/Risk/Human Mastery Gate core, generic HTML Artifact console, personal plugins.
+
+当前已交付表面：Study Anything API、Skill Mode、平台 Agent 包、Docker 自托管、学习/eval/导出闭环。
+
+计划中表面：Mastra runtime、项目 watcher、DecisionCard/Risk/Human Mastery Gate core、通用 HTML Artifact console、个人插件。
+
 ## Target Architecture
 
 ```text
@@ -81,6 +95,43 @@ Cognitive Loop System
 Mastra, project watchers, DecisionCard/Risk/Human Mastery Gate, and the full HTML Artifact console are **planned Cognitive Loop layers**, not shipped runtime claims in this pivot PR. The current launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
 
 Mastra、项目监听器、DecisionCard/Risk/Human Mastery Gate 和完整 HTML Artifact Console 是 **下一阶段 Cognitive Loop 层**，不是这次定位 PR 已经交付的运行时能力。当前上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
+
+## Public Conceptual Contracts
+
+These names are documented now so future implementation work has a stable public vocabulary. They are conceptual contracts, not current HTTP endpoints:
+
+- `ProjectEvent`: normalized file, git, CI, runtime, human, or Agent event.
+- `DecisionCard`: evidence-bound decision record with impact, risk, verification, human gate, and rollback plan.
+- `LoopRun`: one bounded workflow execution cycle with status, trace refs, verification results, and artifacts.
+- `MasteryRecord`: human understanding state for a topic, file, subsystem, or risky change.
+- `EvolutionReport`: governed proposal for improving prompts, policies, evals, docs, tasks, retrieval, or learning paths.
+
+这些名称先作为公开概念契约，方便后续实现保持稳定词汇。它们现在不是 HTTP endpoint：
+
+- `ProjectEvent`：标准化的文件、Git、CI、运行时、人类或 Agent 事件。
+- `DecisionCard`：绑定证据的决策记录，包含影响、风险、验证、人类门禁和回滚计划。
+- `LoopRun`：一次有边界的 workflow 执行循环，包含状态、trace 引用、验证结果和产物。
+- `MasteryRecord`：人类对 topic、文件、子系统或高风险变更的理解状态。
+- `EvolutionReport`：对 prompt、policy、eval、文档、任务、检索或学习路径的受治理改进提案。
+
+Future project contract files:
+
+```text
+.cognitive-loop/config.yaml
+.cognitive-loop/permissions.yaml
+.cognitive-loop/evals.yaml
+.cognitive-loop/risk.yaml
+```
+
+Future CLI names, not implemented in this pivot:
+
+```bash
+cognitive-loop init
+cognitive-loop import-repo .
+cognitive-loop explain-diff --html
+cognitive-loop report --html
+cognitive-loop watch --html
+```
 
 ## Fastest Local Demo
 

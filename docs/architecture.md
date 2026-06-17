@@ -89,6 +89,156 @@ Conceptual objects:
 - `MasteryRecord`: the user's understanding level for a topic, file, subsystem, or risky change.
 - `EvolutionReport`: a governed improvement proposal for prompts, policies, evals, docs, tasks, retrieval rules, or learning paths.
 
+These are planned public contracts. They should be introduced before runtime migration so docs, platform packs, and future code use the same vocabulary.
+
+这些是计划中的公开契约。它们应该先于 runtime 迁移被固定下来，确保文档、平台包和未来代码使用同一套词汇。
+
+## Conceptual Contract Sketches
+
+The following shapes are intentionally compact. They define the public mental model, not the final persistence schema or HTTP API.
+
+以下结构故意保持紧凑。它们定义公开心智模型，不是最终数据库结构或 HTTP API。
+
+```ts
+export type ProjectEvent = {
+  event_id: string;
+  project_id: string;
+  actor: "human" | "ai" | "ci" | "github" | "runtime";
+  event_type:
+    | "file_changed"
+    | "git_diff_changed"
+    | "pre_commit"
+    | "post_commit"
+    | "pull_request_opened"
+    | "ci_failed"
+    | "test_failed"
+    | "agent_tool_called"
+    | "runtime_error"
+    | "dependency_changed"
+    | "config_changed"
+    | "schema_changed";
+  target?: string;
+  summary: string;
+  timestamp: string;
+  raw_ref?: {
+    git_sha?: string;
+    diff_id?: string;
+    trace_id?: string;
+    langfuse_trace_id?: string;
+  };
+  sensitivity?: "public" | "internal" | "secret_like";
+};
+```
+
+```ts
+export type DecisionCard = {
+  decision_id: string;
+  event_id: string;
+  project_id: string;
+  goal: string;
+  actor: "human" | "ai" | "workflow";
+  evidence: Array<{
+    type: "prd" | "test" | "diff" | "log" | "trace" | "doc";
+    ref: string;
+    excerpt?: string;
+  }>;
+  changed_files: string[];
+  impact: Array<{ area: string; description: string; confidence: number }>;
+  risk: {
+    score: number;
+    level: "low" | "medium" | "high" | "blocked";
+    reasons: string[];
+  };
+  verification: {
+    commands: string[];
+    status: "not_run" | "passed" | "failed";
+    output_ref?: string;
+  };
+  human_gate: {
+    required: boolean;
+    questions: string[];
+    approval_status: "not_required" | "pending" | "approved" | "rejected";
+  };
+  rollback: {
+    strategy: "git_checkout" | "git_reset" | "patch_reverse" | "manual";
+    command?: string;
+    checkpoint_ref?: string;
+  };
+};
+```
+
+```ts
+export type LoopRun = {
+  run_id: string;
+  project_id: string;
+  task_id: string;
+  status:
+    | "created"
+    | "running"
+    | "suspended"
+    | "verifying"
+    | "succeeded"
+    | "failed"
+    | "rolled_back"
+    | "rejected";
+  mastra_workflow_run_id?: string;
+  langfuse_trace_id?: string;
+  started_at: string;
+  finished_at?: string;
+  iteration: number;
+  max_iterations: number;
+  artifacts: {
+    patch_id?: string;
+    decision_card_id?: string;
+    html_report_path?: string;
+  };
+};
+```
+
+```ts
+export type MasteryRecord = {
+  mastery_id: string;
+  user_id: string;
+  project_id: string;
+  topic: string;
+  evidence: {
+    quiz_score?: number;
+    explanation_score?: number;
+    trace_score?: number;
+    prediction_score?: number;
+    review_score?: number;
+  };
+  level: "unknown" | "basic" | "working" | "review_ready" | "owner_ready";
+  updated_at: string;
+};
+```
+
+```ts
+export type EvolutionReport = {
+  cycle_id: string;
+  project_id: string;
+  observed_failures: string[];
+  root_causes: Array<{
+    category:
+      | "prompt"
+      | "task_decomposition"
+      | "missing_tests"
+      | "tool_failure"
+      | "bad_context"
+      | "risk_policy"
+      | "human_gate";
+    evidence: string[];
+  }>;
+  proposed_changes: Array<{
+    target: "prompt" | "policy" | "eval" | "task" | "doc" | "retrieval";
+    change: string;
+    risk: "low" | "medium" | "high";
+  }>;
+  verification_plan: string[];
+  status: "draft" | "approved" | "applied" | "rejected";
+};
+```
+
 ## Runtime Strategy
 
 Mastra is the planned runtime layer for Agent/workflow/tool/HITL orchestration. It should sit below Cognitive Loop Core:
@@ -104,6 +254,32 @@ Mastra 是计划中的运行时编排层，而不是产品事实源：
 - Cognitive Loop Core 负责事件结构、决策记录、风险策略、审批状态和回滚证据。
 - Langfuse 负责 trace、prompt、成本、延迟和 eval score。
 - Study Anything 负责把事件和决策卡转成学习包、测验、掌握度和 scribe log。
+
+## Project Contract Files
+
+Future project onboarding should create a `.cognitive-loop/` directory in the target repo. These files are planned contracts, not implemented config loaders in this positioning PR:
+
+```text
+.cognitive-loop/
+  config.yaml       project identity, language, package manager, runtime mode, output paths
+  permissions.yaml  allowed, approval-required, and denied AI operations
+  evals.yaml        test, lint, typecheck, build, coverage, and release gates
+  risk.yaml         risk thresholds, high-risk paths, circuit breakers, mastery gates
+```
+
+未来任意项目接入时，会在目标仓库中创建 `.cognitive-loop/` 目录。这些文件是计划中的契约，不是本次定位 PR 已经实现的配置加载器：
+
+```text
+.cognitive-loop/
+  config.yaml       项目身份、语言、包管理器、运行模式、输出路径
+  permissions.yaml  AI 可执行、需审批、禁止的操作
+  evals.yaml        test、lint、typecheck、build、coverage、release gates
+  risk.yaml         风险阈值、高风险路径、熔断器、掌握度门禁
+```
+
+The extended project protocol may later add `watchers.yaml` and `learning.yaml`, but the first public contract should stay small enough for a new repository to adopt.
+
+扩展协议后续可以加入 `watchers.yaml` 和 `learning.yaml`，但第一版公开契约要足够小，让一个新仓库能快速接入。
 
 ## Product Entry Modes
 
