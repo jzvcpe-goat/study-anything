@@ -59,12 +59,31 @@ Deliver:
 - product positioning doc
 - roadmap reset
 - clear status boundary between current Study Anything capabilities and planned Cognitive Loop layers
+- public conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`
+- future project contract names: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
+- future CLI names, clearly marked as not implemented yet
 
 Acceptance:
 
 - A new reader can understand the four-part direction: Study, Reverse, Operate, Evolve.
 - Docs state that Mastra, watchers, and full HTML Artifact console are planned layers.
 - Docs keep the current no-standalone-frontend launch path scoped to Study Anything/platform-Agent usage.
+- Docs keep real model credentials outside Study Anything.
+- Docs preserve current release evidence anchors while changing the product narrative.
+
+Future CLI vocabulary for this phase:
+
+```bash
+cognitive-loop init
+cognitive-loop import-repo .
+cognitive-loop explain-diff --html
+cognitive-loop report --html
+cognitive-loop watch --html
+```
+
+These commands are naming commitments for the next implementation stages, not commands shipped by this docs-only pivot.
+
+这些命令是下一阶段实现的命名约定，不是本次 docs-only pivot 已经交付的 CLI。
 
 ## Phase 1: Cognitive Loop Core
 
@@ -81,13 +100,18 @@ Deliver:
 - `EvolutionReport`
 - SQLite Event Store
 - static HTML report generator v0
-- conceptual `.cognitive-loop/*.yaml` project contract
+- implemented `.cognitive-loop/config.yaml`
+- implemented `.cognitive-loop/permissions.yaml`
+- implemented `.cognitive-loop/evals.yaml`
+- implemented `.cognitive-loop/risk.yaml`
 
 Acceptance:
 
 - A manually supplied project event can produce a decision card.
 - A decision card can render into a static HTML report.
 - Core state is stored outside Langfuse and outside Agent chat context.
+- A fresh repo can run `cognitive-loop init` and receive the four core contract files.
+- Contract loaders reject unsafe defaults, unknown high-risk permission downgrades, and secret-like config values.
 
 ## Phase 2: Mastra Runtime Adapter
 
@@ -169,6 +193,7 @@ Deliver:
 
 - `cognitive-loop report --html`
 - `cognitive-loop watch --html`
+- `cognitive-loop explain-diff --html`
 - static pages for project map, timeline, decision cards, mastery, audit, and evolution
 - local realtime console over SSE or WebSocket
 - CI-uploadable HTML artifacts
@@ -178,6 +203,7 @@ Acceptance:
 - Static HTML reports open offline.
 - Realtime console updates from local watcher events.
 - Browser UI can display human gates but does not directly execute high-risk commands.
+- HTML reports include provenance and redaction evidence for every rendered event, decision card, and mastery section.
 
 ## Phase 7: Personal Plugin Mode
 
