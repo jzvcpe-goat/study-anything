@@ -81,13 +81,15 @@ Deliver:
 - `EvolutionReport`
 - SQLite Event Store
 - static HTML report generator v0
-- conceptual `.cognitive-loop/*.yaml` project contract
+- conceptual `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, and `.cognitive-loop/risk.yaml` project contracts
+- reserved CLI contract: `cognitive-loop init`
 
 Acceptance:
 
 - A manually supplied project event can produce a decision card.
 - A decision card can render into a static HTML report.
 - Core state is stored outside Langfuse and outside Agent chat context.
+- The reserved project config names are documented but not treated as shipped runtime support until implemented.
 
 ## Phase 2: Mastra Runtime Adapter
 
@@ -167,6 +169,8 @@ Goal: make Cognitive Loop usable as a project console without building a heavy S
 
 Deliver:
 
+- `cognitive-loop import-repo .`
+- `cognitive-loop explain-diff --html`
 - `cognitive-loop report --html`
 - `cognitive-loop watch --html`
 - static pages for project map, timeline, decision cards, mastery, audit, and evolution
@@ -176,6 +180,7 @@ Deliver:
 Acceptance:
 
 - Static HTML reports open offline.
+- Diff explanations can be exported as HTML artifacts.
 - Realtime console updates from local watcher events.
 - Browser UI can display human gates but does not directly execute high-risk commands.
 

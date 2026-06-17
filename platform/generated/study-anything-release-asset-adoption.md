@@ -10,7 +10,7 @@ pack, then replay metadata-only, published-image, or Skill Mode checks.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `fb545c3ac97ba8c8cb084f17873adb631fecd63077b1aba9fff7c15d33876b9d`
+- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `36bf88a19896641a2d49270386d5ee11faf2c141eee6fef652b7b0fef2052b24`
 
 ## Commands
 

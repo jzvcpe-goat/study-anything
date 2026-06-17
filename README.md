@@ -168,6 +168,8 @@ Short term:
 - Keep Study Anything stable as the learning adapter and platform-Agent tool surface.
 - Publish the Cognitive Loop positioning and architecture.
 - Add conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`.
+- Reserve local project contracts: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, and `.cognitive-loop/risk.yaml`.
+- Reserve future CLI names: `cognitive-loop init`, `cognitive-loop import-repo .`, `cognitive-loop explain-diff --html`, `cognitive-loop report --html`, and `cognitive-loop watch --html`.
 
 Next stages:
 
@@ -182,6 +184,8 @@ Next stages:
 - 保持 Study Anything 作为学习适配层和平台 Agent 工具面的稳定性。
 - 发布 Cognitive Loop 的新定位和架构说明。
 - 明确 `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 等概念契约。
+- 预留本地项目契约：`.cognitive-loop/config.yaml`、`.cognitive-loop/permissions.yaml`、`.cognitive-loop/evals.yaml` 和 `.cognitive-loop/risk.yaml`。
+- 预留未来 CLI 名称：`cognitive-loop init`、`cognitive-loop import-repo .`、`cognitive-loop explain-diff --html`、`cognitive-loop report --html` 和 `cognitive-loop watch --html`。
 
 下一阶段：
 

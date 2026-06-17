@@ -89,6 +89,36 @@ Conceptual objects:
 - `MasteryRecord`: the user's understanding level for a topic, file, subsystem, or risky change.
 - `EvolutionReport`: a governed improvement proposal for prompts, policies, evals, docs, tasks, retrieval rules, or learning paths.
 
+Planned project contracts:
+
+- `.cognitive-loop/config.yaml`: local project identity, enabled adapters, report paths, and default redaction policy.
+- `.cognitive-loop/permissions.yaml`: read/write/tool/deploy boundaries for human users and external Agents.
+- `.cognitive-loop/evals.yaml`: deterministic checks, Agent eval adapters, acceptance thresholds, and evidence output paths.
+- `.cognitive-loop/risk.yaml`: risk categories, escalation rules, Human Mastery Gate requirements, and rollback requirements.
+
+Future CLI names are reserved for the Cognitive Loop layer and are not implemented in the current Study Anything alpha:
+
+- `cognitive-loop init`
+- `cognitive-loop import-repo .`
+- `cognitive-loop explain-diff --html`
+- `cognitive-loop report --html`
+- `cognitive-loop watch --html`
+
+计划中的项目契约：
+
+- `.cognitive-loop/config.yaml`：本地项目身份、启用的适配器、报告路径和默认脱敏策略。
+- `.cognitive-loop/permissions.yaml`：人类用户和外部 Agent 的读、写、工具、部署边界。
+- `.cognitive-loop/evals.yaml`：确定性检查、Agent eval 适配器、验收阈值和证据输出路径。
+- `.cognitive-loop/risk.yaml`：风险分类、升级规则、Human Mastery Gate 要求和回滚要求。
+
+未来 CLI 名称只为 Cognitive Loop 层预留，当前 Study Anything alpha 尚未实现：
+
+- `cognitive-loop init`
+- `cognitive-loop import-repo .`
+- `cognitive-loop explain-diff --html`
+- `cognitive-loop report --html`
+- `cognitive-loop watch --html`
+
 ## Runtime Strategy
 
 Mastra is the planned runtime layer for Agent/workflow/tool/HITL orchestration. It should sit below Cognitive Loop Core:
