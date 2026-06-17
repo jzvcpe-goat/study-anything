@@ -30,7 +30,7 @@ from urllib.request import Request, urlopen
 
 SCHEMA_VERSION = "release-cleanroom-bootstrap-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.28-alpha"
+DEFAULT_TAG = "v0.3.30-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 
 REQUIRED_ASSETS = {
@@ -46,6 +46,7 @@ REQUIRED_REPLAY_TOOLS = [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",

@@ -23,13 +23,14 @@ CHECKSUM_PATH = OUTPUT_DIR / "study-anything-platform-agent-replay.sha256"
 ARCHIVE_ROOT = "study-anything-platform-agent-replay"
 
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.30-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 REQUIRED_TOOLS = [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",

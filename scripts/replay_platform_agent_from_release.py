@@ -26,12 +26,13 @@ ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.28-alpha"
+DEFAULT_TAG = "v0.3.30-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_TOOLS = [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
@@ -314,6 +315,9 @@ def response_summary(name: str, response: dict[str, Any]) -> dict[str, Any]:
     if name == "study_anything_add_reading":
         source = response.get("source") or {}
         return {"status": response.get("status"), "excerpt_hash_present": bool(source.get("excerpt_hash"))}
+    if name == "study_anything_teaching_layers":
+        layers = response.get("layers") or response.get("teaching_layers") or []
+        return {"status": response.get("status"), "layer_count": len(layers)}
     if name == "study_anything_run":
         return {"stage": response.get("stage"), "quiz_item_count": len(response.get("quiz_items") or [])}
     if name == "study_anything_answer":
@@ -365,6 +369,7 @@ def validate_learning_responses(
     health: dict[str, Any],
     session: dict[str, Any],
     reading: dict[str, Any],
+    teaching: dict[str, Any],
     running: dict[str, Any],
     completed: dict[str, Any],
     mastery: dict[str, Any],
@@ -378,6 +383,9 @@ def validate_learning_responses(
         raise ReplayError("Create session did not return a session_id.")
     if not (reading.get("source") or {}).get("excerpt_hash"):
         raise ReplayError("Add reading did not return a source excerpt hash.")
+    teaching_layers = teaching.get("layers") or teaching.get("teaching_layers") or []
+    if len(teaching_layers) < 2:
+        raise ReplayError("Teaching layers did not return overview and glossary evidence.")
     quiz_items = running.get("quiz_items") or []
     if not quiz_items or not quiz_items[0].get("item_id"):
         raise ReplayError("Run did not return a quiz item id.")
@@ -440,6 +448,11 @@ def replay_tool_chain(
         },
         session_id=session_id,
     )
+    teaching = call(
+        "study_anything_teaching_layers",
+        {"layers": ["overview", "glossary"]},
+        session_id=session_id,
+    )
     running = call("study_anything_run", {}, session_id=session_id)
     quiz_items = running.get("quiz_items") or []
     quiz_id = str((quiz_items[0] or {}).get("item_id") if quiz_items else "")
@@ -451,6 +464,7 @@ def replay_tool_chain(
         health=health,
         session=session,
         reading=reading,
+        teaching=teaching,
         running=running,
         completed=completed,
         mastery=mastery,

@@ -16,13 +16,19 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "external-eval-marketplace-harness-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.30-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-external-eval-harness.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
 EXPECTED_ADAPTERS = ("promptfoo", "deepeval", "langchain-agentevals", "ragas")
-EXPECTED_TRAJECTORY = ("quiz.generate", "answer.grade", "insight.synthesize")
+EXPECTED_TRAJECTORY = (
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+)
 REQUIRED_OPERATOR_ASSETS = [
     "docs/agent-eval.md",
     "docs/eval-frameworks.md",

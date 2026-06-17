@@ -10,6 +10,7 @@ Use:
 python3 scripts/verify_commercial_readiness.py
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_external_agent_adapter_hardening.py
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
 python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
@@ -52,6 +53,11 @@ submission without turning Study Anything into a paid standalone app.
 The external Agent adapter hardening verifier is the matching proof for user-owned model execution:
 it separates fake and external Agent evidence, diagnoses bad external Agent outputs, and redacts
 secret-looking metadata values before eval evidence is shared.
+The multi-teacher Agent eval hardening verifier is the matching proof for trusted layered learning:
+it proves the whole-topic overview, glossary/term explanation, quiz generation, answer grading, and
+synthesis steps each carry provider/task attribution and redacted evidence. It also proves missing
+attribution, forged provider ids, missing required external judge runtime, and privacy redaction
+failures are caught before platform-Agent adoption evidence or commercial readiness claims are shared.
 
 For adoption and PMF review, call:
 
@@ -131,6 +137,9 @@ to user-owned local data, or a closed plugin channel as a requirement.
   maintainers, with no automatic upload and no private learning content.
 - API smoke that verifies learning flow, recovery status, encrypted sync export/inspect, plugin registry trust, local PMF metrics, and Agent audit boundaries.
 - Redacted Agent Eval artifact foundation that bridges invocation audit evidence into mature external eval tools such as Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
+- Multi-teacher Agent eval hardening for overview, glossary, quiz, grading, and synthesis attribution
+  across fake demo and user-owned HTTP Agent paths, with negative gates for missing/forged
+  attribution and external judge runtime boundaries.
 - NotebookLM/Obsidian bridge hardening verifier for bounded context packages, source-type coverage,
   hidden instruction rejection, idempotent duplicate handling, and strict second-brain handoff
   privacy.

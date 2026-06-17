@@ -76,6 +76,8 @@
       "schema_version": "agent-eval-artifact-v1",
       "status": "ready_for_external_eval",
       "trajectory_tasks": [
+        "teach.overview",
+        "teach.glossary",
         "quiz.generate",
         "answer.grade",
         "insight.synthesize"
@@ -274,11 +276,15 @@
         "check_id": "trajectory_coverage",
         "details": {
           "actual": [
+            "teach.overview",
+            "teach.glossary",
             "quiz.generate",
             "answer.grade",
             "insight.synthesize"
           ],
           "expected": [
+            "teach.overview",
+            "teach.glossary",
             "quiz.generate",
             "answer.grade",
             "insight.synthesize"
@@ -370,5 +376,5 @@
     "trajectory_coverage": 1.0
   },
   "status": "pass",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.30-alpha"
 }

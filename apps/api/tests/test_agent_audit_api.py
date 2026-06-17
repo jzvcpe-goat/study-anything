@@ -88,6 +88,10 @@ class AgentAuditApiTests(unittest.TestCase):
                         "text": "Private source prose for audit.",
                     },
                 )
+                client.post(
+                    f"/v1/sessions/{session_id}/teaching-layers",
+                    json={"layers": ["overview", "glossary"]},
+                )
                 running = client.post(f"/v1/sessions/{session_id}/run").json()
                 quiz_id = running["quiz_items"][0]["item_id"]
                 client.post(
@@ -106,7 +110,13 @@ class AgentAuditApiTests(unittest.TestCase):
         self.assertFalse(body["quality_eval"]["included"])
         self.assertEqual(
             body["observed_tasks"],
-            ["answer.grade", "insight.synthesize", "quiz.generate"],
+            [
+                "answer.grade",
+                "insight.synthesize",
+                "quiz.generate",
+                "teach.glossary",
+                "teach.overview",
+            ],
         )
         self.assertEqual(body["missing_tasks"], [])
         self.assertTrue(body["source_bound"]["source_reference_present"])
@@ -124,13 +134,21 @@ class AgentAuditApiTests(unittest.TestCase):
                         "label": "Audit HTTP Agent",
                         "endpoint": endpoint,
                         "capabilities": [
+                            "teach.overview",
+                            "teach.glossary",
                             "quiz.generate",
                             "answer.grade",
                             "insight.synthesize",
                         ],
                     },
                 ).json()
-                for capability in ["quiz.generate", "answer.grade", "insight.synthesize"]:
+                for capability in [
+                    "teach.overview",
+                    "teach.glossary",
+                    "quiz.generate",
+                    "answer.grade",
+                    "insight.synthesize",
+                ]:
                     client.post(
                         "/v1/agents/defaults",
                         json={
@@ -153,6 +171,10 @@ class AgentAuditApiTests(unittest.TestCase):
                         "text": "The user-owned HTTP agent should be visible in audit.",
                     },
                 )
+                client.post(
+                    f"/v1/sessions/{session_id}/teaching-layers",
+                    json={"layers": ["overview", "glossary"]},
+                )
                 running = client.post(f"/v1/sessions/{session_id}/run").json()
                 quiz_id = running["quiz_items"][0]["item_id"]
                 client.post(
@@ -168,7 +190,7 @@ class AgentAuditApiTests(unittest.TestCase):
         self.assertFalse(body["used_fake_agent"])
         self.assertEqual(body["provider_ids"], [provider["provider_id"]])
         self.assertEqual(body["providers"][0]["kind"], "http_agent")
-        self.assertEqual(len(body["evidence"]), 3)
+        self.assertEqual(len(body["evidence"]), 5)
         self.assertNotIn(endpoint, response.text)
 
     def test_deprecated_agent_eval_alias_is_marked_deprecated(self) -> None:
@@ -195,13 +217,21 @@ class AgentAuditApiTests(unittest.TestCase):
                         "label": "Eval HTTP Agent",
                         "endpoint": endpoint,
                         "capabilities": [
+                            "teach.overview",
+                            "teach.glossary",
                             "quiz.generate",
                             "answer.grade",
                             "insight.synthesize",
                         ],
                     },
                 ).json()
-                for capability in ["quiz.generate", "answer.grade", "insight.synthesize"]:
+                for capability in [
+                    "teach.overview",
+                    "teach.glossary",
+                    "quiz.generate",
+                    "answer.grade",
+                    "insight.synthesize",
+                ]:
                     client.post(
                         "/v1/agents/defaults",
                         json={
@@ -223,6 +253,10 @@ class AgentAuditApiTests(unittest.TestCase):
                         "title": "Private eval title",
                         "text": "Private eval source prose must stay out of eval artifacts.",
                     },
+                )
+                client.post(
+                    f"/v1/sessions/{session_id}/teaching-layers",
+                    json={"layers": ["overview", "glossary"]},
                 )
                 running = client.post(f"/v1/sessions/{session_id}/run").json()
                 quiz_id = running["quiz_items"][0]["item_id"]
@@ -257,7 +291,13 @@ class AgentAuditApiTests(unittest.TestCase):
         self.assertTrue(all(gate["status"] == "pass" for gate in required_gates))
         self.assertEqual(
             [step["task_type"] for step in body["trajectory"]],
-            ["quiz.generate", "answer.grade", "insight.synthesize"],
+            [
+                "teach.overview",
+                "teach.glossary",
+                "quiz.generate",
+                "answer.grade",
+                "insight.synthesize",
+            ],
         )
         self.assertNotIn("Private", response.text)
         self.assertNotIn(endpoint, response.text)

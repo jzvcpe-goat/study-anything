@@ -110,7 +110,7 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
         self.assertEqual(payload["classification"], "cleanroom_bootstrap_ready")
         self.assertTrue(payload["acceptance"]["runtime_verified"])
         self.assertEqual(payload["runtime"]["payload"]["classification"], "platform_agent_replay_ready")
-        self.assertEqual(payload["runtime"]["payload"]["tool_call_count"], 8)
+        self.assertEqual(payload["runtime"]["payload"]["tool_call_count"], 9)
 
     def test_expected_failure_fixtures_are_redacted_and_classified(self) -> None:
         cases = [
@@ -143,7 +143,7 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-cleanroom-bootstrap-evidence-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.30-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["example_report"]["schema_version"], "release-cleanroom-bootstrap-v1")
         self.assertIn("cleanroom_bootstrap_ready", {item["classification"] for item in report["classification_matrix"]})

@@ -121,6 +121,23 @@ def main() -> None:
             "text": "A launch smoke test should create a quiz, grade an answer, and update mastery.",
         },
     )
+    teaching = request(
+        f"/v1/sessions/{session_id}/teaching-layers",
+        {"layers": ["overview", "glossary"]},
+    )
+    if teaching.get("schema_version") != "teaching-layers-v1":
+        raise RuntimeError(f"Teaching layers schema is not teaching-layers-v1: {teaching}")
+    teaching_layers = teaching.get("layers") or []
+    layer_names = {item.get("layer") for item in teaching_layers if isinstance(item, dict)}
+    if not {"overview", "glossary"}.issubset(layer_names):
+        raise RuntimeError(f"Teaching layers did not include overview and glossary: {teaching}")
+    teaching_tasks = {
+        (item.get("agent") or {}).get("task_type")
+        for item in teaching_layers
+        if isinstance(item, dict)
+    }
+    if not {"teach.overview", "teach.glossary"}.issubset(teaching_tasks):
+        raise RuntimeError(f"Teaching layers did not include required Agent tasks: {teaching}")
     running = request(f"/v1/sessions/{session_id}/run", {})
     quiz_id = running["quiz_items"][0]["item_id"]
     completed = request(

@@ -78,6 +78,7 @@ python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
@@ -123,6 +124,13 @@ The Agent eval marketplace enforcement report emits
 required, optional external judge adapters have readable skip/failure
 diagnostics, required judge mode fails closed, and no external judge keys or
 model credentials enter Study Anything.
+The multi-teacher Agent eval hardening verifier emits
+`multiteacher-agent-eval-hardening-v1`; it proves the learning loop records
+provider/task attribution for `teach.overview`, `teach.glossary`,
+`quiz.generate`, `answer.grade`, and `insight.synthesize`, separates fake
+deterministic Agent evidence from user-owned HTTP Agent evidence, rejects
+missing or forged attribution, and keeps judge/model credentials in the
+operator environment.
 The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
 that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
 status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
@@ -136,6 +144,7 @@ python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_learning_enrichment_bridge.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
@@ -489,7 +498,7 @@ release asset:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.28-alpha \
+  --tag v0.3.30-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

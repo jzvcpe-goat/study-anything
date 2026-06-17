@@ -22,7 +22,7 @@ STATUS_LINKAGE_SCHEMA_VERSION = "public-status-linkage-fixture-v1"
 ONBOARDING_SCHEMA_VERSION = "platform-onboarding-readiness-v1"
 SUPPORT_TRIAGE_SCHEMA_VERSION = "platform-support-triage-v1"
 TRIAGE_DASHBOARD_SCHEMA_VERSION = "platform-triage-dashboard-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.30-alpha"
 PLATFORMS = {"kimi", "codex", "workbuddy", "generic"}
 SLA_LABELS = {
     "intake",
@@ -346,7 +346,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-public-maintainer-dashboard.json",
         "platform/generated/study-anything-public-maintainer-dashboard.md",
         "docs/public-support-status.md",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.30-alpha.md",
         *[f"fixtures/platform-status-links/{label}.json" for label in SLA_LABELS],
     }
     missing = sorted(required_paths - paths)
@@ -381,7 +381,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/maintainer-rotation.md": [PUBLIC_STATUS_SCHEMA_VERSION, "public dashboard"],
         "docs/ecosystem-submission.md": [PUBLIC_STATUS_SCHEMA_VERSION, "public support status"],
         "docs/release-checklist.md": ["verify_platform_public_support_status.py --check"],
-        "docs/roadmap.md": ["v0.3.28-alpha", PUBLIC_STATUS_SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.30-alpha", PUBLIC_STATUS_SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

@@ -88,6 +88,44 @@ Study Anything records provider/task evidence only and does not store judge API 
 Agent endpoint secrets, raw source text, learner answers, or private browser/video context in the
 shared report.
 
+## Multi-Teacher Attribution
+
+Study Anything supports layered teaching without requiring Study Anything itself to own real model
+keys. A user-owned Agent can route different learning layers to different models or tools behind its
+own gateway while Study Anything records only redacted provider/task evidence.
+
+The public multi-teacher contract is:
+
+| Learning layer | Agent task | Eval purpose |
+| --- | --- | --- |
+| Whole-topic explanation | `teach.overview` | Prove the learner received a source-bound overview. |
+| Professional term explanation | `teach.glossary` | Prove terminology was explained separately from the overview. |
+| Active recall | `quiz.generate` | Prove a source-bound practice item was generated. |
+| Feedback loop | `answer.grade` | Prove grading produced a bounded score and feedback. |
+| Transfer insight | `insight.synthesize` | Prove the session ended with a reusable synthesis. |
+
+These five tasks are the native required task set for `agent-audit-v1`,
+`agent-eval-artifact-v1`, and `agent-eval-policy-v1`. A session that skips
+`teach.overview` or `teach.glossary` is intentionally partial for release-grade
+multi-teacher evidence, even if quiz generation, grading, and synthesis ran.
+
+Run the release gate directly with:
+
+```bash
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
+```
+
+The verifier emits `multiteacher-agent-eval-hardening-v1`. It runs both a fake deterministic Agent
+baseline and a mock user-owned HTTP Agent, then proves that every layer has `provider_id`,
+`task_type`, `status`, `latency_ms`, optional `confidence`, and redacted metadata. The fake path must
+report `used_fake_agent=true` and `used_external_agent=false`; the HTTP path must report
+`used_external_agent=true` and `used_fake_agent=false`.
+
+The verifier is intentionally not a pedagogy benchmark. It answers the operational question: did the
+learning loop actually go through Study Anything's Agent contract, and can an external eval layer
+trust the resulting trajectory without seeing raw source text, answers, Agent endpoints, real model
+keys, judge keys, or private browser/video context?
+
 ## External Agent Adapter Hardening
 
 Before treating a user-owned HTTP Agent as production-ready, run:

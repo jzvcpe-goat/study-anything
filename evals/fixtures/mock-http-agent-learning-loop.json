@@ -14,6 +14,16 @@
   },
   "agent_tasks": [
     {
+      "task_type": "teach.overview",
+      "provider_kind": "http_agent",
+      "status": "ok"
+    },
+    {
+      "task_type": "teach.glossary",
+      "provider_kind": "http_agent",
+      "status": "ok"
+    },
+    {
       "task_type": "quiz.generate",
       "provider_kind": "http_agent",
       "status": "ok"

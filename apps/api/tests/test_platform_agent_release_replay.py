@@ -70,7 +70,7 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         if self.path == "/v1/health":
-            self._json(200, {"status": "ok", "version": "0.3.28-alpha"})
+            self._json(200, {"status": "ok", "version": "0.3.30-alpha"})
             return
         if self.path == "/v1/sessions/mock-session/mastery":
             if getattr(self.server, "schema_mismatch", False):
@@ -84,7 +84,13 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
                 {
                     "schema_version": "agent-audit-v1",
                     "status": "verified",
-                    "observed_tasks": ["quiz.generate", "answer.grade", "insight.synthesize"],
+                    "observed_tasks": [
+                        "teach.overview",
+                        "teach.glossary",
+                        "quiz.generate",
+                        "answer.grade",
+                        "insight.synthesize",
+                    ],
                 },
             )
             return
@@ -95,6 +101,8 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
                     "schema_version": "agent-eval-artifact-v1",
                     "status": "ready_for_external_eval",
                     "trajectory": [
+                        {"task_type": "teach.overview"},
+                        {"task_type": "teach.glossary"},
                         {"task_type": "quiz.generate"},
                         {"task_type": "answer.grade"},
                         {"task_type": "insight.synthesize"},
@@ -113,6 +121,18 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
             return
         if self.path == "/v1/sessions/mock-session/reading":
             self._json(200, {"status": "ok", "source": {"excerpt_hash": "mock-excerpt"}})
+            return
+        if self.path == "/v1/sessions/mock-session/teaching-layers":
+            self._json(
+                200,
+                {
+                    "status": "ok",
+                    "layers": [
+                        {"layer": "overview", "agent": {"task_type": "teach.overview"}},
+                        {"layer": "glossary", "agent": {"task_type": "teach.glossary"}},
+                    ],
+                },
+            )
             return
         if self.path == "/v1/sessions/mock-session/run":
             self._json(200, {"stage": "awaiting_answers", "quiz_items": [{"item_id": "q1"}]})
@@ -169,7 +189,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
                 self.assertEqual(payload["classification"], "platform_agent_replay_metadata_ready")
                 self.assertEqual(payload["platform"], platform)
                 self.assertGreaterEqual(payload["release_assets"]["asset_count"], 6)
-                self.assertEqual(len(payload["tool_import"]["required_tools"]), 8)
+                self.assertEqual(len(payload["tool_import"]["required_tools"]), 9)
 
     def test_external_api_replay_calls_minimum_learning_tool_chain(self) -> None:
         with MockApiServer() as api_base:
@@ -189,13 +209,14 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         payload = json_from_stdout(completed.stdout)
         self.assertEqual(payload["classification"], "platform_agent_replay_ready")
-        self.assertEqual(payload["replay"]["tool_call_count"], 8)
+        self.assertEqual(payload["replay"]["tool_call_count"], 9)
         self.assertEqual(
             [step["tool_name"] for step in payload["replay"]["steps"]],
             [
                 "study_anything_health",
                 "study_anything_create_session",
                 "study_anything_add_reading",
+                "study_anything_teaching_layers",
                 "study_anything_run",
                 "study_anything_answer",
                 "study_anything_mastery",
@@ -255,7 +276,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "platform-agent-release-replay-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.30-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertRegex(report["archive"]["sha256"], r"^[a-f0-9]{64}$")
         self.assertIn(report["archive"]["sha256"], checksum)

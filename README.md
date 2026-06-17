@@ -31,7 +31,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
 - Source-bound learning loop: reading, teaching layers, quiz, grading, mastery, synthesis, scribe log, and discard/keep.
 - Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI hosts.
-- Redacted Agent audit/eval artifacts and optional mature eval adapters.
+- Redacted Agent audit/eval artifacts, multi-teacher attribution gates, and optional mature eval adapters.
 - Learning Enrichment bridge for web, document, app, video-slice, Markdown, and Obsidian context.
 - Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and GHCR image evidence.
@@ -43,7 +43,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。
 - 基于来源的学习闭环：阅读、分层教学、测验、评分、掌握度、综合洞察、scribe log、保留或丢弃。
 - 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP 和通用 OpenAPI 平台的 Agent 接入包。
-- 脱敏 Agent audit/eval 证据，以及可选成熟 eval 适配。
+- 脱敏 Agent audit/eval 证据、多层教学归因验收，以及可选成熟 eval 适配。
 - Learning Enrichment bridge：接收网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段。
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
@@ -189,12 +189,12 @@ If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/bui
 
 ## Published Image Evidence
 
-The current release evidence line is `v0.3.28-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
+The current release evidence line is `v0.3.30-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
 
 ```bash
 python3 scripts/setup_env.py
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
-python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --manifest-only
+python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --manifest-only
 ```
 
 This keeps Cognitive Loop positioning separate from deployability proof: the current published image evidence still belongs to the Study Anything learning-adapter runtime, while Mastra/watchers/HTML Artifact console remain planned layers.

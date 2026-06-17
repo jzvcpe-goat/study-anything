@@ -59,6 +59,9 @@ platform/ecosystem-submission.json
 - `study_anything_run`
 - `study_anything_answer`
 - `study_anything_agent_audit`
+- `study_anything_agent_eval_artifact`
+- `study_anything_agent_quality_eval`
+- `study_anything_agent_eval_report`
 - `study_anything_enrichment_artifact_export`
 - `study_anything_obsidian_export`
 - `study_anything_learning_package_export`
@@ -73,6 +76,7 @@ Before treating the Kimi integration as ready, run:
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000
 python3 scripts/verify_external_adoption.py \
@@ -86,8 +90,10 @@ The first command emits `ecosystem-submission-verification-v1`; the manual rehea
 operators; the Learning Enrichment bridge command emits
 `learning-enrichment-bridge-verification-v1`, proving Kimi-collected web, document, app, video,
 Markdown, and Obsidian context can become safe micro-lessons plus NotebookLM/Obsidian handoff
-evidence; the telemetry command emits `adoption-telemetry-verification-v1`; the final command emits
-`adoption-proof-v1`.
+evidence; the multi-teacher command emits `multiteacher-agent-eval-hardening-v1`, proving
+`teach.overview`, `teach.glossary`, `quiz.generate`, `answer.grade`, and `insight.synthesize`
+all carry provider/task attribution and redacted evidence; the telemetry command emits
+`adoption-telemetry-verification-v1`; the final command emits `adoption-proof-v1`.
 
 Start with `study_anything_deployment_guide` after the local API is reachable. It returns
 `deployment-guide-v1`: launch commands, common first-run failure classes, and the privacy boundary
@@ -136,6 +142,7 @@ Before sharing the Kimi-compatible pack for manual import, run:
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_external_eval_marketplace_harness.py --check
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
@@ -154,6 +161,9 @@ The Learning Enrichment bridge report proves the same path also supports visual 
 video slices, app context, Obsidian notes, local archive manifests, and strict redaction boundaries.
 The external eval marketplace harness gives Kimi a single redacted checklist for native eval gates,
 optional mature eval adapters, fixtures, timeouts, and evidence schemas before manual submission.
+The multi-teacher verifier proves the Kimi-backed local gateway or fake demo provider actually
+handled the five teaching/eval tasks and that missing attribution, forged provider ids, missing
+external judge runtime, and redaction failures are caught before the pack is shared.
 The external Agent adapter verifier separately proves that Kimi-backed or Kimi-compatible HTTP
 Agents produce redacted eval evidence and that bad outputs become explicit diagnostics.
 

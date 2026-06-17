@@ -9,6 +9,8 @@ from .workflow import LearningState
 
 
 REQUIRED_AGENT_TASKS = [
+    "teach.overview",
+    "teach.glossary",
     "quiz.generate",
     "answer.grade",
     "insight.synthesize",
@@ -49,6 +51,8 @@ def build_agent_audit(
     evidence: list[dict[str, object]] = []
     observed_tasks: set[str] = set()
     provider_ids: set[str] = set()
+    unregistered_provider_ids: set[str] = set()
+    enforce_provider_registration = agent_status is not None
 
     for event in state.events:
         for metadata in _agent_metadata_items(event.payload):
@@ -59,6 +63,11 @@ def build_agent_audit(
             observed_tasks.add(task_type)
             provider_ids.add(provider_id)
             provider = provider_map.get(provider_id)
+            provider_registered = provider is not None or (
+                provider_id == "fake-deterministic" and not enforce_provider_registration
+            )
+            if enforce_provider_registration and not provider_registered:
+                unregistered_provider_ids.add(provider_id)
             evidence.append(
                 {
                     "event_id": event.event_id,
@@ -72,6 +81,7 @@ def build_agent_audit(
                     "status": _string(metadata.get("status")),
                     "latency_ms": _int_or_none(metadata.get("latency_ms")),
                     "confidence": _float_or_none(metadata.get("confidence")),
+                    "provider_registered": provider_registered,
                 }
             )
 
@@ -80,6 +90,8 @@ def build_agent_audit(
     used_external_agent = any(provider_id != "fake-deterministic" for provider_id in provider_ids)
     if not evidence:
         status = "no_agent_evidence"
+    elif unregistered_provider_ids:
+        status = "invalid_provider_evidence"
     elif missing_tasks:
         status = "partial"
     else:
@@ -103,6 +115,7 @@ def build_agent_audit(
         "required_tasks": REQUIRED_AGENT_TASKS,
         "observed_tasks": sorted(observed_tasks),
         "missing_tasks": missing_tasks,
+        "unregistered_provider_ids": sorted(unregistered_provider_ids),
         "provider_ids": sorted(provider_ids),
         "providers": providers,
         "used_study_anything_agent": bool(evidence),
@@ -180,4 +193,3 @@ def _int_or_none(value: Any) -> int | None:
 
 def _float_or_none(value: Any) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
-
