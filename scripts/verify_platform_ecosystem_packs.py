@@ -151,6 +151,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             raise PackVerificationError(f"{pack_path.relative_to(ROOT)} references missing asset: {asset}")
     if "platform/study-anything-platform-tools.json" not in import_assets:
         raise PackVerificationError(f"{pack_path.relative_to(ROOT)} must reference the source manifest")
+    if "docs/cognitive-loop-adoption-cookbook.md" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop adoption cookbook"
+        )
 
     commands = pack.get("local_verification_commands")
     if not isinstance(commands, list) or not commands:
@@ -202,6 +206,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "pmf-readiness-v1",
         "ecosystem-submission-v1",
         "ecosystem-submission-verification-v1",
+        "cognitive-loop-adoption-cookbook.md",
         "raw source",
     )
     return pack

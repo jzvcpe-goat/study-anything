@@ -1032,6 +1032,11 @@ FILES: list[tuple[str, str, str]] = [
         "General platform Agent integration guide.",
     ),
     (
+        "docs/cognitive-loop-adoption-cookbook.md",
+        "docs",
+        "Scenario cookbook for local Cognitive Loop operations from platform Agents.",
+    ),
+    (
         "docs/commercial-readiness.md",
         "docs",
         "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",

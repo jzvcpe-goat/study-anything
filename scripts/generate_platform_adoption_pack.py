@@ -24,6 +24,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/adoption.md", "operator_doc", "Clean-clone and published-image adoption guide."),
     ("docs/github-launch.md", "operator_doc", "GitHub launch, tag, release, and published-image verification guide."),
     ("docs/platform-agent-integrations.md", "operator_doc", "General external platform Agent integration guide."),
+    ("docs/cognitive-loop-adoption-cookbook.md", "operator_doc", "Scenario cookbook for Kimi, Codex, WorkBuddy, and private platform Agent Cognitive Loop operations."),
     ("docs/platform-agent-release-replay.md", "operator_doc", "Release-asset platform Agent replay simulator guide."),
     ("docs/learning-enrichment.md", "operator_doc", "Learning Enrichment Layer context contract and micro-lesson export guide."),
     ("docs/second-brain-handoff.md", "operator_doc", "Strict Obsidian, NotebookLM-style, and local archive handoff guide."),

@@ -96,6 +96,7 @@
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
     "docs/cognitive-loop-contracts.md",
+    "docs/cognitive-loop-adoption-cookbook.md",
     "platform/bootstrap/study_anything_release_bootstrap.py",
     "docs/release-cleanroom-bootstrap.md",
     "platform/generated/study-anything-release-cleanroom-bootstrap.json"

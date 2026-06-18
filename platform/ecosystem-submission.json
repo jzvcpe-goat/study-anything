@@ -217,6 +217,7 @@
     "docs/release-checklist.md",
     "docs/roadmap.md",
     "docs/cognitive-loop-contracts.md",
+    "docs/cognitive-loop-adoption-cookbook.md",
     "docs/platform-agent-integrations.md",
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
@@ -414,6 +415,7 @@
         "platform/generated/study-anything-openai-tools.json",
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
+        "docs/cognitive-loop-adoption-cookbook.md",
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py"
       ],
@@ -470,6 +472,7 @@
         "skills/study-anything/SKILL.md",
         "scripts/study_anything_cli.py",
         "platform/generated/study-anything-tool-catalog.md",
+        "docs/cognitive-loop-adoption-cookbook.md",
         "platform/packs/codex/README.md"
       ],
       "integration_mode": "terminal_skill",
@@ -521,6 +524,7 @@
       "import_assets": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
+        "docs/cognitive-loop-adoption-cookbook.md",
         "platform/packs/workbuddy/README.md"
       ],
       "integration_mode": "openapi_http_tools",
@@ -571,6 +575,7 @@
       "import_assets": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
+        "docs/cognitive-loop-adoption-cookbook.md",
         "docs/platform-agent-integrations.md"
       ],
       "integration_mode": "generic_openapi_tools",

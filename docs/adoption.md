@@ -34,6 +34,8 @@ python3 scripts/verify_external_adoption.py \
 
 The archive contains OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy packs, the repo-local
 Skill, gateway examples, mock agent, NotebookLM fixture, verifier scripts, and a SHA256 manifest.
+For scenario-based use, start with `docs/cognitive-loop-adoption-cookbook.md`; it maps first
+adoption, daily project review, risk decisions, and learning handoff to copyable local commands.
 The operator drill emits `study-anything-operator-drill-v1` evidence that the pack can be consumed as
 an external platform tool directory. The submission dry-run emits `platform-submission-dry-run-v1`
 with ready/warning/blocked status for each target platform. The manual rehearsal emits

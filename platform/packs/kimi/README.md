@@ -76,6 +76,10 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the Kimi-compatible tool surface without requiring
 browser-only Kimi to call localhost directly.
 
+For a shorter operating path, read `docs/cognitive-loop-adoption-cookbook.md`. In Kimi workflows it
+keeps Kimi as the conversation surface while a terminal, workspace Agent, or private gateway runs the
+local Cognitive Loop commands and returns only redacted artifact metadata.
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:

@@ -14,6 +14,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-operator-drill-transcript.json`
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
+- `docs/cognitive-loop-adoption-cookbook.md`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -103,3 +104,7 @@ python3 scripts/diagnose_adoption.py
 The diagnostic output includes `adoption-diagnostic-plan-v1`, a copyable next-command plan that
 separates missing Docker, slow GHCR pulls, missing `.env`, API reachability, Agent endpoint, and
 provider-default issues.
+
+For day-to-day use, start from `docs/cognitive-loop-adoption-cookbook.md`. It maps Kimi, Codex,
+WorkBuddy, and private platform Agents to the local Cognitive Loop commands for first adoption, daily
+project review, risk decisions, and learning handoff.
