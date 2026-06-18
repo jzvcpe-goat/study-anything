@@ -33,7 +33,7 @@
     ]
   },
   "pack": {
-    "file_count": 284,
+    "file_count": 286,
     "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
     "no_frontend_required": true,
     "path": "platform/generated/study-anything-platform-adoption-pack.zip",

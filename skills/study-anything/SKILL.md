@@ -43,6 +43,7 @@ python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 python3 scripts/verify_platform_handoff_checklist.py --check
+python3 scripts/verify_launch_acceptance_ledger.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -61,6 +62,7 @@ The machine-readable entrypoints are:
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
 - `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json`
 - `platform/generated/study-anything-platform-handoff-checklist.json`
+- `platform/generated/study-anything-launch-acceptance-ledger.json`
 - `scripts/cognitive_loop_recipe_cli.py`
 
 Use these recipe ids:

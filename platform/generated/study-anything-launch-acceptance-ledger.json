@@ -1,0 +1,210 @@
+{
+  "acceptance": {
+    "blocks_release_check": true,
+    "evidence": "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
+    "minimum_command": "python3 scripts/verify_launch_acceptance_ledger.py --check"
+  },
+  "commercial_boundary": {
+    "pmf_required_before": [
+      "hosted subscriptions",
+      "managed teams",
+      "marketplace payments",
+      "enterprise SSO"
+    ],
+    "prepare_for_later": [
+      "hosted encrypted sync",
+      "team workspaces",
+      "trusted plugin ecosystem",
+      "professional support and operational convenience"
+    ],
+    "sell_now": "nothing packaged as a paid app"
+  },
+  "current_launch_path": [
+    "GitHub OSS repository",
+    "Skill Mode local API",
+    "Docker/source self-host path",
+    "platform-Agent adoption pack for Codex, Kimi, WorkBuddy, and generic OpenAPI hosts",
+    "user-owned external Agent gateway for real model/tool work"
+  ],
+  "launch_assessment": {
+    "github_oss_launch": "ready",
+    "hosted_paid_services": "not_ready_before_pmf",
+    "platform_agent_distribution": "ready",
+    "published_image_path": "ready_with_public_evidence_and_timeout_fallback",
+    "self_host_alpha": "ready",
+    "skill_mode": "ready",
+    "standalone_frontend": "not_in_launch_path"
+  },
+  "not_current_launch_path": [
+    "standalone web app sale",
+    "hosted Sync/Publish/Teams billing",
+    "Study Anything-hosted model keys",
+    "automatic private data upload",
+    "browser/video/private app context capture by Study Anything"
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true,
+    "standalone_frontend_required": false
+  },
+  "purpose": "One machine-readable launch acceptance ledger for GitHub OSS and platform-Agent adoption. It aggregates existing evidence without adding a standalone frontend or model-key custody.",
+  "release_gate": {
+    "expected_ci_checks": [
+      "api-tests",
+      "compose-smoke"
+    ],
+    "local_gate": "./scripts/release_check.sh",
+    "manual_acceptance": [
+      "Open the draft PR and confirm both GitHub checks pass.",
+      "Verify the adoption pack archive is attached or reproducible from the generated manifest.",
+      "Publish only redacted support/status evidence."
+    ],
+    "minimum_command": "python3 scripts/verify_launch_acceptance_ledger.py --check"
+  },
+  "schema_version": "launch-acceptance-ledger-v1",
+  "source_reports": [
+    {
+      "launch_area": "adopter evidence archive",
+      "path": "platform/generated/study-anything-adopter-evidence-archive.json",
+      "report_id": "adopter_evidence_archive",
+      "required_for_github_oss_launch": true,
+      "schema_version": "adopter-evidence-archive-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "zip-only platform adoption",
+      "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+      "report_id": "cognitive_loop_pack_extract_smoke",
+      "required_for_github_oss_launch": true,
+      "schema_version": "cognitive-loop-pack-extract-smoke-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "commercial boundary",
+      "launch_assessment": {
+        "github_oss_launch": "ready",
+        "hosted_paid_services": "not_ready",
+        "platform_agent_distribution": "ready",
+        "self_host_alpha": "ready",
+        "standalone_app": "not_in_launch_path"
+      },
+      "path": "apps/api/study_anything/core/commercial_readiness.py",
+      "report_id": "commercial_readiness",
+      "required_for_github_oss_launch": true,
+      "schema_version": "commercial-readiness-v1",
+      "status": "architecture_ready_for_oss_platform_alpha"
+    },
+    {
+      "launch_area": "deployment recovery",
+      "path": "platform/generated/study-anything-deployment-hardening.json",
+      "report_id": "deployment_hardening",
+      "required_for_github_oss_launch": true,
+      "schema_version": "deployment-hardening-verification-v1",
+      "status": "pass"
+    },
+    {
+      "path": "platform/ecosystem-submission.json",
+      "platform_count": 4,
+      "report_id": "ecosystem_submission",
+      "required_for_github_oss_launch": true,
+      "schema_version": "ecosystem-submission-v1",
+      "status": "ready"
+    },
+    {
+      "file_count": null,
+      "no_frontend_required": true,
+      "path": "platform/generated/study-anything-platform-adoption-pack.json",
+      "real_model_keys_stored_by_study_anything": false,
+      "report_id": "platform_adoption_pack",
+      "required_for_github_oss_launch": true,
+      "schema_version": "study-anything-platform-adoption-pack-v1",
+      "status": "ready",
+      "supported_platforms": [
+        "kimi-work",
+        "codex",
+        "workbuddy-style-http",
+        "generic-http-tools"
+      ],
+      "tool_count": null
+    },
+    {
+      "launch_area": "platform Agent release replay",
+      "path": "platform/generated/study-anything-platform-agent-replay.json",
+      "report_id": "platform_agent_release_replay",
+      "required_for_github_oss_launch": true,
+      "schema_version": "platform-agent-release-replay-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "redacted feedback escalation",
+      "path": "platform/generated/study-anything-platform-feedback-package.json",
+      "report_id": "platform_feedback_package",
+      "required_for_github_oss_launch": true,
+      "schema_version": "platform-feedback-package-v1",
+      "status": "ready"
+    },
+    {
+      "launch_area": "external platform handoff",
+      "path": "platform/generated/study-anything-platform-handoff-checklist.json",
+      "report_id": "platform_handoff_checklist",
+      "required_for_github_oss_launch": true,
+      "schema_version": "platform-handoff-checklist-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "first adopter onboarding",
+      "path": "platform/generated/study-anything-platform-onboarding-readiness.json",
+      "report_id": "platform_onboarding_readiness",
+      "required_for_github_oss_launch": true,
+      "schema_version": "platform-onboarding-readiness-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "public support and status",
+      "path": "platform/generated/study-anything-public-support-status.json",
+      "report_id": "public_support_status",
+      "required_for_github_oss_launch": true,
+      "schema_version": "public-support-status-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "published image evidence",
+      "path": "platform/generated/study-anything-published-image-evidence.json",
+      "report_id": "published_image_evidence",
+      "required_for_github_oss_launch": true,
+      "schema_version": "published-image-evidence-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "release asset adoption",
+      "path": "platform/generated/study-anything-release-asset-adoption.json",
+      "report_id": "release_asset_adoption",
+      "required_for_github_oss_launch": true,
+      "schema_version": "release-asset-adoption-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "release asset bootstrap",
+      "path": "platform/generated/study-anything-release-asset-bootstrap.json",
+      "report_id": "release_asset_bootstrap",
+      "required_for_github_oss_launch": true,
+      "schema_version": "release-asset-bootstrap-v1",
+      "status": "pass"
+    },
+    {
+      "launch_area": "cleanroom bootstrap",
+      "path": "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+      "report_id": "release_cleanroom_bootstrap",
+      "required_for_github_oss_launch": true,
+      "schema_version": "release-cleanroom-bootstrap-evidence-v1",
+      "status": "pass"
+    }
+  ],
+  "status": "pass",
+  "version": "v0.3.30-alpha"
+}
