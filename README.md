@@ -35,6 +35,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Learning Enrichment bridge for web, document, app, video-slice, Markdown, and Obsidian context.
 - Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and GHCR image evidence.
+- Cognitive Loop contract bootstrap with `.cognitive-loop/config.yaml`, `permissions.yaml`, `evals.yaml`, `risk.yaml`, and `cognitive-loop-contract-bootstrap-v1` verification.
 
 当前 alpha 已经具备本地优先的 Study Anything 基础：
 
@@ -47,6 +48,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Learning Enrichment bridge：接收网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段。
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
+- Cognitive Loop contract bootstrap：`.cognitive-loop/config.yaml`、`permissions.yaml`、`evals.yaml`、`risk.yaml` 和 `cognitive-loop-contract-bootstrap-v1` 验证。
 
 ## Feasibility And Boundary
 
@@ -99,6 +101,7 @@ Mastra、项目监听器、DecisionCard/Risk/Human Mastery Gate 和完整 HTML A
 ## Public Conceptual Contracts
 
 These names are documented now so future implementation work has a stable public vocabulary. They are conceptual contracts, not current HTTP endpoints:
+The first local validator for these contracts is now available in `scripts/verify_cognitive_loop_contracts.py`; Mastra, watchers, and the full HTML console are still planned layers.
 
 - `ProjectEvent`: normalized file, git, CI, runtime, human, or Agent event.
 - `DecisionCard`: evidence-bound decision record with impact, risk, verification, human gate, and rollback plan.
@@ -107,6 +110,7 @@ These names are documented now so future implementation work has a stable public
 - `EvolutionReport`: governed proposal for improving prompts, policies, evals, docs, tasks, retrieval, or learning paths.
 
 这些名称先作为公开概念契约，方便后续实现保持稳定词汇。它们现在不是 HTTP endpoint：
+第一版本地 validator 已经在 `scripts/verify_cognitive_loop_contracts.py` 中可用；Mastra、watcher 和完整 HTML console 仍然是计划中的层。
 
 - `ProjectEvent`：标准化的文件、Git、CI、运行时、人类或 Agent 事件。
 - `DecisionCard`：绑定证据的决策记录，包含影响、风险、验证、人类门禁和回滚计划。
