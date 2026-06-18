@@ -15,6 +15,7 @@
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_event_index.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_doctor.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_repair_plan.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_index.py --check`
 - [ ] `.venv/bin/python scripts/verify_openai_compatible_gateway.py --gateway-only`
 - [ ] `.venv/bin/python scripts/verify_agent_gateway_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_external_agent_adapter_hardening.py`

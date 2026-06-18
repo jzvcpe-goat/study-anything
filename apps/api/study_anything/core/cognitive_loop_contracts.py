@@ -13,6 +13,7 @@ import hashlib
 from html import escape
 import json
 from pathlib import Path
+import posixpath
 import re
 from typing import Any, Callable, Iterable, Mapping, Optional
 
@@ -35,6 +36,7 @@ EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
 EVENT_INDEX_SCHEMA_VERSION = "cognitive-loop-event-index-v1"
 ARTIFACT_DOCTOR_SCHEMA_VERSION = "cognitive-loop-artifact-doctor-v1"
 REPAIR_PLAN_SCHEMA_VERSION = "cognitive-loop-repair-plan-v1"
+ARTIFACT_INDEX_SCHEMA_VERSION = "cognitive-loop-artifact-index-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -652,6 +654,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact doctor verifier.")
     if "python3 scripts/verify_cognitive_loop_repair_plan.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop repair plan verifier.")
+    if "python3 scripts/verify_cognitive_loop_artifact_index.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact index verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -804,6 +808,9 @@ required:
     blocking: true
   - id: cognitive-loop.repair-plan
     command: python3 scripts/verify_cognitive_loop_repair_plan.py --check
+    blocking: true
+  - id: cognitive-loop.artifact-index
+    command: python3 scripts/verify_cognitive_loop_artifact_index.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -2529,6 +2536,250 @@ def build_repair_plan_artifact(
     return report
 
 
+def _safe_artifact_index_paths(paths: Iterable[str]) -> list[str]:
+    safe: list[str] = []
+    for raw_path in paths:
+        if not isinstance(raw_path, str):
+            raise CognitiveLoopContractError("Artifact index paths must be strings.")
+        normalized = raw_path.strip().replace("\\", "/")
+        if not normalized:
+            continue
+        if normalized.startswith("/") or normalized.startswith("../") or "/../" in normalized:
+            raise CognitiveLoopContractError(f"Artifact index path must be repo-relative: {raw_path}.")
+        if not (
+            normalized.startswith(".cognitive-loop/events/")
+            or normalized.startswith(".cognitive-loop/artifacts/")
+        ):
+            raise CognitiveLoopContractError(
+                f"Artifact index only accepts local Cognitive Loop artifact paths: {raw_path}."
+            )
+        if not normalized.endswith((".json", ".html", ".md")):
+            raise CognitiveLoopContractError(f"Artifact index only accepts JSON, HTML, or Markdown artifacts: {raw_path}.")
+        _assert_public_value("artifact_index_path", normalized)
+        safe.append(normalized)
+    deduped = sorted(dict.fromkeys(safe))
+    if len(deduped) > 120:
+        raise CognitiveLoopContractError("Artifact index entry count is limited to 120.")
+    return deduped
+
+
+def _artifact_index_href(relative_path: str, *, artifact_ref: str) -> str:
+    base_dir = posixpath.dirname(artifact_ref) or "."
+    href = posixpath.relpath(relative_path, base_dir)
+    if href.startswith("../.."):
+        href = relative_path
+    _assert_public_value("artifact_index_href", href)
+    return href
+
+
+def _artifact_index_json_metadata(data: bytes, *, relative_path: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {"json_status": "invalid_json"}
+    if not isinstance(payload, Mapping):
+        return {"json_status": "invalid_json_object"}
+    metadata: dict[str, Any] = {"json_status": "valid_json"}
+    for source_key, target_key in (
+        ("schema_version", "schema_version"),
+        ("status", "status"),
+        ("generated_at", "generated_at"),
+        ("title", "title"),
+    ):
+        value = _optional_artifact_string(payload, source_key)
+        if value is not None:
+            metadata[target_key] = value
+    project_event = payload.get("project_event")
+    if isinstance(project_event, Mapping):
+        event_id = _optional_artifact_string(project_event, "event_id")
+        event_type = _optional_artifact_string(project_event, "event_type")
+        if event_id:
+            metadata["project_event_id"] = event_id
+        if event_type:
+            metadata["project_event_type"] = event_type
+    decision_card = payload.get("decision_card")
+    if isinstance(decision_card, Mapping):
+        decision_id = _optional_artifact_string(decision_card, "decision_id")
+        decision_status = _optional_artifact_string(decision_card, "status")
+        if decision_id:
+            metadata["decision_id"] = decision_id
+        if decision_status:
+            metadata["decision_status"] = decision_status
+    loop_run = payload.get("loop_run")
+    if isinstance(loop_run, Mapping):
+        run_id = _optional_artifact_string(loop_run, "run_id")
+        loop_status = _optional_artifact_string(loop_run, "status")
+        if run_id:
+            metadata["loop_run_id"] = run_id
+        if loop_status:
+            metadata["loop_status"] = loop_status
+    _assert_public_value(f"artifact_index_metadata:{relative_path}", metadata)
+    return metadata
+
+
+def build_artifact_index_artifact(
+    root: Path,
+    *,
+    artifact_paths: Iterable[str],
+    objective: str = "Create a static local HTML index for Cognitive Loop artifacts.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-artifact-index.html",
+) -> dict[str, Any]:
+    """Build a static local artifact navigation index without embedding artifact contents."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    safe_paths = _safe_artifact_index_paths(artifact_paths)
+    entries: list[dict[str, Any]] = []
+    total_bytes = 0
+    for relative_path in safe_paths:
+        path = root / relative_path
+        if not path.is_file():
+            raise CognitiveLoopContractError(f"Artifact index target is missing: {relative_path}.")
+        data = path.read_bytes()
+        stat = path.stat()
+        total_bytes += len(data)
+        entry: dict[str, Any] = {
+            "path": relative_path,
+            "href": _artifact_index_href(relative_path, artifact_ref=artifact_ref),
+            "kind": _doctor_file_kind(relative_path),
+            "stem": path.stem,
+            "suffix": path.suffix,
+            "size_bytes": len(data),
+            "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc)
+            .replace(microsecond=0)
+            .isoformat()
+            .replace("+00:00", "Z"),
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "content_included": False,
+        }
+        if relative_path.endswith(".json"):
+            entry.update(_artifact_index_json_metadata(data, relative_path=relative_path))
+        entries.append(entry)
+    html_count = sum(1 for item in entries if item.get("suffix") == ".html")
+    event_json_count = sum(1 for item in entries if item.get("suffix") == ".json")
+    markdown_count = sum(1 for item in entries if item.get("suffix") == ".md")
+    summary = (
+        f"Indexed {len(entries)} local Cognitive Loop artifact"
+        f"{'' if len(entries) == 1 else 's'} for static navigation without embedding contents."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-artifact-index",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "verification_completed",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop/artifacts",
+            "refs": [f"artifact:{item['path']}" for item in entries[:12]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-artifact-index",
+            "project_id": project["id"],
+            "title": "Publish local static artifact index",
+            "status": "approved",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}"],
+            "risk": {
+                "level": "low",
+                "score": 0.18,
+                "reasons": [
+                    "static local navigation only",
+                    "artifact contents excluded",
+                    "no daemon or standalone frontend",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": False,
+                "status": "not_required",
+                "questions": [
+                    "Can the operator open the local index without starting a server?",
+                    "Can the operator confirm the index records hashes rather than artifact bodies?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py artifact-index --html",
+                    "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_artifact_index_manifest", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-artifact-index",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": ARTIFACT_INDEX_SCHEMA_VERSION,
+        "status": "ready",
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Artifact Index",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "artifact_index": {
+            "entry_count": len(entries),
+            "html_count": html_count,
+            "event_json_count": event_json_count,
+            "markdown_count": markdown_count,
+            "total_bytes": total_bytes,
+            "max_artifacts_recorded": 120,
+            "content_included": False,
+            "standalone_frontend_required": False,
+            "entries": entries,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "event_contents_included": False,
+            "artifact_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+            "standalone_frontend_required": False,
+        },
+        "current_limits": [
+            "This is a static local artifact index, not a realtime HTML console.",
+            "It links to local files and records metadata without embedding artifact contents.",
+            "Watcher automation, Mastra orchestration, and a full HTML Artifact console remain planned layers.",
+        ],
+        "commands": {
+            "artifact_index": "python3 scripts/cognitive_loop_cli.py artifact-index --html",
+            "artifact_index_check": "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
+            "doctor": "python3 scripts/cognitive_loop_cli.py doctor --html",
+            "repair_plan": "python3 scripts/cognitive_loop_cli.py repair-plan --html",
+        },
+    }
+    _assert_public_value("artifact_index_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -2648,6 +2899,24 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         for item in repair_actions
         if isinstance(item, Mapping)
     )
+    artifact_index = report.get("artifact_index")
+    if not isinstance(artifact_index, Mapping):
+        artifact_index = {}
+    artifact_index_entries = artifact_index.get("entries")
+    if not isinstance(artifact_index_entries, list):
+        artifact_index_entries = []
+    artifact_index_rows = "\n".join(
+        "<tr>"
+        f"<td><a href=\"{escape(str(item.get('href', '')))}\">{escape(str(item.get('path', '')))}</a></td>"
+        f"<td>{escape(str(item.get('kind', '')))}</td>"
+        f"<td>{escape(str(item.get('schema_version', item.get('suffix', ''))))}</td>"
+        f"<td>{escape(str(item.get('status', item.get('json_status', ''))))}</td>"
+        f"<td>{escape(str(item.get('size_bytes', '')))}</td>"
+        f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
+        "</tr>"
+        for item in artifact_index_entries
+        if isinstance(item, Mapping)
+    )
     gate_resolution = report.get("gate_resolution")
     if not isinstance(gate_resolution, Mapping):
         gate_resolution = {}
@@ -2751,6 +3020,11 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 13px;
     }}
+    a {{
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }}
     pre {{
       overflow: auto;
       max-height: 420px;
@@ -2851,6 +3125,19 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <table>
         <thead><tr><th>Action</th><th>Issue</th><th>Risk</th><th>Gate</th><th>Command</th></tr></thead>
         <tbody>{repair_action_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Artifact Index</h2>
+      <div class="status">
+        <div>Entries<br><strong>{escape(str(artifact_index.get('entry_count', 0)))}</strong></div>
+        <div>HTML<br><strong>{escape(str(artifact_index.get('html_count', 0)))}</strong></div>
+        <div>JSON<br><strong>{escape(str(artifact_index.get('event_json_count', 0)))}</strong></div>
+        <div>Standalone Frontend<br><strong>{escape(str(artifact_index.get('standalone_frontend_required', False)))}</strong></div>
+      </div>
+      <table>
+        <thead><tr><th>Artifact</th><th>Kind</th><th>Schema</th><th>Status</th><th>Bytes</th><th>SHA-256</th></tr></thead>
+        <tbody>{artifact_index_rows}</tbody>
       </table>
     </section>
     <section>
