@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 76478,
+    "bytes": 76755,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "46aa5867ff24b1173506d54b29e92ff3e039105f3d5f8de943559216d1933bb2",
+    "sha256": "8bcacab3292f22c7646928cd1102baf77f5e3b259d74f5f6f71c52a3d191df6c",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -117,9 +117,9 @@
       "sha256": "84f05b9d7ff34a3d94df0b04ac83807b4a6e991142a3f5658c9ac4141a00eb5b"
     },
     {
-      "bytes": 10335,
+      "bytes": 11305,
       "path": "docs/github-launch.md",
-      "sha256": "50d409e12e36ae2d96c95d6bc117a690c945d8986ee90645c6fe1e45eba666ed"
+      "sha256": "f33a3669514cfc4c8accdfb4412a74fb6059f3553257a01aaf3e010a5ae13fc6"
     },
     {
       "bytes": 11215,

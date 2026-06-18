@@ -30,6 +30,7 @@ EXPECTED_STACK = [
     (138, "codex/v0.3.57-release-stack-readiness"),
     (139, "codex/v0.3.58-live-release-stack-status"),
     (140, "codex/v0.3.59-full-stack-lineage"),
+    (141, "codex/v0.3.60-merge-runbook-safety-gate"),
 ]
 PRIVATE_NEEDLES = (
     "gho_",

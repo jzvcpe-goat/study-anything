@@ -160,8 +160,33 @@ While preparing the next stacked PR before it exists on GitHub, use:
 python3 scripts/verify_release_stack_lineage.py --allow-missing-top-pr --report-only
 ```
 
-The release stack must be merged from oldest to newest. After each merge, sync `main`, confirm the next
-stacked PR base is still current, and confirm the required GitHub checks are green.
+Before the maintainer starts the real merge run, generate the runbook:
+
+```bash
+python3 scripts/verify_release_stack_merge_runbook.py
+```
+
+The runbook lists every ancestor PR from oldest to newest, any required `gh pr ready` commands for
+draft PRs, the check command for each PR, recommended and alternative `gh pr merge` commands,
+next-PR retarget commands, post-merge verification commands, and final branch cleanup commands. It is
+safe to run because it does not execute merge commands and does not persist GitHub tokens or live
+check payloads.
+
+While preparing the next stacked PR before it exists on GitHub, use:
+
+```bash
+python3 scripts/verify_release_stack_merge_runbook.py --allow-missing-top-pr --report-only
+```
+
+Immediately before merging, after converting drafts to ready, use the stricter gate:
+
+```bash
+python3 scripts/verify_release_stack_merge_runbook.py --fail-if-draft
+```
+
+The release stack must be merged from oldest to newest. Do not delete intermediate stacked branches
+during the merge run. After each merge, sync `main`, retarget the next PR to `main`, and wait for the
+required GitHub checks to go green before merging that next PR.
 
 ## Tag And Push
 

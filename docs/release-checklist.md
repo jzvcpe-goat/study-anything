@@ -52,6 +52,7 @@
 - [ ] `.venv/bin/python scripts/verify_release_stack_readiness.py`
 - [ ] `.venv/bin/python scripts/verify_release_stack_live_status.py`
 - [ ] `.venv/bin/python scripts/verify_release_stack_lineage.py`
+- [ ] `.venv/bin/python scripts/verify_release_stack_merge_runbook.py`
 - [ ] `.venv/bin/python scripts/generate_platform_adoption_pack.py --check`
 - [ ] `.venv/bin/python scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`
@@ -114,6 +115,7 @@
 - [ ] Verify `python3 scripts/verify_release_stack_readiness.py` returns `release-stack-readiness-v1`, `status=pass`, the current stacked PR order, required `api-tests` and `compose-smoke` checks, local before-tag gates, and privacy assertions without storing GitHub tokens, live check payloads, source text, learner answers, Agent endpoint secrets, or real model keys.
 - [ ] Verify `python3 scripts/verify_release_stack_live_status.py` returns `release-stack-live-status-v1`, confirms every manifest PR head/base pair, required `api-tests` and `compose-smoke` results, and reports no token storage or live payload persistence; use `--allow-missing-top-pr` only while preparing the next stacked PR before it exists on GitHub.
 - [ ] Verify `python3 scripts/verify_release_stack_lineage.py` returns `release-stack-lineage-v1`, reaches `main`, confirms every discovered ancestor PR check summary, and reports no token storage or live payload persistence; use `--allow-missing-top-pr --report-only` only while preparing the next stacked PR before it exists on GitHub.
+- [ ] Verify `python3 scripts/verify_release_stack_merge_runbook.py` returns `release-stack-merge-runbook-v1`, lists oldest-to-newest PR merge steps, draft-to-ready commands, required check commands, merge command options without intermediate branch deletion, next-PR retarget commands, post-merge verification commands, final cleanup commands, and reports no token storage or live payload persistence; use `--allow-missing-top-pr --report-only` only while preparing the next stacked PR before it exists on GitHub, and `--fail-if-draft` immediately before the real merge run.
 - [ ] Verify `platform/generated/study-anything-platform-submission-dry-run.json` is current and redacted before manual platform submission.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/report` returns `schema_version=agent-eval-report-v1`, `native_fast_gate.status=pass`, and no source text, answers, endpoints, or secrets.
 - [ ] Verify `GET|POST /v1/sessions/{session_id}/retrieval/eval` returns `schema_version=retrieval-quality-eval-v1`, `status=pass`, and no retrieval snippets or raw source text.
