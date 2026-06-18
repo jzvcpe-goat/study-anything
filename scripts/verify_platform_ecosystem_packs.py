@@ -55,6 +55,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
     "cognitive_loop_skill_entrypoint.schema_version == cognitive-loop-skill-entrypoint-verification-v1",
     "cognitive_loop_recipe_cli.schema_version == cognitive-loop-recipe-cli-verification-v1",
+    "cognitive_loop_recipe_cli_receipts.schema_version == cognitive-loop-recipe-cli-receipts-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -88,6 +89,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_recipe_replay.py --check",
     "verify_cognitive_loop_skill_entrypoint.py --check",
     "verify_cognitive_loop_recipe_cli.py --check",
+    "verify_cognitive_loop_recipe_cli_receipts.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
@@ -185,9 +187,17 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI report"
         )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI receipts"
+        )
     if "scripts/cognitive_loop_recipe_cli.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI receipt verifier"
         )
 
     commands = pack.get("local_verification_commands")
@@ -204,6 +214,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             raise PackVerificationError(
                 f"{pack_path.relative_to(ROOT)} verification commands must include {fragment}"
             )
+    if "verify_cognitive_loop_recipe_cli_receipts.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI receipt verifier"
+        )
     if pack_id == "codex" and "run_skill_mode_demo.sh" not in command_text:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
     if pack_id == "kimi" and "verify_openai_compatible_gateway.py" not in command_text:
@@ -245,8 +259,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "study-anything-cognitive-loop-recipe-replay.json",
         "study-anything-cognitive-loop-skill-entrypoint.json",
         "study-anything-cognitive-loop-recipe-cli.json",
+        "study-anything-cognitive-loop-recipe-cli-receipts.json",
         "cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli.py",
+        "verify_cognitive_loop_recipe_cli_receipts.py",
         "verify_cognitive_loop_skill_entrypoint.py",
         "raw source",
     )

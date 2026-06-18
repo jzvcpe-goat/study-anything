@@ -58,6 +58,9 @@ COGNITIVE_LOOP_SKILL_ENTRYPOINT_PATH = (
 COGNITIVE_LOOP_RECIPE_CLI_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-recipe-cli.json"
 )
+COGNITIVE_LOOP_RECIPE_CLI_RECEIPTS_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-recipe-cli-receipts.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -184,6 +187,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_skill_entrypoint.py",
     "scripts/cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli.py",
+    "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -199,6 +203,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
     "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+    "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -372,6 +377,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_recipe_replay.py --check",
     "verify_cognitive_loop_skill_entrypoint.py --check",
     "verify_cognitive_loop_recipe_cli.py --check",
+    "verify_cognitive_loop_recipe_cli_receipts.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -577,6 +583,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-recipe-replay-verification-v1",
         "cognitive-loop-skill-entrypoint-verification-v1",
         "cognitive-loop-recipe-cli-verification-v1",
+        "cognitive-loop-recipe-cli-receipts-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -630,8 +637,16 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI report.")
+        if "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI receipts.")
         if "scripts/cognitive_loop_recipe_cli.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI script.")
+        if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI receipt verifier.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -711,6 +726,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
             "cognitive_loop_skill_entrypoint.schema_version == cognitive-loop-skill-entrypoint-verification-v1",
             "cognitive_loop_recipe_cli.schema_version == cognitive-loop-recipe-cli-verification-v1",
+            "cognitive_loop_recipe_cli_receipts.schema_version == cognitive-loop-recipe-cli-receipts-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -752,6 +768,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_skill_entrypoint.py",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli.py",
+        "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -767,6 +784,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -1737,6 +1755,104 @@ def verify_cognitive_loop_recipe_cli_report() -> None:
     ):
         if boundaries.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI boundary {key} must be false.")
+
+
+def verify_cognitive_loop_recipe_cli_receipts_report() -> None:
+    report = load_json(COGNITIVE_LOOP_RECIPE_CLI_RECEIPTS_PATH)
+    if report.get("schema_version") != "cognitive-loop-recipe-cli-receipts-v1":
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipts must pass.")
+    cli = report.get("cli") or {}
+    if cli.get("path") != "scripts/cognitive_loop_recipe_cli.py":
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt path drifted.")
+    if cli.get("schema_version") != "cognitive-loop-recipe-cli-v1":
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt output schema drifted.")
+
+    coverage = report.get("coverage") or {}
+    if coverage.get("receipt_count") != 5:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipts must cover list plus four show outputs.")
+    if coverage.get("all_outputs_schema_version") != "cognitive-loop-recipe-cli-v1":
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt output schemas drifted.")
+    if set(coverage.get("recipe_ids", [])) != {
+        "first_adoption",
+        "daily_project_review",
+        "risk_decision",
+        "learning_handoff",
+    }:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt recipe ids drifted.")
+    for key in (
+        "includes_list",
+        "includes_all_show_recipes",
+        "includes_risk_decision_human_gate",
+        "all_outputs_safe_to_attach_to_issue",
+        "all_steps_reference_existing_scripts",
+    ):
+        if coverage.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI receipt coverage {key} must be true.")
+    if coverage.get("all_show_outputs_safe_to_auto_execute") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI show receipts must not be safe to auto-execute.")
+    if not coverage.get("list_stdout_sha256"):
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI list receipt must include a stdout hash.")
+
+    show = {item.get("recipe_id"): item for item in coverage.get("show_receipts", []) if isinstance(item, dict)}
+    if show.get("risk_decision", {}).get("requires_human_mastery_gate") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI risk receipt must require Human Mastery Gate.")
+    if show.get("first_adoption", {}).get("requires_operator_before_runtime") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI first adoption receipt must require operator.")
+    if show.get("learning_handoff", {}).get("requires_operator_before_runtime") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI learning handoff receipt must require operator.")
+    for item in show.values():
+        if not item.get("stdout_sha256"):
+            raise EcosystemSubmissionError("Cognitive Loop recipe CLI show receipt missing stdout hash.")
+
+    receipts = report.get("receipts")
+    if not isinstance(receipts, list) or len(receipts) != 5:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipts must include five samples.")
+    for receipt in receipts:
+        if receipt.get("exit_code") != 0:
+            raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt exit_code must be zero.")
+        if receipt.get("output_schema_version") != "cognitive-loop-recipe-cli-v1":
+            raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt schema drifted.")
+        if not receipt.get("stdout_sha256"):
+            raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt missing stdout hash.")
+        if receipt.get("safe_to_attach_to_issue") is not True:
+            raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipt must be safe to attach.")
+    policy = report.get("safe_replay_policy") or {}
+    if policy.get("invokes_recipe_cli_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI receipts must invoke only the read-only CLI.")
+    for key in ("executes_recipe_commands", "starts_runtime", "applies_file_changes"):
+        if policy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI receipt policy {key} must be false.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "generated_private_insights_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "real_model_keys_stored",
+        "browser_video_app_private_context_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI receipt privacy.{key} must be false.")
+    boundaries = report.get("boundaries") or {}
+    for key in (
+        "platform_agent_owns_browser_files_apps_video_external_data",
+        "study_anything_is_learning_adapter",
+        "recipe_cli_receipts_are_read_only",
+    ):
+        if boundaries.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI receipt boundary {key} must be true.")
+    for key in (
+        "recipe_cli_receipts_execute_recipe_commands",
+        "recipe_cli_receipts_apply_file_changes",
+        "standalone_frontend_required",
+    ):
+        if boundaries.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe CLI receipt boundary {key} must be false.")
 
 
 def verify_submission_dry_run_report() -> None:
@@ -2853,6 +2969,7 @@ def main() -> None:
     verify_cognitive_loop_recipe_replay_report()
     verify_cognitive_loop_skill_entrypoint_report()
     verify_cognitive_loop_recipe_cli_report()
+    verify_cognitive_loop_recipe_cli_receipts_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -2898,6 +3015,7 @@ def main() -> None:
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",
                 "cognitive_loop_skill_entrypoint": "cognitive-loop-skill-entrypoint-verification-v1",
                 "cognitive_loop_recipe_cli": "cognitive-loop-recipe-cli-verification-v1",
+                "cognitive_loop_recipe_cli_receipts": "cognitive-loop-recipe-cli-receipts-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",

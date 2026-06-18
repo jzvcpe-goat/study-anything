@@ -1,0 +1,600 @@
+{
+  "boundaries": {
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "recipe_cli_receipts_apply_file_changes": false,
+    "recipe_cli_receipts_are_read_only": true,
+    "recipe_cli_receipts_execute_recipe_commands": false,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true
+  },
+  "cli": {
+    "path": "scripts/cognitive_loop_recipe_cli.py",
+    "receipt_commands": [
+      "python3 scripts/cognitive_loop_recipe_cli.py list",
+      "python3 scripts/cognitive_loop_recipe_cli.py show risk_decision"
+    ],
+    "schema_version": "cognitive-loop-recipe-cli-v1"
+  },
+  "commands": {
+    "cli_list": "python3 scripts/cognitive_loop_recipe_cli.py list",
+    "cli_show_risk": "python3 scripts/cognitive_loop_recipe_cli.py show risk_decision",
+    "verify": "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+    "write": "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --write"
+  },
+  "coverage": {
+    "all_outputs_safe_to_attach_to_issue": true,
+    "all_outputs_schema_version": "cognitive-loop-recipe-cli-v1",
+    "all_show_outputs_safe_to_auto_execute": false,
+    "all_steps_reference_existing_scripts": true,
+    "includes_all_show_recipes": true,
+    "includes_list": true,
+    "includes_risk_decision_human_gate": true,
+    "list_stdout_sha256": "42da2a67a659c82f3bd5649e712a7e4f546512f890cb092b6df1ffabaf4a134b",
+    "receipt_count": 5,
+    "recipe_ids": [
+      "first_adoption",
+      "daily_project_review",
+      "risk_decision",
+      "learning_handoff"
+    ],
+    "show_receipts": [
+      {
+        "command_classes": [
+          "external_adoption",
+          "metadata_only"
+        ],
+        "command_count": 3,
+        "recipe_id": "first_adoption",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": true,
+        "runtime_required": true,
+        "safe_to_auto_execute": false,
+        "stdout_sha256": "3521b76397d87029b446bad3869402257693c3a12a929cfbb7e56c6baee30de3"
+      },
+      {
+        "command_classes": [
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "recipe_id": "daily_project_review",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": false,
+        "runtime_required": false,
+        "safe_to_auto_execute": false,
+        "stdout_sha256": "f3470b836bf534da92d1f8dc5cc1f1cd5f2e5463baf6c4bb9dedca76038f9cbc"
+      },
+      {
+        "command_classes": [
+          "human_gate",
+          "manual_repair_plan",
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "recipe_id": "risk_decision",
+        "requires_human_mastery_gate": true,
+        "requires_operator_before_runtime": false,
+        "runtime_required": false,
+        "safe_to_auto_execute": false,
+        "stdout_sha256": "419e3ac24e3f4cb0b8cc35e30e27001a3580a0200f098f0b21479829514509d4"
+      },
+      {
+        "command_classes": [
+          "runtime_required"
+        ],
+        "command_count": 3,
+        "recipe_id": "learning_handoff",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": true,
+        "runtime_required": true,
+        "safe_to_auto_execute": false,
+        "stdout_sha256": "7c08b126e7669470b3dcf1b4d9e16ffefc77a4d19203ec5813aa376088298204"
+      }
+    ]
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Provide deterministic, redacted samples of read-only Cognitive Loop recipe CLI outputs.",
+  "receipts": [
+    {
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py list",
+      "exit_code": 0,
+      "output_action": "list",
+      "output_schema_version": "cognitive-loop-recipe-cli-v1",
+      "recipe_id": null,
+      "safe_to_attach_to_issue": true,
+      "stdout_json": {
+        "action": "list",
+        "privacy": {
+          "agent_endpoints_included": false,
+          "agent_metadata_included": false,
+          "browser_video_app_private_context_included": false,
+          "diff_bodies_included": false,
+          "generated_private_insights_included": false,
+          "grading_feedback_included": false,
+          "learner_answers_included": false,
+          "raw_source_text_included": false,
+          "real_model_keys_stored": false
+        },
+        "recipe_count": 4,
+        "recipe_ids": [
+          "first_adoption",
+          "daily_project_review",
+          "risk_decision",
+          "learning_handoff"
+        ],
+        "recipes": [
+          {
+            "acceptance_evidence_count": 4,
+            "command_classes": [
+              "external_adoption",
+              "metadata_only"
+            ],
+            "command_count": 3,
+            "human_gate_required": false,
+            "metadata_only_plan": true,
+            "operator_goal": "Prove the local-first platform Agent path before adding real model keys.",
+            "recipe_id": "first_adoption",
+            "runtime_required": true,
+            "title": "First Adoption",
+            "zh_title": "首次接入"
+          },
+          {
+            "acceptance_evidence_count": 4,
+            "command_classes": [
+              "metadata_only"
+            ],
+            "command_count": 5,
+            "human_gate_required": false,
+            "metadata_only_plan": true,
+            "operator_goal": "Summarize current project state from local metadata-only Cognitive Loop artifacts.",
+            "recipe_id": "daily_project_review",
+            "runtime_required": false,
+            "title": "Daily Project Review",
+            "zh_title": "日常项目审查"
+          },
+          {
+            "acceptance_evidence_count": 4,
+            "command_classes": [
+              "human_gate",
+              "manual_repair_plan",
+              "metadata_only"
+            ],
+            "command_count": 5,
+            "human_gate_required": true,
+            "metadata_only_plan": true,
+            "operator_goal": "Gate risky actions until the human explicitly approves or rejects the decision.",
+            "recipe_id": "risk_decision",
+            "runtime_required": false,
+            "title": "Risk Decision",
+            "zh_title": "风险决策"
+          },
+          {
+            "acceptance_evidence_count": 5,
+            "command_classes": [
+              "runtime_required"
+            ],
+            "command_count": 3,
+            "human_gate_required": false,
+            "metadata_only_plan": true,
+            "operator_goal": "Turn repo, document, app, web, or video-slice context into learning, eval, and second-brain handoff evidence.",
+            "recipe_id": "learning_handoff",
+            "runtime_required": true,
+            "title": "Learning Handoff",
+            "zh_title": "学习交接"
+          }
+        ],
+        "replay_path": "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "safe_replay_policy": {
+          "applies_file_changes": false,
+          "executes_recipe_commands": false,
+          "metadata_only": true,
+          "requires_human_gate_for_risk_decisions": true,
+          "requires_operator_for_runtime_commands": true,
+          "starts_runtime": false
+        },
+        "schema_version": "cognitive-loop-recipe-cli-v1",
+        "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+        "source_path": "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+        "status": "ok"
+      },
+      "stdout_line_count": 96,
+      "stdout_sha256": "42da2a67a659c82f3bd5649e712a7e4f546512f890cb092b6df1ffabaf4a134b"
+    },
+    {
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py show first_adoption",
+      "exit_code": 0,
+      "output_action": "show",
+      "output_schema_version": "cognitive-loop-recipe-cli-v1",
+      "recipe_id": "first_adoption",
+      "safe_to_attach_to_issue": true,
+      "stdout_json": {
+        "action": "show",
+        "privacy": {
+          "agent_endpoints_included": false,
+          "agent_metadata_included": false,
+          "browser_video_app_private_context_included": false,
+          "diff_bodies_included": false,
+          "generated_private_insights_included": false,
+          "grading_feedback_included": false,
+          "learner_answers_included": false,
+          "raw_source_text_included": false,
+          "real_model_keys_stored": false
+        },
+        "recipe": {
+          "acceptance_evidence": [
+            "adoption-proof-v1",
+            "ecosystem-submission-verification-v1",
+            "no standalone frontend requirement",
+            "no Study Anything custody of real model keys"
+          ],
+          "acceptance_evidence_count": 4,
+          "command_classes": [
+            "external_adoption",
+            "metadata_only"
+          ],
+          "command_count": 3,
+          "human_gate_required": false,
+          "metadata_only_plan": true,
+          "operator_goal": "Prove the local-first platform Agent path before adding real model keys.",
+          "platform_agent_role": "Keep the conversation surface, explain commands, and report only redacted evidence.",
+          "recipe_id": "first_adoption",
+          "requires_human_mastery_gate": false,
+          "requires_operator_before_runtime": true,
+          "runtime_required": true,
+          "safe_to_auto_execute": false,
+          "steps": [
+            {
+              "command": "python3 scripts/generate_platform_adoption_pack.py --check",
+              "command_class": "metadata_only",
+              "script": "scripts/generate_platform_adoption_pack.py",
+              "script_exists": true,
+              "step": 1
+            },
+            {
+              "command": "python3 scripts/verify_ecosystem_submission_pack.py",
+              "command_class": "metadata_only",
+              "script": "scripts/verify_ecosystem_submission_pack.py",
+              "script_exists": true,
+              "step": 2
+            },
+            {
+              "command": "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+              "command_class": "external_adoption",
+              "script": "scripts/verify_external_adoption.py",
+              "script_exists": true,
+              "step": 3
+            }
+          ],
+          "study_anything_role": "Generate and verify the platform adoption pack, ecosystem submission, and adoption proof.",
+          "title": "First Adoption",
+          "zh_title": "首次接入"
+        },
+        "replay_path": "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "safe_replay_policy": {
+          "applies_file_changes": false,
+          "executes_recipe_commands": false,
+          "metadata_only": true,
+          "requires_human_gate_for_risk_decisions": true,
+          "requires_operator_for_runtime_commands": true,
+          "starts_runtime": false
+        },
+        "schema_version": "cognitive-loop-recipe-cli-v1",
+        "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+        "source_path": "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+        "status": "ok"
+      },
+      "stdout_line_count": 77,
+      "stdout_sha256": "3521b76397d87029b446bad3869402257693c3a12a929cfbb7e56c6baee30de3"
+    },
+    {
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py show daily_project_review",
+      "exit_code": 0,
+      "output_action": "show",
+      "output_schema_version": "cognitive-loop-recipe-cli-v1",
+      "recipe_id": "daily_project_review",
+      "safe_to_attach_to_issue": true,
+      "stdout_json": {
+        "action": "show",
+        "privacy": {
+          "agent_endpoints_included": false,
+          "agent_metadata_included": false,
+          "browser_video_app_private_context_included": false,
+          "diff_bodies_included": false,
+          "generated_private_insights_included": false,
+          "grading_feedback_included": false,
+          "learner_answers_included": false,
+          "raw_source_text_included": false,
+          "real_model_keys_stored": false
+        },
+        "recipe": {
+          "acceptance_evidence": [
+            "cognitive-loop-project-snapshot-verification-v1",
+            "cognitive-loop-run-once-evidence-verification-v1",
+            "cognitive-loop-event-index-verification-v1",
+            "cognitive-loop-artifact-index-verification-v1"
+          ],
+          "acceptance_evidence_count": 4,
+          "command_classes": [
+            "metadata_only"
+          ],
+          "command_count": 5,
+          "human_gate_required": false,
+          "metadata_only_plan": true,
+          "operator_goal": "Summarize current project state from local metadata-only Cognitive Loop artifacts.",
+          "platform_agent_role": "Run local commands, open local HTML if allowed, and summarize artifact paths, hashes, status, and next commands.",
+          "recipe_id": "daily_project_review",
+          "requires_human_mastery_gate": false,
+          "requires_operator_before_runtime": false,
+          "runtime_required": false,
+          "safe_to_auto_execute": false,
+          "steps": [
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py init",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 1
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py snapshot --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 2
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py run-once --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 3
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py index --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 4
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py artifact-index --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 5
+            }
+          ],
+          "study_anything_role": "Create snapshots, LoopRuns, event indexes, and static artifact indexes without embedding file contents.",
+          "title": "Daily Project Review",
+          "zh_title": "日常项目审查"
+        },
+        "replay_path": "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "safe_replay_policy": {
+          "applies_file_changes": false,
+          "executes_recipe_commands": false,
+          "metadata_only": true,
+          "requires_human_gate_for_risk_decisions": true,
+          "requires_operator_for_runtime_commands": true,
+          "starts_runtime": false
+        },
+        "schema_version": "cognitive-loop-recipe-cli-v1",
+        "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+        "source_path": "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+        "status": "ok"
+      },
+      "stdout_line_count": 90,
+      "stdout_sha256": "f3470b836bf534da92d1f8dc5cc1f1cd5f2e5463baf6c4bb9dedca76038f9cbc"
+    },
+    {
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py show risk_decision",
+      "exit_code": 0,
+      "output_action": "show",
+      "output_schema_version": "cognitive-loop-recipe-cli-v1",
+      "recipe_id": "risk_decision",
+      "safe_to_attach_to_issue": true,
+      "stdout_json": {
+        "action": "show",
+        "privacy": {
+          "agent_endpoints_included": false,
+          "agent_metadata_included": false,
+          "browser_video_app_private_context_included": false,
+          "diff_bodies_included": false,
+          "generated_private_insights_included": false,
+          "grading_feedback_included": false,
+          "learner_answers_included": false,
+          "raw_source_text_included": false,
+          "real_model_keys_stored": false
+        },
+        "recipe": {
+          "acceptance_evidence": [
+            "cognitive-loop-human-gate-verification-v1",
+            "cognitive-loop-artifact-doctor-verification-v1",
+            "cognitive-loop-repair-plan-verification-v1",
+            "manual-only repair actions"
+          ],
+          "acceptance_evidence_count": 4,
+          "command_classes": [
+            "human_gate",
+            "manual_repair_plan",
+            "metadata_only"
+          ],
+          "command_count": 5,
+          "human_gate_required": true,
+          "metadata_only_plan": true,
+          "operator_goal": "Gate risky actions until the human explicitly approves or rejects the decision.",
+          "platform_agent_role": "Request human approval, preserve the decision result, and never auto-apply repair actions.",
+          "recipe_id": "risk_decision",
+          "requires_human_mastery_gate": true,
+          "requires_operator_before_runtime": false,
+          "runtime_required": false,
+          "safe_to_auto_execute": false,
+          "steps": [
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py report --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 1
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py gate --reject --html --reason \"Needs human review\"",
+              "command_class": "human_gate",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 2
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py doctor --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 3
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py repair-plan --html",
+              "command_class": "manual_repair_plan",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 4
+            },
+            {
+              "command": "python3 scripts/cognitive_loop_cli.py artifact-index --html",
+              "command_class": "metadata_only",
+              "script": "scripts/cognitive_loop_cli.py",
+              "script_exists": true,
+              "step": 5
+            }
+          ],
+          "study_anything_role": "Record Human Mastery Gate status and produce manual-only doctor and repair-plan evidence.",
+          "title": "Risk Decision",
+          "zh_title": "风险决策"
+        },
+        "replay_path": "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "safe_replay_policy": {
+          "applies_file_changes": false,
+          "executes_recipe_commands": false,
+          "metadata_only": true,
+          "requires_human_gate_for_risk_decisions": true,
+          "requires_operator_for_runtime_commands": true,
+          "starts_runtime": false
+        },
+        "schema_version": "cognitive-loop-recipe-cli-v1",
+        "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+        "source_path": "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+        "status": "ok"
+      },
+      "stdout_line_count": 92,
+      "stdout_sha256": "419e3ac24e3f4cb0b8cc35e30e27001a3580a0200f098f0b21479829514509d4"
+    },
+    {
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py show learning_handoff",
+      "exit_code": 0,
+      "output_action": "show",
+      "output_schema_version": "cognitive-loop-recipe-cli-v1",
+      "recipe_id": "learning_handoff",
+      "safe_to_attach_to_issue": true,
+      "stdout_json": {
+        "action": "show",
+        "privacy": {
+          "agent_endpoints_included": false,
+          "agent_metadata_included": false,
+          "browser_video_app_private_context_included": false,
+          "diff_bodies_included": false,
+          "generated_private_insights_included": false,
+          "grading_feedback_included": false,
+          "learner_answers_included": false,
+          "raw_source_text_included": false,
+          "real_model_keys_stored": false
+        },
+        "recipe": {
+          "acceptance_evidence": [
+            "agent-eval-artifact-v1",
+            "agent-eval-report-v1",
+            "obsidian-markdown-export-v1",
+            "learning-package-v1",
+            "second-brain-handoff-v1"
+          ],
+          "acceptance_evidence_count": 5,
+          "command_classes": [
+            "runtime_required"
+          ],
+          "command_count": 3,
+          "human_gate_required": false,
+          "metadata_only_plan": true,
+          "operator_goal": "Turn repo, document, app, web, or video-slice context into learning, eval, and second-brain handoff evidence.",
+          "platform_agent_role": "Collect external context and call Study Anything without handing it browser control or real model keys.",
+          "recipe_id": "learning_handoff",
+          "requires_human_mastery_gate": false,
+          "requires_operator_before_runtime": true,
+          "runtime_required": true,
+          "safe_to_auto_execute": false,
+          "steps": [
+            {
+              "command": "./scripts/run_skill_mode_demo.sh",
+              "command_class": "runtime_required",
+              "script": "scripts/run_skill_mode_demo.sh",
+              "script_exists": true,
+              "step": 1
+            },
+            {
+              "command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+              "command_class": "runtime_required",
+              "script": "scripts/verify_platform_lesson_flow.py",
+              "script_exists": true,
+              "step": 2
+            },
+            {
+              "command": "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py",
+              "command_class": "runtime_required",
+              "script": "scripts/verify_importer_lesson_flow.py",
+              "script_exists": true,
+              "step": 3
+            }
+          ],
+          "study_anything_role": "Run source-bound learning, Agent audit/eval, Obsidian export, NotebookLM-style package, and second-brain handoff.",
+          "title": "Learning Handoff",
+          "zh_title": "学习交接"
+        },
+        "replay_path": "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "safe_replay_policy": {
+          "applies_file_changes": false,
+          "executes_recipe_commands": false,
+          "metadata_only": true,
+          "requires_human_gate_for_risk_decisions": true,
+          "requires_operator_for_runtime_commands": true,
+          "starts_runtime": false
+        },
+        "schema_version": "cognitive-loop-recipe-cli-v1",
+        "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+        "source_path": "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+        "status": "ok"
+      },
+      "stdout_line_count": 77,
+      "stdout_sha256": "7c08b126e7669470b3dcf1b4d9e16ffefc77a4d19203ec5813aa376088298204"
+    }
+  ],
+  "safe_replay_policy": {
+    "applies_file_changes": false,
+    "executes_recipe_commands": false,
+    "invokes_recipe_cli_only": true,
+    "requires_human_gate_for_risk_decisions": true,
+    "requires_operator_for_runtime_commands": true,
+    "starts_runtime": false
+  },
+  "schema_version": "cognitive-loop-recipe-cli-receipts-v1",
+  "status": "pass"
+}

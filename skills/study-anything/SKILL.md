@@ -35,6 +35,7 @@ python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
 python3 scripts/verify_cognitive_loop_recipe_replay.py --check
 python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -45,6 +46,7 @@ The machine-readable entrypoints are:
 - `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
 - `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json`
 - `scripts/cognitive_loop_recipe_cli.py`
 
 Use these recipe ids:
@@ -55,7 +57,8 @@ Use these recipe ids:
 - `learning_handoff`: run Skill Mode or lesson/importer checks before handing compact mastery evidence back.
 
 Treat the replay report as metadata-only replay. It does not execute recipe commands, start runtime
-processes, apply file changes, or approve risk decisions. The platform Agent owns browser, files,
+processes, apply file changes, or approve risk decisions. Treat the CLI receipts as the same
+metadata-only evidence. The platform Agent owns browser, files,
 applications, external data, video slicing, user conversation, and real model credentials. Study
 Anything owns the local Learning Adapter path. Study Anything owns the local Learning Adapter:
 source-bound learning, mastery, eval evidence,
