@@ -8,7 +8,9 @@ from study_anything.core.cognitive_loop_contracts import (
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
+    RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_cli_artifact_report,
+    build_run_once_artifact,
     render_cli_artifact_html,
     validate_all_public_objects,
     validate_contract_files,
@@ -169,6 +171,32 @@ class CognitiveLoopContractsTests(unittest.TestCase):
             self.assertEqual({report.status for report in reports}, {"written"})
             validated = validate_contract_files(root)
             self.assertEqual({report.name for report in validated}, {"config", "permissions", "evals", "risk"})
+
+    def test_run_once_artifact_builds_governed_loop_evidence(self) -> None:
+        report = build_run_once_artifact(
+            REPO_ROOT,
+            generated_at="2026-06-17T00:40:00Z",
+            artifact_ref=".cognitive-loop/artifacts/run-once.html",
+        )
+        html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], RUN_ONCE_ARTIFACT_SCHEMA_VERSION)
+        self.assertEqual(report["loop_run"]["status"], "succeeded")
+        self.assertEqual(report["decision_card"]["status"], "approved")
+        self.assertIn("Loop Run", html)
+        self.assertFalse(report["privacy"]["watcher_daemon_started"])
+        self.assertFalse(report["privacy"]["mastra_runtime_started"])
+
+    def test_run_once_high_risk_requires_human_mastery_gate(self) -> None:
+        report = build_run_once_artifact(
+            REPO_ROOT,
+            risk_level="high",
+            generated_at="2026-06-17T00:41:00Z",
+        )
+
+        self.assertEqual(report["loop_run"]["status"], "suspended")
+        self.assertEqual(report["decision_card"]["status"], "needs_human_mastery")
+        self.assertTrue(report["decision_card"]["human_mastery_gate"]["required"])
 
 
 if __name__ == "__main__":

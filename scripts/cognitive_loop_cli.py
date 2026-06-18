@@ -108,6 +108,40 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_run_once(args: argparse.Namespace) -> int:
+    root = _root(args)
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-run-once.html"
+    report = contracts.build_run_once_artifact(
+        root,
+        objective=args.objective,
+        change_summary=args.change_summary,
+        risk_level=args.risk_level,
+        artifact_ref=artifact_ref,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(args.json_output or (root / ".cognitive-loop" / "events" / "cognitive-loop-run-once.json"))
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -135,6 +169,29 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--risk-level", choices=sorted(contracts.ALLOWED_RISK_LEVELS), default="medium")
     report.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     report.set_defaults(func=cmd_report)
+
+    run_once = sub.add_parser("run-once", help="Run one local Cognitive Loop evidence cycle.")
+    run_once.add_argument("--html", action="store_true", help="Write a static HTML run artifact.")
+    run_once.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-run-once.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    run_once.add_argument(
+        "--json-output",
+        help="JSON evidence output path. Defaults under .cognitive-loop/events.",
+    )
+    run_once.add_argument(
+        "--objective",
+        default="Run a bounded local Cognitive Loop evidence cycle.",
+    )
+    run_once.add_argument(
+        "--change-summary",
+        default="Validate local contracts and produce one governed run artifact.",
+    )
+    run_once.add_argument("--risk-level", choices=sorted(contracts.ALLOWED_RISK_LEVELS), default="medium")
+    run_once.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    run_once.set_defaults(func=cmd_run_once)
     return parser
 
 

@@ -10,7 +10,7 @@ registry access, CI publishing, manifest platforms, or runtime health.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-published-image-evidence.zip` sha256 `445c821af5d1fa8a3f897c7cc0db2eab09be4e0f9517ebfd2a05461defed3a99`
+- Archive: `platform/generated/study-anything-published-image-evidence.zip` sha256 `c1a6409fd32465e4896645d72787f16a6dc068195e17b4bdba9fe416a040adf2`
 
 ## Manifest And Smoke
 

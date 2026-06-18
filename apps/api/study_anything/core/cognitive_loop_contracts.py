@@ -27,6 +27,7 @@ EVALS_SCHEMA_VERSION = "cognitive-loop-evals-v1"
 RISK_SCHEMA_VERSION = "cognitive-loop-risk-v1"
 BOOTSTRAP_SCHEMA_VERSION = "cognitive-loop-contract-bootstrap-v1"
 CLI_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-cli-artifact-v1"
+RUN_ONCE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-run-once-artifact-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -630,6 +631,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop contract verifier.")
     if "python3 scripts/verify_cognitive_loop_cli.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop CLI artifact verifier.")
+    if "python3 scripts/verify_cognitive_loop_run_once.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop run-once verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -762,6 +765,9 @@ required:
   - id: cognitive-loop.cli-artifact
     command: python3 scripts/verify_cognitive_loop_cli.py --check
     blocking: true
+  - id: cognitive-loop.run-once-evidence
+    command: python3 scripts/verify_cognitive_loop_run_once.py --check
+    blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
     blocking: true
@@ -842,6 +848,16 @@ def write_default_contract_files(
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _project_metadata(root: Path) -> dict[str, str]:
+    config = _load_yaml(contract_dir(root) / "config.yaml")
+    _validate_config(config)
+    project = _require_mapping(config, "project")
+    return {
+        "id": _require_string(project, "id"),
+        "name": _require_string(project, "name"),
+    }
 
 
 def build_cli_artifact_report(
@@ -983,6 +999,171 @@ def build_cli_artifact_report(
     return report
 
 
+def build_run_once_artifact(
+    root: Path,
+    *,
+    objective: str = "Run a bounded local Cognitive Loop evidence cycle.",
+    change_summary: str = "Validate local contracts and produce one governed run artifact.",
+    risk_level: str = "medium",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-run-once.html",
+) -> dict[str, Any]:
+    """Build a governed single-run artifact without a watcher, model call, or daemon."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("change_summary", change_summary)
+    _assert_public_value("artifact_ref", artifact_ref)
+    _require_members([risk_level], ALLOWED_RISK_LEVELS, "run-once risk level")
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    needs_gate = risk_level in {"high", "blocked"}
+    risk_score = {
+        "low": 0.18,
+        "medium": 0.44,
+        "high": 0.82,
+        "blocked": 1.0,
+    }[risk_level]
+    decision_status = "needs_human_mastery" if needs_gate else "approved"
+    loop_status = "suspended" if needs_gate else "succeeded"
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-run-once",
+            "project_id": project["id"],
+            "actor": "agent",
+            "event_type": "verification_completed",
+            "summary": change_summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop",
+            "refs": [
+                "script:scripts/cognitive_loop_cli.py",
+                "doc:docs/cognitive-loop-contracts.md",
+            ],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-run-once",
+            "project_id": project["id"],
+            "title": "Run one local Cognitive Loop cycle",
+            "status": decision_status,
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [
+                "contract:.cognitive-loop/config.yaml",
+                "contract:.cognitive-loop/permissions.yaml",
+                "contract:.cognitive-loop/evals.yaml",
+                "contract:.cognitive-loop/risk.yaml",
+                f"artifact:{artifact_ref}",
+            ],
+            "risk": {
+                "level": risk_level,
+                "score": risk_score,
+                "reasons": [
+                    "local-only run evidence",
+                    "no watcher daemon",
+                    "no model key custody",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": needs_gate,
+                "status": "pending" if needs_gate else "not_required",
+                "questions": [
+                    "Can the operator explain the objective and risk level?",
+                    "Can the operator identify what evidence is redacted?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py verify",
+                    "python3 scripts/cognitive_loop_cli.py run-once --html",
+                    "python3 scripts/verify_cognitive_loop_run_once.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_run_once_artifacts", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-run-once",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": loop_status,
+            "started_at": generated_at,
+            "completed_at": None if needs_gate else generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    mastery = validate_mastery_record(
+        {
+            "record_id": "mastery-cognitive-loop-run-once",
+            "project_id": project["id"],
+            "subject": "Cognitive Loop run evidence",
+            "level": 0.68 if needs_gate else 0.78,
+            "bloom": "apply",
+            "evidence_refs": [decision["decision_id"], loop["run_id"]],
+            "updated_at": generated_at,
+        }
+    ).public_dict()
+    evolution = validate_evolution_report(
+        {
+            "report_id": "evo-cognitive-loop-run-once",
+            "project_id": project["id"],
+            "status": "needs_review" if needs_gate else "approved",
+            "proposed_changes": [
+                "Record one bounded local LoopRun",
+                "Bind a DecisionCard to contract evidence",
+                "Render a static HTML handoff artifact",
+            ],
+            "decision_card_ids": [decision["decision_id"]],
+            "verification_refs": ["python3 scripts/verify_cognitive_loop_run_once.py --check"],
+            "risk_summary": "The run stores only redacted governance evidence and no raw source, Agent endpoint, or model key.",
+            "created_at": generated_at,
+        }
+    ).public_dict()
+    report = {
+        "schema_version": RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
+        "status": loop_status,
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Run-Once Evidence",
+        "objective": objective,
+        "change_summary": change_summary,
+        "project": project,
+        "contract_files": contract_reports,
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "mastery_record": mastery,
+        "evolution_report": evolution,
+        "privacy": {
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "real_model_keys_included": False,
+            "standalone_frontend_required": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This is a single local run artifact, not a watcher daemon.",
+            "Mastra runtime remains planned and is not invoked.",
+            "The full realtime HTML console remains planned.",
+        ],
+        "commands": {
+            "init": "python3 scripts/cognitive_loop_cli.py init",
+            "verify": "python3 scripts/cognitive_loop_cli.py verify",
+            "run_once": "python3 scripts/cognitive_loop_cli.py run-once --html",
+            "run_once_check": "python3 scripts/verify_cognitive_loop_run_once.py --check",
+        },
+    }
+    _assert_public_value("run_once_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1022,6 +1203,9 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         f"<tr><td>{escape(str(key))}</td><td><code>{escape(str(command))}</code></td></tr>"
         for key, command in sorted(commands.items())
     )
+    loop_run = report.get("loop_run")
+    if not isinstance(loop_run, Mapping):
+        loop_run = {}
     json_blob = escape(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
     return f"""<!doctype html>
 <html lang="en">
@@ -1132,6 +1316,15 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <p><strong>{escape(value('decision_card.title'))}</strong></p>
       <p>{escape(value('decision_card.summary'))}</p>
       <p>Human Mastery Gate: <strong>{escape(value('decision_card.human_mastery_gate.status'))}</strong></p>
+    </section>
+    <section>
+      <h2>Loop Run</h2>
+      <div class="status">
+        <div>Run<br><strong>{escape(str(loop_run.get('run_id', '')))}</strong></div>
+        <div>Status<br><strong>{escape(str(loop_run.get('status', '')))}</strong></div>
+        <div>Started<br><strong>{escape(str(loop_run.get('started_at', '')))}</strong></div>
+        <div>Completed<br><strong>{escape(str(loop_run.get('completed_at', 'pending')))}</strong></div>
+      </div>
     </section>
     <section>
       <h2>Contract Files</h2>

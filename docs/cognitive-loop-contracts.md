@@ -27,6 +27,7 @@ The repository also includes a small local CLI:
 python3 scripts/cognitive_loop_cli.py init
 python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
+python3 scripts/cognitive_loop_cli.py run-once --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -37,6 +38,7 @@ This CLI is for repo-local contract bootstrap and a static HTML DecisionCard art
 python3 scripts/cognitive_loop_cli.py init
 python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
+python3 scripts/cognitive_loop_cli.py run-once --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -47,8 +49,8 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - default mode is read-only;
 - real model keys and Agent endpoints stay outside Study Anything;
 - raw source text is forbidden in public contracts;
-- required evals include the Cognitive Loop contract verifier;
 - required evals include the Cognitive Loop contract verifier and CLI artifact verifier;
+- required evals include the Cognitive Loop run-once evidence verifier;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -59,8 +61,8 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - 默认模式是只读；
 - 真实模型密钥和 Agent endpoint 留在 Study Anything 外部；
 - public contract 禁止包含原始 source text；
-- required evals 包含 Cognitive Loop contract verifier；
 - required evals 包含 Cognitive Loop contract verifier 和 CLI artifact verifier；
+- required evals 包含 Cognitive Loop run-once evidence verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -86,6 +88,20 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - 用于渲染页面的脱敏 JSON payload。
 
 `python3 scripts/verify_cognitive_loop_cli.py --check` 会在临时 external-adopter project 中验证这条路径，并输出 `cognitive-loop-cli-artifact-verification-v1`。
+
+## Run-Once Evidence
+
+`python3 scripts/cognitive_loop_cli.py run-once --html` performs one bounded local Cognitive Loop evidence cycle. It validates the contract files, builds a redacted `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`, writes JSON evidence under `.cognitive-loop/events/`, and writes an optional static HTML artifact under `.cognitive-loop/artifacts/`.
+
+This is still not a watcher daemon, not Mastra, and not the final realtime HTML console. It is the smallest usable operational loop for external platform Agents and local operators.
+
+`python3 scripts/verify_cognitive_loop_run_once.py --check` verifies this path in a temporary external-adopter project and emits `cognitive-loop-run-once-evidence-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py run-once --html` 会执行一次有边界的本地 Cognitive Loop evidence cycle。它会验证 contract 文件，生成脱敏的 `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord` 和 `EvolutionReport`，把 JSON evidence 写入 `.cognitive-loop/events/`，并可选地把静态 HTML artifact 写入 `.cognitive-loop/artifacts/`。
+
+这仍然不是 watcher daemon，不是 Mastra，也不是最终实时 HTML console。它只是给外部平台 Agent 和本地操作者使用的最小可运行运营循环。
+
+`python3 scripts/verify_cognitive_loop_run_once.py --check` 会在临时 external-adopter project 中验证这条路径，并输出 `cognitive-loop-run-once-evidence-verification-v1`。
 
 ## Public Objects
 
