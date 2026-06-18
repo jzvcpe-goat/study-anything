@@ -138,6 +138,14 @@ SOURCE_REPORTS: tuple[dict[str, Any], ...] = (
         "launch_area": "zip-only Review Agent workflow adoption",
         "required_for_github_oss_launch": True,
     },
+    {
+        "report_id": "cognitive_loop_review_agent_adoption_drill",
+        "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
+        "schema_version": "cognitive-loop-review-agent-adoption-drill-v1",
+        "accepted_statuses": ("pass",),
+        "launch_area": "zip-only Review Agent adoption drill",
+        "required_for_github_oss_launch": True,
+    },
 )
 
 

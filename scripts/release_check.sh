@@ -59,6 +59,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+"$python_bin" scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
 "$python_bin" scripts/verify_cognitive_loop_adoption_cookbook.py --check
 "$python_bin" scripts/generate_cognitive_loop_adoption_recipes.py --check
 "$python_bin" scripts/verify_cognitive_loop_recipe_replay.py --check

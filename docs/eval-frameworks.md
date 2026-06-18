@@ -164,6 +164,20 @@ acceptance bundles from synthetic fixtures, and runs the shipped policy gate for
 and `strict`. It must not require a repo checkout, start a runtime, upload raw reports, call real
 models, or persist temporary files.
 
+## Review Agent Adoption Drill
+
+For a single external-adopter rehearsal of the full zip-only Review Agent path, run:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
+```
+
+It emits `cognitive-loop-review-agent-adoption-drill-v1`. The drill extracts the adoption pack,
+validates embedded Review Agent evidence, builds acceptance bundles, validates bilingual PR comment
+packs, runs the `advisory` / `soft` / `strict` policy matrix, and proves the manual workflow can be
+installed from the zip. It remains metadata-only and must not upload raw reports, include raw diffs,
+call real models, or depend on stored model keys.
+
 ## Review Agent Policy Gate
 
 For CI or operator handoff, convert the metadata-only acceptance bundle into a policy-specific exit

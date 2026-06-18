@@ -96,6 +96,7 @@ python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/codex-review-acceptance --policy soft
 python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
 python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
 ```
 
 For GitHub-side reuse, copy `platform/workflows/cognitive-loop-review-agent-manual.yml` only as a
@@ -105,7 +106,8 @@ uploads only safe metadata artifacts when enabled, and must not upload the raw R
 The workflow applies the captured policy exit code after artifact upload so Codex evidence is
 available even when `needs-fix` or `needs-review` blocks CI. The install smoke proves the same
 workflow and policy gate can be copied from the adoption pack into `.github/workflows/` without
-requiring a repo checkout or raw report upload.
+requiring a repo checkout or raw report upload. The adoption drill rehearses the full zip-only path
+from acceptance bundle to PR comment pack, policy matrix, and workflow install.
 
 ## Run
 

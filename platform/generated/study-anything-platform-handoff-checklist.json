@@ -18,6 +18,12 @@
       "step_id": "install_review_agent_workflow"
     },
     {
+      "blocks_release": true,
+      "command": "python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check",
+      "operator_action": "Run the zip-only Review Agent drill from acceptance bundle through PR comments, policy gate, and workflow install.",
+      "step_id": "run_review_agent_adoption_drill"
+    },
+    {
       "assets": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-openai-tools.json",
@@ -61,7 +67,7 @@
     }
   ],
   "handoff_assets": {
-    "adoption_pack_file_count": 337,
+    "adoption_pack_file_count": 339,
     "adoption_pack_schema": "study-anything-platform-adoption-pack-v1",
     "all_required_assets_present": true,
     "required_assets": [
@@ -72,6 +78,7 @@
       "platform/generated/study-anything-openai-tools.json",
       "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+      "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "platform/generated/study-anything-platform-feedback-package.json",
       "platform/generated/study-anything-published-image-evidence.json",
       "platform/generated/study-anything-release-asset-bootstrap.json",
@@ -83,53 +90,57 @@
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
+      "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 54,
+      "import_asset_count": 56,
       "integration_mode": "terminal_skill",
       "no_frontend_required": true,
       "pack_id": "codex",
       "platform_id": "codex-skill",
       "submission_integration_mode": "terminal_skill",
-      "verification_command_count": 77
+      "verification_command_count": 78
     },
     {
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
+      "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 56,
+      "import_asset_count": 58,
       "integration_mode": "openai_compatible_tools",
       "no_frontend_required": true,
       "pack_id": "kimi",
       "platform_id": "kimi-compatible",
       "submission_integration_mode": "openai_compatible_tools",
+      "verification_command_count": 78
+    },
+    {
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 57,
+      "integration_mode": "openapi_http_tools",
+      "no_frontend_required": true,
+      "pack_id": "workbuddy",
+      "platform_id": "workbuddy-style-http",
+      "submission_integration_mode": "openapi_http_tools",
       "verification_command_count": 77
     },
     {
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
+      "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 55,
-      "integration_mode": "openapi_http_tools",
-      "no_frontend_required": true,
-      "pack_id": "workbuddy",
-      "platform_id": "workbuddy-style-http",
-      "submission_integration_mode": "openapi_http_tools",
-      "verification_command_count": 76
-    },
-    {
-      "declares_extract_smoke": true,
-      "declares_feedback_package": true,
-      "declares_handoff_checklist": true,
-      "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 34,
+      "import_asset_count": 36,
       "integration_mode": "generic_openapi_tools",
       "no_frontend_required": true,
       "pack_id": null,
       "platform_id": "generic-openapi-tools",
       "submission_integration_mode": "generic_openapi_tools",
-      "verification_command_count": 31
+      "verification_command_count": 32
     }
   ],
   "privacy_assertions": {

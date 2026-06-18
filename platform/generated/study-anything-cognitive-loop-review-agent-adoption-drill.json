@@ -1,0 +1,209 @@
+{
+  "acceptance": {
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check",
+    "pack_required": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "policy_matrix": {
+      "approved": {
+        "advisory": 0,
+        "soft": 0,
+        "strict": 0
+      },
+      "needs-fix": {
+        "advisory": 0,
+        "soft": 2,
+        "strict": 2
+      },
+      "needs-review": {
+        "advisory": 0,
+        "soft": 0,
+        "strict": 2
+      }
+    }
+  },
+  "adoption_pack": {
+    "archive_sha256": null,
+    "file_count": 339,
+    "no_frontend_required": true,
+    "real_model_keys_stored_by_study_anything": false,
+    "schema_version": "study-anything-platform-adoption-pack-v1",
+    "tool_count": null
+  },
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "evals/README.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "embedded_reports": {
+    "acceptance_bundle": "cognitive-loop-review-agent-acceptance-bundle-verification-v1",
+    "policy_gate": "cognitive-loop-review-agent-policy-gate-verification-v1",
+    "pr_comment_pack": "cognitive-loop-review-agent-pr-comment-pack-verification-v1",
+    "workflow_install_smoke": "cognitive-loop-review-agent-workflow-install-smoke-v1"
+  },
+  "fixture_count": 3,
+  "fixtures": {
+    "approved": {
+      "bundle_file_count": 7,
+      "bundle_schema_version": "cognitive-loop-review-agent-acceptance-bundle-v1",
+      "comment_pack": {
+        "conclusion": null,
+        "human_action": "merge_allowed_after_required_checks",
+        "labels_to_add": [],
+        "markdown_en_sha256": "3d03d61ced6da8d94eea21eb49a9363753247e0d6177de5f1ec9d15ff7dfd1d4",
+        "markdown_zh_sha256": "ee3fedfb406baa39fa8a8370aec4042beca515dcb950830bec8636f2dc0de572",
+        "schema_version": "cognitive-loop-review-agent-pr-comment-pack-v1"
+      },
+      "decision": "approved",
+      "fixture": "approved.json",
+      "policy_exit_matrix": {
+        "advisory": 0,
+        "soft": 0,
+        "strict": 0
+      },
+      "policy_results": {
+        "advisory": {
+          "conclusion": null,
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        },
+        "soft": {
+          "conclusion": null,
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        },
+        "strict": {
+          "conclusion": null,
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        }
+      }
+    },
+    "needs-fix": {
+      "bundle_file_count": 7,
+      "bundle_schema_version": "cognitive-loop-review-agent-acceptance-bundle-v1",
+      "comment_pack": {
+        "conclusion": null,
+        "human_action": "fix_required_before_merge",
+        "labels_to_add": [
+          "needs-fix",
+          "security-review"
+        ],
+        "markdown_en_sha256": "7f79f9d5f38524213ad80fb88498b4e4bde0e4a5be9a94e42472c22d2497b6b2",
+        "markdown_zh_sha256": "30637e82debc07c647048799fd9b9d35ceb2ec3557fb10cb07d90439cb8be8cf",
+        "schema_version": "cognitive-loop-review-agent-pr-comment-pack-v1"
+      },
+      "decision": "needs-fix",
+      "fixture": "needs-fix.json",
+      "policy_exit_matrix": {
+        "advisory": 0,
+        "soft": 2,
+        "strict": 2
+      },
+      "policy_results": {
+        "advisory": {
+          "conclusion": null,
+          "decision": "needs-fix",
+          "exit_code": 0,
+          "status": "advisory_block_recommended"
+        },
+        "soft": {
+          "conclusion": null,
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "status": "blocked"
+        },
+        "strict": {
+          "conclusion": null,
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "status": "blocked"
+        }
+      }
+    },
+    "needs-review": {
+      "bundle_file_count": 7,
+      "bundle_schema_version": "cognitive-loop-review-agent-acceptance-bundle-v1",
+      "comment_pack": {
+        "conclusion": null,
+        "human_action": "maintainer_review_required",
+        "labels_to_add": [
+          "needs-review",
+          "test-gap"
+        ],
+        "markdown_en_sha256": "ba3b48040d1b5e7c1b904bc2791b8b564cfeb5a0fd31a3396211f70c61943b9b",
+        "markdown_zh_sha256": "ad900c9576558637d96487f46ab876d24a5462321b73aebf54c1877d6fd7e9b3",
+        "schema_version": "cognitive-loop-review-agent-pr-comment-pack-v1"
+      },
+      "decision": "needs-review",
+      "fixture": "needs-review.json",
+      "policy_exit_matrix": {
+        "advisory": 0,
+        "soft": 0,
+        "strict": 2
+      },
+      "policy_results": {
+        "advisory": {
+          "conclusion": null,
+          "decision": "needs-review",
+          "exit_code": 0,
+          "status": "needs_human_review"
+        },
+        "soft": {
+          "conclusion": null,
+          "decision": "needs-review",
+          "exit_code": 0,
+          "status": "needs_human_review"
+        },
+        "strict": {
+          "conclusion": null,
+          "decision": "needs-review",
+          "exit_code": 2,
+          "status": "blocked"
+        }
+      }
+    }
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "raw_report_uploaded": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "purpose": "Prove a zip-only external adopter can run the full metadata-only Review Agent evidence path.",
+  "quality_gates": {
+    "acceptance_bundle_generation": "pass",
+    "bilingual_pr_comment_pack": "pass",
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "manual_workflow_install": "pass",
+    "metadata_only_outputs": "pass",
+    "policy_gate_matrix": "pass",
+    "zip_only_execution": "pass"
+  },
+  "schema_version": "cognitive-loop-review-agent-adoption-drill-v1",
+  "status": "pass",
+  "workflow_install": {
+    "installed_path": ".github/workflows/cognitive-loop-review-agent-manual.yml",
+    "manual_only": true,
+    "raw_report_upload": false,
+    "read_only_permissions": true,
+    "secret_dependency": false,
+    "sha256": "7a1e716e3c85d4a7a1120171634382af8ea211d979d8088bd01dc434c3b15d9b"
+  }
+}
