@@ -1,0 +1,49 @@
+{
+  "approved": {
+    "created": true,
+    "decision_id": "dec-sensitive-runtime",
+    "decision_status": "approved",
+    "gate_status": "approved",
+    "loop_status": "succeeded"
+  },
+  "approved_gate_schema": "cognitive-loop-human-gate-v1",
+  "artifact_json_schema": "cognitive-loop-human-gate-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "approve_gate": "python3 scripts/cognitive_loop_cli.py gate --approve --html",
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "reject_gate": "python3 scripts/cognitive_loop_cli.py gate --reject --html",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_human_gate": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_body_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "rejected": {
+    "created": true,
+    "decision_id": "dec-risky-change",
+    "decision_status": "rejected",
+    "gate_status": "rejected",
+    "loop_status": "rejected"
+  },
+  "rejected_gate_schema": "cognitive-loop-human-gate-v1",
+  "schema_version": "cognitive-loop-human-gate-verification-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}

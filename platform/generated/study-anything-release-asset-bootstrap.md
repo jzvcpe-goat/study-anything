@@ -10,7 +10,7 @@ runtime choices without requiring a development checkout as the starting point.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `e19159bee4653b46bc61878979b05361a118d7d20f16e76ad46df9cc6b640bad`
+- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `03d8997f081b0f0cfc5a471f6ad34e061fe7f41d02260200ffe1904abe398140`
 
 ## Commands
 

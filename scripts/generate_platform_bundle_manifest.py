@@ -67,6 +67,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop redacted project snapshot verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "generated_asset",
+        "Cognitive Loop Human Mastery Gate approval and rejection verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -810,6 +815,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_snapshot.py",
         "verification",
         "Cognitive Loop project snapshot verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_human_gate.py",
+        "verification",
+        "Cognitive Loop Human Mastery Gate verifier.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

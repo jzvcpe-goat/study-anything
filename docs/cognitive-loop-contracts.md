@@ -29,6 +29,7 @@ python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
 python3 scripts/cognitive_loop_cli.py run-once --html
 python3 scripts/cognitive_loop_cli.py snapshot --html
+python3 scripts/cognitive_loop_cli.py gate --approve --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -41,6 +42,7 @@ python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
 python3 scripts/cognitive_loop_cli.py run-once --html
 python3 scripts/cognitive_loop_cli.py snapshot --html
+python3 scripts/cognitive_loop_cli.py gate --approve --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -54,6 +56,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop contract verifier and CLI artifact verifier;
 - required evals include the Cognitive Loop run-once evidence verifier;
 - required evals include the Cognitive Loop project snapshot verifier;
+- required evals include the Cognitive Loop Human Mastery Gate verifier;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -67,6 +70,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop contract verifier 和 CLI artifact verifier；
 - required evals 包含 Cognitive Loop run-once evidence verifier；
 - required evals 包含 Cognitive Loop project snapshot verifier；
+- required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -120,6 +124,20 @@ The snapshot records changed path counts and repo-relative path refs only. It do
 snapshot 只记录 changed path 数量和 repo-relative path refs，不保存 diff body、文件内容、source text、Agent endpoint、model key 或 watcher state。
 
 `python3 scripts/verify_cognitive_loop_snapshot.py --check` 会在临时 external-adopter project 中验证这条路径，并输出 `cognitive-loop-project-snapshot-verification-v1`。
+
+## Human Mastery Gate Evidence
+
+`python3 scripts/cognitive_loop_cli.py gate --approve --html` records a local Human Mastery Gate resolution for a high-risk DecisionCard. Operators can also use `--reject`, pass a public `--decision-id`, add repeated `--evidence-ref` values, and write JSON evidence under `.cognitive-loop/events/`.
+
+The gate artifact records approval or rejection metadata, rationale, evidence refs, risk, rollback strategy, and verification commands. It does not execute the gated change, read source files, store diff bodies, store learner answers, store Agent endpoints, or store model keys.
+
+`python3 scripts/verify_cognitive_loop_human_gate.py --check` verifies approved and rejected gate paths in a temporary external-adopter project and emits `cognitive-loop-human-gate-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py gate --approve --html` 会为高风险 DecisionCard 记录本地 Human Mastery Gate resolution。操作者也可以使用 `--reject`，传入公开的 `--decision-id`，重复添加 `--evidence-ref`，并把 JSON evidence 写入 `.cognitive-loop/events/`。
+
+gate artifact 只记录批准或拒绝 metadata、理由、evidence refs、风险、回滚策略和验证命令。它不会执行被 gate 的变更，不读取源文件，不保存 diff body，不保存学习者答案，不保存 Agent endpoint，也不保存 model key。
+
+`python3 scripts/verify_cognitive_loop_human_gate.py --check` 会在临时 external-adopter project 中验证批准和拒绝两条路径，并输出 `cognitive-loop-human-gate-verification-v1`。
 
 ## Public Objects
 
