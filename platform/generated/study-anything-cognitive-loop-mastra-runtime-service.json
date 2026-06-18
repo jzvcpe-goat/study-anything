@@ -18,14 +18,14 @@
   },
   "files": [
     {
-      "bytes": 633,
+      "bytes": 710,
       "path": "platform/mastra-runtime/package.json",
-      "sha256": "0387484a232dc4bf41b18f7424976dcfc4f89424e8598f28b08d0a5c1d70c350"
+      "sha256": "b979914dfa13f9a483cf12f5a52ea0d12f84ab03be2c174c643894d1f99e0a55"
     },
     {
-      "bytes": 129646,
+      "bytes": 138191,
       "path": "platform/mastra-runtime/package-lock.json",
-      "sha256": "b57199561e78bad4bff12c6ffba9470e85e32e013111ea0be676fbe570d7d1ba"
+      "sha256": "55fed52d46596cea6d4165b538e11e8a9194f18007033757722dd1934b4e797e"
     },
     {
       "bytes": 394,
@@ -33,29 +33,34 @@
       "sha256": "1b4f55f5db75ab30d85009f7c5e6c398536b239d2c12dc4d470e932affe55b66"
     },
     {
-      "bytes": 1028,
+      "bytes": 1299,
       "path": "platform/mastra-runtime/README.md",
-      "sha256": "fe2c938b23c9aff89cba0f4a7cc9ecea7b42f2899309af771b08ef81d81e359b"
+      "sha256": "23894ea95c291738fa428abeb65f382e3c09ba319ca8ff87016b93b053fb10ac"
     },
     {
-      "bytes": 241,
+      "bytes": 694,
       "path": "platform/mastra-runtime/src/runtime.ts",
-      "sha256": "306ecc6a7497d51eb462390d217aa2414a9dbd30224e700b9d52d7834b347632"
+      "sha256": "119bd643ebe1e8d82cc5cd69555b92c0c6d15ec04dd84a00771061ace9aa70c3"
     },
     {
-      "bytes": 4925,
+      "bytes": 5122,
       "path": "platform/mastra-runtime/src/run-once.ts",
-      "sha256": "a63a11800e8336dec45faabba405a201380f5c3e5b7167f5090e747a9d944224"
+      "sha256": "4f7330cb1c7145f7a477e83ef8edbde83f879b1948803909df5402b3254a5360"
     },
     {
-      "bytes": 6731,
+      "bytes": 8067,
+      "path": "platform/mastra-runtime/src/durable-run.ts",
+      "sha256": "b0a63cd11306a0ed1a67a26407947866ecf5960b9d888d6ee412b586fed72193"
+    },
+    {
+      "bytes": 6820,
       "path": "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
-      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
     },
     {
-      "bytes": 6731,
+      "bytes": 6820,
       "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
-      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
     }
   ],
   "privacy": {

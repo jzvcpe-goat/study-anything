@@ -41,6 +41,8 @@ a real Mastra runtime is connected.
 When Node 22+ is available, run
 `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` to start the repo-local
 Mastra MVP and verify the same metadata-only workflow against `@mastra/core`.
+Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` to prove local
+libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata events.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

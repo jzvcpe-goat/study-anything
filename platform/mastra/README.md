@@ -22,6 +22,9 @@ evidence source.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check`: a repo-local
   runtime verifier that starts the isolated `platform/mastra-runtime/` package against
   `@mastra/core` with metadata-only evidence.
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check`: a repo-local
+  durability verifier that persists a suspended workflow to local libSQL storage, then
+  resumes or bails from a separate Node process using watcher-generated metadata evidence.
 
 ## Install Into A Mastra Project
 
@@ -62,9 +65,10 @@ of truth for project evidence.
 ## Current Boundary
 
 Status: adapter contract pack plus metadata-only runtime dry-run harness plus minimal
-repo-started in-memory runtime MVP.
+repo-started runtime MVP with a local libSQL suspend/resume proof.
 
-This repository still does not ship durable workflow storage, watcher daemon, realtime HTML
-console, or hosted service. Manual watcher ingest now creates metadata-only `ProjectEvent`
-artifacts through `scripts/cognitive_loop_watcher_ingest.py`; a later runtime PR can connect
-the repo-local runtime MVP to daemonized watcher events and durable storage.
+This repository still does not ship a watcher daemon, realtime HTML console, hosted service,
+or production storage operations. Manual watcher ingest creates metadata-only `ProjectEvent`
+artifacts through `scripts/cognitive_loop_watcher_ingest.py`, and the durable verifier proves
+the repo-local runtime can persist and recover a Human Mastery Gate snapshot without storing
+source text, diff bodies, prompts, endpoints, or keys.

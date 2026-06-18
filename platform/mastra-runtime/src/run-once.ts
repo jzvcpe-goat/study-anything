@@ -1,8 +1,11 @@
 import { humanMasteryGateStep } from "./workflows/cognitive-loop-mastra-adapter.js";
-import { mastra } from "./runtime.js";
+import { createMastraRuntime } from "./runtime.js";
 
 type JsonRecord = Record<string, unknown>;
 
+const mastra = createMastraRuntime({
+  storageFile: process.env.COGNITIVE_LOOP_MASTRA_STORAGE_FILE,
+});
 const workflow = mastra.getWorkflow("cognitiveLoopRuntimeAdapterWorkflow");
 
 function artifact(kind: string, path: string): JsonRecord {
@@ -27,6 +30,7 @@ function buildInput(overrides: JsonRecord = {}): JsonRecord {
       artifact("project_snapshot", ".cognitive-loop/events/project-snapshot.json"),
       artifact("decision_card", ".cognitive-loop/events/decision-card.json"),
       artifact("event_store", ".cognitive-loop/events/event-store.json"),
+      artifact("watcher_ingest", ".cognitive-loop/events/watcher-ingest.json"),
     ],
     risk: {
       level: "high",

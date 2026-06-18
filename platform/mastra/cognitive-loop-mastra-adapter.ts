@@ -11,6 +11,7 @@ const ArtifactRefSchema = z.object({
     "evidence_bundle",
     "event_index",
     "event_store",
+    "watcher_ingest",
     "review_agent_report",
   ]),
   path: z.string().min(1),
@@ -98,7 +99,12 @@ export const validateCognitiveLoopEvidenceStep = createStep({
   inputSchema: CognitiveLoopRunInputSchema,
   outputSchema: EvidenceValidatedSchema,
   execute: async ({ inputData }) => {
-    const requiredKinds = new Set<ArtifactKind>(["project_snapshot", "decision_card", "event_store"]);
+    const requiredKinds = new Set<ArtifactKind>([
+      "project_snapshot",
+      "decision_card",
+      "event_store",
+      "watcher_ingest",
+    ]);
     const presentKinds = new Set(inputData.artifactRefs.map((artifact) => artifact.kind));
     const missingEvidence = [...requiredKinds].filter((kind) => !presentKinds.has(kind));
 
@@ -160,7 +166,7 @@ export const humanMasteryGateStep = createStep({
         reason: "Human Mastery Gate approval required before this Cognitive Loop run can continue.",
         loopRunId: inputData.loopRunId,
         decisionCardId: inputData.decisionCardId,
-        requiredEvidence: ["project_snapshot", "decision_card", "event_store"],
+        requiredEvidence: ["project_snapshot", "decision_card", "event_store", "watcher_ingest"],
         privacy: {
           metadataOnly: true,
           rawSourceTextIncluded: false,

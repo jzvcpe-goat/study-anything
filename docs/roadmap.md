@@ -126,7 +126,8 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies the TypeScript scaffold, HITL mapping, and privacy boundary.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` rehearses the metadata-only runtime boundary: high-risk run suspension, approved resume, rejected bail, and Event Store projection.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` starts the minimal repo-local Mastra runtime MVP against `@mastra/core` and verifies suspend/resume/bail and no-gate paths.
-- Manual watcher ingest exists through `.cognitive-loop/watchers.yaml` and `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`; durable storage, daemonized watcher input, and realtime console integration are still planned.
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` proves local libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata events.
+- Manual watcher ingest exists through `.cognitive-loop/watchers.yaml` and `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`; daemonized watcher input and realtime console integration are still planned.
 
 当前：
 
@@ -134,7 +135,8 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证 TypeScript scaffold、HITL 映射和隐私边界。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 会演练只含 metadata 的 runtime 边界：高风险运行暂停、批准后 resume、拒绝后 bail，以及 Event Store 投影。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 会通过 `@mastra/core` 启动最小本仓库 Mastra runtime MVP，并验证 suspend/resume/bail 和无需 gate 的路径。
-- 手动 watcher ingest 已通过 `.cognitive-loop/watchers.yaml` 和 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 接入；持久化 storage、常驻 watcher 输入和实时 console 集成仍然是计划中的层。
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 已证明本地 libSQL 可基于 watcher 生成的 metadata event 跨独立 Node 进程 suspend/resume 或 bail。
+- 手动 watcher ingest 已通过 `.cognitive-loop/watchers.yaml` 和 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 接入；常驻 watcher 输入和实时 console 集成仍然是计划中的层。
 
 Deliver:
 

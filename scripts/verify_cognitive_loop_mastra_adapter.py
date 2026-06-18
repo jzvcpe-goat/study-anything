@@ -44,6 +44,7 @@ REQUIRED_TYPESCRIPT_MARKERS = (
     "metadataOnly: z.literal(true)",
     "rawSourceTextIncluded: z.literal(false)",
     "modelKeysIncluded: z.literal(false)",
+    '"watcher_ingest"',
 )
 
 REQUIRED_DOC_MARKERS = (
@@ -162,7 +163,7 @@ def build_dry_run() -> dict[str, Any]:
         "low_risk": {
             "input": {
                 "risk": {"level": "low", "requiresHumanGate": False},
-                "artifact_kinds": ["project_snapshot", "decision_card", "event_store"],
+                "artifact_kinds": ["project_snapshot", "decision_card", "event_store", "watcher_ingest"],
             },
             "expected_status": "not_required",
             "suspended": False,
@@ -170,7 +171,7 @@ def build_dry_run() -> dict[str, Any]:
         "high_risk": {
             "input": {
                 "risk": {"level": "high", "requiresHumanGate": True},
-                "artifact_kinds": ["project_snapshot", "decision_card", "event_store"],
+                "artifact_kinds": ["project_snapshot", "decision_card", "event_store", "watcher_ingest"],
             },
             "expected_status": "suspended_until_human_resume",
             "suspended": True,

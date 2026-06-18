@@ -101,6 +101,7 @@ def verify_package_files() -> list[dict[str, Any]]:
         PACKAGE_DIR / "README.md",
         PACKAGE_DIR / "src" / "runtime.ts",
         PACKAGE_DIR / "src" / "run-once.ts",
+        PACKAGE_DIR / "src" / "durable-run.ts",
         PACKAGE_DIR / "src" / "workflows" / "cognitive-loop-mastra-adapter.ts",
         ROOT / "platform" / "mastra" / "cognitive-loop-mastra-adapter.ts",
     ]
@@ -120,6 +121,10 @@ def verify_package_files() -> list[dict[str, Any]]:
     package = json.loads((PACKAGE_DIR / "package.json").read_text(encoding="utf-8"))
     if package.get("dependencies", {}).get("@mastra/core") != "1.43.0":
         raise MastraRuntimeServiceError("Mastra runtime package must pin @mastra/core 1.43.0.")
+    if package.get("dependencies", {}).get("@mastra/libsql") != "1.13.2":
+        raise MastraRuntimeServiceError("Mastra runtime package must pin @mastra/libsql 1.13.2.")
+    if package.get("scripts", {}).get("run-durable") != "tsx src/durable-run.ts":
+        raise MastraRuntimeServiceError("Mastra runtime package must expose the durable run script.")
     if package.get("scripts", {}).get("verify") != "npm run --silent typecheck && npm run --silent run-once -- --json":
         raise MastraRuntimeServiceError("Mastra runtime package must expose a deterministic verify script.")
     runtime_adapter = PACKAGE_DIR / "src" / "workflows" / "cognitive-loop-mastra-adapter.ts"

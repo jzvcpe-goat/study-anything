@@ -13,7 +13,7 @@
     "adapter_report_schema": "cognitive-loop-mastra-adapter-verification-v1",
     "adapter_version": "0.1.0",
     "manifest_schema": "cognitive-loop-mastra-adapter-manifest-v1",
-    "template_sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+    "template_sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
   },
   "artifact_records": [
     {
@@ -41,13 +41,19 @@
       "privacy_scan_passed": true
     },
     {
-      "bytes": 6064,
+      "bytes": 5249,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-watcher.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 7517,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/events/mastra-runtime-event-store.json",
       "privacy_scan_passed": true
     },
     {
-      "bytes": 11418,
+      "bytes": 13551,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/artifacts/mastra-runtime-event-store.html",
       "privacy_scan_passed": true
@@ -65,19 +71,19 @@
       "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
     },
     {
-      "bytes": 6731,
+      "bytes": 6820,
       "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
-      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
     },
     {
-      "bytes": 3730,
+      "bytes": 3786,
       "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
-      "sha256": "4da99875634110d7671cca7fae512589cef0b2b90ba91dc87d8a490a28fa7f56"
+      "sha256": "686161925b6dbc6b31ac1a67fbc13a81bb26ddfd1c3127da6f375603bd7ee3ba"
     },
     {
-      "bytes": 18112,
+      "bytes": 19162,
       "path": "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
-      "sha256": "39dd93cf1a1c7285cec9af7afc1397904332f8c4cc78ef91ffe232a28f948d5c"
+      "sha256": "f0dee8562f53124b17dd26e8979248010eaf0a539c61c921b6a2e710b1ea15ec"
     }
   ],
   "goal_status": {
@@ -111,7 +117,8 @@
         ".cognitive-loop/events/mastra-runtime-run-once.json",
         ".cognitive-loop/events/mastra-runtime-snapshot.json",
         ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
-        ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json"
+        ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json",
+        ".cognitive-loop/events/mastra-runtime-watcher.json"
       ],
       "constraints": {
         "diffBodiesIncluded": false,
@@ -131,10 +138,10 @@
     "output_contract": {
       "decisionCardId": "dec-cognitive-loop-run-once",
       "eventStoreProjection": {
-        "artifact_count": 4,
+        "artifact_count": 5,
         "content_included": false,
         "engine": "sqlite",
-        "event_count": 3,
+        "event_count": 4,
         "unique_event_count_expected_minimum": 3
       },
       "humanGate": {
@@ -147,7 +154,7 @@
     },
     "steps": [
       {
-        "evidence_count": 4,
+        "evidence_count": 5,
         "id": "validate-cognitive-loop-evidence",
         "source": "scripts/cognitive_loop_cli.py",
         "status": "succeeded"
@@ -171,8 +178,8 @@
         "status": "rejected"
       },
       {
-        "artifact_count": 4,
-        "event_count": 3,
+        "artifact_count": 5,
+        "event_count": 4,
         "id": "project-event-store-metadata",
         "status": "succeeded"
       }

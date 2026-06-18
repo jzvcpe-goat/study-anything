@@ -21,6 +21,7 @@ The repository-level verifier wraps these commands:
 
 ```bash
 python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check
+python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check
 ```
 
 Expected coverage:
@@ -29,5 +30,7 @@ Expected coverage:
 - approved gate resumes to success;
 - rejected gate bails without continuing unsafe work;
 - low-risk workflow completes without a gate;
+- suspended high-risk state persists to a local libSQL file and resumes or bails from a
+  separate Node process;
+- watcher-generated `ProjectEvent` evidence is used without starting a watcher daemon;
 - all output remains metadata-only and redacted.
-
