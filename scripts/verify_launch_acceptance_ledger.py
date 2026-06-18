@@ -130,6 +130,14 @@ SOURCE_REPORTS: tuple[dict[str, Any], ...] = (
         "launch_area": "zip-only platform adoption",
         "required_for_github_oss_launch": True,
     },
+    {
+        "report_id": "cognitive_loop_review_agent_workflow_install_smoke",
+        "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+        "schema_version": "cognitive-loop-review-agent-workflow-install-smoke-v1",
+        "accepted_statuses": ("pass",),
+        "launch_area": "zip-only Review Agent workflow adoption",
+        "required_for_github_oss_launch": True,
+    },
 )
 
 

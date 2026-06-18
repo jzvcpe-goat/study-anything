@@ -147,6 +147,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent metadata-only policy gate verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",

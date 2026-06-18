@@ -102,6 +102,7 @@ REQUIRED_EXPORT_EVIDENCE = [
     "release_asset_adoption.schema_version == release-asset-adoption-v1",
     "release_asset_adoption_fixture.schema_version == release-asset-adoption-fixture-v1",
     "release_asset_adoption_proof.schema_version == release-asset-adoption-proof-v1",
+    "cognitive_loop_review_agent_workflow_install_smoke.schema_version == cognitive-loop-review-agent-workflow-install-smoke-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
 ]

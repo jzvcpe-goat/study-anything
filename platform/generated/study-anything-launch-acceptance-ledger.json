@@ -85,6 +85,14 @@
       "status": "pass"
     },
     {
+      "launch_area": "zip-only Review Agent workflow adoption",
+      "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+      "report_id": "cognitive_loop_review_agent_workflow_install_smoke",
+      "required_for_github_oss_launch": true,
+      "schema_version": "cognitive-loop-review-agent-workflow-install-smoke-v1",
+      "status": "pass"
+    },
+    {
       "launch_area": "commercial boundary",
       "launch_assessment": {
         "github_oss_launch": "ready",

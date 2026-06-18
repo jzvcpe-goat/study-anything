@@ -99,6 +99,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 .venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 .venv/bin/python scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+.venv/bin/python scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
 .venv/bin/python scripts/verify_platform_handoff_checklist.py --check
 .venv/bin/python scripts/verify_launch_acceptance_ledger.py --check
 .venv/bin/python scripts/verify_github_launch_operator_guide.py --check

@@ -98,6 +98,7 @@ python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
 python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
 ```
 
 The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
@@ -107,4 +108,6 @@ Checks summary without reintroducing report-body content. The acceptance bundle 
 comment pack, manifest, and Markdown summary for operator handoff. The GitHub workflow verifier keeps
 the copy-ready manual workflow on the same metadata-only boundary and rejects unsafe auto-trigger or
 raw-report upload fixtures. The policy gate converts the same safe bundle or receipt into advisory,
-soft, or strict CI exit-code behavior without reopening raw Review Agent content.
+soft, or strict CI exit-code behavior without reopening raw Review Agent content. The workflow
+install smoke proves the same template and policy gate can be used from the adoption pack zip after
+copying the workflow into `.github/workflows/`, still without raw report upload or real model calls.
