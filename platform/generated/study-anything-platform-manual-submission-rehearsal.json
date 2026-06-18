@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 85,
+      "acceptance_evidence_count": 86,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -683,6 +683,7 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+        "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -763,6 +764,7 @@
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-platform-handoff-checklist.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -771,18 +773,21 @@
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "scripts/verify_platform_handoff_checklist.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
-        "platform/generated/study-anything-release-cleanroom-bootstrap.json"
+        "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+        "platform/generated/study-anything-platform-feedback-package.zip",
+        "platform/generated/study-anything-platform-feedback-package.json"
       ],
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 85,
+      "acceptance_evidence_count": 86,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -807,6 +812,7 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+        "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -891,6 +897,7 @@
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-platform-handoff-checklist.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -899,18 +906,21 @@
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "scripts/verify_platform_handoff_checklist.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
-        "platform/generated/study-anything-release-cleanroom-bootstrap.json"
+        "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+        "platform/generated/study-anything-platform-feedback-package.zip",
+        "platform/generated/study-anything-platform-feedback-package.json"
       ],
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 85,
+      "acceptance_evidence_count": 86,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -935,6 +945,7 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+        "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -1015,6 +1026,7 @@
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-platform-handoff-checklist.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -1023,11 +1035,14 @@
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "scripts/verify_platform_handoff_checklist.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
-        "platform/generated/study-anything-release-cleanroom-bootstrap.json"
+        "platform/generated/study-anything-release-cleanroom-bootstrap.json",
+        "platform/generated/study-anything-platform-feedback-package.zip",
+        "platform/generated/study-anything-platform-feedback-package.json"
       ],
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",

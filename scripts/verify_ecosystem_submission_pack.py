@@ -82,6 +82,9 @@ COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_FAILURES_PATH = (
 COGNITIVE_LOOP_PACK_EXTRACT_SMOKE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-pack-extract-smoke.json"
 )
+PLATFORM_HANDOFF_CHECKLIST_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-platform-handoff-checklist.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -215,6 +218,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_schema_pack_consumer.py",
     "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
     "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+    "scripts/verify_platform_handoff_checklist.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -237,6 +241,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+    "platform/generated/study-anything-platform-handoff-checklist.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -417,6 +422,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_schema_pack_consumer.py --check",
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
     "verify_cognitive_loop_pack_extract_smoke.py --check",
+    "verify_platform_handoff_checklist.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -709,6 +715,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop extracted pack smoke report.")
+        if "platform/generated/study-anything-platform-handoff-checklist.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the platform handoff checklist report.")
         if "scripts/cognitive_loop_recipe_cli.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI script.")
         if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in set(
@@ -743,6 +753,8 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             raise EcosystemSubmissionError(
                 f"{platform_id} must include the Cognitive Loop extracted pack smoke verifier."
             )
+        if "scripts/verify_platform_handoff_checklist.py" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the platform handoff checklist verifier.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -829,6 +841,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
             "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
             "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
+            "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -877,6 +890,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "scripts/verify_platform_handoff_checklist.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -899,6 +913,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-platform-handoff-checklist.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -2520,6 +2535,79 @@ def verify_cognitive_loop_pack_extract_smoke_report() -> None:
             raise EcosystemSubmissionError(f"Cognitive Loop extracted pack smoke privacy.{key} must be false.")
 
 
+def verify_platform_handoff_checklist_report() -> None:
+    report = load_json(PLATFORM_HANDOFF_CHECKLIST_PATH)
+    if report.get("schema_version") != "platform-handoff-checklist-v1":
+        raise EcosystemSubmissionError("Platform handoff checklist schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Platform handoff checklist report must pass.")
+    if report.get("version") != "v0.3.30-alpha":
+        raise EcosystemSubmissionError("Platform handoff checklist version drifted.")
+
+    handoff_assets = report.get("handoff_assets") or {}
+    if handoff_assets.get("adoption_pack_schema") != "study-anything-platform-adoption-pack-v1":
+        raise EcosystemSubmissionError("Platform handoff checklist adoption pack schema drifted.")
+    if handoff_assets.get("all_required_assets_present") is not True:
+        raise EcosystemSubmissionError("Platform handoff checklist must prove required assets are present.")
+    required_assets = set(handoff_assets.get("required_assets", []))
+    for asset in (
+        "platform/generated/study-anything-platform-adoption-pack.zip",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-adopter-evidence-archive.json",
+    ):
+        if asset not in required_assets:
+            raise EcosystemSubmissionError(f"Platform handoff checklist missing required asset {asset}.")
+
+    platforms = report.get("platforms")
+    if not isinstance(platforms, list) or len(platforms) != 4:
+        raise EcosystemSubmissionError("Platform handoff checklist platform rows drifted.")
+    platform_ids = {item.get("platform_id") for item in platforms if isinstance(item, dict)}
+    if platform_ids != REQUIRED_PLATFORMS:
+        raise EcosystemSubmissionError("Platform handoff checklist platform ids drifted.")
+    for row in platforms:
+        if not isinstance(row, dict):
+            raise EcosystemSubmissionError("Platform handoff checklist rows must be objects.")
+        if row.get("no_frontend_required") is not True:
+            raise EcosystemSubmissionError("Platform handoff checklist row must remain no-frontend.")
+        for key in ("declares_extract_smoke", "declares_feedback_package", "declares_handoff_checklist"):
+            if row.get(key) is not True:
+                raise EcosystemSubmissionError(f"Platform handoff checklist row {key} must be true.")
+
+    checklist = report.get("checklist")
+    expected_steps = {
+        "extract_and_validate_pack",
+        "import_platform_assets",
+        "run_static_acceptance",
+        "choose_runtime_path",
+        "connect_user_owned_agent",
+        "collect_redacted_feedback",
+    }
+    if not isinstance(checklist, list) or {item.get("step_id") for item in checklist if isinstance(item, dict)} != expected_steps:
+        raise EcosystemSubmissionError("Platform handoff checklist steps drifted.")
+
+    acceptance = report.get("acceptance") or {}
+    if acceptance.get("evidence") != "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1":
+        raise EcosystemSubmissionError("Platform handoff checklist evidence drifted.")
+    if acceptance.get("minimum_command") != "python3 scripts/verify_platform_handoff_checklist.py --check":
+        raise EcosystemSubmissionError("Platform handoff checklist minimum command drifted.")
+
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "raw_source_text_included",
+        "learner_answers_included",
+        "agent_endpoint_secrets_included",
+        "real_model_keys_stored_by_study_anything",
+        "automatic_upload",
+        "standalone_frontend_required",
+        "browser_video_private_context_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Platform handoff checklist privacy_assertions.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("Platform handoff checklist report must be redacted.")
+
+
 def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
@@ -3641,6 +3729,7 @@ def main() -> None:
     verify_cognitive_loop_schema_pack_consumer_report()
     verify_cognitive_loop_schema_pack_consumer_failures_report()
     verify_cognitive_loop_pack_extract_smoke_report()
+    verify_platform_handoff_checklist_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -3693,6 +3782,7 @@ def main() -> None:
                 "cognitive_loop_schema_pack_consumer": "cognitive-loop-schema-pack-consumer-v1",
                 "cognitive_loop_schema_pack_consumer_failures": "cognitive-loop-schema-pack-consumer-failures-v1",
                 "cognitive_loop_pack_extract_smoke": "cognitive-loop-pack-extract-smoke-v1",
+                "platform_handoff_checklist": "platform-handoff-checklist-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",

@@ -26,6 +26,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json`
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
 - `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json`
+- `platform/generated/study-anything-platform-handoff-checklist.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -96,6 +97,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 .venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 .venv/bin/python scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+.venv/bin/python scripts/verify_platform_handoff_checklist.py --check
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py list
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py show risk_decision
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
@@ -154,3 +156,5 @@ discoverable and hash-checked from the adoption pack zip without a repo checkout
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
 `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
 adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
+`platform/generated/study-anything-platform-handoff-checklist.json` gives external platform
+operators a release handoff checklist for import, verification, runtime choice, and support escalation.
