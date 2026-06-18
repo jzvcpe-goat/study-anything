@@ -57,6 +57,9 @@ required:
   - id: cognitive-loop.review-agent-github-workflow
     command: python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
     blocking: true
+  - id: cognitive-loop.review-agent-policy-gate
+    command: python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+    blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
     blocking: true

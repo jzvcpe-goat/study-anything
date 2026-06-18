@@ -97,6 +97,7 @@ python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
 python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
 python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
+python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
 ```
 
 The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
@@ -105,4 +106,5 @@ chain-of-thought. The PR comment pack turns that receipt into bilingual copy-rea
 Checks summary without reintroducing report-body content. The acceptance bundle packages the receipt,
 comment pack, manifest, and Markdown summary for operator handoff. The GitHub workflow verifier keeps
 the copy-ready manual workflow on the same metadata-only boundary and rejects unsafe auto-trigger or
-raw-report upload fixtures.
+raw-report upload fixtures. The policy gate converts the same safe bundle or receipt into advisory,
+soft, or strict CI exit-code behavior without reopening raw Review Agent content.
