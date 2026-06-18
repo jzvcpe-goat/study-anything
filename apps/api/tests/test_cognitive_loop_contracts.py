@@ -6,11 +6,15 @@ from _path import ROOT
 
 from study_anything.core.cognitive_loop_contracts import (
     BOOTSTRAP_SCHEMA_VERSION,
+    CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
+    build_cli_artifact_report,
+    render_cli_artifact_html,
     validate_all_public_objects,
     validate_contract_files,
     validate_decision_card,
     validate_project_event,
+    write_default_contract_files,
 )
 
 REPO_ROOT = ROOT.parents[1]
@@ -138,6 +142,33 @@ class CognitiveLoopContractsTests(unittest.TestCase):
 
     def test_bootstrap_schema_constant_is_public(self) -> None:
         self.assertEqual(BOOTSTRAP_SCHEMA_VERSION, "cognitive-loop-contract-bootstrap-v1")
+
+    def test_cli_artifact_report_renders_static_html(self) -> None:
+        report = build_cli_artifact_report(REPO_ROOT, generated_at="2026-06-17T00:20:00Z")
+        html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], CLI_ARTIFACT_SCHEMA_VERSION)
+        self.assertIn("Cognitive Loop System", html)
+        self.assertIn("Decision Card", html)
+        self.assertIn("Contract Files", html)
+        self.assertFalse(report["privacy"]["standalone_frontend_required"])
+        self.assertFalse(report["privacy"]["real_model_keys_included"])
+
+    def test_init_writes_valid_contract_files(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            reports = write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+
+            self.assertEqual({report.status for report in reports}, {"written"})
+            validated = validate_contract_files(root)
+            self.assertEqual({report.name for report in validated}, {"config", "permissions", "evals", "risk"})
 
 
 if __name__ == "__main__":

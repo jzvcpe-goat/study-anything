@@ -8,6 +8,9 @@ layers can consume without making Mastra or Langfuse the source of truth.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from html import escape
+import json
 from pathlib import Path
 import re
 from typing import Any, Callable, Iterable, Mapping, Optional
@@ -23,6 +26,7 @@ PERMISSIONS_SCHEMA_VERSION = "cognitive-loop-permissions-v1"
 EVALS_SCHEMA_VERSION = "cognitive-loop-evals-v1"
 RISK_SCHEMA_VERSION = "cognitive-loop-risk-v1"
 BOOTSTRAP_SCHEMA_VERSION = "cognitive-loop-contract-bootstrap-v1"
+CLI_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-cli-artifact-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -211,6 +215,16 @@ class ContractFileReport:
     name: str
     path: str
     schema_version: str
+    status: str
+
+    def public_dict(self) -> dict[str, str]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ContractInitReport:
+    name: str
+    path: str
     status: str
 
     def public_dict(self) -> dict[str, str]:
@@ -614,6 +628,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         commands.append(_require_string(item, "command"))
     if "python3 scripts/verify_cognitive_loop_contracts.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop contract verifier.")
+    if "python3 scripts/verify_cognitive_loop_cli.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop CLI artifact verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -681,3 +697,465 @@ def validate_all_public_objects(values: Mapping[str, Mapping[str, Any]]) -> dict
         "mastery_record": validate_mastery_record(values["mastery_record"]).public_dict(),
         "evolution_report": validate_evolution_report(values["evolution_report"]).public_dict(),
     }
+
+
+def _safe_yaml_scalar(key: str, value: str) -> str:
+    stripped = value.strip()
+    if not stripped:
+        raise CognitiveLoopContractError(f"Contract init requires non-empty {key}.")
+    if "\n" in stripped or "\r" in stripped:
+        raise CognitiveLoopContractError(f"Contract init value cannot contain newlines: {key}.")
+    _assert_public_value(key, stripped)
+    return json.dumps(stripped, ensure_ascii=False)
+
+
+def default_contract_texts(
+    *,
+    project_id: str = "study-anything",
+    project_name: str = "Study Anything",
+) -> dict[str, str]:
+    """Return the default repo-local Cognitive Loop contract files."""
+
+    project_id_yaml = _safe_yaml_scalar("project_id", project_id)
+    project_name_yaml = _safe_yaml_scalar("project_name", project_name)
+    return {
+        "config": f"""schemaVersion: {CONFIG_SCHEMA_VERSION}
+project:
+  id: {project_id_yaml}
+  name: {project_name_yaml}
+  mode: local_first
+storage:
+  eventStore: .cognitive-loop/events
+  artifactDir: .cognitive-loop/artifacts
+privacy:
+  rawSourceText: forbidden
+  learnerAnswers: redacted
+  realModelKeys: external
+  agentEndpoints: external
+  observabilityMetadata: redacted
+""",
+        "permissions": f"""schemaVersion: {PERMISSIONS_SCHEMA_VERSION}
+defaultMode: read_only
+humanApproval:
+  requiredFor:
+    - write_files
+    - run_network
+    - high_risk_decision
+    - rollback_change
+agent:
+  allowedActions:
+    - read_repo
+    - propose_decision_card
+    - run_verifier
+    - write_static_report
+  deniedActions:
+    - store_model_keys
+    - upload_raw_sources
+    - execute_unreviewed_plugins
+    - bypass_human_mastery_gate
+""",
+        "evals": f"""schemaVersion: {EVALS_SCHEMA_VERSION}
+required:
+  - id: cognitive-loop.contracts
+    command: python3 scripts/verify_cognitive_loop_contracts.py --check
+    blocking: true
+  - id: cognitive-loop.cli-artifact
+    command: python3 scripts/verify_cognitive_loop_cli.py --check
+    blocking: true
+  - id: study-anything.release-check
+    command: ./scripts/release_check.sh
+    blocking: true
+optional:
+  - id: published-image.manifest
+    command: python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --manifest-only
+    blocking: false
+""",
+        "risk": f"""schemaVersion: {RISK_SCHEMA_VERSION}
+levels:
+  - low
+  - medium
+  - high
+  - blocked
+rules:
+  - id: docs-only
+    riskLevel: low
+    when:
+      - docs
+      - comments
+    humanMasteryGate: optional
+  - id: runtime-contract
+    riskLevel: medium
+    when:
+      - public_contract
+      - verifier
+      - release_asset
+    humanMasteryGate: recommended
+  - id: sensitive-runtime
+    riskLevel: high
+    when:
+      - auth
+      - billing
+      - secrets
+      - plugin_execution
+      - destructive_file_write
+    humanMasteryGate: required
+  - id: external-data-exfiltration
+    riskLevel: blocked
+    when:
+      - raw_source_upload
+      - model_key_storage
+      - hidden_instruction_transfer
+    humanMasteryGate: required
+""",
+    }
+
+
+def write_default_contract_files(
+    root: Path,
+    *,
+    project_id: str = "study-anything",
+    project_name: str = "Study Anything",
+    overwrite: bool = False,
+) -> list[ContractInitReport]:
+    """Create `.cognitive-loop` contract files if they are missing."""
+
+    directory = contract_dir(root)
+    directory.mkdir(parents=True, exist_ok=True)
+    texts = default_contract_texts(project_id=project_id, project_name=project_name)
+    reports: list[ContractInitReport] = []
+    for name, (file_name, _schema_version) in CONTRACT_FILES.items():
+        path = directory / file_name
+        status = "exists"
+        if overwrite or not path.exists():
+            path.write_text(texts[name], encoding="utf-8")
+            status = "written"
+        reports.append(
+            ContractInitReport(
+                name=name,
+                path=str(path.relative_to(directory.parent)),
+                status=status,
+            )
+        )
+    validate_contract_files(root)
+    return reports
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def build_cli_artifact_report(
+    root: Path,
+    *,
+    objective: str = "Validate Cognitive Loop local contracts and create a shareable HTML artifact.",
+    title: str = "Cognitive Loop Local Readiness",
+    risk_level: str = "medium",
+    generated_at: Optional[str] = None,
+) -> dict[str, Any]:
+    """Build the local, redacted report that the CLI can render as JSON or HTML."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("title", title)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-cli-report",
+            "project_id": "study-anything",
+            "actor": "agent",
+            "event_type": "verification_completed",
+            "summary": "Cognitive Loop local contracts were verified and rendered as a static artifact.",
+            "timestamp": generated_at,
+            "target": ".cognitive-loop",
+            "refs": ["script:scripts/cognitive_loop_cli.py", "doc:docs/cognitive-loop-contracts.md"],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-cli-artifact",
+            "project_id": "study-anything",
+            "title": title,
+            "status": "approved",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [
+                "contract:.cognitive-loop/config.yaml",
+                "contract:.cognitive-loop/permissions.yaml",
+                "contract:.cognitive-loop/evals.yaml",
+                "contract:.cognitive-loop/risk.yaml",
+            ],
+            "risk": {
+                "level": risk_level,
+                "score": 0.42 if risk_level == "medium" else 0.2,
+                "reasons": ["local contract verification", "static report generation"],
+            },
+            "human_mastery_gate": {
+                "required": risk_level in {"high", "blocked"},
+                "status": "pending" if risk_level in {"high", "blocked"} else "not_required",
+                "questions": [
+                    "Can the operator explain what is shipped versus planned?",
+                    "Can the operator run the verifier before changing runtime behavior?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py verify",
+                    "python3 scripts/cognitive_loop_cli.py report --html",
+                    "python3 scripts/verify_cognitive_loop_cli.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_generated_artifact", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-cli-artifact",
+            "project_id": "study-anything",
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [".cognitive-loop/artifacts/cognitive-loop-report.html"],
+        }
+    ).public_dict()
+    mastery = validate_mastery_record(
+        {
+            "record_id": "mastery-cognitive-loop-cli-artifact",
+            "project_id": "study-anything",
+            "subject": "Cognitive Loop local contract usage",
+            "level": 0.74,
+            "bloom": "apply",
+            "evidence_refs": [decision["decision_id"], loop["run_id"]],
+            "updated_at": generated_at,
+        }
+    ).public_dict()
+    evolution = validate_evolution_report(
+        {
+            "report_id": "evo-cognitive-loop-cli-artifact",
+            "project_id": "study-anything",
+            "status": "approved",
+            "proposed_changes": [
+                "Initialize repo-local Cognitive Loop contracts",
+                "Verify contracts without a runtime daemon",
+                "Render a local static HTML artifact for platform-agent handoff",
+            ],
+            "decision_card_ids": [decision["decision_id"]],
+            "verification_refs": ["python3 scripts/verify_cognitive_loop_cli.py --check"],
+            "risk_summary": "No model key custody, raw source upload, watcher, or Mastra runtime is introduced.",
+            "created_at": generated_at,
+        }
+    ).public_dict()
+    report = {
+        "schema_version": CLI_ARTIFACT_SCHEMA_VERSION,
+        "status": "ready",
+        "generated_at": generated_at,
+        "title": title,
+        "objective": objective,
+        "contract_files": contract_reports,
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "mastery_record": mastery,
+        "evolution_report": evolution,
+        "privacy": {
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "real_model_keys_included": False,
+            "standalone_frontend_required": False,
+        },
+        "current_limits": [
+            "Mastra runtime is planned, not started by this artifact.",
+            "Project watcher is planned, not started by this artifact.",
+            "The full HTML console is planned; this is a static local report.",
+        ],
+        "commands": {
+            "init": "python3 scripts/cognitive_loop_cli.py init",
+            "verify": "python3 scripts/cognitive_loop_cli.py verify",
+            "html_report": "python3 scripts/cognitive_loop_cli.py report --html",
+        },
+    }
+    _assert_public_value("cli_artifact_report", report)
+    return report
+
+
+def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
+    """Render a compact static HTML artifact for local review and platform handoff."""
+
+    _assert_public_value("cli_artifact_html", report)
+
+    def value(path: str, fallback: str = "") -> str:
+        current: Any = report
+        for part in path.split("."):
+            if not isinstance(current, Mapping):
+                return fallback
+            current = current.get(part)
+        return fallback if current is None else str(current)
+
+    def list_items(items: Iterable[Any]) -> str:
+        return "\n".join(f"<li>{escape(str(item))}</li>" for item in items)
+
+    contract_files = report.get("contract_files")
+    if not isinstance(contract_files, list):
+        contract_files = []
+    contract_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('name', '')))}</td>"
+        f"<td>{escape(str(item.get('path', '')))}</td>"
+        f"<td>{escape(str(item.get('schema_version', '')))}</td>"
+        f"<td>{escape(str(item.get('status', '')))}</td>"
+        "</tr>"
+        for item in contract_files
+        if isinstance(item, Mapping)
+    )
+    limits = report.get("current_limits")
+    if not isinstance(limits, list):
+        limits = []
+    commands = report.get("commands")
+    if not isinstance(commands, Mapping):
+        commands = {}
+    command_rows = "\n".join(
+        f"<tr><td>{escape(str(key))}</td><td><code>{escape(str(command))}</code></td></tr>"
+        for key, command in sorted(commands.items())
+    )
+    json_blob = escape(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{escape(value('title', 'Cognitive Loop Report'))}</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      --ink: #182019;
+      --muted: #5f6d61;
+      --line: #dbe3d5;
+      --paper: #faf8f1;
+      --wash: #eef5e7;
+      --accent: #245f3b;
+      --accent-2: #a6542b;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(166, 84, 43, 0.15), transparent 30rem),
+        linear-gradient(135deg, var(--paper), var(--wash));
+      line-height: 1.5;
+    }}
+    main {{
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }}
+    header {{ margin-bottom: 40px; }}
+    .brand {{
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      margin: 0 0 18px;
+    }}
+    .summary {{
+      max-width: 760px;
+      font-size: 20px;
+      color: var(--muted);
+      margin: 0;
+    }}
+    section {{
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+    }}
+    h2 {{
+      font-size: 24px;
+      margin: 0 0 14px;
+    }}
+    .status {{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+    }}
+    .status div {{
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }}
+    th, td {{
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      vertical-align: top;
+    }}
+    code, pre {{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }}
+    pre {{
+      overflow: auto;
+      max-height: 420px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid var(--line);
+    }}
+    .risk {{ color: var(--accent-2); font-weight: 700; }}
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1 class="brand">Cognitive Loop System</h1>
+      <p class="summary">{escape(value('objective'))}</p>
+    </header>
+    <section>
+      <h2>Local Artifact Status</h2>
+      <div class="status">
+        <div>Status<br><strong>{escape(value('status'))}</strong></div>
+        <div>Schema<br><strong>{escape(value('schema_version'))}</strong></div>
+        <div>Generated<br><strong>{escape(value('generated_at'))}</strong></div>
+        <div>Risk<br><strong class="risk">{escape(value('decision_card.risk.level'))}</strong></div>
+      </div>
+    </section>
+    <section>
+      <h2>Decision Card</h2>
+      <p><strong>{escape(value('decision_card.title'))}</strong></p>
+      <p>{escape(value('decision_card.summary'))}</p>
+      <p>Human Mastery Gate: <strong>{escape(value('decision_card.human_mastery_gate.status'))}</strong></p>
+    </section>
+    <section>
+      <h2>Contract Files</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Path</th><th>Schema</th><th>Status</th></tr></thead>
+        <tbody>{contract_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Next Commands</h2>
+      <table>
+        <thead><tr><th>Action</th><th>Command</th></tr></thead>
+        <tbody>{command_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Current Limits</h2>
+      <ul>{list_items(limits)}</ul>
+    </section>
+    <section>
+      <h2>Redacted JSON</h2>
+      <pre>{json_blob}</pre>
+    </section>
+  </main>
+</body>
+</html>
+"""
