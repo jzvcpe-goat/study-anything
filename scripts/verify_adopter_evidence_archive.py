@@ -19,7 +19,7 @@ DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-adopter-evide
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.30-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
@@ -379,7 +379,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/maintainer-rotation.md": [SCHEMA_VERSION, "maintainer handoff"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "Adopter Evidence Archive"],
         "docs/release-checklist.md": ["verify_adopter_evidence_archive.py --check"],
-        "docs/roadmap.md": ["v0.3.30-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.31-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")

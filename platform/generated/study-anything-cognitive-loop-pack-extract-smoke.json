@@ -1,0 +1,69 @@
+{
+  "commands": [
+    {
+      "exit_code": 0,
+      "mode": "write_then_check",
+      "report": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+      "script": "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+      "status": "pass"
+    },
+    {
+      "exit_code": 0,
+      "mode": "write_then_check",
+      "report": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+      "script": "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+      "status": "pass"
+    }
+  ],
+  "distribution": {
+    "report_path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+    "safe_for_platform_agent_static_import": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check"
+  },
+  "extraction": {
+    "archive_root": "study-anything-platform-adoption-pack",
+    "command_count": 2,
+    "included_scripts_executed": true,
+    "required_files_present": [
+      "manifest.json",
+      "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+      "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+      "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+      "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py"
+    ]
+  },
+  "pack": {
+    "file_count": 288,
+    "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
+    "no_frontend_required": true,
+    "path": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "real_model_keys_stored_by_study_anything": false
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "command_stderr_included": false,
+    "command_stdout_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "temporary_paths_included": false,
+    "temporary_report_outputs_included": false
+  },
+  "purpose": "Prove an external platform Agent can extract the adoption pack and run its included Cognitive Loop schema consumer checks without a repo checkout.",
+  "schema_version": "cognitive-loop-pack-extract-smoke-v1",
+  "status": "pass",
+  "zip_only_validation": {
+    "file_changes_applied": false,
+    "original_pack_only": true,
+    "recipe_cli_invoked": false,
+    "repo_checkout_required": false,
+    "runtime_started": false,
+    "temporary_report_outputs_persisted": false,
+    "used_extracted_pack_scripts": true
+  }
+}

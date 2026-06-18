@@ -78,9 +78,9 @@ class AdopterEvidenceArchiveTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "adopter-evidence-archive-v1")
-        self.assertEqual(report["version"], "v0.3.30-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
-        self.assertEqual(report["release_identity"]["tag"], "v0.3.30-alpha")
+        self.assertEqual(report["release_identity"]["tag"], "v0.3.31-alpha")
         self.assertEqual(
             report["source_schemas"]["public_support_status"]["schema_version"],
             "public-support-status-v1",
@@ -128,7 +128,7 @@ class AdopterEvidenceArchiveTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "adopter-evidence-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.30-alpha")
+            self.assertEqual(payload["version"], "v0.3.31-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             self.assertEqual(
                 payload["evidence_mapping"]["linked_archive_schema"],

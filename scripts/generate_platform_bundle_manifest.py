@@ -47,6 +47,131 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic external-platform operator drill transcript.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-contracts.json",
+        "generated_asset",
+        "Cognitive Loop contract bootstrap verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
+        "generated_asset",
+        "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
+        "generated_asset",
+        "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
+        "generated_asset",
+        "Cognitive Loop redacted project snapshot verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "generated_asset",
+        "Cognitive Loop Human Mastery Gate approval and rejection verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only evidence bundle verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-event-index.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only local event index verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only artifact doctor verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-repair-plan.json",
+        "generated_asset",
+        "Cognitive Loop manual-only repair plan verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-artifact-index.json",
+        "generated_asset",
+        "Cognitive Loop static local artifact index verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "generated_asset",
+        "Cognitive Loop platform-agent adoption cookbook verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "generated_asset",
+        "Machine-readable Cognitive Loop platform-agent adoption recipes.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "generated_asset",
+        "Cognitive Loop platform-agent recipe replay verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
+        "generated_asset",
+        "Cognitive Loop Skill and platform-pack recipe entrypoint verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "generated_asset",
+        "Cognitive Loop read-only recipe CLI verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "generated_asset",
+        "Deterministic read-only Cognitive Loop recipe CLI output receipts.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "generated_asset",
+        "Deterministic read-only Cognitive Loop recipe CLI failure receipts.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "generated_asset",
+        "Offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+        "generated_asset",
+        "Negative fixtures proving Cognitive Loop recipe CLI schemas reject drift, unsafe flags, malformed types, and private text probes.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "generated_asset",
+        "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "generated_asset",
+        "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "generated_asset",
+        "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
+    ),
+    (
+        "platform/generated/study-anything-platform-handoff-checklist.json",
+        "generated_asset",
+        "External platform handoff checklist for import, verification, runtime, and support escalation.",
+    ),
+    (
+        "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "generated_asset",
+        "Public launch acceptance ledger for GitHub OSS and platform-Agent adoption.",
+    ),
+    (
+        "platform/generated/study-anything-github-launch-operator-guide.json",
+        "generated_asset",
+        "GitHub launch operator guide proof for release sequence, assets, and local-first boundaries.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -260,6 +385,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/platform-agent-release-replay.md",
         "operator_doc",
         "Platform Agent release replay guide for external tool hosts.",
+    ),
+    (
+        "docs/cognitive-loop-contracts.md",
+        "operator_doc",
+        "Cognitive Loop local contract bootstrap guide.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -762,6 +892,141 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission pack verifier for external platform review readiness.",
     ),
     (
+        "scripts/verify_cognitive_loop_contracts.py",
+        "verification",
+        "Cognitive Loop contract bootstrap verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_cli.py",
+        "cli",
+        "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_cli.py",
+        "verification",
+        "Cognitive Loop CLI and static HTML artifact verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_run_once.py",
+        "verification",
+        "Cognitive Loop run-once evidence verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_snapshot.py",
+        "verification",
+        "Cognitive Loop project snapshot verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_human_gate.py",
+        "verification",
+        "Cognitive Loop Human Mastery Gate verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evidence_bundle.py",
+        "verification",
+        "Cognitive Loop metadata-only evidence bundle verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_event_index.py",
+        "verification",
+        "Cognitive Loop metadata-only local event index verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_doctor.py",
+        "verification",
+        "Cognitive Loop metadata-only artifact doctor verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_repair_plan.py",
+        "verification",
+        "Cognitive Loop manual-only repair plan verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_index.py",
+        "verification",
+        "Cognitive Loop static local artifact index verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_adoption_cookbook.py",
+        "verification",
+        "Cognitive Loop platform-agent adoption cookbook verifier.",
+    ),
+    (
+        "scripts/generate_cognitive_loop_adoption_recipes.py",
+        "verification",
+        "Generate machine-readable Cognitive Loop platform-agent adoption recipes.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_replay.py",
+        "verification",
+        "Verify Cognitive Loop adoption recipes are replay-ready for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_skill_entrypoint.py",
+        "verification",
+        "Verify Cognitive Loop recipe entrypoints are visible from the Skill and platform packs.",
+    ),
+    (
+        "scripts/cognitive_loop_recipe_cli.py",
+        "cli",
+        "Read-only Cognitive Loop recipe query CLI for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli.py",
+        "verification",
+        "Verify the read-only Cognitive Loop recipe CLI for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "verification",
+        "Generate and verify deterministic Cognitive Loop recipe CLI receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "verification",
+        "Generate and verify deterministic Cognitive Loop recipe CLI failure receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
+        "verification",
+        "Generate and verify offline JSON Schemas for Cognitive Loop recipe CLI reports.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
+        "verification",
+        "Verify negative fixtures for Cognitive Loop recipe CLI JSON Schemas.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+        "verification",
+        "Verify Cognitive Loop schema evidence can be consumed from the adoption pack only.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "verification",
+        "Verify Cognitive Loop schema pack consumer failure cases are safe and deterministic.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "verification",
+        "Verify the extracted adoption pack can run its included schema consumer checks.",
+    ),
+    (
+        "scripts/verify_platform_handoff_checklist.py",
+        "verification",
+        "Generate and verify the external platform handoff checklist.",
+    ),
+    (
+        "scripts/verify_launch_acceptance_ledger.py",
+        "verification",
+        "Generate and verify the public launch acceptance ledger.",
+    ),
+    (
+        "scripts/verify_github_launch_operator_guide.py",
+        "verification",
+        "Generate and verify the GitHub launch operator guide proof.",
+    ),
+    (
         "scripts/run_skill_mode_demo.sh",
         "verification",
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
@@ -887,6 +1152,26 @@ FILES: list[tuple[str, str, str]] = [
         "Mock HTTP/user-owned Agent eval fixture.",
     ),
     (
+        ".cognitive-loop/config.yaml",
+        "cognitive_loop_contract",
+        "Local-first Cognitive Loop project configuration contract.",
+    ),
+    (
+        ".cognitive-loop/permissions.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop permission and human approval contract.",
+    ),
+    (
+        ".cognitive-loop/evals.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop required eval command contract.",
+    ),
+    (
+        ".cognitive-loop/risk.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop risk and human mastery gate contract.",
+    ),
+    (
         "docs/adoption.md",
         "docs",
         "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
@@ -900,6 +1185,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/platform-agent-integrations.md",
         "docs",
         "General platform Agent integration guide.",
+    ),
+    (
+        "docs/cognitive-loop-adoption-cookbook.md",
+        "docs",
+        "Scenario cookbook for local Cognitive Loop operations from platform Agents.",
     ),
     (
         "docs/commercial-readiness.md",
@@ -1027,7 +1317,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.30-alpha.md",
+        "docs/release-notes/v0.3.31-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

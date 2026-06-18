@@ -35,6 +35,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Learning Enrichment bridge for web, document, app, video-slice, Markdown, and Obsidian context.
 - Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and GHCR image evidence.
+- Cognitive Loop contract bootstrap with `.cognitive-loop/config.yaml`, `permissions.yaml`, `evals.yaml`, `risk.yaml`, and `cognitive-loop-contract-bootstrap-v1` verification.
 
 当前 alpha 已经具备本地优先的 Study Anything 基础：
 
@@ -47,6 +48,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Learning Enrichment bridge：接收网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段。
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
+- Cognitive Loop contract bootstrap：`.cognitive-loop/config.yaml`、`permissions.yaml`、`evals.yaml`、`risk.yaml` 和 `cognitive-loop-contract-bootstrap-v1` 验证。
 
 ## Feasibility And Boundary
 
@@ -92,13 +94,14 @@ Cognitive Loop System
       └── Realtime local HTML console
 ```
 
-Mastra, project watchers, DecisionCard/Risk/Human Mastery Gate, and the full HTML Artifact console are **planned Cognitive Loop layers**, not shipped runtime claims in this pivot PR. The current launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
+Mastra, project watchers, automated runtime gates, and the full HTML Artifact console are **planned Cognitive Loop layers**, not shipped runtime claims in this pivot PR. The current implementation includes public DecisionCard/Risk/Human Mastery Gate contracts plus local static evidence artifacts. The launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
 
-Mastra、项目监听器、DecisionCard/Risk/Human Mastery Gate 和完整 HTML Artifact Console 是 **下一阶段 Cognitive Loop 层**，不是这次定位 PR 已经交付的运行时能力。当前上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
+Mastra、项目监听器、自动化 runtime gate 和完整 HTML Artifact Console 是 **下一阶段 Cognitive Loop 层**，不是这次定位 PR 已经交付的运行时能力。当前实现已经包含公开的 DecisionCard/Risk/Human Mastery Gate 契约和本地静态 evidence artifact；上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
 
 ## Public Conceptual Contracts
 
 These names are documented now so future implementation work has a stable public vocabulary. They are conceptual contracts, not current HTTP endpoints:
+The first local validator for these contracts is now available in `scripts/verify_cognitive_loop_contracts.py`. A companion local CLI can initialize the contracts, render a static HTML DecisionCard artifact with `python3 scripts/cognitive_loop_cli.py report --html`, produce one bounded local `LoopRun` / `DecisionCard` evidence cycle with `python3 scripts/cognitive_loop_cli.py run-once --html`, capture a redacted path-level project snapshot with `python3 scripts/cognitive_loop_cli.py snapshot --html`, record a local Human Mastery Gate approval or rejection with `python3 scripts/cognitive_loop_cli.py gate --approve --html`, create a metadata-only evidence bundle with `python3 scripts/cognitive_loop_cli.py bundle --html`, build a metadata-only local event timeline with `python3 scripts/cognitive_loop_cli.py index --html`, check local artifact consistency with `python3 scripts/cognitive_loop_cli.py doctor --html`, create a manual-only repair plan with `python3 scripts/cognitive_loop_cli.py repair-plan --html`, and open a static local artifact index with `python3 scripts/cognitive_loop_cli.py artifact-index --html`. Mastra, watchers, and the full realtime HTML console are still planned layers.
 
 - `ProjectEvent`: normalized file, git, CI, runtime, human, or Agent event.
 - `DecisionCard`: evidence-bound decision record with impact, risk, verification, human gate, and rollback plan.
@@ -107,6 +110,7 @@ These names are documented now so future implementation work has a stable public
 - `EvolutionReport`: governed proposal for improving prompts, policies, evals, docs, tasks, retrieval, or learning paths.
 
 这些名称先作为公开概念契约，方便后续实现保持稳定词汇。它们现在不是 HTTP endpoint：
+第一版本地 validator 已经在 `scripts/verify_cognitive_loop_contracts.py` 中可用。配套本地 CLI 可以初始化契约，通过 `python3 scripts/cognitive_loop_cli.py report --html` 渲染静态 HTML DecisionCard artifact，通过 `python3 scripts/cognitive_loop_cli.py run-once --html` 生成一次有边界的本地 `LoopRun` / `DecisionCard` evidence cycle，通过 `python3 scripts/cognitive_loop_cli.py snapshot --html` 捕获脱敏的路径级项目 snapshot，通过 `python3 scripts/cognitive_loop_cli.py gate --approve --html` 记录本地 Human Mastery Gate 的批准或拒绝，通过 `python3 scripts/cognitive_loop_cli.py bundle --html` 创建只含 metadata 的 evidence bundle，通过 `python3 scripts/cognitive_loop_cli.py index --html` 构建只含 metadata 的本地事件 timeline，通过 `python3 scripts/cognitive_loop_cli.py doctor --html` 检查本地 artifact consistency，通过 `python3 scripts/cognitive_loop_cli.py repair-plan --html` 创建仅手动执行的 repair plan，并通过 `python3 scripts/cognitive_loop_cli.py artifact-index --html` 打开一个静态本地 artifact 入口页；Mastra、watcher 和完整实时 HTML console 仍然是计划中的层。
 
 - `ProjectEvent`：标准化的文件、Git、CI、运行时、人类或 Agent 事件。
 - `DecisionCard`：绑定证据的决策记录，包含影响、风险、验证、人类门禁和回滚计划。
@@ -166,8 +170,10 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The platform packs prove that an external Agent can import the tool surface, run one source-bound learning loop, return audit/eval evidence, and export Obsidian or NotebookLM-style handoff artifacts without requiring a standalone frontend or storing real model keys in Study Anything.
+For scenario-based operation, use `docs/cognitive-loop-adoption-cookbook.md` to map Kimi, Codex, WorkBuddy, or a private platform Agent to first adoption, daily project review, risk decisions, and learning handoff.
 
 平台接入包证明：外部 Agent 可以导入工具面、跑完一次基于来源的学习闭环、返回 audit/eval 证据，并导出 Obsidian 或 NotebookLM 式交接材料；整个过程不要求独立前端，也不把真实模型密钥存入 Study Anything。
+如果要按场景操作，请使用 `docs/cognitive-loop-adoption-cookbook.md`，它把 Kimi、Codex、WorkBuddy 或私有平台 Agent 映射到首次接入、日常项目审查、风险决策和学习交接四条路径。
 
 ## Docker Self-Host
 
@@ -189,12 +195,12 @@ If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/bui
 
 ## Published Image Evidence
 
-The current release evidence line is `v0.3.30-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
+The current release evidence line is `v0.3.31-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
 
 ```bash
 python3 scripts/setup_env.py
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
-python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --manifest-only
+python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --manifest-only
 ```
 
 This keeps Cognitive Loop positioning separate from deployability proof: the current published image evidence still belongs to the Study Anything learning-adapter runtime, while Mastra/watchers/HTML Artifact console remain planned layers.

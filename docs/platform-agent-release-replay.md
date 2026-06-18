@@ -1,6 +1,6 @@
 # Platform Agent Release Replay
 
-Study Anything v0.3.30-alpha adds `platform-agent-release-replay-v1` for
+Study Anything v0.3.31-alpha adds `platform-agent-release-replay-v1` for
 Kimi, Codex, WorkBuddy, and generic OpenAPI-style platform Agents.
 
 Use it after `release-asset-bootstrap-v1` passes. Bootstrap proves the GitHub
@@ -34,7 +34,7 @@ platform entrypoints without calling an API:
 
 ```bash
 python3 scripts/replay_platform_agent_from_release.py \
-  --tag v0.3.30-alpha \
+  --tag v0.3.31-alpha \
   --platform kimi \
   --runtime metadata-only
 ```
@@ -44,7 +44,7 @@ checkout and calls the tool chain:
 
 ```bash
 python3 scripts/replay_platform_agent_from_release.py \
-  --tag v0.3.30-alpha \
+  --tag v0.3.31-alpha \
   --platform kimi \
   --runtime skill-mode
 ```
@@ -54,7 +54,7 @@ Anything API:
 
 ```bash
 python3 scripts/replay_platform_agent_from_release.py \
-  --tag v0.3.30-alpha \
+  --tag v0.3.31-alpha \
   --platform workbuddy \
   --runtime external-api \
   --api-base http://127.0.0.1:8000
@@ -65,7 +65,7 @@ starts the published Docker image:
 
 ```bash
 python3 scripts/replay_platform_agent_from_release.py \
-  --tag v0.3.30-alpha \
+  --tag v0.3.31-alpha \
   --platform generic-openapi \
   --runtime published-image \
   --api-base http://127.0.0.1:8000

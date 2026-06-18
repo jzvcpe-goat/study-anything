@@ -10,7 +10,7 @@
       "known_limitation"
     ],
     "linked_archive_schema": "adopter-evidence-archive-v1",
-    "required_public_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report"
+    "required_public_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report"
   },
   "fixture_id": "local-ghcr-pull-timeout",
   "privacy": {
@@ -27,5 +27,5 @@
   "public_note": "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
   "public_status": "local_environment_limit",
   "schema_version": "adopter-evidence-fixture-v1",
-  "version": "v0.3.30-alpha"
+  "version": "v0.3.31-alpha"
 }

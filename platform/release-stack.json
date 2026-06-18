@@ -1,0 +1,92 @@
+{
+  "schema_version": "study-anything-release-stack-v1",
+  "version": "v0.3.31-alpha",
+  "purpose": "Offline merge-order manifest for the current stacked release PRs. It records branch order and local gates without storing GitHub tokens or live check payloads.",
+  "release_policy": {
+    "target_branch": "main",
+    "merge_order": "oldest_to_newest",
+    "merge_mode": "squash_or_merge_commit_by_maintainer_policy",
+    "after_each_merge": [
+      "sync main with git pull --ff-only",
+      "confirm the next stacked PR base is still current",
+      "confirm required GitHub checks are green"
+    ],
+    "before_tag": [
+      "python3 scripts/verify_release_stack_readiness.py",
+      "./scripts/release_check.sh",
+      "python3 scripts/verify_launch_acceptance_ledger.py --check",
+      "python3 scripts/verify_github_launch_operator_guide.py --check",
+      "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+    ]
+  },
+  "required_checks": [
+    "api-tests",
+    "compose-smoke"
+  ],
+  "stack": [
+    {
+      "order": 1,
+      "pr": 134,
+      "branch": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+      "base": "codex/v0.3.52-cognitive-loop-schema-pack-consumer-failures",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 2,
+      "pr": 135,
+      "branch": "codex/v0.3.54-platform-handoff-checklist",
+      "base": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 3,
+      "pr": 136,
+      "branch": "codex/v0.3.55-launch-acceptance-ledger",
+      "base": "codex/v0.3.54-platform-handoff-checklist",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 4,
+      "pr": 137,
+      "branch": "codex/v0.3.56-github-launch-operator-guide",
+      "base": "codex/v0.3.55-launch-acceptance-ledger",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 5,
+      "pr": 138,
+      "branch": "codex/v0.3.57-release-stack-readiness",
+      "base": "codex/v0.3.56-github-launch-operator-guide",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 6,
+      "pr": 139,
+      "branch": "codex/v0.3.58-live-release-stack-status",
+      "base": "codex/v0.3.57-release-stack-readiness",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 7,
+      "pr": 140,
+      "branch": "codex/v0.3.59-full-stack-lineage",
+      "base": "codex/v0.3.58-live-release-stack-status",
+      "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 8,
+      "pr": 141,
+      "branch": "codex/v0.3.60-merge-runbook-safety-gate",
+      "base": "codex/v0.3.59-full-stack-lineage",
+      "status_expected_before_merge": "checks_pass"
+    }
+  ],
+  "privacy_assertions": {
+    "github_tokens_included": false,
+    "live_check_payloads_included": false,
+    "raw_source_text_included": false,
+    "learner_answers_included": false,
+    "agent_endpoint_secrets_included": false,
+    "real_model_keys_included": false
+  }
+}

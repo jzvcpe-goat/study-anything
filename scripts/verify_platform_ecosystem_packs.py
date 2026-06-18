@@ -40,6 +40,31 @@ REQUIRED_ACCEPTANCE = {
     "deployment_guide.schema_version == deployment-guide-v1",
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
+    "cognitive_loop_contracts.schema_version == cognitive-loop-contract-bootstrap-v1",
+    "cognitive_loop_cli_artifact.schema_version == cognitive-loop-cli-artifact-verification-v1",
+    "cognitive_loop_run_once_evidence.schema_version == cognitive-loop-run-once-evidence-verification-v1",
+    "cognitive_loop_project_snapshot.schema_version == cognitive-loop-project-snapshot-verification-v1",
+    "cognitive_loop_human_gate.schema_version == cognitive-loop-human-gate-verification-v1",
+    "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
+    "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
+    "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
+    "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
+    "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
+    "cognitive_loop_adoption_cookbook.schema_version == cognitive-loop-adoption-cookbook-verification-v1",
+    "cognitive_loop_adoption_recipes.schema_version == cognitive-loop-adoption-recipes-v1",
+    "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
+    "cognitive_loop_skill_entrypoint.schema_version == cognitive-loop-skill-entrypoint-verification-v1",
+    "cognitive_loop_recipe_cli.schema_version == cognitive-loop-recipe-cli-verification-v1",
+    "cognitive_loop_recipe_cli_receipts.schema_version == cognitive-loop-recipe-cli-receipts-v1",
+    "cognitive_loop_recipe_cli_failures.schema_version == cognitive-loop-recipe-cli-failures-v1",
+    "cognitive_loop_recipe_cli_schemas.schema_version == cognitive-loop-recipe-cli-schemas-v1",
+    "cognitive_loop_recipe_cli_schema_negative_fixtures.schema_version == cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
+    "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
+    "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
+    "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
+    "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
+    "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
+    "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -58,6 +83,31 @@ REQUIRED_ACCEPTANCE = {
 }
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
+    "verify_cognitive_loop_contracts.py --check",
+    "verify_cognitive_loop_cli.py --check",
+    "verify_cognitive_loop_run_once.py --check",
+    "verify_cognitive_loop_snapshot.py --check",
+    "verify_cognitive_loop_human_gate.py --check",
+    "verify_cognitive_loop_evidence_bundle.py --check",
+    "verify_cognitive_loop_event_index.py --check",
+    "verify_cognitive_loop_artifact_doctor.py --check",
+    "verify_cognitive_loop_repair_plan.py --check",
+    "verify_cognitive_loop_artifact_index.py --check",
+    "verify_cognitive_loop_adoption_cookbook.py --check",
+    "generate_cognitive_loop_adoption_recipes.py --check",
+    "verify_cognitive_loop_recipe_replay.py --check",
+    "verify_cognitive_loop_skill_entrypoint.py --check",
+    "verify_cognitive_loop_recipe_cli.py --check",
+    "verify_cognitive_loop_recipe_cli_receipts.py --check",
+    "verify_cognitive_loop_recipe_cli_failures.py --check",
+    "verify_cognitive_loop_recipe_cli_schemas.py --check",
+    "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
+    "verify_cognitive_loop_schema_pack_consumer.py --check",
+    "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
+    "verify_cognitive_loop_pack_extract_smoke.py --check",
+    "verify_platform_handoff_checklist.py --check",
+    "verify_launch_acceptance_ledger.py --check",
+    "verify_github_launch_operator_guide.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
@@ -131,6 +181,114 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             raise PackVerificationError(f"{pack_path.relative_to(ROOT)} references missing asset: {asset}")
     if "platform/study-anything-platform-tools.json" not in import_assets:
         raise PackVerificationError(f"{pack_path.relative_to(ROOT)} must reference the source manifest")
+    if "docs/cognitive-loop-adoption-cookbook.md" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop adoption cookbook"
+        )
+    if "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop adoption cookbook report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-adoption-recipes.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop adoption recipes"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-replay.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe replay report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Skill entrypoint report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI receipts"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI failures"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schemas"
+        )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema negative fixtures"
+        )
+    if "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer failure report"
+        )
+    if "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop extracted pack smoke report"
+        )
+    if "platform/generated/study-anything-platform-handoff-checklist.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the platform handoff checklist report"
+        )
+    if "platform/generated/study-anything-launch-acceptance-ledger.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the launch acceptance ledger report"
+        )
+    if "platform/generated/study-anything-github-launch-operator-guide.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the GitHub launch operator guide report"
+        )
+    if "scripts/cognitive_loop_recipe_cli.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI receipt verifier"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_failures.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI failure verifier"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_schemas.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema verifier"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema negative fixture verifier"
+        )
+    if "scripts/verify_cognitive_loop_schema_pack_consumer.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer verifier"
+        )
+    if "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer failure verifier"
+        )
+    if "scripts/verify_cognitive_loop_pack_extract_smoke.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop extracted pack smoke verifier"
+        )
+    if "scripts/verify_platform_handoff_checklist.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the platform handoff checklist verifier"
+        )
+    if "scripts/verify_launch_acceptance_ledger.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the launch acceptance ledger verifier"
+        )
+    if "scripts/verify_github_launch_operator_guide.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the GitHub launch operator guide verifier"
+        )
 
     commands = pack.get("local_verification_commands")
     if not isinstance(commands, list) or not commands:
@@ -146,6 +304,46 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
             raise PackVerificationError(
                 f"{pack_path.relative_to(ROOT)} verification commands must include {fragment}"
             )
+    if "verify_cognitive_loop_recipe_cli_receipts.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI receipt verifier"
+        )
+    if "verify_cognitive_loop_recipe_cli_failures.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI failure verifier"
+        )
+    if "verify_cognitive_loop_recipe_cli_schemas.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI schema verifier"
+        )
+    if "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI schema negative fixture verifier"
+        )
+    if "verify_cognitive_loop_schema_pack_consumer.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the schema pack consumer verifier"
+        )
+    if "verify_cognitive_loop_schema_pack_consumer_failures.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the schema pack consumer failure verifier"
+        )
+    if "verify_cognitive_loop_pack_extract_smoke.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the extracted pack smoke verifier"
+        )
+    if "verify_platform_handoff_checklist.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the platform handoff checklist verifier"
+        )
+    if "verify_launch_acceptance_ledger.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the launch acceptance ledger verifier"
+        )
+    if "verify_github_launch_operator_guide.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the GitHub launch operator guide verifier"
+        )
     if pack_id == "codex" and "run_skill_mode_demo.sh" not in command_text:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
     if pack_id == "kimi" and "verify_openai_compatible_gateway.py" not in command_text:
@@ -182,6 +380,34 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "pmf-readiness-v1",
         "ecosystem-submission-v1",
         "ecosystem-submission-verification-v1",
+        "cognitive-loop-adoption-cookbook.md",
+        "study-anything-cognitive-loop-adoption-recipes.json",
+        "study-anything-cognitive-loop-recipe-replay.json",
+        "study-anything-cognitive-loop-skill-entrypoint.json",
+        "study-anything-cognitive-loop-recipe-cli.json",
+        "study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "study-anything-cognitive-loop-recipe-cli-failures.json",
+        "study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+        "study-anything-cognitive-loop-schema-pack-consumer.json",
+        "study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "study-anything-cognitive-loop-pack-extract-smoke.json",
+        "study-anything-platform-handoff-checklist.json",
+        "study-anything-launch-acceptance-ledger.json",
+        "study-anything-github-launch-operator-guide.json",
+        "cognitive_loop_recipe_cli.py",
+        "verify_cognitive_loop_recipe_cli.py",
+        "verify_cognitive_loop_recipe_cli_receipts.py",
+        "verify_cognitive_loop_recipe_cli_failures.py",
+        "verify_cognitive_loop_recipe_cli_schemas.py",
+        "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
+        "verify_cognitive_loop_schema_pack_consumer.py",
+        "verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "verify_cognitive_loop_pack_extract_smoke.py",
+        "verify_platform_handoff_checklist.py",
+        "verify_launch_acceptance_ledger.py",
+        "verify_github_launch_operator_guide.py",
+        "verify_cognitive_loop_skill_entrypoint.py",
         "raw source",
     )
     return pack

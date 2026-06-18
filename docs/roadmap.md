@@ -30,7 +30,7 @@ Already present:
 
 ## Current Release Evidence Anchors
 
-The current public alpha line is `v0.3.30-alpha`. Keep these evidence contracts visible while the product positioning pivots to Cognitive Loop System:
+The current public alpha line is `v0.3.31-alpha`. Keep these evidence contracts visible while the product positioning pivots to Cognitive Loop System:
 
 - `platform-field-adoption-rehearsal-v1`: rehearses Kimi, Codex, WorkBuddy, and generic OpenAPI import paths.
 - `platform-support-triage-v1`: turns external adopter failures into redacted GitHub support tickets.
@@ -39,7 +39,7 @@ The current public alpha line is `v0.3.30-alpha`. Keep these evidence contracts 
 - `published-image-evidence-v1`: separates GHCR/image release evidence from local pull or network friction.
 - `adopter-evidence-archive-v1`: packages public release/adoption proof for maintainers and external testers.
 
-当前公开 alpha 线是 `v0.3.30-alpha`。产品定位转向 Cognitive Loop System 时，仍保留这些可验收证据契约：
+当前公开 alpha 线是 `v0.3.31-alpha`。产品定位转向 Cognitive Loop System 时，仍保留这些可验收证据契约：
 
 - `platform-field-adoption-rehearsal-v1`：演练 Kimi、Codex、WorkBuddy 和通用 OpenAPI 导入路径。
 - `platform-support-triage-v1`：把外部采用失败转成脱敏 GitHub support ticket。
@@ -60,7 +60,8 @@ Deliver:
 - roadmap reset
 - clear status boundary between current Study Anything capabilities and planned Cognitive Loop layers
 - public conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`
-- future project contract names: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
+- implemented project contract bootstrap: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
+- `cognitive-loop-contract-bootstrap-v1` verifier output
 - future CLI names, clearly marked as not implemented yet
 
 Acceptance:
@@ -70,6 +71,7 @@ Acceptance:
 - Docs keep the current no-standalone-frontend launch path scoped to Study Anything/platform-Agent usage.
 - Docs keep real model credentials outside Study Anything.
 - Docs preserve current release evidence anchors while changing the product narrative.
+- `python3 scripts/verify_cognitive_loop_contracts.py --check` passes and rejects secret-like values, raw excerpts, and high-risk decisions without a human gate.
 
 Future CLI vocabulary for this phase:
 

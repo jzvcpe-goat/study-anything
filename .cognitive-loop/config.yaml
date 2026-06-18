@@ -1,0 +1,15 @@
+schemaVersion: cognitive-loop-config-v1
+project:
+  id: study-anything
+  name: Study Anything
+  mode: local_first
+storage:
+  eventStore: .cognitive-loop/events
+  artifactDir: .cognitive-loop/artifacts
+privacy:
+  rawSourceText: forbidden
+  learnerAnswers: redacted
+  realModelKeys: external
+  agentEndpoints: external
+  observabilityMetadata: redacted
+

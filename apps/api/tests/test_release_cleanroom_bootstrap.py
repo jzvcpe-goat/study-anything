@@ -143,7 +143,7 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-cleanroom-bootstrap-evidence-v1")
-        self.assertEqual(report["version"], "v0.3.30-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["example_report"]["schema_version"], "release-cleanroom-bootstrap-v1")
         self.assertIn("cleanroom_bootstrap_ready", {item["classification"] for item in report["classification_matrix"]})

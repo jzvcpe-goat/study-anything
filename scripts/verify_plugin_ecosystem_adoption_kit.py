@@ -17,7 +17,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "plugin-ecosystem-adoption-kit-v1"
-RELEASE_VERSION = "v0.3.30-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-plugin-ecosystem-adoption-kit.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 

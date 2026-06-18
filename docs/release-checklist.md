@@ -1,11 +1,21 @@
 # Release Checklist
 
-## v0.3.30-alpha
+## v0.3.31-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `STUDY_ANYTHING_STRICT_MSGPACK=1 .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_contracts.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_cli.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_run_once.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_snapshot.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_human_gate.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_evidence_bundle.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_event_index.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_doctor.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_repair_plan.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_index.py --check`
 - [ ] `.venv/bin/python scripts/verify_openai_compatible_gateway.py --gateway-only`
 - [ ] `.venv/bin/python scripts/verify_agent_gateway_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_external_agent_adapter_hardening.py`
@@ -37,6 +47,12 @@
 - [ ] `.venv/bin/python scripts/verify_platform_ecosystem_packs.py`
 - [ ] `.venv/bin/python scripts/generate_platform_bundle_manifest.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_operator_drill.py --check`
+- [ ] `.venv/bin/python scripts/verify_launch_acceptance_ledger.py --check`
+- [ ] `.venv/bin/python scripts/verify_github_launch_operator_guide.py --check`
+- [ ] `.venv/bin/python scripts/verify_release_stack_readiness.py`
+- [ ] `.venv/bin/python scripts/verify_release_stack_live_status.py`
+- [ ] `.venv/bin/python scripts/verify_release_stack_lineage.py`
+- [ ] `.venv/bin/python scripts/verify_release_stack_merge_runbook.py`
 - [ ] `.venv/bin/python scripts/generate_platform_adoption_pack.py --check`
 - [ ] `.venv/bin/python scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`
@@ -78,9 +94,9 @@
 - [ ] Run `python3 scripts/generate_release_asset_adoption.py --check` and `python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-asset-adoption-v1` covers GitHub Release zip assets, sha256 digests, adoption-pack manifest hashes, embedded published-image evidence, `release-asset-adoption-fixture-v1`, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_release_cleanroom_bootstrap.py --check` and `python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-cleanroom-bootstrap-v1` covers repo-free release asset verification, platform import validation, redacted issue body generation, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_platform_agent_replay.py --check` and `python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only`; verify `platform-agent-release-replay-v1` covers release-asset tool import, Kimi/Codex/WorkBuddy/generic platform entrypoints, the nine-tool learning replay chain including `study_anything_teaching_layers`, failure classifications, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.30-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.31-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.31-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
 - [ ] Run `python3 scripts/generate_adopter_evidence_archive.py --check` and `python3 scripts/verify_adopter_evidence_archive.py --check`; verify `adopter-evidence-archive-v1` carries release identity, CI commands, Docker manifest evidence, public status hashes, platform pack checksums, known limitations, maintainer handoff checklist, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, personal profiles, or browser/video/app context.
 - [ ] Run `python3 scripts/verify_adopter_evidence_archive.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same evidence archive, checksum, docs, and `adopter-evidence-fixture-v1` fixtures.
 - [ ] Run `python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check` and verify `plugin-ecosystem-adoption-kit-v1` includes all five bundled sample plugins, digest-verified `plugins/registry.json`, quarantine-first trust policy, platform-pack commands, and no plugin entrypoint execution, raw source text, learner answers, Agent endpoint secrets, real model keys, or browser/video private context.
@@ -94,6 +110,12 @@
 - [ ] Verify `GET /v1/pmf/readiness` returns `schema_version=pmf-readiness-v1`, keeps hosted paid services `not_ready`, does not recommend selling a standalone app, and derives status from aggregate adoption telemetry only.
 - [ ] Verify `POST /v1/pmf/export` with consent includes `adoption-telemetry-v1` and `pmf-readiness-v1` inside the shareable PMF package.
 - [ ] Verify `python3 scripts/verify_ecosystem_submission_pack.py` returns `schema_version=ecosystem-submission-verification-v1`, `status=pass`, all four submission targets, no standalone frontend requirement, no Study Anything model-key custody, and no high-risk management endpoints in imported tools.
+- [ ] Verify `python3 scripts/verify_launch_acceptance_ledger.py --check` returns `launch-acceptance-ledger-v1`, `status=pass`, and proves GitHub OSS launch, platform-Agent distribution, self-host alpha, Skill Mode, published image evidence, commercial boundary, and privacy assertions without requiring a standalone frontend or Study Anything model-key custody.
+- [ ] Verify `python3 scripts/verify_github_launch_operator_guide.py --check` returns `github-launch-operator-guide-v1`, `status=pass`, and proves `docs/github-launch.md`, `docs/release-checklist.md`, `./scripts/release_check.sh`, `platform/generated/study-anything-github-launch-operator-guide.json`, `platform/generated/study-anything-launch-acceptance-ledger.json`, `study-anything-platform-adoption-pack.zip`, `study-anything-platform-feedback-package.zip`, `study-anything-published-image-evidence.zip`, `study-anything-release-asset-bootstrap.zip`, `study-anything-platform-agent-replay.zip`, and `study-anything-adopter-evidence-archive.zip` are aligned.
+- [ ] Verify `python3 scripts/verify_release_stack_readiness.py` returns `release-stack-readiness-v1`, `status=pass`, the current stacked PR order, required `api-tests` and `compose-smoke` checks, local before-tag gates, and privacy assertions without storing GitHub tokens, live check payloads, source text, learner answers, Agent endpoint secrets, or real model keys.
+- [ ] Verify `python3 scripts/verify_release_stack_live_status.py` returns `release-stack-live-status-v1`, confirms every manifest PR head/base pair, required `api-tests` and `compose-smoke` results, and reports no token storage or live payload persistence; use `--allow-missing-top-pr` only while preparing the next stacked PR before it exists on GitHub.
+- [ ] Verify `python3 scripts/verify_release_stack_lineage.py` returns `release-stack-lineage-v1`, reaches `main`, confirms every discovered ancestor PR check summary, and reports no token storage or live payload persistence; use `--allow-missing-top-pr --report-only` only while preparing the next stacked PR before it exists on GitHub.
+- [ ] Verify `python3 scripts/verify_release_stack_merge_runbook.py` returns `release-stack-merge-runbook-v1`, lists oldest-to-newest PR merge steps, draft-to-ready commands, required check commands, merge command options without intermediate branch deletion, next-PR retarget commands, post-merge verification commands, final cleanup commands, and reports no token storage or live payload persistence; use `--allow-missing-top-pr --report-only` only while preparing the next stacked PR before it exists on GitHub, and `--fail-if-draft` immediately before the real merge run.
 - [ ] Verify `platform/generated/study-anything-platform-submission-dry-run.json` is current and redacted before manual platform submission.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/report` returns `schema_version=agent-eval-report-v1`, `native_fast_gate.status=pass`, and no source text, answers, endpoints, or secrets.
 - [ ] Verify `GET|POST /v1/sessions/{session_id}/retrieval/eval` returns `schema_version=retrieval-quality-eval-v1`, `status=pass`, and no retrieval snippets or raw source text.
@@ -120,8 +142,8 @@
 - [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<compose-mock-agent-endpoint> python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.30-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -147,4 +169,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.30-alpha`.
+- [ ] Tag `v0.3.31-alpha`.

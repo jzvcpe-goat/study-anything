@@ -35,6 +35,59 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the WorkBuddy-style HTTP tool path without
 requiring a standalone frontend.
 
+For a scenario-based operator guide, read `docs/cognitive-loop-adoption-cookbook.md`. It shows how a
+WorkBuddy-style platform Agent HTTP workspace can call the local API and local Cognitive Loop
+commands while sharing only redacted artifact metadata back into the workspace.
+
+For machine-readable operation, import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or
+human-gated steps. The entrypoint proof is
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`. Verify the WorkBuddy
+entrypoint chain locally with:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+python3 scripts/verify_platform_handoff_checklist.py --check
+python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/cognitive_loop_recipe_cli.py list
+python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
+```
+
+`platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves the read-only recipe CLI
+returns `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` provides deterministic
+sample CLI outputs and hashes for platform Agent import tests.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` provides deterministic
+failure receipts for unknown ids and invalid recipe matrices.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json` provides offline JSON
+Schemas for static WorkBuddy validation of the success, receipt, and failure reports.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json` proves
+those schemas reject drift, unsafe flags, malformed types, and private text probes.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
+discoverable and hash-checked from the adoption pack zip without a repo checkout.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
+`platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
+adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
+`platform/generated/study-anything-platform-handoff-checklist.json` gives WorkBuddy-style operators a
+release handoff checklist for import, verification, runtime choice, and support escalation.
+`platform/generated/study-anything-launch-acceptance-ledger.json` gives WorkBuddy-style operators the
+aggregated launch acceptance state and current commercial boundary.
+`platform/generated/study-anything-github-launch-operator-guide.json` gives WorkBuddy-style operators
+the GitHub release sequence, required release assets, and local-first launch boundary.
+
 ## Runtime Boundary
 
 The workspace Agent should own:

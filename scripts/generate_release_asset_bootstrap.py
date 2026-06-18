@@ -24,7 +24,7 @@ ARCHIVE_ROOT = "study-anything-release-asset-bootstrap"
 
 SCHEMA_VERSION = "release-asset-bootstrap-v1"
 TRANSCRIPT_SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
-RELEASE_VERSION = "v0.3.30-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
@@ -44,11 +44,6 @@ PUBLIC_ASSET_PATHS = (
     "scripts/verify_release_asset_adoption.py",
     "scripts/replay_platform_agent_from_release.py",
     "scripts/generate_release_asset_bootstrap.py",
-    "platform/generated/study-anything-release-asset-adoption.json",
-    "platform/generated/study-anything-release-cleanroom-bootstrap.json",
-    "platform/generated/study-anything-release-cleanroom-bootstrap.md",
-    "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
     "platform/generated/study-anything-platform-agent-replay.json",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-openai-tools.json",

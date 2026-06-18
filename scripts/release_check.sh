@@ -38,6 +38,25 @@ if [ -f .env ]; then
   "$python_bin" scripts/check_env.py
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
+"$python_bin" scripts/verify_cognitive_loop_contracts.py --check
+"$python_bin" scripts/verify_cognitive_loop_cli.py --check
+"$python_bin" scripts/verify_cognitive_loop_run_once.py --check
+"$python_bin" scripts/verify_cognitive_loop_snapshot.py --check
+"$python_bin" scripts/verify_cognitive_loop_human_gate.py --check
+"$python_bin" scripts/verify_cognitive_loop_evidence_bundle.py --check
+"$python_bin" scripts/verify_cognitive_loop_event_index.py --check
+"$python_bin" scripts/verify_cognitive_loop_artifact_doctor.py --check
+"$python_bin" scripts/verify_cognitive_loop_repair_plan.py --check
+"$python_bin" scripts/verify_cognitive_loop_artifact_index.py --check
+"$python_bin" scripts/verify_cognitive_loop_adoption_cookbook.py --check
+"$python_bin" scripts/generate_cognitive_loop_adoption_recipes.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_replay.py --check
+"$python_bin" scripts/verify_cognitive_loop_skill_entrypoint.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/verify_agent_gateway_hardening.py
 "$python_bin" scripts/verify_external_agent_adapter_hardening.py
@@ -88,9 +107,16 @@ fi
 "$python_bin" scripts/verify_adoption_telemetry.py
 "$python_bin" scripts/verify_ecosystem_submission_pack.py
 "$python_bin" scripts/verify_platform_ecosystem_packs.py
+"$python_bin" scripts/verify_platform_handoff_checklist.py --check
+"$python_bin" scripts/verify_launch_acceptance_ledger.py --check
+"$python_bin" scripts/verify_github_launch_operator_guide.py --check
+"$python_bin" scripts/verify_release_stack_readiness.py
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
+"$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+"$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+"$python_bin" scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 "$python_bin" scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --current-worktree \

@@ -1,0 +1,93 @@
+{
+  "cases": [
+    {
+      "case_id": "unknown_recipe_id",
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py show not_a_recipe",
+      "diagnostic_code": "unknown_recipe_id",
+      "exit_code": 1,
+      "expected_message": "Unknown recipe_id: not_a_recipe",
+      "safe_to_attach_to_issue": true,
+      "stderr": "cognitive_loop_recipe_cli failed: Unknown recipe_id: not_a_recipe\n",
+      "stderr_sha256": "9840040549f2ff5e6d33ca85aca3394d668c39854c3b1c4f33f6c5712b53354a",
+      "stdout_empty": true
+    },
+    {
+      "case_id": "source_schema_drift",
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py --recipes <temporary-negative-fixture> list",
+      "diagnostic_code": "source_schema_drift",
+      "exit_code": 1,
+      "expected_message": "Cognitive Loop adoption recipes schema drifted.",
+      "safe_to_attach_to_issue": true,
+      "stderr": "cognitive_loop_recipe_cli failed: Cognitive Loop adoption recipes schema drifted.\n",
+      "stderr_sha256": "9cd8ba82bd7ed58790b921cf1ac3e1647e9bff5cd1a7128ea860c51874ad594d",
+      "stdout_empty": true
+    },
+    {
+      "case_id": "source_status_failed",
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py --recipes <temporary-negative-fixture> list",
+      "diagnostic_code": "source_status_failed",
+      "exit_code": 1,
+      "expected_message": "Cognitive Loop adoption recipes must have status=pass.",
+      "safe_to_attach_to_issue": true,
+      "stderr": "cognitive_loop_recipe_cli failed: Cognitive Loop adoption recipes must have status=pass.\n",
+      "stderr_sha256": "3ff1e5a76ac40b5eaef24f6899f3317e617537d7f7b0a756f7e4f5824d02ff07",
+      "stdout_empty": true
+    },
+    {
+      "case_id": "empty_recipe_matrix",
+      "command": "python3 scripts/cognitive_loop_recipe_cli.py --recipes <temporary-negative-fixture> list",
+      "diagnostic_code": "empty_recipe_matrix",
+      "exit_code": 1,
+      "expected_message": "Cognitive Loop adoption recipes are empty.",
+      "safe_to_attach_to_issue": true,
+      "stderr": "cognitive_loop_recipe_cli failed: Cognitive Loop adoption recipes are empty.\n",
+      "stderr_sha256": "6cf4e3e966d82cec0985575d1bce27e52b138743fb80fc974d8feaf4c2518762",
+      "stdout_empty": true
+    }
+  ],
+  "cli": {
+    "failure_surface": "nonzero_exit_with_redacted_stderr",
+    "path": "scripts/cognitive_loop_recipe_cli.py",
+    "success_schema_version": "cognitive-loop-recipe-cli-v1"
+  },
+  "commands": {
+    "sample_failure": "python3 scripts/cognitive_loop_recipe_cli.py show not_a_recipe",
+    "verify": "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+    "write": "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --write"
+  },
+  "coverage": {
+    "all_exit_nonzero": true,
+    "all_safe_to_attach_to_issue": true,
+    "all_stderr_redacted": true,
+    "all_stdout_empty": true,
+    "case_count": 4,
+    "case_ids": [
+      "unknown_recipe_id",
+      "source_schema_drift",
+      "source_status_failed",
+      "empty_recipe_matrix"
+    ]
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Document deterministic read-only Cognitive Loop recipe CLI failure behavior for platform Agents.",
+  "safe_failure_policy": {
+    "applies_file_changes": false,
+    "executes_recipe_commands": false,
+    "invokes_recipe_cli_only": true,
+    "starts_runtime": false,
+    "temporary_negative_fixtures_removed": true,
+    "writes_only_temporary_negative_fixtures": true
+  },
+  "schema_version": "cognitive-loop-recipe-cli-failures-v1",
+  "status": "pass"
+}

@@ -1,7 +1,7 @@
 # Study Anything Platform Agent Release Replay
 
 Schema: `platform-agent-release-replay-v1`
-Version: `v0.3.30-alpha`
+Version: `v0.3.31-alpha`
 Status: `pass`
 
 This evidence verifies the platform Agent path after release assets are
@@ -10,13 +10,13 @@ emit a redacted transcript that is safe to attach to GitHub issues.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `c96bd269c46750779afebf7c848aac74078f4f871209e20ee969a148b15c6f82`
+- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `544531ee79fcee2870d35371a67d16b239edeeb3c994f095ab3704d1d8c38767`
 
 ## Commands
 
-- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.30-alpha --platform kimi --runtime metadata-only`
-- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.30-alpha --platform kimi --runtime skill-mode`
-- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.30-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000`
+- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime metadata-only`
+- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime skill-mode`
+- `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000`
 - `python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only`
 
 ## Required Replay Tools

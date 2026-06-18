@@ -22,7 +22,7 @@ class ExternalAgentAdapterHardeningTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "external-agent-adapter-hardening-v1")
-        self.assertEqual(report["version"], "v0.3.30-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["external_agent_eval"]["used_external_agent"])
         self.assertFalse(report["external_agent_eval"]["used_fake_agent"])

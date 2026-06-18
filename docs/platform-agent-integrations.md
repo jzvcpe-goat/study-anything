@@ -16,6 +16,11 @@ generation, answer grading, mastery, scribe logs, HITL state, Agent audit, and e
 Study Anything should not store real model API keys. Keep keys inside the platform Agent or the
 user-owned HTTP gateway.
 
+For a short scenario cookbook, use `docs/cognitive-loop-adoption-cookbook.md`. It gives platform
+Agents four copyable paths: first adoption, daily project review, risk decision, and learning
+handoff. Each path keeps the platform Agent in charge of external context while Study Anything emits
+local, redacted Cognitive Loop artifacts.
+
 ## Machine-Readable Tool Contract
 
 Platform integrations should start from the repo-local manifest:
@@ -498,7 +503,7 @@ release asset:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.30-alpha \
+  --tag v0.3.31-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

@@ -1,7 +1,7 @@
 # Study Anything Published Image Evidence
 
 Schema: `published-image-evidence-v1`
-Version: `v0.3.30-alpha`
+Version: `v0.3.31-alpha`
 Status: `pass`
 
 This evidence bundle helps an external operator decide whether published GHCR
@@ -10,13 +10,13 @@ registry access, CI publishing, manifest platforms, or runtime health.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-published-image-evidence.zip` sha256 `81607b422fa3749972b2cea2daaed2a95a4bf2eb526cbbd04be5d4787ebd8509`
+- Archive: `platform/generated/study-anything-published-image-evidence.zip` sha256 `26bfe77afaa60089c6cd699b22b2002a61d013d4f560f9b6cc8c13f6d604f5c7`
 
 ## Manifest And Smoke
 
-- API image: `ghcr.io/jzvcpe-goat/study-anything/api:v0.3.30-alpha`
-- Manifest: `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.30-alpha`
-- Local smoke: `python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report`
+- API image: `ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha`
+- Manifest: `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha`
+- Local smoke: `python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report`
 - Timeout status: `blocked_by_local_ghcr_pull`
 
 ## Local Pull Timeout Acceptance
@@ -39,15 +39,15 @@ registry access, CI publishing, manifest platforms, or runtime health.
 
 ## Fixture Hashes
 
-- `manifest-pass-local-pull-timeout`: `626a07e4223c0f981bc364fe77235088e0f5c086e3541dc892aa0e883ffcedd4`
-- `cached-image-missing`: `3c02fb8936e391597a648cd5d3b52b7c43422712d2a5fbe129e1c0677875922a`
-- `compose-up-timeout`: `f86e1f6766225f19bdf79a53fa702a92811986b32eb19e90ec44e9bc6118a49c`
-- `manifest-only-runtime-unverified`: `87fade1d1c5b8fcab643a0cb30a95208882ef262a2b296bee926c5a386403d13`
-- `manifest-missing-platform`: `97099004fbfe27e054bf11778cb4dc20ddd2c71202db96ee138c7cb232435ae1`
-- `docker-images-failed`: `dd346c359144f9aa6159bc0d9a48cd0e67f73305ec9f2714edbed7c31a3b5502`
-- `ghcr-unavailable`: `e06abf74cc53311f9b242f4433e225eb24c0a7c3333dbd11aee2a82e0c3af8d1`
-- `remote-smoke-pass`: `c376b52f993cc00743fb6f697256aa6a507c2589987c9cccc41ffc806993253f`
-- `remote-smoke-failed`: `cfed2779c6b6580c87a24cf9a6e458ac8b931c95d4719d826db4dc58b57738ef`
+- `manifest-pass-local-pull-timeout`: `e63cc3814b2ed001ef952b68caeab3414ffcaf356b1cc97149e31d001b07aaae`
+- `cached-image-missing`: `d80cd6f3e5f34e935416701861948d57cd7c1be2a5129a7bab7e51556834771e`
+- `compose-up-timeout`: `2788449ac21960702d91c7c0228b324844bf9f96e9d318128620ec5aa8069053`
+- `manifest-only-runtime-unverified`: `51b7832e42b9703630f18898d6a05f84cad7d64a41fd89aa7b90656b8100afac`
+- `manifest-missing-platform`: `a67d2674c27a2b6f8be9307b35163a93ab42294f6508e95b833646c418e09bc2`
+- `docker-images-failed`: `0a098a02d389e40ca96f1259d7ebe370703609f3b64a5228f120d4fb518584b0`
+- `ghcr-unavailable`: `181338b1744d1d833ea86f45af47a9d4d0c798798a5ed4f6df537377d37c30d8`
+- `remote-smoke-pass`: `fe10b6003bc27dea31fdc1bb218e27b6d8d6abbdf27241e9b4313637ff68497a`
+- `remote-smoke-failed`: `2f0678853567ddac156e2661f57522d04689dfd230b82e88b27d9847bf876e05`
 
 ## Privacy
 

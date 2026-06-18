@@ -1,0 +1,118 @@
+{
+  "boundaries": {
+    "cognitive_loop_artifacts_are_metadata_only": true,
+    "mastra_runtime_shipped": false,
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "realtime_html_console_shipped": false,
+    "skill_entrypoint_is_recipe_index": true,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true,
+    "watcher_daemon_shipped": false
+  },
+  "commands": {
+    "cookbook": "python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check",
+    "recipes": "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
+    "replay": "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
+    "verify": "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
+    "write": "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --write"
+  },
+  "distribution_sources": {
+    "adoption_pack_source_registered": true,
+    "bundle_manifest_source_registered": true,
+    "ecosystem_submission_verifier_registered": true,
+    "platform_pack_verifier_registered": true,
+    "release_check_registered": true
+  },
+  "ecosystem_submission": {
+    "minimum_command_registered": true,
+    "must_prove_registered": true,
+    "shared_assets_registered": true,
+    "submission_imports_registered": true
+  },
+  "platform_pack_index": {
+    "mentions_report": true,
+    "path": "platform/packs/README.md",
+    "runs_verifier": true
+  },
+  "platform_pack_manifests": [
+    {
+      "accepts_schema": true,
+      "imports_report": true,
+      "platform_id": "codex",
+      "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_report": true,
+      "platform_id": "kimi",
+      "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_report": true,
+      "platform_id": "workbuddy",
+      "runs_verifier": true
+    }
+  ],
+  "platform_pack_readmes": [
+    {
+      "mentions_cookbook": true,
+      "mentions_recipe_matrix": true,
+      "mentions_replay_report": true,
+      "path": "platform/packs/codex/README.md",
+      "platform_id": "codex",
+      "runs_skill_entrypoint_verifier": true
+    },
+    {
+      "mentions_cookbook": true,
+      "mentions_recipe_matrix": true,
+      "mentions_replay_report": true,
+      "path": "platform/packs/kimi/README.md",
+      "platform_id": "kimi",
+      "runs_skill_entrypoint_verifier": true
+    },
+    {
+      "mentions_cookbook": true,
+      "mentions_recipe_matrix": true,
+      "mentions_replay_report": true,
+      "path": "platform/packs/workbuddy/README.md",
+      "platform_id": "workbuddy",
+      "runs_skill_entrypoint_verifier": true
+    }
+  ],
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Verify Cognitive Loop recipe and replay entrypoints are discoverable from the Skill and platform packs.",
+  "schema_version": "cognitive-loop-skill-entrypoint-verification-v1",
+  "skill": {
+    "human_gate_explicit": true,
+    "mentions_cookbook": true,
+    "mentions_recipe_matrix": true,
+    "mentions_replay_report": true,
+    "metadata_only_replay": true,
+    "path": "skills/study-anything/SKILL.md",
+    "privacy_boundary_explicit": true,
+    "recipe_ids": [
+      "first_adoption",
+      "daily_project_review",
+      "risk_decision",
+      "learning_handoff"
+    ],
+    "verification_commands": [
+      "python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check",
+      "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
+      "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
+      "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check"
+    ]
+  },
+  "status": "pass"
+}

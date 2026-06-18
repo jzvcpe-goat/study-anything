@@ -1,0 +1,44 @@
+{
+  "artifact_json_schema": "cognitive-loop-evidence-bundle-v1",
+  "bundle_schema": "cognitive-loop-evidence-bundle-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "bundle": "python3 scripts/cognitive_loop_cli.py bundle --html",
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "evidence_bundle": {
+    "all_items_exclude_content": true,
+    "all_items_have_hash": true,
+    "artifact_count": 4,
+    "content_included": false,
+    "created": true
+  },
+  "gate_schema": "cognitive-loop-human-gate-v1",
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_evidence_bundle": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "artifact_contents_included": false,
+    "diff_body_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "run_once_schema": "cognitive-loop-run-once-artifact-v1",
+  "schema_version": "cognitive-loop-evidence-bundle-verification-v1",
+  "snapshot_schema": "cognitive-loop-project-snapshot-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}

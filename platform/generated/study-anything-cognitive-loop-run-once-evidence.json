@@ -1,0 +1,38 @@
+{
+  "artifact_json_schema": "cognitive-loop-run-once-artifact-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "run_once": "python3 scripts/cognitive_loop_cli.py run-once --html",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_decision_card": true,
+    "contains_loop_run": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "loop_run": {
+    "created": true,
+    "decision_card_ids": [
+      "dec-cognitive-loop-run-once"
+    ],
+    "run_id": "loop-cognitive-loop-run-once",
+    "status": "succeeded"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "forbidden_text_leaked": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "run_once_schema": "cognitive-loop-run-once-artifact-v1",
+  "schema_version": "cognitive-loop-run-once-evidence-verification-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}
