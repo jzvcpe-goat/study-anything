@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 95,
+      "acceptance_evidence_count": 96,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -193,7 +193,8 @@
         "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -205,7 +206,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 95,
+      "acceptance_evidence_count": 96,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -287,7 +288,8 @@
         "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -301,7 +303,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 95,
+      "acceptance_evidence_count": 96,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -382,7 +384,8 @@
         "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",

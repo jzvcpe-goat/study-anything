@@ -13,7 +13,7 @@
     "adapter_report_schema": "cognitive-loop-mastra-adapter-verification-v1",
     "adapter_version": "0.1.0",
     "manifest_schema": "cognitive-loop-mastra-adapter-manifest-v1",
-    "template_sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+    "template_sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
   },
   "artifact_records": [
     {
@@ -65,14 +65,14 @@
       "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
     },
     {
-      "bytes": 6560,
+      "bytes": 6731,
       "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
-      "sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
     },
     {
       "bytes": 3730,
       "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
-      "sha256": "b21b7e03dfc071262072d621159f990c58c069c94f77414e91fa39230655bbe8"
+      "sha256": "4f9069ae11cf60564beac5a161762ad245995dac4025b2b89cfd9735a1f61db5"
     },
     {
       "bytes": 18112,

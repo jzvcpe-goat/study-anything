@@ -1,0 +1,24 @@
+{
+  "name": "@study-anything/cognitive-loop-mastra-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Repository-started Cognitive Loop Mastra runtime MVP for metadata-only workflow verification.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "run-once": "tsx src/run-once.ts",
+    "verify": "npm run --silent typecheck && npm run --silent run-once -- --json"
+  },
+  "dependencies": {
+    "@mastra/core": "1.43.0",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

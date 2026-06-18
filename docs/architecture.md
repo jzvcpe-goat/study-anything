@@ -295,6 +295,10 @@ The extended project protocol may later add `watchers.yaml` and `learning.yaml`,
 
 `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 是当前的 runtime 演练入口。它使用本地 Cognitive Loop artifact 和 SQLite Event Store 来证明 suspend/resume/bail 契约，但不编译 TypeScript、不启动 Mastra、不运行 watcher daemon，也不调用外部 Agent。
 
+`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` is the first repository-started Mastra runtime MVP. It installs the isolated `platform/mastra-runtime/` Node package, typechecks the workflow against `@mastra/core`, starts an in-memory Mastra instance, and verifies high-risk suspend, approved resume, rejected bail, and low-risk no-gate paths. It still does not start watchers, call external Agents, or provide production durable workflow storage.
+
+`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 是第一版由本仓库启动的 Mastra runtime MVP。它会安装隔离的 `platform/mastra-runtime/` Node package，用 `@mastra/core` typecheck workflow，启动 in-memory Mastra 实例，并验证高风险暂停、批准恢复、拒绝 bail、低风险无需 gate 四条路径。它仍然不启动 watcher、不调用外部 Agent，也不提供生产级持久化 workflow storage。
+
 ## Product Entry Modes
 
 ### Personal Plugin Mode
@@ -340,7 +344,7 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Full Mastra runtime is not yet integrated in this repository; only the adapter contract pack is shipped.
+- Durable Mastra runtime is not yet integrated in this repository; only the adapter contract pack and minimal in-memory runtime MVP are shipped.
 - Full project watchers are not yet shipped.
 - HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.

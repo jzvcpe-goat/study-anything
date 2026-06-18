@@ -1,0 +1,168 @@
+{
+  "acceptance": {
+    "approved_gate_resumes": true,
+    "high_risk_run_suspends": true,
+    "low_risk_run_skips_gate": true,
+    "metadata_only": true,
+    "rejected_gate_bails": true,
+    "report_path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
+    "repository_started_mastra_instance": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
+    "workflow_registered": true
+  },
+  "boundaries": {
+    "external_agent_called": false,
+    "hosted_service_started": false,
+    "realtime_html_console_started": false,
+    "watcher_daemon_started": false
+  },
+  "files": [
+    {
+      "bytes": 633,
+      "path": "platform/mastra-runtime/package.json",
+      "sha256": "0387484a232dc4bf41b18f7424976dcfc4f89424e8598f28b08d0a5c1d70c350"
+    },
+    {
+      "bytes": 129646,
+      "path": "platform/mastra-runtime/package-lock.json",
+      "sha256": "b57199561e78bad4bff12c6ffba9470e85e32e013111ea0be676fbe570d7d1ba"
+    },
+    {
+      "bytes": 394,
+      "path": "platform/mastra-runtime/tsconfig.json",
+      "sha256": "1b4f55f5db75ab30d85009f7c5e6c398536b239d2c12dc4d470e932affe55b66"
+    },
+    {
+      "bytes": 1028,
+      "path": "platform/mastra-runtime/README.md",
+      "sha256": "fe2c938b23c9aff89cba0f4a7cc9ecea7b42f2899309af771b08ef81d81e359b"
+    },
+    {
+      "bytes": 241,
+      "path": "platform/mastra-runtime/src/runtime.ts",
+      "sha256": "306ecc6a7497d51eb462390d217aa2414a9dbd30224e700b9d52d7834b347632"
+    },
+    {
+      "bytes": 4925,
+      "path": "platform/mastra-runtime/src/run-once.ts",
+      "sha256": "a63a11800e8336dec45faabba405a201380f5c3e5b7167f5090e747a9d944224"
+    },
+    {
+      "bytes": 6731,
+      "path": "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+    },
+    {
+      "bytes": 6731,
+      "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
+      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+    }
+  ],
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_bodies_included": false,
+    "learner_answers_included": false,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Prove this repository can start a minimal Mastra runtime instance for the Cognitive Loop adapter workflow while keeping all evidence metadata-only.",
+  "runtime": {
+    "boundaries": {
+      "agent_secrets_included": false,
+      "diff_bodies_included": false,
+      "external_agent_called": false,
+      "metadata_only": true,
+      "model_keys_included": false,
+      "raw_source_text_included": false,
+      "repository_started_mastra_instance": true
+    },
+    "package": "@study-anything/cognitive-loop-mastra-runtime",
+    "paths": {
+      "approved": {
+        "resumed": {
+          "result": {
+            "decisionCardId": "dec-repo-started-mastra-runtime",
+            "eventStoreProjection": {
+              "metadataOnly": true,
+              "path": ".cognitive-loop/mastra-runtime-service.sqlite"
+            },
+            "humanGate": {
+              "reason": "Metadata-only Event Store evidence and rollback path were reviewed.",
+              "required": true,
+              "reviewer": "local-operator"
+            },
+            "loopRunId": "loop-repo-started-mastra-runtime",
+            "projectId": "repo-started-mastra-runtime-project",
+            "status": "approved"
+          },
+          "status": "success",
+          "suspended": []
+        },
+        "started": {
+          "result": null,
+          "status": "suspended",
+          "suspended": [
+            [
+              "human-mastery-gate"
+            ]
+          ]
+        }
+      },
+      "not_required": {
+        "result": {
+          "decisionCardId": "dec-repo-started-mastra-runtime-low-risk",
+          "eventStoreProjection": {
+            "metadataOnly": true,
+            "path": ".cognitive-loop/mastra-runtime-service.sqlite"
+          },
+          "humanGate": {
+            "required": false
+          },
+          "loopRunId": "loop-repo-started-mastra-runtime-low-risk",
+          "projectId": "repo-started-mastra-runtime-project",
+          "status": "not_required"
+        },
+        "status": "success",
+        "suspended": []
+      },
+      "rejected": {
+        "resumed": {
+          "result": {
+            "decisionCardId": "dec-repo-started-mastra-runtime",
+            "eventStoreProjection": {
+              "metadataOnly": true,
+              "path": ".cognitive-loop/mastra-runtime-service.sqlite"
+            },
+            "humanGate": {
+              "reason": "Runtime evidence is not ready for promotion.",
+              "required": true,
+              "reviewer": "local-operator"
+            },
+            "loopRunId": "loop-repo-started-mastra-runtime",
+            "projectId": "repo-started-mastra-runtime-project",
+            "status": "rejected"
+          },
+          "status": "success",
+          "suspended": []
+        },
+        "started": {
+          "result": null,
+          "status": "suspended",
+          "suspended": [
+            [
+              "human-mastery-gate"
+            ]
+          ]
+        }
+      }
+    },
+    "schema_version": "cognitive-loop-mastra-runtime-service-v1",
+    "status": "pass",
+    "workflow_id": "cognitive-loop-runtime-adapter",
+    "workflow_registration_key": "cognitiveLoopRuntimeAdapterWorkflow"
+  },
+  "schema_version": "cognitive-loop-mastra-runtime-service-verification-v1",
+  "status": "pass"
+}

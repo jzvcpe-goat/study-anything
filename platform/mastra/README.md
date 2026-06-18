@@ -19,6 +19,9 @@ evidence source.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check`: a local
   runtime rehearsal that proves high-risk suspension, approved resume, rejected bail, and
   Event Store projection without starting Mastra from this repository.
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check`: a repo-local
+  runtime verifier that starts the isolated `platform/mastra-runtime/` package against
+  `@mastra/core` with metadata-only evidence.
 
 ## Install Into A Mastra Project
 
@@ -58,8 +61,9 @@ of truth for project evidence.
 
 ## Current Boundary
 
-Status: adapter contract pack plus metadata-only runtime dry-run harness.
+Status: adapter contract pack plus metadata-only runtime dry-run harness plus minimal
+repo-started in-memory runtime MVP.
 
-This repository still does not ship the full Mastra runtime, watcher daemon, realtime HTML
-console, or hosted service. The next runtime PR can import this adapter into a real Mastra
-project and connect it to watcher-generated events after the dry-run contract is satisfied.
+This repository still does not ship durable workflow storage, watcher daemon, realtime HTML
+console, or hosted service. The next runtime PR can connect the repo-local runtime MVP to
+watcher-generated events and durable storage after the service verifier is satisfied.

@@ -12,6 +12,7 @@
       "python3 scripts/verify_cognitive_loop_event_store.py --check",
       "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
       "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
       "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
       "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
       "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -144,7 +145,8 @@
       "release-cleanroom-bootstrap-v1 proves external operators can start from GitHub Release assets without a prepared checkout, validate platform imports, run selected runtime paths, and emit a redacted issue-ready report",
       "release-cleanroom-bootstrap-evidence-v1 proves the standalone bootloader, example report, classification matrix, recovery steps, and privacy boundary are packaged for external platform adoption",
       "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
-      "cognitive-loop-mastra-runtime-dry-run-verification-v1 proves the metadata-only Mastra runtime rehearsal covers high-risk suspension, approved resume, rejected bail, and Event Store projection without starting Mastra or storing model keys"
+      "cognitive-loop-mastra-runtime-dry-run-verification-v1 proves the metadata-only Mastra runtime rehearsal covers high-risk suspension, approved resume, rejected bail, and Event Store projection without starting Mastra or storing model keys",
+      "cognitive-loop-mastra-runtime-service-verification-v1 proves a repo-local Mastra runtime MVP can start through @mastra/core and cover high-risk suspension, approved resume, rejected bail, and low-risk no-gate paths without storing model keys"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -244,6 +246,7 @@
     "platform/generated/study-anything-cognitive-loop-event-store.json",
     "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
     "scripts/cognitive_loop_event_store.py",
     "scripts/verify_cognitive_loop_event_store.py",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
@@ -477,7 +480,15 @@
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_adapter.py",
-    "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+    "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
   ],
   "submissions": [
     {
@@ -534,11 +545,20 @@
         "scripts/verify_cognitive_loop_event_store.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -559,7 +579,8 @@
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -601,7 +622,8 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ]
     },
     {
@@ -655,11 +677,20 @@
         "scripts/verify_cognitive_loop_event_store.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -679,7 +710,8 @@
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -719,7 +751,8 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ]
     },
     {
@@ -772,11 +805,20 @@
         "scripts/verify_cognitive_loop_event_store.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -796,7 +838,8 @@
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -836,7 +879,8 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ]
     },
     {
@@ -888,11 +932,20 @@
         "scripts/verify_cognitive_loop_event_store.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -912,7 +965,8 @@
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
@@ -952,7 +1006,8 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
       ]
     }
   ],

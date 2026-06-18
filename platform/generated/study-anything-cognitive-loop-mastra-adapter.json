@@ -56,14 +56,14 @@
   },
   "files": [
     {
-      "bytes": 2564,
+      "bytes": 2829,
       "path": "platform/mastra/README.md",
-      "sha256": "6f77c013b3d385203d0824a4b7259cff92a4c91fb6042e9a43d0616e4367abb3"
+      "sha256": "a7c7c89476ff27e913fc55443e33f9796cdb0e493f738cd27f585a25aa23afe7"
     },
     {
-      "bytes": 6560,
+      "bytes": 6731,
       "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
-      "sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
     },
     {
       "bytes": 1655,

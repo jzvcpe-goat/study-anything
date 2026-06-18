@@ -67,7 +67,7 @@
     }
   ],
   "handoff_assets": {
-    "adoption_pack_file_count": 349,
+    "adoption_pack_file_count": 358,
     "adoption_pack_schema": "study-anything-platform-adoption-pack-v1",
     "all_required_assets_present": true,
     "required_assets": [
@@ -95,13 +95,13 @@
       "declares_mastra_adapter": true,
       "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 66,
+      "import_asset_count": 75,
       "integration_mode": "terminal_skill",
       "no_frontend_required": true,
       "pack_id": "codex",
       "platform_id": "codex-skill",
       "submission_integration_mode": "terminal_skill",
-      "verification_command_count": 81
+      "verification_command_count": 82
     },
     {
       "declares_event_store": true,
@@ -111,12 +111,28 @@
       "declares_mastra_adapter": true,
       "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 68,
+      "import_asset_count": 77,
       "integration_mode": "openai_compatible_tools",
       "no_frontend_required": true,
       "pack_id": "kimi",
       "platform_id": "kimi-compatible",
       "submission_integration_mode": "openai_compatible_tools",
+      "verification_command_count": 82
+    },
+    {
+      "declares_event_store": true,
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_mastra_adapter": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 76,
+      "integration_mode": "openapi_http_tools",
+      "no_frontend_required": true,
+      "pack_id": "workbuddy",
+      "platform_id": "workbuddy-style-http",
+      "submission_integration_mode": "openapi_http_tools",
       "verification_command_count": 81
     },
     {
@@ -127,29 +143,13 @@
       "declares_mastra_adapter": true,
       "declares_review_agent_adoption_drill": true,
       "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 67,
-      "integration_mode": "openapi_http_tools",
-      "no_frontend_required": true,
-      "pack_id": "workbuddy",
-      "platform_id": "workbuddy-style-http",
-      "submission_integration_mode": "openapi_http_tools",
-      "verification_command_count": 80
-    },
-    {
-      "declares_event_store": true,
-      "declares_extract_smoke": true,
-      "declares_feedback_package": true,
-      "declares_handoff_checklist": true,
-      "declares_mastra_adapter": true,
-      "declares_review_agent_adoption_drill": true,
-      "declares_review_agent_workflow_install_smoke": true,
-      "import_asset_count": 46,
+      "import_asset_count": 55,
       "integration_mode": "generic_openapi_tools",
       "no_frontend_required": true,
       "pack_id": null,
       "platform_id": "generic-openapi-tools",
       "submission_integration_mode": "generic_openapi_tools",
-      "verification_command_count": 35
+      "verification_command_count": 36
     }
   ],
   "privacy_assertions": {
