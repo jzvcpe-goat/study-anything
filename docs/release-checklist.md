@@ -9,6 +9,7 @@
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_contracts.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_cli.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_run_once.py --check`
+- [ ] `.venv/bin/python scripts/verify_cognitive_loop_snapshot.py --check`
 - [ ] `.venv/bin/python scripts/verify_openai_compatible_gateway.py --gateway-only`
 - [ ] `.venv/bin/python scripts/verify_agent_gateway_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_external_agent_adapter_hardening.py`

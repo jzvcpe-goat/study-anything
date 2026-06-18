@@ -28,6 +28,7 @@ python3 scripts/cognitive_loop_cli.py init
 python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
 python3 scripts/cognitive_loop_cli.py run-once --html
+python3 scripts/cognitive_loop_cli.py snapshot --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -39,6 +40,7 @@ python3 scripts/cognitive_loop_cli.py init
 python3 scripts/cognitive_loop_cli.py verify
 python3 scripts/cognitive_loop_cli.py report --html
 python3 scripts/cognitive_loop_cli.py run-once --html
+python3 scripts/cognitive_loop_cli.py snapshot --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -51,6 +53,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - raw source text is forbidden in public contracts;
 - required evals include the Cognitive Loop contract verifier and CLI artifact verifier;
 - required evals include the Cognitive Loop run-once evidence verifier;
+- required evals include the Cognitive Loop project snapshot verifier;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -63,6 +66,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - public contract 禁止包含原始 source text；
 - required evals 包含 Cognitive Loop contract verifier 和 CLI artifact verifier；
 - required evals 包含 Cognitive Loop run-once evidence verifier；
+- required evals 包含 Cognitive Loop project snapshot verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -102,6 +106,20 @@ This is still not a watcher daemon, not Mastra, and not the final realtime HTML 
 这仍然不是 watcher daemon，不是 Mastra，也不是最终实时 HTML console。它只是给外部平台 Agent 和本地操作者使用的最小可运行运营循环。
 
 `python3 scripts/verify_cognitive_loop_run_once.py --check` 会在临时 external-adopter project 中验证这条路径，并输出 `cognitive-loop-run-once-evidence-verification-v1`。
+
+## Project Snapshot Evidence
+
+`python3 scripts/cognitive_loop_cli.py snapshot --html` captures a redacted path-level project snapshot. By default it reads `git status --short --untracked-files=all`; operators can also pass explicit repo-relative paths with repeated `--path` arguments.
+
+The snapshot records changed path counts and repo-relative path refs only. It does not store diff bodies, file contents, source text, Agent endpoints, model keys, or watcher state.
+
+`python3 scripts/verify_cognitive_loop_snapshot.py --check` verifies this path in a temporary external-adopter project and emits `cognitive-loop-project-snapshot-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py snapshot --html` 会捕获脱敏的路径级项目 snapshot。默认会读取 `git status --short --untracked-files=all`；操作者也可以通过重复的 `--path` 参数传入 repo-relative path。
+
+snapshot 只记录 changed path 数量和 repo-relative path refs，不保存 diff body、文件内容、source text、Agent endpoint、model key 或 watcher state。
+
+`python3 scripts/verify_cognitive_loop_snapshot.py --check` 会在临时 external-adopter project 中验证这条路径，并输出 `cognitive-loop-project-snapshot-verification-v1`。
 
 ## Public Objects
 

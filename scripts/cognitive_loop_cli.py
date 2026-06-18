@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -142,6 +143,66 @@ def cmd_run_once(args: argparse.Namespace) -> int:
     return 0
 
 
+def _git_snapshot_paths(root: Path) -> list[str]:
+    try:
+        completed = subprocess.run(
+            ["git", "status", "--short", "--untracked-files=all"],
+            cwd=str(root),
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return []
+    paths: list[str] = []
+    for line in completed.stdout.splitlines():
+        if len(line) < 4:
+            continue
+        raw_path = line[3:].strip()
+        if " -> " in raw_path:
+            raw_path = raw_path.split(" -> ", 1)[1].strip()
+        if raw_path:
+            paths.append(raw_path)
+    return paths
+
+
+def cmd_snapshot(args: argparse.Namespace) -> int:
+    root = _root(args)
+    paths = list(args.path or [])
+    if not paths:
+        paths = _git_snapshot_paths(root)
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-snapshot.html"
+    report = contracts.build_project_snapshot_artifact(
+        root,
+        paths=paths,
+        objective=args.objective,
+        artifact_ref=artifact_ref,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(args.json_output or (root / ".cognitive-loop" / "events" / "cognitive-loop-snapshot.json"))
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -192,6 +253,29 @@ def build_parser() -> argparse.ArgumentParser:
     run_once.add_argument("--risk-level", choices=sorted(contracts.ALLOWED_RISK_LEVELS), default="medium")
     run_once.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     run_once.set_defaults(func=cmd_run_once)
+
+    snapshot = sub.add_parser("snapshot", help="Capture redacted project snapshot events.")
+    snapshot.add_argument("--html", action="store_true", help="Write a static HTML snapshot artifact.")
+    snapshot.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-snapshot.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    snapshot.add_argument(
+        "--json-output",
+        help="JSON evidence output path. Defaults under .cognitive-loop/events.",
+    )
+    snapshot.add_argument(
+        "--path",
+        action="append",
+        help="Repo-relative changed path. May be repeated. Defaults to git status paths.",
+    )
+    snapshot.add_argument(
+        "--objective",
+        default="Capture a redacted local project snapshot as Cognitive Loop evidence.",
+    )
+    snapshot.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    snapshot.set_defaults(func=cmd_snapshot)
     return parser
 
 

@@ -1,0 +1,41 @@
+{
+  "artifact_json_schema": "cognitive-loop-project-snapshot-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "snapshot": "python3 scripts/cognitive_loop_cli.py snapshot --html",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_project_snapshot": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "diff_body_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "mastra_runtime_started": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "project_event": {
+    "event_id": "evt-cognitive-loop-project-snapshot",
+    "event_type": "git_diff_changed",
+    "ref_count": 2
+  },
+  "schema_version": "cognitive-loop-project-snapshot-verification-v1",
+  "snapshot": {
+    "changed_path_count": 2,
+    "created": true,
+    "diff_body_included": false,
+    "file_contents_included": false
+  },
+  "snapshot_schema": "cognitive-loop-project-snapshot-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}
