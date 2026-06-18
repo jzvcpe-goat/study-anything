@@ -73,6 +73,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_commercial_readiness.py
 .venv/bin/python scripts/verify_ecosystem_submission_pack.py
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
+.venv/bin/python scripts/verify_cognitive_loop_adoption_cookbook.py --check
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check

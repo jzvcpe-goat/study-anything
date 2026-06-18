@@ -36,8 +36,8 @@ The verifier emits `adoption-proof-v1` and proves the WorkBuddy-style HTTP tool 
 requiring a standalone frontend.
 
 For a scenario-based operator guide, read `docs/cognitive-loop-adoption-cookbook.md`. It shows how a
-WorkBuddy-style HTTP workspace can call the local API and local CLI while sharing only redacted
-artifact metadata back into the workspace.
+WorkBuddy-style platform Agent HTTP workspace can call the local API and local Cognitive Loop
+commands while sharing only redacted artifact metadata back into the workspace.
 
 ## Runtime Boundary
 

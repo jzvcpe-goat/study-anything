@@ -2,7 +2,7 @@
 
 This cookbook is the short operating path for Kimi, Codex, WorkBuddy-style agents, and private
 platform agents that use Study Anything as the local Learning Adapter inside the Cognitive Loop
-System.
+System rather than a standalone frontend.
 
 这份手册面向 Kimi、Codex、WorkBuddy 类工作区 Agent，以及私有平台 Agent。目标是让平台 Agent
 把 Study Anything 当作 Cognitive Loop System 的本地 Learning Adapter 使用，而不是把它当成一个独立
@@ -173,6 +173,7 @@ Do not paste these into Kimi, Codex, WorkBuddy, support tickets, or public issue
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check
 python3 scripts/verify_cognitive_loop_artifact_index.py --check
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py

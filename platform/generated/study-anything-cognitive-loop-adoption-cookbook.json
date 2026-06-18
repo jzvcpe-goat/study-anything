@@ -1,0 +1,72 @@
+{
+  "boundaries": {
+    "cognitive_loop_artifacts_are_metadata_only": true,
+    "mastra_runtime_shipped": false,
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "realtime_html_console_shipped": false,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true,
+    "watcher_daemon_shipped": false
+  },
+  "commands": {
+    "external_adoption": "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
+    "generate_pack": "python3 scripts/generate_platform_adoption_pack.py --check",
+    "verify": "python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check"
+  },
+  "cookbook": {
+    "bilingual": true,
+    "commands": 18,
+    "path": "docs/cognitive-loop-adoption-cookbook.md",
+    "planned_layers_not_shipped": true,
+    "privacy_items": 8,
+    "real_model_key_custody": false,
+    "sections": 9,
+    "standalone_frontend_required": false
+  },
+  "distribution_sources": {
+    "adoption_pack_source_registered": true,
+    "bundle_manifest_source_registered": true
+  },
+  "ecosystem_submission": {
+    "minimum_command_registered": true,
+    "must_prove_registered": true,
+    "shared_assets_registered": true,
+    "submission_imports_registered": true
+  },
+  "platform_packs": [
+    {
+      "accepts_schema": true,
+      "imports_cookbook": true,
+      "imports_report": true,
+      "platform_id": "codex",
+      "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_cookbook": true,
+      "imports_report": true,
+      "platform_id": "kimi",
+      "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_cookbook": true,
+      "imports_report": true,
+      "platform_id": "workbuddy",
+      "runs_verifier": true
+    }
+  ],
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "schema_version": "cognitive-loop-adoption-cookbook-verification-v1",
+  "status": "pass"
+}
