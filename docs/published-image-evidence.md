@@ -51,6 +51,9 @@ A local pull timeout is acceptable only when all three are true:
 - `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha` shows `linux/amd64` and `linux/arm64`.
 - GitHub Actions `docker-images` succeeded for the release tag.
 - `scripts/release_check.sh` and external adoption proof passed before tagging.
+- Optional stronger proof: dispatch the `published-image-smoke` GitHub Actions workflow with
+  `tag=v0.3.31-alpha`. Unlike local fallback mode, this workflow is strict: it fails if the GitHub
+  runner cannot pull the release image, start the API, or complete the deterministic API smoke.
 
 If any required platform is missing, docker-images failed, or a remote smoke run
 fails after the image starts, treat the release claim as blocked.
