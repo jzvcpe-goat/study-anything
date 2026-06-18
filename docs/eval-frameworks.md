@@ -14,6 +14,7 @@ These gates are required for release and marketplace-style submission:
 - `external-agent-adapter-hardening-v1` via `scripts/verify_external_agent_adapter_hardening.py`.
 - `external-eval-marketplace-harness-v1` via `scripts/verify_external_eval_marketplace_harness.py --check`.
 - `cognitive-loop-review-agent-eval-harness-v1` via `scripts/verify_cognitive_loop_review_agent_eval_harness.py --check`.
+- `cognitive-loop-review-agent-ci-receipt-v1` via `scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -82,3 +83,19 @@ It emits `cognitive-loop-review-agent-eval-harness-v1` and checks decision cover
 security findings with CWE references, low-confidence suppression, and privacy-leak rejection. These
 fixtures may contain synthetic raw diff text; real operator diffs must stay in ephemeral handoff
 requests and must not be committed.
+
+## Review Agent CI Receipt
+
+After a Kimi, Codex, WorkBuddy, or private CI Review Agent returns a JSON report, keep raw handoff
+material and real report files outside the repo unless an operator explicitly needs them. The safe
+artifact for PR comments, release evidence, or CI logs is the metadata-only receipt:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_receipt.py build --report REVIEW_AGENT_REPORT.json --provider-id PROVIDER --pr-ref PR --commit-sha SHA
+python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+```
+
+It emits `cognitive-loop-review-agent-ci-receipt-v1` and stores only provider/ref metadata, report
+hash, decision, risk, finding counts, validation commands, and human follow-up action. It must reject
+raw diff text, file bodies, finding evidence, report summaries, Agent endpoint secrets, real model
+keys, and hidden chain-of-thought.

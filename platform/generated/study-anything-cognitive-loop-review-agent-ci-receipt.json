@@ -1,0 +1,71 @@
+{
+  "acceptance": {
+    "build_command": "python3 scripts/cognitive_loop_review_agent_receipt.py build --report REVIEW_AGENT_REPORT.json --provider-id PROVIDER --pr-ref PR --commit-sha SHA",
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-ci-receipt.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check",
+    "validate_command": "python3 scripts/cognitive_loop_review_agent_receipt.py validate --receipt RECEIPT.json"
+  },
+  "cli": "scripts/cognitive_loop_review_agent_receipt.py",
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "negative_receipts": {
+    "raw-diff-leak.json": "Review Agent CI receipt contains private report, raw diff, or secret text: literals=['diff --git'] patterns=[]"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "quality_gates": {
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "metadata_only_receipts": "pass",
+    "privacy_leak_rejection": "pass",
+    "report_hash_required": "pass"
+  },
+  "receipt_count": 3,
+  "receipt_schema_version": "cognitive-loop-review-agent-ci-receipt-v1",
+  "receipts": {
+    "approved.json": {
+      "critical_count": 0,
+      "decision": "approved",
+      "finding_count": 0,
+      "overall_risk": "low",
+      "receipt_id": "review-agent-ci-e1d27af33c28b2fd",
+      "safe_to_attach_to_pr": true
+    },
+    "needs-fix.json": {
+      "critical_count": 1,
+      "decision": "needs-fix",
+      "finding_count": 1,
+      "overall_risk": "high",
+      "receipt_id": "review-agent-ci-e4c659f522bb44bd",
+      "safe_to_attach_to_pr": true
+    },
+    "needs-review.json": {
+      "critical_count": 0,
+      "decision": "needs-review",
+      "finding_count": 1,
+      "overall_risk": "medium",
+      "receipt_id": "review-agent-ci-b04e2f5b48f7d96c",
+      "safe_to_attach_to_pr": true
+    }
+  },
+  "schema_version": "cognitive-loop-review-agent-ci-receipt-verification-v1",
+  "status": "pass"
+}

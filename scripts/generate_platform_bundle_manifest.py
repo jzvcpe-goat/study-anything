@@ -122,6 +122,11 @@ FILES: list[tuple[str, str, str]] = [
         "Offline Cognitive Loop Review Agent eval harness verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-ci-receipt.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent CI receipt verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -450,6 +455,11 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/review-agent/invalid-low-confidence-final.json",
         "fixture",
         "Rejected external Review Agent low-confidence final finding fixture.",
+    ),
+    (
+        "fixtures/review-agent-receipts/raw-diff-leak.json",
+        "fixture",
+        "Rejected external Review Agent CI receipt raw-diff leak fixture.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1032,6 +1042,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent prepare/validate handoff CLI.",
     ),
     (
+        "scripts/cognitive_loop_review_agent_receipt.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only CI receipt CLI.",
+    ),
+    (
         "scripts/verify_cognitive_loop_review_agent_handoff_cli.py",
         "verification",
         "External Cognitive Loop Review Agent handoff CLI verifier.",
@@ -1040,6 +1055,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review_agent_eval_harness.py",
         "verification",
         "Offline Cognitive Loop Review Agent eval harness verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_ci_receipt.py",
+        "verification",
+        "External Cognitive Loop Review Agent CI receipt verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",
