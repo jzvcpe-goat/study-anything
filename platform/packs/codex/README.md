@@ -35,6 +35,9 @@ Verify the SQLite metadata-only path with `python3 scripts/verify_cognitive_loop
 For Mastra orchestration experiments, copy `platform/mastra/cognitive-loop-mastra-adapter.ts`
 into an external Mastra project and keep Study Anything as the metadata source. Verify the
 contract pack with `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` to rehearse
+high-risk suspend, approved resume, rejected bail, and Event Store projection before claiming
+a real Mastra runtime is connected.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

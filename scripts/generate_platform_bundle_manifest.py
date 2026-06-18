@@ -92,6 +92,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Mastra adapter contract-pack verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+        "generated_asset",
+        "Cognitive Loop Mastra runtime dry-run verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1085,6 +1090,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_mastra_adapter.py",
         "verification",
         "Cognitive Loop Mastra adapter contract-pack verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+        "verification",
+        "Cognitive Loop Mastra runtime dry-run verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",

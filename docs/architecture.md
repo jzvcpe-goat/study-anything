@@ -291,6 +291,10 @@ The extended project protocol may later add `watchers.yaml` and `learning.yaml`,
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是当前的 Mastra 桥接层。它是给外部 Mastra 项目使用的 TypeScript scaffold，把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 workflow step、suspend/resume 和 bail 语义。它由 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证；这不代表本仓库已经启动或托管 Mastra。
 
+`python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` is the current runtime rehearsal. It uses local Cognitive Loop artifacts and the SQLite Event Store to prove the suspend/resume/bail contract without compiling TypeScript, starting Mastra, running a watcher daemon, or calling an external Agent.
+
+`python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 是当前的 runtime 演练入口。它使用本地 Cognitive Loop artifact 和 SQLite Event Store 来证明 suspend/resume/bail 契约，但不编译 TypeScript、不启动 Mastra、不运行 watcher daemon，也不调用外部 Agent。
+
 ## Product Entry Modes
 
 ### Personal Plugin Mode

@@ -40,6 +40,12 @@ COGNITIVE_LOOP_EVENT_STORE_PATH = (
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
+COGNITIVE_LOOP_MASTRA_RUNTIME_DRY_RUN_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-cognitive-loop-mastra-runtime-dry-run.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -232,6 +238,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_adapter.py",
+    "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -262,6 +269,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-event-index.json",
     "platform/generated/study-anything-cognitive-loop-event-store.json",
     "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -886,6 +894,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
             "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
+            "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
             "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
             "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -953,10 +962,12 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
         "scripts/verify_cognitive_loop_artifact_doctor.py",
         "scripts/verify_cognitive_loop_repair_plan.py",
         "scripts/verify_cognitive_loop_artifact_index.py",
@@ -1532,6 +1543,62 @@ def verify_cognitive_loop_mastra_adapter_report() -> None:
         raise EcosystemSubmissionError("Cognitive Loop Mastra adapter must model high-risk HITL suspension.")
     if (dry_run.get("rejected") or {}).get("uses_bail") is not True:
         raise EcosystemSubmissionError("Cognitive Loop Mastra adapter must model rejection through bail.")
+
+
+def verify_cognitive_loop_mastra_runtime_dry_run_report() -> None:
+    report = load_json(COGNITIVE_LOOP_MASTRA_RUNTIME_DRY_RUN_PATH)
+    if report.get("schema_version") != "cognitive-loop-mastra-runtime-dry-run-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run report must pass.")
+    acceptance = report.get("acceptance") or {}
+    for key in (
+        "adapter_contract_used_as_source",
+        "high_risk_run_suspends",
+        "approved_gate_maps_to_resume",
+        "rejected_gate_maps_to_bail",
+        "event_store_projection_rebuilt",
+    ):
+        if acceptance.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra runtime dry-run acceptance.{key} must be true.")
+    transcript = report.get("runtime_transcript") or {}
+    output_contract = transcript.get("output_contract") or {}
+    if output_contract.get("status") != "dry_run_passed":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run output contract must pass.")
+    human_gate = output_contract.get("humanGate") or {}
+    for key in ("suspended", "approvedResumeCovered", "rejectedBailCovered"):
+        if human_gate.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra runtime dry-run humanGate.{key} must be true.")
+    projection = output_contract.get("eventStoreProjection") or {}
+    if projection.get("artifact_count") != 4:
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run must project four artifact records.")
+    if projection.get("content_included") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run projection must be metadata-only.")
+    runtime = report.get("runtime_boundaries") or {}
+    for key in (
+        "mastra_runtime_started",
+        "typescript_compiled_in_this_repo",
+        "watcher_daemon_started",
+        "realtime_html_console_started",
+        "external_agent_called",
+    ):
+        if runtime.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra runtime dry-run runtime_boundaries.{key} must be false.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("metadata_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Mastra runtime dry-run must be metadata-only.")
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "file_contents_included",
+        "learner_answers_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra runtime dry-run privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4249,6 +4316,7 @@ def main() -> None:
     verify_cognitive_loop_event_index_report()
     verify_cognitive_loop_event_store_report()
     verify_cognitive_loop_mastra_adapter_report()
+    verify_cognitive_loop_mastra_runtime_dry_run_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4308,6 +4376,7 @@ def main() -> None:
                 "cognitive_loop_event_index": "cognitive-loop-event-index-verification-v1",
                 "cognitive_loop_event_store": "cognitive-loop-event-store-verification-v1",
                 "cognitive_loop_mastra_adapter": "cognitive-loop-mastra-adapter-verification-v1",
+                "cognitive_loop_mastra_runtime_dry_run": "cognitive-loop-mastra-runtime-dry-run-verification-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
