@@ -1,0 +1,107 @@
+{
+  "acceptance": {
+    "build_command": "python3 scripts/cognitive_loop_review_agent_pr_comment.py build --receipt REVIEW_AGENT_CI_RECEIPT.json",
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-pr-comment-pack.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check",
+    "validate_command": "python3 scripts/cognitive_loop_review_agent_pr_comment.py validate --comment-pack COMMENT_PACK.json"
+  },
+  "cli": "scripts/cognitive_loop_review_agent_pr_comment.py",
+  "comment_pack_count": 3,
+  "comment_pack_schema_version": "cognitive-loop-review-agent-pr-comment-pack-v1",
+  "comment_packs": {
+    "approved.json": {
+      "comment_hashes": {
+        "markdown_en_sha256": "183e52cd1c94839b37ff3325f898a6f49175cf4d257b6126be4c1cab086ff828",
+        "markdown_zh_sha256": "9786a34701eaea2ffc5d63b8347ac74341845bc1ce894b40c8c6b990a7923287"
+      },
+      "human_action": "merge_allowed_after_required_checks",
+      "labels_to_add": [],
+      "summary": {
+        "comment_pack_id": "review-agent-pr-comment-a3350421ed3f6831",
+        "conclusion": "success",
+        "decision": "approved",
+        "finding_count": 0,
+        "overall_risk": "low",
+        "safe_to_attach_to_pr": true
+      }
+    },
+    "needs-fix.json": {
+      "comment_hashes": {
+        "markdown_en_sha256": "ff91849348e2896bb47f055b9c165e181f9fbb7471c233153bc1ba06aec19b50",
+        "markdown_zh_sha256": "ea225b1fa520845a749752639116c0880bbdd840931702cf37bb713e723eac66"
+      },
+      "human_action": "fix_required_before_merge",
+      "labels_to_add": [
+        "needs-fix",
+        "security-review"
+      ],
+      "summary": {
+        "comment_pack_id": "review-agent-pr-comment-6da1968075e91fc9",
+        "conclusion": "failure",
+        "decision": "needs-fix",
+        "finding_count": 1,
+        "overall_risk": "high",
+        "safe_to_attach_to_pr": true
+      }
+    },
+    "needs-review.json": {
+      "comment_hashes": {
+        "markdown_en_sha256": "4e78ea99d1dca64c01e8a16d71b470262dc881e319522386679de54a8acf3fc2",
+        "markdown_zh_sha256": "90765c08140ddd9a8a1d3d9198a524e6c46e9cc29059a3632b042248e0aea492"
+      },
+      "human_action": "maintainer_review_required",
+      "labels_to_add": [
+        "needs-review",
+        "test-gap"
+      ],
+      "summary": {
+        "comment_pack_id": "review-agent-pr-comment-fac368e8b0810c35",
+        "conclusion": "neutral",
+        "decision": "needs-review",
+        "finding_count": 1,
+        "overall_risk": "medium",
+        "safe_to_attach_to_pr": true
+      }
+    }
+  },
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "evals/README.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "negative_comment_packs": {
+    "raw-diff-leak.json": "Review Agent PR comment pack contains private report, raw diff, or secret text: literals=['diff --git'] patterns=[]"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "quality_gates": {
+    "bilingual_markdown_comments": "pass",
+    "checks_conclusion_coverage": [
+      "failure",
+      "neutral",
+      "success"
+    ],
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "metadata_only_comments": "pass",
+    "privacy_leak_rejection": "pass"
+  },
+  "schema_version": "cognitive-loop-review-agent-pr-comment-pack-verification-v1",
+  "status": "pass"
+}

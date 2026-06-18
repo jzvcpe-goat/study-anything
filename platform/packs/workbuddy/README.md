@@ -94,10 +94,12 @@ private Review Agent, then validate the JSON response locally:
 ```bash
 python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD > /tmp/workbuddy-review-handoff.json
 python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/workbuddy-review-report.json
-python3 scripts/cognitive_loop_review_agent_receipt.py build --report /tmp/workbuddy-review-report.json --provider-id workbuddy-review-agent --pr-ref PR --commit-sha SHA
+python3 scripts/cognitive_loop_review_agent_receipt.py build --report /tmp/workbuddy-review-report.json --provider-id workbuddy-review-agent --pr-ref PR --commit-sha SHA --output /tmp/workbuddy-review-receipt.json
+python3 scripts/cognitive_loop_review_agent_pr_comment.py build --receipt /tmp/workbuddy-review-receipt.json
 python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
 python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
 ```
 
 ## Runtime Boundary
