@@ -1,0 +1,138 @@
+{
+  "boundaries": {
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "recipe_cli_applies_file_changes": false,
+    "recipe_cli_executes_commands": false,
+    "recipe_cli_is_read_only": true,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true
+  },
+  "cli": {
+    "commands": {
+      "list": "python3 scripts/cognitive_loop_recipe_cli.py list",
+      "show_risk": "python3 scripts/cognitive_loop_recipe_cli.py show risk_decision"
+    },
+    "path": "scripts/cognitive_loop_recipe_cli.py",
+    "schema_version": "cognitive-loop-recipe-cli-v1"
+  },
+  "cli_outputs": {
+    "all_steps_reference_existing_scripts": true,
+    "executes_recipe_commands": false,
+    "list_schema_version": "cognitive-loop-recipe-cli-v1",
+    "metadata_only": true,
+    "plans": [
+      {
+        "command_classes": [
+          "external_adoption",
+          "metadata_only"
+        ],
+        "command_count": 3,
+        "recipe_id": "first_adoption",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": true,
+        "runtime_required": true,
+        "safe_to_auto_execute": false
+      },
+      {
+        "command_classes": [
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "recipe_id": "daily_project_review",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": false,
+        "runtime_required": false,
+        "safe_to_auto_execute": false
+      },
+      {
+        "command_classes": [
+          "human_gate",
+          "manual_repair_plan",
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "recipe_id": "risk_decision",
+        "requires_human_mastery_gate": true,
+        "requires_operator_before_runtime": false,
+        "runtime_required": false,
+        "safe_to_auto_execute": false
+      },
+      {
+        "command_classes": [
+          "runtime_required"
+        ],
+        "command_count": 3,
+        "recipe_id": "learning_handoff",
+        "requires_human_mastery_gate": false,
+        "requires_operator_before_runtime": true,
+        "runtime_required": true,
+        "safe_to_auto_execute": false
+      }
+    ],
+    "recipe_count": 4,
+    "recipe_ids": [
+      "first_adoption",
+      "daily_project_review",
+      "risk_decision",
+      "learning_handoff"
+    ]
+  },
+  "distribution_sources": {
+    "adoption_pack_source_registered": true,
+    "bundle_manifest_source_registered": true,
+    "ecosystem_submission_verifier_registered": true,
+    "platform_pack_verifier_registered": true,
+    "release_check_registered": true
+  },
+  "ecosystem_submission": {
+    "minimum_command_registered": true,
+    "must_prove_registered": true,
+    "shared_assets_registered": true,
+    "submission_imports_registered": true
+  },
+  "entrypoint_docs": {
+    "checked_docs": [
+      "skills/study-anything/SKILL.md",
+      "platform/packs/codex/README.md",
+      "platform/packs/kimi/README.md",
+      "platform/packs/workbuddy/README.md"
+    ],
+    "cli_documented": true
+  },
+  "platform_pack_manifests": {
+    "packs": [
+      {
+        "accepts_schema": true,
+        "imports_cli": true,
+        "platform_id": "codex",
+        "runs_verifier": true
+      },
+      {
+        "accepts_schema": true,
+        "imports_cli": true,
+        "platform_id": "kimi",
+        "runs_verifier": true
+      },
+      {
+        "accepts_schema": true,
+        "imports_cli": true,
+        "platform_id": "workbuddy",
+        "runs_verifier": true
+      }
+    ]
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Verify platform Agents can query Cognitive Loop recipe plans without executing commands.",
+  "schema_version": "cognitive-loop-recipe-cli-verification-v1",
+  "status": "pass"
+}

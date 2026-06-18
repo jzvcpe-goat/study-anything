@@ -18,6 +18,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
 - `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -80,6 +81,9 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/generate_cognitive_loop_adoption_recipes.py --check
 .venv/bin/python scripts/verify_cognitive_loop_recipe_replay.py --check
 .venv/bin/python scripts/verify_cognitive_loop_skill_entrypoint.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli.py --check
+.venv/bin/python scripts/cognitive_loop_recipe_cli.py list
+.venv/bin/python scripts/cognitive_loop_recipe_cli.py show risk_decision
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check
@@ -121,3 +125,5 @@ machine-readable recipe matrix, and
 safe for metadata-only replay before an operator runs runtime or human-gated commands.
 `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json` proves the same recipe path
 is visible from the repo-local Skill and every platform pack README.
+`platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves platform Agents can query
+read-only `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.

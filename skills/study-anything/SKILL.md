@@ -34,12 +34,18 @@ python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
 python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
 python3 scripts/verify_cognitive_loop_recipe_replay.py --check
 python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/cognitive_loop_recipe_cli.py list
+python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
 
 The machine-readable entrypoints are:
 
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
+- `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
+- `scripts/cognitive_loop_recipe_cli.py`
 
 Use these recipe ids:
 

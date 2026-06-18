@@ -84,7 +84,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, platform/generated/study-anything-cognitive-loop-recipe-cli.json, scripts/cognitive_loop_recipe_cli.py, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-openai-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-openai-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, platform/generated/study-anything-cognitive-loop-recipe-cli.json, scripts/cognitive_loop_recipe_cli.py, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -228,7 +228,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, platform/generated/study-anything-cognitive-loop-evidence-bundle.json, platform/generated/study-anything-cognitive-loop-event-index.json, platform/generated/study-anything-cognitive-loop-artifact-doctor.json, platform/generated/study-anything-cognitive-loop-repair-plan.json, platform/generated/study-anything-cognitive-loop-artifact-index.json, platform/generated/study-anything-cognitive-loop-adoption-cookbook.json, platform/generated/study-anything-cognitive-loop-adoption-recipes.json, platform/generated/study-anything-cognitive-loop-recipe-replay.json, platform/generated/study-anything-cognitive-loop-skill-entrypoint.json, platform/generated/study-anything-cognitive-loop-recipe-cli.json, scripts/cognitive_loop_recipe_cli.py, docs/cognitive-loop-contracts.md, docs/cognitive-loop-adoption-cookbook.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -295,7 +295,7 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 265,
+    "file_count": 268,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
@@ -303,7 +303,7 @@
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 77,
+      "acceptance_evidence_count": 78,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -328,6 +328,8 @@
         "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "scripts/cognitive_loop_recipe_cli.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -351,6 +353,7 @@
         "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -404,7 +407,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 77,
+      "acceptance_evidence_count": 78,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -433,6 +436,8 @@
         "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "scripts/cognitive_loop_recipe_cli.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -456,6 +461,7 @@
         "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -509,7 +515,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 77,
+      "acceptance_evidence_count": 78,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -535,6 +541,8 @@
         "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "scripts/cognitive_loop_recipe_cli.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -558,6 +566,7 @@
         "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
