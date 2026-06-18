@@ -43,6 +43,10 @@ For project memory handoff, run `python3 scripts/cognitive_loop_event_store.py r
 share only the `python3 scripts/cognitive_loop_event_store.py export --html` metadata report with the
 workspace. The verifier is `python3 scripts/verify_cognitive_loop_event_store.py --check`.
 
+For a WorkBuddy workspace that owns a Mastra runtime, expose `platform/mastra/` as a static adapter
+pack. The template maps Cognitive Loop Human Mastery Gate state to Mastra suspend/resume/bail while
+keeping raw source text and model keys outside Study Anything.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

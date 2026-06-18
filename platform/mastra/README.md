@@ -1,0 +1,63 @@
+# Cognitive Loop Mastra Adapter Pack
+
+This pack is a copy-ready adapter scaffold for external Mastra projects. It is not the
+shipped Study Anything runtime, does not start Mastra from this repository, and does not
+store model keys.
+
+Use it when a platform Agent or maintainer wants to run Cognitive Loop project evidence
+through a Mastra workflow while keeping Study Anything as the local-first contract and
+evidence source.
+
+## What It Provides
+
+- `cognitive-loop-mastra-adapter.ts`: a TypeScript workflow scaffold using Mastra
+  workflow steps, HITL suspend/resume schemas, and a Human Mastery Gate mapping.
+- `manifest.json`: a machine-readable file list, privacy boundary, and implementation
+  status.
+- `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`: local verification
+  that the pack is present, metadata-only, and included in generated platform bundles.
+
+## Install Into A Mastra Project
+
+Create or open a Mastra project, then copy the TypeScript file into your Mastra workflow
+directory:
+
+```bash
+npm create mastra@latest cognitive-loop-runtime --default --llm openai
+cp platform/mastra/cognitive-loop-mastra-adapter.ts cognitive-loop-runtime/src/mastra/workflows/
+```
+
+The adapter expects an external platform Agent or local operator to pass Cognitive Loop
+metadata:
+
+- `projectId`
+- `loopRunId`
+- `decisionCardId`
+- `eventStorePath`
+- `artifactRefs`
+- `risk`
+- `constraints`
+
+It does not accept raw source text, diff bodies, learner answers, prompts, Agent endpoint
+secrets, or model API keys.
+
+## HITL Mapping
+
+The adapter maps Cognitive Loop Human Mastery Gate state onto Mastra workflow behavior:
+
+- low-risk runs pass through without suspension;
+- risky runs suspend with a redacted gate payload;
+- approvals resume the workflow;
+- explicit rejections bail with a redacted rejection reason.
+
+This mirrors Mastra's workflow HITL pattern while preserving Cognitive Loop as the source
+of truth for project evidence.
+
+## Current Boundary
+
+Status: adapter contract pack.
+
+This repository still does not ship the full Mastra runtime, watcher daemon, realtime HTML
+console, or hosted service. The next runtime PR can import this adapter into a real Mastra
+project and connect it to watcher-generated events.
+

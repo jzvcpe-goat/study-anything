@@ -32,6 +32,10 @@ For local event memory, run `python3 scripts/cognitive_loop_event_store.py rebui
 `.cognitive-loop/events/*.json`, then run `python3 scripts/cognitive_loop_event_store.py export --html`.
 Verify the SQLite metadata-only path with `python3 scripts/verify_cognitive_loop_event_store.py --check`.
 
+For Mastra orchestration experiments, copy `platform/mastra/cognitive-loop-mastra-adapter.ts`
+into an external Mastra project and keep Study Anything as the metadata source. Verify the
+contract pack with `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

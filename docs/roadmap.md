@@ -120,9 +120,21 @@ Acceptance:
 
 Goal: use Mastra for Agent/workflow/tool/HITL execution while keeping Core as the source of truth.
 
+Current:
+
+- Mastra adapter contract pack is available under `platform/mastra/`.
+- `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies the TypeScript scaffold, HITL mapping, and privacy boundary.
+- The pack is copy-ready for external Mastra projects but does not start Mastra from this repository.
+
+当前：
+
+- Mastra adapter contract pack 已位于 `platform/mastra/`。
+- `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证 TypeScript scaffold、HITL 映射和隐私边界。
+- 该包可复制到外部 Mastra 项目使用，但不会从本仓库启动 Mastra。
+
 Deliver:
 
-- Mastra workflow adapter
+- repository-started Mastra workflow adapter
 - tool registry
 - basic Agent set: DiffExplainer, ProjectMapper, RiskAnalyst, StudyCard, Verifier
 - suspend/resume proof for human gates

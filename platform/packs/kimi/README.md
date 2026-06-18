@@ -86,6 +86,11 @@ When a local event ledger is useful, the terminal or workspace Agent can run
 metadata summary, not the SQLite file or private source artifacts. Verify with
 `python3 scripts/verify_cognitive_loop_event_store.py --check`.
 
+If Kimi is coordinating an external Mastra workspace, import `platform/mastra/README.md`,
+`platform/mastra/manifest.json`, and `platform/mastra/cognitive-loop-mastra-adapter.ts` as the
+Mastra-side adapter contract. Verify the pack with
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace

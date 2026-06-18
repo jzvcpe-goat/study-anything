@@ -37,6 +37,9 @@ COGNITIVE_LOOP_EVENT_INDEX_PATH = (
 COGNITIVE_LOOP_EVENT_STORE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-event-store.json"
 )
+COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -225,6 +228,10 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_event_index.py",
     "scripts/cognitive_loop_event_store.py",
     "scripts/verify_cognitive_loop_event_store.py",
+    "platform/mastra/README.md",
+    "platform/mastra/manifest.json",
+    "platform/mastra/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_adapter.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -254,6 +261,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "platform/generated/study-anything-cognitive-loop-event-index.json",
     "platform/generated/study-anything-cognitive-loop-event-store.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -876,6 +884,8 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_human_gate.schema_version == cognitive-loop-human-gate-verification-v1",
             "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
             "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
+            "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
+            "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
             "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
             "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -942,6 +952,11 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_event_index.py",
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
+        "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+        "platform/mastra/README.md",
+        "platform/mastra/manifest.json",
+        "platform/mastra/cognitive-loop-mastra-adapter.ts",
+        "scripts/verify_cognitive_loop_mastra_adapter.py",
         "scripts/verify_cognitive_loop_artifact_doctor.py",
         "scripts/verify_cognitive_loop_repair_plan.py",
         "scripts/verify_cognitive_loop_artifact_index.py",
@@ -1466,6 +1481,57 @@ def verify_cognitive_loop_event_store_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop Event Store privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_mastra_adapter_report() -> None:
+    report = load_json(COGNITIVE_LOOP_MASTRA_ADAPTER_PATH)
+    if report.get("schema_version") != "cognitive-loop-mastra-adapter-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra adapter report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra adapter report must pass.")
+    manifest = report.get("manifest") or {}
+    if manifest.get("status") != "contract_pack":
+        raise EcosystemSubmissionError("Cognitive Loop Mastra adapter must remain a contract pack.")
+    scaffold = report.get("typescript_scaffold") or {}
+    for key in (
+        "uses_mastra_workflows_import",
+        "declares_input_schema",
+        "declares_output_schema",
+        "declares_suspend_schema",
+        "declares_resume_schema",
+        "maps_human_gate_to_suspend",
+        "maps_rejection_to_bail",
+        "metadata_only_constraints",
+    ):
+        if scaffold.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra adapter missing scaffold check: {key}")
+    runtime = report.get("runtime_boundaries") or {}
+    for key in (
+        "mastra_runtime_started",
+        "typescript_compiled_in_this_repo",
+        "watcher_daemon_started",
+        "realtime_html_console_started",
+        "external_agent_called",
+    ):
+        if runtime.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra adapter runtime_boundaries.{key} must be false.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Mastra adapter privacy.{key} must be false.")
+    dry_run = report.get("dry_run_contract") or {}
+    if (dry_run.get("high_risk") or {}).get("suspended") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Mastra adapter must model high-risk HITL suspension.")
+    if (dry_run.get("rejected") or {}).get("uses_bail") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Mastra adapter must model rejection through bail.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4182,6 +4248,7 @@ def main() -> None:
     verify_cognitive_loop_evidence_bundle_report()
     verify_cognitive_loop_event_index_report()
     verify_cognitive_loop_event_store_report()
+    verify_cognitive_loop_mastra_adapter_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4240,6 +4307,7 @@ def main() -> None:
                 "cognitive_loop_evidence_bundle": "cognitive-loop-evidence-bundle-verification-v1",
                 "cognitive_loop_event_index": "cognitive-loop-event-index-verification-v1",
                 "cognitive_loop_event_store": "cognitive-loop-event-store-verification-v1",
+                "cognitive_loop_mastra_adapter": "cognitive-loop-mastra-adapter-verification-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",

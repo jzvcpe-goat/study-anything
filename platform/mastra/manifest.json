@@ -1,0 +1,68 @@
+{
+  "schema_version": "cognitive-loop-mastra-adapter-manifest-v1",
+  "status": "contract_pack",
+  "adapter_id": "cognitive-loop-mastra-runtime-adapter",
+  "adapter_version": "0.1.0",
+  "runtime": {
+    "framework": "Mastra",
+    "language": "TypeScript",
+    "package_imports": [
+      "@mastra/core/workflows",
+      "zod"
+    ],
+    "runtime_started_by_study_anything": false,
+    "compiled_in_this_repo": false
+  },
+  "files": [
+    {
+      "path": "platform/mastra/README.md",
+      "kind": "operator_doc"
+    },
+    {
+      "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
+      "kind": "typescript_scaffold"
+    },
+    {
+      "path": "platform/mastra/manifest.json",
+      "kind": "adapter_manifest"
+    }
+  ],
+  "contracts": {
+    "inputs": [
+      "projectId",
+      "loopRunId",
+      "decisionCardId",
+      "eventStorePath",
+      "artifactRefs",
+      "risk",
+      "constraints"
+    ],
+    "outputs": [
+      "status",
+      "loopRunId",
+      "decisionCardId",
+      "humanGate",
+      "eventStoreProjection"
+    ],
+    "hitl_mapping": {
+      "suspend": "Human Mastery Gate required",
+      "resume": "Human approval received",
+      "bail": "Human rejection received"
+    }
+  },
+  "privacy": {
+    "raw_source_text_allowed": false,
+    "diff_bodies_allowed": false,
+    "learner_answers_allowed": false,
+    "agent_endpoint_secrets_allowed": false,
+    "model_api_keys_allowed": false,
+    "prompt_text_allowed": false
+  },
+  "claim_boundaries": {
+    "mastra_runtime_integrated": false,
+    "watcher_daemon_shipped": false,
+    "realtime_html_console_shipped": false,
+    "study_anything_stores_real_model_keys": false
+  }
+}
+

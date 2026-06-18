@@ -105,7 +105,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
-- required evals include the Cognitive Loop event index, SQLite Event Store, artifact doctor, repair plan, and artifact index verifiers;
+- required evals include the Cognitive Loop event index, SQLite Event Store, Mastra adapter contract pack, artifact doctor, repair plan, and artifact index verifiers;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -121,7 +121,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
-- required evals 包含 Cognitive Loop event index、SQLite Event Store、artifact doctor、repair plan 和 artifact index verifier；
+- required evals 包含 Cognitive Loop event index、SQLite Event Store、Mastra adapter contract pack、artifact doctor、repair plan 和 artifact index verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -239,6 +239,20 @@ Event Store 只记录 `ProjectEvent` metadata、artifact path、artifact kind、
 `python3 scripts/cognitive_loop_event_store.py export --html` 会导出静态 metadata-only Event Store 报告。数据库是本地可重建的；它不是 watcher daemon、后台队列、Mastra runtime 或实时 HTML console。
 
 `python3 scripts/verify_cognitive_loop_event_store.py --check` 会在临时 external-adopter project 中验证 SQLite schema 创建、重复 rebuild 幂等、HTML/JSON 导出、hash 覆盖、正文排除和 unsafe Agent endpoint 拒绝，并输出 `cognitive-loop-event-store-verification-v1`。
+
+## Mastra Adapter Contract Pack
+
+`platform/mastra/cognitive-loop-mastra-adapter.ts` is a copy-ready TypeScript scaffold for external Mastra projects. It maps Cognitive Loop metadata-only evidence into Mastra workflow steps, with a Human Mastery Gate represented through suspend/resume and rejection represented through bail semantics.
+
+`platform/mastra/manifest.json` records the current boundary: this repository ships an adapter contract pack, not a running Mastra service. Study Anything does not compile the TypeScript scaffold, start Mastra, run a watcher daemon, or store model keys.
+
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies required files, Mastra workflow markers, HITL mapping, privacy boundaries, and a deterministic dry-run contract. It emits `cognitive-loop-mastra-adapter-verification-v1`.
+
+`platform/mastra/cognitive-loop-mastra-adapter.ts` 是给外部 Mastra 项目复制使用的 TypeScript scaffold。它把 Cognitive Loop 的 metadata-only evidence 映射为 Mastra workflow steps，并用 suspend/resume 表达 Human Mastery Gate，用 bail 表达拒绝。
+
+`platform/mastra/manifest.json` 记录当前边界：本仓库交付的是 adapter contract pack，不是正在运行的 Mastra 服务。Study Anything 不编译这个 TypeScript scaffold，不启动 Mastra，不运行 watcher daemon，也不保存 model key。
+
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证必需文件、Mastra workflow 标记、HITL 映射、隐私边界和确定性 dry-run contract，并输出 `cognitive-loop-mastra-adapter-verification-v1`。
 
 ## Artifact Doctor / Artifact 诊断器
 
