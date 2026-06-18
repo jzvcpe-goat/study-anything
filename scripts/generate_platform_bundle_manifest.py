@@ -142,6 +142,11 @@ FILES: list[tuple[str, str, str]] = [
         "Negative fixtures proving Cognitive Loop recipe CLI schemas reject drift, unsafe flags, malformed types, and private text probes.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "generated_asset",
+        "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -965,6 +970,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
         "verification",
         "Verify negative fixtures for Cognitive Loop recipe CLI JSON Schemas.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+        "verification",
+        "Verify Cognitive Loop schema evidence can be consumed from the adoption pack only.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",
