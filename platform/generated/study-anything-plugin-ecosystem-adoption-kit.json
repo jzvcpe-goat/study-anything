@@ -180,19 +180,19 @@
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 91,
+      "acceptance_evidence_count": 92,
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "plugin_verifier_command_present": true
     },
     "kimi": {
-      "acceptance_evidence_count": 91,
+      "acceptance_evidence_count": 92,
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "plugin_verifier_command_present": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 91,
+      "acceptance_evidence_count": 92,
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",
       "plugin_verifier_command_present": true

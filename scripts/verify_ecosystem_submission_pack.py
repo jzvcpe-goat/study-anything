@@ -88,6 +88,12 @@ COGNITIVE_LOOP_REVIEW_AGENT_WORKFLOW_INSTALL_SMOKE_PATH = (
     / "generated"
     / "study-anything-cognitive-loop-review-agent-workflow-install-smoke.json"
 )
+COGNITIVE_LOOP_REVIEW_AGENT_ADOPTION_DRILL_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-cognitive-loop-review-agent-adoption-drill.json"
+)
 PLATFORM_HANDOFF_CHECKLIST_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-handoff-checklist.json"
 )
@@ -231,6 +237,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
     "scripts/verify_cognitive_loop_pack_extract_smoke.py",
     "scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py",
+    "scripts/verify_cognitive_loop_review_agent_adoption_drill.py",
     "scripts/verify_platform_handoff_checklist.py",
     "scripts/verify_launch_acceptance_ledger.py",
     "scripts/verify_github_launch_operator_guide.py",
@@ -257,6 +264,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+    "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
     "platform/generated/study-anything-platform-handoff-checklist.json",
     "platform/generated/study-anything-launch-acceptance-ledger.json",
     "platform/generated/study-anything-github-launch-operator-guide.json",
@@ -441,6 +449,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
     "verify_cognitive_loop_pack_extract_smoke.py --check",
     "verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
+    "verify_cognitive_loop_review_agent_adoption_drill.py --check",
     "verify_platform_handoff_checklist.py --check",
     "verify_launch_acceptance_ledger.py --check",
     "verify_github_launch_operator_guide.py --check",
@@ -742,6 +751,12 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             raise EcosystemSubmissionError(
                 f"{platform_id} must include the Review Agent workflow install smoke report."
             )
+        if "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(
+                f"{platform_id} must include the Review Agent adoption drill report."
+            )
         if "platform/generated/study-anything-platform-handoff-checklist.json" not in set(
             str(asset) for asset in import_assets
         ):
@@ -881,6 +896,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
             "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
             "cognitive_loop_review_agent_workflow_install_smoke.schema_version == cognitive-loop-review-agent-workflow-install-smoke-v1",
+            "cognitive_loop_review_agent_adoption_drill.schema_version == cognitive-loop-review-agent-adoption-drill-v1",
             "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
             "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
             "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1",
@@ -933,6 +949,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py",
+        "scripts/verify_cognitive_loop_review_agent_adoption_drill.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
         "scripts/verify_github_launch_operator_guide.py",
@@ -959,6 +976,7 @@ def verify_pack_in_generated_adoption() -> None:
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+    "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
     "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
         "platform/generated/study-anything-github-launch-operator-guide.json",
@@ -2661,6 +2679,93 @@ def verify_cognitive_loop_review_agent_workflow_install_smoke_report() -> None:
         raise EcosystemSubmissionError("Review Agent workflow install smoke must be safe for public evidence.")
 
 
+def verify_cognitive_loop_review_agent_adoption_drill_report() -> None:
+    report = load_json(COGNITIVE_LOOP_REVIEW_AGENT_ADOPTION_DRILL_PATH)
+    if report.get("schema_version") != "cognitive-loop-review-agent-adoption-drill-v1":
+        raise EcosystemSubmissionError("Review Agent adoption drill schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Review Agent adoption drill report must pass.")
+
+    pack = report.get("adoption_pack") or {}
+    if pack.get("schema_version") != "study-anything-platform-adoption-pack-v1":
+        raise EcosystemSubmissionError("Review Agent adoption drill pack schema drifted.")
+    if pack.get("no_frontend_required") is not True:
+        raise EcosystemSubmissionError("Review Agent adoption drill must preserve no-frontend path.")
+    if pack.get("real_model_keys_stored_by_study_anything") is not False:
+        raise EcosystemSubmissionError("Review Agent adoption drill must not store real model keys.")
+
+    embedded = report.get("embedded_reports") or {}
+    expected_embedded = {
+        "acceptance_bundle": "cognitive-loop-review-agent-acceptance-bundle-verification-v1",
+        "pr_comment_pack": "cognitive-loop-review-agent-pr-comment-pack-verification-v1",
+        "policy_gate": "cognitive-loop-review-agent-policy-gate-verification-v1",
+        "workflow_install_smoke": "cognitive-loop-review-agent-workflow-install-smoke-v1",
+    }
+    for key, schema in expected_embedded.items():
+        if embedded.get(key) != schema:
+            raise EcosystemSubmissionError(f"Review Agent adoption drill embedded report {key} drifted.")
+
+    workflow_install = report.get("workflow_install") or {}
+    if workflow_install.get("installed_path") != ".github/workflows/cognitive-loop-review-agent-manual.yml":
+        raise EcosystemSubmissionError("Review Agent adoption drill workflow target drifted.")
+    for key in ("manual_only", "read_only_permissions"):
+        if workflow_install.get(key) is not True:
+            raise EcosystemSubmissionError(f"Review Agent adoption drill workflow_install.{key} must be true.")
+    for key in ("raw_report_upload", "secret_dependency"):
+        if workflow_install.get(key) is not False:
+            raise EcosystemSubmissionError(f"Review Agent adoption drill workflow_install.{key} must be false.")
+
+    fixtures = report.get("fixtures") or {}
+    if set(fixtures) != {"approved", "needs-review", "needs-fix"}:
+        raise EcosystemSubmissionError("Review Agent adoption drill fixture coverage drifted.")
+    expected_exits = {
+        "approved": {"advisory": 0, "soft": 0, "strict": 0},
+        "needs-review": {"advisory": 0, "soft": 0, "strict": 2},
+        "needs-fix": {"advisory": 0, "soft": 2, "strict": 2},
+    }
+    for decision, policies in expected_exits.items():
+        fixture = fixtures.get(decision) or {}
+        if fixture.get("decision") != decision:
+            raise EcosystemSubmissionError(f"Review Agent adoption drill fixture {decision} decision drifted.")
+        comment_pack = fixture.get("comment_pack") or {}
+        if comment_pack.get("schema_version") != "cognitive-loop-review-agent-pr-comment-pack-v1":
+            raise EcosystemSubmissionError(f"Review Agent adoption drill fixture {decision} comment schema drifted.")
+        matrix = fixture.get("policy_exit_matrix") or {}
+        for policy, expected_exit in policies.items():
+            if matrix.get(policy) != expected_exit:
+                raise EcosystemSubmissionError(
+                    f"Review Agent adoption drill {decision}/{policy} exit drifted."
+                )
+
+    quality = report.get("quality_gates") or {}
+    for key in (
+        "zip_only_execution",
+        "acceptance_bundle_generation",
+        "bilingual_pr_comment_pack",
+        "policy_gate_matrix",
+        "manual_workflow_install",
+        "metadata_only_outputs",
+    ):
+        if quality.get(key) != "pass":
+            raise EcosystemSubmissionError(f"Review Agent adoption drill quality_gates.{key} must pass.")
+
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_diff_included",
+        "file_bodies_included",
+        "finding_evidence_included",
+        "report_summary_included",
+        "raw_report_uploaded",
+        "agent_endpoint_secrets_included",
+        "real_model_keys_included",
+        "hidden_chain_of_thought_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Review Agent adoption drill privacy.{key} must be false.")
+    if privacy.get("safe_to_attach_to_pr") is not True:
+        raise EcosystemSubmissionError("Review Agent adoption drill must be safe to attach to PR.")
+
+
 def verify_platform_handoff_checklist_report() -> None:
     report = load_json(PLATFORM_HANDOFF_CHECKLIST_PATH)
     if report.get("schema_version") != "platform-handoff-checklist-v1":
@@ -2680,6 +2785,7 @@ def verify_platform_handoff_checklist_report() -> None:
         "platform/generated/study-anything-platform-adoption-pack.zip",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+        "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-adopter-evidence-archive.json",
     ):
@@ -2700,6 +2806,7 @@ def verify_platform_handoff_checklist_report() -> None:
         for key in (
             "declares_extract_smoke",
             "declares_review_agent_workflow_install_smoke",
+            "declares_review_agent_adoption_drill",
             "declares_feedback_package",
             "declares_handoff_checklist",
         ):
@@ -2710,6 +2817,7 @@ def verify_platform_handoff_checklist_report() -> None:
     expected_steps = {
         "extract_and_validate_pack",
         "install_review_agent_workflow",
+        "run_review_agent_adoption_drill",
         "import_platform_assets",
         "run_static_acceptance",
         "choose_runtime_path",
@@ -4023,6 +4131,7 @@ def main() -> None:
     verify_cognitive_loop_schema_pack_consumer_failures_report()
     verify_cognitive_loop_pack_extract_smoke_report()
     verify_cognitive_loop_review_agent_workflow_install_smoke_report()
+    verify_cognitive_loop_review_agent_adoption_drill_report()
     verify_platform_handoff_checklist_report()
     verify_launch_acceptance_ledger_report()
     verify_github_launch_operator_guide_report()
@@ -4079,6 +4188,7 @@ def main() -> None:
                 "cognitive_loop_schema_pack_consumer_failures": "cognitive-loop-schema-pack-consumer-failures-v1",
                 "cognitive_loop_pack_extract_smoke": "cognitive-loop-pack-extract-smoke-v1",
                 "cognitive_loop_review_agent_workflow_install_smoke": "cognitive-loop-review-agent-workflow-install-smoke-v1",
+                "cognitive_loop_review_agent_adoption_drill": "cognitive-loop-review-agent-adoption-drill-v1",
                 "platform_handoff_checklist": "platform-handoff-checklist-v1",
                 "launch_acceptance_ledger": "launch-acceptance-ledger-v1",
                 "github_launch_operator_guide": "github-launch-operator-guide-v1",

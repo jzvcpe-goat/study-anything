@@ -152,6 +152,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -1130,6 +1135,26 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
         "verification",
         "External Cognitive Loop Review Agent GitHub workflow template verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_policy_gate.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only policy gate CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_policy_gate.py",
+        "verification",
+        "External Cognitive Loop Review Agent policy gate verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py",
+        "verification",
+        "External Cognitive Loop Review Agent workflow install smoke verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_adoption_drill.py",
+        "verification",
+        "External Cognitive Loop Review Agent zip-only adoption drill verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",

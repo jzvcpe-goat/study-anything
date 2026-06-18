@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 76750,
+    "bytes": 76746,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "d11251fe63aad4032908ce8cf849006bcafea0ab4592ee41b421f6d3c0c5d2b0",
+    "sha256": "60672161dce571e26cff3131cfbeed6e9b0e0fa7a72d902dc4c8a0907e38b959",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -159,7 +159,7 @@
     {
       "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "4a7cfd24356abbdf7d4472b68e8c5977635a11939eeb3e8e861c6a7a5a0a0b81"
+      "sha256": "2a1abbfcc2c39657ea4bc95ce4b6ebb26f7dd454ec26ad7f04b8d4c04e393a11"
     },
     {
       "bytes": 83732,

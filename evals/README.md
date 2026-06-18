@@ -99,6 +99,7 @@ python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
 python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
 ```
 
 The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
@@ -111,3 +112,6 @@ raw-report upload fixtures. The policy gate converts the same safe bundle or rec
 soft, or strict CI exit-code behavior without reopening raw Review Agent content. The workflow
 install smoke proves the same template and policy gate can be used from the adoption pack zip after
 copying the workflow into `.github/workflows/`, still without raw report upload or real model calls.
+The adoption drill ties the zip-only path together by extracting the pack, building acceptance
+bundles, validating PR comment packs, running all policy modes, and checking the manual workflow
+install in one metadata-only rehearsal.
