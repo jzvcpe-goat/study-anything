@@ -1,0 +1,128 @@
+{
+  "acceptance": {
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
+    "workflow_template": "platform/workflows/cognitive-loop-review-agent-manual.yml"
+  },
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "docs/github-review-agent-workflow.md": "pass",
+    "evals/README.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/generate_platform_adoption_pack.py": "pass",
+    "scripts/generate_platform_bundle_manifest.py": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "dry_run_fixture_count": 3,
+  "dry_runs": {
+    "approved.json": {
+      "bundle_summary": {
+        "bundle_id": "review-agent-acceptance-f232839ca91d5213",
+        "decision": "approved",
+        "finding_count": 0,
+        "overall_risk": "low",
+        "safe_to_attach_to_pr": true
+      },
+      "checks_summary_sha256": "45f36fe635fab6a199e83cd5fd030d4188b23e95db76be4e01503f3c7bd68ecb",
+      "checks_title": "Cognitive Loop Review Agent: approved",
+      "uploaded_files": [
+        "manifest.json",
+        "SUMMARY.md",
+        "review-agent-ci-receipt.json",
+        "review-agent-pr-comment-pack.json",
+        "review-agent-checks-summary.md"
+      ]
+    },
+    "needs-fix.json": {
+      "bundle_summary": {
+        "bundle_id": "review-agent-acceptance-90a1001fa62f6326",
+        "decision": "needs-fix",
+        "finding_count": 1,
+        "overall_risk": "high",
+        "safe_to_attach_to_pr": true
+      },
+      "checks_summary_sha256": "43740171375dc079a27a08b0ff37c530dcab3c84191c53b7fc359124813578d2",
+      "checks_title": "Cognitive Loop Review Agent: fixes required",
+      "uploaded_files": [
+        "manifest.json",
+        "SUMMARY.md",
+        "review-agent-ci-receipt.json",
+        "review-agent-pr-comment-pack.json",
+        "review-agent-checks-summary.md"
+      ]
+    },
+    "needs-review.json": {
+      "bundle_summary": {
+        "bundle_id": "review-agent-acceptance-fef7423046a42e90",
+        "decision": "needs-review",
+        "finding_count": 1,
+        "overall_risk": "medium",
+        "safe_to_attach_to_pr": true
+      },
+      "checks_summary_sha256": "33db2cf69063a04160b013b7405df8ce2ceeeb1a6ec7730da3f1e0a498a8e7a5",
+      "checks_title": "Cognitive Loop Review Agent: maintainer review required",
+      "uploaded_files": [
+        "manifest.json",
+        "SUMMARY.md",
+        "review-agent-ci-receipt.json",
+        "review-agent-pr-comment-pack.json",
+        "review-agent-checks-summary.md"
+      ]
+    }
+  },
+  "existing_bundle_validation": {
+    "bundle_id": "review-agent-acceptance-fef7423046a42e90",
+    "decision": "needs-review",
+    "finding_count": 1,
+    "overall_risk": "medium",
+    "safe_to_attach_to_pr": true
+  },
+  "negative_workflows": {
+    "unsafe-auto-pr.yml": "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml missing required workflow text: ['workflow_dispatch:', 'evidence_kind:', 'review_agent_report:', 'acceptance_bundle_dir:', 'upload_metadata_bundle:', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py build', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py validate', 'if [ \"$ACCEPTANCE_BUNDLE_DIR\" != \"$OUTPUT_DIR\" ]; then', 'GITHUB_STEP_SUMMARY', 'review-agent-checks-summary.md', 'review-agent-ci-receipt.json', 'review-agent-pr-comment-pack.json']"
+  },
+  "platform_packs": {
+    "codex": "pass",
+    "kimi": "pass",
+    "workbuddy": "pass"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "raw_report_uploaded": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "quality_gates": {
+    "checks_summary_metadata_only": "pass",
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "manual_only_trigger": "pass",
+    "metadata_only_artifact_upload": "pass",
+    "no_external_agent_secret_required": "pass",
+    "no_real_model_call": "pass",
+    "raw_report_not_uploaded": "pass",
+    "unsafe_workflow_rejection": "pass"
+  },
+  "schema_version": "cognitive-loop-review-agent-github-workflow-verification-v1",
+  "status": "pass",
+  "workflow_template": {
+    "automatic_pr_trigger": false,
+    "invokes_real_model": false,
+    "path": "platform/workflows/cognitive-loop-review-agent-manual.yml",
+    "requires_external_agent_secret": false,
+    "trigger": "workflow_dispatch",
+    "uploads_metadata_bundle": true,
+    "uploads_raw_report": false
+  }
+}

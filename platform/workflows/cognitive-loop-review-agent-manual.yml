@@ -1,0 +1,142 @@
+name: Cognitive Loop Review Agent manual evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      evidence_kind:
+        description: "review_report builds a safe bundle; acceptance_bundle only validates an existing safe bundle."
+        required: true
+        default: "review_report"
+        type: choice
+        options:
+          - review_report
+          - acceptance_bundle
+      review_agent_report:
+        description: "Path to the external Review Agent JSON report already present in the runner workspace."
+        required: false
+        default: "REVIEW_AGENT_REPORT.json"
+        type: string
+      acceptance_bundle_dir:
+        description: "Existing acceptance bundle directory when evidence_kind is acceptance_bundle."
+        required: false
+        default: "review-agent-acceptance"
+        type: string
+      output_dir:
+        description: "Metadata-only acceptance bundle output directory."
+        required: false
+        default: "review-agent-acceptance"
+        type: string
+      upload_metadata_bundle:
+        description: "Upload only the metadata-only acceptance bundle artifact."
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  review-agent-evidence:
+    name: Validate Review Agent evidence
+    runs-on: ubuntu-latest
+    env:
+      EVIDENCE_KIND: ${{ inputs.evidence_kind }}
+      REVIEW_AGENT_REPORT: ${{ inputs.review_agent_report }}
+      ACCEPTANCE_BUNDLE_DIR: ${{ inputs.acceptance_bundle_dir }}
+      OUTPUT_DIR: ${{ inputs.output_dir }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install local package
+        run: python -m pip install -e .
+
+      - name: Build or validate metadata-only acceptance bundle
+        shell: bash
+        run: |
+          set -eu
+          if [ "$EVIDENCE_KIND" = "review_report" ]; then
+            case "$REVIEW_AGENT_REPORT" in
+              "$OUTPUT_DIR"/*)
+                echo "review_agent_report must not be inside output_dir because output_dir may be uploaded."
+                exit 1
+                ;;
+            esac
+            python scripts/cognitive_loop_review_agent_acceptance_bundle.py build \
+              --report "$REVIEW_AGENT_REPORT" \
+              --output-dir "$OUTPUT_DIR" \
+              --provider-id "external-review-agent" \
+              --provider-label "User-owned external Review Agent" \
+              --execution-surface "ci" \
+              --pr-ref "${GITHUB_REF_NAME:-manual}" \
+              --commit-sha "${GITHUB_SHA:-unknown}" \
+              --base-ref "${GITHUB_BASE_REF:-main}" \
+              --head-ref "${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-HEAD}}"
+          elif [ "$EVIDENCE_KIND" = "acceptance_bundle" ]; then
+            python scripts/cognitive_loop_review_agent_acceptance_bundle.py validate \
+              --bundle-dir "$ACCEPTANCE_BUNDLE_DIR"
+            if [ "$ACCEPTANCE_BUNDLE_DIR" != "$OUTPUT_DIR" ]; then
+              rm -rf "$OUTPUT_DIR"
+              mkdir -p "$OUTPUT_DIR"
+              cp -R "$ACCEPTANCE_BUNDLE_DIR"/. "$OUTPUT_DIR"/
+            fi
+          else
+            echo "Unsupported evidence_kind: $EVIDENCE_KIND"
+            exit 1
+          fi
+
+      - name: Write metadata-only Checks summary
+        shell: bash
+        run: |
+          set -eu
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          bundle_dir = Path(os.environ["OUTPUT_DIR"])
+          manifest = json.loads((bundle_dir / "manifest.json").read_text(encoding="utf-8"))
+          comment_pack = json.loads((bundle_dir / "review-agent-pr-comment-pack.json").read_text(encoding="utf-8"))
+          checks = comment_pack["checks_summary"]
+          decision = manifest["decision_summary"]
+          source = manifest["source"]
+          lines = [
+              f"## {checks['title']}",
+              "",
+              f"- Decision: `{decision['decision']}`",
+              f"- Risk: `{decision['overall_risk']}`",
+              f"- Findings: `{decision['finding_count']}` total, `{decision['critical_count']}` critical",
+              f"- Human action: `{decision['human_action']}`",
+              f"- Ref: `{source['pr_ref']}` at `{source['commit_sha']}`",
+              f"- Report hash: `{source['report_sha256']}`",
+              "",
+              "Privacy: this workflow summary is metadata-only and excludes raw diffs, source bodies, finding evidence, report prose, endpoint secrets, model keys, and hidden reasoning traces.",
+              "",
+          ]
+          summary = "\n".join(lines)
+          Path("review-agent-checks-summary.md").write_text(summary, encoding="utf-8")
+          step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+          if step_summary:
+              with open(step_summary, "a", encoding="utf-8") as fh:
+                  fh.write(summary)
+          print(f"::notice title={checks['title']}::{checks['summary']}")
+          PY
+
+      - name: Upload metadata-only acceptance bundle
+        if: ${{ inputs.upload_metadata_bundle }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cognitive-loop-review-agent-acceptance-bundle
+          path: |
+            ${{ inputs.output_dir }}/manifest.json
+            ${{ inputs.output_dir }}/SUMMARY.md
+            ${{ inputs.output_dir }}/review-agent-ci-receipt.json
+            ${{ inputs.output_dir }}/review-agent-pr-comment-pack.json
+            review-agent-checks-summary.md
+          if-no-files-found: error

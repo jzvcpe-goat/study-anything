@@ -17,6 +17,7 @@ These gates are required for release and marketplace-style submission:
 - `cognitive-loop-review-agent-ci-receipt-v1` via `scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check`.
 - `cognitive-loop-review-agent-pr-comment-pack-v1` via `scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check`.
 - `cognitive-loop-review-agent-acceptance-bundle-v1` via `scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check`.
+- `cognitive-loop-review-agent-github-workflow-verification-v1` via `scripts/verify_cognitive_loop_review_agent_github_workflow.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -131,3 +132,17 @@ It emits `cognitive-loop-review-agent-acceptance-bundle-v1` and writes a receipt
 manifest, and `SUMMARY.md`. The bundle still excludes raw handoff material, raw diff text, file
 bodies, finding evidence, report summaries, endpoint secrets, real model keys, and hidden
 chain-of-thought.
+
+## Review Agent GitHub Workflow Template
+
+For repository operators who want a safe GitHub Actions handoff, use the manual template:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
+```
+
+The template lives at `platform/workflows/cognitive-loop-review-agent-manual.yml` and is
+`workflow_dispatch` only. It validates an external report or existing acceptance bundle, writes a
+metadata-only Checks/step summary, and may upload only the safe acceptance bundle artifacts. It does
+not invoke real models, require external Agent secrets, upload raw Review Agent reports, or persist
+raw diffs.
