@@ -25,8 +25,8 @@ the learning loop, eval gates, Obsidian export, and NotebookLM-style handoff wit
 frontend.
 
 For Cognitive Loop operations, start from `docs/cognitive-loop-adoption-cookbook.md`. It maps Codex
-to local commands for first adoption, daily project review, risk decisions, and learning handoff
-without adding a standalone frontend.
+to local Cognitive Loop commands for first adoption, daily project review, risk decisions, and
+learning handoff without adding a standalone frontend.
 
 ## Run
 
