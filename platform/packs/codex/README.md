@@ -77,6 +77,16 @@ aggregated launch acceptance state and current commercial boundary.
 `platform/generated/study-anything-github-launch-operator-guide.json` gives Codex operators the
 GitHub release sequence, required release assets, and local-first launch boundary.
 
+For external code-review acceptance, keep Codex as the platform Agent and use the handoff CLI as the
+privacy boundary. `prepare` emits the raw diff only as operator material; `validate` converts the
+external Agent's JSON report into a redacted summary:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD > /tmp/codex-review-handoff.json
+python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/codex-review-report.json
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+```
+
 ## Run
 
 ```bash

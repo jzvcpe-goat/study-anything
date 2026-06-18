@@ -129,6 +129,22 @@ aggregated launch acceptance state and current commercial boundary.
 `platform/generated/study-anything-github-launch-operator-guide.json` gives Kimi operators the
 GitHub release sequence, required release assets, and local-first launch boundary.
 
+For code-review acceptance, use Kimi as the external Review Agent only through an operator-approved
+handoff. The local command creates a temporary request with the real diff; Study Anything should not
+persist that request:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD > /tmp/kimi-review-handoff.json
+```
+
+Paste or attach `/tmp/kimi-review-handoff.json` to Kimi, require JSON-only output, then validate the
+returned report:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/kimi-review-report.json
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+```
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:

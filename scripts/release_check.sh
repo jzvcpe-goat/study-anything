@@ -51,6 +51,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_review.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_prompt.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check
+"$python_bin" scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_adoption_cookbook.py --check
 "$python_bin" scripts/generate_cognitive_loop_adoption_recipes.py --check
 "$python_bin" scripts/verify_cognitive_loop_recipe_replay.py --check

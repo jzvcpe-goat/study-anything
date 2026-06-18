@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 54495,
+    "bytes": 55172,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "544531ee79fcee2870d35371a67d16b239edeeb3c994f095ab3704d1d8c38767",
+    "sha256": "70b82e8ee5e7ce5465f8a13a01573c8c0c6e259ade9016a646e8a2793600d238",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -97,9 +97,9 @@
       "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
     },
     {
-      "bytes": 27610,
+      "bytes": 28242,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "8037e1c5194a97dd8b3c3c321646ce2345924626368105aa520d9828c8204cfa"
+      "sha256": "191849d740e255ecc77ae3d23f8bd1b182f848ac577851d30705c8fafff59632"
     },
     {
       "bytes": 29302,
@@ -122,19 +122,19 @@
       "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
     },
     {
-      "bytes": 12867,
+      "bytes": 13531,
       "path": "platform/packs/kimi/README.md",
-      "sha256": "bc7b76357b8776702503bb08881c61b173718a598c5ca1f5f8f8925b85be2f88"
+      "sha256": "2cf062057d84ea089d7e6946b2a06e159c7569b88a1e4db1e2c87a645f14ab40"
     },
     {
-      "bytes": 12279,
+      "bytes": 12843,
       "path": "platform/packs/codex/README.md",
-      "sha256": "feacd769092237d5bbd15c404a5e64bf0d90ed0a47d18216e152a19a4120c351"
+      "sha256": "1f97cbc1d3765b538afd745cc7071a07db92beae0ed88cc908edf2f630ab8e48"
     },
     {
-      "bytes": 10097,
+      "bytes": 10581,
       "path": "platform/packs/workbuddy/README.md",
-      "sha256": "994a10de86f487218dd18ce559dcdb5af9c5fe5f513b24b42f0a71db92bed234"
+      "sha256": "1185d26e1b6599297b2af17a01f9fcd8bfe563f3dc536f10d12b74f4d1d6db92"
     }
   ],
   "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",

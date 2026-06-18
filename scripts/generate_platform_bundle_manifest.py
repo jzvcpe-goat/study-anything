@@ -112,6 +112,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent report handoff verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-handoff-cli.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent prepare/validate CLI verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
