@@ -24,6 +24,9 @@ required:
   - id: cognitive-loop.event-store
     command: python3 scripts/verify_cognitive_loop_event_store.py --check
     blocking: true
+  - id: cognitive-loop.mastra-adapter
+    command: python3 scripts/verify_cognitive_loop_mastra_adapter.py --check
+    blocking: true
   - id: cognitive-loop.artifact-doctor
     command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check
     blocking: true

@@ -85,6 +85,14 @@
       "status": "pass"
     },
     {
+      "launch_area": "Mastra adapter contract pack",
+      "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+      "report_id": "cognitive_loop_mastra_adapter",
+      "required_for_github_oss_launch": true,
+      "schema_version": "cognitive-loop-mastra-adapter-verification-v1",
+      "status": "pass"
+    },
+    {
       "launch_area": "zip-only platform adoption",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "report_id": "cognitive_loop_pack_extract_smoke",

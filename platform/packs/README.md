@@ -148,7 +148,9 @@ safe for metadata-only replay before an operator runs runtime or human-gated com
 `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json` proves the same recipe path
 across the repo-local Skill and all platform packs. The local SQLite Event Store path is verified by
 `python3 scripts/verify_cognitive_loop_event_store.py --check` and should be shared only as exported
-metadata, not as raw source or Agent context.
+metadata, not as raw source or Agent context. For Mastra-based host Agents, use `platform/mastra/`
+as a copy-ready adapter contract pack verified by
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
 `platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves platform Agents can query
 read-only `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` gives deterministic

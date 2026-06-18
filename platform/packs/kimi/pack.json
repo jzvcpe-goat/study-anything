@@ -92,7 +92,8 @@
     "cognitive_loop_review_agent_github_workflow.schema_version == cognitive-loop-review-agent-github-workflow-verification-v1",
     "cognitive_loop_review_agent_policy_gate.schema_version == cognitive-loop-review-agent-policy-gate-verification-v1",
     "cognitive_loop_review_agent_workflow_install_smoke.schema_version == cognitive-loop-review-agent-workflow-install-smoke-v1",
-    "cognitive_loop_review_agent_adoption_drill.schema_version == cognitive-loop-review-agent-adoption-drill-v1"
+    "cognitive_loop_review_agent_adoption_drill.schema_version == cognitive-loop-review-agent-adoption-drill-v1",
+    "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1"
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
@@ -164,9 +165,17 @@
     "docs/release-cleanroom-bootstrap.md",
     "platform/generated/study-anything-release-cleanroom-bootstrap.json",
     "platform/generated/study-anything-platform-feedback-package.zip",
-    "platform/generated/study-anything-platform-feedback-package.json"
+    "platform/generated/study-anything-platform-feedback-package.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+    "platform/mastra/README.md",
+    "platform/mastra/manifest.json",
+    "platform/mastra/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_adapter.py"
   ],
   "integration_mode": "openai_compatible_tools",
+  "local_verification": [
+    "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check"
+  ],
   "local_verification_commands": [
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -246,7 +255,8 @@
     "python3 scripts/verify_adopter_evidence_archive.py --check",
     "python3 scripts/generate_adopter_evidence_archive.py --check",
     "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
-    "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
+    "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+    "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -265,5 +275,8 @@
     "Kimi or Moonshot credentials stay in the user's gateway environment."
   ],
   "platform_id": "kimi",
-  "schema_version": "study-anything-platform-pack-v1"
+  "schema_version": "study-anything-platform-pack-v1",
+  "verification_commands": [
+    "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check"
+  ]
 }

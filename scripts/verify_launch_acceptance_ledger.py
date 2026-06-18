@@ -139,6 +139,14 @@ SOURCE_REPORTS: tuple[dict[str, Any], ...] = (
         "required_for_github_oss_launch": True,
     },
     {
+        "report_id": "cognitive_loop_mastra_adapter",
+        "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+        "schema_version": "cognitive-loop-mastra-adapter-verification-v1",
+        "accepted_statuses": ("pass",),
+        "launch_area": "Mastra adapter contract pack",
+        "required_for_github_oss_launch": True,
+    },
+    {
         "report_id": "cognitive_loop_review_agent_workflow_install_smoke",
         "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
         "schema_version": "cognitive-loop-review-agent-workflow-install-smoke-v1",

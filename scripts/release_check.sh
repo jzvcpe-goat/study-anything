@@ -46,6 +46,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_evidence_bundle.py --check
 "$python_bin" scripts/verify_cognitive_loop_event_index.py --check
 "$python_bin" scripts/verify_cognitive_loop_event_store.py --check
+"$python_bin" scripts/verify_cognitive_loop_mastra_adapter.py --check
 "$python_bin" scripts/verify_cognitive_loop_artifact_doctor.py --check
 "$python_bin" scripts/verify_cognitive_loop_repair_plan.py --check
 "$python_bin" scripts/verify_cognitive_loop_artifact_index.py --check

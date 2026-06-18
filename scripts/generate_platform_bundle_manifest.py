@@ -87,6 +87,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop local SQLite Event Store verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+        "generated_asset",
+        "Cognitive Loop Mastra adapter contract-pack verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1060,6 +1065,26 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_event_store.py",
         "verification",
         "Cognitive Loop local SQLite Event Store verifier.",
+    ),
+    (
+        "platform/mastra/README.md",
+        "mastra_adapter",
+        "Copy-ready Mastra adapter operator guide.",
+    ),
+    (
+        "platform/mastra/manifest.json",
+        "mastra_adapter",
+        "Machine-readable Mastra adapter contract-pack manifest.",
+    ),
+    (
+        "platform/mastra/cognitive-loop-mastra-adapter.ts",
+        "mastra_adapter",
+        "TypeScript Mastra workflow scaffold for Cognitive Loop HITL mapping.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_adapter.py",
+        "verification",
+        "Cognitive Loop Mastra adapter contract-pack verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",

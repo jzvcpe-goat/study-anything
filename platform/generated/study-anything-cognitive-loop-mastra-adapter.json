@@ -1,0 +1,125 @@
+{
+  "distribution": {
+    "report_path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+    "safe_for_platform_agent_static_import": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check"
+  },
+  "dry_run_contract": {
+    "high_risk": {
+      "expected_status": "suspended_until_human_resume",
+      "input": {
+        "artifact_kinds": [
+          "project_snapshot",
+          "decision_card",
+          "event_store"
+        ],
+        "risk": {
+          "level": "high",
+          "requiresHumanGate": true
+        }
+      },
+      "suspend_payload_redacted": true,
+      "suspended": true
+    },
+    "low_risk": {
+      "expected_status": "not_required",
+      "input": {
+        "artifact_kinds": [
+          "project_snapshot",
+          "decision_card",
+          "event_store"
+        ],
+        "risk": {
+          "level": "low",
+          "requiresHumanGate": false
+        }
+      },
+      "suspended": false
+    },
+    "missing_evidence": {
+      "expected_status": "rejected",
+      "input": {
+        "artifact_kinds": [
+          "project_snapshot"
+        ]
+      },
+      "uses_bail": true
+    },
+    "rejected": {
+      "expected_status": "rejected",
+      "resume": {
+        "approved": false,
+        "reason": "Insufficient operator understanding."
+      },
+      "uses_bail": true
+    }
+  },
+  "files": [
+    {
+      "bytes": 2236,
+      "path": "platform/mastra/README.md",
+      "sha256": "c2778afd72e466543fd7a23d4824ae2ea7aefd1728d430a375d5199596651569"
+    },
+    {
+      "bytes": 6560,
+      "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
+      "sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+    },
+    {
+      "bytes": 1655,
+      "path": "platform/mastra/manifest.json",
+      "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
+    }
+  ],
+  "manifest": {
+    "adapter_id": "cognitive-loop-mastra-runtime-adapter",
+    "adapter_version": "0.1.0",
+    "schema_version": "cognitive-loop-mastra-adapter-manifest-v1",
+    "status": "contract_pack"
+  },
+  "mastra_alignment": {
+    "hitl_pattern": "suspend/resume/bail",
+    "official_framework": "Mastra",
+    "source_links": [
+      "https://mastra.ai/docs",
+      "https://mastra.ai/docs/workflows/human-in-the-loop",
+      "https://github.com/mastra-ai/mastra"
+    ],
+    "workflow_pattern": "createWorkflow/createStep"
+  },
+  "operator_docs": {
+    "boundary_documented": true,
+    "hitl_mapping_documented": true,
+    "install_instructions_present": true,
+    "model_key_storage_denied": false
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_bodies_included": false,
+    "learner_answers_included": false,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Verify the copy-ready Cognitive Loop Mastra adapter contract pack for external Mastra projects without claiming this repository ships the full Mastra runtime.",
+  "runtime_boundaries": {
+    "external_agent_called": false,
+    "mastra_runtime_started": false,
+    "realtime_html_console_started": false,
+    "typescript_compiled_in_this_repo": false,
+    "watcher_daemon_started": false
+  },
+  "schema_version": "cognitive-loop-mastra-adapter-verification-v1",
+  "status": "pass",
+  "typescript_scaffold": {
+    "declares_input_schema": true,
+    "declares_output_schema": true,
+    "declares_resume_schema": true,
+    "declares_suspend_schema": true,
+    "maps_human_gate_to_suspend": true,
+    "maps_rejection_to_bail": true,
+    "metadata_only_constraints": true,
+    "uses_mastra_workflows_import": true
+  }
+}
