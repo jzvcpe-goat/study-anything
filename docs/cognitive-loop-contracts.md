@@ -20,6 +20,7 @@ And one verifier:
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check
 python3 scripts/verify_cognitive_loop_review.py --check
+python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
 ```
 
 The repository also includes a small local CLI:
@@ -41,6 +42,14 @@ python3 scripts/cognitive_loop_review.py --base main --head HEAD --html
 
 This CLI set is for repo-local contract bootstrap, static HTML DecisionCard artifacts, and advisory code-review evidence. It is not a daemon, does not watch files, does not call Mastra, does not call a model, does not store model keys, and does not require a standalone frontend.
 
+The external Review Agent prompt contract is checked separately:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
+```
+
+That prompt contract lives at `platform/prompts/cognitive-loop-review-agent.json`. It is for CI/platform delivery assurance, not for end-user learning sessions. It requires JSON-only output, diff-only review, line-level evidence, suppression of low-confidence findings, and a maximum of eight external Agent findings.
+
 仓库也包含一个小型本地 CLI：
 
 ```bash
@@ -59,6 +68,14 @@ python3 scripts/cognitive_loop_review.py --base main --head HEAD --html
 ```
 
 这组 CLI 用于本地契约初始化、静态 HTML DecisionCard artifact 和咨询式代码审查证据。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，不保存模型 key，也不要求独立前端。
+
+外部 Review Agent 的提示词契约单独验证：
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
+```
+
+该契约位于 `platform/prompts/cognitive-loop-review-agent.json`。它服务 CI/平台交付验收，不服务终端用户学习会话；它要求 JSON-only 输出、仅基于 diff 审查、行级证据、抑制 low-confidence findings，并且外部 Agent 最多输出八条发现。
 
 The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 

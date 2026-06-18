@@ -32,6 +32,17 @@ The built-in reviewer is `fake-deterministic-reviewer`. It does not call a model
 
 Risk is mapped from `.cognitive-loop/risk.yaml`; release verification is mapped through `.cognitive-loop/evals.yaml`. The verifier is a blocking release check because the review feature must stay healthy, but the review result itself does not block merges in v0.1.
 
+### Product Boundary
+
+The Code Review Loop is developer/operator delivery assurance tooling. It is not a Study Anything end-user learning feature, not a code explainer for learners, and not a business feature generator. Its audience is maintainers, CI operators, Codex/Kimi/WorkBuddy-style platform Agents, and private review gateways.
+
+There are two review layers:
+
+- Built-in local CLI: `scripts/cognitive_loop_review.py` creates metadata-only advisory evidence, does not store raw diff bodies or file bodies, and caps deterministic path-level findings at five.
+- External Review Agent: `platform/prompts/cognitive-loop-review-agent.json` is the JSON-only prompt contract for a user-owned CI or platform Agent that receives the real git diff from the operator. It must cite concrete diff lines or snippets, suppress low-confidence findings, and output 最多 8 findings sorted by risk.
+
+Study Anything may store the external Agent's redacted structured report, but it must not store raw diff bodies, file contents, real model keys, private Agent endpoints, hidden chain-of-thought, or business secrets.
+
 Later phases:
 
 - Soft gate: CI can warn on high-risk findings and require an explicit human note.
@@ -69,6 +80,17 @@ python3 scripts/verify_cognitive_loop_review.py --check
 内置 reviewer 是 `fake-deterministic-reviewer`。它不调用模型，也不读取文件正文。真实代码审查能力必须来自 Study Anything 之外的 BYO Agent 或平台 Agent。外部 Agent 可以在操作者授权下读取更多上下文，但 Study Anything 只保存脱敏后的 review contract 输出。
 
 风险来自 `.cognitive-loop/risk.yaml`；发布验证接入 `.cognitive-loop/evals.yaml`。review verifier 是发布检查的一部分，因为这个功能本身必须保持健康；但 v0.1 的审查结果不会阻塞合并。
+
+### 产品边界
+
+Code Review Loop 是 developer/operator 交付验收工具。它不是 Study Anything 面向终端用户的学习功能，不负责给学习者解释代码如何工作，也不生成业务功能代码。它的受众是维护者、CI operator、Codex/Kimi/WorkBuddy-style 平台 Agent 和私有审查网关。
+
+这里分成两层：
+
+- 内置本地 CLI：`scripts/cognitive_loop_review.py` 生成 metadata-only 咨询证据，不保存 raw diff 或文件正文，确定性 path-level findings 最多五条。
+- 外部 Review Agent：`platform/prompts/cognitive-loop-review-agent.json` 是用户自有 CI 或平台 Agent 的 JSON-only 提示词契约，由 operator 把真实 git diff 提供给它。它必须引用具体 diff 行号或代码片段，抑制 low-confidence findings，并且最多 8 条发现，按风险排序。
+
+Study Anything 可以保存外部 Agent 输出的脱敏结构化报告，但不得保存 raw diff、文件正文、真实模型密钥、私有 Agent endpoint、隐藏推理链或业务秘密。
 
 后续阶段：
 

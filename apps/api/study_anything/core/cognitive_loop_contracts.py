@@ -658,6 +658,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact index verifier.")
     if "python3 scripts/verify_cognitive_loop_review.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop advisory review verifier.")
+    if "python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Review Agent prompt verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -816,6 +818,9 @@ required:
     blocking: true
   - id: cognitive-loop.code-review-advisory
     command: python3 scripts/verify_cognitive_loop_review.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-prompt
+    command: python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
