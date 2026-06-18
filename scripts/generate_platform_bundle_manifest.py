@@ -107,6 +107,11 @@ FILES: list[tuple[str, str, str]] = [
         "Machine-readable Cognitive Loop platform-agent adoption recipes.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "generated_asset",
+        "Cognitive Loop platform-agent recipe replay verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -890,6 +895,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/generate_cognitive_loop_adoption_recipes.py",
         "verification",
         "Generate machine-readable Cognitive Loop platform-agent adoption recipes.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_replay.py",
+        "verification",
+        "Verify Cognitive Loop adoption recipes are replay-ready for platform Agents.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

@@ -16,6 +16,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-platform-adoption-pack.zip`
 - `docs/cognitive-loop-adoption-cookbook.md`
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -76,6 +77,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/verify_cognitive_loop_adoption_cookbook.py --check
 .venv/bin/python scripts/generate_cognitive_loop_adoption_recipes.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_replay.py --check
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check
@@ -112,4 +114,6 @@ For day-to-day use, start from `docs/cognitive-loop-adoption-cookbook.md`. It ma
 WorkBuddy, and private platform Agents to the local Cognitive Loop commands for first adoption, daily
 project review, risk decisions, and learning handoff. Platform Agents can also import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json` for the same paths as a
-machine-readable recipe matrix.
+machine-readable recipe matrix, and
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` to verify the matrix is
+safe for metadata-only replay before an operator runs runtime or human-gated commands.

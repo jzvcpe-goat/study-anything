@@ -180,6 +180,8 @@ Machine-readable recipe artifact:
 
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `cognitive-loop-adoption-recipes-v1`
+- `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
+- `cognitive-loop-recipe-replay-verification-v1`
 
 Recipe evidence keys:
 
@@ -195,6 +197,7 @@ Recipe evidence keys:
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check
 python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
 python3 scripts/verify_cognitive_loop_artifact_index.py --check
 python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
