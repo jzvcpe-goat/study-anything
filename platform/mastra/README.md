@@ -65,5 +65,6 @@ Status: adapter contract pack plus metadata-only runtime dry-run harness plus mi
 repo-started in-memory runtime MVP.
 
 This repository still does not ship durable workflow storage, watcher daemon, realtime HTML
-console, or hosted service. The next runtime PR can connect the repo-local runtime MVP to
-watcher-generated events and durable storage after the service verifier is satisfied.
+console, or hosted service. Manual watcher ingest now creates metadata-only `ProjectEvent`
+artifacts through `scripts/cognitive_loop_watcher_ingest.py`; a later runtime PR can connect
+the repo-local runtime MVP to daemonized watcher events and durable storage.

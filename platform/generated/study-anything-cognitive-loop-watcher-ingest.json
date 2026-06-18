@@ -1,0 +1,82 @@
+{
+  "acceptance": {
+    "event_index_classifies_watcher": true,
+    "event_store_ingests_watcher": true,
+    "excluded_target_rejected": true,
+    "file_changed_event_created": true,
+    "malformed_config_rejected": true,
+    "manual_ingest_only": true,
+    "metadata_only": true,
+    "watcher_config_validated": true
+  },
+  "artifact_json_schema": "cognitive-loop-watcher-ingest-v1",
+  "cli": "scripts/cognitive_loop_watcher_ingest.py",
+  "commands": {
+    "event_store": "python3 scripts/cognitive_loop_event_store.py rebuild",
+    "ingest": "python3 scripts/cognitive_loop_watcher_ingest.py ingest --html",
+    "init_config": "python3 scripts/cognitive_loop_watcher_ingest.py init-config",
+    "validate_config": "python3 scripts/cognitive_loop_watcher_ingest.py validate-config"
+  },
+  "event_index": {
+    "contains_watcher_ingest": true,
+    "entry_count": 1
+  },
+  "event_store": {
+    "contains_watcher_ingest": true,
+    "event_count": 1
+  },
+  "event_store_rebuild_schema": "cognitive-loop-event-store-v1",
+  "failure_modes": {
+    "excluded_target_rejected": true,
+    "malformed_config_rejected": true
+  },
+  "index_schema": "cognitive-loop-event-index-v1",
+  "ingest_schema": "cognitive-loop-watcher-ingest-v1",
+  "init_config_schema": "cognitive-loop-watchers-v1",
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_body_included": false,
+    "event_contents_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "metadata_only": true,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "project_event": {
+    "event_id": "evt-watcher-54fc330e072d7fd3",
+    "event_type": "file_changed",
+    "ref_count": 3,
+    "target": "docs/cognitive-loop-contracts.md"
+  },
+  "schema_version": "cognitive-loop-watcher-ingest-verification-v1",
+  "status": "pass",
+  "validate_config_schema": "cognitive-loop-watchers-v1",
+  "watcher_config": {
+    "content_mode": "metadata_only",
+    "created": true,
+    "daemon_enabled": false,
+    "daemon_shipped": false,
+    "mode": "manual_ingest",
+    "watcher_count": 4
+  },
+  "watcher_ingest": {
+    "content_included": false,
+    "created": true,
+    "daemon_started": false,
+    "diff_body_included": false,
+    "event_type": "file_changed",
+    "file_contents_included": false,
+    "html_created": true,
+    "ref_count": 2,
+    "source_kind": "file",
+    "target": "docs/cognitive-loop-contracts.md",
+    "watcher_id": "file-change"
+  }
+}

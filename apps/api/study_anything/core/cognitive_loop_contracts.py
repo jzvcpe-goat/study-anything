@@ -34,6 +34,8 @@ PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
 HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
 EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
 EVENT_INDEX_SCHEMA_VERSION = "cognitive-loop-event-index-v1"
+WATCHER_CONFIG_SCHEMA_VERSION = "cognitive-loop-watchers-v1"
+WATCHER_INGEST_SCHEMA_VERSION = "cognitive-loop-watcher-ingest-v1"
 ARTIFACT_DOCTOR_SCHEMA_VERSION = "cognitive-loop-artifact-doctor-v1"
 REPAIR_PLAN_SCHEMA_VERSION = "cognitive-loop-repair-plan-v1"
 ARTIFACT_INDEX_SCHEMA_VERSION = "cognitive-loop-artifact-index-v1"
@@ -99,6 +101,24 @@ ALLOWED_RISK_LEVELS = {"low", "medium", "high", "blocked"}
 ALLOWED_HUMAN_GATE_STATUSES = {"not_required", "pending", "approved", "rejected"}
 ALLOWED_VERIFICATION_STATUSES = {"not_run", "passed", "failed", "skipped"}
 ALLOWED_SENSITIVITY = {"public", "internal"}
+ALLOWED_WATCHER_KINDS = {
+    "file",
+    "git_diff",
+    "test",
+    "ci",
+    "agent_tool",
+    "runtime_log",
+    "config",
+}
+WATCHER_EVENT_TYPES = {
+    "file": "file_changed",
+    "git_diff": "git_diff_changed",
+    "test": "test_failed",
+    "ci": "ci_failed",
+    "agent_tool": "agent_tool_called",
+    "runtime_log": "runtime_error",
+    "config": "config_changed",
+}
 
 FORBIDDEN_FIELD_NAMES = {
     "api_key",
@@ -652,6 +672,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop event index verifier.")
     if "python3 scripts/verify_cognitive_loop_event_store.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Event Store verifier.")
+    if "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop watcher ingest verifier.")
     if "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Mastra adapter verifier.")
     if "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check" not in commands:
@@ -816,6 +838,9 @@ required:
   - id: cognitive-loop.event-store
     command: python3 scripts/verify_cognitive_loop_event_store.py --check
     blocking: true
+  - id: cognitive-loop.watcher-ingest
+    command: python3 scripts/verify_cognitive_loop_watcher_ingest.py --check
+    blocking: true
   - id: cognitive-loop.mastra-adapter
     command: python3 scripts/verify_cognitive_loop_mastra_adapter.py --check
     blocking: true
@@ -883,6 +908,177 @@ rules:
     humanMasteryGate: required
 """,
     }
+
+
+def default_watcher_config_text() -> str:
+    """Return the default optional watcher ingest contract."""
+
+    return f"""schemaVersion: {WATCHER_CONFIG_SCHEMA_VERSION}
+mode: manual_ingest
+daemon:
+  enabled: false
+  shipped: false
+defaults:
+  debounceMs: 750
+  maxRefs: 12
+  contentMode: metadata_only
+watchers:
+  - id: file-change
+    kind: file
+    enabled: true
+    eventType: file_changed
+    include:
+      - "**/*.py"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.md"
+      - ".cognitive-loop/*.yaml"
+    exclude:
+      - ".env"
+      - "**/.env"
+      - "**/.git/**"
+      - "**/node_modules/**"
+      - "**/.venv/**"
+  - id: git-diff
+    kind: git_diff
+    enabled: true
+    eventType: git_diff_changed
+    include:
+      - "**/*"
+    exclude:
+      - ".env"
+      - "**/.env"
+      - "**/node_modules/**"
+  - id: test-failure
+    kind: test
+    enabled: true
+    eventType: test_failed
+    include:
+      - "apps/**"
+      - "scripts/**"
+      - "tests/**"
+    exclude:
+      - "**/node_modules/**"
+  - id: runtime-log
+    kind: runtime_log
+    enabled: true
+    eventType: runtime_error
+    include:
+      - "runtime-*"
+      - "mastra-*"
+      - "api-*"
+"""
+
+
+def _safe_watcher_globs(values: Any, *, field_name: str) -> list[str]:
+    if values is None:
+        return []
+    if not isinstance(values, list) or not all(isinstance(item, str) for item in values):
+        raise CognitiveLoopContractError(f"watchers.{field_name} must be a string list.")
+    safe: list[str] = []
+    for raw in values:
+        value = raw.strip().replace("\\", "/")
+        if not value:
+            continue
+        if value.startswith("/") or value.startswith("../") or "/../" in value:
+            raise CognitiveLoopContractError(f"watcher glob must stay repo-relative: {raw}.")
+        _assert_public_value(f"watcher_{field_name}", value)
+        safe.append(value)
+    if len(safe) > 50:
+        raise CognitiveLoopContractError(f"watchers.{field_name} is limited to 50 globs.")
+    return safe
+
+
+def validate_watcher_config(values: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate optional watcher ingest config without requiring a daemon."""
+
+    _require_schema(values, WATCHER_CONFIG_SCHEMA_VERSION)
+    if _require_string(values, "mode") != "manual_ingest":
+        raise CognitiveLoopContractError("watchers.mode must be manual_ingest for the MVP.")
+    daemon = _require_mapping(values, "daemon")
+    if daemon.get("enabled") is not False or daemon.get("shipped") is not False:
+        raise CognitiveLoopContractError("watcher daemon must be disabled and unshipped in this MVP.")
+    defaults = dict(_require_mapping(values, "defaults"))
+    if defaults.get("contentMode") != "metadata_only":
+        raise CognitiveLoopContractError("watchers.defaults.contentMode must be metadata_only.")
+    max_refs = defaults.get("maxRefs")
+    if not isinstance(max_refs, int) or isinstance(max_refs, bool) or max_refs < 1 or max_refs > 50:
+        raise CognitiveLoopContractError("watchers.defaults.maxRefs must be an integer between 1 and 50.")
+    debounce_ms = defaults.get("debounceMs")
+    if (
+        not isinstance(debounce_ms, int)
+        or isinstance(debounce_ms, bool)
+        or debounce_ms < 0
+        or debounce_ms > 10000
+    ):
+        raise CognitiveLoopContractError("watchers.defaults.debounceMs must be 0..10000.")
+
+    raw_watchers = values.get("watchers")
+    if not isinstance(raw_watchers, list) or not raw_watchers:
+        raise CognitiveLoopContractError("watchers must be a non-empty list.")
+    normalized_watchers: list[dict[str, Any]] = []
+    ids: set[str] = set()
+    for item in raw_watchers:
+        if not isinstance(item, Mapping):
+            raise CognitiveLoopContractError("Each watcher must be an object.")
+        watcher_id = _require_string(item, "id")
+        if watcher_id in ids:
+            raise CognitiveLoopContractError(f"Duplicate watcher id: {watcher_id}.")
+        ids.add(watcher_id)
+        kind = _require_string(item, "kind")
+        _require_members([kind], ALLOWED_WATCHER_KINDS, "watcher kind")
+        event_type = _require_string(item, "eventType")
+        expected_event_type = WATCHER_EVENT_TYPES[kind]
+        if event_type != expected_event_type:
+            raise CognitiveLoopContractError(
+                f"watcher {watcher_id} eventType must be {expected_event_type} for kind {kind}."
+            )
+        if item.get("enabled") is not True:
+            raise CognitiveLoopContractError(f"watcher {watcher_id} must explicitly set enabled: true.")
+        normalized_watchers.append(
+            {
+                "id": watcher_id,
+                "kind": kind,
+                "enabled": True,
+                "eventType": event_type,
+                "include": _safe_watcher_globs(item.get("include"), field_name="include"),
+                "exclude": _safe_watcher_globs(item.get("exclude"), field_name="exclude"),
+            }
+        )
+    return {
+        "schemaVersion": WATCHER_CONFIG_SCHEMA_VERSION,
+        "mode": "manual_ingest",
+        "daemon": {"enabled": False, "shipped": False},
+        "defaults": {
+            "debounceMs": debounce_ms,
+            "maxRefs": max_refs,
+            "contentMode": "metadata_only",
+        },
+        "watchers": normalized_watchers,
+    }
+
+
+def validate_watcher_config_file(root: Path) -> dict[str, Any]:
+    path = contract_dir(root) / "watchers.yaml"
+    if not path.is_file():
+        raise CognitiveLoopContractError(f"Cognitive Loop watcher config is missing: {path}")
+    return validate_watcher_config(_load_yaml(path))
+
+
+def write_default_watcher_config(root: Path, *, overwrite: bool = False) -> ContractInitReport:
+    directory = contract_dir(root)
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / "watchers.yaml"
+    status = "exists"
+    if overwrite or not path.exists():
+        path.write_text(default_watcher_config_text(), encoding="utf-8")
+        status = "written"
+    validate_watcher_config_file(root)
+    return ContractInitReport(
+        name="watchers",
+        path=str(path.relative_to(directory.parent)),
+        status=status,
+    )
 
 
 def write_default_contract_files(
@@ -1766,6 +1962,8 @@ def _event_index_kind(schema_version: str) -> str:
         return "loop_run"
     if schema_version == PROJECT_SNAPSHOT_SCHEMA_VERSION:
         return "project_snapshot"
+    if schema_version == WATCHER_INGEST_SCHEMA_VERSION:
+        return "watcher_ingest"
     if schema_version == HUMAN_GATE_ARTIFACT_SCHEMA_VERSION:
         return "human_gate"
     if schema_version == EVIDENCE_BUNDLE_SCHEMA_VERSION:

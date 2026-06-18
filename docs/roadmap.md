@@ -126,7 +126,7 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies the TypeScript scaffold, HITL mapping, and privacy boundary.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` rehearses the metadata-only runtime boundary: high-risk run suspension, approved resume, rejected bail, and Event Store projection.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` starts the minimal repo-local Mastra runtime MVP against `@mastra/core` and verifies suspend/resume/bail and no-gate paths.
-- Durable storage, watcher input, and realtime console integration are still planned.
+- Manual watcher ingest exists through `.cognitive-loop/watchers.yaml` and `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`; durable storage, daemonized watcher input, and realtime console integration are still planned.
 
 当前：
 
@@ -134,7 +134,7 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证 TypeScript scaffold、HITL 映射和隐私边界。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 会演练只含 metadata 的 runtime 边界：高风险运行暂停、批准后 resume、拒绝后 bail，以及 Event Store 投影。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 会通过 `@mastra/core` 启动最小本仓库 Mastra runtime MVP，并验证 suspend/resume/bail 和无需 gate 的路径。
-- 持久化 storage、watcher 输入和实时 console 集成仍然是计划中的层。
+- 手动 watcher ingest 已通过 `.cognitive-loop/watchers.yaml` 和 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 接入；持久化 storage、常驻 watcher 输入和实时 console 集成仍然是计划中的层。
 
 Deliver:
 
@@ -189,13 +189,25 @@ Acceptance:
 
 Goal: turn project activity into normalized events.
 
+Current:
+
+- `.cognitive-loop/watchers.yaml` defines manual ingest watcher rules.
+- `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` creates metadata-only `ProjectEvent` artifacts without a daemon.
+- `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` proves Event Index classification, SQLite Event Store ingestion, excluded-target rejection, malformed-config rejection, and privacy boundaries.
+
+当前：
+
+- `.cognitive-loop/watchers.yaml` 定义手动 ingest watcher 规则。
+- `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` 可以在不启动 daemon 的情况下创建只含 metadata 的 `ProjectEvent` artifact。
+- `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 证明 Event Index 分类、SQLite Event Store 摄入、排除目标拒绝、错误配置拒绝和隐私边界。
+
 Deliver:
 
-- file watcher
-- git diff watcher
-- test/CI watcher
-- Agent tool-call watcher
-- runtime log watcher
+- daemonized file watcher
+- daemonized git diff watcher
+- daemonized test/CI watcher
+- daemonized Agent tool-call watcher
+- daemonized runtime log watcher
 - debounce, batching, and secret redaction
 
 Acceptance:

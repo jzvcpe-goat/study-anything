@@ -87,6 +87,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop local SQLite Event Store verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+        "generated_asset",
+        "Cognitive Loop manual watcher ingest verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1077,6 +1082,16 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop local SQLite Event Store verifier.",
     ),
     (
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "cli",
+        "Manual watcher-event ingest for Cognitive Loop metadata artifacts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
+        "verification",
+        "Cognitive Loop manual watcher ingest verifier.",
+    ),
+    (
         "platform/mastra/README.md",
         "mastra_adapter",
         "Copy-ready Mastra adapter operator guide.",
@@ -1475,6 +1490,11 @@ FILES: list[tuple[str, str, str]] = [
         ".cognitive-loop/risk.yaml",
         "cognitive_loop_contract",
         "Cognitive Loop risk and human mastery gate contract.",
+    ),
+    (
+        ".cognitive-loop/watchers.yaml",
+        "cognitive_loop_contract",
+        "Optional Cognitive Loop manual watcher ingest contract.",
     ),
     (
         "docs/adoption.md",
