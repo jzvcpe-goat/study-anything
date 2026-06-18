@@ -111,6 +111,7 @@ fi
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
 "$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+"$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 "$python_bin" scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --current-worktree \

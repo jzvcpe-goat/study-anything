@@ -1,0 +1,131 @@
+{
+  "baseline": {
+    "consumer_schema_version": "cognitive-loop-schema-pack-consumer-v1",
+    "negative_fixture_schema_version": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
+    "schema_bundle_schema_version": "cognitive-loop-recipe-cli-schemas-v1",
+    "zip_only_validation_passed": true
+  },
+  "cases": [
+    {
+      "actual_error_redacted": "Adoption pack manifest schema drifted.",
+      "case_id": "manifest_schema_version_drift",
+      "error_redacted": true,
+      "expected_error": "manifest schema drifted",
+      "mutated_payload_persisted": false,
+      "mutation": "Change the adoption pack manifest schema version.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "Adoption pack is missing schema consumer files: ['study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json']",
+      "case_id": "schema_bundle_missing",
+      "error_redacted": true,
+      "expected_error": "missing schema consumer files",
+      "mutated_payload_persisted": false,
+      "mutation": "Remove the recipe CLI schema bundle from the zip.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json byte count drifted.",
+      "case_id": "schema_bundle_manifest_record_drift",
+      "error_redacted": true,
+      "expected_error": "byte count drifted",
+      "mutated_payload_persisted": false,
+      "mutation": "Change the schema bundle without updating the manifest record.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "Adoption pack must remain no-frontend required.",
+      "case_id": "no_frontend_required_false",
+      "error_redacted": true,
+      "expected_error": "no-frontend required",
+      "mutated_payload_persisted": false,
+      "mutation": "Change no_frontend_required to false.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "Study Anything must not store real model keys.",
+      "case_id": "real_model_keys_true",
+      "error_redacted": true,
+      "expected_error": "must not store real model keys",
+      "mutated_payload_persisted": false,
+      "mutation": "Change real_model_keys_stored_by_study_anything to true.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "Schema negative fixture case count drifted.",
+      "case_id": "negative_fixture_case_drop",
+      "error_redacted": true,
+      "expected_error": "case count drifted",
+      "mutated_payload_persisted": false,
+      "mutation": "Drop one negative fixture case while keeping manifest hashes coherent.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "schema bundle from adoption pack contains private or secret-like text: ['<redacted-private-needle>']",
+      "case_id": "private_text_probe_rejected",
+      "error_redacted": true,
+      "expected_error": "contains private or secret-like text",
+      "mutated_payload_persisted": false,
+      "mutation": "Inject a private secret-like probe while keeping manifest hashes coherent.",
+      "status": "pass"
+    },
+    {
+      "actual_error_redacted": "Schema bundle validation.runtime_started must be false.",
+      "case_id": "runtime_started_true",
+      "error_redacted": true,
+      "expected_error": "validation.runtime_started must be false",
+      "mutated_payload_persisted": false,
+      "mutation": "Change schema bundle validation.runtime_started to true.",
+      "status": "pass"
+    }
+  ],
+  "coverage": {
+    "all_cases_rejected": true,
+    "all_errors_redacted": true,
+    "all_expected_errors_matched": true,
+    "case_count": 8,
+    "case_ids": [
+      "manifest_schema_version_drift",
+      "schema_bundle_missing",
+      "schema_bundle_manifest_record_drift",
+      "no_frontend_required_false",
+      "real_model_keys_true",
+      "negative_fixture_case_drop",
+      "private_text_probe_rejected",
+      "runtime_started_true"
+    ],
+    "file_changes_applied": false,
+    "mutated_archives_persisted": false,
+    "mutated_payloads_persisted": false,
+    "recipe_cli_invoked": false,
+    "repo_checkout_required": false,
+    "runtime_started": false
+  },
+  "distribution": {
+    "report_path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+    "safe_for_platform_agent_static_import": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check"
+  },
+  "pack": {
+    "file_count": 280,
+    "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
+    "no_frontend_required": true,
+    "path": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "real_model_keys_stored_by_study_anything": false
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "mutated_payloads_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Prove the adoption-pack schema consumer rejects tampered or policy-violating zip variants safely.",
+  "schema_version": "cognitive-loop-schema-pack-consumer-failures-v1",
+  "status": "pass"
+}
