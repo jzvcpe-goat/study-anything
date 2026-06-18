@@ -28,6 +28,7 @@ RISK_SCHEMA_VERSION = "cognitive-loop-risk-v1"
 BOOTSTRAP_SCHEMA_VERSION = "cognitive-loop-contract-bootstrap-v1"
 CLI_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-cli-artifact-v1"
 RUN_ONCE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-run-once-artifact-v1"
+PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -633,6 +634,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop CLI artifact verifier.")
     if "python3 scripts/verify_cognitive_loop_run_once.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop run-once verifier.")
+    if "python3 scripts/verify_cognitive_loop_snapshot.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop snapshot verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -767,6 +770,9 @@ required:
     blocking: true
   - id: cognitive-loop.run-once-evidence
     command: python3 scripts/verify_cognitive_loop_run_once.py --check
+    blocking: true
+  - id: cognitive-loop.project-snapshot
+    command: python3 scripts/verify_cognitive_loop_snapshot.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -1164,6 +1170,154 @@ def build_run_once_artifact(
     return report
 
 
+def _safe_snapshot_paths(paths: Iterable[str]) -> list[str]:
+    safe: list[str] = []
+    for raw_path in paths:
+        if not isinstance(raw_path, str):
+            raise CognitiveLoopContractError("Snapshot paths must be strings.")
+        normalized = raw_path.strip().replace("\\", "/")
+        if not normalized:
+            continue
+        if normalized.startswith("/") or normalized.startswith("../") or "/../" in normalized:
+            raise CognitiveLoopContractError(f"Snapshot path must be repo-relative: {raw_path}.")
+        _assert_public_value("snapshot_path", normalized)
+        safe.append(normalized)
+    deduped = sorted(dict.fromkeys(safe))
+    if len(deduped) > 100:
+        raise CognitiveLoopContractError("Snapshot path count is limited to 100.")
+    return deduped
+
+
+def build_project_snapshot_artifact(
+    root: Path,
+    *,
+    paths: Iterable[str],
+    objective: str = "Capture a redacted local project snapshot as Cognitive Loop evidence.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-snapshot.html",
+) -> dict[str, Any]:
+    """Build a path-level project snapshot artifact without reading file contents."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    safe_paths = _safe_snapshot_paths(paths)
+    changed_count = len(safe_paths)
+    summary = (
+        f"Captured {changed_count} repo-relative changed path"
+        f"{'' if changed_count == 1 else 's'} without file contents."
+        if changed_count
+        else "Captured a project snapshot with no changed paths."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-project-snapshot",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "git_diff_changed" if changed_count else "human_note",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": "git:worktree",
+            "refs": [f"path:{path}" for path in safe_paths[:20]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-project-snapshot",
+            "project_id": project["id"],
+            "title": "Review local project snapshot",
+            "status": "proposed",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [
+                f"event:{event['event_id']}",
+                f"artifact:{artifact_ref}",
+            ],
+            "risk": {
+                "level": "low",
+                "score": 0.2,
+                "reasons": [
+                    "path-level snapshot only",
+                    "no diff body",
+                    "no source text",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": False,
+                "status": "not_required",
+                "questions": [
+                    "Can the operator identify which areas changed?",
+                    "Can the operator decide whether a deeper review is needed?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py snapshot --html",
+                    "python3 scripts/verify_cognitive_loop_snapshot.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_snapshot_artifacts", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-project-snapshot",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": PROJECT_SNAPSHOT_SCHEMA_VERSION,
+        "status": "ready",
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Project Snapshot",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "snapshot": {
+            "changed_path_count": changed_count,
+            "paths": safe_paths,
+            "max_paths_recorded": 100,
+            "diff_body_included": False,
+            "file_contents_included": False,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This is a manual snapshot, not a watcher daemon.",
+            "Only repo-relative paths and counts are recorded.",
+            "File contents and diff bodies are intentionally excluded.",
+        ],
+        "commands": {
+            "snapshot": "python3 scripts/cognitive_loop_cli.py snapshot --html",
+            "snapshot_check": "python3 scripts/verify_cognitive_loop_snapshot.py --check",
+        },
+    }
+    _assert_public_value("project_snapshot_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1196,6 +1350,13 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     limits = report.get("current_limits")
     if not isinstance(limits, list):
         limits = []
+    snapshot = report.get("snapshot")
+    if not isinstance(snapshot, Mapping):
+        snapshot = {}
+    snapshot_paths = snapshot.get("paths")
+    if not isinstance(snapshot_paths, list):
+        snapshot_paths = []
+    snapshot_path_items = list_items(snapshot_paths[:20])
     commands = report.get("commands")
     if not isinstance(commands, Mapping):
         commands = {}
@@ -1325,6 +1486,11 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         <div>Started<br><strong>{escape(str(loop_run.get('started_at', '')))}</strong></div>
         <div>Completed<br><strong>{escape(str(loop_run.get('completed_at', 'pending')))}</strong></div>
       </div>
+    </section>
+    <section>
+      <h2>Project Snapshot</h2>
+      <p>Changed paths recorded: <strong>{escape(str(snapshot.get('changed_path_count', 0)))}</strong></p>
+      <ul>{snapshot_path_items}</ul>
     </section>
     <section>
       <h2>Contract Files</h2>

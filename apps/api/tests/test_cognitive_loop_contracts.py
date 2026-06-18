@@ -8,8 +8,10 @@ from study_anything.core.cognitive_loop_contracts import (
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
+    PROJECT_SNAPSHOT_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_cli_artifact_report,
+    build_project_snapshot_artifact,
     build_run_once_artifact,
     render_cli_artifact_html,
     validate_all_public_objects,
@@ -197,6 +199,21 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         self.assertEqual(report["loop_run"]["status"], "suspended")
         self.assertEqual(report["decision_card"]["status"], "needs_human_mastery")
         self.assertTrue(report["decision_card"]["human_mastery_gate"]["required"])
+
+    def test_project_snapshot_artifact_records_paths_without_contents(self) -> None:
+        report = build_project_snapshot_artifact(
+            REPO_ROOT,
+            paths=["README.md", "docs/cognitive-loop-contracts.md"],
+            generated_at="2026-06-17T00:50:00Z",
+        )
+        html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], PROJECT_SNAPSHOT_SCHEMA_VERSION)
+        self.assertEqual(report["snapshot"]["changed_path_count"], 2)
+        self.assertFalse(report["snapshot"]["diff_body_included"])
+        self.assertFalse(report["snapshot"]["file_contents_included"])
+        self.assertFalse(report["privacy"]["watcher_daemon_started"])
+        self.assertIn("Project Snapshot", html)
 
 
 if __name__ == "__main__":
