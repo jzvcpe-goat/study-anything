@@ -18,6 +18,7 @@ These gates are required for release and marketplace-style submission:
 - `cognitive-loop-review-agent-pr-comment-pack-v1` via `scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check`.
 - `cognitive-loop-review-agent-acceptance-bundle-v1` via `scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check`.
 - `cognitive-loop-review-agent-github-workflow-verification-v1` via `scripts/verify_cognitive_loop_review_agent_github_workflow.py --check`.
+- `cognitive-loop-review-agent-policy-gate-v1` via `scripts/verify_cognitive_loop_review_agent_policy_gate.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -146,3 +147,19 @@ The template lives at `platform/workflows/cognitive-loop-review-agent-manual.yml
 metadata-only Checks/step summary, and may upload only the safe acceptance bundle artifacts. It does
 not invoke real models, require external Agent secrets, upload raw Review Agent reports, or persist
 raw diffs.
+
+## Review Agent Policy Gate
+
+For CI or operator handoff, convert the metadata-only acceptance bundle into a policy-specific exit
+code:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/review-agent-acceptance --policy soft
+python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+```
+
+`advisory` always exits 0 and records the decision. `soft` exits nonzero only for `needs-fix`.
+`strict` exits nonzero for `needs-review` and `needs-fix`. The gate can also read a metadata-only
+CI receipt with `--receipt REVIEW_AGENT_CI_RECEIPT.json`. It emits
+`cognitive-loop-review-agent-policy-gate-v1` and must not include raw diffs, file bodies, finding
+evidence, report summaries, Agent endpoint secrets, real model keys, or hidden chain-of-thought.

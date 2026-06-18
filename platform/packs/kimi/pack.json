@@ -88,7 +88,8 @@
     "platform_agent_release_replay.schema_version == platform-agent-release-replay-v1",
     "release_cleanroom_bootstrap.schema_version == release-cleanroom-bootstrap-v1",
     "release_cleanroom_bootstrap_evidence.schema_version == release-cleanroom-bootstrap-evidence-v1",
-    "cognitive_loop_review_agent_github_workflow.schema_version == cognitive-loop-review-agent-github-workflow-verification-v1"
+    "cognitive_loop_review_agent_github_workflow.schema_version == cognitive-loop-review-agent-github-workflow-verification-v1",
+    "cognitive_loop_review_agent_policy_gate.schema_version == cognitive-loop-review-agent-policy-gate-verification-v1"
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
@@ -133,6 +134,9 @@
     "platform/workflows/cognitive-loop-review-agent-manual.yml",
     "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
     "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
+    "scripts/cognitive_loop_review_agent_policy_gate.py",
+    "scripts/verify_cognitive_loop_review_agent_policy_gate.py",
+    "platform/generated/study-anything-cognitive-loop-review-agent-policy-gate.json",
     "scripts/cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
     "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -181,6 +185,7 @@
     "python3 scripts/verify_launch_acceptance_ledger.py --check",
     "python3 scripts/verify_github_launch_operator_guide.py --check",
     "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
+    "python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check",
     "python3 scripts/verify_commercial_readiness.py",
     "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
     "python3 scripts/verify_agent_gateway_hardening.py",
