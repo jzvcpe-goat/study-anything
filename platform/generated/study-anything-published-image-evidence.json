@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 104933,
+    "bytes": 105141,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "26bfe77afaa60089c6cd699b22b2002a61d013d4f560f9b6cc8c13f6d604f5c7",
+    "sha256": "8a80ed3163fb3337a2164c00a477ba2df68114709b22b0f0fdb9300a94319e48",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -185,9 +185,9 @@
       "sha256": "4308f7bbeff3a9e4117a1f7e4878b34fc318ef6b60cefc684f3a67f2a13643cf"
     },
     {
-      "bytes": 31474,
+      "bytes": 31777,
       "path": "docs/release-checklist.md",
-      "sha256": "3de0e24f82cbddcb29fc8e723269e996ec4d55c5f668792cacdc28cfa3202453"
+      "sha256": "952773709005786aa6df6810238affed09b350c7d408e56f5efdb1d1a0c8822b"
     },
     {
       "bytes": 10438,
@@ -195,9 +195,9 @@
       "sha256": "90c06157679bd94182484b21aea61e795d107a3f1587b66ac40d0a3838df0fb0"
     },
     {
-      "bytes": 2514,
+      "bytes": 2802,
       "path": "docs/published-image-evidence.md",
-      "sha256": "6b5712b13cdf0f843f53929c62d14cbae7cee02a47794669152479f0fc406701"
+      "sha256": "ddfc3f11b7f7d786e1ea25e7faee3862c0c449fc8178723437bb9d5a80b759e4"
     },
     {
       "bytes": 19399,
