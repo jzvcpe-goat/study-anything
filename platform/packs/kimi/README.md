@@ -80,6 +80,20 @@ For a shorter operating path, read `docs/cognitive-loop-adoption-cookbook.md`. I
 keeps Kimi as the conversation surface while a terminal, workspace Agent, or private gateway runs the
 local Cognitive Loop commands and returns only redacted artifact metadata.
 
+For machine-readable operation, import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace
+Agent runs runtime or human-gated steps. The entrypoint proof is
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`. The local operator should
+verify the entrypoint chain with:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+```
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:
