@@ -31,6 +31,7 @@ python3 scripts/cognitive_loop_cli.py run-once --html
 python3 scripts/cognitive_loop_cli.py snapshot --html
 python3 scripts/cognitive_loop_cli.py gate --approve --html
 python3 scripts/cognitive_loop_cli.py bundle --html
+python3 scripts/cognitive_loop_cli.py index --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -45,6 +46,7 @@ python3 scripts/cognitive_loop_cli.py run-once --html
 python3 scripts/cognitive_loop_cli.py snapshot --html
 python3 scripts/cognitive_loop_cli.py gate --approve --html
 python3 scripts/cognitive_loop_cli.py bundle --html
+python3 scripts/cognitive_loop_cli.py index --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -60,6 +62,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
+- required evals include the Cognitive Loop event index verifier;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -75,6 +78,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
+- required evals 包含 Cognitive Loop event index verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -156,6 +160,24 @@ The bundle stores artifact paths, kind, size, and SHA-256 digest only. It does n
 bundle 只保存 artifact path、kind、size 和 SHA-256 digest，不嵌入 artifact 正文、source text、diff body、学习者答案、Agent endpoint、Agent metadata 或 model key。
 
 `python3 scripts/verify_cognitive_loop_evidence_bundle.py --check` 会在临时 external-adopter project 中验证 run/snapshot/gate bundle，并输出 `cognitive-loop-evidence-bundle-verification-v1`。
+
+## Event Index Manifest
+
+`python3 scripts/cognitive_loop_cli.py index --html` creates a local event timeline index from Cognitive Loop JSON event artifacts. By default it scans `.cognitive-loop/events/*.json`, or operators can pass repeated `--event` paths.
+
+The index stores event artifact path, kind, schema, status, generated timestamp, size, SHA-256 digest, and public ids such as `ProjectEvent`, `DecisionCard`, and `LoopRun` ids when present. It does not embed event JSON contents, artifact contents, source text, diff bodies, learner answers, Agent endpoints, Agent metadata, or model keys.
+
+This is still a manual rebuild command, not a watcher daemon. It is intended as the bridge between local artifact evidence and a future realtime HTML console.
+
+`python3 scripts/verify_cognitive_loop_event_index.py --check` verifies run/snapshot/gate/bundle indexing in a temporary external-adopter project and emits `cognitive-loop-event-index-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py index --html` 会从 Cognitive Loop JSON event artifacts 创建本地事件 timeline index。默认扫描 `.cognitive-loop/events/*.json`，操作者也可以重复传入 `--event` 路径。
+
+index 只保存 event artifact path、kind、schema、status、generated timestamp、size、SHA-256 digest，以及存在时的 `ProjectEvent`、`DecisionCard`、`LoopRun` 等公开 id。它不嵌入 event JSON 正文、artifact 正文、source text、diff body、学习者答案、Agent endpoint、Agent metadata 或 model key。
+
+这仍然是手动重建命令，不是 watcher daemon。它用于连接本地 artifact evidence 和未来实时 HTML console。
+
+`python3 scripts/verify_cognitive_loop_event_index.py --check` 会在临时 external-adopter project 中验证 run/snapshot/gate/bundle index，并输出 `cognitive-loop-event-index-verification-v1`。
 
 ## Public Objects
 

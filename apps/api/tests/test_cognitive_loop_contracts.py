@@ -9,11 +9,13 @@ from study_anything.core.cognitive_loop_contracts import (
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
     EVIDENCE_BUNDLE_SCHEMA_VERSION,
+    EVENT_INDEX_SCHEMA_VERSION,
     HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
     PROJECT_SNAPSHOT_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_cli_artifact_report,
     build_evidence_bundle_artifact,
+    build_event_index_artifact,
     build_human_gate_artifact,
     build_project_snapshot_artifact,
     build_run_once_artifact,
@@ -292,6 +294,57 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         self.assertTrue(all(not item["content_included"] for item in report["evidence_bundle"]["artifacts"]))
         self.assertFalse(report["privacy"]["artifact_contents_included"])
         self.assertIn("Evidence Bundle", html)
+
+    def test_event_index_records_event_metadata_without_contents(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_path = root / ".cognitive-loop" / "events" / "run-once.json"
+            event_path.parent.mkdir(parents=True, exist_ok=True)
+            event_path.write_text(
+                """{
+                  "schema_version": "cognitive-loop-run-once-artifact-v1",
+                  "status": "succeeded",
+                  "generated_at": "2026-06-17T01:20:00Z",
+                  "project_event": {
+                    "event_id": "evt-1",
+                    "event_type": "verification_completed"
+                  },
+                  "decision_card": {
+                    "decision_id": "dec-1",
+                    "status": "approved"
+                  },
+                  "loop_run": {
+                    "run_id": "loop-1",
+                    "status": "succeeded"
+                  }
+                }""",
+                encoding="utf-8",
+            )
+
+            report = build_event_index_artifact(
+                root,
+                event_paths=[".cognitive-loop/events/run-once.json"],
+                generated_at="2026-06-17T01:21:00Z",
+            )
+            html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], EVENT_INDEX_SCHEMA_VERSION)
+        self.assertEqual(report["event_index"]["entry_count"], 1)
+        self.assertFalse(report["event_index"]["content_included"])
+        self.assertFalse(report["event_index"]["entries"][0]["content_included"])
+        self.assertEqual(report["event_index"]["entries"][0]["kind"], "loop_run")
+        self.assertEqual(report["event_index"]["entries"][0]["project_event_id"], "evt-1")
+        self.assertFalse(report["privacy"]["event_contents_included"])
+        self.assertFalse(report["privacy"]["watcher_daemon_started"])
+        self.assertIn("Event Index", html)
 
 
 if __name__ == "__main__":
