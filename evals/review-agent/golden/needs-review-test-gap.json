@@ -1,0 +1,52 @@
+{
+  "report_version": "1.0",
+  "pr_id": "eval-needs-review-test-gap",
+  "change_type": "feature",
+  "overall_risk": "medium",
+  "decision": "needs-review",
+  "summary": "The importer adds a markdown branch without a paired test. A maintainer should confirm expected behavior before merge.",
+  "findings": [
+    {
+      "rank": 1,
+      "dimension": "test",
+      "title": "Markdown importer branch lacks a paired test",
+      "severity": "warn",
+      "file": "scripts/importer.py",
+      "line_range": "22",
+      "evidence": "scripts/importer.py:22 return parsed",
+      "scenario": "A markdown payload without title should be parsed deterministically, but no test covers this new branch.",
+      "recommendation": "Add a focused importer test for markdown payloads with and without title.",
+      "confidence": "high",
+      "blocking": false
+    }
+  ],
+  "metrics": {
+    "total_files_changed": 1,
+    "total_lines_changed": 4,
+    "critical_count": 0,
+    "warn_count": 1,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "test",
+      "logic"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": false,
+    "required_human_review": true,
+    "labels_to_add": [
+      "test-gap"
+    ]
+  },
+  "suppressed_low_confidence": [
+    {
+      "dimension": "architecture",
+      "title": "Importer shape may need a shared parser",
+      "file": "scripts/importer.py",
+      "line_range": "21-22",
+      "evidence": "scripts/importer.py:21 if payload.get(\"format\") == \"markdown\":",
+      "confidence": "low",
+      "suppression_reason": "The diff alone does not prove duplication or boundary breakage."
+    }
+  ]
+}

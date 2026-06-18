@@ -77,3 +77,15 @@ Ragas, or judge-model dependencies.
 
 This release gate checks the API adapter matrix, redaction-safe sample artifact, Promptfoo config,
 baseline, and docs stay aligned.
+
+## Review Agent Eval
+
+The Cognitive Loop Review Agent has a separate offline eval harness:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+```
+
+It uses only synthetic git diffs under `evals/review-agent`, then validates golden reports against
+the public Review Agent report schema. Use it before routing real PR diffs to Kimi, Codex,
+WorkBuddy, or a private CI Review Agent.

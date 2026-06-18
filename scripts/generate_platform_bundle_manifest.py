@@ -117,6 +117,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent prepare/validate CLI verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-eval-harness.json",
+        "generated_asset",
+        "Offline Cognitive Loop Review Agent eval harness verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -1020,6 +1025,21 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review_agent_report.py",
         "verification",
         "External Cognitive Loop Review Agent report handoff verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_handoff.py",
+        "cli",
+        "External Cognitive Loop Review Agent prepare/validate handoff CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_handoff_cli.py",
+        "verification",
+        "External Cognitive Loop Review Agent handoff CLI verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_eval_harness.py",
+        "verification",
+        "Offline Cognitive Loop Review Agent eval harness verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",

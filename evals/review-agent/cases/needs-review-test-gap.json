@@ -1,0 +1,25 @@
+{
+  "schema_version": "cognitive-loop-review-agent-eval-case-v1",
+  "case_id": "needs-review-test-gap",
+  "title": "Importer behavior changes without a paired test",
+  "input": {
+    "pr_id": "eval-needs-review-test-gap",
+    "change_type": "feature",
+    "git_diff": "diff --git a/scripts/importer.py b/scripts/importer.py\nindex 3333333..4444444 100644\n--- a/scripts/importer.py\n+++ b/scripts/importer.py\n@@ -19,4 +19,8 @@ def parse_record(payload):\n     if not payload:\n         return {}\n+    if payload.get(\"format\") == \"markdown\":\n+        parsed = {\"title\": payload.get(\"title\", \"Untitled\")}\n+        return parsed\n     return {\"title\": str(payload[\"title\"])}\n",
+    "total_files_changed": 1,
+    "total_lines_changed": 4
+  },
+  "expected": {
+    "decision": "needs-review",
+    "overall_risk": "medium",
+    "required_findings": [
+      {
+        "dimension": "test",
+        "severity": "warn",
+        "file": "scripts/importer.py",
+        "evidence_contains": "scripts/importer.py:22"
+      }
+    ],
+    "minimum_suppressed_low_confidence": 1
+  }
+}
