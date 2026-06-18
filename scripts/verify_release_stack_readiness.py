@@ -29,6 +29,7 @@ EXPECTED_STACK = [
     (137, "codex/v0.3.56-github-launch-operator-guide"),
     (138, "codex/v0.3.57-release-stack-readiness"),
     (139, "codex/v0.3.58-live-release-stack-status"),
+    (140, "codex/v0.3.59-full-stack-lineage"),
 ]
 PRIVATE_NEEDLES = (
     "gho_",

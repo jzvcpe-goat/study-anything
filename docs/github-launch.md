@@ -148,6 +148,18 @@ While preparing the next stacked PR before it exists on GitHub, use:
 python3 scripts/verify_release_stack_live_status.py --allow-missing-top-pr
 ```
 
+Before merging the stack, verify the full lineage reaches `main`:
+
+```bash
+python3 scripts/verify_release_stack_lineage.py
+```
+
+While preparing the next stacked PR before it exists on GitHub, use:
+
+```bash
+python3 scripts/verify_release_stack_lineage.py --allow-missing-top-pr --report-only
+```
+
 The release stack must be merged from oldest to newest. After each merge, sync `main`, confirm the next
 stacked PR base is still current, and confirm the required GitHub checks are green.
 
