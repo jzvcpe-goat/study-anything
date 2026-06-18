@@ -19,6 +19,7 @@ And one verifier:
 
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check
+python3 scripts/verify_cognitive_loop_review.py --check
 ```
 
 The repository also includes a small local CLI:
@@ -35,9 +36,10 @@ python3 scripts/cognitive_loop_cli.py index --html
 python3 scripts/cognitive_loop_cli.py doctor --html
 python3 scripts/cognitive_loop_cli.py repair-plan --html
 python3 scripts/cognitive_loop_cli.py artifact-index --html
+python3 scripts/cognitive_loop_review.py --base main --head HEAD --html
 ```
 
-This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
+This CLI set is for repo-local contract bootstrap, static HTML DecisionCard artifacts, and advisory code-review evidence. It is not a daemon, does not watch files, does not call Mastra, does not call a model, does not store model keys, and does not require a standalone frontend.
 
 仓库也包含一个小型本地 CLI：
 
@@ -53,9 +55,10 @@ python3 scripts/cognitive_loop_cli.py index --html
 python3 scripts/cognitive_loop_cli.py doctor --html
 python3 scripts/cognitive_loop_cli.py repair-plan --html
 python3 scripts/cognitive_loop_cli.py artifact-index --html
+python3 scripts/cognitive_loop_review.py --base main --head HEAD --html
 ```
 
-这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
+这组 CLI 用于本地契约初始化、静态 HTML DecisionCard artifact 和咨询式代码审查证据。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，不保存模型 key，也不要求独立前端。
 
 The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 

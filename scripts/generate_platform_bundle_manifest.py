@@ -97,6 +97,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop static local artifact index verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review.json",
+        "generated_asset",
+        "Cognitive Loop advisory code review verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -390,6 +395,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cognitive-loop-contracts.md",
         "operator_doc",
         "Cognitive Loop local contract bootstrap guide.",
+    ),
+    (
+        "docs/cognitive-loop-code-review.md",
+        "operator_doc",
+        "Cognitive Loop advisory code review guide.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -945,6 +955,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_artifact_index.py",
         "verification",
         "Cognitive Loop static local artifact index verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review.py",
+        "cli",
+        "Cognitive Loop advisory code review CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review.py",
+        "verification",
+        "Cognitive Loop advisory code review verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",
