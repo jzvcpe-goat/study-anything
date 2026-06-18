@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 88,
+      "acceptance_evidence_count": 89,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -686,6 +686,7 @@
         "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -769,6 +770,10 @@
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
         "platform/generated/study-anything-github-launch-operator-guide.json",
+        "docs/github-review-agent-workflow.md",
+        "platform/workflows/cognitive-loop-review-agent-manual.yml",
+        "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
+        "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -793,7 +798,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 88,
+      "acceptance_evidence_count": 89,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -821,6 +826,7 @@
         "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -908,6 +914,10 @@
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
         "platform/generated/study-anything-github-launch-operator-guide.json",
+        "docs/github-review-agent-workflow.md",
+        "platform/workflows/cognitive-loop-review-agent-manual.yml",
+        "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
+        "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -932,7 +942,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 88,
+      "acceptance_evidence_count": 89,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -960,6 +970,7 @@
         "python3 scripts/verify_platform_handoff_checklist.py --check",
         "python3 scripts/verify_launch_acceptance_ledger.py --check",
         "python3 scripts/verify_github_launch_operator_guide.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -1043,6 +1054,10 @@
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
         "platform/generated/study-anything-github-launch-operator-guide.json",
+        "docs/github-review-agent-workflow.md",
+        "platform/workflows/cognitive-loop-review-agent-manual.yml",
+        "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
+        "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",

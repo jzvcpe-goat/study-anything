@@ -55,7 +55,7 @@
     }
   ],
   "handoff_assets": {
-    "adoption_pack_file_count": 327,
+    "adoption_pack_file_count": 332,
     "adoption_pack_schema": "study-anything-platform-adoption-pack-v1",
     "all_required_assets_present": true,
     "required_assets": [
@@ -76,37 +76,37 @@
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
-      "import_asset_count": 45,
+      "import_asset_count": 49,
       "integration_mode": "terminal_skill",
       "no_frontend_required": true,
       "pack_id": "codex",
       "platform_id": "codex-skill",
       "submission_integration_mode": "terminal_skill",
-      "verification_command_count": 74
+      "verification_command_count": 75
     },
     {
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
-      "import_asset_count": 47,
+      "import_asset_count": 51,
       "integration_mode": "openai_compatible_tools",
       "no_frontend_required": true,
       "pack_id": "kimi",
       "platform_id": "kimi-compatible",
       "submission_integration_mode": "openai_compatible_tools",
-      "verification_command_count": 74
+      "verification_command_count": 75
     },
     {
       "declares_extract_smoke": true,
       "declares_feedback_package": true,
       "declares_handoff_checklist": true,
-      "import_asset_count": 46,
+      "import_asset_count": 50,
       "integration_mode": "openapi_http_tools",
       "no_frontend_required": true,
       "pack_id": "workbuddy",
       "platform_id": "workbuddy-style-http",
       "submission_integration_mode": "openapi_http_tools",
-      "verification_command_count": 73
+      "verification_command_count": 74
     },
     {
       "declares_extract_smoke": true,
