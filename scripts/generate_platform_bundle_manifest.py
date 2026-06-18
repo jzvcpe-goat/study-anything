@@ -167,6 +167,11 @@ FILES: list[tuple[str, str, str]] = [
         "Public launch acceptance ledger for GitHub OSS and platform-Agent adoption.",
     ),
     (
+        "platform/generated/study-anything-github-launch-operator-guide.json",
+        "generated_asset",
+        "GitHub launch operator guide proof for release sequence, assets, and local-first boundaries.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -1015,6 +1020,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_launch_acceptance_ledger.py",
         "verification",
         "Generate and verify the public launch acceptance ledger.",
+    ),
+    (
+        "scripts/verify_github_launch_operator_guide.py",
+        "verification",
+        "Generate and verify the GitHub launch operator guide proof.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

@@ -26,6 +26,7 @@
       "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
       "python3 scripts/verify_platform_handoff_checklist.py --check",
       "python3 scripts/verify_launch_acceptance_ledger.py --check",
+      "python3 scripts/verify_github_launch_operator_guide.py --check",
       "python3 scripts/verify_commercial_readiness.py",
       "python3 scripts/verify_adoption_telemetry.py",
       "python3 scripts/verify_agent_gateway_hardening.py",
@@ -96,6 +97,7 @@
       "cognitive-loop-recipe-cli-schemas-v1 provides offline JSON Schemas for static platform-Agent validation of recipe CLI success, receipt, and failure reports without executing recipe commands or taking real model keys",
       "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
       "launch-acceptance-ledger-v1 aggregates GitHub OSS, platform-Agent, self-host, support, release asset, and commercial boundary evidence without requiring a standalone frontend or Study Anything model-key custody",
+      "github-launch-operator-guide-v1 proves GitHub release operators have one local-first launch sequence, release asset list, platform-Agent distribution path, and no standalone frontend or Study Anything model-key custody",
       "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
       "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
       "learning-enrichment-bridge-verification-v1 proves platform Agent enrichment inputs, Markdown/HTML micro-lessons, NotebookLM manual bridge, Obsidian/second-brain handoff, source hashes, and privacy evidence are aligned",
@@ -247,6 +249,7 @@
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-platform-handoff-checklist.json",
     "platform/generated/study-anything-launch-acceptance-ledger.json",
+    "platform/generated/study-anything-github-launch-operator-guide.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-adoption-pack.zip",
@@ -295,6 +298,7 @@
     "scripts/verify_cognitive_loop_pack_extract_smoke.py",
     "scripts/verify_platform_handoff_checklist.py",
     "scripts/verify_launch_acceptance_ledger.py",
+    "scripts/verify_github_launch_operator_guide.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -482,6 +486,7 @@
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "platform/generated/study-anything-github-launch-operator-guide.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -492,6 +497,7 @@
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
+        "scripts/verify_github_launch_operator_guide.py",
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "platform/generated/study-anything-platform-feedback-package.zip",
@@ -510,7 +516,8 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
         "python3 scripts/verify_platform_handoff_checklist.py --check",
-        "python3 scripts/verify_launch_acceptance_ledger.py --check"
+        "python3 scripts/verify_launch_acceptance_ledger.py --check",
+        "python3 scripts/verify_github_launch_operator_guide.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -578,6 +585,7 @@
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "platform/generated/study-anything-github-launch-operator-guide.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -588,6 +596,7 @@
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
+        "scripts/verify_github_launch_operator_guide.py",
         "platform/packs/codex/README.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
         "platform/generated/study-anything-platform-feedback-package.json"
@@ -604,7 +613,8 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
         "python3 scripts/verify_platform_handoff_checklist.py --check",
-        "python3 scripts/verify_launch_acceptance_ledger.py --check"
+        "python3 scripts/verify_launch_acceptance_ledger.py --check",
+        "python3 scripts/verify_github_launch_operator_guide.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -669,6 +679,7 @@
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "platform/generated/study-anything-github-launch-operator-guide.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -679,6 +690,7 @@
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
+        "scripts/verify_github_launch_operator_guide.py",
         "platform/packs/workbuddy/README.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
         "platform/generated/study-anything-platform-feedback-package.json"
@@ -695,7 +707,8 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
         "python3 scripts/verify_platform_handoff_checklist.py --check",
-        "python3 scripts/verify_launch_acceptance_ledger.py --check"
+        "python3 scripts/verify_launch_acceptance_ledger.py --check",
+        "python3 scripts/verify_github_launch_operator_guide.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -759,6 +772,7 @@
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "platform/generated/study-anything-github-launch-operator-guide.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
@@ -769,6 +783,7 @@
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
+        "scripts/verify_github_launch_operator_guide.py",
         "docs/platform-agent-integrations.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
         "platform/generated/study-anything-platform-feedback-package.json"
@@ -785,7 +800,8 @@
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check",
         "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
         "python3 scripts/verify_platform_handoff_checklist.py --check",
-        "python3 scripts/verify_launch_acceptance_ledger.py --check"
+        "python3 scripts/verify_launch_acceptance_ledger.py --check",
+        "python3 scripts/verify_github_launch_operator_guide.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
