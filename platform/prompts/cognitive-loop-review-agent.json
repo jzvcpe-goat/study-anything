@@ -129,6 +129,7 @@
     "confidence": "low | medium | high"
   },
   "final_report_schema": {
+    "schema_path": "platform/schemas/cognitive-loop-review-agent-report.schema.json",
     "report_version": "1.0",
     "pr_id": "string",
     "change_type": "string",
@@ -214,6 +215,7 @@
   "integration_notes": {
     "built_in_cli": "scripts/cognitive_loop_review.py 仍然只生成 metadata-only 咨询证据，最多 5 条确定性 path-level findings。",
     "external_agent": "该提示词契约用于 CI 或平台 Agent 读取真实 git diff 后生成行级 JSON 审查报告，最多 8 个发现。",
+    "report_schema": "外部 Agent 最终报告必须符合 platform/schemas/cognitive-loop-review-agent-report.schema.json，并可通过 scripts/verify_cognitive_loop_review_agent_report.py --check 的 fixture gate。",
     "storage_boundary": "Study Anything 可以保存外部 Agent 输出的脱敏结构化报告，但不保存 raw diff、文件正文、真实模型密钥或私有 Agent endpoint。"
   }
 }

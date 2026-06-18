@@ -1,0 +1,40 @@
+{
+  "report_version": "1.0",
+  "pr_id": "fixture-invalid-low-confidence-final",
+  "change_type": "feature",
+  "overall_risk": "medium",
+  "decision": "needs-review",
+  "summary": "This fixture is intentionally invalid because low-confidence findings must be suppressed.",
+  "findings": [
+    {
+      "rank": 1,
+      "dimension": "security",
+      "title": "Unproven data-flow suspicion was placed in final findings",
+      "severity": "warn",
+      "file": "apps/api/study_anything/core/review_gateway.py",
+      "line_range": "71",
+      "evidence": "apps/api/study_anything/core/review_gateway.py:71 save_review(report)",
+      "recommendation": "Move this finding to suppressed_low_confidence unless the diff proves the unsafe data flow.",
+      "confidence": "low",
+      "blocking": false
+    }
+  ],
+  "metrics": {
+    "total_files_changed": 1,
+    "total_lines_changed": 24,
+    "critical_count": 0,
+    "warn_count": 1,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "security"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": false,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-review"
+    ]
+  },
+  "suppressed_low_confidence": []
+}

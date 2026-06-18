@@ -40,6 +40,7 @@ There are two review layers:
 
 - Built-in local CLI: `scripts/cognitive_loop_review.py` creates metadata-only advisory evidence, does not store raw diff bodies or file bodies, and caps deterministic path-level findings at five.
 - External Review Agent: `platform/prompts/cognitive-loop-review-agent.json` is the JSON-only prompt contract for a user-owned CI or platform Agent that receives the real git diff from the operator. It must cite concrete diff lines or snippets, suppress low-confidence findings, and output 最多 8 findings sorted by risk.
+- External report handoff: `platform/schemas/cognitive-loop-review-agent-report.schema.json` defines the final JSON report; `fixtures/review-agent` contains accepted and rejected examples; `python3 scripts/verify_cognitive_loop_review_agent_report.py --check` proves the schema, fixtures, evidence format, suppression rules, and privacy boundary.
 
 Study Anything may store the external Agent's redacted structured report, but it must not store raw diff bodies, file contents, real model keys, private Agent endpoints, hidden chain-of-thought, or business secrets.
 
@@ -89,6 +90,7 @@ Code Review Loop 是 developer/operator 交付验收工具。它不是 Study Any
 
 - 内置本地 CLI：`scripts/cognitive_loop_review.py` 生成 metadata-only 咨询证据，不保存 raw diff 或文件正文，确定性 path-level findings 最多五条。
 - 外部 Review Agent：`platform/prompts/cognitive-loop-review-agent.json` 是用户自有 CI 或平台 Agent 的 JSON-only 提示词契约，由 operator 把真实 git diff 提供给它。它必须引用具体 diff 行号或代码片段，抑制 low-confidence findings，并且最多 8 条发现，按风险排序。
+- 外部报告交接：`platform/schemas/cognitive-loop-review-agent-report.schema.json` 定义最终 JSON 报告；`fixtures/review-agent` 包含通过和拒绝样例；`python3 scripts/verify_cognitive_loop_review_agent_report.py --check` 验证 schema、fixtures、证据格式、低置信抑制规则和隐私边界。
 
 Study Anything 可以保存外部 Agent 输出的脱敏结构化报告，但不得保存 raw diff、文件正文、真实模型密钥、私有 Agent endpoint、隐藏推理链或业务秘密。
 

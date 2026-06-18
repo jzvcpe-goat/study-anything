@@ -1,0 +1,46 @@
+{
+  "report_version": "1.0",
+  "pr_id": "fixture-needs-fix",
+  "change_type": "feature",
+  "overall_risk": "high",
+  "decision": "needs-fix",
+  "summary": "The diff confirms a command-injection sink from user input. Merge should be blocked until the command is allowlisted and argument-passed.",
+  "findings": [
+    {
+      "rank": 1,
+      "dimension": "security",
+      "title": "User-controlled command is executed through shell=True",
+      "severity": "critical",
+      "file": "scripts/review_agent_gateway.py",
+      "line_range": "88-90",
+      "evidence": "scripts/review_agent_gateway.py:89 subprocess.run(user_command, shell=True)",
+      "recommendation": "Replace shell=True with an allowlisted argv array and reject commands outside the configured adapter allowlist.",
+      "confidence": "high",
+      "blocking": true,
+      "cwe_references": [
+        "CWE-78"
+      ]
+    }
+  ],
+  "metrics": {
+    "total_files_changed": 3,
+    "total_lines_changed": 142,
+    "critical_count": 1,
+    "warn_count": 0,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "security",
+      "logic",
+      "test"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": true,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-fix",
+      "security-review"
+    ]
+  },
+  "suppressed_low_confidence": []
+}

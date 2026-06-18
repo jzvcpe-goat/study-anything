@@ -1,0 +1,52 @@
+{
+  "report_version": "1.0",
+  "pr_id": "fixture-needs-review",
+  "change_type": "feature",
+  "overall_risk": "medium",
+  "decision": "needs-review",
+  "summary": "The diff adds an execution path without a paired test. No critical blocker is confirmed, but human review should check coverage before merge.",
+  "findings": [
+    {
+      "rank": 1,
+      "dimension": "test",
+      "title": "New execution branch has no paired test in the provided diff",
+      "severity": "warn",
+      "file": "apps/api/study_anything/core/review_gateway.py",
+      "line_range": "47-51",
+      "evidence": "apps/api/study_anything/core/review_gateway.py:47 if request.mode == \"external\":",
+      "recommendation": "Add a test covering external mode success and failure paths before merging.",
+      "confidence": "medium",
+      "blocking": false
+    }
+  ],
+  "metrics": {
+    "total_files_changed": 2,
+    "total_lines_changed": 86,
+    "critical_count": 0,
+    "warn_count": 1,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "test",
+      "logic"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": false,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-review",
+      "test-gap"
+    ]
+  },
+  "suppressed_low_confidence": [
+    {
+      "dimension": "security",
+      "title": "External request provenance cannot be confirmed from the diff alone",
+      "file": "apps/api/study_anything/core/review_gateway.py",
+      "line_range": "64",
+      "evidence": "apps/api/study_anything/core/review_gateway.py:64 gateway.invoke(payload)",
+      "confidence": "low",
+      "suppression_reason": "The diff does not show caller authentication or upstream request validation."
+    }
+  ]
+}
