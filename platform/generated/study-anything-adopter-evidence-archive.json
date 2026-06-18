@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 286775,
+    "bytes": 287795,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "716dfc6e3336c46afec1cb30c7c733f9e9ac3db303cbf3f42a2836dbf32065fa",
+    "sha256": "670c9d9bcd8c2586ca6ddf5a1e8e048604720bf97c57c6458243b26a3e9e0c52",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -101,19 +101,19 @@
   },
   "platform_pack_checksums": [
     {
-      "bytes": 11287,
+      "bytes": 11519,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "9852eeb89adc195db0512314b73c899959c9e6055fcd1e0952992fd9b033ebe9"
+      "sha256": "ce1f0043fd1f334f618b286200319db72e6baa180e479ed3497cd75c5faf72c6"
     },
     {
-      "bytes": 11887,
+      "bytes": 12119,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "16c410ef85a2a4110d57d9eb39c0e1d590e18a8c424a59a1c1bcdf2c1eacf322"
+      "sha256": "bd7b0b7b101fe38ed6398b756bb88f75feb9a52ec5e55473d1caed5893be8ec7"
     },
     {
-      "bytes": 11393,
+      "bytes": 11625,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "45fcf397dadd44e574e5bbf2b264bad9889c27a9a04d4e7a652e59e440ca2832"
+      "sha256": "e58397541f0028ba4f11f3bd5d8188837cce46e83fa138b6b91309c4431e7c1e"
     }
   ],
   "privacy_assertions": {
@@ -129,9 +129,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 15943,
+      "bytes": 16389,
       "path": "README.md",
-      "sha256": "6106b1b866c450bcb9d79fd9ff759e0d467d8837843b1777835bc7500302f0df"
+      "sha256": "b656ea5e67b5bf7c1972ba7d0890f2de6411083e1bd9dde5e366af78d3719cec"
     },
     {
       "bytes": 19313,
@@ -174,9 +174,9 @@
       "sha256": "33d2f2a380fb2d3b1d90fd95e69deabdd47cf585e0f975564597244618a7f977"
     },
     {
-      "bytes": 27903,
+      "bytes": 27980,
       "path": "docs/release-checklist.md",
-      "sha256": "0eccd7ed3cd1fabb47d6cca3b1c3a34a7bce801c4a370cc6fca7a45f1bce16e9"
+      "sha256": "f8f3c2ada2fc5a909bebca24d86e4b8ef4f506c486ab430cf29b3716ef19ed00"
     },
     {
       "bytes": 10438,
@@ -189,9 +189,9 @@
       "sha256": "80a09e3b55df906c2784ec2c21cb2dc6877e37e233f8ca970d37375d22122816"
     },
     {
-      "bytes": 39571,
+      "bytes": 39981,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "20df9ef48ab187ee30bf04475f57860016d7abf57f49643713d0ceeacd941aaa"
+      "sha256": "98a1fc2debc3e7a7686c6010ab1abf303c93e005fe4f7cfb9bbeda4b357e15de"
     },
     {
       "bytes": 10160,
@@ -209,69 +209,69 @@
       "sha256": "42203dcec0ad5778fce4ebc8d21783feee3706e279a898522b3e0b1a967920d4"
     },
     {
-      "bytes": 11078,
+      "bytes": 11079,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "e379c5bf2d5726a0b39ed9382763ff730088cb82736b8564e41c1ec6fee9ae0c"
+      "sha256": "e27d5a8a9c997997e090cf0d230cd3eee858db3cf930fc8e47c8ce56e2c87435"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "55fc580f9dcfcfc52405abd26c285ea3bfb6e75ef1f5230f24c9c53da3dc383f"
+      "sha256": "c4e292cba39f8eeb1b4afa2b5470465ad39b7c9565ec19b4dfb1138521eaafdd"
     },
     {
-      "bytes": 99919,
+      "bytes": 100200,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "2a70b8fe9b102af655513788b113d76a5517c91f620b58e0a1476a4ab8d619d6"
+      "sha256": "511318b2153ada11101338e2a85fbe2af8e84f06d0c04d34d1ff5a786cff3ba0"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "ed0c0ec7b5a60f0ed5f6dafa1568a56f52a6bad003984ee42935a142674e3b58"
+      "sha256": "f3021c76e89d9afbcdab178849f11286e875fd02a18aed48d660b08fdea446d2"
     },
     {
       "bytes": 8122,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "5248b77522b64b5d0d67abf850d9b5f51d2349cae4499ada8afbfefce5d7e8d4"
+      "sha256": "75570bfb7b7c0f82b7a195c66d18adbe4c984d03bf00eabb942b4fd63977cac6"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "10f49bcc37a9d02a944021ef133cbd84076777f405e518456ef11c0671981218"
+      "sha256": "622e92238e280152eb31e7b0b92deeffb2c5d7e92131ef7ed74b9019188b5c68"
     },
     {
-      "bytes": 99112,
+      "bytes": 99317,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "ab6ab397fccdff431dddd853a247caf5b139d64ab44fe6bb9d0f0e74bb2fc1af"
+      "sha256": "575401d7d9bf4f619f2e300d3c2b7b21ce5f6b4b18dc75650160a0467c5d54c4"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "3d3f9f79018c12f1f1773559b1346c109c07486960d30f6a6e3edcbb9f266634"
+      "sha256": "1c726a208de090ce4c0c56707eb571acc0cfe6d0431a024287c4f16994be8ebb"
     },
     {
-      "bytes": 41919,
+      "bytes": 42558,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "60b7761a5e3f56d3922e9935ceac4f8b0f8dbf2ff8a5cec19521f1a324dd3538"
+      "sha256": "af939cb5ebda826d9b8a6993af7bc9f50064dbd76511b8a39a106f1f9c3bf237"
     },
     {
-      "bytes": 49460,
+      "bytes": 49901,
       "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
-      "sha256": "bcadfc9367d64b2b723fb5c2dbbbe21536f67690895ee0770ed421306f5e8339"
+      "sha256": "c9d3e4b3ac5c0b77c9df10f4b145807ae5b2c4d8db4fadfa78626b25ed7ea1e7"
     },
     {
-      "bytes": 11287,
+      "bytes": 11519,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "9852eeb89adc195db0512314b73c899959c9e6055fcd1e0952992fd9b033ebe9"
+      "sha256": "ce1f0043fd1f334f618b286200319db72e6baa180e479ed3497cd75c5faf72c6"
     },
     {
-      "bytes": 11887,
+      "bytes": 12119,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "16c410ef85a2a4110d57d9eb39c0e1d590e18a8c424a59a1c1bcdf2c1eacf322"
+      "sha256": "bd7b0b7b101fe38ed6398b756bb88f75feb9a52ec5e55473d1caed5893be8ec7"
     },
     {
-      "bytes": 11393,
+      "bytes": 11625,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "45fcf397dadd44e574e5bbf2b264bad9889c27a9a04d4e7a652e59e440ca2832"
+      "sha256": "e58397541f0028ba4f11f3bd5d8188837cce46e83fa138b6b91309c4431e7c1e"
     }
   ],
   "purpose": "Give external adopters and platform maintainers a single privacy-safe proof bundle for reproducing Study Anything platform-Agent launch evidence.",
@@ -286,9 +286,9 @@
   "source_schemas": {
     "ecosystem_submission": {
       "ref": {
-        "bytes": 39571,
+        "bytes": 39981,
         "path": "platform/ecosystem-submission.json",
-        "sha256": "20df9ef48ab187ee30bf04475f57860016d7abf57f49643713d0ceeacd941aaa"
+        "sha256": "98a1fc2debc3e7a7686c6010ab1abf303c93e005fe4f7cfb9bbeda4b357e15de"
       },
       "schema_version": "ecosystem-submission-v1"
     },
@@ -316,9 +316,9 @@
     },
     "published_image_evidence": {
       "ref": {
-        "bytes": 11078,
+        "bytes": 11079,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "e379c5bf2d5726a0b39ed9382763ff730088cb82736b8564e41c1ec6fee9ae0c"
+        "sha256": "e27d5a8a9c997997e090cf0d230cd3eee858db3cf930fc8e47c8ce56e2c87435"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 8122,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "5248b77522b64b5d0d67abf850d9b5f51d2349cae4499ada8afbfefce5d7e8d4"
+        "sha256": "75570bfb7b7c0f82b7a195c66d18adbe4c984d03bf00eabb942b4fd63977cac6"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"

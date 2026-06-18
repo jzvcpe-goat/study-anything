@@ -94,14 +94,14 @@ Cognitive Loop System
       └── Realtime local HTML console
 ```
 
-Mastra, project watchers, DecisionCard/Risk/Human Mastery Gate, and the full HTML Artifact console are **planned Cognitive Loop layers**, not shipped runtime claims in this pivot PR. The current launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
+Mastra, project watchers, automated runtime gates, and the full HTML Artifact console are **planned Cognitive Loop layers**, not shipped runtime claims in this pivot PR. The current implementation includes public DecisionCard/Risk/Human Mastery Gate contracts plus local static evidence artifacts. The launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
 
-Mastra、项目监听器、DecisionCard/Risk/Human Mastery Gate 和完整 HTML Artifact Console 是 **下一阶段 Cognitive Loop 层**，不是这次定位 PR 已经交付的运行时能力。当前上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
+Mastra、项目监听器、自动化 runtime gate 和完整 HTML Artifact Console 是 **下一阶段 Cognitive Loop 层**，不是这次定位 PR 已经交付的运行时能力。当前实现已经包含公开的 DecisionCard/Risk/Human Mastery Gate 契约和本地静态 evidence artifact；上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
 
 ## Public Conceptual Contracts
 
 These names are documented now so future implementation work has a stable public vocabulary. They are conceptual contracts, not current HTTP endpoints:
-The first local validator for these contracts is now available in `scripts/verify_cognitive_loop_contracts.py`. A companion local CLI can initialize the contracts, render a static HTML DecisionCard artifact with `python3 scripts/cognitive_loop_cli.py report --html`, produce one bounded local `LoopRun` / `DecisionCard` evidence cycle with `python3 scripts/cognitive_loop_cli.py run-once --html`, and capture a redacted path-level project snapshot with `python3 scripts/cognitive_loop_cli.py snapshot --html`. Mastra, watchers, and the full realtime HTML console are still planned layers.
+The first local validator for these contracts is now available in `scripts/verify_cognitive_loop_contracts.py`. A companion local CLI can initialize the contracts, render a static HTML DecisionCard artifact with `python3 scripts/cognitive_loop_cli.py report --html`, produce one bounded local `LoopRun` / `DecisionCard` evidence cycle with `python3 scripts/cognitive_loop_cli.py run-once --html`, capture a redacted path-level project snapshot with `python3 scripts/cognitive_loop_cli.py snapshot --html`, and record a local Human Mastery Gate approval or rejection with `python3 scripts/cognitive_loop_cli.py gate --approve --html`. Mastra, watchers, and the full realtime HTML console are still planned layers.
 
 - `ProjectEvent`: normalized file, git, CI, runtime, human, or Agent event.
 - `DecisionCard`: evidence-bound decision record with impact, risk, verification, human gate, and rollback plan.
@@ -110,7 +110,7 @@ The first local validator for these contracts is now available in `scripts/verif
 - `EvolutionReport`: governed proposal for improving prompts, policies, evals, docs, tasks, retrieval, or learning paths.
 
 这些名称先作为公开概念契约，方便后续实现保持稳定词汇。它们现在不是 HTTP endpoint：
-第一版本地 validator 已经在 `scripts/verify_cognitive_loop_contracts.py` 中可用。配套本地 CLI 可以初始化契约，通过 `python3 scripts/cognitive_loop_cli.py report --html` 渲染静态 HTML DecisionCard artifact，通过 `python3 scripts/cognitive_loop_cli.py run-once --html` 生成一次有边界的本地 `LoopRun` / `DecisionCard` evidence cycle，并通过 `python3 scripts/cognitive_loop_cli.py snapshot --html` 捕获脱敏的路径级项目 snapshot；Mastra、watcher 和完整实时 HTML console 仍然是计划中的层。
+第一版本地 validator 已经在 `scripts/verify_cognitive_loop_contracts.py` 中可用。配套本地 CLI 可以初始化契约，通过 `python3 scripts/cognitive_loop_cli.py report --html` 渲染静态 HTML DecisionCard artifact，通过 `python3 scripts/cognitive_loop_cli.py run-once --html` 生成一次有边界的本地 `LoopRun` / `DecisionCard` evidence cycle，通过 `python3 scripts/cognitive_loop_cli.py snapshot --html` 捕获脱敏的路径级项目 snapshot，并通过 `python3 scripts/cognitive_loop_cli.py gate --approve --html` 记录本地 Human Mastery Gate 的批准或拒绝；Mastra、watcher 和完整实时 HTML console 仍然是计划中的层。
 
 - `ProjectEvent`：标准化的文件、Git、CI、运行时、人类或 Agent 事件。
 - `DecisionCard`：绑定证据的决策记录，包含影响、风险、验证、人类门禁和回滚计划。

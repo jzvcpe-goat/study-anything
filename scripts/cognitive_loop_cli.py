@@ -203,6 +203,47 @@ def cmd_snapshot(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_gate(args: argparse.Namespace) -> int:
+    root = _root(args)
+    if args.approve == args.reject:
+        raise CognitiveLoopCliError("Choose exactly one of --approve or --reject.")
+    resolution = "approved" if args.approve else "rejected"
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-human-gate.html"
+    evidence_refs = list(args.evidence_ref or [])
+    report = contracts.build_human_gate_artifact(
+        root,
+        decision_id=args.decision_id,
+        resolution=resolution,
+        rationale=args.rationale,
+        operator_id=args.operator_id,
+        objective=args.objective,
+        artifact_ref=artifact_ref,
+        evidence_refs=evidence_refs,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(args.json_output or (root / ".cognitive-loop" / "events" / "cognitive-loop-human-gate.json"))
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -276,6 +317,43 @@ def build_parser() -> argparse.ArgumentParser:
     )
     snapshot.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     snapshot.set_defaults(func=cmd_snapshot)
+
+    gate = sub.add_parser("gate", help="Record a local Human Mastery Gate resolution.")
+    gate_resolution = gate.add_mutually_exclusive_group(required=True)
+    gate_resolution.add_argument("--approve", action="store_true", help="Approve the gated decision.")
+    gate_resolution.add_argument("--reject", action="store_true", help="Reject the gated decision.")
+    gate.add_argument("--html", action="store_true", help="Write a static HTML gate artifact.")
+    gate.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-human-gate.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    gate.add_argument(
+        "--json-output",
+        help="JSON evidence output path. Defaults under .cognitive-loop/events.",
+    )
+    gate.add_argument(
+        "--decision-id",
+        default="dec-cognitive-loop-human-gate",
+        help="DecisionCard id being approved or rejected.",
+    )
+    gate.add_argument(
+        "--rationale",
+        default="Operator reviewed the decision, evidence, risk, and rollback plan.",
+        help="Short public rationale. Do not include source text, answers, endpoints, or secrets.",
+    )
+    gate.add_argument("--operator-id", default="local-operator")
+    gate.add_argument(
+        "--objective",
+        default="Record a local Human Mastery Gate resolution for a high-risk Cognitive Loop decision.",
+    )
+    gate.add_argument(
+        "--evidence-ref",
+        action="append",
+        help="Public evidence reference. May be repeated.",
+    )
+    gate.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    gate.set_defaults(func=cmd_gate)
     return parser
 
 

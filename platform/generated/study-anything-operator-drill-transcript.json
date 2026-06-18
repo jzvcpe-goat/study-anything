@@ -84,7 +84,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-openai-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-openai-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -228,7 +228,7 @@
       },
       {
         "acceptance": "Tool names start with study_anything_ and map to local HTTP endpoints only.",
-        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
+        "operator_action": "Import or expose: platform/study-anything-platform-tools.json, platform/generated/study-anything-platform-openapi.json, platform/generated/study-anything-tool-catalog.md, platform/generated/study-anything-cognitive-loop-contracts.json, platform/generated/study-anything-cognitive-loop-cli-artifact.json, platform/generated/study-anything-cognitive-loop-run-once-evidence.json, platform/generated/study-anything-cognitive-loop-project-snapshot.json, platform/generated/study-anything-cognitive-loop-human-gate.json, docs/cognitive-loop-contracts.md, platform/bootstrap/study_anything_release_bootstrap.py, docs/release-cleanroom-bootstrap.md, platform/generated/study-anything-release-cleanroom-bootstrap.json.",
         "step": "import_tools"
       },
       {
@@ -295,7 +295,7 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 244,
+    "file_count": 246,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
@@ -303,7 +303,7 @@
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 67,
+      "acceptance_evidence_count": 68,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -318,6 +318,7 @@
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
@@ -330,6 +331,7 @@
         "python3 scripts/verify_cognitive_loop_cli.py --check",
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
+        "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -383,7 +385,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 67,
+      "acceptance_evidence_count": 68,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -402,6 +404,7 @@
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
@@ -414,6 +417,7 @@
         "python3 scripts/verify_cognitive_loop_cli.py --check",
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
+        "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -467,7 +471,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 67,
+      "acceptance_evidence_count": 68,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -483,6 +487,7 @@
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
@@ -495,6 +500,7 @@
         "python3 scripts/verify_cognitive_loop_cli.py --check",
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
+        "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",

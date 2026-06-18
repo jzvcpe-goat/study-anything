@@ -8,9 +8,11 @@ from study_anything.core.cognitive_loop_contracts import (
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
+    HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
     PROJECT_SNAPSHOT_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_cli_artifact_report,
+    build_human_gate_artifact,
     build_project_snapshot_artifact,
     build_run_once_artifact,
     render_cli_artifact_html,
@@ -214,6 +216,45 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         self.assertFalse(report["snapshot"]["file_contents_included"])
         self.assertFalse(report["privacy"]["watcher_daemon_started"])
         self.assertIn("Project Snapshot", html)
+
+    def test_human_gate_artifact_records_approval_without_private_context(self) -> None:
+        report = build_human_gate_artifact(
+            REPO_ROOT,
+            decision_id="dec-sensitive-runtime",
+            resolution="approved",
+            rationale="Operator verified evidence, risk, and rollback plan.",
+            generated_at="2026-06-17T01:00:00Z",
+        )
+        html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], HUMAN_GATE_ARTIFACT_SCHEMA_VERSION)
+        self.assertEqual(report["status"], "approved")
+        self.assertEqual(report["decision_card"]["human_mastery_gate"]["status"], "approved")
+        self.assertEqual(report["loop_run"]["status"], "succeeded")
+        self.assertFalse(report["privacy"]["raw_source_text_included"])
+        self.assertFalse(report["privacy"]["agent_endpoints_included"])
+        self.assertIn("Human Mastery Gate", html)
+
+    def test_human_gate_artifact_records_rejection(self) -> None:
+        report = build_human_gate_artifact(
+            REPO_ROOT,
+            decision_id="dec-risky-change",
+            resolution="rejected",
+            rationale="Operator rejected the decision until verification evidence improves.",
+            generated_at="2026-06-17T01:01:00Z",
+        )
+
+        self.assertEqual(report["status"], "rejected")
+        self.assertEqual(report["decision_card"]["status"], "rejected")
+        self.assertEqual(report["loop_run"]["status"], "rejected")
+
+    def test_human_gate_rejects_secret_like_rationale(self) -> None:
+        with self.assertRaises(CognitiveLoopContractError):
+            build_human_gate_artifact(
+                REPO_ROOT,
+                resolution="approved",
+                rationale="api_key = secretsecretsecret",
+            )
 
 
 if __name__ == "__main__":

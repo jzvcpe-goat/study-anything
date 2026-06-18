@@ -29,6 +29,7 @@ BOOTSTRAP_SCHEMA_VERSION = "cognitive-loop-contract-bootstrap-v1"
 CLI_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-cli-artifact-v1"
 RUN_ONCE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-run-once-artifact-v1"
 PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
+HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -636,6 +637,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop run-once verifier.")
     if "python3 scripts/verify_cognitive_loop_snapshot.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop snapshot verifier.")
+    if "python3 scripts/verify_cognitive_loop_human_gate.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop human gate verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -773,6 +776,9 @@ required:
     blocking: true
   - id: cognitive-loop.project-snapshot
     command: python3 scripts/verify_cognitive_loop_snapshot.py --check
+    blocking: true
+  - id: cognitive-loop.human-gate
+    command: python3 scripts/verify_cognitive_loop_human_gate.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -1318,6 +1324,193 @@ def build_project_snapshot_artifact(
     return report
 
 
+def build_human_gate_artifact(
+    root: Path,
+    *,
+    decision_id: str = "dec-cognitive-loop-human-gate",
+    resolution: str = "approved",
+    rationale: str = "Operator reviewed the decision, evidence, risk, and rollback plan.",
+    operator_id: str = "local-operator",
+    objective: str = "Record a local Human Mastery Gate resolution for a high-risk Cognitive Loop decision.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-human-gate.html",
+    evidence_refs: Optional[Iterable[str]] = None,
+) -> dict[str, Any]:
+    """Build a local human gate resolution artifact without storing private context."""
+
+    generated_at = generated_at or _utc_now()
+    _require_members([resolution], {"approved", "rejected"}, "human gate resolution")
+    _assert_public_value("decision_id", decision_id)
+    _assert_public_value("rationale", rationale)
+    _assert_public_value("operator_id", operator_id)
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    safe_evidence = list(evidence_refs or [])
+    if not safe_evidence:
+        safe_evidence = [
+            "contract:.cognitive-loop/permissions.yaml",
+            "contract:.cognitive-loop/risk.yaml",
+            "command:python3 scripts/cognitive_loop_cli.py verify",
+        ]
+    for evidence_ref in safe_evidence:
+        _assert_public_value("evidence_ref", evidence_ref)
+
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-human-gate",
+            "project_id": project["id"],
+            "actor": "human",
+            "event_type": "human_note",
+            "summary": f"Human Mastery Gate {resolution} for {decision_id}.",
+            "timestamp": generated_at,
+            "target": decision_id,
+            "refs": [f"decision:{decision_id}", f"artifact:{artifact_ref}", *safe_evidence[:8]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": decision_id,
+            "project_id": project["id"],
+            "title": "Resolve Human Mastery Gate",
+            "status": resolution,
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}", *safe_evidence],
+            "risk": {
+                "level": "high",
+                "score": 0.82,
+                "reasons": [
+                    "human mastery gate required",
+                    "operator decision changes runtime or project state",
+                    "rollback plan must be understood before execution",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": True,
+                "status": resolution,
+                "resolved_at": generated_at,
+                "resolved_by": operator_id,
+                "rationale": rationale,
+                "approval_scope": [
+                    "objective",
+                    "evidence_refs",
+                    "risk_level",
+                    "rollback_strategy",
+                    "verification_commands",
+                ],
+                "questions": [
+                    "Can the operator explain the decision and its rollback path?",
+                    "Can the operator identify what private data is intentionally excluded?",
+                ],
+            },
+            "verification": {
+                "status": "passed" if resolution == "approved" else "skipped",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py verify",
+                    "python3 scripts/cognitive_loop_cli.py gate --approve --html",
+                    "python3 scripts/verify_cognitive_loop_human_gate.py --check",
+                ],
+            },
+            "rollback": {
+                "strategy": "keep_resolution_artifact_and_stop_execution"
+                if resolution == "rejected"
+                else "revert_followup_change_before_reusing_gate",
+                "checkpoint_ref": "git",
+            },
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-human-gate",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded" if resolution == "approved" else "rejected",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    mastery = validate_mastery_record(
+        {
+            "record_id": "mastery-cognitive-loop-human-gate",
+            "project_id": project["id"],
+            "subject": "Human Mastery Gate resolution",
+            "level": 0.82 if resolution == "approved" else 0.76,
+            "bloom": "evaluate",
+            "evidence_refs": [decision["decision_id"], loop["run_id"]],
+            "updated_at": generated_at,
+        }
+    ).public_dict()
+    evolution = validate_evolution_report(
+        {
+            "report_id": "evo-cognitive-loop-human-gate",
+            "project_id": project["id"],
+            "status": resolution,
+            "proposed_changes": [
+                "Record a local Human Mastery Gate resolution",
+                "Bind the resolution to DecisionCard evidence",
+                "Keep the artifact local, redacted, and reviewable by platform Agents",
+            ],
+            "decision_card_ids": [decision["decision_id"]],
+            "verification_refs": ["python3 scripts/verify_cognitive_loop_human_gate.py --check"],
+            "risk_summary": "The gate records human approval metadata only; it excludes raw source, answers, Agent endpoints, and model keys.",
+            "created_at": generated_at,
+        }
+    ).public_dict()
+    report = {
+        "schema_version": HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
+        "status": resolution,
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Human Mastery Gate",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "gate_resolution": {
+            "decision_id": decision_id,
+            "status": resolution,
+            "resolved_at": generated_at,
+            "resolved_by": operator_id,
+            "rationale": rationale,
+            "evidence_ref_count": len(safe_evidence),
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "mastery_record": mastery,
+        "evolution_report": evolution,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This records a local human gate decision; it does not execute the gated change.",
+            "It does not read source files, diff bodies, learner answers, or Agent metadata.",
+            "Mastra runtime and watcher automation remain planned, not started here.",
+        ],
+        "commands": {
+            "init": "python3 scripts/cognitive_loop_cli.py init",
+            "verify": "python3 scripts/cognitive_loop_cli.py verify",
+            "approve_gate": "python3 scripts/cognitive_loop_cli.py gate --approve --html",
+            "reject_gate": "python3 scripts/cognitive_loop_cli.py gate --reject --html",
+            "gate_check": "python3 scripts/verify_cognitive_loop_human_gate.py --check",
+        },
+    }
+    _assert_public_value("human_gate_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1357,6 +1550,19 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     if not isinstance(snapshot_paths, list):
         snapshot_paths = []
     snapshot_path_items = list_items(snapshot_paths[:20])
+    gate_resolution = report.get("gate_resolution")
+    if not isinstance(gate_resolution, Mapping):
+        gate_resolution = {}
+    gate_scope = value("decision_card.human_mastery_gate.approval_scope")
+    if isinstance(report.get("decision_card"), Mapping):
+        human_gate = report["decision_card"].get("human_mastery_gate")  # type: ignore[index]
+        if isinstance(human_gate, Mapping):
+            scope_items = human_gate.get("approval_scope")
+            gate_scope = list_items(scope_items) if isinstance(scope_items, list) else ""
+        else:
+            gate_scope = ""
+    else:
+        gate_scope = ""
     commands = report.get("commands")
     if not isinstance(commands, Mapping):
         commands = {}
@@ -1491,6 +1697,17 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <h2>Project Snapshot</h2>
       <p>Changed paths recorded: <strong>{escape(str(snapshot.get('changed_path_count', 0)))}</strong></p>
       <ul>{snapshot_path_items}</ul>
+    </section>
+    <section>
+      <h2>Human Mastery Gate</h2>
+      <div class="status">
+        <div>Decision<br><strong>{escape(str(gate_resolution.get('decision_id', value('decision_card.decision_id'))))}</strong></div>
+        <div>Resolution<br><strong>{escape(str(gate_resolution.get('status', value('decision_card.human_mastery_gate.status'))))}</strong></div>
+        <div>Resolved By<br><strong>{escape(str(gate_resolution.get('resolved_by', 'pending')))}</strong></div>
+        <div>Evidence Refs<br><strong>{escape(str(gate_resolution.get('evidence_ref_count', 0)))}</strong></div>
+      </div>
+      <p>{escape(str(gate_resolution.get('rationale', 'No local human gate resolution recorded.')))}</p>
+      <ul>{gate_scope}</ul>
     </section>
     <section>
       <h2>Contract Files</h2>
