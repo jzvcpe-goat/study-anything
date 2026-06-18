@@ -15,6 +15,7 @@ These gates are required for release and marketplace-style submission:
 - `external-eval-marketplace-harness-v1` via `scripts/verify_external_eval_marketplace_harness.py --check`.
 - `cognitive-loop-review-agent-eval-harness-v1` via `scripts/verify_cognitive_loop_review_agent_eval_harness.py --check`.
 - `cognitive-loop-review-agent-ci-receipt-v1` via `scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check`.
+- `cognitive-loop-review-agent-pr-comment-pack-v1` via `scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -99,3 +100,18 @@ It emits `cognitive-loop-review-agent-ci-receipt-v1` and stores only provider/re
 hash, decision, risk, finding counts, validation commands, and human follow-up action. It must reject
 raw diff text, file bodies, finding evidence, report summaries, Agent endpoint secrets, real model
 keys, and hidden chain-of-thought.
+
+## Review Agent PR Comment Pack
+
+After the metadata-only CI receipt is valid, produce the safe PR surface from that receipt instead
+of pasting the external Agent report:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_pr_comment.py build --receipt REVIEW_AGENT_CI_RECEIPT.json
+python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+```
+
+It emits `cognitive-loop-review-agent-pr-comment-pack-v1` with bilingual Markdown comments, Checks
+summary metadata, suggested labels, validation commands, and human action. The pack must remain
+metadata-only and reject raw diff text, file bodies, finding evidence, report summaries, Agent
+endpoint secrets, real model keys, and hidden chain-of-thought.
