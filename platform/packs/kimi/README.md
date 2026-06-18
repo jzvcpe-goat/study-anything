@@ -99,6 +99,7 @@ python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -116,6 +117,8 @@ those schemas reject drift, unsafe flags, malformed types, and private text prob
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
 discoverable and hash-checked from the adoption pack zip without a repo checkout.
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
+`platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
+adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
 
 ## Kimi As Reasoning Agent
 
