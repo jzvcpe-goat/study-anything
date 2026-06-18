@@ -136,6 +136,18 @@ tagging:
 python3 scripts/verify_release_stack_readiness.py
 ```
 
+When GitHub access is available, run the live status verifier before merging each layer:
+
+```bash
+python3 scripts/verify_release_stack_live_status.py
+```
+
+While preparing the next stacked PR before it exists on GitHub, use:
+
+```bash
+python3 scripts/verify_release_stack_live_status.py --allow-missing-top-pr
+```
+
 The release stack must be merged from oldest to newest. After each merge, sync `main`, confirm the next
 stacked PR base is still current, and confirm the required GitHub checks are green.
 
