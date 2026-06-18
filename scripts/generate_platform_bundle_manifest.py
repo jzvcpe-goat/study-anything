@@ -47,6 +47,11 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic external-platform operator drill transcript.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-contracts.json",
+        "generated_asset",
+        "Cognitive Loop contract bootstrap verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -260,6 +265,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/platform-agent-release-replay.md",
         "operator_doc",
         "Platform Agent release replay guide for external tool hosts.",
+    ),
+    (
+        "docs/cognitive-loop-contracts.md",
+        "operator_doc",
+        "Cognitive Loop local contract bootstrap guide.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -762,6 +772,11 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission pack verifier for external platform review readiness.",
     ),
     (
+        "scripts/verify_cognitive_loop_contracts.py",
+        "verification",
+        "Cognitive Loop contract bootstrap verifier.",
+    ),
+    (
         "scripts/run_skill_mode_demo.sh",
         "verification",
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
@@ -885,6 +900,26 @@ FILES: list[tuple[str, str, str]] = [
         "evals/fixtures/mock-http-agent-learning-loop.json",
         "eval_fixture",
         "Mock HTTP/user-owned Agent eval fixture.",
+    ),
+    (
+        ".cognitive-loop/config.yaml",
+        "cognitive_loop_contract",
+        "Local-first Cognitive Loop project configuration contract.",
+    ),
+    (
+        ".cognitive-loop/permissions.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop permission and human approval contract.",
+    ),
+    (
+        ".cognitive-loop/evals.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop required eval command contract.",
+    ),
+    (
+        ".cognitive-loop/risk.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop risk and human mastery gate contract.",
     ),
     (
         "docs/adoption.md",

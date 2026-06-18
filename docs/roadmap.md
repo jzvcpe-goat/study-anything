@@ -60,7 +60,8 @@ Deliver:
 - roadmap reset
 - clear status boundary between current Study Anything capabilities and planned Cognitive Loop layers
 - public conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`
-- future project contract names: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
+- implemented project contract bootstrap: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
+- `cognitive-loop-contract-bootstrap-v1` verifier output
 - future CLI names, clearly marked as not implemented yet
 
 Acceptance:
@@ -70,6 +71,7 @@ Acceptance:
 - Docs keep the current no-standalone-frontend launch path scoped to Study Anything/platform-Agent usage.
 - Docs keep real model credentials outside Study Anything.
 - Docs preserve current release evidence anchors while changing the product narrative.
+- `python3 scripts/verify_cognitive_loop_contracts.py --check` passes and rejects secret-like values, raw excerpts, and high-risk decisions without a human gate.
 
 Future CLI vocabulary for this phase:
 

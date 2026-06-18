@@ -119,6 +119,13 @@ REQUIRED_SHARED_ASSETS = {
     "docs/second-brain-handoff.md",
     "docs/agent-eval.md",
     "docs/eval-frameworks.md",
+    "docs/cognitive-loop-contracts.md",
+    ".cognitive-loop/config.yaml",
+    ".cognitive-loop/permissions.yaml",
+    ".cognitive-loop/evals.yaml",
+    ".cognitive-loop/risk.yaml",
+    "scripts/verify_cognitive_loop_contracts.py",
+    "platform/generated/study-anything-cognitive-loop-contracts.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -277,6 +284,7 @@ REQUIRED_SHARED_ASSETS = {
 }
 REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_ecosystem_submission_pack.py",
+    "verify_cognitive_loop_contracts.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -467,6 +475,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "platform-agent-release-replay-v1",
         "adopter-evidence-archive-v1",
         "adopter-evidence-fixture-v1",
+        "cognitive-loop-contract-bootstrap-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -550,6 +559,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "public_support_status.schema_version == public-support-status-v1",
             "public_maintainer_dashboard.schema_version == public-maintainer-dashboard-v1",
             "public_status_linkage_fixture.schema_version == public-status-linkage-fixture-v1",
+            "cognitive_loop_contracts.schema_version == cognitive-loop-contract-bootstrap-v1",
             "published_image_evidence.schema_version == published-image-evidence-v1",
             "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
             "release_asset_adoption.schema_version == release-asset-adoption-v1",
@@ -579,7 +589,14 @@ def verify_pack_in_generated_adoption() -> None:
         "docs/ecosystem-submission.md",
         "docs/release-checklist.md",
         "docs/roadmap.md",
+        "docs/cognitive-loop-contracts.md",
         "docs/adoption-telemetry.md",
+        ".cognitive-loop/config.yaml",
+        ".cognitive-loop/permissions.yaml",
+        ".cognitive-loop/evals.yaml",
+        ".cognitive-loop/risk.yaml",
+        "scripts/verify_cognitive_loop_contracts.py",
+        "platform/generated/study-anything-cognitive-loop-contracts.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",

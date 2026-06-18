@@ -89,9 +89,9 @@ Conceptual objects:
 - `MasteryRecord`: the user's understanding level for a topic, file, subsystem, or risky change.
 - `EvolutionReport`: a governed improvement proposal for prompts, policies, evals, docs, tasks, retrieval rules, or learning paths.
 
-These are planned public contracts. They should be introduced before runtime migration so docs, platform packs, and future code use the same vocabulary.
+The first local contract validator is now implemented before runtime migration so docs, platform packs, and future code use the same vocabulary. The contracts are validated by `scripts/verify_cognitive_loop_contracts.py`, which emits `cognitive-loop-contract-bootstrap-v1`.
 
-这些是计划中的公开契约。它们应该先于 runtime 迁移被固定下来，确保文档、平台包和未来代码使用同一套词汇。
+第一版本地 contract validator 已在 runtime 迁移前实现，确保文档、平台包和未来代码使用同一套词汇。契约由 `scripts/verify_cognitive_loop_contracts.py` 校验，并输出 `cognitive-loop-contract-bootstrap-v1`。
 
 ## Conceptual Contract Sketches
 
