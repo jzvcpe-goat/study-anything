@@ -53,6 +53,7 @@ python3 scripts/verify_cognitive_loop_recipe_replay.py --check
 python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -61,6 +62,8 @@ python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 returns `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` provides deterministic
 sample CLI outputs and hashes for platform Agent import tests.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` provides deterministic
+failure receipts for unknown ids and invalid recipe matrices.
 
 ## Runtime Boundary
 

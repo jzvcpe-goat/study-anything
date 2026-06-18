@@ -18,6 +18,7 @@
       "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
       "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
       "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+      "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
       "python3 scripts/verify_commercial_readiness.py",
       "python3 scripts/verify_adoption_telemetry.py",
       "python3 scripts/verify_agent_gateway_hardening.py",
@@ -84,6 +85,7 @@
       "cognitive-loop-skill-entrypoint-verification-v1 proves the repo-local Skill, Codex pack, Kimi pack, WorkBuddy pack, ecosystem submission, bundle manifest, and adoption pack all expose the same Cognitive Loop recipe/replay entrypoint without storing private context or real model keys",
       "cognitive-loop-recipe-cli-verification-v1 proves platform Agents can list and show Cognitive Loop recipe plans without executing recipe commands, starting runtime, applying file changes, storing private context, or taking real model keys",
       "cognitive-loop-recipe-cli-receipts-v1 provides deterministic, redacted sample outputs and hashes for read-only recipe CLI import tests without executing recipe commands or taking real model keys",
+      "cognitive-loop-recipe-cli-failures-v1 provides deterministic, redacted negative-path receipts for recipe CLI import tests without executing recipe commands or taking real model keys",
       "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
       "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
       "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
@@ -228,6 +230,7 @@
     "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+    "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-adoption-pack.zip",
@@ -268,6 +271,7 @@
     "scripts/cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+    "scripts/verify_cognitive_loop_recipe_cli_failures.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -447,8 +451,10 @@
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py"
       ],
@@ -493,7 +499,8 @@
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
-        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check"
+        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check"
       ]
     },
     {
@@ -515,8 +522,10 @@
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
         "platform/packs/codex/README.md"
       ],
       "integration_mode": "terminal_skill",
@@ -557,7 +566,8 @@
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
-        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check"
+        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check"
       ]
     },
     {
@@ -578,8 +588,10 @@
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
         "platform/packs/workbuddy/README.md"
       ],
       "integration_mode": "openapi_http_tools",
@@ -620,7 +632,8 @@
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
-        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check"
+        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check"
       ]
     },
     {
@@ -640,8 +653,10 @@
         "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
         "docs/platform-agent-integrations.md"
       ],
       "integration_mode": "generic_openapi_tools",
@@ -682,7 +697,8 @@
         "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
         "python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
-        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check"
+        "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check"
       ]
     }
   ],
