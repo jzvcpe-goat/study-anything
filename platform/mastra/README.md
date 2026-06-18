@@ -16,6 +16,9 @@ evidence source.
   status.
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`: local verification
   that the pack is present, metadata-only, and included in generated platform bundles.
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check`: a local
+  runtime rehearsal that proves high-risk suspension, approved resume, rejected bail, and
+  Event Store projection without starting Mastra from this repository.
 
 ## Install Into A Mastra Project
 
@@ -55,9 +58,8 @@ of truth for project evidence.
 
 ## Current Boundary
 
-Status: adapter contract pack.
+Status: adapter contract pack plus metadata-only runtime dry-run harness.
 
 This repository still does not ship the full Mastra runtime, watcher daemon, realtime HTML
 console, or hosted service. The next runtime PR can import this adapter into a real Mastra
-project and connect it to watcher-generated events.
-
+project and connect it to watcher-generated events after the dry-run contract is satisfied.

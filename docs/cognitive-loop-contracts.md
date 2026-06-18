@@ -248,11 +248,15 @@ Event Store 只记录 `ProjectEvent` metadata、artifact path、artifact kind、
 
 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies required files, Mastra workflow markers, HITL mapping, privacy boundaries, and a deterministic dry-run contract. It emits `cognitive-loop-mastra-adapter-verification-v1`.
 
+`python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` goes one step further without starting Mastra. It creates temporary local Cognitive Loop artifacts, forces a high-risk `LoopRun` into Human Mastery Gate suspension, records approved and rejected gate resolutions, rebuilds a local SQLite Event Store, and emits `cognitive-loop-mastra-runtime-dry-run-verification-v1`. This proves the runtime contract can be rehearsed by platform Agents while still excluding raw source text, diff bodies, learner answers, Agent endpoints, prompts, and model keys.
+
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是给外部 Mastra 项目复制使用的 TypeScript scaffold。它把 Cognitive Loop 的 metadata-only evidence 映射为 Mastra workflow steps，并用 suspend/resume 表达 Human Mastery Gate，用 bail 表达拒绝。
 
 `platform/mastra/manifest.json` 记录当前边界：本仓库交付的是 adapter contract pack，不是正在运行的 Mastra 服务。Study Anything 不编译这个 TypeScript scaffold，不启动 Mastra，不运行 watcher daemon，也不保存 model key。
 
 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证必需文件、Mastra workflow 标记、HITL 映射、隐私边界和确定性 dry-run contract，并输出 `cognitive-loop-mastra-adapter-verification-v1`。
+
+`python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 会在不启动 Mastra 的前提下再推进一步。它会创建临时本地 Cognitive Loop artifact，让高风险 `LoopRun` 进入 Human Mastery Gate 暂停，记录批准与拒绝两种 gate resolution，重建本地 SQLite Event Store，并输出 `cognitive-loop-mastra-runtime-dry-run-verification-v1`。这证明 platform Agent 可以演练 runtime contract，同时仍然排除源码正文、diff body、学习者答案、Agent endpoint、prompt 和 model key。
 
 ## Artifact Doctor / Artifact 诊断器
 

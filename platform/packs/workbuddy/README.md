@@ -46,6 +46,8 @@ workspace. The verifier is `python3 scripts/verify_cognitive_loop_event_store.py
 For a WorkBuddy workspace that owns a Mastra runtime, expose `platform/mastra/` as a static adapter
 pack. The template maps Cognitive Loop Human Mastery Gate state to Mastra suspend/resume/bail while
 keeping raw source text and model keys outside Study Anything.
+Run `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` before promoting that
+workspace from adapter experiment to connected runtime.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

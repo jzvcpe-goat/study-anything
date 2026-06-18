@@ -1,0 +1,183 @@
+{
+  "acceptance": {
+    "adapter_contract_used_as_source": true,
+    "approved_gate_maps_to_resume": true,
+    "event_store_projection_rebuilt": true,
+    "high_risk_run_suspends": true,
+    "rejected_gate_maps_to_bail": true,
+    "report_path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "verification_command": "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+  },
+  "adapter_source": {
+    "adapter_id": "cognitive-loop-mastra-runtime-adapter",
+    "adapter_report_schema": "cognitive-loop-mastra-adapter-verification-v1",
+    "adapter_version": "0.1.0",
+    "manifest_schema": "cognitive-loop-mastra-adapter-manifest-v1",
+    "template_sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+  },
+  "artifact_records": [
+    {
+      "bytes": 5726,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-run-once.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 4559,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-snapshot.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 6899,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 6867,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 6064,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/events/mastra-runtime-event-store.json",
+      "privacy_scan_passed": true
+    },
+    {
+      "bytes": 11418,
+      "content_hash_omitted": "temporary artifacts include generated timestamps",
+      "path": ".cognitive-loop/artifacts/mastra-runtime-event-store.html",
+      "privacy_scan_passed": true
+    }
+  ],
+  "commands": {
+    "adapter_check": "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
+    "event_store_rebuild": "python3 scripts/cognitive_loop_event_store.py rebuild",
+    "runtime_dry_run_check": "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+  },
+  "files": [
+    {
+      "bytes": 1655,
+      "path": "platform/mastra/manifest.json",
+      "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
+    },
+    {
+      "bytes": 6560,
+      "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
+      "sha256": "357ded677c357ea829ac4758836c95fa2e359f16f93bf3d558d6288fbc2da849"
+    },
+    {
+      "bytes": 3730,
+      "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+      "sha256": "b21b7e03dfc071262072d621159f990c58c069c94f77414e91fa39230655bbe8"
+    },
+    {
+      "bytes": 18112,
+      "path": "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+      "sha256": "39dd93cf1a1c7285cec9af7afc1397904332f8c4cc78ef91ffe232a28f948d5c"
+    }
+  ],
+  "goal_status": {
+    "full_mastra_runtime": "planned",
+    "realtime_html_console": "planned",
+    "runtime_dry_run_harness": "implemented",
+    "watcher_daemon": "planned"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_bodies_included": false,
+    "file_contents_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Prove a repository-started Cognitive Loop Mastra runtime can be rehearsed with metadata-only local evidence before this repository ships or starts a real Mastra service.",
+  "runtime_boundaries": {
+    "external_agent_called": false,
+    "mastra_runtime_started": false,
+    "realtime_html_console_started": false,
+    "typescript_compiled_in_this_repo": false,
+    "watcher_daemon_started": false
+  },
+  "runtime_transcript": {
+    "input_contract": {
+      "artifactRefs": [
+        ".cognitive-loop/events/mastra-runtime-run-once.json",
+        ".cognitive-loop/events/mastra-runtime-snapshot.json",
+        ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
+        ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json"
+      ],
+      "constraints": {
+        "diffBodiesIncluded": false,
+        "metadataOnly": true,
+        "modelKeysIncluded": false,
+        "rawSourceTextIncluded": false
+      },
+      "decisionCardId": "dec-cognitive-loop-run-once",
+      "eventStorePath": ".cognitive-loop/mastra-runtime-dry-run.sqlite",
+      "loopRunId": "loop-cognitive-loop-run-once",
+      "projectId": "external-mastra-adopter-project",
+      "risk": {
+        "level": "high",
+        "requiresHumanGate": true
+      }
+    },
+    "output_contract": {
+      "decisionCardId": "dec-cognitive-loop-run-once",
+      "eventStoreProjection": {
+        "artifact_count": 4,
+        "content_included": false,
+        "engine": "sqlite",
+        "event_count": 3,
+        "unique_event_count_expected_minimum": 3
+      },
+      "humanGate": {
+        "approvedResumeCovered": true,
+        "rejectedBailCovered": true,
+        "suspended": true
+      },
+      "loopRunId": "loop-cognitive-loop-run-once",
+      "status": "dry_run_passed"
+    },
+    "steps": [
+      {
+        "evidence_count": 4,
+        "id": "validate-cognitive-loop-evidence",
+        "source": "scripts/cognitive_loop_cli.py",
+        "status": "succeeded"
+      },
+      {
+        "id": "human-mastery-gate",
+        "mastra_semantic": "suspend",
+        "reason": "high risk requires Human Mastery Gate",
+        "status": "suspended"
+      },
+      {
+        "gate_status": "approved",
+        "id": "resume-approved-run",
+        "mastra_semantic": "resume",
+        "status": "succeeded"
+      },
+      {
+        "gate_status": "rejected",
+        "id": "bail-rejected-run",
+        "mastra_semantic": "bail",
+        "status": "rejected"
+      },
+      {
+        "artifact_count": 4,
+        "event_count": 3,
+        "id": "project-event-store-metadata",
+        "status": "succeeded"
+      }
+    ]
+  },
+  "schema_version": "cognitive-loop-mastra-runtime-dry-run-verification-v1",
+  "status": "pass"
+}

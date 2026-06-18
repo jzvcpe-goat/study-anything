@@ -49,6 +49,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
     "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
     "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
+    "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
     "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
     "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -96,6 +97,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_event_index.py --check",
     "verify_cognitive_loop_event_store.py --check",
     "verify_cognitive_loop_mastra_adapter.py --check",
+    "verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -249,11 +251,16 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Mastra adapter report"
         )
+    if "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Mastra runtime dry-run report"
+        )
     for asset in (
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_adapter.py",
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
     ):
         if asset not in import_assets:
             raise PackVerificationError(

@@ -90,6 +90,8 @@ If Kimi is coordinating an external Mastra workspace, import `platform/mastra/RE
 `platform/mastra/manifest.json`, and `platform/mastra/cognitive-loop-mastra-adapter.ts` as the
 Mastra-side adapter contract. Verify the pack with
 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` to prove the
+metadata-only suspend/resume/bail contract before Kimi tells a user the external runtime is ready.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
