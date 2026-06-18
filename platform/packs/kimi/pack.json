@@ -41,6 +41,7 @@
     "cognitive_loop_recipe_cli.schema_version == cognitive-loop-recipe-cli-verification-v1",
     "cognitive_loop_recipe_cli_receipts.schema_version == cognitive-loop-recipe-cli-receipts-v1",
     "cognitive_loop_recipe_cli_failures.schema_version == cognitive-loop-recipe-cli-failures-v1",
+    "cognitive_loop_recipe_cli_schemas.schema_version == cognitive-loop-recipe-cli-schemas-v1",
     "adoption_telemetry.schema_version == adoption-telemetry-v1",
     "pmf_readiness.schema_version == pmf-readiness-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
@@ -83,12 +84,12 @@
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
+    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
     "gateway": "scripts/openai_compatible_agent_gateway.py",
     "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
     "guide": "docs/kimi-agent-gateway.md",
     "openai_tools": "platform/generated/study-anything-openai-tools.json",
-    "openapi": "platform/generated/study-anything-platform-openapi.json",
-    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py"
+    "openapi": "platform/generated/study-anything-platform-openapi.json"
   },
   "import_assets": [
     "platform/study-anything-platform-tools.json",
@@ -112,9 +113,11 @@
     "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+    "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
     "scripts/cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
     "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+    "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
     "docs/cognitive-loop-contracts.md",
     "docs/cognitive-loop-adoption-cookbook.md",
     "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -141,6 +144,7 @@
     "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
     "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
     "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+    "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
     "python3 scripts/verify_commercial_readiness.py",
     "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
     "python3 scripts/verify_agent_gateway_hardening.py",

@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 80,
+      "acceptance_evidence_count": 81,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -678,6 +678,7 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -753,9 +754,11 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -767,7 +770,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 80,
+      "acceptance_evidence_count": 81,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -787,6 +790,7 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -866,9 +870,11 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -880,7 +886,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 80,
+      "acceptance_evidence_count": 81,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -900,6 +906,7 @@
         "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -975,9 +982,11 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "docs/cognitive-loop-contracts.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
