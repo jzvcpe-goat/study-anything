@@ -134,5 +134,5 @@
   "purpose": "Give external platform operators a copy-ready handoff checklist for importing, verifying, and escalating Study Anything without a standalone frontend.",
   "schema_version": "platform-handoff-checklist-v1",
   "status": "pass",
-  "version": "v0.3.30-alpha"
+  "version": "v0.3.31-alpha"
 }

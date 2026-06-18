@@ -18,7 +18,7 @@ RELEASE_CHECK = ROOT / "scripts" / "release_check.sh"
 ECOSYSTEM_SUBMISSION = ROOT / "platform" / "ecosystem-submission.json"
 ADOPTION_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
 LAUNCH_LEDGER = ROOT / "platform" / "generated" / "study-anything-launch-acceptance-ledger.json"
-VERSION = "v0.3.30-alpha"
+VERSION = "v0.3.31-alpha"
 SCHEMA_VERSION = "github-launch-operator-guide-v1"
 EVIDENCE = "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1"
 MINIMUM_COMMAND = "python3 scripts/verify_github_launch_operator_guide.py --check"
@@ -289,8 +289,8 @@ def build_report() -> dict[str, Any]:
         "release_sequence": [
             "Merge the release PR stack into main from oldest to newest after GitHub CI is green.",
             "Sync main and run ./scripts/release_check.sh from a clean checkout.",
-            "Create and push the v0.3.30-alpha tag from the exact merge commit.",
-            "Create a GitHub prerelease using docs/release-notes/v0.3.30-alpha.md.",
+            "Create and push the v0.3.31-alpha tag from the exact merge commit.",
+            "Create a GitHub prerelease using docs/release-notes/v0.3.31-alpha.md.",
             "Attach release zips and checksum sidecars from platform/generated.",
             "Verify release asset adoption, cleanroom bootstrap, and platform Agent replay.",
             "Publish only redacted status/support evidence.",

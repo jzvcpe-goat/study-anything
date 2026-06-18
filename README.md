@@ -195,12 +195,12 @@ If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/bui
 
 ## Published Image Evidence
 
-The current release evidence line is `v0.3.30-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
+The current release evidence line is `v0.3.31-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
 
 ```bash
 python3 scripts/setup_env.py
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
-python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --manifest-only
+python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --manifest-only
 ```
 
 This keeps Cognitive Loop positioning separate from deployability proof: the current published image evidence still belongs to the Study Anything learning-adapter runtime, while Mastra/watchers/HTML Artifact console remain planned layers.

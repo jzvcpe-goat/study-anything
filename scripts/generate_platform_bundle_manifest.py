@@ -1317,7 +1317,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.30-alpha.md",
+        "docs/release-notes/v0.3.31-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),

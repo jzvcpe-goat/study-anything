@@ -82,13 +82,13 @@
   "release_sequence": [
     "Merge the release PR stack into main from oldest to newest after GitHub CI is green.",
     "Sync main and run ./scripts/release_check.sh from a clean checkout.",
-    "Create and push the v0.3.30-alpha tag from the exact merge commit.",
-    "Create a GitHub prerelease using docs/release-notes/v0.3.30-alpha.md.",
+    "Create and push the v0.3.31-alpha tag from the exact merge commit.",
+    "Create a GitHub prerelease using docs/release-notes/v0.3.31-alpha.md.",
     "Attach release zips and checksum sidecars from platform/generated.",
     "Verify release asset adoption, cleanroom bootstrap, and platform Agent replay.",
     "Publish only redacted status/support evidence."
   ],
   "schema_version": "github-launch-operator-guide-v1",
   "status": "pass",
-  "version": "v0.3.30-alpha"
+  "version": "v0.3.31-alpha"
 }

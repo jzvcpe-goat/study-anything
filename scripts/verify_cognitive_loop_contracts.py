@@ -39,7 +39,7 @@ validate_project_event = contracts.validate_project_event
 
 
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-cognitive-loop-contracts.json"
-RELEASE_VERSION = "v0.3.30-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 
 
 def sample_objects() -> dict[str, dict[str, Any]]:

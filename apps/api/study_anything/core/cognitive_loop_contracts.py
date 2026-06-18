@@ -817,7 +817,7 @@ required:
     blocking: true
 optional:
   - id: published-image.manifest
-    command: python3 scripts/verify_published_image_launch.py --tag v0.3.30-alpha --manifest-only
+    command: python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --manifest-only
     blocking: false
 """,
         "risk": f"""schemaVersion: {RISK_SCHEMA_VERSION}

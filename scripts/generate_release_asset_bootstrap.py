@@ -24,7 +24,7 @@ ARCHIVE_ROOT = "study-anything-release-asset-bootstrap"
 
 SCHEMA_VERSION = "release-asset-bootstrap-v1"
 TRANSCRIPT_SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
-RELEASE_VERSION = "v0.3.30-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"

@@ -8,7 +8,7 @@ assignees: ""
 
 <!--
 schema_version: platform-support-issue-template-v1
-release_target: v0.3.30-alpha
+release_target: v0.3.31-alpha
 Do not paste raw source text, learner answers, Agent prompts, Agent endpoints, model keys,
 browser/video private context, or personal profile data.
 -->
@@ -18,7 +18,7 @@ browser/video private context, or personal profile data.
 ## Platform
 
 - Platform id: <!-- kimi | codex | workbuddy | generic -->
-- Study Anything release: v0.3.30-alpha
+- Study Anything release: v0.3.31-alpha
 - Runtime mode: <!-- skill-mode | published-image | source-compose | other -->
 
 ## Command Ran

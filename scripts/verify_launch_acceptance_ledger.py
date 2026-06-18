@@ -15,7 +15,7 @@ REPORT = ROOT / "platform" / "generated" / "study-anything-launch-acceptance-led
 ECOSYSTEM_SUBMISSION = ROOT / "platform" / "ecosystem-submission.json"
 ADOPTION_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
 COMMERCIAL_READINESS_SOURCE = ROOT / "apps" / "api" / "study_anything" / "core" / "commercial_readiness.py"
-VERSION = "v0.3.30-alpha"
+VERSION = "v0.3.31-alpha"
 SCHEMA_VERSION = "launch-acceptance-ledger-v1"
 EVIDENCE = "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1"
 MINIMUM_COMMAND = "python3 scripts/verify_launch_acceptance_ledger.py --check"

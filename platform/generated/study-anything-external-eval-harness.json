@@ -21,7 +21,7 @@
       "ragas"
     ],
     "baseline_schema": "study-anything-agent-eval-baseline-v1",
-    "baseline_version": "v0.3.30-alpha",
+    "baseline_version": "v0.3.31-alpha",
     "fixtures": {
       "fake-agent-learning-loop.json": {
         "privacy_flags_clear": true,
@@ -240,7 +240,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.30-alpha"
+    "version": "v0.3.31-alpha"
   },
   "timeout_policy": {
     "default_external_eval_timeout_seconds": 180,
@@ -248,5 +248,5 @@
     "platform_ecosystem_eval_timeout_seconds": 60,
     "required_adapter_timeout_result": "failed"
   },
-  "version": "v0.3.30-alpha"
+  "version": "v0.3.31-alpha"
 }

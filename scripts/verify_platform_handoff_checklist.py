@@ -15,7 +15,7 @@ REPORT = ROOT / "platform" / "generated" / "study-anything-platform-handoff-chec
 SUBMISSION = ROOT / "platform" / "ecosystem-submission.json"
 ADOPTION_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
 PACKS_DIR = ROOT / "platform" / "packs"
-VERSION = "v0.3.30-alpha"
+VERSION = "v0.3.31-alpha"
 SCHEMA_VERSION = "platform-handoff-checklist-v1"
 PRIVATE_NEEDLES = (
     "sk-proj-",

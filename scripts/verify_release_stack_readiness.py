@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "platform" / "release-stack.json"
 RELEASE_CHECK = ROOT / "scripts" / "release_check.sh"
 SCHEMA_VERSION = "study-anything-release-stack-v1"
-VERSION = "v0.3.30-alpha"
+VERSION = "v0.3.31-alpha"
 REQUIRED_CHECKS = {"api-tests", "compose-smoke"}
 REQUIRED_BEFORE_TAG = {
     "python3 scripts/verify_release_stack_readiness.py",

@@ -30,7 +30,7 @@ Already present:
 
 ## Current Release Evidence Anchors
 
-The current public alpha line is `v0.3.30-alpha`. Keep these evidence contracts visible while the product positioning pivots to Cognitive Loop System:
+The current public alpha line is `v0.3.31-alpha`. Keep these evidence contracts visible while the product positioning pivots to Cognitive Loop System:
 
 - `platform-field-adoption-rehearsal-v1`: rehearses Kimi, Codex, WorkBuddy, and generic OpenAPI import paths.
 - `platform-support-triage-v1`: turns external adopter failures into redacted GitHub support tickets.
@@ -39,7 +39,7 @@ The current public alpha line is `v0.3.30-alpha`. Keep these evidence contracts 
 - `published-image-evidence-v1`: separates GHCR/image release evidence from local pull or network friction.
 - `adopter-evidence-archive-v1`: packages public release/adoption proof for maintainers and external testers.
 
-当前公开 alpha 线是 `v0.3.30-alpha`。产品定位转向 Cognitive Loop System 时，仍保留这些可验收证据契约：
+当前公开 alpha 线是 `v0.3.31-alpha`。产品定位转向 Cognitive Loop System 时，仍保留这些可验收证据契约：
 
 - `platform-field-adoption-rehearsal-v1`：演练 Kimi、Codex、WorkBuddy 和通用 OpenAPI 导入路径。
 - `platform-support-triage-v1`：把外部采用失败转成脱敏 GitHub support ticket。
