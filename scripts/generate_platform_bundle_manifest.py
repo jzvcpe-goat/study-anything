@@ -92,6 +92,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop manual-only repair plan verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-artifact-index.json",
+        "generated_asset",
+        "Cognitive Loop static local artifact index verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -860,6 +865,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_repair_plan.py",
         "verification",
         "Cognitive Loop manual-only repair plan verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_index.py",
+        "verification",
+        "Cognitive Loop static local artifact index verifier.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

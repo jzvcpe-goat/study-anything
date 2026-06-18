@@ -6,6 +6,7 @@ from _path import ROOT
 
 from study_anything.core.cognitive_loop_contracts import (
     ARTIFACT_DOCTOR_SCHEMA_VERSION,
+    ARTIFACT_INDEX_SCHEMA_VERSION,
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
@@ -16,6 +17,7 @@ from study_anything.core.cognitive_loop_contracts import (
     REPAIR_PLAN_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_artifact_doctor_artifact,
+    build_artifact_index_artifact,
     build_cli_artifact_report,
     build_evidence_bundle_artifact,
     build_event_index_artifact,
@@ -556,6 +558,59 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         self.assertTrue(all(action["execution_mode"] == "manual_only" for action in actions))
         self.assertTrue(all(action["auto_apply"] is False for action in actions))
         self.assertFalse(report["privacy"]["artifact_contents_included"])
+
+    def test_artifact_index_links_local_artifacts_without_contents(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_path = root / ".cognitive-loop" / "events" / "run-once.json"
+            html_path = root / ".cognitive-loop" / "artifacts" / "run-once.html"
+            event_path.parent.mkdir(parents=True, exist_ok=True)
+            html_path.parent.mkdir(parents=True, exist_ok=True)
+            event_path.write_text(
+                """{
+                  "schema_version": "cognitive-loop-run-once-artifact-v1",
+                  "status": "succeeded",
+                  "generated_at": "2026-06-17T01:40:00Z",
+                  "project_event": {"event_id": "evt-1", "event_type": "verification_completed"},
+                  "decision_card": {"decision_id": "dec-1", "status": "approved"},
+                  "loop_run": {"run_id": "loop-1", "status": "succeeded"}
+                }""",
+                encoding="utf-8",
+            )
+            html_path.write_text("<html>private local artifact body</html>", encoding="utf-8")
+
+            report = build_artifact_index_artifact(
+                root,
+                artifact_paths=[
+                    ".cognitive-loop/events/run-once.json",
+                    ".cognitive-loop/artifacts/run-once.html",
+                ],
+                generated_at="2026-06-17T01:41:00Z",
+            )
+            html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], ARTIFACT_INDEX_SCHEMA_VERSION)
+        self.assertEqual(report["artifact_index"]["entry_count"], 2)
+        self.assertEqual(report["artifact_index"]["html_count"], 1)
+        self.assertEqual(report["artifact_index"]["event_json_count"], 1)
+        self.assertFalse(report["artifact_index"]["content_included"])
+        self.assertFalse(report["artifact_index"]["standalone_frontend_required"])
+        self.assertFalse(report["privacy"]["artifact_contents_included"])
+        self.assertFalse(report["privacy"]["standalone_frontend_required"])
+        self.assertTrue(all(not item["content_included"] for item in report["artifact_index"]["entries"]))
+        by_path = {item["path"]: item for item in report["artifact_index"]["entries"]}
+        self.assertEqual(by_path[".cognitive-loop/events/run-once.json"]["href"], "../events/run-once.json")
+        self.assertEqual(by_path[".cognitive-loop/artifacts/run-once.html"]["href"], "run-once.html")
+        self.assertIn("Artifact Index", html)
+        self.assertNotIn("private local artifact body", html)
 
 
 if __name__ == "__main__":

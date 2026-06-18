@@ -34,6 +34,7 @@ python3 scripts/cognitive_loop_cli.py bundle --html
 python3 scripts/cognitive_loop_cli.py index --html
 python3 scripts/cognitive_loop_cli.py doctor --html
 python3 scripts/cognitive_loop_cli.py repair-plan --html
+python3 scripts/cognitive_loop_cli.py artifact-index --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -51,6 +52,7 @@ python3 scripts/cognitive_loop_cli.py bundle --html
 python3 scripts/cognitive_loop_cli.py index --html
 python3 scripts/cognitive_loop_cli.py doctor --html
 python3 scripts/cognitive_loop_cli.py repair-plan --html
+python3 scripts/cognitive_loop_cli.py artifact-index --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -66,7 +68,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
-- required evals include the Cognitive Loop event index, artifact doctor, and repair plan verifiers;
+- required evals include the Cognitive Loop event index, artifact doctor, repair plan, and artifact index verifiers;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -82,7 +84,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
-- required evals 包含 Cognitive Loop event index、artifact doctor 和 repair plan verifier；
+- required evals 包含 Cognitive Loop event index、artifact doctor、repair plan 和 artifact index verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -214,6 +216,20 @@ The repair plan stores issue code, public path metadata, recommended command, ri
 repair plan 只保存 issue code、公开路径 metadata、recommended command、risk level、gate recommendation 和 verification command。它固定保持 `manual_only=true` 与 `auto_apply=false`，不嵌入 event JSON 正文、HTML 正文、Markdown 正文、source text、diff body、学习者答案、Agent endpoint、Agent metadata 或 model key。
 
 `python3 scripts/verify_cognitive_loop_repair_plan.py --check` 会验证 clean / bad fixtures，并输出 `cognitive-loop-repair-plan-verification-v1`。
+
+## Artifact Index / Artifact 入口页
+
+`python3 scripts/cognitive_loop_cli.py artifact-index --html` creates a static local entry page for Cognitive Loop artifacts. It scans local `.cognitive-loop/events/` and `.cognitive-loop/artifacts/` files, records paths, relative links, sizes, SHA-256 hashes, and public JSON metadata such as schema/status/id fields. It does not embed artifact contents or start a server.
+
+This is intentionally smaller than the planned full HTML Artifact console. It is a local navigation shell for operators and platform Agents, not a realtime watcher, Mastra runtime, or standalone web app.
+
+`python3 scripts/verify_cognitive_loop_artifact_index.py --check` verifies the generated static index, relative links, unsafe-path rejection, and privacy boundary, and emits `cognitive-loop-artifact-index-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py artifact-index --html` 会创建一个静态本地 artifact 入口页。它扫描本地 `.cognitive-loop/events/` 和 `.cognitive-loop/artifacts/` 文件，只记录 path、相对链接、size、SHA-256 hash，以及 schema/status/id 这类公开 JSON metadata；不会嵌入 artifact 正文，也不会启动服务。
+
+这和计划中的完整 HTML Artifact console 故意保持区别：它只是给操作者和平台 Agent 使用的本地导航壳，不是实时 watcher、Mastra runtime，也不是独立 Web App。
+
+`python3 scripts/verify_cognitive_loop_artifact_index.py --check` 会验证静态入口页、相对链接、unsafe path 拒绝和隐私边界，并输出 `cognitive-loop-artifact-index-verification-v1`。
 
 ## Public Objects
 

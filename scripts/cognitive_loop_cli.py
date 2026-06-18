@@ -403,6 +403,60 @@ def cmd_repair_plan(args: argparse.Namespace) -> int:
     return 0
 
 
+def _default_artifact_index_artifacts(root: Path, *, excludes: set[str]) -> list[str]:
+    candidates: list[str] = []
+    for directory in (root / ".cognitive-loop" / "events", root / ".cognitive-loop" / "artifacts"):
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.iterdir()):
+            if not path.is_file():
+                continue
+            if path.suffix not in {".json", ".html", ".md"}:
+                continue
+            relative_path = path.relative_to(root).as_posix()
+            if relative_path in excludes:
+                continue
+            candidates.append(relative_path)
+    return candidates
+
+
+def cmd_artifact_index(args: argparse.Namespace) -> int:
+    root = _root(args)
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-artifact-index.html"
+    json_ref = args.json_output or ".cognitive-loop/events/cognitive-loop-artifact-index.json"
+    artifact_paths = list(args.artifact or [])
+    if not artifact_paths:
+        artifact_paths = _default_artifact_index_artifacts(root, excludes={artifact_ref, json_ref})
+    report = contracts.build_artifact_index_artifact(
+        root,
+        artifact_paths=artifact_paths,
+        objective=args.objective,
+        artifact_ref=artifact_ref,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(json_ref)
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -595,6 +649,29 @@ def build_parser() -> argparse.ArgumentParser:
     )
     repair_plan.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     repair_plan.set_defaults(func=cmd_repair_plan)
+
+    artifact_index = sub.add_parser("artifact-index", help="Create a static local index for Cognitive Loop artifacts.")
+    artifact_index.add_argument("--html", action="store_true", help="Write a static HTML artifact index.")
+    artifact_index.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-artifact-index.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    artifact_index.add_argument(
+        "--json-output",
+        help="JSON artifact-index output path. Defaults under .cognitive-loop/events.",
+    )
+    artifact_index.add_argument(
+        "--artifact",
+        action="append",
+        help="Repo-relative artifact path to include. Defaults to local .cognitive-loop events/artifacts.",
+    )
+    artifact_index.add_argument(
+        "--objective",
+        default="Create a static local HTML index for Cognitive Loop artifacts.",
+    )
+    artifact_index.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    artifact_index.set_defaults(func=cmd_artifact_index)
     return parser
 
 
