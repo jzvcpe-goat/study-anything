@@ -1747,11 +1747,11 @@
       "sha256": "82fb18f80e92eead1fd769569d5dcd7e88d65ae0670a96c56f6186a715339616"
     },
     {
-      "bytes": 2514,
+      "bytes": 2802,
       "kind": "docs",
       "path": "docs/published-image-evidence.md",
       "purpose": "Published-image evidence and pull-timeout fallback classification guide.",
-      "sha256": "6b5712b13cdf0f843f53929c62d14cbae7cee02a47794669152479f0fc406701"
+      "sha256": "ddfc3f11b7f7d786e1ea25e7faee3862c0c449fc8178723437bb9d5a80b759e4"
     },
     {
       "bytes": 3259,
@@ -1761,11 +1761,11 @@
       "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
     },
     {
-      "bytes": 31474,
+      "bytes": 31777,
       "kind": "docs",
       "path": "docs/release-checklist.md",
       "purpose": "Release gate checklist for platform adoption evidence.",
-      "sha256": "3de0e24f82cbddcb29fc8e723269e996ec4d55c5f668792cacdc28cfa3202453"
+      "sha256": "952773709005786aa6df6810238affed09b350c7d408e56f5efdb1d1a0c8822b"
     },
     {
       "bytes": 10438,
