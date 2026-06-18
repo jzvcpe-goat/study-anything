@@ -92,7 +92,13 @@ python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
 python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
 python3 scripts/verify_cognitive_loop_recipe_replay.py --check
 python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/cognitive_loop_recipe_cli.py list
+python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
+
+`platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves the read-only recipe CLI
+returns `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
 
 ## Kimi As Reasoning Agent
 
