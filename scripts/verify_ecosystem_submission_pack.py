@@ -76,6 +76,9 @@ COGNITIVE_LOOP_RECIPE_CLI_SCHEMA_NEGATIVE_FIXTURES_PATH = (
 COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-schema-pack-consumer.json"
 )
+COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_FAILURES_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-schema-pack-consumer-failures.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -207,6 +210,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
     "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
     "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+    "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -227,6 +231,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+    "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -405,6 +410,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_recipe_cli_schemas.py --check",
     "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
     "verify_cognitive_loop_schema_pack_consumer.py --check",
+    "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -711,6 +717,12 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop schema pack consumer verifier.")
+        if "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(
+                f"{platform_id} must include the Cognitive Loop schema pack consumer failure verifier."
+            )
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -795,6 +807,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_recipe_cli_schemas.schema_version == cognitive-loop-recipe-cli-schemas-v1",
             "cognitive_loop_recipe_cli_schema_negative_fixtures.schema_version == cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
             "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
+            "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -841,6 +854,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+        "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -861,6 +875,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -2292,6 +2307,100 @@ def verify_cognitive_loop_schema_pack_consumer_report() -> None:
             raise EcosystemSubmissionError(f"Cognitive Loop schema pack consumer privacy.{key} must be false.")
 
 
+def verify_cognitive_loop_schema_pack_consumer_failures_report() -> None:
+    report = load_json(COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_FAILURES_PATH)
+    if report.get("schema_version") != "cognitive-loop-schema-pack-consumer-failures-v1":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure report must pass.")
+
+    pack = report.get("pack") or {}
+    if pack.get("path") != "platform/generated/study-anything-platform-adoption-pack.zip":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure pack path drifted.")
+    if pack.get("manifest_schema_version") != "study-anything-platform-adoption-pack-v1":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure manifest schema drifted.")
+    if pack.get("no_frontend_required") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure must preserve no-frontend path.")
+    if pack.get("real_model_keys_stored_by_study_anything") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure must not store real model keys.")
+
+    baseline = report.get("baseline") or {}
+    if baseline.get("consumer_schema_version") != "cognitive-loop-schema-pack-consumer-v1":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer baseline version drifted.")
+    if baseline.get("schema_bundle_schema_version") != "cognitive-loop-recipe-cli-schemas-v1":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure schema bundle baseline drifted.")
+    if baseline.get("negative_fixture_schema_version") != "cognitive-loop-recipe-cli-schema-negative-fixtures-v1":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure negative fixture baseline drifted.")
+    if baseline.get("zip_only_validation_passed") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure baseline must pass first.")
+
+    coverage = report.get("coverage") or {}
+    expected_cases = {
+        "manifest_schema_version_drift",
+        "schema_bundle_missing",
+        "schema_bundle_manifest_record_drift",
+        "no_frontend_required_false",
+        "real_model_keys_true",
+        "negative_fixture_case_drop",
+        "private_text_probe_rejected",
+        "runtime_started_true",
+    }
+    if coverage.get("case_count") != len(expected_cases):
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case count drifted.")
+    if set(coverage.get("case_ids", [])) != expected_cases:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case IDs drifted.")
+    for key in ("all_cases_rejected", "all_expected_errors_matched", "all_errors_redacted"):
+        if coverage.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop schema pack consumer failure coverage.{key} must be true.")
+    for key in (
+        "mutated_payloads_persisted",
+        "mutated_archives_persisted",
+        "repo_checkout_required",
+        "recipe_cli_invoked",
+        "runtime_started",
+        "file_changes_applied",
+    ):
+        if coverage.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop schema pack consumer failure coverage.{key} must be false.")
+
+    cases = report.get("cases")
+    if not isinstance(cases, list) or len(cases) != len(expected_cases):
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure cases drifted.")
+    for case in cases:
+        if not isinstance(case, dict):
+            raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure cases must be objects.")
+        if case.get("status") != "pass":
+            raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case must pass.")
+        if case.get("case_id") not in expected_cases:
+            raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case ID is unknown.")
+        if case.get("error_redacted") is not True:
+            raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case error must be redacted.")
+        if case.get("mutated_payload_persisted") is not False:
+            raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure case must not persist payload.")
+
+    distribution = report.get("distribution") or {}
+    if distribution.get("report_path") != "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json":
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure report path drifted.")
+    if distribution.get("safe_for_platform_agent_static_import") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer failure must be safe for static import.")
+
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "generated_private_insights_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "real_model_keys_stored",
+        "browser_video_app_private_context_included",
+        "mutated_payloads_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop schema pack consumer failure privacy.{key} must be false.")
+
+
 def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
@@ -3411,6 +3520,7 @@ def main() -> None:
     verify_cognitive_loop_recipe_cli_schemas_report()
     verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report()
     verify_cognitive_loop_schema_pack_consumer_report()
+    verify_cognitive_loop_schema_pack_consumer_failures_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -3461,6 +3571,7 @@ def main() -> None:
                 "cognitive_loop_recipe_cli_schemas": "cognitive-loop-recipe-cli-schemas-v1",
                 "cognitive_loop_recipe_cli_schema_negative_fixtures": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
                 "cognitive_loop_schema_pack_consumer": "cognitive-loop-schema-pack-consumer-v1",
+                "cognitive_loop_schema_pack_consumer_failures": "cognitive-loop-schema-pack-consumer-failures-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",

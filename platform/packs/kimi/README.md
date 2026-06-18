@@ -98,6 +98,7 @@ python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -114,6 +115,7 @@ Schemas for static Kimi validation of the success, receipt, and failure reports.
 those schemas reject drift, unsafe flags, malformed types, and private text probes.
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
 discoverable and hash-checked from the adoption pack zip without a repo checkout.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
 
 ## Kimi As Reasoning Agent
 

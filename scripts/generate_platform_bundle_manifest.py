@@ -147,6 +147,11 @@ FILES: list[tuple[str, str, str]] = [
         "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "generated_asset",
+        "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -975,6 +980,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "verification",
         "Verify Cognitive Loop schema evidence can be consumed from the adoption pack only.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "verification",
+        "Verify Cognitive Loop schema pack consumer failure cases are safe and deterministic.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

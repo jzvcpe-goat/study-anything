@@ -40,6 +40,7 @@ python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
 python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -55,6 +56,7 @@ The machine-readable entrypoints are:
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json`
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json`
+- `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
 - `scripts/cognitive_loop_recipe_cli.py`
 
 Use these recipe ids:
