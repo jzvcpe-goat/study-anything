@@ -37,6 +37,9 @@ COGNITIVE_LOOP_EVENT_INDEX_PATH = (
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
+COGNITIVE_LOOP_REPAIR_PLAN_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-repair-plan.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -154,6 +157,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_evidence_bundle.py",
     "scripts/verify_cognitive_loop_event_index.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
+    "scripts/verify_cognitive_loop_repair_plan.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -162,6 +166,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "platform/generated/study-anything-cognitive-loop-event-index.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
+    "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -328,6 +333,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_evidence_bundle.py --check",
     "verify_cognitive_loop_event_index.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
+    "verify_cognitive_loop_repair_plan.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -526,6 +532,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-evidence-bundle-verification-v1",
         "cognitive-loop-event-index-verification-v1",
         "cognitive-loop-artifact-doctor-verification-v1",
+        "cognitive-loop-repair-plan-verification-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -617,6 +624,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
             "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
             "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
+            "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
             "published_image_evidence.schema_version == published-image-evidence-v1",
             "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
             "release_asset_adoption.schema_version == release-asset-adoption-v1",
@@ -661,6 +669,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_evidence_bundle.py",
         "scripts/verify_cognitive_loop_event_index.py",
         "scripts/verify_cognitive_loop_artifact_doctor.py",
+        "scripts/verify_cognitive_loop_repair_plan.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -669,6 +678,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "platform/generated/study-anything-cognitive-loop-event-index.json",
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
+        "platform/generated/study-anything-cognitive-loop-repair-plan.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -1149,6 +1159,73 @@ def verify_cognitive_loop_artifact_doctor_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop artifact doctor privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_repair_plan_report() -> None:
+    report = load_json(COGNITIVE_LOOP_REPAIR_PLAN_PATH)
+    if report.get("schema_version") != "cognitive-loop-repair-plan-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan report must pass.")
+    if report.get("artifact_json_schema") != "cognitive-loop-repair-plan-v1":
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan artifact schema drifted.")
+    clean = report.get("clean_repair_plan") or {}
+    if clean.get("created") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan artifact must be created.")
+    if clean.get("action_count") != 0:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan clean fixture must have zero actions.")
+    if clean.get("manual_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan must be manual_only.")
+    if clean.get("auto_apply") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan must not auto-apply.")
+    if clean.get("content_included") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan must not embed contents.")
+    bad = report.get("bad_repair_plan") or {}
+    if bad.get("status") != "needs_attention":
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan bad fixture must need attention.")
+    if bad.get("manual_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan bad fixture must stay manual_only.")
+    if bad.get("auto_apply") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan bad fixture must not auto-apply.")
+    action_codes = set(str(item) for item in bad.get("action_codes", []))
+    required_codes = {
+        "missing_html_pair",
+        "duplicate_hash",
+        "stale_event_index_hash_mismatch",
+        "stale_event_index_missing_event",
+    }
+    missing_codes = sorted(required_codes - action_codes)
+    if missing_codes:
+        raise EcosystemSubmissionError(f"Cognitive Loop repair-plan missing action codes: {missing_codes}")
+    html = report.get("html_artifact") or {}
+    for key in (
+        "created",
+        "contains_brand",
+        "contains_repair_plan",
+        "contains_redacted_json",
+    ):
+        if html.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop repair-plan HTML artifact missing {key}.")
+    if html.get("standalone_frontend_required") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop repair-plan must not require a standalone frontend.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "forbidden_text_leaked",
+        "repair_actions_executed",
+        "event_contents_included",
+        "artifact_contents_included",
+        "diff_body_included",
+        "file_contents_included",
+        "raw_source_text_included",
+        "learner_answers_included",
+        "real_model_keys_stored",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "watcher_daemon_started",
+        "mastra_runtime_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop repair-plan privacy.{key} must be false.")
 
 
 def verify_submission_dry_run_report() -> None:
@@ -2258,6 +2335,7 @@ def main() -> None:
     verify_cognitive_loop_evidence_bundle_report()
     verify_cognitive_loop_event_index_report()
     verify_cognitive_loop_artifact_doctor_report()
+    verify_cognitive_loop_repair_plan_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -2296,6 +2374,7 @@ def main() -> None:
                 "cognitive_loop_evidence_bundle": "cognitive-loop-evidence-bundle-verification-v1",
                 "cognitive_loop_event_index": "cognitive-loop-event-index-verification-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
+                "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",

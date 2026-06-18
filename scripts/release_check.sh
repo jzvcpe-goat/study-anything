@@ -46,6 +46,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_evidence_bundle.py --check
 "$python_bin" scripts/verify_cognitive_loop_event_index.py --check
 "$python_bin" scripts/verify_cognitive_loop_artifact_doctor.py --check
+"$python_bin" scripts/verify_cognitive_loop_repair_plan.py --check
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/verify_agent_gateway_hardening.py
 "$python_bin" scripts/verify_external_agent_adapter_hardening.py

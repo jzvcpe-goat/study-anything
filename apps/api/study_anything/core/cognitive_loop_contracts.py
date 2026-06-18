@@ -34,6 +34,7 @@ HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
 EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
 EVENT_INDEX_SCHEMA_VERSION = "cognitive-loop-event-index-v1"
 ARTIFACT_DOCTOR_SCHEMA_VERSION = "cognitive-loop-artifact-doctor-v1"
+REPAIR_PLAN_SCHEMA_VERSION = "cognitive-loop-repair-plan-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -649,6 +650,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop event index verifier.")
     if "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact doctor verifier.")
+    if "python3 scripts/verify_cognitive_loop_repair_plan.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop repair plan verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -798,6 +801,9 @@ required:
     blocking: true
   - id: cognitive-loop.artifact-doctor
     command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check
+    blocking: true
+  - id: cognitive-loop.repair-plan
+    command: python3 scripts/verify_cognitive_loop_repair_plan.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -2310,6 +2316,219 @@ def build_artifact_doctor_artifact(
     return report
 
 
+def _repair_plan_risk(issue: Mapping[str, Any]) -> tuple[str, str, str]:
+    code = str(issue.get("code", "unknown_issue"))
+    if code == "private_metadata_detected":
+        return ("high", "required", "privacy")
+    if code in {"invalid_json", "invalid_json_object"}:
+        return ("medium", "recommended", "artifact_rebuild")
+    if code == "duplicate_hash":
+        return ("medium", "recommended", "evidence_cleanup")
+    if code in {
+        "missing_html_pair",
+        "missing_event_index",
+        "stale_event_index_missing_event",
+        "stale_event_index_hash_mismatch",
+        "stale_evidence_bundle_missing_artifact",
+        "stale_evidence_bundle_hash_mismatch",
+    }:
+        return ("low", "not_required", "metadata_rebuild")
+    if code == "unsafe_filename":
+        return ("low", "not_required", "filename_hygiene")
+    return ("medium", "recommended", "manual_review")
+
+
+def _repair_plan_action(issue: Mapping[str, Any], *, index: int) -> dict[str, Any]:
+    risk_level, human_gate, category = _repair_plan_risk(issue)
+    command = str(issue.get("repair_command") or "Review the issue and rerun the artifact doctor.")
+    action: dict[str, Any] = {
+        "action_id": f"repair-{index:03d}",
+        "issue_id": str(issue.get("issue_id", f"issue-{index:03d}")),
+        "issue_code": str(issue.get("code", "unknown_issue")),
+        "severity": str(issue.get("severity", "warning")),
+        "category": category,
+        "risk_level": risk_level,
+        "human_gate": human_gate,
+        "execution_mode": "manual_only",
+        "auto_apply": False,
+        "recommended_command": command,
+        "verification_command": "python3 scripts/cognitive_loop_cli.py doctor --html",
+        "rationale": str(issue.get("message", "Review local artifact metadata before sharing evidence.")),
+        "content_included": False,
+    }
+    path = issue.get("path")
+    if isinstance(path, str):
+        action["path"] = _doctor_public_path(path)
+    paths = issue.get("paths")
+    if isinstance(paths, list):
+        action["paths"] = [_doctor_public_path(str(item)) for item in paths if isinstance(item, str)]
+    return action
+
+
+def build_repair_plan_artifact(
+    root: Path,
+    *,
+    objective: str = "Create a manual-only repair plan from local Cognitive Loop artifact doctor issues.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-repair-plan.html",
+) -> dict[str, Any]:
+    """Build a metadata-only repair plan from doctor issues without executing repairs."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    doctor_report = build_artifact_doctor_artifact(
+        root,
+        generated_at=generated_at,
+        artifact_ref=".cognitive-loop/artifacts/cognitive-loop-artifact-doctor.html",
+    )
+    artifact_doctor = doctor_report.get("artifact_doctor")
+    if not isinstance(artifact_doctor, Mapping):
+        artifact_doctor = {}
+    issues = artifact_doctor.get("issues")
+    if not isinstance(issues, list):
+        issues = []
+    actions = [
+        _repair_plan_action(issue, index=index)
+        for index, issue in enumerate(issues, start=1)
+        if isinstance(issue, Mapping)
+    ]
+    risk_order = {"low": 0, "medium": 1, "high": 2, "blocked": 3}
+    highest_risk = "low"
+    if actions:
+        highest_risk = max((str(action["risk_level"]) for action in actions), key=lambda item: risk_order[item])
+    gate_required = any(action.get("human_gate") == "required" for action in actions)
+    gate_recommended = any(action.get("human_gate") == "recommended" for action in actions)
+    report_status = "pass" if not actions else "needs_attention"
+    summary = (
+        "No local Cognitive Loop repair actions are currently needed."
+        if not actions
+        else f"Prepared {len(actions)} manual repair action"
+        f"{'' if len(actions) == 1 else 's'} from artifact doctor metadata."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-repair-plan",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "verification_completed",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop",
+            "refs": [f"artifact:{artifact_ref}", "artifact:.cognitive-loop/artifacts/cognitive-loop-artifact-doctor.html"],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-repair-plan",
+            "project_id": project["id"],
+            "title": "Review local Cognitive Loop repair plan",
+            "status": "approved" if not actions else "proposed",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}"],
+            "risk": {
+                "level": highest_risk,
+                "score": 0.15 if not actions else (0.72 if highest_risk == "high" else 0.43),
+                "reasons": [
+                    "metadata-only repair planning",
+                    "no automatic file writes",
+                    "artifact contents excluded",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": gate_required,
+                "status": "pending" if gate_required else "not_required",
+                "questions": [
+                    "Can the operator explain which local evidence artifact will be rebuilt or removed?",
+                    "Can the operator rerun doctor and release checks after manual repair?",
+                ],
+                "recommendation": "recommended" if gate_recommended else "not_required",
+            },
+            "verification": {
+                "status": "passed" if not gate_required else "needs_review",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py repair-plan --html",
+                    "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
+                    "python3 scripts/cognitive_loop_cli.py doctor --html",
+                ],
+            },
+            "rollback": {"strategy": "delete_repair_plan_manifest", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-repair-plan",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": REPAIR_PLAN_SCHEMA_VERSION,
+        "status": report_status,
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Repair Plan",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "repair_plan": {
+            "status": report_status,
+            "action_count": len(actions),
+            "manual_only": True,
+            "auto_apply": False,
+            "content_included": False,
+            "source_doctor": {
+                "schema_version": doctor_report.get("schema_version"),
+                "status": doctor_report.get("status"),
+                "issue_count": artifact_doctor.get("issue_count", 0),
+                "error_count": artifact_doctor.get("error_count", 0),
+                "warning_count": artifact_doctor.get("warning_count", 0),
+                "content_included": False,
+            },
+            "actions": actions,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "event_contents_included": False,
+            "artifact_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+            "repair_actions_executed": False,
+        },
+        "current_limits": [
+            "This is a manual repair plan, not an automatic fixer.",
+            "It maps doctor issue metadata to suggested commands without reading artifact contents.",
+            "Realtime watcher, Mastra orchestration, and full HTML console remain planned layers.",
+        ],
+        "commands": {
+            "repair_plan": "python3 scripts/cognitive_loop_cli.py repair-plan --html",
+            "repair_plan_check": "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
+            "doctor": "python3 scripts/cognitive_loop_cli.py doctor --html",
+            "release_check": "./scripts/release_check.sh",
+        },
+    }
+    _assert_public_value("repair_plan_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -2410,6 +2629,23 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         f"<td><code>{escape(str(item.get('repair_command', '')))}</code></td>"
         "</tr>"
         for item in doctor_issues
+        if isinstance(item, Mapping)
+    )
+    repair_plan = report.get("repair_plan")
+    if not isinstance(repair_plan, Mapping):
+        repair_plan = {}
+    repair_actions = repair_plan.get("actions")
+    if not isinstance(repair_actions, list):
+        repair_actions = []
+    repair_action_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('action_id', '')))}</td>"
+        f"<td>{escape(str(item.get('issue_code', '')))}</td>"
+        f"<td>{escape(str(item.get('risk_level', '')))}</td>"
+        f"<td>{escape(str(item.get('human_gate', '')))}</td>"
+        f"<td><code>{escape(str(item.get('recommended_command', '')))}</code></td>"
+        "</tr>"
+        for item in repair_actions
         if isinstance(item, Mapping)
     )
     gate_resolution = report.get("gate_resolution")
@@ -2602,6 +2838,19 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <table>
         <thead><tr><th>Path</th><th>Kind</th><th>Schema</th><th>Status</th><th>SHA-256</th></tr></thead>
         <tbody>{doctor_record_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Repair Plan</h2>
+      <div class="status">
+        <div>Actions<br><strong>{escape(str(repair_plan.get('action_count', 0)))}</strong></div>
+        <div>Manual Only<br><strong>{escape(str(repair_plan.get('manual_only', False)))}</strong></div>
+        <div>Auto Apply<br><strong>{escape(str(repair_plan.get('auto_apply', False)))}</strong></div>
+        <div>Status<br><strong>{escape(str(repair_plan.get('status', '')))}</strong></div>
+      </div>
+      <table>
+        <thead><tr><th>Action</th><th>Issue</th><th>Risk</th><th>Gate</th><th>Command</th></tr></thead>
+        <tbody>{repair_action_rows}</tbody>
       </table>
     </section>
     <section>

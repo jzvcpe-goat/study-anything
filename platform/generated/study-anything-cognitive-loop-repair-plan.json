@@ -1,0 +1,57 @@
+{
+  "artifact_json_schema": "cognitive-loop-repair-plan-v1",
+  "bad_repair_plan": {
+    "action_codes": [
+      "duplicate_hash",
+      "missing_html_pair",
+      "stale_event_index_hash_mismatch",
+      "stale_event_index_missing_event"
+    ],
+    "action_count": 5,
+    "auto_apply": false,
+    "manual_only": true,
+    "status": "needs_attention"
+  },
+  "clean_repair_plan": {
+    "action_count": 0,
+    "auto_apply": false,
+    "content_included": false,
+    "created": true,
+    "manual_only": true
+  },
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "doctor": "python3 scripts/cognitive_loop_cli.py doctor --html",
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "repair_plan": "python3 scripts/cognitive_loop_cli.py repair-plan --html"
+  },
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_redacted_json": true,
+    "contains_repair_plan": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "index_schema": "cognitive-loop-event-index-v1",
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "artifact_contents_included": false,
+    "diff_body_included": false,
+    "event_contents_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "repair_actions_executed": false,
+    "watcher_daemon_started": false
+  },
+  "repair_plan_schema": "cognitive-loop-repair-plan-v1",
+  "run_once_schema": "cognitive-loop-run-once-artifact-v1",
+  "schema_version": "cognitive-loop-repair-plan-verification-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}

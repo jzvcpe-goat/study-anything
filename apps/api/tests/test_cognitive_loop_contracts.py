@@ -13,6 +13,7 @@ from study_anything.core.cognitive_loop_contracts import (
     EVENT_INDEX_SCHEMA_VERSION,
     HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
     PROJECT_SNAPSHOT_SCHEMA_VERSION,
+    REPAIR_PLAN_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_artifact_doctor_artifact,
     build_cli_artifact_report,
@@ -20,6 +21,7 @@ from study_anything.core.cognitive_loop_contracts import (
     build_event_index_artifact,
     build_human_gate_artifact,
     build_project_snapshot_artifact,
+    build_repair_plan_artifact,
     build_run_once_artifact,
     render_cli_artifact_html,
     validate_all_public_objects,
@@ -472,6 +474,88 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         codes = {issue["code"] for issue in report["artifact_doctor"]["issues"]}
         self.assertIn("stale_event_index_hash_mismatch", codes)
         self.assertFalse(report["privacy"]["watcher_daemon_started"])
+
+    def test_repair_plan_passes_clean_doctor(self) -> None:
+        import hashlib
+        import json
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_dir = root / ".cognitive-loop" / "events"
+            artifact_dir = root / ".cognitive-loop" / "artifacts"
+            event_dir.mkdir(parents=True, exist_ok=True)
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            run_event_path = event_dir / "run-once.json"
+            run_event_path.write_text(
+                '{"schema_version":"cognitive-loop-run-once-artifact-v1","status":"succeeded"}',
+                encoding="utf-8",
+            )
+            (artifact_dir / "run-once.html").write_text("<html>run once artifact</html>", encoding="utf-8")
+            event_hash = hashlib.sha256(run_event_path.read_bytes()).hexdigest()
+            index_event = {
+                "schema_version": "cognitive-loop-event-index-v1",
+                "status": "ready",
+                "event_index": {
+                    "entries": [
+                        {
+                            "path": ".cognitive-loop/events/run-once.json",
+                            "sha256": event_hash,
+                        }
+                    ]
+                },
+            }
+            (event_dir / "cognitive-loop-event-index.json").write_text(json.dumps(index_event), encoding="utf-8")
+            (artifact_dir / "cognitive-loop-event-index.html").write_text(
+                "<html>event index artifact</html>",
+                encoding="utf-8",
+            )
+
+            report = build_repair_plan_artifact(root, generated_at="2026-06-17T01:35:00Z")
+            html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], REPAIR_PLAN_SCHEMA_VERSION)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["repair_plan"]["action_count"], 0)
+        self.assertTrue(report["repair_plan"]["manual_only"])
+        self.assertFalse(report["repair_plan"]["auto_apply"])
+        self.assertFalse(report["privacy"]["repair_actions_executed"])
+        self.assertIn("Repair Plan", html)
+
+    def test_repair_plan_maps_doctor_issues_to_manual_actions(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_dir = root / ".cognitive-loop" / "events"
+            event_dir.mkdir(parents=True, exist_ok=True)
+            payload = '{"schema_version":"cognitive-loop-run-once-artifact-v1","status":"succeeded"}'
+            (event_dir / "one.json").write_text(payload, encoding="utf-8")
+            (event_dir / "two.json").write_text(payload, encoding="utf-8")
+
+            report = build_repair_plan_artifact(root, generated_at="2026-06-17T01:36:00Z")
+
+        actions = report["repair_plan"]["actions"]
+        codes = {action["issue_code"] for action in actions}
+        self.assertEqual(report["status"], "needs_attention")
+        self.assertIn("missing_html_pair", codes)
+        self.assertIn("duplicate_hash", codes)
+        self.assertIn("missing_event_index", codes)
+        self.assertTrue(all(action["execution_mode"] == "manual_only" for action in actions))
+        self.assertTrue(all(action["auto_apply"] is False for action in actions))
+        self.assertFalse(report["privacy"]["artifact_contents_included"])
 
 
 if __name__ == "__main__":
