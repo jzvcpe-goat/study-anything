@@ -61,6 +61,7 @@ python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 python3 scripts/verify_platform_handoff_checklist.py --check
 python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -84,6 +85,8 @@ adoption pack can run its bundled schema consumer checks without a Study Anythin
 release handoff checklist for import, verification, runtime choice, and support escalation.
 `platform/generated/study-anything-launch-acceptance-ledger.json` gives WorkBuddy-style operators the
 aggregated launch acceptance state and current commercial boundary.
+`platform/generated/study-anything-github-launch-operator-guide.json` gives WorkBuddy-style operators
+the GitHub release sequence, required release assets, and local-first launch boundary.
 
 ## Runtime Boundary
 

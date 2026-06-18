@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 101370,
+    "bytes": 102146,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "3b9637e308cd28c07d865fefc0e332da8fa212fa1318cebf8ab6c6ebe7a264a3",
+    "sha256": "6b9928918030aac167eb2cbb9cb64381bb28d0951ef70d69c39b48324209ca91",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -103,9 +103,9 @@
       "sha256": "84f05b9d7ff34a3d94df0b04ac83807b4a6e991142a3f5658c9ac4141a00eb5b"
     },
     {
-      "bytes": 6571,
+      "bytes": 8537,
       "path": "docs/github-launch.md",
-      "sha256": "cde002e434414db008d135dfb39aa9aef759e08815cc98c42f3bc1857ca09400"
+      "sha256": "e5afc065f684a1f5625306ef2730a73d2cdb08332333c804f9705e25c7cde10c"
     },
     {
       "bytes": 11215,
@@ -123,9 +123,9 @@
       "sha256": "dd2631d36e75478dc36e9f800291478a2a836aa442117906af7c586b15e0125a"
     },
     {
-      "bytes": 28381,
+      "bytes": 29562,
       "path": "docs/release-checklist.md",
-      "sha256": "019929fbefe289710931c9aaa596affaa961805604eee7cc20de423bb9bdf1d6"
+      "sha256": "0254fd6bec024c363b19950de942c08449022be260de447cd59e5df3101aeb67"
     },
     {
       "bytes": 10438,
@@ -133,19 +133,19 @@
       "sha256": "893c69cfb7726a9857b71229c0460d3d0efdec83f37728be475a78b41966a03d"
     },
     {
-      "bytes": 59218,
+      "bytes": 60491,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "62a319f8ff37e4d1b0a093d79f1f52a738ac0e8bb4c958f197b5e5d856117a31"
+      "sha256": "3e2c033049622fc7efd350d72f6b5ad57daf441ad35a57305b4ca9783b3e9ea3"
     },
     {
       "bytes": 11079,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "8297816b4ee95a70d09213d8f5296ee882e1491a8619c622e2b7c14835648797"
+      "sha256": "eec6af467d40662a90525f12579de97305ad1c131589ad4ce46482192b4679f8"
     },
     {
-      "bytes": 6407,
+      "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "ce63280e683d06b31fdc3483ad60265473eefad984964bbfcd6a6dddb2ccdb36"
+      "sha256": "e60f1616824fd35a13ad0c70a0a2c88d1ce1306318356e6c3e18b979698e746f"
     },
     {
       "bytes": 21139,

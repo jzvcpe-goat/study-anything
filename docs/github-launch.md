@@ -20,6 +20,8 @@ python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_external_adoption.py \
@@ -66,12 +68,53 @@ Confirm:
   verify the running API version, and complete the API learning loop.
 - `scripts/verify_ecosystem_submission_pack.py` returns `ecosystem-submission-verification-v1` for
   Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI submission assets.
+- `scripts/verify_launch_acceptance_ledger.py --check` returns `launch-acceptance-ledger-v1` and
+  proves the GitHub OSS launch, platform-Agent distribution, self-host alpha, Skill Mode, published
+  image evidence, commercial boundary, and privacy assertions are aligned.
+- `scripts/verify_github_launch_operator_guide.py --check` returns
+  `github-launch-operator-guide-v1` and proves this guide, `docs/release-checklist.md`,
+  `./scripts/release_check.sh`, the launch ledger, ecosystem submission, and adoption pack all expose
+  the same release sequence.
 - `scripts/verify_plugin_quarantine.py` returns `plugin-quarantine-verification-v1`, proving
   quarantine-first plugin handling and blocked digest mismatch behavior.
 - `scripts/verify_security_recovery_hardening.py` returns
   `security-recovery-hardening-verification-v1`, proving backup manifest and restore-preview safety.
 - `docs/release-notes/v0.3.30-alpha.md` lists known limitations.
 - Docker Compose starts with `STACK_PROFILE=core`, `STACK_PROFILE=smoke`, and `STACK_PROFILE=full`.
+
+## Machine-Readable Launch Acceptance
+
+The public launch decision is backed by two generated reports:
+
+- `platform/generated/study-anything-launch-acceptance-ledger.json` with
+  `launch-acceptance-ledger-v1`.
+- `platform/generated/study-anything-github-launch-operator-guide.json` with
+  `github-launch-operator-guide-v1`.
+
+Before publishing, run:
+
+```bash
+python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/generate_platform_adoption_pack.py --check
+python3 scripts/verify_external_adoption.py \
+  --pack platform/generated/study-anything-platform-adoption-pack.zip \
+  --copy-worktree
+```
+
+Attach these release assets to the GitHub prerelease:
+
+- `study-anything-platform-adoption-pack.zip`
+- `study-anything-platform-feedback-package.zip`
+- `study-anything-published-image-evidence.zip`
+- `study-anything-release-asset-bootstrap.zip`
+- `study-anything-platform-agent-replay.zip`
+- `study-anything-adopter-evidence-archive.zip`
+
+Merge the release PR stack into `main` from oldest to newest only after GitHub CI is green, then run
+the same commands from a clean `main` checkout before tagging.
 
 ## Tag And Push
 

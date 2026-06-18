@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 75562,
+    "bytes": 76002,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "d702e067d9fa1be62703166585c020676fa2039614f88094c0d0594d8052f1d4",
+    "sha256": "b807ae74022d614bd9d85a6a907c5bf6b0752f55f1f8abc6dbeaebef036b5d1e",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -117,9 +117,9 @@
       "sha256": "84f05b9d7ff34a3d94df0b04ac83807b4a6e991142a3f5658c9ac4141a00eb5b"
     },
     {
-      "bytes": 6571,
+      "bytes": 8537,
       "path": "docs/github-launch.md",
-      "sha256": "cde002e434414db008d135dfb39aa9aef759e08815cc98c42f3bc1857ca09400"
+      "sha256": "e5afc065f684a1f5625306ef2730a73d2cdb08332333c804f9705e25c7cde10c"
     },
     {
       "bytes": 11215,
@@ -157,9 +157,9 @@
       "sha256": "22e2758e61b59210f4540fa1c709d61c59efe6a1077fa7fbcef89ac17d50ae94"
     },
     {
-      "bytes": 6407,
+      "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "ce63280e683d06b31fdc3483ad60265473eefad984964bbfcd6a6dddb2ccdb36"
+      "sha256": "e60f1616824fd35a13ad0c70a0a2c88d1ce1306318356e6c3e18b979698e746f"
     },
     {
       "bytes": 83732,

@@ -28,6 +28,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json`
 - `platform/generated/study-anything-platform-handoff-checklist.json`
 - `platform/generated/study-anything-launch-acceptance-ledger.json`
+- `platform/generated/study-anything-github-launch-operator-guide.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -100,6 +101,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 .venv/bin/python scripts/verify_platform_handoff_checklist.py --check
 .venv/bin/python scripts/verify_launch_acceptance_ledger.py --check
+.venv/bin/python scripts/verify_github_launch_operator_guide.py --check
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py list
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py show risk_decision
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
@@ -162,3 +164,5 @@ adoption pack can run its bundled schema consumer checks without a Study Anythin
 operators a release handoff checklist for import, verification, runtime choice, and support escalation.
 `platform/generated/study-anything-launch-acceptance-ledger.json` gives operators the aggregated
 GitHub OSS/platform-Agent launch acceptance state and current commercial boundary.
+`platform/generated/study-anything-github-launch-operator-guide.json` gives operators the GitHub
+release sequence, required release assets, and local-first launch boundary as a machine-readable gate.

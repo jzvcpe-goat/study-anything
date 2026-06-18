@@ -88,6 +88,9 @@ PLATFORM_HANDOFF_CHECKLIST_PATH = (
 LAUNCH_ACCEPTANCE_LEDGER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-launch-acceptance-ledger.json"
 )
+GITHUB_LAUNCH_OPERATOR_GUIDE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-github-launch-operator-guide.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -223,6 +226,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_pack_extract_smoke.py",
     "scripts/verify_platform_handoff_checklist.py",
     "scripts/verify_launch_acceptance_ledger.py",
+    "scripts/verify_github_launch_operator_guide.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -247,6 +251,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-platform-handoff-checklist.json",
     "platform/generated/study-anything-launch-acceptance-ledger.json",
+    "platform/generated/study-anything-github-launch-operator-guide.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -429,6 +434,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_pack_extract_smoke.py --check",
     "verify_platform_handoff_checklist.py --check",
     "verify_launch_acceptance_ledger.py --check",
+    "verify_github_launch_operator_guide.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -729,6 +735,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the launch acceptance ledger report.")
+        if "platform/generated/study-anything-github-launch-operator-guide.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the GitHub launch operator guide report.")
         if "scripts/cognitive_loop_recipe_cli.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI script.")
         if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in set(
@@ -767,6 +777,8 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             raise EcosystemSubmissionError(f"{platform_id} must include the platform handoff checklist verifier.")
         if "scripts/verify_launch_acceptance_ledger.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the launch acceptance ledger verifier.")
+        if "scripts/verify_github_launch_operator_guide.py" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the GitHub launch operator guide verifier.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -855,6 +867,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
             "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
             "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
+            "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -905,6 +918,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
         "scripts/verify_launch_acceptance_ledger.py",
+        "scripts/verify_github_launch_operator_guide.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -929,6 +943,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
         "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "platform/generated/study-anything-github-launch-operator-guide.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -2710,6 +2725,79 @@ def verify_launch_acceptance_ledger_report() -> None:
         raise EcosystemSubmissionError("Launch acceptance ledger report must be redacted.")
 
 
+def verify_github_launch_operator_guide_report() -> None:
+    report = load_json(GITHUB_LAUNCH_OPERATOR_GUIDE_PATH)
+    if report.get("schema_version") != "github-launch-operator-guide-v1":
+        raise EcosystemSubmissionError("GitHub launch operator guide schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("GitHub launch operator guide must pass.")
+    if report.get("version") != "v0.3.30-alpha":
+        raise EcosystemSubmissionError("GitHub launch operator guide version drifted.")
+
+    docs = report.get("guide_docs")
+    if not isinstance(docs, list) or {item.get("path") for item in docs if isinstance(item, dict)} != {
+        "docs/github-launch.md",
+        "docs/release-checklist.md",
+    }:
+        raise EcosystemSubmissionError("GitHub launch operator guide docs drifted.")
+
+    release_assets = set(report.get("release_assets", []))
+    for asset in (
+        "study-anything-platform-adoption-pack.zip",
+        "study-anything-platform-feedback-package.zip",
+        "study-anything-published-image-evidence.zip",
+        "study-anything-release-asset-bootstrap.zip",
+        "study-anything-platform-agent-replay.zip",
+        "study-anything-adopter-evidence-archive.zip",
+    ):
+        if asset not in release_assets:
+            raise EcosystemSubmissionError(f"GitHub launch operator guide missing release asset {asset}.")
+
+    boundary = report.get("launch_boundary") or {}
+    expected = {
+        "github_oss_launch": "ready",
+        "platform_agent_distribution": "ready",
+        "self_host_alpha": "ready",
+        "standalone_frontend": "not_in_launch_path",
+        "hosted_paid_services": "not_ready_before_pmf",
+        "real_reasoning_runtime": "user_owned_agent",
+    }
+    for key, value in expected.items():
+        if boundary.get(key) != value:
+            raise EcosystemSubmissionError(f"GitHub launch operator guide boundary {key} drifted.")
+
+    evidence_sources = report.get("evidence_sources") or {}
+    if (evidence_sources.get("release_check") or {}).get("local_gate") != "./scripts/release_check.sh":
+        raise EcosystemSubmissionError("GitHub launch operator guide release_check source drifted.")
+    if (evidence_sources.get("launch_ledger") or {}).get("schema_version") != "launch-acceptance-ledger-v1":
+        raise EcosystemSubmissionError("GitHub launch operator guide launch ledger source drifted.")
+    if (evidence_sources.get("adoption_pack") or {}).get("schema_version") != "study-anything-platform-adoption-pack-v1":
+        raise EcosystemSubmissionError("GitHub launch operator guide adoption pack source drifted.")
+
+    acceptance = report.get("acceptance") or {}
+    if acceptance.get("evidence") != "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1":
+        raise EcosystemSubmissionError("GitHub launch operator guide evidence drifted.")
+    if acceptance.get("minimum_command") != "python3 scripts/verify_github_launch_operator_guide.py --check":
+        raise EcosystemSubmissionError("GitHub launch operator guide minimum command drifted.")
+    if acceptance.get("blocks_release_check") is not True:
+        raise EcosystemSubmissionError("GitHub launch operator guide must block release_check.")
+
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "real_model_keys_stored_by_study_anything",
+        "raw_source_text_in_report",
+        "learner_answers_in_report",
+        "agent_endpoint_secrets_in_report",
+        "browser_video_private_context_in_report",
+        "automatic_upload",
+        "standalone_frontend_required",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"GitHub launch operator guide privacy_assertions.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("GitHub launch operator guide report must be redacted.")
+
+
 def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
@@ -3833,6 +3921,7 @@ def main() -> None:
     verify_cognitive_loop_pack_extract_smoke_report()
     verify_platform_handoff_checklist_report()
     verify_launch_acceptance_ledger_report()
+    verify_github_launch_operator_guide_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -3887,6 +3976,7 @@ def main() -> None:
                 "cognitive_loop_pack_extract_smoke": "cognitive-loop-pack-extract-smoke-v1",
                 "platform_handoff_checklist": "platform-handoff-checklist-v1",
                 "launch_acceptance_ledger": "launch-acceptance-ledger-v1",
+                "github_launch_operator_guide": "github-launch-operator-guide-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
