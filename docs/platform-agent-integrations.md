@@ -16,6 +16,11 @@ generation, answer grading, mastery, scribe logs, HITL state, Agent audit, and e
 Study Anything should not store real model API keys. Keep keys inside the platform Agent or the
 user-owned HTTP gateway.
 
+For a short scenario cookbook, use `docs/cognitive-loop-adoption-cookbook.md`. It gives platform
+Agents four copyable paths: first adoption, daily project review, risk decision, and learning
+handoff. Each path keeps the platform Agent in charge of external context while Study Anything emits
+local, redacted Cognitive Loop artifacts.
+
 ## Machine-Readable Tool Contract
 
 Platform integrations should start from the repo-local manifest:

@@ -24,6 +24,10 @@ The verifier emits `adoption-proof-v1` and proves that a terminal-capable platfo
 the learning loop, eval gates, Obsidian export, and NotebookLM-style handoff without a standalone
 frontend.
 
+For Cognitive Loop operations, start from `docs/cognitive-loop-adoption-cookbook.md`. It maps Codex
+to local commands for first adoption, daily project review, risk decisions, and learning handoff
+without adding a standalone frontend.
+
 ## Run
 
 ```bash

@@ -170,8 +170,10 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The platform packs prove that an external Agent can import the tool surface, run one source-bound learning loop, return audit/eval evidence, and export Obsidian or NotebookLM-style handoff artifacts without requiring a standalone frontend or storing real model keys in Study Anything.
+For scenario-based operation, use `docs/cognitive-loop-adoption-cookbook.md` to map Kimi, Codex, WorkBuddy, or a private platform Agent to first adoption, daily project review, risk decisions, and learning handoff.
 
 平台接入包证明：外部 Agent 可以导入工具面、跑完一次基于来源的学习闭环、返回 audit/eval 证据，并导出 Obsidian 或 NotebookLM 式交接材料；整个过程不要求独立前端，也不把真实模型密钥存入 Study Anything。
+如果要按场景操作，请使用 `docs/cognitive-loop-adoption-cookbook.md`，它把 Kimi、Codex、WorkBuddy 或私有平台 Agent 映射到首次接入、日常项目审查、风险决策和学习交接四条路径。
 
 ## Docker Self-Host
 

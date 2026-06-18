@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 54439,
+    "bytes": 54654,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "7686820dd762bed0dbb5a7ef7f86b9ea5dc4f3b1a35fb9112fda570712ed8702",
+    "sha256": "9b4a2813595ff77aac53c692550eeee4a907e34e0422eca0ecbca27313aadbca",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -157,9 +157,9 @@
       "sha256": "dd2631d36e75478dc36e9f800291478a2a836aa442117906af7c586b15e0125a"
     },
     {
-      "bytes": 19313,
+      "bytes": 19503,
       "path": "docs/adoption.md",
-      "sha256": "44c07f49b8fa4ea9bfce1f4fa3f52bf70e497bd0c5345db1ab3c2295d54fbe92"
+      "sha256": "84f05b9d7ff34a3d94df0b04ac83807b4a6e991142a3f5658c9ac4141a00eb5b"
     },
     {
       "bytes": 19724,
@@ -167,9 +167,9 @@
       "sha256": "9bca21818c55c51a167c03e79a328cbbd943406ad7e801c6e8fa15ba7fc719d2"
     },
     {
-      "bytes": 27275,
+      "bytes": 27610,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "51a33f2c5454e111753b37b6574a9efac960e1958cc7063bc1b0065e119c8997"
+      "sha256": "955109e867b4cc52e813d882774c608d0e8ed07af485570e29a8aa0e63265587"
     },
     {
       "bytes": 20083,

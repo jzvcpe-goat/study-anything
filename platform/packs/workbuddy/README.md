@@ -35,6 +35,10 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the WorkBuddy-style HTTP tool path without
 requiring a standalone frontend.
 
+For a scenario-based operator guide, read `docs/cognitive-loop-adoption-cookbook.md`. It shows how a
+WorkBuddy-style HTTP workspace can call the local API and local CLI while sharing only redacted
+artifact metadata back into the workspace.
+
 ## Runtime Boundary
 
 The workspace Agent should own:

@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 51671,
+    "bytes": 52092,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "c96bd269c46750779afebf7c848aac74078f4f871209e20ee969a148b15c6f82",
+    "sha256": "49bcfbe6b2582c4a93a15f32b5aa6bb3fff4cf9fea57404dfdbd98a36a69d76b",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -97,9 +97,9 @@
       "sha256": "6aeb803855835b29f2e63c709a274a259ab2263d1b1bdfa7f6b409809c33867e"
     },
     {
-      "bytes": 27275,
+      "bytes": 27610,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "51a33f2c5454e111753b37b6574a9efac960e1958cc7063bc1b0065e119c8997"
+      "sha256": "955109e867b4cc52e813d882774c608d0e8ed07af485570e29a8aa0e63265587"
     },
     {
       "bytes": 29302,
@@ -122,19 +122,19 @@
       "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
     },
     {
-      "bytes": 9076,
+      "bytes": 9354,
       "path": "platform/packs/kimi/README.md",
-      "sha256": "6593be7f96fc85b91f5cb1e4826645a067756d8c628e2f62e7c236dd1203f317"
+      "sha256": "cca0c40432ecd9820c80213c6c04a7a866a6c20ab6000c1a16a53913bfbaed52"
     },
     {
-      "bytes": 8271,
+      "bytes": 8507,
       "path": "platform/packs/codex/README.md",
-      "sha256": "705a499c48de60d4881e2b3291055aae221f6a60910fea98a2b83f3b598a6e36"
+      "sha256": "1857d50608a54e9e94f8f3a392ae1c89e32349aee617ba7b3693ae98d89e0acb"
     },
     {
-      "bytes": 6305,
+      "bytes": 6546,
       "path": "platform/packs/workbuddy/README.md",
-      "sha256": "e24a38544bf527c0bd3f38a99d8c9468b4df0b20c70c13b93ea12c0eae6420f4"
+      "sha256": "ab7cf69c2194a6539d3d269d951165054a93c6d0ae273f2c255b72dc2c7e7c1e"
     }
   ],
   "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",

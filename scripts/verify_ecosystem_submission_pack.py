@@ -136,6 +136,7 @@ REQUIRED_SHARED_ASSETS = {
     "docs/release-checklist.md",
     "docs/roadmap.md",
     "docs/platform-agent-integrations.md",
+    "docs/cognitive-loop-adoption-cookbook.md",
     "docs/use-with-kimi.md",
     "docs/commercial-readiness.md",
     "docs/security.md",
@@ -571,6 +572,8 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
         import_assets = submission.get("import_assets")
         if not isinstance(import_assets, list) or not import_assets:
             raise EcosystemSubmissionError(f"{platform_id} must declare import_assets.")
+        if "docs/cognitive-loop-adoption-cookbook.md" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop adoption cookbook.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -663,6 +666,7 @@ def verify_pack_in_generated_adoption() -> None:
         "docs/release-checklist.md",
         "docs/roadmap.md",
         "docs/cognitive-loop-contracts.md",
+        "docs/cognitive-loop-adoption-cookbook.md",
         "docs/adoption-telemetry.md",
         ".cognitive-loop/config.yaml",
         ".cognitive-loop/permissions.yaml",
