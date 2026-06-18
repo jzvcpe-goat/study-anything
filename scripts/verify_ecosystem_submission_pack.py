@@ -49,6 +49,9 @@ COGNITIVE_LOOP_ADOPTION_COOKBOOK_PATH = (
 COGNITIVE_LOOP_ADOPTION_RECIPES_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-adoption-recipes.json"
 )
+COGNITIVE_LOOP_RECIPE_REPLAY_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-recipe-replay.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -171,6 +174,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_artifact_index.py",
     "scripts/verify_cognitive_loop_adoption_cookbook.py",
     "scripts/generate_cognitive_loop_adoption_recipes.py",
+    "scripts/verify_cognitive_loop_recipe_replay.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -183,6 +187,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
     "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
     "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+    "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -353,6 +358,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_artifact_index.py --check",
     "verify_cognitive_loop_adoption_cookbook.py --check",
     "generate_cognitive_loop_adoption_recipes.py --check",
+    "verify_cognitive_loop_recipe_replay.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -555,6 +561,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-artifact-index-verification-v1",
         "cognitive-loop-adoption-cookbook-verification-v1",
         "cognitive-loop-adoption-recipes-v1",
+        "cognitive-loop-recipe-replay-verification-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -596,6 +603,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop adoption recipes.")
+        if "platform/generated/study-anything-cognitive-loop-recipe-replay.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe replay report.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -672,6 +683,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "adopter_evidence_fixture.schema_version == adopter-evidence-fixture-v1",
             "cognitive_loop_adoption_cookbook.schema_version == cognitive-loop-adoption-cookbook-verification-v1",
             "cognitive_loop_adoption_recipes.schema_version == cognitive-loop-adoption-recipes-v1",
+            "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -709,6 +721,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_artifact_index.py",
         "scripts/verify_cognitive_loop_adoption_cookbook.py",
         "scripts/generate_cognitive_loop_adoption_recipes.py",
+        "scripts/verify_cognitive_loop_recipe_replay.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -721,6 +734,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-artifact-index.json",
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -1453,6 +1467,51 @@ def verify_cognitive_loop_adoption_recipes_report() -> None:
     ):
         if boundaries.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop adoption recipes boundary {key} must be false.")
+
+
+def verify_cognitive_loop_recipe_replay_report() -> None:
+    report = load_json(COGNITIVE_LOOP_RECIPE_REPLAY_PATH)
+    if report.get("schema_version") != "cognitive-loop-recipe-replay-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay report must pass.")
+    replay = report.get("replay") or {}
+    if replay.get("source_schema_version") != "cognitive-loop-adoption-recipes-v1":
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay source schema drifted.")
+    if replay.get("source_doc") != "docs/cognitive-loop-adoption-cookbook.md":
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay source_doc drifted.")
+    recipe_ids = {recipe.get("recipe_id") for recipe in replay.get("recipes", []) if isinstance(recipe, dict)}
+    if recipe_ids != {"first_adoption", "daily_project_review", "risk_decision", "learning_handoff"}:
+        raise EcosystemSubmissionError(f"Cognitive Loop recipe replay ids drifted: {sorted(recipe_ids)}")
+    if replay.get("all_commands_reference_existing_scripts") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay must prove command scripts exist.")
+    if replay.get("all_evidence_resolved") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay must resolve acceptance evidence.")
+    if set(replay.get("runtime_required_recipe_ids", [])) != {"first_adoption", "learning_handoff"}:
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay runtime-required coverage drifted.")
+    if set(replay.get("human_gate_recipe_ids", [])) != {"risk_decision"}:
+        raise EcosystemSubmissionError("Cognitive Loop recipe replay human-gate coverage drifted.")
+    policy = report.get("safe_replay_policy") or {}
+    for key in ("metadata_replay_only", "requires_operator_for_runtime_commands", "requires_human_gate_for_risk_decisions"):
+        if policy.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe replay policy {key} must be true.")
+    for key in ("executes_recipe_commands", "starts_runtime", "applies_file_changes"):
+        if policy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe replay policy {key} must be false.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "generated_private_insights_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "real_model_keys_stored",
+        "browser_video_app_private_context_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop recipe replay privacy.{key} must be false.")
 
 
 def verify_submission_dry_run_report() -> None:
@@ -2566,6 +2625,7 @@ def main() -> None:
     verify_cognitive_loop_artifact_index_report()
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
+    verify_cognitive_loop_recipe_replay_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -2608,6 +2668,7 @@ def main() -> None:
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
+                "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
