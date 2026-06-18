@@ -67,7 +67,6 @@ PUBLIC_ASSET_PATHS = (
     "docs/roadmap.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-published-image-evidence.json",
-    "platform/generated/study-anything-platform-agent-replay.json",
     "scripts/verify_release_asset_adoption.py",
     "scripts/replay_platform_agent_from_release.py",
     "scripts/generate_platform_agent_replay.py",

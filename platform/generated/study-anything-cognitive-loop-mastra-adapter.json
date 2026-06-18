@@ -11,7 +11,8 @@
         "artifact_kinds": [
           "project_snapshot",
           "decision_card",
-          "event_store"
+          "event_store",
+          "watcher_ingest"
         ],
         "risk": {
           "level": "high",
@@ -27,7 +28,8 @@
         "artifact_kinds": [
           "project_snapshot",
           "decision_card",
-          "event_store"
+          "event_store",
+          "watcher_ingest"
         ],
         "risk": {
           "level": "low",
@@ -56,14 +58,14 @@
   },
   "files": [
     {
-      "bytes": 2914,
+      "bytes": 3288,
       "path": "platform/mastra/README.md",
-      "sha256": "adc49df42e23bf3ce4a5b394b6ef9a663947a67d58624b12aa9444f9a4406626"
+      "sha256": "b4841550b265b617657fb04a33c61b25d0d230a70a21249aaa1460d5eb961971"
     },
     {
-      "bytes": 6731,
+      "bytes": 6820,
       "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
-      "sha256": "42c652033df83e688430e7d995e9e816f8a73b3cd500faa70bfd2470cb9cf075"
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
     },
     {
       "bytes": 1655,

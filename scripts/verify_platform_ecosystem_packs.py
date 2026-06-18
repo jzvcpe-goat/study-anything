@@ -52,6 +52,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
     "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
+    "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
     "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
     "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
     "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -102,6 +103,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_mastra_adapter.py --check",
     "verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "verify_cognitive_loop_mastra_runtime_service.py --check",
+    "verify_cognitive_loop_mastra_runtime_durable.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -276,6 +278,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Mastra runtime service report"
         )
+    if "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop durable Mastra runtime report"
+        )
     for asset in (
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
@@ -288,8 +294,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "platform/mastra-runtime/tsconfig.json",
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
+        "platform/mastra-runtime/src/durable-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
+        "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
     ):
         if asset not in import_assets:
             raise PackVerificationError(

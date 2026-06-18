@@ -676,6 +676,12 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop watcher ingest verifier.")
     if "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Mastra adapter verifier.")
+    if "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Mastra dry-run verifier.")
+    if "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Mastra runtime service verifier.")
+    if "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop durable Mastra verifier.")
     if "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact doctor verifier.")
     if "python3 scripts/verify_cognitive_loop_repair_plan.py --check" not in commands:
@@ -843,6 +849,15 @@ required:
     blocking: true
   - id: cognitive-loop.mastra-adapter
     command: python3 scripts/verify_cognitive_loop_mastra_adapter.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-dry-run
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-service
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-durable
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check
     blocking: true
   - id: cognitive-loop.artifact-doctor
     command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check

@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 107210,
+    "bytes": 105085,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "485861ab3e3303168e101d6596d42b59ee583fbee7a9a1b718a4428dd0970d93",
+    "sha256": "ed40be04c49dd9dd8d9832321bb5098fe05e7cbaae9e05c1d6e4545d705f7d4d",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 23240,
+      "bytes": 23784,
       "path": "README.md",
-      "sha256": "ee66116acc42621de03cc2a0c363c1c8b55612f25ddf6e6171f0add81a1d2ec6"
+      "sha256": "7e5aa352cc43a6a8696a5e4e3b34a4bf202052f3030b229c4f65566f1bdb9f1a"
     },
     {
       "bytes": 19503,
@@ -128,24 +128,19 @@
       "sha256": "952773709005786aa6df6810238affed09b350c7d408e56f5efdb1d1a0c8822b"
     },
     {
-      "bytes": 15253,
+      "bytes": 15596,
       "path": "docs/roadmap.md",
-      "sha256": "3cba97c23a07ea05b37f5f96a062a78ff1bc1f06f9374056026590f91390b514"
+      "sha256": "c13642f6a523194519dc3c564e2b2f9e58e0619ef6970c8519c1556eda37931c"
     },
     {
-      "bytes": 75084,
+      "bytes": 76923,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "a9ebaed9decf377d16e647f3864e2cce538a37bbfcee253c7a0d588518537694"
+      "sha256": "b72d6ea78ee85e6eebd039c0dde2c6008d4d7be8e348e6e70027eb3208703d91"
     },
     {
       "bytes": 11079,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "9909cf89dfaef075756b1f27c322aa75f4a9751e78c1ae1b8b74d0deed95d797"
-    },
-    {
-      "bytes": 6408,
-      "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "e20cbca0fea790e38c640bdd7f61571d6156c1c17a727c039f4e7f5ba23e8205"
+      "sha256": "475cab8d7e32dda0a9a814d5b50b8dc0403e0fd9933ff30ce459ec5199320e85"
     },
     {
       "bytes": 21139,
@@ -163,9 +158,9 @@
       "sha256": "08dbe202a37c9f0c6461543e70d8512bdb876a7ab3ae3b9fa0bb0f717e31ba2b"
     },
     {
-      "bytes": 18793,
+      "bytes": 18725,
       "path": "scripts/generate_release_asset_adoption.py",
-      "sha256": "16a50287472ea4b967f7ff145f07b6bb7e0b32db7d8f88a067b0d4e9e6f33457"
+      "sha256": "6d9e0d4fbf2a2532595d9039a7de8f980e822134a0c5e432dbe847be4d24775f"
     },
     {
       "bytes": 50417,

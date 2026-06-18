@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-runtime-dry-run.json"
 CLI = ROOT / "scripts" / "cognitive_loop_cli.py"
 EVENT_STORE = ROOT / "scripts" / "cognitive_loop_event_store.py"
+WATCHER_CLI = ROOT / "scripts" / "cognitive_loop_watcher_ingest.py"
 ADAPTER_REPORT = ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 ADAPTER_MANIFEST = ROOT / "platform" / "mastra" / "manifest.json"
 ADAPTER_TEMPLATE = ROOT / "platform" / "mastra" / "cognitive-loop-mastra-adapter.ts"
@@ -86,6 +87,10 @@ def run_cli(args: list[str], *, root: Path) -> dict[str, Any]:
 
 def run_store(args: list[str], *, root: Path) -> dict[str, Any]:
     return run_json([sys.executable, str(EVENT_STORE), "--root", str(root), *args], cwd=ROOT)
+
+
+def run_watcher(args: list[str], *, root: Path) -> dict[str, Any]:
+    return run_json([sys.executable, str(WATCHER_CLI), "--root", str(root), *args], cwd=ROOT)
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -207,11 +212,34 @@ def build_event_artifacts(root: Path) -> dict[str, Any]:
         ],
         root=root,
     )
+    run_watcher(["init-config"], root=root)
+    watcher = run_watcher(
+        [
+            "ingest",
+            "--json",
+            "--watcher-id",
+            "file-change",
+            "--target",
+            "docs/cognitive-loop-contracts.md",
+            "--summary",
+            "Captured Mastra runtime dry-run trigger as metadata only.",
+            "--ref",
+            "path:docs/cognitive-loop-contracts.md",
+            "--ref",
+            "git:working-tree",
+            "--generated-at",
+            "2026-06-18T00:00:00Z",
+            "--json-output",
+            ".cognitive-loop/events/mastra-runtime-watcher.json",
+        ],
+        root=root,
+    )
     event_paths = [
         ".cognitive-loop/events/mastra-runtime-run-once.json",
         ".cognitive-loop/events/mastra-runtime-snapshot.json",
         ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
         ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json",
+        ".cognitive-loop/events/mastra-runtime-watcher.json",
     ]
     db_path = ".cognitive-loop/mastra-runtime-dry-run.sqlite"
     store_args: list[str] = ["--db", db_path, "rebuild"]
@@ -238,6 +266,7 @@ def build_event_artifacts(root: Path) -> dict[str, Any]:
         "snapshot": snapshot,
         "approved_gate": approved,
         "rejected_gate": rejected,
+        "watcher": watcher,
         "event_paths": event_paths,
         "event_store_rebuild": rebuild,
         "event_store_export": event_store_export,
@@ -273,9 +302,9 @@ def build_runtime_transcript(artifacts: dict[str, Any]) -> dict[str, Any]:
         raise MastraRuntimeDryRunError("Approved gate artifact did not approve the Human Mastery Gate.")
     if rejected["decision_card"]["human_mastery_gate"]["status"] != "rejected":
         raise MastraRuntimeDryRunError("Rejected gate artifact did not reject the Human Mastery Gate.")
-    if event_store["event_count"] < 3 or event_store["artifact_count"] != 4:
+    if event_store["event_count"] < 4 or event_store["artifact_count"] != 5:
         raise MastraRuntimeDryRunError(
-            "Event Store projection must contain the dry-run artifacts and at least three unique events."
+            "Event Store projection must contain the dry-run artifacts and watcher event."
         )
     return {
         "input_contract": {
@@ -375,6 +404,7 @@ def build_report() -> dict[str, Any]:
                 ".cognitive-loop/events/mastra-runtime-snapshot.json",
                 ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
                 ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json",
+                ".cognitive-loop/events/mastra-runtime-watcher.json",
                 ".cognitive-loop/events/mastra-runtime-event-store.json",
                 ".cognitive-loop/artifacts/mastra-runtime-event-store.html",
             ]
