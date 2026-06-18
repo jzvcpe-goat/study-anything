@@ -144,9 +144,10 @@ python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 
 The template lives at `platform/workflows/cognitive-loop-review-agent-manual.yml` and is
 `workflow_dispatch` only. It validates an external report or existing acceptance bundle, writes a
-metadata-only Checks/step summary, and may upload only the safe acceptance bundle artifacts. It does
-not invoke real models, require external Agent secrets, upload raw Review Agent reports, or persist
-raw diffs.
+metadata-only Checks/step summary, runs the policy gate with `advisory`, `soft`, or `strict`, and
+may upload only the safe acceptance bundle plus `review-agent-policy-gate.json`. It captures the
+policy exit code before upload and applies it in the final step. It does not invoke real models,
+require external Agent secrets, upload raw Review Agent reports, or persist raw diffs.
 
 ## Review Agent Policy Gate
 

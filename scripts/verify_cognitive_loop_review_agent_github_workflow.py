@@ -17,11 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / "platform" / "workflows" / "cognitive-loop-review-agent-manual.yml"
 UNSAFE_WORKFLOW = ROOT / "fixtures" / "review-agent-github-workflows" / "unsafe-auto-pr.yml"
 BUNDLE_CLI_PATH = ROOT / "scripts" / "cognitive_loop_review_agent_acceptance_bundle.py"
+POLICY_GATE_CLI_PATH = ROOT / "scripts" / "cognitive_loop_review_agent_policy_gate.py"
 REPORT_FIXTURE_DIR = ROOT / "fixtures" / "review-agent"
 REPORT = ROOT / "platform" / "generated" / "study-anything-cognitive-loop-review-agent-github-workflow.json"
 
 SCHEMA_VERSION = "cognitive-loop-review-agent-github-workflow-verification-v1"
 REPORT_FIXTURES = ("approved.json", "needs-review.json", "needs-fix.json")
+POLICIES = ("advisory", "soft", "strict")
 FIXED_GENERATED_AT = "2026-06-18T00:00:00+00:00"
 
 REQUIRED_WORKFLOW_NEEDLES = (
@@ -29,11 +31,16 @@ REQUIRED_WORKFLOW_NEEDLES = (
     "evidence_kind:",
     "review_agent_report:",
     "acceptance_bundle_dir:",
+    "policy:",
     "upload_metadata_bundle:",
     "scripts/cognitive_loop_review_agent_acceptance_bundle.py build",
     "scripts/cognitive_loop_review_agent_acceptance_bundle.py validate",
+    "scripts/cognitive_loop_review_agent_policy_gate.py",
+    "--output review-agent-policy-gate.json",
+    "REVIEW_AGENT_POLICY_EXIT",
     'if [ "$ACCEPTANCE_BUNDLE_DIR" != "$OUTPUT_DIR" ]; then',
     "GITHUB_STEP_SUMMARY",
+    "review-agent-policy-gate.json",
     "review-agent-checks-summary.md",
     "actions/upload-artifact@v4",
     "review-agent-ci-receipt.json",
@@ -89,6 +96,16 @@ def load_bundle_cli() -> Any:
     return module
 
 
+def load_policy_gate_cli() -> Any:
+    spec = importlib.util.spec_from_file_location("study_anything_review_agent_policy_gate", POLICY_GATE_CLI_PATH)
+    if spec is None or spec.loader is None:
+        raise ReviewAgentGithubWorkflowVerificationError(f"Cannot load policy gate CLI: {POLICY_GATE_CLI_PATH}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 def reject_private_text(value: Any, *, label: str) -> None:
     serialized = value if isinstance(value, str) else dump_json(value)
     lowered = serialized.lower()
@@ -114,6 +131,8 @@ def validate_workflow_template(path: Path) -> dict[str, Any]:
         "requires_external_agent_secret": False,
         "uploads_raw_report": False,
         "uploads_metadata_bundle": True,
+        "runs_policy_gate": True,
+        "policy_input": True,
     }
 
 
@@ -125,12 +144,13 @@ def validate_unsafe_fixture() -> str:
     raise ReviewAgentGithubWorkflowVerificationError("Unsafe GitHub workflow fixture unexpectedly passed.")
 
 
-def render_checks_summary(bundle_dir: Path) -> str:
+def render_checks_summary(bundle_dir: Path, policy_gate: dict[str, Any]) -> str:
     manifest = json.loads((bundle_dir / "manifest.json").read_text(encoding="utf-8"))
     comment_pack = json.loads((bundle_dir / "review-agent-pr-comment-pack.json").read_text(encoding="utf-8"))
     checks = comment_pack["checks_summary"]
     decision = manifest["decision_summary"]
     source = manifest["source"]
+    policy_result = policy_gate["policy_result"]
     lines = [
         f"## {checks['title']}",
         "",
@@ -138,10 +158,12 @@ def render_checks_summary(bundle_dir: Path) -> str:
         f"- Risk: `{decision['overall_risk']}`",
         f"- Findings: `{decision['finding_count']}` total, `{decision['critical_count']}` critical",
         f"- Human action: `{decision['human_action']}`",
+        f"- Policy: `{policy_gate['policy']}` -> `{policy_gate['status']}` / exit `{policy_gate['exit_code']}`",
+        f"- Policy message: {policy_result['human_message']}",
         f"- Ref: `{source['pr_ref']}` at `{source['commit_sha']}`",
         f"- Report hash: `{source['report_sha256']}`",
         "",
-        "Privacy: this workflow summary is metadata-only and excludes raw diffs, source bodies, finding evidence, report prose, endpoint secrets, model keys, and hidden reasoning traces.",
+        "Privacy: this workflow summary and policy gate output are metadata-only and exclude raw diffs, source bodies, finding evidence, report prose, endpoint secrets, model keys, and hidden reasoning traces.",
         "",
     ]
     summary = "\n".join(lines)
@@ -149,7 +171,28 @@ def render_checks_summary(bundle_dir: Path) -> str:
     return summary
 
 
-def build_dry_run_for_fixture(module: Any, fixture_name: str, output_root: Path) -> dict[str, Any]:
+def evaluate_policy_matrix(policy_cli: Any, bundle_dir: Path) -> dict[str, dict[str, Any]]:
+    matrix: dict[str, dict[str, Any]] = {}
+    for policy in POLICIES:
+        args = argparse.Namespace(
+            bundle_dir=str(bundle_dir),
+            receipt=None,
+            policy=policy,
+            output=None,
+            generated_at=FIXED_GENERATED_AT,
+        )
+        payload = policy_cli.evaluate(args)
+        summary = policy_cli.validate_gate_payload(payload)
+        reject_private_text(payload, label=f"{bundle_dir.name} {policy} policy gate")
+        matrix[policy] = {
+            "decision": summary["decision"],
+            "status": summary["status"],
+            "exit_code": summary["exit_code"],
+        }
+    return matrix
+
+
+def build_dry_run_for_fixture(module: Any, policy_cli: Any, fixture_name: str, output_root: Path) -> dict[str, Any]:
     fixture_id = fixture_name.removesuffix(".json")
     output_dir = output_root / fixture_id / "review-agent-acceptance"
     args = argparse.Namespace(
@@ -167,7 +210,17 @@ def build_dry_run_for_fixture(module: Any, fixture_name: str, output_root: Path)
     )
     manifest = module.build_bundle(args)
     summary = module.validate_bundle_dir(output_dir)
-    checks_summary = render_checks_summary(output_dir)
+    policy_matrix = evaluate_policy_matrix(policy_cli, output_dir)
+    soft_args = argparse.Namespace(
+        bundle_dir=str(output_dir),
+        receipt=None,
+        policy="soft",
+        output=None,
+        generated_at=FIXED_GENERATED_AT,
+    )
+    soft_policy_payload = policy_cli.evaluate(soft_args)
+    policy_cli.validate_gate_payload(soft_policy_payload)
+    checks_summary = render_checks_summary(output_dir, soft_policy_payload)
     serialized_public = dump_json(manifest) + checks_summary
     reject_private_text(serialized_public, label=f"{fixture_name} GitHub workflow dry-run output")
     return {
@@ -175,6 +228,8 @@ def build_dry_run_for_fixture(module: Any, fixture_name: str, output_root: Path)
         "checks_title": json.loads((output_dir / "review-agent-pr-comment-pack.json").read_text(encoding="utf-8"))[
             "checks_summary"
         ]["title"],
+        "default_policy": "soft",
+        "policy_matrix": policy_matrix,
         "checks_summary_sha256": module.load_module(module.RECEIPT_CLI_PATH, "study_anything_review_agent_receipt").sha256_text(
             checks_summary
         ),
@@ -183,6 +238,7 @@ def build_dry_run_for_fixture(module: Any, fixture_name: str, output_root: Path)
             "SUMMARY.md",
             "review-agent-ci-receipt.json",
             "review-agent-pr-comment-pack.json",
+            "review-agent-policy-gate.json",
             "review-agent-checks-summary.md",
         ],
     }
@@ -197,6 +253,8 @@ def validate_docs() -> dict[str, str]:
         "docs/github-review-agent-workflow.md": [
             "workflow_dispatch",
             "metadata-only",
+            "policy",
+            "review-agent-policy-gate.json",
             "不调用真实模型",
             "verify_cognitive_loop_review_agent_github_workflow.py --check",
         ],
@@ -274,15 +332,38 @@ def build_report() -> dict[str, Any]:
     workflow = validate_workflow_template(WORKFLOW)
     negative = {"unsafe-auto-pr.yml": validate_unsafe_fixture()}
     module = load_bundle_cli()
+    policy_cli = load_policy_gate_cli()
     with tempfile.TemporaryDirectory(prefix="study-anything-review-agent-github-workflow-") as tmp_name:
         output_root = Path(tmp_name)
-        dry_runs = {fixture: build_dry_run_for_fixture(module, fixture, output_root) for fixture in REPORT_FIXTURES}
+        dry_runs = {
+            fixture: build_dry_run_for_fixture(module, policy_cli, fixture, output_root)
+            for fixture in REPORT_FIXTURES
+        }
         existing_bundle = output_root / "existing-bundle"
         source_bundle = output_root / "needs-review" / "review-agent-acceptance"
         shutil.copytree(source_bundle, existing_bundle)
         existing_summary = module.validate_bundle_dir(existing_bundle)
     decisions = {value["bundle_summary"]["decision"] for value in dry_runs.values()}
     require(decisions == {"approved", "needs-review", "needs-fix"}, f"Dry-run decision coverage drifted: {sorted(decisions)}")
+    policy_matrix = {
+        fixture.removesuffix(".json"): dry_run["policy_matrix"] for fixture, dry_run in dry_runs.items()
+    }
+    require(
+        policy_matrix["approved"]["strict"]["exit_code"] == 0,
+        "Approved strict policy should pass.",
+    )
+    require(
+        policy_matrix["needs-review"]["strict"]["exit_code"] == 2,
+        "Needs-review strict policy should fail.",
+    )
+    require(
+        policy_matrix["needs-review"]["soft"]["exit_code"] == 0,
+        "Needs-review soft policy should not fail.",
+    )
+    require(
+        policy_matrix["needs-fix"]["soft"]["exit_code"] == 2,
+        "Needs-fix soft policy should fail.",
+    )
     docs = validate_docs()
     packs = validate_platform_packs()
     return {
@@ -291,6 +372,7 @@ def build_report() -> dict[str, Any]:
         "workflow_template": workflow,
         "dry_run_fixture_count": len(dry_runs),
         "dry_runs": dry_runs,
+        "policy_matrix": policy_matrix,
         "existing_bundle_validation": existing_summary,
         "negative_workflows": negative,
         "docs": docs,
@@ -301,8 +383,11 @@ def build_report() -> dict[str, Any]:
             "no_external_agent_secret_required": "pass",
             "metadata_only_artifact_upload": "pass",
             "raw_report_not_uploaded": "pass",
+            "policy_gate_wired": "pass",
+            "policy_exit_preserved_after_artifact_upload": "pass",
             "checks_summary_metadata_only": "pass",
             "decision_path_coverage": sorted(decisions),
+            "policy_path_coverage": list(POLICIES),
             "unsafe_workflow_rejection": "pass",
         },
         "privacy": {
