@@ -94,7 +94,8 @@
     "cognitive_loop_review_agent_workflow_install_smoke.schema_version == cognitive-loop-review-agent-workflow-install-smoke-v1",
     "cognitive_loop_review_agent_adoption_drill.schema_version == cognitive-loop-review-agent-adoption-drill-v1",
     "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
-    "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1"
+    "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
+    "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1"
   ],
   "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
   "entrypoints": {
@@ -166,11 +167,20 @@
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+    "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_adapter.py",
-    "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py"
+    "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+    "platform/mastra-runtime/README.md",
+    "platform/mastra-runtime/package.json",
+    "platform/mastra-runtime/package-lock.json",
+    "platform/mastra-runtime/tsconfig.json",
+    "platform/mastra-runtime/src/runtime.ts",
+    "platform/mastra-runtime/src/run-once.ts",
+    "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "scripts/verify_cognitive_loop_mastra_runtime_service.py"
   ],
   "integration_mode": "openapi_http_tools",
   "local_verification": [
@@ -256,7 +266,8 @@
     "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
     "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
     "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-    "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -274,6 +285,7 @@
   "schema_version": "study-anything-platform-pack-v1",
   "verification_commands": [
     "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
-    "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check"
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check"
   ]
 }

@@ -97,6 +97,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Mastra runtime dry-run verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
+        "generated_asset",
+        "Cognitive Loop repository-started Mastra runtime service verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1095,6 +1100,46 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
         "verification",
         "Cognitive Loop Mastra runtime dry-run verifier.",
+    ),
+    (
+        "platform/mastra-runtime/README.md",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime MVP operator notes.",
+    ),
+    (
+        "platform/mastra-runtime/package.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime package manifest.",
+    ),
+    (
+        "platform/mastra-runtime/package-lock.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime dependency lockfile.",
+    ),
+    (
+        "platform/mastra-runtime/tsconfig.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime TypeScript configuration.",
+    ),
+    (
+        "platform/mastra-runtime/src/runtime.ts",
+        "mastra_runtime",
+        "Repository-started Mastra instance registration for the Cognitive Loop workflow.",
+    ),
+    (
+        "platform/mastra-runtime/src/run-once.ts",
+        "mastra_runtime",
+        "Deterministic Mastra workflow run covering suspend, resume, bail, and no-gate paths.",
+    ),
+    (
+        "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+        "mastra_runtime",
+        "Runtime-local copy of the Cognitive Loop Mastra workflow adapter kept identical to the public pack.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_runtime_service.py",
+        "verification",
+        "Cognitive Loop repository-started Mastra runtime service verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",

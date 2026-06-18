@@ -48,6 +48,8 @@ pack. The template maps Cognitive Loop Human Mastery Gate state to Mastra suspen
 keeping raw source text and model keys outside Study Anything.
 Run `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` before promoting that
 workspace from adapter experiment to connected runtime.
+With Node 22+, run `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` to
+verify the repo-local Mastra MVP against the same metadata-only workflow contract.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

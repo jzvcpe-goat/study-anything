@@ -19,7 +19,7 @@
     "schema_version": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1"
   },
   "pack": {
-    "file_count": 349,
+    "file_count": 358,
     "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
     "no_frontend_required": true,
     "path": "platform/generated/study-anything-platform-adoption-pack.zip",

@@ -125,21 +125,23 @@ Current:
 - Mastra adapter contract pack is available under `platform/mastra/`.
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` verifies the TypeScript scaffold, HITL mapping, and privacy boundary.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` rehearses the metadata-only runtime boundary: high-risk run suspension, approved resume, rejected bail, and Event Store projection.
-- The pack is copy-ready for external Mastra projects but does not start Mastra from this repository.
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` starts the minimal repo-local Mastra runtime MVP against `@mastra/core` and verifies suspend/resume/bail and no-gate paths.
+- Durable storage, watcher input, and realtime console integration are still planned.
 
 当前：
 
 - Mastra adapter contract pack 已位于 `platform/mastra/`。
 - `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 会验证 TypeScript scaffold、HITL 映射和隐私边界。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 会演练只含 metadata 的 runtime 边界：高风险运行暂停、批准后 resume、拒绝后 bail，以及 Event Store 投影。
-- 该包可复制到外部 Mastra 项目使用，但不会从本仓库启动 Mastra。
+- `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 会通过 `@mastra/core` 启动最小本仓库 Mastra runtime MVP，并验证 suspend/resume/bail 和无需 gate 的路径。
+- 持久化 storage、watcher 输入和实时 console 集成仍然是计划中的层。
 
 Deliver:
 
-- repository-started Mastra workflow service
+- repository-started Mastra workflow service MVP
 - tool registry
 - basic Agent set: DiffExplainer, ProjectMapper, RiskAnalyst, StudyCard, Verifier
-- suspend/resume proof connected to a real Mastra runtime
+- durable suspend/resume proof connected to watcher-generated events
 
 Acceptance:
 
