@@ -48,6 +48,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
     "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
     "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
+    "cognitive_loop_watcher_ingest.schema_version == cognitive-loop-watcher-ingest-verification-v1",
     "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
     "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -97,6 +98,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_evidence_bundle.py --check",
     "verify_cognitive_loop_event_index.py --check",
     "verify_cognitive_loop_event_store.py --check",
+    "verify_cognitive_loop_watcher_ingest.py --check",
     "verify_cognitive_loop_mastra_adapter.py --check",
     "verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "verify_cognitive_loop_mastra_runtime_service.py --check",
@@ -249,6 +251,19 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Event Store report"
         )
+    if "platform/generated/study-anything-cognitive-loop-watcher-ingest.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop watcher ingest report"
+        )
+    for asset in (
+        ".cognitive-loop/watchers.yaml",
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
+    ):
+        if asset not in import_assets:
+            raise PackVerificationError(
+                f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop watcher ingest asset: {asset}"
+            )
     if "platform/generated/study-anything-cognitive-loop-mastra-adapter.json" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Mastra adapter report"

@@ -105,7 +105,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
-- required evals include the Cognitive Loop event index, SQLite Event Store, Mastra adapter contract pack, artifact doctor, repair plan, and artifact index verifiers;
+- required evals include the Cognitive Loop event index, SQLite Event Store, manual watcher ingest, Mastra adapter contract pack, artifact doctor, repair plan, and artifact index verifiers;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -121,7 +121,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
-- required evals 包含 Cognitive Loop event index、SQLite Event Store、Mastra adapter contract pack、artifact doctor、repair plan 和 artifact index verifier；
+- required evals 包含 Cognitive Loop event index、SQLite Event Store、手动 watcher ingest、Mastra adapter contract pack、artifact doctor、repair plan 和 artifact index verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -239,6 +239,24 @@ Event Store 只记录 `ProjectEvent` metadata、artifact path、artifact kind、
 `python3 scripts/cognitive_loop_event_store.py export --html` 会导出静态 metadata-only Event Store 报告。数据库是本地可重建的；它不是 watcher daemon、后台队列、Mastra runtime 或实时 HTML console。
 
 `python3 scripts/verify_cognitive_loop_event_store.py --check` 会在临时 external-adopter project 中验证 SQLite schema 创建、重复 rebuild 幂等、HTML/JSON 导出、hash 覆盖、正文排除和 unsafe Agent endpoint 拒绝，并输出 `cognitive-loop-event-store-verification-v1`。
+
+## Manual Watcher Ingest / 手动 Watcher 摄入
+
+`.cognitive-loop/watchers.yaml` is the optional watcher ingest contract. It declares enabled watcher kinds, their `ProjectEvent` type, include/exclude globs, `maxRefs`, and the current MVP mode: `manual_ingest`.
+
+`python3 scripts/cognitive_loop_watcher_ingest.py init-config` creates the default watcher config. `python3 scripts/cognitive_loop_watcher_ingest.py validate-config` validates that config stays metadata-only and that no daemon is enabled. `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html --watcher-id file-change --target docs/cognitive-loop-contracts.md` writes a metadata-only watcher event artifact under `.cognitive-loop/events/`.
+
+The ingest artifact stores watcher id, source kind, event type, target, public refs, `ProjectEvent`, `DecisionCard`, and `LoopRun` metadata only. It does not read or store file contents, diff bodies, event payload contents, source text, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
+
+`python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` verifies config creation, config validation, file-change event creation, Event Index classification as `watcher_ingest`, SQLite Event Store ingestion, excluded target rejection, malformed config rejection, and privacy boundaries. It emits `cognitive-loop-watcher-ingest-verification-v1`.
+
+`.cognitive-loop/watchers.yaml` 是可选 watcher ingest contract。它声明启用的 watcher kind、对应 `ProjectEvent` 类型、include/exclude glob、`maxRefs`，以及当前 MVP 模式：`manual_ingest`。
+
+`python3 scripts/cognitive_loop_watcher_ingest.py init-config` 会创建默认 watcher 配置。`python3 scripts/cognitive_loop_watcher_ingest.py validate-config` 会验证配置保持 metadata-only 且不启用 daemon。`python3 scripts/cognitive_loop_watcher_ingest.py ingest --html --watcher-id file-change --target docs/cognitive-loop-contracts.md` 会在 `.cognitive-loop/events/` 下写入只含 metadata 的 watcher event artifact。
+
+ingest artifact 只保存 watcher id、source kind、event type、target、公开 refs、`ProjectEvent`、`DecisionCard` 和 `LoopRun` metadata。它不读取或保存文件正文、diff body、event payload 正文、source text、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+
+`python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 会验证配置创建、配置校验、file-change event 创建、Event Index 识别为 `watcher_ingest`、SQLite Event Store 摄入、排除目标拒绝、错误配置拒绝和隐私边界，并输出 `cognitive-loop-watcher-ingest-verification-v1`。
 
 ## Mastra Adapter Contract Pack
 

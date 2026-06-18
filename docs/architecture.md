@@ -63,7 +63,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
-- Cognitive Loop contract files, static evidence artifacts, local event index, SQLite Event Store MVP, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
+- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -74,7 +74,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
-- Cognitive Loop 契约文件、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
+- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -259,7 +259,7 @@ Mastra 是计划中的运行时编排层，而不是产品事实源：
 
 ## Project Contract Files
 
-Project onboarding can create a `.cognitive-loop/` directory in the target repo. The current repo already validates these first four files with `python3 scripts/verify_cognitive_loop_contracts.py --check`; richer watcher and runtime config remains planned:
+Project onboarding can create a `.cognitive-loop/` directory in the target repo. The current repo validates the first four core files with `python3 scripts/verify_cognitive_loop_contracts.py --check` and validates optional manual watcher ingest config with `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`:
 
 ```text
 .cognitive-loop/
@@ -267,9 +267,10 @@ Project onboarding can create a `.cognitive-loop/` directory in the target repo.
   permissions.yaml  allowed, approval-required, and denied AI operations
   evals.yaml        test, lint, typecheck, build, coverage, and release gates
   risk.yaml         risk thresholds, high-risk paths, circuit breakers, mastery gates
+  watchers.yaml     optional manual watcher ingest rules; no daemon is started
 ```
 
-任意项目接入时，可以在目标仓库中创建 `.cognitive-loop/` 目录。当前仓库已经可以用 `python3 scripts/verify_cognitive_loop_contracts.py --check` 校验这四个首批文件；更完整的 watcher 和 runtime config 仍是后续计划：
+任意项目接入时，可以在目标仓库中创建 `.cognitive-loop/` 目录。当前仓库已经可以用 `python3 scripts/verify_cognitive_loop_contracts.py --check` 校验前四个核心文件，并用 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 校验可选的手动 watcher ingest 配置：
 
 ```text
 .cognitive-loop/
@@ -277,15 +278,20 @@ Project onboarding can create a `.cognitive-loop/` directory in the target repo.
   permissions.yaml  AI 可执行、需审批、禁止的操作
   evals.yaml        test、lint、typecheck、build、coverage、release gates
   risk.yaml         风险阈值、高风险路径、熔断器、掌握度门禁
+  watchers.yaml     可选手动 watcher ingest 规则；不会启动 daemon
 ```
 
-The extended project protocol may later add `watchers.yaml` and `learning.yaml`, but the first public contract should stay small enough for a new repository to adopt.
+The extended project protocol may later add `learning.yaml` and daemon runtime config, but the public contract should stay small enough for a new repository to adopt.
 
-扩展协议后续可以加入 `watchers.yaml` 和 `learning.yaml`，但第一版公开契约要足够小，让一个新仓库能快速接入。
+扩展协议后续可以加入 `learning.yaml` 和 daemon runtime config，但公开契约仍要足够小，让一个新仓库能快速接入。
 
 `python3 scripts/cognitive_loop_event_store.py rebuild` is the current local Event Store entrypoint. It rebuilds a SQLite database from validated `.cognitive-loop/events/*.json` artifacts and `python3 scripts/cognitive_loop_event_store.py export --html` creates a static metadata-only report. It is not a watcher daemon or Mastra runtime.
 
 `python3 scripts/cognitive_loop_event_store.py rebuild` 是当前本地 Event Store 入口。它会从已经校验的 `.cognitive-loop/events/*.json` artifact 重建 SQLite 数据库，`python3 scripts/cognitive_loop_event_store.py export --html` 会创建静态 metadata-only 报告。它不是 watcher daemon，也不是 Mastra runtime。
+
+`python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` is the current watcher bridge. It reads `.cognitive-loop/watchers.yaml`, normalizes one file/git/test/runtime-style observation into a metadata-only `ProjectEvent` artifact, and can be indexed or rebuilt into the SQLite Event Store. It does not run a background watcher daemon, read file contents, embed diff bodies, or call external Agents.
+
+`python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` 是当前 watcher 桥接入口。它读取 `.cognitive-loop/watchers.yaml`，把一次文件/Git/测试/runtime 风格 observation 标准化为只含 metadata 的 `ProjectEvent` artifact，并可被 Event Index 或 SQLite Event Store 重建。它不会运行后台 watcher daemon，不读取文件正文，不嵌入 diff body，也不调用外部 Agent。
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
@@ -345,7 +351,7 @@ Professional mode should produce browser-readable artifacts:
 ## Near-Term Non-Goals
 
 - Durable Mastra runtime is not yet integrated in this repository; only the adapter contract pack and minimal in-memory runtime MVP are shipped.
-- Full project watchers are not yet shipped.
+- Full daemonized project watchers are not yet shipped.
 - HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.
 - The current launch path remains API/Skill/platform-Agent first, not a standalone frontend.

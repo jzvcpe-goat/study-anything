@@ -174,6 +174,8 @@ def _artifact_kind(schema_version: str) -> str:
         return "run_once"
     if schema_version.startswith("cognitive-loop-project-snapshot"):
         return "project_snapshot"
+    if schema_version.startswith("cognitive-loop-watcher-ingest"):
+        return "watcher_ingest"
     if schema_version.startswith("cognitive-loop-human-gate"):
         return "human_gate"
     if schema_version.startswith("cognitive-loop-evidence-bundle"):

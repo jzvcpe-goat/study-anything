@@ -37,6 +37,9 @@ COGNITIVE_LOOP_EVENT_INDEX_PATH = (
 COGNITIVE_LOOP_EVENT_STORE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-event-store.json"
 )
+COGNITIVE_LOOP_WATCHER_INGEST_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-watcher-ingest.json"
+)
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
@@ -230,6 +233,7 @@ REQUIRED_SHARED_ASSETS = {
     ".cognitive-loop/permissions.yaml",
     ".cognitive-loop/evals.yaml",
     ".cognitive-loop/risk.yaml",
+    ".cognitive-loop/watchers.yaml",
     "scripts/verify_cognitive_loop_contracts.py",
     "scripts/cognitive_loop_cli.py",
     "scripts/verify_cognitive_loop_cli.py",
@@ -240,6 +244,8 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_event_index.py",
     "scripts/cognitive_loop_event_store.py",
     "scripts/verify_cognitive_loop_event_store.py",
+    "scripts/cognitive_loop_watcher_ingest.py",
+    "scripts/verify_cognitive_loop_watcher_ingest.py",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -282,6 +288,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "platform/generated/study-anything-cognitive-loop-event-index.json",
     "platform/generated/study-anything-cognitive-loop-event-store.json",
+    "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
     "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
@@ -471,6 +478,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_evidence_bundle.py --check",
     "verify_cognitive_loop_event_index.py --check",
     "verify_cognitive_loop_event_store.py --check",
+    "verify_cognitive_loop_watcher_ingest.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -689,6 +697,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-evidence-bundle-verification-v1",
         "cognitive-loop-event-index-verification-v1",
         "cognitive-loop-event-store-verification-v1",
+        "cognitive-loop-watcher-ingest-verification-v1",
         "cognitive-loop-artifact-doctor-verification-v1",
         "cognitive-loop-repair-plan-verification-v1",
         "cognitive-loop-artifact-index-verification-v1",
@@ -784,6 +793,17 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop extracted pack smoke report.")
+        for asset in (
+            "platform/generated/study-anything-cognitive-loop-event-store.json",
+            "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+            ".cognitive-loop/watchers.yaml",
+            "scripts/cognitive_loop_event_store.py",
+            "scripts/verify_cognitive_loop_event_store.py",
+            "scripts/cognitive_loop_watcher_ingest.py",
+            "scripts/verify_cognitive_loop_watcher_ingest.py",
+        ):
+            if asset not in set(str(item) for item in import_assets):
+                raise EcosystemSubmissionError(f"{platform_id} must include Cognitive Loop event asset {asset}.")
         if "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json" not in set(
             str(asset) for asset in import_assets
         ):
@@ -908,6 +928,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
             "cognitive_loop_event_index.schema_version == cognitive-loop-event-index-verification-v1",
             "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
+            "cognitive_loop_watcher_ingest.schema_version == cognitive-loop-watcher-ingest-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -967,6 +988,7 @@ def verify_pack_in_generated_adoption() -> None:
         ".cognitive-loop/permissions.yaml",
         ".cognitive-loop/evals.yaml",
         ".cognitive-loop/risk.yaml",
+        ".cognitive-loop/watchers.yaml",
         "scripts/verify_cognitive_loop_contracts.py",
         "scripts/cognitive_loop_cli.py",
         "scripts/verify_cognitive_loop_cli.py",
@@ -977,6 +999,8 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_event_index.py",
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
@@ -1021,6 +1045,8 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-human-gate.json",
         "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "platform/generated/study-anything-cognitive-loop-event-index.json",
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "platform/generated/study-anything-cognitive-loop-repair-plan.json",
         "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -1517,6 +1543,66 @@ def verify_cognitive_loop_event_store_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop Event Store privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_watcher_ingest_report() -> None:
+    report = load_json(COGNITIVE_LOOP_WATCHER_INGEST_PATH)
+    if report.get("schema_version") != "cognitive-loop-watcher-ingest-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest report must pass.")
+    config = report.get("watcher_config") or {}
+    if config.get("mode") != "manual_ingest":
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest must stay manual_ingest.")
+    if config.get("daemon_enabled") is not False or config.get("daemon_shipped") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop watcher daemon must remain disabled and unshipped.")
+    ingest = report.get("watcher_ingest") or {}
+    for key in (
+        "created",
+        "html_created",
+    ):
+        if ingest.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop watcher ingest missing {key}.")
+    if ingest.get("source_kind") != "file" or ingest.get("event_type") != "file_changed":
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest must prove a file_changed event.")
+    for key in (
+        "content_included",
+        "diff_body_included",
+        "file_contents_included",
+        "daemon_started",
+    ):
+        if ingest.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop watcher ingest {key} must be false.")
+    event_index = report.get("event_index") or {}
+    event_store = report.get("event_store") or {}
+    if event_index.get("contains_watcher_ingest") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop event index must classify watcher_ingest.")
+    if event_store.get("contains_watcher_ingest") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must ingest watcher_ingest.")
+    failure_modes = report.get("failure_modes") or {}
+    if failure_modes.get("excluded_target_rejected") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest must reject excluded targets.")
+    if failure_modes.get("malformed_config_rejected") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest must reject malformed config.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("metadata_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop watcher ingest must be metadata-only.")
+    for key in (
+        "forbidden_text_leaked",
+        "raw_source_text_included",
+        "diff_body_included",
+        "file_contents_included",
+        "event_contents_included",
+        "learner_answers_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+        "watcher_daemon_started",
+        "mastra_runtime_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop watcher ingest privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_mastra_adapter_report() -> None:
@@ -4395,6 +4481,7 @@ def main() -> None:
     verify_cognitive_loop_evidence_bundle_report()
     verify_cognitive_loop_event_index_report()
     verify_cognitive_loop_event_store_report()
+    verify_cognitive_loop_watcher_ingest_report()
     verify_cognitive_loop_mastra_adapter_report()
     verify_cognitive_loop_mastra_runtime_dry_run_report()
     verify_cognitive_loop_mastra_runtime_service_report()
@@ -4456,6 +4543,7 @@ def main() -> None:
                 "cognitive_loop_evidence_bundle": "cognitive-loop-evidence-bundle-verification-v1",
                 "cognitive_loop_event_index": "cognitive-loop-event-index-verification-v1",
                 "cognitive_loop_event_store": "cognitive-loop-event-store-verification-v1",
+                "cognitive_loop_watcher_ingest": "cognitive-loop-watcher-ingest-verification-v1",
                 "cognitive_loop_mastra_adapter": "cognitive-loop-mastra-adapter-verification-v1",
                 "cognitive_loop_mastra_runtime_dry_run": "cognitive-loop-mastra-runtime-dry-run-verification-v1",
                 "cognitive_loop_mastra_runtime_service": "cognitive-loop-mastra-runtime-service-verification-v1",

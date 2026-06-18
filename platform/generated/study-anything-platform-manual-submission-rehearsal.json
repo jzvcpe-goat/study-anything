@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -669,6 +669,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -760,8 +761,12 @@
         "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "platform/generated/study-anything-cognitive-loop-event-index.json",
         "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+        ".cognitive-loop/watchers.yaml",
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "platform/generated/study-anything-cognitive-loop-repair-plan.json",
         "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -831,7 +836,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -842,6 +847,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -937,8 +943,12 @@
         "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "platform/generated/study-anything-cognitive-loop-event-index.json",
         "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+        ".cognitive-loop/watchers.yaml",
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "platform/generated/study-anything-cognitive-loop-repair-plan.json",
         "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -1008,7 +1018,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1019,6 +1029,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -1110,8 +1121,12 @@
         "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "platform/generated/study-anything-cognitive-loop-event-index.json",
         "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+        ".cognitive-loop/watchers.yaml",
         "scripts/cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_event_store.py",
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "platform/generated/study-anything-cognitive-loop-repair-plan.json",
         "platform/generated/study-anything-cognitive-loop-artifact-index.json",

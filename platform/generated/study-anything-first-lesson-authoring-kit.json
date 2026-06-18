@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -122,6 +122,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -206,7 +207,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -217,6 +218,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -303,7 +305,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 96,
+      "acceptance_evidence_count": 97,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -314,6 +316,7 @@
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
         "python3 scripts/verify_cognitive_loop_event_store.py --check",
+        "python3 scripts/verify_cognitive_loop_watcher_ingest.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
         "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
