@@ -86,10 +86,12 @@ python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --hea
 python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/codex-review-report.json
 python3 scripts/cognitive_loop_review_agent_receipt.py build --report /tmp/codex-review-report.json --provider-id codex-review-agent --pr-ref PR --commit-sha SHA --output /tmp/codex-review-receipt.json
 python3 scripts/cognitive_loop_review_agent_pr_comment.py build --receipt /tmp/codex-review-receipt.json
+python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py build --report /tmp/codex-review-report.json --provider-id codex-review-agent --pr-ref PR --commit-sha SHA --output-dir /tmp/codex-review-acceptance
 python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
 python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
 python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 ```
 
 ## Run

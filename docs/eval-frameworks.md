@@ -16,6 +16,7 @@ These gates are required for release and marketplace-style submission:
 - `cognitive-loop-review-agent-eval-harness-v1` via `scripts/verify_cognitive_loop_review_agent_eval_harness.py --check`.
 - `cognitive-loop-review-agent-ci-receipt-v1` via `scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check`.
 - `cognitive-loop-review-agent-pr-comment-pack-v1` via `scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check`.
+- `cognitive-loop-review-agent-acceptance-bundle-v1` via `scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -115,3 +116,18 @@ It emits `cognitive-loop-review-agent-pr-comment-pack-v1` with bilingual Markdow
 summary metadata, suggested labels, validation commands, and human action. The pack must remain
 metadata-only and reject raw diff text, file bodies, finding evidence, report summaries, Agent
 endpoint secrets, real model keys, and hidden chain-of-thought.
+
+## Review Agent Acceptance Bundle
+
+For CI or platform operators who want one artifact directory, build an acceptance bundle directly
+from the validated external Agent report:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py build --report REVIEW_AGENT_REPORT.json --output-dir /tmp/review-agent-acceptance
+python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
+```
+
+It emits `cognitive-loop-review-agent-acceptance-bundle-v1` and writes a receipt, PR comment pack,
+manifest, and `SUMMARY.md`. The bundle still excludes raw handoff material, raw diff text, file
+bodies, finding evidence, report summaries, endpoint secrets, real model keys, and hidden
+chain-of-thought.

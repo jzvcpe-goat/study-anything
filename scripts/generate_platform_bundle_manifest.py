@@ -132,6 +132,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent PR comment pack verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-acceptance-bundle.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent acceptance bundle verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -470,6 +475,11 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/review-agent-pr-comments/raw-diff-leak.json",
         "fixture",
         "Rejected external Review Agent PR comment raw-diff leak fixture.",
+    ),
+    (
+        "fixtures/review-agent-acceptance-bundles/raw-diff-leak/manifest.json",
+        "fixture",
+        "Rejected external Review Agent acceptance bundle raw-diff leak fixture.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1062,6 +1072,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent metadata-only PR comment pack CLI.",
     ),
     (
+        "scripts/cognitive_loop_review_agent_acceptance_bundle.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only acceptance bundle CLI.",
+    ),
+    (
         "scripts/verify_cognitive_loop_review_agent_handoff_cli.py",
         "verification",
         "External Cognitive Loop Review Agent handoff CLI verifier.",
@@ -1080,6 +1095,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py",
         "verification",
         "External Cognitive Loop Review Agent PR comment pack verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py",
+        "verification",
+        "External Cognitive Loop Review Agent acceptance bundle verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",
