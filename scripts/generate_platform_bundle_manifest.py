@@ -137,6 +137,11 @@ FILES: list[tuple[str, str, str]] = [
         "Offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+        "generated_asset",
+        "Negative fixtures proving Cognitive Loop recipe CLI schemas reject drift, unsafe flags, malformed types, and private text probes.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -955,6 +960,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "verification",
         "Generate and verify offline JSON Schemas for Cognitive Loop recipe CLI reports.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
+        "verification",
+        "Verify negative fixtures for Cognitive Loop recipe CLI JSON Schemas.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

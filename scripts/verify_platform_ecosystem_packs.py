@@ -58,6 +58,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_recipe_cli_receipts.schema_version == cognitive-loop-recipe-cli-receipts-v1",
     "cognitive_loop_recipe_cli_failures.schema_version == cognitive-loop-recipe-cli-failures-v1",
     "cognitive_loop_recipe_cli_schemas.schema_version == cognitive-loop-recipe-cli-schemas-v1",
+    "cognitive_loop_recipe_cli_schema_negative_fixtures.schema_version == cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -94,6 +95,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_recipe_cli_receipts.py --check",
     "verify_cognitive_loop_recipe_cli_failures.py --check",
     "verify_cognitive_loop_recipe_cli_schemas.py --check",
+    "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
@@ -203,6 +205,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schemas"
         )
+    if "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema negative fixtures"
+        )
     if "scripts/cognitive_loop_recipe_cli.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI"
@@ -218,6 +224,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if "scripts/verify_cognitive_loop_recipe_cli_schemas.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema verifier"
+        )
+    if "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI schema negative fixture verifier"
         )
 
     commands = pack.get("local_verification_commands")
@@ -245,6 +255,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if "verify_cognitive_loop_recipe_cli_schemas.py --check" not in command_text:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI schema verifier"
+        )
+    if "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the recipe CLI schema negative fixture verifier"
         )
     if pack_id == "codex" and "run_skill_mode_demo.sh" not in command_text:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
@@ -290,11 +304,13 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "study-anything-cognitive-loop-recipe-cli-receipts.json",
         "study-anything-cognitive-loop-recipe-cli-failures.json",
         "study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
         "cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli_receipts.py",
         "verify_cognitive_loop_recipe_cli_failures.py",
         "verify_cognitive_loop_recipe_cli_schemas.py",
+        "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
         "verify_cognitive_loop_skill_entrypoint.py",
         "raw source",
     )

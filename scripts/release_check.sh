@@ -56,6 +56,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
 "$python_bin" scripts/verify_cognitive_loop_recipe_cli_failures.py --check
 "$python_bin" scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+"$python_bin" scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/verify_agent_gateway_hardening.py
 "$python_bin" scripts/verify_external_agent_adapter_hardening.py
