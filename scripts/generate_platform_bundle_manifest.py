@@ -162,6 +162,11 @@ FILES: list[tuple[str, str, str]] = [
         "External platform handoff checklist for import, verification, runtime, and support escalation.",
     ),
     (
+        "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "generated_asset",
+        "Public launch acceptance ledger for GitHub OSS and platform-Agent adoption.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -1005,6 +1010,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_platform_handoff_checklist.py",
         "verification",
         "Generate and verify the external platform handoff checklist.",
+    ),
+    (
+        "scripts/verify_launch_acceptance_ledger.py",
+        "verification",
+        "Generate and verify the public launch acceptance ledger.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

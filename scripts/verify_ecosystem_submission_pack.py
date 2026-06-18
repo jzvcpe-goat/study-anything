@@ -85,6 +85,9 @@ COGNITIVE_LOOP_PACK_EXTRACT_SMOKE_PATH = (
 PLATFORM_HANDOFF_CHECKLIST_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-handoff-checklist.json"
 )
+LAUNCH_ACCEPTANCE_LEDGER_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-launch-acceptance-ledger.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -219,6 +222,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
     "scripts/verify_cognitive_loop_pack_extract_smoke.py",
     "scripts/verify_platform_handoff_checklist.py",
+    "scripts/verify_launch_acceptance_ledger.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -242,6 +246,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-platform-handoff-checklist.json",
+    "platform/generated/study-anything-launch-acceptance-ledger.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -423,6 +428,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
     "verify_cognitive_loop_pack_extract_smoke.py --check",
     "verify_platform_handoff_checklist.py --check",
+    "verify_launch_acceptance_ledger.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -719,6 +725,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the platform handoff checklist report.")
+        if "platform/generated/study-anything-launch-acceptance-ledger.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the launch acceptance ledger report.")
         if "scripts/cognitive_loop_recipe_cli.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI script.")
         if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in set(
@@ -755,6 +765,8 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             )
         if "scripts/verify_platform_handoff_checklist.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the platform handoff checklist verifier.")
+        if "scripts/verify_launch_acceptance_ledger.py" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the launch acceptance ledger verifier.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -842,6 +854,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
             "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
             "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
+            "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -891,6 +904,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "scripts/verify_platform_handoff_checklist.py",
+        "scripts/verify_launch_acceptance_ledger.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -914,6 +928,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "platform/generated/study-anything-platform-handoff-checklist.json",
+        "platform/generated/study-anything-launch-acceptance-ledger.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -2608,6 +2623,93 @@ def verify_platform_handoff_checklist_report() -> None:
         raise EcosystemSubmissionError("Platform handoff checklist report must be redacted.")
 
 
+def verify_launch_acceptance_ledger_report() -> None:
+    report = load_json(LAUNCH_ACCEPTANCE_LEDGER_PATH)
+    if report.get("schema_version") != "launch-acceptance-ledger-v1":
+        raise EcosystemSubmissionError("Launch acceptance ledger schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Launch acceptance ledger must pass.")
+    if report.get("version") != "v0.3.30-alpha":
+        raise EcosystemSubmissionError("Launch acceptance ledger version drifted.")
+
+    assessment = report.get("launch_assessment") or {}
+    expected = {
+        "github_oss_launch": "ready",
+        "platform_agent_distribution": "ready",
+        "self_host_alpha": "ready",
+        "skill_mode": "ready",
+        "standalone_frontend": "not_in_launch_path",
+        "hosted_paid_services": "not_ready_before_pmf",
+    }
+    for key, value in expected.items():
+        if assessment.get(key) != value:
+            raise EcosystemSubmissionError(f"Launch acceptance ledger assessment {key} drifted.")
+
+    source_reports = report.get("source_reports")
+    if not isinstance(source_reports, list) or len(source_reports) < 12:
+        raise EcosystemSubmissionError("Launch acceptance ledger must aggregate source reports.")
+    source_ids = {item.get("report_id") for item in source_reports if isinstance(item, dict)}
+    for report_id in (
+        "commercial_readiness",
+        "platform_adoption_pack",
+        "ecosystem_submission",
+        "platform_handoff_checklist",
+        "platform_onboarding_readiness",
+        "public_support_status",
+        "published_image_evidence",
+        "release_asset_adoption",
+        "release_asset_bootstrap",
+        "release_cleanroom_bootstrap",
+        "platform_agent_release_replay",
+        "adopter_evidence_archive",
+        "deployment_hardening",
+        "platform_feedback_package",
+        "cognitive_loop_pack_extract_smoke",
+    ):
+        if report_id not in source_ids:
+            raise EcosystemSubmissionError(f"Launch acceptance ledger missing source report {report_id}.")
+    for item in source_reports:
+        if not isinstance(item, dict):
+            raise EcosystemSubmissionError("Launch acceptance ledger source rows must be objects.")
+        if item.get("required_for_github_oss_launch") is not True:
+            raise EcosystemSubmissionError("Every launch ledger source row must be release-required.")
+
+    release_gate = report.get("release_gate") or {}
+    if release_gate.get("local_gate") != "./scripts/release_check.sh":
+        raise EcosystemSubmissionError("Launch acceptance ledger release gate drifted.")
+    if release_gate.get("minimum_command") != "python3 scripts/verify_launch_acceptance_ledger.py --check":
+        raise EcosystemSubmissionError("Launch acceptance ledger minimum command drifted.")
+    if set(release_gate.get("expected_ci_checks", [])) != {"api-tests", "compose-smoke"}:
+        raise EcosystemSubmissionError("Launch acceptance ledger CI checks drifted.")
+
+    boundary = report.get("commercial_boundary") or {}
+    if boundary.get("sell_now") != "nothing packaged as a paid app":
+        raise EcosystemSubmissionError("Launch acceptance ledger commercial boundary drifted.")
+    if "hosted subscriptions" not in set(boundary.get("pmf_required_before", [])):
+        raise EcosystemSubmissionError("Launch acceptance ledger must keep hosted subscriptions post-PMF.")
+
+    acceptance = report.get("acceptance") or {}
+    if acceptance.get("evidence") != "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1":
+        raise EcosystemSubmissionError("Launch acceptance ledger evidence drifted.")
+    if acceptance.get("blocks_release_check") is not True:
+        raise EcosystemSubmissionError("Launch acceptance ledger must block release_check.")
+
+    privacy = report.get("privacy_assertions") or {}
+    for key in (
+        "real_model_keys_stored_by_study_anything",
+        "raw_source_text_in_report",
+        "learner_answers_in_report",
+        "agent_endpoint_secrets_in_report",
+        "browser_video_private_context_in_report",
+        "automatic_upload",
+        "standalone_frontend_required",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Launch acceptance ledger privacy_assertions.{key} must be false.")
+    if privacy.get("report_is_redacted") is not True:
+        raise EcosystemSubmissionError("Launch acceptance ledger report must be redacted.")
+
+
 def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
@@ -3730,6 +3832,7 @@ def main() -> None:
     verify_cognitive_loop_schema_pack_consumer_failures_report()
     verify_cognitive_loop_pack_extract_smoke_report()
     verify_platform_handoff_checklist_report()
+    verify_launch_acceptance_ledger_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -3783,6 +3886,7 @@ def main() -> None:
                 "cognitive_loop_schema_pack_consumer_failures": "cognitive-loop-schema-pack-consumer-failures-v1",
                 "cognitive_loop_pack_extract_smoke": "cognitive-loop-pack-extract-smoke-v1",
                 "platform_handoff_checklist": "platform-handoff-checklist-v1",
+                "launch_acceptance_ledger": "launch-acceptance-ledger-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
