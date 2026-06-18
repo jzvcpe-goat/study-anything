@@ -5,6 +5,7 @@ import unittest
 from _path import ROOT
 
 from study_anything.core.cognitive_loop_contracts import (
+    ARTIFACT_DOCTOR_SCHEMA_VERSION,
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
@@ -13,6 +14,7 @@ from study_anything.core.cognitive_loop_contracts import (
     HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
     PROJECT_SNAPSHOT_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
+    build_artifact_doctor_artifact,
     build_cli_artifact_report,
     build_evidence_bundle_artifact,
     build_event_index_artifact,
@@ -345,6 +347,131 @@ class CognitiveLoopContractsTests(unittest.TestCase):
         self.assertFalse(report["privacy"]["event_contents_included"])
         self.assertFalse(report["privacy"]["watcher_daemon_started"])
         self.assertIn("Event Index", html)
+
+    def test_artifact_doctor_passes_clean_metadata_pairs(self) -> None:
+        import hashlib
+        import json
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_dir = root / ".cognitive-loop" / "events"
+            artifact_dir = root / ".cognitive-loop" / "artifacts"
+            event_dir.mkdir(parents=True, exist_ok=True)
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            run_event = {
+                "schema_version": "cognitive-loop-run-once-artifact-v1",
+                "status": "succeeded",
+                "generated_at": "2026-06-17T01:30:00Z",
+            }
+            run_event_path = event_dir / "run-once.json"
+            run_event_path.write_text(json.dumps(run_event), encoding="utf-8")
+            (artifact_dir / "run-once.html").write_text("<html>run once artifact</html>", encoding="utf-8")
+            event_hash = hashlib.sha256(run_event_path.read_bytes()).hexdigest()
+            index_event = {
+                "schema_version": "cognitive-loop-event-index-v1",
+                "status": "ready",
+                "generated_at": "2026-06-17T01:31:00Z",
+                "event_index": {
+                    "entries": [
+                        {
+                            "path": ".cognitive-loop/events/run-once.json",
+                            "sha256": event_hash,
+                        }
+                    ]
+                },
+            }
+            (event_dir / "cognitive-loop-event-index.json").write_text(json.dumps(index_event), encoding="utf-8")
+            (artifact_dir / "cognitive-loop-event-index.html").write_text(
+                "<html>event index artifact</html>",
+                encoding="utf-8",
+            )
+
+            report = build_artifact_doctor_artifact(
+                root,
+                generated_at="2026-06-17T01:32:00Z",
+            )
+            html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], ARTIFACT_DOCTOR_SCHEMA_VERSION)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["artifact_doctor"]["issue_count"], 0)
+        self.assertFalse(report["artifact_doctor"]["content_included"])
+        self.assertFalse(report["privacy"]["event_contents_included"])
+        self.assertIn("Artifact Doctor", html)
+
+    def test_artifact_doctor_detects_missing_html_and_duplicate_hash(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_dir = root / ".cognitive-loop" / "events"
+            event_dir.mkdir(parents=True, exist_ok=True)
+            payload = '{"schema_version":"cognitive-loop-run-once-artifact-v1","status":"succeeded"}'
+            (event_dir / "one.json").write_text(payload, encoding="utf-8")
+            (event_dir / "two.json").write_text(payload, encoding="utf-8")
+
+            report = build_artifact_doctor_artifact(root, generated_at="2026-06-17T01:33:00Z")
+
+        codes = {issue["code"] for issue in report["artifact_doctor"]["issues"]}
+        self.assertEqual(report["status"], "needs_attention")
+        self.assertIn("missing_html_pair", codes)
+        self.assertIn("duplicate_hash", codes)
+        self.assertIn("missing_event_index", codes)
+        self.assertFalse(report["privacy"]["artifact_contents_included"])
+
+    def test_artifact_doctor_detects_stale_event_index_hash(self) -> None:
+        import json
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_dir = root / ".cognitive-loop" / "events"
+            artifact_dir = root / ".cognitive-loop" / "artifacts"
+            event_dir.mkdir(parents=True, exist_ok=True)
+            artifact_dir.mkdir(parents=True, exist_ok=True)
+            (event_dir / "run-once.json").write_text(
+                '{"schema_version":"cognitive-loop-run-once-artifact-v1","status":"succeeded"}',
+                encoding="utf-8",
+            )
+            (artifact_dir / "run-once.html").write_text("<html>run once artifact</html>", encoding="utf-8")
+            stale_index = {
+                "schema_version": "cognitive-loop-event-index-v1",
+                "status": "ready",
+                "event_index": {
+                    "entries": [
+                        {
+                            "path": ".cognitive-loop/events/run-once.json",
+                            "sha256": "0" * 64,
+                        }
+                    ]
+                },
+            }
+            (event_dir / "cognitive-loop-event-index.json").write_text(json.dumps(stale_index), encoding="utf-8")
+
+            report = build_artifact_doctor_artifact(root, generated_at="2026-06-17T01:34:00Z")
+
+        codes = {issue["code"] for issue in report["artifact_doctor"]["issues"]}
+        self.assertIn("stale_event_index_hash_mismatch", codes)
+        self.assertFalse(report["privacy"]["watcher_daemon_started"])
 
 
 if __name__ == "__main__":

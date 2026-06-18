@@ -33,6 +33,7 @@ PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
 HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
 EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
 EVENT_INDEX_SCHEMA_VERSION = "cognitive-loop-event-index-v1"
+ARTIFACT_DOCTOR_SCHEMA_VERSION = "cognitive-loop-artifact-doctor-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -646,6 +647,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop evidence bundle verifier.")
     if "python3 scripts/verify_cognitive_loop_event_index.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop event index verifier.")
+    if "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact doctor verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -792,6 +795,9 @@ required:
     blocking: true
   - id: cognitive-loop.event-index
     command: python3 scripts/verify_cognitive_loop_event_index.py --check
+    blocking: true
+  - id: cognitive-loop.artifact-doctor
+    command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -1912,6 +1918,398 @@ def build_event_index_artifact(
     return report
 
 
+def _doctor_file_kind(relative_path: str) -> str:
+    if relative_path.startswith(".cognitive-loop/events/") and relative_path.endswith(".json"):
+        return "event_json"
+    if relative_path.startswith(".cognitive-loop/artifacts/") and relative_path.endswith(".html"):
+        return "html_artifact"
+    if relative_path.startswith(".cognitive-loop/artifacts/") and relative_path.endswith(".md"):
+        return "markdown_artifact"
+    return "artifact"
+
+
+def _doctor_public_path(relative_path: str) -> str:
+    try:
+        _assert_public_value("artifact_doctor_path", relative_path)
+    except CognitiveLoopContractError:
+        return "[redacted-sensitive-path]"
+    return relative_path
+
+
+def _doctor_is_safe_filename(path: Path) -> bool:
+    return bool(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,119}", path.name))
+
+
+def _doctor_issue(
+    issues: list[dict[str, Any]],
+    *,
+    code: str,
+    severity: str,
+    message: str,
+    path: Optional[str] = None,
+    repair_command: str,
+) -> None:
+    issue = {
+        "issue_id": f"issue-{len(issues) + 1:03d}",
+        "severity": severity,
+        "code": code,
+        "message": message,
+        "repair_command": repair_command,
+    }
+    if path is not None:
+        issue["path"] = _doctor_public_path(path)
+    issues.append(issue)
+
+
+def _scan_doctor_artifacts(root: Path) -> list[str]:
+    paths: list[str] = []
+    for directory in (root / ".cognitive-loop" / "events", root / ".cognitive-loop" / "artifacts"):
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.iterdir()):
+            if not path.is_file():
+                continue
+            if path.suffix not in {".json", ".html", ".md"}:
+                continue
+            relative_path = path.relative_to(root).as_posix()
+            paths.append(relative_path)
+    return paths[:200]
+
+
+def build_artifact_doctor_artifact(
+    root: Path,
+    *,
+    objective: str = "Check local Cognitive Loop artifacts for metadata consistency before watcher automation.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-artifact-doctor.html",
+) -> dict[str, Any]:
+    """Build a metadata-only doctor report for local Cognitive Loop event and HTML artifacts."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    issues: list[dict[str, Any]] = []
+    records: list[dict[str, Any]] = []
+    payloads: dict[str, Mapping[str, Any]] = {}
+    hashes: dict[str, list[str]] = {}
+
+    for relative_path in _scan_doctor_artifacts(root):
+        path = root / relative_path
+        stat = path.stat()
+        data = path.read_bytes()
+        sha256 = hashlib.sha256(data).hexdigest()
+        hashes.setdefault(sha256, []).append(relative_path)
+        record: dict[str, Any] = {
+            "path": _doctor_public_path(relative_path),
+            "kind": _doctor_file_kind(relative_path),
+            "stem": path.stem,
+            "suffix": path.suffix,
+            "size_bytes": len(data),
+            "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc)
+            .replace(microsecond=0)
+            .isoformat()
+            .replace("+00:00", "Z"),
+            "sha256": sha256,
+            "content_included": False,
+        }
+        if not _doctor_is_safe_filename(path):
+            _doctor_issue(
+                issues,
+                code="unsafe_filename",
+                severity="warning",
+                message="Artifact filename should use letters, numbers, dot, dash, or underscore only.",
+                path=relative_path,
+                repair_command="Rename the artifact to a safe local filename and rerun the doctor.",
+            )
+        if relative_path.endswith(".json"):
+            try:
+                payload = json.loads(data.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                record["json_status"] = "invalid_json"
+                _doctor_issue(
+                    issues,
+                    code="invalid_json",
+                    severity="error",
+                    message="Event artifact is not valid JSON.",
+                    path=relative_path,
+                    repair_command="Rebuild the event with scripts/cognitive_loop_cli.py and rerun the doctor.",
+                )
+            else:
+                if isinstance(payload, Mapping):
+                    payloads[relative_path] = payload
+                    record["json_status"] = "valid_json"
+                    schema_version = _optional_artifact_string(payload, "schema_version")
+                    status = _optional_artifact_string(payload, "status")
+                    generated = _optional_artifact_string(payload, "generated_at")
+                    if schema_version:
+                        record["schema_version"] = schema_version
+                    if status:
+                        record["status"] = status
+                    if generated:
+                        record["generated_at"] = generated
+                    try:
+                        _assert_public_value("artifact_doctor_json_metadata", payload)
+                    except CognitiveLoopContractError:
+                        _doctor_issue(
+                            issues,
+                            code="private_metadata_detected",
+                            severity="error",
+                            message="JSON artifact contains private-looking metadata and was not expanded in the report.",
+                            path=relative_path,
+                            repair_command="Rebuild the artifact without raw text, answers, endpoints, Agent metadata, or secrets.",
+                        )
+                else:
+                    record["json_status"] = "invalid_json"
+                    _doctor_issue(
+                        issues,
+                        code="invalid_json_object",
+                        severity="error",
+                        message="Event artifact JSON must be an object.",
+                        path=relative_path,
+                        repair_command="Rebuild the event with scripts/cognitive_loop_cli.py and rerun the doctor.",
+                    )
+        records.append(record)
+
+    event_json_paths = {
+        path
+        for path in payloads
+        if path.startswith(".cognitive-loop/events/")
+        and path not in {
+            ".cognitive-loop/events/cognitive-loop-event-index.json",
+            ".cognitive-loop/events/cognitive-loop-artifact-doctor.json",
+        }
+    }
+    html_paths = {
+        record["path"]
+        for record in records
+        if record.get("kind") == "html_artifact" and isinstance(record.get("path"), str)
+    }
+    for event_path in sorted(event_json_paths):
+        expected_html = f".cognitive-loop/artifacts/{Path(event_path).stem}.html"
+        if expected_html not in html_paths:
+            _doctor_issue(
+                issues,
+                code="missing_html_pair",
+                severity="warning",
+                message="Event JSON does not have a same-stem HTML artifact.",
+                path=event_path,
+                repair_command="Rerun the producing cognitive_loop_cli.py command with --html.",
+            )
+
+    for sha256, paths in sorted(hashes.items()):
+        if len(paths) < 2:
+            continue
+        public_paths = [_doctor_public_path(path) for path in paths]
+        _doctor_issue(
+            issues,
+            code="duplicate_hash",
+            severity="warning",
+            message=f"{len(paths)} local artifacts share the same SHA-256 hash.",
+            repair_command="Review duplicate artifacts and delete or rename superseded local evidence.",
+        )
+        issues[-1]["paths"] = public_paths
+
+    index_payload = payloads.get(".cognitive-loop/events/cognitive-loop-event-index.json")
+    if event_json_paths and not isinstance(index_payload, Mapping):
+        _doctor_issue(
+            issues,
+            code="missing_event_index",
+            severity="warning",
+            message="Event artifacts exist but the local event index is missing.",
+            repair_command="python3 scripts/cognitive_loop_cli.py index --html",
+        )
+    elif isinstance(index_payload, Mapping):
+        index = index_payload.get("event_index")
+        index_entries = index.get("entries") if isinstance(index, Mapping) else None
+        entry_hashes: dict[str, str] = {}
+        if isinstance(index_entries, list):
+            for item in index_entries:
+                if not isinstance(item, Mapping):
+                    continue
+                path_value = item.get("path")
+                hash_value = item.get("sha256")
+                if isinstance(path_value, str) and isinstance(hash_value, str):
+                    entry_hashes[path_value] = hash_value
+        for event_path in sorted(event_json_paths):
+            current_hash = hashlib.sha256((root / event_path).read_bytes()).hexdigest()
+            if event_path not in entry_hashes:
+                _doctor_issue(
+                    issues,
+                    code="stale_event_index_missing_event",
+                    severity="warning",
+                    message="Event index does not list a current event artifact.",
+                    path=event_path,
+                    repair_command="python3 scripts/cognitive_loop_cli.py index --html",
+                )
+            elif entry_hashes[event_path] != current_hash:
+                _doctor_issue(
+                    issues,
+                    code="stale_event_index_hash_mismatch",
+                    severity="warning",
+                    message="Event index hash does not match the current event artifact.",
+                    path=event_path,
+                    repair_command="python3 scripts/cognitive_loop_cli.py index --html",
+                )
+
+    for bundle_path, payload in sorted(payloads.items()):
+        if _optional_artifact_string(payload, "schema_version") != EVIDENCE_BUNDLE_SCHEMA_VERSION:
+            continue
+        bundle = payload.get("evidence_bundle")
+        artifacts = bundle.get("artifacts") if isinstance(bundle, Mapping) else None
+        if not isinstance(artifacts, list):
+            continue
+        for item in artifacts:
+            if not isinstance(item, Mapping):
+                continue
+            listed_path = item.get("path")
+            listed_hash = item.get("sha256")
+            if not isinstance(listed_path, str) or not isinstance(listed_hash, str):
+                continue
+            target = root / listed_path
+            if not target.is_file():
+                _doctor_issue(
+                    issues,
+                    code="stale_evidence_bundle_missing_artifact",
+                    severity="warning",
+                    message="Evidence bundle lists an artifact that is no longer present.",
+                    path=bundle_path,
+                    repair_command="python3 scripts/cognitive_loop_cli.py bundle --html",
+                )
+                continue
+            current_hash = hashlib.sha256(target.read_bytes()).hexdigest()
+            if current_hash != listed_hash:
+                _doctor_issue(
+                    issues,
+                    code="stale_evidence_bundle_hash_mismatch",
+                    severity="warning",
+                    message="Evidence bundle hash does not match a current local artifact.",
+                    path=bundle_path,
+                    repair_command="python3 scripts/cognitive_loop_cli.py bundle --html",
+                )
+
+    error_count = sum(1 for issue in issues if issue.get("severity") == "error")
+    warning_count = sum(1 for issue in issues if issue.get("severity") == "warning")
+    report_status = "pass" if not issues else "needs_attention"
+    summary = (
+        "Checked local Cognitive Loop artifacts with no consistency issues."
+        if not issues
+        else f"Checked local Cognitive Loop artifacts and found {len(issues)} issue"
+        f"{'' if len(issues) == 1 else 's'}."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-artifact-doctor",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "verification_completed",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop",
+            "refs": [f"artifact:{record['path']}" for record in records[:12]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-artifact-doctor",
+            "project_id": project["id"],
+            "title": "Run local Cognitive Loop artifact doctor",
+            "status": "approved",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}"],
+            "risk": {
+                "level": "low" if not issues else "medium",
+                "score": 0.2 if not issues else 0.48,
+                "reasons": [
+                    "metadata-only local artifact scan",
+                    "artifact contents excluded",
+                    "manual repair commands only",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": False,
+                "status": "not_required",
+                "questions": [
+                    "Can the operator identify stale or missing local evidence before sharing?",
+                    "Can the operator rebuild the index and bundle without exposing artifact contents?",
+                ],
+            },
+            "verification": {
+                "status": "passed" if not error_count else "needs_review",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py doctor --html",
+                    "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_artifact_doctor_manifest", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-artifact-doctor",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": ARTIFACT_DOCTOR_SCHEMA_VERSION,
+        "status": report_status,
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Artifact Doctor",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "artifact_doctor": {
+            "status": report_status,
+            "file_count": len(records),
+            "issue_count": len(issues),
+            "error_count": error_count,
+            "warning_count": warning_count,
+            "content_included": False,
+            "records": records,
+            "issues": issues,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "event_contents_included": False,
+            "artifact_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This is a manual local consistency check, not a watcher daemon.",
+            "It records artifact metadata, hashes, and repair commands, not file or event contents.",
+            "Realtime HTML console and Mastra runtime orchestration remain planned layers.",
+        ],
+        "commands": {
+            "doctor": "python3 scripts/cognitive_loop_cli.py doctor --html",
+            "doctor_check": "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
+            "rebuild_index": "python3 scripts/cognitive_loop_cli.py index --html",
+            "rebuild_bundle": "python3 scripts/cognitive_loop_cli.py bundle --html",
+        },
+    }
+    _assert_public_value("artifact_doctor_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1982,6 +2380,36 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
         "</tr>"
         for item in event_entries
+        if isinstance(item, Mapping)
+    )
+    artifact_doctor = report.get("artifact_doctor")
+    if not isinstance(artifact_doctor, Mapping):
+        artifact_doctor = {}
+    doctor_records = artifact_doctor.get("records")
+    if not isinstance(doctor_records, list):
+        doctor_records = []
+    doctor_issues = artifact_doctor.get("issues")
+    if not isinstance(doctor_issues, list):
+        doctor_issues = []
+    doctor_record_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('path', '')))}</td>"
+        f"<td>{escape(str(item.get('kind', '')))}</td>"
+        f"<td>{escape(str(item.get('schema_version', '')))}</td>"
+        f"<td>{escape(str(item.get('status', item.get('json_status', ''))))}</td>"
+        f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
+        "</tr>"
+        for item in doctor_records
+        if isinstance(item, Mapping)
+    )
+    doctor_issue_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('severity', '')))}</td>"
+        f"<td>{escape(str(item.get('code', '')))}</td>"
+        f"<td>{escape(str(item.get('path', '')))}</td>"
+        f"<td><code>{escape(str(item.get('repair_command', '')))}</code></td>"
+        "</tr>"
+        for item in doctor_issues
         if isinstance(item, Mapping)
     )
     gate_resolution = report.get("gate_resolution")
@@ -2157,6 +2585,23 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <table>
         <thead><tr><th>Generated</th><th>Path</th><th>Kind</th><th>Status</th><th>SHA-256</th></tr></thead>
         <tbody>{event_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Artifact Doctor</h2>
+      <div class="status">
+        <div>Files<br><strong>{escape(str(artifact_doctor.get('file_count', 0)))}</strong></div>
+        <div>Issues<br><strong>{escape(str(artifact_doctor.get('issue_count', 0)))}</strong></div>
+        <div>Errors<br><strong>{escape(str(artifact_doctor.get('error_count', 0)))}</strong></div>
+        <div>Warnings<br><strong>{escape(str(artifact_doctor.get('warning_count', 0)))}</strong></div>
+      </div>
+      <table>
+        <thead><tr><th>Severity</th><th>Code</th><th>Path</th><th>Repair</th></tr></thead>
+        <tbody>{doctor_issue_rows}</tbody>
+      </table>
+      <table>
+        <thead><tr><th>Path</th><th>Kind</th><th>Schema</th><th>Status</th><th>SHA-256</th></tr></thead>
+        <tbody>{doctor_record_rows}</tbody>
       </table>
     </section>
     <section>
