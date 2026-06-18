@@ -19,6 +19,7 @@ These gates are required for release and marketplace-style submission:
 - `cognitive-loop-review-agent-acceptance-bundle-v1` via `scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check`.
 - `cognitive-loop-review-agent-github-workflow-verification-v1` via `scripts/verify_cognitive_loop_review_agent_github_workflow.py --check`.
 - `cognitive-loop-review-agent-policy-gate-v1` via `scripts/verify_cognitive_loop_review_agent_policy_gate.py --check`.
+- `cognitive-loop-review-agent-workflow-install-smoke-v1` via `scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -148,6 +149,20 @@ metadata-only Checks/step summary, runs the policy gate with `advisory`, `soft`,
 may upload only the safe acceptance bundle plus `review-agent-policy-gate.json`. It captures the
 policy exit code before upload and applies it in the final step. It does not invoke real models,
 require external Agent secrets, upload raw Review Agent reports, or persist raw diffs.
+
+## Review Agent Workflow Install Smoke
+
+For release-asset or adoption-pack handoff, prove the workflow remains installable from the zip:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+```
+
+It emits `cognitive-loop-review-agent-workflow-install-smoke-v1`. The smoke extracts the adoption
+pack, copies the workflow into a temporary `.github/workflows/` path, builds metadata-only
+acceptance bundles from synthetic fixtures, and runs the shipped policy gate for `advisory`, `soft`,
+and `strict`. It must not require a repo checkout, start a runtime, upload raw reports, call real
+models, or persist temporary files.
 
 ## Review Agent Policy Gate
 

@@ -32,10 +32,27 @@ Recommended local dry-run:
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 ```
 
+Recommended adoption-pack install smoke:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+```
+
+This smoke extracts `platform/generated/study-anything-platform-adoption-pack.zip`, copies the
+workflow into a temporary `.github/workflows/` directory, builds metadata-only acceptance bundles
+from synthetic fixtures, and reproduces `advisory`, `soft`, and `strict` policy gate exits using
+only files shipped in the pack.
+
 The verification report is:
 
 ```text
 platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json
+```
+
+The install-smoke report is:
+
+```text
+platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json
 ```
 
 Privacy boundary:
@@ -80,10 +97,26 @@ workflow 会先捕获 policy gate 退出码，在允许上传时只上传安全 
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 ```
 
+adoption pack 安装验收：
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+```
+
+这个 smoke 会解压 `platform/generated/study-anything-platform-adoption-pack.zip`，把 workflow 复制到临时
+`.github/workflows/` 目录，用合成 fixture 生成 metadata-only acceptance bundle，并且只使用 pack 中的文件
+复现 `advisory`、`soft`、`strict` 三种 policy gate 退出码。
+
 验证报告：
 
 ```text
 platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json
+```
+
+安装验收报告：
+
+```text
+platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json
 ```
 
 隐私边界：

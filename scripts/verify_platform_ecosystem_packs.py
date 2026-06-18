@@ -62,6 +62,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
     "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
     "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
+    "cognitive_loop_review_agent_workflow_install_smoke.schema_version == cognitive-loop-review-agent-workflow-install-smoke-v1",
     "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
     "launch_acceptance_ledger.schema_version == launch-acceptance-ledger-v1",
     "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1",
@@ -105,6 +106,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_schema_pack_consumer.py --check",
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
     "verify_cognitive_loop_pack_extract_smoke.py --check",
+    "verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
     "verify_platform_handoff_checklist.py --check",
     "verify_launch_acceptance_ledger.py --check",
     "verify_github_launch_operator_guide.py --check",
@@ -277,6 +279,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop extracted pack smoke verifier"
         )
+    if "scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Review Agent workflow install smoke verifier"
+        )
     if "scripts/verify_platform_handoff_checklist.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the platform handoff checklist verifier"
@@ -331,6 +337,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if "verify_cognitive_loop_pack_extract_smoke.py --check" not in command_text:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} verification commands must include the extracted pack smoke verifier"
+        )
+    if "verify_cognitive_loop_review_agent_workflow_install_smoke.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the Review Agent workflow install smoke verifier"
         )
     if "verify_platform_handoff_checklist.py --check" not in command_text:
         raise PackVerificationError(

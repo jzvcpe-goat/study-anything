@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 106797,
+    "bytes": 107069,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "3902814f8ec74c7d672bcadc088b0cdb7211679538965b12da8ef69c803e3b30",
+    "sha256": "c5d05f2fa61be9b27393773f8323857a958db09a00b50652d02f7ae1bf78cbf4",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -240,24 +240,24 @@
       "sha256": "cc0ecc5dd2a8a27083f7cef2835b4e07fb5e33841e9ac10e6d0f301ab82801f6"
     },
     {
-      "bytes": 60491,
+      "bytes": 62214,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "0b60c46a4aa3b164f726728ca338468e14d15bb80d1c61649e3c74e387b55a73"
+      "sha256": "919cf3938546ba786d41a0e714862121b24fd3baa88b1a22976926c836a1da67"
     },
     {
-      "bytes": 18263,
+      "bytes": 18658,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "20ed229a7c6a2b2114932c685572f616ab8ef3885496c16490bf8f44e3cdfff1"
+      "sha256": "08f9e80638600a346dcc11e6815cab96c9e50779bf90ec8b312db418b5e408b6"
     },
     {
-      "bytes": 18863,
+      "bytes": 19258,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "a9fe8048f547fbdb9dfebef0b38940a30cfb2e93381a71165b4d8f1918069131"
+      "sha256": "b1e9ef9394c3b360c3b3ddc5d210e9412be71736c02849c5d748954402a0dda8"
     },
     {
-      "bytes": 18369,
+      "bytes": 18764,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "69c019920327a6ec1afcf15f4c7372aaa1b0ed83b21349edea699336e9c816c2"
+      "sha256": "953c29c57cb63ef1a4dc4a3c023fb6729be86e548df6ff2cf266b095be1b8825"
     }
   ],
   "purpose": "Give external adopters and platform maintainers a deterministic way to decide whether a published Study Anything image is ready, blocked, or only limited by local Docker/GHCR pull conditions.",

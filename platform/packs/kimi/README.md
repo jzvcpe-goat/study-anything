@@ -153,6 +153,7 @@ python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
 python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/kimi-review-acceptance --policy soft
 python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
 ```
 
 For GitHub-side reuse, copy `platform/workflows/cognitive-loop-review-agent-manual.yml` only as a
@@ -160,7 +161,9 @@ manual `workflow_dispatch` workflow after the external Kimi report path is clear
 metadata-only Checks summary, runs the built-in `advisory` / `soft` / `strict` policy gate,
 uploads only safe metadata artifacts when enabled, and must not upload the raw Review Agent report.
 The workflow applies the captured policy exit code after artifact upload so Kimi evidence is
-available even when `needs-fix` or `needs-review` blocks CI.
+available even when `needs-fix` or `needs-review` blocks CI. The install smoke proves the same
+workflow and policy gate can be copied from the adoption pack into `.github/workflows/` without
+requiring a repo checkout or raw report upload.
 
 ## Kimi As Reasoning Agent
 

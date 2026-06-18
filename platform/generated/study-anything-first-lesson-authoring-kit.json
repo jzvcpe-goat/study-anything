@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 90,
+      "acceptance_evidence_count": 91,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -141,6 +141,7 @@
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -200,7 +201,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 90,
+      "acceptance_evidence_count": 91,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -230,6 +231,7 @@
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -291,7 +293,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 90,
+      "acceptance_evidence_count": 91,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -321,6 +323,7 @@
         "python3 scripts/verify_github_launch_operator_guide.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check",
         "python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",

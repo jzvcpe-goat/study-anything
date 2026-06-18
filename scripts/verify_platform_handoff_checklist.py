@@ -40,6 +40,7 @@ PACK_BY_PLATFORM = {
 REQUIRED_HANDOFF_COMMANDS = (
     "python3 scripts/verify_platform_handoff_checklist.py --check",
     "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+    "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
     "python3 scripts/generate_platform_feedback_package.py --check",
 )
 REQUIRED_HANDOFF_ASSETS = (
@@ -49,6 +50,7 @@ REQUIRED_HANDOFF_ASSETS = (
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+    "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
     "platform/generated/study-anything-platform-feedback-package.json",
     "platform/generated/study-anything-published-image-evidence.json",
     "platform/generated/study-anything-release-asset-bootstrap.json",
@@ -145,6 +147,8 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include the feedback package.")
         if "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json" not in import_assets:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include the extracted pack smoke report.")
+        if "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json" not in import_assets:
+            raise PlatformHandoffChecklistError(f"{pack_id} pack must include the Review Agent workflow install smoke report.")
         if "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1" not in acceptance:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include handoff checklist evidence.")
         if submission_row.get("no_frontend_required") is not True:
@@ -158,6 +162,7 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
                 "import_asset_count": len(import_assets),
                 "verification_command_count": len(commands),
                 "declares_extract_smoke": True,
+                "declares_review_agent_workflow_install_smoke": True,
                 "declares_feedback_package": True,
                 "declares_handoff_checklist": True,
                 "no_frontend_required": True,
@@ -174,6 +179,10 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
             "verification_command_count": len(generic.get("verification_commands", [])),
             "declares_extract_smoke": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
             in set(str(item) for item in generic.get("import_assets", [])),
+            "declares_review_agent_workflow_install_smoke": (
+                "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json"
+                in set(str(item) for item in generic.get("import_assets", []))
+            ),
             "declares_feedback_package": "platform/generated/study-anything-platform-feedback-package.json"
             in set(str(item) for item in generic.get("import_assets", [])),
             "declares_handoff_checklist": "platform/generated/study-anything-platform-handoff-checklist.json"
@@ -220,6 +229,12 @@ def build_report() -> dict[str, Any]:
                 "step_id": "extract_and_validate_pack",
                 "operator_action": "Extract the adoption pack and run bundled schema consumer checks.",
                 "command": "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+                "blocks_release": True,
+            },
+            {
+                "step_id": "install_review_agent_workflow",
+                "operator_action": "Copy the Review Agent workflow from the adoption pack into .github/workflows and run the metadata-only install smoke.",
+                "command": "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
                 "blocks_release": True,
             },
             {
