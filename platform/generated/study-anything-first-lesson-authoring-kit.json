@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 70,
+      "acceptance_evidence_count": 71,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -121,6 +121,7 @@
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
+        "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -180,7 +181,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 70,
+      "acceptance_evidence_count": 71,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -190,6 +191,7 @@
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
+        "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -251,7 +253,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 70,
+      "acceptance_evidence_count": 71,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -261,6 +263,7 @@
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
         "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_cognitive_loop_event_index.py --check",
+        "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",

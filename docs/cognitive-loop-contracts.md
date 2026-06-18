@@ -32,6 +32,7 @@ python3 scripts/cognitive_loop_cli.py snapshot --html
 python3 scripts/cognitive_loop_cli.py gate --approve --html
 python3 scripts/cognitive_loop_cli.py bundle --html
 python3 scripts/cognitive_loop_cli.py index --html
+python3 scripts/cognitive_loop_cli.py doctor --html
 ```
 
 This CLI is for repo-local contract bootstrap and a static HTML DecisionCard artifact. It is not a daemon, does not watch files, does not call Mastra, does not call a model, and does not require a standalone frontend.
@@ -47,6 +48,7 @@ python3 scripts/cognitive_loop_cli.py snapshot --html
 python3 scripts/cognitive_loop_cli.py gate --approve --html
 python3 scripts/cognitive_loop_cli.py bundle --html
 python3 scripts/cognitive_loop_cli.py index --html
+python3 scripts/cognitive_loop_cli.py doctor --html
 ```
 
 这个 CLI 用于本地契约初始化和静态 HTML DecisionCard artifact。它不是 daemon，不监听文件，不调用 Mastra，不调用模型，也不要求独立前端。
@@ -62,7 +64,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
-- required evals include the Cognitive Loop event index verifier;
+- required evals include the Cognitive Loop event index and artifact doctor verifiers;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -78,7 +80,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
-- required evals 包含 Cognitive Loop event index verifier；
+- required evals 包含 Cognitive Loop event index 和 artifact doctor verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -178,6 +180,24 @@ index 只保存 event artifact path、kind、schema、status、generated timesta
 这仍然是手动重建命令，不是 watcher daemon。它用于连接本地 artifact evidence 和未来实时 HTML console。
 
 `python3 scripts/verify_cognitive_loop_event_index.py --check` 会在临时 external-adopter project 中验证 run/snapshot/gate/bundle index，并输出 `cognitive-loop-event-index-verification-v1`。
+
+## Artifact Doctor
+
+`python3 scripts/cognitive_loop_cli.py doctor --html` checks local Cognitive Loop event and artifact consistency before watcher automation. It scans `.cognitive-loop/events/` and `.cognitive-loop/artifacts/` for JSON, HTML, and Markdown artifacts.
+
+The doctor stores artifact path, kind, schema, status, modified timestamp, size, SHA-256 digest, issue code, severity, and repair command only. It does not embed event JSON contents, HTML contents, Markdown contents, source text, diff bodies, learner answers, Agent endpoints, Agent metadata, or model keys.
+
+The first doctor checks detect missing same-stem HTML artifacts, duplicate hashes, invalid JSON, unsafe filenames, stale event-index hashes, and stale evidence-bundle hashes. This is still a manual consistency command, not a watcher daemon or realtime HTML console.
+
+`python3 scripts/verify_cognitive_loop_artifact_doctor.py --check` verifies clean and intentionally broken artifact sets in temporary external-adopter projects and emits `cognitive-loop-artifact-doctor-verification-v1`.
+
+`python3 scripts/cognitive_loop_cli.py doctor --html` 会在 watcher automation 之前检查本地 Cognitive Loop event 和 artifact consistency。它扫描 `.cognitive-loop/events/` 与 `.cognitive-loop/artifacts/` 里的 JSON、HTML 和 Markdown artifacts。
+
+doctor 只保存 artifact path、kind、schema、status、modified timestamp、size、SHA-256 digest、issue code、severity 和 repair command。它不嵌入 event JSON 正文、HTML 正文、Markdown 正文、source text、diff body、学习者答案、Agent endpoint、Agent metadata 或 model key。
+
+第一版 doctor 会检测缺失的同名 HTML artifact、重复 hash、无效 JSON、不安全文件名、过期 event-index hash 和过期 evidence-bundle hash。这仍然是手动一致性命令，不是 watcher daemon 或实时 HTML console。
+
+`python3 scripts/verify_cognitive_loop_artifact_doctor.py --check` 会在临时 external-adopter project 中验证干净 artifact 集和故意构造的坏 artifact 集，并输出 `cognitive-loop-artifact-doctor-verification-v1`。
 
 ## Public Objects
 

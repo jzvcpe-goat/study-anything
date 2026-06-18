@@ -339,6 +339,38 @@ def cmd_index(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_doctor(args: argparse.Namespace) -> int:
+    root = _root(args)
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-artifact-doctor.html"
+    report = contracts.build_artifact_doctor_artifact(
+        root,
+        objective=args.objective,
+        artifact_ref=artifact_ref,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(args.json_output or (root / ".cognitive-loop" / "events" / "cognitive-loop-artifact-doctor.json"))
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -495,6 +527,24 @@ def build_parser() -> argparse.ArgumentParser:
     )
     index.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     index.set_defaults(func=cmd_index)
+
+    doctor = sub.add_parser("doctor", help="Check local Cognitive Loop artifact consistency.")
+    doctor.add_argument("--html", action="store_true", help="Write a static HTML doctor artifact.")
+    doctor.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-artifact-doctor.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    doctor.add_argument(
+        "--json-output",
+        help="JSON doctor output path. Defaults under .cognitive-loop/events.",
+    )
+    doctor.add_argument(
+        "--objective",
+        default="Check local Cognitive Loop artifacts for metadata consistency before watcher automation.",
+    )
+    doctor.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    doctor.set_defaults(func=cmd_doctor)
     return parser
 
 
