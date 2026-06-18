@@ -39,6 +39,10 @@ For a scenario-based operator guide, read `docs/cognitive-loop-adoption-cookbook
 WorkBuddy-style platform Agent HTTP workspace can call the local API and local Cognitive Loop
 commands while sharing only redacted artifact metadata back into the workspace.
 
+For project memory handoff, run `python3 scripts/cognitive_loop_event_store.py rebuild` locally and
+share only the `python3 scripts/cognitive_loop_event_store.py export --html` metadata report with the
+workspace. The verifier is `python3 scripts/verify_cognitive_loop_event_store.py --check`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

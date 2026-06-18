@@ -1,0 +1,52 @@
+{
+  "cli": "scripts/cognitive_loop_event_store.py",
+  "commands": {
+    "check": "python3 scripts/verify_cognitive_loop_event_store.py --check",
+    "export": "python3 scripts/cognitive_loop_event_store.py export --html",
+    "init": "python3 scripts/cognitive_loop_event_store.py init",
+    "rebuild": "python3 scripts/cognitive_loop_event_store.py rebuild"
+  },
+  "event_store": {
+    "all_items_exclude_content": true,
+    "all_items_have_hash": true,
+    "artifact_count": 5,
+    "duplicate_rebuild_idempotent": true,
+    "event_count": 5,
+    "kinds": [
+      "event_index",
+      "evidence_bundle",
+      "human_gate",
+      "project_snapshot",
+      "run_once"
+    ],
+    "sqlite_file_created": true
+  },
+  "export_schema": "cognitive-loop-event-store-export-v1",
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_redacted_json": true,
+    "contains_sqlite_event_store": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-event-store-v1",
+  "list_schema": "cognitive-loop-event-store-list-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "artifact_contents_included": false,
+    "diff_body_included": false,
+    "event_contents_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "unsafe_agent_endpoint_rejected": true,
+    "watcher_daemon_started": false
+  },
+  "rebuild_schema": "cognitive-loop-event-store-v1",
+  "schema_version": "cognitive-loop-event-store-verification-v1",
+  "status": "pass"
+}

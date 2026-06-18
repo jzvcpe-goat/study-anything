@@ -40,6 +40,7 @@ PACK_BY_PLATFORM = {
 REQUIRED_HANDOFF_COMMANDS = (
     "python3 scripts/verify_platform_handoff_checklist.py --check",
     "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+    "python3 scripts/verify_cognitive_loop_event_store.py --check",
     "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
     "python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check",
     "python3 scripts/generate_platform_feedback_package.py --check",
@@ -51,6 +52,7 @@ REQUIRED_HANDOFF_ASSETS = (
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-openai-tools.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+    "platform/generated/study-anything-cognitive-loop-event-store.json",
     "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
     "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
     "platform/generated/study-anything-platform-feedback-package.json",
@@ -149,6 +151,8 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include the feedback package.")
         if "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json" not in import_assets:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include the extracted pack smoke report.")
+        if "platform/generated/study-anything-cognitive-loop-event-store.json" not in import_assets:
+            raise PlatformHandoffChecklistError(f"{pack_id} pack must include the Event Store report.")
         if "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json" not in import_assets:
             raise PlatformHandoffChecklistError(f"{pack_id} pack must include the Review Agent workflow install smoke report.")
         if "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json" not in import_assets:
@@ -166,6 +170,7 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
                 "import_asset_count": len(import_assets),
                 "verification_command_count": len(commands),
                 "declares_extract_smoke": True,
+                "declares_event_store": True,
                 "declares_review_agent_workflow_install_smoke": True,
                 "declares_review_agent_adoption_drill": True,
                 "declares_feedback_package": True,
@@ -183,6 +188,8 @@ def build_platform_rows(submission: dict[str, Any]) -> list[dict[str, Any]]:
             "import_asset_count": len(generic.get("import_assets", [])),
             "verification_command_count": len(generic.get("verification_commands", [])),
             "declares_extract_smoke": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+            in set(str(item) for item in generic.get("import_assets", [])),
+            "declares_event_store": "platform/generated/study-anything-cognitive-loop-event-store.json"
             in set(str(item) for item in generic.get("import_assets", [])),
             "declares_review_agent_workflow_install_smoke": (
                 "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json"

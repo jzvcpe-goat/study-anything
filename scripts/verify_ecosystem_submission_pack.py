@@ -34,6 +34,9 @@ COGNITIVE_LOOP_EVIDENCE_BUNDLE_PATH = (
 COGNITIVE_LOOP_EVENT_INDEX_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-event-index.json"
 )
+COGNITIVE_LOOP_EVENT_STORE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-event-store.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -220,6 +223,8 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_human_gate.py",
     "scripts/verify_cognitive_loop_evidence_bundle.py",
     "scripts/verify_cognitive_loop_event_index.py",
+    "scripts/cognitive_loop_event_store.py",
+    "scripts/verify_cognitive_loop_event_store.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -248,6 +253,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-human-gate.json",
     "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "platform/generated/study-anything-cognitive-loop-event-index.json",
+    "platform/generated/study-anything-cognitive-loop-event-store.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -433,6 +439,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_human_gate.py --check",
     "verify_cognitive_loop_evidence_bundle.py --check",
     "verify_cognitive_loop_event_index.py --check",
+    "verify_cognitive_loop_event_store.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -650,6 +657,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-human-gate-verification-v1",
         "cognitive-loop-evidence-bundle-verification-v1",
         "cognitive-loop-event-index-verification-v1",
+        "cognitive-loop-event-store-verification-v1",
         "cognitive-loop-artifact-doctor-verification-v1",
         "cognitive-loop-repair-plan-verification-v1",
         "cognitive-loop-artifact-index-verification-v1",
@@ -932,6 +940,8 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_human_gate.py",
         "scripts/verify_cognitive_loop_evidence_bundle.py",
         "scripts/verify_cognitive_loop_event_index.py",
+        "scripts/cognitive_loop_event_store.py",
+        "scripts/verify_cognitive_loop_event_store.py",
         "scripts/verify_cognitive_loop_artifact_doctor.py",
         "scripts/verify_cognitive_loop_repair_plan.py",
         "scripts/verify_cognitive_loop_artifact_index.py",
@@ -1400,6 +1410,62 @@ def verify_cognitive_loop_event_index_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop event index privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_event_store_report() -> None:
+    report = load_json(COGNITIVE_LOOP_EVENT_STORE_PATH)
+    if report.get("schema_version") != "cognitive-loop-event-store-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Event Store report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Event Store report must pass.")
+    store = report.get("event_store") or {}
+    if store.get("sqlite_file_created") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must create a SQLite file.")
+    if store.get("event_count", 0) < 5:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must record local event artifacts.")
+    if store.get("artifact_count", 0) < 5:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must record artifact metadata.")
+    for key in (
+        "duplicate_rebuild_idempotent",
+        "all_items_have_hash",
+        "all_items_exclude_content",
+    ):
+        if store.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Event Store missing {key}.")
+    kinds = set(str(item) for item in store.get("kinds", []))
+    expected = {"run_once", "project_snapshot", "human_gate", "evidence_bundle", "event_index"}
+    if not expected.issubset(kinds):
+        raise EcosystemSubmissionError(f"Cognitive Loop Event Store kinds drifted: {sorted(kinds)}")
+    html = report.get("html_artifact") or {}
+    for key in (
+        "created",
+        "contains_brand",
+        "contains_sqlite_event_store",
+        "contains_redacted_json",
+    ):
+        if html.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Event Store HTML artifact missing {key}.")
+    if html.get("standalone_frontend_required") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must not require a standalone frontend.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("unsafe_agent_endpoint_rejected") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Event Store must reject unsafe Agent endpoint probes.")
+    for key in (
+        "forbidden_text_leaked",
+        "event_contents_included",
+        "artifact_contents_included",
+        "diff_body_included",
+        "file_contents_included",
+        "raw_source_text_included",
+        "learner_answers_included",
+        "real_model_keys_stored",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "watcher_daemon_started",
+        "mastra_runtime_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Event Store privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4115,6 +4181,7 @@ def main() -> None:
     verify_cognitive_loop_human_gate_report()
     verify_cognitive_loop_evidence_bundle_report()
     verify_cognitive_loop_event_index_report()
+    verify_cognitive_loop_event_store_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4172,6 +4239,7 @@ def main() -> None:
                 "cognitive_loop_human_gate": "cognitive-loop-human-gate-verification-v1",
                 "cognitive_loop_evidence_bundle": "cognitive-loop-evidence-bundle-verification-v1",
                 "cognitive_loop_event_index": "cognitive-loop-event-index-verification-v1",
+                "cognitive_loop_event_store": "cognitive-loop-event-store-verification-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",

@@ -131,6 +131,14 @@ SOURCE_REPORTS: tuple[dict[str, Any], ...] = (
         "required_for_github_oss_launch": True,
     },
     {
+        "report_id": "cognitive_loop_event_store",
+        "path": "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "schema_version": "cognitive-loop-event-store-verification-v1",
+        "accepted_statuses": ("pass",),
+        "launch_area": "local metadata event store",
+        "required_for_github_oss_launch": True,
+    },
+    {
         "report_id": "cognitive_loop_review_agent_workflow_install_smoke",
         "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
         "schema_version": "cognitive-loop-review-agent-workflow-install-smoke-v1",

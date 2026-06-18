@@ -32,6 +32,7 @@ Run:
 
 ```bash
 python3 scripts/verify_ecosystem_submission_pack.py
+python3 scripts/verify_cognitive_loop_event_store.py --check
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
