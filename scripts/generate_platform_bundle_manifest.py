@@ -157,6 +157,11 @@ FILES: list[tuple[str, str, str]] = [
         "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
     ),
     (
+        "platform/generated/study-anything-platform-handoff-checklist.json",
+        "generated_asset",
+        "External platform handoff checklist for import, verification, runtime, and support escalation.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -995,6 +1000,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "verification",
         "Verify the extracted adoption pack can run its included schema consumer checks.",
+    ),
+    (
+        "scripts/verify_platform_handoff_checklist.py",
+        "verification",
+        "Generate and verify the external platform handoff checklist.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

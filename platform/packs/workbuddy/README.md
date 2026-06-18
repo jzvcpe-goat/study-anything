@@ -59,6 +59,7 @@ python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --c
 python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+python3 scripts/verify_platform_handoff_checklist.py --check
 python3 scripts/cognitive_loop_recipe_cli.py list
 python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
@@ -78,6 +79,8 @@ discoverable and hash-checked from the adoption pack zip without a repo checkout
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
 `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
 adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
+`platform/generated/study-anything-platform-handoff-checklist.json` gives WorkBuddy-style operators a
+release handoff checklist for import, verification, runtime choice, and support escalation.
 
 ## Runtime Boundary
 
