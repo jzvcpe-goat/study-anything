@@ -95,9 +95,11 @@ For CI/PR evidence, pair the external report verifier with the metadata-only rec
 ```bash
 python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
 python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
 ```
 
 The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
 text, finding evidence, report summaries, Agent endpoint secrets, real model keys, and hidden
 chain-of-thought. The PR comment pack turns that receipt into bilingual copy-ready comments and a
-Checks summary without reintroducing report-body content.
+Checks summary without reintroducing report-body content. The acceptance bundle packages the receipt,
+comment pack, manifest, and Markdown summary for operator handoff.

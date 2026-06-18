@@ -1,0 +1,75 @@
+{
+  "acceptance": {
+    "build_command": "python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py build --report REVIEW_AGENT_REPORT.json --output-dir /tmp/review-agent-acceptance",
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-acceptance-bundle.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check",
+    "validate_command": "python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py validate --bundle-dir /tmp/review-agent-acceptance"
+  },
+  "bundle_count": 3,
+  "bundle_schema_version": "cognitive-loop-review-agent-acceptance-bundle-v1",
+  "bundles": {
+    "approved.json": {
+      "bundle_id": "review-agent-acceptance-6040b64290c943ce",
+      "decision": "approved",
+      "finding_count": 0,
+      "overall_risk": "low",
+      "safe_to_attach_to_pr": true
+    },
+    "needs-fix.json": {
+      "bundle_id": "review-agent-acceptance-2258902d1c4fb2e5",
+      "decision": "needs-fix",
+      "finding_count": 1,
+      "overall_risk": "high",
+      "safe_to_attach_to_pr": true
+    },
+    "needs-review.json": {
+      "bundle_id": "review-agent-acceptance-dd722b1d1b3889d3",
+      "decision": "needs-review",
+      "finding_count": 1,
+      "overall_risk": "medium",
+      "safe_to_attach_to_pr": true
+    }
+  },
+  "cli": "scripts/cognitive_loop_review_agent_acceptance_bundle.py",
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "evals/README.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "negative_bundles": {
+    "raw-diff-leak": "Review Agent acceptance bundle manifest contains private report, raw diff, or secret text: literals=['diff --git'] patterns=[]"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "raw_handoff_material_written": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "quality_gates": {
+    "bundle_files": [
+      "manifest.json",
+      "SUMMARY.md",
+      "review-agent-ci-receipt.json",
+      "review-agent-pr-comment-pack.json"
+    ],
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "metadata_only_bundle": "pass",
+    "privacy_leak_rejection": "pass"
+  },
+  "schema_version": "cognitive-loop-review-agent-acceptance-bundle-verification-v1",
+  "status": "pass"
+}
