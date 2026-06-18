@@ -22,6 +22,7 @@ python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/verify_launch_acceptance_ledger.py --check
 python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/verify_release_stack_readiness.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_external_adoption.py \
@@ -75,6 +76,10 @@ Confirm:
   `github-launch-operator-guide-v1` and proves this guide, `docs/release-checklist.md`,
   `./scripts/release_check.sh`, the launch ledger, ecosystem submission, and adoption pack all expose
   the same release sequence.
+- `scripts/verify_release_stack_readiness.py` returns `release-stack-readiness-v1` and proves the
+  current stacked GitHub PR order, required `api-tests` and `compose-smoke` checks, and local
+  before-tag gates are aligned without storing GitHub tokens, live check payloads, source text,
+  learner answers, Agent endpoint secrets, or real model keys.
 - `scripts/verify_plugin_quarantine.py` returns `plugin-quarantine-verification-v1`, proving
   quarantine-first plugin handling and blocked digest mismatch behavior.
 - `scripts/verify_security_recovery_hardening.py` returns
@@ -96,6 +101,7 @@ Before publishing, run:
 ```bash
 python3 scripts/verify_launch_acceptance_ledger.py --check
 python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/verify_release_stack_readiness.py
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_adoption_pack.py --check
@@ -115,6 +121,23 @@ Attach these release assets to the GitHub prerelease:
 
 Merge the release PR stack into `main` from oldest to newest only after GitHub CI is green, then run
 the same commands from a clean `main` checkout before tagging.
+
+## Release Stack Readiness
+
+`platform/release-stack.json` is the offline merge-order manifest for the current stacked release
+PRs. It records PR numbers, branch names, base branches, required checks, and local before-tag gates.
+It intentionally does not record GitHub tokens, live CI payloads, raw source text, learner answers,
+Agent endpoint secrets, or real model keys.
+
+Run the release stack verifier before merging each layer and again from a clean `main` checkout before
+tagging:
+
+```bash
+python3 scripts/verify_release_stack_readiness.py
+```
+
+The release stack must be merged from oldest to newest. After each merge, sync `main`, confirm the next
+stacked PR base is still current, and confirm the required GitHub checks are green.
 
 ## Tag And Push
 
