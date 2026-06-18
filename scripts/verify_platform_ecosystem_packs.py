@@ -61,6 +61,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_recipe_cli_schema_negative_fixtures.schema_version == cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
     "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
     "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
+    "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -100,6 +101,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
     "verify_cognitive_loop_schema_pack_consumer.py --check",
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
+    "verify_cognitive_loop_pack_extract_smoke.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
@@ -221,6 +223,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer failure report"
         )
+    if "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop extracted pack smoke report"
+        )
     if "scripts/cognitive_loop_recipe_cli.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe CLI"
@@ -248,6 +254,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py" not in import_assets:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop schema pack consumer failure verifier"
+        )
+    if "scripts/verify_cognitive_loop_pack_extract_smoke.py" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop extracted pack smoke verifier"
         )
 
     commands = pack.get("local_verification_commands")
@@ -287,6 +297,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if "verify_cognitive_loop_schema_pack_consumer_failures.py --check" not in command_text:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} verification commands must include the schema pack consumer failure verifier"
+        )
+    if "verify_cognitive_loop_pack_extract_smoke.py --check" not in command_text:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} verification commands must include the extracted pack smoke verifier"
         )
     if pack_id == "codex" and "run_skill_mode_demo.sh" not in command_text:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
@@ -335,6 +349,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
         "study-anything-cognitive-loop-schema-pack-consumer.json",
         "study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "study-anything-cognitive-loop-pack-extract-smoke.json",
         "cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli_receipts.py",
@@ -343,6 +358,7 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
         "verify_cognitive_loop_schema_pack_consumer.py",
         "verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "verify_cognitive_loop_pack_extract_smoke.py",
         "verify_cognitive_loop_skill_entrypoint.py",
         "raw source",
     )

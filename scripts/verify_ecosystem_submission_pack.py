@@ -79,6 +79,9 @@ COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_PATH = (
 COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_FAILURES_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-schema-pack-consumer-failures.json"
 )
+COGNITIVE_LOOP_PACK_EXTRACT_SMOKE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-pack-extract-smoke.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -211,6 +214,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
     "scripts/verify_cognitive_loop_schema_pack_consumer.py",
     "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+    "scripts/verify_cognitive_loop_pack_extract_smoke.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -232,6 +236,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+    "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -411,6 +416,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
     "verify_cognitive_loop_schema_pack_consumer.py --check",
     "verify_cognitive_loop_schema_pack_consumer_failures.py --check",
+    "verify_cognitive_loop_pack_extract_smoke.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -693,6 +699,16 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop schema pack consumer report.")
+        if "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(
+                f"{platform_id} must include the Cognitive Loop schema pack consumer failure report."
+            )
+        if "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop extracted pack smoke report.")
         if "scripts/cognitive_loop_recipe_cli.py" not in set(str(asset) for asset in import_assets):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI script.")
         if "scripts/verify_cognitive_loop_recipe_cli_receipts.py" not in set(
@@ -722,6 +738,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
         ):
             raise EcosystemSubmissionError(
                 f"{platform_id} must include the Cognitive Loop schema pack consumer failure verifier."
+            )
+        if "scripts/verify_cognitive_loop_pack_extract_smoke.py" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(
+                f"{platform_id} must include the Cognitive Loop extracted pack smoke verifier."
             )
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
@@ -808,6 +828,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_recipe_cli_schema_negative_fixtures.schema_version == cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
             "cognitive_loop_schema_pack_consumer.schema_version == cognitive-loop-schema-pack-consumer-v1",
             "cognitive_loop_schema_pack_consumer_failures.schema_version == cognitive-loop-schema-pack-consumer-failures-v1",
+            "cognitive_loop_pack_extract_smoke.schema_version == cognitive-loop-pack-extract-smoke-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -855,6 +876,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer.py",
         "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "scripts/verify_cognitive_loop_pack_extract_smoke.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -876,6 +898,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
         "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -2401,6 +2424,102 @@ def verify_cognitive_loop_schema_pack_consumer_failures_report() -> None:
             raise EcosystemSubmissionError(f"Cognitive Loop schema pack consumer failure privacy.{key} must be false.")
 
 
+def verify_cognitive_loop_pack_extract_smoke_report() -> None:
+    report = load_json(COGNITIVE_LOOP_PACK_EXTRACT_SMOKE_PATH)
+    if report.get("schema_version") != "cognitive-loop-pack-extract-smoke-v1":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke report must pass.")
+
+    pack = report.get("pack") or {}
+    if pack.get("path") != "platform/generated/study-anything-platform-adoption-pack.zip":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke pack path drifted.")
+    if pack.get("manifest_schema_version") != "study-anything-platform-adoption-pack-v1":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke manifest schema drifted.")
+    if pack.get("no_frontend_required") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must preserve no-frontend path.")
+    if pack.get("real_model_keys_stored_by_study_anything") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must not store real model keys.")
+
+    extraction = report.get("extraction") or {}
+    if extraction.get("archive_root") != "study-anything-platform-adoption-pack":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke archive root drifted.")
+    if extraction.get("command_count") != 2:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke command count drifted.")
+    if extraction.get("included_scripts_executed") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must execute bundled scripts.")
+    expected_required = {
+        "manifest.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+        "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+    }
+    if set(extraction.get("required_files_present", [])) != expected_required:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke required file set drifted.")
+
+    commands = report.get("commands")
+    if not isinstance(commands, list) or len(commands) != 2:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke commands drifted.")
+    expected_commands = {
+        (
+            "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+            "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        ),
+        (
+            "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+            "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        ),
+    }
+    actual_commands = set()
+    for command in commands:
+        if not isinstance(command, dict):
+            raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke command must be an object.")
+        if command.get("status") != "pass" or command.get("exit_code") != 0:
+            raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke command must pass with exit 0.")
+        if command.get("mode") != "write_then_check":
+            raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke command mode drifted.")
+        actual_commands.add((command.get("script"), command.get("report")))
+    if actual_commands != expected_commands:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke command targets drifted.")
+
+    zip_only = report.get("zip_only_validation") or {}
+    if zip_only.get("used_extracted_pack_scripts") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must use extracted scripts.")
+    if zip_only.get("original_pack_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must rely on the original pack only.")
+    if zip_only.get("temporary_report_outputs_persisted") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must not persist temporary report outputs.")
+    for key in ("repo_checkout_required", "recipe_cli_invoked", "runtime_started", "file_changes_applied"):
+        if zip_only.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop extracted pack smoke zip_only_validation.{key} must be false.")
+
+    distribution = report.get("distribution") or {}
+    if distribution.get("report_path") != "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json":
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke report path drifted.")
+    if distribution.get("safe_for_platform_agent_static_import") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop extracted pack smoke must be safe for static import.")
+
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "generated_private_insights_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "real_model_keys_stored",
+        "browser_video_app_private_context_included",
+        "temporary_paths_included",
+        "command_stdout_included",
+        "command_stderr_included",
+        "temporary_report_outputs_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop extracted pack smoke privacy.{key} must be false.")
+
+
 def verify_submission_dry_run_report() -> None:
     report = load_json(SUBMISSION_DRY_RUN_PATH)
     if report.get("schema_version") != "platform-submission-dry-run-v1":
@@ -3521,6 +3640,7 @@ def main() -> None:
     verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report()
     verify_cognitive_loop_schema_pack_consumer_report()
     verify_cognitive_loop_schema_pack_consumer_failures_report()
+    verify_cognitive_loop_pack_extract_smoke_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -3572,6 +3692,7 @@ def main() -> None:
                 "cognitive_loop_recipe_cli_schema_negative_fixtures": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
                 "cognitive_loop_schema_pack_consumer": "cognitive-loop-schema-pack-consumer-v1",
                 "cognitive_loop_schema_pack_consumer_failures": "cognitive-loop-schema-pack-consumer-failures-v1",
+                "cognitive_loop_pack_extract_smoke": "cognitive-loop-pack-extract-smoke-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
