@@ -110,6 +110,7 @@ fi
 "$python_bin" scripts/verify_platform_handoff_checklist.py --check
 "$python_bin" scripts/verify_launch_acceptance_ledger.py --check
 "$python_bin" scripts/verify_github_launch_operator_guide.py --check
+"$python_bin" scripts/verify_release_stack_readiness.py
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
