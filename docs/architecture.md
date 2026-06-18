@@ -63,6 +63,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
+- Cognitive Loop contract files, static evidence artifacts, local event index, and SQLite Event Store MVP for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -73,6 +74,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
+- Cognitive Loop 契约文件、静态 evidence artifacts、本地 event index，以及只存 metadata 的 SQLite Event Store MVP。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -257,7 +259,7 @@ Mastra 是计划中的运行时编排层，而不是产品事实源：
 
 ## Project Contract Files
 
-Future project onboarding should create a `.cognitive-loop/` directory in the target repo. These files are planned contracts, not implemented config loaders in this positioning PR:
+Project onboarding can create a `.cognitive-loop/` directory in the target repo. The current repo already validates these first four files with `python3 scripts/verify_cognitive_loop_contracts.py --check`; richer watcher and runtime config remains planned:
 
 ```text
 .cognitive-loop/
@@ -267,7 +269,7 @@ Future project onboarding should create a `.cognitive-loop/` directory in the ta
   risk.yaml         risk thresholds, high-risk paths, circuit breakers, mastery gates
 ```
 
-未来任意项目接入时，会在目标仓库中创建 `.cognitive-loop/` 目录。这些文件是计划中的契约，不是本次定位 PR 已经实现的配置加载器：
+任意项目接入时，可以在目标仓库中创建 `.cognitive-loop/` 目录。当前仓库已经可以用 `python3 scripts/verify_cognitive_loop_contracts.py --check` 校验这四个首批文件；更完整的 watcher 和 runtime config 仍是后续计划：
 
 ```text
 .cognitive-loop/
@@ -280,6 +282,10 @@ Future project onboarding should create a `.cognitive-loop/` directory in the ta
 The extended project protocol may later add `watchers.yaml` and `learning.yaml`, but the first public contract should stay small enough for a new repository to adopt.
 
 扩展协议后续可以加入 `watchers.yaml` 和 `learning.yaml`，但第一版公开契约要足够小，让一个新仓库能快速接入。
+
+`python3 scripts/cognitive_loop_event_store.py rebuild` is the current local Event Store entrypoint. It rebuilds a SQLite database from validated `.cognitive-loop/events/*.json` artifacts and `python3 scripts/cognitive_loop_event_store.py export --html` creates a static metadata-only report. It is not a watcher daemon or Mastra runtime.
+
+`python3 scripts/cognitive_loop_event_store.py rebuild` 是当前本地 Event Store 入口。它会从已经校验的 `.cognitive-loop/events/*.json` artifact 重建 SQLite 数据库，`python3 scripts/cognitive_loop_event_store.py export --html` 会创建静态 metadata-only 报告。它不是 watcher daemon，也不是 Mastra runtime。
 
 ## Product Entry Modes
 

@@ -105,7 +105,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals include the Cognitive Loop project snapshot verifier;
 - required evals include the Cognitive Loop Human Mastery Gate verifier;
 - required evals include the Cognitive Loop evidence bundle verifier;
-- required evals include the Cognitive Loop event index, artifact doctor, repair plan, and artifact index verifiers;
+- required evals include the Cognitive Loop event index, SQLite Event Store, artifact doctor, repair plan, and artifact index verifiers;
 - high or blocked risk rules require a Human Mastery Gate;
 - `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport` validate as redacted public DTOs;
 - secret-like values, raw excerpt fields, and high-risk decisions without a human gate are rejected.
@@ -121,7 +121,7 @@ The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 - required evals 包含 Cognitive Loop project snapshot verifier；
 - required evals 包含 Cognitive Loop Human Mastery Gate verifier；
 - required evals 包含 Cognitive Loop evidence bundle verifier；
-- required evals 包含 Cognitive Loop event index、artifact doctor、repair plan 和 artifact index verifier；
+- required evals 包含 Cognitive Loop event index、SQLite Event Store、artifact doctor、repair plan 和 artifact index verifier；
 - high / blocked 风险规则必须有人类掌握度门禁；
 - `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 可以作为脱敏 public DTO 校验；
 - secret-like 值、raw excerpt 字段、没有 human gate 的高风险决策会被拒绝。
@@ -221,6 +221,24 @@ index 只保存 event artifact path、kind、schema、status、generated timesta
 这仍然是手动重建命令，不是 watcher daemon。它用于连接本地 artifact evidence 和未来实时 HTML console。
 
 `python3 scripts/verify_cognitive_loop_event_index.py --check` 会在临时 external-adopter project 中验证 run/snapshot/gate/bundle index，并输出 `cognitive-loop-event-index-verification-v1`。
+
+## SQLite Event Store
+
+`python3 scripts/cognitive_loop_event_store.py rebuild` creates a local SQLite Event Store from validated Cognitive Loop JSON event artifacts. By default it reads `.cognitive-loop/events/*.json`, or operators can pass repeated `--event` paths.
+
+The store records `ProjectEvent` metadata, artifact path, artifact kind, schema, status, size, SHA-256 digest, and public ids such as `DecisionCard` and `LoopRun` ids when present. It does not store artifact contents, source text, diff bodies, learner answers, Agent endpoints, Agent metadata, model keys, or prompt text.
+
+`python3 scripts/cognitive_loop_event_store.py export --html` exports a static metadata-only Event Store report. The database is local and rebuildable; it is not a watcher daemon, background queue, Mastra runtime, or realtime HTML console.
+
+`python3 scripts/verify_cognitive_loop_event_store.py --check` verifies SQLite schema creation, idempotent rebuild, HTML/JSON export, hash coverage, content exclusion, and unsafe Agent endpoint rejection in a temporary external-adopter project. It emits `cognitive-loop-event-store-verification-v1`.
+
+`python3 scripts/cognitive_loop_event_store.py rebuild` 会从已经校验的 Cognitive Loop JSON event artifacts 创建本地 SQLite Event Store。默认读取 `.cognitive-loop/events/*.json`，操作者也可以重复传入 `--event` 路径。
+
+Event Store 只记录 `ProjectEvent` metadata、artifact path、artifact kind、schema、status、size、SHA-256 digest，以及存在时的 `DecisionCard` 和 `LoopRun` 等公开 id。它不保存 artifact 正文、source text、diff body、学习者答案、Agent endpoint、Agent metadata、model key 或 prompt text。
+
+`python3 scripts/cognitive_loop_event_store.py export --html` 会导出静态 metadata-only Event Store 报告。数据库是本地可重建的；它不是 watcher daemon、后台队列、Mastra runtime 或实时 HTML console。
+
+`python3 scripts/verify_cognitive_loop_event_store.py --check` 会在临时 external-adopter project 中验证 SQLite schema 创建、重复 rebuild 幂等、HTML/JSON 导出、hash 覆盖、正文排除和 unsafe Agent endpoint 拒绝，并输出 `cognitive-loop-event-store-verification-v1`。
 
 ## Artifact Doctor / Artifact 诊断器
 

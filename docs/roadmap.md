@@ -100,7 +100,7 @@ Deliver:
 - `LoopRun`
 - `MasteryRecord`
 - `EvolutionReport`
-- SQLite Event Store
+- SQLite Event Store MVP with metadata-only rebuild/export proof
 - static HTML report generator v0
 - implemented `.cognitive-loop/config.yaml`
 - implemented `.cognitive-loop/permissions.yaml`
@@ -111,6 +111,7 @@ Acceptance:
 
 - A manually supplied project event can produce a decision card.
 - A decision card can render into a static HTML report.
+- Validated event artifacts can be rebuilt into a local SQLite Event Store and exported without content payloads.
 - Core state is stored outside Langfuse and outside Agent chat context.
 - A fresh repo can run `cognitive-loop init` and receive the four core contract files.
 - Contract loaders reject unsafe defaults, unknown high-risk permission downgrades, and secret-like config values.

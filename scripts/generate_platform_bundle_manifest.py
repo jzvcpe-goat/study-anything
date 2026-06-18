@@ -82,6 +82,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop metadata-only local event index verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "generated_asset",
+        "Cognitive Loop local SQLite Event Store verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1045,6 +1050,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_event_index.py",
         "verification",
         "Cognitive Loop metadata-only local event index verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_event_store.py",
+        "cli",
+        "Local SQLite Event Store for validated Cognitive Loop event metadata.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_event_store.py",
+        "verification",
+        "Cognitive Loop local SQLite Event Store verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",

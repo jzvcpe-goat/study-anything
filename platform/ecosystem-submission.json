@@ -9,6 +9,7 @@
       "python3 scripts/verify_cognitive_loop_human_gate.py --check",
       "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
       "python3 scripts/verify_cognitive_loop_event_index.py --check",
+      "python3 scripts/verify_cognitive_loop_event_store.py --check",
       "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check",
       "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
       "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
@@ -86,6 +87,7 @@
       "cognitive-loop-human-gate-verification-v1 proves external operators can record local Human Mastery Gate approvals and rejections without executing changes, storing private context, or taking model-key custody",
       "cognitive-loop-evidence-bundle-verification-v1 proves external operators can bundle local evidence metadata with paths, sizes, and hashes without embedding artifact contents or private context",
       "cognitive-loop-event-index-verification-v1 proves external operators can build a metadata-only local event timeline from Cognitive Loop artifacts without embedding event contents, starting a watcher daemon, or taking model-key custody",
+      "cognitive-loop-event-store-verification-v1 proves external operators can rebuild a local SQLite Event Store from validated artifacts, export metadata-only HTML/JSON, reject unsafe Agent endpoints, and keep watcher/Mastra/runtime claims out of the MVP",
       "cognitive-loop-artifact-doctor-verification-v1 proves external operators can detect missing pairs, duplicate hashes, invalid JSON, and stale local indexes or bundles without embedding artifact contents, starting a watcher daemon, or taking model-key custody",
       "cognitive-loop-repair-plan-verification-v1 proves external operators can map artifact doctor issues to manual-only repair actions without executing file changes, embedding artifact contents, starting a watcher daemon, or taking model-key custody",
       "cognitive-loop-artifact-index-verification-v1 proves external operators can open a static local artifact index with relative links, hashes, and metadata without embedding artifact contents, requiring a standalone frontend, starting a watcher daemon, or taking model-key custody",
@@ -235,6 +237,9 @@
     "platform/generated/study-anything-cognitive-loop-human-gate.json",
     "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "platform/generated/study-anything-cognitive-loop-event-index.json",
+    "platform/generated/study-anything-cognitive-loop-event-store.json",
+    "scripts/cognitive_loop_event_store.py",
+    "scripts/verify_cognitive_loop_event_store.py",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -512,7 +517,10 @@
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "platform/generated/study-anything-platform-feedback-package.json"
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "scripts/cognitive_loop_event_store.py",
+        "scripts/verify_cognitive_loop_event_store.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -521,6 +529,7 @@
         "The submission pack does not include raw learning content or private platform context."
       ],
       "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
@@ -536,6 +545,7 @@
       "platform_id": "kimi-compatible",
       "submission_status": "ready_for_manual_submission",
       "verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -617,7 +627,10 @@
         "scripts/verify_github_launch_operator_guide.py",
         "platform/packs/codex/README.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "platform/generated/study-anything-platform-feedback-package.json"
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "scripts/cognitive_loop_event_store.py",
+        "scripts/verify_cognitive_loop_event_store.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -625,6 +638,7 @@
         "The Skill launches or calls a local Study Anything API instead of becoming a standalone chat product."
       ],
       "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
@@ -640,6 +654,7 @@
       "platform_id": "codex-skill",
       "submission_status": "ready_for_repo_local_use",
       "verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -718,7 +733,10 @@
         "scripts/verify_github_launch_operator_guide.py",
         "platform/packs/workbuddy/README.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "platform/generated/study-anything-platform-feedback-package.json"
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "scripts/cognitive_loop_event_store.py",
+        "scripts/verify_cognitive_loop_event_store.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -726,6 +744,7 @@
         "Admin, provider setup, sync export, restore preview, and PMF export endpoints are intentionally excluded."
       ],
       "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
@@ -741,6 +760,7 @@
       "platform_id": "workbuddy-style-http",
       "submission_status": "ready_for_manual_submission",
       "verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -818,7 +838,10 @@
         "scripts/verify_github_launch_operator_guide.py",
         "docs/platform-agent-integrations.md",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "platform/generated/study-anything-platform-feedback-package.json"
+        "platform/generated/study-anything-platform-feedback-package.json",
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "scripts/cognitive_loop_event_store.py",
+        "scripts/verify_cognitive_loop_event_store.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -826,6 +849,7 @@
         "The pack is for local-first OSS adoption, not managed hosting or marketplace payments."
       ],
       "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
         "python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check",
         "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",
@@ -841,6 +865,7 @@
       "platform_id": "generic-openapi-tools",
       "submission_status": "ready_for_manual_submission",
       "verification_commands": [
+        "python3 scripts/verify_cognitive_loop_event_store.py --check",
         "python3 scripts/verify_ecosystem_submission_pack.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",

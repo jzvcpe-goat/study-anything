@@ -77,6 +77,14 @@
       "status": "pass"
     },
     {
+      "launch_area": "local metadata event store",
+      "path": "platform/generated/study-anything-cognitive-loop-event-store.json",
+      "report_id": "cognitive_loop_event_store",
+      "required_for_github_oss_launch": true,
+      "schema_version": "cognitive-loop-event-store-verification-v1",
+      "status": "pass"
+    },
+    {
       "launch_area": "zip-only platform adoption",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "report_id": "cognitive_loop_pack_extract_smoke",

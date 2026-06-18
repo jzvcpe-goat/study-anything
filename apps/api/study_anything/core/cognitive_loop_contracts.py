@@ -650,6 +650,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop evidence bundle verifier.")
     if "python3 scripts/verify_cognitive_loop_event_index.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop event index verifier.")
+    if "python3 scripts/verify_cognitive_loop_event_store.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop Event Store verifier.")
     if "python3 scripts/verify_cognitive_loop_artifact_doctor.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop artifact doctor verifier.")
     if "python3 scripts/verify_cognitive_loop_repair_plan.py --check" not in commands:
@@ -808,6 +810,9 @@ required:
     blocking: true
   - id: cognitive-loop.event-index
     command: python3 scripts/verify_cognitive_loop_event_index.py --check
+    blocking: true
+  - id: cognitive-loop.event-store
+    command: python3 scripts/verify_cognitive_loop_event_store.py --check
     blocking: true
   - id: cognitive-loop.artifact-doctor
     command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check

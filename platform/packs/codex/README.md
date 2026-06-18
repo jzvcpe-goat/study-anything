@@ -28,6 +28,10 @@ For Cognitive Loop operations, start from `docs/cognitive-loop-adoption-cookbook
 to local Cognitive Loop commands for first adoption, daily project review, risk decisions, and
 learning handoff without adding a standalone frontend.
 
+For local event memory, run `python3 scripts/cognitive_loop_event_store.py rebuild` after generating
+`.cognitive-loop/events/*.json`, then run `python3 scripts/cognitive_loop_event_store.py export --html`.
+Verify the SQLite metadata-only path with `python3 scripts/verify_cognitive_loop_event_store.py --check`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

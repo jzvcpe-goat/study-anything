@@ -80,6 +80,12 @@ For a shorter operating path, read `docs/cognitive-loop-adoption-cookbook.md`. I
 keeps Kimi as the conversation surface while a terminal, workspace Agent, or private gateway runs the
 local Cognitive Loop commands and returns only redacted artifact metadata.
 
+When a local event ledger is useful, the terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_event_store.py rebuild` and
+`python3 scripts/cognitive_loop_event_store.py export --html`; Kimi should receive only the exported
+metadata summary, not the SQLite file or private source artifacts. Verify with
+`python3 scripts/verify_cognitive_loop_event_store.py --check`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace

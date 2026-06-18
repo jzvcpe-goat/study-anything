@@ -146,7 +146,9 @@ machine-readable recipe matrix, and
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` to verify the matrix is
 safe for metadata-only replay before an operator runs runtime or human-gated commands.
 `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json` proves the same recipe path
-is visible from the repo-local Skill and every platform pack README.
+across the repo-local Skill and all platform packs. The local SQLite Event Store path is verified by
+`python3 scripts/verify_cognitive_loop_event_store.py --check` and should be shared only as exported
+metadata, not as raw source or Agent context.
 `platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves platform Agents can query
 read-only `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` gives deterministic
