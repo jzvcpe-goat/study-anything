@@ -122,6 +122,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop read-only recipe CLI verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "generated_asset",
+        "Deterministic read-only Cognitive Loop recipe CLI output receipts.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -925,6 +930,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_recipe_cli.py",
         "verification",
         "Verify the read-only Cognitive Loop recipe CLI for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "verification",
+        "Generate and verify deterministic Cognitive Loop recipe CLI receipts.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",
