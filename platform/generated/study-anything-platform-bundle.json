@@ -372,112 +372,112 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "6aa923d70296ce31603edd4d0a7775ab6e28c720e16f005288b6132e3afcfb84"
+      "sha256": "6f00c85e5fb4bd331950a0b53bd1b105c190ef0eebfe99f7e9235d1ce9a598d7"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "d5272ee961f6341379953e57333744faf1ab9f2a565f53a50bf465ac70a25275"
+      "sha256": "f9a0209579be2e05d8cb242566c51b7cf25c5f16e5797c0ce484ababaaa59845"
     },
     {
-      "bytes": 104709,
+      "bytes": 104772,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "b5ed0ecb7cb2ebe229f9aab4a42e6dbaf7972fa1ac895e966a8e6c79d600fc6e"
+      "sha256": "5cd14273fd80e3d77e0b5072e1ceade31f38fbf0e022099c03f567e4131e8531"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "ec946b9691e796e6f9489b39e520700254165b44ed3b3a242177adf35f73f547"
+      "sha256": "ade09b08ec056ef333aecb7c83e0e7a4d35ffbe828c792d59721637c62db68db"
     },
     {
       "bytes": 13750,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "5ac69e83d5cfd4d23fbc1171df39ee4197110763d195de1e84e0099346085675"
+      "sha256": "85d4c22ac50ccfd0f90335a49ae8dfb786664d9a43cc5bcd9e03062fa0ad5333"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "5bcc3b62465e952c4575d1ec623200bb076d885b15dc78c9f9fbf6e1d14d914d"
+      "sha256": "3dfe3d1cf1d43fd987ceecf2db7453d4cd4cbb24cfdb66f56fd6e3bc82ab266b"
     },
     {
-      "bytes": 301486,
+      "bytes": 301713,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "2bc0ea842f705954bf041ea485f8482ef6d5b023330732943a3f3e1e95ff23a0"
+      "sha256": "1cbc856a3cd5aeef63f3d4e77d4a654d39e767f513252e6e9648aa457bfc27de"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "8d936432cdefbd3e9ed009dcbb0a2354598e3052e6daae51a028d2956f1ebc6c"
+      "sha256": "975da6fa75dcd68dd2393f828eee2b16d67d75a36def843c008626a2f190244c"
     },
     {
       "bytes": 8124,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "aab7a85e5fe0b10626d239fc40f88e2245be1e77173da18ea1586cbd5373f700"
+      "sha256": "ead4e00f871dae60dd619450728169063d968cb0c5deda25549ff573fcc085fa"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "042472c7abb641ce55cd8b21489b619c2aa37a5efd253ef8b85303a66fdb1552"
+      "sha256": "438367137c91a1b59347f5c2c1878fb9b88b1f35f44c7416a6907f467bd9735b"
     },
     {
-      "bytes": 102781,
+      "bytes": 102891,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "996a60ce61d5cc79499dbfa12e5912133685913c7b5935027033108ad8e5182d"
+      "sha256": "80a7ec3df0ab0178f3e364243529519c4c8a395ff51392c36a4adc961a1ac9df"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "942d7654ea7e0585aae4dffb17ba45a1ffaf649c1e63bcf0a9ebb2d875d82893"
+      "sha256": "0ba4fd0149c5aeedb97ddc219f1b63cf454c8cdfed3ea7b6f07b87953de5b086"
     },
     {
       "bytes": 7877,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "16302310f3639eb7979ce6df46adad8fdd59581749b1812f06ac38a8be6ed023"
+      "sha256": "f4c3d878cd44c500d6d5bed15a7942a2ef5840783f2f86d83bc1420329bb05e2"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "2322aa18e0a8f952aa1ade4d19818a749ab1e2edc6765bfd5ca8ef1947253809"
+      "sha256": "4c22815db3fa2f97c7c32451cdd6deece5aa4197261f5aeb08cb87c2ae2235f8"
     },
     {
-      "bytes": 76429,
+      "bytes": 76478,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "10f0c9f5298cf86df391e42e5ec14f904364dd33a1e06683467c13a895db3589"
+      "sha256": "46aa5867ff24b1173506d54b29e92ff3e039105f3d5f8de943559216d1933bb2"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "e244f1da8e79fd0f42a8c7ae1baebb088c6ad53bf643851af483bd7409dc5f30"
+      "sha256": "df0065cc00c12596f2301af9dc7414e5229b7b60a6bdd709b8f83deecdf3bedf"
     },
     {
       "bytes": 7868,
@@ -1663,11 +1663,11 @@
       "sha256": "84f05b9d7ff34a3d94df0b04ac83807b4a6e991142a3f5658c9ac4141a00eb5b"
     },
     {
-      "bytes": 10039,
+      "bytes": 10335,
       "kind": "docs",
       "path": "docs/github-launch.md",
       "purpose": "GitHub launch, tag, release, and published-image verification guide.",
-      "sha256": "c9360d495fb57091022577938a6edc06c85f5752ab283c9508aba98bb5fed34a"
+      "sha256": "50d409e12e36ae2d96c95d6bc117a690c945d8986ee90645c6fe1e45eba666ed"
     },
     {
       "bytes": 27610,
@@ -1761,11 +1761,11 @@
       "sha256": "6aeb803855835b29f2e63c709a274a259ab2263d1b1bdfa7f6b409809c33867e"
     },
     {
-      "bytes": 30424,
+      "bytes": 30827,
       "kind": "docs",
       "path": "docs/release-checklist.md",
       "purpose": "Release gate checklist for platform adoption evidence.",
-      "sha256": "36261df1c7aa0786e5c36306655d10faa4ca31b0a03b2f5fc21bbf85bbd015a3"
+      "sha256": "91b83ab3ad44e8d580ae95b7b48eaa3ac4d26719451c13bf7f0b554265a25bd2"
     },
     {
       "bytes": 10438,

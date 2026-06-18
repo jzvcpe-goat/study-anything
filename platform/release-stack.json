@@ -65,6 +65,13 @@
       "branch": "codex/v0.3.58-live-release-stack-status",
       "base": "codex/v0.3.57-release-stack-readiness",
       "status_expected_before_merge": "checks_pass"
+    },
+    {
+      "order": 7,
+      "pr": 140,
+      "branch": "codex/v0.3.59-full-stack-lineage",
+      "base": "codex/v0.3.58-live-release-stack-status",
+      "status_expected_before_merge": "checks_pass"
     }
   ],
   "privacy_assertions": {
