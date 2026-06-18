@@ -244,6 +244,53 @@ def cmd_gate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _default_bundle_artifacts(root: Path) -> list[str]:
+    candidates: list[str] = []
+    for directory in (root / ".cognitive-loop" / "events", root / ".cognitive-loop" / "artifacts"):
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.iterdir()):
+            if path.is_file() and path.suffix in {".json", ".html", ".md"}:
+                candidates.append(path.relative_to(root).as_posix())
+    return candidates
+
+
+def cmd_bundle(args: argparse.Namespace) -> int:
+    root = _root(args)
+    artifact_paths = list(args.artifact or [])
+    if not artifact_paths:
+        artifact_paths = _default_bundle_artifacts(root)
+    artifact_ref = args.output or ".cognitive-loop/artifacts/cognitive-loop-evidence-bundle.html"
+    report = contracts.build_evidence_bundle_artifact(
+        root,
+        artifact_paths=artifact_paths,
+        objective=args.objective,
+        artifact_ref=artifact_ref,
+    )
+    wrote: list[str] = []
+    if args.html:
+        output = Path(artifact_ref)
+        if not output.is_absolute():
+            output = root / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(contracts.render_cli_artifact_html(report), encoding="utf-8")
+        wrote.append(str(output))
+
+    json_output = Path(args.json_output or (root / ".cognitive-loop" / "events" / "cognitive-loop-evidence-bundle.json"))
+    if not json_output.is_absolute():
+        json_output = root / json_output
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.write_text(_dump(report), encoding="utf-8")
+    wrote.append(str(json_output))
+
+    if args.html and not args.json:
+        for path in wrote:
+            print(f"wrote: {path}")
+        return 0
+    print(_dump(report), end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -354,6 +401,29 @@ def build_parser() -> argparse.ArgumentParser:
     )
     gate.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     gate.set_defaults(func=cmd_gate)
+
+    bundle = sub.add_parser("bundle", help="Create a metadata-only local evidence bundle manifest.")
+    bundle.add_argument("--html", action="store_true", help="Write a static HTML bundle artifact.")
+    bundle.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-evidence-bundle.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    bundle.add_argument(
+        "--json-output",
+        help="JSON evidence output path. Defaults under .cognitive-loop/events.",
+    )
+    bundle.add_argument(
+        "--artifact",
+        action="append",
+        help="Repo-relative artifact path to include. Defaults to local .cognitive-loop events/artifacts.",
+    )
+    bundle.add_argument(
+        "--objective",
+        default="Create a redacted local Cognitive Loop evidence bundle manifest.",
+    )
+    bundle.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    bundle.set_defaults(func=cmd_bundle)
     return parser
 
 

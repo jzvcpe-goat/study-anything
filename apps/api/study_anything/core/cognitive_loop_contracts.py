@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
+import hashlib
 from html import escape
 import json
 from pathlib import Path
@@ -30,6 +31,7 @@ CLI_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-cli-artifact-v1"
 RUN_ONCE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-run-once-artifact-v1"
 PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
 HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
+EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -639,6 +641,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop snapshot verifier.")
     if "python3 scripts/verify_cognitive_loop_human_gate.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop human gate verifier.")
+    if "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop evidence bundle verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -779,6 +783,9 @@ required:
     blocking: true
   - id: cognitive-loop.human-gate
     command: python3 scripts/verify_cognitive_loop_human_gate.py --check
+    blocking: true
+  - id: cognitive-loop.evidence-bundle
+    command: python3 scripts/verify_cognitive_loop_evidence_bundle.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -1511,6 +1518,179 @@ def build_human_gate_artifact(
     return report
 
 
+def _safe_bundle_artifact_paths(paths: Iterable[str]) -> list[str]:
+    safe: list[str] = []
+    for raw_path in paths:
+        if not isinstance(raw_path, str):
+            raise CognitiveLoopContractError("Evidence bundle artifact paths must be strings.")
+        normalized = raw_path.strip().replace("\\", "/")
+        if not normalized:
+            continue
+        if normalized.startswith("/") or normalized.startswith("../") or "/../" in normalized:
+            raise CognitiveLoopContractError(f"Evidence bundle path must be repo-relative: {raw_path}.")
+        _assert_public_value("artifact_path", normalized)
+        safe.append(normalized)
+    deduped = sorted(dict.fromkeys(safe))
+    if len(deduped) > 50:
+        raise CognitiveLoopContractError("Evidence bundle artifact count is limited to 50.")
+    return deduped
+
+
+def _bundle_artifact_kind(path: str) -> str:
+    if path.endswith(".json"):
+        return "event_json"
+    if path.endswith(".html"):
+        return "html_artifact"
+    if path.endswith(".md"):
+        return "markdown_artifact"
+    return "artifact"
+
+
+def build_evidence_bundle_artifact(
+    root: Path,
+    *,
+    artifact_paths: Iterable[str],
+    objective: str = "Create a redacted local Cognitive Loop evidence bundle manifest.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-evidence-bundle.html",
+) -> dict[str, Any]:
+    """Build a manifest for local evidence artifacts without embedding artifact contents."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    safe_paths = _safe_bundle_artifact_paths(artifact_paths)
+    artifacts: list[dict[str, Any]] = []
+    total_bytes = 0
+    for relative_path in safe_paths:
+        path = root / relative_path
+        if not path.is_file():
+            raise CognitiveLoopContractError(f"Evidence bundle artifact is missing: {relative_path}.")
+        data = path.read_bytes()
+        size = len(data)
+        total_bytes += size
+        artifacts.append(
+            {
+                "path": relative_path,
+                "kind": _bundle_artifact_kind(relative_path),
+                "size_bytes": size,
+                "sha256": hashlib.sha256(data).hexdigest(),
+                "content_included": False,
+            }
+        )
+    artifact_count = len(artifacts)
+    summary = (
+        f"Bundled metadata for {artifact_count} local Cognitive Loop artifact"
+        f"{'' if artifact_count == 1 else 's'} without embedding contents."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-evidence-bundle",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "verification_completed",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop",
+            "refs": [f"artifact:{item['path']}" for item in artifacts[:12]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-evidence-bundle",
+            "project_id": project["id"],
+            "title": "Publish local evidence bundle manifest",
+            "status": "approved",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}"],
+            "risk": {
+                "level": "low",
+                "score": 0.24,
+                "reasons": [
+                    "metadata-only evidence manifest",
+                    "artifact contents excluded",
+                    "local operator controlled export",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": False,
+                "status": "not_required",
+                "questions": [
+                    "Can the operator inspect artifact hashes without exposing contents?",
+                    "Can the operator rerun the verifier before sharing the manifest?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py bundle --html",
+                    "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_evidence_bundle_manifest", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-evidence-bundle",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": EVIDENCE_BUNDLE_SCHEMA_VERSION,
+        "status": "ready",
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Evidence Bundle",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "evidence_bundle": {
+            "artifact_count": artifact_count,
+            "total_bytes": total_bytes,
+            "max_artifacts_recorded": 50,
+            "content_included": False,
+            "artifacts": artifacts,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "artifact_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This is a metadata manifest, not an archive containing artifact contents.",
+            "Operators can share hashes and paths while keeping local evidence files private.",
+            "Realtime HTML console and watcher automation remain planned layers.",
+        ],
+        "commands": {
+            "bundle": "python3 scripts/cognitive_loop_cli.py bundle --html",
+            "bundle_check": "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
+        },
+    }
+    _assert_public_value("evidence_bundle_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1550,6 +1730,22 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     if not isinstance(snapshot_paths, list):
         snapshot_paths = []
     snapshot_path_items = list_items(snapshot_paths[:20])
+    evidence_bundle = report.get("evidence_bundle")
+    if not isinstance(evidence_bundle, Mapping):
+        evidence_bundle = {}
+    bundle_artifacts = evidence_bundle.get("artifacts")
+    if not isinstance(bundle_artifacts, list):
+        bundle_artifacts = []
+    bundle_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('path', '')))}</td>"
+        f"<td>{escape(str(item.get('kind', '')))}</td>"
+        f"<td>{escape(str(item.get('size_bytes', '')))}</td>"
+        f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
+        "</tr>"
+        for item in bundle_artifacts
+        if isinstance(item, Mapping)
+    )
     gate_resolution = report.get("gate_resolution")
     if not isinstance(gate_resolution, Mapping):
         gate_resolution = {}
@@ -1708,6 +1904,14 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       </div>
       <p>{escape(str(gate_resolution.get('rationale', 'No local human gate resolution recorded.')))}</p>
       <ul>{gate_scope}</ul>
+    </section>
+    <section>
+      <h2>Evidence Bundle</h2>
+      <p>Artifact metadata records: <strong>{escape(str(evidence_bundle.get('artifact_count', 0)))}</strong></p>
+      <table>
+        <thead><tr><th>Path</th><th>Kind</th><th>Bytes</th><th>SHA-256</th></tr></thead>
+        <tbody>{bundle_rows}</tbody>
+      </table>
     </section>
     <section>
       <h2>Contract Files</h2>

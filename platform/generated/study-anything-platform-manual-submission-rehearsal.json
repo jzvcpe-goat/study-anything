@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 68,
+      "acceptance_evidence_count": 69,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -666,6 +666,7 @@
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -729,6 +730,7 @@
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
         "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
@@ -739,7 +741,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 68,
+      "acceptance_evidence_count": 69,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -747,6 +749,7 @@
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -814,6 +817,7 @@
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
         "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",
@@ -824,7 +828,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 68,
+      "acceptance_evidence_count": 69,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -832,6 +836,7 @@
         "python3 scripts/verify_cognitive_loop_run_once.py --check",
         "python3 scripts/verify_cognitive_loop_snapshot.py --check",
         "python3 scripts/verify_cognitive_loop_human_gate.py --check",
+        "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check",
         "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
@@ -895,6 +900,7 @@
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
         "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "docs/cognitive-loop-contracts.md",
         "platform/bootstrap/study_anything_release_bootstrap.py",
         "docs/release-cleanroom-bootstrap.md",

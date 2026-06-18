@@ -8,10 +8,12 @@ from study_anything.core.cognitive_loop_contracts import (
     BOOTSTRAP_SCHEMA_VERSION,
     CLI_ARTIFACT_SCHEMA_VERSION,
     CognitiveLoopContractError,
+    EVIDENCE_BUNDLE_SCHEMA_VERSION,
     HUMAN_GATE_ARTIFACT_SCHEMA_VERSION,
     PROJECT_SNAPSHOT_SCHEMA_VERSION,
     RUN_ONCE_ARTIFACT_SCHEMA_VERSION,
     build_cli_artifact_report,
+    build_evidence_bundle_artifact,
     build_human_gate_artifact,
     build_project_snapshot_artifact,
     build_run_once_artifact,
@@ -255,6 +257,41 @@ class CognitiveLoopContractsTests(unittest.TestCase):
                 resolution="approved",
                 rationale="api_key = secretsecretsecret",
             )
+
+    def test_evidence_bundle_records_hashes_without_contents(self) -> None:
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_default_contract_files(
+                root,
+                project_id="external-adopter-project",
+                project_name="External Adopter Project",
+            )
+            event_path = root / ".cognitive-loop" / "events" / "run-once.json"
+            html_path = root / ".cognitive-loop" / "artifacts" / "gate.html"
+            event_path.parent.mkdir(parents=True, exist_ok=True)
+            html_path.parent.mkdir(parents=True, exist_ok=True)
+            event_path.write_text('{"schema_version":"example"}', encoding="utf-8")
+            html_path.write_text("<html>redacted artifact</html>", encoding="utf-8")
+
+            report = build_evidence_bundle_artifact(
+                root,
+                artifact_paths=[
+                    ".cognitive-loop/events/run-once.json",
+                    ".cognitive-loop/artifacts/gate.html",
+                ],
+                generated_at="2026-06-17T01:10:00Z",
+            )
+            html = render_cli_artifact_html(report)
+
+        self.assertEqual(report["schema_version"], EVIDENCE_BUNDLE_SCHEMA_VERSION)
+        self.assertEqual(report["evidence_bundle"]["artifact_count"], 2)
+        self.assertFalse(report["evidence_bundle"]["content_included"])
+        self.assertTrue(all(not item["content_included"] for item in report["evidence_bundle"]["artifacts"]))
+        self.assertFalse(report["privacy"]["artifact_contents_included"])
+        self.assertIn("Evidence Bundle", html)
 
 
 if __name__ == "__main__":
