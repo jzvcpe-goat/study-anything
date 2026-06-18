@@ -102,6 +102,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop advisory code review verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-prompt.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent prompt verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -400,6 +405,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cognitive-loop-code-review.md",
         "operator_doc",
         "Cognitive Loop advisory code review guide.",
+    ),
+    (
+        "platform/prompts/cognitive-loop-review-agent.json",
+        "prompt_contract",
+        "External Cognitive Loop Review Agent JSON-only prompt contract.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -965,6 +975,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review.py",
         "verification",
         "Cognitive Loop advisory code review verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_prompt.py",
+        "verification",
+        "External Cognitive Loop Review Agent prompt verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",

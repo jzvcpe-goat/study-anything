@@ -187,18 +187,22 @@ Acceptance:
 - A git diff can create a DecisionCard.
 - A test failure creates a diagnostic event and recommended next step.
 - A git diff or redacted PR summary can create an advisory `ReviewRun` with up to five high-confidence findings, suggested verification commands, and a non-blocking security gate.
+- A user-owned CI/platform Review Agent can use `platform/prompts/cognitive-loop-review-agent.json` for JSON-only line-level diff review with at most eight findings; Study Anything still only stores redacted structured evidence.
 - git diff 或脱敏 PR 摘要可以生成咨询式 `ReviewRun`，最多五条高置信发现、建议验证命令，以及不阻塞合并的安全门。
+- 用户自有 CI/平台 Review Agent 可以使用 `platform/prompts/cognitive-loop-review-agent.json` 做 JSON-only 行级 diff 审查，最多八条发现；Study Anything 仍然只保存脱敏结构化证据。
 
 Current code-review scope:
 
 - `python3 scripts/cognitive_loop_review.py --base main --head HEAD --html`
 - `python3 scripts/verify_cognitive_loop_review.py --check`
+- `python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check`
 - v0.1 is advisory only; soft gate and hard gate adoption are later opt-in phases.
 
 当前代码审查范围：
 
 - `python3 scripts/cognitive_loop_review.py --base main --head HEAD --html`
 - `python3 scripts/verify_cognitive_loop_review.py --check`
+- `python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check`
 - v0.1 仅做咨询；soft gate 和 hard gate 是后续可选升级阶段。
 
 ## Phase 6: Professional HTML Artifact Mode

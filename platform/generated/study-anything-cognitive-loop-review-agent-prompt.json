@@ -1,0 +1,31 @@
+{
+  "acceptance": {
+    "built_in_review_cli": "scripts/cognitive_loop_review.py remains metadata-only advisory evidence",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check",
+    "prompt_contract": "platform/prompts/cognitive-loop-review-agent.json"
+  },
+  "checks": {
+    "confidence_rules": "pass",
+    "external_max_findings": 8,
+    "identity_boundaries": "pass",
+    "input_constraints": "pass",
+    "output_discipline": "pass",
+    "product_boundary": "pass"
+  },
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "README.md": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/cognitive-loop-contracts.md": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "privacy": {
+    "external_agent_reads_diff_only_when_ci_provides_it": true,
+    "study_anything_stores_diff": false,
+    "study_anything_stores_file_bodies": false,
+    "study_anything_stores_model_keys": false
+  },
+  "prompt_contract": "platform/prompts/cognitive-loop-review-agent.json",
+  "schema_version": "cognitive-loop-review-agent-prompt-verification-v1",
+  "status": "pass"
+}
