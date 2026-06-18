@@ -13,6 +13,7 @@
       "python3 scripts/verify_cognitive_loop_repair_plan.py --check",
       "python3 scripts/verify_cognitive_loop_artifact_index.py --check",
       "python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check",
+      "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
       "python3 scripts/verify_commercial_readiness.py",
       "python3 scripts/verify_adoption_telemetry.py",
       "python3 scripts/verify_agent_gateway_hardening.py",
@@ -74,6 +75,7 @@
       "cognitive-loop-repair-plan-verification-v1 proves external operators can map artifact doctor issues to manual-only repair actions without executing file changes, embedding artifact contents, starting a watcher daemon, or taking model-key custody",
       "cognitive-loop-artifact-index-verification-v1 proves external operators can open a static local artifact index with relative links, hashes, and metadata without embedding artifact contents, requiring a standalone frontend, starting a watcher daemon, or taking model-key custody",
       "cognitive-loop-adoption-cookbook-verification-v1 proves Kimi, Codex, WorkBuddy, and private platform Agent adoption paths are documented, privacy-safe, pack-indexed, and explicit that Mastra runtime, watcher daemon, and realtime HTML console are planned rather than shipped requirements",
+      "cognitive-loop-adoption-recipes-v1 gives platform Agents a machine-readable recipe matrix for first adoption, daily project review, risk decisions, and learning handoff without storing private context or real model keys",
       "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
       "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
       "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
@@ -213,6 +215,7 @@
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
     "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+    "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-adoption-pack.zip",
@@ -247,6 +250,7 @@
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
     "scripts/verify_cognitive_loop_adoption_cookbook.py",
+    "scripts/generate_cognitive_loop_adoption_recipes.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -421,6 +425,7 @@
         "platform/generated/study-anything-tool-catalog.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py"
       ],
@@ -479,6 +484,7 @@
         "platform/generated/study-anything-tool-catalog.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/packs/codex/README.md"
       ],
       "integration_mode": "terminal_skill",
@@ -532,6 +538,7 @@
         "platform/generated/study-anything-tool-catalog.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/packs/workbuddy/README.md"
       ],
       "integration_mode": "openapi_http_tools",
@@ -584,6 +591,7 @@
         "platform/generated/study-anything-tool-catalog.md",
         "docs/cognitive-loop-adoption-cookbook.md",
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "docs/platform-agent-integrations.md"
       ],
       "integration_mode": "generic_openapi_tools",

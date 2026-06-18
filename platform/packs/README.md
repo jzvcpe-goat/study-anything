@@ -15,6 +15,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
 - `docs/cognitive-loop-adoption-cookbook.md`
+- `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -74,6 +75,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_ecosystem_submission_pack.py
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
 .venv/bin/python scripts/verify_cognitive_loop_adoption_cookbook.py --check
+.venv/bin/python scripts/generate_cognitive_loop_adoption_recipes.py --check
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check
@@ -108,4 +110,6 @@ provider-default issues.
 
 For day-to-day use, start from `docs/cognitive-loop-adoption-cookbook.md`. It maps Kimi, Codex,
 WorkBuddy, and private platform Agents to the local Cognitive Loop commands for first adoption, daily
-project review, risk decisions, and learning handoff.
+project review, risk decisions, and learning handoff. Platform Agents can also import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json` for the same paths as a
+machine-readable recipe matrix.

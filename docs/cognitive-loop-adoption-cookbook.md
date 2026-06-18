@@ -30,6 +30,12 @@ python3 scripts/verify_external_adoption.py \
   --copy-worktree
 ```
 
+Single-line form for platform Agents:
+
+```bash
+python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree
+```
+
 Acceptance evidence:
 
 - `adoption-proof-v1`
@@ -109,9 +115,9 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 After a real learning session, fetch these redacted artifacts:
 
 - `agent-audit`
-- `agent-eval/artifact`
+- `agent-eval/artifact` (`agent-eval-artifact-v1`)
 - `agent-eval/quality`
-- `agent-eval/report`
+- `agent-eval/report` (`agent-eval-report-v1`)
 - Obsidian export
 - NotebookLM-style learning package
 - second-brain handoff
@@ -119,12 +125,12 @@ After a real learning session, fetch these redacted artifacts:
 真实学习会话完成后，获取这些脱敏产物：
 
 - `agent-audit`
-- `agent-eval/artifact`
+- `agent-eval/artifact` (`agent-eval-artifact-v1`)
 - `agent-eval/quality`
-- `agent-eval/report`
-- Obsidian export
-- NotebookLM-style learning package
-- second-brain handoff
+- `agent-eval/report` (`agent-eval-report-v1`)
+- Obsidian export (`obsidian-markdown-export-v1`)
+- NotebookLM-style learning package (`learning-package-v1`)
+- second-brain handoff (`second-brain-handoff-v1`)
 
 ## Platform Prompts / 平台 Agent 提示词
 
@@ -170,8 +176,25 @@ Do not paste these into Kimi, Codex, WorkBuddy, support tickets, or public issue
 
 ## Quick Acceptance / 快速验收
 
+Machine-readable recipe artifact:
+
+- `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
+- `cognitive-loop-adoption-recipes-v1`
+
+Recipe evidence keys:
+
+- `cognitive-loop-project-snapshot-verification-v1`
+- `cognitive-loop-run-once-evidence-verification-v1`
+- `cognitive-loop-event-index-verification-v1`
+- `cognitive-loop-artifact-index-verification-v1`
+- `cognitive-loop-human-gate-verification-v1`
+- `cognitive-loop-artifact-doctor-verification-v1`
+- `cognitive-loop-repair-plan-verification-v1`
+- `manual-only repair actions`
+
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
 python3 scripts/verify_cognitive_loop_artifact_index.py --check
 python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
 python3 scripts/generate_platform_bundle_manifest.py --check

@@ -1,0 +1,131 @@
+{
+  "boundaries": {
+    "cognitive_loop_artifacts_are_metadata_only": true,
+    "mastra_runtime_shipped": false,
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "realtime_html_console_shipped": false,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true,
+    "watcher_daemon_shipped": false
+  },
+  "commands": {
+    "check": "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
+    "cookbook": "python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check",
+    "generate": "python3 scripts/generate_cognitive_loop_adoption_recipes.py"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "do_not_share": [
+      "raw source text",
+      "diff bodies or file contents",
+      "learner answers",
+      "grading feedback",
+      "generated private insights",
+      "Agent endpoints or raw Agent metadata",
+      "API keys, judge keys, or model secrets",
+      "browser, video, app, or personal private context"
+    ],
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Machine-readable adoption recipes for Kimi, Codex, WorkBuddy, and private platform Agents.",
+  "recipes": [
+    {
+      "acceptance_evidence": [
+        "adoption-proof-v1",
+        "ecosystem-submission-verification-v1",
+        "no standalone frontend requirement",
+        "no Study Anything custody of real model keys"
+      ],
+      "commands": [
+        "python3 scripts/generate_platform_adoption_pack.py --check",
+        "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+      ],
+      "operator_goal": "Prove the local-first platform Agent path before adding real model keys.",
+      "platform_agent_role": "Keep the conversation surface, explain commands, and report only redacted evidence.",
+      "recipe_id": "first_adoption",
+      "study_anything_role": "Generate and verify the platform adoption pack, ecosystem submission, and adoption proof.",
+      "title": "First Adoption",
+      "zh_title": "首次接入"
+    },
+    {
+      "acceptance_evidence": [
+        "cognitive-loop-project-snapshot-verification-v1",
+        "cognitive-loop-run-once-evidence-verification-v1",
+        "cognitive-loop-event-index-verification-v1",
+        "cognitive-loop-artifact-index-verification-v1"
+      ],
+      "commands": [
+        "python3 scripts/cognitive_loop_cli.py init",
+        "python3 scripts/cognitive_loop_cli.py snapshot --html",
+        "python3 scripts/cognitive_loop_cli.py run-once --html",
+        "python3 scripts/cognitive_loop_cli.py index --html",
+        "python3 scripts/cognitive_loop_cli.py artifact-index --html"
+      ],
+      "operator_goal": "Summarize current project state from local metadata-only Cognitive Loop artifacts.",
+      "platform_agent_role": "Run local commands, open local HTML if allowed, and summarize artifact paths, hashes, status, and next commands.",
+      "recipe_id": "daily_project_review",
+      "study_anything_role": "Create snapshots, LoopRuns, event indexes, and static artifact indexes without embedding file contents.",
+      "title": "Daily Project Review",
+      "zh_title": "日常项目审查"
+    },
+    {
+      "acceptance_evidence": [
+        "cognitive-loop-human-gate-verification-v1",
+        "cognitive-loop-artifact-doctor-verification-v1",
+        "cognitive-loop-repair-plan-verification-v1",
+        "manual-only repair actions"
+      ],
+      "commands": [
+        "python3 scripts/cognitive_loop_cli.py report --html",
+        "python3 scripts/cognitive_loop_cli.py gate --reject --html --reason \"Needs human review\"",
+        "python3 scripts/cognitive_loop_cli.py doctor --html",
+        "python3 scripts/cognitive_loop_cli.py repair-plan --html",
+        "python3 scripts/cognitive_loop_cli.py artifact-index --html"
+      ],
+      "operator_goal": "Gate risky actions until the human explicitly approves or rejects the decision.",
+      "platform_agent_role": "Request human approval, preserve the decision result, and never auto-apply repair actions.",
+      "recipe_id": "risk_decision",
+      "study_anything_role": "Record Human Mastery Gate status and produce manual-only doctor and repair-plan evidence.",
+      "title": "Risk Decision",
+      "zh_title": "风险决策"
+    },
+    {
+      "acceptance_evidence": [
+        "agent-eval-artifact-v1",
+        "agent-eval-report-v1",
+        "obsidian-markdown-export-v1",
+        "learning-package-v1",
+        "second-brain-handoff-v1"
+      ],
+      "commands": [
+        "./scripts/run_skill_mode_demo.sh",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py"
+      ],
+      "operator_goal": "Turn repo, document, app, web, or video-slice context into learning, eval, and second-brain handoff evidence.",
+      "platform_agent_role": "Collect external context and call Study Anything without handing it browser control or real model keys.",
+      "recipe_id": "learning_handoff",
+      "study_anything_role": "Run source-bound learning, Agent audit/eval, Obsidian export, NotebookLM-style package, and second-brain handoff.",
+      "title": "Learning Handoff",
+      "zh_title": "学习交接"
+    }
+  ],
+  "schema_version": "cognitive-loop-adoption-recipes-v1",
+  "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+  "status": "pass",
+  "supported_platforms": [
+    "kimi",
+    "codex",
+    "workbuddy",
+    "private-platform-agent",
+    "generic-openapi-tools"
+  ]
+}
