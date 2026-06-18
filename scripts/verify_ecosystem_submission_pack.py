@@ -28,6 +28,9 @@ COGNITIVE_LOOP_SNAPSHOT_PATH = (
 COGNITIVE_LOOP_HUMAN_GATE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-human-gate.json"
 )
+COGNITIVE_LOOP_EVIDENCE_BUNDLE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-evidence-bundle.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -142,11 +145,13 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_run_once.py",
     "scripts/verify_cognitive_loop_snapshot.py",
     "scripts/verify_cognitive_loop_human_gate.py",
+    "scripts/verify_cognitive_loop_evidence_bundle.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
     "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
     "platform/generated/study-anything-cognitive-loop-human-gate.json",
+    "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -310,6 +315,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_run_once.py --check",
     "verify_cognitive_loop_snapshot.py --check",
     "verify_cognitive_loop_human_gate.py --check",
+    "verify_cognitive_loop_evidence_bundle.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -505,6 +511,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-run-once-evidence-verification-v1",
         "cognitive-loop-project-snapshot-verification-v1",
         "cognitive-loop-human-gate-verification-v1",
+        "cognitive-loop-evidence-bundle-verification-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -593,6 +600,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_run_once_evidence.schema_version == cognitive-loop-run-once-evidence-verification-v1",
             "cognitive_loop_project_snapshot.schema_version == cognitive-loop-project-snapshot-verification-v1",
             "cognitive_loop_human_gate.schema_version == cognitive-loop-human-gate-verification-v1",
+            "cognitive_loop_evidence_bundle.schema_version == cognitive-loop-evidence-bundle-verification-v1",
             "published_image_evidence.schema_version == published-image-evidence-v1",
             "published_image_evidence_fixture.schema_version == published-image-evidence-fixture-v1",
             "release_asset_adoption.schema_version == release-asset-adoption-v1",
@@ -634,11 +642,13 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_run_once.py",
         "scripts/verify_cognitive_loop_snapshot.py",
         "scripts/verify_cognitive_loop_human_gate.py",
+        "scripts/verify_cognitive_loop_evidence_bundle.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
         "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
         "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -960,6 +970,53 @@ def verify_cognitive_loop_human_gate_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop human gate privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_evidence_bundle_report() -> None:
+    report = load_json(COGNITIVE_LOOP_EVIDENCE_BUNDLE_PATH)
+    if report.get("schema_version") != "cognitive-loop-evidence-bundle-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle report must pass.")
+    if report.get("artifact_json_schema") != "cognitive-loop-evidence-bundle-v1":
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle artifact schema drifted.")
+    bundle = report.get("evidence_bundle") or {}
+    if bundle.get("created") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle artifact must be created.")
+    if bundle.get("artifact_count", 0) < 4:
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle must record at least four artifacts.")
+    if bundle.get("content_included") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle must not embed artifact contents.")
+    for key in ("all_items_have_hash", "all_items_exclude_content"):
+        if bundle.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop evidence bundle missing {key}.")
+    html = report.get("html_artifact") or {}
+    for key in (
+        "created",
+        "contains_brand",
+        "contains_evidence_bundle",
+        "contains_redacted_json",
+    ):
+        if html.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop evidence bundle HTML artifact missing {key}.")
+    if html.get("standalone_frontend_required") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop evidence bundle artifact must not require a standalone frontend.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "forbidden_text_leaked",
+        "artifact_contents_included",
+        "diff_body_included",
+        "file_contents_included",
+        "raw_source_text_included",
+        "learner_answers_included",
+        "real_model_keys_stored",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "watcher_daemon_started",
+        "mastra_runtime_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop evidence bundle privacy.{key} must be false.")
 
 
 def verify_submission_dry_run_report() -> None:
@@ -2066,6 +2123,7 @@ def main() -> None:
     verify_cognitive_loop_run_once_report()
     verify_cognitive_loop_snapshot_report()
     verify_cognitive_loop_human_gate_report()
+    verify_cognitive_loop_evidence_bundle_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -2101,6 +2159,7 @@ def main() -> None:
                 "cognitive_loop_run_once_evidence": "cognitive-loop-run-once-evidence-verification-v1",
                 "cognitive_loop_project_snapshot": "cognitive-loop-project-snapshot-verification-v1",
                 "cognitive_loop_human_gate": "cognitive-loop-human-gate-verification-v1",
+                "cognitive_loop_evidence_bundle": "cognitive-loop-evidence-bundle-verification-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",
