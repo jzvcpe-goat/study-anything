@@ -107,6 +107,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Cognitive Loop Review Agent prompt verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-review-agent-report.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent report handoff verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "generated_asset",
         "Cognitive Loop platform-agent adoption cookbook verification report.",
@@ -410,6 +415,31 @@ FILES: list[tuple[str, str, str]] = [
         "platform/prompts/cognitive-loop-review-agent.json",
         "prompt_contract",
         "External Cognitive Loop Review Agent JSON-only prompt contract.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-review-agent-report.schema.json",
+        "schema",
+        "External Cognitive Loop Review Agent final report JSON Schema.",
+    ),
+    (
+        "fixtures/review-agent/approved.json",
+        "fixture",
+        "Accepted external Review Agent approved report fixture.",
+    ),
+    (
+        "fixtures/review-agent/needs-review.json",
+        "fixture",
+        "Accepted external Review Agent needs-review report fixture.",
+    ),
+    (
+        "fixtures/review-agent/needs-fix.json",
+        "fixture",
+        "Accepted external Review Agent needs-fix report fixture.",
+    ),
+    (
+        "fixtures/review-agent/invalid-low-confidence-final.json",
+        "fixture",
+        "Rejected external Review Agent low-confidence final finding fixture.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -980,6 +1010,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_review_agent_prompt.py",
         "verification",
         "External Cognitive Loop Review Agent prompt verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_report.py",
+        "verification",
+        "External Cognitive Loop Review Agent report handoff verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_adoption_cookbook.py",

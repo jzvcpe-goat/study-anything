@@ -21,6 +21,7 @@ And one verifier:
 python3 scripts/verify_cognitive_loop_contracts.py --check
 python3 scripts/verify_cognitive_loop_review.py --check
 python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
+python3 scripts/verify_cognitive_loop_review_agent_report.py --check
 ```
 
 The repository also includes a small local CLI:
@@ -50,6 +51,14 @@ python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
 
 That prompt contract lives at `platform/prompts/cognitive-loop-review-agent.json`. It is for CI/platform delivery assurance, not for end-user learning sessions. It requires JSON-only output, diff-only review, line-level evidence, suppression of low-confidence findings, and a maximum of eight external Agent findings.
 
+The external report handoff is checked with:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_report.py --check
+```
+
+The report schema lives at `platform/schemas/cognitive-loop-review-agent-report.schema.json`, with accepted and rejected examples in `fixtures/review-agent`. This keeps the Review Agent loop machine-checkable without storing raw diffs or file bodies in Study Anything.
+
 仓库也包含一个小型本地 CLI：
 
 ```bash
@@ -76,6 +85,14 @@ python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
 ```
 
 该契约位于 `platform/prompts/cognitive-loop-review-agent.json`。它服务 CI/平台交付验收，不服务终端用户学习会话；它要求 JSON-only 输出、仅基于 diff 审查、行级证据、抑制 low-confidence findings，并且外部 Agent 最多输出八条发现。
+
+外部报告交接用下面的命令验证：
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_report.py --check
+```
+
+报告 schema 位于 `platform/schemas/cognitive-loop-review-agent-report.schema.json`，通过和拒绝样例位于 `fixtures/review-agent`。这样 Review Agent loop 可以机器验收，同时 Study Anything 仍不保存 raw diff 或文件正文。
 
 The verifier emits `cognitive-loop-contract-bootstrap-v1` and proves:
 
