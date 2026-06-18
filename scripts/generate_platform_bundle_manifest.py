@@ -52,6 +52,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop contract bootstrap verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
+        "generated_asset",
+        "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -775,6 +780,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_contracts.py",
         "verification",
         "Cognitive Loop contract bootstrap verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_cli.py",
+        "cli",
+        "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_cli.py",
+        "verification",
+        "Cognitive Loop CLI and static HTML artifact verifier.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

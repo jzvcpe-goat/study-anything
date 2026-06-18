@@ -41,6 +41,7 @@ REQUIRED_ACCEPTANCE = {
     "ecosystem_submission.schema_version == ecosystem-submission-v1",
     "ecosystem_submission_verification.schema_version == ecosystem-submission-verification-v1",
     "cognitive_loop_contracts.schema_version == cognitive-loop-contract-bootstrap-v1",
+    "cognitive_loop_cli_artifact.schema_version == cognitive-loop-cli-artifact-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -60,6 +61,7 @@ REQUIRED_ACCEPTANCE = {
 REQUIRED_COMMAND_FRAGMENTS = {
     "verify_notebooklm_obsidian_bridge_hardening.py",
     "verify_cognitive_loop_contracts.py --check",
+    "verify_cognitive_loop_cli.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
