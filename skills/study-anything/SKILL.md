@@ -23,6 +23,44 @@ Alternatively pass `--api-base` to `scripts/study_anything_cli.py`.
 If the user already runs the Docker stack or a remote private deployment, do not launch another local
 API. Check `health` against their configured API base instead.
 
+## Cognitive Loop Recipes
+
+Use Cognitive Loop recipes when the user wants a platform Agent to operate a project or repo through
+local, auditable steps rather than run only one Study Anything lesson. Start from
+`docs/cognitive-loop-adoption-cookbook.md`, then use the generated recipe matrix and replay report:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+```
+
+The machine-readable entrypoints are:
+
+- `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
+
+Use these recipe ids:
+
+- `first_adoption`: prove platform pack, external adoption, and privacy boundaries before real keys.
+- `daily_project_review`: initialize contracts, snapshot the repo, run one local loop, and open the static artifact index.
+- `risk_decision`: produce report, gate, doctor, and repair-plan evidence; stop for the Human Mastery Gate.
+- `learning_handoff`: run Skill Mode or lesson/importer checks before handing compact mastery evidence back.
+
+Treat the replay report as metadata-only replay. It does not execute recipe commands, start runtime
+processes, apply file changes, or approve risk decisions. The platform Agent owns browser, files,
+applications, external data, video slicing, user conversation, and real model credentials. Study
+Anything owns the local Learning Adapter path. Study Anything owns the local Learning Adapter:
+source-bound learning, mastery, eval evidence,
+Obsidian/NotebookLM-style exports, and redacted Cognitive Loop artifacts.
+
+Do not paste raw source text, diff bodies, learner answers, grading feedback, generated private
+insights, Agent endpoints, raw Agent metadata, API keys, model secrets, or browser/video/app private
+context into shared logs, recipe metadata, or support bundles. Generated private insights must stay
+out of shared logs.
+Boundary check phrase: generated private insights.
+
 ## Start A Learning Loop
 
 1. Check API health.

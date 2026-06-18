@@ -53,6 +53,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_adoption_cookbook.schema_version == cognitive-loop-adoption-cookbook-verification-v1",
     "cognitive_loop_adoption_recipes.schema_version == cognitive-loop-adoption-recipes-v1",
     "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
+    "cognitive_loop_skill_entrypoint.schema_version == cognitive-loop-skill-entrypoint-verification-v1",
     "adoption_telemetry_verification.schema_version == adoption-telemetry-verification-v1",
     "agent_gateway_hardening.schema_version == agent-gateway-hardening-verification-v1",
     "external_agent_adapter_hardening.schema_version == external-agent-adapter-hardening-v1",
@@ -84,6 +85,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_adoption_cookbook.py --check",
     "generate_cognitive_loop_adoption_recipes.py --check",
     "verify_cognitive_loop_recipe_replay.py --check",
+    "verify_cognitive_loop_skill_entrypoint.py --check",
     "verify_learning_enrichment_bridge.py",
     "verify_external_agent_adapter_hardening.py",
     "verify_plugin_quarantine.py",
@@ -173,6 +175,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop recipe replay report"
         )
+    if "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Skill entrypoint report"
+        )
 
     commands = pack.get("local_verification_commands")
     if not isinstance(commands, list) or not commands:
@@ -225,6 +231,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "ecosystem-submission-v1",
         "ecosystem-submission-verification-v1",
         "cognitive-loop-adoption-cookbook.md",
+        "study-anything-cognitive-loop-adoption-recipes.json",
+        "study-anything-cognitive-loop-recipe-replay.json",
+        "study-anything-cognitive-loop-skill-entrypoint.json",
+        "verify_cognitive_loop_skill_entrypoint.py",
         "raw source",
     )
     return pack

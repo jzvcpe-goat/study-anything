@@ -28,11 +28,26 @@ For Cognitive Loop operations, start from `docs/cognitive-loop-adoption-cookbook
 to local Cognitive Loop commands for first adoption, daily project review, risk decisions, and
 learning handoff without adding a standalone frontend.
 
+For machine-readable operation, import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or
+human-gated steps. The entrypoint proof is
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`. Verify the Skill
+entrypoint and recipe path together:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+```
+
 ## Run
 
 ```bash
 python3 scripts/verify_clean_clone_adoption.py --repo .
 python3 scripts/verify_commercial_readiness.py
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
 ./scripts/run_skill_mode_demo.sh
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 ./scripts/launch_skill_mode.sh

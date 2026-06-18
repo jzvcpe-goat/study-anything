@@ -52,6 +52,9 @@ COGNITIVE_LOOP_ADOPTION_RECIPES_PATH = (
 COGNITIVE_LOOP_RECIPE_REPLAY_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-recipe-replay.json"
 )
+COGNITIVE_LOOP_SKILL_ENTRYPOINT_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-skill-entrypoint.json"
+)
 SUBMISSION_DRY_RUN_PATH = (
     ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 )
@@ -175,6 +178,7 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_adoption_cookbook.py",
     "scripts/generate_cognitive_loop_adoption_recipes.py",
     "scripts/verify_cognitive_loop_recipe_replay.py",
+    "scripts/verify_cognitive_loop_skill_entrypoint.py",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -188,6 +192,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
     "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
     "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+    "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -359,6 +364,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_adoption_cookbook.py --check",
     "generate_cognitive_loop_adoption_recipes.py --check",
     "verify_cognitive_loop_recipe_replay.py --check",
+    "verify_cognitive_loop_skill_entrypoint.py --check",
     "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_agent_gateway_hardening.py",
@@ -562,6 +568,7 @@ def verify_submission(submission: dict[str, Any]) -> dict[str, Any]:
         "cognitive-loop-adoption-cookbook-verification-v1",
         "cognitive-loop-adoption-recipes-v1",
         "cognitive-loop-recipe-replay-verification-v1",
+        "cognitive-loop-skill-entrypoint-verification-v1",
     ):
         if schema not in prove_text:
             raise EcosystemSubmissionError(f"Submission acceptance must prove {schema}.")
@@ -607,6 +614,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe replay report.")
+        if "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json" not in set(
+            str(asset) for asset in import_assets
+        ):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop Skill entrypoint report.")
         for asset in import_assets:
             require_file(str(asset), label=f"{platform_id}.import_assets")
 
@@ -684,6 +695,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_adoption_cookbook.schema_version == cognitive-loop-adoption-cookbook-verification-v1",
             "cognitive_loop_adoption_recipes.schema_version == cognitive-loop-adoption-recipes-v1",
             "cognitive_loop_recipe_replay.schema_version == cognitive-loop-recipe-replay-verification-v1",
+            "cognitive_loop_skill_entrypoint.schema_version == cognitive-loop-skill-entrypoint-verification-v1",
         ):
             if item not in evidence:
                 raise EcosystemSubmissionError(f"{pack_id} pack missing platform adoption evidence {item}.")
@@ -722,6 +734,7 @@ def verify_pack_in_generated_adoption() -> None:
         "scripts/verify_cognitive_loop_adoption_cookbook.py",
         "scripts/generate_cognitive_loop_adoption_recipes.py",
         "scripts/verify_cognitive_loop_recipe_replay.py",
+        "scripts/verify_cognitive_loop_skill_entrypoint.py",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -735,6 +748,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
         "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
         "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
         "scripts/verify_ecosystem_submission_pack.py",
         "scripts/verify_adoption_telemetry.py",
         "scripts/verify_notebooklm_obsidian_bridge_hardening.py",
@@ -1512,6 +1526,99 @@ def verify_cognitive_loop_recipe_replay_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop recipe replay privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_skill_entrypoint_report() -> None:
+    report = load_json(COGNITIVE_LOOP_SKILL_ENTRYPOINT_PATH)
+    if report.get("schema_version") != "cognitive-loop-skill-entrypoint-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint report must pass.")
+    skill = report.get("skill") or {}
+    if skill.get("path") != "skills/study-anything/SKILL.md":
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint path drifted.")
+    for key in (
+        "mentions_cookbook",
+        "mentions_recipe_matrix",
+        "mentions_replay_report",
+        "metadata_only_replay",
+        "human_gate_explicit",
+        "privacy_boundary_explicit",
+    ):
+        if skill.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint skill missing {key}.")
+    if set(skill.get("recipe_ids", [])) != {"first_adoption", "daily_project_review", "risk_decision", "learning_handoff"}:
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint recipe id coverage drifted.")
+
+    readme_ids = {item.get("platform_id") for item in report.get("platform_pack_readmes", []) if isinstance(item, dict)}
+    manifest_ids = {item.get("platform_id") for item in report.get("platform_pack_manifests", []) if isinstance(item, dict)}
+    if readme_ids != {"codex", "kimi", "workbuddy"}:
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint README coverage drifted.")
+    if manifest_ids != {"codex", "kimi", "workbuddy"}:
+        raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint pack manifest coverage drifted.")
+    for item in report.get("platform_pack_readmes", []):
+        for key in ("mentions_cookbook", "mentions_recipe_matrix", "mentions_replay_report", "runs_skill_entrypoint_verifier"):
+            if item.get(key) is not True:
+                raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint README missing {key}.")
+    for item in report.get("platform_pack_manifests", []):
+        for key in ("imports_report", "runs_verifier", "accepts_schema"):
+            if item.get(key) is not True:
+                raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint pack manifest missing {key}.")
+
+    index = report.get("platform_pack_index") or {}
+    for key in ("mentions_report", "runs_verifier"):
+        if index.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint platform pack index missing {key}.")
+    ecosystem = report.get("ecosystem_submission") or {}
+    for key in (
+        "shared_assets_registered",
+        "minimum_command_registered",
+        "must_prove_registered",
+        "submission_imports_registered",
+    ):
+        if ecosystem.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint ecosystem missing {key}.")
+    distribution = report.get("distribution_sources") or {}
+    for key in (
+        "bundle_manifest_source_registered",
+        "adoption_pack_source_registered",
+        "release_check_registered",
+        "platform_pack_verifier_registered",
+        "ecosystem_submission_verifier_registered",
+    ):
+        if distribution.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint distribution missing {key}.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "raw_source_text_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "generated_private_insights_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "real_model_keys_stored",
+        "browser_video_app_private_context_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint privacy.{key} must be false.")
+    boundaries = report.get("boundaries") or {}
+    for key in (
+        "platform_agent_owns_browser_files_apps_video_external_data",
+        "study_anything_is_learning_adapter",
+        "skill_entrypoint_is_recipe_index",
+        "cognitive_loop_artifacts_are_metadata_only",
+    ):
+        if boundaries.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint boundary {key} must be true.")
+    for key in (
+        "mastra_runtime_shipped",
+        "watcher_daemon_shipped",
+        "realtime_html_console_shipped",
+        "standalone_frontend_required",
+    ):
+        if boundaries.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Skill entrypoint boundary {key} must be false.")
 
 
 def verify_submission_dry_run_report() -> None:
@@ -2626,6 +2733,7 @@ def main() -> None:
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
     verify_cognitive_loop_recipe_replay_report()
+    verify_cognitive_loop_skill_entrypoint_report()
     verify_submission_dry_run_report()
     verify_manual_rehearsal_report()
     verify_first_lesson_kit_report()
@@ -2669,6 +2777,7 @@ def main() -> None:
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",
+                "cognitive_loop_skill_entrypoint": "cognitive-loop-skill-entrypoint-verification-v1",
                 "external_eval_marketplace_harness": "external-eval-marketplace-harness-v1",
                 "agent_eval_marketplace_enforcement": "agent-eval-marketplace-enforcement-v1",
                 "platform_adoption_feedback_diagnostics": "platform-adoption-feedback-diagnostics-v1",

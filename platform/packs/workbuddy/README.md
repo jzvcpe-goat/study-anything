@@ -39,6 +39,20 @@ For a scenario-based operator guide, read `docs/cognitive-loop-adoption-cookbook
 WorkBuddy-style platform Agent HTTP workspace can call the local API and local Cognitive Loop
 commands while sharing only redacted artifact metadata back into the workspace.
 
+For machine-readable operation, import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or
+human-gated steps. The entrypoint proof is
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`. Verify the WorkBuddy
+entrypoint chain locally with:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+```
+
 ## Runtime Boundary
 
 The workspace Agent should own:

@@ -51,6 +51,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_adoption_cookbook.py --check
 "$python_bin" scripts/generate_cognitive_loop_adoption_recipes.py --check
 "$python_bin" scripts/verify_cognitive_loop_recipe_replay.py --check
+"$python_bin" scripts/verify_cognitive_loop_skill_entrypoint.py --check
 "$python_bin" scripts/verify_openai_compatible_gateway.py --gateway-only
 "$python_bin" scripts/verify_agent_gateway_hardening.py
 "$python_bin" scripts/verify_external_agent_adapter_hardening.py
