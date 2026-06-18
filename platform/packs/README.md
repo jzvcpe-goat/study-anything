@@ -21,6 +21,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -86,6 +87,7 @@ retrieval, and ecosystem eval capabilities:
 .venv/bin/python scripts/verify_cognitive_loop_recipe_cli.py --check
 .venv/bin/python scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
 .venv/bin/python scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py list
 .venv/bin/python scripts/cognitive_loop_recipe_cli.py show risk_decision
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
@@ -135,3 +137,5 @@ read-only `cognitive-loop-recipe-cli-v1` plans without executing recipe commands
 sample outputs and hashes for those read-only CLI calls.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` gives deterministic
 negative-path receipts for unknown recipe ids and invalid recipe matrices.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json` gives offline JSON
+Schemas for static validation of the recipe CLI success, receipt, and failure reports.

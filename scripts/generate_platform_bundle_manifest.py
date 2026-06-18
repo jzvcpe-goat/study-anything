@@ -132,6 +132,11 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic read-only Cognitive Loop recipe CLI failure receipts.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "generated_asset",
+        "Offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -945,6 +950,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
         "verification",
         "Generate and verify deterministic Cognitive Loop recipe CLI failure receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
+        "verification",
+        "Generate and verify offline JSON Schemas for Cognitive Loop recipe CLI reports.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

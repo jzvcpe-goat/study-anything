@@ -19,6 +19,7 @@
       "python3 scripts/verify_cognitive_loop_recipe_cli.py --check",
       "python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check",
       "python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check",
+      "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
       "python3 scripts/verify_commercial_readiness.py",
       "python3 scripts/verify_adoption_telemetry.py",
       "python3 scripts/verify_agent_gateway_hardening.py",
@@ -86,6 +87,7 @@
       "cognitive-loop-recipe-cli-verification-v1 proves platform Agents can list and show Cognitive Loop recipe plans without executing recipe commands, starting runtime, applying file changes, storing private context, or taking real model keys",
       "cognitive-loop-recipe-cli-receipts-v1 provides deterministic, redacted sample outputs and hashes for read-only recipe CLI import tests without executing recipe commands or taking real model keys",
       "cognitive-loop-recipe-cli-failures-v1 provides deterministic, redacted negative-path receipts for recipe CLI import tests without executing recipe commands or taking real model keys",
+      "cognitive-loop-recipe-cli-schemas-v1 provides offline JSON Schemas for static platform-Agent validation of recipe CLI success, receipt, and failure reports without executing recipe commands or taking real model keys",
       "agent-gateway-hardening-verification-v1 blocks unsafe provider config and bad Agent output",
       "external-agent-adapter-hardening-v1 proves real external Agent eval evidence is separated from fake Agent evidence and bad outputs are diagnosed without leaking private data",
       "notebooklm-obsidian-bridge-hardening-v1 blocks hidden instructions, dedupes fixture imports, and verifies strict handoff privacy",
@@ -231,6 +233,7 @@
     "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+    "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-platform-adoption-pack.zip",
@@ -272,6 +275,7 @@
     "scripts/verify_cognitive_loop_recipe_cli.py",
     "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
     "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+    "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
     "scripts/verify_adoption_telemetry.py",
     "scripts/verify_agent_gateway_hardening.py",
     "scripts/verify_external_agent_adapter_hardening.py",
@@ -433,12 +437,12 @@
     {
       "display_name": "Kimi-compatible Tool Workspace",
       "entrypoints": {
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
         "gateway": "scripts/openai_compatible_agent_gateway.py",
         "guide": "docs/use-with-kimi.md",
         "openai_tools": "platform/generated/study-anything-openai-tools.json",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
-        "pack": "platform/packs/kimi/pack.json",
-        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py"
+        "pack": "platform/packs/kimi/pack.json"
       },
       "import_assets": [
         "platform/generated/study-anything-openai-tools.json",
@@ -452,9 +456,11 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "platform/packs/kimi/README.md",
         "platform/bootstrap/study_anything_release_bootstrap.py"
       ],
@@ -463,6 +469,9 @@
         "Browser-only Kimi chat cannot reach localhost directly.",
         "Kimi or Moonshot credentials stay in the user's gateway or platform environment.",
         "The submission pack does not include raw learning content or private platform context."
+      ],
+      "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -523,15 +532,20 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "platform/packs/codex/README.md"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
         "Requires a terminal-capable Agent with local checkout access.",
         "The Skill launches or calls a local Study Anything API instead of becoming a standalone chat product."
+      ],
+      "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -589,15 +603,20 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "platform/packs/workbuddy/README.md"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
         "The workspace must be able to call a local or private HTTP endpoint.",
         "Admin, provider setup, sync export, restore preview, and PMF export endpoints are intentionally excluded."
+      ],
+      "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -654,15 +673,20 @@
         "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
         "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "scripts/cognitive_loop_recipe_cli.py",
         "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
         "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
         "docs/platform-agent-integrations.md"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
         "OpenAPI import behavior differs by host platform; use the tool catalog as the fallback mapping.",
         "The pack is for local-first OSS adoption, not managed hosting or marketplace payments."
+      ],
+      "local_verification_commands": [
+        "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
