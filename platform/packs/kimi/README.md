@@ -142,8 +142,10 @@ returned report:
 
 ```bash
 python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/kimi-review-report.json
+python3 scripts/cognitive_loop_review_agent_receipt.py build --report /tmp/kimi-review-report.json --provider-id kimi-review-agent --pr-ref PR --commit-sha SHA
 python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
 ```
 
 ## Kimi As Reasoning Agent

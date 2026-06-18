@@ -89,3 +89,13 @@ python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
 It uses only synthetic git diffs under `evals/review-agent`, then validates golden reports against
 the public Review Agent report schema. Use it before routing real PR diffs to Kimi, Codex,
 WorkBuddy, or a private CI Review Agent.
+
+For CI/PR evidence, pair the external report verifier with the metadata-only receipt verifier:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+```
+
+The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
+text, finding evidence, report summaries, Agent endpoint secrets, real model keys, and hidden
+chain-of-thought.

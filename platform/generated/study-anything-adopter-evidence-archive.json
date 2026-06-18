@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 306995,
+    "bytes": 306990,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "316cab6863fba1eb95e0624119aa55caec93dc8e370130a86fa65b786aea81d8",
+    "sha256": "8a19681d3a72801a820db0bcfb6d177e58645c0c65393effdbc0e5c586e95c0c",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -231,27 +231,27 @@
     {
       "bytes": 8124,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "a2d17d1753cb8cad6565f05fbbea4f27b9ae2002fa67491c7008f7e6388c5ee2"
+      "sha256": "d8718874f8c5f965f92f06099bcd2ef4a04679a4db767ade6c49e7e424603f69"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "570aef2f56d8b5a7594c6895e344ec7ee79a13f48ecf6443d2df9e1bf9cc0985"
+      "sha256": "ec9c3e6e382d8c38c99ad414b75f7e6b78d27e6e5eb99413555dd554538aead0"
     },
     {
-      "bytes": 104564,
+      "bytes": 104568,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "916a1c20b6b88f555a5767ac464f57832841384355a973cd0b31e84313685ab1"
+      "sha256": "66e50a5cac341fbf1f645c299af23acbd0a2b7156729ea6e13b0e63199e8bc27"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "811829e7eb5a0f1c75eff1485121e874aff2d0ee7315512501a4aae928a68d48"
+      "sha256": "c6aeac7a1a8b86768261e3f1cdf9b986df58dd3d2d593ed02af650827823ca1c"
     },
     {
       "bytes": 61437,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "4ed466de65cbb537c9569b13d5c958530bfb22ac604c822153bcf5cedee3939d"
+      "sha256": "f047905ab2a632d9dfc9b9caba01f9183d66fdea1230868f4093abff9cd489d3"
     },
     {
       "bytes": 62177,
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 8124,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "a2d17d1753cb8cad6565f05fbbea4f27b9ae2002fa67491c7008f7e6388c5ee2"
+        "sha256": "d8718874f8c5f965f92f06099bcd2ef4a04679a4db767ade6c49e7e424603f69"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
