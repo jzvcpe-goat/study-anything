@@ -27,13 +27,32 @@
         "overall_risk": "low",
         "safe_to_attach_to_pr": true
       },
-      "checks_summary_sha256": "45f36fe635fab6a199e83cd5fd030d4188b23e95db76be4e01503f3c7bd68ecb",
+      "checks_summary_sha256": "bb23fa58d99e620119999e8178b7c3108637ab605498ed3d9831c238a47c99c3",
       "checks_title": "Cognitive Loop Review Agent: approved",
+      "default_policy": "soft",
+      "policy_matrix": {
+        "advisory": {
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        },
+        "soft": {
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        },
+        "strict": {
+          "decision": "approved",
+          "exit_code": 0,
+          "status": "pass"
+        }
+      },
       "uploaded_files": [
         "manifest.json",
         "SUMMARY.md",
         "review-agent-ci-receipt.json",
         "review-agent-pr-comment-pack.json",
+        "review-agent-policy-gate.json",
         "review-agent-checks-summary.md"
       ]
     },
@@ -45,13 +64,32 @@
         "overall_risk": "high",
         "safe_to_attach_to_pr": true
       },
-      "checks_summary_sha256": "43740171375dc079a27a08b0ff37c530dcab3c84191c53b7fc359124813578d2",
+      "checks_summary_sha256": "900a6aafc7d6067333256a253ac688c6ca093f9141b0b94786675edc1869a0f4",
       "checks_title": "Cognitive Loop Review Agent: fixes required",
+      "default_policy": "soft",
+      "policy_matrix": {
+        "advisory": {
+          "decision": "needs-fix",
+          "exit_code": 0,
+          "status": "advisory_block_recommended"
+        },
+        "soft": {
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "status": "blocked"
+        },
+        "strict": {
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "status": "blocked"
+        }
+      },
       "uploaded_files": [
         "manifest.json",
         "SUMMARY.md",
         "review-agent-ci-receipt.json",
         "review-agent-pr-comment-pack.json",
+        "review-agent-policy-gate.json",
         "review-agent-checks-summary.md"
       ]
     },
@@ -63,13 +101,32 @@
         "overall_risk": "medium",
         "safe_to_attach_to_pr": true
       },
-      "checks_summary_sha256": "33db2cf69063a04160b013b7405df8ce2ceeeb1a6ec7730da3f1e0a498a8e7a5",
+      "checks_summary_sha256": "65e0fbf4e5f6c9ac0cd3363b11793e8e51d06de2397be6bb10de062fb3304bf1",
       "checks_title": "Cognitive Loop Review Agent: maintainer review required",
+      "default_policy": "soft",
+      "policy_matrix": {
+        "advisory": {
+          "decision": "needs-review",
+          "exit_code": 0,
+          "status": "needs_human_review"
+        },
+        "soft": {
+          "decision": "needs-review",
+          "exit_code": 0,
+          "status": "needs_human_review"
+        },
+        "strict": {
+          "decision": "needs-review",
+          "exit_code": 2,
+          "status": "blocked"
+        }
+      },
       "uploaded_files": [
         "manifest.json",
         "SUMMARY.md",
         "review-agent-ci-receipt.json",
         "review-agent-pr-comment-pack.json",
+        "review-agent-policy-gate.json",
         "review-agent-checks-summary.md"
       ]
     }
@@ -82,12 +139,65 @@
     "safe_to_attach_to_pr": true
   },
   "negative_workflows": {
-    "unsafe-auto-pr.yml": "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml missing required workflow text: ['workflow_dispatch:', 'evidence_kind:', 'review_agent_report:', 'acceptance_bundle_dir:', 'upload_metadata_bundle:', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py build', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py validate', 'if [ \"$ACCEPTANCE_BUNDLE_DIR\" != \"$OUTPUT_DIR\" ]; then', 'GITHUB_STEP_SUMMARY', 'review-agent-checks-summary.md', 'review-agent-ci-receipt.json', 'review-agent-pr-comment-pack.json']"
+    "unsafe-auto-pr.yml": "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml missing required workflow text: ['workflow_dispatch:', 'evidence_kind:', 'review_agent_report:', 'acceptance_bundle_dir:', 'policy:', 'upload_metadata_bundle:', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py build', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py validate', 'scripts/cognitive_loop_review_agent_policy_gate.py', '--output review-agent-policy-gate.json', 'REVIEW_AGENT_POLICY_EXIT', 'if [ \"$ACCEPTANCE_BUNDLE_DIR\" != \"$OUTPUT_DIR\" ]; then', 'GITHUB_STEP_SUMMARY', 'review-agent-policy-gate.json', 'review-agent-checks-summary.md', 'review-agent-ci-receipt.json', 'review-agent-pr-comment-pack.json']"
   },
   "platform_packs": {
     "codex": "pass",
     "kimi": "pass",
     "workbuddy": "pass"
+  },
+  "policy_matrix": {
+    "approved": {
+      "advisory": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "soft": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "strict": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      }
+    },
+    "needs-fix": {
+      "advisory": {
+        "decision": "needs-fix",
+        "exit_code": 0,
+        "status": "advisory_block_recommended"
+      },
+      "soft": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      },
+      "strict": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    },
+    "needs-review": {
+      "advisory": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "soft": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "strict": {
+        "decision": "needs-review",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    }
   },
   "privacy": {
     "agent_endpoint_secrets_included": false,
@@ -111,6 +221,13 @@
     "metadata_only_artifact_upload": "pass",
     "no_external_agent_secret_required": "pass",
     "no_real_model_call": "pass",
+    "policy_exit_preserved_after_artifact_upload": "pass",
+    "policy_gate_wired": "pass",
+    "policy_path_coverage": [
+      "advisory",
+      "soft",
+      "strict"
+    ],
     "raw_report_not_uploaded": "pass",
     "unsafe_workflow_rejection": "pass"
   },
@@ -120,7 +237,9 @@
     "automatic_pr_trigger": false,
     "invokes_real_model": false,
     "path": "platform/workflows/cognitive-loop-review-agent-manual.yml",
+    "policy_input": true,
     "requires_external_agent_secret": false,
+    "runs_policy_gate": true,
     "trigger": "workflow_dispatch",
     "uploads_metadata_bundle": true,
     "uploads_raw_report": false

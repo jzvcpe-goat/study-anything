@@ -109,9 +109,10 @@ python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
 
 For GitHub-side reuse, copy `platform/workflows/cognitive-loop-review-agent-manual.yml` only as a
 manual `workflow_dispatch` workflow after the external WorkBuddy report path is clear. It writes a
-metadata-only Checks summary and must not upload the raw Review Agent report.
-Use the policy gate after bundle validation when WorkBuddy should turn `needs-fix` or `needs-review`
-evidence into advisory, soft, or strict CI behavior without reopening the raw report.
+metadata-only Checks summary, runs the built-in `advisory` / `soft` / `strict` policy gate,
+uploads only safe metadata artifacts when enabled, and must not upload the raw Review Agent report.
+The workflow applies the captured policy exit code after artifact upload so WorkBuddy evidence is
+available even when `needs-fix` or `needs-review` blocks CI.
 
 ## Runtime Boundary
 

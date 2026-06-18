@@ -26,6 +26,15 @@ on:
         required: false
         default: "review-agent-acceptance"
         type: string
+      policy:
+        description: "Policy gate behavior: advisory records only, soft blocks needs-fix, strict blocks needs-review or needs-fix."
+        required: true
+        default: "soft"
+        type: choice
+        options:
+          - advisory
+          - soft
+          - strict
       upload_metadata_bundle:
         description: "Upload only the metadata-only acceptance bundle artifact."
         required: true
@@ -45,6 +54,7 @@ jobs:
       REVIEW_AGENT_REPORT: ${{ inputs.review_agent_report }}
       ACCEPTANCE_BUNDLE_DIR: ${{ inputs.acceptance_bundle_dir }}
       OUTPUT_DIR: ${{ inputs.output_dir }}
+      POLICY: ${{ inputs.policy }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -91,6 +101,19 @@ jobs:
             exit 1
           fi
 
+      - name: Evaluate metadata-only policy gate
+        shell: bash
+        run: |
+          set +e
+          python scripts/cognitive_loop_review_agent_policy_gate.py \
+            --bundle-dir "$OUTPUT_DIR" \
+            --policy "$POLICY" \
+            --output review-agent-policy-gate.json
+          policy_exit="$?"
+          set -e
+          echo "REVIEW_AGENT_POLICY_EXIT=$policy_exit" >> "$GITHUB_ENV"
+          exit 0
+
       - name: Write metadata-only Checks summary
         shell: bash
         run: |
@@ -103,9 +126,11 @@ jobs:
           bundle_dir = Path(os.environ["OUTPUT_DIR"])
           manifest = json.loads((bundle_dir / "manifest.json").read_text(encoding="utf-8"))
           comment_pack = json.loads((bundle_dir / "review-agent-pr-comment-pack.json").read_text(encoding="utf-8"))
+          policy_gate = json.loads(Path("review-agent-policy-gate.json").read_text(encoding="utf-8"))
           checks = comment_pack["checks_summary"]
           decision = manifest["decision_summary"]
           source = manifest["source"]
+          policy_result = policy_gate["policy_result"]
           lines = [
               f"## {checks['title']}",
               "",
@@ -113,10 +138,12 @@ jobs:
               f"- Risk: `{decision['overall_risk']}`",
               f"- Findings: `{decision['finding_count']}` total, `{decision['critical_count']}` critical",
               f"- Human action: `{decision['human_action']}`",
+              f"- Policy: `{policy_gate['policy']}` -> `{policy_gate['status']}` / exit `{policy_gate['exit_code']}`",
+              f"- Policy message: {policy_result['human_message']}",
               f"- Ref: `{source['pr_ref']}` at `{source['commit_sha']}`",
               f"- Report hash: `{source['report_sha256']}`",
               "",
-              "Privacy: this workflow summary is metadata-only and excludes raw diffs, source bodies, finding evidence, report prose, endpoint secrets, model keys, and hidden reasoning traces.",
+              "Privacy: this workflow summary and policy gate output are metadata-only and exclude raw diffs, source bodies, finding evidence, report prose, endpoint secrets, model keys, and hidden reasoning traces.",
               "",
           ]
           summary = "\n".join(lines)
@@ -138,5 +165,11 @@ jobs:
             ${{ inputs.output_dir }}/SUMMARY.md
             ${{ inputs.output_dir }}/review-agent-ci-receipt.json
             ${{ inputs.output_dir }}/review-agent-pr-comment-pack.json
+            review-agent-policy-gate.json
             review-agent-checks-summary.md
           if-no-files-found: error
+
+      - name: Apply policy gate exit code
+        shell: bash
+        run: |
+          exit "${REVIEW_AGENT_POLICY_EXIT:-1}"
