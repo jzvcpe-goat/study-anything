@@ -77,6 +77,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop metadata-only evidence bundle verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-event-index.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only local event index verification report.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -830,6 +835,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_evidence_bundle.py",
         "verification",
         "Cognitive Loop metadata-only evidence bundle verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_event_index.py",
+        "verification",
+        "Cognitive Loop metadata-only local event index verifier.",
     ),
     (
         "scripts/run_skill_mode_demo.sh",

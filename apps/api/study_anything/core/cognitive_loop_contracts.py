@@ -32,6 +32,7 @@ RUN_ONCE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-run-once-artifact-v1"
 PROJECT_SNAPSHOT_SCHEMA_VERSION = "cognitive-loop-project-snapshot-v1"
 HUMAN_GATE_ARTIFACT_SCHEMA_VERSION = "cognitive-loop-human-gate-v1"
 EVIDENCE_BUNDLE_SCHEMA_VERSION = "cognitive-loop-evidence-bundle-v1"
+EVENT_INDEX_SCHEMA_VERSION = "cognitive-loop-event-index-v1"
 
 CONTRACT_FILES = {
     "config": ("config.yaml", CONFIG_SCHEMA_VERSION),
@@ -643,6 +644,8 @@ def _validate_evals(values: Mapping[str, Any]) -> None:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop human gate verifier.")
     if "python3 scripts/verify_cognitive_loop_evidence_bundle.py --check" not in commands:
         raise CognitiveLoopContractError("evals.required must include the Cognitive Loop evidence bundle verifier.")
+    if "python3 scripts/verify_cognitive_loop_event_index.py --check" not in commands:
+        raise CognitiveLoopContractError("evals.required must include the Cognitive Loop event index verifier.")
 
 
 def _validate_risk(values: Mapping[str, Any]) -> None:
@@ -786,6 +789,9 @@ required:
     blocking: true
   - id: cognitive-loop.evidence-bundle
     command: python3 scripts/verify_cognitive_loop_evidence_bundle.py --check
+    blocking: true
+  - id: cognitive-loop.event-index
+    command: python3 scripts/verify_cognitive_loop_event_index.py --check
     blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
@@ -1691,6 +1697,221 @@ def build_evidence_bundle_artifact(
     return report
 
 
+def _safe_event_index_paths(paths: Iterable[str]) -> list[str]:
+    safe: list[str] = []
+    for raw_path in paths:
+        if not isinstance(raw_path, str):
+            raise CognitiveLoopContractError("Event index paths must be strings.")
+        normalized = raw_path.strip().replace("\\", "/")
+        if not normalized:
+            continue
+        if normalized.startswith("/") or normalized.startswith("../") or "/../" in normalized:
+            raise CognitiveLoopContractError(f"Event index path must be repo-relative: {raw_path}.")
+        if not normalized.endswith(".json"):
+            raise CognitiveLoopContractError(f"Event index only accepts JSON event artifacts: {raw_path}.")
+        _assert_public_value("event_path", normalized)
+        safe.append(normalized)
+    deduped = sorted(dict.fromkeys(safe))
+    if len(deduped) > 100:
+        raise CognitiveLoopContractError("Event index entry count is limited to 100.")
+    return deduped
+
+
+def _event_index_kind(schema_version: str) -> str:
+    if schema_version == RUN_ONCE_ARTIFACT_SCHEMA_VERSION:
+        return "loop_run"
+    if schema_version == PROJECT_SNAPSHOT_SCHEMA_VERSION:
+        return "project_snapshot"
+    if schema_version == HUMAN_GATE_ARTIFACT_SCHEMA_VERSION:
+        return "human_gate"
+    if schema_version == EVIDENCE_BUNDLE_SCHEMA_VERSION:
+        return "evidence_bundle"
+    if schema_version == CLI_ARTIFACT_SCHEMA_VERSION:
+        return "readiness_report"
+    return "event_artifact"
+
+
+def _optional_artifact_string(values: Mapping[str, Any], key: str) -> Optional[str]:
+    value = values.get(key)
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    if not value:
+        return None
+    _assert_public_value(key, value)
+    return value
+
+
+def build_event_index_artifact(
+    root: Path,
+    *,
+    event_paths: Iterable[str],
+    objective: str = "Create a redacted local Cognitive Loop event index.",
+    generated_at: Optional[str] = None,
+    artifact_ref: str = ".cognitive-loop/artifacts/cognitive-loop-event-index.html",
+) -> dict[str, Any]:
+    """Build a chronological metadata index of local Cognitive Loop event artifacts."""
+
+    generated_at = generated_at or _utc_now()
+    _assert_public_value("objective", objective)
+    _assert_public_value("artifact_ref", artifact_ref)
+    project = _project_metadata(root)
+    contract_reports = [report.public_dict() for report in validate_contract_files(root)]
+    safe_paths = _safe_event_index_paths(event_paths)
+    entries: list[dict[str, Any]] = []
+    total_bytes = 0
+    for relative_path in safe_paths:
+        path = root / relative_path
+        if not path.is_file():
+            raise CognitiveLoopContractError(f"Event index artifact is missing: {relative_path}.")
+        data = path.read_bytes()
+        total_bytes += len(data)
+        try:
+            artifact = json.loads(data.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise CognitiveLoopContractError(f"Event index artifact is not valid JSON: {relative_path}.") from exc
+        if not isinstance(artifact, Mapping):
+            raise CognitiveLoopContractError(f"Event index artifact must be a JSON object: {relative_path}.")
+        _assert_public_value("event_artifact_metadata", artifact)
+        schema_version = _optional_artifact_string(artifact, "schema_version") or "unknown"
+        entry: dict[str, Any] = {
+            "path": relative_path,
+            "kind": _event_index_kind(schema_version),
+            "schema_version": schema_version,
+            "status": _optional_artifact_string(artifact, "status") or "unknown",
+            "generated_at": _optional_artifact_string(artifact, "generated_at"),
+            "size_bytes": len(data),
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "content_included": False,
+        }
+        project_event = artifact.get("project_event")
+        if isinstance(project_event, Mapping):
+            entry["project_event_id"] = _optional_artifact_string(project_event, "event_id")
+            entry["project_event_type"] = _optional_artifact_string(project_event, "event_type")
+        decision_card = artifact.get("decision_card")
+        if isinstance(decision_card, Mapping):
+            entry["decision_id"] = _optional_artifact_string(decision_card, "decision_id")
+            entry["decision_status"] = _optional_artifact_string(decision_card, "status")
+        loop_run = artifact.get("loop_run")
+        if isinstance(loop_run, Mapping):
+            entry["loop_run_id"] = _optional_artifact_string(loop_run, "run_id")
+            entry["loop_status"] = _optional_artifact_string(loop_run, "status")
+        entries.append({key: value for key, value in entry.items() if value is not None})
+    entries.sort(key=lambda item: (str(item.get("generated_at", "")), str(item.get("path", ""))))
+    entry_count = len(entries)
+    summary = (
+        f"Indexed {entry_count} local Cognitive Loop event artifact"
+        f"{'' if entry_count == 1 else 's'} without embedding JSON contents."
+    )
+    event = validate_project_event(
+        {
+            "event_id": "evt-cognitive-loop-event-index",
+            "project_id": project["id"],
+            "actor": "system",
+            "event_type": "verification_completed",
+            "summary": summary,
+            "timestamp": generated_at,
+            "target": ".cognitive-loop/events",
+            "refs": [f"event-artifact:{item['path']}" for item in entries[:12]],
+            "sensitivity": "internal",
+        }
+    ).public_dict()
+    decision = validate_decision_card(
+        {
+            "decision_id": "dec-cognitive-loop-event-index",
+            "project_id": project["id"],
+            "title": "Publish local event index manifest",
+            "status": "approved",
+            "summary": objective,
+            "event_ids": [event["event_id"]],
+            "evidence_refs": [f"event:{event['event_id']}", f"artifact:{artifact_ref}"],
+            "risk": {
+                "level": "low",
+                "score": 0.22,
+                "reasons": [
+                    "metadata-only event index",
+                    "event contents excluded",
+                    "manual local command before watcher automation",
+                ],
+            },
+            "human_mastery_gate": {
+                "required": False,
+                "status": "not_required",
+                "questions": [
+                    "Can the operator inspect event order without exposing event payloads?",
+                    "Can the operator rebuild the index before sharing evidence?",
+                ],
+            },
+            "verification": {
+                "status": "passed",
+                "commands": [
+                    "python3 scripts/cognitive_loop_cli.py index --html",
+                    "python3 scripts/verify_cognitive_loop_event_index.py --check",
+                ],
+            },
+            "rollback": {"strategy": "delete_event_index_manifest", "checkpoint_ref": "git"},
+        }
+    ).public_dict()
+    loop = validate_loop_run(
+        {
+            "run_id": "loop-cognitive-loop-event-index",
+            "project_id": project["id"],
+            "objective": objective,
+            "status": "succeeded",
+            "started_at": generated_at,
+            "completed_at": generated_at,
+            "project_event_ids": [event["event_id"]],
+            "decision_card_ids": [decision["decision_id"]],
+            "artifact_refs": [artifact_ref],
+        }
+    ).public_dict()
+    report = {
+        "schema_version": EVENT_INDEX_SCHEMA_VERSION,
+        "status": "ready",
+        "generated_at": generated_at,
+        "title": "Cognitive Loop Event Index",
+        "objective": objective,
+        "project": project,
+        "contract_files": contract_reports,
+        "event_index": {
+            "entry_count": entry_count,
+            "total_bytes": total_bytes,
+            "max_events_recorded": 100,
+            "content_included": False,
+            "entries": entries,
+        },
+        "project_event": event,
+        "decision_card": decision,
+        "loop_run": loop,
+        "privacy": {
+            "raw_source_text_included": False,
+            "diff_body_included": False,
+            "file_contents_included": False,
+            "event_contents_included": False,
+            "artifact_contents_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "real_model_keys_included": False,
+            "watcher_daemon_started": False,
+            "mastra_runtime_started": False,
+        },
+        "current_limits": [
+            "This is a manually rebuilt local event index, not a watcher daemon.",
+            "It records event artifact metadata and hashes, not event payload contents.",
+            "Realtime HTML console and Mastra runtime orchestration remain planned layers.",
+        ],
+        "commands": {
+            "index": "python3 scripts/cognitive_loop_cli.py index --html",
+            "index_check": "python3 scripts/verify_cognitive_loop_event_index.py --check",
+        },
+    }
+    _assert_public_value("event_index_artifact", report)
+    return report
+
+
 def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
     """Render a compact static HTML artifact for local review and platform handoff."""
 
@@ -1744,6 +1965,23 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
         f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
         "</tr>"
         for item in bundle_artifacts
+        if isinstance(item, Mapping)
+    )
+    event_index = report.get("event_index")
+    if not isinstance(event_index, Mapping):
+        event_index = {}
+    event_entries = event_index.get("entries")
+    if not isinstance(event_entries, list):
+        event_entries = []
+    event_rows = "\n".join(
+        "<tr>"
+        f"<td>{escape(str(item.get('generated_at', '')))}</td>"
+        f"<td>{escape(str(item.get('path', '')))}</td>"
+        f"<td>{escape(str(item.get('kind', '')))}</td>"
+        f"<td>{escape(str(item.get('status', '')))}</td>"
+        f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
+        "</tr>"
+        for item in event_entries
         if isinstance(item, Mapping)
     )
     gate_resolution = report.get("gate_resolution")
@@ -1911,6 +2149,14 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
       <table>
         <thead><tr><th>Path</th><th>Kind</th><th>Bytes</th><th>SHA-256</th></tr></thead>
         <tbody>{bundle_rows}</tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Event Index</h2>
+      <p>Event metadata records: <strong>{escape(str(event_index.get('entry_count', 0)))}</strong></p>
+      <table>
+        <thead><tr><th>Generated</th><th>Path</th><th>Kind</th><th>Status</th><th>SHA-256</th></tr></thead>
+        <tbody>{event_rows}</tbody>
       </table>
     </section>
     <section>
