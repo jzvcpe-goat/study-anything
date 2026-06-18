@@ -1,0 +1,46 @@
+{
+  "report_version": "1.0",
+  "pr_id": "eval-needs-fix-command-injection",
+  "change_type": "feature",
+  "overall_risk": "high",
+  "decision": "needs-fix",
+  "summary": "The diff passes a user-controlled branch name into a shell command. This is a merge-blocking command injection risk.",
+  "findings": [
+    {
+      "rank": 1,
+      "dimension": "security",
+      "title": "User-controlled branch is interpolated into shell command",
+      "severity": "critical",
+      "file": "apps/api/insecure.py",
+      "line_range": "12",
+      "evidence": "apps/api/insecure.py:12 subprocess.run(command, shell=True, check=True)",
+      "scenario": "A branch value containing shell metacharacters can change the executed command.",
+      "recommendation": "Pass an argument list to subprocess.run and reject branch values that are not valid refs.",
+      "confidence": "high",
+      "blocking": true,
+      "cwe_references": [
+        "CWE-78"
+      ]
+    }
+  ],
+  "metrics": {
+    "total_files_changed": 1,
+    "total_lines_changed": 4,
+    "critical_count": 1,
+    "warn_count": 0,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "security",
+      "logic"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": true,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-fix",
+      "security-review"
+    ]
+  },
+  "suppressed_low_confidence": []
+}

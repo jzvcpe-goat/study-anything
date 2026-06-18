@@ -1,0 +1,28 @@
+{
+  "schema_version": "cognitive-loop-review-agent-eval-case-v1",
+  "case_id": "needs-fix-command-injection",
+  "title": "User-controlled branch name is passed to a shell command",
+  "input": {
+    "pr_id": "eval-needs-fix-command-injection",
+    "change_type": "feature",
+    "git_diff": "diff --git a/apps/api/insecure.py b/apps/api/insecure.py\nindex 5555555..6666666 100644\n--- a/apps/api/insecure.py\n+++ b/apps/api/insecure.py\n@@ -9,4 +9,7 @@ def sync_branch(branch):\n     if not branch:\n         return {\"status\": \"missing\"}\n+    command = f\"git fetch origin {branch}\"\n+    subprocess.run(command, shell=True, check=True)\n+    return {\"status\": \"synced\"}\n     return {\"status\": \"noop\"}\n",
+    "total_files_changed": 1,
+    "total_lines_changed": 4
+  },
+  "expected": {
+    "decision": "needs-fix",
+    "overall_risk": "high",
+    "required_findings": [
+      {
+        "dimension": "security",
+        "severity": "critical",
+        "file": "apps/api/insecure.py",
+        "evidence_contains": "apps/api/insecure.py:12",
+        "cwe_references": [
+          "CWE-78"
+        ]
+      }
+    ],
+    "minimum_suppressed_low_confidence": 0
+  }
+}

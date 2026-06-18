@@ -13,6 +13,7 @@ These gates are required for release and marketplace-style submission:
 - `study-anything-agent-eval-regression-report-v1` via `scripts/verify_agent_eval_baseline.py --check`.
 - `external-agent-adapter-hardening-v1` via `scripts/verify_external_agent_adapter_hardening.py`.
 - `external-eval-marketplace-harness-v1` via `scripts/verify_external_eval_marketplace_harness.py --check`.
+- `cognitive-loop-review-agent-eval-harness-v1` via `scripts/verify_cognitive_loop_review_agent_eval_harness.py --check`.
 
 These gates do not require judge-model credentials and must not store real model keys in Study
 Anything.
@@ -66,3 +67,18 @@ contract for Kimi, Codex, WorkBuddy-style workspaces, and generic OpenAPI tool p
 The harness is redacted. It must not include raw source text, learner answers, grading feedback,
 generated insights, Agent endpoints, Agent metadata, API keys, judge keys, or private browser/video
 context.
+
+## Review Agent Eval Harness
+
+`evals/review-agent` is the offline eval set for the Cognitive Loop Review Agent. It contains
+synthetic git diffs and golden JSON reports for approved, needs-review, and needs-fix decisions. Use
+it before trusting a Kimi, Codex, WorkBuddy, or private CI Review Agent:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+```
+
+It emits `cognitive-loop-review-agent-eval-harness-v1` and checks decision coverage, critical
+security findings with CWE references, low-confidence suppression, and privacy-leak rejection. These
+fixtures may contain synthetic raw diff text; real operator diffs must stay in ephemeral handoff
+requests and must not be committed.

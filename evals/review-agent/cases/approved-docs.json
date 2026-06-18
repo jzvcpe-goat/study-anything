@@ -1,0 +1,18 @@
+{
+  "schema_version": "cognitive-loop-review-agent-eval-case-v1",
+  "case_id": "approved-docs",
+  "title": "Documentation wording change with no code risk",
+  "input": {
+    "pr_id": "eval-approved-docs",
+    "change_type": "docs",
+    "git_diff": "diff --git a/docs/guide.md b/docs/guide.md\nindex 1111111..2222222 100644\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -4,2 +4,2 @@\n-Run the old command.\n+Run the supported command.\n",
+    "total_files_changed": 1,
+    "total_lines_changed": 2
+  },
+  "expected": {
+    "decision": "approved",
+    "overall_risk": "low",
+    "required_findings": [],
+    "minimum_suppressed_low_confidence": 0
+  }
+}
