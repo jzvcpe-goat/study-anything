@@ -85,6 +85,7 @@ python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
@@ -129,6 +130,12 @@ The Agent eval marketplace enforcement report emits
 required, optional external judge adapters have readable skip/failure
 diagnostics, required judge mode fails closed, and no external judge keys or
 model credentials enter Study Anything.
+The Cognitive Loop Review Agent handoff CLI emits
+`cognitive-loop-review-agent-handoff-cli-v1`; it proves Kimi, Codex,
+WorkBuddy, and private CI Agents can receive an operator-approved raw diff
+through an ephemeral request, return JSON against the public report schema, and
+have that JSON validated into a redacted summary without committing raw diff,
+file bodies, model keys, or private Agent endpoints.
 The multi-teacher Agent eval hardening verifier emits
 `multiteacher-agent-eval-hardening-v1`; it proves the learning loop records
 provider/task attribution for `teach.overview`, `teach.glossary`,
@@ -151,6 +158,7 @@ python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_learning_enrichment_bridge.py --check
 python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
@@ -216,6 +224,7 @@ platform/generated/study-anything-operator-drill-transcript.json
 platform/generated/study-anything-platform-submission-dry-run.json
 platform/generated/study-anything-platform-manual-submission-rehearsal.json
 platform/generated/study-anything-first-lesson-authoring-kit.json
+platform/generated/study-anything-cognitive-loop-review-agent-handoff-cli.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 platform/generated/study-anything-platform-field-rehearsal.json

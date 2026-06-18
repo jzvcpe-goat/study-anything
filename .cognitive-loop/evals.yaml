@@ -39,6 +39,9 @@ required:
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true
+  - id: cognitive-loop.review-agent-handoff-cli
+    command: python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+    blocking: true
   - id: study-anything.release-check
     command: ./scripts/release_check.sh
     blocking: true

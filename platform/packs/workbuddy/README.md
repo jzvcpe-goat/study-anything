@@ -88,6 +88,15 @@ aggregated launch acceptance state and current commercial boundary.
 `platform/generated/study-anything-github-launch-operator-guide.json` gives WorkBuddy-style operators
 the GitHub release sequence, required release assets, and local-first launch boundary.
 
+For code-review acceptance, the WorkBuddy-style workspace can pass a temporary handoff request to its
+private Review Agent, then validate the JSON response locally:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD > /tmp/workbuddy-review-handoff.json
+python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/workbuddy-review-report.json
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+```
+
 ## Runtime Boundary
 
 The workspace Agent should own:
