@@ -337,13 +337,16 @@ Current:
 - `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` creates read-only Patch Proposal Lite artifacts across prompt, policy, eval, task, doc, and retrieval categories.
 - `python3 scripts/verify_cognitive_loop_patch_proposal.py --check` verifies low-risk proposal generation, mixed manual-only handling, high-risk/gated/forbidden-path degradation, insufficient comparison degradation, secret/raw-diff/policy-weakening/invalid-schema rejection, JSON/HTML artifact structure, and privacy flags.
 - Patch Proposal Lite is not source-changing auto-apply: it produces bounded patch specifications and never generates raw unified diffs, calls models, executes apply, or modifies source files.
+- `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` creates read-only Mastra Evolution Receipt Link Lite artifacts from metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence.
+- `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check` verifies complete four-artifact linkage, missing-evidence degradation, insufficient comparison degradation, high-risk ungated blocking, manual-only Patch Proposal blocking, unsupported-schema/secret/raw-diff/policy-weakening rejection, JSON/HTML artifact structure, and privacy flags.
+- Mastra Evolution Receipt Link Lite is not production Mastra execution: it produces metadata-only `EvolutionReceiptLink` JSON/HTML receipt DTOs and never starts Mastra, calls models, executes apply, or modifies source files.
 
 Still planned:
 
 - low-risk source-changing auto-apply path with explicit policy guardrails
 - source-changing patch application from accepted Patch Proposal Lite specifications
 - realtime Artifact Console integration
-- EvolutionReport linkage into future Mastra workflow receipts
+- production Mastra workflow execution from accepted EvolutionReceiptLink artifacts
 
 Acceptance:
 

@@ -78,6 +78,9 @@ required:
   - id: cognitive-loop.patch-proposal-lite
     command: python3 scripts/verify_cognitive_loop_patch_proposal.py --check
     blocking: true
+  - id: cognitive-loop.mastra-evolution-receipt-link-lite
+    command: python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check
+    blocking: true
   - id: cognitive-loop.code-review-advisory
     command: python3 scripts/verify_cognitive_loop_review.py --check
     blocking: true

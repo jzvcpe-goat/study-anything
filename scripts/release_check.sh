@@ -64,6 +64,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_apply_plan.py --check
 "$python_bin" scripts/verify_cognitive_loop_improvement_comparator.py --check
 "$python_bin" scripts/verify_cognitive_loop_patch_proposal.py --check
+"$python_bin" scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check
 "$python_bin" scripts/verify_cognitive_loop_review.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_prompt.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check

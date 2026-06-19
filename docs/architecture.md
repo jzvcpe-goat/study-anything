@@ -64,7 +64,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
-- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
+- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -75,7 +75,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
-- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite、Measured Improvement Comparator Lite、Patch Proposal Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
+- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite、Measured Improvement Comparator Lite、Patch Proposal Lite、Mastra Evolution Receipt Link Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -92,6 +92,8 @@ Conceptual objects:
 - `MasteryRecord`: the user's understanding level for a topic, file, subsystem, or risky change.
 - `EvolutionReport`: a governed improvement proposal for prompts, policies, evals, docs, tasks, retrieval rules, or learning paths.
 - `ImprovementComparison`: a read-only comparison of metadata-only loop artifacts for improved/regressed/unchanged/insufficient/ambiguous loop outcomes.
+- `PatchProposal`: a read-only patch specification for prompt, policy, eval, task, doc, and retrieval categories.
+- `EvolutionReceiptLink`: a metadata-only linkage record that turns evolution evidence into a future Mastra workflow receipt DTO without starting Mastra, calling models, executing apply, or modifying source files.
 
 The first local contract validator is now implemented before runtime migration so docs, platform packs, and future code use the same vocabulary. The contracts are validated by `scripts/verify_cognitive_loop_contracts.py`, which emits `cognitive-loop-contract-bootstrap-v1`.
 
@@ -323,6 +325,10 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` 是当前 Patch Proposal Lite 入口。它把 metadata-only Evolution、Apply Plan、Improvement Comparison 或 verification artifact 转换为只读的 `PatchProposal` 规格，覆盖 prompt、policy、eval、task、doc 和 retrieval 六类。它会拒绝或降级高风险、Human Mastery Gate required、manual-only、受保护路径、证据不足、疑似 secret、raw diff 和 policy weakening 输入；它不会生成 raw unified diff、执行 apply、调用模型、修改源码、启动 daemon 或保存私有学习数据。
 
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` is the current Mastra Evolution Receipt Link Lite entrypoint. It links metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal artifacts into a read-only `EvolutionReceiptLink` JSON/HTML artifact for future Mastra workflow handoff. It accepts complete evidence as `ready`, degrades missing or insufficient evidence, blocks high-risk ungated or manual-only patch paths, and rejects unsupported schemas, secrets, raw diff bodies, policy weakening, and privacy flag regressions. It never starts Mastra, calls models, executes apply, modifies source files, or stores private learning data.
+
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` 是当前 Mastra Evolution Receipt Link Lite 入口。它把 metadata-only Evolution Report、Apply Plan、Improvement Comparison 和 Patch Proposal artifact 链接成只读 `EvolutionReceiptLink` JSON/HTML artifact，供未来 Mastra workflow 交接使用。完整证据会标记为 `ready`，缺件或证据不足会降级，高风险未 gate 或 manual-only patch 路径会阻断，并拒绝 unsupported schema、secret、raw diff body、policy weakening 和 privacy flag 回归。它不会启动 Mastra、调用模型、执行 apply、修改源码或保存私有学习数据。
+
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是当前的 Mastra 桥接层。它是给外部 Mastra 项目使用的 TypeScript scaffold，把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 workflow step、suspend/resume 和 bail 语义。它由 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证；这不代表本仓库已经启动或托管 Mastra。
@@ -385,7 +391,7 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, and Patch Proposal Lite.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, and Mastra Evolution Receipt Link Lite.
 - Governed source-changing auto-apply is not yet shipped; Apply Plan Lite only writes generated-artifact receipts when explicitly allowed, and Patch Proposal Lite produces read-only patch specifications rather than raw diffs or applied changes.
 - Full daemonized project watchers are not yet shipped.
 - Realtime HTML Artifact console is not yet a complete product UI.

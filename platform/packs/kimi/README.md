@@ -176,6 +176,15 @@ files, or stores private learning data. Verify it with
 `python3 scripts/verify_cognitive_loop_patch_proposal.py --check`, then share only
 `platform/generated/study-anything-cognitive-loop-patch-proposal.json` metadata back to Kimi.
 
+For Mastra Evolution Receipt Link Lite, a terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json`.
+It links metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal
+artifacts into a future Mastra workflow receipt DTO. It does not start Mastra, call models, execute
+apply, generate raw unified diffs, modify source files, or store private learning data. Verify it
+with `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check`, then share only
+`platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json` metadata back to
+Kimi.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace
