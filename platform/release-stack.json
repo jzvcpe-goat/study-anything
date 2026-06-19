@@ -2,7 +2,7 @@
   "schema_version": "study-anything-release-stack-v1",
   "version": "v0.3.31-alpha",
   "purpose": "Offline release-stack archive for completed and previous PR chains. It records branch order, PR/check metadata, and local gates without storing GitHub tokens, job logs, annotations, artifacts, source text, or live check payloads.",
-  "current_group": "release-stack-promotion-v0.3.79-v0.3.80",
+  "current_group": "release-stack-promotion-v0.3.81-v0.3.82",
   "release_policy": {
     "target_branch": "main",
     "merge_order": "oldest_to_newest",
@@ -29,12 +29,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 189,
-      "branch": "codex/v0.3.79-release-stack-candidate-promotion-lite",
+      "pr": 191,
+      "branch": "codex/v0.3.81-release-stack-candidate-promotion-lite",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "b24161e2362a432687ee4f29f118ad73bf2fe9eb",
+      "merge_commit": "5f20d05da8925ea31e0e4b4a1bf6e236b8027b7e",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -50,12 +50,12 @@
     },
     {
       "order": 2,
-      "pr": 190,
-      "branch": "codex/v0.3.80-release-stack-self-intake-lite",
+      "pr": 192,
+      "branch": "codex/v0.3.82-release-stack-self-intake-lite",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "58d74654a1aae10f7f9d16f85bf70a196e04b7e6",
+      "merge_commit": "59ea15e54d9487172ab5487ff90c964cb5b4e7dd",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -495,8 +495,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.79-v0.3.80",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
       "required_checks": [
@@ -550,6 +550,89 @@
           "status_expected_before_merge": "checks_pass",
           "final_state": "MERGED",
           "merge_commit": "58d74654a1aae10f7f9d16f85bf70a196e04b7e6",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.81-v0.3.82",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 191,
+          "branch": "codex/v0.3.81-release-stack-candidate-promotion-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "5f20d05da8925ea31e0e4b4a1bf6e236b8027b7e",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 192,
+          "branch": "codex/v0.3.82-release-stack-self-intake-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "59ea15e54d9487172ab5487ff90c964cb5b4e7dd",
           "required_checks": {
             "api-tests": "pass",
             "compose-smoke": "pass"
