@@ -352,6 +352,9 @@ Current:
 - `python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>` validates that handoff from the ZIP alone.
 - `python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check` verifies ready/manual/blocked/missing consumer flows plus tampered ZIP, manifest drift, missing file, hash mismatch, secret, raw-diff, policy-weakening, privacy-regression, protected-path, unsafe-ZIP-path, and archive-layout mismatch rejection.
 - Evolution Pack Consumer Smoke Lite is not a runtime or frontend: it requires no API, Docker, production Mastra, model calls, real apply, raw payloads, or repository checkout in `--pack` mode.
+- `python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check` aggregates export, zip-only consumer, release/adoption evidence, release_check status, and maintainer PR CI status into a metadata-only `ready|manual_review|blocked` ledger.
+- Maintainer Acceptance Ledger Lite verifies matching pack hashes, required source reports, `api-tests`/`compose-smoke`, release_check wiring, safe next commands, and privacy flags; it rejects missing consumer evidence, stale pack hashes, failed CI, missing release evidence, privacy regression, unsafe command, and policy weakening.
+- Maintainer Acceptance Ledger Lite is not hosted release automation: it does not call models, start daemons, require API/Docker, execute apply, mutate source, or merge PRs.
 
 Still planned:
 

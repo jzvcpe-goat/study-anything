@@ -51,6 +51,7 @@
     "ready_entry_count": 18,
     "ready_manifest_sha256": "d2afe743b05ba8d9f964bc658444864eb1af3e01be20cbbc4d7da33f3f95e6f2",
     "ready_pack_file_count": 17,
-    "ready_status": "pack_ready"
+    "ready_status": "pack_ready",
+    "ready_zip_sha256": "6b6a039f7bb20ee8aa1e1da0a8b3c2d577474b3233feda87b44ebd3e9b06dd42"
   }
 }

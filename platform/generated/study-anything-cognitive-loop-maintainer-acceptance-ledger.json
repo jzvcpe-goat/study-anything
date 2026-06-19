@@ -1,0 +1,155 @@
+{
+  "acceptance": {
+    "blocks_release_check": true,
+    "human_prerequisite": "Maintainer confirms PR CI is accurately reflected in ci_status_fixture.",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check"
+  },
+  "blocking_reasons": [],
+  "commercialization_readiness_notes": [
+    "Do not sell a standalone app from this ledger.",
+    "Use this ledger to support OSS/local-first maintainer acceptance.",
+    "Future paid value remains hosted sync, team workflows, trusted ecosystem, and professional operations."
+  ],
+  "decision": "ready",
+  "failure_modes": {
+    "blocked_fixture_decision": true,
+    "failed_ci_blocks": true,
+    "manual_review_fixture_decision": true,
+    "missing_consumer_report_rejected": true,
+    "missing_release_evidence_rejected": true,
+    "policy_weakening_rejected": true,
+    "privacy_regression_rejected": true,
+    "ready_fixture_decision": true,
+    "stale_pack_hash_rejected": true,
+    "unsafe_command_rejected": true
+  },
+  "manual_review_reasons": [],
+  "operator_next_commands": [
+    "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+    "python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check",
+    "python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check",
+    "python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>",
+    "./scripts/release_check.sh",
+    "gh pr checks <PR> --watch --interval 10"
+  ],
+  "pack": {
+    "consumer_ready_zip_sha256": "6b6a039f7bb20ee8aa1e1da0a8b3c2d577474b3233feda87b44ebd3e9b06dd42",
+    "consumer_report": "platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json",
+    "export_report": "platform/generated/study-anything-cognitive-loop-evolution-pack-export.json",
+    "manifest_schema": "cognitive-loop-evolution-pack-manifest-v1",
+    "pack_sha256": "6b6a039f7bb20ee8aa1e1da0a8b3c2d577474b3233feda87b44ebd3e9b06dd42",
+    "repo_checkout_required_for_pack_mode": false,
+    "zip_hashes_match": true,
+    "zip_only_consumer": true
+  },
+  "privacy_flags": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "no_model_calls": true,
+    "no_raw_payloads": true,
+    "no_real_source_mutation": true,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_stored": false,
+    "source_text_included": false
+  },
+  "purpose": "Aggregate Professional Evolution Pack export, zip-only consumer, release evidence, local release gate, and PR CI status into a maintainer go/no-go ledger.",
+  "release_gate": {
+    "ci_status_fixture": {
+      "checks": [
+        {
+          "name": "api-tests",
+          "status": "pass"
+        },
+        {
+          "name": "compose-smoke",
+          "status": "pass"
+        }
+      ],
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "schema_version": "cognitive-loop-pr-ci-status-fixture-v1",
+      "source": "maintainer-entered PR check summary"
+    },
+    "release_check": {
+      "command": "./scripts/release_check.sh",
+      "included_in_release_check": true,
+      "status": "pass"
+    },
+    "required_checks": [
+      "api-tests",
+      "compose-smoke"
+    ]
+  },
+  "runtime_boundaries": {
+    "api_required": false,
+    "docker_required": false,
+    "model_called": false,
+    "production_mastra_daemon_started": false,
+    "real_worktree_apply_executed": false,
+    "source_files_modified": false,
+    "standalone_frontend_required": false
+  },
+  "schema_version": "cognitive-loop-maintainer-acceptance-ledger-v1",
+  "source_refs": [
+    {
+      "path": "platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json",
+      "required": true,
+      "schema_version": "cognitive-loop-evolution-pack-consumer-v1",
+      "sha256": "bc8db47c72b45879c171e92997d2214204f8e82c2dec22129ee4594f0fbf7a53",
+      "source_id": "evolution_pack_consumer",
+      "status": "pass"
+    },
+    {
+      "path": "platform/generated/study-anything-cognitive-loop-evolution-pack-export.json",
+      "required": true,
+      "schema_version": "cognitive-loop-evolution-pack-export-verification-v1",
+      "sha256": "f723523328245eb15c4bd4bbad5457a5924a07e25fae58f68b77fb28e6afb319",
+      "source_id": "evolution_pack_export",
+      "status": "pass"
+    },
+    {
+      "path": "platform/generated/study-anything-launch-acceptance-ledger.json",
+      "required": true,
+      "schema_version": "launch-acceptance-ledger-v1",
+      "sha256": "2d056f75ff9dd738292beaa535f596e5dec714ea92221d719f460ed893b15457",
+      "source_id": "launch_acceptance_ledger",
+      "status": "pass"
+    },
+    {
+      "path": "platform/generated/study-anything-platform-adoption-pack.json",
+      "required": true,
+      "schema_version": "study-anything-platform-adoption-pack-v1",
+      "source_id": "platform_adoption_pack",
+      "status": "n/a"
+    },
+    {
+      "path": "platform/generated/study-anything-platform-bundle.json",
+      "required": true,
+      "schema_version": "study-anything-platform-bundle-v1",
+      "source_id": "platform_bundle",
+      "status": "n/a"
+    },
+    {
+      "path": "platform/generated/study-anything-published-image-evidence.json",
+      "required": true,
+      "schema_version": "published-image-evidence-v1",
+      "sha256": "6a6a4b4787bd2c66465c3e302ca6989ee6cde2a8b7e1b9e59c7fab6867b58fa0",
+      "source_id": "published_image_evidence",
+      "status": "pass"
+    },
+    {
+      "path": "platform/generated/study-anything-release-asset-adoption.json",
+      "required": true,
+      "schema_version": "release-asset-adoption-v1",
+      "sha256": "5b009986a1496fb54de4268d6b7f67c3252a9970c85187cba01c099d106f0bf4",
+      "source_id": "release_asset_adoption",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

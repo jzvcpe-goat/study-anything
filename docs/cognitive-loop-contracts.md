@@ -460,6 +460,20 @@ Evolution Pack Consumer Smoke Lite is a consumer-side validation gate. It does n
 
 Evolution Pack Consumer Smoke Lite 是消费方验收 gate。它不需要 API、Docker、独立前端、`--pack` 模式下的仓库 checkout、生产 Mastra、模型调用、源码改写 apply、raw source、raw diff、学习者答案、Agent endpoint secret、Agent metadata、prompt 或 model key。
 
+## Maintainer Acceptance Ledger Lite / Maintainer Acceptance Ledger Lite
+
+`python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check` emits `cognitive-loop-maintainer-acceptance-ledger-v1`. The ledger aggregates Professional Evolution Pack export evidence, ZIP-only consumer evidence, public release/adoption evidence, local release-check status, and a maintainer-entered PR CI fixture into a `ready`, `manual_review`, or `blocked` decision.
+
+The ledger verifies the export and consumer ZIP hashes match, required source reports exist, `api-tests` and `compose-smoke` are represented, `./scripts/release_check.sh` includes the ledger verifier, and operator next commands stay review-only. It rejects missing consumer reports, stale pack hashes, failed CI, missing release evidence, privacy regressions, unsafe commands, and policy weakening.
+
+Maintainer Acceptance Ledger Lite is metadata-only. It does not call models, start daemons, require API/Docker, run production Mastra, execute source-changing apply, mutate the real worktree, store raw source, store raw diffs, store learner answers, store Agent endpoints, store Agent metadata, store prompts, or store model keys.
+
+`python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check` 会输出 `cognitive-loop-maintainer-acceptance-ledger-v1`。该账本会聚合 Professional Evolution Pack export evidence、ZIP-only consumer evidence、公开 release/adoption evidence、本地 release-check 状态和维护者录入的 PR CI fixture，形成 `ready`、`manual_review` 或 `blocked` 决策。
+
+该账本会验证 export 与 consumer 的 ZIP hash 一致、必需 source reports 存在、`api-tests` 与 `compose-smoke` 已表示、`./scripts/release_check.sh` 已包含 ledger verifier，且 operator next commands 仍是 review-only。它会拒绝缺失 consumer report、pack hash 过期、CI 失败、缺失 release evidence、privacy regression、unsafe command 和 policy weakening。
+
+Maintainer Acceptance Ledger Lite 只保存 metadata。它不调用模型、不启动 daemon、不要求 API/Docker、不运行生产 Mastra、不执行源码改写 apply、不修改真实工作树，也不保存 raw source、raw diff、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+
 ## Public Objects
 
 ### `ProjectEvent`

@@ -264,6 +264,7 @@ python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --z
 python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check
 python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack .cognitive-loop/artifacts/evolution-pack/cognitive-loop-professional-evolution-pack.zip
 python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check
 ```
 
 The export is metadata-only. It maps ready chains to `pack_ready`, degraded chains to missing
@@ -276,6 +277,11 @@ Use the consumer command when a maintainer or platform Agent receives only the Z
 mode verifies manifest schema, pack id, archive layout, entry hashes, artifact refs, commands,
 privacy flags, and read-only guardrails without API, Docker, a repo checkout, model calls, or source
 mutation.
+
+Use the maintainer ledger before merge or release. It aggregates export evidence, consumer evidence,
+public release/adoption evidence, release_check status, and PR CI status into a metadata-only
+`ready`, `manual_review`, or `blocked` decision. It is a review gate, not hosted automation: it does
+not merge PRs, execute apply, call models, start daemons, require Docker/API, or mutate source.
 
 ## Start A Learning Loop
 
