@@ -154,7 +154,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
         "generated_asset",
-        "Cognitive Loop PR CI metadata-only receipt verification report.",
+        "Cognitive Loop PR CI metadata-only receipt verification report with optional GitHub CLI metadata adapter.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
@@ -1299,7 +1299,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "scripts/verify_cognitive_loop_pr_ci_receipt.py",
         "verification",
-        "Verify Cognitive Loop PR CI metadata-only receipt decisions and privacy boundaries.",
+        "Verify Cognitive Loop PR CI metadata-only receipt decisions, optional GitHub CLI metadata adapter, and privacy boundaries.",
     ),
     (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",

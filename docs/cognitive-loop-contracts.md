@@ -464,15 +464,15 @@ Evolution Pack Consumer Smoke Lite 是消费方验收 gate。它不需要 API、
 
 `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check` emits `cognitive-loop-pr-ci-receipt-v1`. The receipt stores metadata-only PR CI evidence for required checks: `api-tests` and `compose-smoke`, check statuses, PR number, head SHA, source type, decision, blocking/manual reasons, and safe next commands.
 
-`python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-fixture <path>` can read a redacted fixture or sanitized `gh pr checks --json`-style payload. The verifier rejects missing required checks, stale head SHA, malformed gh-json, secret-like text, raw logs, unsafe commands, and policy weakening.
+`python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-fixture <path>` can read a redacted fixture or sanitized `gh pr checks --json`-style payload. `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write` is an explicit live adapter that asks the local GitHub CLI for metadata only: PR number, head SHA, base branch, check names, states, timestamps, and github.com details URLs.
 
-PR CI Receipt Lite does not read GitHub tokens, fetch job logs, call models, start daemons, require Docker/API, execute apply, mutate source, or store raw logs.
+The verifier rejects missing required checks, stale head SHA, malformed gh-json, GitHub CLI unavailable/auth/not-found failures, secret-like text or URL queries, raw logs, annotations, unsafe commands, and policy weakening. PR CI Receipt Lite does not read GitHub tokens, fetch job logs, fetch artifacts, call models, start daemons, require Docker/API, execute apply, mutate source, or store raw logs.
 
 `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check` 会输出 `cognitive-loop-pr-ci-receipt-v1`。该 receipt 只保存 metadata-only 的 PR CI evidence：必需 checks `api-tests` 与 `compose-smoke`、check status、PR number、head SHA、source type、decision、blocking/manual reasons 和安全 next commands。
 
-`python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-fixture <path>` 可以读取脱敏 fixture 或净化后的 `gh pr checks --json` 类 payload。verifier 会拒绝缺失 required check、head SHA 过期、malformed gh-json、疑似 secret、raw log、unsafe command 和 policy weakening。
+`python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-fixture <path>` 可以读取脱敏 fixture 或净化后的 `gh pr checks --json` 类 payload。`python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write` 是显式 live adapter，只通过本机 GitHub CLI 读取 metadata：PR number、head SHA、base branch、check name、state、timestamp 和 github.com details URL。
 
-PR CI Receipt Lite 不读取 GitHub token、不抓取 job log、不调用模型、不启动 daemon、不要求 Docker/API、不执行 apply、不修改源码，也不保存 raw log。
+verifier 会拒绝缺失 required check、head SHA 过期、malformed gh-json、GitHub CLI 不可用/未登录/PR 不存在、疑似 secret 或 URL query、raw log、annotation、unsafe command 和 policy weakening。PR CI Receipt Lite 不读取 GitHub token、不抓取 job log、不抓取 artifact、不调用模型、不启动 daemon、不要求 Docker/API、不执行 apply、不修改源码，也不保存 raw log。
 
 ## Maintainer Acceptance Ledger Lite / Maintainer Acceptance Ledger Lite
 
