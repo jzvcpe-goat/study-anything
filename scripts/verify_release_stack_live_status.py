@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from verify_release_stack_readiness import current_group, required_checks_from
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "platform" / "release-stack.json"
@@ -55,7 +57,7 @@ def run_gh_pr_view(number: int) -> dict[str, Any]:
         "view",
         str(number),
         "--json",
-        "number,headRefName,baseRefName,state,isDraft,statusCheckRollup,url",
+        "number,headRefName,baseRefName,state,isDraft,mergeCommit,statusCheckRollup,url",
     ]
     completed = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
     if completed.returncode != 0:
@@ -94,12 +96,15 @@ def summarize_checks(payload: dict[str, Any], required_checks: set[str]) -> tupl
 
 
 def verify_live_stack(manifest: dict[str, Any], allow_missing_top_pr: bool) -> dict[str, Any]:
-    stack = manifest.get("stack")
+    group = current_group(manifest)
+    stack = group.get("stack")
     if not isinstance(stack, list) or not stack:
         raise LiveStackStatusError("Release stack manifest must include a non-empty stack.")
-    required_checks = set(str(item) for item in manifest.get("required_checks", []))
+    required_checks = required_checks_from(group, str(group.get("group_id")))
     if required_checks != REQUIRED_CHECKS:
         raise LiveStackStatusError(f"Release stack required checks drifted: {sorted(required_checks)}")
+    group_status = str(group.get("status"))
+    target_branch = str(group.get("target_branch") or manifest.get("release_policy", {}).get("target_branch"))
 
     rows: list[dict[str, Any]] = []
     failures: list[str] = []
@@ -113,7 +118,7 @@ def verify_live_stack(manifest: dict[str, Any], allow_missing_top_pr: bool) -> d
         base = row.get("base")
         if not isinstance(pr_number, int) or not isinstance(branch, str) or not isinstance(base, str):
             raise LiveStackStatusError(f"Release stack row {index + 1} must include int pr and string branch/base.")
-        if index > 0 and base != previous_branch:
+        if group_status == "open" and index > 0 and base != previous_branch:
             raise LiveStackStatusError(f"Release stack row {index + 1} base must equal previous branch {previous_branch}.")
         previous_branch = branch
 
@@ -145,7 +150,16 @@ def verify_live_stack(manifest: dict[str, Any], allow_missing_top_pr: bool) -> d
             row_failures.append(f"PR #{pr_number} head must be {branch}.")
         if payload.get("baseRefName") != base:
             row_failures.append(f"PR #{pr_number} base must be {base}.")
-        if payload.get("state") != "OPEN":
+        if group_status == "completed":
+            if payload.get("state") != "MERGED":
+                row_failures.append(f"PR #{pr_number} must be MERGED in a completed stack group.")
+            merge_commit = payload.get("mergeCommit") or {}
+            expected_merge_commit = row.get("merge_commit")
+            if not isinstance(merge_commit, dict) or merge_commit.get("oid") != expected_merge_commit:
+                row_failures.append(f"PR #{pr_number} merge commit must match the release stack manifest.")
+            if base != target_branch:
+                row_failures.append(f"PR #{pr_number} completed base must be {target_branch}.")
+        elif payload.get("state") != "OPEN":
             row_failures.append(f"PR #{pr_number} must be OPEN before stack merge.")
         checks, check_failures = summarize_checks(payload, required_checks)
         row_failures.extend(check_failures)
@@ -157,6 +171,9 @@ def verify_live_stack(manifest: dict[str, Any], allow_missing_top_pr: bool) -> d
                 "branch": branch,
                 "base": base,
                 "state": payload.get("state"),
+                "merge_commit": (payload.get("mergeCommit") or {}).get("oid")
+                if isinstance(payload.get("mergeCommit"), dict)
+                else None,
                 "is_draft": bool(payload.get("isDraft")),
                 "required_checks": checks,
                 "merge_ready": not row_failures,
@@ -173,6 +190,8 @@ def verify_live_stack(manifest: dict[str, Any], allow_missing_top_pr: bool) -> d
         "schema_version": SCHEMA_VERSION,
         "status": status,
         "version": manifest.get("version"),
+        "current_group": group.get("group_id"),
+        "current_group_status": group_status,
         "target_branch": manifest.get("release_policy", {}).get("target_branch"),
         "merge_order": manifest.get("release_policy", {}).get("merge_order"),
         "required_checks": sorted(required_checks),

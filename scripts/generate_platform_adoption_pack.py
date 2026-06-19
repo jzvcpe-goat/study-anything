@@ -151,6 +151,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-platform-handoff-checklist.json", "submission_report", "External platform handoff checklist for import, verification, runtime, and support escalation."),
     ("platform/generated/study-anything-launch-acceptance-ledger.json", "submission_report", "Public launch acceptance ledger for GitHub OSS and platform-Agent adoption."),
     ("platform/generated/study-anything-github-launch-operator-guide.json", "submission_report", "GitHub launch operator guide proof for release sequence, assets, and local-first boundaries."),
+    ("platform/generated/study-anything-release-stack-manifest-fixtures.json", "submission_report", "Negative fixtures proving release stack archive manifest boundary checks."),
     ("platform/generated/study-anything-operator-drill-transcript.json", "submission_report", "External platform operator drill transcript."),
     ("platform/generated/study-anything-platform-submission-dry-run.json", "submission_report", "External platform submission dry-run readiness report."),
     ("platform/generated/study-anything-platform-manual-submission-rehearsal.json", "submission_report", "Manual platform-submission rehearsal and redacted handoff report."),
