@@ -86,6 +86,14 @@ diff text, learner answers, Agent endpoints, Agent metadata, prompts, or model k
 `python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json`.
 
+For Evolution Report Lite, run
+`python3 scripts/cognitive_loop_evolution.py build --html --json`.
+It clusters metadata-only failures, proposes governed next-loop improvements, requires a Human
+Mastery Gate for high-risk suggestions, and writes JSON/HTML reports without modifying source files
+or weakening risk, audit, privacy, rollback, test, or permission policy. Verify it with
+`python3 scripts/verify_cognitive_loop_evolution_report.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-evolution-report.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

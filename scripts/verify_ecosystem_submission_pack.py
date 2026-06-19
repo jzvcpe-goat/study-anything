@@ -49,6 +49,9 @@ COGNITIVE_LOOP_ARTIFACT_CONSOLE_PATH = (
 COGNITIVE_LOOP_PERSONAL_PLUGIN_MODE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-personal-plugin-mode.json"
 )
+COGNITIVE_LOOP_EVOLUTION_REPORT_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-evolution-report.json"
+)
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
@@ -288,6 +291,9 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
     "scripts/cognitive_loop_personal_mode.py",
     "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+    "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+    "scripts/cognitive_loop_evolution.py",
+    "scripts/verify_cognitive_loop_evolution_report.py",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -542,6 +548,8 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "cognitive_loop_artifact_console.py build",
     "verify_cognitive_loop_personal_plugin_mode.py --check",
     "cognitive_loop_personal_mode.py explain",
+    "verify_cognitive_loop_evolution_report.py --check",
+    "cognitive_loop_evolution.py build",
     "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_study_anything_adapter.py --check",
     "verify_cognitive_loop_study_adapter_cli.py --check",
@@ -999,6 +1007,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1",
             "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1",
             "cognitive_loop_personal_plugin_mode.schema_version == cognitive-loop-personal-plugin-mode-verification-v1",
+            "cognitive_loop_evolution_report.schema_version == cognitive-loop-evolution-report-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -2212,6 +2221,56 @@ def verify_cognitive_loop_personal_plugin_mode_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Personal plugin mode privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_evolution_report() -> None:
+    report = load_json(COGNITIVE_LOOP_EVOLUTION_REPORT_PATH)
+    if report.get("schema_version") != "cognitive-loop-evolution-report-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop evolution report verifier schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop evolution report verifier must pass.")
+    if report.get("artifact_schema") != "cognitive-loop-evolution-report-lite-v1":
+        raise EcosystemSubmissionError("Cognitive Loop evolution artifact schema drifted.")
+    success = report.get("success_modes") or {}
+    if success.get("cluster_count", 0) < 1:
+        raise EcosystemSubmissionError("Evolution report must include failure clustering.")
+    if success.get("root_cause_count", 0) < 1:
+        raise EcosystemSubmissionError("Evolution report must include root-cause hypotheses.")
+    if success.get("proposed_improvement_count", 0) < 1:
+        raise EcosystemSubmissionError("Evolution report must include proposed improvements.")
+    if success.get("high_risk_gate_required") is not True:
+        raise EcosystemSubmissionError("Evolution report must require a gate for high-risk suggestions.")
+    if success.get("input_hash_unchanged") is not True:
+        raise EcosystemSubmissionError("Evolution report must prove input evidence is unchanged.")
+    degraded = report.get("degraded_modes") or {}
+    if degraded.get("empty_evidence_degraded") is not True:
+        raise EcosystemSubmissionError("Evolution report must degrade for empty evidence.")
+    if degraded.get("missing_evidence_degraded") is not True:
+        raise EcosystemSubmissionError("Evolution report must degrade for missing evidence.")
+    failures = report.get("failure_modes") or {}
+    if failures.get("secret_evidence_rejected") is not True:
+        raise EcosystemSubmissionError("Evolution report must reject secret-looking evidence.")
+    if failures.get("raw_diff_body_rejected") is not True:
+        raise EcosystemSubmissionError("Evolution report must reject raw diff bodies.")
+    if failures.get("policy_weakening_rejected") is not True:
+        raise EcosystemSubmissionError("Evolution report must reject policy-weakening suggestions.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("read_only") is not True:
+        raise EcosystemSubmissionError("Evolution report privacy.read_only must be true.")
+    for key in (
+        "source_text_included",
+        "raw_diff_included",
+        "learner_answers_included",
+        "agent_endpoint_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+        "model_called",
+        "daemon_started",
+        "policy_weakened",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Evolution report privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4942,6 +5001,7 @@ def main() -> None:
     verify_cognitive_loop_artifact_index_report()
     verify_cognitive_loop_artifact_console_report()
     verify_cognitive_loop_personal_plugin_mode_report()
+    verify_cognitive_loop_evolution_report()
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
     verify_cognitive_loop_recipe_replay_report()
@@ -5011,6 +5071,7 @@ def main() -> None:
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
                 "cognitive_loop_artifact_console": "cognitive-loop-artifact-console-verification-v1",
                 "cognitive_loop_personal_plugin_mode": "cognitive-loop-personal-plugin-mode-verification-v1",
+                "cognitive_loop_evolution_report": "cognitive-loop-evolution-report-verification-v1",
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",

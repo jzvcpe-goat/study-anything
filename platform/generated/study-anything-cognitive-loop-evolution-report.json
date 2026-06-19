@@ -1,0 +1,44 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_evolution.py build --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-evolution-report-lite-v1",
+  "cli": "scripts/cognitive_loop_evolution.py",
+  "degraded_modes": {
+    "empty_evidence_degraded": true,
+    "missing_evidence_degraded": true,
+    "missing_evidence_recorded": true
+  },
+  "failure_modes": {
+    "policy_weakening_rejected": true,
+    "raw_diff_body_rejected": true,
+    "secret_evidence_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_text_included": false
+  },
+  "schema_version": "cognitive-loop-evolution-report-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "artifact_file_count": 2,
+    "cluster_count": 4,
+    "high_risk_gate_required": true,
+    "html_json_created": true,
+    "input_hash_unchanged": true,
+    "proposed_improvement_count": 4,
+    "root_cause_count": 4
+  },
+  "version": "v0.3.31-alpha"
+}

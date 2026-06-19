@@ -111,6 +111,28 @@ diff bodies, learner answers, Agent endpoints, Agent metadata, prompts, model ke
 outputs. The default behavior is explain-only and read-only: do not auto-apply code changes from
 this mode.
 
+## Evolution Report Lite
+
+Use Evolution Report Lite after a local loop, Personal Plugin Mode run, Artifact Console run, or
+support/eval failure when the platform Agent needs a governed next-loop proposal. It clusters
+metadata-only failures, proposes prompt/policy/eval/task/doc/retrieval improvements, marks high-risk
+suggestions for a Human Mastery Gate, and writes JSON/HTML evidence. It must stay read-only.
+
+```bash
+python3 scripts/cognitive_loop_evolution.py build --html --json
+python3 scripts/verify_cognitive_loop_evolution_report.py --check
+```
+
+Machine-readable evidence:
+
+- `platform/generated/study-anything-cognitive-loop-evolution-report.json`
+- `scripts/cognitive_loop_evolution.py`
+- `scripts/verify_cognitive_loop_evolution_report.py`
+
+Do not use Evolution Report Lite to auto-apply changes, weaken risk thresholds, skip audit, remove
+rollback, reduce test requirements, loosen permissions, bypass Human Mastery Gates, store real model
+keys, or include raw source/diff bodies.
+
 ## Start A Learning Loop
 
 1. Check API health.
