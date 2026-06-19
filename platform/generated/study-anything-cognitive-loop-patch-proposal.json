@@ -1,0 +1,48 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-patch-proposal-lite-v1",
+  "cli": "scripts/cognitive_loop_patch_proposal.py",
+  "failure_modes": {
+    "invalid_schema_rejected": true,
+    "policy_weakening_rejected": true,
+    "raw_diff_proposal_rejected": true,
+    "secret_proposal_rejected": true
+  },
+  "manual_modes": {
+    "forbidden_path_manual_only": true,
+    "high_risk_manual_only": true,
+    "human_gate_manual_only": true,
+    "insufficient_comparison_degraded": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "raw_unified_diff_generated": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_files_modified": false,
+    "source_text_included": false
+  },
+  "schema_version": "cognitive-loop-patch-proposal-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "category_count": 6,
+    "html_json_created": true,
+    "low_risk_status": "ready",
+    "mixed_manual_only_count": 1,
+    "mixed_status": "needs_review",
+    "read_only": true
+  },
+  "version": "v0.3.31-alpha"
+}
