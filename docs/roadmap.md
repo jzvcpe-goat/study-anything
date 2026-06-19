@@ -349,6 +349,9 @@ Current:
 - `python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip` creates Professional Evolution Pack Export Lite artifacts from Artifact Console, Evolution Report, Apply Plan, Improvement Comparison, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and PatchApplySandboxReceipt refs.
 - `python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check` verifies ready export chains, manual-review chains, blocked chains, missing-artifact degradation, ZIP extraction and hash checks, protected-path rejection, secret/raw-diff/privacy-regression/policy-weakening rejection, HTML/mobile structure, and real-worktree read-only boundaries.
 - Professional Evolution Pack Export Lite is not source-changing auto-apply: it produces metadata-only `EvolutionPackManifest` JSON/HTML/ZIP handoff evidence for maintainers and platform Agents, and never mutates the real worktree.
+- `python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>` validates that handoff from the ZIP alone.
+- `python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check` verifies ready/manual/blocked/missing consumer flows plus tampered ZIP, manifest drift, missing file, hash mismatch, secret, raw-diff, policy-weakening, privacy-regression, protected-path, unsafe-ZIP-path, and archive-layout mismatch rejection.
+- Evolution Pack Consumer Smoke Lite is not a runtime or frontend: it requires no API, Docker, production Mastra, model calls, real apply, raw payloads, or repository checkout in `--pack` mode.
 
 Still planned:
 

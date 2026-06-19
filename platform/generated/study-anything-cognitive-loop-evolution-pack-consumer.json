@@ -1,0 +1,56 @@
+{
+  "consumer": {
+    "api_required": false,
+    "command": "python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>",
+    "docker_required": false,
+    "repo_checkout_required_for_pack_mode": false,
+    "script": "scripts/verify_cognitive_loop_evolution_pack_consumer.py"
+  },
+  "failure_modes": {
+    "archive_layout_mismatch_rejected": true,
+    "hash_mismatch_rejected": true,
+    "manifest_drift_rejected": true,
+    "missing_pack_file_rejected": true,
+    "policy_weakening_rejected": true,
+    "privacy_regression_rejected": true,
+    "protected_path_rejected": true,
+    "raw_diff_text_rejected": true,
+    "secret_like_text_rejected": true,
+    "tampered_zip_rejected": true,
+    "unsafe_zip_path_rejected": true
+  },
+  "manifest_schema": "cognitive-loop-evolution-pack-manifest-v1",
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "no_model_calls": true,
+    "no_raw_payloads": true,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_stored": false,
+    "source_text_included": false
+  },
+  "purpose": "Verify external zip-only consumption of Cognitive Loop Professional Evolution Pack exports.",
+  "runtime_boundaries": {
+    "api_required": false,
+    "docker_required": false,
+    "model_called": false,
+    "production_mastra_daemon_started": false,
+    "real_worktree_apply_executed": false,
+    "source_files_modified": false,
+    "standalone_frontend_required": false
+  },
+  "schema_version": "cognitive-loop-evolution-pack-consumer-v1",
+  "status": "pass",
+  "success_modes": {
+    "blocked_status": "blocked",
+    "manual_status": "manual_review",
+    "missing_status": "degraded_missing_artifacts",
+    "ready_entry_count": 18,
+    "ready_manifest_sha256": "d2afe743b05ba8d9f964bc658444864eb1af3e01be20cbbc4d7da33f3f95e6f2",
+    "ready_pack_file_count": 17,
+    "ready_status": "pack_ready"
+  }
+}

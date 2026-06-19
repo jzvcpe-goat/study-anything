@@ -262,6 +262,8 @@ Kimi/Codex/WorkBuddy-style platform Agents, or future hosted team review.
 ```bash
 python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip
 python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check
+python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack .cognitive-loop/artifacts/evolution-pack/cognitive-loop-professional-evolution-pack.zip
+python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check
 ```
 
 The export is metadata-only. It maps ready chains to `pack_ready`, degraded chains to missing
@@ -269,6 +271,11 @@ artifact status, manual chains to manual review, and blocked chains to blocked. 
 entry hashes, rejects invalid schemas, protected target paths, secrets, raw diffs, privacy flag
 regressions, and policy weakening. It never mutates the real worktree, executes apply, starts
 production Mastra, calls models, or stores private learning data.
+
+Use the consumer command when a maintainer or platform Agent receives only the ZIP handoff. Consumer
+mode verifies manifest schema, pack id, archive layout, entry hashes, artifact refs, commands,
+privacy flags, and read-only guardrails without API, Docker, a repo checkout, model calls, or source
+mutation.
 
 ## Start A Learning Loop
 

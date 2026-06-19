@@ -147,6 +147,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Professional Evolution Pack Export Lite verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json",
+        "generated_asset",
+        "Cognitive Loop Professional Evolution Pack zip-only consumer verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1275,6 +1280,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_evolution_pack_export.py",
         "verification",
         "Verify Cognitive Loop professional evolution pack export, zip integrity, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evolution_pack_consumer.py",
+        "verification",
+        "Verify Cognitive Loop professional evolution pack zip-only consumer import and privacy boundaries.",
     ),
     (
         "platform/mastra/README.md",
