@@ -432,6 +432,20 @@ Patch Apply Sandbox Lite does not apply source changes. It does not start daemon
 
 Patch Apply Sandbox Lite 不执行源码修改。它不启动 daemon，不要求独立前端，不启动生产 Mastra，不调用模型，不物化 raw diff，不修改真实工作树，不保存 raw source、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
 
+## Professional Evolution Pack Export Lite / Professional Evolution Pack Export Lite
+
+`python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip` creates a metadata-only professional handoff package from Artifact Console, Evolution Report, Governed Apply Plan, Improvement Comparison, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and PatchApplySandboxReceipt refs. The output schema is `cognitive-loop-evolution-pack-manifest-v1` and includes `EvolutionPackManifest` artifact refs, SHA-256 values, pack file list, operator next commands, guardrails, privacy flags, JSON/HTML output references, and ZIP layout.
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check` verifies ready export chains, manual-review chains, blocked chains, missing-artifact degradation, ZIP extraction and entry hash checks, protected-path rejection, secret-like rejection, raw diff rejection, privacy flag regression rejection, policy-weakening rejection, HTML/mobile structure, and read-only boundaries. It emits `cognitive-loop-evolution-pack-export-verification-v1`.
+
+Professional Evolution Pack Export Lite does not apply source changes. It does not start daemons, require a standalone frontend, start production Mastra, call models, materialize raw diffs, mutate the real worktree, store raw source, store learner answers, store Agent endpoints, store Agent metadata, store prompts, or store model keys.
+
+`python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip` 会基于 Artifact Console、Evolution Report、Governed Apply Plan、Improvement Comparison、Patch Proposal、EvolutionReceiptLink、MastraEvolutionWorkflowReplay 和 PatchApplySandboxReceipt 引用创建 metadata-only professional handoff package。输出 schema 是 `cognitive-loop-evolution-pack-manifest-v1`，包含 `EvolutionPackManifest` artifact refs、SHA-256、pack file list、operator next commands、guardrails、privacy flags、JSON/HTML 输出引用和 ZIP layout。
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check` 会验证 ready export chain、manual-review chain、blocked chain、缺失 artifact 降级、ZIP 解压和 entry hash 检查、受保护路径拒绝、疑似 secret 拒绝、raw diff 拒绝、privacy flag 回归拒绝、policy weakening 拒绝、HTML/移动端结构和只读边界，并输出 `cognitive-loop-evolution-pack-export-verification-v1`。
+
+Professional Evolution Pack Export Lite 不执行源码修改。它不启动 daemon，不要求独立前端，不启动生产 Mastra，不调用模型，不物化 raw diff，不修改真实工作树，不保存 raw source、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -520,6 +534,12 @@ Metadata-only replay transcript that maps an `EvolutionReceiptLink` into future 
 Metadata-only dry-run receipt that consumes Patch Proposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs. It records artifact refs, SHA-256 values, gate/manual/blocking state, sandbox redacted ref, rollback proof, operator next commands, guardrails, and privacy flags, but never mutates the real worktree or materializes raw diffs.
 
 只含 metadata 的 dry-run receipt，用来消费 Patch Proposal、Apply Plan、EvolutionReceiptLink 和 MastraEvolutionWorkflowReplay 引用。它记录 artifact refs、SHA-256、gate/manual/blocking 状态、沙箱脱敏引用、rollback proof、operator next commands、guardrails 和 privacy flags，但不修改真实工作树，也不物化 raw diff。
+
+### `EvolutionPackManifest`
+
+Metadata-only professional handoff manifest that packages Artifact Console, Evolution Report, Apply Plan, Improvement Comparison, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and PatchApplySandboxReceipt refs into a redacted JSON/HTML/ZIP evidence pack. It records artifact refs, SHA-256 values, pack file list, operator next commands, guardrails, and privacy flags, but never stores source bodies, patch bodies, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
+
+只含 metadata 的 professional handoff manifest，用来把 Artifact Console、Evolution Report、Apply Plan、Improvement Comparison、Patch Proposal、EvolutionReceiptLink、MastraEvolutionWorkflowReplay 和 PatchApplySandboxReceipt 引用打包成脱敏 JSON/HTML/ZIP 证据包。它记录 artifact refs、SHA-256、pack file list、operator next commands、guardrails 和 privacy flags，但不保存 source body、patch body、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
 
 ## Privacy Boundary
 

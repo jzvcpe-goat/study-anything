@@ -1,0 +1,55 @@
+{
+  "cli": "scripts/cognitive_loop_evolution_pack_export.py",
+  "commands": {
+    "console": "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+    "export": "python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
+    "verify": "python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check"
+  },
+  "failure_modes": {
+    "invalid_schema_rejected": true,
+    "policy_weakening_rejected": true,
+    "privacy_regression_rejected": true,
+    "protected_path_rejected": true,
+    "raw_diff_rejected": true,
+    "secret_like_rejected": true
+  },
+  "manifest_schema": "cognitive-loop-evolution-pack-manifest-v1",
+  "non_ready_modes": {
+    "blocked_status": "blocked",
+    "manual_status": "manual_review",
+    "missing_artifact_count": 8,
+    "missing_status": "degraded_missing_artifacts"
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "production_mastra_started": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "raw_payloads_included": false,
+    "real_model_keys_stored": false,
+    "real_source_mutated": false,
+    "source_text_included": false
+  },
+  "runtime_boundaries": {
+    "model_called": false,
+    "production_mastra_daemon_started": false,
+    "real_worktree_apply_executed": false,
+    "source_files_modified": false,
+    "standalone_frontend_required": false
+  },
+  "schema_version": "cognitive-loop-evolution-pack-export-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "artifact_count": 8,
+    "pack_file_count": 17,
+    "ready_status": "pack_ready",
+    "source_fixture_unchanged": true,
+    "zip_extract_verified": true,
+    "zip_sha256": "fb0ff5615b96990cd29c7b39463329d2425a54532fcb619168529a894c9d8f52"
+  }
+}
