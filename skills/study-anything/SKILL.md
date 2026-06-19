@@ -197,6 +197,23 @@ ungated artifacts and manual-only PatchProposal candidates, rejects unsupported 
 raw diffs, and policy weakening, and never starts Mastra, calls models, executes apply, generates raw
 unified diffs, modifies source files, or stores private learning data.
 
+## Mastra Evolution Workflow Replay Lite
+
+Use Mastra Evolution Workflow Replay Lite after a metadata-only EvolutionReceiptLink exists and an
+operator needs a replay transcript for future Mastra workflow handoff.
+
+```bash
+python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json
+python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check
+```
+
+Workflow Replay Lite is read-only. It maps ready receipts to replay-ready workflow steps, degraded
+receipts to manual review, and blocked receipts to blocked/manual-only. It rejects invalid schemas,
+unsupported statuses, missing required roles on ready receipts, high-risk ungated receipts,
+manual-only patch paths, privacy flag regressions, secrets, raw diffs, and policy weakening. It
+never starts production Mastra, calls models, executes apply, modifies source files, or stores
+private learning data.
+
 ## Start A Learning Loop
 
 1. Check API health.

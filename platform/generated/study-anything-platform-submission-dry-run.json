@@ -17,7 +17,7 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 401,
+    "file_count": 404,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
@@ -77,6 +77,7 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -180,7 +181,9 @@
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
-        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json"
       ],
       "display": "Codex Skill",
       "expected_mode": "terminal_skill",
@@ -293,6 +296,7 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -395,7 +399,9 @@
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
-        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json"
       ],
       "display": "Generic OpenAPI Tool Platform",
       "expected_mode": "generic_openapi_tools",
@@ -508,6 +514,7 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -611,7 +618,9 @@
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
-        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json"
       ],
       "display": "Kimi-compatible Tool Workspace",
       "expected_mode": "openai_compatible_tools",
@@ -727,6 +736,7 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -829,7 +839,9 @@
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
         "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
         "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
-        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json"
       ],
       "display": "WorkBuddy-style HTTP Workspace",
       "expected_mode": "openapi_http_tools",
