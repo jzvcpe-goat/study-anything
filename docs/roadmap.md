@@ -301,12 +301,18 @@ Acceptance:
 
 Goal: reduce adoption friction for individual users.
 
-Deliver in priority order:
+Current:
+
+- `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` creates read-only metadata-only Study Cards, quiz items, and Markdown/HTML learning reports for file, README, webpage metadata, and diff-summary targets.
+- `python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check` verifies target coverage, missing-target handling, secret-looking target rejection, raw diff body rejection, no-write behavior, report structure, and privacy flags.
+- Personal Plugin Mode Lite does not launch a daemon, start a standalone frontend, call real models, store real model keys, or embed raw source text, raw diff bodies, learner answers, Agent endpoints, Agent metadata, or prompts.
+
+Still planned:
 
 - VS Code/Cursor plugin
 - browser extension
 - Obsidian plugin
-- CLI Lite
+- richer Kimi/Codex/WorkBuddy platform shortcuts on top of the CLI
 
 Acceptance:
 

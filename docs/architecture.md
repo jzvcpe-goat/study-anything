@@ -64,7 +64,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
-- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
+- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -75,7 +75,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
-- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
+- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -302,6 +302,10 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/cognitive_loop_artifact_console.py build --html --json` 是当前静态 Artifact Console Lite 入口。它会把 Event Store rows、watcher runner summary、Study Adapter artifacts、DecisionCard、Human Gate、LoopRun 和 artifact-health metadata 汇总到 `.cognitive-loop/artifacts/console/index.html` 以及 JSON manifest。它是离线且 metadata-only 的：不启动 daemon，不引入独立前端，不使用 SSE/WebSocket，也不嵌入 event JSON 正文、HTML/Markdown 正文、source text、raw diff、test output、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
 
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` is the current Personal Plugin Mode Lite entrypoint. It creates read-only metadata-only Study Cards, quiz items, and Markdown/HTML learning reports for a file, README, webpage metadata record, or diff summary. It is designed for Kimi, Codex, WorkBuddy, browser assistants, or local Agents that need a lightweight learning artifact without launching a daemon or standalone frontend. It does not modify source files, call a real model, store model keys, or embed raw source text, raw diff bodies, learner answers, Agent endpoints, Agent metadata, or prompts.
+
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` 是当前 Personal Plugin Mode Lite 入口。它会为文件、README、网页 metadata 记录或 diff summary 生成只读、metadata-only 的 Study Cards、quiz items 和 Markdown/HTML 学习报告。它面向 Kimi、Codex、WorkBuddy、浏览器助手或本地 Agent 这类轻量入口，不启动 daemon，也不要求独立前端。它不会修改源文件、调用真实模型、保存模型密钥，也不会嵌入源文件正文、raw diff body、学习者答案、Agent endpoint、Agent metadata 或 prompt。
+
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是当前的 Mastra 桥接层。它是给外部 Mastra 项目使用的 TypeScript scaffold，把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 workflow step、suspend/resume 和 bail 语义。它由 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证；这不代表本仓库已经启动或托管 Mastra。
@@ -340,6 +344,7 @@ Professional mode should produce browser-readable artifacts:
 
 - static HTML reports for project maps, timelines, decision cards, mastery, audit, and evolution
 - static metadata-only Artifact Console Lite for Event Store, watcher runner, Study Adapter, Human Gate, LoopRun, and artifact-health status
+- Personal Plugin Mode Lite for read-only file, README, webpage metadata, and diff-summary learning artifacts
 - realtime local HTML console for watcher events, human gates, Agent audit, and verification status
 - CI-uploadable reports for PR review and team handoff
 
@@ -347,6 +352,7 @@ Professional mode should produce browser-readable artifacts:
 
 - 项目地图、时间线、决策卡、掌握度、审计和进化报告的静态 HTML
 - 面向 Event Store、watcher runner、Study Adapter、Human Gate、LoopRun 和 artifact-health 状态的静态 metadata-only Artifact Console Lite
+- 面向文件、README、网页 metadata 和 diff summary 的只读 Personal Plugin Mode Lite 学习 artifact
 - 面向 watcher event、human gate、Agent audit、验证状态的本地实时 HTML console
 - 可上传到 CI 的 PR review 和团队交接报告
 
@@ -362,7 +368,7 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, and static Artifact Console Lite.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, and Personal Plugin Mode Lite.
 - Full daemonized project watchers are not yet shipped.
 - Realtime HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.

@@ -348,6 +348,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_artifact_console.py --check` 会验证空项目渲染、runner-lite Event Store 聚合、Study Adapter artifact 链接、缺失 artifact 降级、secret/private-text 拒绝、移动端/窄屏 HTML 结构和隐私边界，并输出 `cognitive-loop-artifact-console-verification-v1`。
 
+## Personal Plugin Mode Lite / Personal Plugin Mode Lite
+
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` creates read-only metadata-only learning artifacts for a file, README, webpage metadata record, or diff summary. The output schema is `cognitive-loop-personal-plugin-mode-v1` and includes target metadata, Study Cards, quiz items, report references, provenance, and privacy flags.
+
+`python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check` verifies file, README, webpage metadata, and diff summary targets; JSON/HTML/Markdown report structure; read-only/no-write behavior; missing target handling; secret-looking target rejection; raw diff body rejection; and privacy flags for raw source text, raw diff bodies, learner answers, Agent endpoints, Agent metadata, prompts, model keys, model calls, and daemons. It emits `cognitive-loop-personal-plugin-mode-verification-v1`.
+
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` 会为文件、README、网页 metadata 记录或 diff summary 创建只读、metadata-only 的学习 artifact。输出 schema 是 `cognitive-loop-personal-plugin-mode-v1`，包含目标 metadata、Study Cards、quiz items、报告引用、provenance 和 privacy flags。
+
+`python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check` 会验证文件、README、网页 metadata、diff summary 四类目标，JSON/HTML/Markdown 报告结构，只读/no-write 行为，缺失目标处理，疑似 secret 目标拒绝，raw diff body 拒绝，以及源正文、raw diff body、学习者答案、Agent endpoint、Agent metadata、prompt、model key、model call 和 daemon 的隐私标记，并输出 `cognitive-loop-personal-plugin-mode-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`

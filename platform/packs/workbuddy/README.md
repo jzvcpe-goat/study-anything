@@ -88,6 +88,14 @@ Agent endpoints, Agent metadata, prompts, or model keys. Verify it with
 `python3 scripts/verify_cognitive_loop_artifact_console.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-artifact-console.json`.
 
+For Personal Plugin Mode Lite, run
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json`.
+It creates read-only metadata-only Study Cards, quiz items, and Markdown/HTML reports for a file,
+README, webpage metadata, or diff summary without modifying source files or storing raw source or
+diff text, learner answers, Agent endpoints, Agent metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

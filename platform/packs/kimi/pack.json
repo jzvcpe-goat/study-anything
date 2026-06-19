@@ -102,7 +102,8 @@
     "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1",
     "cognitive_loop_study_adapter_cli.schema_version == cognitive-loop-study-anything-adapter-cli-v1",
     "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1",
-    "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1"
+    "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1",
+    "cognitive_loop_personal_plugin_mode.schema_version == cognitive-loop-personal-plugin-mode-verification-v1"
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
@@ -215,7 +216,10 @@
     "scripts/verify_cognitive_loop_watcher_runner.py",
     "platform/generated/study-anything-cognitive-loop-artifact-console.json",
     "scripts/cognitive_loop_artifact_console.py",
-    "scripts/verify_cognitive_loop_artifact_console.py"
+    "scripts/verify_cognitive_loop_artifact_console.py",
+    "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
+    "scripts/cognitive_loop_personal_mode.py",
+    "scripts/verify_cognitive_loop_personal_plugin_mode.py"
   ],
   "integration_mode": "openai_compatible_tools",
   "local_verification": [
@@ -313,7 +317,9 @@
     ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
     ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'",
     "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
-    "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
+    "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+    "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+    "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -343,6 +349,7 @@
     "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
     ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
     ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-    "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
+    "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+    "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check"
   ]
 }

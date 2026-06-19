@@ -46,6 +46,9 @@ COGNITIVE_LOOP_WATCHER_RUNNER_PATH = (
 COGNITIVE_LOOP_ARTIFACT_CONSOLE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-console.json"
 )
+COGNITIVE_LOOP_PERSONAL_PLUGIN_MODE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-personal-plugin-mode.json"
+)
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
@@ -282,6 +285,9 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-artifact-console.json",
     "scripts/cognitive_loop_artifact_console.py",
     "scripts/verify_cognitive_loop_artifact_console.py",
+    "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
+    "scripts/cognitive_loop_personal_mode.py",
+    "scripts/verify_cognitive_loop_personal_plugin_mode.py",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -534,6 +540,8 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "cognitive_loop_watcher_runner.py run",
     "verify_cognitive_loop_artifact_console.py --check",
     "cognitive_loop_artifact_console.py build",
+    "verify_cognitive_loop_personal_plugin_mode.py --check",
+    "cognitive_loop_personal_mode.py explain",
     "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_study_anything_adapter.py --check",
     "verify_cognitive_loop_study_adapter_cli.py --check",
@@ -990,6 +998,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_watcher_ingest.schema_version == cognitive-loop-watcher-ingest-verification-v1",
             "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1",
             "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1",
+            "cognitive_loop_personal_plugin_mode.schema_version == cognitive-loop-personal-plugin-mode-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -2157,6 +2166,52 @@ def verify_cognitive_loop_artifact_console_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Artifact console privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_personal_plugin_mode_report() -> None:
+    report = load_json(COGNITIVE_LOOP_PERSONAL_PLUGIN_MODE_PATH)
+    if report.get("schema_version") != "cognitive-loop-personal-plugin-mode-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop personal plugin mode report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop personal plugin mode report must pass.")
+    if report.get("artifact_schema") != "cognitive-loop-personal-plugin-mode-v1":
+        raise EcosystemSubmissionError("Cognitive Loop personal plugin mode artifact schema drifted.")
+    success = report.get("success_modes") or {}
+    target_kinds = set(success.get("target_kinds") or [])
+    expected_kinds = {"file", "readme", "webpage", "diff_summary"}
+    if not expected_kinds.issubset(target_kinds):
+        raise EcosystemSubmissionError("Personal plugin mode must cover file, README, webpage, and diff summary targets.")
+    if success.get("source_hash_unchanged") is not True:
+        raise EcosystemSubmissionError("Personal plugin mode must prove source files stay unchanged.")
+    if success.get("artifact_file_count", 0) < 12:
+        raise EcosystemSubmissionError("Personal plugin mode must create JSON, HTML, and Markdown artifacts for each target.")
+    if success.get("study_card_count", 0) < 12:
+        raise EcosystemSubmissionError("Personal plugin mode must generate study cards.")
+    if success.get("quiz_item_count", 0) < 8:
+        raise EcosystemSubmissionError("Personal plugin mode must generate quiz items.")
+    failures = report.get("failure_modes") or {}
+    if failures.get("missing_target_rejected") is not True:
+        raise EcosystemSubmissionError("Personal plugin mode must reject missing targets.")
+    if failures.get("secret_target_rejected") is not True:
+        raise EcosystemSubmissionError("Personal plugin mode must reject secret-looking target content.")
+    if failures.get("raw_diff_rejected") is not True:
+        raise EcosystemSubmissionError("Personal plugin mode must reject raw diff bodies.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("read_only") is not True:
+        raise EcosystemSubmissionError("Personal plugin mode privacy.read_only must be true.")
+    for key in (
+        "source_text_included",
+        "raw_diff_included",
+        "learner_answers_included",
+        "agent_endpoint_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+        "model_called",
+        "daemon_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Personal plugin mode privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4886,6 +4941,7 @@ def main() -> None:
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
     verify_cognitive_loop_artifact_console_report()
+    verify_cognitive_loop_personal_plugin_mode_report()
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
     verify_cognitive_loop_recipe_replay_report()
@@ -4954,6 +5010,7 @@ def main() -> None:
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
                 "cognitive_loop_artifact_console": "cognitive-loop-artifact-console-verification-v1",
+                "cognitive_loop_personal_plugin_mode": "cognitive-loop-personal-plugin-mode-verification-v1",
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",

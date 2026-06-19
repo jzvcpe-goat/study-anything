@@ -1,0 +1,48 @@
+{
+  "acceptance": {
+    "example_file_command": "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-personal-plugin-mode-v1",
+  "cli": "scripts/cognitive_loop_personal_mode.py",
+  "failure_modes": {
+    "missing_target_rejected": true,
+    "raw_diff_rejected": true,
+    "secret_target_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_text_included": false
+  },
+  "schema_version": "cognitive-loop-personal-plugin-mode-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "artifact_file_count": 12,
+    "html_markdown_created": true,
+    "privacy_flags": {
+      "all_read_only": true,
+      "raw_diff_included": false,
+      "real_model_keys_stored": false,
+      "source_text_included": false
+    },
+    "quiz_item_count": 8,
+    "source_hash_unchanged": true,
+    "study_card_count": 12,
+    "target_kinds": [
+      "diff_summary",
+      "file",
+      "readme",
+      "webpage"
+    ]
+  },
+  "version": "v0.3.31-alpha"
+}
