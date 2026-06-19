@@ -408,6 +408,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check` 会验证完整四件套链接、单件 artifact 降级、证据不足 comparison 降级、高风险未 gate 阻断、manual-only Patch Proposal 阻断、unsupported schema 拒绝、疑似 secret 拒绝、raw diff 拒绝、policy weakening 拒绝、privacy flag 回归阻断、JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-mastra-evolution-receipt-verification-v1`。
 
+## Mastra Evolution Workflow Replay Lite / Mastra Evolution Workflow Replay Lite
+
+`python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` creates a read-only replay transcript from a metadata-only `EvolutionReceiptLink`. The output schema is `cognitive-loop-mastra-evolution-workflow-replay-v1` and includes `MastraEvolutionWorkflowReplay` source receipt metadata, workflow steps, gate actions, replay summary, operator next commands, guardrails, privacy flags, and JSON/HTML output references.
+
+`python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check` verifies ready, degraded, and blocked receipt replay; invalid schema rejection; unsupported status rejection; ready-with-missing-roles rejection; high-risk ungated rejection; manual-only patch rejection; privacy flag regression rejection; secret-like rejection; raw diff rejection; policy-weakening rejection; JSON/HTML report structure; and read-only privacy boundaries. It emits `cognitive-loop-mastra-evolution-replay-verification-v1`.
+
+`python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` 会基于 metadata-only `EvolutionReceiptLink` 创建只读 replay transcript。输出 schema 是 `cognitive-loop-mastra-evolution-workflow-replay-v1`，包含 `MastraEvolutionWorkflowReplay` source receipt metadata、workflow steps、gate actions、replay summary、operator next commands、guardrails、privacy flags，以及 JSON/HTML 输出引用。
+
+`python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check` 会验证 ready、degraded、blocked receipt replay；invalid schema 拒绝；unsupported status 拒绝；ready 但缺少 required roles 拒绝；高风险未 gate 拒绝；manual-only patch 拒绝；privacy flag 回归拒绝；疑似 secret 拒绝；raw diff 拒绝；policy weakening 拒绝；JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-mastra-evolution-replay-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -484,6 +494,12 @@ Read-only patch specification covering prompt, policy, eval, task, doc, and retr
 Metadata-only linkage record that connects Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence into a future Mastra workflow receipt DTO. It records artifact roles, workflow-step intent, degraded reasons, blockers, guardrails, and privacy flags, but never starts Mastra, calls models, executes apply, embeds raw diffs, or modifies source files.
 
 只含 metadata 的链接记录，用来把 Evolution Report、Apply Plan、Improvement Comparison 和 Patch Proposal evidence 接成未来 Mastra workflow receipt DTO。它记录 artifact role、workflow-step 意图、degraded reasons、blockers、guardrails 和 privacy flags，但不启动 Mastra、不调用模型、不执行 apply、不嵌入 raw diff，也不修改源码。
+
+### `MastraEvolutionWorkflowReplay`
+
+Metadata-only replay transcript that maps an `EvolutionReceiptLink` into future Mastra workflow steps. It records source receipt status, workflow steps, gate actions, manual review or blocked reasons, operator next commands, guardrails, and privacy flags, but never starts production Mastra, calls models, executes apply, embeds raw diffs, or modifies source files.
+
+只含 metadata 的 replay transcript，用来把 `EvolutionReceiptLink` 映射为未来 Mastra workflow steps。它记录 source receipt status、workflow steps、gate actions、manual review 或 blocked reasons、operator next commands、guardrails 和 privacy flags，但不启动生产 Mastra、不调用模型、不执行 apply、不嵌入 raw diff，也不修改源码。
 
 ## Privacy Boundary
 

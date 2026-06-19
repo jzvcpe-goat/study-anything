@@ -139,6 +139,15 @@ apply, generate raw unified diffs, modify source files, or store private learnin
 with `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json`.
 
+For Mastra Evolution Workflow Replay Lite, run
+`python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json`.
+It replays a metadata-only EvolutionReceiptLink into future Mastra workflow steps for evidence
+validation, human gate evaluation, patch review, apply-plan review, and observability receipt
+handoff. It does not start production Mastra, call models, execute apply, modify source files, or
+store private learning data. Verify it with
+`python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-mastra-evolution-replay.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

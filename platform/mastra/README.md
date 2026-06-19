@@ -36,6 +36,13 @@ evidence source.
   verification that the receipt link degrades missing evidence, blocks high-risk ungated or
   manual-only patch paths, rejects secrets/raw diffs/policy weakening, and never starts Mastra,
   calls models, executes apply, or modifies source files.
+- `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json`:
+  a read-only workflow replay builder that maps an EvolutionReceiptLink into future Mastra
+  validate-evidence, human-gate, patch-review, apply-plan-review, and observability-receipt steps.
+- `python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check`: local
+  verification that ready receipts become replay-ready, degraded receipts require manual review,
+  blocked receipts stay blocked, unsafe receipts are rejected, and no production Mastra, model,
+  apply, or source-writing path is started.
 
 ## Install Into A Mastra Project
 
@@ -66,6 +73,10 @@ For evolution loops, the safer handoff is an `EvolutionReceiptLink` artifact pro
 Apply Plan, Improvement Comparison, and Patch Proposal evidence is ready, degraded, or blocked
 before any external Mastra project decides what to execute.
 
+Before connecting a production workflow, run `scripts/cognitive_loop_mastra_evolution_replay.py`
+against that receipt link. The replay transcript is still metadata-only, but it shows how the
+receipt would map to future workflow steps and which gates or blockers must be resolved first.
+
 ## HITL Mapping
 
 The adapter maps Cognitive Loop Human Mastery Gate state onto Mastra workflow behavior:
@@ -82,7 +93,8 @@ of truth for project evidence.
 
 Status: adapter contract pack plus metadata-only runtime dry-run harness plus minimal
 repo-started runtime MVP with a local libSQL suspend/resume proof, a local Langfuse DTO
-mapping proof, and a read-only EvolutionReceiptLink builder for future Mastra workflow handoff.
+mapping proof, a read-only EvolutionReceiptLink builder, and a read-only workflow replay builder
+for future Mastra workflow handoff.
 
 This repository still does not ship a watcher daemon, realtime HTML console, hosted service,
 or production storage operations. Manual watcher ingest creates metadata-only `ProjectEvent`

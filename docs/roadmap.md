@@ -340,6 +340,9 @@ Current:
 - `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` creates read-only Mastra Evolution Receipt Link Lite artifacts from metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence.
 - `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check` verifies complete four-artifact linkage, missing-evidence degradation, insufficient comparison degradation, high-risk ungated blocking, manual-only Patch Proposal blocking, unsupported-schema/secret/raw-diff/policy-weakening rejection, JSON/HTML artifact structure, and privacy flags.
 - Mastra Evolution Receipt Link Lite is not production Mastra execution: it produces metadata-only `EvolutionReceiptLink` JSON/HTML receipt DTOs and never starts Mastra, calls models, executes apply, or modifies source files.
+- `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` creates read-only Mastra Evolution Workflow Replay Lite artifacts from metadata-only `EvolutionReceiptLink` evidence.
+- `python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check` verifies ready/degraded/blocked receipt replay; invalid schema, unsupported status, missing required roles, high-risk ungated, manual-only patch, privacy regression, secret, raw-diff, and policy-weakening rejection; JSON/HTML artifact structure; and privacy flags.
+- Mastra Evolution Workflow Replay Lite is not production Mastra execution: it produces metadata-only `MastraEvolutionWorkflowReplay` transcripts and never starts production Mastra, calls models, executes apply, or modifies source files.
 
 Still planned:
 

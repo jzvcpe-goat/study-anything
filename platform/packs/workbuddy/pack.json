@@ -108,7 +108,8 @@
     "cognitive_loop_apply_plan.schema_version == cognitive-loop-apply-plan-verification-v1",
     "cognitive_loop_improvement_comparison.schema_version == cognitive-loop-improvement-comparison-verification-v1",
     "cognitive_loop_patch_proposal.schema_version == cognitive-loop-patch-proposal-verification-v1",
-    "cognitive_loop_mastra_evolution_receipt.schema_version == cognitive-loop-mastra-evolution-receipt-verification-v1"
+    "cognitive_loop_mastra_evolution_receipt.schema_version == cognitive-loop-mastra-evolution-receipt-verification-v1",
+    "cognitive_loop_mastra_evolution_replay.schema_version == cognitive-loop-mastra-evolution-replay-verification-v1"
   ],
   "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
   "entrypoints": {
@@ -236,7 +237,10 @@
     "scripts/verify_cognitive_loop_patch_proposal.py",
     "platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json",
     "scripts/cognitive_loop_mastra_evolution_receipt.py",
-    "scripts/verify_cognitive_loop_mastra_evolution_receipt.py"
+    "scripts/verify_cognitive_loop_mastra_evolution_receipt.py",
+    "platform/generated/study-anything-cognitive-loop-mastra-evolution-replay.json",
+    "scripts/cognitive_loop_mastra_evolution_replay.py",
+    "scripts/verify_cognitive_loop_mastra_evolution_replay.py"
   ],
   "integration_mode": "openapi_http_tools",
   "local_verification": [
@@ -345,7 +349,9 @@
     "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
     "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
     "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
-    "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
+    "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+    "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+    "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -376,6 +382,7 @@
     "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
     "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
     "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
-    "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check"
+    "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+    "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check"
   ]
 }
