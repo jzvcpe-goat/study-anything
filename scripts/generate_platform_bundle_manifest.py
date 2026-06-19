@@ -357,6 +357,11 @@ FILES: list[tuple[str, str, str]] = [
         "Metadata-only release stack intake candidate report for the next PR group.",
     ),
     (
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "generated_asset",
+        "Metadata-only release stack candidate promotion report for the current PR group.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -1327,9 +1332,19 @@ FILES: list[tuple[str, str, str]] = [
         "Verify metadata-only release stack intake candidates from PR summary metadata.",
     ),
     (
+        "scripts/verify_release_stack_candidate_promotion.py",
+        "verification",
+        "Verify metadata-only release stack candidate promotion into the manifest.",
+    ),
+    (
         "fixtures/release-stack/pr-183-intake-candidate.json",
         "fixture",
         "Redacted release stack intake candidate fixture for PR 183.",
+    ),
+    (
+        "fixtures/release-stack/pr-184-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 184.",
     ),
     (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",

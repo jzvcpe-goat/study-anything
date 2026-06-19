@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-01-01T00:00:00Z",
+  "negative_fixtures": [
+    {
+      "case_id": "already_represented_pr",
+      "error": "promoted current group does not match the expected #183/#184 candidate group.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_merge_commit",
+      "error": "release-stack-promotion-v0.3.73-v0.3.74.stack[2].merge_commit must be a 40-character lowercase SHA.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "failed_required_check",
+      "error": "release-stack-promotion-v0.3.73-v0.3.74.stack[2].required_checks.api-tests must be pass.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_required_check",
+      "error": "release-stack-promotion-v0.3.73-v0.3.74.stack[2].required_checks.compose-smoke must be pass.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "unsafe_command",
+      "error": "current_group.operator_commands contains unsafe commands: ['gh api repos/jzvcpe-goat/study-anything/actions/jobs/1/logs']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "secret_log_artifact_payload",
+      "error": "release stack manifest contains private or unsafe text: ['<redacted>', '<redacted>']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "manifest_regression",
+      "error": "current_group role must be current.",
+      "status": "rejected"
+    }
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "artifacts_stored": false,
+    "check_annotations_stored": false,
+    "github_tokens_stored": false,
+    "job_logs_stored": false,
+    "learner_answers_included": false,
+    "live_check_payloads_stored": false,
+    "metadata_only": true,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "source_mutation_performed": false
+  },
+  "promotion": {
+    "current_group": "release-stack-promotion-v0.3.73-v0.3.74",
+    "previous_current_group": "pr-ci-receipt-chain-v0.3.70-v0.3.72",
+    "previous_current_group_archived": true,
+    "promoted_prs": [
+      183,
+      184
+    ],
+    "top_level_stack_mirrors_current": true
+  },
+  "readiness": {
+    "archived_group_count": 2,
+    "current_group": "release-stack-promotion-v0.3.73-v0.3.74",
+    "schema_version": "release-stack-readiness-v1",
+    "stack_prs": [
+      183,
+      184
+    ],
+    "status": "pass"
+  },
+  "schema_version": "release-stack-candidate-promotion-v1",
+  "source_reports": [
+    "platform/generated/study-anything-release-stack-intake-candidate.json",
+    "fixtures/release-stack/pr-184-intake-candidate.json",
+    "platform/release-stack.json"
+  ],
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}
