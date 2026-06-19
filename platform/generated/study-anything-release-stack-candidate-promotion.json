@@ -72,7 +72,7 @@
   },
   "schema_version": "release-stack-candidate-promotion-v1",
   "source_reports": [
-    "platform/generated/study-anything-release-stack-intake-candidate.json",
+    "fixtures/release-stack/pr-183-intake-candidate.json",
     "fixtures/release-stack/pr-184-intake-candidate.json",
     "platform/release-stack.json"
   ],
