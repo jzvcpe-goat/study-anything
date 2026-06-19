@@ -88,6 +88,29 @@ context into shared logs, recipe metadata, or support bundles. Generated private
 out of shared logs.
 Boundary check phrase: generated private insights.
 
+## Personal Plugin Mode Lite
+
+Use Personal Plugin Mode Lite when the platform Agent only needs a read-only learning artifact for
+a single file, README, webpage metadata record, or git diff summary. This is the lightweight path for
+Kimi, Codex, WorkBuddy, or another local Agent to explain material and hand Study Cards, quiz items,
+and Markdown/HTML reports back to the user without launching a daemon or standalone frontend.
+
+```bash
+python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json
+python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check
+```
+
+Machine-readable evidence:
+
+- `platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json`
+- `scripts/cognitive_loop_personal_mode.py`
+- `scripts/verify_cognitive_loop_personal_plugin_mode.py`
+
+Treat Personal Plugin Mode artifacts as metadata-only. They must not contain raw source text, raw
+diff bodies, learner answers, Agent endpoints, Agent metadata, prompts, model keys, or real model
+outputs. The default behavior is explain-only and read-only: do not auto-apply code changes from
+this mode.
+
 ## Start A Learning Loop
 
 1. Check API health.
