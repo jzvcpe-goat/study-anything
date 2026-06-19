@@ -352,6 +352,11 @@ FILES: list[tuple[str, str, str]] = [
         "Negative fixtures proving release stack archive manifest boundary checks.",
     ),
     (
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "generated_asset",
+        "Metadata-only release stack intake candidate report for the next PR group.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",
@@ -1315,6 +1320,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_pr_ci_receipt.py",
         "verification",
         "Verify Cognitive Loop PR CI metadata-only receipt decisions, optional GitHub CLI metadata adapter, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_release_stack_intake_candidate.py",
+        "verification",
+        "Verify metadata-only release stack intake candidates from PR summary metadata.",
+    ),
+    (
+        "fixtures/release-stack/pr-183-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 183.",
     ),
     (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
