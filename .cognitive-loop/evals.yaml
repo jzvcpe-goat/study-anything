@@ -69,6 +69,9 @@ required:
   - id: cognitive-loop.evolution-report-lite
     command: python3 scripts/verify_cognitive_loop_evolution_report.py --check
     blocking: true
+  - id: cognitive-loop.apply-plan-lite
+    command: python3 scripts/verify_cognitive_loop_apply_plan.py --check
+    blocking: true
   - id: cognitive-loop.code-review-advisory
     command: python3 scripts/verify_cognitive_loop_review.py --check
     blocking: true

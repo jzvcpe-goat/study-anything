@@ -368,6 +368,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_evolution_report.py --check` 会验证成功聚类、root-cause 生成、高风险 gate 要求、空或缺失 evidence 降级、疑似 secret evidence 拒绝、diff body 拒绝、policy 弱化拒绝、JSON/HTML 报告结构和隐私边界，并输出 `cognitive-loop-evolution-report-verification-v1`。
 
+## Governed Apply Plan Lite / Governed Apply Plan Lite
+
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` creates a dry-run apply plan from low-risk metadata-only Evolution proposals. The output schema is `cognitive-loop-apply-plan-lite-v1`; an explicit `--apply --allow-generated-artifacts` writes only an idempotent `cognitive-loop-apply-receipt-lite-v1` receipt/marker under `.cognitive-loop/artifacts/applied/`.
+
+`python3 scripts/verify_cognitive_loop_apply_plan.py --check` verifies dry-run output, explicit generated-artifact receipt apply, required allow flag, idempotent receipt, medium/high-risk and Human Mastery Gate rejection, forbidden target path rejection, secret-looking proposal rejection, diff body rejection, policy-weakening rejection, JSON/HTML report structure, and privacy boundaries. It emits `cognitive-loop-apply-plan-verification-v1`.
+
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` 会从低风险、metadata-only 的 Evolution proposal 创建 dry-run apply plan。输出 schema 是 `cognitive-loop-apply-plan-lite-v1`；只有显式传入 `--apply --allow-generated-artifacts` 时，才会在 `.cognitive-loop/artifacts/applied/` 下写入幂等的 `cognitive-loop-apply-receipt-lite-v1` receipt/marker。
+
+`python3 scripts/verify_cognitive_loop_apply_plan.py --check` 会验证 dry-run 输出、显式 generated-artifact receipt apply、必须带 allow flag、receipt 幂等、中高风险与 Human Mastery Gate 拒绝、禁止目标路径拒绝、疑似 secret proposal 拒绝、diff body 拒绝、policy 弱化拒绝、JSON/HTML 报告结构和隐私边界，并输出 `cognitive-loop-apply-plan-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`

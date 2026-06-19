@@ -64,7 +64,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
-- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
+- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -75,7 +75,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
-- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
+- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -310,6 +310,10 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/cognitive_loop_evolution.py build --html --json` 是当前 Evolution Report Lite 入口。它读取 metadata-only evidence summary、failure summary、Personal Plugin Mode 输出或 Artifact Console/Event Store 证据引用，写出受治理的 `EvolutionReport` artifact，包含 failure cluster、root-cause hypothesis、下一轮改进建议、回归计划和成功指标。它是只读的：不自动修改源文件、不调用模型、不启动 daemon，也不削弱 risk、audit、privacy、rollback、test 或 permission policy。
 
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` is the current Governed Apply Plan Lite entrypoint. It converts low-risk metadata-only Evolution proposals into a dry-run apply plan and, only with `--apply --allow-generated-artifacts`, writes an idempotent receipt/marker under `.cognitive-loop/artifacts/applied/`. It does not write source files, docs, scripts, platform packs, policy files, raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
+
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` 是当前 Governed Apply Plan Lite 入口。它把低风险、metadata-only 的 Evolution proposal 转换为 dry-run apply plan；只有显式传入 `--apply --allow-generated-artifacts` 时，才会在 `.cognitive-loop/artifacts/applied/` 下写入幂等 receipt/marker。它不会写源码、docs、scripts、platform packs、policy 文件、raw source、raw diff、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是当前的 Mastra 桥接层。它是给外部 Mastra 项目使用的 TypeScript scaffold，把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 workflow step、suspend/resume 和 bail 语义。它由 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证；这不代表本仓库已经启动或托管 Mastra。
@@ -372,8 +376,8 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, and Evolution Report Lite.
-- Governed auto-apply is not yet shipped; Evolution Report Lite is read-only and proposal-only.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, and Governed Apply Plan Lite.
+- Governed source-changing auto-apply is not yet shipped; Apply Plan Lite only writes generated-artifact receipts when explicitly allowed.
 - Full daemonized project watchers are not yet shipped.
 - Realtime HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.
