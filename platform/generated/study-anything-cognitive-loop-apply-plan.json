@@ -1,0 +1,46 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
+    "explicit_apply_command": "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --apply --allow-generated-artifacts --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-apply-plan-lite-v1",
+  "cli": "scripts/cognitive_loop_apply_plan.py",
+  "failure_modes": {
+    "forbidden_path_apply_rejected": true,
+    "high_risk_apply_rejected": true,
+    "high_risk_manual_only": true,
+    "policy_weakening_rejected": true,
+    "raw_diff_proposal_rejected": true,
+    "secret_proposal_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_stored": false,
+    "source_files_modified": false,
+    "source_text_included": false
+  },
+  "receipt_schema": "cognitive-loop-apply-receipt-lite-v1",
+  "schema_version": "cognitive-loop-apply-plan-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "apply_requires_allow_flag": true,
+    "apply_status": "applied",
+    "dry_run_status": "dry_run_ready",
+    "eligible_action_count": 1,
+    "html_json_created": true,
+    "idempotent_receipt": true,
+    "input_hash_unchanged": true,
+    "marker_written": true,
+    "receipt_written": true
+  },
+  "version": "v0.3.31-alpha"
+}

@@ -329,10 +329,13 @@ Current:
 - `python3 scripts/cognitive_loop_evolution.py build --html --json` creates read-only Evolution Report Lite artifacts from metadata-only evidence and bounded failure summaries.
 - `python3 scripts/verify_cognitive_loop_evolution_report.py --check` verifies failure clustering, root-cause hypotheses, proposed improvements, regression plan, high-risk Human Mastery Gate requirements, empty/missing evidence degradation, secret/diff-body rejection, policy-weakening rejection, and privacy flags.
 - Evolution Report Lite is proposal-only: no automatic source changes, no model calls, no daemon, no stored real model keys, and no weakening of risk, audit, rollback, tests, production policy, privacy policy, or permissions.
+- `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` creates Governed Apply Plan Lite artifacts for low-risk generated-artifact receipts.
+- `python3 scripts/verify_cognitive_loop_apply_plan.py --check` verifies dry-run behavior, explicit generated-artifact receipt apply, required allow flag, idempotent receipt, high-risk/gated/forbidden-path rejection, secret/diff-body/policy-weakening rejection, and privacy flags.
+- Apply Plan Lite is not source-changing auto-apply: it writes only `.cognitive-loop/artifacts/applied/` receipt markers when explicitly allowed.
 
 Still planned:
 
-- low-risk auto-apply path with explicit policy guardrails
+- low-risk source-changing auto-apply path with explicit policy guardrails
 - measured improvement comparison across loop runs
 - prompt/policy/eval/task/doc/retrieval patch generation
 - realtime Artifact Console integration

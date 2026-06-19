@@ -104,6 +104,15 @@ or weakening risk, audit, privacy, rollback, test, or permission policy. Verify 
 `python3 scripts/verify_cognitive_loop_evolution_report.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-evolution-report.json`.
 
+For Governed Apply Plan Lite, run
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json`.
+It is dry-run by default and only writes an idempotent generated-artifact receipt when explicitly
+called with `--apply --allow-generated-artifacts`; it never writes source files, docs, scripts,
+platform packs, policy files, raw source, raw diff, learner answers, Agent endpoints, Agent
+metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_apply_plan.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-apply-plan.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

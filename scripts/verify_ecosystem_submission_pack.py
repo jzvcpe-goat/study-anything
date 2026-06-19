@@ -52,6 +52,9 @@ COGNITIVE_LOOP_PERSONAL_PLUGIN_MODE_PATH = (
 COGNITIVE_LOOP_EVOLUTION_REPORT_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-evolution-report.json"
 )
+COGNITIVE_LOOP_APPLY_PLAN_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-apply-plan.json"
+)
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
@@ -294,6 +297,9 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-evolution-report.json",
     "scripts/cognitive_loop_evolution.py",
     "scripts/verify_cognitive_loop_evolution_report.py",
+    "platform/generated/study-anything-cognitive-loop-apply-plan.json",
+    "scripts/cognitive_loop_apply_plan.py",
+    "scripts/verify_cognitive_loop_apply_plan.py",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -550,6 +556,8 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "cognitive_loop_personal_mode.py explain",
     "verify_cognitive_loop_evolution_report.py --check",
     "cognitive_loop_evolution.py build",
+    "verify_cognitive_loop_apply_plan.py --check",
+    "cognitive_loop_apply_plan.py plan",
     "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_study_anything_adapter.py --check",
     "verify_cognitive_loop_study_adapter_cli.py --check",
@@ -1008,6 +1016,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1",
             "cognitive_loop_personal_plugin_mode.schema_version == cognitive-loop-personal-plugin-mode-verification-v1",
             "cognitive_loop_evolution_report.schema_version == cognitive-loop-evolution-report-verification-v1",
+            "cognitive_loop_apply_plan.schema_version == cognitive-loop-apply-plan-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -2271,6 +2280,62 @@ def verify_cognitive_loop_evolution_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Evolution report privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_apply_plan_report() -> None:
+    report = load_json(COGNITIVE_LOOP_APPLY_PLAN_PATH)
+    if report.get("schema_version") != "cognitive-loop-apply-plan-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop apply-plan verifier schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop apply-plan verifier must pass.")
+    if report.get("artifact_schema") != "cognitive-loop-apply-plan-lite-v1":
+        raise EcosystemSubmissionError("Cognitive Loop apply-plan artifact schema drifted.")
+    if report.get("receipt_schema") != "cognitive-loop-apply-receipt-lite-v1":
+        raise EcosystemSubmissionError("Cognitive Loop apply receipt schema drifted.")
+    success = report.get("success_modes") or {}
+    for key in (
+        "receipt_written",
+        "marker_written",
+        "input_hash_unchanged",
+        "apply_requires_allow_flag",
+        "idempotent_receipt",
+        "html_json_created",
+    ):
+        if success.get(key) is not True:
+            raise EcosystemSubmissionError(f"Apply Plan success mode {key} must be true.")
+    if success.get("dry_run_status") != "dry_run_ready":
+        raise EcosystemSubmissionError("Apply Plan dry-run status drifted.")
+    if success.get("apply_status") != "applied":
+        raise EcosystemSubmissionError("Apply Plan explicit apply status drifted.")
+    if success.get("eligible_action_count", 0) < 1:
+        raise EcosystemSubmissionError("Apply Plan must include at least one eligible low-risk action.")
+    failures = report.get("failure_modes") or {}
+    for key in (
+        "high_risk_manual_only",
+        "high_risk_apply_rejected",
+        "forbidden_path_apply_rejected",
+        "secret_proposal_rejected",
+        "raw_diff_proposal_rejected",
+        "policy_weakening_rejected",
+    ):
+        if failures.get(key) is not True:
+            raise EcosystemSubmissionError(f"Apply Plan failure mode {key} must be true.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "source_text_included",
+        "raw_diff_included",
+        "learner_answers_included",
+        "agent_endpoint_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+        "model_called",
+        "daemon_started",
+        "policy_weakened",
+        "source_files_modified",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Apply Plan privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -5002,6 +5067,7 @@ def main() -> None:
     verify_cognitive_loop_artifact_console_report()
     verify_cognitive_loop_personal_plugin_mode_report()
     verify_cognitive_loop_evolution_report()
+    verify_cognitive_loop_apply_plan_report()
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
     verify_cognitive_loop_recipe_replay_report()
@@ -5072,6 +5138,7 @@ def main() -> None:
                 "cognitive_loop_artifact_console": "cognitive-loop-artifact-console-verification-v1",
                 "cognitive_loop_personal_plugin_mode": "cognitive-loop-personal-plugin-mode-verification-v1",
                 "cognitive_loop_evolution_report": "cognitive-loop-evolution-report-verification-v1",
+                "cognitive_loop_apply_plan": "cognitive-loop-apply-plan-verification-v1",
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",

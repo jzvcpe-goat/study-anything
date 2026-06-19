@@ -133,6 +133,21 @@ Do not use Evolution Report Lite to auto-apply changes, weaken risk thresholds, 
 rollback, reduce test requirements, loosen permissions, bypass Human Mastery Gates, store real model
 keys, or include raw source/diff bodies.
 
+## Governed Apply Plan Lite
+
+Use Apply Plan Lite after Evolution Report Lite when an operator needs a low-risk, receipt-only next
+step without handing source control to the learning system.
+
+```bash
+python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json
+python3 scripts/verify_cognitive_loop_apply_plan.py --check
+```
+
+The command is dry-run by default. Only use `--apply --allow-generated-artifacts` when the proposal
+is low risk and the intended output is an idempotent receipt under `.cognitive-loop/artifacts/applied/`.
+Do not use it to write README, docs, scripts, apps, platform packs, policy files, source code, raw
+source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
+
 ## Start A Learning Loop
 
 1. Check API health.
