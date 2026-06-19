@@ -22,6 +22,7 @@ The repository-level verifier wraps these commands:
 ```bash
 python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check
 python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check
+python3 scripts/verify_cognitive_loop_langfuse_observability.py --check
 ```
 
 Expected coverage:
@@ -33,4 +34,10 @@ Expected coverage:
 - suspended high-risk state persists to a local libSQL file and resumes or bails from a
   separate Node process;
 - watcher-generated `ProjectEvent` evidence is used without starting a watcher daemon;
+- service and durable receipts map to local Langfuse trace/span/generation/score DTOs;
 - all output remains metadata-only and redacted.
+
+`npm run run-observability -- --json --service-report <service.json> --durable-report <durable.json>`
+emits a local receipt only. It does not import the Langfuse SDK, call Langfuse Cloud or a
+self-hosted Langfuse instance, or include source bodies, diffs, learner answers, Agent endpoints,
+Agent metadata, prompts, model keys, storage paths, or absolute local paths.

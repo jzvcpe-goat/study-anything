@@ -301,9 +301,9 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 是当前的 runtime 演练入口。它使用本地 Cognitive Loop artifact 和 SQLite Event Store 来证明 suspend/resume/bail 契约，但不编译 TypeScript、不启动 Mastra、不运行 watcher daemon，也不调用外部 Agent。
 
-`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` is the first repository-started Mastra runtime MVP. It installs the isolated `platform/mastra-runtime/` Node package, typechecks the workflow against `@mastra/core`, starts an in-memory Mastra instance, and verifies high-risk suspend, approved resume, rejected bail, and low-risk no-gate paths. `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` adds a local libSQL storage proof: a watcher-generated metadata-only `ProjectEvent` suspends, survives a separate Node process, then resumes or bails from the persisted workflow snapshot. These checks still do not start watcher daemons, call external Agents, expose a hosted service, or claim production storage operations.
+`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` is the first repository-started Mastra runtime MVP. It installs the isolated `platform/mastra-runtime/` Node package, typechecks the workflow against `@mastra/core`, starts an in-memory Mastra instance, and verifies high-risk suspend, approved resume, rejected bail, and low-risk no-gate paths. `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` adds a local libSQL storage proof: a watcher-generated metadata-only `ProjectEvent` suspends, survives a separate Node process, then resumes or bails from the persisted workflow snapshot. `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` maps those service and durable receipts to local Langfuse trace/span/generation/score DTOs without importing the Langfuse SDK or calling a hosted service. These checks still do not start watcher daemons, call external Agents, expose a hosted service, or claim production storage operations.
 
-`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 是第一版由本仓库启动的 Mastra runtime MVP。它会安装隔离的 `platform/mastra-runtime/` Node package，用 `@mastra/core` typecheck workflow，启动 in-memory Mastra 实例，并验证高风险暂停、批准恢复、拒绝 bail、低风险无需 gate 四条路径。`python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 会进一步给出本地 libSQL storage 证明：由 watcher 生成的 metadata-only `ProjectEvent` 进入暂停状态，跨独立 Node 进程后可从持久化 workflow snapshot 恢复或 bail。这些检查仍然不启动常驻 watcher daemon，不调用外部 Agent，不暴露 hosted service，也不声称已经具备生产级 storage 运维能力。
+`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 是第一版由本仓库启动的 Mastra runtime MVP。它会安装隔离的 `platform/mastra-runtime/` Node package，用 `@mastra/core` typecheck workflow，启动 in-memory Mastra 实例，并验证高风险暂停、批准恢复、拒绝 bail、低风险无需 gate 四条路径。`python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 会进一步给出本地 libSQL storage 证明：由 watcher 生成的 metadata-only `ProjectEvent` 进入暂停状态，跨独立 Node 进程后可从持久化 workflow snapshot 恢复或 bail。`python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` 会把这些 service 和 durable receipt 映射成本地 Langfuse trace/span/generation/score DTO，但不导入 Langfuse SDK，也不调用 hosted service。这些检查仍然不启动常驻 watcher daemon，不调用外部 Agent，不暴露 hosted service，也不声称已经具备生产级 storage 运维能力。
 
 ## Product Entry Modes
 
@@ -350,7 +350,7 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Durable Mastra runtime is not yet integrated in this repository; only the adapter contract pack and minimal in-memory runtime MVP are shipped.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, and local Langfuse DTO mapping proof.
 - Full daemonized project watchers are not yet shipped.
 - HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.

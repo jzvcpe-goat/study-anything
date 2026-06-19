@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -743,7 +743,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -819,6 +820,7 @@
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+        "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -831,16 +833,19 @@
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
         "platform/mastra-runtime/src/durable-run.ts",
+        "platform/mastra-runtime/src/observability.ts",
+        "platform/mastra-runtime/src/observability-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_durable.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "scripts/verify_cognitive_loop_langfuse_observability.py"
       ],
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -925,7 +930,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1005,6 +1011,7 @@
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+        "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -1017,16 +1024,19 @@
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
         "platform/mastra-runtime/src/durable-run.ts",
+        "platform/mastra-runtime/src/observability.ts",
+        "platform/mastra-runtime/src/observability-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_durable.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "scripts/verify_cognitive_loop_langfuse_observability.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1110,7 +1120,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -1187,6 +1198,7 @@
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+        "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -1199,9 +1211,12 @@
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
         "platform/mastra-runtime/src/durable-run.ts",
+        "platform/mastra-runtime/src/observability.ts",
+        "platform/mastra-runtime/src/observability-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
-        "scripts/verify_cognitive_loop_mastra_runtime_durable.py"
+        "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "scripts/verify_cognitive_loop_langfuse_observability.py"
       ],
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",

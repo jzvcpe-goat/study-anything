@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -196,7 +196,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -208,7 +209,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -293,7 +294,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -307,7 +309,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 98,
+      "acceptance_evidence_count": 99,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -391,7 +393,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+        "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",

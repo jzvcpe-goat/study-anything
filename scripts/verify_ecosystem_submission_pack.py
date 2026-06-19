@@ -61,6 +61,12 @@ COGNITIVE_LOOP_MASTRA_RUNTIME_DURABLE_PATH = (
     / "generated"
     / "study-anything-cognitive-loop-mastra-runtime-durable.json"
 )
+COGNITIVE_LOOP_LANGFUSE_OBSERVABILITY_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-cognitive-loop-langfuse-observability.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -264,9 +270,12 @@ REQUIRED_SHARED_ASSETS = {
     "platform/mastra-runtime/src/runtime.ts",
     "platform/mastra-runtime/src/run-once.ts",
     "platform/mastra-runtime/src/durable-run.ts",
+    "platform/mastra-runtime/src/observability.ts",
+    "platform/mastra-runtime/src/observability-run.ts",
     "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_runtime_service.py",
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+    "scripts/verify_cognitive_loop_langfuse_observability.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -301,6 +310,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+    "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -488,6 +498,7 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_event_index.py --check",
     "verify_cognitive_loop_event_store.py --check",
     "verify_cognitive_loop_watcher_ingest.py --check",
+    "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -942,6 +953,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
             "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
+            "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
             "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
             "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
             "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -1015,6 +1027,7 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
         "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+        "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
         "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -1027,9 +1040,12 @@ def verify_pack_in_generated_adoption() -> None:
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
         "platform/mastra-runtime/src/durable-run.ts",
+        "platform/mastra-runtime/src/observability.ts",
+        "platform/mastra-runtime/src/observability-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
         "scripts/verify_cognitive_loop_artifact_doctor.py",
         "scripts/verify_cognitive_loop_repair_plan.py",
         "scripts/verify_cognitive_loop_artifact_index.py",
@@ -1849,6 +1865,69 @@ def verify_cognitive_loop_mastra_runtime_durable_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop Mastra durable runtime privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_langfuse_observability_report() -> None:
+    report = load_json(COGNITIVE_LOOP_LANGFUSE_OBSERVABILITY_PATH)
+    if report.get("schema_version") != "cognitive-loop-langfuse-observability-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability report must pass.")
+    acceptance = report.get("acceptance") or {}
+    for key in (
+        "service_report_mapped",
+        "durable_report_mapped",
+        "trace_dtos_created",
+        "span_dtos_created",
+        "generation_dtos_created",
+        "score_dtos_created",
+        "risk_human_gate_eval_scores_created",
+        "local_receipt_created",
+        "metadata_only",
+    ):
+        if acceptance.get(key) is not True:
+            raise EcosystemSubmissionError(f"Cognitive Loop Langfuse observability acceptance.{key} must be true.")
+    observability = report.get("observability") or {}
+    if observability.get("schema_version") != "cognitive-loop-langfuse-observability-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability DTO schema drifted.")
+    if len(observability.get("traces") or []) != 5:
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability must include five traces.")
+    receipt = observability.get("receipt") or {}
+    counts = receipt.get("dto_counts") or {}
+    if counts.get("traces") != 5 or counts.get("generations") != 5:
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability DTO counts drifted.")
+    if counts.get("spans", 0) < 17 or counts.get("scores", 0) < 35:
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability must include spans and scores.")
+    if receipt.get("local_only") is not True or receipt.get("calls_real_langfuse") is not False:
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability receipt must stay local-only.")
+    boundaries = report.get("boundaries") or {}
+    for key in (
+        "calls_real_langfuse",
+        "imports_langfuse_sdk",
+        "network_calls",
+        "external_agent_called",
+        "hosted_service_started",
+    ):
+        if boundaries.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Langfuse observability boundaries.{key} must be false.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("metadata_only") is not True:
+        raise EcosystemSubmissionError("Cognitive Loop Langfuse observability must be metadata-only.")
+    for key in (
+        "raw_source_text_included",
+        "source_bodies_included",
+        "diff_bodies_included",
+        "learner_answers_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "real_model_keys_stored",
+        "langfuse_secret_included",
+        "storage_path_included",
+        "absolute_paths_included",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Cognitive Loop Langfuse observability privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4570,6 +4649,7 @@ def main() -> None:
     verify_cognitive_loop_mastra_runtime_dry_run_report()
     verify_cognitive_loop_mastra_runtime_service_report()
     verify_cognitive_loop_mastra_runtime_durable_report()
+    verify_cognitive_loop_langfuse_observability_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4633,6 +4713,7 @@ def main() -> None:
                 "cognitive_loop_mastra_runtime_dry_run": "cognitive-loop-mastra-runtime-dry-run-verification-v1",
                 "cognitive_loop_mastra_runtime_service": "cognitive-loop-mastra-runtime-service-verification-v1",
                 "cognitive_loop_mastra_runtime_durable": "cognitive-loop-mastra-runtime-durable-verification-v1",
+                "cognitive_loop_langfuse_observability": "cognitive-loop-langfuse-observability-verification-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
