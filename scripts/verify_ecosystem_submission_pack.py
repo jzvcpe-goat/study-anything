@@ -73,6 +73,12 @@ COGNITIVE_LOOP_STUDY_ANYTHING_ADAPTER_PATH = (
     / "generated"
     / "study-anything-cognitive-loop-study-anything-adapter.json"
 )
+COGNITIVE_LOOP_STUDY_ADAPTER_CLI_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-cognitive-loop-study-adapter-cli.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -284,6 +290,10 @@ REQUIRED_SHARED_ASSETS = {
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
     "scripts/verify_cognitive_loop_langfuse_observability.py",
     "scripts/verify_cognitive_loop_study_anything_adapter.py",
+    "scripts/cognitive_loop_study_adapter_cli.py",
+    "scripts/verify_cognitive_loop_study_adapter_cli.py",
+    "fixtures/cognitive-loop-study-adapter/project-event.json",
+    "fixtures/cognitive-loop-study-adapter/decision-card.json",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -320,6 +330,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
     "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
     "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+    "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -508,6 +519,9 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_event_store.py --check",
     "verify_cognitive_loop_watcher_ingest.py --check",
     "verify_cognitive_loop_langfuse_observability.py --check",
+    "verify_cognitive_loop_study_anything_adapter.py --check",
+    "verify_cognitive_loop_study_adapter_cli.py --check",
+    "cognitive_loop_cli.py study-adapter",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -963,6 +977,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
             "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
             "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
+            "cognitive_loop_study_adapter_cli.schema_version == cognitive-loop-study-anything-adapter-cli-v1",
             "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
             "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
             "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -1987,6 +2002,60 @@ def verify_cognitive_loop_study_anything_adapter_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Study Anything adapter privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_study_adapter_cli_report() -> None:
+    report = load_json(COGNITIVE_LOOP_STUDY_ADAPTER_CLI_PATH)
+    if report.get("schema_version") != "cognitive-loop-study-anything-adapter-cli-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Study Adapter CLI report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Study Adapter CLI report must pass.")
+    core = report.get("adapter_core") or {}
+    if core.get("schema_version") != "cognitive-loop-study-anything-adapter-v1":
+        raise EcosystemSubmissionError("Study Adapter CLI core adapter schema drifted.")
+    learning = report.get("learning_status") or {}
+    if learning.get("stage") != "completed":
+        raise EcosystemSubmissionError("Study Adapter CLI learning loop must complete.")
+    if learning.get("learning_context_text_included") is not False:
+        raise EcosystemSubmissionError("Study Adapter CLI must exclude learning context text.")
+    study_card = report.get("study_card") or {}
+    if study_card.get("schema_version") != "study-card-v1":
+        raise EcosystemSubmissionError("Study Adapter CLI StudyCard schema drifted.")
+    if study_card.get("content_included") is not False:
+        raise EcosystemSubmissionError("Study Adapter CLI StudyCard must exclude source content.")
+    gaps = report.get("understanding_gaps")
+    if not isinstance(gaps, list) or len(gaps) < 2:
+        raise EcosystemSubmissionError("Study Adapter CLI understanding gaps are missing.")
+    scribe = report.get("scribe_summary") or {}
+    if scribe.get("entry_count", 0) < 1:
+        raise EcosystemSubmissionError("Study Adapter CLI scribe summary must contain entry metadata.")
+    if scribe.get("answers_included") is not False or scribe.get("feedback_included") is not False:
+        raise EcosystemSubmissionError("Study Adapter CLI scribe summary must exclude answers and feedback.")
+    agent = report.get("agent_task_coverage") or {}
+    if agent.get("audit_status") != "verified" or agent.get("eval_status") != "ready_for_external_eval":
+        raise EcosystemSubmissionError("Study Adapter CLI agent evidence must pass.")
+    mastery = report.get("mastery_record") or {}
+    if mastery.get("schema_version") != "mastery-record-v1":
+        raise EcosystemSubmissionError("Study Adapter CLI MasteryRecord schema drifted.")
+    loop_run = report.get("loop_run") or {}
+    if loop_run.get("schema_version") != "loop-run-v1" or loop_run.get("status") != "succeeded":
+        raise EcosystemSubmissionError("Study Adapter CLI LoopRun schema or status drifted.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("metadata_only_cognitive_loop_evidence") is not True:
+        raise EcosystemSubmissionError("Study Adapter CLI evidence must be metadata-only.")
+    for key in (
+        "raw_source_text_included",
+        "raw_diff_included",
+        "learner_answers_included",
+        "grading_feedback_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "model_keys_included",
+        "input_file_contents_included",
+        "standalone_frontend_required",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Study Adapter CLI privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4710,6 +4779,7 @@ def main() -> None:
     verify_cognitive_loop_mastra_runtime_durable_report()
     verify_cognitive_loop_langfuse_observability_report()
     verify_cognitive_loop_study_anything_adapter_report()
+    verify_cognitive_loop_study_adapter_cli_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4775,6 +4845,7 @@ def main() -> None:
                 "cognitive_loop_mastra_runtime_durable": "cognitive-loop-mastra-runtime-durable-verification-v1",
                 "cognitive_loop_langfuse_observability": "cognitive-loop-langfuse-observability-verification-v1",
                 "cognitive_loop_study_anything_adapter": "cognitive-loop-study-anything-adapter-v1",
+                "cognitive_loop_study_adapter_cli": "cognitive-loop-study-anything-adapter-cli-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",

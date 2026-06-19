@@ -72,19 +72,19 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 1786350,
+  "archive_bytes": 1807463,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "24f7a53e71f10f1833105c589e0ea09332fe30813eecbc8a7605ceace7b3284b",
+  "archive_sha256": "e986d5afc09dd2b504af5e5a0af227a6173e54a48496686f43e44ad33e03eaed",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
       "archive_path": "study-anything-platform-adoption-pack/README.md",
-      "bytes": 25011,
+      "bytes": 25993,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Repository overview and local-first launch entrypoint.",
-      "sha256": "285b661bdc7e338183fb98b3dbfbd9f6902945ce1bfcaeab9f320611c20b88d2"
+      "sha256": "a6814c9776ce781c4eff291d68cbd7e8b99f146dc6b8faa3df74df103fffbdaa"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/adoption.md",
@@ -328,19 +328,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/roadmap.md",
-      "bytes": 17689,
+      "bytes": 18020,
       "kind": "operator_doc",
       "path": "docs/roadmap.md",
       "purpose": "Roadmap and release track for platform adoption goals.",
-      "sha256": "22da0c15bb1ad8cc5937c506ea94be144df25ddc7d6f3677f10a4cc501b10200"
+      "sha256": "1a106d5f920b11967e56b1d1c79c5f96d8e68fc209b2ad6e2651cde60b38e096"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/cognitive-loop-contracts.md",
-      "bytes": 34534,
+      "bytes": 35324,
       "kind": "operator_doc",
       "path": "docs/cognitive-loop-contracts.md",
       "purpose": "Cognitive Loop local contract bootstrap and privacy boundary guide.",
-      "sha256": "ea9bb9550efede2c293e7d01e8ad5923c7c2061a0f7582a094b330f6076f4e81"
+      "sha256": "2b7a6bcc0ab11d3cb6b3032c043569fc59e39f542109602aa0fcd906fd3c8167"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/watchers.yaml",
@@ -504,11 +504,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/ecosystem-submission.json",
-      "bytes": 80803,
+      "bytes": 84035,
       "kind": "submission_manifest",
       "path": "platform/ecosystem-submission.json",
       "purpose": "Machine-readable ecosystem submission metadata.",
-      "sha256": "69d238a150250d6619441b9defd1419b60a5ead6d31c8d91b3c7e15cfb8efcc3"
+      "sha256": "b77995aa66b5cb9fc7192482b32148e180dbbbee6cc86e8cbb25892dda0d40cc"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/prompts/cognitive-loop-review-agent.json",
@@ -624,11 +624,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 109557,
+      "bytes": 110585,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "8568ceaa8fe552abed48c07364331440e4f90f5f7c70b4530fad98def9708bee"
+      "sha256": "6dc62ce9fd32b2cb96e95b894c000d0c00bcfdad4e5542896fb0b817653d0bbf"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-contracts.json",
@@ -744,11 +744,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
-      "bytes": 6204,
+      "bytes": 6243,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
       "purpose": "Cognitive Loop Study Anything Learning Adapter verification report.",
-      "sha256": "929661a8e3854c7ded000b82cf920e7932a1678f8d97e2d605206945123b0974"
+      "sha256": "0a31480e684bd1cf1260aac36a2b7982499ee549f6828d2f9c2c7e0cd2c43de6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+      "bytes": 6378,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+      "purpose": "Cognitive Loop Study Anything Adapter CLI Lite verification report.",
+      "sha256": "534a7a3b3cfc68b03af2517ae1bf7781f68bd144e7ca38f6059e8f2950a11cf9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
@@ -860,7 +868,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent workflow install smoke verification report.",
-      "sha256": "12fbadbeba51f7479440574d4ab0fb7dedaa2799f2172c48763c3b879cdb4013"
+      "sha256": "9cb9c96d994c810e2fdf0e8a24be5ece9fe10eaa82c919036c31a2b1a12a3a07"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
@@ -868,7 +876,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "0fea09d47e8965100e5880bc244ffee682da39b936b6550f90ae1af49a43ec7b"
+      "sha256": "be27028cbacc40e98b230d3fd86f343f36415fc7cb1e59e8eea1cf71567e44d8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
@@ -948,7 +956,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "64d7f0bf7a567c1dfb2c9185249b4b9991824bfc733e078e20248d8ccc8cec69"
+      "sha256": "018c1f67ec5f7ad81baea772320a1e5fdac533a694c55e94a98895cd3573b7c8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
@@ -956,7 +964,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "3f999ff9a4c8c70912e855c3d8a5e06de9d7ab3ff4ba05eb7db87b3564c4afad"
+      "sha256": "096c5698e773a221959e776292f36c1e06e54b8a00c221f78235c5d2be087f3f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
@@ -964,7 +972,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "b0b4c7cb5743024c870727804c2da4ddc3f67d4f5c3a3428253ad2c4c43465bc"
+      "sha256": "b316314796519118e85a22fad280638c55b520aa65392e66dc11499753004b11"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-handoff-checklist.json",
@@ -972,7 +980,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "8af171f255ddeb2e2bcbca7fee8b8593feb586ae866a9a18215bc38b4e0c14ea"
+      "sha256": "b46a33b36e6d7f60b5fd8dd6e8b98d461cb3431281ddefefed30a6d42dd191cb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-launch-acceptance-ledger.json",
@@ -992,35 +1000,35 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-operator-drill-transcript.json",
-      "bytes": 80418,
+      "bytes": 83568,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "155bba48df09552662b590e115bc4a3369e9d01dca1526b74d654837ac07de46"
+      "sha256": "6e9f670015f483bdcfd760e9f3326d0080a68d23ddc91579ca2ef820686fff6f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
-      "bytes": 56093,
+      "bytes": 58485,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "a96db321c343dc37ccb1afcb7d4f711d1b088505573cafae262a007a63cdde5a"
+      "sha256": "1ffb6d0ed282246781b60dbaa73d4a3f433a7b8e108bd68ee1ab1d5ec3e96511"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
-      "bytes": 73985,
+      "bytes": 75890,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
       "purpose": "Manual platform-submission rehearsal and redacted handoff report.",
-      "sha256": "345db2639b403a3106a67b6db6fdd21334a31b6bd04f623d4fef868fe5469252"
+      "sha256": "d075f4d63a024e17bd6f91ba799e6aff507c80ae4dc7ff5992fcd39ee3f78107"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-first-lesson-authoring-kit.json",
-      "bytes": 31985,
+      "bytes": 32882,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-first-lesson-authoring-kit.json",
       "purpose": "Copyable first-run lesson authoring kit for platform Agents.",
-      "sha256": "dfa87a01cf7018f6ef4e6a228433c495b740f6fbcca772a788ffd58ab8603f7b"
+      "sha256": "6b6a9e3eef296ef88a386b66a3cbd31076d153d69ac08c41e950a935b3be4bef"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-eval-harness.json",
@@ -1028,7 +1036,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-external-eval-harness.json",
       "purpose": "Marketplace-quality external Agent eval harness for platform submissions.",
-      "sha256": "58ad687ed4ff456c5fb0a82ad09b60e2e5d1157d003a06dcdd46e3d71c75a195"
+      "sha256": "56415f70ccb2d765e010df71a9da29f1aa7b0f1167e6e5167081aabd8cae56d4"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
@@ -1132,7 +1140,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "fe49b7a56d44f0c9da2e3ed84ee90122a29539a00a997eebb4d38a35f99e7e65"
+      "sha256": "76a9d0304c0ed2cd50b8e9b59242533d86ddc365f58f9b3814a9ee87c36d4024"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.md",
@@ -1140,15 +1148,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "887aa2435af4cb6f341fd8996639a2ea37afc5ac799b8e54cb38fb00e8366218"
+      "sha256": "32abb34517efaac24de7ae4fc85fc7028f150df51cae3a1b9057136dda5e7a01"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.zip",
-      "bytes": 112479,
+      "bytes": 113327,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "9e380108da84c578e8308b3e50d6915b52a0163c43f3c0f4e6c4c11fac6795c8"
+      "sha256": "ba9b36f7758e67b869c57f01d190b0d376c96fd3299cf29cc2eb02433e0d959c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.sha256",
@@ -1156,7 +1164,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "2bf956c59cd03f2c5c8b615c41b7af3456c85af146b9460f05ca431e2de6a375"
+      "sha256": "478fb23c5e06f2c7938e8f9ba2d5094d9990a38f6d33268396d736c2d036d61b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.json",
@@ -1164,7 +1172,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "1ad2f580cd196bdaee44163bd1b493f24da3715ae057a8d5fea7947a6d0fd3b4"
+      "sha256": "6f0a0598c912e1aa461c6e3d6c7737fbc7a78f0ee9354c0b7c7176e4e0efe1ef"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.md",
@@ -1172,15 +1180,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "f74835bf7d1614ea32b904e322b7637bb97480b94b99a723c8c6880f8883b3a9"
+      "sha256": "fcbf985300807e502ef1225965531515e7939ffd7ec7807a5739f00f06be1ab4"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.zip",
-      "bytes": 106290,
+      "bytes": 106835,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence package.",
-      "sha256": "69393ade94fd7154b411af55d02362779505ecace2e71d82a54cb523dff85377"
+      "sha256": "ff6bcc5a7b17aec0574472be8a4e10357f61a20699ebfa364039a26e2533e0eb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.sha256",
@@ -1188,7 +1196,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "0a79317398875c146bf267a5d96ae7bf3a5cb08cd5591bb35a0a874fa228cb91"
+      "sha256": "734f4b6e8a18174d91da67f8009464267b9263106ab46342148e2edbf5b0753a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.json",
@@ -1196,7 +1204,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "66d67f191fbfacd557373ae9d8c71cc249cdd9230c6413af41edbe19ed4de948"
+      "sha256": "3ddb697f2e3e365d40970098e03ee8d478f2b94576fcda1890a4f69177720972"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.md",
@@ -1204,15 +1212,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "e734b88566141e735ad872649e2d282b9c8ceea4f06216a6325fbd0322a8246b"
+      "sha256": "df3a63870b4952729345693062cd42039bb5ae3bd2263bd018bb777fc242405c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.zip",
-      "bytes": 76783,
+      "bytes": 76782,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence package.",
-      "sha256": "5e06ff796b33f8c1839487f2784eeb51446553ddd9921adf314f5f0abad728ad"
+      "sha256": "6236ef0576e831a134ff0c21294a1977e2be5a60a80279120a65ee1ee77c13a0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.sha256",
@@ -1220,7 +1228,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "d517a1b1e1735a45eae04eda5db749ded5be8d868d3b3c12ef84263d0038b069"
+      "sha256": "69362dd9a8df258160f64784a2d65dbe271ecbe8f0a94455f04daa29871a8b5b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.json",
@@ -1260,7 +1268,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.json",
       "purpose": "Platform Agent release replay evidence JSON.",
-      "sha256": "35358df69a370a4d3965321bb7ccacaa85e12d2df09292099f19df7ed21d52fc"
+      "sha256": "41d220374d11bfd98c952a2075562146f23821ff796626b6e0aff968544ce0ee"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.md",
@@ -1268,15 +1276,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.md",
       "purpose": "Platform Agent release replay evidence Markdown.",
-      "sha256": "bdf16541d060578d81191832f3e427c263228189ed0a8ae745a28e76aa6d99ec"
+      "sha256": "12cd89fe4cf606880dbf6f100cfc95a5828c2ce99836f7846f333519da9439d0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.zip",
-      "bytes": 58601,
+      "bytes": 59142,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.zip",
       "purpose": "Platform Agent release replay evidence package.",
-      "sha256": "18d1581f6383a8c8d257e518e62211222052a0d14a0f7b13c497ea4a78c9b55c"
+      "sha256": "bfec19172a06470c141842dfbaa98a8cd55484ccd0ef150edb40a480dbb32c80"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.sha256",
@@ -1284,7 +1292,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.sha256",
       "purpose": "Platform Agent release replay evidence checksum.",
-      "sha256": "be5942745ebe767b100efbc7ad25161cf293b2453c7a4fad527abb17919aa231"
+      "sha256": "da23d00f07639325cc044908ed4281dbe12ba8f94bfb87f5078c7ff24c9dada0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.json",
@@ -1292,7 +1300,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "aabb9b406d38bcb7a56194c7c3cae59a67ec36d4974520b1642ebd17da699d67"
+      "sha256": "8f0fd9ec50c53c3fb9c57959c628d6315670b6d7b99270ce5f9a19637c957b90"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -1300,15 +1308,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "7bf30cd40de1d366e5a869e2fc29b94df834ebefaf3c4b4b0a2853c0a7c70ded"
+      "sha256": "ceb55e9bb6a20610136ae2cf9a87a91b217f4fd640c4501d270b49279ca04c4c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 322649,
+      "bytes": 325134,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "0ea7b2688a4f92091e6023baa92d1191c5e57bf8f269167e7e07200ceedd1cac"
+      "sha256": "7fc7ef8af09a4a6d7ad0843637078fa898bedb14349bc2554dd1cc1a2d172c2b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -1316,7 +1324,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "da8c4b5e9118252b9963811221f4fb9b828c489a969a9e2e9fae56afd9d10fae"
+      "sha256": "d5c339bb152365caa26d446279b5b1097bd5d713c9e98c75879330567d331e6a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -1791,12 +1799,28 @@
       "sha256": "7289284d9d5e204a28f72dd290c55562a8b42ef4bbb46207ff1aeaaf4bd8a150"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cognitive-loop-study-adapter/project-event.json",
+      "bytes": 548,
+      "kind": "cognitive_loop_fixture",
+      "path": "fixtures/cognitive-loop-study-adapter/project-event.json",
+      "purpose": "ProjectEvent fixture for the Study Anything adapter CLI.",
+      "sha256": "c01520e500d1eb57f11d6f4c2ede0e7305da95c5604496ca2302dfda5d15f569"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cognitive-loop-study-adapter/decision-card.json",
+      "bytes": 1820,
+      "kind": "cognitive_loop_fixture",
+      "path": "fixtures/cognitive-loop-study-adapter/decision-card.json",
+      "purpose": "DecisionCard fixture for the Study Anything adapter CLI.",
+      "sha256": "e5fd5dfaadfe4446668f5bbf17d37e42660b5579b33a30b14349c8fa927a0fee"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
       "bytes": 9547,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
       "purpose": "Copy-ready plugin ecosystem adoption kit for platform submissions.",
-      "sha256": "ee0cee3e2f9fa8506e6f979827d93504a22d2c22c85cb0301d24e81c9396144d"
+      "sha256": "b7c3e3c22bc2936a021b26f128651302c301effc7f94354b018de1b0e3cfd8a1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-deployment-hardening.json",
@@ -1824,51 +1848,51 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/kimi/README.md",
-      "bytes": 17866,
+      "bytes": 18507,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/README.md",
       "purpose": "Kimi Work and Kimi-compatible setup.",
-      "sha256": "2a403b385a3dcea8f3cf399db43e8683eecb67843f75e4471b277e46d4e28aac"
+      "sha256": "b10384cbf82de02d0e1b32654cb01c1614ab40aeacc57214bb585eb8c0ef497a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/kimi/pack.json",
-      "bytes": 23984,
+      "bytes": 24777,
       "kind": "platform_pack",
       "path": "platform/packs/kimi/pack.json",
       "purpose": "Machine-readable Kimi pack.",
-      "sha256": "453a05736f4f274a29321c003f94fc7ab84712920f4db75aa872b3056205beed"
+      "sha256": "7a5886eeabf9f29d8fc9bb49bde2f5926501744bceb92789e433f797b16784bc"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/README.md",
-      "bytes": 17101,
+      "bytes": 17746,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex setup and command flow.",
-      "sha256": "98a40f34adbc5a3ade3ffb26a56401149467cf380648a0968f5cf02bf93037a6"
+      "sha256": "a2d0f293b20aa2face7dfdcf077e571006804904452247abd74d44399b99592a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/codex/pack.json",
-      "bytes": 23044,
+      "bytes": 23837,
       "kind": "platform_pack",
       "path": "platform/packs/codex/pack.json",
       "purpose": "Machine-readable Codex pack.",
-      "sha256": "9bc329704b70fd55b8090af8a967f6c7b37a65d6bf7cf33aa36ebbb55988b802"
+      "sha256": "215431c59506b1911ac70d03dfb1e332c11de6b97a535e34a33d252d6a4901bd"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/README.md",
-      "bytes": 14764,
+      "bytes": 15413,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP workspace setup.",
-      "sha256": "0420fe417c37da932c59c8d0827753e3749b838943701ee57fc7d68c4db2bb10"
+      "sha256": "5af036923d4cf6edfcf8617006452a3194d8db3c660d4e4fc6127bc6e06465b2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/pack.json",
-      "bytes": 23150,
+      "bytes": 23943,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack.",
-      "sha256": "29f9159ed0180d5ed11ae78491119540cf52bcd0f3d0f9ed28b81be6cbc33bdb"
+      "sha256": "8675c40c29d720a9d14e4886213d952048650d1ee4a41cb19ca554f02849aa71"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/skills/study-anything/SKILL.md",
@@ -2296,11 +2320,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_ecosystem_submission_pack.py",
-      "bytes": 266582,
+      "bytes": 270786,
       "kind": "verification",
       "path": "scripts/verify_ecosystem_submission_pack.py",
       "purpose": "Ecosystem submission pack verifier for external platform review.",
-      "sha256": "6e9eee68a1eaaea11ee26f26c9b98323aa86ff7039d382e560d238ade96d02c0"
+      "sha256": "f0d4f9ad58c679e3eb437e222927c570823848d03b0948a0ab7fbb79e39e2b23"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cognitive_loop_contracts.py",
@@ -2312,11 +2336,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_cli.py",
-      "bytes": 26640,
+      "bytes": 28128,
       "kind": "cli",
       "path": "scripts/cognitive_loop_cli.py",
       "purpose": "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
-      "sha256": "a35a49c26a42e3201ccaac525d24a6a4451ec6cc138f9e72f281ca78b7388eb4"
+      "sha256": "e8a366e5e23b347846fe6ac60f06f533a7c70a7bbcdf17e33211c8ae6606a1e2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cognitive_loop_cli.py",
@@ -2496,11 +2520,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
-      "bytes": 14162,
+      "bytes": 14201,
       "kind": "api_core",
       "path": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
       "purpose": "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
-      "sha256": "54dbb8dfaff9d1dd29cf7d25e7b08a9fbc5b73e076cf0a5e1030f91310981cab"
+      "sha256": "2d39a63854919eb8edde9e2f10aa20791c6d1f11d9c12fce5046c206b85349b6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_study_adapter_cli.py",
+      "bytes": 20560,
+      "kind": "cli",
+      "path": "scripts/cognitive_loop_study_adapter_cli.py",
+      "purpose": "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence.",
+      "sha256": "709df2cc85418130d1328245f5890bdcca5673a2cc72f6210b5e213e66d9b25f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cognitive_loop_mastra_runtime_service.py",
@@ -2533,6 +2565,14 @@
       "path": "scripts/verify_cognitive_loop_study_anything_adapter.py",
       "purpose": "Verify Cognitive Loop Study Anything Learning Adapter mastery projection.",
       "sha256": "a2931298f5db110c2cd97c8bf2ec0d6aaf274b9726bb57ed666cb844ff1201f6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cognitive_loop_study_adapter_cli.py",
+      "bytes": 10550,
+      "kind": "verification",
+      "path": "scripts/verify_cognitive_loop_study_adapter_cli.py",
+      "purpose": "Verify the Study Anything adapter CLI Lite evidence and HTML output.",
+      "sha256": "954549c64575ab4110cc20a275513fd23ab00d63fc5fd52f31a1d60792fbb81b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cognitive_loop_artifact_doctor.py",
@@ -2936,11 +2976,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/evals.yaml",
-      "bytes": 4608,
+      "bytes": 4757,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "51cfd1cc2a30ac6b2b0709524ed20522af998ca1ed77adcb8eaa4d5f4a76c320"
+      "sha256": "8409745a9628cc7f56a149bff4eb6613e162ef46f3f4c6fe279e532b678eb499"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/risk.yaml",

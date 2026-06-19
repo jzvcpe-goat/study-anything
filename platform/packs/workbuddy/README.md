@@ -63,6 +63,13 @@ Learning Adapter integration. The verifier proves metadata-only `ProjectEvent` /
 input can create a source-bound Study Anything learning context and project `MasteryRecord` /
 `LoopRun` evidence without source bodies, raw diffs, learner answers, Agent endpoints, Agent
 metadata, or model keys.
+Then run `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html`
+and inspect `platform/generated/study-anything-cognitive-loop-study-adapter-cli.json` before
+connecting the bridge to a workspace action. The CLI Lite writes JSON/HTML learning status,
+StudyCard, understanding gaps, scribe summary, `MasteryRecord`, and `LoopRun` evidence from
+metadata-only files.
+The pack includes `scripts/cognitive_loop_study_adapter_cli.py` and
+`scripts/verify_cognitive_loop_study_adapter_cli.py` for this handoff.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

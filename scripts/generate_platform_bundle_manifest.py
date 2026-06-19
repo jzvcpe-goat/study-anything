@@ -122,6 +122,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Study Anything Learning Adapter verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+        "generated_asset",
+        "Cognitive Loop Study Anything Adapter CLI Lite verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1202,9 +1207,19 @@ FILES: list[tuple[str, str, str]] = [
         "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
     ),
     (
+        "scripts/cognitive_loop_study_adapter_cli.py",
+        "cli",
+        "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence.",
+    ),
+    (
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "verification",
         "Cognitive Loop Study Anything Learning Adapter verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_study_adapter_cli.py",
+        "verification",
+        "Cognitive Loop Study Anything Adapter CLI Lite verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",
@@ -1841,6 +1856,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
             "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
             "python3 scripts/verify_deployment_hardening.py --check",

@@ -1,0 +1,159 @@
+{
+  "adapter_core": {
+    "core_schema_expected": "cognitive-loop-study-anything-adapter-v1",
+    "purpose": "Execute a metadata-only Cognitive Loop learning gate through Study Anything.",
+    "schema_version": "cognitive-loop-study-anything-adapter-v1",
+    "status": "pass"
+  },
+  "agent_task_coverage": {
+    "audit_status": "verified",
+    "eval_status": "ready_for_external_eval",
+    "observed_tasks": [
+      "answer.grade",
+      "insight.synthesize",
+      "quiz.generate",
+      "teach.glossary",
+      "teach.overview"
+    ],
+    "used_external_agent": false,
+    "used_fake_agent": true
+  },
+  "artifact_refs": {
+    "html": ".cognitive-loop/artifacts/cognitive-loop-study-adapter.html",
+    "json": "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json"
+  },
+  "commands": {
+    "core_adapter_check": ".venv/bin/python scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+    "release_check": "./scripts/release_check.sh",
+    "run_cli": ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+    "verify_cli": ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check"
+  },
+  "current_limits": [
+    "This is a CLI Lite bridge, not a daemonized watcher or full HTML Artifact console.",
+    "The fake deterministic Agent is used for local proof; real reasoning remains outside Study Anything.",
+    "JSON and HTML reports contain metadata, hashes, status, and public refs only."
+  ],
+  "generated_at": "2026-06-19T00:00:00Z",
+  "input_refs": {
+    "content_included": false,
+    "decision_card": {
+      "path": "fixtures/cognitive-loop-study-adapter/decision-card.json",
+      "sha256": "e5fd5dfaadfe4446668f5bbf17d37e42660b5579b33a30b14349c8fa927a0fee"
+    },
+    "project_event": {
+      "path": "fixtures/cognitive-loop-study-adapter/project-event.json",
+      "sha256": "c01520e500d1eb57f11d6f4c2ede0e7305da95c5604496ca2302dfda5d15f569"
+    }
+  },
+  "learning_status": {
+    "grading_result_count": 1,
+    "insight_count": 1,
+    "learning_context_item_count": 1,
+    "learning_context_schema": "learning-context-package-v1",
+    "learning_context_text_included": false,
+    "quiz_item_count": 1,
+    "scribe_entry_count": 1,
+    "stage": "completed",
+    "teaching_layer_count": 2,
+    "track": "ENGINEERING"
+  },
+  "loop_run": {
+    "artifact_refs": [
+      "mastery-record:mastery-d01605216dc5",
+      "learning-package:learning-package-v1",
+      "second-brain-handoff:second-brain-handoff-v1"
+    ],
+    "completed_at": "2026-06-19T00:00:00Z",
+    "decision_card_ids": [
+      "decision-study-adapter-cli-001"
+    ],
+    "objective": "Use Study Anything to close the Cognitive Loop human mastery gate.",
+    "project_event_ids": [
+      "event-study-adapter-cli-001"
+    ],
+    "project_id": "cognitive-loop-demo",
+    "run_id": "loop-study-da47cc66e6d2",
+    "schema_version": "loop-run-v1",
+    "started_at": "2026-06-19T00:00:00Z",
+    "status": "succeeded",
+    "trace_refs": [
+      "study-anything-adapter:metadata-only"
+    ]
+  },
+  "mastery_record": {
+    "bloom": "understand",
+    "evidence_refs": [
+      "learning-context:4b15692627db",
+      "agent-audit:verified",
+      "agent-eval-artifact:ready_for_external_eval"
+    ],
+    "level": 0.5,
+    "project_id": "cognitive-loop-demo",
+    "record_id": "mastery-d01605216dc5",
+    "schema_version": "mastery-record-v1",
+    "subject": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py: Route risky project changes through Study Anything adapter CLI",
+    "updated_at": "2026-06-19T00:00:00Z"
+  },
+  "objective": "Verify platform-Agent callable Study Anything adapter CLI evidence.",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "grading_feedback_included": false,
+    "input_file_contents_included": false,
+    "learner_answers_included": false,
+    "metadata_only_cognitive_loop_evidence": true,
+    "model_keys_included": false,
+    "raw_diff_included": false,
+    "raw_source_text_included": false,
+    "standalone_frontend_required": false
+  },
+  "schema_version": "cognitive-loop-study-anything-adapter-cli-v1",
+  "scribe_summary": {
+    "answers_included": false,
+    "captured": "counts_and_public_refs_only",
+    "content_included": false,
+    "entry_count": 1,
+    "feedback_included": false,
+    "schema_version": "scribe-summary-v1",
+    "source_excerpt_hash": "67257e58e5d6023d960c58352d8038f5dc4ad291cf51edcfd2d51291633fd16a",
+    "source_reference": "cognitive-loop://decision/decision-study-adapter-cli-001"
+  },
+  "status": "pass",
+  "study_card": {
+    "bloom": "understand",
+    "card_id": "study-card-mastery-d01605216dc5",
+    "content_included": false,
+    "evidence_refs": [
+      "learning-context:4b15692627db",
+      "agent-audit:verified",
+      "agent-eval-artifact:ready_for_external_eval"
+    ],
+    "mastery_level": 0.5,
+    "practice_questions": [
+      "Can the operator explain the decision from the public summary only?",
+      "Can the operator name the risk boundary, verification proof, and rollback path?",
+      "Can the operator describe what must stay outside Cognitive Loop evidence?"
+    ],
+    "schema_version": "study-card-v1",
+    "source_excerpt_hash": "67257e58e5d6023d960c58352d8038f5dc4ad291cf51edcfd2d51291633fd16a",
+    "source_reference": "cognitive-loop://decision/decision-study-adapter-cli-001",
+    "subject": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py: Route risky project changes through Study Anything adapter CLI",
+    "title": "Cognitive Loop Learning Gate: Route risky project changes through Study Anything adapter CLI",
+    "track": "ENGINEERING"
+  },
+  "title": "Cognitive Loop Study Anything Adapter CLI Lite",
+  "understanding_gaps": [
+    {
+      "evidence_ref": "mastery-record:mastery-d01605216dc5",
+      "gap_id": "risk-boundary",
+      "question": "Operator should explain why raw diffs, answers, Agent endpoints, and keys stay outside evidence.",
+      "status": "watch"
+    },
+    {
+      "evidence_ref": "loop-run:loop-study-da47cc66e6d2",
+      "gap_id": "rollback-path",
+      "question": "Operator should identify how to disable or bypass the learning adapter if the bridge is unhealthy.",
+      "status": "watch"
+    }
+  ]
+}

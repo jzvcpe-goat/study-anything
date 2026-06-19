@@ -99,7 +99,8 @@
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
     "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
     "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
-    "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1"
+    "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1",
+    "cognitive_loop_study_adapter_cli.schema_version == cognitive-loop-study-anything-adapter-cli-v1"
   ],
   "description": "Use the repo-local Skill and CLI when Codex or another terminal-capable agent can run commands inside the Study Anything checkout.",
   "entrypoints": {
@@ -196,7 +197,12 @@
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
     "scripts/verify_cognitive_loop_langfuse_observability.py",
     "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+    "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+    "fixtures/cognitive-loop-study-adapter/project-event.json",
+    "fixtures/cognitive-loop-study-adapter/decision-card.json",
     "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+    "scripts/verify_cognitive_loop_study_adapter_cli.py",
+    "scripts/cognitive_loop_study_adapter_cli.py",
     "scripts/verify_cognitive_loop_study_anything_adapter.py"
   ],
   "integration_mode": "terminal_skill",
@@ -289,7 +295,9 @@
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
     "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+    ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+    ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -311,6 +319,7 @@
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
     "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+    ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check"
   ]
 }

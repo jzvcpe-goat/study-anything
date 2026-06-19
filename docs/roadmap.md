@@ -184,16 +184,15 @@ Goal: connect project decisions to human learning and mastery.
 Current:
 
 - `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` proves a metadata-only `ProjectEvent` and `DecisionCard` can create a source-bound `LearningContextPackage`, complete a deterministic Study Anything learning loop, and project the result back into `MasteryRecord` / `LoopRun` evidence.
+- `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html` turns that proof into a platform-Agent-callable CLI Lite. It writes JSON/HTML learning status, StudyCard, understanding gaps, scribe summary, `MasteryRecord`, and `LoopRun` evidence from metadata-only inputs.
 - Cognitive Loop evidence stores only public summaries, source references, excerpt hashes, schemas, counts, and mastery metadata. It does not include source bodies, raw diffs, learner answers, grading feedback, Agent endpoints, Agent metadata, or model keys.
 - The bridge uses the local `fake-deterministic` Agent for proof; real teaching remains delegated to the user's platform Agent or private HTTP Agent.
 
 Deliver:
 
-- CLI command for LearningContextPackage from ProjectEvent and DecisionCard
-- StudyCard generation
-- richer mastery sync from Study Anything sessions into Cognitive Loop MasteryRecord
-- scribe log bridge into the future HTML Artifact console
-- report sections for learning status and understanding gaps
+- richer mastery sync from full Study Anything sessions into Cognitive Loop MasteryRecord
+- scribe log bridge into the future realtime HTML Artifact console
+- optional external Agent handoff around the CLI Lite contract
 
 Acceptance:
 

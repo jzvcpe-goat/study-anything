@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -198,7 +198,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -210,7 +212,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -297,7 +299,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -311,7 +315,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -397,7 +401,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",

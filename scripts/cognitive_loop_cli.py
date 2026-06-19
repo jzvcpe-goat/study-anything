@@ -457,6 +457,12 @@ def cmd_artifact_index(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_study_adapter(args: argparse.Namespace) -> int:
+    import cognitive_loop_study_adapter_cli
+
+    return cognitive_loop_study_adapter_cli.run_from_namespace(args)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="Repository or project root.")
@@ -672,6 +678,31 @@ def build_parser() -> argparse.ArgumentParser:
     )
     artifact_index.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
     artifact_index.set_defaults(func=cmd_artifact_index)
+
+    study_adapter = sub.add_parser(
+        "study-adapter",
+        help="Run Study Anything as a metadata-only Cognitive Loop learning gate.",
+    )
+    study_adapter.add_argument("--event", required=True, help="ProjectEvent JSON file.")
+    study_adapter.add_argument("--decision", required=True, help="DecisionCard JSON file.")
+    study_adapter.add_argument("--html", action="store_true", help="Write a static HTML learning status artifact.")
+    study_adapter.add_argument(
+        "--output",
+        default=".cognitive-loop/artifacts/cognitive-loop-study-adapter.html",
+        help="HTML output path. Defaults under .cognitive-loop/artifacts.",
+    )
+    study_adapter.add_argument(
+        "--json-output",
+        default=".cognitive-loop/events/cognitive-loop-study-adapter.json",
+        help="JSON evidence output path. Defaults under .cognitive-loop/events.",
+    )
+    study_adapter.add_argument(
+        "--objective",
+        default="Run a Study Anything learning gate from Cognitive Loop ProjectEvent and DecisionCard metadata.",
+    )
+    study_adapter.add_argument("--generated-at", help="Deterministic timestamp for verifiers.")
+    study_adapter.add_argument("--json", action="store_true", help="Print JSON even when --html is used.")
+    study_adapter.set_defaults(func=cmd_study_adapter)
     return parser
 
 
