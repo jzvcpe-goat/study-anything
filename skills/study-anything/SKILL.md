@@ -148,6 +148,22 @@ is low risk and the intended output is an idempotent receipt under `.cognitive-l
 Do not use it to write README, docs, scripts, apps, platform packs, policy files, source code, raw
 source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
 
+## Measured Improvement Comparator Lite
+
+Use Comparator Lite after at least two metadata-only loop artifacts exist and the operator needs to
+know whether the latest loop actually improved. It compares Evolution Report, Apply Plan, receipt,
+or verification report artifacts and classifies the result as `improved`, `regressed`, `unchanged`,
+`insufficient`, or `ambiguous`.
+
+```bash
+python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json
+python3 scripts/verify_cognitive_loop_improvement_comparator.py --check
+```
+
+Comparator Lite is read-only. Do not use it to call models, execute apply, modify source files,
+weaken policy, or include raw source, raw diff, learner answers, Agent endpoints, Agent metadata,
+prompts, or model keys.
+
 ## Start A Learning Loop
 
 1. Check API health.

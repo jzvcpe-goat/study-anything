@@ -113,6 +113,14 @@ metadata, prompts, or model keys. Verify it with
 `python3 scripts/verify_cognitive_loop_apply_plan.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-apply-plan.json`.
 
+For Measured Improvement Comparator Lite, run
+`python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json`.
+It compares metadata-only loop artifacts, classifies `improved`, `regressed`, `unchanged`,
+`insufficient`, or `ambiguous`, and never calls models, executes apply, modifies source files, or
+stores raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model
+keys. Verify it with `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check`, then
+inspect `platform/generated/study-anything-cognitive-loop-improvement-comparison.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

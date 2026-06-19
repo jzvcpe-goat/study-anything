@@ -10,7 +10,7 @@ emit a redacted transcript that is safe to attach to GitHub issues.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `9cd78eadddaf29f3d92901ccd60bfd422b1fd159c4b95e38bffbfae06d12c959`
+- Archive: `platform/generated/study-anything-platform-agent-replay.zip` sha256 `798cc51f9566e6aaeddc59471efdfba629ae3949c9a9209b47b1d4cbb53b23d2`
 
 ## Commands
 

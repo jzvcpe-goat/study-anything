@@ -378,6 +378,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_apply_plan.py --check` 会验证 dry-run 输出、显式 generated-artifact receipt apply、必须带 allow flag、receipt 幂等、中高风险与 Human Mastery Gate 拒绝、禁止目标路径拒绝、疑似 secret proposal 拒绝、diff body 拒绝、policy 弱化拒绝、JSON/HTML 报告结构和隐私边界，并输出 `cognitive-loop-apply-plan-verification-v1`。
 
+## Measured Improvement Comparator Lite / Measured Improvement Comparator Lite
+
+`python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` compares metadata-only loop artifacts. The output schema is `cognitive-loop-improvement-comparison-lite-v1` and includes per-artifact metrics, deltas, status classification, guardrails, privacy flags, and JSON/HTML output references.
+
+`python3 scripts/verify_cognitive_loop_improvement_comparator.py --check` verifies improved, regressed, unchanged, insufficient, and ambiguous classifications; malformed JSON rejection; invalid schema rejection; secret-looking artifact rejection; diff body rejection; policy-weakening rejection; privacy regression detection; JSON/HTML report structure; and read-only boundaries. It emits `cognitive-loop-improvement-comparison-verification-v1`.
+
+`python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` 会比较 metadata-only loop artifacts。输出 schema 是 `cognitive-loop-improvement-comparison-lite-v1`，包含每个 artifact 的 metrics、delta、状态分类、guardrails、privacy flags，以及 JSON/HTML 输出引用。
+
+`python3 scripts/verify_cognitive_loop_improvement_comparator.py --check` 会验证 improved、regressed、unchanged、insufficient、ambiguous 分类；malformed JSON 拒绝；invalid schema 拒绝；疑似 secret artifact 拒绝；diff body 拒绝；policy 弱化拒绝；privacy regression 检测；JSON/HTML 报告结构；以及只读边界，并输出 `cognitive-loop-improvement-comparison-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -436,6 +446,12 @@ Human understanding state for a topic, file, subsystem, or risky change.
 Governed proposal for improving prompts, policies, evals, docs, tasks, retrieval rules, or learning paths.
 
 对 prompt、policy、eval、文档、任务、检索规则或学习路径的受治理改进提案。
+
+### `ImprovementComparison`
+
+Read-only comparison of metadata-only loop artifacts showing whether the latest loop improved, regressed, stayed unchanged, lacks enough evidence, or needs manual review.
+
+只读比较 metadata-only loop artifacts，用来判断最新 loop 是改进、退化、无变化、证据不足，还是需要人工复核。
 
 ## Privacy Boundary
 

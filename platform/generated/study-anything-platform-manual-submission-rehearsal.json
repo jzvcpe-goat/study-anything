@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 106,
+      "acceptance_evidence_count": 107,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -757,7 +757,9 @@
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json"
+        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -874,14 +876,17 @@
         "scripts/verify_cognitive_loop_evolution_report.py",
         "platform/generated/study-anything-cognitive-loop-apply-plan.json",
         "scripts/cognitive_loop_apply_plan.py",
-        "scripts/verify_cognitive_loop_apply_plan.py"
+        "scripts/verify_cognitive_loop_apply_plan.py",
+        "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
+        "scripts/cognitive_loop_improvement_comparator.py",
+        "scripts/verify_cognitive_loop_improvement_comparator.py"
       ],
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 106,
+      "acceptance_evidence_count": 107,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -980,7 +985,9 @@
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json"
+        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1101,14 +1108,17 @@
         "scripts/verify_cognitive_loop_evolution_report.py",
         "platform/generated/study-anything-cognitive-loop-apply-plan.json",
         "scripts/cognitive_loop_apply_plan.py",
-        "scripts/verify_cognitive_loop_apply_plan.py"
+        "scripts/verify_cognitive_loop_apply_plan.py",
+        "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
+        "scripts/cognitive_loop_improvement_comparator.py",
+        "scripts/verify_cognitive_loop_improvement_comparator.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 106,
+      "acceptance_evidence_count": 107,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1206,7 +1216,9 @@
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json"
+        "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -1324,7 +1336,10 @@
         "scripts/verify_cognitive_loop_evolution_report.py",
         "platform/generated/study-anything-cognitive-loop-apply-plan.json",
         "scripts/cognitive_loop_apply_plan.py",
-        "scripts/verify_cognitive_loop_apply_plan.py"
+        "scripts/verify_cognitive_loop_apply_plan.py",
+        "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
+        "scripts/cognitive_loop_improvement_comparator.py",
+        "scripts/verify_cognitive_loop_improvement_comparator.py"
       ],
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",

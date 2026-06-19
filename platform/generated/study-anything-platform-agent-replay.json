@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 61506,
+    "bytes": 62017,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "9cd78eadddaf29f3d92901ccd60bfd422b1fd159c4b95e38bffbfae06d12c959",
+    "sha256": "798cc51f9566e6aaeddc59471efdfba629ae3949c9a9209b47b1d4cbb53b23d2",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -122,19 +122,19 @@
       "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
     },
     {
-      "bytes": 21587,
+      "bytes": 22299,
       "path": "platform/packs/kimi/README.md",
-      "sha256": "31aef89a70ec7be41f49bcc594443e0a2844900935eaf0b83536b526465d82ac"
+      "sha256": "97a05e4cb6c3d1662ada9b500d143e16a6d805dac604cd9803fd0e4aa2b710a6"
     },
     {
-      "bytes": 20826,
+      "bytes": 21479,
       "path": "platform/packs/codex/README.md",
-      "sha256": "df9adfc3f58aa2f177f90a2284b9e51dcaba5ecc96add3f1eef61f50bc433871"
+      "sha256": "86e1b2a3bbcbd0a43d39a5b91e42a1e81ea3069691efb7bb47c8f1a4d17a2150"
     },
     {
-      "bytes": 18493,
+      "bytes": 19146,
       "path": "platform/packs/workbuddy/README.md",
-      "sha256": "be0ffc2aa2038a0268f5b5d11aea48fbed3c93faf5f53b08396d4ba992de249a"
+      "sha256": "b9d6b33c6cfba1b7854a31e637ff0f42e5f2346820fb3783e296057fa92c2d71"
     }
   ],
   "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",

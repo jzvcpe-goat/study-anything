@@ -332,11 +332,12 @@ Current:
 - `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` creates Governed Apply Plan Lite artifacts for low-risk generated-artifact receipts.
 - `python3 scripts/verify_cognitive_loop_apply_plan.py --check` verifies dry-run behavior, explicit generated-artifact receipt apply, required allow flag, idempotent receipt, high-risk/gated/forbidden-path rejection, secret/diff-body/policy-weakening rejection, and privacy flags.
 - Apply Plan Lite is not source-changing auto-apply: it writes only `.cognitive-loop/artifacts/applied/` receipt markers when explicitly allowed.
+- `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` creates read-only Measured Improvement Comparator Lite artifacts across metadata-only loop evidence.
+- `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check` verifies improved, regressed, unchanged, insufficient, and ambiguous outcomes; privacy regression detection; malformed/invalid/secret/diff-body/policy-weakening rejection; JSON/HTML artifact structure; and read-only guardrails.
 
 Still planned:
 
 - low-risk source-changing auto-apply path with explicit policy guardrails
-- measured improvement comparison across loop runs
 - prompt/policy/eval/task/doc/retrieval patch generation
 - realtime Artifact Console integration
 - EvolutionReport linkage into future Mastra workflow receipts
