@@ -117,6 +117,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Langfuse observability DTO mapping verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "generated_asset",
+        "Cognitive Loop Study Anything Learning Adapter verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
         "generated_asset",
         "Cognitive Loop metadata-only artifact doctor verification report.",
@@ -1190,6 +1195,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_langfuse_observability.py",
         "verification",
         "Cognitive Loop Langfuse observability DTO mapping verifier.",
+    ),
+    (
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "api_core",
+        "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_study_anything_adapter.py",
+        "verification",
+        "Cognitive Loop Study Anything Learning Adapter verifier.",
     ),
     (
         "scripts/verify_cognitive_loop_artifact_doctor.py",

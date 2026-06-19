@@ -181,19 +181,26 @@ Acceptance:
 
 Goal: connect project decisions to human learning and mastery.
 
+Current:
+
+- `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` proves a metadata-only `ProjectEvent` and `DecisionCard` can create a source-bound `LearningContextPackage`, complete a deterministic Study Anything learning loop, and project the result back into `MasteryRecord` / `LoopRun` evidence.
+- Cognitive Loop evidence stores only public summaries, source references, excerpt hashes, schemas, counts, and mastery metadata. It does not include source bodies, raw diffs, learner answers, grading feedback, Agent endpoints, Agent metadata, or model keys.
+- The bridge uses the local `fake-deterministic` Agent for proof; real teaching remains delegated to the user's platform Agent or private HTTP Agent.
+
 Deliver:
 
-- LearningContextPackage from ProjectEvent and DecisionCard
+- CLI command for LearningContextPackage from ProjectEvent and DecisionCard
 - StudyCard generation
-- mastery sync from Study Anything sessions into Cognitive Loop MasteryRecord
-- scribe log bridge
+- richer mastery sync from Study Anything sessions into Cognitive Loop MasteryRecord
+- scribe log bridge into the future HTML Artifact console
 - report sections for learning status and understanding gaps
 
 Acceptance:
 
-- A project diff can generate a learning package.
-- A high-risk decision can generate understanding questions.
-- A completed learning loop updates MasteryRecord and appears in the HTML report.
+- A metadata-only project decision can generate a learning package.
+- A high-risk decision can generate understanding questions through Study Anything.
+- A completed learning loop updates MasteryRecord and appears in generated Cognitive Loop evidence.
+- Future HTML reports can render the same MasteryRecord without adding private source or answer text.
 
 ## Phase 5: Realtime Watchers
 

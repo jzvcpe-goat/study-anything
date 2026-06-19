@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 111734,
+    "bytes": 112479,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "faa89b66e361d7d488991b6b766088fd95a55a66f4e5480bd66ed601d3028729",
+    "sha256": "9e380108da84c578e8308b3e50d6915b52a0163c43f3c0f4e6c4c11fac6795c8",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -160,9 +160,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 24515,
+      "bytes": 25011,
       "path": "README.md",
-      "sha256": "aac431d4bbb58e5db4f714d0c9af42d6f9727d26820f0eab6c6a3e92d4f686fd"
+      "sha256": "285b661bdc7e338183fb98b3dbfbd9f6902945ce1bfcaeab9f320611c20b88d2"
     },
     {
       "bytes": 19503,
@@ -190,9 +190,9 @@
       "sha256": "952773709005786aa6df6810238affed09b350c7d408e56f5efdb1d1a0c8822b"
     },
     {
-      "bytes": 16736,
+      "bytes": 17689,
       "path": "docs/roadmap.md",
-      "sha256": "062f47d2c86ff75dbb821beb61ec21c012f02605f5e5fd74b74cd372a3e6e556"
+      "sha256": "22da0c15bb1ad8cc5937c506ea94be144df25ddc7d6f3677f10a4cc501b10200"
     },
     {
       "bytes": 2802,
@@ -240,24 +240,24 @@
       "sha256": "cc0ecc5dd2a8a27083f7cef2835b4e07fb5e33841e9ac10e6d0f301ab82801f6"
     },
     {
-      "bytes": 79333,
+      "bytes": 80803,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "e385022cfa88a99a890e9fef6b673f4acc436cdb02c948962127774fe90693d3"
+      "sha256": "69d238a150250d6619441b9defd1419b60a5ead6d31c8d91b3c7e15cfb8efcc3"
     },
     {
-      "bytes": 22564,
+      "bytes": 23044,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "2e2d3ad4d1036c83d271351331f876e83a33984a7259736412015e8ad753cb8c"
+      "sha256": "9bc329704b70fd55b8090af8a967f6c7b37a65d6bf7cf33aa36ebbb55988b802"
     },
     {
-      "bytes": 23164,
+      "bytes": 23984,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "6acc7eee2701496552b91543eeecef20b1e33f6c74a5d26e2ed7b2888588ff91"
+      "sha256": "453a05736f4f274a29321c003f94fc7ab84712920f4db75aa872b3056205beed"
     },
     {
-      "bytes": 22670,
+      "bytes": 23150,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "853a8507adab2501195b944b21a7f8b484180431811994c435397d6601c32cd3"
+      "sha256": "29f9159ed0180d5ed11ae78491119540cf52bcd0f3d0f9ed28b81be6cbc33bdb"
     }
   ],
   "purpose": "Give external adopters and platform maintainers a deterministic way to decide whether a published Study Anything image is ready, blocked, or only limited by local Docker/GHCR pull conditions.",

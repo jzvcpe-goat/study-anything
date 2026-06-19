@@ -503,7 +503,10 @@
     "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_runtime_service.py",
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-    "scripts/verify_cognitive_loop_langfuse_observability.py"
+    "scripts/verify_cognitive_loop_langfuse_observability.py",
+    "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+    "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+    "scripts/verify_cognitive_loop_study_anything_adapter.py"
   ],
   "submissions": [
     {
@@ -584,7 +587,10 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -655,7 +661,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ]
     },
     {
@@ -733,7 +740,10 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -801,7 +811,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ]
     },
     {
@@ -878,7 +889,10 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -946,7 +960,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ]
     },
     {
@@ -1022,7 +1037,10 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -1090,7 +1108,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ]
     }
   ],

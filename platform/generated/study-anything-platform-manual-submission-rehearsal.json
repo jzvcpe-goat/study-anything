@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 99,
+      "acceptance_evidence_count": 100,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -744,7 +744,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -838,14 +839,17 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 99,
+      "acceptance_evidence_count": 100,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -931,7 +935,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1029,14 +1034,17 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 99,
+      "acceptance_evidence_count": 100,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1121,7 +1129,8 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+        "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -1216,7 +1225,10 @@
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-        "scripts/verify_cognitive_loop_langfuse_observability.py"
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",

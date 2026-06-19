@@ -67,6 +67,12 @@ COGNITIVE_LOOP_LANGFUSE_OBSERVABILITY_PATH = (
     / "generated"
     / "study-anything-cognitive-loop-langfuse-observability.json"
 )
+COGNITIVE_LOOP_STUDY_ANYTHING_ADAPTER_PATH = (
+    ROOT
+    / "platform"
+    / "generated"
+    / "study-anything-cognitive-loop-study-anything-adapter.json"
+)
 COGNITIVE_LOOP_ARTIFACT_DOCTOR_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-doctor.json"
 )
@@ -273,9 +279,11 @@ REQUIRED_SHARED_ASSETS = {
     "platform/mastra-runtime/src/observability.ts",
     "platform/mastra-runtime/src/observability-run.ts",
     "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+    "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
     "scripts/verify_cognitive_loop_mastra_runtime_service.py",
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
     "scripts/verify_cognitive_loop_langfuse_observability.py",
+    "scripts/verify_cognitive_loop_study_anything_adapter.py",
     "scripts/verify_cognitive_loop_artifact_doctor.py",
     "scripts/verify_cognitive_loop_repair_plan.py",
     "scripts/verify_cognitive_loop_artifact_index.py",
@@ -311,6 +319,7 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
     "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
+    "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
     "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
     "platform/generated/study-anything-cognitive-loop-repair-plan.json",
     "platform/generated/study-anything-cognitive-loop-artifact-index.json",
@@ -1928,6 +1937,56 @@ def verify_cognitive_loop_langfuse_observability_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Cognitive Loop Langfuse observability privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_study_anything_adapter_report() -> None:
+    report = load_json(COGNITIVE_LOOP_STUDY_ANYTHING_ADAPTER_PATH)
+    if report.get("schema_version") != "cognitive-loop-study-anything-adapter-v1":
+        raise EcosystemSubmissionError("Cognitive Loop Study Anything adapter report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop Study Anything adapter report must pass.")
+    context = report.get("learning_context") or {}
+    if context.get("schema_version") != "learning-context-package-v1":
+        raise EcosystemSubmissionError("Study Anything adapter learning context schema drifted.")
+    if (context.get("privacy") or {}).get("bounded_excerpts_included") is not False:
+        raise EcosystemSubmissionError("Study Anything adapter public context must exclude bounded excerpt text.")
+    loop = report.get("study_anything_loop") or {}
+    if loop.get("stage") != "completed":
+        raise EcosystemSubmissionError("Study Anything adapter learning loop must complete.")
+    if loop.get("teaching_layer_count") != 2 or loop.get("quiz_item_count") != 1:
+        raise EcosystemSubmissionError("Study Anything adapter learning loop counts drifted.")
+    agent = report.get("agent_evidence") or {}
+    if agent.get("audit_status") != "verified" or agent.get("eval_status") != "ready_for_external_eval":
+        raise EcosystemSubmissionError("Study Anything adapter agent audit/eval evidence must pass.")
+    projection = report.get("cognitive_loop_projection") or {}
+    mastery = projection.get("mastery_record") or {}
+    if mastery.get("schema_version") != "mastery-record-v1":
+        raise EcosystemSubmissionError("Study Anything adapter MasteryRecord schema drifted.")
+    if mastery.get("level") != 0.5 or mastery.get("bloom") != "understand":
+        raise EcosystemSubmissionError("Study Anything adapter MasteryRecord values drifted.")
+    loop_run = projection.get("loop_run") or {}
+    if loop_run.get("schema_version") != "loop-run-v1" or loop_run.get("status") != "succeeded":
+        raise EcosystemSubmissionError("Study Anything adapter LoopRun projection drifted.")
+    exports = report.get("exports") or {}
+    if exports.get("second_brain_handoff_schema") != "second-brain-handoff-v1":
+        raise EcosystemSubmissionError("Study Anything adapter second-brain handoff schema drifted.")
+    if exports.get("strict_handoff_excludes_learner_answers") is not True:
+        raise EcosystemSubmissionError("Study Anything adapter strict handoff must exclude learner answers.")
+    privacy = report.get("privacy") or {}
+    if privacy.get("metadata_only_cognitive_loop_evidence") is not True:
+        raise EcosystemSubmissionError("Study Anything adapter Cognitive Loop evidence must be metadata-only.")
+    for key in (
+        "raw_source_text_in_report",
+        "raw_diff_in_report",
+        "learner_answers_in_report",
+        "grading_feedback_in_report",
+        "agent_endpoints_in_report",
+        "agent_metadata_in_report",
+        "model_keys_in_report",
+        "study_anything_stores_real_model_keys",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Study Anything adapter privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4650,6 +4709,7 @@ def main() -> None:
     verify_cognitive_loop_mastra_runtime_service_report()
     verify_cognitive_loop_mastra_runtime_durable_report()
     verify_cognitive_loop_langfuse_observability_report()
+    verify_cognitive_loop_study_anything_adapter_report()
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
@@ -4714,6 +4774,7 @@ def main() -> None:
                 "cognitive_loop_mastra_runtime_service": "cognitive-loop-mastra-runtime-service-verification-v1",
                 "cognitive_loop_mastra_runtime_durable": "cognitive-loop-mastra-runtime-durable-verification-v1",
                 "cognitive_loop_langfuse_observability": "cognitive-loop-langfuse-observability-verification-v1",
+                "cognitive_loop_study_anything_adapter": "cognitive-loop-study-anything-adapter-v1",
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
