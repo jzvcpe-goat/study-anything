@@ -194,6 +194,22 @@ Deliver:
 - scribe log bridge into the future realtime HTML Artifact console
 - optional external Agent handoff around the CLI Lite contract
 
+## Phase 5: Watcher Runner Lite
+
+Goal: move from manual watcher ingest to bounded local runner automation without shipping a daemon.
+
+Current:
+
+- `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` reads `.cognitive-loop/watchers.yaml`, accepts explicit path/git/test signals, debounces duplicate observations, skips excluded paths, writes metadata-only ProjectEvent artifacts, ingests them into the SQLite Event Store, and can trigger Study Anything adapter CLI for the first high-risk event.
+- `.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check` verifies file-save, git diff summary, test failure summary, exclude rules, raw diff rejection, idempotent Event Store writes, and Study Adapter gate triggering.
+- Runner Lite does not start a background watcher, read source bodies, embed raw diffs or test output, store learner answers, expose Agent endpoints, capture Agent metadata, or store model keys.
+
+Deliver:
+
+- richer local signal adapters for CI receipts and platform-Agent tool call metadata
+- realtime HTML Artifact console fed by Event Store rows
+- optional Mastra watcher workflow that consumes runner-lite events after the same privacy verifier passes
+
 Acceptance:
 
 - A metadata-only project decision can generate a learning package.

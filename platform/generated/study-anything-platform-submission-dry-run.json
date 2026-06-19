@@ -17,7 +17,7 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 377,
+    "file_count": 380,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
@@ -68,6 +68,8 @@
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -155,7 +157,9 @@
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
-        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
       ],
       "display": "Codex Skill",
       "expected_mode": "terminal_skill",
@@ -259,6 +263,8 @@
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -345,7 +351,9 @@
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
-        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
       ],
       "display": "Generic OpenAPI Tool Platform",
       "expected_mode": "generic_openapi_tools",
@@ -449,6 +457,8 @@
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -536,7 +546,9 @@
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
-        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
       ],
       "display": "Kimi-compatible Tool Workspace",
       "expected_mode": "openai_compatible_tools",
@@ -643,6 +655,8 @@
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -729,7 +743,9 @@
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
-        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+        ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
       ],
       "display": "WorkBuddy-style HTTP Workspace",
       "expected_mode": "openapi_http_tools",

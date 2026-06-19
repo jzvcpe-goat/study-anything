@@ -293,6 +293,10 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` 是当前 watcher 桥接入口。它读取 `.cognitive-loop/watchers.yaml`，把一次文件/Git/测试/runtime 风格 observation 标准化为只含 metadata 的 `ProjectEvent` artifact，并可被 Event Index 或 SQLite Event Store 重建。它不会运行后台 watcher daemon，不读取文件正文，不嵌入 diff body，也不调用外部 Agent。
 
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` is the current runner-lite bridge. It performs a bounded one-shot/polling pass over explicit local signals, debounces duplicate paths, skips excluded paths, writes metadata-only watcher events, ingests them into the SQLite Event Store, and can trigger the Study Anything adapter CLI for the first high-risk event. It is still not a daemon and does not read file contents, raw diffs, raw test output, learner answers, Agent endpoints, Agent metadata, or model keys.
+
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` 是当前 runner-lite 桥接入口。它对显式传入的本地信号做有界 one-shot/polling 处理，合并重复路径，跳过 exclude 命中的路径，写出 metadata-only watcher event，摄入 SQLite Event Store，并可对第一个高风险事件触发 Study Anything adapter CLI。它仍然不是 daemon，也不读取文件正文、raw diff、raw test output、学习者答案、Agent endpoint、Agent metadata 或 model key。
+
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` 是当前的 Mastra 桥接层。它是给外部 Mastra 项目使用的 TypeScript scaffold，把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 workflow step、suspend/resume 和 bail 语义。它由 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证；这不代表本仓库已经启动或托管 Mastra。

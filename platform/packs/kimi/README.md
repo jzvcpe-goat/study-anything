@@ -115,6 +115,14 @@ gaps, scribe summary, `MasteryRecord`, and `LoopRun` evidence from metadata-only
 The pack includes `scripts/cognitive_loop_study_adapter_cli.py` and
 `scripts/verify_cognitive_loop_study_adapter_cli.py` for this handoff.
 
+For bounded local watcher automation, run
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary "Metadata-only workflow boundary changed"`.
+This runner reads `.cognitive-loop/watchers.yaml`, debounces duplicate paths, skips excluded
+paths, writes metadata-only ProjectEvents into the local Event Store, and can trigger the Study
+Anything adapter gate for the first high-risk event. Verify it with
+`.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-watcher-runner.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace

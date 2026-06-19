@@ -47,6 +47,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_event_index.py --check
 "$python_bin" scripts/verify_cognitive_loop_event_store.py --check
 "$python_bin" scripts/verify_cognitive_loop_watcher_ingest.py --check
+"$python_bin" scripts/verify_cognitive_loop_watcher_runner.py --check
 "$python_bin" scripts/verify_cognitive_loop_mastra_adapter.py --check
 "$python_bin" scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check
 "$python_bin" scripts/verify_cognitive_loop_mastra_runtime_service.py --check

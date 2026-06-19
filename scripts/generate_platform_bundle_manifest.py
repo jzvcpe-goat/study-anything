@@ -92,6 +92,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop manual watcher ingest verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
+        "generated_asset",
+        "Cognitive Loop bounded watcher runner-lite verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1112,6 +1117,16 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop manual watcher ingest verifier.",
     ),
     (
+        "scripts/cognitive_loop_watcher_runner.py",
+        "cli",
+        "Bounded watcher runner-lite for metadata-only local project signals.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "verification",
+        "Cognitive Loop watcher runner-lite verifier.",
+    ),
+    (
         "platform/mastra/README.md",
         "mastra_adapter",
         "Copy-ready Mastra adapter operator guide.",
@@ -1856,6 +1871,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
             "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
