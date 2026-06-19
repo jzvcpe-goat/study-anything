@@ -54,6 +54,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
     "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
     "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
+    "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1",
     "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
     "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
     "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -106,6 +107,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_mastra_runtime_service.py --check",
     "verify_cognitive_loop_mastra_runtime_durable.py --check",
     "verify_cognitive_loop_langfuse_observability.py --check",
+    "verify_cognitive_loop_study_anything_adapter.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -288,6 +290,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Langfuse observability report"
         )
+    if "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Study Anything adapter report"
+        )
     for asset in (
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
@@ -307,6 +313,8 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
         "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_anything_adapter.py",
     ):
         if asset not in import_assets:
             raise PackVerificationError(
@@ -503,8 +511,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "study-anything-launch-acceptance-ledger.json",
         "study-anything-github-launch-operator-guide.json",
         "study-anything-cognitive-loop-langfuse-observability.json",
+        "study-anything-cognitive-loop-study-anything-adapter.json",
         "cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_langfuse_observability.py",
+        "verify_cognitive_loop_study_anything_adapter.py",
         "verify_cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli_receipts.py",
         "verify_cognitive_loop_recipe_cli_failures.py",

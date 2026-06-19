@@ -344,13 +344,14 @@ Professional mode should produce browser-readable artifacts:
 - Study Anything does not store real model API keys.
 - User-owned Agents keep model choice, credentials, tools, browsing, and external data access.
 - Langfuse metadata must stay allowlisted and redacted.
+- Study Anything Adapter evidence must stay metadata-only; learning packages may be used internally, but Cognitive Loop reports must not embed source bodies, raw diffs, learner answers, grading feedback, Agent endpoints, Agent metadata, or model keys.
 - Event Store is the canonical audit ledger for Cognitive Loop state.
 - `.env`, credentials, private keys, signed URLs, raw secrets, and sensitive local paths must not enter HTML reports, traces, learning packages, or public support bundles.
 - Risk policy, audit, rollback, and human gate rules must not be weakened by automatic self-evolution.
 
 ## Near-Term Non-Goals
 
-- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, and local Langfuse DTO mapping proof.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, and a metadata-only Study Anything Adapter mastery projection proof.
 - Full daemonized project watchers are not yet shipped.
 - HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.

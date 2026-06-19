@@ -98,7 +98,8 @@
     "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
     "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
-    "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1"
+    "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
+    "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1"
   ],
   "description": "Use generated OpenAI-compatible function tools or OpenAPI assets for Kimi-compatible agents, and optionally run Kimi behind the local user-owned HTTP Agent gateway.",
   "entrypoints": {
@@ -197,7 +198,10 @@
     "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_runtime_service.py",
     "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
-    "scripts/verify_cognitive_loop_langfuse_observability.py"
+    "scripts/verify_cognitive_loop_langfuse_observability.py",
+    "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+    "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+    "scripts/verify_cognitive_loop_study_anything_adapter.py"
   ],
   "integration_mode": "openai_compatible_tools",
   "local_verification": [
@@ -288,7 +292,8 @@
     "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -304,7 +309,8 @@
   "name": "Study Anything Kimi Tool Pack",
   "notes": [
     "Browser-only Kimi chat cannot reach localhost directly.",
-    "Kimi or Moonshot credentials stay in the user's gateway environment."
+    "Kimi or Moonshot credentials stay in the user's gateway environment.",
+    "cognitive-loop-study-anything-adapter-v1 proves ProjectEvent and DecisionCard metadata can create a source-bound Study Anything learning context, complete the fake-agent learning loop, and project MasteryRecord/LoopRun evidence back without leaking source text, diffs, learner answers, Agent endpoints, Agent metadata, or model keys"
   ],
   "platform_id": "kimi",
   "schema_version": "study-anything-platform-pack-v1",
@@ -313,6 +319,7 @@
     "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
-    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
+    "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
   ]
 }

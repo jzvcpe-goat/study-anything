@@ -102,6 +102,12 @@ Then run `python3 scripts/verify_cognitive_loop_langfuse_observability.py --chec
 observability. The verifier maps Mastra receipts to redacted Langfuse trace/span/generation/score
 DTOs and keeps raw source, learner answers, Agent endpoints, prompts, model keys, storage paths, and
 absolute local paths out of the local receipt.
+Then run `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` and inspect
+`platform/generated/study-anything-cognitive-loop-study-anything-adapter.json` before telling a user
+that the Learning Adapter is connected. The verifier proves metadata-only `ProjectEvent` /
+`DecisionCard` input can create a source-bound Study Anything learning context and project
+`MasteryRecord` / `LoopRun` evidence without source bodies, raw diffs, learner answers, Agent
+endpoints, Agent metadata, or model keys.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
