@@ -9,8 +9,10 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 from typing import Any, Mapping
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +24,9 @@ REQUIRED_CHECKS = ("api-tests", "compose-smoke")
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_COMMANDS = (
     "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+    "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
     "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+    "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
     "gh pr checks <PR> --watch --interval 10",
 )
 SECRET_PATTERNS = (
@@ -65,7 +69,26 @@ UNSAFE_COMMAND_PATTERNS = (
 PASS_STATUSES = {"pass", "success", "completed", "successful"}
 PENDING_STATUSES = {"pending", "queued", "in_progress", "waiting", "unknown", "not_run"}
 FAIL_STATUSES = {"fail", "failed", "failure", "cancelled", "canceled", "timed_out", "action_required", "skipped"}
-RAW_LOG_KEYS = {"log", "logs", "raw_log", "raw_logs", "raw_output", "stdout", "stderr"}
+RAW_LOG_KEYS = {
+    "annotation",
+    "annotations",
+    "annotation_text",
+    "artifact",
+    "artifacts",
+    "job_log",
+    "job_logs",
+    "log",
+    "logs",
+    "raw_log",
+    "raw_logs",
+    "raw_output",
+    "step_log",
+    "step_logs",
+    "stderr",
+    "stdout",
+}
+GH_CHECK_FIELDS = ("bucket", "completedAt", "link", "name", "startedAt", "state", "workflow")
+GH_VIEW_FIELDS = ("baseRefName", "headRefOid", "number")
 
 
 class PrCiReceiptError(RuntimeError):
@@ -128,6 +151,40 @@ def validate_safe_commands(commands: list[str]) -> None:
         raise PrCiReceiptError(f"Unsafe or unknown PR CI commands: unknown={unknown} unsafe={unsafe}")
 
 
+def sanitize_details_url(url: Any) -> str:
+    value = str(url or "").strip()
+    if not value:
+        return ""
+    parsed = urlparse(value)
+    if parsed.scheme != "https" or parsed.netloc.lower() not in {"github.com", "www.github.com"}:
+        raise PrCiReceiptError("PR CI details URLs must be github.com HTTPS URLs.")
+    if parsed.query or parsed.fragment:
+        raise PrCiReceiptError("PR CI details URLs must not include query strings or fragments.")
+    assert_public_payload(value, label="pr ci details url")
+    return value
+
+
+def scalar_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, Mapping):
+        return str(value.get("name") or value.get("id") or "")
+    if isinstance(value, (str, int, float, bool)):
+        return str(value)
+    return ""
+
+
+def normalize_check_row(row: Mapping[str, Any]) -> dict[str, str]:
+    raw_name = row.get("name") or row.get("workflowName") or row.get("workflow") or ""
+    return {
+        "name": scalar_text(raw_name),
+        "status": normalize_status(row.get("status") or row.get("state") or row.get("bucket") or row.get("conclusion")),
+        "url": sanitize_details_url(row.get("url") or row.get("link") or ""),
+        "started_at": scalar_text(row.get("startedAt") or row.get("started_at")),
+        "completed_at": scalar_text(row.get("completedAt") or row.get("completed_at")),
+    }
+
+
 def default_source(statuses: Mapping[str, str] | None = None) -> dict[str, Any]:
     status_map = {name: "pass" for name in REQUIRED_CHECKS}
     if statuses:
@@ -175,6 +232,7 @@ def normalize_status(status: Any) -> str:
 
 
 def normalize_gh_json(payload: Any) -> dict[str, Any]:
+    assert_no_raw_logs(payload)
     if isinstance(payload, Mapping) and payload.get("schema_version") == GH_JSON_SCHEMA_VERSION:
         checks = payload.get("checks")
         pr_number = payload.get("pr_number", 0)
@@ -200,16 +258,63 @@ def normalize_gh_json(payload: Any) -> dict[str, Any]:
         "pr_number": pr_number,
         "head_sha": head_sha,
         "expected_head_sha": expected,
-        "checks": [
-            {
-                "name": str(row.get("name") or row.get("workflowName") or ""),
-                "status": normalize_status(row.get("status") or row.get("state") or row.get("conclusion")),
-                "url": str(row.get("url") or row.get("link") or ""),
-            }
-            for row in checks
-            if isinstance(row, Mapping)
-        ],
+        "checks": [normalize_check_row(row) for row in checks if isinstance(row, Mapping)],
         "raw_logs_included": False,
+        "operator_next_commands": list(SAFE_COMMANDS),
+    }
+
+
+def run_gh_json(command: list[str], *, runner: Any = None, allow_exit_codes: tuple[int, ...] = (0,)) -> Any:
+    active_runner = runner or subprocess.run
+    try:
+        result = active_runner(command, text=True, capture_output=True, check=False)
+    except FileNotFoundError as exc:
+        raise PrCiReceiptError("GitHub CLI is unavailable; use --from-fixture for offline receipt generation.") from exc
+    except OSError as exc:
+        raise PrCiReceiptError(f"GitHub CLI metadata command failed before execution: {exc.__class__.__name__}") from exc
+    returncode = int(getattr(result, "returncode", 1))
+    if returncode not in allow_exit_codes:
+        raise PrCiReceiptError(f"GitHub CLI metadata command failed with exit code {returncode}; no logs captured.")
+    stdout = str(getattr(result, "stdout", "") or "")
+    assert_public_payload(stdout, label="gh metadata stdout")
+    assert_no_raw_logs({"stdout_snapshot": "", "payload": stdout})
+    try:
+        return json.loads(stdout)
+    except json.JSONDecodeError as exc:
+        raise PrCiReceiptError("GitHub CLI metadata output was not valid JSON.") from exc
+
+
+def build_live_gh_source(pr_number: Any, *, runner: Any = None) -> dict[str, Any]:
+    number_text = str(pr_number or "").strip()
+    if not re.fullmatch(r"[0-9]+", number_text):
+        raise PrCiReceiptError("--from-gh-pr expects a numeric PR number.")
+    view = run_gh_json(
+        ["gh", "pr", "view", number_text, "--json", ",".join(GH_VIEW_FIELDS)],
+        runner=runner,
+    )
+    checks = run_gh_json(
+        ["gh", "pr", "checks", number_text, "--json", ",".join(GH_CHECK_FIELDS)],
+        runner=runner,
+        allow_exit_codes=(0, 8),
+    )
+    if not isinstance(view, Mapping):
+        raise PrCiReceiptError("GitHub PR view metadata must be a JSON object.")
+    if not isinstance(checks, list):
+        raise PrCiReceiptError("GitHub PR checks metadata must be a JSON list.")
+    assert_no_raw_logs(checks)
+    head_sha = scalar_text(view.get("headRefOid")).lower()
+    return {
+        "schema_version": SOURCE_SCHEMA_VERSION,
+        "source": "gh_live",
+        "source_tool": "gh",
+        "source_command": "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+        "pr_number": int(view.get("number") or int(number_text)),
+        "base_branch": scalar_text(view.get("baseRefName")),
+        "head_sha": head_sha,
+        "expected_head_sha": head_sha,
+        "checks": [normalize_check_row(row) for row in checks if isinstance(row, Mapping)],
+        "raw_logs_included": False,
+        "raw_annotations_included": False,
         "operator_next_commands": list(SAFE_COMMANDS),
     }
 
@@ -217,7 +322,7 @@ def normalize_gh_json(payload: Any) -> dict[str, Any]:
 def validate_source(source: Mapping[str, Any]) -> None:
     if source.get("schema_version") != SOURCE_SCHEMA_VERSION:
         raise PrCiReceiptError("PR CI source fixture schema drifted.")
-    if source.get("source") not in {"fixture", "gh_json"}:
+    if source.get("source") not in {"fixture", "gh_json", "gh_live"}:
         raise PrCiReceiptError(f"Unsupported PR CI source: {source.get('source')}")
     head = str(source.get("head_sha") or "")
     expected = str(source.get("expected_head_sha") or head)
@@ -228,6 +333,9 @@ def validate_source(source: Mapping[str, Any]) -> None:
     checks = source.get("checks")
     if not isinstance(checks, list):
         raise PrCiReceiptError("PR CI checks must be a list.")
+    for row in checks:
+        if isinstance(row, Mapping):
+            sanitize_details_url(row.get("url") or row.get("link") or "")
     commands = list(source.get("operator_next_commands") or SAFE_COMMANDS)
     validate_safe_commands([str(command) for command in commands])
     assert_no_raw_logs(source)
@@ -279,6 +387,7 @@ def build_receipt(source: Mapping[str, Any] | None = None) -> dict[str, Any]:
         "privacy_flags": {
             "metadata_only": True,
             "raw_logs_included": False,
+            "raw_annotations_included": False,
             "github_tokens_included": False,
             "job_logs_included": False,
             "model_called": False,
@@ -298,6 +407,54 @@ def expect_failure(name: str, builder: Any) -> bool:
     raise RuntimeError(f"Unsafe PR CI receipt fixture was not rejected: {name}")
 
 
+def fake_gh_runner(
+    *,
+    view: Mapping[str, Any] | None = None,
+    checks: list[Mapping[str, Any]] | None = None,
+    checks_exit: int = 0,
+) -> Any:
+    view_payload = dict(
+        view
+        or {
+            "baseRefName": "main",
+            "headRefOid": "b" * 40,
+            "number": 180,
+        }
+    )
+    checks_payload = list(
+        checks
+        or [
+            {
+                "bucket": "pass",
+                "completedAt": "2026-01-01T00:00:00Z",
+                "link": "https://github.com/jzvcpe-goat/study-anything/actions/runs/1",
+                "name": "api-tests",
+                "startedAt": "2026-01-01T00:00:00Z",
+                "state": "success",
+                "workflow": "CI",
+            },
+            {
+                "bucket": "pass",
+                "completedAt": "2026-01-01T00:00:00Z",
+                "link": "https://github.com/jzvcpe-goat/study-anything/actions/runs/2",
+                "name": "compose-smoke",
+                "startedAt": "2026-01-01T00:00:00Z",
+                "state": "success",
+                "workflow": "CI",
+            },
+        ]
+    )
+
+    def runner(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+        if command[:3] == ["gh", "pr", "view"]:
+            return subprocess.CompletedProcess(command, 0, dump_json(view_payload), "")
+        if command[:3] == ["gh", "pr", "checks"]:
+            return subprocess.CompletedProcess(command, checks_exit, dump_json(checks_payload), "")
+        return subprocess.CompletedProcess(command, 1, "", "")
+
+    return runner
+
+
 def verify_failure_modes() -> dict[str, bool]:
     ready = build_receipt(default_source())
     pending = build_receipt(default_source({"api-tests": "pending"}))
@@ -312,6 +469,11 @@ def verify_failure_modes() -> dict[str, bool]:
         if receipt["decision"] != "blocked":
             raise PrCiReceiptError("Missing required check did not block.")
 
+    def extra_checks_non_blocking() -> bool:
+        source = default_source()
+        source["checks"].append({"name": "lint", "status": "failed", "url": ""})
+        return build_receipt(source)["decision"] == "ready"
+
     def stale_head_sha() -> None:
         source = default_source()
         source["expected_head_sha"] = "b" * 40
@@ -319,6 +481,14 @@ def verify_failure_modes() -> dict[str, bool]:
 
     def malformed_gh_json() -> None:
         normalize_gh_json({"bad": "shape"})
+
+    def gh_json_annotations() -> None:
+        normalize_gh_json(
+            {
+                "schema_version": GH_JSON_SCHEMA_VERSION,
+                "checks": [{"name": "api-tests", "state": "success", "annotations": ["line-level detail"]}],
+            }
+        )
 
     def secret_like_url() -> None:
         source = default_source()
@@ -328,6 +498,11 @@ def verify_failure_modes() -> dict[str, bool]:
     def raw_logs() -> None:
         source = default_source()
         source["raw_logs"] = "raw log: failing test output"
+        build_receipt(source)
+
+    def raw_annotations() -> None:
+        source = default_source()
+        source["checks"][0]["annotations"] = ["failure detail"]
         build_receipt(source)
 
     def unsafe_command() -> None:
@@ -340,17 +515,55 @@ def verify_failure_modes() -> dict[str, bool]:
         source["operator_next_commands"] = ["skip tests"]
         build_receipt(source)
 
+    def live_pending_manual_review() -> bool:
+        source = build_live_gh_source(
+            180,
+            runner=fake_gh_runner(
+                checks=[
+                    {"name": "api-tests", "state": "pending", "link": "https://github.com/jzvcpe-goat/study-anything/actions/runs/1"},
+                    {"name": "compose-smoke", "state": "success", "link": "https://github.com/jzvcpe-goat/study-anything/actions/runs/2"},
+                ],
+                checks_exit=8,
+            ),
+        )
+        return build_receipt(source)["decision"] == "manual_review"
+
+    def gh_missing() -> None:
+        def runner(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+            raise FileNotFoundError("gh")
+
+        build_live_gh_source(180, runner=runner)
+
+    def gh_auth_or_missing_pr_error() -> None:
+        def runner(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+            return subprocess.CompletedProcess(command, 1, "", "authentication token ghp_redacted should not leak")
+
+        build_live_gh_source(180, runner=runner)
+
+    def malformed_live_json() -> None:
+        def runner(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
+            return subprocess.CompletedProcess(command, 0, "not json", "")
+
+        build_live_gh_source(180, runner=runner)
+
     return {
         "ready_fixture_decision": ready["decision"] == "ready",
         "pending_fixture_manual_review": pending["decision"] == "manual_review",
         "failed_fixture_blocked": failed["decision"] == "blocked",
         "missing_required_check_blocks": missing_required_check() is None,
+        "extra_checks_non_blocking": extra_checks_non_blocking(),
         "stale_head_sha_rejected": expect_failure("stale_head_sha", stale_head_sha),
         "malformed_gh_json_rejected": expect_failure("malformed_gh_json", malformed_gh_json),
+        "gh_json_annotations_rejected": expect_failure("gh_json_annotations", gh_json_annotations),
         "secret_like_text_rejected": expect_failure("secret_like_url", secret_like_url),
         "raw_logs_rejected": expect_failure("raw_logs", raw_logs),
+        "raw_annotations_rejected": expect_failure("raw_annotations", raw_annotations),
         "unsafe_command_rejected": expect_failure("unsafe_command", unsafe_command),
         "policy_weakening_rejected": expect_failure("policy_weakening", policy_weakening),
+        "live_pending_manual_review": live_pending_manual_review(),
+        "gh_missing_rejected": expect_failure("gh_missing", gh_missing),
+        "gh_auth_or_missing_pr_rejected": expect_failure("gh_auth_or_missing_pr_error", gh_auth_or_missing_pr_error),
+        "malformed_live_json_rejected": expect_failure("malformed_live_json", malformed_live_json),
     }
 
 
@@ -366,6 +579,7 @@ def build_report(source: Mapping[str, Any] | None = None) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--from-fixture", help="Read a redacted PR CI fixture or gh-json output.")
+    parser.add_argument("--from-gh-pr", help="Read metadata-only PR checks from the local GitHub CLI for this PR number.")
     parser.add_argument("--write", action="store_true", help="Write generated PR CI receipt.")
     parser.add_argument("--check", action="store_true", help="Require generated PR CI receipt to be current.")
     parser.add_argument("--output", default=str(REPORT), help="Report path for --write/--check.")
@@ -374,9 +588,13 @@ def main() -> int:
         raise PrCiReceiptError("Use only one of --write or --check.")
     try:
         source: Mapping[str, Any] | None = None
+        if args.from_fixture and args.from_gh_pr:
+            raise PrCiReceiptError("Use only one of --from-fixture or --from-gh-pr.")
         if args.from_fixture:
             loaded = load_source(Path(args.from_fixture))
             source = normalize_gh_json(loaded) if loaded.get("schema_version") == GH_JSON_SCHEMA_VERSION else loaded
+        if args.from_gh_pr:
+            source = build_live_gh_source(args.from_gh_pr)
         report = build_report(source)
         rendered = dump_json(report)
         output = Path(args.output)

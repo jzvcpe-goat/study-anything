@@ -129,7 +129,7 @@
       "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
       "required": true,
       "schema_version": "cognitive-loop-pr-ci-receipt-v1",
-      "sha256": "090ec52a01980f98532507ee7f5b9d1b723a96a975fb2678d8b96eddfd045e01",
+      "sha256": "4a5e2bda10a65307643aa76c49e730f3d7d117ef1800b536d51860bafb1ed448",
       "source_id": "pr_ci_receipt",
       "status": "pass"
     },
@@ -137,7 +137,7 @@
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "required": true,
       "schema_version": "published-image-evidence-v1",
-      "sha256": "b732b658ae0ac8dd71af5eff022395038ee65b4b90923c730d87f0c550eaa077",
+      "sha256": "9b436148da90e986d0f49c6fa0f7e20b2d113badf971bbb75698154e4b98852b",
       "source_id": "published_image_evidence",
       "status": "pass"
     },
@@ -145,7 +145,7 @@
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "required": true,
       "schema_version": "release-asset-adoption-v1",
-      "sha256": "16af7cfe18e8a91d8edc8ed0cd596b02ec24b53a2e093a877a2db6f7f9370d3c",
+      "sha256": "f6f11d78a544a714bd9bdb3020fa1db3389e5e0d2c66e360e2042d8cc0330e2d",
       "source_id": "release_asset_adoption",
       "status": "pass"
     }

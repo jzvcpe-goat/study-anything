@@ -286,8 +286,10 @@ not merge PRs, execute apply, call models, start daemons, require Docker/API, or
 
 Use PR CI Receipt Lite when you need to turn required-check status into a portable artifact first.
 The default verifier is offline and fixture-backed; `--from-fixture` can accept a redacted fixture or
-sanitized `gh pr checks --json`-style payload. It stores check names/statuses, PR number, head SHA,
-and decision only; it does not read GitHub tokens or raw job logs.
+sanitized `gh pr checks --json`-style payload. When a maintainer explicitly wants live PR metadata,
+run `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write`; this calls the
+local GitHub CLI for PR/check metadata only. It stores check names/statuses, PR number, head SHA, base
+branch, and decision only; it does not read GitHub tokens, annotations, artifacts, or raw job logs.
 
 ## Start A Learning Loop
 
