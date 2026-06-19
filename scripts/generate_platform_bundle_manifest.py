@@ -137,6 +137,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Mastra Evolution Workflow Replay Lite verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-patch-apply-sandbox.json",
+        "generated_asset",
+        "Cognitive Loop Governed Patch Apply Sandbox Lite verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",

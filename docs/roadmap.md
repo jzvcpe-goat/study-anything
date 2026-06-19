@@ -277,8 +277,8 @@ Goal: make Cognitive Loop usable as a project console without building a heavy S
 
 Current:
 
-- `python3 scripts/cognitive_loop_artifact_console.py build --html --json` generates `.cognitive-loop/artifacts/console/index.html` and a JSON manifest with Event Store, watcher runner, Study Adapter, gate/loop, Evolution Chain, and artifact-health sections.
-- `python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty projects, runner-lite Event Store aggregation, Study Adapter links, Evolution Chain aggregation, missing-artifact degradation, blocked replay preservation, invalid/secret/raw-diff/privacy-regression/policy-weakening rejection, mobile/narrow-screen HTML structure, and privacy flags.
+- `python3 scripts/cognitive_loop_artifact_console.py build --html --json` generates `.cognitive-loop/artifacts/console/index.html` and a JSON manifest with Event Store, watcher runner, Study Adapter, gate/loop, Evolution Chain including Patch Apply Sandbox, and artifact-health sections.
+- `python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty projects, runner-lite Event Store aggregation, Study Adapter links, Evolution Chain aggregation through Patch Apply Sandbox, missing-artifact degradation, blocked replay preservation, invalid/secret/raw-diff/privacy-regression/policy-weakening rejection, mobile/narrow-screen HTML structure, and privacy flags.
 - Console Lite stays static and metadata-only: no daemon, no standalone frontend, no SSE/WebSocket, no raw event bodies, no source text, no diffs, no test output, no learner answers, no Agent endpoints, no Agent metadata, no prompts, and no model keys.
 
 Still planned:
@@ -343,11 +343,14 @@ Current:
 - `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` creates read-only Mastra Evolution Workflow Replay Lite artifacts from metadata-only `EvolutionReceiptLink` evidence.
 - `python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check` verifies ready/degraded/blocked receipt replay; invalid schema, unsupported status, missing required roles, high-risk ungated, manual-only patch, privacy regression, secret, raw-diff, and policy-weakening rejection; JSON/HTML artifact structure; and privacy flags.
 - Mastra Evolution Workflow Replay Lite is not production Mastra execution: it produces metadata-only `MastraEvolutionWorkflowReplay` transcripts and never starts production Mastra, calls models, executes apply, or modifies source files.
+- `python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` creates Governed Patch Apply Sandbox Lite receipts from metadata-only Patch Proposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs.
+- `python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check` verifies ready dry-run chains, manual-review chains, blocked chains, missing-artifact degradation, protected-path rejection, secret/raw-diff/privacy-regression/policy-weakening rejection, rollback proof, HTML/mobile structure, and real-worktree read-only boundaries.
+- Patch Apply Sandbox Lite is not source-changing auto-apply: it produces metadata-only `PatchApplySandboxReceipt` JSON/HTML, proves rollback through a temporary sandbox preview reference, and never mutates the real worktree.
 
 Still planned:
 
 - low-risk source-changing auto-apply path with explicit policy guardrails
-- source-changing patch application from accepted Patch Proposal Lite specifications
+- source-changing patch application from accepted Patch Proposal Lite specifications after the sandbox receipt is accepted by policy and humans
 - realtime Artifact Console integration
 - production Mastra workflow execution from accepted EvolutionReceiptLink artifacts
 

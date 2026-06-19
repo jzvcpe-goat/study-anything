@@ -24,6 +24,7 @@ IMPROVEMENT = ROOT / "scripts" / "cognitive_loop_improvement_comparator.py"
 PATCH_PROPOSAL = ROOT / "scripts" / "cognitive_loop_patch_proposal.py"
 EVOLUTION_RECEIPT = ROOT / "scripts" / "cognitive_loop_mastra_evolution_receipt.py"
 EVOLUTION_REPLAY = ROOT / "scripts" / "cognitive_loop_mastra_evolution_replay.py"
+PATCH_APPLY_SANDBOX = ROOT / "scripts" / "cognitive_loop_patch_apply_sandbox.py"
 SCHEMA_VERSION = "cognitive-loop-artifact-console-verification-v1"
 EVOLUTION_CHAIN_REFS = {
     "evolution_report": ".cognitive-loop/artifacts/evolution/evolution-report-lite.json",
@@ -32,6 +33,7 @@ EVOLUTION_CHAIN_REFS = {
     "patch_proposal": ".cognitive-loop/artifacts/patches/patch-proposal-lite.json",
     "evolution_receipt_link": ".cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json",
     "mastra_workflow_replay": ".cognitive-loop/artifacts/mastra/mastra-evolution-workflow-replay.json",
+    "patch_apply_sandbox": ".cognitive-loop/artifacts/applied/patch-apply-sandbox-receipt.json",
 }
 
 
@@ -282,6 +284,19 @@ def run_evolution_chain(root: Path) -> dict[str, Any]:
             "2026-01-01T00:00:00Z",
         ]
     )
+    sandbox = run_json(
+        [
+            sys.executable,
+            str(PATCH_APPLY_SANDBOX),
+            "--root",
+            str(root),
+            "sandbox",
+            "--html",
+            "--json",
+            "--generated-at",
+            "2026-01-01T00:00:00Z",
+        ]
+    )
     return {
         "evolution_status": evolution["status"],
         "apply_plan_status": apply_plan["status"],
@@ -289,6 +304,7 @@ def run_evolution_chain(root: Path) -> dict[str, Any]:
         "patch_status": patch["status"],
         "receipt_status": receipt["status"],
         "replay_status": replay["status"],
+        "sandbox_status": sandbox["status"],
     }
 
 
@@ -381,7 +397,7 @@ def verify_empty_console() -> dict[str, Any]:
     if "No Event Store rows yet." not in html:
         raise RuntimeError("Empty console HTML does not explain the empty Event Store.")
     evolution = sections["evolution_chain"]
-    if evolution["status"] != "degraded_missing_artifacts" or evolution["missing_artifact_count"] != 6:
+    if evolution["status"] != "degraded_missing_artifacts" or evolution["missing_artifact_count"] != 7:
         raise RuntimeError(f"Empty console should degrade the optional Evolution Chain section: {evolution}")
     if "Evolution Chain" not in html:
         raise RuntimeError("Empty console HTML missed Evolution Chain section.")
@@ -463,7 +479,7 @@ def verify_evolution_chain_console() -> dict[str, Any]:
         chain = run_evolution_chain(root)
         manifest, html = build_console(root)
     evolution = manifest["sections"]["evolution_chain"]
-    if evolution["artifact_count"] != 6 or evolution["missing_artifact_count"] != 0:
+    if evolution["artifact_count"] != 7 or evolution["missing_artifact_count"] != 0:
         raise RuntimeError(f"Console missed complete Evolution Chain artifacts: {evolution}")
     if not all(item.get("sha256") for item in evolution["artifacts"]):
         raise RuntimeError("Console Evolution Chain must include artifact SHA-256 values.")
@@ -479,6 +495,7 @@ def verify_evolution_chain_console() -> dict[str, Any]:
         "Patch Proposal",
         "Evolution Receipt Link",
         "Mastra Workflow Replay",
+        "Patch Apply Sandbox",
     ]
     missing = [needle for needle in required_html if needle not in html]
     if missing:

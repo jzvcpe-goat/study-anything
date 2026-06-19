@@ -418,6 +418,20 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check` 会验证 ready、degraded、blocked receipt replay；invalid schema 拒绝；unsupported status 拒绝；ready 但缺少 required roles 拒绝；高风险未 gate 拒绝；manual-only patch 拒绝；privacy flag 回归拒绝；疑似 secret 拒绝；raw diff 拒绝；policy weakening 拒绝；JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-mastra-evolution-replay-verification-v1`。
 
+## Governed Patch Apply Sandbox Lite / Governed Patch Apply Sandbox Lite
+
+`python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` creates a metadata-only dry-run apply receipt from Patch Proposal, Governed Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs. The output schema is `cognitive-loop-patch-apply-sandbox-receipt-v1` and includes `PatchApplySandboxReceipt` artifact refs, statuses, SHA-256 values, gate/manual/blocking state, sandbox redacted ref, rollback proof, operator next commands, guardrails, privacy flags, and JSON/HTML output references.
+
+`python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check` verifies ready dry-run chains, manual-review chains, blocked chains, missing-artifact degradation, protected-path rejection, secret-like rejection, raw diff rejection, privacy flag regression rejection, policy-weakening rejection, HTML/mobile structure, rollback proof, and read-only boundaries. It emits `cognitive-loop-patch-apply-sandbox-verification-v1`.
+
+Patch Apply Sandbox Lite does not apply source changes. It does not start daemons, require a standalone frontend, start production Mastra, call models, materialize raw diffs, mutate the real worktree, store raw source, store learner answers, store Agent endpoints, store Agent metadata, store prompts, or store model keys.
+
+`python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` 会基于 Patch Proposal、Governed Apply Plan、EvolutionReceiptLink 和 MastraEvolutionWorkflowReplay 引用创建 metadata-only dry-run apply receipt。输出 schema 是 `cognitive-loop-patch-apply-sandbox-receipt-v1`，包含 `PatchApplySandboxReceipt` artifact refs、status、SHA-256、gate/manual/blocking 状态、沙箱脱敏引用、rollback proof、operator next commands、guardrails、privacy flags，以及 JSON/HTML 输出引用。
+
+`python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check` 会验证 ready dry-run chain、manual-review chain、blocked chain、缺失 artifact 降级、受保护路径拒绝、疑似 secret 拒绝、raw diff 拒绝、privacy flag 回归拒绝、policy weakening 拒绝、HTML/移动端结构、rollback proof 和只读边界，并输出 `cognitive-loop-patch-apply-sandbox-verification-v1`。
+
+Patch Apply Sandbox Lite 不执行源码修改。它不启动 daemon，不要求独立前端，不启动生产 Mastra，不调用模型，不物化 raw diff，不修改真实工作树，不保存 raw source、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -500,6 +514,12 @@ Metadata-only linkage record that connects Evolution Report, Apply Plan, Improve
 Metadata-only replay transcript that maps an `EvolutionReceiptLink` into future Mastra workflow steps. It records source receipt status, workflow steps, gate actions, manual review or blocked reasons, operator next commands, guardrails, and privacy flags, but never starts production Mastra, calls models, executes apply, embeds raw diffs, or modifies source files.
 
 只含 metadata 的 replay transcript，用来把 `EvolutionReceiptLink` 映射为未来 Mastra workflow steps。它记录 source receipt status、workflow steps、gate actions、manual review 或 blocked reasons、operator next commands、guardrails 和 privacy flags，但不启动生产 Mastra、不调用模型、不执行 apply、不嵌入 raw diff，也不修改源码。
+
+### `PatchApplySandboxReceipt`
+
+Metadata-only dry-run receipt that consumes Patch Proposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs. It records artifact refs, SHA-256 values, gate/manual/blocking state, sandbox redacted ref, rollback proof, operator next commands, guardrails, and privacy flags, but never mutates the real worktree or materializes raw diffs.
+
+只含 metadata 的 dry-run receipt，用来消费 Patch Proposal、Apply Plan、EvolutionReceiptLink 和 MastraEvolutionWorkflowReplay 引用。它记录 artifact refs、SHA-256、gate/manual/blocking 状态、沙箱脱敏引用、rollback proof、operator next commands、guardrails 和 privacy flags，但不修改真实工作树，也不物化 raw diff。
 
 ## Privacy Boundary
 

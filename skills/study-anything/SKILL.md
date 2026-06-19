@@ -116,7 +116,7 @@ this mode.
 Use Artifact Console Lite when the platform Agent or local operator needs one static HTML/JSON entry
 point for local evidence. It aggregates Event Store rows, watcher runner summaries, Study Adapter
 artifacts, Human Gate/Loop metadata, artifact health, and the Evolution Chain from `EvolutionReport`
-through `MastraEvolutionWorkflowReplay`. Missing Evolution artifacts should degrade the section
+through `MastraEvolutionWorkflowReplay` and `PatchApplySandboxReceipt`. Missing Evolution artifacts should degrade the section
 instead of failing the console; invalid, secret-like, raw-diff, privacy-regressing, or policy-weakening
 artifacts must be rejected.
 
@@ -232,6 +232,24 @@ unsupported statuses, missing required roles on ready receipts, high-risk ungate
 manual-only patch paths, privacy flag regressions, secrets, raw diffs, and policy weakening. It
 never starts production Mastra, calls models, executes apply, modifies source files, or stores
 private learning data.
+
+## Governed Patch Apply Sandbox Lite
+
+Use Patch Apply Sandbox Lite after Patch Proposal, Apply Plan, EvolutionReceiptLink, and
+MastraEvolutionWorkflowReplay evidence exists and the operator needs a dry-run receipt before any
+future source-changing apply path.
+
+```bash
+python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json
+python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check
+```
+
+Patch Apply Sandbox Lite is metadata-only. It maps ready chains to `sandbox_ready`, degraded chains
+to manual review, blocked chains to blocked, and missing chains to degraded missing artifacts. It
+rejects invalid schemas, protected target paths, secrets, raw diffs, privacy flag regressions, and
+policy weakening. It proves rollback with a temporary sandbox preview reference, but never mutates
+the real worktree, executes apply, starts production Mastra, calls models, or stores private learning
+data.
 
 ## Start A Learning Loop
 

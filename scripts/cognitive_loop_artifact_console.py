@@ -118,6 +118,13 @@ EVOLUTION_CHAIN_SPECS = (
         "default_ref": ".cognitive-loop/artifacts/mastra/mastra-evolution-workflow-replay.json",
         "operator_next_command": "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json",
     },
+    {
+        "role": "patch_apply_sandbox",
+        "label": "Patch Apply Sandbox",
+        "schema_version": "cognitive-loop-patch-apply-sandbox-receipt-v1",
+        "default_ref": ".cognitive-loop/artifacts/applied/patch-apply-sandbox-receipt.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json",
+    },
 )
 
 
