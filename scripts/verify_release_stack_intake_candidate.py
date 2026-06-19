@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-183-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-185-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -178,6 +178,7 @@ def default_operator_commands(pr_number: int) -> list[str]:
         f"python3 scripts/verify_release_stack_intake_candidate.py --from-gh-pr {pr_number} --report-only",
         "python3 scripts/verify_release_stack_readiness.py",
         "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
     ]
 
 
