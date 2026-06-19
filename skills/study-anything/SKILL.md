@@ -264,6 +264,7 @@ python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --z
 python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check
 python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack .cognitive-loop/artifacts/evolution-pack/cognitive-loop-professional-evolution-pack.zip
 python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check
 python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check
 ```
 
@@ -279,9 +280,14 @@ privacy flags, and read-only guardrails without API, Docker, a repo checkout, mo
 mutation.
 
 Use the maintainer ledger before merge or release. It aggregates export evidence, consumer evidence,
-public release/adoption evidence, release_check status, and PR CI status into a metadata-only
+PR CI receipt evidence, public release/adoption evidence, and release_check status into a metadata-only
 `ready`, `manual_review`, or `blocked` decision. It is a review gate, not hosted automation: it does
 not merge PRs, execute apply, call models, start daemons, require Docker/API, or mutate source.
+
+Use PR CI Receipt Lite when you need to turn required-check status into a portable artifact first.
+The default verifier is offline and fixture-backed; `--from-fixture` can accept a redacted fixture or
+sanitized `gh pr checks --json`-style payload. It stores check names/statuses, PR number, head SHA,
+and decision only; it does not read GitHub tokens or raw job logs.
 
 ## Start A Learning Loop
 

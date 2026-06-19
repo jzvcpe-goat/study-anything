@@ -69,6 +69,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_patch_apply_sandbox.py --check
 "$python_bin" scripts/verify_cognitive_loop_evolution_pack_export.py --check
 "$python_bin" scripts/verify_cognitive_loop_evolution_pack_consumer.py --check
+"$python_bin" scripts/verify_cognitive_loop_pr_ci_receipt.py --check
 "$python_bin" scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check
 "$python_bin" scripts/verify_cognitive_loop_review.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_prompt.py --check
