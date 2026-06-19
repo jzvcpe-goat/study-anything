@@ -21,6 +21,7 @@ REQUIRED_CHECKS = {"api-tests", "compose-smoke"}
 REQUIRED_BEFORE_TAG = {
     "python3 scripts/verify_release_stack_readiness.py",
     "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check",
     "./scripts/release_check.sh",
     "python3 scripts/verify_launch_acceptance_ledger.py --check",
     "python3 scripts/verify_github_launch_operator_guide.py --check",
@@ -29,6 +30,8 @@ REQUIRED_BEFORE_TAG = {
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
     "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_intake_candidate.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check",
     "python3 scripts/verify_release_stack_live_status.py",
     "python3 scripts/verify_release_stack_lineage.py",
     "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
@@ -254,6 +257,7 @@ def verify_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
     for command in (
         "verify_release_stack_readiness.py",
         "verify_release_stack_manifest_fixtures.py --check",
+        "verify_release_stack_candidate_promotion.py --check",
     ):
         if command not in release_check_text:
             raise ReleaseStackReadinessError(f"release_check.sh must run {command}.")

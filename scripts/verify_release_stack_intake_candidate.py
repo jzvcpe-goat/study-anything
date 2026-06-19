@@ -31,9 +31,9 @@ SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_intake_candidate.py --check",
-    "python3 scripts/verify_release_stack_intake_candidate.py --from-gh-pr 183 --report-only",
     "python3 scripts/verify_release_stack_readiness.py",
     "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check",
 }
 EVIDENCE_REFS = [
     "platform/generated/study-anything-release-stack-manifest-fixtures.json",
@@ -172,11 +172,22 @@ def sanitize_url(value: Any) -> str:
     return url
 
 
-def validate_operator_commands(commands: Any) -> list[str]:
+def default_operator_commands(pr_number: int) -> list[str]:
+    return [
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        f"python3 scripts/verify_release_stack_intake_candidate.py --from-gh-pr {pr_number} --report-only",
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    ]
+
+
+def validate_operator_commands(commands: Any, *, pr_number: int) -> list[str]:
     if not isinstance(commands, list) or not commands:
         raise ReleaseStackIntakeError("operator_commands must be a non-empty list.")
     normalized = [str(command) for command in commands]
-    unknown = [command for command in normalized if command not in SAFE_OPERATOR_COMMANDS]
+    allowed_commands = set(SAFE_OPERATOR_COMMANDS)
+    allowed_commands.add(f"python3 scripts/verify_release_stack_intake_candidate.py --from-gh-pr {pr_number} --report-only")
+    unknown = [command for command in normalized if command not in allowed_commands]
     unsafe = [command for command in normalized if any(pattern.search(command) for pattern in UNSAFE_COMMAND_PATTERNS)]
     if unknown or unsafe:
         raise ReleaseStackIntakeError(f"Unsafe release stack intake commands: unknown={unknown} unsafe={unsafe}")
@@ -297,14 +308,21 @@ def validate_evidence_refs(refs: list[str]) -> None:
             raise ReleaseStackIntakeError(f"Release stack intake evidence ref is missing: {ref}")
 
 
-def build_report(source: Mapping[str, Any], manifest: dict[str, Any], *, include_negative_fixtures: bool = True) -> dict[str, Any]:
+def build_report(
+    source: Mapping[str, Any],
+    manifest: dict[str, Any],
+    *,
+    include_negative_fixtures: bool = True,
+    allow_represented: bool = True,
+) -> dict[str, Any]:
     reject_private_text(source, "release stack intake source")
     reject_raw_payloads(source)
 
     pr_number = source.get("pr_number") or source.get("number")
     if not isinstance(pr_number, int):
         raise ReleaseStackIntakeError("Release stack intake source must include int pr_number.")
-    if pr_number in represented_prs(manifest):
+    is_represented = pr_number in represented_prs(manifest)
+    if is_represented and not allow_represented:
         raise ReleaseStackIntakeError(f"PR #{pr_number} is already represented in release-stack manifest.")
 
     branch = scalar(source.get("head_branch") or source.get("headRefName"))
@@ -321,7 +339,7 @@ def build_report(source: Mapping[str, Any], manifest: dict[str, Any], *, include
 
     merge_commit = normalize_merge_commit(source)
     checks = normalize_checks(source)
-    commands = validate_operator_commands(source.get("operator_commands") or sorted(SAFE_OPERATOR_COMMANDS))
+    commands = validate_operator_commands(source.get("operator_commands") or default_operator_commands(pr_number), pr_number=pr_number)
     validate_evidence_refs(EVIDENCE_REFS)
 
     current_group = manifest.get("current_group")
@@ -357,7 +375,8 @@ def build_report(source: Mapping[str, Any], manifest: dict[str, Any], *, include
         "source": scalar(source.get("source") or "gh_pr_view"),
         "manifest": {
             "current_group": current_group,
-            "candidate_is_not_applied": True,
+            "candidate_is_not_applied": not is_represented,
+            "candidate_is_represented": is_represented,
             "represented_pr_count": len(represented_prs(manifest)),
         },
         "candidate_group": candidate_group,
@@ -383,7 +402,12 @@ def build_report(source: Mapping[str, Any], manifest: dict[str, Any], *, include
 
 def run_negative_case(case_id: str, source: Mapping[str, Any], manifest: dict[str, Any]) -> str:
     try:
-        build_report(source, manifest, include_negative_fixtures=False)
+        build_report(
+            source,
+            manifest,
+            include_negative_fixtures=False,
+            allow_represented=case_id != "already_represented_pr",
+        )
     except ReleaseStackIntakeError as exc:
         return str(exc)
     raise ReleaseStackIntakeError(f"Negative release stack intake fixture was not rejected: {case_id}")

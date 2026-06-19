@@ -148,6 +148,7 @@ fi
 "$python_bin" scripts/verify_release_stack_readiness.py
 "$python_bin" scripts/verify_release_stack_manifest_fixtures.py --check
 "$python_bin" scripts/verify_release_stack_intake_candidate.py --check
+"$python_bin" scripts/verify_release_stack_candidate_promotion.py --check
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
