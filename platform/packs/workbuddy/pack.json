@@ -147,6 +147,8 @@
     "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+    "platform/schemas/cognitive-loop-pr-ci-source.schema.json",
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
     "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",

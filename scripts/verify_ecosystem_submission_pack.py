@@ -151,6 +151,12 @@ COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_PATH = (
 COGNITIVE_LOOP_SCHEMA_PACK_CONSUMER_FAILURES_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-schema-pack-consumer-failures.json"
 )
+COGNITIVE_LOOP_PR_CI_RECEIPT_SCHEMA_PATH = (
+    ROOT / "platform" / "schemas" / "cognitive-loop-pr-ci-receipt.schema.json"
+)
+COGNITIVE_LOOP_PR_CI_SOURCE_SCHEMA_PATH = (
+    ROOT / "platform" / "schemas" / "cognitive-loop-pr-ci-source.schema.json"
+)
 COGNITIVE_LOOP_PACK_EXTRACT_SMOKE_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-pack-extract-smoke.json"
 )
@@ -888,6 +894,10 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             str(asset) for asset in import_assets
         ):
             raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop recipe CLI schemas.")
+        if "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop PR CI receipt schema.")
+        if "platform/schemas/cognitive-loop-pr-ci-source.schema.json" not in set(str(asset) for asset in import_assets):
+            raise EcosystemSubmissionError(f"{platform_id} must include the Cognitive Loop PR CI source schema.")
         if "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json" not in set(
             str(asset) for asset in import_assets
         ):
@@ -3346,6 +3356,8 @@ def verify_cognitive_loop_recipe_cli_schemas_report() -> None:
         "cognitive_loop_recipe_cli_verification",
         "cognitive_loop_recipe_cli_receipts",
         "cognitive_loop_recipe_cli_failures",
+        "cognitive_loop_pr_ci_receipt",
+        "cognitive_loop_pr_ci_source",
     }
     if json_schema.get("dialect") != "https://json-schema.org/draft/2020-12/schema":
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI schema dialect drifted.")
@@ -3383,6 +3395,21 @@ def verify_cognitive_loop_recipe_cli_schemas_report() -> None:
             "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
             "cognitive-loop-recipe-cli-failures-v1",
         ),
+        (
+            "cognitive_loop_pr_ci_receipt",
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "cognitive-loop-pr-ci-receipt-v1",
+        ),
+        (
+            "cognitive_loop_pr_ci_source",
+            "<synthetic:fixture:cognitive-loop-pr-ci-source-v1>",
+            "cognitive-loop-pr-ci-source-v1",
+        ),
+        (
+            "cognitive_loop_pr_ci_source",
+            "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
+            "cognitive-loop-pr-ci-source-v1",
+        ),
     }
     actual_reports = {
         (item.get("schema_key"), item.get("path"), item.get("schema_version"))
@@ -3400,6 +3427,17 @@ def verify_cognitive_loop_recipe_cli_schemas_report() -> None:
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI schema bundle path drifted.")
     if distribution.get("safe_for_platform_agent_static_import") is not True:
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI schemas must be safe for static import.")
+    schema_files = set(distribution.get("schema_files", []))
+    expected_schema_files = {
+        "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+        "platform/schemas/cognitive-loop-pr-ci-source.schema.json",
+    }
+    if schema_files != expected_schema_files:
+        raise EcosystemSubmissionError("Cognitive Loop recipe CLI schema file distribution drifted.")
+    if not COGNITIVE_LOOP_PR_CI_RECEIPT_SCHEMA_PATH.is_file():
+        raise EcosystemSubmissionError("Cognitive Loop PR CI receipt schema file is missing.")
+    if not COGNITIVE_LOOP_PR_CI_SOURCE_SCHEMA_PATH.is_file():
+        raise EcosystemSubmissionError("Cognitive Loop PR CI source schema file is missing.")
     privacy = report.get("privacy") or {}
     for key in (
         "raw_source_text_included",
@@ -3435,6 +3473,8 @@ def verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report() -> None:
         "cognitive_loop_recipe_cli_verification",
         "cognitive_loop_recipe_cli_receipts",
         "cognitive_loop_recipe_cli_failures",
+        "cognitive_loop_pr_ci_receipt",
+        "cognitive_loop_pr_ci_source",
     }
     if set(source_schema_bundle.get("schema_keys", [])) != expected_schema_keys:
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI negative fixtures source schema keys drifted.")
@@ -3445,6 +3485,12 @@ def verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report() -> None:
         "success_auto_execute_true",
         "receipts_missing_privacy",
         "failures_exit_code_string",
+        "pr_ci_receipt_missing_required_checks",
+        "pr_ci_receipt_github_tokens_true",
+        "pr_ci_source_unsupported_source",
+        "pr_ci_source_unsafe_url_query",
+        "pr_ci_source_raw_logs_true",
+        "pr_ci_source_unsafe_command",
         "private_text_probe_rejected",
     }
     if coverage.get("case_count") != len(expected_case_ids):
@@ -3481,6 +3527,16 @@ def verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report() -> None:
             "cognitive_loop_recipe_cli_failures",
             "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
             "cognitive-loop-recipe-cli-failures-v1",
+        ),
+        (
+            "cognitive_loop_pr_ci_receipt",
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "cognitive-loop-pr-ci-receipt-v1",
+        ),
+        (
+            "cognitive_loop_pr_ci_source",
+            "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
+            "cognitive-loop-pr-ci-source-v1",
         ),
     }
     actual_reports = {
@@ -3572,6 +3628,8 @@ def verify_cognitive_loop_schema_pack_consumer_report() -> None:
             "study-anything-platform-adoption-pack/platform/generated/"
             "study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json"
         ),
+        "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+        "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-source.schema.json",
     }
     if files_read != expected_files:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer zip file set drifted.")
@@ -3579,18 +3637,29 @@ def verify_cognitive_loop_schema_pack_consumer_report() -> None:
     schema_bundle = report.get("schema_bundle") or {}
     if schema_bundle.get("schema_version") != "cognitive-loop-recipe-cli-schemas-v1":
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer schema bundle version drifted.")
-    if schema_bundle.get("schema_count") != 3:
+    if schema_bundle.get("schema_count") != 5:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer schema count drifted.")
+    if set(schema_bundle.get("schema_keys", [])) != {
+        "cognitive_loop_recipe_cli_verification",
+        "cognitive_loop_recipe_cli_receipts",
+        "cognitive_loop_recipe_cli_failures",
+        "cognitive_loop_pr_ci_receipt",
+        "cognitive_loop_pr_ci_source",
+    }:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer schema keys drifted.")
     if schema_bundle.get("validated_without_running_recipe_cli") is not True:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer must validate without running recipe CLI.")
 
     negative_fixtures = report.get("negative_fixtures") or {}
     if negative_fixtures.get("schema_version") != "cognitive-loop-recipe-cli-schema-negative-fixtures-v1":
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixture version drifted.")
-    if negative_fixtures.get("case_count") != 5:
+    if negative_fixtures.get("case_count") != 11:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixture count drifted.")
     if negative_fixtures.get("all_cases_rejected") is not True:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixtures must reject all cases.")
+    standalone_schema_files = report.get("standalone_schema_files")
+    if not isinstance(standalone_schema_files, list) or len(standalone_schema_files) != 2:
+        raise EcosystemSubmissionError("Cognitive Loop schema pack consumer standalone schema files drifted.")
 
     distribution = report.get("distribution") or {}
     if distribution.get("report_path") != "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json":

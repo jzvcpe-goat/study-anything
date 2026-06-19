@@ -192,7 +192,19 @@ Recipe evidence keys:
 - `cognitive-loop-human-gate-verification-v1`
 - `cognitive-loop-artifact-doctor-verification-v1`
 - `cognitive-loop-repair-plan-verification-v1`
+- `cognitive-loop-pr-ci-receipt-v1`
+- `cognitive-loop-pr-ci-source-v1`
 - `manual-only repair actions`
+
+The standalone PR CI schemas live at `platform/schemas/cognitive-loop-pr-ci-receipt.schema.json` and
+`platform/schemas/cognitive-loop-pr-ci-source.schema.json`. Platform Agents can use them to validate
+metadata-only CI receipt/source fields without running Python, reading GitHub tokens, fetching job
+logs, calling models, starting Docker/API, or mutating source files.
+
+独立 PR CI schema 位于 `platform/schemas/cognitive-loop-pr-ci-receipt.schema.json` 和
+`platform/schemas/cognitive-loop-pr-ci-source.schema.json`。平台 Agent 可以用它们静态验证
+metadata-only 的 CI receipt/source 字段；不需要运行 Python、读取 GitHub token、获取 job log、调用模型、
+启动 Docker/API 或修改源码。
 
 ```bash
 python3 scripts/verify_cognitive_loop_contracts.py --check

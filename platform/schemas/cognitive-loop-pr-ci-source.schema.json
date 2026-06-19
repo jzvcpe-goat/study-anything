@@ -1,0 +1,117 @@
+{
+  "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "base_branch": {
+      "type": "string"
+    },
+    "checks": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "completed_at": {
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "started_at": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "pending",
+              "fail",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "url"
+        ],
+        "type": "object"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "expected_head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "operator_next_commands": {
+      "items": {
+        "enum": [
+          "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+          "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+          "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+          "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+          "gh pr checks <PR> --watch --interval 10"
+        ],
+        "type": "string"
+      },
+      "minItems": 5,
+      "type": "array"
+    },
+    "pr_number": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "raw_annotations_included": {
+      "const": false,
+      "type": "boolean"
+    },
+    "raw_logs_included": {
+      "const": false,
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "cognitive-loop-pr-ci-source-v1"
+    },
+    "source": {
+      "enum": [
+        "fixture",
+        "gh_json",
+        "gh_live"
+      ],
+      "type": "string"
+    },
+    "source_command": {
+      "enum": [
+        "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow"
+      ],
+      "type": "string"
+    },
+    "source_tool": {
+      "enum": [
+        "gh"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source",
+    "pr_number",
+    "head_sha",
+    "expected_head_sha",
+    "checks",
+    "raw_logs_included",
+    "operator_next_commands"
+  ],
+  "title": "Cognitive Loop PR CI source",
+  "type": "object"
+}

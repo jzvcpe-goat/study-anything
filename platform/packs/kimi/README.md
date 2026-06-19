@@ -229,9 +229,14 @@ sample CLI outputs and hashes for platform Agent import tests.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` provides deterministic
 failure receipts for unknown ids and invalid recipe matrices.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json` provides offline JSON
-Schemas for static Kimi validation of the success, receipt, and failure reports.
+Schemas for static Kimi validation of the recipe CLI success, receipt, and failure reports plus PR CI
+receipt/source metadata.
+`platform/schemas/cognitive-loop-pr-ci-receipt.schema.json` and
+`platform/schemas/cognitive-loop-pr-ci-source.schema.json` are standalone schemas Kimi can validate
+without running Python, reading GitHub tokens, fetching job logs, or mutating source files.
 `platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json` proves
-those schemas reject drift, unsafe flags, malformed types, and private text probes.
+those schemas reject drift, unsafe flags, malformed types, unsafe PR CI URLs, unsafe commands, and
+private text probes.
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
 discoverable and hash-checked from the adoption pack zip without a repo checkout.
 `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.

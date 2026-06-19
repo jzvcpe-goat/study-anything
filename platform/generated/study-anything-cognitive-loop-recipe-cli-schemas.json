@@ -2,17 +2,322 @@
   "distribution": {
     "safe_for_platform_agent_static_import": true,
     "schema_bundle_path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "schema_files": [
+      "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+    ],
     "verification_command": "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
   },
   "json_schema": {
     "dialect": "https://json-schema.org/draft/2020-12/schema",
-    "schema_count": 3,
+    "schema_count": 5,
     "schema_keys": [
+      "cognitive_loop_pr_ci_receipt",
+      "cognitive_loop_pr_ci_source",
       "cognitive_loop_recipe_cli_failures",
       "cognitive_loop_recipe_cli_receipts",
       "cognitive_loop_recipe_cli_verification"
     ],
     "schemas": {
+      "cognitive_loop_pr_ci_receipt": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "blocking_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "checks": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "completed_at": {
+                  "type": "string"
+                },
+                "name": {
+                  "enum": [
+                    "api-tests",
+                    "compose-smoke"
+                  ],
+                  "type": "string"
+                },
+                "started_at": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "pending",
+                    "fail",
+                    "unknown"
+                  ],
+                  "type": "string"
+                },
+                "url": {
+                  "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "url"
+              ],
+              "type": "object"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "decision": {
+            "enum": [
+              "ready",
+              "manual_review",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "failure_modes": {
+            "type": "object"
+          },
+          "generated_at": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "manual_review_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "operator_next_commands": {
+            "items": {
+              "enum": [
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+                "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+                "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+                "gh pr checks <PR> --watch --interval 10"
+              ],
+              "type": "string"
+            },
+            "minItems": 5,
+            "type": "array"
+          },
+          "pr_number": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "privacy_flags": {
+            "additionalProperties": true,
+            "properties": {
+              "github_tokens_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "job_logs_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "metadata_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "model_called": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_annotations_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_logs_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "source_files_modified": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "metadata_only",
+              "raw_logs_included",
+              "raw_annotations_included",
+              "github_tokens_included",
+              "job_logs_included",
+              "model_called",
+              "source_files_modified"
+            ],
+            "type": "object"
+          },
+          "required_checks": {
+            "const": [
+              "api-tests",
+              "compose-smoke"
+            ]
+          },
+          "schema_version": {
+            "const": "cognitive-loop-pr-ci-receipt-v1"
+          },
+          "source": {
+            "enum": [
+              "fixture",
+              "gh_json",
+              "gh_live"
+            ],
+            "type": "string"
+          },
+          "source_sha256": {
+            "minLength": 64,
+            "type": "string"
+          },
+          "status": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "generated_at",
+          "source",
+          "source_sha256",
+          "pr_number",
+          "head_sha",
+          "required_checks",
+          "checks",
+          "decision",
+          "blocking_reasons",
+          "manual_review_reasons",
+          "privacy_flags",
+          "operator_next_commands"
+        ],
+        "title": "Cognitive Loop PR CI receipt",
+        "type": "object"
+      },
+      "cognitive_loop_pr_ci_source": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "base_branch": {
+            "type": "string"
+          },
+          "checks": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "completed_at": {
+                  "type": "string"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "started_at": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "pending",
+                    "fail",
+                    "unknown"
+                  ],
+                  "type": "string"
+                },
+                "url": {
+                  "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "url"
+              ],
+              "type": "object"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "expected_head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "operator_next_commands": {
+            "items": {
+              "enum": [
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+                "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+                "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+                "gh pr checks <PR> --watch --interval 10"
+              ],
+              "type": "string"
+            },
+            "minItems": 5,
+            "type": "array"
+          },
+          "pr_number": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "raw_annotations_included": {
+            "const": false,
+            "type": "boolean"
+          },
+          "raw_logs_included": {
+            "const": false,
+            "type": "boolean"
+          },
+          "schema_version": {
+            "const": "cognitive-loop-pr-ci-source-v1"
+          },
+          "source": {
+            "enum": [
+              "fixture",
+              "gh_json",
+              "gh_live"
+            ],
+            "type": "string"
+          },
+          "source_command": {
+            "enum": [
+              "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow"
+            ],
+            "type": "string"
+          },
+          "source_tool": {
+            "enum": [
+              "gh"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "source",
+          "pr_number",
+          "head_sha",
+          "expected_head_sha",
+          "checks",
+          "raw_logs_included",
+          "operator_next_commands"
+        ],
+        "title": "Cognitive Loop PR CI source",
+        "type": "object"
+      },
       "cognitive_loop_recipe_cli_failures": {
         "$id": "https://study-anything.local/schemas/cognitive-loop-recipe-cli-failures-v1.json",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -735,7 +1040,7 @@
     "raw_source_text_included": false,
     "real_model_keys_stored": false
   },
-  "purpose": "Provide offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
+  "purpose": "Provide offline JSON Schemas for Cognitive Loop recipe CLI reports and PR CI receipt/source metadata reports.",
   "schema_version": "cognitive-loop-recipe-cli-schemas-v1",
   "status": "pass",
   "validation": {
@@ -758,6 +1063,24 @@
         "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
         "schema_key": "cognitive_loop_recipe_cli_failures",
         "schema_version": "cognitive-loop-recipe-cli-failures-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "schema_key": "cognitive_loop_pr_ci_receipt",
+        "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+        "status": "pass"
+      },
+      {
+        "path": "<synthetic:fixture:cognitive-loop-pr-ci-source-v1>",
+        "schema_key": "cognitive_loop_pr_ci_source",
+        "schema_version": "cognitive-loop-pr-ci-source-v1",
+        "status": "pass"
+      },
+      {
+        "path": "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
+        "schema_key": "cognitive_loop_pr_ci_source",
+        "schema_version": "cognitive-loop-pr-ci-source-v1",
         "status": "pass"
       }
     ],

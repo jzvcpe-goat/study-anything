@@ -309,7 +309,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
         "generated_asset",
-        "Offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
+        "Offline JSON Schemas for Cognitive Loop recipe CLI reports and PR CI receipt/source metadata reports.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
@@ -580,6 +580,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cognitive-loop-review-agent-report.schema.json",
         "schema",
         "External Cognitive Loop Review Agent final report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+        "schema",
+        "Cognitive Loop PR CI receipt JSON Schema for offline platform-Agent validation.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-pr-ci-source.schema.json",
+        "schema",
+        "Cognitive Loop PR CI source JSON Schema for offline platform-Agent validation.",
     ),
     (
         "fixtures/review-agent/approved.json",
