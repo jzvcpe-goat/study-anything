@@ -13,6 +13,7 @@ from typing import Any, Callable
 
 from verify_cognitive_loop_recipe_cli_schemas import (
     FAILURES_REPORT,
+    PR_CI_RECEIPT_REPORT,
     RECEIPTS_REPORT,
     REPORT as SCHEMA_BUNDLE_REPORT,
     ROOT,
@@ -20,6 +21,7 @@ from verify_cognitive_loop_recipe_cli_schemas import (
     SUCCESS_REPORT,
     RecipeCliSchemaError,
     build_schemas,
+    default_pr_ci_source,
     dump_json,
     load_json,
     reject_private_text,
@@ -39,6 +41,12 @@ CASE_IDS = (
     "success_auto_execute_true",
     "receipts_missing_privacy",
     "failures_exit_code_string",
+    "pr_ci_receipt_missing_required_checks",
+    "pr_ci_receipt_github_tokens_true",
+    "pr_ci_source_unsupported_source",
+    "pr_ci_source_unsafe_url_query",
+    "pr_ci_source_raw_logs_true",
+    "pr_ci_source_unsafe_command",
     "private_text_probe_rejected",
 )
 
@@ -72,12 +80,36 @@ def mutate_failures_exit_code_string(payload: dict[str, Any]) -> None:
     payload["cases"][0]["exit_code"] = "1"
 
 
+def mutate_pr_ci_receipt_missing_required_checks(payload: dict[str, Any]) -> None:
+    payload["required_checks"] = ["api-tests"]
+
+
+def mutate_pr_ci_receipt_github_tokens_true(payload: dict[str, Any]) -> None:
+    payload["privacy_flags"]["github_tokens_included"] = True
+
+
+def mutate_pr_ci_source_unsupported_source(payload: dict[str, Any]) -> None:
+    payload["source"] = "webhook"
+
+
+def mutate_pr_ci_source_unsafe_url_query(payload: dict[str, Any]) -> None:
+    payload["checks"][0]["url"] = "https://github.com/jzvcpe-goat/study-anything/actions/runs/1?token=leak"
+
+
+def mutate_pr_ci_source_raw_logs_true(payload: dict[str, Any]) -> None:
+    payload["raw_logs_included"] = True
+
+
+def mutate_pr_ci_source_unsafe_command(payload: dict[str, Any]) -> None:
+    payload["operator_next_commands"][0] = "gh pr merge 180 --merge"
+
+
 def expect_schema_rejection(
     *,
     case_id: str,
     schema_key: str,
     schema: dict[str, Any],
-    source_path: Path,
+    source_path: Path | None,
     source_payload: dict[str, Any],
     mutation: str,
     mutate: Callable[[dict[str, Any]], None],
@@ -96,7 +128,7 @@ def expect_schema_rejection(
         return {
             "case_id": case_id,
             "schema_key": schema_key,
-            "source_report_path": source_path.relative_to(ROOT).as_posix(),
+            "source_report_path": source_path.relative_to(ROOT).as_posix() if source_path else None,
             "mutation": mutation,
             "expected_error_contains": expected_error_contains,
             "rejected": True,
@@ -137,6 +169,8 @@ def build_report() -> dict[str, Any]:
     success = load_json(SUCCESS_REPORT)
     receipts = load_json(RECEIPTS_REPORT)
     failures = load_json(FAILURES_REPORT)
+    pr_ci_receipt = load_json(PR_CI_RECEIPT_REPORT)
+    pr_ci_source = default_pr_ci_source(source="gh_live")
 
     canonical_reports = [
         (
@@ -157,6 +191,18 @@ def build_report() -> dict[str, Any]:
             "cognitive-loop-recipe-cli-failures-v1",
             failures,
         ),
+        (
+            "cognitive_loop_pr_ci_receipt",
+            PR_CI_RECEIPT_REPORT,
+            "cognitive-loop-pr-ci-receipt-v1",
+            pr_ci_receipt,
+        ),
+        (
+            "cognitive_loop_pr_ci_source",
+            None,
+            "cognitive-loop-pr-ci-source-v1",
+            pr_ci_source,
+        ),
     ]
     canonical_validations: list[dict[str, Any]] = []
     for schema_key, path, schema_version, payload in canonical_reports:
@@ -164,7 +210,7 @@ def build_report() -> dict[str, Any]:
         canonical_validations.append(
             {
                 "schema_key": schema_key,
-                "path": path.relative_to(ROOT).as_posix(),
+                "path": path.relative_to(ROOT).as_posix() if path else "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
                 "schema_version": schema_version,
                 "status": "pass",
             }
@@ -210,6 +256,66 @@ def build_report() -> dict[str, Any]:
             mutation="change first failure case exit_code from integer to string",
             mutate=mutate_failures_exit_code_string,
             expected_error_contains="$cognitive_loop_recipe_cli_failures.cases[0].exit_code expected type integer",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_receipt_missing_required_checks",
+            schema_key="cognitive_loop_pr_ci_receipt",
+            schema=schemas["cognitive_loop_pr_ci_receipt"],
+            source_path=PR_CI_RECEIPT_REPORT,
+            source_payload=pr_ci_receipt,
+            mutation="remove compose-smoke from required_checks",
+            mutate=mutate_pr_ci_receipt_missing_required_checks,
+            expected_error_contains="required_checks expected const",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_receipt_github_tokens_true",
+            schema_key="cognitive_loop_pr_ci_receipt",
+            schema=schemas["cognitive_loop_pr_ci_receipt"],
+            source_path=PR_CI_RECEIPT_REPORT,
+            source_payload=pr_ci_receipt,
+            mutation="set privacy_flags.github_tokens_included to true",
+            mutate=mutate_pr_ci_receipt_github_tokens_true,
+            expected_error_contains="github_tokens_included expected const False",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_source_unsupported_source",
+            schema_key="cognitive_loop_pr_ci_source",
+            schema=schemas["cognitive_loop_pr_ci_source"],
+            source_path=None,
+            source_payload=pr_ci_source,
+            mutation="set source to unsupported webhook value",
+            mutate=mutate_pr_ci_source_unsupported_source,
+            expected_error_contains="$cognitive_loop_pr_ci_source.source expected one of",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_source_unsafe_url_query",
+            schema_key="cognitive_loop_pr_ci_source",
+            schema=schemas["cognitive_loop_pr_ci_source"],
+            source_path=None,
+            source_payload=pr_ci_source,
+            mutation="append a query string to a GitHub details URL",
+            mutate=mutate_pr_ci_source_unsafe_url_query,
+            expected_error_contains="url did not match pattern",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_source_raw_logs_true",
+            schema_key="cognitive_loop_pr_ci_source",
+            schema=schemas["cognitive_loop_pr_ci_source"],
+            source_path=None,
+            source_payload=pr_ci_source,
+            mutation="set raw_logs_included to true",
+            mutate=mutate_pr_ci_source_raw_logs_true,
+            expected_error_contains="raw_logs_included expected const False",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_source_unsafe_command",
+            schema_key="cognitive_loop_pr_ci_source",
+            schema=schemas["cognitive_loop_pr_ci_source"],
+            source_path=None,
+            source_payload=pr_ci_source,
+            mutation="replace operator command allowlist with gh pr merge",
+            mutate=mutate_pr_ci_source_unsafe_command,
+            expected_error_contains="operator_next_commands[0] expected one of",
         ),
         expect_private_text_rejection(),
     ]

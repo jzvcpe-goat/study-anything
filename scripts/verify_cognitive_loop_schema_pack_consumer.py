@@ -21,6 +21,8 @@ SCHEMA_BUNDLE_PATH = "platform/generated/study-anything-cognitive-loop-recipe-cl
 NEGATIVE_FIXTURE_PATH = (
     "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json"
 )
+PR_CI_RECEIPT_SCHEMA_PATH = "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json"
+PR_CI_SOURCE_SCHEMA_PATH = "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
 SCHEMA_VERSION = "cognitive-loop-schema-pack-consumer-v1"
 PRIVATE_NEEDLES = (
     "sk-proj-",
@@ -110,6 +112,8 @@ def build_report(pack_path: Path) -> dict[str, Any]:
             MANIFEST_ARCHIVE_PATH,
             archive_path(SCHEMA_BUNDLE_PATH),
             archive_path(NEGATIVE_FIXTURE_PATH),
+            archive_path(PR_CI_RECEIPT_SCHEMA_PATH),
+            archive_path(PR_CI_SOURCE_SCHEMA_PATH),
         }
         missing = sorted(required_archive_paths - names)
         if missing:
@@ -125,25 +129,54 @@ def build_report(pack_path: Path) -> dict[str, Any]:
 
         schema_record = manifest_record(manifest, SCHEMA_BUNDLE_PATH)
         negative_record = manifest_record(manifest, NEGATIVE_FIXTURE_PATH)
+        receipt_schema_record = manifest_record(manifest, PR_CI_RECEIPT_SCHEMA_PATH)
+        source_schema_record = manifest_record(manifest, PR_CI_SOURCE_SCHEMA_PATH)
         schema_raw = assert_zip_record_matches(archive, record=schema_record, expected_path=SCHEMA_BUNDLE_PATH)
         negative_raw = assert_zip_record_matches(
             archive,
             record=negative_record,
             expected_path=NEGATIVE_FIXTURE_PATH,
         )
+        receipt_schema_raw = assert_zip_record_matches(
+            archive,
+            record=receipt_schema_record,
+            expected_path=PR_CI_RECEIPT_SCHEMA_PATH,
+        )
+        source_schema_raw = assert_zip_record_matches(
+            archive,
+            record=source_schema_record,
+            expected_path=PR_CI_SOURCE_SCHEMA_PATH,
+        )
         schema_bundle = json.loads(schema_raw.decode("utf-8"))
         negative_fixtures = json.loads(negative_raw.decode("utf-8"))
+        receipt_schema = json.loads(receipt_schema_raw.decode("utf-8"))
+        source_schema = json.loads(source_schema_raw.decode("utf-8"))
 
     reject_private_text(dump_json(schema_bundle), label="schema bundle from adoption pack")
     reject_private_text(dump_json(negative_fixtures), label="schema negative fixtures from adoption pack")
+    reject_private_text(dump_json(receipt_schema), label="PR CI receipt schema from adoption pack")
+    reject_private_text(dump_json(source_schema), label="PR CI source schema from adoption pack")
 
     json_schema = schema_bundle.get("json_schema") or {}
     if schema_bundle.get("schema_version") != "cognitive-loop-recipe-cli-schemas-v1":
         raise SchemaPackConsumerError("Schema bundle schema_version drifted.")
     if schema_bundle.get("status") != "pass":
         raise SchemaPackConsumerError("Schema bundle must pass.")
-    if json_schema.get("schema_count") != 3:
-        raise SchemaPackConsumerError("Schema bundle must expose three schemas.")
+    expected_schema_keys = {
+        "cognitive_loop_recipe_cli_verification",
+        "cognitive_loop_recipe_cli_receipts",
+        "cognitive_loop_recipe_cli_failures",
+        "cognitive_loop_pr_ci_receipt",
+        "cognitive_loop_pr_ci_source",
+    }
+    if json_schema.get("schema_count") != len(expected_schema_keys):
+        raise SchemaPackConsumerError("Schema bundle must expose five schemas.")
+    if set(json_schema.get("schema_keys", [])) != expected_schema_keys:
+        raise SchemaPackConsumerError("Schema bundle schema keys drifted.")
+    if receipt_schema.get("$id") != "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json":
+        raise SchemaPackConsumerError("PR CI receipt schema id drifted.")
+    if source_schema.get("$id") != "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json":
+        raise SchemaPackConsumerError("PR CI source schema id drifted.")
     validation = schema_bundle.get("validation") or {}
     for key in ("validated_without_running_recipe_cli",):
         if validation.get(key) is not True:
@@ -162,6 +195,12 @@ def build_report(pack_path: Path) -> dict[str, Any]:
         "success_auto_execute_true",
         "receipts_missing_privacy",
         "failures_exit_code_string",
+        "pr_ci_receipt_missing_required_checks",
+        "pr_ci_receipt_github_tokens_true",
+        "pr_ci_source_unsupported_source",
+        "pr_ci_source_unsafe_url_query",
+        "pr_ci_source_raw_logs_true",
+        "pr_ci_source_unsafe_command",
         "private_text_probe_rejected",
     }
     if coverage.get("case_count") != len(expected_cases):
@@ -202,6 +241,8 @@ def build_report(pack_path: Path) -> dict[str, Any]:
                 MANIFEST_ARCHIVE_PATH,
                 archive_path(SCHEMA_BUNDLE_PATH),
                 archive_path(NEGATIVE_FIXTURE_PATH),
+                archive_path(PR_CI_RECEIPT_SCHEMA_PATH),
+                archive_path(PR_CI_SOURCE_SCHEMA_PATH),
             ],
         },
         "schema_bundle": {
@@ -220,6 +261,18 @@ def build_report(pack_path: Path) -> dict[str, Any]:
             "case_ids": coverage["case_ids"],
             "all_cases_rejected": True,
         },
+        "standalone_schema_files": [
+            {
+                "path": PR_CI_RECEIPT_SCHEMA_PATH,
+                "archive_path": archive_path(PR_CI_RECEIPT_SCHEMA_PATH),
+                "id": receipt_schema["$id"],
+            },
+            {
+                "path": PR_CI_SOURCE_SCHEMA_PATH,
+                "archive_path": archive_path(PR_CI_SOURCE_SCHEMA_PATH),
+                "id": source_schema["$id"],
+            },
+        ],
         "distribution": {
             "report_path": REPORT.relative_to(ROOT).as_posix(),
             "verification_command": "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check",

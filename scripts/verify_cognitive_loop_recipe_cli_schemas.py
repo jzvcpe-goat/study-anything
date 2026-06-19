@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -19,18 +20,40 @@ RECEIPTS_REPORT = (
 FAILURES_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-recipe-cli-failures.json"
 )
+PR_CI_RECEIPT_REPORT = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-pr-ci-receipt.json"
+)
+PR_CI_RECEIPT_SCHEMA_FILE = (
+    ROOT / "platform" / "schemas" / "cognitive-loop-pr-ci-receipt.schema.json"
+)
+PR_CI_SOURCE_SCHEMA_FILE = ROOT / "platform" / "schemas" / "cognitive-loop-pr-ci-source.schema.json"
 
 SCHEMA_VERSION = "cognitive-loop-recipe-cli-schemas-v1"
 CLI_SCHEMA_VERSION = "cognitive-loop-recipe-cli-v1"
 SUCCESS_SCHEMA_VERSION = "cognitive-loop-recipe-cli-verification-v1"
 RECEIPTS_SCHEMA_VERSION = "cognitive-loop-recipe-cli-receipts-v1"
 FAILURES_SCHEMA_VERSION = "cognitive-loop-recipe-cli-failures-v1"
+PR_CI_RECEIPT_SCHEMA_VERSION = "cognitive-loop-pr-ci-receipt-v1"
+PR_CI_SOURCE_SCHEMA_VERSION = "cognitive-loop-pr-ci-source-v1"
 EXPECTED_RECIPE_IDS = ("first_adoption", "daily_project_review", "risk_decision", "learning_handoff")
 FAILURE_CASE_IDS = (
     "unknown_recipe_id",
     "source_schema_drift",
     "source_status_failed",
     "empty_recipe_matrix",
+)
+PR_CI_REQUIRED_CHECKS = ("api-tests", "compose-smoke")
+PR_CI_SOURCES = ("fixture", "gh_json", "gh_live")
+PR_CI_DECISIONS = ("ready", "manual_review", "blocked")
+PR_CI_CHECK_STATUSES = ("pass", "pending", "fail", "unknown")
+PR_CI_GITHUB_URL_PATTERN = r"^$|^https://(?:www\.)?github\.com/[^?#\s]+$"
+PR_CI_SHA_PATTERN = r"^[0-9a-f]{40}$"
+PR_CI_SAFE_COMMANDS = (
+    "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+    "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+    "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+    "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+    "gh pr checks <PR> --watch --interval 10",
 )
 PRIVACY_FALSE_KEYS = (
     "raw_source_text_included",
@@ -88,6 +111,171 @@ def privacy_schema() -> dict[str, Any]:
         "additionalProperties": True,
         "required": list(PRIVACY_FALSE_KEYS),
         "properties": {key: schema_bool(False) for key in PRIVACY_FALSE_KEYS},
+    }
+
+
+def pr_ci_check_schema() -> dict[str, Any]:
+    return {
+        "type": "object",
+        "additionalProperties": True,
+        "required": ["name", "status", "url"],
+        "properties": {
+            "name": {"type": "string", "enum": list(PR_CI_REQUIRED_CHECKS)},
+            "status": {"type": "string", "enum": list(PR_CI_CHECK_STATUSES)},
+            "url": {"type": "string", "pattern": PR_CI_GITHUB_URL_PATTERN},
+            "started_at": {"type": "string"},
+            "completed_at": {"type": "string"},
+        },
+    }
+
+
+def pr_ci_source_check_schema() -> dict[str, Any]:
+    schema = pr_ci_check_schema()
+    schema["properties"] = dict(schema["properties"])
+    schema["properties"]["name"] = {"type": "string", "minLength": 1}
+    return schema
+
+
+def pr_ci_privacy_flags_schema() -> dict[str, Any]:
+    return {
+        "type": "object",
+        "additionalProperties": True,
+        "required": [
+            "metadata_only",
+            "raw_logs_included",
+            "raw_annotations_included",
+            "github_tokens_included",
+            "job_logs_included",
+            "model_called",
+            "source_files_modified",
+        ],
+        "properties": {
+            "metadata_only": schema_bool(True),
+            "raw_logs_included": schema_bool(False),
+            "raw_annotations_included": schema_bool(False),
+            "github_tokens_included": schema_bool(False),
+            "job_logs_included": schema_bool(False),
+            "model_called": schema_bool(False),
+            "source_files_modified": schema_bool(False),
+        },
+    }
+
+
+def build_pr_ci_receipt_schema() -> dict[str, Any]:
+    return {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+        "title": "Cognitive Loop PR CI receipt",
+        "type": "object",
+        "additionalProperties": True,
+        "required": [
+            "schema_version",
+            "status",
+            "generated_at",
+            "source",
+            "source_sha256",
+            "pr_number",
+            "head_sha",
+            "required_checks",
+            "checks",
+            "decision",
+            "blocking_reasons",
+            "manual_review_reasons",
+            "privacy_flags",
+            "operator_next_commands",
+        ],
+        "properties": {
+            "schema_version": {"const": PR_CI_RECEIPT_SCHEMA_VERSION},
+            "status": {"const": "pass"},
+            "generated_at": {"type": "string", "minLength": 1},
+            "source": {"type": "string", "enum": list(PR_CI_SOURCES)},
+            "source_sha256": {"type": "string", "minLength": 64},
+            "pr_number": {"type": "integer", "minimum": 0},
+            "head_sha": {"type": "string", "pattern": PR_CI_SHA_PATTERN},
+            "required_checks": {"const": list(PR_CI_REQUIRED_CHECKS)},
+            "checks": {
+                "type": "array",
+                "minItems": len(PR_CI_REQUIRED_CHECKS),
+                "items": pr_ci_check_schema(),
+            },
+            "decision": {"type": "string", "enum": list(PR_CI_DECISIONS)},
+            "blocking_reasons": {"type": "array", "items": {"type": "string"}},
+            "manual_review_reasons": {"type": "array", "items": {"type": "string"}},
+            "privacy_flags": pr_ci_privacy_flags_schema(),
+            "operator_next_commands": {
+                "type": "array",
+                "minItems": len(PR_CI_SAFE_COMMANDS),
+                "items": {"type": "string", "enum": list(PR_CI_SAFE_COMMANDS)},
+            },
+            "failure_modes": {"type": "object"},
+        },
+    }
+
+
+def build_pr_ci_source_schema() -> dict[str, Any]:
+    return {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+        "title": "Cognitive Loop PR CI source",
+        "type": "object",
+        "additionalProperties": True,
+        "required": [
+            "schema_version",
+            "source",
+            "pr_number",
+            "head_sha",
+            "expected_head_sha",
+            "checks",
+            "raw_logs_included",
+            "operator_next_commands",
+        ],
+        "properties": {
+            "schema_version": {"const": PR_CI_SOURCE_SCHEMA_VERSION},
+            "source": {"type": "string", "enum": list(PR_CI_SOURCES)},
+            "source_tool": {"type": "string", "enum": ["gh"]},
+            "source_command": {
+                "type": "string",
+                "enum": ["gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow"],
+            },
+            "pr_number": {"type": "integer", "minimum": 0},
+            "base_branch": {"type": "string"},
+            "head_sha": {"type": "string", "pattern": PR_CI_SHA_PATTERN},
+            "expected_head_sha": {"type": "string", "pattern": PR_CI_SHA_PATTERN},
+            "checks": {
+                "type": "array",
+                "minItems": len(PR_CI_REQUIRED_CHECKS),
+                "items": pr_ci_source_check_schema(),
+            },
+            "raw_logs_included": schema_bool(False),
+            "raw_annotations_included": schema_bool(False),
+            "operator_next_commands": {
+                "type": "array",
+                "minItems": len(PR_CI_SAFE_COMMANDS),
+                "items": {"type": "string", "enum": list(PR_CI_SAFE_COMMANDS)},
+            },
+        },
+    }
+
+
+def default_pr_ci_source(*, source: str = "fixture", status: str = "pass") -> dict[str, Any]:
+    row_status = status if status in PR_CI_CHECK_STATUSES else "unknown"
+    return {
+        "schema_version": PR_CI_SOURCE_SCHEMA_VERSION,
+        "source": source,
+        "pr_number": 179,
+        "head_sha": "a" * 40,
+        "expected_head_sha": "a" * 40,
+        "checks": [
+            {
+                "name": name,
+                "status": row_status,
+                "url": f"https://github.com/jzvcpe-goat/study-anything/actions/runs/redacted-{name}",
+            }
+            for name in PR_CI_REQUIRED_CHECKS
+        ],
+        "raw_logs_included": False,
+        "raw_annotations_included": False,
+        "operator_next_commands": list(PR_CI_SAFE_COMMANDS),
     }
 
 
@@ -417,6 +605,8 @@ def validate_instance(value: Any, schema: dict[str, Any], *, path: str = "$") ->
 
     if isinstance(value, str) and "minLength" in schema and len(value) < int(schema["minLength"]):
         raise RecipeCliSchemaError(f"{path} is shorter than minLength {schema['minLength']}")
+    if isinstance(value, str) and "pattern" in schema and re.fullmatch(str(schema["pattern"]), value) is None:
+        raise RecipeCliSchemaError(f"{path} did not match pattern {schema['pattern']!r}")
     if isinstance(value, (int, float)) and not isinstance(value, bool) and "minimum" in schema:
         if value < schema["minimum"]:
             raise RecipeCliSchemaError(f"{path} is lower than minimum {schema['minimum']}")
@@ -449,7 +639,34 @@ def build_schemas() -> dict[str, Any]:
         "cognitive_loop_recipe_cli_verification": build_success_report_schema(),
         "cognitive_loop_recipe_cli_receipts": build_receipts_report_schema(),
         "cognitive_loop_recipe_cli_failures": build_failures_report_schema(),
+        "cognitive_loop_pr_ci_receipt": build_pr_ci_receipt_schema(),
+        "cognitive_loop_pr_ci_source": build_pr_ci_source_schema(),
     }
+
+
+def pr_ci_schema_files(schemas: dict[str, Any]) -> dict[Path, dict[str, Any]]:
+    return {
+        PR_CI_RECEIPT_SCHEMA_FILE: schemas["cognitive_loop_pr_ci_receipt"],
+        PR_CI_SOURCE_SCHEMA_FILE: schemas["cognitive_loop_pr_ci_source"],
+    }
+
+
+def write_pr_ci_schema_files(schemas: dict[str, Any]) -> None:
+    for path, schema in pr_ci_schema_files(schemas).items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(dump_json(schema), encoding="utf-8")
+
+
+def assert_pr_ci_schema_files_current(schemas: dict[str, Any]) -> None:
+    for path, schema in pr_ci_schema_files(schemas).items():
+        expected = dump_json(schema)
+        if not path.is_file():
+            raise RecipeCliSchemaError(f"Missing schema file: {path.relative_to(ROOT)}")
+        if path.read_text(encoding="utf-8") != expected:
+            raise RecipeCliSchemaError(
+                f"{path.relative_to(ROOT)} is stale. "
+                "Run: python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --write"
+            )
 
 
 def build_report() -> dict[str, Any]:
@@ -473,6 +690,12 @@ def build_report() -> dict[str, Any]:
             FAILURES_SCHEMA_VERSION,
             load_json(FAILURES_REPORT),
         ),
+        (
+            "cognitive_loop_pr_ci_receipt",
+            PR_CI_RECEIPT_REPORT,
+            PR_CI_RECEIPT_SCHEMA_VERSION,
+            load_json(PR_CI_RECEIPT_REPORT),
+        ),
     ]
 
     validations: list[dict[str, Any]] = []
@@ -486,11 +709,27 @@ def build_report() -> dict[str, Any]:
                 "status": "pass",
             }
         )
+    for source_name, source_payload in (
+        ("fixture", default_pr_ci_source(source="fixture")),
+        ("gh_live", default_pr_ci_source(source="gh_live", status="pending")),
+    ):
+        validate_instance(source_payload, schemas["cognitive_loop_pr_ci_source"], path="$cognitive_loop_pr_ci_source")
+        validations.append(
+            {
+                "schema_key": "cognitive_loop_pr_ci_source",
+                "path": f"<synthetic:{source_name}:cognitive-loop-pr-ci-source-v1>",
+                "schema_version": PR_CI_SOURCE_SCHEMA_VERSION,
+                "status": "pass",
+            }
+        )
 
     report = {
         "schema_version": SCHEMA_VERSION,
         "status": "pass",
-        "purpose": "Provide offline JSON Schemas for Cognitive Loop recipe CLI success, receipt, and failure reports.",
+        "purpose": (
+            "Provide offline JSON Schemas for Cognitive Loop recipe CLI reports and PR CI "
+            "receipt/source metadata reports."
+        ),
         "json_schema": {
             "dialect": "https://json-schema.org/draft/2020-12/schema",
             "schema_count": len(schemas),
@@ -506,6 +745,9 @@ def build_report() -> dict[str, Any]:
         },
         "distribution": {
             "schema_bundle_path": REPORT.relative_to(ROOT).as_posix(),
+            "schema_files": [
+                path.relative_to(ROOT).as_posix() for path in sorted(pr_ci_schema_files(schemas))
+            ],
             "verification_command": "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check",
             "safe_for_platform_agent_static_import": True,
         },
@@ -533,10 +775,13 @@ def main() -> int:
     args = parser.parse_args()
 
     output = Path(args.output)
-    serialized = dump_json(build_report())
+    report = build_report()
+    schemas = build_schemas()
+    serialized = dump_json(report)
     if args.write:
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(serialized, encoding="utf-8")
+        write_pr_ci_schema_files(schemas)
     if args.check:
         if not output.is_file():
             raise SystemExit(f"Cognitive Loop recipe CLI schema bundle is missing: {output}")
@@ -546,6 +791,7 @@ def main() -> int:
                 "Cognitive Loop recipe CLI schema bundle is stale. "
                 "Run: python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --write"
             )
+        assert_pr_ci_schema_files_current(schemas)
     if not args.write and not args.check:
         print(serialized, end="")
     return 0

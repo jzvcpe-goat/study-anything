@@ -58,6 +58,8 @@ The machine-readable entrypoints are:
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json`
+- `platform/schemas/cognitive-loop-pr-ci-receipt.schema.json`
+- `platform/schemas/cognitive-loop-pr-ci-source.schema.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json`
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json`
 - `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
@@ -76,7 +78,9 @@ Use these recipe ids:
 
 Treat the replay report as metadata-only replay. It does not execute recipe commands, start runtime
 processes, apply file changes, or approve risk decisions. Treat the CLI receipts, failures, and
-schemas as the same metadata-only evidence. The platform Agent owns browser, files,
+schemas as the same metadata-only evidence. The PR CI receipt/source schemas are static validation
+contracts for platform Agents; they must not require reading GitHub tokens, fetching job logs, calling
+models, running Docker/API, or mutating source files. The platform Agent owns browser, files,
 applications, external data, video slicing, user conversation, and real model credentials. Study
 Anything owns the local Learning Adapter path. Study Anything owns the local Learning Adapter:
 source-bound learning, mastery, eval evidence,

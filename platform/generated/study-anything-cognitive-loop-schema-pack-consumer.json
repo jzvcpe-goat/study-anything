@@ -7,19 +7,25 @@
   "negative_fixtures": {
     "all_cases_rejected": true,
     "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
-    "case_count": 5,
+    "case_count": 11,
     "case_ids": [
       "success_wrong_schema_version",
       "success_auto_execute_true",
       "receipts_missing_privacy",
       "failures_exit_code_string",
+      "pr_ci_receipt_missing_required_checks",
+      "pr_ci_receipt_github_tokens_true",
+      "pr_ci_source_unsupported_source",
+      "pr_ci_source_unsafe_url_query",
+      "pr_ci_source_raw_logs_true",
+      "pr_ci_source_unsafe_command",
       "private_text_probe_rejected"
     ],
     "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
     "schema_version": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1"
   },
   "pack": {
-    "file_count": 416,
+    "file_count": 418,
     "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
     "no_frontend_required": true,
     "path": "platform/generated/study-anything-platform-adoption-pack.zip",
@@ -40,8 +46,10 @@
   "schema_bundle": {
     "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
     "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
-    "schema_count": 3,
+    "schema_count": 5,
     "schema_keys": [
+      "cognitive_loop_pr_ci_receipt",
+      "cognitive_loop_pr_ci_source",
       "cognitive_loop_recipe_cli_failures",
       "cognitive_loop_recipe_cli_receipts",
       "cognitive_loop_recipe_cli_verification"
@@ -50,6 +58,18 @@
     "validated_without_running_recipe_cli": true
   },
   "schema_version": "cognitive-loop-schema-pack-consumer-v1",
+  "standalone_schema_files": [
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+      "path": "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-source.schema.json",
+      "id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+      "path": "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+    }
+  ],
   "status": "pass",
   "zip_only_validation": {
     "archive_asset_hashes_match": true,
@@ -57,7 +77,9 @@
     "files_read_from_zip": [
       "study-anything-platform-adoption-pack/manifest.json",
       "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
-      "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json"
+      "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+      "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-source.schema.json"
     ],
     "manifest_records_checked": true,
     "recipe_cli_invoked": false,
