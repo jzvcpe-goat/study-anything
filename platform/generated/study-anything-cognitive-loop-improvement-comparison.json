@@ -1,0 +1,44 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-improvement-comparison-lite-v1",
+  "cli": "scripts/cognitive_loop_improvement_comparator.py",
+  "failure_modes": {
+    "invalid_schema_rejected": true,
+    "malformed_json_rejected": true,
+    "policy_weakening_rejected": true,
+    "privacy_flag_regression_detected": true,
+    "raw_diff_artifact_rejected": true,
+    "secret_artifact_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_files_modified": false,
+    "source_text_included": false
+  },
+  "schema_version": "cognitive-loop-improvement-comparison-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "ambiguous_status": "ambiguous",
+    "html_json_created": true,
+    "improved_status": "improved",
+    "insufficient_status": "insufficient",
+    "read_only": true,
+    "regressed_status": "regressed",
+    "unchanged_status": "unchanged"
+  },
+  "version": "v0.3.31-alpha"
+}
