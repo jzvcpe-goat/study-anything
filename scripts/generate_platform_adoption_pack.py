@@ -221,6 +221,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/release-stack/pr-183-intake-candidate.json", "fixture", "Redacted release stack intake candidate fixture for PR 183."),
     ("fixtures/release-stack/pr-184-intake-candidate.json", "fixture", "Redacted release stack intake candidate fixture for PR 184."),
     ("fixtures/release-stack/pr-185-intake-candidate.json", "fixture", "Redacted release stack intake candidate fixture for PR 185."),
+    ("fixtures/release-stack/pr-186-intake-candidate.json", "fixture", "Redacted release stack intake candidate fixture for PR 186."),
     ("scripts/verify_release_stack_intake_candidate.py", "verification", "Verify metadata-only release stack intake candidates from PR summary metadata."),
     ("scripts/verify_release_stack_candidate_promotion.py", "verification", "Verify metadata-only release stack candidate promotion into the manifest."),
     ("fixtures/platform-status-links/intake.json", "status_linkage_fixture", "Public status linkage fixture for intake issues."),
