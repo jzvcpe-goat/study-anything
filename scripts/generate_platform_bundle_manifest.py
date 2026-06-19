@@ -122,6 +122,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Measured Improvement Comparator Lite verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "generated_asset",
+        "Cognitive Loop Patch Proposal Lite verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1202,6 +1207,16 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Improvement Comparator Lite verifier.",
     ),
     (
+        "scripts/cognitive_loop_patch_proposal.py",
+        "cli",
+        "Read-only Cognitive Loop Patch Proposal Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_patch_proposal.py",
+        "verification",
+        "Cognitive Loop Patch Proposal Lite verifier.",
+    ),
+    (
         "platform/mastra/README.md",
         "mastra_adapter",
         "Copy-ready Mastra adapter operator guide.",
@@ -1952,6 +1967,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
             "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
             "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+            "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
             "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",

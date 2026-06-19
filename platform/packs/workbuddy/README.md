@@ -121,6 +121,16 @@ stores raw source, raw diff, learner answers, Agent endpoints, Agent metadata, p
 keys. Verify it with `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check`, then
 inspect `platform/generated/study-anything-cognitive-loop-improvement-comparison.json`.
 
+For Patch Proposal Lite, run
+`python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json`.
+It turns metadata-only loop evidence into six patch specification categories: `prompt`, `policy`,
+`eval`, `task`, `doc`, and `retrieval`. It is read-only: high-risk, gated, manual-only, protected
+path, insufficient, secret-like, raw-diff, and policy-weakening inputs are rejected or downgraded to
+manual-only, and it never generates raw unified diffs, calls models, executes apply, modifies source
+files, or stores private learning data. Verify it with
+`python3 scripts/verify_cognitive_loop_patch_proposal.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-patch-proposal.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

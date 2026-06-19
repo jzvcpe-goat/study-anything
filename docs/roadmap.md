@@ -334,11 +334,14 @@ Current:
 - Apply Plan Lite is not source-changing auto-apply: it writes only `.cognitive-loop/artifacts/applied/` receipt markers when explicitly allowed.
 - `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` creates read-only Measured Improvement Comparator Lite artifacts across metadata-only loop evidence.
 - `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check` verifies improved, regressed, unchanged, insufficient, and ambiguous outcomes; privacy regression detection; malformed/invalid/secret/diff-body/policy-weakening rejection; JSON/HTML artifact structure; and read-only guardrails.
+- `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` creates read-only Patch Proposal Lite artifacts across prompt, policy, eval, task, doc, and retrieval categories.
+- `python3 scripts/verify_cognitive_loop_patch_proposal.py --check` verifies low-risk proposal generation, mixed manual-only handling, high-risk/gated/forbidden-path degradation, insufficient comparison degradation, secret/raw-diff/policy-weakening/invalid-schema rejection, JSON/HTML artifact structure, and privacy flags.
+- Patch Proposal Lite is not source-changing auto-apply: it produces bounded patch specifications and never generates raw unified diffs, calls models, executes apply, or modifies source files.
 
 Still planned:
 
 - low-risk source-changing auto-apply path with explicit policy guardrails
-- prompt/policy/eval/task/doc/retrieval patch generation
+- source-changing patch application from accepted Patch Proposal Lite specifications
 - realtime Artifact Console integration
 - EvolutionReport linkage into future Mastra workflow receipts
 

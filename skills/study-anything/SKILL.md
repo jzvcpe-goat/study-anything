@@ -164,6 +164,23 @@ Comparator Lite is read-only. Do not use it to call models, execute apply, modif
 weaken policy, or include raw source, raw diff, learner answers, Agent endpoints, Agent metadata,
 prompts, or model keys.
 
+## Patch Proposal Lite
+
+Use Patch Proposal Lite after Evolution Report, Apply Plan, or Comparator evidence exists and the
+operator needs a read-only patch specification instead of source-changing automation. It covers
+`prompt`, `policy`, `eval`, `task`, `doc`, and `retrieval` proposal categories.
+
+```bash
+python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json
+python3 scripts/verify_cognitive_loop_patch_proposal.py --check
+```
+
+Patch Proposal Lite is read-only. It rejects or downgrades high-risk, Human Mastery Gate required,
+manual-only, protected target path, insufficient evidence, secret-like, raw-diff, and
+policy-weakening inputs. Do not use it to generate raw unified diffs, call models, execute apply,
+modify source files, weaken policy, or include raw source, raw diff, learner answers, Agent
+endpoints, Agent metadata, prompts, or model keys.
+
 ## Start A Learning Loop
 
 1. Check API health.

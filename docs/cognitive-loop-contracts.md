@@ -388,6 +388,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check` 会验证 improved、regressed、unchanged、insufficient、ambiguous 分类；malformed JSON 拒绝；invalid schema 拒绝；疑似 secret artifact 拒绝；diff body 拒绝；policy 弱化拒绝；privacy regression 检测；JSON/HTML 报告结构；以及只读边界，并输出 `cognitive-loop-improvement-comparison-verification-v1`。
 
+## Patch Proposal Lite / Patch Proposal Lite
+
+`python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` creates a read-only patch proposal artifact from metadata-only Evolution Report, Apply Plan, Improvement Comparison, or verification evidence. The output schema is `cognitive-loop-patch-proposal-lite-v1` and includes `PatchProposal` candidates, manual-only candidates, degraded sources, coverage for `prompt`, `policy`, `eval`, `task`, `doc`, and `retrieval`, guardrails, privacy flags, and JSON/HTML output references.
+
+`python3 scripts/verify_cognitive_loop_patch_proposal.py --check` verifies low-risk proposal generation, six-category coverage, mixed manual-only handling, high-risk and Human Mastery Gate degradation, forbidden path degradation, insufficient comparison degradation, secret-like proposal rejection, raw diff rejection, policy-weakening rejection, invalid schema rejection, JSON/HTML report structure, and read-only privacy boundaries. It emits `cognitive-loop-patch-proposal-verification-v1`.
+
+`python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` 会基于 metadata-only Evolution Report、Apply Plan、Improvement Comparison 或 verification evidence 创建只读 patch proposal artifact。输出 schema 是 `cognitive-loop-patch-proposal-lite-v1`，包含 `PatchProposal` candidates、manual-only candidates、degraded sources、`prompt`、`policy`、`eval`、`task`、`doc`、`retrieval` 六类覆盖、guardrails、privacy flags，以及 JSON/HTML 输出引用。
+
+`python3 scripts/verify_cognitive_loop_patch_proposal.py --check` 会验证低风险 proposal 生成、六类覆盖、混合 manual-only 处理、高风险与 Human Mastery Gate 降级、禁止路径降级、证据不足 comparison 降级、疑似 secret proposal 拒绝、raw diff 拒绝、policy 弱化拒绝、invalid schema 拒绝、JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-patch-proposal-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -452,6 +462,12 @@ Governed proposal for improving prompts, policies, evals, docs, tasks, retrieval
 Read-only comparison of metadata-only loop artifacts showing whether the latest loop improved, regressed, stayed unchanged, lacks enough evidence, or needs manual review.
 
 只读比较 metadata-only loop artifacts，用来判断最新 loop 是改进、退化、无变化、证据不足，还是需要人工复核。
+
+### `PatchProposal`
+
+Read-only patch specification covering prompt, policy, eval, task, doc, and retrieval categories. It records target path, intent, verification commands, risk level, and manual-only reasons, but never embeds raw unified diffs or applies changes.
+
+只读补丁规格，覆盖 prompt、policy、eval、task、doc 和 retrieval 六类。它记录 target path、intent、验证命令、risk level 和 manual-only 原因，但不嵌入 raw unified diff，也不执行变更。
 
 ## Privacy Boundary
 

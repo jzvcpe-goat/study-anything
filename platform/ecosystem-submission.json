@@ -90,7 +90,9 @@
       "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
       "python3 scripts/cognitive_loop_evolution.py build --html --json",
       "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
-      "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
+      "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+      "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+      "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
     ],
     "must_prove": [
       "all submission assets exist",
@@ -170,7 +172,8 @@
       "cognitive-loop-personal-plugin-mode-verification-v1 proves personal plugin/Skill operators can explain files, README, webpage metadata, and diff summaries through read-only metadata-only artifacts without embedding raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, model keys, or starting a daemon",
       "cognitive-loop-evolution-report-verification-v1 proves platform and Skill operators can cluster metadata-only failures, propose governed next-loop improvements, require Human Mastery Gate for high-risk suggestions, degrade on missing evidence, reject secrets or diff bodies, and avoid weakening risk, audit, privacy, rollback, test, or permission policy",
       "cognitive-loop-apply-plan-verification-v1 proves platform and Skill operators can create dry-run governed apply plans, explicitly write only generated-artifact receipts for low-risk suggestions, reject high-risk or gated apply, reject forbidden write paths, and avoid weakening risk, audit, privacy, rollback, test, or permission policy",
-      "cognitive-loop-improvement-comparison-verification-v1 proves platform and Skill operators can compare metadata-only loop artifacts, classify improved/regressed/unchanged/insufficient/ambiguous outcomes, detect privacy regressions, reject secrets or diff bodies, and avoid calling models, executing apply, or modifying source files"
+      "cognitive-loop-improvement-comparison-verification-v1 proves platform and Skill operators can compare metadata-only loop artifacts, classify improved/regressed/unchanged/insufficient/ambiguous outcomes, detect privacy regressions, reject secrets or diff bodies, and avoid calling models, executing apply, or modifying source files",
+      "cognitive-loop-patch-proposal-verification-v1 proves platform and Skill operators can turn metadata-only loop proposals into six-category patch specifications, downgrade high-risk or gated work to manual-only, reject secrets or diff bodies, and avoid generating raw unified diffs, calling models, executing apply, or modifying source files"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -549,7 +552,10 @@
     "scripts/verify_cognitive_loop_apply_plan.py",
     "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
     "scripts/cognitive_loop_improvement_comparator.py",
-    "scripts/verify_cognitive_loop_improvement_comparator.py"
+    "scripts/verify_cognitive_loop_improvement_comparator.py",
+    "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+    "scripts/cognitive_loop_patch_proposal.py",
+    "scripts/verify_cognitive_loop_patch_proposal.py"
   ],
   "submissions": [
     {
@@ -656,7 +662,10 @@
         "scripts/verify_cognitive_loop_apply_plan.py",
         "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
         "scripts/cognitive_loop_improvement_comparator.py",
-        "scripts/verify_cognitive_loop_improvement_comparator.py"
+        "scripts/verify_cognitive_loop_improvement_comparator.py",
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "scripts/cognitive_loop_patch_proposal.py",
+        "scripts/verify_cognitive_loop_patch_proposal.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -693,7 +702,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
-        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -749,7 +760,8 @@
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check"
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check"
       ]
     },
     {
@@ -853,7 +865,10 @@
         "scripts/verify_cognitive_loop_apply_plan.py",
         "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
         "scripts/cognitive_loop_improvement_comparator.py",
-        "scripts/verify_cognitive_loop_improvement_comparator.py"
+        "scripts/verify_cognitive_loop_improvement_comparator.py",
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "scripts/cognitive_loop_patch_proposal.py",
+        "scripts/verify_cognitive_loop_patch_proposal.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -889,7 +904,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
-        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -943,7 +960,8 @@
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check"
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check"
       ]
     },
     {
@@ -1046,7 +1064,10 @@
         "scripts/verify_cognitive_loop_apply_plan.py",
         "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
         "scripts/cognitive_loop_improvement_comparator.py",
-        "scripts/verify_cognitive_loop_improvement_comparator.py"
+        "scripts/verify_cognitive_loop_improvement_comparator.py",
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "scripts/cognitive_loop_patch_proposal.py",
+        "scripts/verify_cognitive_loop_patch_proposal.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -1082,7 +1103,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
-        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -1136,7 +1159,8 @@
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check"
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check"
       ]
     },
     {
@@ -1238,7 +1262,10 @@
         "scripts/verify_cognitive_loop_apply_plan.py",
         "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
         "scripts/cognitive_loop_improvement_comparator.py",
-        "scripts/verify_cognitive_loop_improvement_comparator.py"
+        "scripts/verify_cognitive_loop_improvement_comparator.py",
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "scripts/cognitive_loop_patch_proposal.py",
+        "scripts/verify_cognitive_loop_patch_proposal.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -1274,7 +1301,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_evolution.py build --html --json",
         "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
-        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json"
+        "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
@@ -1328,7 +1357,8 @@
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
         "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
         "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
-        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check"
+        "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+        "python3 scripts/verify_cognitive_loop_patch_proposal.py --check"
       ]
     }
   ],
