@@ -541,6 +541,7 @@ def build_report() -> dict[str, Any]:
             "ready_entry_count": ready["pack"]["entry_count"],
             "ready_pack_file_count": ready["pack"]["pack_file_count"],
             "ready_manifest_sha256": ready["pack"]["manifest_sha256"],
+            "ready_zip_sha256": ready["pack"]["zip_sha256"],
         },
         "failure_modes": failures,
         "privacy": {

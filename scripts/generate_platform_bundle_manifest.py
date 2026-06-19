@@ -152,6 +152,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Professional Evolution Pack zip-only consumer verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
+        "generated_asset",
+        "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1287,6 +1292,11 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Cognitive Loop professional evolution pack zip-only consumer import and privacy boundaries.",
     ),
     (
+        "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
+        "verification",
+        "Verify Cognitive Loop maintainer go/no-go acceptance ledger and launch handoff boundaries.",
+    ),
+    (
         "platform/mastra/README.md",
         "mastra_adapter",
         "Copy-ready Mastra adapter operator guide.",
@@ -2040,6 +2050,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
             "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
             "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+            "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
             "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",

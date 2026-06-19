@@ -120,6 +120,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cognitive-loop-patch-apply-sandbox.json", "submission_report", "Cognitive Loop Governed Patch Apply Sandbox Lite verification report."),
     ("platform/generated/study-anything-cognitive-loop-evolution-pack-export.json", "submission_report", "Cognitive Loop Professional Evolution Pack Export Lite verification report."),
     ("platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json", "submission_report", "Cognitive Loop Professional Evolution Pack zip-only consumer verification report."),
+    ("platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json", "submission_report", "Cognitive Loop maintainer go/no-go acceptance ledger verification report."),
     ("platform/generated/study-anything-cognitive-loop-review.json", "submission_report", "Cognitive Loop advisory code review verification report."),
     ("platform/generated/study-anything-cognitive-loop-review-agent-prompt.json", "submission_report", "External Cognitive Loop Review Agent prompt verification report."),
     ("platform/generated/study-anything-cognitive-loop-review-agent-report.json", "submission_report", "External Cognitive Loop Review Agent report handoff verification report."),
@@ -348,6 +349,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/cognitive_loop_evolution_pack_export.py", "cli", "Export a metadata-only Cognitive Loop professional evolution evidence pack."),
     ("scripts/verify_cognitive_loop_evolution_pack_export.py", "verification", "Verify Evolution Pack Export Lite zip integrity, manifest hashes, and privacy boundaries."),
     ("scripts/verify_cognitive_loop_evolution_pack_consumer.py", "verification", "Verify Evolution Pack zip-only consumer import, tamper rejection, and privacy boundaries."),
+    ("scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py", "verification", "Verify maintainer go/no-go acceptance ledger evidence, CI fixture, and privacy boundaries."),
     ("scripts/verify_cognitive_loop_mastra_adapter.py", "verification", "Verify the Cognitive Loop Mastra adapter contract pack and privacy boundary."),
     ("scripts/verify_cognitive_loop_mastra_runtime_dry_run.py", "verification", "Verify the Cognitive Loop Mastra runtime dry-run harness and privacy boundary."),
     ("platform/mastra-runtime/README.md", "mastra_runtime", "Repository-started Cognitive Loop Mastra runtime MVP operator notes."),
@@ -656,6 +658,7 @@ def manifest_payload() -> dict[str, object]:
                 "deployment-hardening-verification-v1",
                 "ecosystem-submission-v1",
                 "ecosystem-submission-verification-v1",
+                "cognitive-loop-maintainer-acceptance-ledger-v1",
             ],
         },
         "privacy_contract": {
