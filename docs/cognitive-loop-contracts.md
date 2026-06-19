@@ -398,6 +398,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_patch_proposal.py --check` 会验证低风险 proposal 生成、六类覆盖、混合 manual-only 处理、高风险与 Human Mastery Gate 降级、禁止路径降级、证据不足 comparison 降级、疑似 secret proposal 拒绝、raw diff 拒绝、policy 弱化拒绝、invalid schema 拒绝、JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-patch-proposal-verification-v1`。
 
+## Mastra Evolution Receipt Link Lite / Mastra Evolution Receipt Link Lite
+
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` creates a read-only Mastra evolution receipt link artifact from metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence. The output schema is `cognitive-loop-mastra-evolution-receipt-link-v1` and includes `EvolutionReceiptLink` artifact links, planned workflow steps, missing roles, degraded reasons, blockers, guardrails, privacy flags, and JSON/HTML output references.
+
+`python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check` verifies complete four-artifact linkage, single-artifact degradation, insufficient comparison degradation, high-risk ungated blocking, manual-only Patch Proposal blocking, unsupported schema rejection, secret-like rejection, raw diff rejection, policy-weakening rejection, privacy flag regression blocking, JSON/HTML report structure, and read-only privacy boundaries. It emits `cognitive-loop-mastra-evolution-receipt-verification-v1`.
+
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` 会基于 metadata-only Evolution Report、Apply Plan、Improvement Comparison 和 Patch Proposal evidence 创建只读 Mastra evolution receipt link artifact。输出 schema 是 `cognitive-loop-mastra-evolution-receipt-link-v1`，包含 `EvolutionReceiptLink` artifact links、计划 workflow steps、missing roles、degraded reasons、blockers、guardrails、privacy flags，以及 JSON/HTML 输出引用。
+
+`python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check` 会验证完整四件套链接、单件 artifact 降级、证据不足 comparison 降级、高风险未 gate 阻断、manual-only Patch Proposal 阻断、unsupported schema 拒绝、疑似 secret 拒绝、raw diff 拒绝、policy weakening 拒绝、privacy flag 回归阻断、JSON/HTML 报告结构和只读隐私边界，并输出 `cognitive-loop-mastra-evolution-receipt-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`
@@ -468,6 +478,12 @@ Read-only comparison of metadata-only loop artifacts showing whether the latest 
 Read-only patch specification covering prompt, policy, eval, task, doc, and retrieval categories. It records target path, intent, verification commands, risk level, and manual-only reasons, but never embeds raw unified diffs or applies changes.
 
 只读补丁规格，覆盖 prompt、policy、eval、task、doc 和 retrieval 六类。它记录 target path、intent、验证命令、risk level 和 manual-only 原因，但不嵌入 raw unified diff，也不执行变更。
+
+### `EvolutionReceiptLink`
+
+Metadata-only linkage record that connects Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence into a future Mastra workflow receipt DTO. It records artifact roles, workflow-step intent, degraded reasons, blockers, guardrails, and privacy flags, but never starts Mastra, calls models, executes apply, embeds raw diffs, or modifies source files.
+
+只含 metadata 的链接记录，用来把 Evolution Report、Apply Plan、Improvement Comparison 和 Patch Proposal evidence 接成未来 Mastra workflow receipt DTO。它记录 artifact role、workflow-step 意图、degraded reasons、blockers、guardrails 和 privacy flags，但不启动 Mastra、不调用模型、不执行 apply、不嵌入 raw diff，也不修改源码。
 
 ## Privacy Boundary
 

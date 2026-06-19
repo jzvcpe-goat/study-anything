@@ -181,6 +181,22 @@ policy-weakening inputs. Do not use it to generate raw unified diffs, call model
 modify source files, weaken policy, or include raw source, raw diff, learner answers, Agent
 endpoints, Agent metadata, prompts, or model keys.
 
+## Mastra Evolution Receipt Link Lite
+
+Use Mastra Evolution Receipt Link Lite after Evolution Report, Apply Plan, Comparator, and Patch
+Proposal evidence exists and an operator needs a metadata-only receipt DTO for future Mastra workflow
+handoff.
+
+```bash
+python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json
+python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check
+```
+
+Receipt Link Lite is read-only. It degrades missing or insufficient evidence, blocks high-risk
+ungated artifacts and manual-only PatchProposal candidates, rejects unsupported schemas, secrets,
+raw diffs, and policy weakening, and never starts Mastra, calls models, executes apply, generates raw
+unified diffs, modifies source files, or stores private learning data.
+
 ## Start A Learning Loop
 
 1. Check API health.

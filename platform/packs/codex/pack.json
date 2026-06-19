@@ -107,7 +107,8 @@
     "cognitive_loop_evolution_report.schema_version == cognitive-loop-evolution-report-verification-v1",
     "cognitive_loop_apply_plan.schema_version == cognitive-loop-apply-plan-verification-v1",
     "cognitive_loop_improvement_comparison.schema_version == cognitive-loop-improvement-comparison-verification-v1",
-    "cognitive_loop_patch_proposal.schema_version == cognitive-loop-patch-proposal-verification-v1"
+    "cognitive_loop_patch_proposal.schema_version == cognitive-loop-patch-proposal-verification-v1",
+    "cognitive_loop_mastra_evolution_receipt.schema_version == cognitive-loop-mastra-evolution-receipt-verification-v1"
   ],
   "description": "Use the repo-local Skill and CLI when Codex or another terminal-capable agent can run commands inside the Study Anything checkout.",
   "entrypoints": {
@@ -231,7 +232,10 @@
     "scripts/verify_cognitive_loop_improvement_comparator.py",
     "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
     "scripts/cognitive_loop_patch_proposal.py",
-    "scripts/verify_cognitive_loop_patch_proposal.py"
+    "scripts/verify_cognitive_loop_patch_proposal.py",
+    "platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json",
+    "scripts/cognitive_loop_mastra_evolution_receipt.py",
+    "scripts/verify_cognitive_loop_mastra_evolution_receipt.py"
   ],
   "integration_mode": "terminal_skill",
   "local_verification": [
@@ -339,7 +343,9 @@
     "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
     "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
     "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
-    "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
+    "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+    "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+    "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -369,6 +375,7 @@
     "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
     "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
     "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
-    "python3 scripts/verify_cognitive_loop_patch_proposal.py --check"
+    "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+    "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check"
   ]
 }

@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 108,
+      "acceptance_evidence_count": 109,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -214,7 +214,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
-        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -226,7 +228,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 108,
+      "acceptance_evidence_count": 109,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -329,7 +331,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
-        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -343,7 +347,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 108,
+      "acceptance_evidence_count": 109,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -445,7 +449,9 @@
         "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
         "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
         "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
-        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json"
+        "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+        "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+        "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",

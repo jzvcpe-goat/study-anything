@@ -29,6 +29,13 @@ evidence source.
   observability verifier that maps the repo-local service and durable receipts to redacted
   Langfuse trace/span/generation/score DTOs without importing the Langfuse SDK or calling a
   hosted service.
+- `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json`:
+  a read-only receipt-link builder that turns metadata-only Evolution Report, Apply Plan,
+  Improvement Comparison, and Patch Proposal evidence into a future Mastra workflow receipt DTO.
+- `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check`: local
+  verification that the receipt link degrades missing evidence, blocks high-risk ungated or
+  manual-only patch paths, rejects secrets/raw diffs/policy weakening, and never starts Mastra,
+  calls models, executes apply, or modifies source files.
 
 ## Install Into A Mastra Project
 
@@ -54,6 +61,11 @@ metadata:
 It does not accept raw source text, diff bodies, learner answers, prompts, Agent endpoint
 secrets, or model API keys.
 
+For evolution loops, the safer handoff is an `EvolutionReceiptLink` artifact produced by
+`scripts/cognitive_loop_mastra_evolution_receipt.py`. That artifact records which Evolution,
+Apply Plan, Improvement Comparison, and Patch Proposal evidence is ready, degraded, or blocked
+before any external Mastra project decides what to execute.
+
 ## HITL Mapping
 
 The adapter maps Cognitive Loop Human Mastery Gate state onto Mastra workflow behavior:
@@ -69,8 +81,8 @@ of truth for project evidence.
 ## Current Boundary
 
 Status: adapter contract pack plus metadata-only runtime dry-run harness plus minimal
-repo-started runtime MVP with a local libSQL suspend/resume proof and a local Langfuse DTO
-mapping proof.
+repo-started runtime MVP with a local libSQL suspend/resume proof, a local Langfuse DTO
+mapping proof, and a read-only EvolutionReceiptLink builder for future Mastra workflow handoff.
 
 This repository still does not ship a watcher daemon, realtime HTML console, hosted service,
 or production storage operations. Manual watcher ingest creates metadata-only `ProjectEvent`
