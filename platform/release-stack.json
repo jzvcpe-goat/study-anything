@@ -1,7 +1,8 @@
 {
   "schema_version": "study-anything-release-stack-v1",
   "version": "v0.3.31-alpha",
-  "purpose": "Offline merge-order manifest for the current stacked release PRs. It records branch order and local gates without storing GitHub tokens or live check payloads.",
+  "purpose": "Offline release-stack archive for completed and previous PR chains. It records branch order, PR/check metadata, and local gates without storing GitHub tokens, job logs, annotations, artifacts, source text, or live check payloads.",
+  "current_group": "pr-ci-receipt-chain-v0.3.70-v0.3.72",
   "release_policy": {
     "target_branch": "main",
     "merge_order": "oldest_to_newest",
@@ -13,6 +14,7 @@
     ],
     "before_tag": [
       "python3 scripts/verify_release_stack_readiness.py",
+      "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
       "./scripts/release_check.sh",
       "python3 scripts/verify_launch_acceptance_ledger.py --check",
       "python3 scripts/verify_github_launch_operator_guide.py --check",
@@ -26,64 +28,243 @@
   "stack": [
     {
       "order": 1,
-      "pr": 134,
-      "branch": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
-      "base": "codex/v0.3.52-cognitive-loop-schema-pack-consumer-failures",
-      "status_expected_before_merge": "checks_pass"
+      "pr": 180,
+      "branch": "codex/v0.3.70-pr-ci-receipt-lite",
+      "base": "main",
+      "status_expected_before_merge": "checks_pass",
+      "final_state": "MERGED",
+      "merge_commit": "7e1dab0a2ec56a65e628f8e6ca65c9c899f60552",
+      "required_checks": {
+        "api-tests": "pass",
+        "compose-smoke": "pass"
+      },
+      "evidence_refs": [
+        "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+      ]
     },
     {
       "order": 2,
-      "pr": 135,
-      "branch": "codex/v0.3.54-platform-handoff-checklist",
-      "base": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
-      "status_expected_before_merge": "checks_pass"
+      "pr": 181,
+      "branch": "codex/v0.3.71-live-gh-ci-receipt-adapter-lite",
+      "base": "main",
+      "status_expected_before_merge": "checks_pass",
+      "final_state": "MERGED",
+      "merge_commit": "b853066f6de138096ca3be4cffe3907313011d83",
+      "required_checks": {
+        "api-tests": "pass",
+        "compose-smoke": "pass"
+      },
+      "evidence_refs": [
+        "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+      ]
     },
     {
       "order": 3,
-      "pr": 136,
-      "branch": "codex/v0.3.55-launch-acceptance-ledger",
-      "base": "codex/v0.3.54-platform-handoff-checklist",
-      "status_expected_before_merge": "checks_pass"
+      "pr": 182,
+      "branch": "codex/v0.3.72-pr-ci-receipt-schema-pack-lite",
+      "base": "main",
+      "status_expected_before_merge": "checks_pass",
+      "final_state": "MERGED",
+      "merge_commit": "a26c137a39104e02189356cd8bcabb431d9bf186",
+      "required_checks": {
+        "api-tests": "pass",
+        "compose-smoke": "pass"
+      },
+      "evidence_refs": [
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+        "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+      ]
+    }
+  ],
+  "stack_groups": [
+    {
+      "group_id": "release-stack-v0.3.53-v0.3.60",
+      "role": "archived",
+      "status": "archived",
+      "target_branch": "main",
+      "summary": "Previous completed release-stack safety chain retained for audit continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 134,
+          "branch": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+          "base": "codex/v0.3.52-cognitive-loop-schema-pack-consumer-failures",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 2,
+          "pr": 135,
+          "branch": "codex/v0.3.54-platform-handoff-checklist",
+          "base": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 3,
+          "pr": 136,
+          "branch": "codex/v0.3.55-launch-acceptance-ledger",
+          "base": "codex/v0.3.54-platform-handoff-checklist",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 4,
+          "pr": 137,
+          "branch": "codex/v0.3.56-github-launch-operator-guide",
+          "base": "codex/v0.3.55-launch-acceptance-ledger",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 5,
+          "pr": 138,
+          "branch": "codex/v0.3.57-release-stack-readiness",
+          "base": "codex/v0.3.56-github-launch-operator-guide",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 6,
+          "pr": 139,
+          "branch": "codex/v0.3.58-live-release-stack-status",
+          "base": "codex/v0.3.57-release-stack-readiness",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 7,
+          "pr": 140,
+          "branch": "codex/v0.3.59-full-stack-lineage",
+          "base": "codex/v0.3.58-live-release-stack-status",
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "order": 8,
+          "pr": 141,
+          "branch": "codex/v0.3.60-merge-runbook-safety-gate",
+          "base": "codex/v0.3.59-full-stack-lineage",
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
     },
     {
-      "order": 4,
-      "pr": 137,
-      "branch": "codex/v0.3.56-github-launch-operator-guide",
-      "base": "codex/v0.3.55-launch-acceptance-ledger",
-      "status_expected_before_merge": "checks_pass"
-    },
-    {
-      "order": 5,
-      "pr": 138,
-      "branch": "codex/v0.3.57-release-stack-readiness",
-      "base": "codex/v0.3.56-github-launch-operator-guide",
-      "status_expected_before_merge": "checks_pass"
-    },
-    {
-      "order": 6,
-      "pr": 139,
-      "branch": "codex/v0.3.58-live-release-stack-status",
-      "base": "codex/v0.3.57-release-stack-readiness",
-      "status_expected_before_merge": "checks_pass"
-    },
-    {
-      "order": 7,
-      "pr": 140,
-      "branch": "codex/v0.3.59-full-stack-lineage",
-      "base": "codex/v0.3.58-live-release-stack-status",
-      "status_expected_before_merge": "checks_pass"
-    },
-    {
-      "order": 8,
-      "pr": 141,
-      "branch": "codex/v0.3.60-merge-runbook-safety-gate",
-      "base": "codex/v0.3.59-full-stack-lineage",
-      "status_expected_before_merge": "checks_pass"
+      "group_id": "pr-ci-receipt-chain-v0.3.70-v0.3.72",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed PR CI receipt, live GitHub metadata adapter, and offline schema-pack chain.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "platform/generated/study-anything-platform-adoption-pack.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 180,
+          "branch": "codex/v0.3.70-pr-ci-receipt-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "7e1dab0a2ec56a65e628f8e6ca65c9c899f60552",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 181,
+          "branch": "codex/v0.3.71-live-gh-ci-receipt-adapter-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "b853066f6de138096ca3be4cffe3907313011d83",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+          ]
+        },
+        {
+          "order": 3,
+          "pr": 182,
+          "branch": "codex/v0.3.72-pr-ci-receipt-schema-pack-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "a26c137a39104e02189356cd8bcabb431d9bf186",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+            "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+            "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+            "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
     }
   ],
   "privacy_assertions": {
+    "metadata_only": true,
     "github_tokens_included": false,
+    "job_logs_included": false,
+    "check_annotations_included": false,
     "live_check_payloads_included": false,
+    "source_mutation_performed": false,
     "raw_source_text_included": false,
     "learner_answers_included": false,
     "agent_endpoint_secrets_included": false,

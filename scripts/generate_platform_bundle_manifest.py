@@ -347,6 +347,11 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub launch operator guide proof for release sequence, assets, and local-first boundaries.",
     ),
     (
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "generated_asset",
+        "Negative fixtures proving release stack archive manifest boundary checks.",
+    ),
+    (
         "platform/generated/study-anything-platform-submission-dry-run.json",
         "generated_asset",
         "External platform submission dry-run readiness report.",

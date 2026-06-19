@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from verify_release_stack_readiness import current_group, required_checks_from
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "platform" / "release-stack.json"
@@ -66,7 +68,7 @@ def view_pr(number: int) -> dict[str, Any]:
             "view",
             str(number),
             "--json",
-            "number,headRefName,baseRefName,state,isDraft,statusCheckRollup",
+            "number,headRefName,baseRefName,state,isDraft,mergeCommit,statusCheckRollup",
         ]
     )
     if not isinstance(payload, dict):
@@ -86,7 +88,7 @@ def find_pr_by_head(branch: str) -> dict[str, Any]:
             "--limit",
             "20",
             "--json",
-            "number,headRefName,baseRefName,state,isDraft,statusCheckRollup",
+            "number,headRefName,baseRefName,state,isDraft,mergeCommit,statusCheckRollup",
         ]
     )
     if not isinstance(payload, list):
@@ -103,14 +105,14 @@ def find_pr_by_head(branch: str) -> dict[str, Any]:
     return matches[0]
 
 
-def summarize_checks(payload: dict[str, Any]) -> tuple[dict[str, str], list[str]]:
+def summarize_checks(payload: dict[str, Any], required_checks: set[str] = REQUIRED_CHECKS) -> tuple[dict[str, str], list[str]]:
     rollup = payload.get("statusCheckRollup", [])
     if not isinstance(rollup, list):
         raise ReleaseStackLineageError(f"PR #{payload.get('number')} statusCheckRollup must be a list.")
     by_name = {str(item.get("name")): item for item in rollup if isinstance(item, dict)}
     checks: dict[str, str] = {}
     failures: list[str] = []
-    for check_name in sorted(REQUIRED_CHECKS):
+    for check_name in sorted(required_checks):
         item = by_name.get(check_name)
         if not item:
             checks[check_name] = "missing"
@@ -126,7 +128,12 @@ def summarize_checks(payload: dict[str, Any]) -> tuple[dict[str, str], list[str]
     return checks, failures
 
 
-def summarize_pr(payload: dict[str, Any], expected_head: str | None = None, expected_base: str | None = None) -> tuple[dict[str, Any], list[str]]:
+def summarize_pr(
+    payload: dict[str, Any],
+    expected_head: str | None = None,
+    expected_base: str | None = None,
+    required_checks: set[str] = REQUIRED_CHECKS,
+) -> tuple[dict[str, Any], list[str]]:
     failures: list[str] = []
     pr_number = payload.get("number")
     head = payload.get("headRefName")
@@ -138,8 +145,9 @@ def summarize_pr(payload: dict[str, Any], expected_head: str | None = None, expe
         failures.append(f"PR #{pr_number} base must be {expected_base}.")
     if state not in {"OPEN", "MERGED"}:
         failures.append(f"PR #{pr_number} state must be OPEN or MERGED.")
-    checks, check_failures = summarize_checks(payload) if state == "OPEN" else ({}, [])
+    checks, check_failures = summarize_checks(payload, required_checks)
     failures.extend(check_failures)
+    merge_commit = payload.get("mergeCommit") or {}
     return (
         {
             "pr": pr_number,
@@ -147,6 +155,7 @@ def summarize_pr(payload: dict[str, Any], expected_head: str | None = None, expe
             "base": base,
             "state": state,
             "is_draft": bool(payload.get("isDraft")) if state == "OPEN" else None,
+            "merge_commit": merge_commit.get("oid") if isinstance(merge_commit, dict) else None,
             "required_checks": checks,
             "merge_ready": not failures,
         },
@@ -155,15 +164,71 @@ def summarize_pr(payload: dict[str, Any], expected_head: str | None = None, expe
 
 
 def verify_lineage(manifest: dict[str, Any], allow_missing_top_pr: bool, max_depth: int) -> dict[str, Any]:
-    stack = manifest.get("stack")
+    group = current_group(manifest)
+    stack = group.get("stack")
     if not isinstance(stack, list) or not stack:
         raise ReleaseStackLineageError("Release stack manifest must include a non-empty stack.")
-    if set(str(item) for item in manifest.get("required_checks", [])) != REQUIRED_CHECKS:
+    required_checks = required_checks_from(group, str(group.get("group_id")))
+    if required_checks != REQUIRED_CHECKS:
         raise ReleaseStackLineageError("Release stack required checks drifted.")
     policy = manifest.get("release_policy")
     if not isinstance(policy, dict):
         raise ReleaseStackLineageError("release_policy must be an object.")
     target_branch = str(policy.get("target_branch"))
+    group_status = str(group.get("status"))
+
+    if group_status == "completed":
+        lineage: list[dict[str, Any]] = []
+        blockers: list[str] = []
+        for row in stack:
+            if not isinstance(row, dict):
+                raise ReleaseStackLineageError("Release stack rows must be objects.")
+            pr_number = row.get("pr")
+            branch = row.get("branch")
+            base = row.get("base")
+            expected_merge_commit = row.get("merge_commit")
+            if not isinstance(pr_number, int) or not isinstance(branch, str) or not isinstance(base, str):
+                raise ReleaseStackLineageError("Completed stack rows must include int pr and string branch/base.")
+            payload = view_pr(pr_number)
+            summary, failures = summarize_pr(
+                payload,
+                expected_head=branch,
+                expected_base=base,
+                required_checks=required_checks,
+            )
+            if payload.get("state") != "MERGED":
+                failures.append(f"PR #{pr_number} must be MERGED in a completed stack group.")
+            if summary.get("merge_commit") != expected_merge_commit:
+                failures.append(f"PR #{pr_number} merge commit must match the release stack manifest.")
+            if base != target_branch:
+                failures.append(f"PR #{pr_number} completed base must be {target_branch}.")
+            lineage.append(summary)
+            blockers.extend(failures)
+        reached_target = all(item.get("base") == target_branch for item in lineage)
+        status = "pass" if not blockers and reached_target else "blocked"
+        return {
+            "schema_version": SCHEMA_VERSION,
+            "status": status,
+            "version": manifest.get("version"),
+            "current_group": group.get("group_id"),
+            "current_group_status": group_status,
+            "target_branch": target_branch,
+            "top_branch": stack[-1].get("branch") if isinstance(stack[-1], dict) else None,
+            "lineage_reaches_target": reached_target,
+            "lineage_length": len(lineage),
+            "lineage": lineage,
+            "blocker_count": len(blockers),
+            "blockers": [redact(item) for item in blockers[:10]],
+            "privacy": {
+                "github_tokens_stored": False,
+                "live_check_payloads_stored": False,
+                "raw_source_text_included": False,
+                "learner_answers_included": False,
+                "agent_endpoint_secrets_included": False,
+                "real_model_keys_included": False,
+            },
+        }
+
     top = stack[-1]
     if not isinstance(top, dict):
         raise ReleaseStackLineageError("Top stack row must be an object.")
@@ -182,7 +247,12 @@ def verify_lineage(manifest: dict[str, Any], allow_missing_top_pr: bool, max_dep
 
     try:
         top_payload = view_pr(top_pr)
-        top_summary, top_failures = summarize_pr(top_payload, expected_head=top_branch, expected_base=top_base)
+        top_summary, top_failures = summarize_pr(
+            top_payload,
+            expected_head=top_branch,
+            expected_base=top_base,
+            required_checks=required_checks,
+        )
         lineage.append(top_summary)
         blockers.extend(top_failures)
         current_base = str(top_payload.get("baseRefName"))
@@ -210,7 +280,7 @@ def verify_lineage(manifest: dict[str, Any], allow_missing_top_pr: bool, max_dep
             raise ReleaseStackLineageError(f"Cycle detected while walking lineage at {current_base}.")
         visited.add(current_base)
         payload = find_pr_by_head(current_base)
-        summary, failures = summarize_pr(payload, expected_head=current_base)
+        summary, failures = summarize_pr(payload, expected_head=current_base, required_checks=required_checks)
         lineage.append(summary)
         blockers.extend(failures)
         current_base = str(payload.get("baseRefName"))
@@ -230,6 +300,8 @@ def verify_lineage(manifest: dict[str, Any], allow_missing_top_pr: bool, max_dep
         "schema_version": SCHEMA_VERSION,
         "status": status,
         "version": manifest.get("version"),
+        "current_group": group.get("group_id"),
+        "current_group_status": group_status,
         "target_branch": target_branch,
         "top_branch": top_branch,
         "lineage_reaches_target": reached_target,

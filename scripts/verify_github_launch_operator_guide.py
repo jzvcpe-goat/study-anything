@@ -143,6 +143,7 @@ def verify_release_check_registered() -> dict[str, Any]:
     for command in (
         "scripts/verify_launch_acceptance_ledger.py --check",
         "scripts/verify_github_launch_operator_guide.py --check",
+        "scripts/verify_release_stack_manifest_fixtures.py --check",
         "scripts/generate_platform_bundle_manifest.py --check",
         "scripts/generate_platform_adoption_pack.py --check",
     ):
