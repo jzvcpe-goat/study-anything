@@ -3,22 +3,22 @@
   "negative_fixtures": [
     {
       "case_id": "already_represented_pr",
-      "error": "promoted current group does not match the expected #193/#194 candidate group.",
+      "error": "promoted current group does not match the expected #195/#196 candidate group.",
       "status": "rejected"
     },
     {
       "case_id": "missing_merge_commit",
-      "error": "release-stack-promotion-v0.3.83-v0.3.84.stack[2].merge_commit must be a 40-character lowercase SHA.",
+      "error": "release-stack-promotion-v0.3.85-v0.3.86.stack[2].merge_commit must be a 40-character lowercase SHA.",
       "status": "rejected"
     },
     {
       "case_id": "failed_required_check",
-      "error": "release-stack-promotion-v0.3.83-v0.3.84.stack[2].required_checks.api-tests must be pass.",
+      "error": "release-stack-promotion-v0.3.85-v0.3.86.stack[2].required_checks.api-tests must be pass.",
       "status": "rejected"
     },
     {
       "case_id": "missing_required_check",
-      "error": "release-stack-promotion-v0.3.83-v0.3.84.stack[2].required_checks.compose-smoke must be pass.",
+      "error": "release-stack-promotion-v0.3.85-v0.3.86.stack[2].required_checks.compose-smoke must be pass.",
       "status": "rejected"
     },
     {
@@ -51,29 +51,29 @@
     "source_mutation_performed": false
   },
   "promotion": {
-    "current_group": "release-stack-promotion-v0.3.83-v0.3.84",
-    "previous_current_group": "release-stack-promotion-v0.3.81-v0.3.82",
+    "current_group": "release-stack-promotion-v0.3.85-v0.3.86",
+    "previous_current_group": "release-stack-promotion-v0.3.83-v0.3.84",
     "previous_current_group_archived": true,
     "promoted_prs": [
-      193,
-      194
+      195,
+      196
     ],
     "top_level_stack_mirrors_current": true
   },
   "readiness": {
-    "archived_group_count": 7,
-    "current_group": "release-stack-promotion-v0.3.83-v0.3.84",
+    "archived_group_count": 8,
+    "current_group": "release-stack-promotion-v0.3.85-v0.3.86",
     "schema_version": "release-stack-readiness-v1",
     "stack_prs": [
-      193,
-      194
+      195,
+      196
     ],
     "status": "pass"
   },
   "schema_version": "release-stack-candidate-promotion-v1",
   "source_reports": [
-    "fixtures/release-stack/pr-193-intake-candidate.json",
-    "fixtures/release-stack/pr-194-intake-candidate.json",
+    "fixtures/release-stack/pr-195-intake-candidate.json",
+    "fixtures/release-stack/pr-196-intake-candidate.json",
     "platform/release-stack.json"
   ],
   "status": "pass",
