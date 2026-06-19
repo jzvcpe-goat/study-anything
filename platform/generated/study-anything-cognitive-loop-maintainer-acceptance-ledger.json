@@ -1,7 +1,7 @@
 {
   "acceptance": {
     "blocks_release_check": true,
-    "human_prerequisite": "Maintainer confirms PR CI is accurately reflected in ci_status_fixture.",
+    "human_prerequisite": "Maintainer confirms PR CI receipt accurately reflects the current PR checks.",
     "minimum_command": "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check"
   },
   "blocking_reasons": [],
@@ -16,6 +16,7 @@
     "failed_ci_blocks": true,
     "manual_review_fixture_decision": true,
     "missing_consumer_report_rejected": true,
+    "missing_pr_ci_receipt_rejected": true,
     "missing_release_evidence_rejected": true,
     "policy_weakening_rejected": true,
     "privacy_regression_rejected": true,
@@ -55,25 +56,15 @@
     "real_model_keys_stored": false,
     "source_text_included": false
   },
-  "purpose": "Aggregate Professional Evolution Pack export, zip-only consumer, release evidence, local release gate, and PR CI status into a maintainer go/no-go ledger.",
+  "purpose": "Aggregate Professional Evolution Pack export, zip-only consumer, release evidence, local release gate, and PR CI receipt status into a maintainer go/no-go ledger.",
   "release_gate": {
-    "ci_status_fixture": {
-      "checks": [
-        {
-          "name": "api-tests",
-          "status": "pass"
-        },
-        {
-          "name": "compose-smoke",
-          "status": "pass"
-        }
-      ],
-      "required_checks": [
-        "api-tests",
-        "compose-smoke"
-      ],
-      "schema_version": "cognitive-loop-pr-ci-status-fixture-v1",
-      "source": "maintainer-entered PR check summary"
+    "pr_ci_receipt": {
+      "decision": "ready",
+      "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+      "pr_number": 179,
+      "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+      "status": "pass"
     },
     "release_check": {
       "command": "./scripts/release_check.sh",
@@ -135,10 +126,18 @@
       "status": "n/a"
     },
     {
+      "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+      "required": true,
+      "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+      "sha256": "090ec52a01980f98532507ee7f5b9d1b723a96a975fb2678d8b96eddfd045e01",
+      "source_id": "pr_ci_receipt",
+      "status": "pass"
+    },
+    {
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "required": true,
       "schema_version": "published-image-evidence-v1",
-      "sha256": "6a6a4b4787bd2c66465c3e302ca6989ee6cde2a8b7e1b9e59c7fab6867b58fa0",
+      "sha256": "b732b658ae0ac8dd71af5eff022395038ee65b4b90923c730d87f0c550eaa077",
       "source_id": "published_image_evidence",
       "status": "pass"
     },
@@ -146,7 +145,7 @@
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "required": true,
       "schema_version": "release-asset-adoption-v1",
-      "sha256": "5b009986a1496fb54de4268d6b7f67c3252a9970c85187cba01c099d106f0bf4",
+      "sha256": "16af7cfe18e8a91d8edc8ed0cd596b02ec24b53a2e093a877a2db6f7f9370d3c",
       "source_id": "release_asset_adoption",
       "status": "pass"
     }

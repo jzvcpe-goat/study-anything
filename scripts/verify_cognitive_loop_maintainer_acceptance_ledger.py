@@ -16,7 +16,7 @@ from typing import Any, Mapping
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "platform" / "generated" / "study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
 SCHEMA_VERSION = "cognitive-loop-maintainer-acceptance-ledger-v1"
-CI_FIXTURE_SCHEMA = "cognitive-loop-pr-ci-status-fixture-v1"
+PR_CI_RECEIPT_SCHEMA = "cognitive-loop-pr-ci-receipt-v1"
 REQUIRED_CHECKS = ("api-tests", "compose-smoke")
 SAFE_COMMANDS = (
     "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
@@ -38,6 +38,13 @@ SOURCE_SPECS: tuple[dict[str, Any], ...] = (
         "source_id": "evolution_pack_consumer",
         "path": "platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json",
         "schema_version": "cognitive-loop-evolution-pack-consumer-v1",
+        "accepted_statuses": ("pass",),
+        "required": True,
+    },
+    {
+        "source_id": "pr_ci_receipt",
+        "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "schema_version": "cognitive-loop-pr-ci-receipt-v1",
         "accepted_statuses": ("pass",),
         "required": True,
     },
@@ -294,40 +301,35 @@ def validate_safe_commands(commands: list[str]) -> None:
         raise MaintainerAcceptanceLedgerError(f"Unsafe or unknown operator commands: unexpected={unexpected} unsafe={unsafe}")
 
 
-def default_ci_fixture(statuses: Mapping[str, str] | None = None) -> dict[str, Any]:
-    status_map = {name: "pass" for name in REQUIRED_CHECKS}
-    if statuses:
-        status_map.update(statuses)
-    return {
-        "schema_version": CI_FIXTURE_SCHEMA,
-        "source": "maintainer-entered PR check summary",
-        "required_checks": list(REQUIRED_CHECKS),
-        "checks": [{"name": name, "status": status_map[name]} for name in REQUIRED_CHECKS],
-    }
-
-
-def evaluate_ci(ci_fixture: Mapping[str, Any]) -> tuple[list[str], list[str]]:
-    if ci_fixture.get("schema_version") != CI_FIXTURE_SCHEMA:
-        raise MaintainerAcceptanceLedgerError("CI fixture schema drifted.")
-    required = set(str(item) for item in ci_fixture.get("required_checks") or [])
+def evaluate_pr_ci_receipt(receipt: Mapping[str, Any]) -> tuple[str, list[str], list[str]]:
+    if receipt.get("schema_version") != PR_CI_RECEIPT_SCHEMA:
+        raise MaintainerAcceptanceLedgerError("PR CI receipt schema drifted.")
+    if receipt.get("status") != "pass":
+        raise MaintainerAcceptanceLedgerError(f"PR CI receipt status is not pass: {receipt.get('status')}")
+    required = set(str(item) for item in receipt.get("required_checks") or [])
     missing_required = sorted(set(REQUIRED_CHECKS) - required)
     if missing_required:
-        raise MaintainerAcceptanceLedgerError(f"CI fixture is missing required checks: {missing_required}")
-    checks = ci_fixture.get("checks")
+        raise MaintainerAcceptanceLedgerError(f"PR CI receipt is missing required checks: {missing_required}")
+    decision = str(receipt.get("decision") or "")
+    if decision not in {"ready", "manual_review", "blocked"}:
+        raise MaintainerAcceptanceLedgerError(f"PR CI receipt decision is not supported: {decision}")
+    checks = receipt.get("checks")
     if not isinstance(checks, list):
-        raise MaintainerAcceptanceLedgerError("CI fixture checks must be a list.")
+        raise MaintainerAcceptanceLedgerError("PR CI receipt checks must be a list.")
     by_name = {str(row.get("name")): str(row.get("status")) for row in checks if isinstance(row, Mapping)}
-    blocking: list[str] = []
-    manual: list[str] = []
     for check in REQUIRED_CHECKS:
         status = by_name.get(check)
-        if status == "pass":
-            continue
-        if status in {"pending", "queued", "unknown", "not_run"}:
-            manual.append(f"ci:{check}:{status}")
-        else:
-            blocking.append(f"ci:{check}:{status}")
-    return blocking, manual
+        if status not in {"pass", "pending", "fail", "unknown"}:
+            raise MaintainerAcceptanceLedgerError(f"PR CI receipt has unsupported check status {check}={status}")
+    blocking = [str(item) for item in receipt.get("blocking_reasons") or []]
+    manual = [str(item) for item in receipt.get("manual_review_reasons") or []]
+    if decision == "ready" and (blocking or manual):
+        raise MaintainerAcceptanceLedgerError("Ready PR CI receipt must not contain blocking/manual reasons.")
+    if decision == "manual_review" and blocking:
+        raise MaintainerAcceptanceLedgerError("Manual-review PR CI receipt must not contain blocking reasons.")
+    if decision == "blocked" and not blocking:
+        raise MaintainerAcceptanceLedgerError("Blocked PR CI receipt must contain blocking reasons.")
+    return decision, blocking, manual
 
 
 def pack_sha_from_sources(sources: Mapping[str, Mapping[str, Any]]) -> tuple[str, str]:
@@ -354,7 +356,6 @@ def required_reports_present(sources: Mapping[str, Mapping[str, Any]]) -> list[s
 def build_report(
     sources: Mapping[str, Mapping[str, Any]] | None = None,
     *,
-    ci_fixture: Mapping[str, Any] | None = None,
     release_check_status: str = "pass",
     release_check_text: str | None = None,
 ) -> dict[str, Any]:
@@ -366,16 +367,16 @@ def build_report(
     if release_text is None:
         release_text = (ROOT / "scripts" / "release_check.sh").read_text(encoding="utf-8")
     release_check_included = release_check_includes_self(release_text)
-    ci = dict(ci_fixture or default_ci_fixture())
-    ci_blocking, ci_manual = evaluate_ci(ci)
+    pr_ci_receipt = loaded_sources["pr_ci_receipt"]
+    pr_ci_decision, pr_ci_blocking, pr_ci_manual = evaluate_pr_ci_receipt(pr_ci_receipt)
     blocking_reasons: list[str] = []
     manual_review_reasons: list[str] = []
     if release_check_status != "pass":
         blocking_reasons.append(f"release_check:{release_check_status}")
     if not release_check_included:
         blocking_reasons.append("release_check_missing_maintainer_ledger")
-    blocking_reasons.extend(ci_blocking)
-    manual_review_reasons.extend(ci_manual)
+    blocking_reasons.extend(f"pr_ci:{item}" for item in pr_ci_blocking)
+    manual_review_reasons.extend(f"pr_ci:{item}" for item in pr_ci_manual)
 
     commands = list(SAFE_COMMANDS)
     validate_safe_commands(commands)
@@ -385,7 +386,7 @@ def build_report(
         "status": "pass",
         "purpose": (
             "Aggregate Professional Evolution Pack export, zip-only consumer, release evidence, "
-            "local release gate, and PR CI status into a maintainer go/no-go ledger."
+            "local release gate, and PR CI receipt status into a maintainer go/no-go ledger."
         ),
         "decision": decision,
         "blocking_reasons": blocking_reasons,
@@ -407,7 +408,14 @@ def build_report(
                 "status": release_check_status,
                 "included_in_release_check": release_check_included,
             },
-            "ci_status_fixture": ci,
+            "pr_ci_receipt": {
+                "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+                "schema_version": pr_ci_receipt["schema_version"],
+                "status": pr_ci_receipt["status"],
+                "decision": pr_ci_decision,
+                "head_sha": pr_ci_receipt.get("head_sha"),
+                "pr_number": pr_ci_receipt.get("pr_number"),
+            },
             "required_checks": list(REQUIRED_CHECKS),
         },
         "operator_next_commands": commands,
@@ -441,7 +449,7 @@ def build_report(
         "acceptance": {
             "minimum_command": "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
             "blocks_release_check": True,
-            "human_prerequisite": "Maintainer confirms PR CI is accurately reflected in ci_status_fixture.",
+            "human_prerequisite": "Maintainer confirms PR CI receipt accurately reflects the current PR checks.",
         },
     }
     assert_no_private_text(report, label="maintainer acceptance ledger")
@@ -467,8 +475,16 @@ def clone_sources() -> dict[str, dict[str, Any]]:
 
 def verify_failure_modes() -> dict[str, bool]:
     ready_sources = clone_sources()
-    manual = build_report(ready_sources, ci_fixture=default_ci_fixture({"api-tests": "pending"}))
-    blocked = build_report(ready_sources, ci_fixture=default_ci_fixture({"compose-smoke": "fail"}))
+    manual_sources = clone_sources()
+    manual_sources["pr_ci_receipt"]["decision"] = "manual_review"
+    manual_sources["pr_ci_receipt"]["manual_review_reasons"] = ["ci:api-tests:pending"]
+    manual_sources["pr_ci_receipt"]["checks"][0]["status"] = "pending"
+    blocked_sources = clone_sources()
+    blocked_sources["pr_ci_receipt"]["decision"] = "blocked"
+    blocked_sources["pr_ci_receipt"]["blocking_reasons"] = ["ci:compose-smoke:fail"]
+    blocked_sources["pr_ci_receipt"]["checks"][1]["status"] = "fail"
+    manual = build_report(manual_sources)
+    blocked = build_report(blocked_sources)
     if manual["decision"] != "manual_review":
         raise MaintainerAcceptanceLedgerError("Manual-review fixture did not produce manual_review.")
     if blocked["decision"] != "blocked":
@@ -479,13 +495,22 @@ def verify_failure_modes() -> dict[str, bool]:
         del sources["evolution_pack_consumer"]
         build_report(sources)
 
+    def missing_pr_ci_receipt() -> None:
+        sources = clone_sources()
+        del sources["pr_ci_receipt"]
+        build_report(sources)
+
     def stale_pack_hash() -> None:
         sources = clone_sources()
         sources["evolution_pack_consumer"]["success_modes"]["ready_zip_sha256"] = "0" * 64
         build_report(sources)
 
     def failed_ci() -> None:
-        report = build_report(clone_sources(), ci_fixture=default_ci_fixture({"api-tests": "fail"}))
+        sources = clone_sources()
+        sources["pr_ci_receipt"]["decision"] = "blocked"
+        sources["pr_ci_receipt"]["blocking_reasons"] = ["ci:api-tests:fail"]
+        sources["pr_ci_receipt"]["checks"][0]["status"] = "fail"
+        report = build_report(sources)
         if report["decision"] != "blocked":
             raise MaintainerAcceptanceLedgerError("Failed CI did not block maintainer ledger.")
 
@@ -512,6 +537,7 @@ def verify_failure_modes() -> dict[str, bool]:
         "manual_review_fixture_decision": manual["decision"] == "manual_review",
         "blocked_fixture_decision": blocked["decision"] == "blocked",
         "missing_consumer_report_rejected": expect_failure("missing_consumer_report", missing_consumer),
+        "missing_pr_ci_receipt_rejected": expect_failure("missing_pr_ci_receipt", missing_pr_ci_receipt),
         "stale_pack_hash_rejected": expect_failure("stale_pack_hash", stale_pack_hash),
         "failed_ci_blocks": failed_ci() is None,
         "missing_release_evidence_rejected": expect_failure("missing_release_evidence", missing_release_evidence),
