@@ -1,0 +1,115 @@
+{
+  "candidate_group": {
+    "group_id": "release-stack-intake-pr-183-v0.3.73-release-stack-archive-refresh-lite",
+    "operator_commands": [
+      "python3 scripts/verify_release_stack_intake_candidate.py --check",
+      "python3 scripts/verify_release_stack_intake_candidate.py --from-gh-pr 183 --report-only",
+      "python3 scripts/verify_release_stack_readiness.py",
+      "python3 scripts/verify_release_stack_manifest_fixtures.py --check"
+    ],
+    "post_merge_evidence_refs": [
+      "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+      "platform/generated/study-anything-platform-bundle.json",
+      "platform/generated/study-anything-platform-adoption-pack.json",
+      "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+    ],
+    "privacy_assertions": {
+      "agent_endpoint_secrets_included": false,
+      "artifacts_included": false,
+      "check_annotations_included": false,
+      "github_tokens_included": false,
+      "job_logs_included": false,
+      "learner_answers_included": false,
+      "live_check_payloads_included": false,
+      "metadata_only": true,
+      "raw_source_text_included": false,
+      "real_model_keys_included": false,
+      "source_mutation_performed": false
+    },
+    "required_checks": [
+      "api-tests",
+      "compose-smoke"
+    ],
+    "role": "candidate",
+    "stack": [
+      {
+        "base": "main",
+        "branch": "codex/v0.3.73-release-stack-archive-refresh-lite",
+        "evidence_refs": [
+          "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+          "platform/generated/study-anything-platform-bundle.json",
+          "platform/generated/study-anything-platform-adoption-pack.json",
+          "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+        ],
+        "final_state": "MERGED",
+        "merge_commit": "32793e4e12314076f89b11f72fd1d2b7a03adec4",
+        "order": 1,
+        "pr": 183,
+        "required_checks": {
+          "api-tests": "pass",
+          "compose-smoke": "pass"
+        },
+        "status_expected_before_merge": "checks_pass"
+      }
+    ],
+    "status": "completed",
+    "summary": "Candidate release stack group for PR #183: Add manifest-driven release stack archive checks.",
+    "target_branch": "main"
+  },
+  "generated_at": "2026-01-01T00:00:00Z",
+  "manifest": {
+    "candidate_is_not_applied": true,
+    "current_group": "pr-ci-receipt-chain-v0.3.70-v0.3.72",
+    "represented_pr_count": 11
+  },
+  "negative_fixtures": [
+    {
+      "case_id": "missing_merge_commit",
+      "error": "Release stack intake merge commit must be a 40-character lowercase SHA.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "failed_required_check",
+      "error": "Release stack intake required checks must pass: {'api-tests': 'completed:failure'}",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_required_check",
+      "error": "Release stack intake missing required checks: ['compose-smoke']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "unsafe_command",
+      "error": "Unsafe release stack intake commands: unknown=['gh api repos/jzvcpe-goat/study-anything/actions/jobs/1/logs'] unsafe=['gh api repos/jzvcpe-goat/study-anything/actions/jobs/1/logs']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "secret_log_artifact_payload",
+      "error": "release stack intake source contains private or unsafe text: ['<redacted>', '<redacted>']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "already_represented_pr",
+      "error": "PR #180 is already represented in release-stack manifest.",
+      "status": "rejected"
+    }
+  ],
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "artifacts_stored": false,
+    "check_annotations_stored": false,
+    "github_tokens_stored": false,
+    "job_logs_stored": false,
+    "learner_answers_included": false,
+    "live_check_payloads_stored": false,
+    "manifest_mutated": false,
+    "metadata_only": true,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "source_mutation_performed": false
+  },
+  "schema_version": "release-stack-intake-candidate-v1",
+  "source": "fixture",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}
