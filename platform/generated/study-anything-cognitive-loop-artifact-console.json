@@ -18,11 +18,11 @@
     "event_count": 0,
     "evolution_chain_status": "degraded_missing_artifacts",
     "html_has_empty_state": true,
-    "missing_evolution_artifact_count": 6,
+    "missing_evolution_artifact_count": 7,
     "status": "ready"
   },
   "evolution_chain_console": {
-    "artifact_count": 6,
+    "artifact_count": 7,
     "blocking_count": 0,
     "chain_statuses": {
       "apply_plan_status": "dry_run_ready",
@@ -30,7 +30,8 @@
       "evolution_status": "ready",
       "patch_status": "ready",
       "receipt_status": "ready",
-      "replay_status": "replay_ready"
+      "replay_status": "replay_ready",
+      "sandbox_status": "sandbox_ready"
     },
     "html_has_evolution_chain": true,
     "manual_review_count": 0,
@@ -80,7 +81,7 @@
     "evolution_chain_status": "degraded_missing_artifacts",
     "manifest_written": true,
     "missing_event_source_count": 1,
-    "missing_evolution_artifact_count": 6,
+    "missing_evolution_artifact_count": 7,
     "mobile_structure": "ok",
     "runner_status": "pass",
     "skipped_observation_count": 2,

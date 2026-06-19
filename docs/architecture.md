@@ -64,7 +64,7 @@ The current repository already implements the Study Anything foundation:
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
-- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, Mastra Evolution Workflow Replay Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
+- Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, Mastra Evolution Workflow Replay Lite, Governed Patch Apply Sandbox Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
 当前仓库已经实现的是 Study Anything 基础层：
@@ -75,7 +75,7 @@ The current repository already implements the Study Anything foundation:
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
-- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite、Measured Improvement Comparator Lite、Patch Proposal Lite、Mastra Evolution Receipt Link Lite、Mastra Evolution Workflow Replay Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
+- Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite、Measured Improvement Comparator Lite、Patch Proposal Lite、Mastra Evolution Receipt Link Lite、Mastra Evolution Workflow Replay Lite、Governed Patch Apply Sandbox Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影和 release 证据。
 
 ## Planned Cognitive Loop Core
@@ -95,6 +95,7 @@ Conceptual objects:
 - `PatchProposal`: a read-only patch specification for prompt, policy, eval, task, doc, and retrieval categories.
 - `EvolutionReceiptLink`: a metadata-only linkage record that turns evolution evidence into a future Mastra workflow receipt DTO without starting Mastra, calling models, executing apply, or modifying source files.
 - `MastraEvolutionWorkflowReplay`: a metadata-only replay transcript that maps an EvolutionReceiptLink into future Mastra workflow steps without starting production Mastra, calling models, executing apply, or modifying source files.
+- `PatchApplySandboxReceipt`: a metadata-only dry-run receipt that proves patch-apply readiness and rollback without mutating the real worktree.
 
 The first local contract validator is now implemented before runtime migration so docs, platform packs, and future code use the same vocabulary. The contracts are validated by `scripts/verify_cognitive_loop_contracts.py`, which emits `cognitive-loop-contract-bootstrap-v1`.
 
@@ -332,7 +333,11 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` is the current Mastra Evolution Workflow Replay Lite entrypoint. It consumes a metadata-only `EvolutionReceiptLink` and writes a read-only `MastraEvolutionWorkflowReplay` JSON/HTML transcript for future workflow handoff. Ready receipts become replay-ready; degraded receipts become manual review; blocked receipts stay blocked/manual-only. It rejects invalid schemas, unsupported statuses, ready receipts with missing roles, high-risk ungated receipts, manual-only patch paths, privacy flag regressions, secrets, raw diff bodies, and policy weakening. It never starts production Mastra, calls models, executes apply, modifies source files, or stores private learning data.
 
+`python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` is the current Governed Patch Apply Sandbox Lite entrypoint. It consumes metadata-only Patch Proposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs, builds a `PatchApplySandboxReceipt`, proves rollback through a temporary sandbox preview reference, and confirms the real worktree was not mutated. It rejects invalid schemas, secrets, raw diffs, protected target paths, privacy flag regressions, and policy weakening; it does not execute source-changing apply.
+
 `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json` 是当前 Mastra Evolution Workflow Replay Lite 入口。它消费 metadata-only `EvolutionReceiptLink`，并写出只读 `MastraEvolutionWorkflowReplay` JSON/HTML transcript，供未来 workflow 交接使用。ready receipt 会成为 replay-ready；degraded receipt 会进入 manual review；blocked receipt 会停在 blocked/manual-only。它拒绝 invalid schema、unsupported status、ready 但缺少 required roles 的 receipt、高风险未 gate receipt、manual-only patch path、privacy flag 回归、secret、raw diff body 和 policy weakening。它不会启动生产 Mastra、调用模型、执行 apply、修改源码或保存私有学习数据。
+
+`python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` 是当前 Governed Patch Apply Sandbox Lite 入口。它消费 metadata-only Patch Proposal、Apply Plan、EvolutionReceiptLink 和 MastraEvolutionWorkflowReplay 引用，写出 `PatchApplySandboxReceipt`，通过临时沙箱预演引用证明 rollback，并确认真实工作树未被修改。它会拒绝 invalid schema、secret、raw diff、受保护路径、privacy flag 回归和 policy weakening；它不执行源码改写 apply。
 
 `platform/mastra/cognitive-loop-mastra-adapter.ts` is the current Mastra bridge. It is a TypeScript scaffold for an external Mastra project, mapping Cognitive Loop evidence validation and Human Mastery Gate state to workflow steps, suspend/resume, and bail semantics. It is verified by `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`; it does not mean this repository starts or hosts Mastra.
 
@@ -396,8 +401,8 @@ Professional mode should produce browser-readable artifacts:
 
 ## Near-Term Non-Goals
 
-- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, and Mastra Evolution Workflow Replay Lite.
-- Governed source-changing auto-apply is not yet shipped; Apply Plan Lite only writes generated-artifact receipts when explicitly allowed, and Patch Proposal Lite produces read-only patch specifications rather than raw diffs or applied changes.
+- Production Mastra daemon/watch/storage operations are not yet shipped; the repository currently has a minimal Mastra MVP, local libSQL durable proof, local Langfuse DTO mapping proof, metadata-only Study Anything Adapter mastery projection proof, a platform-Agent-callable Study Adapter CLI Lite, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, Mastra Evolution Workflow Replay Lite, and Governed Patch Apply Sandbox Lite.
+- Governed source-changing auto-apply is not yet shipped; Apply Plan Lite only writes generated-artifact receipts when explicitly allowed, Patch Proposal Lite produces read-only patch specifications rather than raw diffs, and Patch Apply Sandbox Lite only proves dry-run readiness without mutating the real worktree.
 - Full daemonized project watchers are not yet shipped.
 - Realtime HTML Artifact console is not yet a complete product UI.
 - Hosted Sync, Teams, billing, SSO, and managed cloud are future services, not alpha requirements.
