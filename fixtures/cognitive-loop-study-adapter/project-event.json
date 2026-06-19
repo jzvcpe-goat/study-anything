@@ -1,0 +1,15 @@
+{
+  "actor": "agent",
+  "event_id": "event-study-adapter-cli-001",
+  "event_type": "git_diff_changed",
+  "project_id": "cognitive-loop-demo",
+  "refs": [
+    "path:apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+    "evidence:metadata-only"
+  ],
+  "schema_version": "project-event-v1",
+  "sensitivity": "internal",
+  "summary": "A metadata-only watcher noticed a risky Study Anything adapter boundary change.",
+  "target": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+  "timestamp": "2026-06-19T00:00:00Z"
+}

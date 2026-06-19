@@ -264,8 +264,8 @@ def run_cognitive_loop_study_adapter(
             "study_anything_stores_real_model_keys": False,
         },
         "next_steps": [
-            "Expose this bridge through a Cognitive Loop CLI command.",
-            "Let watcher-generated DecisionCards request a Study Anything mastery gate.",
+            "Use the Cognitive Loop study-adapter CLI as the platform-Agent callable bridge.",
+            "Let watcher-generated DecisionCards request the Study Anything mastery gate automatically.",
             "Render the MasteryRecord in the future HTML Artifact console.",
         ],
     }

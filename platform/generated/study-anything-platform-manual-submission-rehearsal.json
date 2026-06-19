@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -745,7 +745,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -841,7 +843,12 @@
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
         "scripts/verify_cognitive_loop_langfuse_observability.py",
         "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+        "fixtures/cognitive-loop-study-adapter/project-event.json",
+        "fixtures/cognitive-loop-study-adapter/decision-card.json",
         "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_adapter_cli.py",
+        "scripts/cognitive_loop_study_adapter_cli.py",
         "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "terminal_skill",
@@ -849,7 +856,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -936,7 +943,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1036,7 +1045,12 @@
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
         "scripts/verify_cognitive_loop_langfuse_observability.py",
         "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+        "fixtures/cognitive-loop-study-adapter/project-event.json",
+        "fixtures/cognitive-loop-study-adapter/decision-card.json",
         "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_adapter_cli.py",
+        "scripts/cognitive_loop_study_adapter_cli.py",
         "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openai_compatible_tools",
@@ -1044,7 +1058,7 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 100,
+      "acceptance_evidence_count": 101,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1130,7 +1144,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
-        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check"
+        "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
+        ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+        ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -1227,7 +1243,12 @@
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
         "scripts/verify_cognitive_loop_langfuse_observability.py",
         "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+        "fixtures/cognitive-loop-study-adapter/project-event.json",
+        "fixtures/cognitive-loop-study-adapter/decision-card.json",
         "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "scripts/verify_cognitive_loop_study_adapter_cli.py",
+        "scripts/cognitive_loop_study_adapter_cli.py",
         "scripts/verify_cognitive_loop_study_anything_adapter.py"
       ],
       "integration_mode": "openapi_http_tools",
