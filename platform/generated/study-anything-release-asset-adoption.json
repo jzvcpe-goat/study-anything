@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 114063,
+    "bytes": 114062,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "ce5b45ff86f72464f0c1a965483546e4d4667497caa074e42456033f66a87db8",
+    "sha256": "bfcf7fd17aefd7f89989e42f4039d050312354ec20dfb75733f66f2cd1a48b28",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -125,7 +125,7 @@
     {
       "bytes": 33018,
       "path": "docs/release-checklist.md",
-      "sha256": "513623bc52c75322274beef375ef19dfefb304f28696e5adcf8d85380aaf3e82"
+      "sha256": "60aba024904f776a052bc7042df2f01ae69b3af58f5a1840beb0883fbfcbcb0e"
     },
     {
       "bytes": 29822,
@@ -140,7 +140,7 @@
     {
       "bytes": 11080,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "e932677b603daed6ef4238a4e38c733ebf3e14b8124969611fea7c159da4f6b1"
+      "sha256": "9119437f57b7d16637aae9ab522aed6d2bf1669eb803a792345ef287fa0b6c48"
     },
     {
       "bytes": 21139,
