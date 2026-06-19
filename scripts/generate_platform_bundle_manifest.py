@@ -142,6 +142,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop Governed Patch Apply Sandbox Lite verification report.",
     ),
     (
+        "platform/generated/study-anything-cognitive-loop-evolution-pack-export.json",
+        "generated_asset",
+        "Cognitive Loop Professional Evolution Pack Export Lite verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
         "generated_asset",
         "Cognitive Loop Mastra adapter contract-pack verification report.",
@@ -1250,6 +1255,26 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cognitive_loop_mastra_evolution_replay.py",
         "verification",
         "Cognitive Loop Mastra Evolution Workflow Replay Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_patch_apply_sandbox.py",
+        "cli",
+        "Build metadata-only Cognitive Loop governed patch-apply sandbox receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_patch_apply_sandbox.py",
+        "verification",
+        "Cognitive Loop Governed Patch Apply Sandbox Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_evolution_pack_export.py",
+        "cli",
+        "Export a metadata-only Cognitive Loop professional evolution evidence pack.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evolution_pack_export.py",
+        "verification",
+        "Verify Cognitive Loop professional evolution pack export, zip integrity, and privacy boundaries.",
     ),
     (
         "platform/mastra/README.md",

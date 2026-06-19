@@ -115,10 +115,11 @@ this mode.
 
 Use Artifact Console Lite when the platform Agent or local operator needs one static HTML/JSON entry
 point for local evidence. It aggregates Event Store rows, watcher runner summaries, Study Adapter
-artifacts, Human Gate/Loop metadata, artifact health, and the Evolution Chain from `EvolutionReport`
-through `MastraEvolutionWorkflowReplay` and `PatchApplySandboxReceipt`. Missing Evolution artifacts should degrade the section
-instead of failing the console; invalid, secret-like, raw-diff, privacy-regressing, or policy-weakening
-artifacts must be rejected.
+artifacts, Human Gate/Loop metadata, artifact health, the Evolution Chain from `EvolutionReport`
+through `MastraEvolutionWorkflowReplay` and `PatchApplySandboxReceipt`, and the Professional
+Evolution Pack export handoff. Missing Evolution artifacts should degrade the section instead of
+failing the console; invalid, secret-like, raw-diff, privacy-regressing, or policy-weakening artifacts
+must be rejected.
 
 ```bash
 python3 scripts/cognitive_loop_artifact_console.py build --html --json
@@ -250,6 +251,24 @@ rejects invalid schemas, protected target paths, secrets, raw diffs, privacy fla
 policy weakening. It proves rollback with a temporary sandbox preview reference, but never mutates
 the real worktree, executes apply, starts production Mastra, calls models, or stores private learning
 data.
+
+## Professional Evolution Pack Export Lite
+
+Use Professional Evolution Pack Export Lite after Artifact Console, Evolution Report, Apply Plan,
+Comparator, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and Patch Apply
+Sandbox evidence exists and the operator needs a redacted JSON/HTML/ZIP handoff for maintainers,
+Kimi/Codex/WorkBuddy-style platform Agents, or future hosted team review.
+
+```bash
+python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip
+python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check
+```
+
+The export is metadata-only. It maps ready chains to `pack_ready`, degraded chains to missing
+artifact status, manual chains to manual review, and blocked chains to blocked. It verifies ZIP
+entry hashes, rejects invalid schemas, protected target paths, secrets, raw diffs, privacy flag
+regressions, and policy weakening. It never mutates the real worktree, executes apply, starts
+production Mastra, calls models, or stores private learning data.
 
 ## Start A Learning Loop
 

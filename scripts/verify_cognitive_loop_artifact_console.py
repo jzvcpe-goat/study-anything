@@ -496,6 +496,7 @@ def verify_evolution_chain_console() -> dict[str, Any]:
         "Evolution Receipt Link",
         "Mastra Workflow Replay",
         "Patch Apply Sandbox",
+        "Professional Evolution Pack",
     ]
     missing = [needle for needle in required_html if needle not in html]
     if missing:
@@ -506,8 +507,11 @@ def verify_evolution_chain_console() -> dict[str, Any]:
         "missing_artifact_count": evolution["missing_artifact_count"],
         "manual_review_count": evolution["manual_review_count"],
         "blocking_count": evolution["blocking_count"],
+        "export_status": manifest["sections"]["evolution_pack_export"]["status"],
+        "export_command_present": bool(manifest["sections"]["evolution_pack_export"]["operator_next_command"]),
         "chain_statuses": chain,
         "html_has_evolution_chain": True,
+        "html_has_professional_evolution_pack": True,
         "sha256_values_present": True,
         "operator_commands_present": True,
         "privacy_flags_present": True,
@@ -689,6 +693,7 @@ def build_report() -> dict[str, Any]:
             "verify": "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
             "runner": ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter",
             "evolution_chain": "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+            "evolution_pack_export": "python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
         },
     }
 

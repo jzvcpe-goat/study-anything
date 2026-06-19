@@ -277,8 +277,8 @@ Goal: make Cognitive Loop usable as a project console without building a heavy S
 
 Current:
 
-- `python3 scripts/cognitive_loop_artifact_console.py build --html --json` generates `.cognitive-loop/artifacts/console/index.html` and a JSON manifest with Event Store, watcher runner, Study Adapter, gate/loop, Evolution Chain including Patch Apply Sandbox, and artifact-health sections.
-- `python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty projects, runner-lite Event Store aggregation, Study Adapter links, Evolution Chain aggregation through Patch Apply Sandbox, missing-artifact degradation, blocked replay preservation, invalid/secret/raw-diff/privacy-regression/policy-weakening rejection, mobile/narrow-screen HTML structure, and privacy flags.
+- `python3 scripts/cognitive_loop_artifact_console.py build --html --json` generates `.cognitive-loop/artifacts/console/index.html` and a JSON manifest with Event Store, watcher runner, Study Adapter, gate/loop, Evolution Chain including Patch Apply Sandbox, Professional Evolution Pack export handoff, and artifact-health sections.
+- `python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty projects, runner-lite Event Store aggregation, Study Adapter links, Evolution Chain aggregation through Patch Apply Sandbox, Professional Evolution Pack handoff visibility, missing-artifact degradation, blocked replay preservation, invalid/secret/raw-diff/privacy-regression/policy-weakening rejection, mobile/narrow-screen HTML structure, and privacy flags.
 - Console Lite stays static and metadata-only: no daemon, no standalone frontend, no SSE/WebSocket, no raw event bodies, no source text, no diffs, no test output, no learner answers, no Agent endpoints, no Agent metadata, no prompts, and no model keys.
 
 Still planned:
@@ -346,6 +346,9 @@ Current:
 - `python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json` creates Governed Patch Apply Sandbox Lite receipts from metadata-only Patch Proposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs.
 - `python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check` verifies ready dry-run chains, manual-review chains, blocked chains, missing-artifact degradation, protected-path rejection, secret/raw-diff/privacy-regression/policy-weakening rejection, rollback proof, HTML/mobile structure, and real-worktree read-only boundaries.
 - Patch Apply Sandbox Lite is not source-changing auto-apply: it produces metadata-only `PatchApplySandboxReceipt` JSON/HTML, proves rollback through a temporary sandbox preview reference, and never mutates the real worktree.
+- `python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip` creates Professional Evolution Pack Export Lite artifacts from Artifact Console, Evolution Report, Apply Plan, Improvement Comparison, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and PatchApplySandboxReceipt refs.
+- `python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check` verifies ready export chains, manual-review chains, blocked chains, missing-artifact degradation, ZIP extraction and hash checks, protected-path rejection, secret/raw-diff/privacy-regression/policy-weakening rejection, HTML/mobile structure, and real-worktree read-only boundaries.
+- Professional Evolution Pack Export Lite is not source-changing auto-apply: it produces metadata-only `EvolutionPackManifest` JSON/HTML/ZIP handoff evidence for maintainers and platform Agents, and never mutates the real worktree.
 
 Still planned:
 

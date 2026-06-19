@@ -618,6 +618,41 @@ def _gate_section(event_store_summary: Mapping[str, Any], artifacts: list[dict[s
     }
 
 
+def _evolution_pack_export_section(evolution_chain: Mapping[str, Any]) -> dict[str, Any]:
+    status = str(evolution_chain.get("status") or "unknown")
+    if status == "ready":
+        export_status = "export_ready"
+    elif status == "blocked":
+        export_status = "blocked"
+    elif status == "manual_review":
+        export_status = "manual_review"
+    else:
+        export_status = "degraded_missing_artifacts"
+    return {
+        "status": export_status,
+        "expected_input_count": int(evolution_chain.get("expected_artifact_count") or 0) + 1,
+        "available_input_count": int(evolution_chain.get("artifact_count") or 0) + 1,
+        "includes_artifact_console": True,
+        "operator_next_command": "python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
+        "outputs": {
+            "json_ref": ".cognitive-loop/artifacts/evolution-pack/evolution-pack-manifest.json",
+            "html_ref": ".cognitive-loop/artifacts/evolution-pack/index.html",
+            "zip_ref": ".cognitive-loop/artifacts/evolution-pack/cognitive-loop-professional-evolution-pack.zip",
+        },
+        "privacy": {
+            "metadata_only": True,
+            "source_text_included": False,
+            "raw_diff_included": False,
+            "learner_answers_included": False,
+            "agent_endpoints_included": False,
+            "agent_metadata_included": False,
+            "prompt_text_included": False,
+            "model_keys_included": False,
+        },
+        "content_included": False,
+    }
+
+
 def _artifact_health_section(
     root: Path,
     artifacts: list[dict[str, Any]],
@@ -674,6 +709,7 @@ def build_console_report(
     gates = _gate_section(event_summary, artifacts)
     artifact_health = _artifact_health_section(root, artifacts, event_summary)
     evolution_chain = _evolution_chain_section(root, artifacts)
+    evolution_pack_export = _evolution_pack_export_section(evolution_chain)
     status = "ready"
     if artifact_health["status"] != "ready":
         status = "partial"
@@ -692,6 +728,7 @@ def build_console_report(
             "study_adapter": study,
             "decision_gate_loop": gates,
             "evolution_chain": evolution_chain,
+            "evolution_pack_export": evolution_pack_export,
             "artifact_health": artifact_health,
         },
         "artifact_refs": {
@@ -728,6 +765,14 @@ def build_console_report(
                 command="python3 scripts/cognitive_loop_artifact_console.py build --html --json",
                 inputs=[item["ref"] for item in evolution_chain["artifacts"] if item.get("ref")],
             ),
+            "evolution_pack_export": _provenance(
+                html_ref,
+                command="python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
+                inputs=[
+                    manifest_ref,
+                    *[item["ref"] for item in evolution_chain["artifacts"] if item.get("ref")],
+                ],
+            ),
             "artifact_health": _provenance(
                 html_ref,
                 command="python3 scripts/cognitive_loop_cli.py doctor --html",
@@ -755,6 +800,7 @@ def build_console_report(
             "runner_lite": ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter",
             "event_store_export": "python3 scripts/cognitive_loop_event_store.py export --html",
             "evolution_chain": "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+            "evolution_pack_export": "python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
         },
     }
     _assert_no_forbidden_text(report, label="artifact_console_report")
@@ -843,6 +889,7 @@ def render_console_html(report: Mapping[str, Any]) -> str:
     study = sections.get("study_adapter") if isinstance(sections.get("study_adapter"), Mapping) else {}
     gates = sections.get("decision_gate_loop") if isinstance(sections.get("decision_gate_loop"), Mapping) else {}
     evolution = sections.get("evolution_chain") if isinstance(sections.get("evolution_chain"), Mapping) else {}
+    evolution_export = sections.get("evolution_pack_export") if isinstance(sections.get("evolution_pack_export"), Mapping) else {}
     health = sections.get("artifact_health") if isinstance(sections.get("artifact_health"), Mapping) else {}
     json_blob = escape(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
     return f"""<!doctype html>
@@ -965,6 +1012,17 @@ def render_console_html(report: Mapping[str, Any]) -> str:
         <thead><tr><th>Artifact</th><th>Schema</th><th>Status</th><th>Gate</th><th>Manual</th><th>Blocked</th><th>SHA-256</th><th>HTML</th></tr></thead>
         <tbody>{_evolution_rows(list(evolution.get('artifacts', [])) if isinstance(evolution.get('artifacts'), list) else [])}</tbody>
       </table>
+    </section>
+
+    <section>
+      <h2>Professional Evolution Pack</h2>
+      <p class="note">A metadata-only export path for maintainers and platform Agents. The pack contains refs, hashes, static index output, and redacted artifact copies; it does not include source bodies or patch bodies.</p>
+      <table>{_rows({
+        'status': evolution_export.get('status', ''),
+        'expected_input_count': evolution_export.get('expected_input_count', 0),
+        'available_input_count': evolution_export.get('available_input_count', 0),
+        'operator_next_command': evolution_export.get('operator_next_command', ''),
+      })}</table>
     </section>
 
     <section>
