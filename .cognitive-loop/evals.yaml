@@ -27,6 +27,9 @@ required:
   - id: cognitive-loop.watcher-ingest
     command: python3 scripts/verify_cognitive_loop_watcher_ingest.py --check
     blocking: true
+  - id: cognitive-loop.watcher-runner-lite
+    command: .venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check
+    blocking: true
   - id: cognitive-loop.mastra-adapter
     command: python3 scripts/verify_cognitive_loop_mastra_adapter.py --check
     blocking: true

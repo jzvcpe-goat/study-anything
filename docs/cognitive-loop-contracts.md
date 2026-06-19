@@ -244,6 +244,14 @@ Event Store 只记录 `ProjectEvent` metadata、artifact path、artifact kind、
 
 `.cognitive-loop/watchers.yaml` is the optional watcher ingest contract. It declares enabled watcher kinds, their `ProjectEvent` type, include/exclude globs, `maxRefs`, and the current MVP mode: `manual_ingest`.
 
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` adds runner-lite on top of manual ingest. It accepts explicit path, git diff summary, and test failure summary signals; debounces repeated observations; skips excluded paths; writes metadata-only watcher events; ingests them into the SQLite Event Store; and can trigger Study Anything adapter CLI for the first high-risk event. It is bounded to local one-shot/polling execution and does not start a daemon.
+
+`.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check` verifies runner-lite with duplicate path debounce, `.env` exclusion, git diff summary, test failure summary, raw diff rejection, Event Store idempotency, Study Adapter gate triggering, and privacy flags. It emits `cognitive-loop-watcher-runner-verification-v1`.
+
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` 在手动 ingest 之上加入 runner-lite。它接收显式 path、git diff summary、test failure summary 信号，合并重复 observation，跳过 exclude 路径，写出 metadata-only watcher event，摄入 SQLite Event Store，并可对第一个高风险事件触发 Study Anything adapter CLI。它只做有界本地 one-shot/polling，不启动 daemon。
+
+`.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check` 会验证 runner-lite 的重复路径 debounce、`.env` 排除、git diff summary、test failure summary、raw diff 拒绝、Event Store 幂等、Study Adapter gate 触发和隐私标记，并输出 `cognitive-loop-watcher-runner-verification-v1`。
+
 `python3 scripts/cognitive_loop_watcher_ingest.py init-config` creates the default watcher config. `python3 scripts/cognitive_loop_watcher_ingest.py validate-config` validates that config stays metadata-only and that no daemon is enabled. `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html --watcher-id file-change --target docs/cognitive-loop-contracts.md` writes a metadata-only watcher event artifact under `.cognitive-loop/events/`.
 
 The ingest artifact stores watcher id, source kind, event type, target, public refs, `ProjectEvent`, `DecisionCard`, and `LoopRun` metadata only. It does not read or store file contents, diff bodies, event payload contents, source text, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.

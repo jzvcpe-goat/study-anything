@@ -1,0 +1,52 @@
+{
+  "accepted_observation_count": 4,
+  "commands": {
+    "release_check": "./scripts/release_check.sh",
+    "run": ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter",
+    "verify": ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check"
+  },
+  "duplicate_count": 6,
+  "event_store_event_count": 4,
+  "failure_modes": {
+    "duplicate_events_idempotent": true,
+    "excluded_env_path_skipped": true,
+    "raw_diff_rejected": true
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "background_service_started": false,
+    "diff_body_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "model_keys_included": false,
+    "raw_diff_included": false,
+    "raw_source_text_included": false,
+    "test_output_included": false,
+    "watcher_daemon_started": false
+  },
+  "runner_html_written": true,
+  "runner_json_written": true,
+  "runner_schema": "cognitive-loop-watcher-runner-v1",
+  "schema_version": "cognitive-loop-watcher-runner-verification-v1",
+  "second_pass_event_count": 4,
+  "skipped_count": 2,
+  "status": "pass",
+  "stored_event_count": 4,
+  "study_adapter_gate": {
+    "external_agent_called": false,
+    "schema_version": "cognitive-loop-study-anything-adapter-cli-v1",
+    "status": "pass",
+    "study_artifact_count": 3,
+    "triggered": true
+  },
+  "watcher_config_schema": "cognitive-loop-watchers-v1",
+  "watcher_event_types": [
+    "file_changed",
+    "git_diff_changed",
+    "test_failed"
+  ]
+}
