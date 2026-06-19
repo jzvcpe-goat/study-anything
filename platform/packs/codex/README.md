@@ -69,6 +69,15 @@ Anything adapter gate for the first high-risk event. Verify it with
 `.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check`, then inspect
 `platform/generated/study-anything-cognitive-loop-watcher-runner.json`.
 
+For a static HTML Artifact Console Lite, run
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json`.
+It aggregates Event Store rows, watcher runner summaries, Study Adapter outputs, and
+DecisionCard/Human Gate/LoopRun metadata into `.cognitive-loop/artifacts/console/index.html`
+without a daemon, standalone frontend, SSE, WebSocket, raw diffs, source bodies, learner answers,
+Agent endpoints, Agent metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_artifact_console.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-artifact-console.json`.
+
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
 `platform/generated/study-anything-cognitive-loop-recipe-replay.json` before running runtime or

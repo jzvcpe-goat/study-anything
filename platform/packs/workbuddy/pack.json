@@ -101,7 +101,8 @@
     "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
     "cognitive_loop_study_anything_adapter.schema_version == cognitive-loop-study-anything-adapter-v1",
     "cognitive_loop_study_adapter_cli.schema_version == cognitive-loop-study-anything-adapter-cli-v1",
-    "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1"
+    "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1",
+    "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1"
   ],
   "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
   "entrypoints": {
@@ -208,7 +209,10 @@
     "scripts/verify_cognitive_loop_study_anything_adapter.py",
     "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
     "scripts/cognitive_loop_watcher_runner.py",
-    "scripts/verify_cognitive_loop_watcher_runner.py"
+    "scripts/verify_cognitive_loop_watcher_runner.py",
+    "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+    "scripts/cognitive_loop_artifact_console.py",
+    "scripts/verify_cognitive_loop_artifact_console.py"
   ],
   "integration_mode": "openapi_http_tools",
   "local_verification": [
@@ -303,7 +307,9 @@
     ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
     ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
     ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-    ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
+    ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'",
+    "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+    "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -327,6 +333,7 @@
     "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
     "python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check",
     ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
-    ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check"
+    ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+    "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
   ]
 }

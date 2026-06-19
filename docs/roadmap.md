@@ -67,7 +67,7 @@ Deliver:
 Acceptance:
 
 - A new reader can understand the four-part direction: Study, Reverse, Operate, Evolve.
-- Docs state that Mastra, watchers, and full HTML Artifact console are planned layers.
+- Docs state that daemonized watchers and the full realtime HTML Artifact console are planned layers, while static metadata-only Console Lite is a current local artifact path.
 - Docs keep the current no-standalone-frontend launch path scoped to Study Anything/platform-Agent usage.
 - Docs keep real model credentials outside Study Anything.
 - Docs preserve current release evidence anchors while changing the product narrative.
@@ -128,7 +128,7 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` starts the minimal repo-local Mastra runtime MVP against `@mastra/core` and verifies suspend/resume/bail and no-gate paths.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` proves local libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata events.
 - `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` maps service and durable receipts to local Langfuse trace/span/generation/score DTOs without calling Langfuse or leaking private runtime data.
-- Manual watcher ingest exists through `.cognitive-loop/watchers.yaml` and `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`; daemonized watcher input and realtime console integration are still planned.
+- Manual watcher ingest exists through `.cognitive-loop/watchers.yaml` and `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check`; bounded watcher runner-lite and static metadata-only Console Lite are current, while daemonized watcher input and realtime console integration are still planned.
 
 当前：
 
@@ -138,7 +138,7 @@ Current:
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 会通过 `@mastra/core` 启动最小本仓库 Mastra runtime MVP，并验证 suspend/resume/bail 和无需 gate 的路径。
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 已证明本地 libSQL 可基于 watcher 生成的 metadata event 跨独立 Node 进程 suspend/resume 或 bail。
 - `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` 已将 service 和 durable receipt 映射为本地 Langfuse trace/span/generation/score DTO，并且不调用 Langfuse，也不泄露私有运行时数据。
-- 手动 watcher ingest 已通过 `.cognitive-loop/watchers.yaml` 和 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 接入；常驻 watcher 输入和实时 console 集成仍然是计划中的层。
+- 手动 watcher ingest 已通过 `.cognitive-loop/watchers.yaml` 和 `python3 scripts/verify_cognitive_loop_watcher_ingest.py --check` 接入；有界 watcher runner-lite 和静态 metadata-only Console Lite 已是当前能力，常驻 watcher 输入和实时 console 集成仍然是计划中的层。
 
 Deliver:
 
@@ -207,7 +207,8 @@ Current:
 Deliver:
 
 - richer local signal adapters for CI receipts and platform-Agent tool call metadata
-- realtime HTML Artifact console fed by Event Store rows
+- static Artifact Console Lite promotion into the professional artifact path
+- realtime HTML Artifact console fed by Event Store rows as a later layer
 - optional Mastra watcher workflow that consumes runner-lite events after the same privacy verifier passes
 
 Acceptance:
@@ -274,7 +275,13 @@ Current code-review scope:
 
 Goal: make Cognitive Loop usable as a project console without building a heavy SaaS or desktop app.
 
-Deliver:
+Current:
+
+- `python3 scripts/cognitive_loop_artifact_console.py build --html --json` generates `.cognitive-loop/artifacts/console/index.html` and a JSON manifest.
+- `python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty projects, runner-lite Event Store aggregation, Study Adapter links, missing-artifact degradation, secret rejection, mobile/narrow-screen HTML structure, and privacy flags.
+- Console Lite stays static and metadata-only: no daemon, no standalone frontend, no SSE/WebSocket, no raw event bodies, no source text, no diffs, no test output, no learner answers, no Agent endpoints, no Agent metadata, no prompts, and no model keys.
+
+Still planned:
 
 - `cognitive-loop report --html`
 - `cognitive-loop watch --html`
@@ -285,10 +292,10 @@ Deliver:
 
 Acceptance:
 
-- Static HTML reports open offline.
-- Realtime console updates from local watcher events.
+- Static HTML reports and Console Lite open offline.
+- Console Lite includes provenance and redaction evidence for Event Store, watcher runner, Study Adapter, Human Gate, LoopRun, and artifact-health sections.
 - Browser UI can display human gates but does not directly execute high-risk commands.
-- HTML reports include provenance and redaction evidence for every rendered event, decision card, and mastery section.
+- Full realtime console updates from local watcher events remain a later acceptance target.
 
 ## Phase 7: Personal Plugin Mode
 

@@ -43,6 +43,9 @@ COGNITIVE_LOOP_WATCHER_INGEST_PATH = (
 COGNITIVE_LOOP_WATCHER_RUNNER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-watcher-runner.json"
 )
+COGNITIVE_LOOP_ARTIFACT_CONSOLE_PATH = (
+    ROOT / "platform" / "generated" / "study-anything-cognitive-loop-artifact-console.json"
+)
 COGNITIVE_LOOP_MASTRA_ADAPTER_PATH = (
     ROOT / "platform" / "generated" / "study-anything-cognitive-loop-mastra-adapter.json"
 )
@@ -276,6 +279,9 @@ REQUIRED_SHARED_ASSETS = {
     "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
     "scripts/cognitive_loop_watcher_runner.py",
     "scripts/verify_cognitive_loop_watcher_runner.py",
+    "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+    "scripts/cognitive_loop_artifact_console.py",
+    "scripts/verify_cognitive_loop_artifact_console.py",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -526,6 +532,8 @@ REQUIRED_ACCEPTANCE_COMMANDS = {
     "verify_cognitive_loop_watcher_ingest.py --check",
     "verify_cognitive_loop_watcher_runner.py --check",
     "cognitive_loop_watcher_runner.py run",
+    "verify_cognitive_loop_artifact_console.py --check",
+    "cognitive_loop_artifact_console.py build",
     "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_study_anything_adapter.py --check",
     "verify_cognitive_loop_study_adapter_cli.py --check",
@@ -981,6 +989,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
             "cognitive_loop_event_store.schema_version == cognitive-loop-event-store-verification-v1",
             "cognitive_loop_watcher_ingest.schema_version == cognitive-loop-watcher-ingest-verification-v1",
             "cognitive_loop_watcher_runner.schema_version == cognitive-loop-watcher-runner-verification-v1",
+            "cognitive_loop_artifact_console.schema_version == cognitive-loop-artifact-console-verification-v1",
             "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
             "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
             "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
@@ -2105,6 +2114,49 @@ def verify_cognitive_loop_watcher_runner_report() -> None:
     ):
         if privacy.get(key) is not False:
             raise EcosystemSubmissionError(f"Watcher runner privacy.{key} must be false.")
+
+
+def verify_cognitive_loop_artifact_console_report() -> None:
+    report = load_json(COGNITIVE_LOOP_ARTIFACT_CONSOLE_PATH)
+    if report.get("schema_version") != "cognitive-loop-artifact-console-verification-v1":
+        raise EcosystemSubmissionError("Cognitive Loop artifact console report schema drifted.")
+    if report.get("status") != "pass":
+        raise EcosystemSubmissionError("Cognitive Loop artifact console report must pass.")
+    if report.get("console_schema") != "cognitive-loop-artifact-console-v1":
+        raise EcosystemSubmissionError("Artifact console artifact schema drifted.")
+    empty = report.get("empty_console") or {}
+    if empty.get("event_count") != 0 or empty.get("status") != "ready":
+        raise EcosystemSubmissionError("Artifact console must handle empty projects.")
+    runner = report.get("runner_console") or {}
+    if runner.get("event_count", 0) < 3:
+        raise EcosystemSubmissionError("Artifact console must aggregate Event Store rows.")
+    if runner.get("accepted_observation_count", 0) < 3:
+        raise EcosystemSubmissionError("Artifact console must aggregate watcher runner observations.")
+    if runner.get("study_adapter_artifact_count", 0) < 1 or runner.get("study_adapter_html_linked") is not True:
+        raise EcosystemSubmissionError("Artifact console must link Study Adapter artifacts.")
+    failures = report.get("failure_modes") or {}
+    if failures.get("forbidden_private_text_rejected") is not True:
+        raise EcosystemSubmissionError("Artifact console must reject forbidden private-looking text.")
+    if failures.get("missing_artifact_degrades_console") is not True:
+        raise EcosystemSubmissionError("Artifact console must degrade when Event Store sources are missing.")
+    privacy = report.get("privacy") or {}
+    for key in (
+        "event_json_contents_included",
+        "html_contents_included",
+        "markdown_contents_included",
+        "source_text_included",
+        "raw_diff_included",
+        "test_output_included",
+        "learner_answers_included",
+        "agent_endpoints_included",
+        "agent_metadata_included",
+        "prompt_text_included",
+        "model_keys_included",
+        "standalone_frontend_required",
+        "watcher_daemon_started",
+    ):
+        if privacy.get(key) is not False:
+            raise EcosystemSubmissionError(f"Artifact console privacy.{key} must be false.")
 
 
 def verify_cognitive_loop_artifact_doctor_report() -> None:
@@ -4833,6 +4885,7 @@ def main() -> None:
     verify_cognitive_loop_artifact_doctor_report()
     verify_cognitive_loop_repair_plan_report()
     verify_cognitive_loop_artifact_index_report()
+    verify_cognitive_loop_artifact_console_report()
     verify_cognitive_loop_adoption_cookbook_report()
     verify_cognitive_loop_adoption_recipes_report()
     verify_cognitive_loop_recipe_replay_report()
@@ -4900,6 +4953,7 @@ def main() -> None:
                 "cognitive_loop_artifact_doctor": "cognitive-loop-artifact-doctor-verification-v1",
                 "cognitive_loop_repair_plan": "cognitive-loop-repair-plan-verification-v1",
                 "cognitive_loop_artifact_index": "cognitive-loop-artifact-index-verification-v1",
+                "cognitive_loop_artifact_console": "cognitive-loop-artifact-console-verification-v1",
                 "cognitive_loop_adoption_cookbook": "cognitive-loop-adoption-cookbook-verification-v1",
                 "cognitive_loop_adoption_recipes": "cognitive-loop-adoption-recipes-v1",
                 "cognitive_loop_recipe_replay": "cognitive-loop-recipe-replay-verification-v1",

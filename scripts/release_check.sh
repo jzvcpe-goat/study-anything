@@ -58,6 +58,7 @@ fi
 "$python_bin" scripts/verify_cognitive_loop_artifact_doctor.py --check
 "$python_bin" scripts/verify_cognitive_loop_repair_plan.py --check
 "$python_bin" scripts/verify_cognitive_loop_artifact_index.py --check
+"$python_bin" scripts/verify_cognitive_loop_artifact_console.py --check
 "$python_bin" scripts/verify_cognitive_loop_review.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_prompt.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check
