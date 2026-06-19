@@ -25,6 +25,10 @@ evidence source.
 - `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check`: a repo-local
   durability verifier that persists a suspended workflow to local libSQL storage, then
   resumes or bails from a separate Node process using watcher-generated metadata evidence.
+- `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check`: a local
+  observability verifier that maps the repo-local service and durable receipts to redacted
+  Langfuse trace/span/generation/score DTOs without importing the Langfuse SDK or calling a
+  hosted service.
 
 ## Install Into A Mastra Project
 
@@ -65,10 +69,11 @@ of truth for project evidence.
 ## Current Boundary
 
 Status: adapter contract pack plus metadata-only runtime dry-run harness plus minimal
-repo-started runtime MVP with a local libSQL suspend/resume proof.
+repo-started runtime MVP with a local libSQL suspend/resume proof and a local Langfuse DTO
+mapping proof.
 
 This repository still does not ship a watcher daemon, realtime HTML console, hosted service,
 or production storage operations. Manual watcher ingest creates metadata-only `ProjectEvent`
 artifacts through `scripts/cognitive_loop_watcher_ingest.py`, and the durable verifier proves
 the repo-local runtime can persist and recover a Human Mastery Gate snapshot without storing
-source text, diff bodies, prompts, endpoints, or keys.
+source text, diff bodies, prompts, endpoints, keys, storage paths, or absolute local paths.

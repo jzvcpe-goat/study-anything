@@ -415,11 +415,12 @@ def build_report() -> dict[str, Any]:
         "status": "pass",
         "purpose": (
             "Prove a repository-started Cognitive Loop Mastra runtime can be rehearsed with "
-            "metadata-only local evidence before this repository ships or starts a real Mastra service."
+            "metadata-only local evidence before production Mastra daemon/storage operations ship."
         ),
         "goal_status": {
             "runtime_dry_run_harness": "implemented",
-            "full_mastra_runtime": "planned",
+            "repo_local_mastra_runtime_mvp": "implemented",
+            "production_mastra_runtime_operations": "planned",
             "watcher_daemon": "planned",
             "realtime_html_console": "planned",
         },

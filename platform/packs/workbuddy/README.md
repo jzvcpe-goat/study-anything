@@ -52,6 +52,11 @@ With Node 22+, run `python3 scripts/verify_cognitive_loop_mastra_runtime_service
 verify the repo-local Mastra MVP against the same metadata-only workflow contract.
 Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` to prove local
 libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata events.
+Then run `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` and inspect
+`platform/generated/study-anything-cognitive-loop-langfuse-observability.json` before enabling real
+observability. The verifier maps Mastra receipts to redacted Langfuse trace/span/generation/score
+DTOs and keeps raw source, learner answers, Agent endpoints, prompts, model keys, storage paths, and
+absolute local paths out of the local receipt.
 
 For machine-readable operation, import
 `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read

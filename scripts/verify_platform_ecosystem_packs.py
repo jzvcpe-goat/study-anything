@@ -53,6 +53,7 @@ REQUIRED_ACCEPTANCE = {
     "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
     "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
+    "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1",
     "cognitive_loop_artifact_doctor.schema_version == cognitive-loop-artifact-doctor-verification-v1",
     "cognitive_loop_repair_plan.schema_version == cognitive-loop-repair-plan-verification-v1",
     "cognitive_loop_artifact_index.schema_version == cognitive-loop-artifact-index-verification-v1",
@@ -104,6 +105,7 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "verify_cognitive_loop_mastra_runtime_service.py --check",
     "verify_cognitive_loop_mastra_runtime_durable.py --check",
+    "verify_cognitive_loop_langfuse_observability.py --check",
     "verify_cognitive_loop_artifact_doctor.py --check",
     "verify_cognitive_loop_repair_plan.py --check",
     "verify_cognitive_loop_artifact_index.py --check",
@@ -282,6 +284,10 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError(
             f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop durable Mastra runtime report"
         )
+    if "platform/generated/study-anything-cognitive-loop-langfuse-observability.json" not in import_assets:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must reference the Cognitive Loop Langfuse observability report"
+        )
     for asset in (
         "platform/mastra/README.md",
         "platform/mastra/manifest.json",
@@ -295,9 +301,12 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "platform/mastra-runtime/src/runtime.ts",
         "platform/mastra-runtime/src/run-once.ts",
         "platform/mastra-runtime/src/durable-run.ts",
+        "platform/mastra-runtime/src/observability.ts",
+        "platform/mastra-runtime/src/observability-run.ts",
         "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
         "scripts/verify_cognitive_loop_mastra_runtime_service.py",
         "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
     ):
         if asset not in import_assets:
             raise PackVerificationError(
@@ -493,7 +502,9 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         "study-anything-platform-handoff-checklist.json",
         "study-anything-launch-acceptance-ledger.json",
         "study-anything-github-launch-operator-guide.json",
+        "study-anything-cognitive-loop-langfuse-observability.json",
         "cognitive_loop_recipe_cli.py",
+        "verify_cognitive_loop_langfuse_observability.py",
         "verify_cognitive_loop_recipe_cli.py",
         "verify_cognitive_loop_recipe_cli_receipts.py",
         "verify_cognitive_loop_recipe_cli_failures.py",

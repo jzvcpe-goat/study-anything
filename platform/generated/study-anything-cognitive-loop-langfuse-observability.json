@@ -1,0 +1,1094 @@
+{
+  "acceptance": {
+    "durable_report_mapped": true,
+    "generation_dtos_created": true,
+    "local_receipt_created": true,
+    "metadata_only": true,
+    "report_path": "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
+    "risk_human_gate_eval_scores_created": true,
+    "score_dtos_created": true,
+    "service_report_mapped": true,
+    "span_dtos_created": true,
+    "trace_dtos_created": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
+  },
+  "boundaries": {
+    "calls_real_langfuse": false,
+    "external_agent_called": false,
+    "hosted_service_started": false,
+    "imports_langfuse_sdk": false,
+    "network_calls": false
+  },
+  "files": [
+    {
+      "bytes": 767,
+      "path": "platform/mastra-runtime/package.json",
+      "sha256": "0904430d0bfadfe799d5b1ebe00964719149694bb4c9ec066a61acb455c1cb07"
+    },
+    {
+      "bytes": 138191,
+      "path": "platform/mastra-runtime/package-lock.json",
+      "sha256": "55fed52d46596cea6d4165b538e11e8a9194f18007033757722dd1934b4e797e"
+    },
+    {
+      "bytes": 394,
+      "path": "platform/mastra-runtime/tsconfig.json",
+      "sha256": "1b4f55f5db75ab30d85009f7c5e6c398536b239d2c12dc4d470e932affe55b66"
+    },
+    {
+      "bytes": 1826,
+      "path": "platform/mastra-runtime/README.md",
+      "sha256": "c759472438c6963e8dd472cd4667db8375f41d9fa3d971c7c4224b7a6b724f8b"
+    },
+    {
+      "bytes": 12388,
+      "path": "platform/mastra-runtime/src/observability.ts",
+      "sha256": "b9c3fa35d8dc881941378ca686dbd8a9b94c88d37eed63770ad6d909da9a4768"
+    },
+    {
+      "bytes": 1658,
+      "path": "platform/mastra-runtime/src/observability-run.ts",
+      "sha256": "5830d65732e5854560997b5cafff628d485a1ee1c06aafd0ed00c69e65afd338"
+    },
+    {
+      "bytes": 5846,
+      "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
+      "sha256": "2ef73061529922b5de7a301fa62245f87760023eaa1dac99afc352cb84dbca79"
+    },
+    {
+      "bytes": 5144,
+      "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+      "sha256": "861b0f6f78cba942776791901416636d1ac6c5c793151540f3683dbb28374abd"
+    }
+  ],
+  "observability": {
+    "boundaries": {
+      "calls_real_langfuse": false,
+      "dto_only": true,
+      "external_agent_called": false,
+      "hosted_service_started": false,
+      "imports_langfuse_sdk": false,
+      "metadata_only": true,
+      "network_calls": false
+    },
+    "evidence": {
+      "durable_schema": "cognitive-loop-mastra-runtime-durable-verification-v1",
+      "runtime_id": "repo-local-mastra-runtime",
+      "service_schema": "cognitive-loop-mastra-runtime-service-verification-v1",
+      "workflow_id": "cognitive-loop-runtime-adapter"
+    },
+    "generations": [
+      {
+        "id": "generation-service_approved-runtime-adapter",
+        "input_omitted": true,
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "external_agent_called": false,
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "prompt_text_included": false,
+          "provider_id": "repo-local-mastra-adapter",
+          "real_model_keys_stored": false,
+          "run_kind": "service_approved",
+          "task_type": "workflow.run"
+        },
+        "model": "user-owned-agent-outside-study-anything",
+        "name": "cognitive-loop-runtime-adapter",
+        "output_omitted": true,
+        "trace_id": "trace-service_approved"
+      },
+      {
+        "id": "generation-service_rejected-runtime-adapter",
+        "input_omitted": true,
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "external_agent_called": false,
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "prompt_text_included": false,
+          "provider_id": "repo-local-mastra-adapter",
+          "real_model_keys_stored": false,
+          "run_kind": "service_rejected",
+          "task_type": "workflow.run"
+        },
+        "model": "user-owned-agent-outside-study-anything",
+        "name": "cognitive-loop-runtime-adapter",
+        "output_omitted": true,
+        "trace_id": "trace-service_rejected"
+      },
+      {
+        "id": "generation-service_not_required-runtime-adapter",
+        "input_omitted": true,
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "external_agent_called": false,
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "prompt_text_included": false,
+          "provider_id": "repo-local-mastra-adapter",
+          "real_model_keys_stored": false,
+          "run_kind": "service_not_required",
+          "task_type": "workflow.run"
+        },
+        "model": "user-owned-agent-outside-study-anything",
+        "name": "cognitive-loop-runtime-adapter",
+        "output_omitted": true,
+        "trace_id": "trace-service_not_required"
+      },
+      {
+        "id": "generation-durable_approved-runtime-adapter",
+        "input_omitted": true,
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "external_agent_called": false,
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "prompt_text_included": false,
+          "provider_id": "repo-local-mastra-adapter",
+          "real_model_keys_stored": false,
+          "run_kind": "durable_approved",
+          "task_type": "workflow.run"
+        },
+        "model": "user-owned-agent-outside-study-anything",
+        "name": "cognitive-loop-runtime-adapter",
+        "output_omitted": true,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "id": "generation-durable_rejected-runtime-adapter",
+        "input_omitted": true,
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "external_agent_called": false,
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "prompt_text_included": false,
+          "provider_id": "repo-local-mastra-adapter",
+          "real_model_keys_stored": false,
+          "run_kind": "durable_rejected",
+          "task_type": "workflow.run"
+        },
+        "model": "user-owned-agent-outside-study-anything",
+        "name": "cognitive-loop-runtime-adapter",
+        "output_omitted": true,
+        "trace_id": "trace-durable_rejected"
+      }
+    ],
+    "privacy": {
+      "absolute_paths_included": false,
+      "agent_endpoints_included": false,
+      "agent_metadata_included": false,
+      "diff_bodies_included": false,
+      "langfuse_secret_included": false,
+      "learner_answers_included": false,
+      "metadata_only": true,
+      "prompt_text_included": false,
+      "raw_source_text_included": false,
+      "real_model_keys_stored": false,
+      "source_bodies_included": false,
+      "storage_path_included": false
+    },
+    "purpose": "Map repo-local Cognitive Loop Mastra runtime receipts to Langfuse trace, span, generation, and score DTOs without calling Langfuse or exposing private runtime data.",
+    "receipt": {
+      "calls_real_langfuse": false,
+      "dto_counts": {
+        "generations": 5,
+        "scores": 35,
+        "spans": 19,
+        "traces": 5
+      },
+      "local_only": true,
+      "privacy_checked": true,
+      "schema_version": "cognitive-loop-langfuse-receipt-v1"
+    },
+    "schema_version": "cognitive-loop-langfuse-observability-v1",
+    "scores": [
+      {
+        "id": "score-service_approved-risk_score",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "risk_level": "high",
+          "run_kind": "service_approved"
+        },
+        "name": "risk_score",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": 0.8
+      },
+      {
+        "id": "score-service_approved-human_gate_required",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved"
+        },
+        "name": "human_gate_required",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": true
+      },
+      {
+        "id": "score-service_approved-human_gate_resolution",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved"
+        },
+        "name": "human_gate_resolution",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": "approved"
+      },
+      {
+        "id": "score-service_approved-privacy_metadata_only",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved"
+        },
+        "name": "privacy_metadata_only",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": true
+      },
+      {
+        "id": "score-service_approved-latency_ms",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved"
+        },
+        "name": "latency_ms",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": 21
+      },
+      {
+        "id": "score-service_approved-token_count",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved",
+          "token_metadata_provided": false
+        },
+        "name": "token_count",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": 0
+      },
+      {
+        "id": "score-service_approved-cost_usd",
+        "metadata": {
+          "cost_metadata_provided": false,
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved"
+        },
+        "name": "cost_usd",
+        "source": "local-receipt",
+        "trace_id": "trace-service_approved",
+        "value": 0
+      },
+      {
+        "id": "score-service_rejected-risk_score",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "risk_level": "high",
+          "run_kind": "service_rejected"
+        },
+        "name": "risk_score",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": 0.8
+      },
+      {
+        "id": "score-service_rejected-human_gate_required",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected"
+        },
+        "name": "human_gate_required",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": true
+      },
+      {
+        "id": "score-service_rejected-human_gate_resolution",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected"
+        },
+        "name": "human_gate_resolution",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": "rejected"
+      },
+      {
+        "id": "score-service_rejected-privacy_metadata_only",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected"
+        },
+        "name": "privacy_metadata_only",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": true
+      },
+      {
+        "id": "score-service_rejected-latency_ms",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected"
+        },
+        "name": "latency_ms",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": 21
+      },
+      {
+        "id": "score-service_rejected-token_count",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected",
+          "token_metadata_provided": false
+        },
+        "name": "token_count",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": 0
+      },
+      {
+        "id": "score-service_rejected-cost_usd",
+        "metadata": {
+          "cost_metadata_provided": false,
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected"
+        },
+        "name": "cost_usd",
+        "source": "local-receipt",
+        "trace_id": "trace-service_rejected",
+        "value": 0
+      },
+      {
+        "id": "score-service_not_required-risk_score",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "risk_level": "low",
+          "run_kind": "service_not_required"
+        },
+        "name": "risk_score",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": 0.2
+      },
+      {
+        "id": "score-service_not_required-human_gate_required",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required"
+        },
+        "name": "human_gate_required",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": false
+      },
+      {
+        "id": "score-service_not_required-human_gate_resolution",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required"
+        },
+        "name": "human_gate_resolution",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": "not_required"
+      },
+      {
+        "id": "score-service_not_required-privacy_metadata_only",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required"
+        },
+        "name": "privacy_metadata_only",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": true
+      },
+      {
+        "id": "score-service_not_required-latency_ms",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required"
+        },
+        "name": "latency_ms",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": 21
+      },
+      {
+        "id": "score-service_not_required-token_count",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required",
+          "token_metadata_provided": false
+        },
+        "name": "token_count",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": 0
+      },
+      {
+        "id": "score-service_not_required-cost_usd",
+        "metadata": {
+          "cost_metadata_provided": false,
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required"
+        },
+        "name": "cost_usd",
+        "source": "local-receipt",
+        "trace_id": "trace-service_not_required",
+        "value": 0
+      },
+      {
+        "id": "score-durable_approved-risk_score",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "risk_level": "high",
+          "run_kind": "durable_approved"
+        },
+        "name": "risk_score",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": 0.8
+      },
+      {
+        "id": "score-durable_approved-human_gate_required",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved"
+        },
+        "name": "human_gate_required",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": true
+      },
+      {
+        "id": "score-durable_approved-human_gate_resolution",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved"
+        },
+        "name": "human_gate_resolution",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": "approved"
+      },
+      {
+        "id": "score-durable_approved-privacy_metadata_only",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved"
+        },
+        "name": "privacy_metadata_only",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": true
+      },
+      {
+        "id": "score-durable_approved-latency_ms",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved"
+        },
+        "name": "latency_ms",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": 42
+      },
+      {
+        "id": "score-durable_approved-token_count",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved",
+          "token_metadata_provided": false
+        },
+        "name": "token_count",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": 0
+      },
+      {
+        "id": "score-durable_approved-cost_usd",
+        "metadata": {
+          "cost_metadata_provided": false,
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved"
+        },
+        "name": "cost_usd",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_approved",
+        "value": 0
+      },
+      {
+        "id": "score-durable_rejected-risk_score",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "risk_level": "high",
+          "run_kind": "durable_rejected"
+        },
+        "name": "risk_score",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": 0.8
+      },
+      {
+        "id": "score-durable_rejected-human_gate_required",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected"
+        },
+        "name": "human_gate_required",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": true
+      },
+      {
+        "id": "score-durable_rejected-human_gate_resolution",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected"
+        },
+        "name": "human_gate_resolution",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": "rejected"
+      },
+      {
+        "id": "score-durable_rejected-privacy_metadata_only",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected"
+        },
+        "name": "privacy_metadata_only",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": true
+      },
+      {
+        "id": "score-durable_rejected-latency_ms",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected"
+        },
+        "name": "latency_ms",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": 42
+      },
+      {
+        "id": "score-durable_rejected-token_count",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected",
+          "token_metadata_provided": false
+        },
+        "name": "token_count",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": 0
+      },
+      {
+        "id": "score-durable_rejected-cost_usd",
+        "metadata": {
+          "cost_metadata_provided": false,
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected"
+        },
+        "name": "cost_usd",
+        "source": "local-receipt",
+        "trace_id": "trace-durable_rejected",
+        "value": 0
+      }
+    ],
+    "spans": [
+      {
+        "end_offset_ms": 7,
+        "id": "span-service_approved-validate-cognitive-loop-evidence",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "evidence_status": "ready",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved",
+          "step_id": "validate-cognitive-loop-evidence"
+        },
+        "name": "validate-cognitive-loop-evidence",
+        "start_offset_ms": 0,
+        "trace_id": "trace-service_approved"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-service_approved-human-mastery-gate",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "gate_required": true,
+          "gate_resolution": "approved",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_approved",
+          "step_id": "human-mastery-gate"
+        },
+        "name": "human-mastery-gate",
+        "start_offset_ms": 10,
+        "trace_id": "trace-service_approved"
+      },
+      {
+        "end_offset_ms": 27,
+        "id": "span-service_approved-event-store-projection",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "projection": "metadata-only",
+          "run_kind": "service_approved",
+          "storage_path_included": false
+        },
+        "name": "event-store-projection",
+        "start_offset_ms": 20,
+        "trace_id": "trace-service_approved"
+      },
+      {
+        "end_offset_ms": 7,
+        "id": "span-service_rejected-validate-cognitive-loop-evidence",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "evidence_status": "ready",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected",
+          "step_id": "validate-cognitive-loop-evidence"
+        },
+        "name": "validate-cognitive-loop-evidence",
+        "start_offset_ms": 0,
+        "trace_id": "trace-service_rejected"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-service_rejected-human-mastery-gate",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "gate_required": true,
+          "gate_resolution": "rejected",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "run_kind": "service_rejected",
+          "step_id": "human-mastery-gate"
+        },
+        "name": "human-mastery-gate",
+        "start_offset_ms": 10,
+        "trace_id": "trace-service_rejected"
+      },
+      {
+        "end_offset_ms": 27,
+        "id": "span-service_rejected-event-store-projection",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "projection": "metadata-only",
+          "run_kind": "service_rejected",
+          "storage_path_included": false
+        },
+        "name": "event-store-projection",
+        "start_offset_ms": 20,
+        "trace_id": "trace-service_rejected"
+      },
+      {
+        "end_offset_ms": 7,
+        "id": "span-service_not_required-validate-cognitive-loop-evidence",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "evidence_status": "ready",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required",
+          "step_id": "validate-cognitive-loop-evidence"
+        },
+        "name": "validate-cognitive-loop-evidence",
+        "start_offset_ms": 0,
+        "trace_id": "trace-service_not_required"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-service_not_required-human-mastery-gate",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "gate_required": false,
+          "gate_resolution": "not_required",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "run_kind": "service_not_required",
+          "step_id": "human-mastery-gate"
+        },
+        "name": "human-mastery-gate",
+        "start_offset_ms": 10,
+        "trace_id": "trace-service_not_required"
+      },
+      {
+        "end_offset_ms": 27,
+        "id": "span-service_not_required-event-store-projection",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "projection": "metadata-only",
+          "run_kind": "service_not_required",
+          "storage_path_included": false
+        },
+        "name": "event-store-projection",
+        "start_offset_ms": 20,
+        "trace_id": "trace-service_not_required"
+      },
+      {
+        "end_offset_ms": 7,
+        "id": "span-durable_approved-validate-cognitive-loop-evidence",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "evidence_status": "ready",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved",
+          "step_id": "validate-cognitive-loop-evidence"
+        },
+        "name": "validate-cognitive-loop-evidence",
+        "start_offset_ms": 0,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-durable_approved-durable-state-recovered",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved",
+          "storage": "local-libsql",
+          "storage_path_included": false
+        },
+        "name": "durable-state-recovered",
+        "start_offset_ms": 10,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-durable_approved-human-mastery-gate",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "gate_required": true,
+          "gate_resolution": "approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "run_kind": "durable_approved",
+          "step_id": "human-mastery-gate"
+        },
+        "name": "human-mastery-gate",
+        "start_offset_ms": 10,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "end_offset_ms": 27,
+        "id": "span-durable_approved-event-store-projection",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "projection": "metadata-only",
+          "run_kind": "durable_approved",
+          "storage_path_included": false
+        },
+        "name": "event-store-projection",
+        "start_offset_ms": 20,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "end_offset_ms": 47,
+        "id": "span-durable_approved-durable-receipt-written",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "receipt_phase": "approved",
+          "run_kind": "durable_approved",
+          "storage_path_included": false
+        },
+        "name": "durable-receipt-written",
+        "start_offset_ms": 40,
+        "trace_id": "trace-durable_approved"
+      },
+      {
+        "end_offset_ms": 7,
+        "id": "span-durable_rejected-validate-cognitive-loop-evidence",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "evidence_status": "ready",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected",
+          "step_id": "validate-cognitive-loop-evidence"
+        },
+        "name": "validate-cognitive-loop-evidence",
+        "start_offset_ms": 0,
+        "trace_id": "trace-durable_rejected"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-durable_rejected-durable-state-recovered",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected",
+          "storage": "local-libsql",
+          "storage_path_included": false
+        },
+        "name": "durable-state-recovered",
+        "start_offset_ms": 10,
+        "trace_id": "trace-durable_rejected"
+      },
+      {
+        "end_offset_ms": 17,
+        "id": "span-durable_rejected-human-mastery-gate",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "gate_required": true,
+          "gate_resolution": "rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "run_kind": "durable_rejected",
+          "step_id": "human-mastery-gate"
+        },
+        "name": "human-mastery-gate",
+        "start_offset_ms": 10,
+        "trace_id": "trace-durable_rejected"
+      },
+      {
+        "end_offset_ms": 27,
+        "id": "span-durable_rejected-event-store-projection",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "projection": "metadata-only",
+          "run_kind": "durable_rejected",
+          "storage_path_included": false
+        },
+        "name": "event-store-projection",
+        "start_offset_ms": 20,
+        "trace_id": "trace-durable_rejected"
+      },
+      {
+        "end_offset_ms": 47,
+        "id": "span-durable_rejected-durable-receipt-written",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "receipt_phase": "rejected",
+          "run_kind": "durable_rejected",
+          "storage_path_included": false
+        },
+        "name": "durable-receipt-written",
+        "start_offset_ms": 40,
+        "trace_id": "trace-durable_rejected"
+      }
+    ],
+    "status": "pass",
+    "traces": [
+      {
+        "id": "trace-service_approved",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "gate_required": true,
+          "gate_resolution": "approved",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "project_id": "repo-started-mastra-runtime-project",
+          "report_id": "mastra-runtime-service",
+          "risk_level": "high",
+          "run_kind": "service_approved",
+          "runtime_id": "repo-local-mastra-runtime",
+          "terminal_status": "success",
+          "workflow_id": "cognitive-loop-runtime-adapter"
+        },
+        "name": "Cognitive Loop service approved",
+        "session_id": "loop-repo-started-mastra-runtime",
+        "user_id": "local-operator"
+      },
+      {
+        "id": "trace-service_rejected",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime",
+          "gate_required": true,
+          "gate_resolution": "rejected",
+          "loop_run_id": "loop-repo-started-mastra-runtime",
+          "metadata_only": true,
+          "project_id": "repo-started-mastra-runtime-project",
+          "report_id": "mastra-runtime-service",
+          "risk_level": "high",
+          "run_kind": "service_rejected",
+          "runtime_id": "repo-local-mastra-runtime",
+          "terminal_status": "success",
+          "workflow_id": "cognitive-loop-runtime-adapter"
+        },
+        "name": "Cognitive Loop service rejected",
+        "session_id": "loop-repo-started-mastra-runtime",
+        "user_id": "local-operator"
+      },
+      {
+        "id": "trace-service_not_required",
+        "metadata": {
+          "decision_card_id": "dec-repo-started-mastra-runtime-low-risk",
+          "gate_required": false,
+          "gate_resolution": "not_required",
+          "loop_run_id": "loop-repo-started-mastra-runtime-low-risk",
+          "metadata_only": true,
+          "project_id": "repo-started-mastra-runtime-project",
+          "report_id": "mastra-runtime-service",
+          "risk_level": "low",
+          "run_kind": "service_not_required",
+          "runtime_id": "repo-local-mastra-runtime",
+          "terminal_status": "success",
+          "workflow_id": "cognitive-loop-runtime-adapter"
+        },
+        "name": "Cognitive Loop service not required",
+        "session_id": "loop-repo-started-mastra-runtime-low-risk",
+        "user_id": "local-operator"
+      },
+      {
+        "id": "trace-durable_approved",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-approved",
+          "gate_required": true,
+          "gate_resolution": "approved",
+          "loop_run_id": "run-durable-approved",
+          "metadata_only": true,
+          "project_id": "repo-started-mastra-runtime-project",
+          "report_id": "mastra-runtime-durable",
+          "risk_level": "high",
+          "run_kind": "durable_approved",
+          "runtime_id": "repo-local-mastra-runtime",
+          "terminal_status": "approved",
+          "workflow_id": "cognitive-loop-runtime-adapter"
+        },
+        "name": "Cognitive Loop durable approved",
+        "session_id": "run-durable-approved",
+        "user_id": "local-operator"
+      },
+      {
+        "id": "trace-durable_rejected",
+        "metadata": {
+          "decision_card_id": "dec-run-durable-rejected",
+          "gate_required": true,
+          "gate_resolution": "rejected",
+          "loop_run_id": "run-durable-rejected",
+          "metadata_only": true,
+          "project_id": "repo-started-mastra-runtime-project",
+          "report_id": "mastra-runtime-durable",
+          "risk_level": "high",
+          "run_kind": "durable_rejected",
+          "runtime_id": "repo-local-mastra-runtime",
+          "terminal_status": "rejected",
+          "workflow_id": "cognitive-loop-runtime-adapter"
+        },
+        "name": "Cognitive Loop durable rejected",
+        "session_id": "run-durable-rejected",
+        "user_id": "local-operator"
+      }
+    ]
+  },
+  "privacy": {
+    "absolute_paths_included": false,
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_bodies_included": false,
+    "langfuse_secret_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "source_bodies_included": false,
+    "storage_path_included": false
+  },
+  "purpose": "Prove repo-local Cognitive Loop Mastra service and durable receipts map to Langfuse trace/span/generation/score DTOs without calling Langfuse or leaking source text, diffs, learner answers, Agent endpoints, Agent metadata, prompts, keys, or local paths.",
+  "receipt_record": {
+    "bytes": 33922,
+    "sha256": "aa3e6ba9091b13f0d56bb7bbf5993c240c10419fe17dc9909709525c6f4562fc"
+  },
+  "schema_version": "cognitive-loop-langfuse-observability-verification-v1",
+  "status": "pass"
+}

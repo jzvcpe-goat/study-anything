@@ -97,7 +97,8 @@
     "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
     "cognitive_loop_mastra_runtime_dry_run.schema_version == cognitive-loop-mastra-runtime-dry-run-verification-v1",
     "cognitive_loop_mastra_runtime_service.schema_version == cognitive-loop-mastra-runtime-service-verification-v1",
-    "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1"
+    "cognitive_loop_mastra_runtime_durable.schema_version == cognitive-loop-mastra-runtime-durable-verification-v1",
+    "cognitive_loop_langfuse_observability.schema_version == cognitive-loop-langfuse-observability-verification-v1"
   ],
   "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
   "entrypoints": {
@@ -175,6 +176,7 @@
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
     "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+    "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
     "platform/mastra/README.md",
     "platform/mastra/manifest.json",
     "platform/mastra/cognitive-loop-mastra-adapter.ts",
@@ -187,9 +189,12 @@
     "platform/mastra-runtime/src/runtime.ts",
     "platform/mastra-runtime/src/run-once.ts",
     "platform/mastra-runtime/src/durable-run.ts",
+    "platform/mastra-runtime/src/observability.ts",
+    "platform/mastra-runtime/src/observability-run.ts",
     "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
     "scripts/verify_cognitive_loop_mastra_runtime_service.py",
-    "scripts/verify_cognitive_loop_mastra_runtime_durable.py"
+    "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+    "scripts/verify_cognitive_loop_langfuse_observability.py"
   ],
   "integration_mode": "openapi_http_tools",
   "local_verification": [
@@ -278,7 +283,8 @@
     "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-    "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
   ],
   "must_not_log_or_share": [
     "raw source text",
@@ -298,6 +304,7 @@
     "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check",
     "python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check",
-    "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check"
+    "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+    "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check"
   ]
 }

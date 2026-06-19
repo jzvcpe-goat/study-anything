@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 317269,
+    "bytes": 320485,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "f783af166e5684169e4e331aa82e2f3d3e99b7a8ea182fedadf7a3f5b3c5575c",
+    "sha256": "1f4e605d1e9b35a15d8c65c242ef8c48ac611f8ca3d7af82bf1119dbe229c42f",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -101,19 +101,19 @@
   },
   "platform_pack_checksums": [
     {
-      "bytes": 22034,
+      "bytes": 22564,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "de874d7f5b486b16840bc6308e097fbf557c9455be92655b416cc2d5d2e50a85"
+      "sha256": "2e2d3ad4d1036c83d271351331f876e83a33984a7259736412015e8ad753cb8c"
     },
     {
-      "bytes": 22634,
+      "bytes": 23164,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "55d57b81d3a49b26a136672d8c4ef2a23530793fb72da84db20359e29db76a11"
+      "sha256": "6acc7eee2701496552b91543eeecef20b1e33f6c74a5d26e2ed7b2888588ff91"
     },
     {
-      "bytes": 22140,
+      "bytes": 22670,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "4272823c3f88736adedd8e7e9ffb0c1f701954805bdf45362e1e1367bedc6c25"
+      "sha256": "853a8507adab2501195b944b21a7f8b484180431811994c435397d6601c32cd3"
     }
   ],
   "privacy_assertions": {
@@ -129,9 +129,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 23784,
+      "bytes": 24515,
       "path": "README.md",
-      "sha256": "7e5aa352cc43a6a8696a5e4e3b34a4bf202052f3030b229c4f65566f1bdb9f1a"
+      "sha256": "aac431d4bbb58e5db4f714d0c9af42d6f9727d26820f0eab6c6a3e92d4f686fd"
     },
     {
       "bytes": 19503,
@@ -179,19 +179,19 @@
       "sha256": "952773709005786aa6df6810238affed09b350c7d408e56f5efdb1d1a0c8822b"
     },
     {
-      "bytes": 15596,
+      "bytes": 16736,
       "path": "docs/roadmap.md",
-      "sha256": "c13642f6a523194519dc3c564e2b2f9e58e0619ef6970c8519c1556eda37931c"
+      "sha256": "062f47d2c86ff75dbb821beb61ec21c012f02605f5e5fd74b74cd372a3e6e556"
     },
     {
-      "bytes": 2903,
+      "bytes": 3018,
       "path": "docs/release-notes/v0.3.31-alpha.md",
-      "sha256": "692ee30a55f33abf8817f4f15fc76cd94073c68f07938087213f161c36259745"
+      "sha256": "78f2f7f13a29bd995ef28215c9a6fcc070d6f6606641761c78feb832ca3f978f"
     },
     {
-      "bytes": 76923,
+      "bytes": 79333,
       "path": "platform/ecosystem-submission.json",
-      "sha256": "b72d6ea78ee85e6eebd039c0dde2c6008d4d7be8e348e6e70027eb3208703d91"
+      "sha256": "e385022cfa88a99a890e9fef6b673f4acc436cdb02c948962127774fe90693d3"
     },
     {
       "bytes": 10160,
@@ -211,67 +211,67 @@
     {
       "bytes": 11079,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "475cab8d7e32dda0a9a814d5b50b8dc0403e0fd9933ff30ce459ec5199320e85"
+      "sha256": "5d30e1c9b0bcd1be45227f337cb51ec96100d9c8702cb433fe1ecabff3d6e8cd"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "e81e00a428cbfe4f43f47cce709f197e31e59c527abfd7dbdb7db0c079103ee7"
+      "sha256": "a313f69120e9c2549223604ee83a3d8b677608a81dd2484f1fd710757f2e917b"
     },
     {
-      "bytes": 110854,
+      "bytes": 111734,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "ad5ed883253a498e5e3077d27ccb84059af8ce61db4b15be2d359dd635c3db28"
+      "sha256": "faa89b66e361d7d488991b6b766088fd95a55a66f4e5480bd66ed601d3028729"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "3698b013bafb7dd23e7d29f98735e5771a73fd6e01cae526e5a1e258e36420e1"
+      "sha256": "c198cc8677e0cad2befb5dd0f4d8db1c11bd81bcc78480dc26b81e75c0089b89"
     },
     {
       "bytes": 7929,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "4d6d7f01cfdc135d9da6601b8bc46da4c11a54f931457de3de4e197d12823c3b"
+      "sha256": "2bc9c76ba286a92ee2849b37d8626f9a856b5de9cba952a4027de5a90e6279fb"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "774baef79cd94a0f912021f14a61d5756c84951efc2a26cb8729e7083715da2e"
+      "sha256": "8126e2508489dfd7fdcd55d8fe271237c54bea31b26c35dde15c02da43822d09"
     },
     {
-      "bytes": 105085,
+      "bytes": 105823,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "ed40be04c49dd9dd8d9832321bb5098fe05e7cbaae9e05c1d6e4545d705f7d4d"
+      "sha256": "48ccb7ea1f3d4a1549006b6c125c9f2803ba2789455707e6d0791514443b86db"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "b790d54da4c1290fc1024c00a2c7e90e4ab67a71b26edb4004108f03493ac2ec"
+      "sha256": "d187b8225ac5c65f4f0dbe2a83c351210c007bbdb166dfcef400ebb116b83ded"
     },
     {
-      "bytes": 77121,
+      "bytes": 78876,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "71461c415d42f82b0f18408dcc4b9871caf1ef738c731ce0a3eccc45bf43ef33"
+      "sha256": "6807f5dabbcf27d53f90cb50d6bfa6c371b4cb2f20aa952bc1b5c8706c885908"
     },
     {
-      "bytes": 71981,
+      "bytes": 73043,
       "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
-      "sha256": "ecbfa8056ec3aab83cc0e5f51464d48af2b186cf785bf81beb157a7963256a74"
+      "sha256": "f1b7a087cea7a57dd06231a4c641970e16fac066a76470fc25da5de10aafc21e"
     },
     {
-      "bytes": 22034,
+      "bytes": 22564,
       "path": "platform/packs/codex/pack.json",
-      "sha256": "de874d7f5b486b16840bc6308e097fbf557c9455be92655b416cc2d5d2e50a85"
+      "sha256": "2e2d3ad4d1036c83d271351331f876e83a33984a7259736412015e8ad753cb8c"
     },
     {
-      "bytes": 22634,
+      "bytes": 23164,
       "path": "platform/packs/kimi/pack.json",
-      "sha256": "55d57b81d3a49b26a136672d8c4ef2a23530793fb72da84db20359e29db76a11"
+      "sha256": "6acc7eee2701496552b91543eeecef20b1e33f6c74a5d26e2ed7b2888588ff91"
     },
     {
-      "bytes": 22140,
+      "bytes": 22670,
       "path": "platform/packs/workbuddy/pack.json",
-      "sha256": "4272823c3f88736adedd8e7e9ffb0c1f701954805bdf45362e1e1367bedc6c25"
+      "sha256": "853a8507adab2501195b944b21a7f8b484180431811994c435397d6601c32cd3"
     }
   ],
   "purpose": "Give external adopters and platform maintainers a single privacy-safe proof bundle for reproducing Study Anything platform-Agent launch evidence.",
@@ -286,9 +286,9 @@
   "source_schemas": {
     "ecosystem_submission": {
       "ref": {
-        "bytes": 76923,
+        "bytes": 79333,
         "path": "platform/ecosystem-submission.json",
-        "sha256": "b72d6ea78ee85e6eebd039c0dde2c6008d4d7be8e348e6e70027eb3208703d91"
+        "sha256": "e385022cfa88a99a890e9fef6b673f4acc436cdb02c948962127774fe90693d3"
       },
       "schema_version": "ecosystem-submission-v1"
     },
@@ -318,7 +318,7 @@
       "ref": {
         "bytes": 11079,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "475cab8d7e32dda0a9a814d5b50b8dc0403e0fd9933ff30ce459ec5199320e85"
+        "sha256": "5d30e1c9b0bcd1be45227f337cb51ec96100d9c8702cb433fe1ecabff3d6e8cd"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 7929,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "4d6d7f01cfdc135d9da6601b8bc46da4c11a54f931457de3de4e197d12823c3b"
+        "sha256": "2bc9c76ba286a92ee2849b37d8626f9a856b5de9cba952a4027de5a90e6279fb"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
