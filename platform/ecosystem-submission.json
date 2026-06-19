@@ -80,7 +80,9 @@
       ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
       ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
       ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-      ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+      ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+      "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+      "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
     ],
     "must_prove": [
       "all submission assets exist",
@@ -155,7 +157,8 @@
       "cognitive_loop_mastra_adapter.schema_version == cognitive-loop-mastra-adapter-verification-v1",
       "cognitive-loop-mastra-runtime-dry-run-verification-v1 proves the metadata-only Mastra runtime rehearsal covers high-risk suspension, approved resume, rejected bail, and Event Store projection without starting Mastra or storing model keys",
       "cognitive-loop-mastra-runtime-service-verification-v1 proves a repo-local Mastra runtime MVP can start through @mastra/core and cover high-risk suspension, approved resume, rejected bail, and low-risk no-gate paths without storing model keys",
-      "cognitive-loop-langfuse-observability-verification-v1 proves repo-local Mastra service and durable receipts map to Langfuse trace/span/generation/score DTOs without calling Langfuse or leaking source text, diffs, learner answers, Agent endpoints, Agent metadata, prompts, keys, storage paths, or absolute local paths"
+      "cognitive-loop-langfuse-observability-verification-v1 proves repo-local Mastra service and durable receipts map to Langfuse trace/span/generation/score DTOs without calling Langfuse or leaking source text, diffs, learner answers, Agent endpoints, Agent metadata, prompts, keys, storage paths, or absolute local paths",
+      "cognitive-loop-artifact-console-verification-v1 proves external operators can open a static metadata-only HTML Artifact Console Lite from Event Store, watcher runner, Study Adapter, DecisionCard, Human Gate, and LoopRun evidence without embedding private artifact contents, starting a daemon, requiring a standalone frontend, or taking model-key custody"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -519,7 +522,10 @@
     "scripts/verify_cognitive_loop_study_anything_adapter.py",
     "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
     "scripts/cognitive_loop_watcher_runner.py",
-    "scripts/verify_cognitive_loop_watcher_runner.py"
+    "scripts/verify_cognitive_loop_watcher_runner.py",
+    "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+    "scripts/cognitive_loop_artifact_console.py",
+    "scripts/verify_cognitive_loop_artifact_console.py"
   ],
   "submissions": [
     {
@@ -611,7 +617,10 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -638,7 +647,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -689,7 +700,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
       ]
     },
     {
@@ -778,7 +790,10 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -804,7 +819,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -853,7 +870,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
       ]
     },
     {
@@ -941,7 +959,10 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -967,7 +988,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -1016,7 +1039,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
       ]
     },
     {
@@ -1103,7 +1127,10 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -1129,7 +1156,9 @@
         "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
         "python3 scripts/verify_cognitive_loop_langfuse_observability.py --check",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
@@ -1178,7 +1207,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\""
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
       ]
     }
   ],

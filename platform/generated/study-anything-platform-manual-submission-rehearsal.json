@@ -658,7 +658,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 102,
+      "acceptance_evidence_count": 103,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -749,7 +749,9 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -854,14 +856,17 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "terminal_skill",
       "platform_id": "codex",
       "status": "ready_for_manual_rehearsal"
     },
     "kimi": {
-      "acceptance_evidence_count": 102,
+      "acceptance_evidence_count": 103,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -952,7 +957,9 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -1061,14 +1068,17 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "platform_id": "kimi",
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 102,
+      "acceptance_evidence_count": 103,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -1158,7 +1168,9 @@
         ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
         ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
-        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'"
+        ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary 'Metadata-only workflow boundary changed'",
+        "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+        "python3 scripts/cognitive_loop_artifact_console.py build --html --json"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -1264,7 +1276,10 @@
         "scripts/verify_cognitive_loop_study_anything_adapter.py",
         "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
         "scripts/cognitive_loop_watcher_runner.py",
-        "scripts/verify_cognitive_loop_watcher_runner.py"
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "scripts/cognitive_loop_artifact_console.py",
+        "scripts/verify_cognitive_loop_artifact_console.py"
       ],
       "integration_mode": "openapi_http_tools",
       "platform_id": "workbuddy",
