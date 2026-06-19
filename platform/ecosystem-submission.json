@@ -84,7 +84,9 @@
       "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
       "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
       "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-      "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+      "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+      "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+      "python3 scripts/cognitive_loop_evolution.py build --html --json"
     ],
     "must_prove": [
       "all submission assets exist",
@@ -161,7 +163,8 @@
       "cognitive-loop-mastra-runtime-service-verification-v1 proves a repo-local Mastra runtime MVP can start through @mastra/core and cover high-risk suspension, approved resume, rejected bail, and low-risk no-gate paths without storing model keys",
       "cognitive-loop-langfuse-observability-verification-v1 proves repo-local Mastra service and durable receipts map to Langfuse trace/span/generation/score DTOs without calling Langfuse or leaking source text, diffs, learner answers, Agent endpoints, Agent metadata, prompts, keys, storage paths, or absolute local paths",
       "cognitive-loop-artifact-console-verification-v1 proves external operators can open a static metadata-only HTML Artifact Console Lite from Event Store, watcher runner, Study Adapter, DecisionCard, Human Gate, and LoopRun evidence without embedding private artifact contents, starting a daemon, requiring a standalone frontend, or taking model-key custody",
-      "cognitive-loop-personal-plugin-mode-verification-v1 proves personal plugin/Skill operators can explain files, README, webpage metadata, and diff summaries through read-only metadata-only artifacts without embedding raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, model keys, or starting a daemon"
+      "cognitive-loop-personal-plugin-mode-verification-v1 proves personal plugin/Skill operators can explain files, README, webpage metadata, and diff summaries through read-only metadata-only artifacts without embedding raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, model keys, or starting a daemon",
+      "cognitive-loop-evolution-report-verification-v1 proves platform and Skill operators can cluster metadata-only failures, propose governed next-loop improvements, require Human Mastery Gate for high-risk suggestions, degrade on missing evidence, reject secrets or diff bodies, and avoid weakening risk, audit, privacy, rollback, test, or permission policy"
     ],
     "schema": "ecosystem-submission-verification-v1"
   },
@@ -531,7 +534,10 @@
     "scripts/verify_cognitive_loop_artifact_console.py",
     "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
     "scripts/cognitive_loop_personal_mode.py",
-    "scripts/verify_cognitive_loop_personal_plugin_mode.py"
+    "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+    "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+    "scripts/cognitive_loop_evolution.py",
+    "scripts/verify_cognitive_loop_evolution_report.py"
   ],
   "submissions": [
     {
@@ -629,7 +635,10 @@
         "scripts/verify_cognitive_loop_artifact_console.py",
         "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
         "scripts/cognitive_loop_personal_mode.py",
-        "scripts/verify_cognitive_loop_personal_plugin_mode.py"
+        "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+        "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+        "scripts/cognitive_loop_evolution.py",
+        "scripts/verify_cognitive_loop_evolution_report.py"
       ],
       "integration_mode": "openai_compatible_tools",
       "known_limits": [
@@ -660,7 +669,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "kimi-compatible",
@@ -713,7 +724,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
         ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
-        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check"
+        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check"
       ]
     },
     {
@@ -808,7 +820,10 @@
         "scripts/verify_cognitive_loop_artifact_console.py",
         "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
         "scripts/cognitive_loop_personal_mode.py",
-        "scripts/verify_cognitive_loop_personal_plugin_mode.py"
+        "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+        "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+        "scripts/cognitive_loop_evolution.py",
+        "scripts/verify_cognitive_loop_evolution_report.py"
       ],
       "integration_mode": "terminal_skill",
       "known_limits": [
@@ -838,7 +853,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "codex-skill",
@@ -889,7 +906,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
         ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
-        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check"
+        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check"
       ]
     },
     {
@@ -983,7 +1001,10 @@
         "scripts/verify_cognitive_loop_artifact_console.py",
         "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
         "scripts/cognitive_loop_personal_mode.py",
-        "scripts/verify_cognitive_loop_personal_plugin_mode.py"
+        "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+        "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+        "scripts/cognitive_loop_evolution.py",
+        "scripts/verify_cognitive_loop_evolution_report.py"
       ],
       "integration_mode": "openapi_http_tools",
       "known_limits": [
@@ -1013,7 +1034,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "workbuddy-style-http",
@@ -1064,7 +1087,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
         ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
-        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check"
+        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check"
       ]
     },
     {
@@ -1157,7 +1181,10 @@
         "scripts/verify_cognitive_loop_artifact_console.py",
         "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
         "scripts/cognitive_loop_personal_mode.py",
-        "scripts/verify_cognitive_loop_personal_plugin_mode.py"
+        "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+        "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+        "scripts/cognitive_loop_evolution.py",
+        "scripts/verify_cognitive_loop_evolution_report.py"
       ],
       "integration_mode": "generic_openapi_tools",
       "known_limits": [
@@ -1187,7 +1214,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "no_frontend_required": true,
       "platform_id": "generic-openapi-tools",
@@ -1238,7 +1267,8 @@
         ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
         ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary \"Metadata-only workflow boundary changed\"",
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
-        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check"
+        "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check"
       ]
     }
   ],

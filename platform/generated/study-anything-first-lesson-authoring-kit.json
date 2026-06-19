@@ -111,7 +111,7 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 104,
+      "acceptance_evidence_count": 105,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -206,7 +206,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -218,7 +220,7 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 104,
+      "acceptance_evidence_count": 105,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -313,7 +315,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -327,7 +331,7 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 104,
+      "acceptance_evidence_count": 105,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
@@ -421,7 +425,9 @@
         "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
         "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
-        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json"
+        "python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json",
+        "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+        "python3 scripts/cognitive_loop_evolution.py build --html --json"
       ],
       "entrypoints": {
         "api_docs": "docs/api.md",

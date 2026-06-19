@@ -358,6 +358,16 @@ This console is larger than the Artifact Index but still smaller than the planne
 
 `python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check` 会验证文件、README、网页 metadata、diff summary 四类目标，JSON/HTML/Markdown 报告结构，只读/no-write 行为，缺失目标处理，疑似 secret 目标拒绝，raw diff body 拒绝，以及源正文、raw diff body、学习者答案、Agent endpoint、Agent metadata、prompt、model key、model call 和 daemon 的隐私标记，并输出 `cognitive-loop-personal-plugin-mode-verification-v1`。
 
+## Evolution Report Lite / Evolution Report Lite
+
+`python3 scripts/cognitive_loop_evolution.py build --html --json` creates a read-only governed improvement artifact from metadata-only evidence and bounded failure summaries. The output schema is `cognitive-loop-evolution-report-lite-v1` and includes evidence summaries, failure clusters, root-cause hypotheses, proposed improvements, Human Mastery Gate state, regression plan, next-loop success metric, and a validated `EvolutionReport`.
+
+`python3 scripts/verify_cognitive_loop_evolution_report.py --check` verifies successful clustering, root-cause generation, high-risk gate requirements, empty or missing evidence degradation, secret-looking evidence rejection, diff body rejection, policy-weakening rejection, JSON/HTML report structure, and privacy boundaries. It emits `cognitive-loop-evolution-report-verification-v1`.
+
+`python3 scripts/cognitive_loop_evolution.py build --html --json` 会基于 metadata-only evidence 和有边界的 failure summary 创建只读的受治理改进 artifact。输出 schema 是 `cognitive-loop-evolution-report-lite-v1`，包含 evidence summary、failure cluster、root-cause hypothesis、改进建议、Human Mastery Gate 状态、回归计划、下一轮成功指标，以及通过校验的 `EvolutionReport`。
+
+`python3 scripts/verify_cognitive_loop_evolution_report.py --check` 会验证成功聚类、root-cause 生成、高风险 gate 要求、空或缺失 evidence 降级、疑似 secret evidence 拒绝、diff body 拒绝、policy 弱化拒绝、JSON/HTML 报告结构和隐私边界，并输出 `cognitive-loop-evolution-report-verification-v1`。
+
 ## Public Objects
 
 ### `ProjectEvent`
