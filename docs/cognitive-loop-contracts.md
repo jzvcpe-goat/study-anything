@@ -336,17 +336,17 @@ This is intentionally smaller than the planned full HTML Artifact console. It is
 
 ## Artifact Console Lite / Artifact Console Lite
 
-`python3 scripts/cognitive_loop_artifact_console.py build --html --json` creates a static metadata-only console under `.cognitive-loop/artifacts/console/`. It aggregates Event Store rows, watcher runner summaries, Study Adapter artifact links, DecisionCard, Human Gate, LoopRun, and artifact-health metadata into `index.html` and `manifest.json`.
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json` creates a static metadata-only console under `.cognitive-loop/artifacts/console/`. It aggregates Event Store rows, watcher runner summaries, Study Adapter artifact links, DecisionCard, Human Gate, LoopRun, Evolution Chain artifact refs, and artifact-health metadata into `index.html` and `manifest.json`.
 
 This console is larger than the Artifact Index but still smaller than the planned realtime HTML console. It is an offline operator surface for platform Agents and maintainers, not a daemon, not a standalone web app, and not an SSE/WebSocket UI. Every section records provenance and redaction evidence, and the manifest keeps privacy flags for event JSON bodies, HTML/Markdown bodies, source text, raw diffs, test output, learner answers, Agent endpoints, Agent metadata, prompts, and model keys set to false.
 
-`python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty project rendering, runner-lite Event Store aggregation, Study Adapter artifact links, degraded missing-artifact status, secret/private-text rejection, mobile/narrow-screen HTML structure, and privacy boundaries. It emits `cognitive-loop-artifact-console-verification-v1`.
+`python3 scripts/verify_cognitive_loop_artifact_console.py --check` verifies empty project rendering, runner-lite Event Store aggregation, Study Adapter artifact links, Evolution Chain aggregation, missing Evolution artifact degradation, blocked replay preservation, invalid/secret/raw-diff/privacy-regression/policy-weakening rejection, mobile/narrow-screen HTML structure, and privacy boundaries. It emits `cognitive-loop-artifact-console-verification-v1`.
 
-`python3 scripts/cognitive_loop_artifact_console.py build --html --json` 会在 `.cognitive-loop/artifacts/console/` 下创建静态 metadata-only console。它把 Event Store rows、watcher runner summary、Study Adapter artifact link、DecisionCard、Human Gate、LoopRun 和 artifact-health metadata 汇总为 `index.html` 和 `manifest.json`。
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json` 会在 `.cognitive-loop/artifacts/console/` 下创建静态 metadata-only console。它把 Event Store rows、watcher runner summary、Study Adapter artifact link、DecisionCard、Human Gate、LoopRun、Evolution Chain artifact refs 和 artifact-health metadata 汇总为 `index.html` 和 `manifest.json`。
 
 这个 console 比 Artifact Index 更聚合，但仍小于计划中的实时 HTML console。它是给平台 Agent 和维护者使用的离线操作界面，不是 daemon，不是独立 Web App，也不是 SSE/WebSocket UI。每个 section 都记录 provenance 和 redaction evidence，并且 manifest 会把 event JSON 正文、HTML/Markdown 正文、source text、raw diff、test output、学习者答案、Agent endpoint、Agent metadata、prompt 和 model key 的隐私标记保持为 false。
 
-`python3 scripts/verify_cognitive_loop_artifact_console.py --check` 会验证空项目渲染、runner-lite Event Store 聚合、Study Adapter artifact 链接、缺失 artifact 降级、secret/private-text 拒绝、移动端/窄屏 HTML 结构和隐私边界，并输出 `cognitive-loop-artifact-console-verification-v1`。
+`python3 scripts/verify_cognitive_loop_artifact_console.py --check` 会验证空项目渲染、runner-lite Event Store 聚合、Study Adapter artifact 链接、Evolution Chain 聚合、缺失 Evolution artifact 降级、blocked replay 保留、invalid/secret/raw-diff/privacy-regression/policy-weakening 拒绝、移动端/窄屏 HTML 结构和隐私边界，并输出 `cognitive-loop-artifact-console-verification-v1`。
 
 ## Personal Plugin Mode Lite / Personal Plugin Mode Lite
 

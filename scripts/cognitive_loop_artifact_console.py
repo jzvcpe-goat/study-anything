@@ -31,10 +31,93 @@ FORBIDDEN_TEXT = (
     "diff --git",
     "api_key",
     "agent endpoint:",
+    "agent metadata:",
+    "prompt:",
     "http://127.0.0.1:8787",
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
     "raw test output",
+)
+POLICY_WEAKENING_PHRASES = (
+    "disable privacy",
+    "skip privacy",
+    "weaken privacy",
+    "disable audit",
+    "skip audit",
+    "remove rollback",
+    "skip rollback",
+    "disable tests",
+    "skip tests",
+    "lower risk threshold",
+    "weaken risk",
+    "disable human gate",
+    "bypass human gate",
+    "loosen permissions",
+)
+PRIVACY_FALSE_KEYS = (
+    "source_text_included",
+    "raw_source_text_included",
+    "raw_diff_included",
+    "diff_bodies_included",
+    "file_contents_included",
+    "learner_answers_included",
+    "agent_endpoint_included",
+    "agent_endpoints_included",
+    "agent_metadata_included",
+    "prompt_text_included",
+    "real_model_keys_stored",
+    "model_called",
+    "daemon_started",
+    "mastra_workflow_started",
+    "production_mastra_daemon_started",
+    "apply_executed",
+    "raw_unified_diff_generated",
+    "policy_weakened",
+    "source_files_modified",
+)
+EVOLUTION_CHAIN_SPECS = (
+    {
+        "role": "evolution_report",
+        "label": "Evolution Report",
+        "schema_version": "cognitive-loop-evolution-report-lite-v1",
+        "default_ref": ".cognitive-loop/artifacts/evolution/evolution-report-lite.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_evolution.py build --html --json",
+    },
+    {
+        "role": "apply_plan",
+        "label": "Governed Apply Plan",
+        "schema_version": "cognitive-loop-apply-plan-lite-v1",
+        "default_ref": ".cognitive-loop/artifacts/applied/apply-plan-lite.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json",
+    },
+    {
+        "role": "improvement_comparison",
+        "label": "Improvement Comparison",
+        "schema_version": "cognitive-loop-improvement-comparison-lite-v1",
+        "default_ref": ".cognitive-loop/artifacts/comparison/improvement-comparison-lite.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json",
+    },
+    {
+        "role": "patch_proposal",
+        "label": "Patch Proposal",
+        "schema_version": "cognitive-loop-patch-proposal-lite-v1",
+        "default_ref": ".cognitive-loop/artifacts/patches/patch-proposal-lite.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json",
+    },
+    {
+        "role": "evolution_receipt_link",
+        "label": "Evolution Receipt Link",
+        "schema_version": "cognitive-loop-mastra-evolution-receipt-link-v1",
+        "default_ref": ".cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+    },
+    {
+        "role": "mastra_workflow_replay",
+        "label": "Mastra Workflow Replay",
+        "schema_version": "cognitive-loop-mastra-evolution-workflow-replay-v1",
+        "default_ref": ".cognitive-loop/artifacts/mastra/mastra-evolution-workflow-replay.json",
+        "operator_next_command": "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json",
+    },
 )
 
 
@@ -52,6 +135,19 @@ def _assert_no_forbidden_text(value: Any, *, label: str) -> None:
     leaked = [needle for needle in FORBIDDEN_TEXT if needle.lower() in lowered]
     if leaked:
         raise ArtifactConsoleError(f"{label} contains private-looking text: {leaked}")
+
+
+def _assert_no_policy_weakening(value: Any, *, label: str) -> None:
+    text = value if isinstance(value, str) else json.dumps(value, ensure_ascii=False, sort_keys=True)
+    lowered = text.lower()
+    hits = [phrase for phrase in POLICY_WEAKENING_PHRASES if phrase in lowered]
+    if hits:
+        raise ArtifactConsoleError(f"{label} tries to weaken protected policy: {hits}")
+
+
+def _assert_public_payload(value: Any, *, label: str) -> None:
+    _assert_no_forbidden_text(value, label=label)
+    _assert_no_policy_weakening(value, label=label)
 
 
 def _root(args: argparse.Namespace) -> Path:
@@ -93,7 +189,7 @@ def _safe_json_summary(root: Path, path: Path) -> dict[str, Any]:
     relative = _relative(root, path)
     data = path.read_bytes()
     text = data.decode("utf-8", errors="replace")
-    _assert_no_forbidden_text(text, label=relative)
+    _assert_public_payload(text, label=relative)
     schema_version = "unknown"
     status = "unknown"
     event_id = ""
@@ -203,6 +299,198 @@ def _load_optional_json(path: Path) -> dict[str, Any] | None:
     except json.JSONDecodeError:
         return None
     return payload if isinstance(payload, dict) else None
+
+
+def _privacy_regressions(payload: Mapping[str, Any]) -> list[str]:
+    regressions: list[str] = []
+    for section_name in ("privacy", "guardrails", "runtime_boundaries"):
+        section = payload.get(section_name)
+        if not isinstance(section, Mapping):
+            continue
+        for key in PRIVACY_FALSE_KEYS:
+            if section.get(key) is True:
+                regressions.append(f"{section_name}.{key}")
+    links = payload.get("artifact_links")
+    if isinstance(links, list):
+        for index, link in enumerate(links):
+            if not isinstance(link, Mapping):
+                continue
+            for regression in link.get("privacy_regressions") or []:
+                regressions.append(f"artifact_links[{index}].{regression}")
+    return sorted(set(regressions))
+
+
+def _first_command(payload: Mapping[str, Any], fallback: str) -> str:
+    commands = payload.get("commands")
+    if isinstance(commands, Mapping):
+        for value in commands.values():
+            if isinstance(value, str) and value.strip():
+                return value
+    return fallback
+
+
+def _list_len(payload: Mapping[str, Any], key: str) -> int:
+    value = payload.get(key)
+    return len(value) if isinstance(value, list) else 0
+
+
+def _gate_status(payload: Mapping[str, Any]) -> str:
+    human_gate = payload.get("human_mastery_gate")
+    if isinstance(human_gate, Mapping):
+        status = str(human_gate.get("status") or "")
+        if status:
+            return status
+        if human_gate.get("required") is True:
+            return "required"
+    receipt = payload.get("receipt")
+    if isinstance(receipt, Mapping):
+        if receipt.get("human_mastery_gate_required") is True:
+            return "required"
+        if receipt.get("manual_only_required") is True:
+            return "manual_review_required"
+    gate_actions = payload.get("gate_actions")
+    if isinstance(gate_actions, list):
+        actions = sorted(
+            {
+                str(item.get("gate_action"))
+                for item in gate_actions
+                if isinstance(item, Mapping) and item.get("gate_action")
+            }
+        )
+        if actions:
+            return ",".join(actions)
+    return "not_required"
+
+
+def _manual_review_required(payload: Mapping[str, Any], status: str) -> bool:
+    if status in {"degraded", "manual_only", "needs_review", "manual_review", "insufficient", "regressed", "ambiguous"}:
+        return True
+    human_gate = payload.get("human_mastery_gate")
+    if isinstance(human_gate, Mapping) and str(human_gate.get("status") or "") in {"pending", "manual_review_required"}:
+        return True
+    receipt = payload.get("receipt")
+    if isinstance(receipt, Mapping) and receipt.get("manual_only_required") is True:
+        return True
+    replay_summary = payload.get("replay_summary")
+    if isinstance(replay_summary, Mapping) and replay_summary.get("manual_review_required") is True:
+        return True
+    return _list_len(payload, "manual_only_actions") > 0 or _list_len(payload, "manual_only_candidates") > 0
+
+
+def _blocking_required(payload: Mapping[str, Any], status: str) -> bool:
+    if status == "blocked":
+        return True
+    blockers = payload.get("blockers")
+    if isinstance(blockers, list) and blockers:
+        return True
+    replay_summary = payload.get("replay_summary")
+    if isinstance(replay_summary, Mapping) and replay_summary.get("blocked") is True:
+        return True
+    return False
+
+
+def _evolution_artifact(
+    root: Path,
+    spec: Mapping[str, str],
+    artifacts_by_schema: Mapping[str, list[str]],
+) -> dict[str, Any]:
+    default_ref = spec["default_ref"]
+    schema_version = spec["schema_version"]
+    path = root / default_ref
+    if not path.is_file():
+        candidates = artifacts_by_schema.get(schema_version, [])
+        path = root / candidates[0] if candidates else path
+    if not path.is_file():
+        return {
+            "role": spec["role"],
+            "label": spec["label"],
+            "schema_version": schema_version,
+            "status": "missing",
+            "ref": default_ref,
+            "sha256": "",
+            "size_bytes": 0,
+            "html_ref": "",
+            "gate_status": "unknown",
+            "manual_review_required": True,
+            "blocking_required": False,
+            "operator_next_command": spec["operator_next_command"],
+            "privacy_flags": {},
+            "privacy_regressions": [],
+            "content_included": False,
+        }
+    relative = _relative(root, path)
+    data = path.read_bytes()
+    text = data.decode("utf-8", errors="replace")
+    _assert_public_payload(text, label=relative)
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ArtifactConsoleError(f"Evolution chain artifact must be JSON: {relative}") from exc
+    if not isinstance(payload, Mapping):
+        raise ArtifactConsoleError(f"Evolution chain artifact must be a JSON object: {relative}")
+    actual_schema = str(payload.get("schema_version") or "")
+    if actual_schema != schema_version:
+        raise ArtifactConsoleError(
+            f"Evolution chain artifact {relative} has invalid schema {actual_schema}; expected {schema_version}"
+        )
+    regressions = _privacy_regressions(payload)
+    if regressions:
+        raise ArtifactConsoleError(f"Evolution chain artifact privacy regression in {relative}: {', '.join(regressions)}")
+    _assert_public_payload(payload, label=relative)
+    status = str(payload.get("status") or "unknown").lower()
+    outputs = payload.get("outputs")
+    html_ref = str(outputs.get("html_ref") or "") if isinstance(outputs, Mapping) else ""
+    privacy = payload.get("privacy")
+    return {
+        "role": spec["role"],
+        "label": spec["label"],
+        "schema_version": schema_version,
+        "status": status,
+        "ref": relative,
+        "sha256": _sha256_bytes(data),
+        "size_bytes": len(data),
+        "html_ref": html_ref,
+        "gate_status": _gate_status(payload),
+        "manual_review_required": _manual_review_required(payload, status),
+        "blocking_required": _blocking_required(payload, status),
+        "operator_next_command": _first_command(payload, spec["operator_next_command"]),
+        "privacy_flags": dict(privacy) if isinstance(privacy, Mapping) else {},
+        "privacy_regressions": regressions,
+        "content_included": False,
+    }
+
+
+def _evolution_chain_section(root: Path, artifacts: list[dict[str, Any]]) -> dict[str, Any]:
+    artifacts_by_schema: dict[str, list[str]] = {}
+    for item in artifacts:
+        schema = str(item.get("schema_version") or "")
+        path = str(item.get("path") or "")
+        if schema and path:
+            artifacts_by_schema.setdefault(schema, []).append(path)
+    for paths in artifacts_by_schema.values():
+        paths.sort()
+    chain = [_evolution_artifact(root, spec, artifacts_by_schema) for spec in EVOLUTION_CHAIN_SPECS]
+    missing_count = sum(1 for item in chain if item["status"] == "missing")
+    blocked_count = sum(1 for item in chain if item["blocking_required"])
+    manual_count = sum(1 for item in chain if item["manual_review_required"])
+    if blocked_count:
+        status = "blocked"
+    elif missing_count:
+        status = "degraded_missing_artifacts"
+    elif manual_count:
+        status = "manual_review"
+    else:
+        status = "ready"
+    return {
+        "status": status,
+        "artifact_count": len(chain) - missing_count,
+        "expected_artifact_count": len(EVOLUTION_CHAIN_SPECS),
+        "missing_artifact_count": missing_count,
+        "manual_review_count": manual_count,
+        "blocking_count": blocked_count,
+        "artifacts": chain,
+        "content_included": False,
+    }
 
 
 def _watcher_runner_section(root: Path, artifacts: list[dict[str, Any]]) -> dict[str, Any]:
@@ -378,6 +666,7 @@ def build_console_report(
     study = _study_adapter_section(root, artifacts)
     gates = _gate_section(event_summary, artifacts)
     artifact_health = _artifact_health_section(root, artifacts, event_summary)
+    evolution_chain = _evolution_chain_section(root, artifacts)
     status = "ready"
     if artifact_health["status"] != "ready":
         status = "partial"
@@ -395,6 +684,7 @@ def build_console_report(
             "watcher_runner": watcher,
             "study_adapter": study,
             "decision_gate_loop": gates,
+            "evolution_chain": evolution_chain,
             "artifact_health": artifact_health,
         },
         "artifact_refs": {
@@ -426,6 +716,11 @@ def build_console_report(
                     if item.get("source_path")
                 ],
             ),
+            "evolution_chain": _provenance(
+                html_ref,
+                command="python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+                inputs=[item["ref"] for item in evolution_chain["artifacts"] if item.get("ref")],
+            ),
             "artifact_health": _provenance(
                 html_ref,
                 command="python3 scripts/cognitive_loop_cli.py doctor --html",
@@ -452,6 +747,7 @@ def build_console_report(
             "verify_console": "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
             "runner_lite": ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter",
             "event_store_export": "python3 scripts/cognitive_loop_event_store.py export --html",
+            "evolution_chain": "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
         },
     }
     _assert_no_forbidden_text(report, label="artifact_console_report")
@@ -506,6 +802,31 @@ def _study_rows(cards: list[Any]) -> str:
     return "\n".join(rows)
 
 
+def _evolution_rows(artifacts: list[Any]) -> str:
+    if not artifacts:
+        return '<tr><td colspan="8">No Evolution Chain artifacts yet.</td></tr>'
+    rows: list[str] = []
+    for item in artifacts:
+        if not isinstance(item, Mapping):
+            continue
+        html_ref = str(item.get("html_ref") or "")
+        link = escape(html_ref)
+        html_link = f'<a href="{link}">HTML</a>' if html_ref else "none"
+        rows.append(
+            "<tr>"
+            f"<td>{escape(str(item.get('label', '')))}</td>"
+            f"<td><code>{escape(str(item.get('schema_version', '')))}</code></td>"
+            f"<td>{escape(str(item.get('status', '')))}</td>"
+            f"<td>{escape(str(item.get('gate_status', '')))}</td>"
+            f"<td>{escape(str(item.get('manual_review_required', False)))}</td>"
+            f"<td>{escape(str(item.get('blocking_required', False)))}</td>"
+            f"<td><code>{escape(str(item.get('sha256', ''))[:16])}</code></td>"
+            f"<td>{html_link}</td>"
+            "</tr>"
+        )
+    return "\n".join(rows)
+
+
 def render_console_html(report: Mapping[str, Any]) -> str:
     sections = report.get("sections")
     if not isinstance(sections, Mapping):
@@ -514,6 +835,7 @@ def render_console_html(report: Mapping[str, Any]) -> str:
     watcher = sections.get("watcher_runner") if isinstance(sections.get("watcher_runner"), Mapping) else {}
     study = sections.get("study_adapter") if isinstance(sections.get("study_adapter"), Mapping) else {}
     gates = sections.get("decision_gate_loop") if isinstance(sections.get("decision_gate_loop"), Mapping) else {}
+    evolution = sections.get("evolution_chain") if isinstance(sections.get("evolution_chain"), Mapping) else {}
     health = sections.get("artifact_health") if isinstance(sections.get("artifact_health"), Mapping) else {}
     json_blob = escape(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
     return f"""<!doctype html>
@@ -571,12 +893,12 @@ def render_console_html(report: Mapping[str, Any]) -> str:
   <main>
     <header>
       <h1>Cognitive Loop Artifact Console</h1>
-      <p class="lede">A local, static, metadata-only console for Event Store rows, watcher runner outputs, Study Adapter artifacts, gates, and artifact health. No daemon, no standalone frontend, no private content.</p>
+      <p class="lede">A local, static, metadata-only console for Event Store rows, watcher runner outputs, Study Adapter artifacts, gates, evolution-chain artifacts, and artifact health. No daemon, no standalone frontend, no private content.</p>
       <div class="grid">
         <div class="metric">Status<strong>{escape(str(report.get('status', '')))}</strong></div>
         <div class="metric">Events<strong>{escape(str(event_summary.get('event_count', 0)))}</strong></div>
         <div class="metric">Artifacts<strong>{escape(str(health.get('artifact_count', 0)))}</strong></div>
-        <div class="metric">Runner Reports<strong>{escape(str(watcher.get('runner_report_count', 0)))}</strong></div>
+        <div class="metric">Evolution<strong>{escape(str(evolution.get('status', 'unknown')))}</strong></div>
       </div>
     </header>
 
@@ -619,6 +941,23 @@ def render_console_html(report: Mapping[str, Any]) -> str:
         'loop_run_count': gates.get('loop_run_count', 0),
         'human_gate_artifact_count': gates.get('human_gate_artifact_count', 0),
       })}</table>
+    </section>
+
+    <section>
+      <h2>Evolution Chain</h2>
+      <p class="note">Evolution artifacts are shown as references, schemas, statuses, gate/manual/blocking state, hashes, and operator commands only. Missing artifacts degrade this section without failing the console.</p>
+      <table>{_rows({
+        'status': evolution.get('status', ''),
+        'artifact_count': evolution.get('artifact_count', 0),
+        'expected_artifact_count': evolution.get('expected_artifact_count', 0),
+        'missing_artifact_count': evolution.get('missing_artifact_count', 0),
+        'manual_review_count': evolution.get('manual_review_count', 0),
+        'blocking_count': evolution.get('blocking_count', 0),
+      })}</table>
+      <table>
+        <thead><tr><th>Artifact</th><th>Schema</th><th>Status</th><th>Gate</th><th>Manual</th><th>Blocked</th><th>SHA-256</th><th>HTML</th></tr></thead>
+        <tbody>{_evolution_rows(list(evolution.get('artifacts', [])) if isinstance(evolution.get('artifacts'), list) else [])}</tbody>
+      </table>
     </section>
 
     <section>
