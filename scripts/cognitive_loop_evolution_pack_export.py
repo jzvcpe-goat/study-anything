@@ -404,6 +404,10 @@ def existing_pack_files(root: Path, artifacts: list[dict[str, Any]], index_html:
     return records
 
 
+def pack_id_for(generated_at: str, pack_files: list[dict[str, Any]]) -> str:
+    return f"evolution-pack-{sha256_text(generated_at + json.dumps(pack_files, sort_keys=True))[:16]}"
+
+
 def derive_status(artifacts: list[dict[str, Any]]) -> str:
     if any(item["blocking_required"] for item in artifacts):
         return "blocked"
@@ -431,7 +435,7 @@ def build_manifest(
     blocked = [item["role"] for item in artifacts if item["blocking_required"]]
     manual = [item["role"] for item in artifacts if item["manual_review_required"] and item["status"] != "missing"]
     pack_files = existing_pack_files(root, artifacts, index_html)
-    pack_id = f"evolution-pack-{sha256_text(generated_at + json.dumps(pack_files, sort_keys=True))[:16]}"
+    pack_id = pack_id_for(generated_at, pack_files)
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "status": status,
@@ -635,6 +639,7 @@ def cmd_export(args: argparse.Namespace) -> int:
     html = render_html(manifest)
     manifest["pack_files"][0]["size_bytes"] = len(html.encode("utf-8"))
     manifest["pack_files"][0]["sha256"] = sha256_text(html)
+    manifest["pack_id"] = pack_id_for(args.generated_at, manifest["pack_files"])
     assert_public_payload(manifest, label="evolution pack manifest")
 
     output_dir.mkdir(parents=True, exist_ok=True)

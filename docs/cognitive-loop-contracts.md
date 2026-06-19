@@ -446,6 +446,20 @@ Professional Evolution Pack Export Lite does not apply source changes. It does n
 
 Professional Evolution Pack Export Lite 不执行源码修改。它不启动 daemon，不要求独立前端，不启动生产 Mastra，不调用模型，不物化 raw diff，不修改真实工作树，不保存 raw source、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
 
+## Evolution Pack Consumer Smoke Lite / Evolution Pack Consumer Smoke Lite
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>` verifies a Professional Evolution Pack from the ZIP alone. It emits `cognitive-loop-evolution-pack-consumer-v1` and checks the manifest schema, manifest-derived pack id, archive layout, entry SHA-256 values, artifact refs, operator commands, privacy flags, `no_real_source_mutation=true`, `no_model_calls=true`, and `no_raw_payloads=true`.
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check` generates ready, manual-review, blocked, and missing-artifact fixtures, then verifies tampered ZIP rejection, manifest drift rejection, missing pack file rejection, hash mismatch rejection, secret-like text rejection, raw diff rejection, policy-weakening rejection, privacy-regression rejection, protected-path rejection, unsafe ZIP path rejection, and archive-layout mismatch rejection.
+
+Evolution Pack Consumer Smoke Lite is a consumer-side validation gate. It does not require API, Docker, a standalone frontend, a repository checkout for `--pack` mode, production Mastra, model calls, source-changing apply, raw source, raw diffs, learner answers, Agent endpoint secrets, Agent metadata, prompts, or model keys.
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>` 会只基于 ZIP 验证 Professional Evolution Pack。它输出 `cognitive-loop-evolution-pack-consumer-v1`，并检查 manifest schema、由 manifest 派生的 pack id、archive layout、entry SHA-256、artifact refs、operator commands、privacy flags、`no_real_source_mutation=true`、`no_model_calls=true` 和 `no_raw_payloads=true`。
+
+`python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check` 会生成 ready、manual-review、blocked 和 missing-artifact fixtures，并验证 tampered ZIP 拒绝、manifest drift 拒绝、缺失 pack file 拒绝、hash mismatch 拒绝、疑似 secret 拒绝、raw diff 拒绝、policy weakening 拒绝、privacy regression 拒绝、受保护路径拒绝、unsafe ZIP path 拒绝和 archive-layout mismatch 拒绝。
+
+Evolution Pack Consumer Smoke Lite 是消费方验收 gate。它不需要 API、Docker、独立前端、`--pack` 模式下的仓库 checkout、生产 Mastra、模型调用、源码改写 apply、raw source、raw diff、学习者答案、Agent endpoint secret、Agent metadata、prompt 或 model key。
+
 ## Public Objects
 
 ### `ProjectEvent`
