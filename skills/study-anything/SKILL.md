@@ -111,6 +111,25 @@ diff bodies, learner answers, Agent endpoints, Agent metadata, prompts, model ke
 outputs. The default behavior is explain-only and read-only: do not auto-apply code changes from
 this mode.
 
+## Artifact Console Evolution Chain
+
+Use Artifact Console Lite when the platform Agent or local operator needs one static HTML/JSON entry
+point for local evidence. It aggregates Event Store rows, watcher runner summaries, Study Adapter
+artifacts, Human Gate/Loop metadata, artifact health, and the Evolution Chain from `EvolutionReport`
+through `MastraEvolutionWorkflowReplay`. Missing Evolution artifacts should degrade the section
+instead of failing the console; invalid, secret-like, raw-diff, privacy-regressing, or policy-weakening
+artifacts must be rejected.
+
+```bash
+python3 scripts/cognitive_loop_artifact_console.py build --html --json
+python3 scripts/verify_cognitive_loop_artifact_console.py --check
+```
+
+Treat the console as metadata-only and static. It must not start a daemon, require a standalone
+frontend, use SSE/WebSocket, call models, execute apply, start production Mastra, modify source
+files, or include source bodies, raw diffs, learner answers, Agent endpoints, Agent metadata,
+prompts, or model keys.
+
 ## Evolution Report Lite
 
 Use Evolution Report Lite after a local loop, Personal Plugin Mode run, Artifact Console run, or

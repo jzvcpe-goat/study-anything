@@ -302,9 +302,9 @@ The extended project protocol may later add `learning.yaml` and daemon runtime c
 
 `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` 是当前 runner-lite 桥接入口。它对显式传入的本地信号做有界 one-shot/polling 处理，合并重复路径，跳过 exclude 命中的路径，写出 metadata-only watcher event，摄入 SQLite Event Store，并可对第一个高风险事件触发 Study Anything adapter CLI。它仍然不是 daemon，也不读取文件正文、raw diff、raw test output、学习者答案、Agent endpoint、Agent metadata 或 model key。
 
-`python3 scripts/cognitive_loop_artifact_console.py build --html --json` is the current static Artifact Console Lite entrypoint. It aggregates Event Store rows, watcher runner summaries, Study Adapter artifacts, DecisionCard, Human Gate, LoopRun, and artifact-health metadata into `.cognitive-loop/artifacts/console/index.html` plus a JSON manifest. It is offline and metadata-only: no daemon, no standalone frontend, no SSE/WebSocket, and no embedded event JSON body, HTML/Markdown body, source text, raw diff, test output, learner answer, Agent endpoint, Agent metadata, prompt, or model key.
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json` is the current static Artifact Console Lite entrypoint. It aggregates Event Store rows, watcher runner summaries, Study Adapter artifacts, DecisionCard, Human Gate, LoopRun, Evolution Chain artifact refs, and artifact-health metadata into `.cognitive-loop/artifacts/console/index.html` plus a JSON manifest. It is offline and metadata-only: no daemon, no standalone frontend, no SSE/WebSocket, and no embedded event JSON body, HTML/Markdown body, source text, raw diff, test output, learner answer, Agent endpoint, Agent metadata, prompt, or model key.
 
-`python3 scripts/cognitive_loop_artifact_console.py build --html --json` 是当前静态 Artifact Console Lite 入口。它会把 Event Store rows、watcher runner summary、Study Adapter artifacts、DecisionCard、Human Gate、LoopRun 和 artifact-health metadata 汇总到 `.cognitive-loop/artifacts/console/index.html` 以及 JSON manifest。它是离线且 metadata-only 的：不启动 daemon，不引入独立前端，不使用 SSE/WebSocket，也不嵌入 event JSON 正文、HTML/Markdown 正文、source text、raw diff、test output、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json` 是当前静态 Artifact Console Lite 入口。它会把 Event Store rows、watcher runner summary、Study Adapter artifacts、DecisionCard、Human Gate、LoopRun、Evolution Chain artifact refs 和 artifact-health metadata 汇总到 `.cognitive-loop/artifacts/console/index.html` 以及 JSON manifest。它是离线且 metadata-only 的：不启动 daemon，不引入独立前端，不使用 SSE/WebSocket，也不嵌入 event JSON 正文、HTML/Markdown 正文、source text、raw diff、test output、学习者答案、Agent endpoint、Agent metadata、prompt 或 model key。
 
 `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` is the current Personal Plugin Mode Lite entrypoint. It creates read-only metadata-only Study Cards, quiz items, and Markdown/HTML learning reports for a file, README, webpage metadata record, or diff summary. It is designed for Kimi, Codex, WorkBuddy, browser assistants, or local Agents that need a lightweight learning artifact without launching a daemon or standalone frontend. It does not modify source files, call a real model, store model keys, or embed raw source text, raw diff bodies, learner answers, Agent endpoints, Agent metadata, or prompts.
 
@@ -371,7 +371,7 @@ Personal mode should stay lightweight:
 Professional mode should produce browser-readable artifacts:
 
 - static HTML reports for project maps, timelines, decision cards, mastery, audit, and evolution
-- static metadata-only Artifact Console Lite for Event Store, watcher runner, Study Adapter, Human Gate, LoopRun, and artifact-health status
+- static metadata-only Artifact Console Lite for Event Store, watcher runner, Study Adapter, Human Gate, LoopRun, Evolution Chain, and artifact-health status
 - Personal Plugin Mode Lite for read-only file, README, webpage metadata, and diff-summary learning artifacts
 - realtime local HTML console for watcher events, human gates, Agent audit, and verification status
 - CI-uploadable reports for PR review and team handoff
@@ -379,7 +379,7 @@ Professional mode should produce browser-readable artifacts:
 专业 HTML Artifact 模式输出可在浏览器打开和归档的材料：
 
 - 项目地图、时间线、决策卡、掌握度、审计和进化报告的静态 HTML
-- 面向 Event Store、watcher runner、Study Adapter、Human Gate、LoopRun 和 artifact-health 状态的静态 metadata-only Artifact Console Lite
+- 面向 Event Store、watcher runner、Study Adapter、Human Gate、LoopRun、Evolution Chain 和 artifact-health 状态的静态 metadata-only Artifact Console Lite
 - 面向文件、README、网页 metadata 和 diff summary 的只读 Personal Plugin Mode Lite 学习 artifact
 - 面向 watcher event、human gate、Agent audit、验证状态的本地实时 HTML console
 - 可上传到 CI 的 PR review 和团队交接报告
