@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 351469,
+    "bytes": 351462,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "4a8109c35380b45695b977760de41db44ad55c470eb78c372c46fca0250830e7",
+    "sha256": "0f1504777eda71b3d9628c3063dcc0275ca49473076f8ba27d020ee403910bc6",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -176,7 +176,7 @@
     {
       "bytes": 33018,
       "path": "docs/release-checklist.md",
-      "sha256": "9a3dc4dff2d1de17a71da70a6f8cf9a9245a740fe6fdf258c7014f7b016ab1fb"
+      "sha256": "96c1ca7c0378666e340254a47cca6386058802475de68d3291a7fe5571050b77"
     },
     {
       "bytes": 29822,
@@ -211,47 +211,47 @@
     {
       "bytes": 11080,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "bde47aa449a6f5ed3f7404151bd7d9e8046f5af0a663e7a98e49b8aa781e6d5d"
+      "sha256": "0b2ee9aa7cae92ed34b8cf22553b9e5a7d6994da9d95a3ae1013f01c67d241d8"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "acfe0ab04b08a1ab040b13c6f5fee037f2dae62ae486cae923f3993cb07e27ae"
+      "sha256": "f0bacd2023155162bbf43c108126430d524c84cefb43e4c99a7fda8155c279c6"
     },
     {
-      "bytes": 122328,
+      "bytes": 122325,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "15be698741404a1ef3c123108631f7f302d5011a603bd193ddb7352984d346e1"
+      "sha256": "869798dfa8c5e668d290232bac6acd646baab97cf8370e8178d92ec7c4edf97a"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "400d6405289fc6a849e5438cb5b408c52f9da9acabc264fffa22ea98bab0b878"
+      "sha256": "f48da217828d1bdbe879e29684f788e7d2e1fc7b7e605fb66d04b977ad380a41"
     },
     {
       "bytes": 7930,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "aead1e347352f7bb2bf667922757880352e5c4d932126c5a39b603dc8da3c7a5"
+      "sha256": "9c38cd6e013f32ae05c471c22d32658367eeefc6138a692502c2a5b3c3b6cac4"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "132fc4b99595bbb82c0bfb6a02a30cd8ce31c30f8f32f7b902391cf701b76fdc"
+      "sha256": "1df23b26489d11c68521817f0d1404f67aedcb2981bb1ffcd873bdd8f10c75cb"
     },
     {
       "bytes": 114062,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "740e8b3d8906da1eb98c440a5039b534c7cb9f9e28b8366feccf9d7a8cb71ef7"
+      "sha256": "3ffedc7e556970e7fee32a566852d3196ec6973d32e901d0a872d6c055270209"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "18b52aa4581fbeb2aa0168a0200657b824e768129bb1dff3f63427e97f0f6492"
+      "sha256": "e3732abf4ef1370d19cc34153bfe67e0a093f6109aaa50342521e41d24e52169"
     },
     {
       "bytes": 99828,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "f11f22005135ac5ef54013d28b3612982068fa75829ba3f95eee597f4b07c933"
+      "sha256": "a6018777fb6592bf117cba6c4ecca6f4e8e2196652cab566b266d5655eff8650"
     },
     {
       "bytes": 87329,
@@ -318,7 +318,7 @@
       "ref": {
         "bytes": 11080,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "bde47aa449a6f5ed3f7404151bd7d9e8046f5af0a663e7a98e49b8aa781e6d5d"
+        "sha256": "0b2ee9aa7cae92ed34b8cf22553b9e5a7d6994da9d95a3ae1013f01c67d241d8"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 7930,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "aead1e347352f7bb2bf667922757880352e5c4d932126c5a39b603dc8da3c7a5"
+        "sha256": "9c38cd6e013f32ae05c471c22d32658367eeefc6138a692502c2a5b3c3b6cac4"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
