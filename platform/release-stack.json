@@ -1,5 +1,5 @@
 {
-  "current_group": "release-stack-promotion-v0.3.142-v0.3.143",
+  "current_group": "release-stack-promotion-v0.3.145-v0.3.146",
   "privacy_assertions": {
     "agent_endpoint_secrets_included": false,
     "check_annotations_included": false,
@@ -40,12 +40,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 252,
-      "branch": "codex/v0.3.142-release-stack-candidate-promotion-lite",
+      "pr": 255,
+      "branch": "codex/v0.3.145-release-stack-candidate-promotion-lite",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "de3a1b1e75372ee23983134d8a639e35dec2ab3d",
+      "merge_commit": "c94f8e04f1eca702881e947c23f3fab5d2d5e779",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -61,12 +61,12 @@
     },
     {
       "order": 2,
-      "pr": 253,
-      "branch": "codex/v0.3.143-release-stack-self-intake-lite",
+      "pr": 256,
+      "branch": "codex/v0.3.146-release-stack-self-intake-lite",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "521c9674a01b0a0497acd8773dbd193b11f7694e",
+      "merge_commit": "a558b629dbe0c11c709abc1fede7b23ec0483bbf",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -2913,8 +2913,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.142-v0.3.143",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
       "required_checks": [
@@ -2968,6 +2968,89 @@
           "status_expected_before_merge": "checks_pass",
           "final_state": "MERGED",
           "merge_commit": "521c9674a01b0a0497acd8773dbd193b11f7694e",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.145-v0.3.146",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 255,
+          "branch": "codex/v0.3.145-release-stack-candidate-promotion-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "c94f8e04f1eca702881e947c23f3fab5d2d5e779",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 256,
+          "branch": "codex/v0.3.146-release-stack-self-intake-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "a558b629dbe0c11c709abc1fede7b23ec0483bbf",
           "required_checks": {
             "api-tests": "pass",
             "compose-smoke": "pass"

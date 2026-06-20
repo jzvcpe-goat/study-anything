@@ -31,11 +31,11 @@ from verify_release_stack_readiness import (
 
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
-PR_252_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-252-intake-candidate.json"
-PR_253_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-253-intake-candidate.json"
+PR_255_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-255-intake-candidate.json"
+PR_256_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-256-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.142-v0.3.143"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.139-v0.3.140"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.145-v0.3.146"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.142-v0.3.143"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -54,7 +54,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
 ]
-PR_252_EVIDENCE_REFS = [
+PR_255_EVIDENCE_REFS = [
     "platform/generated/study-anything-release-stack-intake-candidate.json",
     "platform/generated/study-anything-release-stack-manifest-fixtures.json",
     "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -62,7 +62,7 @@ PR_252_EVIDENCE_REFS = [
     "platform/generated/study-anything-platform-adoption-pack.json",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
 ]
-PR_253_EVIDENCE_REFS = [
+PR_256_EVIDENCE_REFS = [
     "platform/generated/study-anything-release-stack-intake-candidate.json",
     "platform/generated/study-anything-release-stack-candidate-promotion.json",
     "platform/generated/study-anything-platform-bundle.json",
@@ -189,7 +189,7 @@ def load_source_row(
     return row
 
 
-def expected_group(pr_252_source: Mapping[str, Any], pr_253_source: Mapping[str, Any]) -> dict[str, Any]:
+def expected_group(pr_255_source: Mapping[str, Any], pr_256_source: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "group_id": PROMOTED_GROUP_ID,
         "role": "current",
@@ -210,17 +210,17 @@ def expected_group(pr_252_source: Mapping[str, Any], pr_253_source: Mapping[str,
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_252_source,
-                expected_pr=252,
+                pr_255_source,
+                expected_pr=255,
                 order=1,
-                evidence_refs=PR_252_EVIDENCE_REFS,
+                evidence_refs=PR_255_EVIDENCE_REFS,
                 require_promotion_commands=False,
             ),
             load_source_row(
-                pr_253_source,
-                expected_pr=253,
+                pr_256_source,
+                expected_pr=256,
                 order=2,
-                evidence_refs=PR_253_EVIDENCE_REFS,
+                evidence_refs=PR_256_EVIDENCE_REFS,
                 require_promotion_commands=True,
             ),
         ],
@@ -258,8 +258,8 @@ def assert_no_duplicate_prs(manifest: Mapping[str, Any]) -> None:
 
 def verify_promoted_manifest(
     manifest: dict[str, Any],
-    pr_252_source: Mapping[str, Any],
-    pr_253_source: Mapping[str, Any],
+    pr_255_source: Mapping[str, Any],
+    pr_256_source: Mapping[str, Any],
 ) -> dict[str, Any]:
     reject_private_payload(manifest, "release stack manifest")
     try:
@@ -272,13 +272,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [249, 250]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #249-#250 audit rows.")
+    if previous_prs != [252, 253]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #252-#253 audit rows.")
 
-    expected = expected_group(pr_252_source, pr_253_source)
+    expected = expected_group(pr_255_source, pr_256_source)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #252/#253 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #255/#256 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -291,13 +291,13 @@ def run_negative_case(
     case_id: str,
     mutator: Any,
     manifest: dict[str, Any],
-    pr_252_source: Mapping[str, Any],
-    pr_253_source: Mapping[str, Any],
+    pr_255_source: Mapping[str, Any],
+    pr_256_source: Mapping[str, Any],
 ) -> dict[str, str]:
     payload = copy.deepcopy(manifest)
     mutator(payload)
     try:
-        verify_promoted_manifest(payload, pr_252_source, pr_253_source)
+        verify_promoted_manifest(payload, pr_255_source, pr_256_source)
     except ReleaseStackPromotionError as exc:
         return {"case_id": case_id, "status": "rejected", "error": redact(str(exc))}
     raise ReleaseStackPromotionError(f"Negative promotion fixture was not rejected: {case_id}")
@@ -310,8 +310,8 @@ def sync_top_level_stack(manifest: dict[str, Any]) -> None:
 
 def negative_fixtures(
     manifest: dict[str, Any],
-    pr_252_source: Mapping[str, Any],
-    pr_253_source: Mapping[str, Any],
+    pr_255_source: Mapping[str, Any],
+    pr_256_source: Mapping[str, Any],
 ) -> list[dict[str, str]]:
     def duplicate_pr(payload: dict[str, Any]) -> None:
         group = find_group(payload, PROMOTED_GROUP_ID)
@@ -355,11 +355,11 @@ def negative_fixtures(
         ("secret_log_artifact_payload", secret_payload),
         ("manifest_regression", manifest_regression),
     ]
-    return [run_negative_case(case_id, mutator, manifest, pr_252_source, pr_253_source) for case_id, mutator in cases]
+    return [run_negative_case(case_id, mutator, manifest, pr_255_source, pr_256_source) for case_id, mutator in cases]
 
 
-def build_report(manifest: dict[str, Any], pr_252_source: Mapping[str, Any], pr_253_source: Mapping[str, Any]) -> dict[str, Any]:
-    readiness = verify_promoted_manifest(manifest, pr_252_source, pr_253_source)
+def build_report(manifest: dict[str, Any], pr_255_source: Mapping[str, Any], pr_256_source: Mapping[str, Any]) -> dict[str, Any]:
+    readiness = verify_promoted_manifest(manifest, pr_255_source, pr_256_source)
     current = current_group(manifest)
     report = {
         "schema_version": REPORT_SCHEMA_VERSION,
@@ -367,8 +367,8 @@ def build_report(manifest: dict[str, Any], pr_252_source: Mapping[str, Any], pr_
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-252-intake-candidate.json",
-            "fixtures/release-stack/pr-253-intake-candidate.json",
+            "fixtures/release-stack/pr-255-intake-candidate.json",
+            "fixtures/release-stack/pr-256-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -385,7 +385,7 @@ def build_report(manifest: dict[str, Any], pr_252_source: Mapping[str, Any], pr_
             "archived_group_count": readiness["archived_group_count"],
             "stack_prs": readiness["stack_prs"],
         },
-        "negative_fixtures": negative_fixtures(manifest, pr_252_source, pr_253_source),
+        "negative_fixtures": negative_fixtures(manifest, pr_255_source, pr_256_source),
         "privacy": {
             "metadata_only": True,
             "github_tokens_stored": False,
@@ -407,8 +407,8 @@ def build_report(manifest: dict[str, Any], pr_252_source: Mapping[str, Any], pr_
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-252-source", type=Path, default=PR_252_SOURCE)
-    parser.add_argument("--pr-253-source", type=Path, default=PR_253_SOURCE)
+    parser.add_argument("--pr-255-source", type=Path, default=PR_255_SOURCE)
+    parser.add_argument("--pr-256-source", type=Path, default=PR_256_SOURCE)
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -417,9 +417,9 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
-    pr_252_source = load_json(args.pr_252_source)
-    pr_253_source = load_json(args.pr_253_source)
-    report = build_report(manifest, pr_252_source, pr_253_source)
+    pr_255_source = load_json(args.pr_255_source)
+    pr_256_source = load_json(args.pr_256_source)
+    report = build_report(manifest, pr_255_source, pr_256_source)
     text = dump_json(report)
     if args.write:
         REPORT.write_text(text, encoding="utf-8")
