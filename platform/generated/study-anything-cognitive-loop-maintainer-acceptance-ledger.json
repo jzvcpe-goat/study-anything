@@ -137,7 +137,7 @@
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "required": true,
       "schema_version": "published-image-evidence-v1",
-      "sha256": "54ac3708d64a75cd9bef82e715ea0f2a1939488274d934a4274d518ad90e431b",
+      "sha256": "bde47aa449a6f5ed3f7404151bd7d9e8046f5af0a663e7a98e49b8aa781e6d5d",
       "source_id": "published_image_evidence",
       "status": "pass"
     },
@@ -145,7 +145,7 @@
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "required": true,
       "schema_version": "release-asset-adoption-v1",
-      "sha256": "bf7eea77ad299f67949f7c37435d9d32c60051fca5043cdd47422615025546d0",
+      "sha256": "aead1e347352f7bb2bf667922757880352e5c4d932126c5a39b603dc8da3c7a5",
       "source_id": "release_asset_adoption",
       "status": "pass"
     }
