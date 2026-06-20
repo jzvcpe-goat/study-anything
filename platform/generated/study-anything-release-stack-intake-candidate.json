@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-199-v0.3.89-release-stack-candidate-promotion-lite",
+    "group_id": "release-stack-intake-pr-201-v0.3.91-release-stack-candidate-promotion-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -34,7 +34,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.89-release-stack-candidate-promotion-lite",
+        "branch": "codex/v0.3.91-release-stack-candidate-promotion-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -42,9 +42,9 @@
           "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "f0aa4f1aec3cbe5dfcd508d0f85d422f5118ee2a",
+        "merge_commit": "b081c5c10d7014e300355323666280468044a2db",
         "order": 1,
-        "pr": 199,
+        "pr": 201,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -53,13 +53,13 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #199: Promote release stack group for PRs 197 and 198.",
+    "summary": "Candidate release stack group for PR #201: Promote release stack group for PRs 199 and 200.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
-    "candidate_is_not_applied": false,
-    "candidate_is_represented": true,
+    "candidate_is_not_applied": true,
+    "candidate_is_represented": false,
     "current_group": "release-stack-promotion-v0.3.89-v0.3.90",
     "represented_pr_count": 29
   },
