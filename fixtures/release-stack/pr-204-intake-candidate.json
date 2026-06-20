@@ -1,0 +1,31 @@
+{
+  "base_branch": "main",
+  "checks": [
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/27861025043/job/82456946312",
+      "name": "api-tests",
+      "status": "COMPLETED"
+    },
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/27861025043/job/82456946338",
+      "name": "compose-smoke",
+      "status": "COMPLETED"
+    }
+  ],
+  "head_branch": "codex/v0.3.94-release-stack-self-intake-lite",
+  "merge_commit": "975b00fc84235918cf7d33efb3fec669042d4827",
+  "operator_commands": [
+    "python3 scripts/verify_release_stack_intake_candidate.py --check",
+    "python3 scripts/verify_release_stack_readiness.py",
+    "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check"
+  ],
+  "pr_number": 204,
+  "raw_logs_included": false,
+  "schema_version": "release-stack-intake-source-v1",
+  "source": "fixture",
+  "state": "MERGED",
+  "title": "Add release stack intake candidate for PR 203"
+}
