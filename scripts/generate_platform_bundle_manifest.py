@@ -1537,6 +1537,11 @@ FILES: list[tuple[str, str, str]] = [
         "Redacted release stack intake candidate fixture for PR 222.",
     ),
     (
+        "fixtures/release-stack/pr-223-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 223.",
+    ),
+    (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
         "verification",
         "Verify Cognitive Loop maintainer go/no-go acceptance ledger and launch handoff boundaries.",
