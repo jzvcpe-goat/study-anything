@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-256-v0.3.146-release-stack-self-intake-lite",
+    "group_id": "release-stack-intake-pr-258-v0.3.148-release-stack-candidate-promotion-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -34,7 +34,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.146-release-stack-self-intake-lite",
+        "branch": "codex/v0.3.148-release-stack-candidate-promotion-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -42,9 +42,9 @@
           "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "a558b629dbe0c11c709abc1fede7b23ec0483bbf",
+        "merge_commit": "a6b42cb9122e7d16de4a1c74c5f70d995925c6eb",
         "order": 1,
-        "pr": 256,
+        "pr": 258,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -53,13 +53,13 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #256: Add release stack intake candidate for PR 255.",
+    "summary": "Candidate release stack group for PR #258: Promote release stack group for PRs 255 and 256.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
-    "candidate_is_not_applied": false,
-    "candidate_is_represented": true,
+    "candidate_is_not_applied": true,
+    "candidate_is_represented": false,
     "current_group": "release-stack-promotion-v0.3.145-v0.3.146",
     "represented_pr_count": 79
   },
