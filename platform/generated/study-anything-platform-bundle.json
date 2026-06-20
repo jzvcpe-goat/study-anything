@@ -517,21 +517,21 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "3ce9099e35ecfa0beabf103358c632cf8266960d24d5d4c00810a27fb4619053"
+      "sha256": "c724330e73922b52bddda2201b2600a87f9a8f0d8a3154e5bd52b0426f0a439f"
     },
     {
       "bytes": 4284,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "66ba1c61e0093e46341c132b3445da1395e1bf8fd484db42b44ace1dac1e9ee6"
+      "sha256": "724acc9ba038dfbc12d028619950f503cafdd98fde17468bb7e91605151ddcef"
     },
     {
       "bytes": 2637,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "dee82d1533f16838aeb45fc3db271ebcd85c3389e2ade0f8f35501419729d3cb"
+      "sha256": "5e628fddf9d58d39eded2b9fa7cd6c8995b4a5bf911be489c5dcc61af63b7cf4"
     },
     {
       "bytes": 69701,
@@ -1896,7 +1896,7 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "1bd3737b107eada4260dffcb59525370b35b18dbdc0326909c13445530417aec"
+      "sha256": "50c34c873fd834153f27ceac6ee9f770cee90dd74635de0a0bce5940def54b2f"
     },
     {
       "bytes": 1138,
