@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 351465,
+    "bytes": 351453,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "c52f951f42d8223dd90eae80de51a23cb91a687f26a730a9cc812716e37bbccf",
+    "sha256": "ef387626f79184c32e456971da110f253944509fbc47755f667c4130f6de8973",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -176,7 +176,7 @@
     {
       "bytes": 33018,
       "path": "docs/release-checklist.md",
-      "sha256": "96c1ca7c0378666e340254a47cca6386058802475de68d3291a7fe5571050b77"
+      "sha256": "de438c81ceedaa988b3bd707aa849e038e713dd490a109efcdde4d6197361979"
     },
     {
       "bytes": 29822,
@@ -211,42 +211,42 @@
     {
       "bytes": 11080,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "0b2ee9aa7cae92ed34b8cf22553b9e5a7d6994da9d95a3ae1013f01c67d241d8"
+      "sha256": "621477f5f08a1492b95e18309d80e17a562087ec55a675acb25eb22d5cdd0351"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "f0bacd2023155162bbf43c108126430d524c84cefb43e4c99a7fda8155c279c6"
+      "sha256": "79b19492116a870f10fe55eb9474f9b9b40dc13f08e39bb33416ba807291aa52"
     },
     {
-      "bytes": 122325,
+      "bytes": 122323,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "869798dfa8c5e668d290232bac6acd646baab97cf8370e8178d92ec7c4edf97a"
+      "sha256": "931dfc7abc3d8595b550577fd8fe4d5d30f0f90a400fb383e2d3ca3b57774ad0"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "f48da217828d1bdbe879e29684f788e7d2e1fc7b7e605fb66d04b977ad380a41"
+      "sha256": "90c9538d243c983a834f64f4a4d71452c006dcca80bc678895421d8c2c82ba82"
     },
     {
       "bytes": 7930,
       "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "9c38cd6e013f32ae05c471c22d32658367eeefc6138a692502c2a5b3c3b6cac4"
+      "sha256": "9af127cd3f23103a8d3465063d81fcc36a992157b12aaedafcdc298103ed4864"
     },
     {
       "bytes": 2392,
       "path": "platform/generated/study-anything-release-asset-adoption.md",
-      "sha256": "1df23b26489d11c68521817f0d1404f67aedcb2981bb1ffcd873bdd8f10c75cb"
+      "sha256": "0bd87aaa0b491228a9359bb8bd74013a6c4f7aa9cbbebcaaa0c1e6272856c564"
     },
     {
-      "bytes": 114062,
+      "bytes": 114056,
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
-      "sha256": "3ffedc7e556970e7fee32a566852d3196ec6973d32e901d0a872d6c055270209"
+      "sha256": "52bb47070263eed00c534b8c109c248452feeb4217d5a0dc56718d73b0874cad"
     },
     {
       "bytes": 108,
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
-      "sha256": "e3732abf4ef1370d19cc34153bfe67e0a093f6109aaa50342521e41d24e52169"
+      "sha256": "e7d1dbc58d1ca3bb376646d21a6c739796ad18c47224225d7d7a6dc43e3c9120"
     },
     {
       "bytes": 99828,
@@ -318,7 +318,7 @@
       "ref": {
         "bytes": 11080,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "0b2ee9aa7cae92ed34b8cf22553b9e5a7d6994da9d95a3ae1013f01c67d241d8"
+        "sha256": "621477f5f08a1492b95e18309d80e17a562087ec55a675acb25eb22d5cdd0351"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"
@@ -327,7 +327,7 @@
       "ref": {
         "bytes": 7930,
         "path": "platform/generated/study-anything-release-asset-adoption.json",
-        "sha256": "9c38cd6e013f32ae05c471c22d32658367eeefc6138a692502c2a5b3c3b6cac4"
+        "sha256": "9af127cd3f23103a8d3465063d81fcc36a992157b12aaedafcdc298103ed4864"
       },
       "schema_version": "release-asset-adoption-v1",
       "verification_command": "python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
