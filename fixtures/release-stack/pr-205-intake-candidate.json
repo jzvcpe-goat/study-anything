@@ -1,0 +1,31 @@
+{
+  "base_branch": "main",
+  "checks": [
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/27861286484/job/82457599935",
+      "name": "api-tests",
+      "status": "COMPLETED"
+    },
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/27861286484/job/82457599904",
+      "name": "compose-smoke",
+      "status": "COMPLETED"
+    }
+  ],
+  "head_branch": "codex/v0.3.95-release-stack-candidate-promotion-lite",
+  "merge_commit": "f11b222e6dabefb83b11248283c4032acde90bf2",
+  "operator_commands": [
+    "python3 scripts/verify_release_stack_intake_candidate.py --check",
+    "python3 scripts/verify_release_stack_readiness.py",
+    "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check"
+  ],
+  "pr_number": 205,
+  "raw_logs_included": false,
+  "schema_version": "release-stack-intake-source-v1",
+  "source": "fixture",
+  "state": "MERGED",
+  "title": "Promote release stack group for PRs 203 and 204"
+}
