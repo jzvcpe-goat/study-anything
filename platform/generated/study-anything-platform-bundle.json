@@ -90,7 +90,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "0b3cd39de62f3aab712434e78818dbb41c106711b2a3fdc8e4c6588ceb60cffe"
+      "sha256": "06569e663fc9f4c2d37ad0bd070a89055241da45ddcc4e5f8b140fe617ab4263"
     },
     {
       "bytes": 1939,
@@ -398,14 +398,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "2d1cbea330fa0901c2d25c3aca354ec4dc47a1241a75cf7d7c71abfd7eb39481"
+      "sha256": "7f2968ccb39f176a00b3bd5bbf7d3183cde4ff060fa34d4a313a767f420bd4c5"
     },
     {
       "bytes": 6681,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "03673c7de2be9467865838860db8c12e910b4437dc4ff5973abf7257a1cc9f0d"
+      "sha256": "bb08b0e193e1beb8be8f436d20f522725afad31f6cd8098605fb02452c23d3a1"
     },
     {
       "bytes": 2302,
@@ -475,28 +475,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "7ee2b26084b596e44b9daaa0df479b5b106d1a225c88669900791b801618150f"
+      "sha256": "7c2905fc3428aa3bdef826e12abaf67aed42d3c4722b7d2ce57fcdd83f25b65e"
     },
     {
       "bytes": 5371,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "711ea47e676060dc171227b1f74df14b3a9abf0960751aa2dbe04c2f5fa0850b"
+      "sha256": "ea64543d03091047ab4e4ae1b780e40b56045651cf11be3c166152989b201d51"
     },
     {
       "bytes": 2713,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "8544d631e452b283cf447cfaf7d0a52efe93193483ecbaddae7e24ce712be0d2"
+      "sha256": "d1ebc95bffeb3ddea056d12f5cb1b5a4f9faa3462004ea443a8c129361cd07b4"
     },
     {
       "bytes": 7274,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "cd20d4a88061217b95017b401de94a912295f7cb2fe2218de5be0495b319b022"
+      "sha256": "31957c8abd499f54bc48e542fa0c8fcf50f9d72a9ab8ee48a81f2ee144ccdc1e"
     },
     {
       "bytes": 9386,
@@ -524,7 +524,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "469231a99aaedc12e273f678506caa2f003048a114e354f9263f682d2f885966"
+      "sha256": "45d29546ce482dde564cfccf2c30fc076336bd81401c9eca18868d1311c24494"
     },
     {
       "bytes": 2637,
@@ -538,7 +538,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "8e79a0d2caabf8f3ff0065e893f8bd80eb97d1e7a420f1ae734aa12ded7c3d9e"
+      "sha256": "6e9042ee8ba57bb286b67619fa61c8c2712d24ec2560fe24a4668f372ed45aa7"
     },
     {
       "bytes": 87329,
@@ -678,28 +678,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "333082517a0bfd175304126a34e5f25a9f18615e7517bea4adfc0d4eb626c2cb"
+      "sha256": "4cc805e8f6bc504d9ed46c2e29fa3681ff1985fd301e8faa55a073caca29d71f"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "f89148172fd3a41bc8474cd572502cfecfb2d5e21ca33b95d8b5a307a734d16d"
+      "sha256": "e3872e9475292f6a6ad47693a93a88ab460b30c7553464267ceab2b8192d9fad"
     },
     {
-      "bytes": 351452,
+      "bytes": 351454,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "68e7f2b782ec9918dd4860519d3eea5dd4b7d541656e0939dd594fa9ced9b5c1"
+      "sha256": "49cac1e3c1e3aafc1eb6d763b8ea1fe8041bd6aeca536f14f8127ac665cc4489"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "f274dc74a0e761d9444aeb25406a5dbabfb44cf88d5e4f20e9977ede0d03f2ed"
+      "sha256": "59bfb006b8088a024bdca256b3314343322da12012773eff12efcf912f4f21f7"
     },
     {
       "bytes": 7930,
@@ -1889,7 +1889,7 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "415b90b3ca8838819f08e6343922a25327bb40c4ea1fb6c5c47acaf1dbef7cf1"
+      "sha256": "9c64e73c971bdbe2d238d52b150e0947e34dbb54ec7e6d1eafed5ecf089ec291"
     },
     {
       "bytes": 18589,
@@ -2163,6 +2163,13 @@
       "path": "fixtures/release-stack/pr-220-intake-candidate.json",
       "purpose": "Redacted release stack intake candidate fixture for PR 220.",
       "sha256": "4ced67b3d460f0fe949d72d7e6c52c31d783593181f185e71bc9c11dc86c3cf2"
+    },
+    {
+      "bytes": 1122,
+      "kind": "fixture",
+      "path": "fixtures/release-stack/pr-221-intake-candidate.json",
+      "purpose": "Redacted release stack intake candidate fixture for PR 221.",
+      "sha256": "42137f59d5edb634d7b86fb6ce4f6604c5180293fe3122bed5dd9d0c85ef8213"
     },
     {
       "bytes": 24978,
@@ -2697,11 +2704,11 @@
       "sha256": "56185a55bd736fe4a03f75f54ade68b589e574457be5f28ac2cc235d85a7cd8c"
     },
     {
-      "bytes": 80053,
+      "bytes": 80188,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "4899d84bef95a4744e6ab0612bd8f2c99f343bb8c0b1165184b5e5f77d787a48"
+      "sha256": "320401aa53e0db1f956434fe4f544b0aa298da7e41dc2fbe84a54ba203aadc46"
     },
     {
       "bytes": 50417,
