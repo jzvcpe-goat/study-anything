@@ -11,7 +11,7 @@ handoff steps without copying private learning data.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `49cac1e3c1e3aafc1eb6d763b8ea1fe8041bd6aeca536f14f8127ac665cc4489`
+- Archive: `platform/generated/study-anything-adopter-evidence-archive.zip` sha256 `8cadac1f15e3c241f1ace4f3db514e754f6c73d83a886a05c0060df28be62f0e`
 
 ## Reproduction Commands
 
