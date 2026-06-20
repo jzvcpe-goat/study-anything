@@ -58,10 +58,10 @@
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
-    "candidate_is_not_applied": true,
-    "candidate_is_represented": false,
-    "current_group": "release-stack-promotion-v0.3.119-v0.3.120",
-    "represented_pr_count": 59
+    "candidate_is_not_applied": false,
+    "candidate_is_represented": true,
+    "current_group": "release-stack-promotion-v0.3.121-v0.3.122",
+    "represented_pr_count": 61
   },
   "negative_fixtures": [
     {
