@@ -74,10 +74,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 2123911,
+  "archive_bytes": 2123910,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "e0987b3b5def3fb5b21397cbb7c2bb21db482815f1ef28ed1324d7ee514a9fd9",
+  "archive_sha256": "6274abb03db92941263d33bc94f1bf7a82c67142219c6772aadf03f8500aa4de",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -646,7 +646,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "d0e14b3eabd5663b1d74fbc2b1f29b8d2ece8b50fb3a28136f992fa8d7146409"
+      "sha256": "ea59056982b7403321cbbe90fe958ac795879e490e097e872a63998d86690bff"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-contracts.json",
@@ -1134,7 +1134,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "c724330e73922b52bddda2201b2600a87f9a8f0d8a3154e5bd52b0426f0a439f"
+      "sha256": "a35bd5dfa92e68e9383f44f6b84dd86334df1a95861fcc36dd952575dc8691a0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-stack-intake-candidate.json",
@@ -1142,7 +1142,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "898c4914d273c8ab27659f2e0f2362e06a1f0c35b375e797105d60baf5a67a9d"
+      "sha256": "e236f9eb924d04ff112b6350284f1f3e32bf90e047c968da85994fcbdc25b7d1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -1150,7 +1150,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "5e628fddf9d58d39eded2b9fa7cd6c8995b4a5bf911be489c5dcc61af63b7cf4"
+      "sha256": "caaba215fa12680277da3df8536fede4673e05a250ebbe62d70234445aec06b1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-operator-drill-transcript.json",
@@ -2238,7 +2238,7 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "50c34c873fd834153f27ceac6ee9f770cee90dd74635de0a0bce5940def54b2f"
+      "sha256": "2eeaa117247c0161e787b91824bb992692db4c42bb16cf42ec371270a9c06907"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-status-links/intake.json",
