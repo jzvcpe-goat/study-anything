@@ -97,6 +97,7 @@ fi
 "$python_bin" scripts/verify_external_agent_adapter_hardening.py
 "$python_bin" scripts/verify_notebooklm_obsidian_bridge_hardening.py
 "$python_bin" scripts/verify_learning_enrichment_bridge.py --check
+"$python_bin" scripts/verify_okf_bundle.py --check
 "$python_bin" scripts/verify_multiteacher_agent_eval_hardening.py
 "$python_bin" scripts/verify_plugin_quarantine.py
 "$python_bin" scripts/verify_security_recovery_hardening.py

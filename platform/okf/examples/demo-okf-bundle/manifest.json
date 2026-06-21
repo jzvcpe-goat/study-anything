@@ -1,0 +1,74 @@
+{
+  "brand": "认知黑箱 / Cognitive Black Box",
+  "consumers": [
+    "kimi",
+    "codex",
+    "obsidian",
+    "notebooklm",
+    "generic-platform-agent"
+  ],
+  "files": [
+    {
+      "bytes": 972,
+      "kind": "markdown_note",
+      "path": "concepts/glossary.md",
+      "sha256": "6a0c6c00c1c1670b64b30bf941574a1abb9e0aa85d33f307f00bd7bb3e1808c0"
+    },
+    {
+      "bytes": 948,
+      "kind": "markdown_note",
+      "path": "concepts/overview.md",
+      "sha256": "f3fc27f646f5db86038673b696ea5b85e3f53a8518e180da9115e8672be5b69f"
+    },
+    {
+      "bytes": 1096,
+      "kind": "markdown_note",
+      "path": "decisions.md",
+      "sha256": "04b1841e6cf43c66a11d56a3cc7ace27e1f5feb382134ce08111d01ef00fb303"
+    },
+    {
+      "bytes": 1031,
+      "kind": "markdown_note",
+      "path": "mastery.md",
+      "sha256": "5647df24d5d88f4728c430750c9904799b1a43b6a0a3dd7976d9f5651db54951"
+    },
+    {
+      "bytes": 1111,
+      "kind": "markdown_note",
+      "path": "overview.md",
+      "sha256": "0b03a7e32c2fed76296658cc2ccc3eccef355406c2f116a932feae9ca4ae0c77"
+    },
+    {
+      "bytes": 1170,
+      "kind": "markdown_note",
+      "path": "questions/review.md",
+      "sha256": "8bda32c531dd56d6b6456c569df0e8d5e7ddc87c79ecdf241cd712ca5cfccb7f"
+    },
+    {
+      "bytes": 1125,
+      "kind": "markdown_note",
+      "path": "sources.md",
+      "sha256": "44cc17bfa94babaf902c0a3a7acc0ce84d532e8c50adce77ae13e3484e99b1be"
+    }
+  ],
+  "generated_at": "2026-01-01T00:00:00Z",
+  "privacy": {
+    "agent_sensitive_metadata_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_enrichment_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "secrets_included": false
+  },
+  "purpose": "Convert a Study Anything learning session into a portable cognitive asset bundle.",
+  "schema_version": "cognitive-black-box-okf-bundle-v1",
+  "session": {
+    "session_id": "okf-demo-session-0001",
+    "source_excerpt_hash": "1a49bdfc2c8c6f6e8f4c0e533e1fd26c5f3a6b9ac0f8360ed854f2f558d53f44",
+    "source_reference": "file://AI-product-manager-technical-foundations.pdf",
+    "source_title": "AI Product Manager Technical Foundations",
+    "stage": "completed",
+    "track": "PRODUCT"
+  }
+}

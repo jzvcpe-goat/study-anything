@@ -55,6 +55,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/second-brain-handoff.md",
             "docs/obsidian-export.md",
             "docs/notebooklm-bridge.md",
+            "docs/okf-alignment.md",
             "docs/commercial-readiness.md",
             "docs/adoption-telemetry.md",
             "docs/plugin-sdk.md",
@@ -83,6 +84,18 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-public-maintainer-dashboard.json",
             "platform/generated/study-anything-public-maintainer-dashboard.md",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-okf-alignment.json",
+            "platform/okf/examples/demo-session.json",
+            "platform/okf/examples/demo-okf-bundle/manifest.json",
+            "platform/okf/examples/demo-okf-bundle/overview.md",
+            "platform/okf/examples/demo-okf-bundle/sources.md",
+            "platform/okf/examples/demo-okf-bundle/mastery.md",
+            "platform/okf/examples/demo-okf-bundle/decisions.md",
+            "platform/okf/examples/demo-okf-bundle/concepts/overview.md",
+            "platform/okf/examples/demo-okf-bundle/concepts/glossary.md",
+            "platform/okf/examples/demo-okf-bundle/questions/review.md",
+            "scripts/export_okf_bundle.py",
+            "scripts/verify_okf_bundle.py",
             "fixtures/platform-import-failures/schema_mismatch.json",
             "fixtures/platform-import-failures/missing_local_gateway.json",
             "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -208,6 +221,11 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("study_anything_learning_package_export", manifest["required_tool_names"])
         self.assertIn("study_anything_second_brain_handoff_export", manifest["required_tool_names"])
         self.assertIn("learning-enrichment-bridge-verification-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn(
+            "cognitive-black-box-okf-alignment-verification-v1",
+            manifest["acceptance"]["must_verify"],
+        )
+        self.assertIn("cognitive-black-box-okf-bundle-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("agent-eval-marketplace-enforcement-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-adoption-feedback-diagnostics-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-onboarding-readiness-v1", manifest["acceptance"]["must_verify"])
