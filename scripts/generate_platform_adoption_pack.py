@@ -27,6 +27,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/cognitive-loop-adoption-cookbook.md", "operator_doc", "Scenario cookbook for Kimi, Codex, WorkBuddy, and private platform Agent Cognitive Loop operations."),
     ("docs/platform-agent-release-replay.md", "operator_doc", "Release-asset platform Agent replay simulator guide."),
     ("docs/learning-enrichment.md", "operator_doc", "Learning Enrichment Layer context contract and micro-lesson export guide."),
+    ("docs/okf-alignment.md", "operator_doc", "OKF-style Cognitive Black Box knowledge-bundle alignment guide."),
     ("docs/second-brain-handoff.md", "operator_doc", "Strict Obsidian, NotebookLM-style, and local archive handoff guide."),
     ("docs/obsidian-export.md", "operator_doc", "Obsidian export privacy and second-brain note guide."),
     ("docs/notebooklm-bridge.md", "operator_doc", "NotebookLM-style manual bridge contract."),
@@ -91,6 +92,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
     ("platform/generated/study-anything-tool-catalog.md", "tool_catalog", "Human-readable platform tool catalog."),
     ("platform/generated/study-anything-platform-bundle.json", "bundle_manifest", "Source file manifest for platform assets."),
+    ("platform/generated/study-anything-okf-alignment.json", "submission_report", "OKF-style Cognitive Black Box knowledge-bundle verification report."),
     ("platform/generated/study-anything-cognitive-loop-contracts.json", "submission_report", "Cognitive Loop contract bootstrap verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -328,6 +330,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/release-asset-adoption/network-unavailable.json", "release_asset_adoption_fixture", "Release asset adoption fixture for GitHub release network unavailability."),
     ("fixtures/cognitive-loop-study-adapter/project-event.json", "cognitive_loop_fixture", "ProjectEvent fixture for the Study Anything adapter CLI."),
     ("fixtures/cognitive-loop-study-adapter/decision-card.json", "cognitive_loop_fixture", "DecisionCard fixture for the Study Anything adapter CLI."),
+    ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
+    ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
+    ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
+    ("platform/okf/examples/demo-okf-bundle/sources.md", "okf_example", "Demo OKF-style source-reference note."),
+    ("platform/okf/examples/demo-okf-bundle/mastery.md", "okf_example", "Demo OKF-style mastery note."),
+    ("platform/okf/examples/demo-okf-bundle/decisions.md", "okf_example", "Demo OKF-style handoff decision note."),
+    ("platform/okf/examples/demo-okf-bundle/concepts/overview.md", "okf_example", "Demo OKF-style concept overview note."),
+    ("platform/okf/examples/demo-okf-bundle/concepts/glossary.md", "okf_example", "Demo OKF-style glossary note."),
+    ("platform/okf/examples/demo-okf-bundle/questions/review.md", "okf_example", "Demo OKF-style question review note with answers omitted."),
     ("platform/generated/study-anything-plugin-ecosystem-adoption-kit.json", "submission_report", "Copy-ready plugin ecosystem adoption kit for platform submissions."),
     ("platform/generated/study-anything-deployment-hardening.json", "submission_report", "Deployment hardening and clean-clone operator path report."),
     ("platform/generated/study-anything-learning-enrichment-bridge.json", "submission_report", "Learning Enrichment operator bridge report for platform Agents, NotebookLM, Obsidian, and second-brain handoff."),
@@ -391,6 +402,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_plugin_ecosystem_adoption_kit.py", "verification", "Plugin ecosystem sample, registry, and trust-policy adoption verifier."),
     ("scripts/verify_deployment_hardening.py", "verification", "Deployment hardening and published-image operator path verifier."),
     ("scripts/verify_learning_enrichment_bridge.py", "verification", "Learning Enrichment operator bridge verifier."),
+    ("scripts/export_okf_bundle.py", "cli", "Export a Study Anything session into an OKF-style Cognitive Black Box Markdown bundle."),
+    ("scripts/verify_okf_bundle.py", "verification", "Verify OKF-style Cognitive Black Box bundle frontmatter, consumers, and privacy boundaries."),
     ("scripts/verify_ecosystem_submission_pack.py", "verification", "Ecosystem submission pack verifier for external platform review."),
     ("scripts/verify_cognitive_loop_contracts.py", "verification", "Cognitive Loop contract bootstrap verifier."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
@@ -614,7 +627,7 @@ WorkBuddy-style HTTP tool workspaces, and other platform Agents.
 Use it when the platform Agent owns browsing, files, video slicing, outside
 tools, real model credentials, and conversation. Study Anything owns the
 source-bound learning workflow, state, audit, eval evidence, retrieval quality,
-and Obsidian/NotebookLM handoff.
+OKF-style Markdown knowledge bundles, and Obsidian/NotebookLM handoff.
 
 ## Quick Start
 
@@ -697,6 +710,8 @@ def manifest_payload() -> dict[str, object]:
                 "agent-gateway-hardening-verification-v1",
                 "notebooklm-obsidian-bridge-hardening-v1",
                 "learning-enrichment-bridge-verification-v1",
+                "cognitive-black-box-okf-alignment-verification-v1",
+                "cognitive-black-box-okf-bundle-v1",
                 "security-recovery-hardening-verification-v1",
                 "platform-submission-dry-run-v1",
                 "platform-manual-submission-rehearsal-v1",

@@ -917,6 +917,71 @@ FILES: list[tuple[str, str, str]] = [
         "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
     ),
     (
+        "platform/generated/study-anything-okf-alignment.json",
+        "generated_asset",
+        "OKF-style Cognitive Black Box knowledge-bundle verification report.",
+    ),
+    (
+        "docs/okf-alignment.md",
+        "docs",
+        "OKF-style Cognitive Black Box knowledge-bundle alignment guide.",
+    ),
+    (
+        "platform/okf/examples/demo-session.json",
+        "example",
+        "Demo learning session input for OKF-style knowledge-bundle export.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/manifest.json",
+        "example",
+        "Demo OKF-style knowledge-bundle manifest.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/overview.md",
+        "example",
+        "Demo OKF-style session overview note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/sources.md",
+        "example",
+        "Demo OKF-style source-reference note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/mastery.md",
+        "example",
+        "Demo OKF-style mastery note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/decisions.md",
+        "example",
+        "Demo OKF-style handoff decision note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/concepts/overview.md",
+        "example",
+        "Demo OKF-style concept overview note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/concepts/glossary.md",
+        "example",
+        "Demo OKF-style glossary note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/questions/review.md",
+        "example",
+        "Demo OKF-style question review note with answers omitted.",
+    ),
+    (
+        "scripts/export_okf_bundle.py",
+        "cli",
+        "Export a Study Anything session into an OKF-style Cognitive Black Box Markdown bundle.",
+    ),
+    (
+        "scripts/verify_okf_bundle.py",
+        "verification",
+        "Verify OKF-style Cognitive Black Box bundle frontmatter, consumers, and privacy boundaries.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",

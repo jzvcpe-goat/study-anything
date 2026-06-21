@@ -1,0 +1,113 @@
+{
+  "schema_version": "okf-session-export-input-v1",
+  "session": {
+    "session_id": "okf-demo-session-0001",
+    "user_hash": "user_demo_hash",
+    "track": "PRODUCT",
+    "stage": "completed",
+    "source": {
+      "source_type": "document",
+      "reference": "file://AI-product-manager-technical-foundations.pdf",
+      "title": "AI Product Manager Technical Foundations",
+      "text": "PRIVATE SOURCE TEXT: proprietary notes about model serving, evaluation, and product risk.",
+      "excerpt_hash": "1a49bdfc2c8c6f6e8f4c0e533e1fd26c5f3a6b9ac0f8360ed854f2f558d53f44",
+      "verified": true
+    },
+    "enrichment_items": [
+      {
+        "source_type": "video_slice",
+        "reference": "video://lesson/ai-pm/clip-001",
+        "title": "Evaluation Clip",
+        "text": "PRIVATE VIDEO TRANSCRIPT: user-owned explanation of regression evals.",
+        "excerpt_hash": "54a0c88f6d7e8ef7bd8a2b2c7b3a9b32b2e15bbd79d58d174343ce8df45b1163",
+        "locator": "00:02:10-00:03:05",
+        "metadata": {
+          "provenance": {
+            "collector": "platform-agent",
+            "capture_method": "video_slice",
+            "source_owner": "user"
+          },
+          "redaction_policy": "reference_only"
+        }
+      }
+    ],
+    "teaching_layers": [
+      {
+        "layer": "overview",
+        "task_type": "teach.overview",
+        "content": "Agent evaluation connects product promises to repeatable evidence. A product manager should define target behavior, failure modes, fixtures, and regression thresholds before trusting an AI workflow.",
+        "citations": [
+          {
+            "reference": "file://AI-product-manager-technical-foundations.pdf",
+            "excerpt_hash": "1a49bdfc2c8c6f6e8f4c0e533e1fd26c5f3a6b9ac0f8360ed854f2f558d53f44"
+          }
+        ],
+        "confidence": 0.82,
+        "agent": {
+          "provider_id": "local-user-agent",
+          "task_type": "teach.overview",
+          "status": "ok",
+          "latency_ms": 120,
+          "metadata": {
+            "endpoint": "http://127.0.0.1:8787/private?token=PRIVATE_AGENT_TOKEN",
+            "debug_prompt": "PRIVATE AGENT PROMPT",
+            "api_key": "sk-proj-demo-secret-value"
+          }
+        }
+      },
+      {
+        "layer": "glossary",
+        "task_type": "teach.glossary",
+        "content": [
+          "Regression eval: a repeated test that catches quality drift.",
+          "Fixture: a stable input/output case used for repeatable evaluation.",
+          "Human mastery gate: a checkpoint that asks the operator to understand the change before accepting risk."
+        ],
+        "confidence": 0.8
+      }
+    ],
+    "quiz_items": [
+      {
+        "item_id": "q1",
+        "prompt": "Why should an AI product workflow define eval fixtures before launch?",
+        "source_ref": "file://AI-product-manager-technical-foundations.pdf",
+        "excerpt_hash": "1a49bdfc2c8c6f6e8f4c0e533e1fd26c5f3a6b9ac0f8360ed854f2f558d53f44",
+        "rubric": "Mention target behavior, failure modes, repeatability, and launch confidence."
+      }
+    ],
+    "answers": [
+      {
+        "item_id": "q1",
+        "text": "PRIVATE ANSWER TEXT: eval fixtures make product risk visible before release."
+      }
+    ],
+    "grading_results": [
+      {
+        "item_id": "q1",
+        "score": 0.83,
+        "feedback": "PRIVATE FEEDBACK: the answer is strong but should mention regression thresholds.",
+        "reward": 0.83
+      }
+    ],
+    "mastery": {
+      "level": 0.63,
+      "bloom": "understand"
+    },
+    "insights": [
+      "The learner is ready to compare native fast gates with optional external judge frameworks.",
+      "The next lesson should ask the learner to design one failed case and one passing case."
+    ],
+    "scribe_log": [
+      "A safe public scribe note would focus on eval shape, not private answer text."
+    ],
+    "audit_log": [
+      {
+        "event_type": "agent.invoked",
+        "payload": {
+          "provider_id": "local-user-agent",
+          "endpoint": "http://127.0.0.1:8787/private?token=PRIVATE_AGENT_TOKEN"
+        }
+      }
+    ]
+  }
+}

@@ -90,7 +90,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "9617966e8d5fdd45e592c80d0775adb6277df71b9f13caaa749d561c29e14705"
+      "sha256": "f67a9a9f844fc280ce4960b4117317f4863d6958828b0e5cfcdb50a0556262e2"
     },
     {
       "bytes": 1939,
@@ -251,7 +251,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
       "purpose": "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
-      "sha256": "5e030ba162ddb3332de283492f9762e4e3c59bf663603b00d955c2dd4d303a0c"
+      "sha256": "70125da9481c32c95316d42c665093339e43a5713b25e1ec411b5b53a4e6f9de"
     },
     {
       "bytes": 3786,
@@ -398,14 +398,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "ef18ef7a6b338ae12a17a97389f22799bcf27084b6e492dbdf5f2ec43210899b"
+      "sha256": "d4ecaa081c7f7983cb280718f0e6732e3eb101b91757d671dc6a3c928b6ff640"
     },
     {
       "bytes": 6681,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "6c4190220c17efe651a356cfed41b6d590a3fb8c01afd43dc52f69f6aec250c4"
+      "sha256": "5fd30ec4fd1e8c9e4af4c370a96f014ce77eebe5d23dddaa2eae3946653d4378"
     },
     {
       "bytes": 2302,
@@ -475,28 +475,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "14f81233eba66d8d47c4fb8a7b20952596408b5dde0f2c81e6311b747186d894"
+      "sha256": "d2e3d1e0f6fa53b41ee21b56e99b2e110098e95cc3dc5adf3e695db2866fe6a5"
     },
     {
       "bytes": 5371,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "27828d5b47d2ec40b2077262c383c05b07a6c265e30ef5998f5ae622d084ec6a"
+      "sha256": "99238f40ed70e786ea592fb50d931db39746372246dfb9c93b3e0bbd3c7eeb0c"
     },
     {
       "bytes": 2713,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "3868cff6f0fdc6629283b69763e9f1414fa0134b64fe556c3869dd882ef45ce7"
+      "sha256": "4838c6be4ef6bed18b359a2bbd1b7c59e024c6857cfb3136ea949ca39104bd80"
     },
     {
       "bytes": 7274,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "8dd5649b2fc8b775e9422bcaa4a5fc7f5164045ec068a12d7aa54f821b630136"
+      "sha256": "3595db0942134c10eca6c1fcc50a7d45d090baf86c6a98805381c58feacbe9b8"
     },
     {
       "bytes": 9386,
@@ -538,7 +538,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "f9f749ccef0f0f4e652f3d46a8a68c68e233e002c66cd13ea8c406c817925938"
+      "sha256": "88da1c4a01789004fb244da7767ee9ab22d3dfcb5f1334c55be5ce5f61b234aa"
     },
     {
       "bytes": 87329,
@@ -650,84 +650,84 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "3283bb796c6628bacc7202d0b1f89bf938353005d065252dce215a0bc6225400"
+      "sha256": "6099a759e80bdd71057988b4466d6c0aab55213c723fffaf6ccbbe878de64e4f"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "385a47f1de395aa57c61410dabf05c5e90d7072fd060bf52cfec3e1a8ab5c775"
+      "sha256": "1d631df05ecbd1bf9b47d04b943768f422d1a43334f9c15f53f40509f3516913"
     },
     {
-      "bytes": 122327,
+      "bytes": 122533,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "66bffcf835091fe9a5d6341de2738e48f059525ad4e4085295765d6b44b24f14"
+      "sha256": "d657ad0f0c610ae370cc6db54ddbf8d978a58b61acb2c3498b3d7c2cffcbfdc3"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "ff7e9758552a33de145816d8aca55d163ba537f75bd5d970df4af19d089c4aa0"
+      "sha256": "148b398361af0ef9af8566bee0c33b25b92e4e20c18df50664db3b18f8115bda"
     },
     {
       "bytes": 13752,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "0f608e0fba224810577a711e36f2cbb53a4692c64897c5a1f1cb54962520f0fd"
+      "sha256": "66b490c20a54b034f3077d1c96a02aa76eec57efdd649bfc6ac5b17b3eb30320"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "6a9d795baa67cdb035d619ea3cbec846e7477f8880133573dfbd991ed9bfa000"
+      "sha256": "12771bc8feeefb5cd30b9538a7834eb37786556ad5d03ff5ba0d5b9ee4f4ef4e"
     },
     {
-      "bytes": 351479,
+      "bytes": 352099,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "7bfcf7fa108b3a9770a67fda80a3c8761014690b71cd6519dcd12172ad5613a7"
+      "sha256": "b7c87706138ed804fce23794ecd3dbba6463c573a3b4f24e60969d6c4abc91e1"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "9b9ceb842b1b34bd670a4b234f5b410c10512bc971af430eea1bf1b177f54140"
+      "sha256": "806cb0880b06140dbdb8d39556108305b5751cfc3b03181c7e0450404f175156"
     },
     {
       "bytes": 7930,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "1cfcf1bda99af911349a59e7b97c325fbb97a8d12cce20ef31ef2dcf2716b635"
+      "sha256": "32b4cc333e94482a256ae33db1cb1f1e8bc744fea37975e2cfd95882d95921d9"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "a17902b90651c2a8b5bb7b048282cae9cbe10f45defd6257537fac68868f39c4"
+      "sha256": "df187c34a2a784e9e7444cfeb0a6658ee2e932eb7abfe876e9ea0f31131a338d"
     },
     {
-      "bytes": 114064,
+      "bytes": 114273,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "68de99737c0572d17e8ca5674287a58bc05ea30127c53c3db4c4c08d91ceebef"
+      "sha256": "55bf5aed4bbee90959d62b34b13e7eea1c8594c7a39d490ff642912fe5b64eeb"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "792f74158a8c683fd95f36510c40ba6a92fc5d0adde57e8bc37b77e20972c1d3"
+      "sha256": "61f14b3ad7e5057b8df1adca260934bca1a2cbecb000187b23d9bcb1ac096954"
     },
     {
       "bytes": 7877,
@@ -1309,6 +1309,97 @@
       "path": "platform/generated/study-anything-learning-enrichment-bridge.json",
       "purpose": "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
       "sha256": "7df467392c39253e7c519a31a3d9e733d76e78db2bb03ddd9e7b215f7c4c206a"
+    },
+    {
+      "bytes": 1168,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-okf-alignment.json",
+      "purpose": "OKF-style Cognitive Black Box knowledge-bundle verification report.",
+      "sha256": "eccd6fb3c7244314c952a80e0060963d5f5c4ee047904e6e855a5e1987a93d2d"
+    },
+    {
+      "bytes": 4599,
+      "kind": "docs",
+      "path": "docs/okf-alignment.md",
+      "purpose": "OKF-style Cognitive Black Box knowledge-bundle alignment guide.",
+      "sha256": "f7dd8b678d3d2ae8571f2a8ef8f4200a08ffe9dafc2a375592afb25b11fc583c"
+    },
+    {
+      "bytes": 4105,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-session.json",
+      "purpose": "Demo learning session input for OKF-style knowledge-bundle export.",
+      "sha256": "d3a8dc9b7754943a4730b715690b95413ec8eb2502f480bb2c5c9f52ae322116"
+    },
+    {
+      "bytes": 2286,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/manifest.json",
+      "purpose": "Demo OKF-style knowledge-bundle manifest.",
+      "sha256": "b78b6088fc653137d8d6ed1c8f1c2c94ea7b4767c62298f9b618a277ed7c884e"
+    },
+    {
+      "bytes": 1111,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/overview.md",
+      "purpose": "Demo OKF-style session overview note.",
+      "sha256": "0b03a7e32c2fed76296658cc2ccc3eccef355406c2f116a932feae9ca4ae0c77"
+    },
+    {
+      "bytes": 1125,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/sources.md",
+      "purpose": "Demo OKF-style source-reference note.",
+      "sha256": "44cc17bfa94babaf902c0a3a7acc0ce84d532e8c50adce77ae13e3484e99b1be"
+    },
+    {
+      "bytes": 1031,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/mastery.md",
+      "purpose": "Demo OKF-style mastery note.",
+      "sha256": "5647df24d5d88f4728c430750c9904799b1a43b6a0a3dd7976d9f5651db54951"
+    },
+    {
+      "bytes": 1096,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/decisions.md",
+      "purpose": "Demo OKF-style handoff decision note.",
+      "sha256": "04b1841e6cf43c66a11d56a3cc7ace27e1f5feb382134ce08111d01ef00fb303"
+    },
+    {
+      "bytes": 948,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/concepts/overview.md",
+      "purpose": "Demo OKF-style concept overview note.",
+      "sha256": "f3fc27f646f5db86038673b696ea5b85e3f53a8518e180da9115e8672be5b69f"
+    },
+    {
+      "bytes": 972,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/concepts/glossary.md",
+      "purpose": "Demo OKF-style glossary note.",
+      "sha256": "6a0c6c00c1c1670b64b30bf941574a1abb9e0aa85d33f307f00bd7bb3e1808c0"
+    },
+    {
+      "bytes": 1170,
+      "kind": "example",
+      "path": "platform/okf/examples/demo-okf-bundle/questions/review.md",
+      "purpose": "Demo OKF-style question review note with answers omitted.",
+      "sha256": "8bda32c531dd56d6b6456c569df0e8d5e7ddc87c79ecdf241cd712ca5cfccb7f"
+    },
+    {
+      "bytes": 17520,
+      "kind": "cli",
+      "path": "scripts/export_okf_bundle.py",
+      "purpose": "Export a Study Anything session into an OKF-style Cognitive Black Box Markdown bundle.",
+      "sha256": "a4d1bfd19dd48f221929e7572185b2a397a9ce2c6d515e6cde8def78af508a7f"
+    },
+    {
+      "bytes": 8427,
+      "kind": "verification",
+      "path": "scripts/verify_okf_bundle.py",
+      "purpose": "Verify OKF-style Cognitive Black Box bundle frontmatter, consumers, and privacy boundaries.",
+      "sha256": "18dec7d17b409bfd27e7af46df060abe1a8ee0dfb9c322cb19ee837445ef272e"
     },
     {
       "bytes": 12149,
@@ -2921,11 +3012,11 @@
       "sha256": "56185a55bd736fe4a03f75f54ade68b589e574457be5f28ac2cc235d85a7cd8c"
     },
     {
-      "bytes": 84373,
+      "bytes": 86173,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "7903df755efbe68b42ec1d6d48c678afe997cab838f1776d1eb3ca9d1e24e8fa"
+      "sha256": "b9d6e28e1556722a239c9bc60e3630f00f0d448a413ec4f545cab7d16ed3ac8c"
     },
     {
       "bytes": 50417,

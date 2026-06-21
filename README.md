@@ -1,12 +1,18 @@
-# Cognitive Loop System
+# 认知黑箱 / Cognitive Black Box
 
-**Cognitive Loop System** is a local-first cognitive control layer for AI-assisted projects. It helps people and platform Agents learn a project, reverse-engineer how it works, watch important changes, verify actions, preserve audit evidence, and evolve the project under human-understanding gates.
+**不是让认知变黑箱，而是记录和打开 AI 协作过程的黑匣子。**
 
-**认知自循环系统** 是一个本地优先的 AI 项目认知控制层。它帮助人类和平台 Agent 学习项目、逆向理解项目、监听关键变化、验证行动、保留审计证据，并在人类理解确认的约束下推动项目持续进化。
+**Cognitive Black Box** is a local-first cognitive flight recorder for AI-assisted learning, project work, and platform-Agent collaboration. It helps people and Agents capture what was learned, what changed, why a decision was made, how it was verified, and what can be safely handed off to Kimi, Codex, Obsidian, NotebookLM, WorkBuddy-style tools, or a private Agent.
 
-Study Anything is now positioned as the **Learning Adapter** inside Cognitive Loop System. It remains responsible for source-bound learning sessions, layered teaching, quizzes, mastery state, scribe logs, Agent audit/eval evidence, Obsidian exports, NotebookLM-style handoff packages, and platform-Agent adoption assets.
+**认知黑箱** 是一个本地优先的 AI 协作黑匣子：记录学习、项目理解、变更、决策、验证、风险和交接证据。它不是把认知过程变得不透明，而是把 AI 协作过程变成可复盘、可审计、可迁移、可继续演化的认知资产。
 
-Study Anything 现在定位为 Cognitive Loop System 里的 **学习适配层**：负责基于来源的学习会话、分层教学、测验、掌握度、scribe log、Agent 审计/eval 证据、Obsidian 导出、NotebookLM 式交接包，以及平台 Agent 接入资产。
+Cognitive Loop remains the technical control pattern inside the project.
+
+Cognitive Loop 仍然是项目内部的技术控制模式。
+
+Study Anything is now positioned as the **Learning Adapter** inside Cognitive Black Box. It remains responsible for source-bound learning sessions, layered teaching, quizzes, mastery state, scribe logs, Agent audit/eval evidence, Obsidian exports, NotebookLM-style handoff packages, OKF-style knowledge bundles, and platform-Agent adoption assets.
+
+Study Anything 现在定位为认知黑箱里的 **学习适配层**：负责基于来源的学习会话、分层教学、测验、掌握度、scribe log、Agent 审计/eval 证据、Obsidian 导出、NotebookLM 式交接包、OKF-style 知识包，以及平台 Agent 接入资产。
 
 ## What It Is
 

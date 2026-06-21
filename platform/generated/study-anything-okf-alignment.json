@@ -1,0 +1,41 @@
+{
+  "bundle_dir": "platform/okf/examples/demo-okf-bundle",
+  "bundle_schema": "cognitive-black-box-okf-bundle-v1",
+  "consumers": [
+    "codex",
+    "generic-platform-agent",
+    "kimi",
+    "notebooklm",
+    "obsidian"
+  ],
+  "file_count": 8,
+  "markdown_files": [
+    "concepts/glossary.md",
+    "concepts/overview.md",
+    "decisions.md",
+    "mastery.md",
+    "overview.md",
+    "questions/review.md",
+    "sources.md"
+  ],
+  "note_schema": "cognitive-black-box-okf-note-v1",
+  "platform_alignment": {
+    "codex_skill_context_bundle": true,
+    "kimi_context_bundle": true,
+    "notebooklm_manual_source_bundle": true,
+    "obsidian_second_brain_folder": true,
+    "standalone_frontend_required": false
+  },
+  "privacy": {
+    "agent_sensitive_metadata_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_enrichment_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "secrets_included": false
+  },
+  "schema_version": "cognitive-black-box-okf-alignment-verification-v1",
+  "source_session": "platform/okf/examples/demo-session.json",
+  "status": "pass"
+}
