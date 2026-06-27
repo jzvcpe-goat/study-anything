@@ -629,6 +629,16 @@ FILES: list[tuple[str, str, str]] = [
         "Human-readable GitHub Release download index for platform plugin packs.",
     ),
     (
+        "platform/generated/study-anything-workbuddy-codebuddy-marketplace.json",
+        "generated_asset",
+        "Generated CodeBuddy/WorkBuddy marketplace plugin verification report.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-codebuddy-marketplace.md",
+        "generated_asset",
+        "Human-readable CodeBuddy/WorkBuddy marketplace plugin verification report.",
+    ),
+    (
         "docs/release-asset-bootstrap.md",
         "operator_doc",
         "GitHub Release asset bootstrap guide for external platform Agents.",
@@ -647,6 +657,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/platform-plugin-downloads.md",
         "operator_doc",
         "GitHub Release download guide for Codex, Kimi, and WorkBuddy plugin packs.",
+    ),
+    (
+        "docs/use-with-workbuddy.md",
+        "operator_doc",
+        "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide.",
     ),
     (
         "docs/cognitive-loop-contracts.md",
@@ -1087,6 +1102,46 @@ FILES: list[tuple[str, str, str]] = [
         "platform/packs/workbuddy/pack.json",
         "platform_pack",
         "Machine-readable WorkBuddy pack metadata.",
+    ),
+    (
+        ".codebuddy-plugin/marketplace.json",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy marketplace listing for the Study Anything plugin.",
+    ),
+    (
+        "plugins/study-anything/.codebuddy-plugin/plugin.json",
+        "workbuddy_marketplace",
+        "Installable CodeBuddy/WorkBuddy plugin manifest.",
+    ),
+    (
+        "plugins/study-anything/README.md",
+        "workbuddy_marketplace",
+        "Installable CodeBuddy/WorkBuddy plugin README.",
+    ),
+    (
+        "plugins/study-anything/skills/study-anything/SKILL.md",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy Study Anything skill entrypoint.",
+    ),
+    (
+        "plugins/study-anything/commands/start.md",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy start command.",
+    ),
+    (
+        "plugins/study-anything/commands/learn.md",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy learn command.",
+    ),
+    (
+        "plugins/study-anything/commands/diagnose.md",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy diagnose command.",
+    ),
+    (
+        "plugins/study-anything/commands/export.md",
+        "workbuddy_marketplace",
+        "CodeBuddy/WorkBuddy export command.",
     ),
     (
         "scripts/openai_compatible_agent_gateway.py",
@@ -2204,6 +2259,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify platform plugin pack archives, manifests, hashes, and privacy boundaries.",
     ),
     (
+        "scripts/generate_platform_plugin_downloads.py",
+        "verification",
+        "Generate the GitHub Release download index for platform plugin packs.",
+    ),
+    (
+        "scripts/verify_platform_plugin_downloads.py",
+        "verification",
+        "Verify the GitHub Release download index for platform plugin packs.",
+    ),
+    (
+        "scripts/generate_workbuddy_plugin_marketplace.py",
+        "verification",
+        "Generate installable CodeBuddy/WorkBuddy marketplace plugin files.",
+    ),
+    (
+        "scripts/verify_workbuddy_plugin_marketplace.py",
+        "verification",
+        "Verify CodeBuddy/WorkBuddy marketplace plugin files and privacy boundaries.",
+    ),
+    (
         "scripts/verify_platform_ecosystem_eval_flow.py",
         "verification",
         "Platform ecosystem verifier for importer, enrichment, retrieval quality, external eval adapters, and export.",
@@ -2638,6 +2713,10 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_platform_ecosystem_packs.py",
             "python3 scripts/generate_platform_plugin_packs.py --check",
             "python3 scripts/verify_platform_plugin_packs.py --check",
+            "python3 scripts/generate_platform_plugin_downloads.py --check",
+            "python3 scripts/verify_platform_plugin_downloads.py --check",
+            "python3 scripts/generate_workbuddy_plugin_marketplace.py --check",
+            "python3 scripts/verify_workbuddy_plugin_marketplace.py --check",
             "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
             "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
             "python3 scripts/generate_platform_bundle_manifest.py --check",

@@ -13,6 +13,23 @@ Download one platform pack:
 - Kimi-compatible: `study-anything-kimi-plugin-pack.zip`
 - WorkBuddy-style HTTP: `study-anything-workbuddy-plugin-pack.zip`
 
+For CodeBuddy/WorkBuddy, prefer the installable marketplace wrapper when the
+host supports plugin marketplaces:
+
+```text
+/plugin marketplace add jzvcpe-goat/study-anything
+/plugin install study-anything@study-anything
+```
+
+That wrapper lives in:
+
+- `.codebuddy-plugin/marketplace.json`
+- `plugins/study-anything/.codebuddy-plugin/plugin.json`
+- `plugins/study-anything/skills/study-anything/SKILL.md`
+- `plugins/study-anything/commands/{start,learn,diagnose,export}.md`
+
+Read `docs/use-with-workbuddy.md` for the beginner flow.
+
 Each pack has a sidecar manifest and checksum:
 
 - `study-anything-*-plugin-pack.json`
@@ -40,4 +57,6 @@ python3 scripts/generate_platform_plugin_packs.py --check
 python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/generate_platform_plugin_downloads.py --check
 python3 scripts/verify_platform_plugin_downloads.py --check
+python3 scripts/generate_workbuddy_plugin_marketplace.py --check
+python3 scripts/verify_workbuddy_plugin_marketplace.py --check
 ```

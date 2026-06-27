@@ -8,9 +8,10 @@ Use the GitHub Release page as the public download entrypoint:
 
 `https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha`
 
-These are import helpers for user-owned platform Agents. They do not contain
-real model keys, do not publish a marketplace listing, and still call a local or
-private Study Anything runtime.
+These zip archives are import helpers for user-owned platform Agents. They do
+not contain real model keys and still call a local or private Study Anything
+runtime. CodeBuddy/WorkBuddy marketplace installation is provided separately by
+`.codebuddy-plugin/marketplace.json` and `plugins/study-anything/`.
 
 | Platform | Archive | Manifest | Checksum |
 | --- | --- | --- | --- |
