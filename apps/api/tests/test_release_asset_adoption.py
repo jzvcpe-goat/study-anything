@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -11,6 +12,10 @@ from _path import ROOT  # noqa: F401
 
 
 REPO = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO / "scripts"))
+
+from verify_release_asset_adoption import REQUIRED_ASSETS  # noqa: E402
+
 GENERATOR = REPO / "scripts" / "generate_release_asset_adoption.py"
 VERIFIER = REPO / "scripts" / "verify_release_asset_adoption.py"
 REPORT = REPO / "platform" / "generated" / "study-anything-release-asset-adoption.json"
@@ -148,15 +153,9 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
     def test_corrupted_asset_dir_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             asset_dir = Path(tmp_dir)
-            for name in (
-                "study-anything-platform-adoption-pack.zip",
-                "study-anything-published-image-evidence.zip",
-                "study-anything-adopter-evidence-archive.zip",
-                "study-anything-platform-feedback-package.zip",
-                "study-anything-release-asset-bootstrap.zip",
-                "study-anything-platform-agent-replay.zip",
-            ):
-                (asset_dir / name).write_bytes(b"not a zip archive")
+            for name in REQUIRED_ASSETS:
+                shutil.copyfile(REPO / "platform" / "generated" / name, asset_dir / name)
+            (asset_dir / "study-anything-platform-adoption-pack.zip").write_bytes(b"not a zip archive")
             completed = run_script(
                 VERIFIER,
                 "--fixture",

@@ -41,6 +41,15 @@ REQUIRED_ASSETS = {
     "study-anything-platform-feedback-package.zip": "platform_feedback_package",
     "study-anything-release-asset-bootstrap.zip": "release_asset_bootstrap",
     "study-anything-platform-agent-replay.zip": "platform_agent_release_replay",
+    "study-anything-codex-plugin-pack.json": "codex_plugin_pack_manifest",
+    "study-anything-codex-plugin-pack.zip": "codex_plugin_pack",
+    "study-anything-codex-plugin-pack.sha256": "codex_plugin_pack_checksum",
+    "study-anything-kimi-plugin-pack.json": "kimi_plugin_pack_manifest",
+    "study-anything-kimi-plugin-pack.zip": "kimi_plugin_pack",
+    "study-anything-kimi-plugin-pack.sha256": "kimi_plugin_pack_checksum",
+    "study-anything-workbuddy-plugin-pack.json": "workbuddy_plugin_pack_manifest",
+    "study-anything-workbuddy-plugin-pack.zip": "workbuddy_plugin_pack",
+    "study-anything-workbuddy-plugin-pack.sha256": "workbuddy_plugin_pack_checksum",
 }
 REQUIRED_PACK_PATHS = {
     "manifest.json",
@@ -61,6 +70,17 @@ REQUIRED_PACK_PATHS = {
     "platform/generated/study-anything-platform-agent-replay.md",
     "platform/generated/study-anything-platform-agent-replay.zip",
     "platform/generated/study-anything-platform-agent-replay.sha256",
+    "platform/generated/study-anything-platform-plugin-downloads.json",
+    "platform/generated/study-anything-platform-plugin-downloads.md",
+    "platform/generated/study-anything-codex-plugin-pack.json",
+    "platform/generated/study-anything-codex-plugin-pack.zip",
+    "platform/generated/study-anything-codex-plugin-pack.sha256",
+    "platform/generated/study-anything-kimi-plugin-pack.json",
+    "platform/generated/study-anything-kimi-plugin-pack.zip",
+    "platform/generated/study-anything-kimi-plugin-pack.sha256",
+    "platform/generated/study-anything-workbuddy-plugin-pack.json",
+    "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+    "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
     "scripts/bootstrap_from_release.py",
     "scripts/generate_release_asset_bootstrap.py",
     "docs/release-asset-bootstrap.md",
@@ -69,7 +89,10 @@ REQUIRED_PACK_PATHS = {
     "docs/platform-agent-release-replay.md",
     "scripts/generate_release_asset_adoption.py",
     "scripts/verify_release_asset_adoption.py",
+    "scripts/generate_platform_plugin_downloads.py",
+    "scripts/verify_platform_plugin_downloads.py",
     "docs/release-asset-adoption.md",
+    "docs/platform-plugin-downloads.md",
     "fixtures/release-asset-adoption/asset-only-pass.json",
     "scripts/verify_external_adoption.py",
     "scripts/verify_published_image_evidence.py",
@@ -270,7 +293,27 @@ def materialize_assets(args: argparse.Namespace, release: dict[str, Any], asset_
             "sha256": actual,
             "github_digest_verified": bool(expected),
         }
+    validate_plugin_sidecars(asset_dir)
     return results
+
+
+def validate_plugin_sidecars(asset_dir: Path) -> None:
+    for platform_id in ("codex", "kimi", "workbuddy"):
+        base = f"study-anything-{platform_id}-plugin-pack"
+        manifest_path = asset_dir / f"{base}.json"
+        archive_path = asset_dir / f"{base}.zip"
+        checksum_path = asset_dir / f"{base}.sha256"
+        manifest = read_json(manifest_path)
+        if manifest.get("schema_version") != "study-anything-platform-plugin-pack-v1":
+            raise ReleaseAssetAdoptionError(f"{manifest_path.name} schema drifted.")
+        if manifest.get("platform_id") != platform_id:
+            raise ReleaseAssetAdoptionError(f"{manifest_path.name} platform_id drifted.")
+        archive_hash = sha256_file(archive_path)
+        if manifest.get("archive", {}).get("sha256") != archive_hash:
+            raise ReleaseAssetAdoptionError(f"{archive_path.name} hash drifted from sidecar manifest.")
+        expected_checksum = f"{archive_hash}  {archive_path.name}\n"
+        if checksum_path.read_text(encoding="utf-8") != expected_checksum:
+            raise ReleaseAssetAdoptionError(f"{checksum_path.name} checksum drifted.")
 
 
 def extract_adoption_pack(asset_dir: Path, work_root: Path) -> Path:

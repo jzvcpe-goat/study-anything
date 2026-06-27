@@ -66,9 +66,9 @@
   },
   "files": [
     {
-      "bytes": 1655,
+      "bytes": 1654,
       "path": "platform/mastra/manifest.json",
-      "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
+      "sha256": "3d88e073925abbcb5676d7cb0b1748c54ff1b0d28df662948475317d4cc1f9d4"
     },
     {
       "bytes": 6820,
@@ -78,7 +78,7 @@
     {
       "bytes": 3786,
       "path": "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
-      "sha256": "89950b19a18b528a94fdf06ada59eb9dadf0ebac5cbd1776f22117fe9d77eba7"
+      "sha256": "d33c4a0894dffa5492b5e416a184edcd7ad30ab82343e9f2f5bd40d5a11e6b8f"
     },
     {
       "bytes": 19234,

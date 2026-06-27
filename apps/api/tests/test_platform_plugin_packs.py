@@ -57,6 +57,28 @@ class PlatformPluginPackTests(unittest.TestCase):
         for platform_id in PACKS:
             self.assertIn(f"study-anything-{platform_id}-plugin-pack is import-ready", output)
 
+    def test_platform_plugin_download_index_is_current_and_verified(self) -> None:
+        self.run_script("generate_platform_plugin_downloads.py", "--check")
+        output = self.run_script("verify_platform_plugin_downloads.py", "--check")
+        self.assertIn('"schema_version": "platform-plugin-downloads-v1"', output)
+        self.assertIn('"release_asset_count": 9', output)
+        report = json.loads((GENERATED / "study-anything-platform-plugin-downloads.json").read_text(encoding="utf-8"))
+        self.assertEqual(report["schema_version"], "platform-plugin-downloads-v1")
+        self.assertEqual(
+            set(report["required_release_asset_names"]),
+            {
+                "study-anything-codex-plugin-pack.json",
+                "study-anything-codex-plugin-pack.zip",
+                "study-anything-codex-plugin-pack.sha256",
+                "study-anything-kimi-plugin-pack.json",
+                "study-anything-kimi-plugin-pack.zip",
+                "study-anything-kimi-plugin-pack.sha256",
+                "study-anything-workbuddy-plugin-pack.json",
+                "study-anything-workbuddy-plugin-pack.zip",
+                "study-anything-workbuddy-plugin-pack.sha256",
+            },
+        )
+
     def test_platform_plugin_pack_archives_have_single_root_and_manifest(self) -> None:
         for platform_id, spec in PACKS.items():
             package_name = f"study-anything-{platform_id}-plugin-pack"

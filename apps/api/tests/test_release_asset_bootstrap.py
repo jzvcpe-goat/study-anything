@@ -10,6 +10,10 @@ from _path import ROOT  # noqa: F401
 
 
 REPO = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO / "scripts"))
+
+from verify_release_asset_adoption import REQUIRED_ASSETS  # noqa: E402
+
 BOOTSTRAP = REPO / "scripts" / "bootstrap_from_release.py"
 GENERATOR = REPO / "scripts" / "generate_release_asset_bootstrap.py"
 REPORT = REPO / "platform" / "generated" / "study-anything-release-asset-bootstrap.json"
@@ -73,7 +77,7 @@ class ReleaseAssetBootstrapTests(unittest.TestCase):
         self.assertEqual(payload["classification"], "release_asset_bootstrap_ready")
         self.assertEqual(payload["adoption_pack"]["schema_version"], "study-anything-platform-adoption-pack-v1")
         self.assertEqual(payload["runtime"]["proof_classification"], "release_asset_adoption_ready")
-        self.assertEqual(payload["release_assets"]["asset_count"], 6)
+        self.assertEqual(payload["release_assets"]["asset_count"], len(REQUIRED_ASSETS))
         self.assertEqual(payload["platform_import_preflight"]["status"], "ready")
         self.assertIn("kimi", payload["platform_import_preflight"]["platforms"])
         self.assertIn("codex", payload["platform_import_preflight"]["platforms"])

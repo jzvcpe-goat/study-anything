@@ -30,6 +30,15 @@ RELEASE_ASSETS = (
     "study-anything-release-asset-bootstrap.zip",
     "study-anything-platform-agent-replay.zip",
     "study-anything-adopter-evidence-archive.zip",
+    "study-anything-codex-plugin-pack.json",
+    "study-anything-codex-plugin-pack.zip",
+    "study-anything-codex-plugin-pack.sha256",
+    "study-anything-kimi-plugin-pack.json",
+    "study-anything-kimi-plugin-pack.zip",
+    "study-anything-kimi-plugin-pack.sha256",
+    "study-anything-workbuddy-plugin-pack.json",
+    "study-anything-workbuddy-plugin-pack.zip",
+    "study-anything-workbuddy-plugin-pack.sha256",
 )
 REQUIRED_GUIDE_MARKERS = (
     "GitHub Release Guide",
@@ -49,8 +58,11 @@ REQUIRED_GUIDE_MARKERS = (
     "python3 scripts/verify_ecosystem_submission_pack.py",
     "python3 scripts/verify_platform_ecosystem_packs.py",
     "python3 scripts/generate_platform_adoption_pack.py --check",
+    "python3 scripts/generate_platform_plugin_downloads.py --check",
+    "python3 scripts/verify_platform_plugin_downloads.py --check",
     "python3 scripts/verify_external_adoption.py",
     "platform/generated/study-anything-platform-adoption-pack.zip",
+    "platform/generated/study-anything-platform-plugin-downloads.json",
     "No managed cloud",
     "No billing",
     "No hosted Sync/Publish/Teams",
@@ -64,6 +76,9 @@ REQUIRED_CHECKLIST_MARKERS = (
     "platform/generated/study-anything-github-launch-operator-guide.json",
     "study-anything-platform-adoption-pack.zip",
     "study-anything-platform-agent-replay.zip",
+    "study-anything-codex-plugin-pack.zip",
+    "study-anything-kimi-plugin-pack.zip",
+    "study-anything-workbuddy-plugin-pack.zip",
 )
 PRIVATE_NEEDLES = (
     "sk-proj-",
@@ -146,6 +161,8 @@ def verify_release_check_registered() -> dict[str, Any]:
         "scripts/verify_release_stack_manifest_fixtures.py --check",
         "scripts/generate_platform_bundle_manifest.py --check",
         "scripts/generate_platform_adoption_pack.py --check",
+        "scripts/generate_platform_plugin_downloads.py --check",
+        "scripts/verify_platform_plugin_downloads.py --check",
     ):
         if command not in text:
             raise GitHubLaunchOperatorGuideError(f"release_check.sh missing {command}.")
@@ -248,8 +265,13 @@ def verify_adoption_pack() -> dict[str, Any]:
     for path in (
         "docs/github-launch.md",
         "docs/release-checklist.md",
+        "docs/platform-plugin-downloads.md",
         "platform/generated/study-anything-github-launch-operator-guide.json",
+        "platform/generated/study-anything-platform-plugin-downloads.json",
+        "platform/generated/study-anything-platform-plugin-downloads.md",
         "scripts/verify_github_launch_operator_guide.py",
+        "scripts/generate_platform_plugin_downloads.py",
+        "scripts/verify_platform_plugin_downloads.py",
     ):
         if path not in paths:
             raise GitHubLaunchOperatorGuideError(f"Adoption pack manifest missing {path}.")

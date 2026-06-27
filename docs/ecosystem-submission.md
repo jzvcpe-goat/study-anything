@@ -130,6 +130,9 @@ For download-first adoption, use the generated plugin packs:
 Each archive has a sidecar `.json` manifest and `.sha256` checksum. These are import helpers for
 local-first usage, not marketplace listings. The user still runs Study Anything locally or on a
 private endpoint, and the host Agent owns real model credentials and outside tools.
+The release download index is generated at
+`platform/generated/study-anything-platform-plugin-downloads.json` and rendered for humans at
+`docs/platform-plugin-downloads.md`.
 
 Kimi-compatible platforms should use
 `platform/generated/study-anything-openai-tools.json` or

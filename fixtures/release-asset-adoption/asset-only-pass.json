@@ -37,6 +37,42 @@
       {
         "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-platform-agent-replay.zip",
         "name": "study-anything-platform-agent-replay.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.json",
+        "name": "study-anything-codex-plugin-pack.json"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.zip",
+        "name": "study-anything-codex-plugin-pack.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.sha256",
+        "name": "study-anything-codex-plugin-pack.sha256"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.json",
+        "name": "study-anything-kimi-plugin-pack.json"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.zip",
+        "name": "study-anything-kimi-plugin-pack.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.sha256",
+        "name": "study-anything-kimi-plugin-pack.sha256"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.json",
+        "name": "study-anything-workbuddy-plugin-pack.json"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.zip",
+        "name": "study-anything-workbuddy-plugin-pack.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
+        "name": "study-anything-workbuddy-plugin-pack.sha256"
       }
     ],
     "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",

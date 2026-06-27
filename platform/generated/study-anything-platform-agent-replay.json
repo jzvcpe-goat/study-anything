@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 63670,
+    "bytes": 63783,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "de9bdc9008d1230e44685d65ee6c70001b06e8f1632e760fd250f91db905df94",
+    "sha256": "de9eb3d88c1833576726f05aa3067166f72213d8a1652eb6d10ef8351b6b4f30",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -92,9 +92,9 @@
       "sha256": "b95b3b7aa6cc306378c50cd7919e4c66b1d45d83a4276544ca5b9dfa51d95979"
     },
     {
-      "bytes": 3259,
+      "bytes": 3840,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
+      "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
     },
     {
       "bytes": 28242,

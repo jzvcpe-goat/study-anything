@@ -68,9 +68,9 @@
       "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
     },
     {
-      "bytes": 1655,
+      "bytes": 1654,
       "path": "platform/mastra/manifest.json",
-      "sha256": "dfda5040ee64d006ec32776947507d51f25f2516d150dfd5b321215aa403f840"
+      "sha256": "3d88e073925abbcb5676d7cb0b1748c54ff1b0d28df662948475317d4cc1f9d4"
     }
   ],
   "manifest": {
