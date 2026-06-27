@@ -189,7 +189,17 @@ Downloadable plugin packs are generated under `platform/generated/`:
 - `study-anything-workbuddy-plugin-pack.zip` for WorkBuddy-style OpenAPI HTTP workspaces.
 
 Each pack has a matching `.json` manifest and `.sha256` checksum. The packs still call a local or
-private Study Anything runtime; they do not contain model keys and they are not marketplace listings.
+private Study Anything runtime; they do not contain model keys. WorkBuddy/CodeBuddy also has an
+installable marketplace wrapper:
+
+```text
+/plugin marketplace add jzvcpe-goat/study-anything
+/plugin install study-anything@study-anything
+```
+
+The marketplace wrapper is generated from `.codebuddy-plugin/marketplace.json` and
+`plugins/study-anything/.codebuddy-plugin/plugin.json`; it exposes `/study-anything:start`,
+`/study-anything:learn`, `/study-anything:diagnose`, and `/study-anything:export`.
 For release downloads, use `docs/platform-plugin-downloads.md` or the generated index
 `platform/generated/study-anything-platform-plugin-downloads.json`; the GitHub Release must attach
 each plugin pack archive, manifest, and checksum sidecar.
@@ -201,6 +211,8 @@ python3 scripts/generate_platform_plugin_packs.py --check
 python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/generate_platform_plugin_downloads.py --check
 python3 scripts/verify_platform_plugin_downloads.py --check
+python3 scripts/generate_workbuddy_plugin_marketplace.py --check
+python3 scripts/verify_workbuddy_plugin_marketplace.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \
@@ -212,6 +224,10 @@ The platform packs prove that an external Agent can import the tool surface, run
 For scenario-based operation, use `docs/cognitive-loop-adoption-cookbook.md` to map Kimi, Codex, WorkBuddy, or a private platform Agent to first adoption, daily project review, risk decisions, and learning handoff.
 
 三个可下载插件包分别面向 Codex、Kimi-compatible 和 WorkBuddy-style 平台。它们只负责导入工具和启动本地运行时；真实模型、浏览器、外部应用和密钥仍然由用户自己的平台 Agent 管理。
+
+WorkBuddy/CodeBuddy 还可以通过 `/plugin marketplace add jzvcpe-goat/study-anything` 和
+`/plugin install study-anything@study-anything` 安装插件包装层。它只负责命令、Skill 和
+OpenAPI/local HTTP 接入；真实模型密钥仍不进入 Study Anything。
 
 平台接入包证明：外部 Agent 可以导入工具面、跑完一次基于来源的学习闭环、返回 audit/eval 证据，并导出 Obsidian 或 NotebookLM 式交接材料；整个过程不要求独立前端，也不把真实模型密钥存入 Study Anything。
 如果要按场景操作，请使用 `docs/cognitive-loop-adoption-cookbook.md`，它把 Kimi、Codex、WorkBuddy 或私有平台 Agent 映射到首次接入、日常项目审查、风险决策和学习交接四条路径。

@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 130950,
+    "bytes": 131518,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "c64a6fa22382f33539d8a7374933fb8df43a886e75d9ec817cb2c9e30529f703",
+    "sha256": "f598105ff71ff0cebaf571d312a4a2809b1c62320eb2689e1a9eeab020eff503",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 37858,
+      "bytes": 38656,
       "path": "README.md",
-      "sha256": "4123780343b796c5ca0c8c94ec82948faa3bb3b0e2c26105317d3d821959ee07"
+      "sha256": "11eead29e38580b6bcf9711707c69e1ed9cbdf11509ccaf70ff4c786e64046a5"
     },
     {
       "bytes": 19503,
@@ -118,9 +118,9 @@
       "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
     },
     {
-      "bytes": 1439,
+      "bytes": 2096,
       "path": "docs/platform-plugin-downloads.md",
-      "sha256": "fe25f66b5574f62850298eacdecf48f9fe2681e74234ad7e22dfa0a81815a51b"
+      "sha256": "bb5a9071664a8d072e451f0b8b1d14caec6eab5649ff0440e0344b924f308305"
     },
     {
       "bytes": 3611,
@@ -145,17 +145,17 @@
     {
       "bytes": 11080,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "8e64385e7c45c809ed701071d54a5c4a2444eda250cfa69907aed49f4a71b584"
+      "sha256": "e7b950b3a99f74f687e3a56123c1c78bdb5525f88808613c0c1509494fe86133"
     },
     {
       "bytes": 9963,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "d2a7e9902d34238f4541a51ab8df9b0f8d489037bb65550e8590cbcb24165c8e"
+      "sha256": "f578657b8b6c2ede959ed6880e4a4b650b7457664b098a983c161554eaf70a97"
     },
     {
-      "bytes": 1389,
+      "bytes": 1502,
       "path": "platform/generated/study-anything-platform-plugin-downloads.md",
-      "sha256": "fff86dfba8fc15200daa108154a5db27c47a6d8497409ec0e418a049ae43dc64"
+      "sha256": "f7878648839f0ac39aa366fe403bd6342a359005ea393eda29f31590d6bb416a"
     },
     {
       "bytes": 23862,
@@ -163,9 +163,9 @@
       "sha256": "a9d04857744e6b0ef4deb73dc83a437a5bfe3af2f0bf0cd62a9f01dc74a69c97"
     },
     {
-      "bytes": 9379,
+      "bytes": 9492,
       "path": "scripts/generate_platform_plugin_downloads.py",
-      "sha256": "89365d8f7164948d1204a0af436739d813950ddff5f407e38873f548869dd0b8"
+      "sha256": "6704973374ed42b51583fd1ded4bbda59f15f9265b92c732ffc833dc6c788cf0"
     },
     {
       "bytes": 5097,

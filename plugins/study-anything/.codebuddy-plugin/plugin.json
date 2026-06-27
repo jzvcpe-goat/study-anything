@@ -1,0 +1,41 @@
+{
+  "author": {
+    "name": "Study Anything Maintainers",
+    "url": "https://github.com/jzvcpe-goat/study-anything"
+  },
+  "category": "AI Agents",
+  "commands": "commands",
+  "description": "Local-first learning engine for CodeBuddy/WorkBuddy. Start Study Anything locally, call its OpenAPI/local HTTP tools, and export source-bound learning evidence without storing model keys.",
+  "homepage": "https://github.com/jzvcpe-goat/study-anything",
+  "keywords": [
+    "study-anything",
+    "learning",
+    "cognitive-loop",
+    "workbuddy",
+    "codebuddy",
+    "local-first",
+    "openapi"
+  ],
+  "license": "Apache-2.0",
+  "metadata": {
+    "local_runtime": {
+      "default_api_base": "http://127.0.0.1:8000",
+      "launch": "./scripts/launch_skill_mode.sh",
+      "one_click": "./START_HERE.command",
+      "stop": "./scripts/stop_skill_mode.sh"
+    },
+    "privacy_boundaries": {
+      "real_model_keys": "owned by CodeBuddy/WorkBuddy or the user's private Agent",
+      "study_anything_stores": "local learning state, validation evidence, and redacted audit metadata"
+    },
+    "tool_contracts": {
+      "local_http": "http://127.0.0.1:8000",
+      "mcp": "planned extension; not shipped by this plugin",
+      "openapi": "platform/generated/study-anything-platform-openapi.json"
+    }
+  },
+  "name": "study-anything",
+  "repository": "https://github.com/jzvcpe-goat/study-anything",
+  "skills": "skills",
+  "version": "0.3.31-alpha"
+}

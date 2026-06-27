@@ -84,6 +84,10 @@ SOURCE_SPECS: tuple[dict[str, Any], ...] = (
         "schema_version": "release-asset-adoption-v1",
         "accepted_statuses": ("pass",),
         "required": True,
+        # This report includes adoption-pack release asset digests, while the
+        # adoption pack includes this ledger. Validate schema/status without
+        # feeding that circular checksum back into the ledger.
+        "hash_in_ledger": False,
     },
 )
 PRIVACY_FALSE_KEYS = (
