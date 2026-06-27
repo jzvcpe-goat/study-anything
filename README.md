@@ -190,12 +190,17 @@ Downloadable plugin packs are generated under `platform/generated/`:
 
 Each pack has a matching `.json` manifest and `.sha256` checksum. The packs still call a local or
 private Study Anything runtime; they do not contain model keys and they are not marketplace listings.
+For release downloads, use `docs/platform-plugin-downloads.md` or the generated index
+`platform/generated/study-anything-platform-plugin-downloads.json`; the GitHub Release must attach
+each plugin pack archive, manifest, and checksum sidecar.
 
 For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, or another platform Agent, verify the copy-ready adoption pack:
 
 ```bash
 python3 scripts/generate_platform_plugin_packs.py --check
 python3 scripts/verify_platform_plugin_packs.py --check
+python3 scripts/generate_platform_plugin_downloads.py --check
+python3 scripts/verify_platform_plugin_downloads.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \

@@ -34,6 +34,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/release-asset-bootstrap.md",
     "docs/release-cleanroom-bootstrap.md",
     "docs/release-asset-adoption.md",
+    "docs/platform-plugin-downloads.md",
     "docs/platform-agent-release-replay.md",
     "docs/adoption.md",
     "docs/github-launch.md",
@@ -42,9 +43,13 @@ PUBLIC_ASSET_PATHS = (
     "scripts/generate_release_cleanroom_bootstrap.py",
     "scripts/bootstrap_from_release.py",
     "scripts/verify_release_asset_adoption.py",
+    "scripts/generate_platform_plugin_downloads.py",
+    "scripts/verify_platform_plugin_downloads.py",
     "scripts/replay_platform_agent_from_release.py",
     "scripts/generate_release_asset_bootstrap.py",
     "platform/generated/study-anything-platform-agent-replay.json",
+    "platform/generated/study-anything-platform-plugin-downloads.json",
+    "platform/generated/study-anything-platform-plugin-downloads.md",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-openai-tools.json",
 )
@@ -186,7 +191,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
         "status": "pass",
         "purpose": (
             "Make the GitHub Release page a complete external adoption entrypoint: "
-            "download assets, verify digests, inspect platform import manifests, and "
+            "download platform plugin packs, verify digests, inspect platform import manifests, and "
             "emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts."
         ),
         "release_identity": {

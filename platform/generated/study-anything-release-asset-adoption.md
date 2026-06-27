@@ -10,7 +10,7 @@ pack, then replay metadata-only, published-image, or Skill Mode checks.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `26236b1aded2309999682c637a18d5413a104789f1b2c3288fcfa277b4f851f2`
+- Archive: `platform/generated/study-anything-release-asset-adoption.zip` sha256 `c64a6fa22382f33539d8a7374933fb8df43a886e75d9ec817cb2c9e30529f703`
 
 ## Commands
 
@@ -30,11 +30,11 @@ pack, then replay metadata-only, published-image, or Skill Mode checks.
 
 ## Fixture Hashes
 
-- `asset-only-pass`: `92b88baeeee5c1b067d8a689d2467f4b0a42767c6d04862c704289483be126cb`
+- `asset-only-pass`: `3715aaab731b87183e0c0171f52548294cc6d5b5f4ff91df0aea5dd3251647e3`
 - `asset-missing`: `df20f1701c66787fa45528c165f0c6e152aa6c7ac853046037ae8c7ffd91cae0`
-- `digest-mismatch`: `3e58d2a2eac64685ad168918dd6a35a81b49a2ed6e4359ffb8e5856abc4fb4f5`
-- `pack-corrupted`: `5f9a6a938847921152b53a2331e0f828051a0052d7e4b6389490c90b02a8f9de`
-- `published-evidence-missing`: `b88557fbf1057f91b45a28e3275dbca557b744c171db0237faedfd0d606a2ab1`
+- `digest-mismatch`: `de76c9a958e7647d8cd04c3103a8135f4e52b3b6a15155e5dada81180338b762`
+- `pack-corrupted`: `ec73e9d4f8522f3fa79dfa6dc846de30b77768c749a3242849b4b1f212f3582a`
+- `published-evidence-missing`: `b83e99873ea02b805e980b2ed1b22ba7181a5ea33eebe977a947933ea648d69d`
 - `network-unavailable`: `7289284d9d5e204a28f72dd290c55562a8b42ef4bbb46207ff1aeaaf4bd8a150`
 
 ## Privacy

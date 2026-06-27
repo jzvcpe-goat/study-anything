@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 54824,
+    "bytes": 54936,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "138a080f86788f30e8101c8de6784f835819e204e540b783d3642765e09030d1",
+    "sha256": "4b8d62fd54d54c6fd68acf97334a15f6adb73d257dc81320f0411d14e5405535",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -147,9 +147,9 @@
       "sha256": "b95b3b7aa6cc306378c50cd7919e4c66b1d45d83a4276544ca5b9dfa51d95979"
     },
     {
-      "bytes": 3259,
+      "bytes": 3840,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
+      "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
     },
     {
       "bytes": 3611,

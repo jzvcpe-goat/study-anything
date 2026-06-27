@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 129009,
+    "bytes": 129093,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "428fc724b032769e17bde88c2fa926bb39800625b0f1a6d8a81bb2dce5fea705"
+    "sha256": "dd51256e8e03280a17840b11fa492c95803d14f7599612b44f7c7b5b76d02d36"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -14,11 +14,11 @@
   "files": [
     {
       "archive_path": "study-anything-codex-plugin-pack/README.md",
-      "bytes": 37493,
+      "bytes": 37858,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "ffd306aee68670ffad7a25f5546c8b018dc3cf5d073e2a78b18a35ddab22a2c9"
+      "sha256": "4123780343b796c5ca0c8c94ec82948faa3bb3b0e2c26105317d3d821959ee07"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/QUICKSTART.md",

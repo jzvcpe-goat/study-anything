@@ -41,14 +41,14 @@
   "guide_docs": [
     {
       "path": "docs/github-launch.md",
-      "release_asset_count": 6,
-      "required_marker_count": 24,
+      "release_asset_count": 15,
+      "required_marker_count": 27,
       "status": "pass"
     },
     {
       "path": "docs/release-checklist.md",
-      "release_asset_count": 6,
-      "required_marker_count": 6,
+      "release_asset_count": 15,
+      "required_marker_count": 9,
       "status": "pass"
     }
   ],
@@ -77,7 +77,16 @@
     "study-anything-published-image-evidence.zip",
     "study-anything-release-asset-bootstrap.zip",
     "study-anything-platform-agent-replay.zip",
-    "study-anything-adopter-evidence-archive.zip"
+    "study-anything-adopter-evidence-archive.zip",
+    "study-anything-codex-plugin-pack.json",
+    "study-anything-codex-plugin-pack.zip",
+    "study-anything-codex-plugin-pack.sha256",
+    "study-anything-kimi-plugin-pack.json",
+    "study-anything-kimi-plugin-pack.zip",
+    "study-anything-kimi-plugin-pack.sha256",
+    "study-anything-workbuddy-plugin-pack.json",
+    "study-anything-workbuddy-plugin-pack.zip",
+    "study-anything-workbuddy-plugin-pack.sha256"
   ],
   "release_sequence": [
     "Merge the release PR stack into main from oldest to newest after GitHub CI is green.",

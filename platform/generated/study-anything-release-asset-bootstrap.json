@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 76960,
+    "bytes": 87587,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "fb60b55528f89c36254382665c3a28f3f48d8cf8dd76621462016e03106ad14a",
+    "sha256": "ce4c0cb4085f2a90c61fe96e106bc53601438bb0fa48648145032af2ad81ae6f",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -102,9 +102,14 @@
       "sha256": "af9b020c121279919e2bf3b02d71f82eb51d001fa5cf9c47d20169af0070fff6"
     },
     {
-      "bytes": 3259,
+      "bytes": 3840,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
+      "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
+    },
+    {
+      "bytes": 1439,
+      "path": "docs/platform-plugin-downloads.md",
+      "sha256": "fe25f66b5574f62850298eacdecf48f9fe2681e74234ad7e22dfa0a81815a51b"
     },
     {
       "bytes": 3611,
@@ -117,14 +122,14 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 11533,
+      "bytes": 12582,
       "path": "docs/github-launch.md",
-      "sha256": "8a5b324522650458f90a737e89927fc475da136b553ce3c143ff8868e29fd0cb"
+      "sha256": "e50fbedb19702e331bb360da7181c8c5946ae1a1ae32c38e1195835bf22d8b0a"
     },
     {
-      "bytes": 11978,
+      "bytes": 12152,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "779dacc06cd5c24f9b64d1da3b04643be67546dee6a3b19b000a649b3f4f9dd2"
+      "sha256": "ce99d81983e3a6ebfc20000a416fded3c65a437575dd09b91e20ac733f6397d9"
     },
     {
       "bytes": 35043,
@@ -142,9 +147,19 @@
       "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
     },
     {
-      "bytes": 21139,
+      "bytes": 23862,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "eda710833e22efe02cb7a0606af8d6fca7b496e16be1724c096c28032e5e61e3"
+      "sha256": "a9d04857744e6b0ef4deb73dc83a437a5bfe3af2f0bf0cd62a9f01dc74a69c97"
+    },
+    {
+      "bytes": 9379,
+      "path": "scripts/generate_platform_plugin_downloads.py",
+      "sha256": "89365d8f7164948d1204a0af436739d813950ddff5f407e38873f548869dd0b8"
+    },
+    {
+      "bytes": 5097,
+      "path": "scripts/verify_platform_plugin_downloads.py",
+      "sha256": "186479fa0569ef1e02b0e82d24d1e479fba6edc7fc5dfc92404f58e0c3d8c5d8"
     },
     {
       "bytes": 29302,
@@ -152,14 +167,24 @@
       "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
     },
     {
-      "bytes": 15655,
+      "bytes": 15957,
       "path": "scripts/generate_release_asset_bootstrap.py",
-      "sha256": "9e43b103f505b148b8db3d8db29843b474438691f0a387618555de6d4fee6e35"
+      "sha256": "0f8a6cf508b8a569d35d92e68b658ae18f40f1211a1ac8193df78c2b95faa0bb"
     },
     {
       "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "14ac1f1be8f0407ebbc141d0ee4ac2ba451e4a54e55608953edb98123ca5413a"
+      "sha256": "9c9a4401eab4fcf6dbfd27a4d455a3761161c5a595f7e7afb9c6ae740d0e8564"
+    },
+    {
+      "bytes": 9963,
+      "path": "platform/generated/study-anything-platform-plugin-downloads.json",
+      "sha256": "d2a7e9902d34238f4541a51ab8df9b0f8d489037bb65550e8590cbcb24165c8e"
+    },
+    {
+      "bytes": 1389,
+      "path": "platform/generated/study-anything-platform-plugin-downloads.md",
+      "sha256": "fff86dfba8fc15200daa108154a5db27c47a6d8497409ec0e418a049ae43dc64"
     },
     {
       "bytes": 83732,
@@ -172,7 +197,7 @@
       "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
     }
   ],
-  "purpose": "Make the GitHub Release page a complete external adoption entrypoint: download assets, verify digests, inspect platform import manifests, and emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts.",
+  "purpose": "Make the GitHub Release page a complete external adoption entrypoint: download platform plugin packs, verify digests, inspect platform import manifests, and emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts.",
   "release_identity": {
     "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",
     "repo": "jzvcpe-goat/study-anything",

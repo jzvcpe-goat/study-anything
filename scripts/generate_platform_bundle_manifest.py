@@ -619,6 +619,16 @@ FILES: list[tuple[str, str, str]] = [
         "WorkBuddy downloadable plugin pack checksum.",
     ),
     (
+        "platform/generated/study-anything-platform-plugin-downloads.json",
+        "generated_asset",
+        "Public GitHub Release download index for platform plugin packs.",
+    ),
+    (
+        "platform/generated/study-anything-platform-plugin-downloads.md",
+        "generated_asset",
+        "Human-readable GitHub Release download index for platform plugin packs.",
+    ),
+    (
         "docs/release-asset-bootstrap.md",
         "operator_doc",
         "GitHub Release asset bootstrap guide for external platform Agents.",
@@ -632,6 +642,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/platform-agent-release-replay.md",
         "operator_doc",
         "Platform Agent release replay guide for external tool hosts.",
+    ),
+    (
+        "docs/platform-plugin-downloads.md",
+        "operator_doc",
+        "GitHub Release download guide for Codex, Kimi, and WorkBuddy plugin packs.",
     ),
     (
         "docs/cognitive-loop-contracts.md",

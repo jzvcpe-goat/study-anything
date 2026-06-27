@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from verify_release_asset_adoption import REQUIRED_ASSETS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SUBMISSION_PATH = ROOT / "platform" / "ecosystem-submission.json"
@@ -4225,14 +4227,7 @@ def verify_github_launch_operator_guide_report() -> None:
         raise EcosystemSubmissionError("GitHub launch operator guide docs drifted.")
 
     release_assets = set(report.get("release_assets", []))
-    for asset in (
-        "study-anything-platform-adoption-pack.zip",
-        "study-anything-platform-feedback-package.zip",
-        "study-anything-published-image-evidence.zip",
-        "study-anything-release-asset-bootstrap.zip",
-        "study-anything-platform-agent-replay.zip",
-        "study-anything-adopter-evidence-archive.zip",
-    ):
+    for asset in REQUIRED_ASSETS:
         if asset not in release_assets:
             raise EcosystemSubmissionError(f"GitHub launch operator guide missing release asset {asset}.")
 
@@ -4977,14 +4972,7 @@ def verify_release_asset_adoption_report() -> None:
     if identity.get("tag") != "v0.3.31-alpha":
         raise EcosystemSubmissionError("Release asset adoption tag drifted.")
     required_assets = set(str(item) for item in identity.get("required_asset_names", []))
-    expected_assets = {
-        "study-anything-platform-adoption-pack.zip",
-        "study-anything-published-image-evidence.zip",
-        "study-anything-adopter-evidence-archive.zip",
-        "study-anything-platform-feedback-package.zip",
-        "study-anything-release-asset-bootstrap.zip",
-        "study-anything-platform-agent-replay.zip",
-    }
+    expected_assets = set(REQUIRED_ASSETS)
     if required_assets != expected_assets:
         raise EcosystemSubmissionError(f"Release asset adoption required assets drifted: {sorted(required_assets)}")
     verification = report.get("verification") or {}

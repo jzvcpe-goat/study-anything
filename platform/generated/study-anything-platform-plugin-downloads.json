@@ -1,0 +1,193 @@
+{
+  "commands": {
+    "generate_download_index": "python3 scripts/generate_platform_plugin_downloads.py --check",
+    "generate_plugin_packs": "python3 scripts/generate_platform_plugin_packs.py --check",
+    "verify_download_index": "python3 scripts/verify_platform_plugin_downloads.py --check",
+    "verify_plugin_packs": "python3 scripts/verify_platform_plugin_packs.py --check"
+  },
+  "downloads": [
+    {
+      "entrypoints": {
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+        "cli": "scripts/study_anything_cli.py",
+        "demo": "scripts/run_skill_mode_demo.sh",
+        "skill": "skills/study-anything/SKILL.md"
+      },
+      "import_assets": [
+        "skills/study-anything/SKILL.md",
+        "skills/study-anything/agents/openai.yaml",
+        "platform/packs/codex/pack.json",
+        "platform/generated/study-anything-tool-catalog.md"
+      ],
+      "known_limitations": [
+        "Requires a local checkout or extracted runtime files that can execute shell commands.",
+        "Does not install a marketplace extension automatically.",
+        "Real model credentials stay inside the user's platform Agent or gateway, not Study Anything."
+      ],
+      "package_type": "terminal_skill",
+      "platform_id": "codex",
+      "release_assets": {
+        "archive": {
+          "asset_name": "study-anything-codex-plugin-pack.zip",
+          "bytes": 129093,
+          "path": "platform/generated/study-anything-codex-plugin-pack.zip",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.zip",
+          "sha256": "dd51256e8e03280a17840b11fa492c95803d14f7599612b44f7c7b5b76d02d36"
+        },
+        "checksum": {
+          "asset_name": "study-anything-codex-plugin-pack.sha256",
+          "bytes": 103,
+          "path": "platform/generated/study-anything-codex-plugin-pack.sha256",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.sha256",
+          "sha256": "72e7037e231e7a186f56a2bf85e519b30ad184512321e3f1f8481b91a435d3d1"
+        },
+        "manifest": {
+          "asset_name": "study-anything-codex-plugin-pack.json",
+          "bytes": 9192,
+          "path": "platform/generated/study-anything-codex-plugin-pack.json",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.json",
+          "sha256": "81d46976d915127c471814c2fe2573172210401adf0b0cd24636e444a2334ecc"
+        }
+      },
+      "summary": "Install the repo-local Skill in Codex or another terminal-capable Agent and let that Agent call the local Study Anything runtime.",
+      "title": "Study Anything Codex Plugin Pack",
+      "verification_commands": [
+        "./START_HERE.command",
+        "python3 scripts/study_anything_cli.py health",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py"
+      ]
+    },
+    {
+      "entrypoints": {
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+        "gateway": "scripts/openai_compatible_agent_gateway.py",
+        "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
+        "guide": "docs/kimi-agent-gateway.md",
+        "openai_tools": "platform/generated/study-anything-openai-tools.json",
+        "openapi": "platform/generated/study-anything-platform-openapi.json"
+      },
+      "import_assets": [
+        "platform/generated/study-anything-openai-tools.json",
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-tool-catalog.md",
+        "platform/packs/kimi/pack.json"
+      ],
+      "known_limitations": [
+        "Kimi web or workspace policy may block direct localhost calls; use a private gateway when needed.",
+        "Manual gateway startup is transitional; Kimi Work or another platform Agent should own model configuration.",
+        "Study Anything does not store real model API keys."
+      ],
+      "package_type": "openai_compatible_tools",
+      "platform_id": "kimi",
+      "release_assets": {
+        "archive": {
+          "asset_name": "study-anything-kimi-plugin-pack.zip",
+          "bytes": 152801,
+          "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.zip",
+          "sha256": "2d3a7e55ab80bd887967029a95f41eb3de3dc36c7fea02cb9001fdea966ee5a8"
+        },
+        "checksum": {
+          "asset_name": "study-anything-kimi-plugin-pack.sha256",
+          "bytes": 102,
+          "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.sha256",
+          "sha256": "ee6a6f53d9866c2c2c84d5270815e3eec4b815be7c0ae27270d76aef9362c331"
+        },
+        "manifest": {
+          "asset_name": "study-anything-kimi-plugin-pack.json",
+          "bytes": 10599,
+          "path": "platform/generated/study-anything-kimi-plugin-pack.json",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.json",
+          "sha256": "f5335eccaf496e0aefb2282a5901dd2a5e02b61bfa16d6482cccfbcb2676760f"
+        }
+      },
+      "summary": "Import OpenAI-compatible tool definitions into Kimi-compatible hosts and call the local or private Study Anything HTTP runtime.",
+      "title": "Study Anything Kimi Plugin Pack",
+      "verification_commands": [
+        "./START_HERE.command",
+        "python3 scripts/verify_openai_compatible_gateway.py --contract-only",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py"
+      ]
+    },
+    {
+      "entrypoints": {
+        "api_docs": "docs/api.md",
+        "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+        "openapi": "platform/generated/study-anything-platform-openapi.json",
+        "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
+      },
+      "import_assets": [
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-tool-catalog.md",
+        "platform/packs/workbuddy/pack.json"
+      ],
+      "known_limitations": [
+        "Requires the host workspace to reach the configured local or private HTTP endpoint.",
+        "This is an import package, not an official marketplace listing.",
+        "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent."
+      ],
+      "package_type": "openapi_http_tools",
+      "platform_id": "workbuddy",
+      "release_assets": {
+        "archive": {
+          "asset_name": "study-anything-workbuddy-plugin-pack.zip",
+          "bytes": 138472,
+          "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.zip",
+          "sha256": "367b542732da0181269b976c958c6e50c77b8e4540eeb0e0c907914d675b5359"
+        },
+        "checksum": {
+          "asset_name": "study-anything-workbuddy-plugin-pack.sha256",
+          "bytes": 107,
+          "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
+          "sha256": "0577be186634d6e3a75914fdaa807c9e62ce2b2d92d3934ce4ec44a6aa471bf0"
+        },
+        "manifest": {
+          "asset_name": "study-anything-workbuddy-plugin-pack.json",
+          "bytes": 9427,
+          "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
+          "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.json",
+          "sha256": "0776d6563a0bb58d5dbc64d23f3e9d5c2fa52fcd8498684222abf6dbd546b950"
+        }
+      },
+      "summary": "Import the constrained OpenAPI HTTP tools into WorkBuddy-style workspaces that can call a local or private Study Anything runtime.",
+      "title": "Study Anything WorkBuddy Plugin Pack",
+      "verification_commands": [
+        "./START_HERE.command",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+        "python3 scripts/verify_platform_operator_drill.py --check"
+      ]
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "automatic_upload": false,
+    "learner_answers_in_report": false,
+    "local_absolute_paths_in_report": false,
+    "marketplace_listing_claim": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false
+  },
+  "purpose": "Make the GitHub Release page a direct download surface for Codex, Kimi-compatible, and WorkBuddy-style platform plugin packs.",
+  "release": {
+    "repo": "jzvcpe-goat/study-anything",
+    "tag": "v0.3.31-alpha",
+    "url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha"
+  },
+  "required_release_asset_names": [
+    "study-anything-codex-plugin-pack.json",
+    "study-anything-codex-plugin-pack.zip",
+    "study-anything-codex-plugin-pack.sha256",
+    "study-anything-kimi-plugin-pack.json",
+    "study-anything-kimi-plugin-pack.zip",
+    "study-anything-kimi-plugin-pack.sha256",
+    "study-anything-workbuddy-plugin-pack.json",
+    "study-anything-workbuddy-plugin-pack.zip",
+    "study-anything-workbuddy-plugin-pack.sha256"
+  ],
+  "schema_version": "platform-plugin-downloads-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

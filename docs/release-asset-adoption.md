@@ -16,6 +16,20 @@ Required assets:
 - `study-anything-platform-feedback-package.zip`
 - `study-anything-release-asset-bootstrap.zip`
 - `study-anything-platform-agent-replay.zip`
+- `study-anything-codex-plugin-pack.json`
+- `study-anything-codex-plugin-pack.zip`
+- `study-anything-codex-plugin-pack.sha256`
+- `study-anything-kimi-plugin-pack.json`
+- `study-anything-kimi-plugin-pack.zip`
+- `study-anything-kimi-plugin-pack.sha256`
+- `study-anything-workbuddy-plugin-pack.json`
+- `study-anything-workbuddy-plugin-pack.zip`
+- `study-anything-workbuddy-plugin-pack.sha256`
+
+Plugin-pack downloads are indexed in:
+
+- `docs/platform-plugin-downloads.md`
+- `platform/generated/study-anything-platform-plugin-downloads.json`
 
 Schema contract:
 
@@ -31,8 +45,8 @@ Schema contract:
 
 Metadata-only replay downloads the release assets, checks GitHub sha256
 digests when available, extracts the platform adoption pack, verifies the pack
-manifest hashes, and verifies the published-image evidence bundled inside the
-pack:
+manifest hashes, verifies the plugin-pack sidecar checksums, and verifies the
+published-image evidence bundled inside the pack:
 
 ```bash
 python3 scripts/verify_release_asset_adoption.py \

@@ -22,6 +22,8 @@ python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_plugin_packs.py --check
 python3 scripts/verify_platform_plugin_packs.py --check
+python3 scripts/generate_platform_plugin_downloads.py --check
+python3 scripts/verify_platform_plugin_downloads.py --check
 python3 scripts/verify_launch_acceptance_ledger.py --check
 python3 scripts/verify_github_launch_operator_guide.py --check
 python3 scripts/verify_release_stack_readiness.py
@@ -78,6 +80,9 @@ Confirm:
   `github-launch-operator-guide-v1` and proves this guide, `docs/release-checklist.md`,
   `./scripts/release_check.sh`, the launch ledger, ecosystem submission, and adoption pack all expose
   the same release sequence.
+- `scripts/verify_platform_plugin_downloads.py --check` returns `platform-plugin-downloads-v1` and
+  proves the Codex, Kimi, and WorkBuddy plugin packs have release download URLs, sha256 checksums,
+  import manifests, and no model keys.
 - `scripts/verify_release_stack_readiness.py` returns `release-stack-readiness-v1` and proves the
   current stacked GitHub PR order, required `api-tests` and `compose-smoke` checks, and local
   before-tag gates are aligned without storing GitHub tokens, live check payloads, source text,
@@ -108,6 +113,8 @@ python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_plugin_packs.py --check
 python3 scripts/verify_platform_plugin_packs.py --check
+python3 scripts/generate_platform_plugin_downloads.py --check
+python3 scripts/verify_platform_plugin_downloads.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
@@ -122,6 +129,18 @@ Attach these release assets to the GitHub prerelease:
 - `study-anything-release-asset-bootstrap.zip`
 - `study-anything-platform-agent-replay.zip`
 - `study-anything-adopter-evidence-archive.zip`
+- `study-anything-codex-plugin-pack.json`
+- `study-anything-codex-plugin-pack.zip`
+- `study-anything-codex-plugin-pack.sha256`
+- `study-anything-kimi-plugin-pack.json`
+- `study-anything-kimi-plugin-pack.zip`
+- `study-anything-kimi-plugin-pack.sha256`
+- `study-anything-workbuddy-plugin-pack.json`
+- `study-anything-workbuddy-plugin-pack.zip`
+- `study-anything-workbuddy-plugin-pack.sha256`
+
+The human download entrypoint is `docs/platform-plugin-downloads.md`; the machine-readable download
+index is `platform/generated/study-anything-platform-plugin-downloads.json`.
 
 Merge the release PR stack into `main` from oldest to newest only after GitHub CI is green, then run
 the same commands from a clean `main` checkout before tagging.

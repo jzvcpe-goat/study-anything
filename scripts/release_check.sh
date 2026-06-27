@@ -152,6 +152,8 @@ fi
 "$python_bin" scripts/verify_release_stack_candidate_promotion.py --check
 "$python_bin" scripts/generate_platform_plugin_packs.py --check
 "$python_bin" scripts/verify_platform_plugin_packs.py --check
+"$python_bin" scripts/generate_platform_plugin_downloads.py --check
+"$python_bin" scripts/verify_platform_plugin_downloads.py --check
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
