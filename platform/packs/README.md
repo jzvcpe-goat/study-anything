@@ -14,6 +14,9 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-operator-drill-transcript.json`
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
+- `platform/generated/study-anything-codex-plugin-pack.zip`
+- `platform/generated/study-anything-kimi-plugin-pack.zip`
+- `platform/generated/study-anything-workbuddy-plugin-pack.zip`
 - `docs/cognitive-loop-adoption-cookbook.md`
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
@@ -68,6 +71,8 @@ retrieval, and ecosystem eval capabilities:
   `plugin-package-validation-v1` package check for local plugin ecosystem handoff.
 - a copy-ready platform adoption pack that proves the Kimi/Codex/WorkBuddy-style tool surface works
   without requiring a standalone frontend.
+- three downloadable plugin packs with sidecar manifests and checksums for Codex, Kimi-compatible,
+  and WorkBuddy-style imports.
 - `study-anything-operator-drill-v1` transcript evidence that proves the pack can be consumed as an
   external platform tool directory.
 - `study-anything-agent-eval-regression-report-v1` evidence that the native eval scorecard did not
@@ -80,7 +85,24 @@ retrieval, and ecosystem eval capabilities:
   reasoning model through the local gateway.
 - `workbuddy`: HTTP-tool workspace agents that import OpenAPI tools and call the local API.
 
-## Verify
+## Downloadable Plugin Packs
+
+- `platform/generated/study-anything-codex-plugin-pack.zip`
+- `platform/generated/study-anything-kimi-plugin-pack.zip`
+- `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+
+Each archive has one root directory, a `manifest.json`, a `PLUGIN_PACK_README.md`, and a matching
+`.sha256` file. Generate or verify them from a full checkout with:
+
+```bash
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
+```
+
+## Verify From A Full Source Checkout
+
+These commands require the complete repository, including `apps/api` and all source-only release
+gates. Do not run this whole block from an extracted adoption pack zip.
 
 ```bash
 .venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
@@ -114,6 +136,15 @@ retrieval, and ecosystem eval capabilities:
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
 ```
+
+## Verify From An Extracted Adoption Pack
+
+Each `platform/packs/*/pack.json` separates commands by scope:
+
+- `local_verification_commands`: scripts included in the adoption pack and safe to run from the
+  extracted pack root.
+- `source_verification_commands`: full-source gates that require a repository checkout, such as
+  `scripts/verify_commercial_readiness.py`.
 
 For a running API:
 

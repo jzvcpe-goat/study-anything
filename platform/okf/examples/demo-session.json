@@ -51,7 +51,7 @@
           "metadata": {
             "endpoint": "http://127.0.0.1:8787/private?token=PRIVATE_AGENT_TOKEN",
             "debug_prompt": "PRIVATE AGENT PROMPT",
-            "api_key": "sk-proj-demo-secret-value"
+            "api_key": "<user-agent-secret-omitted>"
           }
         }
       },

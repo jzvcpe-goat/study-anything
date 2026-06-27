@@ -1,0 +1,248 @@
+{
+  "archive": {
+    "bytes": 152720,
+    "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
+    "root": "study-anything-kimi-plugin-pack",
+    "sha256": "2f69faa1c0c511dc281cf14864be837ac3ba6678428229461e66880c410d489d"
+  },
+  "entrypoints": {
+    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+    "gateway": "scripts/openai_compatible_agent_gateway.py",
+    "gateway_verifier": "scripts/verify_openai_compatible_gateway.py",
+    "guide": "docs/kimi-agent-gateway.md",
+    "openai_tools": "platform/generated/study-anything-openai-tools.json",
+    "openapi": "platform/generated/study-anything-platform-openapi.json"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/README.md",
+      "bytes": 37493,
+      "kind": "root_doc",
+      "path": "README.md",
+      "purpose": "Project positioning and local-first adoption overview.",
+      "sha256": "ffd306aee68670ffad7a25f5546c8b018dc3cf5d073e2a78b18a35ddab22a2c9"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/QUICKSTART.md",
+      "bytes": 1258,
+      "kind": "quickstart",
+      "path": "QUICKSTART.md",
+      "purpose": "Beginner-friendly quickstart entrypoint.",
+      "sha256": "11e6c8c29d9516e94d499eace7fbfb581a31220cbaf1a97d0c31c7935df615f5"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/START_HERE.command",
+      "bytes": 1112,
+      "kind": "launcher",
+      "path": "START_HERE.command",
+      "purpose": "Double-click macOS beginner launcher.",
+      "sha256": "03d6e9affc81ecc8cee8cf024f562d6f1c4b5b758d7aa62fbce73992cc059e6b"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/docs/getting-started.md",
+      "bytes": 5247,
+      "kind": "operator_doc",
+      "path": "docs/getting-started.md",
+      "purpose": "Step-by-step first-run guide.",
+      "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/docs/operator-drill.md",
+      "bytes": 3296,
+      "kind": "operator_doc",
+      "path": "docs/operator-drill.md",
+      "purpose": "External platform operator drill.",
+      "sha256": "974633f1f295665339bcf8d9cf9850e33bdb715dc3cfae0708749316a2d5257e"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/study-anything-platform-tools.json",
+      "bytes": 47347,
+      "kind": "tool_manifest",
+      "path": "platform/study-anything-platform-tools.json",
+      "purpose": "Source platform tool contract.",
+      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/generated/study-anything-tool-catalog.md",
+      "bytes": 24007,
+      "kind": "tool_catalog",
+      "path": "platform/generated/study-anything-tool-catalog.md",
+      "purpose": "Human-readable platform tool catalog.",
+      "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/start_here.sh",
+      "bytes": 10068,
+      "kind": "launcher",
+      "path": "scripts/start_here.sh",
+      "purpose": "One-command local runtime launcher.",
+      "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/launch_skill_mode.sh",
+      "bytes": 27321,
+      "kind": "runtime",
+      "path": "scripts/launch_skill_mode.sh",
+      "purpose": "Local Skill Mode API launcher.",
+      "sha256": "d34df18cb73f4bd4de4ba75abca206b09dbdc1d61fca60c2a7a1d1e7521edff2"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/stop_skill_mode.sh",
+      "bytes": 6063,
+      "kind": "runtime",
+      "path": "scripts/stop_skill_mode.sh",
+      "purpose": "Local Skill Mode API stop helper.",
+      "sha256": "0e253c59de751487b72d07103d29d86d4f35347992b2ccc652ec76eceef40b4f"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/run_skill_mode_demo.sh",
+      "bytes": 10135,
+      "kind": "verification",
+      "path": "scripts/run_skill_mode_demo.sh",
+      "purpose": "One-command local demo and smoke check.",
+      "sha256": "8c5a5ee73293e9945b872c51bc37205408feb6c0202cdf86475ce584023a0bbd"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/study_anything_cli.py",
+      "bytes": 136781,
+      "kind": "cli",
+      "path": "scripts/study_anything_cli.py",
+      "purpose": "CLI for learning loop and evidence commands.",
+      "sha256": "c5fdc5bd64c0050d7e1686b7bd754a6cfa1ecad5305779c27213d0b948cdbc68"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/localhost_diagnostics.py",
+      "bytes": 8669,
+      "kind": "diagnostics",
+      "path": "scripts/localhost_diagnostics.py",
+      "purpose": "Shared localhost diagnostics and redaction helpers.",
+      "sha256": "aa0bbe62ea68497e45c8621755e303b39d6da90cf956bb64935c6cd4d1008cf1"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/verify_platform_agent_tools.py",
+      "bytes": 47018,
+      "kind": "verification",
+      "path": "scripts/verify_platform_agent_tools.py",
+      "purpose": "Live local API tool-surface verifier.",
+      "sha256": "1a4ab6e2964ca51199a8edda35c9ec31dcd7493260bba89fd733a25bb329937c"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/verify_external_adoption.py",
+      "bytes": 68921,
+      "kind": "verification",
+      "path": "scripts/verify_external_adoption.py",
+      "purpose": "Extracted adoption-pack verifier.",
+      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/docs/use-with-kimi.md",
+      "bytes": 9026,
+      "kind": "operator_doc",
+      "path": "docs/use-with-kimi.md",
+      "purpose": "Kimi usage modes and no-key boundary.",
+      "sha256": "8479d0156cb85beee918763e89fb484a1cd3f505356c5f4be0c1dc2cb36eec68"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/docs/kimi-agent-gateway.md",
+      "bytes": 10783,
+      "kind": "operator_doc",
+      "path": "docs/kimi-agent-gateway.md",
+      "purpose": "OpenAI-compatible local Agent gateway guide.",
+      "sha256": "86c58f17df2b0216a6d5e8cb40ea236808b1ae6988d4aa2826b4f667dd6e0d49"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/packs/kimi/README.md",
+      "bytes": 24882,
+      "kind": "platform_pack",
+      "path": "platform/packs/kimi/README.md",
+      "purpose": "Kimi-specific import guide.",
+      "sha256": "742ba7d1dfb8f930c8dda6aa667592453f47742224b97d1d11d7a2608fc6f824"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/packs/kimi/pack.json",
+      "bytes": 30152,
+      "kind": "platform_pack",
+      "path": "platform/packs/kimi/pack.json",
+      "purpose": "Kimi platform pack source descriptor.",
+      "sha256": "7a350f82bfe9f3513681eade2f530e87dc3faef8a0c8fef2c8060cbf885b038f"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/generated/study-anything-openai-tools.json",
+      "bytes": 27111,
+      "kind": "tool_import",
+      "path": "platform/generated/study-anything-openai-tools.json",
+      "purpose": "OpenAI-compatible function tool definitions.",
+      "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/platform/generated/study-anything-platform-openapi.json",
+      "bytes": 83732,
+      "kind": "tool_import",
+      "path": "platform/generated/study-anything-platform-openapi.json",
+      "purpose": "OpenAPI fallback import asset.",
+      "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/openai_compatible_agent_gateway.py",
+      "bytes": 30510,
+      "kind": "gateway",
+      "path": "scripts/openai_compatible_agent_gateway.py",
+      "purpose": "User-owned local HTTP Agent gateway.",
+      "sha256": "0fc645f79953f3bf8611ae7a5932e2806d51a22ed82b76bb51e59514ecc5c208"
+    },
+    {
+      "archive_path": "study-anything-kimi-plugin-pack/scripts/verify_openai_compatible_gateway.py",
+      "bytes": 24606,
+      "kind": "verification",
+      "path": "scripts/verify_openai_compatible_gateway.py",
+      "purpose": "Gateway contract and live verifier.",
+      "sha256": "e95d9d6fcbb92600f45c6379f32d61ceb53eccfca6a93baf3a69190c699000f9"
+    }
+  ],
+  "import_assets": [
+    "platform/generated/study-anything-openai-tools.json",
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-tool-catalog.md",
+    "platform/packs/kimi/pack.json"
+  ],
+  "known_limitations": [
+    "Kimi web or workspace policy may block direct localhost calls; use a private gateway when needed.",
+    "Manual gateway startup is transitional; Kimi Work or another platform Agent should own model configuration.",
+    "Study Anything does not store real model API keys."
+  ],
+  "local_runtime": {
+    "api_base": "http://127.0.0.1:8000",
+    "beginner_launcher": "./START_HERE.command",
+    "script_launcher": "./scripts/start_here.sh",
+    "skill_mode": "./scripts/launch_skill_mode.sh",
+    "stop": "./scripts/stop_skill_mode.sh"
+  },
+  "name": "study-anything-kimi-plugin-pack",
+  "package_type": "openai_compatible_tools",
+  "platform_id": "kimi",
+  "privacy_boundaries": {
+    "must_not_store_or_share": [
+      "raw source text",
+      "learner answers",
+      "grading feedback",
+      "generated insights",
+      "agent endpoints",
+      "agent metadata",
+      "API keys or model secrets",
+      "raw user ids",
+      "browser/video/app private context"
+    ],
+    "real_model_keys": "owned by the user's platform Agent or private gateway",
+    "study_anything_stores": "local learning state, validation evidence, redacted audit metadata"
+  },
+  "schema_version": "study-anything-platform-plugin-pack-v1",
+  "source_pack": "platform/packs/kimi/pack.json",
+  "source_pack_sha256": "7a350f82bfe9f3513681eade2f530e87dc3faef8a0c8fef2c8060cbf885b038f",
+  "summary": "Import OpenAI-compatible tool definitions into Kimi-compatible hosts and call the local or private Study Anything HTTP runtime.",
+  "title": "Study Anything Kimi Plugin Pack",
+  "verification_commands": [
+    "./START_HERE.command",
+    "python3 scripts/verify_openai_compatible_gateway.py --contract-only",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py"
+  ]
+}

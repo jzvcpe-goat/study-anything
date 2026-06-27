@@ -5,14 +5,185 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
+from pathlib import Path
 from typing import Any, Dict, Optional
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 
-API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000").rstrip("/")
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import format_api_unreachable, resolve_api_base, verifier_name_from_file
+
+
+API_BASE = resolve_api_base()
+VERIFIER_NAME = verifier_name_from_file(__file__)
+PRIVATE_SOURCE_TEXT = "Private reading prose must stay outside the graph projection."
+PRIVATE_ANSWER = "The source is projected only through an allowlisted DTO."
+PRIVATE_USER = "graph-smoke-user"
+PRIVATE_TITLE = "FalkorDB Smoke"
+PRIVATE_REFERENCE = "demo://falkordb-smoke"
+FORBIDDEN_LITERALS = (
+    PRIVATE_SOURCE_TEXT,
+    PRIVATE_ANSWER,
+    PRIVATE_USER,
+    PRIVATE_TITLE,
+    PRIVATE_REFERENCE,
+    "OPENAI_API_KEY",
+    "MOONSHOT_API_KEY",
+    "AGENT_LLM_API_KEY=",
+    "raw_source_text=",
+    "learner_answer=",
+)
+
+
+def sanitize_text(value: str | bytes | None) -> str:
+    if value is None:
+        text = ""
+    elif isinstance(value, bytes):
+        text = value.decode("utf-8", errors="replace")
+    else:
+        text = value
+    replacements = {
+        PRIVATE_SOURCE_TEXT: "<private-source-text>",
+        PRIVATE_ANSWER: "<private-answer>",
+        PRIVATE_USER: "<private-user>",
+        PRIVATE_TITLE: "<private-title>",
+        PRIVATE_REFERENCE: "<private-reference>",
+    }
+    for literal, replacement in replacements.items():
+        text = text.replace(literal, replacement)
+    text = re.sub(r"(?i)private reading prose[^\"'\n.]*\.?", "<private-source-text>", text)
+    text = re.sub(r"(?i)source is projected only[^\"'\n.]*\.?", "<private-answer>", text)
+    text = re.sub(r"\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b", "<uuid>", text)
+    text = re.sub(r"/Users/[^\s\"'?&]+", "<local-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"/tmp/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"(?i)(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
+    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
+    text = re.sub(r"([?&](?:api[_-]?key|token|secret)=)[^&\s\"']+", r"\1<redacted>", text, flags=re.IGNORECASE)
+    return text.strip()[:1600]
+
+
+def classify_failure(message: str) -> str:
+    lowered = message.lower()
+    if (
+        "runner appears to block localhost sockets" in lowered
+        or "blocks localhost" in lowered
+        or "operation not permitted" in lowered
+        or "permission denied" in lowered
+        or "localhost_socket_blocked" in lowered
+    ):
+        return "localhost_socket_blocked"
+    if "cannot reach study anything" in lowered or "connection refused" in lowered or "urlopen error" in lowered:
+        return "api_unreachable"
+    if "falkordb did not become healthy" in lowered:
+        if "disabled" in lowered:
+            return "graph_disabled"
+        return "graph_unhealthy"
+    if "503" in lowered or "unavailable" in lowered:
+        return "graph_unavailable"
+    if "409" in lowered or "data" in lowered and "insufficient" in lowered:
+        return "topology_data_insufficient"
+    if "expected completed stage" in lowered:
+        return "learning_flow_incomplete"
+    if "topology is not ready" in lowered or "unexpected topology" in lowered or "projection is not idempotent" in lowered:
+        return "topology_contract_failed"
+    if "leaked" in lowered or "private source prose" in lowered:
+        return "privacy_leak"
+    return "falkordb_flow_failed"
+
+
+def failure_next_steps(classification: str) -> list[str]:
+    common = [
+        "docker compose --profile full up -d",
+        f"API_BASE={API_BASE} python3 scripts/verify_falkordb_flow.py",
+        "python3 scripts/diagnose_adoption.py",
+    ]
+    matrix = {
+        "localhost_socket_blocked": [
+            "Run the verifier from a normal terminal or host shell that permits localhost sockets.",
+            "If this came from Codex or another sandboxed Agent, collect this blocked report and rerun outside the sandbox.",
+        ],
+        "api_unreachable": [
+            "Start the API first, then pass the running URL with `API_BASE=http://127.0.0.1:<port>`.",
+            "For the full Docker profile, ensure the API container is healthy before running this verifier.",
+        ],
+        "graph_disabled": [
+            "Enable FalkorDB for this smoke with `FALKORDB_ENABLED=true`.",
+            "Start the full Compose profile that includes FalkorDB before running the verifier.",
+        ],
+        "graph_unhealthy": [
+            "Check `/v1/graph/status` and the FalkorDB container logs.",
+            "Confirm `FALKORDB_HOST`, `FALKORDB_PORT`, and `FALKORDB_GRAPH` point to the Compose service.",
+        ],
+        "graph_unavailable": [
+            "The graph API is unavailable; confirm FalkorDB is enabled and reachable.",
+            "Rerun after the full stack reports healthy containers.",
+        ],
+        "topology_data_insufficient": [
+            "Complete a learning session before rebuilding topology.",
+            "Rerun this verifier from a clean full-stack smoke so it creates its own source-bound session.",
+        ],
+        "learning_flow_incomplete": [
+            "Run `python3 scripts/verify_full_api_flow.py` first to isolate core learning-loop failures.",
+            "Check session events locally for the first failed workflow stage.",
+        ],
+        "topology_contract_failed": [
+            "Inspect topology DTOs; the public API must expose only Learner, Session, Source and STUDIED/USES_SOURCE/MASTERY.",
+            "Check FalkorDB projection idempotency before publishing full-stack evidence.",
+        ],
+        "privacy_leak": [
+            "Do not share the raw topology response publicly.",
+            "Fix graph projection privacy before using this run as release evidence.",
+        ],
+    }
+    return matrix.get(classification, ["Rerun after the full Docker stack and FalkorDB are healthy."]) + common
+
+
+def failure_report(exc: BaseException) -> dict[str, Any]:
+    diagnostic = sanitize_text(str(exc))
+    classification = classify_failure(diagnostic)
+    report = {
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": diagnostic,
+        "next_steps": failure_next_steps(classification),
+        "source": {
+            "verifier": VERIFIER_NAME,
+            "api_base": sanitize_text(API_BASE),
+        },
+        "privacy": {
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "graph_connection_details_included": False,
+            "real_model_keys_included": False,
+            "local_absolute_paths_included": False,
+        },
+    }
+    assert_failure_report_redacted(report)
+    return report
+
+
+def assert_failure_report_redacted(report: dict[str, Any]) -> None:
+    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
+    leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
+    if re.search(r"/Users/[^\s\"']+", serialized):
+        leaks.append("local absolute path")
+    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
+        leaks.append("local temp path")
+    if re.search(r"/tmp/[^\s\"']+", serialized):
+        leaks.append("tmp path")
+    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
+        leaks.append("secret-looking sk token")
+    if leaks:
+        raise RuntimeError(f"FalkorDB verifier failure report leaked private data: {leaks}")
 
 
 def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
@@ -29,6 +200,10 @@ def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise RuntimeError(f"{exc.code} {path}: {detail}") from exc
+    except (URLError, OSError) as exc:
+        raise RuntimeError(
+            format_api_unreachable(API_BASE, exc, verifier=VERIFIER_NAME)
+        ) from exc
 
 
 def wait_for_graph() -> None:
@@ -56,26 +231,25 @@ def assert_topology(topology: Dict[str, Any]) -> None:
 
 def main() -> None:
     wait_for_graph()
-    private_text = "Private reading prose must stay outside the graph projection."
     session = request(
         "/v1/sessions",
-        {"user_id": "graph-smoke-user", "track": "ACADEMIC", "use_demo_agent": True},
+        {"user_id": PRIVATE_USER, "track": "ACADEMIC", "use_demo_agent": True},
     )
     session_id = session["session_id"]
     request(
         f"/v1/sessions/{session_id}/reading",
         {
             "source_type": "local_text",
-            "reference": "demo://falkordb-smoke",
-            "title": "FalkorDB Smoke",
-            "text": private_text,
+            "reference": PRIVATE_REFERENCE,
+            "title": PRIVATE_TITLE,
+            "text": PRIVATE_SOURCE_TEXT,
         },
     )
     running = request(f"/v1/sessions/{session_id}/run", {})
     quiz_id = running["quiz_items"][0]["item_id"]
     completed = request(
         f"/v1/sessions/{session_id}/answers",
-        {"answers": {quiz_id: "The source is projected only through an allowlisted DTO."}},
+        {"answers": {quiz_id: PRIVATE_ANSWER}},
     )
     if completed["stage"] != "completed":
         raise RuntimeError(f"Expected completed stage, got {completed['stage']}")
@@ -85,7 +259,7 @@ def main() -> None:
     rebuilt = request(f"/v1/sessions/{session_id}/topology/rebuild", {})
     assert_topology(rebuilt["topology"])
     serialized = json.dumps(rebuilt, ensure_ascii=False)
-    if private_text in serialized or "FalkorDB Smoke" in serialized:
+    if PRIVATE_SOURCE_TEXT in serialized or PRIVATE_TITLE in serialized:
         raise RuntimeError("Private source prose leaked into the topology response.")
     print(
         json.dumps(
@@ -105,5 +279,6 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_falkordb_flow failed: {exc}", file=sys.stderr)
+        print(json.dumps(failure_report(exc), ensure_ascii=False, sort_keys=True))
+        print(f"verify_falkordb_flow failed: {sanitize_text(str(exc))}", file=sys.stderr)
         sys.exit(1)

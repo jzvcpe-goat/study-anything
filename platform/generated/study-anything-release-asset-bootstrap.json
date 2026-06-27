@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 76787,
+    "bytes": 76960,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "0087d673e5fadd0d89cbd93a6bf269310cf57f7ca69f8efc59482bebc712efff",
+    "sha256": "fb60b55528f89c36254382665c3a28f3f48d8cf8dd76621462016e03106ad14a",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -117,14 +117,14 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 11305,
+      "bytes": 11533,
       "path": "docs/github-launch.md",
-      "sha256": "85ef6f3f0006bdcf17875ca5849f9807228a5b3461fa0cd8210a121d38f0f4aa"
+      "sha256": "8a5b324522650458f90a737e89927fc475da136b553ce3c143ff8868e29fd0cb"
     },
     {
-      "bytes": 11340,
+      "bytes": 11978,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "db3f78d9ec388860a696a24bf90b33511cc9a3df8a380fd33b48c18fbc3f9a0e"
+      "sha256": "779dacc06cd5c24f9b64d1da3b04643be67546dee6a3b19b000a649b3f4f9dd2"
     },
     {
       "bytes": 35043,
@@ -159,7 +159,7 @@
     {
       "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "f2dd954896c4168b974c2a47e708eeab81470c6096917d282e1850977042a5de"
+      "sha256": "14ac1f1be8f0407ebbc141d0ee4ac2ba451e4a54e55608953edb98123ca5413a"
     },
     {
       "bytes": 83732,

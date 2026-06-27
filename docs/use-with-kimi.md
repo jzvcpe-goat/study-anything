@@ -113,9 +113,14 @@ secrets.
 Use this when you want Study Anything's learning Agent tasks to run through your
 own Kimi-compatible local gateway.
 
+If you use WorkBuddy, Kimi Work, or another terminal/platform Agent that already owns model
+configuration, you usually do not need to start this Gateway manually. Let that Agent call Study
+Anything's local API and keep model credentials inside the Agent runtime.
+
 ```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
-export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
+export AGENT_LLM_API_KEY="your-api-key"
+# 可以是任何 OpenAI-compatible endpoint：Moonshot、OpenAI、DeepSeek、中转站、本地 Ollama
 export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 
 python3 scripts/openai_compatible_agent_gateway.py \
@@ -131,6 +136,10 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --endpoint "http://127.0.0.1:8787/invoke" \
   --set-default
 ```
+
+After `--set-default`, the CLI's default `--agent-mode auto` uses this gateway for new learning
+sessions when the common learning capabilities are covered. Use `--agent-mode demo` for a zero-key
+local-only smoke, or `--agent-mode configured` when debugging gateway routing explicitly.
 
 Kimi or the platform Agent still owns browsing, files, external data, and video
 slice creation. The local gateway owns model credentials and reasoning. Study

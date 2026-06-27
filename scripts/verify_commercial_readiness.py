@@ -13,13 +13,86 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
-from study_anything import __version__  # noqa: E402
-from study_anything.core.commercial_readiness import (  # noqa: E402
-    COMMERCIAL_READINESS_SCHEMA_VERSION,
-    build_commercial_readiness,
+from localhost_diagnostics import (  # noqa: E402
+    format_api_unreachable,
+    redact_diagnostic,
+    verifier_name_from_file,
 )
+
+
+MIN_PYTHON = (3, 11)
+
+
+def runtime_failure_payload(
+    *,
+    classification: str,
+    diagnostic: str,
+    details: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "commercial-readiness-error-v1",
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": redact_diagnostic(diagnostic),
+        "details": details or {},
+        "next_steps": [
+            ".venv/bin/python scripts/verify_commercial_readiness.py",
+            "python3 scripts/setup_env.py",
+            "./scripts/run_skill_mode_demo.sh",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def runtime_failure(
+    message: str,
+    *,
+    classification: str = "python_dependency_missing",
+    details: dict[str, Any] | None = None,
+) -> None:
+    print(
+        json.dumps(
+            runtime_failure_payload(
+                classification=classification,
+                diagnostic=message,
+                details=details,
+            ),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+if sys.version_info < MIN_PYTHON:  # pragma: no cover - depends on local interpreter
+    runtime_failure(
+        "verify_commercial_readiness requires Python 3.11 or newer.",
+        classification="python_version_unsupported",
+        details={"python_version": sys.version.split()[0]},
+    )
+
+try:
+    from study_anything import __version__  # noqa: E402
+    from study_anything.core.commercial_readiness import (  # noqa: E402
+        COMMERCIAL_READINESS_SCHEMA_VERSION,
+        build_commercial_readiness,
+    )
+except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
+    runtime_failure(
+        f"Python dependencies are missing for this interpreter ({exc.name}).",
+        classification="python_dependency_missing",
+        details={"missing_module": redact_diagnostic(exc.name or "required module")},
+    )
 
 
 PLATFORM_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
@@ -27,10 +100,30 @@ GENERATED_OPENAPI = ROOT / "platform" / "generated" / "study-anything-platform-o
 GENERATED_TOOLS = ROOT / "platform" / "generated" / "study-anything-openai-tools.json"
 REQUIRED_TOOL = "study_anything_commercial_readiness"
 FORBIDDEN_MARKERS = ("sk-", "api_key", "secret_key", "bearer ")
+VERIFIER_NAME = verifier_name_from_file(__file__)
 
 
 class CommercialReadinessError(RuntimeError):
     """Readable commercial-readiness verification failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed.",
+            f"Diagnostic: {diagnostic}",
+            "Next steps:",
+            "  1. Regenerate platform agent assets when tool contracts changed:",
+            "     python3 scripts/generate_platform_agent_assets.py",
+            "  2. Rebuild adoption/bundle evidence if generated assets changed:",
+            "     python3 scripts/generate_platform_adoption_pack.py",
+            "     python3 scripts/generate_platform_bundle_manifest.py",
+            "  3. Re-run the commercial readiness verifier:",
+            "     python3 scripts/verify_commercial_readiness.py",
+            "     API_BASE=http://127.0.0.1:8000 python3 scripts/verify_commercial_readiness.py",
+        ]
+    )
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -52,8 +145,10 @@ def fetch_report(api_base: str) -> dict[str, Any]:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise CommercialReadinessError(f"API returned {exc.code} for {url}: {detail}") from exc
-    except URLError as exc:
-        raise CommercialReadinessError(f"Cannot reach Study Anything at {url}: {exc}") from exc
+    except (URLError, OSError) as exc:
+        raise CommercialReadinessError(
+            format_api_unreachable(api_base.rstrip("/"), exc, verifier=VERIFIER_NAME)
+        ) from exc
     if not isinstance(value, dict):
         raise CommercialReadinessError("Commercial readiness API did not return a JSON object.")
     return value
@@ -213,5 +308,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_commercial_readiness failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

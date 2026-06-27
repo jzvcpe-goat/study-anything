@@ -34,4 +34,3 @@ rules:
       - model_key_storage
       - hidden_instruction_transfer
     humanMasteryGate: required
-

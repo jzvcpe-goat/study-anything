@@ -224,19 +224,27 @@ def validate_report(root: Path) -> dict[str, Any]:
         item = source_schemas.get(key) or {}
         if item.get("schema_version") != expected_schema:
             raise AdopterEvidenceArchiveError(f"{key} source schema drifted.")
-        if key == "platform_adoption_pack":
+        if key in {"platform_adoption_pack", "release_asset_adoption"}:
             command_text = "\n".join(
                 str(item.get(field, ""))
                 for field in ("verification_command", "generation_command", "note")
             )
-            for required in (
-                "verify_external_adoption.py --pack",
-                "generate_platform_adoption_pack.py --check",
-                "evidence archive",
-            ):
+            if key == "platform_adoption_pack":
+                required_fragments = (
+                    "verify_external_adoption.py --pack",
+                    "generate_platform_adoption_pack.py --check",
+                    "evidence archive",
+                )
+            else:
+                required_fragments = (
+                    "verify_release_asset_adoption.py",
+                    "generate_release_asset_adoption.py --check",
+                    "evidence archive",
+                )
+            for required in required_fragments:
                 if required not in command_text:
                     raise AdopterEvidenceArchiveError(
-                        f"platform_adoption_pack source missing {required}."
+                        f"{key} source missing {required}."
                     )
         else:
             validate_file_ref(root, item.get("ref") or {})

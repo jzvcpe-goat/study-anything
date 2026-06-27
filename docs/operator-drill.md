@@ -18,16 +18,21 @@ environment.
 
 ## Drill
 
-1. Unpack `platform/generated/study-anything-platform-adoption-pack.zip`.
-2. Open `platform/packs/kimi`, `platform/packs/codex`, or
+1. Pick the platform package:
+   `study-anything-codex-plugin-pack.zip`,
+   `study-anything-kimi-plugin-pack.zip`, or
+   `study-anything-workbuddy-plugin-pack.zip`.
+2. Verify the package with its `.sha256` file, then unpack it. Each archive has
+   one root directory and a `manifest.json`.
+3. Open `platform/packs/kimi`, `platform/packs/codex`, or
    `platform/packs/workbuddy`, depending on the host platform.
-3. Import `platform/generated/study-anything-platform-openapi.json` or
+4. Import `platform/generated/study-anything-platform-openapi.json` or
    `platform/generated/study-anything-openai-tools.json`, or install
    `skills/study-anything` for Codex.
-4. Start Skill Mode or the published API image locally.
-5. Run importer/enrichment, retrieval, teaching layers, quiz, answer, mastery,
+5. Start Skill Mode or the published API image locally.
+6. Run importer/enrichment, retrieval, teaching layers, quiz, answer, mastery,
    agent audit, quality eval, Obsidian export, and learning-package export.
-6. Share only redacted proof: schema names, statuses, tool counts, session ids,
+7. Share only redacted proof: schema names, statuses, tool counts, session ids,
    and export shapes. Do not share raw source text, answers, generated insight
    text, endpoints with secrets, agent metadata, or API keys.
 
@@ -38,6 +43,8 @@ Generate and validate the deterministic operator transcript:
 ```bash
 python3 scripts/verify_platform_operator_drill.py --write
 python3 scripts/verify_platform_operator_drill.py --check
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/verify_platform_submission_dry_run.py --check
 ```
 
@@ -57,6 +64,7 @@ learning/eval/export loop.
 ## Acceptance Evidence
 
 - `study-anything-operator-drill-v1` transcript is current.
+- `study-anything-platform-plugin-pack-v1` manifests and zip checksums are current.
 - `adoption-proof-v1` is emitted within the target window.
 - Kimi, Codex, and WorkBuddy packs reference existing files only.
 - Generated OpenAPI/OpenAI tool assets expose the required Study Anything tool

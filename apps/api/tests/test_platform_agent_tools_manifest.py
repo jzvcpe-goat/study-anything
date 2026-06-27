@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import importlib.util
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -8,6 +10,7 @@ from _path import ROOT  # noqa: F401
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
+GENERATOR = REPO_ROOT / "scripts" / "generate_platform_agent_assets.py"
 MANIFEST_PATH = REPO_ROOT / "platform" / "study-anything-platform-tools.json"
 GENERATED_DIR = REPO_ROOT / "platform" / "generated"
 OPENAPI_PATH = GENERATED_DIR / "study-anything-platform-openapi.json"
@@ -60,10 +63,43 @@ DISALLOWED_PATH_FRAGMENTS = (
     "/v1/pmf/export",
 )
 
+if str(REPO_ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+GENERATOR_SPEC = importlib.util.spec_from_file_location(
+    "generate_platform_agent_assets",
+    GENERATOR,
+)
+assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
+generator = importlib.util.module_from_spec(GENERATOR_SPEC)
+GENERATOR_SPEC.loader.exec_module(generator)
+
 
 class PlatformAgentToolsManifestTests(unittest.TestCase):
     def _manifest(self) -> dict[str, object]:
         return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+
+    def test_generator_failure_formatter_is_actionable_and_redacted(self) -> None:
+        secret = "sk-proj-" + "abcdefghijklmnop123456"
+        temp_path = "/private/" + "tmp/study-anything/platform-agent-assets.json"
+        message = generator.format_cli_failure(
+            RuntimeError(
+                f"platform agent asset generation failed at {temp_path} "
+                f"with Authorization: Bearer {secret}"
+            )
+        )
+
+        self.assertIn("generate_platform_agent_assets failed:", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_platform_agent_assets.py --check", message)
+        self.assertIn("verify_platform_agent_tools.py", message)
+        self.assertIn("generate_platform_adoption_pack.py", message)
+        self.assertIn("generate_platform_bundle_manifest.py", message)
+        self.assertIn("diagnose_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn("/private/" + "tmp", message)
+        self.assertNotIn(secret, message)
 
     def test_manifest_declares_required_learning_tools(self) -> None:
         manifest = self._manifest()

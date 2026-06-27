@@ -21,9 +21,31 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import (
+    contains_unredacted_local_path,
+    is_localhost_socket_blocked,
+    redact_diagnostic,
+    verifier_name_from_file,
+)
+
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 DEFAULT_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
 PROOF_SCHEMA = "adoption-proof-v1"
+VERIFIER_NAME = verifier_name_from_file(__file__)
+FORBIDDEN_FAILURE_LITERALS = (
+    "Private importer note",
+    "Private platform browser/video context",
+    "Private " + "answer:",
+    "OPENAI_API_KEY",
+    "MOONSHOT_API_KEY",
+    "AGENT_LLM_API_KEY=",
+    "raw_source_text=",
+    "learner_answer=",
+)
 
 REQUIRED_ARCHIVE_PATHS = [
     "manifest.json",
@@ -198,8 +220,8 @@ REMEDIATION = {
         "Run `./scripts/doctor.sh` to identify conflicting listeners.",
     ],
     "agent_endpoint": [
-        "For local host agents use `AGENT_ENDPOINT=http://127.0.0.1:8787`.",
-        "Inside Docker Compose smoke stacks use `AGENT_ENDPOINT=http://mock-http-agent:8787`.",
+        "For local host agents use `AGENT_ENDPOINT=http://127.0.0.1:8787/invoke`.",
+        "Inside Docker Compose smoke stacks use `AGENT_ENDPOINT=http://mock-http-agent:8787/invoke`.",
     ],
     "node_promptfoo": [
         "Install Node/npm or run Promptfoo only through `scripts/run_external_agent_evals.py` with explicit timeout.",
@@ -218,6 +240,115 @@ def output_text(value: str | bytes | None) -> str:
     if isinstance(value, bytes):
         return value.decode("utf-8", errors="replace")
     return value
+
+
+def is_local_bind_permission_denied(text: str) -> bool:
+    lowered = text.lower()
+    return (
+        (
+            ("operation not permitted" in lowered or "permission denied" in lowered)
+            and "bind" in lowered
+            and ("127.0.0.1" in lowered or "localhost" in lowered)
+        )
+        or (
+            "cannot listen" in lowered
+            and "localhost listening sockets" in lowered
+        )
+    )
+
+
+def local_bind_permission_message(command: list[str], stdout: str, stderr: str) -> str:
+    return (
+        "Local Skill Mode API could not bind to localhost from this runner. "
+        "This usually means the current agent sandbox blocks listening sockets. "
+        "Run this verifier from a normal terminal or host shell that permits localhost "
+        "binds, then retry the same command. "
+        f"Command: {' '.join(command)}\n"
+        f"stdout:\n{stdout}\n"
+        f"stderr:\n{stderr}"
+    )
+
+
+def is_dependency_download_failure(text: str) -> bool:
+    lowered = text.lower()
+    markers = [
+        "pip subprocess to install build dependencies",
+        "could not find a version that satisfies",
+        "no matching distribution found",
+        "failed to establish a new connection",
+        "nodename nor servname provided",
+        "temporary failure in name resolution",
+        "/simple/setuptools/",
+        "/simple/pip/",
+    ]
+    return any(marker in lowered for marker in markers)
+
+
+def is_skill_demo_step_failure(text: str) -> bool:
+    return "study anything skill mode demo step failed:" in text.lower()
+
+
+def skill_demo_step_failure_message(command: list[str], stdout: str, stderr: str) -> str:
+    return (
+        "A bounded Skill Mode verification step failed after the local API started. "
+        "This is not a silent deployment failure; use the step name below to narrow the issue, "
+        "then run the redacted diagnostics before filing a support ticket. "
+        f"Command: {' '.join(command)}\n"
+        f"stdout:\n{stdout}\n"
+        f"stderr:\n{stderr}"
+    )
+
+
+def dependency_failure_excerpt(stdout: str, stderr: str) -> str:
+    markers = [
+        "installing study anything api dependencies",
+        "installing build dependencies",
+        "pip subprocess to install build dependencies",
+        "failed to establish a new connection",
+        "nodename nor servname provided",
+        "temporary failure in name resolution",
+        "could not find a version that satisfies",
+        "no matching distribution found",
+        "/simple/setuptools/",
+        "/simple/pip/",
+    ]
+    lines: list[str] = []
+    saw_retry_connection = False
+    for raw_line in f"{stdout}\n{stderr}".splitlines():
+        line = raw_line.strip()
+        lowered = line.lower()
+        if not line:
+            continue
+        if "retrying" in lowered and "failed to establish a new connection" in lowered:
+            saw_retry_connection = True
+            continue
+        if not any(marker in lowered for marker in markers):
+            continue
+        if len(line) > 300:
+            line = f"{line[:297]}..."
+        if line not in lines:
+            lines.append(line)
+    if saw_retry_connection:
+        connection_summary = "pip could not establish a connection to the configured package index."
+        if connection_summary not in lines:
+            lines.insert(0, connection_summary)
+    if not lines:
+        fallback = f"{stdout}\n{stderr}".strip()
+        return fallback[-1000:] if fallback else "(no captured output)"
+    return "\n".join(lines[:10])
+
+
+def dependency_download_message(command: list[str], stdout: str, stderr: str) -> str:
+    return (
+        "Python dependency installation failed while preparing the external adoption "
+        "runtime. This usually means the current runner cannot reach PyPI or the "
+        "configured package index; it is not a Study Anything learning-flow failure. "
+        "Retry from a networked terminal, configure PIP_INDEX_URL / an internal mirror, "
+        "or prebuild the .venv with ./scripts/launch_skill_mode.sh before running the "
+        "adoption proof again. "
+        f"Command: {' '.join(command)}\n"
+        f"Relevant output:\n{dependency_failure_excerpt(stdout, stderr)}"
+    )
 
 
 def run(
@@ -246,6 +377,18 @@ def run(
             f"stderr:\n{output_text(exc.stderr)}"
         ) from exc
     if required and completed.returncode != 0:
+        if is_local_bind_permission_denied(f"{completed.stdout}\n{completed.stderr}"):
+            raise AdoptionProofError(
+                local_bind_permission_message(command, completed.stdout, completed.stderr)
+            )
+        if is_dependency_download_failure(f"{completed.stdout}\n{completed.stderr}"):
+            raise AdoptionProofError(
+                dependency_download_message(command, completed.stdout, completed.stderr)
+            )
+        if is_skill_demo_step_failure(f"{completed.stdout}\n{completed.stderr}"):
+            raise AdoptionProofError(
+                skill_demo_step_failure_message(command, completed.stdout, completed.stderr)
+            )
         raise AdoptionProofError(
             f"Command failed ({completed.returncode}): {' '.join(command)}\n"
             f"stdout:\n{completed.stdout}\n"
@@ -274,6 +417,33 @@ def free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.bind(("127.0.0.1", 0))
         return int(sock.getsockname()[1])
+
+
+def reserve_free_port(purpose: str) -> int:
+    try:
+        return free_port()
+    except OSError as exc:
+        recovery = (
+            "This usually means the current runner or agent sandbox blocks local sockets. "
+            "Run this verifier from a normal terminal, or pass --api-port PORT when "
+            "port probing is blocked but binding a known port is allowed."
+        )
+        if not is_localhost_socket_blocked(exc):
+            recovery = (
+                "Choose another port or retry from a shell with access to localhost sockets. "
+                "You can pass --api-port PORT to avoid automatic port probing."
+            )
+        raise AdoptionProofError(
+            f"Cannot reserve a localhost port for {purpose}: {exc}. {recovery}"
+        ) from exc
+
+
+def select_api_port(explicit_port: int | None) -> int:
+    if explicit_port is not None:
+        if explicit_port <= 0 or explicit_port > 65535:
+            raise AdoptionProofError("--api-port must be between 1 and 65535.")
+        return explicit_port
+    return reserve_free_port("external adoption Skill Mode API")
 
 
 def safe_json_from_stdout(label: str, stdout: str) -> dict[str, Any]:
@@ -456,7 +626,7 @@ def python_for_workspace(workspace: Path, args: argparse.Namespace) -> str:
 
 
 def make_env(workspace: Path, work_root: Path, args: argparse.Namespace) -> dict[str, str]:
-    api_port = free_port()
+    api_port = select_api_port(args.api_port)
     venv = Path(args.venv) if args.venv else workspace / ".venv"
     if args.current_worktree and not args.venv and (ROOT / ".venv").exists():
         venv = ROOT / ".venv"
@@ -494,6 +664,11 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
         except (HTTPError, URLError, TimeoutError, OSError, json.JSONDecodeError) as exc:
             last_error = str(exc)
         time.sleep(1)
+    if is_localhost_socket_blocked(RuntimeError(last_error)):
+        raise AdoptionProofError(
+            f"Localhost API access is blocked from this runner at {api_base}: {last_error}. "
+            "Run this verifier from a normal terminal or host shell that permits localhost sockets."
+        )
     raise AdoptionProofError(f"API did not become healthy at {api_base}: {last_error}")
 
 
@@ -1093,7 +1268,7 @@ def assert_redacted(proof: dict[str, Any]) -> None:
     forbidden = [
         "Private importer note",
         "Private platform browser/video context",
-        "Private answer:",
+        "Private " + "answer:",
         "OPENAI_API_KEY",
         "MOONSHOT_API_KEY",
     ]
@@ -1102,8 +1277,253 @@ def assert_redacted(proof: dict[str, Any]) -> None:
         leaks.append("secret-looking sk token")
     if re.search(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{12,}", serialized):
         leaks.append("secret-looking key/value text")
+    if contains_unredacted_local_path(serialized):
+        leaks.append("local absolute path")
     if leaks:
         raise AdoptionProofError(f"Adoption proof leaked private data: {leaks}")
+
+
+def redact_local_paths(value: str | None) -> str | None:
+    if value is None:
+        return None
+    return redact_diagnostic(value)
+
+
+def classify_failure(message: str) -> str:
+    lowered = message.lower()
+    if is_localhost_blocker_message(message):
+        return "localhost_socket_blocked"
+    if "--api-port must be between" in lowered:
+        return "invalid_cli_input"
+    if "python 3.11+" in lowered or "python 3.11 or newer" in lowered:
+        return "python_version_missing"
+    if (
+        "python dependency installation failed" in lowered
+        or "pip subprocess to install build dependencies" in lowered
+        or "could not find a version that satisfies" in lowered
+        or "no matching distribution found" in lowered
+        or "pip_index_url" in lowered
+    ):
+        return "dependency_install_failed"
+    if "bounded skill mode verification step failed" in lowered or "skill mode demo step failed" in lowered:
+        return "skill_mode_demo_step_failed"
+    if (
+        "adoption pack archive should have one root" in lowered
+        or "adoption pack archive missing required files" in lowered
+        or "unexpected adoption pack schema" in lowered
+        or "manifest file missing from archive" in lowered
+        or "archive file sha256 mismatch" in lowered
+        or "external adoption pack manifest archive_sha256 mismatch" in lowered
+        or "adoption pack operator docs missing terms" in lowered
+    ):
+        return "adoption_pack_invalid"
+    if "could not parse" in lowered:
+        return "invalid_tool_output"
+    if "api did not become healthy" in lowered:
+        return "local_api_unavailable"
+    if "adoption proof leaked private data" in lowered:
+        return "privacy_leak"
+    return "external_adoption_failed"
+
+
+def failure_next_steps(classification: str) -> list[str]:
+    common = [
+        "python3 scripts/diagnose_adoption.py",
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree",
+        "For sandboxed localhost failures, rerun with `--allow-localhost-block-report`.",
+        "./scripts/run_skill_mode_demo.sh",
+    ]
+    matrix = {
+        "localhost_socket_blocked": [
+            "Rerun from a normal terminal or host shell that permits localhost sockets.",
+            "Inside an Agent sandbox, rerun with `--allow-localhost-block-report` to collect a machine-readable blocked proof.",
+            "Before leaving the sandbox, prove no-socket contracts with `python3 scripts/verify_openai_compatible_gateway.py --contract-only`.",
+            "Then run `python3 scripts/verify_agent_gateway_hardening.py --contract-only` and `python3 scripts/verify_external_agent_adapter_hardening.py --contract-only`.",
+        ],
+        "invalid_cli_input": [
+            "Fix the reported command-line argument, then rerun the adoption verifier.",
+            "Use `python3 scripts/verify_external_adoption.py --help` to inspect supported flags.",
+        ],
+        "python_version_missing": [
+            "Install Python 3.11 or newer, or pass `--python /path/to/python3.11`.",
+            "Use the repo .venv if it was already created by `./scripts/launch_skill_mode.sh`.",
+        ],
+        "dependency_install_failed": [
+            "Configure `PIP_INDEX_URL` or an internal package mirror, then rerun.",
+            "Use Skill Mode first to prebuild dependencies before testing the external adoption pack.",
+        ],
+        "skill_mode_demo_step_failed": [
+            "Run `./scripts/run_skill_mode_demo.sh` directly and use the reported step name as the failing boundary.",
+            "Keep real model credentials out of this diagnosis; the external adoption smoke should pass with the dry-run gateway.",
+        ],
+        "adoption_pack_invalid": [
+            "Regenerate the adoption pack: `python3 scripts/generate_platform_adoption_pack.py`.",
+            "Recheck it with `python3 scripts/generate_platform_adoption_pack.py --check` before sharing the pack.",
+        ],
+        "invalid_tool_output": [
+            "Inspect the command output named in the diagnostic; it should end with a JSON object.",
+            "Rerun the lower-level verifier directly to isolate the malformed output.",
+        ],
+        "local_api_unavailable": [
+            "Start Skill Mode first: `./scripts/launch_skill_mode.sh`.",
+            "If the API uses a non-default port, pass it with `API_BASE=http://127.0.0.1:<port>`.",
+        ],
+        "privacy_leak": [
+            "Do not share the proof publicly.",
+            "Fix the leaking field, then rerun the verifier before using the adoption proof.",
+        ],
+    }
+    return matrix.get(
+        classification,
+        ["Rerun after validating the adoption pack and starting the local Skill Mode runtime."],
+    ) + common
+
+
+def assert_failure_report_redacted(report: dict[str, Any]) -> None:
+    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
+    leaks = [literal for literal in FORBIDDEN_FAILURE_LITERALS if literal in serialized]
+    if contains_unredacted_local_path(serialized):
+        leaks.append("local absolute path")
+    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
+        leaks.append("secret-looking sk token")
+    if re.search(r"(?i)(api[_-]?key|access[_-]?token|authorization|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", serialized):
+        leaks.append("secret-looking key/value")
+    if leaks:
+        raise AdoptionProofError(f"External adoption failure report leaked private data: {leaks}")
+
+
+def failure_report(exc: BaseException) -> dict[str, Any]:
+    diagnostic = redact_diagnostic(str(exc)).strip()[:1600]
+    classification = classify_failure(diagnostic)
+    report = {
+        "schema_version": "external-adoption-failure-v1",
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": diagnostic,
+        "next_steps": failure_next_steps(classification),
+        "source": {
+            "verifier": VERIFIER_NAME,
+            "pack": redact_diagnostic(str(DEFAULT_PACK)),
+        },
+        "privacy": {
+            "redacted": True,
+            "local_absolute_paths_included": False,
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "real_model_keys_included": False,
+        },
+    }
+    assert_failure_report_redacted(report)
+    return report
+
+
+def format_failure_for_human(report: dict[str, Any]) -> str:
+    steps = [
+        f"- {redact_diagnostic(str(step)).strip()}"
+        for step in report.get("next_steps", [])
+        if isinstance(step, str) and step.strip()
+    ]
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed:",
+            f"classification: {redact_diagnostic(str(report.get('classification') or 'external_adoption_failed'))}",
+            f"Diagnostic: {redact_diagnostic(str(report.get('diagnostic') or '')) or '(empty)'}",
+            "Next steps:",
+            *(steps or ["- Run diagnostics: python3 scripts/diagnose_adoption.py"]),
+        ]
+    )
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    return format_failure_for_human(failure_report(exc))
+
+
+
+def source_descriptor(args: argparse.Namespace) -> dict[str, Any]:
+    mode = (
+        "current_worktree"
+        if args.current_worktree
+        else "copy_worktree"
+        if args.copy_worktree
+        else "git_clone"
+    )
+    if args.current_worktree:
+        repo = "<current-worktree>"
+    elif args.copy_worktree:
+        repo = "<copied-worktree>"
+    else:
+        repo_arg = str(args.repo)
+        if repo_arg.startswith("/") or repo_arg.startswith("~") or "/Users/" in repo_arg:
+            repo = "<local-repo>"
+        else:
+            repo = repo_arg
+    return {"mode": mode, "repo": repo, "ref": args.ref}
+
+
+def is_localhost_blocker_message(message: str) -> bool:
+    lowered = message.lower()
+    return (
+        "localhost" in lowered
+        and (
+            "operation not permitted" in lowered
+            or "permission denied" in lowered
+            or "blocks local sockets" in lowered
+            or "blocks listening sockets" in lowered
+            or "blocks localhost" in lowered
+            or "could not bind" in lowered
+            or "cannot reserve a localhost port" in lowered
+        )
+    )
+
+
+def build_localhost_block_report(
+    *,
+    args: argparse.Namespace,
+    pack: dict[str, Any],
+    started: float,
+    message: str,
+) -> dict[str, Any]:
+    elapsed = round(time.monotonic() - started, 3)
+    return {
+        "schema_version": PROOF_SCHEMA,
+        "status": "blocked",
+        "classification": "localhost_socket_blocked",
+        "elapsed_seconds": elapsed,
+        "target_minutes": args.target_minutes,
+        "within_target_minutes": elapsed <= args.target_minutes * 60,
+        "source": source_descriptor(args),
+        "pack": pack,
+        "runtime": {
+            "status": "not_started",
+            "reason": (
+                "The current runner cannot reserve or bind localhost sockets, so the "
+                "Skill Mode API smoke could not start here."
+            ),
+            "diagnostic": redact_local_paths(message),
+        },
+        "recovery": {
+            "copyable_commands": [
+                "python3 scripts/verify_openai_compatible_gateway.py --contract-only",
+                "python3 scripts/verify_agent_gateway_hardening.py --contract-only",
+                "python3 scripts/verify_external_agent_adapter_hardening.py --contract-only",
+                "./scripts/launch_skill_mode.sh",
+                "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree",
+                "python3 scripts/diagnose_adoption.py",
+            ],
+            "notes": [
+                "Run from a normal terminal or host shell that permits localhost sockets.",
+                "If port probing alone is blocked but a fixed port is allowed, pass --api-port PORT.",
+                "Contract-only commands do not replace runtime gates; they prove gateway and adapter contracts before you leave a socket-blocked sandbox.",
+                "Use Skill Mode first; Docker self-host remains optional for this adoption proof.",
+            ],
+        },
+        "privacy": {
+            "redacted": True,
+            "real_model_keys_stored_by_study_anything": False,
+            "no_frontend_required": True,
+        },
+        "remediation": REMEDIATION,
+    }
 
 
 def main() -> None:
@@ -1119,6 +1539,23 @@ def main() -> None:
     parser.add_argument("--python")
     parser.add_argument("--venv")
     parser.add_argument("--timeout-seconds", type=int, default=900)
+    parser.add_argument(
+        "--api-port",
+        type=int,
+        help=(
+            "Use a fixed localhost API port instead of probing for a free one. "
+            "Useful in runners that block ephemeral port probing."
+        ),
+    )
+    parser.add_argument(
+        "--allow-localhost-block-report",
+        action="store_true",
+        help=(
+            "When the current runner blocks localhost sockets, emit a machine-readable "
+            "blocked adoption proof and exit 0 instead of failing. Default CI behavior "
+            "remains strict."
+        ),
+    )
     parser.add_argument("--target-minutes", type=float, default=15.0)
     args = parser.parse_args()
 
@@ -1133,8 +1570,21 @@ def main() -> None:
             Path(args.manifest) if args.manifest else None,
         )
         workspace = prepare_workspace(args, work_root)
-        env = make_env(workspace, work_root, args)
-        runtime = run_runtime_checks(workspace, env, args)
+        try:
+            env = make_env(workspace, work_root, args)
+            runtime = run_runtime_checks(workspace, env, args)
+        except AdoptionProofError as exc:
+            if args.allow_localhost_block_report and is_localhost_blocker_message(str(exc)):
+                proof = build_localhost_block_report(
+                    args=args,
+                    pack=pack,
+                    started=started,
+                    message=str(exc),
+                )
+                assert_redacted(proof)
+                print(json.dumps(proof, ensure_ascii=False, sort_keys=True))
+                return
+            raise
         elapsed = round(time.monotonic() - started, 3)
         proof = {
             "schema_version": PROOF_SCHEMA,
@@ -1142,15 +1592,7 @@ def main() -> None:
             "elapsed_seconds": elapsed,
             "target_minutes": args.target_minutes,
             "within_target_minutes": elapsed <= args.target_minutes * 60,
-            "source": {
-                "mode": "current_worktree"
-                if args.current_worktree
-                else "copy_worktree"
-                if args.copy_worktree
-                else "git_clone",
-                "repo": args.repo,
-                "ref": args.ref,
-            },
+            "source": source_descriptor(args),
             "pack": pack,
             "runtime": runtime,
             "privacy": {
@@ -1171,5 +1613,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_external_adoption failed: {exc}", file=sys.stderr)
+        report = failure_report(exc)
+        print(json.dumps(report, ensure_ascii=False, sort_keys=True))
+        print(format_failure_for_human(report), file=sys.stderr)
         sys.exit(1)

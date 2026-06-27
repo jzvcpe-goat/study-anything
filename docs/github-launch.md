@@ -20,6 +20,8 @@ python3 scripts/check_env.py --env /tmp/study-anything.env --strict
 python3 scripts/generate_platform_agent_assets.py --check
 python3 scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/verify_launch_acceptance_ledger.py --check
 python3 scripts/verify_github_launch_operator_guide.py --check
 python3 scripts/verify_release_stack_readiness.py
@@ -104,6 +106,8 @@ python3 scripts/verify_github_launch_operator_guide.py --check
 python3 scripts/verify_release_stack_readiness.py
 python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_platform_ecosystem_packs.py
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \

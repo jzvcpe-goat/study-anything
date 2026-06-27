@@ -2,7 +2,7 @@
 
 ## v0.3.31-alpha
 
-- [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
+- [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e '.[dev,full]'`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `STUDY_ANYTHING_STRICT_MSGPACK=1 .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
@@ -45,6 +45,8 @@
 - [ ] `.venv/bin/python scripts/verify_adoption_telemetry.py`
 - [ ] `.venv/bin/python scripts/verify_ecosystem_submission_pack.py`
 - [ ] `.venv/bin/python scripts/verify_platform_ecosystem_packs.py`
+- [ ] `.venv/bin/python scripts/generate_platform_plugin_packs.py --check`
+- [ ] `.venv/bin/python scripts/verify_platform_plugin_packs.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_bundle_manifest.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_operator_drill.py --check`
 - [ ] `.venv/bin/python scripts/verify_launch_acceptance_ledger.py --check`

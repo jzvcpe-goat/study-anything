@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import importlib.util
+import io
 import json
 import subprocess
 import sys
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
+from unittest.mock import patch
 
 from _path import ROOT  # noqa: F401
 
@@ -15,7 +19,48 @@ from study_anything.api.main import create_app
 from study_anything.core.commercial_readiness import build_commercial_readiness
 
 
+REPO = Path(__file__).resolve().parents[3]
+VERIFIER_PATH = REPO / "scripts" / "verify_commercial_readiness.py"
+SPEC = importlib.util.spec_from_file_location("verify_commercial_readiness", VERIFIER_PATH)
+assert SPEC is not None and SPEC.loader is not None
+verifier = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(verifier)
+
+
 class CommercialReadinessTests(unittest.TestCase):
+    def test_runtime_failure_payload_is_machine_readable(self) -> None:
+        payload = verifier.runtime_failure_payload(
+            classification="python_dependency_missing",
+            diagnostic="missing module at /Users/example/project token=secretToken123456",
+            details={"missing_module": "tomllib"},
+        )
+
+        self.assertEqual(payload["schema_version"], "commercial-readiness-error-v1")
+        self.assertEqual(payload["classification"], "python_dependency_missing")
+        self.assertEqual(payload["details"]["missing_module"], "tomllib")
+        self.assertIn(".venv/bin/python", " ".join(payload["next_steps"]))
+        serialized = json.dumps(payload, sort_keys=True)
+        self.assertIn("<local-path>", serialized)
+        self.assertIn("token=<redacted>", serialized)
+        self.assertNotIn("/Users/example", serialized)
+        self.assertNotIn("secretToken123456", serialized)
+
+    def test_runtime_failure_prints_json(self) -> None:
+        stderr = io.StringIO()
+
+        with redirect_stderr(stderr):
+            with self.assertRaises(SystemExit) as raised:
+                verifier.runtime_failure(
+                    "verify_commercial_readiness requires Python 3.11 or newer.",
+                    classification="python_version_unsupported",
+                    details={"python_version": "3.9.6"},
+                )
+
+        self.assertEqual(raised.exception.code, 1)
+        payload = json.loads(stderr.getvalue())
+        self.assertEqual(payload["classification"], "python_version_unsupported")
+        self.assertEqual(payload["details"]["python_version"], "3.9.6")
+
     def test_core_contract_marks_local_first_alpha_ready_but_hosted_services_not_ready(self) -> None:
         report = build_commercial_readiness(version=__version__)
 
@@ -73,10 +118,9 @@ class CommercialReadinessTests(unittest.TestCase):
         self.assertEqual(summary["local_invariants_passed"], summary["local_invariant_count"])
 
     def test_verifier_script_passes(self) -> None:
-        root = Path(__file__).resolve().parents[3]
         completed = subprocess.run(
-            [sys.executable, str(root / "scripts" / "verify_commercial_readiness.py")],
-            cwd=root,
+            [sys.executable, str(VERIFIER_PATH)],
+            cwd=REPO,
             text=True,
             capture_output=True,
             check=False,
@@ -86,6 +130,23 @@ class CommercialReadinessTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "commercial-readiness-verification-v1")
         self.assertEqual(payload["status"], "pass")
+
+    def test_failure_formatter_is_actionable_and_redacted(self) -> None:
+        local_home = "/Users/" + "james"
+        secret = "sk-" + "proj-private-commercial-token"
+        message = verifier.format_cli_failure(
+            verifier.CommercialReadinessError(
+                f"Generated tool stale at {local_home}/project with token={secret}"
+            )
+        )
+
+        self.assertIn("verify_commercial_readiness failed.", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_platform_agent_assets.py", message)
+        self.assertIn("generate_platform_bundle_manifest.py", message)
+        self.assertNotIn(local_home, message)
+        self.assertNotIn(secret, message)
+        self.assertIn("<redacted>", message)
 
 
 if __name__ == "__main__":

@@ -10,12 +10,24 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 BUNDLE_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-bundle.json"
 
 FILES: list[tuple[str, str, str]] = [
+    (
+        "QUICKSTART.md",
+        "root_doc",
+        "Beginner-friendly quickstart guide.",
+    ),
+    (
+        "START_HERE.command",
+        "launcher",
+        "Double-click macOS beginner launcher.",
+    ),
     (
         "platform/study-anything-platform-tools.json",
         "source_manifest",
@@ -560,6 +572,51 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-platform-agent-replay.sha256",
         "generated_asset",
         "Platform Agent release replay evidence checksum.",
+    ),
+    (
+        "platform/generated/study-anything-codex-plugin-pack.json",
+        "generated_asset",
+        "Codex downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-codex-plugin-pack.zip",
+        "generated_asset",
+        "Codex downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-codex-plugin-pack.sha256",
+        "generated_asset",
+        "Codex downloadable plugin pack checksum.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.json",
+        "generated_asset",
+        "Kimi downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.zip",
+        "generated_asset",
+        "Kimi downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.sha256",
+        "generated_asset",
+        "Kimi downloadable plugin pack checksum.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.json",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack checksum.",
     ),
     (
         "docs/release-asset-bootstrap.md",
@@ -2067,6 +2124,11 @@ FILES: list[tuple[str, str, str]] = [
         "Local API launcher for Skill Mode and adoption verification.",
     ),
     (
+        "scripts/start_here.sh",
+        "runtime",
+        "Beginner-friendly one-command local launcher.",
+    ),
+    (
         "scripts/study_anything_cli.py",
         "cli",
         "Command-line learning loop and Agent evidence entrypoint.",
@@ -2075,6 +2137,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/install_local_plugin.py",
         "cli",
         "CLI for explicit local plugin quarantine and approved install.",
+    ),
+    (
+        "scripts/localhost_diagnostics.py",
+        "diagnostics",
+        "Shared localhost diagnostics and redaction helpers.",
     ),
     (
         "scripts/verify_clean_clone_adoption.py",
@@ -2110,6 +2177,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_importer_runtime_retrieval_flow.py",
         "verification",
         "Importer-runtime and retrieval verifier for local Agent platform flows.",
+    ),
+    (
+        "scripts/generate_platform_plugin_packs.py",
+        "verification",
+        "Generate downloadable Codex, Kimi, and WorkBuddy platform plugin packs.",
+    ),
+    (
+        "scripts/verify_platform_plugin_packs.py",
+        "verification",
+        "Verify platform plugin pack archives, manifests, hashes, and privacy boundaries.",
     ),
     (
         "scripts/verify_platform_ecosystem_eval_flow.py",
@@ -2215,6 +2292,16 @@ FILES: list[tuple[str, str, str]] = [
         "docs/github-launch.md",
         "docs",
         "GitHub launch, tag, release, and published-image verification guide.",
+    ),
+    (
+        "docs/getting-started.md",
+        "docs",
+        "Step-by-step first-run guide.",
+    ),
+    (
+        "docs/skill-mode.md",
+        "docs",
+        "Skill Mode startup and CLI guide.",
     ),
     (
         "docs/platform-agent-integrations.md",
@@ -2438,6 +2525,21 @@ class BundleManifestError(RuntimeError):
     """Readable bundle manifest failure."""
 
 
+def format_cli_failure(exc: BaseException) -> str:
+    message = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_bundle_manifest failed: {message}",
+            "",
+            "Next steps:",
+            "1. python3 scripts/generate_platform_bundle_manifest.py --check",
+            "2. python3 scripts/generate_platform_adoption_pack.py --check",
+            "3. python3 scripts/verify_ecosystem_submission_pack.py",
+            "4. python3 scripts/diagnose_adoption.py",
+        ]
+    )
+
+
 def load_json(path: Path) -> dict[str, Any]:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -2519,6 +2621,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
+            "python3 scripts/generate_platform_plugin_packs.py --check",
+            "python3 scripts/verify_platform_plugin_packs.py --check",
             "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
             "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
@@ -2599,5 +2703,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_platform_bundle_manifest failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

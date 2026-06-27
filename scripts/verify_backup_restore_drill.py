@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -19,10 +20,24 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import (
+    format_api_unreachable,
+    format_localhost_listen_blocked,
+    is_localhost_socket_blocked,
+    verifier_name_from_file,
+)
+
+
 COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.yml"
 SETUP_ENV = ROOT / "scripts" / "setup_env.py"
 SELF_HOST_DATA = ROOT / "scripts" / "self_host_data.py"
 VERIFY_FULL_API_FLOW = ROOT / "scripts" / "verify_full_api_flow.py"
+VERIFIER_NAME = verifier_name_from_file(__file__)
+PRIVATE_PROJECT_PREFIX = "study_anything_drill_"
 PORT_KEYS = (
     "API_PORT",
     "APP_POSTGRES_PORT",
@@ -51,6 +66,196 @@ SOURCE_COPY_EXCLUDES = (
     ".env",
     ".DS_Store",
 )
+
+
+def sanitize_text(value: str | bytes | None) -> str:
+    if value is None:
+        text = ""
+    elif isinstance(value, bytes):
+        text = value.decode("utf-8", errors="replace")
+    else:
+        text = value
+    text = re.sub(rf"{PRIVATE_PROJECT_PREFIX}\d+", "<compose-project>", text)
+    text = re.sub(r"/Users/[^\s\"'?&]+", "<local-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"/tmp/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"(?i)(api[_-]?key|secret|token|password|passphrase)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
+    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
+    text = re.sub(r"([?&](?:api[_-]?key|token|secret|password|passphrase)=)[^&\s\"']+", r"\1<redacted>", text, flags=re.IGNORECASE)
+    return text.strip()[:1800]
+
+
+def output_text(exc: BaseException) -> str:
+    parts = [str(exc)]
+    if isinstance(exc, subprocess.CalledProcessError):
+        parts.append("command=" + " ".join(str(part) for part in exc.cmd))
+        if exc.stdout:
+            parts.append("stdout=" + str(exc.stdout))
+        if exc.stderr:
+            parts.append("stderr=" + str(exc.stderr))
+    return "\n".join(parts)
+
+
+def classify_failure(message: str) -> str:
+    lowered = message.lower()
+    if (
+        "cannot allocate a local port" in lowered
+        or "runner appears to block localhost listening sockets" in lowered
+        or "operation not permitted" in lowered
+        or "permission denied" in lowered
+        or "localhost_socket_blocked" in lowered
+    ):
+        return "localhost_socket_blocked"
+    if "no such file or directory" in lowered and "docker" in lowered:
+        return "docker_missing"
+    if "docker compose" in lowered or "compose" in lowered:
+        if "up" in lowered:
+            return "docker_compose_up_failed"
+        if "down" in lowered:
+            return "docker_compose_cleanup_failed"
+        return "docker_compose_failed"
+    if "docker daemon" in lowered or "cannot connect to the docker daemon" in lowered:
+        return "docker_daemon_unavailable"
+    if "api did not become healthy" in lowered:
+        return "api_health_timeout"
+    if "verify_full_api_flow" in lowered or "full_api_flow" in lowered:
+        return "full_api_flow_failed"
+    if "baseline smoke flow did not create" in lowered or "mutation smoke did not increase" in lowered:
+        return "session_count_failed"
+    if "self_host_data.py" in lowered and "backup" in lowered:
+        return "backup_failed"
+    if "self_host_data.py" in lowered and "restore" in lowered:
+        return "restore_failed"
+    if "restore did not roll back" in lowered:
+        return "restore_failed"
+    if "restore api should remain disabled" in lowered:
+        return "recovery_status_failed"
+    if "json" in lowered and "decode" in lowered:
+        return "json_parse_failed"
+    if "source checkout path contains non-ascii" in lowered or "ascii source copy" in lowered:
+        return "ascii_reexec_failed"
+    return "backup_restore_drill_failed"
+
+
+def failure_next_steps(classification: str) -> list[str]:
+    common = [
+        "python3 scripts/verify_backup_restore_drill.py --no-build",
+        "python3 scripts/diagnose_adoption.py",
+        "./scripts/doctor.sh",
+    ]
+    matrix = {
+        "localhost_socket_blocked": [
+            "Run this Docker drill from a normal terminal or host shell that permits localhost listening sockets.",
+            "If this came from Codex or another sandboxed Agent, collect this blocked report and rerun outside the sandbox.",
+        ],
+        "docker_missing": [
+            "Install Docker Desktop or Docker Engine, then reopen the terminal so `docker` is on PATH.",
+            "Use Skill Mode for a no-Docker smoke while Docker is unavailable.",
+        ],
+        "docker_daemon_unavailable": [
+            "Start Docker Desktop or the Docker daemon.",
+            "Run `docker info` and `docker compose version` before rerunning the drill.",
+        ],
+        "docker_compose_up_failed": [
+            "Run `./scripts/doctor.sh` to check Docker, ports, Compose, and env files.",
+            "Retry with `--no-build` if the image already exists and local builds are the blocker.",
+        ],
+        "docker_compose_failed": [
+            "Inspect the Docker Compose stderr and rerun `docker compose config`.",
+            "Run `./scripts/doctor.sh` for port and Docker diagnostics.",
+        ],
+        "docker_compose_cleanup_failed": [
+            "Cleanup failed after the drill; run `docker compose down -v --remove-orphans` for the printed project manually.",
+            "Do not publish the drill transcript until disposable resources are cleaned up.",
+        ],
+        "api_health_timeout": [
+            "Inspect API container logs and the generated disposable `.env` if you kept the drill on failure.",
+            "Increase `--timeout` on slow machines.",
+        ],
+        "full_api_flow_failed": [
+            "Run `API_BASE=<drill-api> python3 scripts/verify_full_api_flow.py` to isolate API flow failures.",
+            "Check the structured JSON emitted by `verify_full_api_flow.py`.",
+        ],
+        "session_count_failed": [
+            "Inspect Postgres state in the disposable stack; backup/restore evidence needs session count changes.",
+            "Rerun after confirming the full API smoke creates sessions.",
+        ],
+        "backup_failed": [
+            "Run `python3 scripts/self_host_data.py backup --help` and inspect backup manifest diagnostics.",
+            "Do not proceed to restore until backup manifest verification passes.",
+        ],
+        "restore_failed": [
+            "Inspect restore output and Postgres container logs.",
+            "Keep the drill with `--keep-on-failure` for local debugging.",
+        ],
+        "recovery_status_failed": [
+            "Recovery status must keep destructive API restore disabled.",
+            "Run `python3 scripts/verify_security_recovery_hardening.py` before this drill.",
+        ],
+        "json_parse_failed": [
+            "A nested verifier returned non-JSON output; inspect its stderr and rerun it directly.",
+            "Confirm the nested verifier and API come from the same checkout.",
+        ],
+        "ascii_reexec_failed": [
+            "Use an ASCII-only checkout path for Docker source builds, or use published images/Skill Mode.",
+            "If the script kept an ASCII temp copy, inspect it locally and remove it after debugging.",
+        ],
+    }
+    return matrix.get(classification, ["Rerun the backup/restore drill after fixing the reported invariant."]) + common
+
+
+def failure_report(exc: BaseException) -> dict[str, Any]:
+    diagnostic = sanitize_text(output_text(exc))
+    classification = classify_failure(diagnostic)
+    report = {
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": diagnostic,
+        "next_steps": failure_next_steps(classification),
+        "source": {
+            "verifier": VERIFIER_NAME,
+            "compose_file": sanitize_text(str(COMPOSE_FILE.relative_to(ROOT))),
+        },
+        "privacy": {
+            "env_file_paths_included": False,
+            "backup_paths_included": False,
+            "local_absolute_paths_included": False,
+            "generated_secrets_included": False,
+            "learner_answers_included": False,
+            "raw_source_text_included": False,
+        },
+    }
+    assert_failure_report_redacted(report)
+    return report
+
+
+def format_cli_failure(report: dict[str, Any]) -> str:
+    lines = [
+        "verify_backup_restore_drill failed:",
+        f"classification: {report.get('classification')}",
+        f"Diagnostic: {report.get('diagnostic')}",
+        "Next steps:",
+    ]
+    lines.extend(f"- {step}" for step in report.get("next_steps", []))
+    return "\n".join(lines)
+
+
+def assert_failure_report_redacted(report: dict[str, Any]) -> None:
+    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
+    leaks: list[str] = []
+    if re.search(r"/Users/[^\s\"']+", serialized):
+        leaks.append("local absolute path")
+    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
+        leaks.append("local temp path")
+    if re.search(r"/tmp/[^\s\"']+", serialized):
+        leaks.append("tmp path")
+    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
+        leaks.append("secret-looking sk token")
+    if re.search(rf"{PRIVATE_PROJECT_PREFIX}\d+", serialized):
+        leaks.append("compose project name")
+    if leaks:
+        raise RuntimeError(f"Backup/restore drill failure report leaked private data: {leaks}")
 
 
 def run(
@@ -87,7 +292,7 @@ def maybe_reexec_from_ascii_copy(keep_on_failure: bool) -> None:
     target = parent / "study-anything"
     print(
         "Source checkout path contains non-ASCII characters; copying to an ASCII temp path "
-        f"for Docker BuildKit: {target}",
+        f"for Docker BuildKit: {sanitize_text(str(target))}",
         file=sys.stderr,
     )
     shutil.copytree(
@@ -103,13 +308,20 @@ def maybe_reexec_from_ascii_copy(keep_on_failure: bool) -> None:
     if result.returncode == 0 or not keep_on_failure:
         shutil.rmtree(parent, ignore_errors=True)
     else:
-        print(f"Kept ASCII source copy for debugging: {target}", file=sys.stderr)
+        print(f"Kept ASCII source copy for debugging: {sanitize_text(str(target))}", file=sys.stderr)
     raise SystemExit(result.returncode)
 
 
 def free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind(("127.0.0.1", 0))
+        try:
+            sock.bind(("127.0.0.1", 0))
+        except OSError as exc:
+            if is_localhost_socket_blocked(exc):
+                raise RuntimeError(
+                    format_localhost_listen_blocked(verifier=VERIFIER_NAME)
+                ) from exc
+            raise
         return int(sock.getsockname()[1])
 
 
@@ -127,7 +339,7 @@ def compose(env_file: Path, *args: str, profiles: tuple[str, ...] = ()) -> list[
 
 def create_disposable_env(work_dir: Path, project_name: str) -> Path:
     env_file = work_dir / ".env"
-    run([sys.executable, str(SETUP_ENV), "--force", "--output", str(env_file)])
+    run([sys.executable, str(SETUP_ENV), "--force", "--output", str(env_file)], capture_output=True)
     additions = {
         "COMPOSE_PROJECT_NAME": project_name,
         "STACK_PROFILE": "core",
@@ -151,8 +363,17 @@ def parse_env(path: Path) -> dict[str, str]:
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in line:
             continue
-        key, value = line.split("=", 1)
-        values[key.strip()] = value.strip().strip("'\"")
+        if stripped.startswith("export "):
+            stripped = stripped[len("export ") :].lstrip()
+        key, value = stripped.split("=", 1)
+        raw_value = value.strip()
+        if raw_value.startswith(("'", '"')):
+            quote = raw_value[0]
+            end = raw_value.find(quote, 1)
+            parsed_value = raw_value[1:end] if end != -1 else raw_value[1:]
+        else:
+            parsed_value = re.split(r"\s+#", raw_value, maxsplit=1)[0].strip()
+        values[key.strip()] = parsed_value
     return values
 
 
@@ -164,7 +385,10 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
             request_json(api_base, "/v1/health")
             return
         except (HTTPError, URLError, TimeoutError, OSError, RuntimeError) as exc:
-            last_error = str(exc)
+            if isinstance(exc, (URLError, TimeoutError, OSError)):
+                last_error = format_api_unreachable(api_base, exc, verifier=VERIFIER_NAME)
+            else:
+                last_error = str(exc)
             time.sleep(2)
     raise RuntimeError(f"API did not become healthy within {timeout_seconds}s: {last_error}")
 
@@ -321,5 +545,7 @@ if __name__ == "__main__":
     try:
         main()
     except (OSError, RuntimeError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
-        print(f"verify_backup_restore_drill failed: {exc}", file=sys.stderr)
+        report = failure_report(exc)
+        print(json.dumps(report, ensure_ascii=False, sort_keys=True))
+        print(format_cli_failure(report), file=sys.stderr)
         sys.exit(1)

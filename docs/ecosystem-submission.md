@@ -121,6 +121,16 @@ commands, and no plugin entrypoint execution during validation.
 
 ## Submission Targets
 
+For download-first adoption, use the generated plugin packs:
+
+- `platform/generated/study-anything-codex-plugin-pack.zip`
+- `platform/generated/study-anything-kimi-plugin-pack.zip`
+- `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+
+Each archive has a sidecar `.json` manifest and `.sha256` checksum. These are import helpers for
+local-first usage, not marketplace listings. The user still runs Study Anything locally or on a
+private endpoint, and the host Agent owns real model credentials and outside tools.
+
 Kimi-compatible platforms should use
 `platform/generated/study-anything-openai-tools.json` or
 `platform/generated/study-anything-platform-openapi.json`, then follow
@@ -165,6 +175,8 @@ python3 scripts/verify_platform_onboarding_readiness.py --check
 python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
 python3 scripts/generate_published_image_evidence.py --check
 python3 scripts/verify_published_image_evidence.py --check
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/verify_platform_ecosystem_packs.py
 python3 scripts/generate_platform_bundle_manifest.py --check
 python3 scripts/generate_platform_adoption_pack.py --check

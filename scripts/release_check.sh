@@ -19,13 +19,13 @@ fi
 if ! "$python_bin" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)'; then
   printf "error Python 3.11+ is required. Create a project virtualenv with:\n" >&2
   printf "  python3.11 -m venv .venv\n" >&2
-  printf "  .venv/bin/python -m pip install -e .\n" >&2
+  printf "  .venv/bin/python -m pip install -e '.[dev,full]'\n" >&2
   exit 1
 fi
 
 if ! "$python_bin" -c 'import fastapi' >/dev/null 2>&1; then
   printf "error API dependencies are missing for %s. Install them with:\n" "$python_bin" >&2
-  printf "  %s -m pip install -e .\n" "$python_bin" >&2
+  printf "  %s -m pip install -e '.[dev,full]'\n" "$python_bin" >&2
   exit 1
 fi
 
@@ -150,6 +150,8 @@ fi
 "$python_bin" scripts/verify_release_stack_manifest_fixtures.py --check
 "$python_bin" scripts/verify_release_stack_intake_candidate.py --check
 "$python_bin" scripts/verify_release_stack_candidate_promotion.py --check
+"$python_bin" scripts/generate_platform_plugin_packs.py --check
+"$python_bin" scripts/verify_platform_plugin_packs.py --check
 "$python_bin" scripts/generate_platform_bundle_manifest.py --check
 "$python_bin" scripts/verify_platform_operator_drill.py --check
 "$python_bin" scripts/generate_platform_adoption_pack.py --check
@@ -162,7 +164,13 @@ fi
   --python "$python_bin"
 "$python_bin" scripts/verify_agent_eval_assets.py
 "$python_bin" scripts/verify_agent_eval_baseline.py --check
-"$python_bin" scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
+SKILL_PIP_INSTALL_TIMEOUT_SECONDS="${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-1200}" \
+  PIP_DEFAULT_TIMEOUT="${PIP_DEFAULT_TIMEOUT:-120}" \
+  PIP_RETRIES="${PIP_RETRIES:-1}" \
+  "$python_bin" scripts/verify_clean_clone_adoption.py \
+    --repo . \
+    --copy-worktree \
+    --timeout-seconds "${STUDY_ANYTHING_CLEAN_CLONE_TIMEOUT_SECONDS:-1800}"
 "$python_bin" scripts/diagnose_adoption.py --ghcr-timeout-seconds 5
 "$python_bin" -m unittest discover apps/api/tests
 "$python_bin" scripts/smoke_core.py

@@ -11,7 +11,7 @@ COPY pyproject.toml README.md ./
 COPY apps/api ./apps/api
 
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -e .
+    && pip install --no-cache-dir -e '.[full]'
 
 COPY plugins ./plugins
 COPY scripts/mock_http_agent.py ./scripts/mock_http_agent.py

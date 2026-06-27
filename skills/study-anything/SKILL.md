@@ -298,7 +298,10 @@ branch, and decision only; it does not read GitHub tokens, annotations, artifact
 ## Start A Learning Loop
 
 1. Check API health.
-2. Start a source-bound session. Use `--agent-mode demo` only for local demos and smoke tests. Use `configured` for a user-owned agent.
+2. Start a source-bound session. The CLI default `--agent-mode auto` uses configured Agent defaults
+   when the common learning capabilities are routed, and falls back to the zero-key demo Agent when
+   no Agent is configured. Use `--agent-mode demo` only for local demos and smoke tests. Use
+   `--agent-mode configured` only when explicitly debugging configured-Agent routing.
 3. Read the generated question from the command output.
 4. Submit the user's answer. Omit `--item-id` to answer the first unanswered question.
 5. Report the mastery level, feedback, insight, and any open HITL task.
@@ -349,6 +352,8 @@ python3 scripts/study_anything_cli.py context-import \
 The package schema is `learning-context-package-v1`. It supports `web`, `document`, `video_slice`,
 `app_context`, `markdown_note`, and `obsidian_note`. Do not put model keys, agent secrets, or broad
 unbounded workspace dumps into the package.
+For import commands, bare `--session` prints the created/expanded session summary. Use
+`--session SESSION_ID` or `--session-id SESSION_ID` to expand an existing session.
 
 When a reviewed local importer plugin is available, use the controlled importer runtime instead of
 manually assembling the package:
@@ -403,7 +408,12 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --set-default
 ```
 
-Run `agent-test PROVIDER_ID` after configuration. Start real sessions with `--agent-mode configured`.
+Run `agent-test` after configuration. After `--set-default`, new sessions use the
+configured Agent automatically through `--agent-mode auto`; add `--agent-mode configured` only when
+you need to force configured routing while debugging.
+If `auto` reports missing default capabilities and falls back to demo, run `agents`, then route the
+provider with `agent-set-default PROVIDER_ID` unless the user intentionally configured split
+providers with explicit `--capability` values.
 
 ## Inspect And Resume
 

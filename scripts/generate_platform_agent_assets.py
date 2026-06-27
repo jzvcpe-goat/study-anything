@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Tuple
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "platform" / "study-anything-platform-tools.json"
@@ -23,6 +25,22 @@ PATH_PARAM_RE = re.compile(r"{([^}]+)}")
 
 class AssetGenerationError(RuntimeError):
     """Readable generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_agent_assets failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild platform Agent assets: python3 scripts/generate_platform_agent_assets.py",
+            "2. Re-check platform Agent assets: python3 scripts/generate_platform_agent_assets.py --check",
+            "3. Verify platform Agent tools: python3 scripts/verify_platform_agent_tools.py",
+            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def load_manifest(path: Path = MANIFEST_PATH) -> Dict[str, Any]:
@@ -283,6 +301,6 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except AssetGenerationError as exc:
-        print(f"generate_platform_agent_assets failed: {exc}", file=sys.stderr)
+    except Exception as exc:
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

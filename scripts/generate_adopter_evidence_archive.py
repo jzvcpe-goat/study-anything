@@ -63,10 +63,6 @@ PUBLIC_ASSET_PATHS = (
     "platform/generated/study-anything-published-image-evidence.md",
     "platform/generated/study-anything-published-image-evidence.zip",
     "platform/generated/study-anything-published-image-evidence.sha256",
-    "platform/generated/study-anything-release-asset-adoption.json",
-    "platform/generated/study-anything-release-asset-adoption.md",
-    "platform/generated/study-anything-release-asset-adoption.zip",
-    "platform/generated/study-anything-release-asset-adoption.sha256",
     "platform/generated/study-anything-operator-drill-transcript.json",
     "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
     "platform/packs/codex/pack.json",
@@ -250,11 +246,15 @@ def schema_source_refs() -> dict[str, Any]:
         },
         "release_asset_adoption": {
             "schema_version": release_asset_adoption.get("schema_version"),
-            "ref": public_file_ref("platform/generated/study-anything-release-asset-adoption.json"),
             "verification_command": (
                 "python3 scripts/verify_release_asset_adoption.py "
                 "--fixture fixtures/release-asset-adoption/asset-only-pass.json "
                 "--asset-dir platform/generated --runtime metadata-only"
+            ),
+            "generation_command": "python3 scripts/generate_release_asset_adoption.py --check",
+            "note": (
+                "Release asset adoption includes this evidence archive, so its manifest and zip "
+                "hashes are verified by command instead of embedded here."
             ),
         },
         "platform_adoption_pack": {

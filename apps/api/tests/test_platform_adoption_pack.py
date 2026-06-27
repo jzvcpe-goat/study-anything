@@ -75,6 +75,15 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-feedback-package.zip",
+            "platform/generated/study-anything-codex-plugin-pack.json",
+            "platform/generated/study-anything-codex-plugin-pack.zip",
+            "platform/generated/study-anything-codex-plugin-pack.sha256",
+            "platform/generated/study-anything-kimi-plugin-pack.json",
+            "platform/generated/study-anything-kimi-plugin-pack.zip",
+            "platform/generated/study-anything-kimi-plugin-pack.sha256",
+            "platform/generated/study-anything-workbuddy-plugin-pack.json",
+            "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+            "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
             "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform/generated/study-anything-platform-support-triage.json",
             "platform/generated/study-anything-platform-onboarding-readiness.json",
@@ -173,6 +182,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "scripts/verify_external_eval_marketplace_harness.py",
             "scripts/verify_agent_eval_marketplace_enforcement.py",
             "scripts/verify_platform_adoption_feedback_diagnostics.py",
+            "scripts/generate_platform_plugin_packs.py",
+            "scripts/verify_platform_plugin_packs.py",
             "scripts/generate_platform_feedback_package.py",
             "scripts/generate_platform_field_rehearsal.py",
             "scripts/verify_platform_field_rehearsal.py",
@@ -228,6 +239,7 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("cognitive-black-box-okf-bundle-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("agent-eval-marketplace-enforcement-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-adoption-feedback-diagnostics-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("study-anything-platform-plugin-pack-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-onboarding-readiness-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-triage-dashboard-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-release-blocker-fixture-v1", manifest["acceptance"]["must_verify"])

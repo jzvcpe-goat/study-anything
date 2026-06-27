@@ -14,6 +14,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
@@ -118,6 +120,22 @@ FORBIDDEN_PROOF_PATTERNS = [
 
 class OperatorDrillError(RuntimeError):
     """Readable operator-drill failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_platform_operator_drill failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py",
+            "2. Refresh the operator drill transcript: python3 scripts/verify_platform_operator_drill.py --write",
+            "3. Re-check the operator drill transcript: python3 scripts/verify_platform_operator_drill.py --check",
+            "4. Re-run ecosystem submission verification: python3 scripts/verify_ecosystem_submission_pack.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def read_json(path: Path) -> Any:
@@ -519,5 +537,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_operator_drill failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

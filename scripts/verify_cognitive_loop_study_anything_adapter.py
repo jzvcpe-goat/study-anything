@@ -238,4 +238,3 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"verify_cognitive_loop_study_anything_adapter failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
-

@@ -1,0 +1,222 @@
+{
+  "archive": {
+    "bytes": 129009,
+    "path": "platform/generated/study-anything-codex-plugin-pack.zip",
+    "root": "study-anything-codex-plugin-pack",
+    "sha256": "428fc724b032769e17bde88c2fa926bb39800625b0f1a6d8a81bb2dce5fea705"
+  },
+  "entrypoints": {
+    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+    "cli": "scripts/study_anything_cli.py",
+    "demo": "scripts/run_skill_mode_demo.sh",
+    "skill": "skills/study-anything/SKILL.md"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-codex-plugin-pack/README.md",
+      "bytes": 37493,
+      "kind": "root_doc",
+      "path": "README.md",
+      "purpose": "Project positioning and local-first adoption overview.",
+      "sha256": "ffd306aee68670ffad7a25f5546c8b018dc3cf5d073e2a78b18a35ddab22a2c9"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/QUICKSTART.md",
+      "bytes": 1258,
+      "kind": "quickstart",
+      "path": "QUICKSTART.md",
+      "purpose": "Beginner-friendly quickstart entrypoint.",
+      "sha256": "11e6c8c29d9516e94d499eace7fbfb581a31220cbaf1a97d0c31c7935df615f5"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/START_HERE.command",
+      "bytes": 1112,
+      "kind": "launcher",
+      "path": "START_HERE.command",
+      "purpose": "Double-click macOS beginner launcher.",
+      "sha256": "03d6e9affc81ecc8cee8cf024f562d6f1c4b5b758d7aa62fbce73992cc059e6b"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/docs/getting-started.md",
+      "bytes": 5247,
+      "kind": "operator_doc",
+      "path": "docs/getting-started.md",
+      "purpose": "Step-by-step first-run guide.",
+      "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/docs/operator-drill.md",
+      "bytes": 3296,
+      "kind": "operator_doc",
+      "path": "docs/operator-drill.md",
+      "purpose": "External platform operator drill.",
+      "sha256": "974633f1f295665339bcf8d9cf9850e33bdb715dc3cfae0708749316a2d5257e"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/platform/study-anything-platform-tools.json",
+      "bytes": 47347,
+      "kind": "tool_manifest",
+      "path": "platform/study-anything-platform-tools.json",
+      "purpose": "Source platform tool contract.",
+      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/platform/generated/study-anything-tool-catalog.md",
+      "bytes": 24007,
+      "kind": "tool_catalog",
+      "path": "platform/generated/study-anything-tool-catalog.md",
+      "purpose": "Human-readable platform tool catalog.",
+      "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/start_here.sh",
+      "bytes": 10068,
+      "kind": "launcher",
+      "path": "scripts/start_here.sh",
+      "purpose": "One-command local runtime launcher.",
+      "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/launch_skill_mode.sh",
+      "bytes": 27321,
+      "kind": "runtime",
+      "path": "scripts/launch_skill_mode.sh",
+      "purpose": "Local Skill Mode API launcher.",
+      "sha256": "d34df18cb73f4bd4de4ba75abca206b09dbdc1d61fca60c2a7a1d1e7521edff2"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/stop_skill_mode.sh",
+      "bytes": 6063,
+      "kind": "runtime",
+      "path": "scripts/stop_skill_mode.sh",
+      "purpose": "Local Skill Mode API stop helper.",
+      "sha256": "0e253c59de751487b72d07103d29d86d4f35347992b2ccc652ec76eceef40b4f"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/run_skill_mode_demo.sh",
+      "bytes": 10135,
+      "kind": "verification",
+      "path": "scripts/run_skill_mode_demo.sh",
+      "purpose": "One-command local demo and smoke check.",
+      "sha256": "8c5a5ee73293e9945b872c51bc37205408feb6c0202cdf86475ce584023a0bbd"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/study_anything_cli.py",
+      "bytes": 136781,
+      "kind": "cli",
+      "path": "scripts/study_anything_cli.py",
+      "purpose": "CLI for learning loop and evidence commands.",
+      "sha256": "c5fdc5bd64c0050d7e1686b7bd754a6cfa1ecad5305779c27213d0b948cdbc68"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/localhost_diagnostics.py",
+      "bytes": 8669,
+      "kind": "diagnostics",
+      "path": "scripts/localhost_diagnostics.py",
+      "purpose": "Shared localhost diagnostics and redaction helpers.",
+      "sha256": "aa0bbe62ea68497e45c8621755e303b39d6da90cf956bb64935c6cd4d1008cf1"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/verify_platform_agent_tools.py",
+      "bytes": 47018,
+      "kind": "verification",
+      "path": "scripts/verify_platform_agent_tools.py",
+      "purpose": "Live local API tool-surface verifier.",
+      "sha256": "1a4ab6e2964ca51199a8edda35c9ec31dcd7493260bba89fd733a25bb329937c"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/scripts/verify_external_adoption.py",
+      "bytes": 68921,
+      "kind": "verification",
+      "path": "scripts/verify_external_adoption.py",
+      "purpose": "Extracted adoption-pack verifier.",
+      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/docs/skill-mode.md",
+      "bytes": 11755,
+      "kind": "operator_doc",
+      "path": "docs/skill-mode.md",
+      "purpose": "Skill Mode startup and CLI guide.",
+      "sha256": "d552a1d10d1dce5980c1f7044e39120e0661ef527ab50ef23073f9e24a3d4c1d"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/README.md",
+      "bytes": 23882,
+      "kind": "platform_pack",
+      "path": "platform/packs/codex/README.md",
+      "purpose": "Codex-specific import guide.",
+      "sha256": "e940c780e718adb7c2cda596f4956627e379df962e4041dac76ce09e993e7a3d"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/pack.json",
+      "bytes": 29212,
+      "kind": "platform_pack",
+      "path": "platform/packs/codex/pack.json",
+      "purpose": "Codex platform pack source descriptor.",
+      "sha256": "727728dc3439f03cac32a495fb6844eade25bcee4be8c0727b6331bcca91e15c"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/skills/study-anything/SKILL.md",
+      "bytes": 25327,
+      "kind": "skill",
+      "path": "skills/study-anything/SKILL.md",
+      "purpose": "Codex Skill entrypoint.",
+      "sha256": "107e7be78e17716cb070bc160339b3e1353121a0454a5e75256f01f66696b618"
+    },
+    {
+      "archive_path": "study-anything-codex-plugin-pack/skills/study-anything/agents/openai.yaml",
+      "bytes": 201,
+      "kind": "skill_metadata",
+      "path": "skills/study-anything/agents/openai.yaml",
+      "purpose": "OpenAI-compatible Skill agent metadata.",
+      "sha256": "5ac2f5a40ffa82109f0f524f5c350254f9dea6e4ca6d24eba6b84f9060a70bea"
+    }
+  ],
+  "import_assets": [
+    "skills/study-anything/SKILL.md",
+    "skills/study-anything/agents/openai.yaml",
+    "platform/packs/codex/pack.json",
+    "platform/generated/study-anything-tool-catalog.md"
+  ],
+  "known_limitations": [
+    "Requires a local checkout or extracted runtime files that can execute shell commands.",
+    "Does not install a marketplace extension automatically.",
+    "Real model credentials stay inside the user's platform Agent or gateway, not Study Anything."
+  ],
+  "local_runtime": {
+    "api_base": "http://127.0.0.1:8000",
+    "beginner_launcher": "./START_HERE.command",
+    "script_launcher": "./scripts/start_here.sh",
+    "skill_mode": "./scripts/launch_skill_mode.sh",
+    "stop": "./scripts/stop_skill_mode.sh"
+  },
+  "name": "study-anything-codex-plugin-pack",
+  "package_type": "terminal_skill",
+  "platform_id": "codex",
+  "privacy_boundaries": {
+    "must_not_store_or_share": [
+      "raw source text",
+      "learner answers",
+      "grading feedback",
+      "generated insights",
+      "agent endpoints",
+      "agent metadata",
+      "API keys or model secrets",
+      "raw user ids",
+      "browser/video/app private context"
+    ],
+    "real_model_keys": "owned by the user's platform Agent or private gateway",
+    "study_anything_stores": "local learning state, validation evidence, redacted audit metadata"
+  },
+  "schema_version": "study-anything-platform-plugin-pack-v1",
+  "source_pack": "platform/packs/codex/pack.json",
+  "source_pack_sha256": "727728dc3439f03cac32a495fb6844eade25bcee4be8c0727b6331bcca91e15c",
+  "summary": "Install the repo-local Skill in Codex or another terminal-capable Agent and let that Agent call the local Study Anything runtime.",
+  "title": "Study Anything Codex Plugin Pack",
+  "verification_commands": [
+    "./START_HERE.command",
+    "python3 scripts/study_anything_cli.py health",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py"
+  ]
+}

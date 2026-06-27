@@ -201,6 +201,14 @@ For the full adoption smoke from a disposable clone:
 python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
 ```
 
+When a sandbox blocks automatic localhost port probing, pin the disposable Skill Mode API and the
+optional Promptfoo eval API separately:
+
+```bash
+python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo \
+  --api-port 8012 --promptfoo-api-port 8013
+```
+
 If the output is `status=ok`, the Promptfoo path consumed the redacted artifact successfully. That is
 still a contract/evidence gate, not a claim that the Agent's teaching quality is good.
 
@@ -328,7 +336,7 @@ When checking a user-owned HTTP Agent path, set:
 
 ```bash
 python3 scripts/mock_http_agent.py --host 127.0.0.1 --port 8787
-EXPECT_EXTERNAL_AGENT=true API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787 \
+EXPECT_EXTERNAL_AGENT=true API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://127.0.0.1:8787/invoke \
   python3 scripts/verify_agent_eval_flow.py
 ```
 

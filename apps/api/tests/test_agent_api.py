@@ -70,6 +70,25 @@ class AgentApiTests(unittest.TestCase):
         self.assertIn("http://127.0.0.1:8787/invoke?mode=local", status.text)
         self.assertNotIn("Authorization", status.text)
 
+    def test_agent_provider_api_normalises_gateway_root_endpoint(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            client, stack = self._client(Path(tmpdir))
+            with stack, client:
+                created = client.post(
+                    "/v1/agents/providers",
+                    json={
+                        "kind": "http_agent",
+                        "label": "Root HTTP Agent",
+                        "endpoint": "127.0.0.1:8787",
+                        "capabilities": ["quiz.generate"],
+                    },
+                )
+                status = client.get("/v1/agents/status")
+
+        self.assertEqual(created.status_code, 200)
+        self.assertEqual(created.json()["endpoint"], "http://127.0.0.1:8787/invoke")
+        self.assertIn("http://127.0.0.1:8787/invoke", status.text)
+
     def test_agent_provider_rejects_inline_endpoint_secret(self) -> None:
         with TemporaryDirectory() as tmpdir:
             client, stack = self._client(Path(tmpdir))
@@ -135,7 +154,12 @@ class AgentApiTests(unittest.TestCase):
         class ServerContext:
             def __enter__(self_inner) -> str:
                 _InvalidAgentHandler.response = response
-                self_inner.server = HTTPServer(("127.0.0.1", 0), _InvalidAgentHandler)
+                try:
+                    self_inner.server = HTTPServer(("127.0.0.1", 0), _InvalidAgentHandler)
+                except PermissionError as exc:
+                    raise unittest.SkipTest(
+                        "localhost listening sockets are unavailable in this runner"
+                    ) from exc
                 self_inner.thread = threading.Thread(
                     target=self_inner.server.serve_forever,
                     daemon=True,

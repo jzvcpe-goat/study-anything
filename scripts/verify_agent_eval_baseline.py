@@ -30,6 +30,70 @@ class AgentEvalBaselineError(RuntimeError):
     """Readable baseline failure."""
 
 
+def sanitize_text(value: object) -> str:
+    text = str(value)
+    text = re.sub(r"/private/tmp/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/tmp/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/Users/[^\s\"']+", "<local-path>", text)
+    text = re.sub(
+        r"(?i)(Authorization\s*:\s*)Bearer\s+[A-Za-z0-9._~+/=-]{8,}",
+        r"\1Bearer <redacted>",
+        text,
+    )
+    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
+    text = re.sub(
+        r"(?i)\b(api[_-]?key|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}",
+        r"\1=<redacted>",
+        text,
+    )
+    return text
+
+
+def runtime_failure_payload(
+    *,
+    classification: str,
+    diagnostic: object,
+    details: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    payload = {
+        "schema_version": "agent-eval-baseline-error-v1",
+        "status": "blocked",
+        "classification": sanitize_text(classification),
+        "diagnostic": sanitize_text(diagnostic),
+        "details": {str(key): sanitize_text(value) for key, value in (details or {}).items()},
+        "next_steps": [
+            ".venv/bin/python scripts/verify_agent_eval_baseline.py --check",
+            ".venv/bin/python scripts/verify_agent_eval_baseline.py --write",
+            ".venv/bin/python scripts/verify_agent_eval_assets.py",
+            "docs/agent-eval.md",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+    return payload
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    payload = runtime_failure_payload(
+        classification="agent_eval_baseline_failed",
+        diagnostic=str(exc),
+    )
+    return "\n".join(
+        [
+            f"verify_agent_eval_baseline failed: {payload['diagnostic']}",
+            "Next steps:",
+            "- .venv/bin/python scripts/verify_agent_eval_baseline.py --check",
+            "- .venv/bin/python scripts/verify_agent_eval_baseline.py --write",
+            "- .venv/bin/python scripts/verify_agent_eval_assets.py",
+            "- Read docs/agent-eval.md",
+        ]
+    )
+
+
 def dump_json(payload: Any) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
@@ -625,5 +689,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_agent_eval_baseline failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

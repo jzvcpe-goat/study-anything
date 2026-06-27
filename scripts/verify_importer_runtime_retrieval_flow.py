@@ -8,18 +8,222 @@ import json
 import os
 import re
 import sys
+from pathlib import Path
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 
-API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://127.0.0.1:8000")).rstrip("/")
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import (
+    format_api_unreachable,
+    redact_diagnostic,
+    resolve_api_base,
+    verifier_name_from_file,
+)
+
+
+API_BASE = resolve_api_base()
 REQUEST_TIMEOUT_SECONDS = int(os.getenv("IMPORTER_RETRIEVAL_TIMEOUT_SECONDS", "15"))
+VERIFIER_NAME = verifier_name_from_file(__file__)
+DEFAULT_PRIVATE_USER = "importer-runtime-retrieval-smoke-user"
+DEFAULT_EXCERPT = (
+    "AI product learning improves when a learner connects overall product intent, "
+    "technical vocabulary, source evidence, feedback, and spaced review."
+)
+DEFAULT_QUERY = "AI product learning feedback vocabulary"
+DEFAULT_ANSWER = "The lesson connects source evidence to feedback and review."
+FORBIDDEN_LITERALS = (
+    DEFAULT_PRIVATE_USER,
+    DEFAULT_EXCERPT,
+    DEFAULT_ANSWER,
+    "OPENAI_API_KEY",
+    "MOONSHOT_API_KEY",
+    "AGENT_LLM_API_KEY=",
+    "raw_source_text=",
+    "learner_answer=",
+)
 
 
 class VerificationError(RuntimeError):
     """Readable smoke failure."""
+
+
+def sanitize_text(value: str | bytes | None) -> str:
+    if value is None:
+        text = ""
+    elif isinstance(value, bytes):
+        text = value.decode("utf-8", errors="replace")
+    else:
+        text = value
+    text = text.replace(DEFAULT_PRIVATE_USER, "<private-user>")
+    text = text.replace(DEFAULT_EXCERPT, "<private-source-text>")
+    text = text.replace(DEFAULT_ANSWER, "<private-answer>")
+    text = re.sub(r"(?i)ai product learning improves[^\"']*", "<private-source-text>", text)
+    text = re.sub(r"(?i)the lesson connects source evidence[^\"']*", "<private-answer>", text)
+    return redact_diagnostic(text).strip()[:1600]
+
+
+def classify_failure(message: str) -> str:
+    lowered = message.lower()
+    if (
+        "runner appears to block localhost sockets" in lowered
+        or "blocks localhost" in lowered
+        or "operation not permitted" in lowered
+        or "permission denied" in lowered
+        or "localhost_socket_blocked" in lowered
+    ):
+        return "localhost_socket_blocked"
+    if "cannot reach" in lowered or "connection refused" in lowered or "urlopen error" in lowered:
+        return "api_unreachable"
+    if "health check failed" in lowered:
+        return "api_health_not_ok"
+    if "retrieval is not healthy" in lowered:
+        return "retrieval_unhealthy"
+    if "importer did not return" in lowered or "importer package did not create" in lowered:
+        return "importer_context_failed"
+    if "retrieval rebuild indexed no documents" in lowered:
+        return "retrieval_rebuild_failed"
+    if "retrieval search returned no results" in lowered:
+        return "retrieval_search_failed"
+    if "retrieval quality eval did not pass" in lowered:
+        return "retrieval_quality_failed"
+    if "lesson did not complete" in lowered or "session did not produce quiz items" in lowered:
+        return "learning_flow_incomplete"
+    if "quality eval did not pass" in lowered:
+        return "quality_eval_failed"
+    if "agent eval report native gate failed" in lowered:
+        return "agent_eval_failed"
+    if "leaked secret-looking" in lowered or "leaked private" in lowered:
+        return "privacy_leak"
+    if "returned invalid schema" in lowered:
+        return "response_schema_invalid"
+    return "importer_runtime_retrieval_failed"
+
+
+def failure_next_steps(classification: str) -> list[str]:
+    common = [
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory ./scripts/launch_skill_mode.sh",
+        f"API_BASE={API_BASE} python3 scripts/verify_importer_runtime_retrieval_flow.py",
+        "python3 scripts/diagnose_adoption.py",
+    ]
+    matrix = {
+        "localhost_socket_blocked": [
+            "Run the verifier from a normal terminal or host shell that permits localhost sockets.",
+            "If this came from Codex or another sandboxed Agent, collect this blocked report and rerun outside the sandbox.",
+        ],
+        "api_unreachable": [
+            "Start the Study Anything API first with in-memory retrieval for a zero-config smoke.",
+            "If the API is already running on another port, pass it with `API_BASE=http://127.0.0.1:<port>`.",
+        ],
+        "api_health_not_ok": [
+            "Open `/v1/health` on the configured API_BASE and inspect the reported service status.",
+            "Restart Skill Mode with retrieval enabled, then rerun this verifier.",
+        ],
+        "retrieval_unhealthy": [
+            "For local smoke, set `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory` before starting Skill Mode.",
+            "For full stack, enable and verify LanceDB before rerunning retrieval evidence.",
+        ],
+        "importer_context_failed": [
+            "Validate importer output independently with the context-package APIs.",
+            "Run `python3 scripts/verify_importer_lesson_flow.py` first to isolate importer/package issues.",
+        ],
+        "retrieval_rebuild_failed": [
+            "Confirm the source session contains imported context package text.",
+            "Rerun retrieval rebuild after confirming the retrieval backend is healthy.",
+        ],
+        "retrieval_search_failed": [
+            "Try a broader query with `--query` or rerun with the bundled default importer excerpt.",
+            "Inspect `/v1/sessions/<source_session_id>/retrieval/search` locally for ranking details.",
+        ],
+        "retrieval_quality_failed": [
+            "Inspect `/v1/sessions/<source_session_id>/retrieval/eval` locally.",
+            "Use the memory backend for first-run smoke before testing LanceDB quality evidence.",
+        ],
+        "learning_flow_incomplete": [
+            "Check lesson session events locally for the first failed workflow stage.",
+            "Rerun `python3 scripts/verify_platform_lesson_flow.py` to isolate quiz/grading/synthesis failures.",
+        ],
+        "quality_eval_failed": [
+            "Inspect `/v1/sessions/<lesson_session_id>/agent-eval/quality` locally.",
+            "Do not publish the run as evidence until quality status is pass.",
+        ],
+        "agent_eval_failed": [
+            "Run `python3 scripts/verify_agent_eval_flow.py` first to isolate eval failures.",
+            "Do not publish raw source, query, or answers while debugging.",
+        ],
+        "privacy_leak": [
+            "Do not share the raw transcript publicly.",
+            "Fix the leaking API response or export before using this run as evidence.",
+        ],
+        "response_schema_invalid": [
+            "Confirm the API server and verifier come from the same checkout.",
+            "Rerun setup with `python3 scripts/setup_env.py` if the API surface is stale.",
+        ],
+    }
+    return matrix.get(classification, ["Rerun after starting the local API with retrieval enabled."]) + common
+
+
+def failure_report(exc: BaseException) -> dict[str, Any]:
+    diagnostic = sanitize_text(str(exc))
+    classification = classify_failure(diagnostic)
+    report = {
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": diagnostic,
+        "next_steps": failure_next_steps(classification),
+        "source": {
+            "verifier": VERIFIER_NAME,
+            "api_base": sanitize_text(API_BASE),
+            "retrieval_backend": sanitize_text(os.getenv("STUDY_ANYTHING_RETRIEVAL_BACKEND", "")),
+        },
+        "privacy": {
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "real_model_keys_included": False,
+            "local_absolute_paths_included": False,
+        },
+    }
+    assert_failure_report_redacted(report)
+    return report
+
+
+def format_failure_for_human(report: dict[str, Any]) -> str:
+    steps = [
+        f"- {sanitize_text(str(step))}"
+        for step in report.get("next_steps", [])
+        if isinstance(step, str) and step.strip()
+    ]
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed:",
+            f"classification: {sanitize_text(str(report.get('classification') or 'importer_runtime_retrieval_failed'))}",
+            f"Diagnostic: {sanitize_text(str(report.get('diagnostic') or '')) or '(empty)'}",
+            "Next steps:",
+            *(steps or ["- Start the local API with retrieval enabled, then rerun this verifier."]),
+        ]
+    )
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    return format_failure_for_human(failure_report(exc))
+
+
+def assert_failure_report_redacted(report: dict[str, Any]) -> None:
+    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
+    leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
+    if re.search(r"/Users/[^\s\"']+", serialized):
+        leaks.append("local absolute path")
+    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
+        leaks.append("local temp path")
+    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
+        leaks.append("secret-looking sk token")
+    if leaks:
+        raise VerificationError(f"Importer runtime retrieval verifier failure report leaked private data: {leaks}")
 
 
 def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
@@ -36,8 +240,10 @@ def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise VerificationError(f"API returned {exc.code} for {path}: {detail}") from exc
-    except URLError as exc:
-        raise VerificationError(f"Cannot reach Study Anything at {API_BASE}: {exc}") from exc
+    except (URLError, OSError) as exc:
+        raise VerificationError(
+            format_api_unreachable(API_BASE, exc, verifier=VERIFIER_NAME)
+        ) from exc
 
 
 def assert_schema(value: Dict[str, Any], schema_version: str, label: str) -> None:
@@ -62,16 +268,10 @@ def first_quiz_item(session: Dict[str, Any]) -> Dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--user-id", default="importer-runtime-retrieval-smoke-user")
-    parser.add_argument(
-        "--excerpt",
-        default=(
-            "AI product learning improves when a learner connects overall product intent, "
-            "technical vocabulary, source evidence, feedback, and spaced review."
-        ),
-    )
-    parser.add_argument("--query", default="AI product learning feedback vocabulary")
-    parser.add_argument("--answer", default="The lesson connects source evidence to feedback and review.")
+    parser.add_argument("--user-id", default=DEFAULT_PRIVATE_USER)
+    parser.add_argument("--excerpt", default=DEFAULT_EXCERPT)
+    parser.add_argument("--query", default=DEFAULT_QUERY)
+    parser.add_argument("--answer", default=DEFAULT_ANSWER)
     args = parser.parse_args()
 
     health = request("/v1/health")
@@ -212,5 +412,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_importer_runtime_retrieval_flow failed: {exc}", file=sys.stderr)
+        report = failure_report(exc)
+        print(json.dumps(report, ensure_ascii=False, sort_keys=True))
+        print(format_failure_for_human(report), file=sys.stderr)
         sys.exit(1)

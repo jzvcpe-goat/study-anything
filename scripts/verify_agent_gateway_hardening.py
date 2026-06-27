@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+import argparse
+import errno
+import importlib.util
 import json
 import os
 import socket
@@ -18,17 +21,105 @@ from typing import Any, ClassVar
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from fastapi.testclient import TestClient
 
-
+SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = Path(__file__).resolve().parents[1]
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
-from study_anything.api import main as api_main  # noqa: E402
-from study_anything.core.agent_registry import AgentRegistry, AgentRouter  # noqa: E402
-from study_anything.core.security import redact_url_secrets  # noqa: E402
-from study_anything.core.store import InMemorySessionStore  # noqa: E402
-from study_anything.core.workflow import LearningWorkflow  # noqa: E402
+from localhost_diagnostics import redact_diagnostic  # noqa: E402
+
+
+MIN_PYTHON = (3, 11)
+CONTRACT_ONLY_RECOVERY_STEPS = [
+    ".venv/bin/python scripts/verify_openai_compatible_gateway.py --contract-only",
+    ".venv/bin/python scripts/verify_agent_gateway_hardening.py --contract-only",
+    ".venv/bin/python scripts/verify_external_agent_adapter_hardening.py --contract-only",
+]
+
+
+def runtime_failure_payload(
+    *,
+    classification: str,
+    diagnostic: str,
+    details: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "agent-gateway-hardening-error-v1",
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": redact_diagnostic(diagnostic),
+        "details": details or {},
+        "next_steps": [
+            ".venv/bin/python scripts/verify_agent_gateway_hardening.py --contract-only",
+            ".venv/bin/python scripts/verify_agent_gateway_hardening.py --allow-localhost-block-report",
+            "python3 scripts/setup_env.py",
+            "./scripts/launch_skill_mode.sh",
+            "./scripts/run_skill_mode_demo.sh",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def runtime_failure(
+    *,
+    classification: str,
+    diagnostic: str,
+    details: dict[str, Any] | None = None,
+) -> None:
+    print(
+        json.dumps(
+            runtime_failure_payload(
+                classification=classification,
+                diagnostic=diagnostic,
+                details=details,
+            ),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def ensure_supported_python() -> None:
+    if sys.version_info >= MIN_PYTHON:
+        return
+    runtime_failure(
+        classification="python_version_unsupported",
+        diagnostic="verify_agent_gateway_hardening requires Python 3.11 or newer.",
+        details={"python_version": sys.version.split()[0]},
+    )
+
+
+def dependency_failure(module_name: str) -> None:
+    runtime_failure(
+        classification="python_dependency_missing",
+        diagnostic=(
+            "verify_agent_gateway_hardening dependencies are not installed "
+            f"for this interpreter (missing {module_name})."
+        ),
+        details={"missing_module": redact_diagnostic(module_name)},
+    )
+
+
+ensure_supported_python()
+
+try:
+    from fastapi.testclient import TestClient
+
+    from study_anything.api import main as api_main  # noqa: E402
+    from study_anything.core.agent_registry import AgentRegistry, AgentRouter  # noqa: E402
+    from study_anything.core.security import redact_url_secrets  # noqa: E402
+    from study_anything.core.store import InMemorySessionStore  # noqa: E402
+    from study_anything.core.workflow import LearningWorkflow  # noqa: E402
+except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
+    dependency_failure(exc.name or "required module")
 
 
 SCHEMA_VERSION = "agent-gateway-hardening-verification-v1"
@@ -45,6 +136,102 @@ FORBIDDEN_VALUES = [
 
 class GatewayHardeningError(RuntimeError):
     """Readable gateway hardening verification failure."""
+
+
+def is_localhost_bind_error(exc: BaseException) -> bool:
+    if isinstance(exc, OSError) and exc.errno in {errno.EPERM, errno.EACCES, errno.EADDRINUSE}:
+        return True
+    text = str(exc).lower()
+    return (
+        "operation not permitted" in text
+        or "permission denied" in text
+        or "address already in use" in text
+    )
+
+
+def localhost_blocked_message(exc: BaseException) -> str:
+    return (
+        "Agent gateway hardening could not allocate or start a local gateway on "
+        f"127.0.0.1:0: {exc}. This usually means the current runner blocks localhost "
+        "listening sockets, or the host port range is unavailable. Run this verifier "
+        "from a normal terminal or host shell that permits localhost sockets. If you "
+        "are running the broader adoption proof from a platform sandbox, use "
+        "`python3 scripts/verify_external_adoption.py --allow-localhost-block-report` "
+        "to emit a machine-readable environment-blocked report."
+    )
+
+
+def is_localhost_blocker_message(message: str) -> bool:
+    lowered = message.lower()
+    return (
+        ("localhost" in lowered or "127.0.0.1" in lowered)
+        and (
+            "operation not permitted" in lowered
+            or "permission denied" in lowered
+            or "blocks localhost" in lowered
+            or "blocks listening sockets" in lowered
+            or "could not allocate" in lowered
+            or "could not start" in lowered
+            or "could not bind" in lowered
+        )
+    )
+
+
+def build_localhost_block_report(message: str) -> dict[str, Any]:
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "status": "blocked",
+        "classification": "localhost_socket_blocked",
+        "runtime": {
+            "status": "not_started",
+            "reason": (
+                "The current runner cannot start the verifier's local dry-run Agent "
+                "gateway or mock HTTP Agent, so gateway hardening cannot be executed here."
+            ),
+            "diagnostic": message,
+        },
+        "recovery": {
+            "copyable_commands": [
+                ".venv/bin/python scripts/verify_agent_gateway_hardening.py",
+                *CONTRACT_ONLY_RECOVERY_STEPS,
+                "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree --allow-localhost-block-report",
+                "python3 scripts/diagnose_adoption.py",
+            ],
+            "notes": [
+                "Run from a normal terminal or host shell that permits localhost listening sockets.",
+                "Use the three --contract-only checks to prove no-socket gateway and adapter contracts before leaving this sandbox.",
+                "Use .venv/bin/python if system Python is older than 3.11.",
+                "Contract-only checks and this blocked report do not replace runtime gateway behavior on a host terminal.",
+            ],
+        },
+        "privacy": {
+            "redacted": True,
+            "secrets_returned": False,
+            "raw_task_payload_returned": False,
+            "agent_endpoint_secrets_returned": False,
+            "real_model_keys_stored_by_study_anything": False,
+        },
+    }
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_agent_gateway_hardening failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "  1. If this runner blocks localhost sockets, prove no-socket contracts first:",
+            *[f"     {step}" for step in CONTRACT_ONLY_RECOVERY_STEPS],
+            "  2. For a normal local machine, run: .venv/bin/python scripts/verify_agent_gateway_hardening.py",
+            "  3. If this is an AI platform sandbox, collect a machine-readable report with:",
+            "     .venv/bin/python scripts/verify_agent_gateway_hardening.py --allow-localhost-block-report",
+            "  4. For the full adoption path, run:",
+            "     python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree --allow-localhost-block-report",
+            "  5. For redacted environment diagnostics, run: python3 scripts/diagnose_adoption.py",
+            "  6. See docs/kimi-agent-gateway.md and docs/skill-mode.md for Gateway and zero-key Skill Mode setup.",
+        ]
+    )
 
 
 class InvalidAgentHandler(BaseHTTPRequestHandler):
@@ -73,7 +260,12 @@ class HttpServerContext:
 
     def __enter__(self) -> str:
         InvalidAgentHandler.response = self.response
-        self.server = HTTPServer(("127.0.0.1", 0), InvalidAgentHandler)
+        try:
+            self.server = HTTPServer(("127.0.0.1", 0), InvalidAgentHandler)
+        except OSError as exc:
+            if is_localhost_bind_error(exc):
+                raise GatewayHardeningError(localhost_blocked_message(exc)) from exc
+            raise
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         host, port = self.server.server_address
@@ -87,7 +279,12 @@ class HttpServerContext:
 
 def find_free_port(host: str = "127.0.0.1") -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind((host, 0))
+        try:
+            sock.bind((host, 0))
+        except OSError as exc:
+            if is_localhost_bind_error(exc):
+                raise GatewayHardeningError(localhost_blocked_message(exc)) from exc
+            raise
         return int(sock.getsockname()[1])
 
 
@@ -197,6 +394,84 @@ def verify_running_gateway() -> dict[str, Any]:
             process.kill()
 
 
+def load_gateway_module() -> Any:
+    spec = importlib.util.spec_from_file_location("openai_compatible_agent_gateway_hardening", GATEWAY_SCRIPT)
+    if spec is None or spec.loader is None:
+        raise GatewayHardeningError("Could not load openai_compatible_agent_gateway.py for contract-only verification.")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def verify_gateway_contract_only() -> dict[str, Any]:
+    gateway = load_gateway_module()
+    previous_mode = os.environ.get("AGENT_GATEWAY_MODE")
+    os.environ["AGENT_GATEWAY_MODE"] = "dry_run"
+    try:
+        health = gateway._dry_run_health_payload()
+        if "quiz.generate" not in health.get("capabilities", []):
+            raise GatewayHardeningError(f"Gateway contract health missing capabilities: {health}")
+        privacy = health.get("privacy", {})
+        if privacy.get("study_anything_stores_model_keys") is not False:
+            raise GatewayHardeningError(f"Gateway contract privacy drifted: {health}")
+
+        invalid_task = {
+            "task_type": "unsupported",
+            "session_id": "gateway-hardening",
+            "source": {"text": "Private gateway verifier source text"},
+            "answers": [{"text": "Private gateway verifier answer"}],
+        }
+        try:
+            gateway._invoke_agent(invalid_task)
+        except ValueError as exc:
+            invalid_error = redact_diagnostic(str(exc))
+        else:
+            raise GatewayHardeningError("Gateway contract accepted an unsupported task type.")
+        if "Private gateway verifier" in invalid_error:
+            raise GatewayHardeningError("Gateway invalid task contract leaked raw private payload.")
+
+        valid = gateway._invoke_agent(
+            {
+                "task_type": "quiz.generate",
+                "session_id": "gateway-hardening",
+                "source": {
+                    "reference": "demo://gateway-hardening",
+                    "title": "Gateway Hardening",
+                    "text": "Private gateway verifier source text",
+                    "excerpt_hash": "gateway-hardening-hash",
+                },
+            }
+        )
+        grade = gateway._invoke_agent(
+            {
+                "task_type": "answer.grade",
+                "session_id": "gateway-hardening",
+                "source": {
+                    "reference": "demo://gateway-hardening",
+                    "excerpt_hash": "gateway-hardening-hash",
+                },
+                "answers": [{"item_id": "q1", "text": "Private gateway verifier answer"}],
+            }
+        )
+        if valid.get("status") != "ok" or not valid.get("citations"):
+            raise GatewayHardeningError(f"Gateway contract valid task drifted: {valid}")
+        if grade.get("status") != "ok" or not isinstance(grade.get("score"), (int, float)):
+            raise GatewayHardeningError(f"Gateway contract grade task drifted: {grade}")
+        return {
+            "runtime": "in_process_contract",
+            "socket_required": False,
+            "health_capabilities": len(health.get("capabilities", [])),
+            "invalid_task_error_redacted": True,
+            "valid_task_status": valid.get("status"),
+            "grade_score_present": True,
+        }
+    finally:
+        if previous_mode is None:
+            os.environ.pop("AGENT_GATEWAY_MODE", None)
+        else:
+            os.environ["AGENT_GATEWAY_MODE"] = previous_mode
+
+
 def verify_registry_and_api() -> dict[str, Any]:
     redacted = redact_url_secrets("http://user:gateway-secret@127.0.0.1:8787/invoke?api_key=secret")
     if redacted != "http://127.0.0.1:8787/invoke?api_key=%5Bredacted%5D":
@@ -294,10 +569,10 @@ def patch_api(name: str, value: Any) -> Any:
     return patch.object(api_main, name, value)
 
 
-def main() -> None:
+def build_pass_report() -> dict[str, Any]:
     running_gateway = verify_running_gateway()
     registry_and_api = verify_registry_and_api()
-    payload = {
+    return {
         "schema_version": SCHEMA_VERSION,
         "status": "pass",
         "checks": {
@@ -310,6 +585,59 @@ def main() -> None:
             },
         },
     }
+
+
+def build_contract_report() -> dict[str, Any]:
+    contract = verify_gateway_contract_only()
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "status": "pass",
+        "runtime": "in_process_contract",
+        "socket_required": False,
+        "checks": {
+            "contract_only": contract,
+            "privacy": {
+                "secrets_returned": False,
+                "raw_task_payload_returned": False,
+                "agent_endpoint_secrets_returned": False,
+            },
+        },
+        "release_gate": {
+            "blocking": False,
+            "replaces_runtime_gateway_check": False,
+            "next_runtime_gate": ".venv/bin/python scripts/verify_agent_gateway_hardening.py",
+        },
+    }
+
+
+def parser() -> argparse.ArgumentParser:
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument(
+        "--allow-localhost-block-report",
+        action="store_true",
+        help=(
+            "When the current runner blocks localhost listening sockets, emit a "
+            "machine-readable blocked report and exit 0 instead of failing. Default CI "
+            "behavior remains strict."
+        ),
+    )
+    cli.add_argument(
+        "--contract-only",
+        action="store_true",
+        help="Validate gateway hardening contract in-process without opening localhost sockets.",
+    )
+    return cli
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parser().parse_args(argv)
+    try:
+        payload = build_contract_report() if args.contract_only else build_pass_report()
+    except Exception as exc:
+        if args.allow_localhost_block_report and is_localhost_blocker_message(str(exc)):
+            payload = build_localhost_block_report(str(exc))
+        else:
+            raise
     serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     leaks = [value for value in FORBIDDEN_VALUES if value in serialized]
     if leaks:
@@ -321,5 +649,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_agent_gateway_hardening failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

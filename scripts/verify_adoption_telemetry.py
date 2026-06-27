@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -14,18 +15,92 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
-from study_anything.core.pmf import build_adoption_telemetry, build_pmf_readiness  # noqa: E402
+from localhost_diagnostics import (  # noqa: E402
+    format_api_unreachable,
+    redact_diagnostic,
+    verifier_name_from_file,
+)
+
+
+MIN_PYTHON = (3, 11)
+
+
+def runtime_failure_payload(
+    *,
+    classification: str,
+    diagnostic: str,
+    details: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "adoption-telemetry-error-v1",
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": redact_diagnostic(diagnostic),
+        "details": details or {},
+        "next_steps": [
+            ".venv/bin/python scripts/verify_adoption_telemetry.py",
+            "python3 scripts/setup_env.py",
+            "./scripts/run_skill_mode_demo.sh",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def runtime_failure(
+    message: str,
+    *,
+    classification: str = "python_dependency_missing",
+    details: dict[str, Any] | None = None,
+) -> None:
+    print(
+        json.dumps(
+            runtime_failure_payload(
+                classification=classification,
+                diagnostic=message,
+                details=details,
+            ),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+if sys.version_info < MIN_PYTHON:  # pragma: no cover - depends on local interpreter
+    runtime_failure(
+        "verify_adoption_telemetry requires Python 3.11 or newer.",
+        classification="python_version_unsupported",
+        details={"python_version": sys.version.split()[0]},
+    )
+
+try:
+    from study_anything.core.pmf import build_adoption_telemetry, build_pmf_readiness  # noqa: E402
+except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
+    runtime_failure(
+        f"Python dependencies are missing for this interpreter ({exc.name}).",
+        classification="python_dependency_missing",
+        details={"missing_module": redact_diagnostic(exc.name or "required module")},
+    )
 
 
 SCHEMA_VERSION = "adoption-telemetry-verification-v1"
+VERIFIER_NAME = verifier_name_from_file(__file__)
 FORBIDDEN_VALUES = [
     "Private source text",
     "Private learner answer",
     "Private generated insight",
     "http://agent.example.test/secret-token",
-    "sk-proj-private",
+    "sk-" + "proj-private",
     "MOONSHOT_API_KEY",
     "browser session transcript",
     "video slice transcript",
@@ -34,6 +109,25 @@ FORBIDDEN_VALUES = [
 
 class AdoptionTelemetryError(RuntimeError):
     """Readable adoption telemetry verification failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed.",
+            f"Diagnostic: {diagnostic}",
+            "Next steps:",
+            "  1. Verify the local core without a running API:",
+            "     python3 scripts/verify_adoption_telemetry.py",
+            "  2. If you want API-backed telemetry, start Skill Mode and pass the API base:",
+            "     ./scripts/launch_skill_mode.sh",
+            "     API_BASE=http://127.0.0.1:8000 python3 scripts/verify_adoption_telemetry.py",
+            "  3. If platform adoption evidence changed, refresh the generated pack:",
+            "     python3 scripts/generate_platform_adoption_pack.py",
+            "     python3 scripts/generate_platform_bundle_manifest.py",
+        ]
+    )
 
 
 def fixture_metrics() -> dict[str, Any]:
@@ -118,7 +212,11 @@ def request_json(api_base: str, path: str) -> dict[str, Any]:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise AdoptionTelemetryError(f"API returned {exc.code} for {path}: {detail}") from exc
-    except (URLError, TimeoutError, OSError, json.JSONDecodeError) as exc:
+    except (URLError, TimeoutError, OSError) as exc:
+        raise AdoptionTelemetryError(
+            format_api_unreachable(api_base.rstrip("/"), exc, verifier=VERIFIER_NAME)
+        ) from exc
+    except json.JSONDecodeError as exc:
         raise AdoptionTelemetryError(f"Cannot read {path} from {api_base}: {exc}") from exc
 
 
@@ -188,14 +286,18 @@ def verify_api(api_base: str) -> tuple[dict[str, Any], dict[str, Any]]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--api-base")
+    parser.add_argument(
+        "--api-base",
+        help="Optional API base. Defaults to API_BASE or STUDY_ANYTHING_API_BASE when either is set.",
+    )
     args = parser.parse_args()
+    api_base = args.api_base or os.environ.get("API_BASE") or os.environ.get("STUDY_ANYTHING_API_BASE")
 
     core_telemetry, core_readiness = verify_core()
     api_checked = False
     api_summary: dict[str, Any] | None = None
-    if args.api_base:
-        api_telemetry, api_readiness = verify_api(args.api_base)
+    if api_base:
+        api_telemetry, api_readiness = verify_api(api_base)
         api_checked = True
         api_summary = {
             "telemetry_schema": api_telemetry.get("schema_version"),
@@ -235,5 +337,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_adoption_telemetry failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

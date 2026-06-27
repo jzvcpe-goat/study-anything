@@ -138,6 +138,50 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             submission["shared_assets"],
         )
         self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn("scripts/generate_platform_plugin_packs.py", submission["shared_assets"])
+        self.assertIn("scripts/verify_platform_plugin_packs.py", submission["shared_assets"])
+        self.assertIn("scripts/localhost_diagnostics.py", submission["shared_assets"])
+        self.assertIn("QUICKSTART.md", submission["shared_assets"])
+        self.assertIn("START_HERE.command", submission["shared_assets"])
+        self.assertIn("docs/getting-started.md", submission["shared_assets"])
+        self.assertIn("docs/skill-mode.md", submission["shared_assets"])
+        self.assertIn("scripts/start_here.sh", submission["shared_assets"])
+        self.assertIn(
             "platform/generated/study-anything-platform-field-rehearsal.json",
             submission["shared_assets"],
         )

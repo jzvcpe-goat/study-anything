@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -10,16 +11,52 @@ from pathlib import Path
 from _path import ROOT  # noqa: F401
 
 
+REPO = Path(__file__).resolve().parents[3]
+VERIFIER = REPO / "scripts" / "verify_platform_operator_drill.py"
+
+if str(REPO / "scripts") not in sys.path:
+    sys.path.insert(0, str(REPO / "scripts"))
+
+VERIFIER_SPEC = importlib.util.spec_from_file_location(
+    "verify_platform_operator_drill",
+    VERIFIER,
+)
+assert VERIFIER_SPEC is not None and VERIFIER_SPEC.loader is not None
+verifier = importlib.util.module_from_spec(VERIFIER_SPEC)
+VERIFIER_SPEC.loader.exec_module(verifier)
+
+
 class PlatformOperatorDrillTests(unittest.TestCase):
+    def test_verifier_failure_formatter_is_actionable_and_redacted(self) -> None:
+        secret = "sk-proj-" + "abcdefghijklmnop123456"
+        temp_path = "/private/" + "tmp/study-anything/operator-drill.json"
+        message = verifier.format_cli_failure(
+            RuntimeError(
+                f"operator drill stale at {temp_path} "
+                f"with Authorization: Bearer {secret}"
+            )
+        )
+
+        self.assertIn("verify_platform_operator_drill failed:", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_platform_adoption_pack.py", message)
+        self.assertIn("verify_platform_operator_drill.py --write", message)
+        self.assertIn("verify_platform_operator_drill.py --check", message)
+        self.assertIn("verify_ecosystem_submission_pack.py", message)
+        self.assertIn("diagnose_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn("/private/" + "tmp", message)
+        self.assertNotIn(secret, message)
+
     def test_operator_drill_transcript_is_current(self) -> None:
-        root = Path(__file__).resolve().parents[3]
         completed = subprocess.run(
             [
                 sys.executable,
-                str(root / "scripts" / "verify_platform_operator_drill.py"),
+                str(VERIFIER),
                 "--check",
             ],
-            cwd=root,
+            cwd=REPO,
             text=True,
             capture_output=True,
             check=False,
@@ -27,8 +64,7 @@ class PlatformOperatorDrillTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
     def test_operator_drill_validates_extracted_platform_directory(self) -> None:
-        root = Path(__file__).resolve().parents[3]
-        archive_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
+        archive_path = REPO / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
         with tempfile.TemporaryDirectory(prefix="study-anything-operator-drill-test-") as tmp:
             import zipfile
 
@@ -38,11 +74,11 @@ class PlatformOperatorDrillTests(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    str(root / "scripts" / "verify_platform_operator_drill.py"),
+                    str(VERIFIER),
                     "--pack-root",
                     str(pack_root),
                 ],
-                cwd=root,
+                cwd=REPO,
                 text=True,
                 capture_output=True,
                 check=False,

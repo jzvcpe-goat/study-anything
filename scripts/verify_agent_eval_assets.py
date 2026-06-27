@@ -11,6 +11,12 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import redact_diagnostic
+
 EXPECTED_ADAPTER_IDS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 EXPECTED_TRAJECTORY = [
     "teach.overview",
@@ -19,6 +25,68 @@ EXPECTED_TRAJECTORY = [
     "answer.grade",
     "insight.synthesize",
 ]
+MIN_PYTHON = (3, 11)
+
+
+def runtime_failure_payload(
+    *,
+    classification: str,
+    diagnostic: str,
+    details: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "agent-eval-assets-error-v1",
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": redact_diagnostic(diagnostic),
+        "details": details or {},
+        "next_steps": [
+            ".venv/bin/python scripts/verify_agent_eval_assets.py",
+            "python3 scripts/setup_env.py",
+            "python3 scripts/verify_agent_eval_baseline.py --check",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def runtime_failure(
+    message: str,
+    *,
+    classification: str = "python_dependency_missing",
+    details: dict[str, Any] | None = None,
+) -> None:
+    print(
+        json.dumps(
+            runtime_failure_payload(
+                classification=classification,
+                diagnostic=message,
+                details=details,
+            ),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_agent_eval_assets failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Re-run the asset verifier: python3 scripts/verify_agent_eval_assets.py",
+            "2. Re-run the baseline gate: python3 scripts/verify_agent_eval_baseline.py",
+            "3. Rebuild platform assets if schemas changed: python3 scripts/generate_platform_agent_assets.py --check",
+            "4. Check the Agent eval guide: docs/agent-eval.md",
+        ]
+    )
 
 
 def fail(message: str) -> None:
@@ -106,13 +174,27 @@ def sample_audit() -> dict[str, Any]:
 
 
 def main() -> None:
+    if sys.version_info < MIN_PYTHON:  # pragma: no cover - depends on local interpreter
+        runtime_failure(
+            "verify_agent_eval_assets requires Python 3.11 or newer.",
+            classification="python_version_unsupported",
+            details={"python_version": sys.version.split()[0]},
+        )
+
     sys.path.insert(0, str(ROOT / "apps" / "api"))
-    from study_anything.core.agent_eval import (  # noqa: PLC0415
-        AGENT_EVAL_ADAPTERS,
-        agent_eval_policy,
-        build_agent_eval_artifact,
-        build_agent_eval_report,
-    )
+    try:
+        from study_anything.core.agent_eval import (  # noqa: PLC0415
+            AGENT_EVAL_ADAPTERS,
+            agent_eval_policy,
+            build_agent_eval_artifact,
+            build_agent_eval_report,
+        )
+    except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
+        runtime_failure(
+            f"Python dependencies are missing for this interpreter ({exc.name}).",
+            classification="python_dependency_missing",
+            details={"missing_module": redact_diagnostic(exc.name or "required module")},
+        )
 
     adapter_ids = {adapter.adapter_id for adapter in AGENT_EVAL_ADAPTERS}
     if adapter_ids != EXPECTED_ADAPTER_IDS:
@@ -333,5 +415,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_agent_eval_assets failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)
