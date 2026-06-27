@@ -27,6 +27,30 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
+    def test_manual_submission_rehearsal_failure_is_actionable_and_redacted(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "verify_platform_manual_submission_rehearsal.py"),
+                "--pack",
+                "/Users/james/private/missing-adoption-pack.zip",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("verify_platform_manual_submission_rehearsal failed:", completed.stderr)
+        self.assertIn("Next steps:", completed.stderr)
+        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
+        self.assertIn("verify_platform_submission_dry_run.py --check", completed.stderr)
+        self.assertIn("diagnose_adoption.py", completed.stderr)
+        self.assertIn("<local-path>", completed.stderr)
+        self.assertNotIn("/Users/james", completed.stderr)
+
     def test_manual_submission_rehearsal_report_privacy_and_schema(self) -> None:
         root = Path(__file__).resolve().parents[3]
         report = json.loads(
@@ -38,7 +62,7 @@ class PlatformManualSubmissionRehearsalTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.29-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertGreaterEqual(len(report["operator_steps"]), 7)
         self.assertIn(

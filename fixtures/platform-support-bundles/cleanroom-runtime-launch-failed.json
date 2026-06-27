@@ -1,0 +1,38 @@
+{
+  "command_ran": "python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.29-alpha --platform kimi --runtime skill-mode",
+  "diagnostic_code": "runtime_launch_failed",
+  "failure_class": "runtime_launch_failed",
+  "fixture_id": "cleanroom-runtime-launch-failed",
+  "next_commands_tried": [
+    "metadata-only bootloader",
+    "skill-mode replay"
+  ],
+  "platform_id": "kimi",
+  "recommended_next_steps": [
+    "Run metadata-only first and attach this support bundle.",
+    "Retry Skill Mode on an unused port or run the maintainer replay command."
+  ],
+  "redacted_log_excerpt": "Skill Mode replay could not launch before the health check timeout.",
+  "redaction_flags": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "personal_profile_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "release_assets": {
+    "asset_count": 6,
+    "github_digest_verified_count": 6,
+    "tag": "v0.3.29-alpha"
+  },
+  "release_version": "v0.3.29-alpha",
+  "replay_command": "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+  "runtime": "skill-mode",
+  "schema_version": "platform-support-bundle-v1",
+  "tool_import_status": "ready",
+  "workflow_stage": "cleanroom_bootstrap"
+}

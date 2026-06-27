@@ -12,11 +12,13 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-adoption-feedback-diagnostics-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-adoption-feedback-diagnostics.json"
 )
@@ -43,7 +45,10 @@ DIAGNOSTIC_CATEGORIES = (
     "openai_tools_malformed",
     "unsupported_platform_capability",
     "localhost_api_unreachable",
+    "localhost_socket_permission_denied",
     "agent_endpoint_unreachable",
+    "agent_local_socket_permission_denied",
+    "provider_status_blocked_by_localhost_socket",
     "agent_eval_evidence_missing",
     "version_drift",
     "missing_required_command",
@@ -83,6 +88,32 @@ FORBIDDEN_LITERALS = [
 
 class PlatformAdoptionFeedbackDiagnosticsError(RuntimeError):
     """Readable platform-adoption diagnostics failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    lowered = diagnostic.lower()
+    lines = [
+        f"verify_platform_adoption_feedback_diagnostics failed: {diagnostic}",
+        "Next steps:",
+    ]
+    if "stale" in lowered or "drifted" in lowered:
+        lines.append(
+            "- Refresh feedback diagnostics: python3 scripts/verify_platform_adoption_feedback_diagnostics.py --write"
+        )
+    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
+        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
+    else:
+        lines.append(
+            "- Recheck feedback diagnostics: python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check"
+        )
+    lines.extend(
+        [
+            "- Rebuild the feedback package: python3 scripts/generate_platform_feedback_package.py",
+            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def dump_json(payload: Any) -> str:
@@ -234,10 +265,16 @@ def validate_diagnostic_contract(root: Path) -> dict[str, Any]:
         "scripts/diagnose_adoption.py",
         "adoption-diagnostics-v1",
         "adoption-diagnostic-plan-v1",
+        "adoption-recommended-path-v1",
+        "build_recommended_path",
+        "primary_command",
+        "copyable_commands",
         "check_ghcr_manifest",
         "provider_capability_report",
         "api_unreachable",
+        "localhost_socket_permission_denied",
         "agent_endpoint_unreachable",
+        "agent_local_socket_permission_denied",
         "provider_defaults_missing",
     )
     external_text = assert_contains(
@@ -249,6 +286,7 @@ def validate_diagnostic_contract(root: Path) -> dict[str, Any]:
     )
     return {
         "diagnose_adoption_has_recovery_plan": "build_recovery_plan" in diagnose_text,
+        "diagnose_adoption_has_recommended_path": "build_recommended_path" in diagnose_text,
         "external_adoption_proof_schema": "adoption-proof-v1" in external_text,
         "diagnostic_categories": list(DIAGNOSTIC_CATEGORIES),
         "copyable_recovery_commands": [
@@ -315,6 +353,11 @@ def validate_feedback_package(root: Path) -> dict[str, Any]:
         raise PlatformAdoptionFeedbackDiagnosticsError("Feedback package must be redacted.")
     if payload.get("privacy", {}).get("automatic_upload") is not False:
         raise PlatformAdoptionFeedbackDiagnosticsError("Feedback package must be local-only.")
+    missing_categories = sorted(set(DIAGNOSTIC_CATEGORIES) - set(payload.get("diagnostic_categories", [])))
+    if missing_categories:
+        raise PlatformAdoptionFeedbackDiagnosticsError(
+            f"Feedback package missing diagnostic categories: {missing_categories}"
+        )
     with zipfile.ZipFile(archive_path) as archive:
         names = set(archive.namelist())
     required_names = {
@@ -453,7 +496,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
         "platform/generated/study-anything-platform-feedback-package.json",
         "platform/generated/study-anything-platform-feedback-package.zip",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
     }
     missing = required - paths
     if missing:
@@ -568,5 +611,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_adoption_feedback_diagnostics failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

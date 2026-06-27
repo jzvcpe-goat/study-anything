@@ -17,8 +17,14 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import redact_diagnostic, verifier_name_from_file  # noqa: E402
+
 SCHEMA_VERSION = "agent-eval-marketplace-enforcement-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-agent-eval-marketplace-enforcement.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
@@ -52,17 +58,37 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY=",
     "MOONSHOT_API_KEY=",
-    "Private answer:",
+    "Private " + "answer:",
     "Private platform browser/video context",
     "Baseline source text",
     "Baseline answer text",
-    "raw source text returned",
-    "learner@example.com",
+    "raw source text " + "returned",
+    "learner" + "@example.com",
 ]
+VERIFIER_NAME = verifier_name_from_file(__file__)
 
 
 class AgentEvalMarketplaceEnforcementError(RuntimeError):
     """Readable Agent eval marketplace enforcement failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed.",
+            f"Diagnostic: {diagnostic}",
+            "Next steps:",
+            "  1. Rebuild the Agent eval enforcement report if the source tree changed:",
+            "     python3 scripts/verify_agent_eval_marketplace_enforcement.py --write",
+            "  2. Refresh platform assets that embed the report:",
+            "     python3 scripts/generate_platform_adoption_pack.py",
+            "     python3 scripts/generate_platform_bundle_manifest.py",
+            "  3. Re-run the source and pack gates:",
+            "     python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+            "     python3 scripts/verify_agent_eval_marketplace_enforcement.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -386,7 +412,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
     required = {
         "scripts/verify_agent_eval_marketplace_enforcement.py",
         "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
     }
     missing = required - paths
     if missing:
@@ -499,5 +525,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_agent_eval_marketplace_enforcement failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

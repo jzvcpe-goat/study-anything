@@ -12,6 +12,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-support-triage-v1"
@@ -19,7 +21,7 @@ TICKET_SCHEMA_VERSION = "platform-support-ticket-fixture-v1"
 ISSUE_TEMPLATE_SCHEMA_VERSION = "platform-support-issue-template-v1"
 FIELD_REHEARSAL_SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-support-triage.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SUPPORT_CATEGORY_IDS = (
@@ -42,11 +44,21 @@ QUIRK_IDS = (
 REQUIRED_SUPPORT_FIELDS = (
     "release_version",
     "platform_id",
+    "runtime",
+    "failure_class",
+    "workflow_stage",
     "command_ran",
     "diagnostic_code",
     "fixture_id",
     "redacted_log_excerpt",
     "next_commands_tried",
+    "recommended_next_steps",
+    "replay_command",
+    "tool_import_status",
+    "manifest_evidence",
+    "image_evidence",
+    "release_assets",
+    "redaction_flags",
 )
 REQUIRED_COMMAND = "verify_platform_support_triage.py --check"
 REQUIRED_GENERATOR_COMMAND = "generate_platform_support_triage.py --check"
@@ -74,6 +86,30 @@ FORBIDDEN_LITERALS = [
 
 class PlatformSupportTriageError(RuntimeError):
     """Readable platform support-triage validation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    lowered = diagnostic.lower()
+    lines = [
+        f"verify_platform_support_triage failed: {diagnostic}",
+        "Next steps:",
+    ]
+    if "stale" in lowered or "drifted" in lowered:
+        lines.append(
+            "- Refresh support triage assets: python3 scripts/generate_platform_support_triage.py"
+        )
+    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
+        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
+    else:
+        lines.append("- Recheck support triage: python3 scripts/verify_platform_support_triage.py --check")
+    lines.extend(
+        [
+            "- Check onboarding readiness: python3 scripts/verify_platform_onboarding_readiness.py --check",
+            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def dump_json(payload: Any) -> str:
@@ -158,6 +194,16 @@ def validate_ticket(root: Path, relative_path: str, ticket_id: str) -> dict[str,
         raise PlatformSupportTriageError(f"{relative_path} support bundle missing: {missing}")
     if not support_bundle.get("next_commands_tried"):
         raise PlatformSupportTriageError(f"{relative_path} must include next_commands_tried.")
+    if not support_bundle.get("recommended_next_steps"):
+        raise PlatformSupportTriageError(f"{relative_path} must include recommended_next_steps.")
+    redaction_flags = support_bundle.get("redaction_flags")
+    if not isinstance(redaction_flags, dict):
+        raise PlatformSupportTriageError(f"{relative_path} support bundle must include redaction_flags.")
+    for key, value in redaction_flags.items():
+        if value is not False:
+            raise PlatformSupportTriageError(
+                f"{relative_path} support bundle redaction_flags.{key} must be false."
+            )
     linked = payload.get("linked_import_failure_fixture")
     if not isinstance(linked, str) or not linked.startswith("fixtures/platform-import-failures/"):
         raise PlatformSupportTriageError(f"{relative_path} must link an import failure fixture.")
@@ -192,9 +238,11 @@ def validate_issue_template(root: Path, relative_path: str, category_id: str) ->
         "Do not paste raw source text",
         "## Command Ran",
         "## Diagnostic Code",
+        "## Workflow Stage",
         "## Fixture Or Quirk Id",
         "## Redacted Log Excerpt",
         "## Next Commands Tried",
+        "## Maintainer Replay",
     ):
         if needle not in text:
             raise PlatformSupportTriageError(f"{relative_path} missing {needle!r}.")
@@ -367,7 +415,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "scripts/verify_platform_support_triage.py",
         "platform/generated/study-anything-platform-support-triage.json",
         "docs/support-desk.md",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
         *[f".github/ISSUE_TEMPLATE/{category_id}.md" for category_id in SUPPORT_CATEGORY_IDS],
         *[f"fixtures/platform-support-tickets/{category_id}.json" for category_id in SUPPORT_CATEGORY_IDS],
     }
@@ -397,7 +445,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "support desk"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "support triage"],
         "docs/release-checklist.md": ["verify_platform_support_triage.py --check"],
-        "docs/roadmap.md": ["v0.3.28-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.29-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")
@@ -484,5 +532,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_support_triage failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

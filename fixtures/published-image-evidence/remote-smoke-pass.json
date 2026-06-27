@@ -15,7 +15,7 @@
   "release_gate": "pass",
   "schema_version": "published-image-evidence-fixture-v1",
   "signals": {
-    "api_image": "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.28-alpha",
+    "api_image": "ghcr.io/jzvcpe-goat/study-anything/api:v0.3.29-alpha",
     "docker_images_workflow": {
       "status": "success"
     },
@@ -32,7 +32,7 @@
     "remote_smoke": {
       "status": "ok"
     },
-    "tag": "v0.3.28-alpha"
+    "tag": "v0.3.29-alpha"
   },
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

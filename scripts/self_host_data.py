@@ -8,6 +8,7 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -23,6 +24,13 @@ DEFAULT_ENV = ROOT / ".env"
 DEFAULT_BACKUP_ROOT = ROOT / "backups"
 MANIFEST_NAME = "manifest.json"
 SCHEMA_VERSION = 1
+SECRET_VALUE_RE = re.compile(r"(?i)\b(token|api[_-]?key|secret|password)(=|:)\s*[^\s\"'<>]+")
+BEARER_RE = re.compile(r"(?i)Authorization:\s*Bearer\s+[A-Za-z0-9._~+/=-]+")
+URL_CREDENTIAL_RE = re.compile(r"(https?://)[^/@\s\"']+:[^/@\s\"']+@")
+LOCAL_PATH_RE = re.compile(
+    r"(?<![\w<])(?:/Users|/private/tmp|/tmp|/private/var/folders|/var/folders)"
+    r"/[^\s\"'<>]+"
+)
 
 CORE_VOLUME_KEYS = ("study_anything_data",)
 OPTIONAL_VOLUME_KEYS = (
@@ -91,15 +99,7 @@ def run(
 def compose_project_name(env_file: Path) -> str | None:
     if not env_file.exists():
         return None
-    for line in env_file.read_text(encoding="utf-8").splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        if key.strip() == "COMPOSE_PROJECT_NAME":
-            project_name = value.strip().strip("'\"")
-            return project_name or None
-    return None
+    return parse_env(env_file).get("COMPOSE_PROJECT_NAME") or None
 
 
 def compose_command(env_file: Path, *args: str, profiles: Iterable[str] = ()) -> list[str]:
@@ -120,8 +120,17 @@ def parse_env(path: Path) -> dict[str, str]:
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in line:
             continue
-        key, value = line.split("=", 1)
-        values[key.strip()] = value.strip().strip("'\"")
+        if stripped.startswith("export "):
+            stripped = stripped[len("export ") :].lstrip()
+        key, value = stripped.split("=", 1)
+        raw_value = value.strip()
+        if raw_value.startswith(("'", '"')):
+            quote = raw_value[0]
+            end = raw_value.find(quote, 1)
+            parsed_value = raw_value[1:end] if end != -1 else raw_value[1:]
+        else:
+            parsed_value = re.split(r"\s+#", raw_value, maxsplit=1)[0].strip()
+        values[key.strip()] = parsed_value
     return values
 
 
@@ -366,6 +375,115 @@ def safe_backup_member_path(backup_dir: Path, relative_path: str) -> Path:
     return target
 
 
+def sanitize_text(value: object) -> str:
+    text = str(value)
+    text = BEARER_RE.sub("Authorization: Bearer <redacted>", text)
+    text = URL_CREDENTIAL_RE.sub(r"\1<redacted>@", text)
+    text = SECRET_VALUE_RE.sub(lambda match: f"{match.group(1)}{match.group(2)}<redacted>", text)
+    text = LOCAL_PATH_RE.sub("<local-path>", text)
+    return text
+
+
+def display_path(path: Path, *, placeholder: str) -> str:
+    expanded = path.expanduser()
+    if not expanded.is_absolute():
+        return str(expanded)
+    try:
+        return str(expanded.resolve(strict=False).relative_to(ROOT))
+    except ValueError:
+        return placeholder
+
+
+def classify_error(exc: BaseException) -> str:
+    message = str(exc).lower()
+    if isinstance(exc, FileNotFoundError) or "no such file or directory: 'docker'" in message:
+        return "docker_cli_missing"
+    if isinstance(exc, PermissionError) or "permission denied" in message:
+        return "permission_denied"
+    if isinstance(exc, subprocess.CalledProcessError):
+        combined = (
+            f"{exc} {getattr(exc, 'stderr', b'')!r} {getattr(exc, 'stdout', b'')!r}"
+        ).lower()
+        if "docker" in combined:
+            return "docker_command_failed"
+    if "docker daemon is not running" in message:
+        return "docker_daemon_unavailable"
+    if "missing .env" in message or "run `python3 scripts/setup_env.py`" in message:
+        return "env_missing"
+    if "restore is destructive" in message:
+        return "restore_confirmation_required"
+    if "missing manifest.json" in message:
+        return "backup_manifest_missing"
+    if "unsupported backup manifest schema" in message:
+        return "backup_manifest_unsupported"
+    if "checksum mismatch" in message:
+        return "backup_checksum_mismatch"
+    if "unsafe backup file path" in message or "archive links are not allowed" in message:
+        return "backup_archive_unsafe"
+    if "postgres did not become ready" in message:
+        return "postgres_not_ready"
+    if "compose volume" in message and "not configured" in message:
+        return "compose_volume_missing"
+    return "self_host_data_failed"
+
+
+def next_steps_for_error(code: str) -> list[str]:
+    common = [
+        "Run diagnostics: python3 scripts/diagnose_adoption.py",
+        "Validate local env: python3 scripts/check_env.py --strict",
+    ]
+    if code in {"docker_cli_missing", "docker_daemon_unavailable", "docker_command_failed"}:
+        return [
+            "Start Docker Desktop and confirm `docker info` works from the same terminal.",
+            "For a no-Docker smoke, run Skill Mode first: ./scripts/run_skill_mode_demo.sh",
+            *common,
+        ]
+    if code == "permission_denied":
+        return [
+            "Check filesystem or Docker socket permissions from a normal terminal.",
+            "Retry with a writable backup path or a terminal allowed to access Docker.",
+            *common,
+        ]
+    if code == "env_missing":
+        return [
+            "Create local env: python3 scripts/setup_env.py",
+            "Then validate it: python3 scripts/check_env.py --strict",
+            "Retry the backup after the app env exists.",
+        ]
+    if code == "restore_confirmation_required":
+        return [
+            "Inspect the backup directory and manifest first.",
+            "Restore intentionally with: python3 scripts/self_host_data.py restore BACKUP_DIR --yes",
+            "Use --restore-env only when you intend to replace the current .env.",
+        ]
+    if code.startswith("backup_"):
+        return [
+            "Do not restore this backup until the manifest and archive contents are inspected.",
+            "Create a fresh backup if the checksum or archive safety check fails.",
+            *common,
+        ]
+    if code == "postgres_not_ready":
+        return [
+            "Start the app database: STACK_PROFILE=core ./scripts/launch_self_host.sh",
+            "Check Postgres health through Docker Compose, then retry backup or restore.",
+            *common,
+        ]
+    return common
+
+
+def format_error(exc: BaseException) -> str:
+    code = classify_error(exc)
+    lines = [
+        f"self_host_data failed [{code}]: {sanitize_text(exc)}",
+        "Next steps:",
+    ]
+    lines.extend(f"- {sanitize_text(step)}" for step in next_steps_for_error(code))
+    lines.append(
+        "Privacy: real model keys, local absolute paths, raw source text, and learner answers are not included."
+    )
+    return "\n".join(lines)
+
+
 def default_backup_dir() -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return DEFAULT_BACKUP_ROOT / f"study-anything-backup-{timestamp}"
@@ -422,7 +540,7 @@ def create_backup(env_file: Path, output: Path, *, include_optional: bool) -> No
         "files": records,
     }
     write_manifest(output, manifest)
-    print(f"Backup created at {output}")
+    print(f"Backup created at {display_path(output, placeholder='<backup-dir>')}")
     print("The backup contains an env.snapshot with local secrets. Store it securely.")
 
 
@@ -435,7 +553,7 @@ def restore_env_snapshot(backup_dir: Path, env_file: Path, *, restore_env: bool)
     env_file.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(snapshot, env_file)
     env_file.chmod(0o600)
-    print(f"Restored environment snapshot to {env_file}")
+    print(f"Restored environment snapshot to {display_path(env_file, placeholder='<env-file>')}")
 
 
 def restore_backup(env_file: Path, backup_dir: Path, *, restore_env: bool, confirmed: bool) -> None:
@@ -497,7 +615,8 @@ def main() -> None:
                 confirmed=args.yes,
             )
     except (OSError, RuntimeError, subprocess.CalledProcessError) as exc:
-        raise SystemExit(f"error: {exc}") from exc
+        print(format_error(exc), file=sys.stderr)
+        raise SystemExit(1) from exc
 
 
 if __name__ == "__main__":

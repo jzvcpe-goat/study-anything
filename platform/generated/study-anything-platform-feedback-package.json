@@ -1,7 +1,7 @@
 {
-  "archive_bytes": 1881,
+  "archive_bytes": 2094,
   "archive_name": "study-anything-platform-feedback-package.zip",
-  "archive_sha256": "c7ddcf161440051b37f6895c9507f190b3b8da8905131e977df502958e8c19b4",
+  "archive_sha256": "c83b88197ee642ae130a720bfefdf46bded6d9cd2b972e26a18a3099e7a2312c",
   "diagnostic_categories": [
     "pack_schema_invalid",
     "required_file_missing",
@@ -9,7 +9,10 @@
     "openai_tools_malformed",
     "unsupported_platform_capability",
     "localhost_api_unreachable",
+    "localhost_socket_permission_denied",
     "agent_endpoint_unreachable",
+    "agent_local_socket_permission_denied",
+    "provider_status_blocked_by_localhost_socket",
     "agent_eval_evidence_missing",
     "version_drift",
     "missing_required_command",
@@ -31,6 +34,8 @@
     "error_type",
     "diagnostic_summary",
     "redacted_logs",
+    "support_bundle",
+    "maintainer_replay_command",
     "reproduction_commands"
   ],
   "name": "study-anything-platform-feedback-package",
@@ -38,7 +43,9 @@
     "diagnose": "python3 scripts/diagnose_adoption.py",
     "external_adoption": "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
     "generate_feedback_package": "python3 scripts/generate_platform_feedback_package.py",
-    "verify_diagnostics": "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check"
+    "support_bundle_replay": "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --issue-body",
+    "verify_diagnostics": "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+    "verify_support_bundle_replay": "python3 scripts/verify_platform_support_bundle_replay.py --check"
   },
   "privacy": {
     "agent_endpoint_secrets_included": false,
@@ -54,11 +61,13 @@
   "schema_version": "platform-feedback-package-v1",
   "status": "ready",
   "summary": "Local-only, redacted feedback payload for Kimi/Codex/WorkBuddy import, runtime, and adoption failures.",
+  "support_bundle_schema": "platform-support-bundle-v1",
+  "support_replay_schema": "platform-support-bundle-replay-v1",
   "supported_platforms": [
     "kimi-work",
     "codex",
     "workbuddy-style-http",
     "generic-http-tools"
   ],
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

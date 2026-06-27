@@ -364,7 +364,7 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --label "My Kimi gateway" \
   --endpoint "http://127.0.0.1:<agent-port>/invoke" \
   --set-default
-python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
+python3 scripts/study_anything_cli.py agent-test
 ```
 
 See `docs/kimi-agent-gateway.md` for the full flow.
@@ -489,7 +489,7 @@ release asset:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.28-alpha \
+  --tag v0.3.29-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

@@ -9,14 +9,14 @@
     "feedback_assets_included": 6,
     "included": true,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "agent_eval_evidence": {
     "external_judge_optional": true,
     "required_mode_can_block": true,
     "schema_version": "agent-eval-marketplace-enforcement-v1",
     "status": "pass",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "diagnostic_contract": {
     "copyable_recovery_commands": [
@@ -25,6 +25,7 @@
       "./scripts/launch_skill_mode.sh",
       "./scripts/launch_self_host.sh"
     ],
+    "diagnose_adoption_has_recommended_path": true,
     "diagnose_adoption_has_recovery_plan": true,
     "diagnostic_categories": [
       "pack_schema_invalid",
@@ -33,7 +34,10 @@
       "openai_tools_malformed",
       "unsupported_platform_capability",
       "localhost_api_unreachable",
+      "localhost_socket_permission_denied",
       "agent_endpoint_unreachable",
+      "agent_local_socket_permission_denied",
+      "provider_status_blocked_by_localhost_socket",
       "agent_eval_evidence_missing",
       "version_drift",
       "missing_required_command",
@@ -53,7 +57,7 @@
     "schema_version": "ecosystem-submission-v1",
     "shared_assets_included": 5,
     "submission_count": 4,
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "feedback_package": {
     "archive_name": "study-anything-platform-feedback-package.zip",
@@ -64,7 +68,10 @@
       "openai_tools_malformed",
       "unsupported_platform_capability",
       "localhost_api_unreachable",
+      "localhost_socket_permission_denied",
       "agent_endpoint_unreachable",
+      "agent_local_socket_permission_denied",
+      "provider_status_blocked_by_localhost_socket",
       "agent_eval_evidence_missing",
       "version_drift",
       "missing_required_command",
@@ -73,7 +80,7 @@
     "included": true,
     "local_only": true,
     "schema_version": "platform-feedback-package-v1",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "import_assets": {
     "api_key_security_schemes_exposed": false,
@@ -114,5 +121,5 @@
   "purpose": "Make external platform import failures diagnosable and make local feedback packages useful without uploading private learning data.",
   "schema_version": "platform-adoption-feedback-diagnostics-v1",
   "status": "pass",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

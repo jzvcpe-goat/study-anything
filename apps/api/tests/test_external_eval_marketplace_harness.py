@@ -25,6 +25,30 @@ class ExternalEvalMarketplaceHarnessTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
+    def test_external_eval_harness_failure_is_actionable_and_redacted(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "verify_external_eval_marketplace_harness.py"),
+                "--pack",
+                "/Users/james/private/missing-eval-harness-pack.zip",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("verify_external_eval_marketplace_harness failed:", completed.stderr)
+        self.assertIn("Next steps:", completed.stderr)
+        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
+        self.assertIn("verify_agent_eval_baseline.py", completed.stderr)
+        self.assertIn("diagnose_adoption.py", completed.stderr)
+        self.assertIn("<local-path>", completed.stderr)
+        self.assertNotIn("/Users/james", completed.stderr)
+
     def test_external_eval_marketplace_harness_privacy_and_adapters(self) -> None:
         root = Path(__file__).resolve().parents[3]
         report = json.loads(
@@ -36,7 +60,7 @@ class ExternalEvalMarketplaceHarnessTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "external-eval-marketplace-harness-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.29-alpha")
         self.assertEqual(report["status"], "pass")
         adapter_ids = {item["adapter_id"] for item in report["external_adapters"]}
         self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})

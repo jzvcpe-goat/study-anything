@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -11,9 +12,22 @@ from pathlib import Path
 from _path import ROOT  # noqa: F401
 
 
+REPO = Path(__file__).resolve().parents[3]
+GENERATOR = REPO / "scripts" / "generate_platform_adoption_pack.py"
+
+sys.path.insert(0, str(REPO / "scripts"))
+GENERATOR_SPEC = importlib.util.spec_from_file_location(
+    "generate_platform_adoption_pack",
+    GENERATOR,
+)
+assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
+generator = importlib.util.module_from_spec(GENERATOR_SPEC)
+GENERATOR_SPEC.loader.exec_module(generator)
+
+
 class PlatformAdoptionPackTests(unittest.TestCase):
     def test_platform_adoption_pack_is_current(self) -> None:
-        root = Path(__file__).resolve().parents[3]
+        root = REPO
         completed = subprocess.run(
             [
                 sys.executable,
@@ -27,14 +41,32 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
+    def test_generator_failure_formatter_is_actionable_and_redacted(self) -> None:
+        message = generator.format_cli_failure(
+            RuntimeError(
+                "pack stale at /private/tmp/study-anything/pack.json "
+                "with Authorization: Bearer sk-proj-abcdefghijklmnop123456"
+            )
+        )
+
+        self.assertIn("generate_platform_adoption_pack failed:", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_platform_adoption_pack.py --check", message)
+        self.assertIn("generate_platform_bundle_manifest.py --check", message)
+        self.assertIn("verify_external_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn("/private/tmp", message)
+        self.assertNotIn("sk-proj-abcdefghijklmnop123456", message)
+
     def test_platform_adoption_pack_contains_external_operator_assets(self) -> None:
-        root = Path(__file__).resolve().parents[3]
+        root = REPO
         manifest_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
         archive_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.28-alpha")
+        self.assertEqual(manifest["version"], "v0.3.29-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -47,6 +79,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
 
         required_paths = {
             "manifest.json",
+            "QUICKSTART.md",
+            "START_HERE.command",
             "platform/generated/study-anything-platform-openapi.json",
             "platform/generated/study-anything-openai-tools.json",
             "platform/packs/kimi/README.md",
@@ -59,11 +93,13 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/adoption-telemetry.md",
             "docs/plugin-sdk.md",
             "docs/plugin-registry.md",
+            "docs/getting-started.md",
+            "docs/skill-mode.md",
             "docs/ecosystem-submission.md",
             "docs/eval-frameworks.md",
             "docs/release-checklist.md",
             "docs/roadmap.md",
-            "docs/release-notes/v0.3.28-alpha.md",
+            "docs/release-notes/v0.3.29-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -145,9 +181,12 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "fixtures/release-asset-adoption/published-evidence-missing.json",
             "fixtures/release-asset-adoption/network-unavailable.json",
             "skills/study-anything/SKILL.md",
+            "scripts/start_here.sh",
             "scripts/doctor.sh",
             "scripts/launch_self_host.sh",
             "scripts/stop_self_host.sh",
+            "scripts/localhost_diagnostics.py",
+            "scripts/generate_platform_adoption_pack.py",
             "scripts/verify_published_image_launch.py",
             "scripts/verify_ecosystem_submission_pack.py",
             "scripts/verify_adoption_telemetry.py",
@@ -185,6 +224,21 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             archive_root = "study-anything-platform-adoption-pack"
             for path in required_paths:
                 self.assertIn(f"{archive_root}/{path}", names)
+            kimi_readme = archive.read(f"{archive_root}/platform/packs/kimi/README.md").decode(
+                "utf-8"
+            )
+            self.assertIn('AGENT_LLM_API_KEY="your-api-key"', kimi_readme)
+            self.assertNotIn("MOONSHOT_API_KEY", kimi_readme)
+            for platform_id in ("codex", "kimi", "workbuddy"):
+                platform_pack = json.loads(
+                    archive.read(f"{archive_root}/platform/packs/{platform_id}/pack.json").decode(
+                        "utf-8"
+                    )
+                )
+                local_commands = "\n".join(platform_pack["local_verification_commands"])
+                source_commands = "\n".join(platform_pack["source_verification_commands"])
+                self.assertNotIn("verify_commercial_readiness.py", local_commands)
+                self.assertIn("verify_commercial_readiness.py", source_commands)
             internal_manifest = json.loads(
                 archive.read(f"{archive_root}/manifest.json").decode("utf-8")
             )

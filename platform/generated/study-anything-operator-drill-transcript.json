@@ -295,15 +295,15 @@
   },
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
-    "file_count": 230,
+    "file_count": 249,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "display": "Codex Skill / terminal Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -321,7 +321,6 @@
       "integration_mode": "terminal_skill",
       "local_verification_commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -340,6 +339,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -374,7 +376,7 @@
       "privacy_forbids_model_secrets": true
     },
     "kimi": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "display": "Kimi Work / Kimi-compatible Agent",
       "entrypoints": {
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -396,7 +398,6 @@
       "integration_mode": "openai_compatible_tools",
       "local_verification_commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -415,6 +416,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -449,7 +453,7 @@
       "privacy_forbids_model_secrets": true
     },
     "workbuddy": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "display": "WorkBuddy-style HTTP workspace",
       "entrypoints": {
         "api_docs": "docs/api.md",
@@ -468,7 +472,6 @@
       "integration_mode": "openapi_http_tools",
       "local_verification_commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -487,6 +490,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",

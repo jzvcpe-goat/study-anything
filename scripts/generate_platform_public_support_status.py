@@ -11,6 +11,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "platform" / "generated" / "study-anything-public-support-status.json"
@@ -21,7 +23,7 @@ STATUS_LINKAGE_DIR = ROOT / "fixtures" / "platform-status-links"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 STATUS_LINKAGE_SCHEMA_VERSION = "public-status-linkage-fixture-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SLA_LABELS = (
     "intake",
@@ -64,8 +66,8 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
+    "Private " + "answer:",
+    "Private " + "source text:",
     "Private platform browser/video context",
     "raw_source_text=",
     "learner_answer=",
@@ -75,6 +77,22 @@ FORBIDDEN_LITERALS = [
 
 class PublicSupportStatusGenerationError(RuntimeError):
     """Readable public support status generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_public_support_status failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild public support status assets: python3 scripts/generate_platform_public_support_status.py",
+            "2. Re-check public support status assets: python3 scripts/generate_platform_public_support_status.py --check",
+            "3. Verify public support status: python3 scripts/verify_platform_public_support_status.py --check",
+            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -258,7 +276,7 @@ def build_public_status() -> dict[str, Any]:
         "release_readiness": {
             "release_gate": "scripts/release_check.sh",
             "required_ci": ["main ci", "main docker-images", "tag docker-images"],
-            "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+            "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
             "current_status": "ready_when_release_gates_pass",
         },
         "privacy_assertions": {
@@ -416,5 +434,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_platform_public_support_status failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

@@ -10,10 +10,17 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 BUNDLE_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-bundle.json"
+SELF_REFERENTIAL_OUTPUTS = {
+    "platform/generated/study-anything-platform-bundle.json",
+    "platform/generated/study-anything-platform-adoption-pack.json",
+    "platform/generated/study-anything-platform-adoption-pack.zip",
+}
 
 FILES: list[tuple[str, str, str]] = [
     (
@@ -95,6 +102,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-platform-support-triage.json",
         "generated_asset",
         "GitHub-first support triage, issue template, and maintainer response playbook report.",
+    ),
+    (
+        "platform/generated/study-anything-platform-support-bundle-replay.json",
+        "generated_asset",
+        "Maintainer support bundle replay evidence and issue-to-fix classification report.",
     ),
     (
         "platform/generated/study-anything-platform-onboarding-readiness.json",
@@ -255,6 +267,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/release-cleanroom-bootstrap.md",
         "operator_doc",
         "Release-only cleanroom bootstrap guide for external platform Agents.",
+    ),
+    (
+        "docs/support-desk.md",
+        "operator_doc",
+        "GitHub-first support desk, support bundle replay, and maintainer triage guide.",
     ),
     (
         "docs/platform-agent-release-replay.md",
@@ -597,9 +614,19 @@ FILES: list[tuple[str, str, str]] = [
         "Docker Compose self-host stop helper.",
     ),
     (
+        "scripts/self_host_data.py",
+        "runtime",
+        "Backup and restore helper for self-hosted deployments.",
+    ),
+    (
         "scripts/verify_published_image_launch.py",
         "verification",
         "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
+    ),
+    (
+        "scripts/verify_backup_restore_drill.py",
+        "verification",
+        "Disposable backup and restore drill verifier.",
     ),
     (
         "scripts/verify_commercial_readiness.py",
@@ -767,6 +794,21 @@ FILES: list[tuple[str, str, str]] = [
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
     ),
     (
+        "scripts/start_here.sh",
+        "runtime",
+        "Beginner launcher for zero-key demo, persistent Skill Mode, Docker, and diagnostics.",
+    ),
+    (
+        "START_HERE.command",
+        "runtime",
+        "macOS double-click one-key beginner launcher.",
+    ),
+    (
+        "scripts/release_check.sh",
+        "verification",
+        "Strict release gate with automatic localhost-blocked report collection.",
+    ),
+    (
         "scripts/launch_skill_mode.sh",
         "runtime",
         "Local API launcher for Skill Mode and adoption verification.",
@@ -775,6 +817,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/study_anything_cli.py",
         "cli",
         "Command-line learning loop and Agent evidence entrypoint.",
+    ),
+    (
+        "scripts/localhost_diagnostics.py",
+        "diagnostics",
+        "Shared localhost socket diagnostics for platform verifiers.",
     ),
     (
         "scripts/install_local_plugin.py",
@@ -787,9 +834,29 @@ FILES: list[tuple[str, str, str]] = [
         "Disposable clean-clone adoption verifier for external-user smoke testing.",
     ),
     (
+        "scripts/verify_api_smoke.sh",
+        "verification",
+        "Minimal API health/system/plugin smoke that follows .env API_PORT.",
+    ),
+    (
         "scripts/verify_openai_compatible_gateway.py",
         "verification",
         "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
+    ),
+    (
+        "scripts/verify_mock_http_agent_flow.py",
+        "verification",
+        "User-owned mock HTTP Agent learning-loop smoke verifier.",
+    ),
+    (
+        "scripts/verify_full_api_flow.py",
+        "verification",
+        "Full public API learning-loop smoke verifier used by published-image checks.",
+    ),
+    (
+        "scripts/verify_skill_cli_flow.py",
+        "verification",
+        "Skill Mode CLI learning-loop verifier with actionable recovery output.",
     ),
     (
         "infra/compose/docker-compose.yml",
@@ -815,6 +882,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_importer_runtime_retrieval_flow.py",
         "verification",
         "Importer-runtime and retrieval verifier for local Agent platform flows.",
+    ),
+    (
+        "scripts/verify_falkordb_flow.py",
+        "verification",
+        "Optional FalkorDB topology projection API verifier.",
     ),
     (
         "scripts/verify_platform_ecosystem_eval_flow.py",
@@ -922,11 +994,6 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission metadata, verification, and no-frontend launch guide.",
     ),
     (
-        "docs/support-desk.md",
-        "docs",
-        "GitHub-first support desk, support bundle, and maintainer triage playbook.",
-    ),
-    (
         "docs/adopter-onboarding.md",
         "docs",
         "First external adopter walkthrough and failure fallback guide.",
@@ -1007,6 +1074,21 @@ FILES: list[tuple[str, str, str]] = [
         "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
     ),
     (
+        "docs/getting-started.md",
+        "docs",
+        "Chinese-first beginner guide and one-command launch path.",
+    ),
+    (
+        "QUICKSTART.md",
+        "docs",
+        "Ultra-short Chinese first-run guide.",
+    ),
+    (
+        "docs/skill-mode.md",
+        "docs",
+        "Zero-key Skill Mode CLI and local Agent gateway first-run guide.",
+    ),
+    (
         "docs/operator-drill.md",
         "docs",
         "External platform operator drill and transcript guide.",
@@ -1027,7 +1109,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -1113,6 +1195,21 @@ class BundleManifestError(RuntimeError):
     """Readable bundle manifest failure."""
 
 
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_bundle_manifest failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild the platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py",
+            "2. Re-check the platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py --check",
+            "3. Re-check the adoption pack: python3 scripts/generate_platform_adoption_pack.py --check",
+            "4. Verify ecosystem submission assets: python3 scripts/verify_ecosystem_submission_pack.py",
+        ]
+    )
+
+
 def load_json(path: Path) -> dict[str, Any]:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -1152,6 +1249,12 @@ def build_manifest() -> dict[str, object]:
     file_paths = [path for path, _kind, _purpose in FILES]
     if len(file_paths) != len(set(file_paths)):
         raise BundleManifestError("Bundle file list contains duplicates.")
+    recursive_outputs = sorted(SELF_REFERENTIAL_OUTPUTS.intersection(file_paths))
+    if recursive_outputs:
+        raise BundleManifestError(
+            "Bundle manifest must not include generated outputs that hash "
+            f"the manifest/adoption pack itself: {recursive_outputs}"
+        )
     return {
         "schema_version": "study-anything-platform-bundle-v1",
         "name": "study-anything-platform-bundle",
@@ -1190,6 +1293,9 @@ def build_manifest() -> dict[str, object]:
                 "python3 scripts/verify_external_adoption.py --pack "
                 "platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
             ),
+            "python3 scripts/verify_openai_compatible_gateway.py --contract-only",
+            "python3 scripts/verify_agent_gateway_hardening.py --contract-only",
+            "python3 scripts/verify_external_agent_adapter_hardening.py --contract-only",
             "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -1262,5 +1368,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_platform_bundle_manifest failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

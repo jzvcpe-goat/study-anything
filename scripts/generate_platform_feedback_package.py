@@ -11,6 +11,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
@@ -19,7 +21,9 @@ ARCHIVE_PATH = OUTPUT_DIR / "study-anything-platform-feedback-package.zip"
 ARCHIVE_ROOT = "study-anything-platform-feedback-package"
 SCHEMA_VERSION = "platform-feedback-package-v1"
 DIAGNOSTICS_SCHEMA = "platform-adoption-feedback-diagnostics-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
+SUPPORT_BUNDLE_SCHEMA = "platform-support-bundle-v1"
+SUPPORT_REPLAY_SCHEMA = "platform-support-bundle-replay-v1"
 DIAGNOSTIC_CATEGORIES = [
     "pack_schema_invalid",
     "required_file_missing",
@@ -27,7 +31,10 @@ DIAGNOSTIC_CATEGORIES = [
     "openai_tools_malformed",
     "unsupported_platform_capability",
     "localhost_api_unreachable",
+    "localhost_socket_permission_denied",
     "agent_endpoint_unreachable",
+    "agent_local_socket_permission_denied",
+    "provider_status_blocked_by_localhost_socket",
     "agent_eval_evidence_missing",
     "version_drift",
     "missing_required_command",
@@ -49,6 +56,22 @@ class PlatformFeedbackPackageError(RuntimeError):
     """Readable feedback-package generation failure."""
 
 
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_feedback_package failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild the feedback package: python3 scripts/generate_platform_feedback_package.py",
+            "2. Re-check the feedback package: python3 scripts/generate_platform_feedback_package.py --check",
+            "3. Re-check platform feedback diagnostics: python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -64,6 +87,8 @@ def build_manifest() -> dict[str, Any]:
         "name": "study-anything-platform-feedback-package",
         "status": "ready",
         "diagnostics_schema": DIAGNOSTICS_SCHEMA,
+        "support_bundle_schema": SUPPORT_BUNDLE_SCHEMA,
+        "support_replay_schema": SUPPORT_REPLAY_SCHEMA,
         "summary": (
             "Local-only, redacted feedback payload for Kimi/Codex/WorkBuddy import, "
             "runtime, and adoption failures."
@@ -81,6 +106,8 @@ def build_manifest() -> dict[str, Any]:
             "error_type",
             "diagnostic_summary",
             "redacted_logs",
+            "support_bundle",
+            "maintainer_replay_command",
             "reproduction_commands",
         ],
         "excluded_sections": [
@@ -108,6 +135,13 @@ def build_manifest() -> dict[str, Any]:
             "verify_diagnostics": (
                 "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check"
             ),
+            "support_bundle_replay": (
+                "python3 scripts/replay_support_bundle.py "
+                "--bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --issue-body"
+            ),
+            "verify_support_bundle_replay": (
+                "python3 scripts/verify_platform_support_bundle_replay.py --check"
+            ),
             "generate_feedback_package": "python3 scripts/generate_platform_feedback_package.py",
             "external_adoption": (
                 "python3 scripts/verify_external_adoption.py --pack "
@@ -126,6 +160,8 @@ def archive_bytes(manifest: dict[str, Any]) -> bytes:
         "status": "redacted-template",
         "diagnostic_categories": DIAGNOSTIC_CATEGORIES,
         "feedback_package_schema": SCHEMA_VERSION,
+        "support_bundle_schema": SUPPORT_BUNDLE_SCHEMA,
+        "support_replay_schema": SUPPORT_REPLAY_SCHEMA,
     }
     files = [
         (f"{ARCHIVE_ROOT}/manifest.json", dump_json(manifest).encode("utf-8")),
@@ -199,5 +235,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_platform_feedback_package failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

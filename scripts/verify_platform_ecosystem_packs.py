@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST_PATH = ROOT / "platform" / "study-anything-platform-tools.json"
@@ -81,15 +83,33 @@ REQUIRED_COMMAND_FRAGMENTS = {
     "run_external_agent_evals.py --tool retrieval",
 }
 REQUIRED_ADOPTION_COMMAND_FRAGMENTS = {
-    "verify_commercial_readiness.py",
     "verify_adoption_telemetry.py",
     "verify_clean_clone_adoption.py",
     "diagnose_adoption.py",
+}
+REQUIRED_SOURCE_COMMAND_FRAGMENTS = {
+    "verify_commercial_readiness.py",
 }
 
 
 class PackVerificationError(RuntimeError):
     """Readable platform pack verification failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_platform_ecosystem_packs failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild platform packs if generated assets changed: python3 scripts/generate_platform_adoption_pack.py",
+            "2. Rebuild platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py",
+            "3. Re-run platform pack verification: python3 scripts/verify_platform_ecosystem_packs.py",
+            "4. Re-run ecosystem submission verification: python3 scripts/verify_ecosystem_submission_pack.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -136,10 +156,21 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(commands, list) or not commands:
         raise PackVerificationError(f"{pack_path.relative_to(ROOT)} must declare verification commands")
     command_text = "\n".join(str(command) for command in commands)
+    source_commands = pack.get("source_verification_commands")
+    if not isinstance(source_commands, list) or not source_commands:
+        raise PackVerificationError(
+            f"{pack_path.relative_to(ROOT)} must declare source_verification_commands"
+        )
+    source_command_text = "\n".join(str(command) for command in source_commands)
     for fragment in REQUIRED_ADOPTION_COMMAND_FRAGMENTS:
         if fragment not in command_text:
             raise PackVerificationError(
                 f"{pack_path.relative_to(ROOT)} verification commands must include {fragment}"
+            )
+    for fragment in REQUIRED_SOURCE_COMMAND_FRAGMENTS:
+        if fragment not in source_command_text:
+            raise PackVerificationError(
+                f"{pack_path.relative_to(ROOT)} source verification commands must include {fragment}"
             )
     for fragment in REQUIRED_COMMAND_FRAGMENTS:
         if fragment not in command_text and pack_id != "codex":
@@ -223,5 +254,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_ecosystem_packs failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

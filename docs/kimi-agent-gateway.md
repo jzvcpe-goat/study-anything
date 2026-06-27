@@ -1,5 +1,9 @@
 # Kimi Agent Gateway
 
+> **定位**：这是手动配置 Gateway 的文档。如果你使用 WorkBuddy、Kimi Work 或其他
+> 已经自带模型配置的 Agent 出口，你**不需要**手动启动这个 Gateway。那些 Agent 会
+> 自己调用 Study Anything 的本地 API，模型配置在它们内部完成。
+
 Study Anything does not store model credentials or call real models directly. To use Kimi, run the
 included user-owned gateway as a separate local process.
 
@@ -31,10 +35,17 @@ Before adding Kimi credentials, prove that the same gateway entrypoint can satis
 Agent contract:
 
 ```bash
+python3 scripts/verify_openai_compatible_gateway.py --contract-only
+python3 scripts/verify_agent_gateway_hardening.py --contract-only
+python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_external_agent_adapter_hardening.py
 ```
+
+If a platform sandbox cannot open localhost sockets, `--contract-only` still proves the gateway and
+adapter contracts without starting a server. Use `--gateway-only` and the hardening commands without
+`--contract-only` from a normal terminal for runtime socket checks.
 
 With a running Study Anything API, run the end-to-end dry-run acceptance flow:
 
@@ -55,9 +66,17 @@ boundaries.
 Run this in a separate terminal. The API key remains in the gateway process environment and is never
 stored by Study Anything:
 
+> **启动前检查**：Gateway 默认是 `auto` 模式。如果没有配置上游模型环境变量，它会
+> 自动进入 `dry_run`，并在终端打印 health/invoke 地址、缺失的 env 和下一步建议。
+> 只有当你显式设置 `AGENT_GATEWAY_MODE=upstream` 时，才必须同时提供
+> `AGENT_LLM_BASE_URL`、`AGENT_LLM_API_KEY` 和 `AGENT_LLM_MODEL`；缺失时 Gateway
+> 会带清楚诊断退出。真实模型也可以完全交给 WorkBuddy / Kimi Work / 你的终端 Agent
+> 作为出口，Study Anything 只负责本地学习流程。
+
 ```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
-export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
+export AGENT_LLM_API_KEY="your-api-key"
+# 可以是任何 OpenAI-compatible endpoint：Moonshot、OpenAI、DeepSeek、中转站、本地 Ollama
 export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 export AGENT_LLM_EXTRA_BODY_JSON='{"thinking":{"type":"disabled"}}'
 
@@ -91,17 +110,31 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --set-default
 ```
 
-The command prints a provider ID. Verify it, then start a configured learning session:
+The command sets the gateway as the default provider. Verify it, then start a configured learning session:
 
 ```bash
-python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
+python3 scripts/study_anything_cli.py agent-test
+```
 
+如果返回 `502 Bad Gateway`、`503 configuration_required` 或 `Connection refused`，
+说明 Gateway 进程没有运行，或者运行了但模型出口还没接好。这不是系统故障。
+
+诊断步骤：
+
+1. `curl http://127.0.0.1:8787/health` — 如果不通，Gateway 没启动
+2. 如果 health 返回 `mode: dry_run`，说明没有 key，正在模拟模式运行
+3. 如果 health 返回 `configuration_required`，补齐上游 env，或重启为 `--dry-run`
+
+```bash
 python3 scripts/study_anything_cli.py start \
-  --agent-mode configured \
   --title "My notes" \
   --reference "local://my-notes" \
   --text "Paste the source material here."
 ```
+
+Because the previous step used `--set-default`, the CLI's default `--agent-mode auto` routes this
+session to the configured gateway. Add `--agent-mode configured` only when you want to force that
+path while debugging routing.
 
 When Kimi or the surrounding platform Agent has gathered multiple sources, build a
 `learning-context-package-v1` first instead of flattening everything into one prompt. Validate and

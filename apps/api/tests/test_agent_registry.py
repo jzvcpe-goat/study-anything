@@ -19,6 +19,7 @@ from study_anything.core.agent_registry import (
     AgentResultInvalid,
     AgentRouter,
     AgentTask,
+    normalise_http_agent_endpoint,
 )
 from study_anything.core.model_registry import Capability, ModelRegistry, ModelRouter
 
@@ -97,6 +98,20 @@ class AgentRegistryTests(unittest.TestCase):
         self.assertEqual(public["endpoint"], "http://localhost:8787/invoke?mode=local")
         self.assertEqual(public["metadata"]["owner"], "local")
 
+    def test_http_agent_endpoint_root_and_health_are_normalised_to_invoke(self) -> None:
+        self.assertEqual(
+            normalise_http_agent_endpoint("localhost:8787"),
+            "http://localhost:8787/invoke",
+        )
+        self.assertEqual(
+            normalise_http_agent_endpoint("http://localhost:8787/health"),
+            "http://localhost:8787/invoke",
+        )
+        self.assertEqual(
+            normalise_http_agent_endpoint("https://agent.example.test/custom/invoke"),
+            "https://agent.example.test/custom/invoke",
+        )
+
     def test_rejects_agent_endpoint_inline_secrets(self) -> None:
         registry = AgentRegistry()
 
@@ -133,7 +148,18 @@ class AgentRegistryTests(unittest.TestCase):
                                 "timeout_seconds": 15,
                                 "enabled": True,
                                 "metadata": {"api_key": "old-secret", "owner": "local"},
-                            }
+                            },
+                            {
+                                "provider_id": "legacy-query",
+                                "kind": "http_agent",
+                                "label": "Legacy Query Agent",
+                                "endpoint": "http://localhost:8787?api_key=old-secret",
+                                "command": [],
+                                "capabilities": ["quiz.generate"],
+                                "timeout_seconds": 15,
+                                "enabled": True,
+                                "metadata": {"owner": "local"},
+                            },
                         ],
                         "defaults": {},
                     }
@@ -144,13 +170,53 @@ class AgentRegistryTests(unittest.TestCase):
             registry = AgentRegistry(path)
             status = registry.status("alice")
             provider = next(item for item in status["providers"] if item["provider_id"] == "legacy")
+            query_provider = next(
+                item for item in status["providers"] if item["provider_id"] == "legacy-query"
+            )
             saved = json.loads(path.read_text(encoding="utf-8"))
 
             self.assertFalse(provider["enabled"])
             self.assertEqual(provider["endpoint"], "http://localhost:8787/invoke")
+            self.assertFalse(query_provider["enabled"])
+            self.assertEqual(query_provider["endpoint"], "http://localhost:8787/invoke")
             self.assertNotIn("api_key", provider["metadata"])
             self.assertNotIn("old-secret", json.dumps(saved))
             self.assertNotIn("user:secret", json.dumps(saved))
+
+    def test_load_normalises_legacy_http_agent_root_endpoint(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "agents.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "providers": [
+                            {
+                                "provider_id": "legacy-root",
+                                "kind": "http_agent",
+                                "label": "Legacy Root Agent",
+                                "endpoint": "http://localhost:8787",
+                                "command": [],
+                                "capabilities": ["quiz.generate"],
+                                "timeout_seconds": 15,
+                                "enabled": True,
+                                "metadata": {},
+                            }
+                        ],
+                        "defaults": {},
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            registry = AgentRegistry(path)
+            status = registry.status("alice")
+            provider = next(
+                item for item in status["providers"] if item["provider_id"] == "legacy-root"
+            )
+            saved = json.loads(path.read_text(encoding="utf-8"))
+
+            self.assertEqual(provider["endpoint"], "http://localhost:8787/invoke")
+            self.assertEqual(saved["providers"][0]["endpoint"], "http://localhost:8787/invoke")
 
     def test_registry_persists_providers_and_defaults(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -168,6 +234,7 @@ class AgentRegistryTests(unittest.TestCase):
             status = restored.status("alice")
 
             self.assertEqual(status["defaults"]["quiz.generate"], provider.provider_id)
+            self.assertEqual(provider.endpoint, "http://localhost:8787/invoke")
             self.assertTrue(
                 any(item["provider_id"] == provider.provider_id for item in status["providers"])
             )
@@ -334,7 +401,12 @@ class AgentRegistryTests(unittest.TestCase):
             def __enter__(self_inner) -> str:
                 if response is not None:
                     _AgentHandler.response = response
-                self_inner.server = HTTPServer(("127.0.0.1", 0), _AgentHandler)
+                try:
+                    self_inner.server = HTTPServer(("127.0.0.1", 0), _AgentHandler)
+                except PermissionError as exc:
+                    raise unittest.SkipTest(
+                        "localhost listening sockets are unavailable in this runner"
+                    ) from exc
                 self_inner.thread = threading.Thread(
                     target=self_inner.server.serve_forever,
                     daemon=True,

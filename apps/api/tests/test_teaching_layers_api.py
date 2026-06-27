@@ -168,7 +168,12 @@ class TeachingLayersApiTests(unittest.TestCase):
         class ServerContext:
             def __enter__(self_inner) -> str:
                 _TeachingAgentHandler.seen = []
-                self_inner.server = HTTPServer(("127.0.0.1", 0), _TeachingAgentHandler)
+                try:
+                    self_inner.server = HTTPServer(("127.0.0.1", 0), _TeachingAgentHandler)
+                except PermissionError as exc:
+                    raise unittest.SkipTest(
+                        "localhost listening sockets are unavailable in this runner"
+                    ) from exc
                 self_inner.thread = threading.Thread(
                     target=self_inner.server.serve_forever,
                     daemon=True,

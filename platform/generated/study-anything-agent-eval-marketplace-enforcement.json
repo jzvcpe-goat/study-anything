@@ -8,7 +8,7 @@
     "enforcement_assets_included": 3,
     "included": true,
     "schema_version": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "baseline_and_harness": {
     "adapter_ids": [
@@ -19,7 +19,7 @@
     ],
     "baseline_schema": "study-anything-agent-eval-baseline-v1",
     "baseline_status": "pass",
-    "baseline_version": "v0.3.28-alpha",
+    "baseline_version": "v0.3.29-alpha",
     "harness_schema": "external-eval-marketplace-harness-v1",
     "harness_status": "pass"
   },
@@ -35,7 +35,7 @@
     "schema_version": "ecosystem-submission-v1",
     "shared_assets_included": 4,
     "submission_count": 4,
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "external_judge_contracts": [
     {
@@ -135,5 +135,5 @@
   },
   "schema_version": "agent-eval-marketplace-enforcement-v1",
   "status": "pass",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

@@ -1,0 +1,76 @@
+{
+  "commands": {
+    "copy_issue_body": "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --issue-body",
+    "maintainer_replay": "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+    "verify": "python3 scripts/verify_platform_support_bundle_replay.py --check"
+  },
+  "fixture_refs": [
+    {
+      "expected_classification": "local_ghcr_pull_timeout",
+      "fixture_id": "local-ghcr-pull-timeout",
+      "path": "fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+      "schema_version": "platform-support-bundle-v1",
+      "sha256": "b5352dbae0da827f47af083675d5062fbb42706b434e96c81a9aa0676c7eaafc"
+    },
+    {
+      "expected_classification": "runtime_launch_failed",
+      "fixture_id": "cleanroom-runtime-launch-failed",
+      "path": "fixtures/platform-support-bundles/cleanroom-runtime-launch-failed.json",
+      "schema_version": "platform-support-bundle-v1",
+      "sha256": "71898d5a186939628995fd933da6859672cb876b4f9b5e194a5e93c70735d393"
+    },
+    {
+      "expected_classification": "privacy_contract_violation",
+      "fixture_id": "privacy-contract-violation",
+      "path": "fixtures/platform-support-bundles/privacy-contract-violation.json",
+      "schema_version": "platform-support-bundle-v1",
+      "sha256": "ed46f9f3045b91ea4701835fa68e5fb89d204ac9319239d23b8460296bcd8ee4"
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "agent_prompts_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "fixtures_are_mock_only": true,
+    "learner_answers_in_report": false,
+    "local_absolute_paths_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_in_report": false
+  },
+  "purpose": "Close the external adopter support loop: a user shares a redacted support bundle, then a maintainer replays it into a stable classification and issue body.",
+  "release_gate": {
+    "block_when": [
+      "bundle includes raw source text, answers, Agent endpoints, model keys, or local paths",
+      "replay cannot classify the failure",
+      "adoption pack omits replay scripts or fixtures"
+    ],
+    "pass_when": [
+      "support bundle schema validates",
+      "maintainer replay produces expected classification",
+      "issue body is copyable and redacted",
+      "privacy violation bundles are blocked"
+    ]
+  },
+  "required_bundle_fields": [
+    "release_version",
+    "platform_id",
+    "runtime",
+    "failure_class",
+    "workflow_stage",
+    "command_ran",
+    "diagnostic_code",
+    "redacted_log_excerpt",
+    "next_commands_tried",
+    "recommended_next_steps",
+    "replay_command",
+    "redaction_flags"
+  ],
+  "schema_version": "platform-support-bundle-replay-evidence-v1",
+  "schemas": {
+    "maintainer_replay": "platform-support-bundle-replay-v1",
+    "support_bundle": "platform-support-bundle-v1"
+  },
+  "status": "pass",
+  "version": "v0.3.29-alpha"
+}

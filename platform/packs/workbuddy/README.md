@@ -35,6 +35,17 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the WorkBuddy-style HTTP tool path without
 requiring a standalone frontend.
 
+If the workspace adoption fails, keep the support handoff metadata-only:
+
+```bash
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
+python3 scripts/verify_platform_support_bundle_replay.py --check
+```
+
+The replay emits `platform-support-bundle-replay-v1` with a stable classification and copyable issue
+body. Do not share raw workspace logs, browser traces, Agent endpoints, model keys, source text, or
+learner answers.
+
 ## Runtime Boundary
 
 The workspace Agent should own:
@@ -67,7 +78,6 @@ Against a running API, verify the imported tool surface and redacted evidence:
 curl http://127.0.0.1:8000/v1/deployment/guide
 curl http://127.0.0.1:8000/v1/commercial/readiness
 curl http://127.0.0.1:8000/v1/evals/policy
-python3 scripts/verify_commercial_readiness.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
 STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
@@ -84,6 +94,9 @@ STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
   python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required
 ```
 
+`python3 scripts/verify_commercial_readiness.py` remains a full-source checkout gate. From an
+extracted adoption pack, prefer the `/v1/commercial/readiness` tool/API call above.
+
 If the workspace also wants a copy-ready user-owned HTTP Agent example, use the OpenAI-compatible
 gateway dry-run before replacing it with the workspace's private Agent endpoint:
 
@@ -95,6 +108,7 @@ If setup fails, run the adoption diagnostics before changing workspace configura
 
 ```bash
 python3 scripts/diagnose_adoption.py
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
 ```
 
 ## Acceptance

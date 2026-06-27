@@ -21,7 +21,7 @@
     },
     {
       "category_id": "published_image_pull_failure",
-      "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
       "path": ".github/ISSUE_TEMPLATE/published_image_pull_failure.md",
       "schema_version": "platform-support-issue-template-v1"
     },
@@ -151,11 +151,21 @@
     "required_fields": [
       "release_version",
       "platform_id",
+      "runtime",
+      "failure_class",
+      "workflow_stage",
       "command_ran",
       "diagnostic_code",
       "fixture_id",
       "redacted_log_excerpt",
-      "next_commands_tried"
+      "next_commands_tried",
+      "recommended_next_steps",
+      "replay_command",
+      "tool_import_status",
+      "manifest_evidence",
+      "image_evidence",
+      "release_assets",
+      "redaction_flags"
     ],
     "safe_handoff_only": true,
     "schema_version": "platform-support-bundle-v1"
@@ -187,5 +197,5 @@
       "ticket_id": "docs_confusion"
     }
   ],
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

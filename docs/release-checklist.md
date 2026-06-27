@@ -1,11 +1,14 @@
 # Release Checklist
 
-## v0.3.28-alpha
+## v0.3.29-alpha
 
 - [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e .`.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `STUDY_ANYTHING_STRICT_MSGPACK=1 .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`
+- [ ] `.venv/bin/python scripts/verify_openai_compatible_gateway.py --contract-only` when diagnosing a socket-blocked Agent runner; this does not replace the next runtime gate.
+- [ ] `.venv/bin/python scripts/verify_agent_gateway_hardening.py --contract-only` when diagnosing a socket-blocked Agent runner; this does not replace the runtime hardening gate.
+- [ ] `.venv/bin/python scripts/verify_external_agent_adapter_hardening.py --contract-only` when diagnosing a socket-blocked Agent runner; this does not replace the runtime adapter gate.
 - [ ] `.venv/bin/python scripts/verify_openai_compatible_gateway.py --gateway-only`
 - [ ] `.venv/bin/python scripts/verify_agent_gateway_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_external_agent_adapter_hardening.py`
@@ -24,6 +27,9 @@
 - [ ] `.venv/bin/python scripts/verify_platform_field_rehearsal.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_support_triage.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_support_triage.py --check`
+- [ ] `.venv/bin/python scripts/generate_platform_support_bundle_replay.py --check`
+- [ ] `.venv/bin/python scripts/verify_platform_support_bundle_replay.py --check`
+- [ ] `.venv/bin/python scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout`
 - [ ] `.venv/bin/python scripts/generate_platform_onboarding_readiness.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_onboarding_readiness.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_public_support_status.py --check`
@@ -67,6 +73,9 @@
 - [ ] Run `python3 scripts/generate_platform_field_rehearsal.py --check` and `python3 scripts/verify_platform_field_rehearsal.py --check`; verify `platform-field-adoption-rehearsal-v1` covers Kimi/Codex/WorkBuddy/generic rehearsals and `platform-import-failure-fixture-v1` covers schema mismatch, missing gateway, auth mismatch, tool naming drift, timeout, localhost restrictions, package corruption, and version drift without raw learning data or secrets.
 - [ ] Run `python3 scripts/generate_platform_support_triage.py --check` and `python3 scripts/verify_platform_support_triage.py --check`; verify `platform-support-triage-v1` covers five GitHub issue templates, five `platform-support-ticket-fixture-v1` mock support tickets, the support bundle contract, all eight maintainer playbook entries, platform-pack inclusion, ecosystem submission inclusion, adoption-pack inclusion, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, or private browser/video/app context.
 - [ ] Run `python3 scripts/verify_platform_support_triage.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same support desk assets and release notes.
+- [ ] Run `python3 scripts/generate_platform_support_bundle_replay.py --check` and `python3 scripts/verify_platform_support_bundle_replay.py --check`; verify `platform-support-bundle-replay-evidence-v1` covers `platform-support-bundle-v1`, maintainer replay, copyable issue body generation, local GHCR pull timeout, cleanroom runtime launch failure, privacy-blocking fixtures, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, or local absolute paths.
+- [ ] Run `python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --issue-body` and verify it emits `platform-support-bundle-replay-v1` with `classification=local_ghcr_pull_timeout`.
+- [ ] Run `python3 scripts/verify_platform_support_bundle_replay.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same replay script, support bundle fixtures, generated report, and docs.
 - [ ] Run `python3 scripts/generate_platform_onboarding_readiness.py --check` and `python3 scripts/verify_platform_onboarding_readiness.py --check`; verify `platform-onboarding-readiness-v1` covers Kimi/Codex/WorkBuddy/generic first adopter walkthroughs, `maintainer-sla-labels-v1`, `maintainer-rotation-checklist-v1`, `platform-triage-dashboard-v1`, `platform-release-blocker-fixture-v1`, platform-pack inclusion, ecosystem submission inclusion, adoption-pack inclusion, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, or private browser/video/app context.
 - [ ] Run `python3 scripts/verify_platform_onboarding_readiness.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same onboarding readiness report, dashboard, release-blocker fixtures, docs, and release notes.
 - [ ] Run `python3 scripts/generate_platform_public_support_status.py --check` and `python3 scripts/verify_platform_public_support_status.py --check`; verify `public-support-status-v1` covers Kimi/Codex/WorkBuddy/generic platform statuses, known blocker fixtures, `public-maintainer-dashboard-v1`, `public-status-linkage-fixture-v1`, platform-pack inclusion, ecosystem submission inclusion, adoption-pack inclusion, and no source text, answers, prompts, Agent endpoints, model keys, personal profiles, full support bundle payloads, or private browser/video/app context.
@@ -76,13 +85,13 @@
 - [ ] Run `python3 scripts/generate_release_asset_adoption.py --check` and `python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-asset-adoption-v1` covers GitHub Release zip assets, sha256 digests, adoption-pack manifest hashes, embedded published-image evidence, `release-asset-adoption-fixture-v1`, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_release_cleanroom_bootstrap.py --check` and `python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`; verify `release-cleanroom-bootstrap-v1` covers repo-free release asset verification, platform import validation, redacted issue body generation, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
 - [ ] Run `python3 scripts/generate_platform_agent_replay.py --check` and `python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only`; verify `platform-agent-release-replay-v1` covers release-asset tool import, Kimi/Codex/WorkBuddy/generic platform entrypoints, the eight-tool learning replay chain, failure classifications, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, or local absolute paths.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.28-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
-- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/verify_release_asset_adoption.py --tag v0.3.29-alpha --runtime metadata-only` and verify it emits `release-asset-adoption-proof-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 platform/bootstrap/study_anything_release_bootstrap.py --tag v0.3.29-alpha --platform kimi --runtime metadata-only --output-dir /tmp/study-anything-cleanroom` and verify it emits `release-cleanroom-bootstrap-v1`.
+- [ ] After creating the GitHub prerelease, run `python3 scripts/replay_platform_agent_from_release.py --tag v0.3.29-alpha --platform kimi --runtime metadata-only` and verify it emits `platform-agent-release-replay-v1`.
 - [ ] Run `python3 scripts/generate_adopter_evidence_archive.py --check` and `python3 scripts/verify_adopter_evidence_archive.py --check`; verify `adopter-evidence-archive-v1` carries release identity, CI commands, Docker manifest evidence, public status hashes, platform pack checksums, known limitations, maintainer handoff checklist, and no source text, answers, prompts, Agent endpoints, model keys, support bundle private payloads, personal profiles, or browser/video/app context.
 - [ ] Run `python3 scripts/verify_adopter_evidence_archive.py --pack platform/generated/study-anything-platform-adoption-pack.zip` and verify the archived adoption pack carries the same evidence archive, checksum, docs, and `adopter-evidence-fixture-v1` fixtures.
 - [ ] Run `python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check` and verify `plugin-ecosystem-adoption-kit-v1` includes all five bundled sample plugins, digest-verified `plugins/registry.json`, quarantine-first trust policy, platform-pack commands, and no plugin entrypoint execution, raw source text, learner answers, Agent endpoint secrets, real model keys, or browser/video private context.
-- [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<mock-agent-endpoint> ./scripts/verify_mock_http_agent_flow.py`.
+- [ ] Start `scripts/mock_http_agent.py` and run `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=<mock-agent-endpoint>/invoke ./scripts/verify_mock_http_agent_flow.py`.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-audit` reports required Agent tasks and does not return source text, answers, feedback, endpoints, or raw Agent metadata.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py` and verify `GET /v1/sessions/{session_id}/agent-eval/artifact` emits a redacted `agent-eval-artifact-v1` bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.
 - [ ] Verify `GET /v1/sessions/{session_id}/agent-eval/quality` returns `schema_version=agent-quality-eval-v1` and `status=pass` after overview, glossary, quiz, grading, and synthesis.
@@ -104,7 +113,7 @@
 - [ ] Verify `POST /v1/sessions/from-context-package` and `POST /v1/sessions/{session_id}/context-package` create and expand sessions with web/document/video/app/Markdown/Obsidian context.
 - [ ] Verify `POST /v1/sessions/{session_id}/enrichment` accepts web/document/PDF/video/app-context/Markdown/Obsidian items only when `locator`, `provenance`, and `redaction_policy` are present, and returns only references plus excerpt hashes.
 - [ ] When Node/npm package installation is allowed, run `API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required`.
-- [ ] When Node/npm package installation is allowed in a disposable checkout, run `.venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo --promptfoo-required`.
+- [ ] When Node/npm package installation is allowed in a disposable checkout, run `.venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo --promptfoo-required`; if automatic localhost port probing is blocked, pin both ports with `--api-port 8012 --promptfoo-api-port 8013`.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py` and verify `platform/study-anything-platform-tools.json` matches the public learning tool contract.
 - [ ] Run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py` and verify importer -> lesson -> quality -> Obsidian -> learning package passes.
 - [ ] Run `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py` and verify platform Agent -> importer/enrichment -> retrieval -> retrieval eval -> teaching -> learning loop -> eval -> exports passes.
@@ -115,11 +124,11 @@
 - [ ] `python3 scripts/verify_deployment_hardening.py --check`
 - [ ] `python3 scripts/verify_deployment_hardening.py --pack platform/generated/study-anything-platform-adoption-pack.zip`
 - [ ] `docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up -d --build`
-- [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 STUDY_ANYTHING_TEST_AGENT_ENDPOINT=<compose-mock-agent-endpoint> python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
+- [ ] Against the smoke Compose stack, run `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`, `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_falkordb_flow.py`, `API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=<compose-mock-agent-endpoint>/invoke python3 scripts/verify_mock_http_agent_flow.py`, and `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py`.
 - [ ] `STACK_PROFILE=core ./scripts/launch_self_host.sh`
 - [ ] `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh`
-- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha`.
-- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.28-alpha`.
+- [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha`.
+- [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.29-alpha`.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.
@@ -145,4 +154,4 @@
 - [ ] Confirm local backups remain ignored by Git and are stored encrypted at rest.
 - [ ] Confirm GitHub Actions `ci` passes.
 - [ ] Confirm GHCR image publish workflow is enabled after first push.
-- [ ] Tag `v0.3.28-alpha`.
+- [ ] Tag `v0.3.29-alpha`.

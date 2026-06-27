@@ -24,7 +24,23 @@ The verifier emits `adoption-proof-v1` and proves that a terminal-capable platfo
 the learning loop, eval gates, Obsidian export, and NotebookLM-style handoff without a standalone
 frontend.
 
+When a user reports a failed adoption run, Codex should ask for a redacted
+`platform-support-bundle-v1` or cleanroom report and replay it locally:
+
+```bash
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
+python3 scripts/verify_platform_support_bundle_replay.py --check
+```
+
+The replay emits `platform-support-bundle-replay-v1`, blocks privacy-unsafe bundles, and returns a
+copyable GitHub issue body for the maintainer loop.
+
 ## Run
+
+`verify_commercial_readiness.py` is a full-source checkout gate because it imports the local API
+package. If you are reading this from an extracted adoption pack zip, use `GET
+/v1/commercial/readiness` or `python3 scripts/study_anything_cli.py commercial-readiness` against a
+running API instead.
 
 ```bash
 python3 scripts/verify_clean_clone_adoption.py --repo .
@@ -146,6 +162,7 @@ shared logs.
 
 ```bash
 python3 scripts/diagnose_adoption.py
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
 ```
 
 Use the diagnostic output to distinguish API reachability, missing provider defaults, Agent endpoint

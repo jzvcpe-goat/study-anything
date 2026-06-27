@@ -12,12 +12,14 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FIXTURE_SCHEMA_VERSION = "platform-import-failure-fixture-v1"
 FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
@@ -59,6 +61,30 @@ FORBIDDEN_LITERALS = [
 
 class PlatformFieldRehearsalError(RuntimeError):
     """Readable platform field-rehearsal validation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    lowered = diagnostic.lower()
+    lines = [
+        f"verify_platform_field_rehearsal failed: {diagnostic}",
+        "Next steps:",
+    ]
+    if "stale" in lowered or "drifted" in lowered:
+        lines.append(
+            "- Refresh field rehearsal assets: python3 scripts/generate_platform_field_rehearsal.py"
+        )
+    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
+        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
+    else:
+        lines.append("- Recheck field rehearsal: python3 scripts/verify_platform_field_rehearsal.py --check")
+    lines.extend(
+        [
+            "- Check feedback diagnostics: python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def dump_json(payload: Any) -> str:
@@ -311,7 +337,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "scripts/generate_platform_field_rehearsal.py",
         "scripts/verify_platform_field_rehearsal.py",
         "platform/generated/study-anything-platform-field-rehearsal.json",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
         *[f"fixtures/platform-import-failures/{failure_id}.json" for failure_id in QUIRK_IDS],
     }
     missing = sorted(required_paths - paths)
@@ -349,7 +375,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
             "verify_platform_field_rehearsal.py --check",
             "generate_platform_field_rehearsal.py --check",
         ],
-        "docs/roadmap.md": ["v0.3.28-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.29-alpha", SCHEMA_VERSION],
     }
     for path, needles in checked.items():
         assert_contains(root, path, *needles)
@@ -444,5 +470,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_field_rehearsal failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

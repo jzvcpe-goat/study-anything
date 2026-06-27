@@ -12,22 +12,78 @@ from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
-from fastapi.testclient import TestClient
-
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "apps" / "api"))
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
+from localhost_diagnostics import redact_diagnostic  # noqa: E402
+
+
+SCHEMA_VERSION = "plugin-quarantine-verification-v1"
+MIN_PYTHON = (3, 11)
+
+
+def python_version_error_payload(version: str | None = None) -> dict[str, Any]:
+    return {
+        "schema_version": "plugin-quarantine-error-v1",
+        "status": "blocked",
+        "classification": "python_version_unsupported",
+        "diagnostic": "verify_plugin_quarantine requires Python 3.11 or newer.",
+        "python_version": version or sys.version.split()[0],
+        "next_steps": [
+            ".venv/bin/python scripts/verify_plugin_quarantine.py",
+            "python3 scripts/setup_env.py",
+            "./scripts/run_skill_mode_demo.sh",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def ensure_supported_python() -> None:
+    if sys.version_info >= MIN_PYTHON:
+        return
+    print(
+        json.dumps(
+            python_version_error_payload(),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
+
+
+ensure_supported_python()
+
+from fastapi.testclient import TestClient  # noqa: E402
 from study_anything.api import main as api_main  # noqa: E402
 from study_anything.core.plugin_registry import PluginRegistry  # noqa: E402
 from study_anything.core.plugin_trust import compute_plugin_source_digest  # noqa: E402
 
 
-SCHEMA_VERSION = "plugin-quarantine-verification-v1"
-
-
 class PluginQuarantineError(RuntimeError):
     """Readable plugin quarantine verification failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_plugin_quarantine failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Re-run plugin quarantine verification: python3 scripts/verify_plugin_quarantine.py",
+            "2. Validate a plugin package explicitly: python3 scripts/install_local_plugin.py path/to/plugin --quarantine-destination data/plugin-quarantine",
+            "3. Check plugin trust docs: docs/plugin-registry.md and docs/plugins.md",
+            "4. Do not approve unknown plugins until digest, permissions, and source are reviewed.",
+        ]
+    )
 
 
 def write_plugin(
@@ -284,5 +340,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_plugin_quarantine failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

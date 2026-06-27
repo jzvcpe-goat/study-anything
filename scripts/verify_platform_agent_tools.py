@@ -14,10 +14,18 @@ from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import format_api_unreachable, resolve_api_base, verifier_name_from_file
+
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 PACKS_DIR = ROOT / "platform" / "packs"
-API_BASE = os.getenv("API_BASE", os.getenv("STUDY_ANYTHING_API_BASE", "http://127.0.0.1:8000")).rstrip("/")
+API_BASE = resolve_api_base()
+VERIFIER_NAME = verifier_name_from_file(__file__)
 REQUIRED_TOOLS = {
     "study_anything_deployment_guide",
     "study_anything_commercial_readiness",
@@ -58,6 +66,12 @@ REQUIRED_ADAPTERS = {"promptfoo", "deepeval", "langchain-agentevals", "ragas"}
 REQUIRED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
 REQUIRED_PLATFORM_PACKS = {"codex", "kimi", "workbuddy"}
 NOTEBOOKLM_FIXTURE = ROOT / "fixtures" / "notebooklm" / "notebooklm-style-context-package.json"
+PRIVATE_SOURCE_TEXT = "Private platform tool smoke source text must stay out of audit artifacts."
+PRIVATE_ENRICHMENT_TEXT = "Private enrichment web and video context must stay out of redacted evidence."
+PRIVATE_ANSWER = "Private platform tool smoke answer."
+PRIVATE_TITLE = "Private Platform Tool Smoke"
+PRIVATE_USER = "platform-tools-smoke-user"
+PRIVATE_CONTEXT_USER = "platform-context-tools-smoke-user"
 BANNED_TOOL_PATH_FRAGMENTS = (
     "/v1/agents/providers",
     "/v1/agents/defaults",
@@ -72,6 +86,215 @@ BANNED_TOOL_PATH_FRAGMENTS = (
 
 class VerificationError(RuntimeError):
     """Readable verification failure."""
+
+
+FORBIDDEN_LITERALS = (
+    PRIVATE_SOURCE_TEXT,
+    PRIVATE_ENRICHMENT_TEXT,
+    PRIVATE_ANSWER,
+    PRIVATE_TITLE,
+    PRIVATE_USER,
+    PRIVATE_CONTEXT_USER,
+    "OPENAI_API_KEY",
+    "MOONSHOT_API_KEY",
+    "AGENT_LLM_API_KEY=",
+    "raw_source_text=",
+    "learner_answer=",
+)
+
+
+def sanitize_text(value: str | bytes | None) -> str:
+    if value is None:
+        text = ""
+    elif isinstance(value, bytes):
+        text = value.decode("utf-8", errors="replace")
+    else:
+        text = value
+    replacements = {
+        PRIVATE_SOURCE_TEXT: "<private-source-text>",
+        PRIVATE_ENRICHMENT_TEXT: "<private-enrichment-text>",
+        PRIVATE_ANSWER: "<private-answer>",
+        PRIVATE_TITLE: "<private-title>",
+        PRIVATE_USER: "<private-user>",
+        PRIVATE_CONTEXT_USER: "<private-user>",
+    }
+    for literal, replacement in replacements.items():
+        text = text.replace(literal, replacement)
+    text = re.sub(r"(?i)private platform tool smoke source text[^\"'\n.]*\.?", "<private-source-text>", text)
+    text = re.sub(r"(?i)private enrichment web and video context[^\"'\n.]*\.?", "<private-enrichment-text>", text)
+    text = re.sub(r"(?i)private platform tool smoke answer[^\"'\n.]*\.?", "<private-answer>", text)
+    text = re.sub(r"(?i)private fixture [^:]{1,80} excerpt:[^\"'\n.]*\.?", "<private-fixture-text>", text)
+    text = re.sub(r"\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b", "<uuid>", text)
+    text = re.sub(r"/Users/[^\s\"'?&]+", "<local-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"'?&]+", "<temp-path>", text)
+    text = re.sub(r"(?i)(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
+    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
+    text = re.sub(r"([?&](?:api[_-]?key|token|secret)=)[^&\s\"']+", r"\1<redacted>", text, flags=re.IGNORECASE)
+    return text.strip()[:1600]
+
+
+def classify_failure(message: str) -> str:
+    lowered = message.lower()
+    if (
+        "runner appears to block localhost sockets" in lowered
+        or "blocks localhost" in lowered
+        or "operation not permitted" in lowered
+        or "permission denied" in lowered
+        or "localhost_socket_blocked" in lowered
+    ):
+        return "localhost_socket_blocked"
+    if "cannot reach study anything" in lowered or "connection refused" in lowered or "urlopen error" in lowered:
+        return "api_unreachable"
+    if "cannot read platform manifest" in lowered or "platform manifest" in lowered:
+        return "manifest_invalid"
+    if "missing platform ecosystem packs" in lowered:
+        return "platform_pack_missing"
+    if "commercial readiness" in lowered or "pmf readiness" in lowered or "adoption telemetry" in lowered:
+        return "commercial_boundary_failed"
+    if "plugin" in lowered and ("invalid schema" in lowered or "validation" in lowered or "capabilities" in lowered):
+        return "plugin_contract_failed"
+    if "context package" in lowered or "importer" in lowered:
+        return "context_package_failed"
+    if "retrieval" in lowered:
+        return "retrieval_contract_failed"
+    if "teaching layers" in lowered:
+        return "teaching_layer_failed"
+    if "did not produce a quiz" in lowered or "did not complete the learning loop" in lowered:
+        return "learning_flow_incomplete"
+    if "agent audit" in lowered:
+        return "agent_audit_failed"
+    if "eval" in lowered or "quality" in lowered:
+        return "agent_eval_failed"
+    if "obsidian" in lowered or "learning package" in lowered or "second-brain" in lowered or "enrichment artifact" in lowered:
+        return "export_contract_failed"
+    if "leaked" in lowered or "privacy" in lowered:
+        return "privacy_leak"
+    return "platform_agent_tools_failed"
+
+
+def failure_next_steps(classification: str) -> list[str]:
+    common = [
+        "./scripts/launch_skill_mode.sh",
+        f"API_BASE={API_BASE} python3 scripts/verify_platform_agent_tools.py",
+        "python3 scripts/diagnose_adoption.py",
+    ]
+    matrix = {
+        "localhost_socket_blocked": [
+            "Run the verifier from a normal terminal or host shell that permits localhost sockets.",
+            "If this came from Codex or another sandboxed Agent, collect this blocked report and rerun outside the sandbox.",
+        ],
+        "api_unreachable": [
+            "Start the Study Anything API first with `./scripts/launch_skill_mode.sh`.",
+            "If the API is already running on another port, pass it with `API_BASE=http://127.0.0.1:<port>`.",
+        ],
+        "manifest_invalid": [
+            "Regenerate platform Agent assets and confirm `platform/study-anything-platform-tools.json` is present.",
+            "Run `python3 scripts/generate_platform_agent_assets.py --check` before this verifier.",
+        ],
+        "platform_pack_missing": [
+            "Restore platform packs under `platform/packs/{codex,kimi,workbuddy}`.",
+            "Regenerate the platform adoption pack after restoring pack metadata.",
+        ],
+        "commercial_boundary_failed": [
+            "Check hosted paid services remain contract-only and local core does not require billing.",
+            "Do not publish platform evidence until commercial/privacy boundaries are green.",
+        ],
+        "plugin_contract_failed": [
+            "Run plugin SDK/capability/package validation checks separately.",
+            "Confirm plugin validation remains metadata-only and does not execute or copy plugin packages.",
+        ],
+        "context_package_failed": [
+            "Validate the NotebookLM-style Learning Context Package independently.",
+            "Run `python3 scripts/verify_importer_lesson_flow.py` first to isolate importer/context issues.",
+        ],
+        "retrieval_contract_failed": [
+            "Check `/v1/retrieval/status`; use `STUDY_ANYTHING_RETRIEVAL_BACKEND=memory` for local Skill Mode when retrieval evidence is required.",
+            "Rerun retrieval rebuild/eval on the failing session locally.",
+        ],
+        "teaching_layer_failed": [
+            "Confirm the configured Agent supports `teach.overview` and `teach.glossary`.",
+            "Retry with the bundled fake agent path before validating a custom Agent.",
+        ],
+        "learning_flow_incomplete": [
+            "Check session events locally for the first failed workflow stage.",
+            "Rerun the simpler `verify_platform_lesson_flow.py` before this full tool-manifest verifier.",
+        ],
+        "agent_audit_failed": [
+            "Inspect `/v1/sessions/<session_id>/agent-audit` locally for observed task coverage.",
+            "Do not publish raw source, enrichment, or answers while debugging.",
+        ],
+        "agent_eval_failed": [
+            "Run `python3 scripts/verify_agent_eval_flow.py` first to isolate eval failures.",
+            "Required native eval gates must pass before release evidence is valid.",
+        ],
+        "export_contract_failed": [
+            "Check Obsidian, enrichment artifact, learning package, and second-brain exports locally.",
+            "Do not publish export evidence until privacy flags and schemas are correct.",
+        ],
+        "privacy_leak": [
+            "Do not share the raw transcript publicly.",
+            "Fix the leaking API response, eval artifact, or export before using this run as evidence.",
+        ],
+    }
+    return matrix.get(classification, ["Rerun after starting the local API."]) + common
+
+
+def failure_report(exc: BaseException) -> dict[str, Any]:
+    diagnostic = sanitize_text(str(exc))
+    classification = classify_failure(diagnostic)
+    report = {
+        "status": "blocked",
+        "classification": classification,
+        "diagnostic": diagnostic,
+        "next_steps": failure_next_steps(classification),
+        "source": {
+            "verifier": VERIFIER_NAME,
+            "api_base": sanitize_text(API_BASE),
+            "manifest": sanitize_text(str(DEFAULT_MANIFEST.relative_to(ROOT))),
+        },
+        "privacy": {
+            "raw_source_text_included": False,
+            "raw_enrichment_text_included": False,
+            "learner_answers_included": False,
+            "real_model_keys_included": False,
+            "local_absolute_paths_included": False,
+        },
+    }
+    assert_failure_report_redacted(report)
+    return report
+
+
+def format_failure_for_human(report: dict[str, Any]) -> str:
+    steps = [
+        f"- {sanitize_text(str(step))}"
+        for step in report.get("next_steps", [])
+        if isinstance(step, str) and step.strip()
+    ]
+    return "\n".join(
+        [
+            f"{VERIFIER_NAME} failed:",
+            f"classification: {sanitize_text(str(report.get('classification') or 'platform_agent_tools_failed'))}",
+            f"Diagnostic: {sanitize_text(str(report.get('diagnostic') or '')) or '(empty)'}",
+            "Next steps:",
+            *(steps or ["- Regenerate platform Agent assets, then rerun this verifier."]),
+        ]
+    )
+
+
+def assert_failure_report_redacted(report: dict[str, Any]) -> None:
+    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
+    leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
+    if re.search(r"(?i)private (?:platform|enrichment|fixture)[^\"']+", serialized):
+        leaks.append("private smoke text")
+    if re.search(r"/Users/[^\s\"']+", serialized):
+        leaks.append("local absolute path")
+    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
+        leaks.append("local temp path")
+    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
+        leaks.append("secret-looking sk token")
+    if leaks:
+        raise VerificationError(f"Platform Agent tools verifier failure report leaked private data: {leaks}")
 
 
 def load_manifest(path: Path = DEFAULT_MANIFEST) -> Dict[str, Any]:
@@ -143,8 +366,10 @@ def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     except HTTPError as exc:
         detail = exc.read().decode("utf-8")
         raise VerificationError(f"API returned {exc.code} for {path}: {detail}") from exc
-    except URLError as exc:
-        raise VerificationError(f"Cannot reach Study Anything at {API_BASE}: {exc}") from exc
+    except (URLError, OSError) as exc:
+        raise VerificationError(
+            format_api_unreachable(API_BASE, exc, verifier=VERIFIER_NAME)
+        ) from exc
 
 
 def path_for(tool: Dict[str, Any], **params: str) -> str:
@@ -357,7 +582,7 @@ def main() -> None:
         tools,
         "study_anything_create_session_from_context_package",
         {
-            "user_id": "platform-context-tools-smoke-user",
+            "user_id": PRIVATE_CONTEXT_USER,
             "use_demo_agent": True,
             "package": context_fixture,
         },
@@ -447,14 +672,11 @@ def main() -> None:
                 f"Retrieval quality eval returned snippet-bearing evidence: {retrieval_quality}"
             )
 
-    private_source_text = "Private platform tool smoke source text must stay out of audit artifacts."
-    private_enrichment_text = "Private enrichment web and video context must stay out of redacted evidence."
-    private_answer = "Private platform tool smoke answer."
     session = call_tool(
         tools,
         "study_anything_create_session",
         {
-            "user_id": "platform-tools-smoke-user",
+            "user_id": PRIVATE_USER,
             "track": "ACADEMIC",
             "use_demo_agent": True,
         },
@@ -469,8 +691,8 @@ def main() -> None:
         {
             "source_type": "local_text",
             "reference": "demo://platform-tools-smoke",
-            "title": "Private Platform Tool Smoke",
-            "text": private_source_text,
+            "title": PRIVATE_TITLE,
+            "text": PRIVATE_SOURCE_TEXT,
         },
         session_id=session_id,
     )
@@ -489,7 +711,7 @@ def main() -> None:
                     "reference": "https://example.test/platform-enrichment",
                     "title": "Private Enrichment Web",
                     "locator": "section=platform-smoke",
-                    "text": private_enrichment_text,
+                    "text": PRIVATE_ENRICHMENT_TEXT,
                     "provenance": {
                         "collector": "platform-agent-tool-smoke",
                         "capture_method": "browser_excerpt",
@@ -502,7 +724,7 @@ def main() -> None:
                     "reference": "video://platform-smoke/clip",
                     "title": "Private Enrichment Clip",
                     "locator": "00:00:08-00:00:21",
-                    "text": private_enrichment_text,
+                    "text": PRIVATE_ENRICHMENT_TEXT,
                     "provenance": {
                         "collector": "platform-agent-tool-smoke",
                         "capture_method": "video_transcript_slice",
@@ -516,7 +738,7 @@ def main() -> None:
     )
     if enrichment.get("schema_version") != "learning-enrichment-v1":
         raise VerificationError(f"Enrichment tool returned invalid schema: {enrichment}")
-    if private_enrichment_text in json.dumps(enrichment, ensure_ascii=False):
+    if PRIVATE_ENRICHMENT_TEXT in json.dumps(enrichment, ensure_ascii=False):
         raise VerificationError("Enrichment tool response leaked raw enrichment text.")
     if not (enrichment.get("source") or {}).get("excerpt_hash"):
         raise VerificationError(f"Enrichment tool did not return a source excerpt hash: {enrichment}")
@@ -555,7 +777,7 @@ def main() -> None:
     completed = call_tool(
         tools,
         "study_anything_answer",
-        {"answers": {quiz_id: private_answer}},
+        {"answers": {quiz_id: PRIVATE_ANSWER}},
         session_id=session_id,
     )
     if completed.get("stage") != "completed":
@@ -643,7 +865,7 @@ def main() -> None:
     for heading in ["## Source", "## Quiz Review", "## Mastery", "## Enrichment Context"]:
         if heading not in markdown:
             raise VerificationError(f"Obsidian export missing heading {heading}: {markdown}")
-    if private_source_text in markdown or private_enrichment_text in markdown:
+    if PRIVATE_SOURCE_TEXT in markdown or PRIVATE_ENRICHMENT_TEXT in markdown:
         raise VerificationError("Obsidian export leaked raw source/enrichment text.")
 
     enrichment_artifact = call_tool(
@@ -657,9 +879,9 @@ def main() -> None:
         raise VerificationError(f"Unexpected enrichment artifact format: {enrichment_artifact}")
     if "learning-enrichment-artifact-v1" not in str(enrichment_artifact.get("html") or ""):
         raise VerificationError(f"Enrichment artifact HTML missing schema marker: {enrichment_artifact}")
-    if private_source_text in json.dumps(enrichment_artifact, ensure_ascii=False):
+    if PRIVATE_SOURCE_TEXT in json.dumps(enrichment_artifact, ensure_ascii=False):
         raise VerificationError("Enrichment artifact leaked raw source text.")
-    if private_enrichment_text in json.dumps(enrichment_artifact, ensure_ascii=False):
+    if PRIVATE_ENRICHMENT_TEXT in json.dumps(enrichment_artifact, ensure_ascii=False):
         raise VerificationError("Enrichment artifact leaked raw enrichment text.")
 
     package = call_tool(tools, "study_anything_learning_package_export", session_id=session_id)
@@ -670,9 +892,9 @@ def main() -> None:
     package_privacy = package.get("privacy") or {}
     if package_privacy.get("raw_source_text_included") or package_privacy.get("raw_enrichment_text_included"):
         raise VerificationError(f"Learning package privacy flags are unsafe: {package_privacy}")
-    if private_source_text in json.dumps(package, ensure_ascii=False):
+    if PRIVATE_SOURCE_TEXT in json.dumps(package, ensure_ascii=False):
         raise VerificationError("Learning package leaked raw source text.")
-    if private_enrichment_text in json.dumps(package, ensure_ascii=False):
+    if PRIVATE_ENRICHMENT_TEXT in json.dumps(package, ensure_ascii=False):
         raise VerificationError("Learning package leaked raw enrichment text.")
 
     second_brain = call_tool(
@@ -699,11 +921,11 @@ def main() -> None:
     obsidian_note = second_brain.get("obsidian") or {}
     if obsidian_note.get("schema_version") != "second-brain-obsidian-note-v1":
         raise VerificationError(f"Second-brain Obsidian note is invalid: {second_brain}")
-    if private_answer in json.dumps(second_brain, ensure_ascii=False):
+    if PRIVATE_ANSWER in json.dumps(second_brain, ensure_ascii=False):
         raise VerificationError("Second-brain handoff leaked learner answer.")
-    if private_source_text in json.dumps(second_brain, ensure_ascii=False):
+    if PRIVATE_SOURCE_TEXT in json.dumps(second_brain, ensure_ascii=False):
         raise VerificationError("Second-brain handoff leaked raw source text.")
-    if private_enrichment_text in json.dumps(second_brain, ensure_ascii=False):
+    if PRIVATE_ENRICHMENT_TEXT in json.dumps(second_brain, ensure_ascii=False):
         raise VerificationError("Second-brain handoff leaked raw enrichment text.")
 
     serialized_evidence = json.dumps(
@@ -719,11 +941,11 @@ def main() -> None:
         ensure_ascii=False,
     )
     forbidden_fragments = [
-        private_source_text,
-        private_enrichment_text,
-        private_answer,
-        "Private Platform Tool Smoke",
-        "platform-tools-smoke-user",
+        PRIVATE_SOURCE_TEXT,
+        PRIVATE_ENRICHMENT_TEXT,
+        PRIVATE_ANSWER,
+        PRIVATE_TITLE,
+        PRIVATE_USER,
         "127.0.0.1:8787",
         "OPENAI_API_KEY",
         "MOONSHOT_API_KEY",
@@ -771,5 +993,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_agent_tools failed: {exc}", file=sys.stderr)
+        report = failure_report(exc)
+        print(json.dumps(report, ensure_ascii=False, sort_keys=True))
+        print(format_failure_for_human(report), file=sys.stderr)
         sys.exit(1)

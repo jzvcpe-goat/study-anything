@@ -10,6 +10,7 @@ import json
 import threading
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass, field, replace
 from enum import Enum
@@ -186,6 +187,60 @@ def _normalise_capability(capability: str | AgentCapability) -> AgentCapability:
         "embed": AgentCapability.EMBEDDING_CREATE,
     }
     return legacy.get(capability, AgentCapability(capability))
+
+
+def normalise_http_agent_endpoint(value: str | None) -> str | None:
+    """Return a copy-paste tolerant HTTP Agent invoke endpoint.
+
+    Users and platform Agents often provide a local gateway root such as
+    ``127.0.0.1:8787`` or a health URL. The runtime invokes the Agent by POSTing
+    to the task endpoint, so normalize those common first-run inputs at the
+    registry boundary instead of storing an endpoint that will fail later.
+    """
+
+    if value is None:
+        return None
+    endpoint = value.strip()
+    if not endpoint:
+        return None
+    if "://" not in endpoint:
+        endpoint = f"http://{endpoint}"
+    parts = urllib.parse.urlsplit(endpoint)
+    if parts.scheme not in {"http", "https"} or not parts.netloc:
+        raise ValueError("HTTP agent endpoint must be an HTTP(S) URL.")
+    if parts.username or parts.password:
+        raise ValueError(
+            "Agent endpoint must not contain inline credentials or secret-like query parameters. "
+            "Keep real model credentials inside the user's gateway or platform Agent."
+        )
+    if url_contains_inline_secret(endpoint):
+        raise ValueError(
+            "Agent endpoint must not contain inline credentials or secret-like query parameters. "
+            "Keep real model credentials inside the user's gateway or platform Agent."
+        )
+    path = parts.path
+    if path in {"", "/"} or path.rstrip("/") == "/health":
+        path = "/invoke"
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc, path, parts.query, parts.fragment))
+
+
+def _remove_secret_query_params(value: str | None) -> str | None:
+    if value is None:
+        return None
+    parts = urllib.parse.urlsplit(value)
+    if not parts.scheme or not parts.netloc:
+        return value
+    safe_query = urllib.parse.urlencode(
+        [
+            (key, query_value)
+            for key, query_value in urllib.parse.parse_qsl(parts.query, keep_blank_values=True)
+            if not is_secret_key(key)
+        ],
+        doseq=True,
+    )
+    return urllib.parse.urlunsplit(
+        (parts.scheme, parts.netloc, parts.path, safe_query, parts.fragment)
+    )
 
 
 def _assert_safe_provider_storage(
@@ -434,7 +489,14 @@ class AgentRegistry:
             self._save()
 
     def register_provider(self, provider: AgentProviderConfig) -> AgentProviderConfig:
-        _assert_safe_provider_storage(endpoint=provider.endpoint, metadata=provider.metadata)
+        endpoint = (
+            normalise_http_agent_endpoint(provider.endpoint)
+            if provider.kind == AgentProviderKind.HTTP_AGENT
+            else provider.endpoint
+        )
+        _assert_safe_provider_storage(endpoint=endpoint, metadata=provider.metadata)
+        if endpoint != provider.endpoint:
+            provider = replace(provider, endpoint=endpoint)
         if not provider.provider_id:
             provider = replace(provider, provider_id=str(uuid4()))
         self._providers[provider.provider_id] = provider
@@ -458,6 +520,8 @@ class AgentRegistry:
         provider_kind = _normalise_kind(kind)
         provider_metadata = dict(metadata or {})
         storage_endpoint = endpoint or base_url
+        if provider_kind == AgentProviderKind.HTTP_AGENT:
+            storage_endpoint = normalise_http_agent_endpoint(storage_endpoint)
         _assert_safe_provider_storage(endpoint=storage_endpoint, metadata=provider_metadata)
         if timeout_seconds < 1 or timeout_seconds > 300:
             raise ValueError("Agent provider timeout_seconds must be between 1 and 300.")
@@ -655,10 +719,15 @@ class AgentRegistry:
             endpoint = provider_values.get("endpoint")
             metadata = dict(provider_values.get("metadata", {}))
             if url_contains_inline_secret(endpoint):
-                endpoint = redact_url_secrets(endpoint)
+                endpoint = _remove_secret_query_params(redact_url_secrets(endpoint))
                 metadata["migration_warning"] = "unsafe endpoint secrets were redacted and provider was disabled"
                 provider_values["enabled"] = False
                 sanitized = True
+            if provider_values.get("kind") == AgentProviderKind.HTTP_AGENT.value:
+                normalised_endpoint = normalise_http_agent_endpoint(endpoint)
+                if normalised_endpoint != endpoint:
+                    endpoint = normalised_endpoint
+                    sanitized = True
             secret_metadata_keys = [key for key in metadata if is_secret_key(str(key))]
             if secret_metadata_keys:
                 for key in secret_metadata_keys:

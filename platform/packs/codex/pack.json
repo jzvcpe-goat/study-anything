@@ -43,6 +43,8 @@
     "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
     "platform_support_triage.schema_version == platform-support-triage-v1",
     "platform_support_ticket_fixture.schema_version == platform-support-ticket-fixture-v1",
+    "platform_support_bundle_replay.schema_version == platform-support-bundle-replay-evidence-v1",
+    "platform_support_bundle_replay_result.schema_version == platform-support-bundle-replay-v1",
     "platform_onboarding_readiness.schema_version == platform-onboarding-readiness-v1",
     "platform_triage_dashboard.schema_version == platform-triage-dashboard-v1",
     "platform_release_blocker_fixture.schema_version == platform-release-blocker-fixture-v1",
@@ -81,7 +83,6 @@
   "integration_mode": "terminal_skill",
   "local_verification_commands": [
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
-    "python3 scripts/verify_commercial_readiness.py",
     "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
     "python3 scripts/verify_agent_gateway_hardening.py",
     "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -100,6 +101,9 @@
     "python3 scripts/generate_platform_field_rehearsal.py --check",
     "python3 scripts/verify_platform_support_triage.py --check",
     "python3 scripts/generate_platform_support_triage.py --check",
+    "python3 scripts/verify_platform_support_bundle_replay.py --check",
+    "python3 scripts/generate_platform_support_bundle_replay.py --check",
+    "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
     "python3 scripts/verify_platform_onboarding_readiness.py --check",
     "python3 scripts/generate_platform_onboarding_readiness.py --check",
     "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -129,6 +133,9 @@
     "python3 scripts/generate_adopter_evidence_archive.py --check",
     "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
     "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only"
+  ],
+  "source_verification_commands": [
+    "python3 scripts/verify_commercial_readiness.py"
   ],
   "must_not_log_or_share": [
     "raw source text",

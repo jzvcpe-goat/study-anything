@@ -4,7 +4,7 @@
       "blocker_id": "tool_import_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/tool_import_blocker.json",
-        "sha256": "26066f5eac32325f57a38ff56806a44c76e411dec7f715d709344edad0b63d0c"
+        "sha256": "d3bd69eb62a938f1faef57591ab71c2c28a3f6c4ad08ee3a2255e00bab4042af"
       },
       "linked_support_category": "platform_import_failure",
       "minimum_reproduction_command": "python3 scripts/verify_ecosystem_submission_pack.py",
@@ -19,7 +19,7 @@
       "blocker_id": "local_gateway_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/local_gateway_blocker.json",
-        "sha256": "23504e7bd57c091e12589ee7a2dbe3a7389a4248ba365499396ed18a277923ca"
+        "sha256": "51f4056b0165d64d47820bd48a1322efd2ed8c0940f19c67d75745087db3643d"
       },
       "linked_support_category": "local_gateway_failure",
       "minimum_reproduction_command": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
@@ -34,10 +34,10 @@
       "blocker_id": "published_image_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/published_image_blocker.json",
-        "sha256": "d4ec179668e56c1e3176b7ee8b18de62006f2a2dced40c6ab4967ec7891c1b81"
+        "sha256": "d66c12e39f073bfc8c18b19dfc2e702910499e474a9baad39e09bf023fd6de84"
       },
       "linked_support_category": "published_image_pull_failure",
-      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "minimum_reproduction_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
       "public_status": "mock_fixture_ready_no_open_blocker",
       "required_labels": [
         "intake",
@@ -49,7 +49,7 @@
       "blocker_id": "agent_eval_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/agent_eval_blocker.json",
-        "sha256": "26c0bad50e3518042fbbc61565d03169c863a7612270b949d600a4bbee2e117f"
+        "sha256": "5bad7558655c2ce4404a2328eae7b3cd0abd9feafc95108632cdd62dbfe51883"
       },
       "linked_support_category": "agent_eval_evidence_failure",
       "minimum_reproduction_command": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
@@ -64,7 +64,7 @@
       "blocker_id": "support_bundle_privacy_blocker",
       "fixture_ref": {
         "path": "fixtures/platform-release-blockers/support_bundle_privacy_blocker.json",
-        "sha256": "70a5c55c8bdc9b9eccd8eced91b151502e472b33730a71aaaf028c27858fb437"
+        "sha256": "af20209a91b7178ff54daf64392a620bc9794cc49fd3abd7299ab9d6bcdc3393"
       },
       "linked_support_category": "docs_confusion",
       "minimum_reproduction_command": "python3 scripts/verify_platform_onboarding_readiness.py --check",
@@ -165,5 +165,5 @@
     "sla_label_count": 7,
     "status_linkage_fixture_count": 7
   },
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

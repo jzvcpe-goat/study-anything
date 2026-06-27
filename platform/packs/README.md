@@ -65,7 +65,10 @@ retrieval, and ecosystem eval capabilities:
   reasoning model through the local gateway.
 - `workbuddy`: HTTP-tool workspace agents that import OpenAPI tools and call the local API.
 
-## Verify
+## Verify From A Full Source Checkout
+
+These commands require the complete repository, including `apps/api` and all source-only release
+gates. Do not run this whole block from an extracted adoption pack zip.
 
 ```bash
 .venv/bin/python scripts/verify_clean_clone_adoption.py --repo . --copy-worktree
@@ -80,6 +83,15 @@ retrieval, and ecosystem eval capabilities:
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
 ```
+
+## Verify From An Extracted Adoption Pack
+
+Each `platform/packs/*/pack.json` separates commands by scope:
+
+- `local_verification_commands`: scripts included in the adoption pack and safe to run from the
+  extracted pack root.
+- `source_verification_commands`: full-source gates that require a repository checkout, such as
+  `scripts/verify_commercial_readiness.py`.
 
 For a running API:
 

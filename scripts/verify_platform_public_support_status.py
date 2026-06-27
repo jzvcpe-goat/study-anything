@@ -12,6 +12,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-public-support-status.json"
@@ -22,7 +24,7 @@ STATUS_LINKAGE_SCHEMA_VERSION = "public-status-linkage-fixture-v1"
 ONBOARDING_SCHEMA_VERSION = "platform-onboarding-readiness-v1"
 SUPPORT_TRIAGE_SCHEMA_VERSION = "platform-support-triage-v1"
 TRIAGE_DASHBOARD_SCHEMA_VERSION = "platform-triage-dashboard-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 PLATFORMS = {"kimi", "codex", "workbuddy", "generic"}
 SLA_LABELS = {
     "intake",
@@ -73,6 +75,32 @@ FORBIDDEN_LITERALS = [
 
 class PublicSupportStatusError(RuntimeError):
     """Readable public support status validation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    lowered = diagnostic.lower()
+    lines = [
+        f"verify_platform_public_support_status failed: {diagnostic}",
+        "Next steps:",
+    ]
+    if "stale" in lowered or "drifted" in lowered:
+        lines.append(
+            "- Refresh public support status assets: python3 scripts/generate_platform_public_support_status.py"
+        )
+    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
+        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
+    else:
+        lines.append(
+            "- Recheck public support status: python3 scripts/verify_platform_public_support_status.py --check"
+        )
+    lines.extend(
+        [
+            "- Check onboarding readiness: python3 scripts/verify_platform_onboarding_readiness.py --check",
+            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def dump_json(payload: Any) -> str:
@@ -346,7 +374,7 @@ def validate_adoption_pack(root: Path) -> dict[str, Any]:
         "platform/generated/study-anything-public-maintainer-dashboard.json",
         "platform/generated/study-anything-public-maintainer-dashboard.md",
         "docs/public-support-status.md",
-        "docs/release-notes/v0.3.28-alpha.md",
+        "docs/release-notes/v0.3.29-alpha.md",
         *[f"fixtures/platform-status-links/{label}.json" for label in SLA_LABELS],
     }
     missing = sorted(required_paths - paths)
@@ -381,7 +409,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/maintainer-rotation.md": [PUBLIC_STATUS_SCHEMA_VERSION, "public dashboard"],
         "docs/ecosystem-submission.md": [PUBLIC_STATUS_SCHEMA_VERSION, "public support status"],
         "docs/release-checklist.md": ["verify_platform_public_support_status.py --check"],
-        "docs/roadmap.md": ["v0.3.28-alpha", PUBLIC_STATUS_SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.29-alpha", PUBLIC_STATUS_SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")
@@ -467,5 +495,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_platform_public_support_status failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

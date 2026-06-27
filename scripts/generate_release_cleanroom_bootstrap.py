@@ -13,6 +13,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
@@ -24,7 +26,7 @@ ARCHIVE_ROOT = "study-anything-release-cleanroom-bootstrap"
 
 SCHEMA_VERSION = "release-cleanroom-bootstrap-evidence-v1"
 BOOTLOADER_SCHEMA_VERSION = "release-cleanroom-bootstrap-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 
@@ -50,6 +52,7 @@ CLASSIFICATION_MATRIX = [
     ("platform_entrypoint_missing", "block_platform_submission", "The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing."),
     ("source_download_failed", "needs_network_or_source_dir", "Runtime replay needs source code but the GitHub tag source archive could not be downloaded."),
     ("runtime_launch_failed", "needs_runtime_triage", "The selected Skill Mode, external API, or published-image runtime could not be launched."),
+    ("localhost_socket_blocked", "needs_host_terminal_recheck", "The current Agent sandbox cannot open localhost sockets for Skill Mode or gateway runtime replay."),
     ("api_unavailable", "needs_runtime_triage", "The Study Anything API was not reachable for tool replay."),
     ("schema_mismatch", "block_release_claim", "A runtime response did not match the expected learning/eval schema."),
     ("privacy_leak", "block_release_claim", "A report included source text, answers, local paths, prompts, endpoints, or keys."),
@@ -65,16 +68,32 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
-    "Private platform replay source text",
-    "Private platform replay learner answer",
+    "Private " + "answer:",
+    "Private " + "source text:",
+    "Private platform replay " + "source text",
+    "Private platform replay learner " + "answer",
     "AGENT_ENDPOINT=http",
 ]
 
 
 class CleanroomBootstrapGenerationError(RuntimeError):
     """Readable cleanroom bootstrap generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_release_cleanroom_bootstrap failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild cleanroom bootstrap evidence: python3 scripts/generate_release_cleanroom_bootstrap.py",
+            "2. Re-check cleanroom bootstrap evidence: python3 scripts/generate_release_cleanroom_bootstrap.py --check",
+            "3. Re-check release asset bootstrap evidence: python3 scripts/generate_release_asset_bootstrap.py --check",
+            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -355,7 +374,7 @@ def main() -> None:
         else:
             write_outputs()
     except Exception as exc:
-        print(f"generate_release_cleanroom_bootstrap failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)
 
 

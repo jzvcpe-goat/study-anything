@@ -76,6 +76,18 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the Kimi-compatible tool surface without requiring
 browser-only Kimi to call localhost directly.
 
+If an external Kimi adoption run fails, do not paste raw logs or Agent configuration. Use the support
+bundle replay path:
+
+```bash
+python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
+python3 scripts/verify_platform_support_bundle_replay.py --check
+```
+
+The replay emits `platform-support-bundle-replay-v1` and a copyable GitHub issue body. Kimi should
+only share redacted fields from `platform-support-bundle-v1`.
+
 ## Kimi As Reasoning Agent
 
 First verify the same gateway entrypoint without a real key:
@@ -89,7 +101,7 @@ Then switch the gateway to real Kimi credentials:
 
 ```bash
 export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
-export AGENT_LLM_API_KEY="$MOONSHOT_API_KEY"
+export AGENT_LLM_API_KEY="your-api-key"
 export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
 
 python3 scripts/openai_compatible_agent_gateway.py --host 127.0.0.1 --port 8787
@@ -99,7 +111,8 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --set-default
 ```
 
-Keep Moonshot/Kimi credentials in the gateway environment, not in Study Anything. The default
+The endpoint can be Moonshot/Kimi, OpenAI, DeepSeek, a relay, or any OpenAI-compatible runtime.
+Keep provider credentials in the gateway environment, not in Study Anything. The default
 `agent-add-http --set-default` command registers teaching layers, quiz generation, grading, synthesis,
 scribe notes, source verification, and embedding tasks.
 
@@ -176,6 +189,7 @@ grading feedback, Agent endpoints, or model secrets.
 
 ```bash
 python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke
+python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
 ```
 
 If browser-only Kimi cannot call localhost, move the HTTP calls to a terminal-capable Agent, local

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -19,6 +20,17 @@ ARCHIVE = REPO / "platform" / "generated" / "study-anything-published-image-evid
 CHECKSUM = REPO / "platform" / "generated" / "study-anything-published-image-evidence.sha256"
 FIXTURES = REPO / "fixtures" / "published-image-evidence"
 ADOPTION_PACK = REPO / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
+
+sys.path.insert(0, str(REPO / "scripts"))
+GENERATOR_SPEC = importlib.util.spec_from_file_location("generate_published_image_evidence", GENERATOR)
+assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
+generator = importlib.util.module_from_spec(GENERATOR_SPEC)
+GENERATOR_SPEC.loader.exec_module(generator)
+
+VERIFIER_SPEC = importlib.util.spec_from_file_location("verify_published_image_evidence", VERIFIER)
+assert VERIFIER_SPEC is not None and VERIFIER_SPEC.loader is not None
+verifier = importlib.util.module_from_spec(VERIFIER_SPEC)
+VERIFIER_SPEC.loader.exec_module(verifier)
 
 FIXTURE_IDS = {
     "manifest-pass-local-pull-timeout",
@@ -46,8 +58,8 @@ FORBIDDEN_MARKERS = (
     "sk-",
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
+    "Private " + "answer:",
+    "Private " + "source text:",
     "learner_answer=",
     "raw_source_text=",
     "AGENT_ENDPOINT=http",
@@ -92,9 +104,9 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "published-image-evidence-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.29-alpha")
         self.assertEqual(report["status"], "pass")
-        self.assertEqual(report["release_identity"]["tag"], "v0.3.28-alpha")
+        self.assertEqual(report["release_identity"]["tag"], "v0.3.29-alpha")
         self.assertEqual(
             set(report["manifest_evidence"]["required_platforms"]),
             {"linux/amd64", "linux/arm64"},
@@ -127,7 +139,7 @@ class PublishedImageEvidenceTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "published-image-evidence-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.28-alpha")
+            self.assertEqual(payload["version"], "v0.3.29-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             classifications.add(payload["classification"])
             self.assertTrue(payload["operator_next_step"])
@@ -152,6 +164,59 @@ class PublishedImageEvidenceTests(unittest.TestCase):
             completed = run_script(VERIFIER, "--pack-root", str(missing_root))
         self.assertNotEqual(completed.returncode, 0)
         self.assertIn("Pack root does not exist", completed.stderr)
+        self.assertIn("Next steps:", completed.stderr)
+        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
+        self.assertIn("verify_published_image_launch.py --allow-pull-timeout-report", completed.stderr)
+        self.assertIn("diagnose_adoption.py", completed.stderr)
+        self.assertIn("<temp-path>", completed.stderr)
+        self.assertNotIn(tmp_dir, completed.stderr)
+
+    def test_verifier_cli_failure_formatter_is_actionable_and_redacted(self) -> None:
+        secret = "sk-proj-" + "abcdefghijklmnop123456"
+        message = verifier.format_cli_failure(
+            RuntimeError(
+                "published-image evidence failed at /private/"
+                f"tmp/study-anything/image.json with Authorization: Bearer {secret}"
+            )
+        )
+
+        self.assertIn("verify_published_image_evidence failed", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("verify_published_image_evidence.py --check", message)
+        self.assertIn("verify_published_image_launch.py --allow-pull-timeout-report", message)
+        self.assertIn("diagnose_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn(secret, message)
+        self.assertNotIn("/private/" + "tmp", message)
+
+    def test_generator_cli_failure_formatter_is_actionable_and_redacted(self) -> None:
+        secret = "sk-proj-" + "abcdefghijklmnop123456"
+        message = generator.format_cli_failure(
+            RuntimeError(
+                "published-image generation failed at /private/"
+                f"tmp/study-anything/generated.json with Authorization: Bearer {secret}"
+            )
+        )
+
+        self.assertIn("generate_published_image_evidence failed", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_published_image_evidence.py --check", message)
+        self.assertIn("verify_published_image_evidence.py --check", message)
+        self.assertIn("generate_platform_adoption_pack.py", message)
+        self.assertIn("diagnose_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn(secret, message)
+        self.assertNotIn("/private/" + "tmp", message)
+
+    def test_redaction_guards_block_unredacted_temp_paths(self) -> None:
+        payload = {"diagnostic": "/private/" + "tmp/study-anything/image.log"}
+
+        with self.assertRaises(verifier.PublishedImageEvidenceError):
+            verifier.assert_no_leaks(payload)
+        with self.assertRaises(generator.PublishedImageEvidenceError):
+            generator.assert_no_leaks(payload)
 
 
 if __name__ == "__main__":

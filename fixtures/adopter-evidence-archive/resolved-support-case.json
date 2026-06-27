@@ -27,5 +27,5 @@
   "public_note": "Closing evidence includes a passing command or documented platform limitation.",
   "public_status": "resolved_with_public_evidence",
   "schema_version": "adopter-evidence-fixture-v1",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

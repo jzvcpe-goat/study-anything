@@ -1,0 +1,31 @@
+{
+  "command_ran": "python3 scripts/replay_support_bundle.py --bundle support-bundle.json",
+  "diagnostic_code": "privacy_contract_violation",
+  "failure_class": "privacy_contract_violation",
+  "fixture_id": "privacy-contract-violation",
+  "next_commands_tried": [
+    "support bundle replay"
+  ],
+  "platform_id": "kimi",
+  "recommended_next_steps": [
+    "Do not post the unsafe bundle publicly.",
+    "Regenerate diagnostics with source text, answers, endpoints, and secrets redacted."
+  ],
+  "redacted_log_excerpt": "Reporter indicated an unsafe support bundle was generated.",
+  "redaction_flags": {
+    "agent_endpoint_secrets_included": false,
+    "agent_prompts_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "personal_profile_included": false,
+    "raw_source_text_included": true,
+    "real_model_keys_included": false
+  },
+  "release_version": "v0.3.29-alpha",
+  "replay_command": "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+  "runtime": "skill-mode",
+  "schema_version": "platform-support-bundle-v1",
+  "workflow_stage": "support_handoff"
+}

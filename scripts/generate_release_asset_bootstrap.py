@@ -13,6 +13,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
@@ -24,7 +26,7 @@ ARCHIVE_ROOT = "study-anything-release-asset-bootstrap"
 
 SCHEMA_VERSION = "release-asset-bootstrap-v1"
 TRANSCRIPT_SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
@@ -35,6 +37,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/release-cleanroom-bootstrap.md",
     "docs/release-asset-adoption.md",
     "docs/platform-agent-release-replay.md",
+    "docs/support-desk.md",
     "docs/adoption.md",
     "docs/github-launch.md",
     "docs/ecosystem-submission.md",
@@ -43,7 +46,11 @@ PUBLIC_ASSET_PATHS = (
     "scripts/bootstrap_from_release.py",
     "scripts/verify_release_asset_adoption.py",
     "scripts/replay_platform_agent_from_release.py",
+    "scripts/replay_support_bundle.py",
+    "scripts/generate_platform_support_bundle_replay.py",
+    "scripts/verify_platform_support_bundle_replay.py",
     "scripts/generate_release_asset_bootstrap.py",
+    "platform/generated/study-anything-platform-support-bundle-replay.json",
     "platform/generated/study-anything-release-asset-adoption.json",
     "platform/generated/study-anything-release-cleanroom-bootstrap.json",
     "platform/generated/study-anything-release-cleanroom-bootstrap.md",
@@ -76,8 +83,8 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
+    "Private " + "answer:",
+    "Private " + "source text:",
     "raw_source_text=",
     "learner_answer=",
     "AGENT_ENDPOINT=http",
@@ -87,6 +94,21 @@ FORBIDDEN_LITERALS = [
 
 class ReleaseAssetBootstrapError(RuntimeError):
     """Readable release-asset bootstrap generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_release_asset_bootstrap failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild the public release-asset bootstrap evidence: python3 scripts/generate_release_asset_bootstrap.py",
+            "2. Re-check the generated assets: python3 scripts/generate_release_asset_bootstrap.py --check",
+            "3. Re-run release asset adoption verification: python3 scripts/verify_release_asset_adoption.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
+            "4. If this is an adopter report, replay the redacted support bundle: python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -164,7 +186,7 @@ def recovery_matrix() -> list[dict[str, Any]]:
         {
             "classification": "local_api_unavailable",
             "release_gate": "runtime_recheck_required",
-            "operator_next_step": "Launch Skill Mode or Docker self-host before running live platform tools.",
+            "operator_next_step": "Launch Skill Mode or Docker self-host from a normal terminal that permits localhost sockets before running live platform tools.",
         },
         {
             "classification": "published_image_unavailable",
@@ -399,5 +421,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_release_asset_bootstrap failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

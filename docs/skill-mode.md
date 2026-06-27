@@ -7,6 +7,52 @@ Study Anything can be used as an API/Skill-first learning system. The repository
 
 The CLI talks only to the public API. It does not store model API keys or execute real model logic inside Study Anything.
 
+## 零配置体验（不需要任何 API Key）
+
+在接入真实模型之前，你可以先验证本地学习引擎本身是否工作。零配置路径会显式使用
+`dry_run` Gateway：所有推理都是确定性的模拟输出，不产生任何费用，也不需要网络。
+
+> **启动前检查**：Gateway 默认是 `auto` 模式。如果没有配置上游模型环境变量，它会
+> 自动进入 `dry_run`，并在终端打印 health/invoke 地址、缺失的 env 和下一步建议。
+> 只有当你显式设置 `AGENT_GATEWAY_MODE=upstream` 时，才必须同时提供
+> `AGENT_LLM_BASE_URL`、`AGENT_LLM_API_KEY` 和 `AGENT_LLM_MODEL`；缺失时 Gateway
+> 会带清楚诊断退出。真实模型也可以完全交给 WorkBuddy / Kimi Work / 你的终端 Agent
+> 作为出口，Study Anything 只负责本地学习流程。
+
+```bash
+# 1. 启动本地引擎
+./scripts/launch_skill_mode.sh
+python3 scripts/study_anything_cli.py health
+
+# 2. 启动 Gateway（显式 dry_run，不需要 key）
+AGENT_GATEWAY_MODE=dry_run python3 scripts/openai_compatible_agent_gateway.py \
+  --host 127.0.0.1 \
+  --port 8787
+
+# 3. 在另一个终端注册
+python3 scripts/study_anything_cli.py agent-add-http \
+  --label "Local gateway" \
+  --endpoint "http://127.0.0.1:8787/invoke" \
+  --set-default
+
+# 4. 跑一条完整学习流
+python3 scripts/study_anything_cli.py start \
+  --title "Rust 所有权" \
+  --text "Rust 的核心创新是所有权系统。" \
+  --reference "rust-book"
+
+# 拿到输出的 session_id 后
+python3 scripts/study_anything_cli.py answer <SESSION_ID> \
+  --text "所有权确保内存安全，编译器在编译时检查借用规则。"
+
+python3 scripts/study_anything_cli.py teach <SESSION_ID> --layer overview
+```
+
+> **注意**：这个 Gateway 启动是**临时验证**用的。真正推荐的使用方式是让
+> **WorkBuddy / Kimi Work / 你的终端 Agent** 作为模型出口，它们自带模型配置和浏览能力。
+> Study Anything 只负责本地学习流程、校验、审计和导出。你不需要长期维护一个手动
+> 启动的 Gateway 进程。
+
 ## Start
 
 For the smallest working setup, launch the local Skill API and run the deterministic demo:
@@ -73,6 +119,26 @@ In short:
 
 ## Learn From A Source
 
+### CLI 参数速查
+
+| 命令 | session 怎么传 |
+|------|---------------|
+| `start` | 自动生成，不用传 |
+| `teach <SESSION_ID>` | positional，或 `teach --session <SESSION_ID>` |
+| `answer <SESSION_ID>` | positional，或 `answer --session <SESSION_ID>` |
+| `show <SESSION_ID>` | positional，或 `show --session <SESSION_ID>` |
+| `mastery <SESSION_ID>` | positional，或 `mastery --session <SESSION_ID>` |
+
+示例：
+
+```bash
+# 正确
+python3 scripts/study_anything_cli.py teach a1aea872-xxx --layer overview
+
+# 也正确
+python3 scripts/study_anything_cli.py teach --session a1aea872-xxx --layer overview
+```
+
 ```bash
 python3 scripts/study_anything_cli.py start \
   --title "Notes on retrieval practice" \
@@ -114,6 +180,9 @@ python3 scripts/study_anything_cli.py context-import \
   fixtures/notebooklm/notebooklm-style-context-package.json --session
 ```
 
+For import commands, bare `--session` prints the created/expanded session summary. Use
+`--session SESSION_ID` or `--session-id SESSION_ID` to expand an existing session.
+
 The package supports `web`, `document`, `video_slice`, `app_context`, `markdown_note`, and
 `obsidian_note` items. Use this path when a platform Agent, Kimi workspace, Codex run, or WorkBuddy
 workspace has collected several pieces of context before Study Anything starts teaching.
@@ -136,23 +205,37 @@ Expose a user-owned gateway that implements `docs/agent-contract.md`, then confi
 ```bash
 python3 scripts/study_anything_cli.py agent-add-http \
   --label "My private learning agent" \
-  --endpoint "http://127.0.0.1:8787" \
+  --endpoint "http://127.0.0.1:8787/invoke" \
   --set-default
 
-python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
+python3 scripts/study_anything_cli.py agent-test
 ```
 
-Use `--agent-mode configured` when starting a session with that gateway. Credentials, tools, and model choice remain inside the gateway.
+After `--set-default`, `start`, `lesson`, and context-import session creation use `--agent-mode auto`
+by default: they route to the configured Agent when the common learning capabilities are covered and
+fall back to the zero-key demo Agent when nothing is configured. Use `--agent-mode configured` only
+when you want to force configured routing while debugging. Credentials, tools, and model choice remain inside the gateway.
 By default, `agent-add-http --set-default` registers the gateway for teaching layers, quiz
 generation, grading, synthesis, scribe notes, source verification, and embedding tasks. Use repeated
 `--capability` flags when you want split routing across multiple providers.
 
+If `auto` finds a partial Agent setup, the CLI prints the missing default capabilities and keeps the
+lesson usable by falling back to the zero-key demo. Run `agents`, then `agent-set-default PROVIDER_ID`
+to route the common learning capabilities, or set the missing capabilities one by one with repeated
+`--capability` values.
+
 For an OpenAI-compatible gateway dry-run that needs no model key:
 
 ```bash
+python3 scripts/verify_openai_compatible_gateway.py --contract-only
+python3 scripts/verify_agent_gateway_hardening.py --contract-only
+python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
+
+Use `--contract-only` inside runners that block localhost listening sockets; it validates the
+gateway and adapter contracts in-process before you rerun the socket checks from a host terminal.
 
 You can also avoid environment variables by passing `--api-base`:
 

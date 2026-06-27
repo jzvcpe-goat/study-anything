@@ -1,15 +1,15 @@
 # Study Anything Release Cleanroom Bootstrap
 
-Version: `v0.3.28-alpha`
+Version: `v0.3.29-alpha`
 
 `release-cleanroom-bootstrap-evidence-v1` proves that Study Anything can be bootstrapped
 from GitHub Release assets without assuming an existing repository checkout.
 
 ## Commands
 
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime metadata-only`
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform kimi --runtime skill-mode`
-- `python3 study_anything_release_bootstrap.py --tag v0.3.28-alpha --platform generic-openapi --runtime published-image`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.29-alpha --platform kimi --runtime metadata-only`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.29-alpha --platform kimi --runtime skill-mode`
+- `python3 study_anything_release_bootstrap.py --tag v0.3.29-alpha --platform generic-openapi --runtime published-image`
 - `python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`
 
 ## Classification Matrix
@@ -22,6 +22,7 @@ from GitHub Release assets without assuming an existing repository checkout.
 - `platform_entrypoint_missing` -> `block_platform_submission`: The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing.
 - `source_download_failed` -> `needs_network_or_source_dir`: Runtime replay needs source code but the GitHub tag source archive could not be downloaded.
 - `runtime_launch_failed` -> `needs_runtime_triage`: The selected Skill Mode, external API, or published-image runtime could not be launched.
+- `localhost_socket_blocked` -> `needs_host_terminal_recheck`: The current Agent sandbox cannot open localhost sockets for Skill Mode or gateway runtime replay.
 - `api_unavailable` -> `needs_runtime_triage`: The Study Anything API was not reachable for tool replay.
 - `schema_mismatch` -> `block_release_claim`: A runtime response did not match the expected learning/eval schema.
 - `privacy_leak` -> `block_release_claim`: A report included source text, answers, local paths, prompts, endpoints, or keys.
@@ -38,4 +39,4 @@ from GitHub Release assets without assuming an existing repository checkout.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `a54c8043f8dfa5c7bfc4e86f7defa9925f338d45b81bbac74ca50567c622e9fc`
+- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `2d62ae98e4c8dbe2fadc93920bdc5906631584da98c56f1dc8595f0760f37885`

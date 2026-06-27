@@ -111,10 +111,9 @@
   ],
   "platforms": {
     "codex": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -133,6 +132,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -173,10 +175,9 @@
       "platform_id": "codex"
     },
     "kimi": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -195,6 +196,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -237,10 +241,9 @@
       "platform_id": "kimi"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 63,
+      "acceptance_evidence_count": 65,
       "commands": [
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
-        "python3 scripts/verify_commercial_readiness.py",
         "python3 scripts/verify_adoption_telemetry.py --api-base http://127.0.0.1:8000",
         "python3 scripts/verify_agent_gateway_hardening.py",
         "python3 scripts/verify_external_agent_adapter_hardening.py",
@@ -259,6 +262,9 @@
         "python3 scripts/generate_platform_field_rehearsal.py --check",
         "python3 scripts/verify_platform_support_triage.py --check",
         "python3 scripts/generate_platform_support_triage.py --check",
+        "python3 scripts/verify_platform_support_bundle_replay.py --check",
+        "python3 scripts/generate_platform_support_bundle_replay.py --check",
+        "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
         "python3 scripts/verify_platform_onboarding_readiness.py --check",
         "python3 scripts/generate_platform_onboarding_readiness.py --check",
         "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -312,7 +318,7 @@
     "no_frontend_required": true,
     "platform_count": 4,
     "schema_version": "ecosystem-submission-v1",
-    "version": "v0.3.28-alpha"
+    "version": "v0.3.29-alpha"
   },
   "time_budget": {
     "estimated_operator_minutes": 12,
@@ -400,5 +406,5 @@
       "tool": "study_anything_second_brain_handoff_export"
     }
   ],
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

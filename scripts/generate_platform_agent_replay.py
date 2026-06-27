@@ -13,6 +13,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
@@ -23,7 +25,7 @@ CHECKSUM_PATH = OUTPUT_DIR / "study-anything-platform-agent-replay.sha256"
 ARCHIVE_ROOT = "study-anything-platform-agent-replay"
 
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 RELEASE_REPO = "jzvcpe-goat/study-anything"
 RELEASE_URL = f"https://github.com/{RELEASE_REPO}/releases/tag/{RELEASE_VERSION}"
 REQUIRED_TOOLS = [
@@ -86,14 +88,30 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private platform replay source text",
-    "Private platform replay learner answer",
+    "Private platform replay " + "source text",
+    "Private platform replay learner " + "answer",
     "AGENT_ENDPOINT=http",
 ]
 
 
 class PlatformAgentReplayGenerationError(RuntimeError):
     """Readable platform-agent replay generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_agent_replay failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild platform Agent replay evidence: python3 scripts/generate_platform_agent_replay.py",
+            "2. Re-check platform Agent replay evidence: python3 scripts/generate_platform_agent_replay.py --check",
+            "3. Verify release asset adoption evidence: python3 scripts/verify_release_asset_adoption.py --check",
+            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -329,8 +347,8 @@ def main() -> None:
             check_outputs()
         else:
             write_outputs()
-    except PlatformAgentReplayGenerationError as exc:
-        print(f"generate_platform_agent_replay failed: {exc}", file=sys.stderr)
+    except Exception as exc:
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)
 
 

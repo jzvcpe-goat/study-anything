@@ -21,6 +21,9 @@
       "python3 scripts/generate_platform_field_rehearsal.py --check",
       "python3 scripts/verify_platform_support_triage.py --check",
       "python3 scripts/generate_platform_support_triage.py --check",
+      "python3 scripts/verify_platform_support_bundle_replay.py --check",
+      "python3 scripts/generate_platform_support_bundle_replay.py --check",
+      "python3 scripts/replay_support_bundle.py --bundle fixtures/platform-support-bundles/local-ghcr-pull-timeout.json --expect-classification local_ghcr_pull_timeout",
       "python3 scripts/verify_platform_onboarding_readiness.py --check",
       "python3 scripts/generate_platform_onboarding_readiness.py --check",
       "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
@@ -70,6 +73,8 @@
       "platform-support-triage-v1 proves GitHub-first support issue templates, support bundle contracts, maintainer response playbooks, and redacted support ticket fixtures are aligned",
       "platform-support-ticket-fixture-v1 proves mock support tickets contain version, platform, command, diagnostic code, fixture id, redacted logs, and next commands without private learning data",
       "platform-support-issue-template-v1 proves support templates ask for actionable diagnostics while forbidding raw source text, learner answers, Agent endpoints, model keys, and private browser/video context",
+      "platform-support-bundle-replay-evidence-v1 proves support bundle fixtures, maintainer replay classification, privacy blocking, and issue body generation are aligned",
+      "platform-support-bundle-replay-v1 proves a redacted user report can become a stable maintainer classification and copyable GitHub issue body",
       "platform-onboarding-readiness-v1 proves first external adopter walkthroughs, maintainer SLA labels, rotation checklists, release-blocker fixtures, and pack inclusion are aligned",
       "platform-triage-dashboard-v1 proves support bundle completeness, diagnostic distribution, fixture coverage, privacy scan, and release blocker evidence are generated",
       "platform-release-blocker-fixture-v1 proves release blockers are linked to support categories and can be reproduced without private learning data",
@@ -234,6 +239,13 @@
     "scripts/generate_platform_field_rehearsal.py",
     "scripts/verify_platform_support_triage.py",
     "scripts/generate_platform_support_triage.py",
+    "scripts/replay_support_bundle.py",
+    "scripts/verify_platform_support_bundle_replay.py",
+    "scripts/generate_platform_support_bundle_replay.py",
+    "platform/generated/study-anything-platform-support-bundle-replay.json",
+    "fixtures/platform-support-bundles/local-ghcr-pull-timeout.json",
+    "fixtures/platform-support-bundles/cleanroom-runtime-launch-failed.json",
+    "fixtures/platform-support-bundles/privacy-contract-violation.json",
     "scripts/verify_platform_onboarding_readiness.py",
     "scripts/generate_platform_onboarding_readiness.py",
     "platform/generated/study-anything-platform-onboarding-readiness.json",
@@ -567,5 +579,5 @@
     }
   ],
   "summary": "Submission-ready local-first integration metadata for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI tool platforms.",
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

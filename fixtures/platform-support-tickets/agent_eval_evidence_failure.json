@@ -21,13 +21,36 @@
   "support_bundle": {
     "command_ran": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
     "diagnostic_code": "agent_eval_evidence_missing",
+    "failure_class": "agent_eval_evidence_missing",
     "fixture_id": "version_drift",
+    "image_evidence": {},
+    "manifest_evidence": {},
     "next_commands_tried": [
       "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check"
     ],
     "platform_id": "generic",
+    "recommended_next_steps": [
+      "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+      "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body"
+    ],
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=agent_eval_evidence_missing\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.28-alpha"
+    "redaction_flags": {
+      "agent_endpoint_secrets_included": false,
+      "agent_prompts_included": false,
+      "automatic_upload": false,
+      "browser_video_private_context_included": false,
+      "learner_answers_included": false,
+      "local_absolute_paths_included": false,
+      "personal_profile_included": false,
+      "raw_source_text_included": false,
+      "real_model_keys_included": false
+    },
+    "release_assets": {},
+    "release_version": "v0.3.29-alpha",
+    "replay_command": "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body",
+    "runtime": "skill-mode",
+    "tool_import_status": "unknown",
+    "workflow_stage": "agent_eval_evidence_failure"
   },
   "support_category": "agent_eval_evidence_failure",
   "ticket_id": "agent_eval_evidence_failure",
@@ -37,5 +60,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

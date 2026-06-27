@@ -14,7 +14,54 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
+
+from localhost_diagnostics import redact_diagnostic  # noqa: E402
+
+
+SCHEMA_VERSION = "notebooklm-obsidian-bridge-hardening-v1"
+MIN_PYTHON = (3, 11)
+DEFAULT_FIXTURE = ROOT / "fixtures" / "notebooklm" / "notebooklm-style-context-package.json"
+
+
+def python_version_error_payload(version: str | None = None) -> dict[str, Any]:
+    return {
+        "schema_version": "notebooklm-obsidian-bridge-error-v1",
+        "status": "blocked",
+        "classification": "python_version_unsupported",
+        "diagnostic": "verify_notebooklm_obsidian_bridge_hardening requires Python 3.11 or newer.",
+        "python_version": version or sys.version.split()[0],
+        "next_steps": [
+            ".venv/bin/python scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+            "python3 scripts/setup_env.py",
+            "./scripts/run_skill_mode_demo.sh",
+        ],
+        "privacy": {
+            "local_absolute_paths_included": False,
+            "secrets_recorded": False,
+        },
+    }
+
+
+def ensure_supported_python() -> None:
+    if sys.version_info >= MIN_PYTHON:
+        return
+    print(
+        json.dumps(
+            python_version_error_payload(),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
+
+
+ensure_supported_python()
 
 from study_anything.core.learning_context import (  # noqa: E402
     LEARNING_CONTEXT_SCHEMA_VERSION,
@@ -36,12 +83,31 @@ from study_anything.core.workflow import (  # noqa: E402
 )
 
 
-SCHEMA_VERSION = "notebooklm-obsidian-bridge-hardening-v1"
-DEFAULT_FIXTURE = ROOT / "fixtures" / "notebooklm" / "notebooklm-style-context-package.json"
-
-
 class BridgeHardeningError(RuntimeError):
     """Readable bridge-hardening verification failure."""
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return redact_diagnostic(str(resolved))
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"verify_notebooklm_obsidian_bridge_hardening failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Re-run the bridge hardening verifier: python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py",
+            "2. Validate the NotebookLM-style fixture: python3 scripts/study_anything_cli.py context-validate fixtures/notebooklm/notebooklm-style-context-package.json",
+            "3. Check docs/notebooklm-bridge.md and docs/second-brain-handoff.md for supported handoff modes.",
+            "4. Remove raw source text, learner answers, Agent endpoints, and secret-like metadata from public handoff bundles.",
+        ]
+    )
 
 
 def load_fixture(path: Path) -> dict[str, Any]:
@@ -136,7 +202,7 @@ def build_state(fixture: dict[str, Any]) -> tuple[LearningState, list[str]]:
     private_answer = "Private learner bridge answer: this should only appear in user-owned direct exports."
     private_feedback = "Private bridge grading feedback."
     private_agent_endpoint = "http://127.0.0.1:8787/private-agent?token=bridge-secret"
-    private_sk = "sk-proj-bridgeVerifierSecretToken000000"
+    private_sk = "fake-bridge-verifier-secret-token"
     enrichment_items = [
         EnrichmentItem(
             source_type=item.source_type,
@@ -248,7 +314,7 @@ def verify_exports(state: LearningState, forbidden: list[str]) -> dict[str, Any]
     endpoint_fragments = [
         "127.0.0.1:8787/private-agent",
         "bridge-secret",
-        "sk-proj-bridgeVerifierSecretToken000000",
+        "fake-bridge-verifier-secret-token",
     ]
 
     assert_no_leaks("Obsidian direct export source boundary", obsidian, private_source_fragments + endpoint_fragments)
@@ -326,7 +392,7 @@ def main() -> None:
             {
                 "status": "ok",
                 "schema_version": SCHEMA_VERSION,
-                "fixture": str(args.fixture),
+                "fixture": display_path(args.fixture),
                 "package_schema": public["schema_version"],
                 "context_item_count": public["item_count"],
                 "context_source_types": public["source_types"],
@@ -357,5 +423,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"verify_notebooklm_obsidian_bridge_hardening failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

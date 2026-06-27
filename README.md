@@ -25,9 +25,34 @@ The alpha MVP runs a full local learning loop:
 - Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
 - API/Skill-as-product: external agents, CLIs, and future platform plugins are clients of the public API.
 
-## Fastest Local Demo
+## Start Here
 
-Use Skill Mode when you want to try the learning loop without Docker:
+For a first-time user, do not start with Docker, model keys, or architecture docs.
+
+On macOS, double-click:
+
+```text
+START_HERE.command
+```
+
+Or run this in a terminal:
+
+```bash
+./scripts/start_here.sh
+```
+
+It runs a zero-key, no-Docker disposable demo, verifies the learning loop, and stops the temporary
+API before exiting. Success means you see:
+
+```text
+Done. You have proved the local learning loop once.
+```
+
+Read the ultra-short Chinese quickstart at `QUICKSTART.md`, then the fuller beginner guide at
+`docs/getting-started.md`. Use `./scripts/start_here.sh --foreground` only when an Agent shell does
+not preserve background processes.
+
+Use Skill Mode directly when you want to try the learning loop without Docker:
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
@@ -210,6 +235,9 @@ The agent flow mirrors tools such as OpenClaw and Codex: the user controls the m
 For Kimi/OpenAI-compatible providers, verify the local gateway without a real key first:
 
 ```bash
+python3 scripts/verify_openai_compatible_gateway.py --contract-only
+python3 scripts/verify_agent_gateway_hardening.py --contract-only
+python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
@@ -217,6 +245,10 @@ python3 scripts/verify_plugin_quarantine.py
 python3 scripts/verify_security_recovery_hardening.py
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
+
+Use `--contract-only` when your current Agent runner cannot open localhost sockets; it proves the
+gateway, adapter, and eval redaction contracts in-process. `--gateway-only` and the hardening
+commands without `--contract-only` remain the stricter runtime checks.
 
 Then replace dry-run mode with your own gateway, model, credentials, tools, and network policy.
 Keep credentials in the gateway environment; Study Anything rejects endpoint URLs or provider
@@ -466,7 +498,7 @@ For external operators who start from GitHub instead of a checkout, use
 `docs/release-asset-adoption.md` and run:
 
 ```bash
-python3 scripts/verify_release_asset_adoption.py --tag v0.3.28-alpha --runtime metadata-only
+python3 scripts/verify_release_asset_adoption.py --tag v0.3.29-alpha --runtime metadata-only
 ```
 
 ## GitHub Launch

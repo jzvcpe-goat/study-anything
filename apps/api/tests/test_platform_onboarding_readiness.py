@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -47,13 +48,22 @@ FORBIDDEN_MARKERS = (
     "sk-",
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
+    "Private " + "answer:",
+    "Private " + "source text:",
     "learner_answer=",
     "raw_source_text=",
     "AGENT_ENDPOINT=http",
     "http://127.0.0.1:8787",
 )
+
+sys.path.insert(0, str(REPO / "scripts"))
+GENERATOR_SPEC = importlib.util.spec_from_file_location(
+    "generate_platform_onboarding_readiness",
+    GENERATOR,
+)
+assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
+generator = importlib.util.module_from_spec(GENERATOR_SPEC)
+GENERATOR_SPEC.loader.exec_module(generator)
 
 
 def run_script(script: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -67,6 +77,28 @@ def run_script(script: Path, *args: str) -> subprocess.CompletedProcess[str]:
 
 
 class PlatformOnboardingReadinessTests(unittest.TestCase):
+    def test_generator_failure_formatter_is_actionable_and_redacted(self) -> None:
+        secret = "sk-proj-" + "abcdefghijklmnop123456"
+        temp_path = "/private/" + "tmp/study-anything/onboarding-readiness.json"
+        message = generator.format_cli_failure(
+            RuntimeError(
+                f"onboarding readiness stale at {temp_path} "
+                f"with Authorization: Bearer {secret}"
+            )
+        )
+
+        self.assertIn("generate_platform_onboarding_readiness failed:", message)
+        self.assertIn("Next steps:", message)
+        self.assertIn("generate_platform_onboarding_readiness.py --check", message)
+        self.assertIn("verify_platform_onboarding_readiness.py --check", message)
+        self.assertIn("generate_platform_adoption_pack.py", message)
+        self.assertIn("generate_platform_bundle_manifest.py", message)
+        self.assertIn("diagnose_adoption.py", message)
+        self.assertIn("<temp-path>", message)
+        self.assertIn("Authorization: Bearer <redacted>", message)
+        self.assertNotIn("/private/" + "tmp", message)
+        self.assertNotIn(secret, message)
+
     def test_generator_and_verifier_checks_pass(self) -> None:
         generated = run_script(GENERATOR, "--check")
         self.assertEqual(generated.returncode, 0, generated.stderr)
@@ -80,7 +112,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         report = json.loads(REPORT.read_text(encoding="utf-8"))
 
         self.assertEqual(report["schema_version"], "platform-onboarding-readiness-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.29-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["walkthrough"]["schema_version"], "first-external-adopter-walkthrough-v1")
         self.assertEqual(
@@ -119,7 +151,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         dashboard = json.loads(DASHBOARD.read_text(encoding="utf-8"))
 
         self.assertEqual(dashboard["schema_version"], "platform-triage-dashboard-v1")
-        self.assertEqual(dashboard["version"], "v0.3.28-alpha")
+        self.assertEqual(dashboard["version"], "v0.3.29-alpha")
         self.assertEqual(dashboard["status"], "pass")
         self.assertEqual(
             set(dashboard["support_bundle_completeness"]["required_fields"]),
@@ -145,7 +177,7 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "platform-release-blocker-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.28-alpha")
+            self.assertEqual(payload["version"], "v0.3.29-alpha")
             self.assertEqual(payload["blocker_id"], path.stem)
             self.assertEqual(payload["status"], "mock_release_blocker_ready")
             self.assertIn(payload["linked_support_category"], {
@@ -181,6 +213,12 @@ class PlatformOnboardingReadinessTests(unittest.TestCase):
             completed = run_script(VERIFIER, "--pack-root", str(missing_root))
         self.assertNotEqual(completed.returncode, 0)
         self.assertIn("Pack root does not exist", completed.stderr)
+        self.assertIn("Next steps:", completed.stderr)
+        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
+        self.assertIn("verify_platform_support_triage.py --check", completed.stderr)
+        self.assertIn("diagnose_adoption.py", completed.stderr)
+        self.assertIn("<temp-path>", completed.stderr)
+        self.assertNotIn(tmp_dir, completed.stderr)
 
 
 if __name__ == "__main__":

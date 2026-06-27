@@ -14,7 +14,13 @@ from pathlib import Path
 from typing import Any
 
 
+SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = Path(__file__).resolve().parents[1]
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import redact_diagnostic  # noqa: E402
+
 OUTPUT_DIR = ROOT / "platform" / "generated"
 REPORT_PATH = OUTPUT_DIR / "study-anything-adopter-evidence-archive.json"
 MARKDOWN_PATH = OUTPUT_DIR / "study-anything-adopter-evidence-archive.md"
@@ -25,7 +31,7 @@ ARCHIVE_ROOT = "study-anything-adopter-evidence-archive"
 
 SCHEMA_VERSION = "adopter-evidence-archive-v1"
 FIXTURE_SCHEMA_VERSION = "adopter-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.28-alpha"
+RELEASE_VERSION = "v0.3.29-alpha"
 PUBLIC_STATUS_SCHEMA_VERSION = "public-support-status-v1"
 PUBLIC_DASHBOARD_SCHEMA_VERSION = "public-maintainer-dashboard-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
@@ -54,7 +60,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/ecosystem-submission.md",
     "docs/release-checklist.md",
     "docs/roadmap.md",
-    "docs/release-notes/v0.3.28-alpha.md",
+    "docs/release-notes/v0.3.29-alpha.md",
     "platform/ecosystem-submission.json",
     "platform/generated/study-anything-public-support-status.json",
     "platform/generated/study-anything-public-maintainer-dashboard.json",
@@ -74,6 +80,11 @@ PUBLIC_ASSET_PATHS = (
     "platform/packs/workbuddy/pack.json",
 )
 
+PRIVATE_ANSWER_SENTINEL = "Private " + "answer:"
+PRIVATE_SOURCE_TEXT_SENTINEL = "Private " + "source text:"
+PRIVATE_PLATFORM_CONTEXT_SENTINEL = "Private platform " + "browser/video context"
+PRIVATE_TMP_PREFIX = "/private/" + "tmp/"
+TMP_PREFIX = "/" + "tmp/"
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
@@ -83,9 +94,9 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private answer:",
-    "Private source text:",
-    "Private platform browser/video context",
+    PRIVATE_ANSWER_SENTINEL,
+    PRIVATE_SOURCE_TEXT_SENTINEL,
+    PRIVATE_PLATFORM_CONTEXT_SENTINEL,
     "raw_source_text=",
     "learner_answer=",
     "AGENT_ENDPOINT=http",
@@ -95,6 +106,22 @@ FORBIDDEN_LITERALS = [
 
 class AdopterEvidenceArchiveError(RuntimeError):
     """Readable adopter evidence archive generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_adopter_evidence_archive failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "  1. Regenerate adopter evidence archive: python3 scripts/generate_adopter_evidence_archive.py",
+            "  2. Verify adopter evidence archive: python3 scripts/generate_adopter_evidence_archive.py --check",
+            "  3. Verify archive wiring: python3 scripts/verify_adopter_evidence_archive.py --check",
+            "  4. Refresh the platform pack after archive changes: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
+            "  5. For local adoption diagnostics, run: python3 scripts/diagnose_adoption.py",
+        ]
+    )
 
 
 def dump_json(payload: Any) -> str:
@@ -127,6 +154,8 @@ def assert_no_leaks(payload: Any) -> None:
     serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
     leaks.extend(pattern.pattern for pattern in FORBIDDEN_PATTERNS if pattern.search(serialized))
+    if PRIVATE_TMP_PREFIX in serialized or TMP_PREFIX in serialized:
+        leaks.append("local temporary path")
     if leaks:
         raise AdopterEvidenceArchiveError(f"Adopter evidence archive leaked private data: {leaks}")
 
@@ -156,7 +185,7 @@ def fixture_payload(fixture_id: str) -> dict[str, Any]:
         ),
         "local-ghcr-pull-timeout": (
             "local_environment_limit",
-            "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
+            "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 600 --allow-pull-timeout-report",
             "Local GHCR pull timed out while manifest and docker-images evidence remained valid.",
         ),
         "needs-repro-issue": (
@@ -543,5 +572,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_adopter_evidence_archive failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

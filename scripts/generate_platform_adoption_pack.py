@@ -11,16 +11,25 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from localhost_diagnostics import redact_diagnostic
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
 MANIFEST_PATH = OUTPUT_DIR / "study-anything-platform-adoption-pack.json"
 ARCHIVE_PATH = OUTPUT_DIR / "study-anything-platform-adoption-pack.zip"
 ARCHIVE_ROOT = "study-anything-platform-adoption-pack"
+SELF_REFERENTIAL_OUTPUTS = {
+    "platform/generated/study-anything-platform-adoption-pack.json",
+    "platform/generated/study-anything-platform-adoption-pack.zip",
+    "platform/generated/study-anything-platform-bundle.json",
+}
 
 
 PACK_FILES: list[tuple[str, str, str]] = [
     ("README.md", "root_doc", "Repository overview and local-first launch entrypoint."),
+    ("QUICKSTART.md", "root_doc", "Ultra-short Chinese first-run guide."),
+    ("docs/getting-started.md", "operator_doc", "Chinese-first beginner guide and one-command launch path."),
     ("docs/adoption.md", "operator_doc", "Clean-clone and published-image adoption guide."),
     ("docs/github-launch.md", "operator_doc", "GitHub launch, tag, release, and published-image verification guide."),
     ("docs/platform-agent-integrations.md", "operator_doc", "General external platform Agent integration guide."),
@@ -34,6 +43,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/plugins.md", "operator_doc", "Plugin examples, manifest, quarantine, and sample install guide."),
     ("docs/kimi-agent-gateway.md", "operator_doc", "Kimi-compatible HTTP Agent gateway guide."),
     ("docs/use-with-kimi.md", "operator_doc", "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway."),
+    ("docs/skill-mode.md", "operator_doc", "Zero-key Skill Mode CLI and local Agent gateway first-run guide."),
     ("docs/operator-drill.md", "operator_doc", "External platform operator drill and transcript guide."),
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
     ("docs/security.md", "operator_doc", "Local-first security model and recovery hardening guide."),
@@ -54,14 +64,13 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/agent-eval.md", "operator_doc", "Agent and retrieval eval guide."),
     ("docs/eval-frameworks.md", "operator_doc", "External eval framework selection, adapter boundary, and marketplace harness guide."),
     ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
-    ("docs/release-notes/v0.3.28-alpha.md", "release_doc", "Release notes for this adoption pack."),
+    ("docs/release-notes/v0.3.29-alpha.md", "release_doc", "Release notes for this adoption pack."),
     ("evals/README.md", "eval", "External eval overview and native/optional adapter guide."),
     ("platform/study-anything-platform-tools.json", "tool_manifest", "Source platform tool contract."),
     ("platform/ecosystem-submission.json", "submission_manifest", "Machine-readable ecosystem submission metadata."),
     ("platform/generated/study-anything-platform-openapi.json", "tool_import", "OpenAPI 3.1 import asset."),
     ("platform/generated/study-anything-openai-tools.json", "tool_import", "OpenAI-compatible function tools."),
     ("platform/generated/study-anything-tool-catalog.md", "tool_catalog", "Human-readable platform tool catalog."),
-    ("platform/generated/study-anything-platform-bundle.json", "bundle_manifest", "Source file manifest for platform assets."),
     ("platform/generated/study-anything-operator-drill-transcript.json", "submission_report", "External platform operator drill transcript."),
     ("platform/generated/study-anything-platform-submission-dry-run.json", "submission_report", "External platform submission dry-run readiness report."),
     ("platform/generated/study-anything-platform-manual-submission-rehearsal.json", "submission_report", "Manual platform-submission rehearsal and redacted handoff report."),
@@ -73,6 +82,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-platform-feedback-package.zip", "feedback_package", "Local-only redacted feedback package archive."),
     ("platform/generated/study-anything-platform-field-rehearsal.json", "submission_report", "Redacted field-adoption rehearsal transcript and import quirks report."),
     ("platform/generated/study-anything-platform-support-triage.json", "submission_report", "GitHub-first support triage report for external platform adoption failures."),
+    ("platform/generated/study-anything-platform-support-bundle-replay.json", "submission_report", "Maintainer support bundle replay evidence and issue-to-fix classification report."),
     ("platform/generated/study-anything-platform-onboarding-readiness.json", "submission_report", "First-adopter onboarding readiness and maintainer SLA report."),
     ("platform/generated/study-anything-platform-triage-dashboard.json", "submission_report", "Generated platform triage dashboard JSON."),
     ("platform/generated/study-anything-platform-triage-dashboard.md", "submission_report", "Generated platform triage dashboard Markdown."),
@@ -121,6 +131,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/platform-support-tickets/published_image_pull_failure.json", "support_fixture", "Mock support ticket fixture for published-image pull triage."),
     ("fixtures/platform-support-tickets/agent_eval_evidence_failure.json", "support_fixture", "Mock support ticket fixture for Agent eval evidence triage."),
     ("fixtures/platform-support-tickets/docs_confusion.json", "support_fixture", "Mock support ticket fixture for docs confusion triage."),
+    ("fixtures/platform-support-bundles/local-ghcr-pull-timeout.json", "support_fixture", "Redacted support bundle fixture for local GHCR pull timeout replay."),
+    ("fixtures/platform-support-bundles/cleanroom-runtime-launch-failed.json", "support_fixture", "Redacted support bundle fixture for cleanroom runtime launch replay."),
+    ("fixtures/platform-support-bundles/privacy-contract-violation.json", "support_fixture", "Unsafe support bundle fixture used to prove privacy blocking."),
     ("fixtures/platform-release-blockers/tool_import_blocker.json", "release_blocker_fixture", "Mock release blocker fixture for platform tool import failures."),
     ("fixtures/platform-release-blockers/local_gateway_blocker.json", "release_blocker_fixture", "Mock release blocker fixture for local Agent gateway failures."),
     ("fixtures/platform-release-blockers/published_image_blocker.json", "release_blocker_fixture", "Mock release blocker fixture for published-image launch failures."),
@@ -170,14 +183,22 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/mock_http_agent.py", "gateway", "Deterministic mock HTTP Agent for smoke tests."),
     ("scripts/setup_env.py", "runtime", "Generate local .env files with development-safe local secrets."),
     ("scripts/check_env.py", "runtime", "Validate required local environment variables before launch."),
+    ("scripts/verify_api_smoke.sh", "verification", "Minimal API health/system/plugin smoke that follows .env API_PORT."),
     ("scripts/doctor.sh", "diagnostics", "Self-host doctor for Docker, ports, env, and Compose config."),
     ("scripts/launch_self_host.sh", "runtime", "Docker Compose self-host launcher."),
     ("scripts/stop_self_host.sh", "runtime", "Docker Compose self-host stop helper."),
+    ("scripts/self_host_data.py", "runtime", "Backup and restore helper for self-hosted deployments."),
     ("scripts/verify_published_image_launch.py", "verification", "Disposable GHCR published-image launch verifier."),
+    ("scripts/verify_backup_restore_drill.py", "verification", "Disposable backup and restore drill verifier."),
+    ("scripts/verify_full_api_flow.py", "verification", "Full public API learning-loop smoke verifier used by published-image checks."),
+    ("scripts/release_check.sh", "verification", "Strict release gate with automatic localhost-blocked report collection."),
+    ("START_HERE.command", "runtime", "macOS double-click one-key beginner launcher."),
+    ("scripts/start_here.sh", "runtime", "Beginner launcher for zero-key demo, persistent Skill Mode, Docker, and diagnostics."),
     ("scripts/launch_skill_mode.sh", "runtime", "Local Skill Mode API launcher."),
     ("scripts/stop_skill_mode.sh", "runtime", "Local Skill Mode API stop helper."),
     ("scripts/run_skill_mode_demo.sh", "verification", "One-command Skill Mode demo and eval gate."),
     ("scripts/study_anything_cli.py", "cli", "CLI for learning loop and evidence commands."),
+    ("scripts/localhost_diagnostics.py", "diagnostics", "Shared localhost socket diagnostics for platform verifiers."),
     ("scripts/install_local_plugin.py", "cli", "CLI for explicit local plugin quarantine and approved install."),
     ("scripts/verify_external_adoption.py", "verification", "Adoption-proof-v1 verifier for external operators."),
     ("scripts/verify_clean_clone_adoption.py", "verification", "Disposable clean-clone Skill Mode and gateway adoption verifier."),
@@ -188,6 +209,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_plugin_quarantine.py", "verification", "Plugin trust quarantine and explicit approval verifier."),
     ("scripts/verify_security_recovery_hardening.py", "verification", "Security recovery, backup manifest, and sync restore privacy verifier."),
     ("scripts/verify_platform_submission_dry_run.py", "verification", "External platform submission dry-run verifier."),
+    ("scripts/generate_platform_adoption_pack.py", "diagnostics", "Generate or check the distributable platform adoption pack."),
     ("scripts/verify_platform_manual_submission_rehearsal.py", "verification", "Manual platform-submission rehearsal verifier."),
     ("scripts/verify_first_lesson_authoring_kit.py", "verification", "Copyable first-run lesson authoring kit verifier."),
     ("scripts/verify_external_eval_marketplace_harness.py", "verification", "Marketplace-quality external Agent eval harness verifier."),
@@ -198,6 +220,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_platform_field_rehearsal.py", "verification", "Verify field-adoption rehearsals, import quirks, failed-import fixtures, and pack inclusion."),
     ("scripts/generate_platform_support_triage.py", "diagnostics", "Generate GitHub-first issue templates, support ticket fixtures, and support triage report."),
     ("scripts/verify_platform_support_triage.py", "verification", "Verify support triage redaction, actionability, pack inclusion, and docs."),
+    ("scripts/replay_support_bundle.py", "diagnostics", "Replay a redacted support bundle into maintainer classification and issue body."),
+    ("scripts/generate_platform_support_bundle_replay.py", "diagnostics", "Generate support bundle replay evidence and fixtures."),
+    ("scripts/verify_platform_support_bundle_replay.py", "verification", "Verify support bundle replay, privacy blocking, fixtures, and pack inclusion."),
     ("scripts/generate_platform_onboarding_readiness.py", "diagnostics", "Generate first-adopter onboarding, triage dashboard, and release-blocker fixtures."),
     ("scripts/verify_platform_onboarding_readiness.py", "verification", "Verify onboarding readiness, SLA labels, dashboard, release blockers, packs, submission, and docs."),
     ("scripts/generate_platform_public_support_status.py", "diagnostics", "Generate public support status, maintainer dashboard, and status-linkage fixtures."),
@@ -223,12 +248,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_platform_ecosystem_eval_flow.py", "verification", "Full platform ecosystem learning/eval/export verifier."),
     ("scripts/verify_importer_lesson_flow.py", "verification", "NotebookLM-style importer lesson verifier."),
     ("scripts/verify_importer_runtime_retrieval_flow.py", "verification", "Importer runtime plus retrieval verifier."),
+    ("scripts/verify_falkordb_flow.py", "verification", "Optional FalkorDB topology projection API verifier."),
     ("scripts/verify_platform_lesson_flow.py", "verification", "Enriched platform lesson verifier."),
+    ("scripts/verify_mock_http_agent_flow.py", "verification", "User-owned mock HTTP Agent learning-loop smoke verifier."),
     ("scripts/verify_agent_eval_flow.py", "verification", "Agent eval artifact verifier."),
     ("scripts/verify_agent_eval_assets.py", "verification", "Agent eval asset and adapter contract verifier."),
     ("scripts/verify_agent_eval_baseline.py", "verification", "Agent eval baseline and regression gate verifier."),
     ("scripts/run_external_agent_evals.py", "verification", "Promptfoo/DeepEval/retrieval eval runner."),
     ("scripts/verify_openai_compatible_gateway.py", "verification", "OpenAI-compatible gateway dry-run verifier."),
+    ("scripts/verify_skill_cli_flow.py", "verification", "Skill Mode CLI learning-loop verifier with actionable recovery output."),
     ("infra/compose/docker-compose.yml", "runtime", "Docker Compose source-build stack definition."),
     ("infra/compose/docker-compose.images.yml", "runtime", "Docker Compose published-image override."),
     ("scripts/diagnose_adoption.py", "diagnostics", "Adoption diagnostics and remediation hints."),
@@ -288,6 +316,21 @@ REQUIRED_PLATFORM_TOOLS = [
 
 class AdoptionPackError(RuntimeError):
     """Readable adoption-pack generation failure."""
+
+
+def format_cli_failure(exc: BaseException) -> str:
+    diagnostic = redact_diagnostic(str(exc))
+    return "\n".join(
+        [
+            f"generate_platform_adoption_pack failed: {diagnostic}",
+            "",
+            "Next steps:",
+            "1. Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py",
+            "2. Re-check the adoption pack: python3 scripts/generate_platform_adoption_pack.py --check",
+            "3. Re-check the platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py --check",
+            "4. Run the external adoption verifier: python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree",
+        ]
+    )
 
 
 def sha256(path: Path) -> str:
@@ -371,6 +414,16 @@ The generated `adopter-evidence-archive-v1` package is the public maintainer
 handoff bundle for release proof, checksums, and local GHCR pull-timeout
 fallback evidence.
 
+## Verification Command Scopes
+
+Each `platform/packs/*/pack.json` separates commands by where they can run:
+
+- `local_verification_commands` are included in this adoption pack and are safe to run from the
+  extracted pack root.
+- `source_verification_commands` require a full source checkout. For example,
+  `scripts/verify_commercial_readiness.py` imports the local API package and should not be run from
+  this zip alone.
+
 ## Privacy
 
 Do not put real model API keys in Study Anything. Keep real model credentials
@@ -385,10 +438,16 @@ def manifest_payload() -> dict[str, object]:
     file_paths = [path for path, _kind, _purpose in PACK_FILES]
     if len(file_paths) != len(set(file_paths)):
         raise AdoptionPackError("Adoption pack file list contains duplicates.")
+    recursive_outputs = sorted(SELF_REFERENTIAL_OUTPUTS.intersection(file_paths))
+    if recursive_outputs:
+        raise AdoptionPackError(
+            "Adoption pack must not include generated manifest outputs that hash "
+            f"the pack itself: {recursive_outputs}"
+        )
     return {
         "schema_version": "study-anything-platform-adoption-pack-v1",
         "name": "study-anything-platform-adoption-pack",
-        "version": "v0.3.28-alpha",
+        "version": "v0.3.29-alpha",
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
@@ -447,6 +506,8 @@ def manifest_payload() -> dict[str, object]:
                 "platform-support-triage-v1",
                 "platform-support-ticket-fixture-v1",
                 "platform-support-issue-template-v1",
+                "platform-support-bundle-replay-evidence-v1",
+                "platform-support-bundle-replay-v1",
                 "platform-onboarding-readiness-v1",
                 "first-external-adopter-walkthrough-v1",
                 "maintainer-sla-labels-v1",
@@ -570,5 +631,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(f"generate_platform_adoption_pack failed: {exc}", file=sys.stderr)
+        print(format_cli_failure(exc), file=sys.stderr)
         sys.exit(1)

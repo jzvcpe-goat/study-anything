@@ -19,15 +19,38 @@
   "schema_version": "platform-support-ticket-fixture-v1",
   "status": "mock_ticket_ready",
   "support_bundle": {
-    "command_ran": "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "command_ran": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
     "diagnostic_code": "timeout",
+    "failure_class": "timeout",
     "fixture_id": "timeout",
+    "image_evidence": {},
+    "manifest_evidence": {},
     "next_commands_tried": [
-      "python3 scripts/verify_published_image_launch.py --tag v0.3.28-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
+      "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report"
     ],
     "platform_id": "generic",
+    "recommended_next_steps": [
+      "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+      "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body"
+    ],
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=timeout\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "release_version": "v0.3.28-alpha"
+    "redaction_flags": {
+      "agent_endpoint_secrets_included": false,
+      "agent_prompts_included": false,
+      "automatic_upload": false,
+      "browser_video_private_context_included": false,
+      "learner_answers_included": false,
+      "local_absolute_paths_included": false,
+      "personal_profile_included": false,
+      "raw_source_text_included": false,
+      "real_model_keys_included": false
+    },
+    "release_assets": {},
+    "release_version": "v0.3.29-alpha",
+    "replay_command": "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body",
+    "runtime": "skill-mode",
+    "tool_import_status": "unknown",
+    "workflow_stage": "published_image_pull_failure"
   },
   "support_category": "published_image_pull_failure",
   "ticket_id": "published_image_pull_failure",
@@ -37,5 +60,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.28-alpha"
+  "version": "v0.3.29-alpha"
 }

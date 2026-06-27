@@ -27,6 +27,30 @@ class FirstLessonAuthoringKitTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
+    def test_first_lesson_authoring_kit_failure_is_actionable_and_redacted(self) -> None:
+        root = Path(__file__).resolve().parents[3]
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(root / "scripts" / "verify_first_lesson_authoring_kit.py"),
+                "--pack",
+                "/Users/james/private/missing-first-lesson-pack.zip",
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("verify_first_lesson_authoring_kit failed:", completed.stderr)
+        self.assertIn("Next steps:", completed.stderr)
+        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
+        self.assertIn("verify_platform_lesson_flow.py", completed.stderr)
+        self.assertIn("diagnose_adoption.py", completed.stderr)
+        self.assertIn("<local-path>", completed.stderr)
+        self.assertNotIn("/Users/james", completed.stderr)
+
     def test_first_lesson_authoring_kit_schema_prompts_and_privacy(self) -> None:
         root = Path(__file__).resolve().parents[3]
         report = json.loads(
@@ -35,7 +59,7 @@ class FirstLessonAuthoringKitTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "first-run-lesson-authoring-kit-v1")
-        self.assertEqual(report["version"], "v0.3.28-alpha")
+        self.assertEqual(report["version"], "v0.3.29-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(set(report["copyable_prompts"]), {"en", "zh"})
         self.assertIn("第一课", report["copyable_prompts"]["zh"]["title"])

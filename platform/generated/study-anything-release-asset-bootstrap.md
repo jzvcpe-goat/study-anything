@@ -1,7 +1,7 @@
 # Study Anything Release Asset Bootstrap
 
 Schema: `release-asset-bootstrap-v1`
-Version: `v0.3.28-alpha`
+Version: `v0.3.29-alpha`
 Status: `pass`
 
 This evidence makes the GitHub Release page the first adoption surface for
@@ -10,13 +10,13 @@ runtime choices without requiring a development checkout as the starting point.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `466ea2c232638a97460a3acf12ae56df33fe717724a2d8ccfe0d05f39860527f`
+- Archive: `platform/generated/study-anything-release-asset-bootstrap.zip` sha256 `b9191cdd962a16efd6298b285e37fdf909c1eb4d0c4a7a7cdb162ca455a2c6e3`
 
 ## Commands
 
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime metadata-only`
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime skill-mode`
-- `python3 scripts/bootstrap_from_release.py --tag v0.3.28-alpha --runtime published-image`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime metadata-only`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime skill-mode`
+- `python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime published-image`
 - `python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only`
 
 ## Classification Matrix
@@ -28,7 +28,7 @@ runtime choices without requiring a development checkout as the starting point.
 - `release_asset_published_evidence_missing` -> `block_release_claim`: Regenerate published-image evidence before packaging the adoption pack.
 - `release_asset_network_unavailable` -> `needs_independent_recheck`: Retry from another network or use a safely mirrored asset directory.
 - `tool_manifest_invalid` -> `block_platform_submission`: Regenerate platform tool assets and adoption pack before importing into Kimi/Codex/WorkBuddy.
-- `local_api_unavailable` -> `runtime_recheck_required`: Launch Skill Mode or Docker self-host before running live platform tools.
+- `local_api_unavailable` -> `runtime_recheck_required`: Launch Skill Mode or Docker self-host from a normal terminal that permits localhost sockets before running live platform tools.
 - `published_image_unavailable` -> `runtime_recheck_required`: Check GHCR manifest and docker-images workflow before claiming published-image readiness.
 - `non_ascii_path_risk` -> `operator_environment_warning`: Use Skill Mode or published images, or move source builds into an ASCII-only path.
 - `bootstrap_failed` -> `needs_triage`: Run the lower-level release asset verifier and attach the redacted transcript to GitHub.

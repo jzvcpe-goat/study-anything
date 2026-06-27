@@ -21,10 +21,16 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from localhost_diagnostics import redact_diagnostic
+
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "release-asset-bootstrap-transcript-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.28-alpha"
+DEFAULT_TAG = "v0.3.29-alpha"
 
 PLATFORM_PACKS = {
     "kimi": {
@@ -80,6 +86,8 @@ RECOVERY_PLAN = {
     ],
     "local_api_unavailable": [
         "Run `./scripts/launch_skill_mode.sh` for local Skill Mode.",
+        "If localhost sockets are blocked, rerun from a normal terminal or host shell.",
+        "Use `.venv/bin/python` instead of `python3` if your system Python is older than 3.11.",
         "For Docker, run `./scripts/launch_self_host.sh` and then `API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py`.",
     ],
     "published_image_unavailable": [
@@ -105,6 +113,7 @@ FORBIDDEN_LITERALS = [
     "learner_answer=",
     "AGENT_ENDPOINT=http",
     "full_support_bundle_payload",
+    "sk-",
 ]
 
 
@@ -258,16 +267,19 @@ def assert_redacted(payload: Any) -> None:
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
     if re.search(r"/Users/[^\s\"']+", serialized):
         leaks.append("local absolute path")
+    if re.search(r"/private/tmp/[^\s\"']+", serialized):
+        leaks.append("temporary absolute path")
+    if re.search(r"(?i)\b(api[_-]?key|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", serialized):
+        leaks.append("secret-looking assignment")
+    if re.search(r"(?i)\bauthorization\s*[:=]\s*bearer\s+[A-Za-z0-9._~+/=-]{8,}", serialized):
+        leaks.append("bearer token")
     if leaks:
         raise BootstrapError(f"Bootstrap transcript leaked private data: {leaks}")
 
 
 def sanitize_error(message: str) -> str:
     first_line = (message or "Bootstrap failed.").splitlines()[0]
-    first_line = re.sub(r"/Users/[^\s\"']+", "<local-path>", first_line)
-    first_line = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", first_line)
-    first_line = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", first_line)
-    return first_line[:800]
+    return redact_diagnostic(first_line)[:800]
 
 
 def classify_error(message: str) -> str:
