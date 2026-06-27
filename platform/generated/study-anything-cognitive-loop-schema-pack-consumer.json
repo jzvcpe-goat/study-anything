@@ -1,0 +1,89 @@
+{
+  "distribution": {
+    "report_path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+    "safe_for_platform_agent_static_import": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check"
+  },
+  "negative_fixtures": {
+    "all_cases_rejected": true,
+    "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+    "case_count": 11,
+    "case_ids": [
+      "success_wrong_schema_version",
+      "success_auto_execute_true",
+      "receipts_missing_privacy",
+      "failures_exit_code_string",
+      "pr_ci_receipt_missing_required_checks",
+      "pr_ci_receipt_github_tokens_true",
+      "pr_ci_source_unsupported_source",
+      "pr_ci_source_unsafe_url_query",
+      "pr_ci_source_raw_logs_true",
+      "pr_ci_source_unsafe_command",
+      "private_text_probe_rejected"
+    ],
+    "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+    "schema_version": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1"
+  },
+  "pack": {
+    "file_count": 523,
+    "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
+    "no_frontend_required": true,
+    "path": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "real_model_keys_stored_by_study_anything": false
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Prove external platform Agents can validate Cognitive Loop recipe CLI schemas from the adoption pack zip without a repo checkout.",
+  "schema_bundle": {
+    "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "schema_count": 5,
+    "schema_keys": [
+      "cognitive_loop_pr_ci_receipt",
+      "cognitive_loop_pr_ci_source",
+      "cognitive_loop_recipe_cli_failures",
+      "cognitive_loop_recipe_cli_receipts",
+      "cognitive_loop_recipe_cli_verification"
+    ],
+    "schema_version": "cognitive-loop-recipe-cli-schemas-v1",
+    "validated_without_running_recipe_cli": true
+  },
+  "schema_version": "cognitive-loop-schema-pack-consumer-v1",
+  "standalone_schema_files": [
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+      "path": "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-source.schema.json",
+      "id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+      "path": "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+    }
+  ],
+  "status": "pass",
+  "zip_only_validation": {
+    "archive_asset_hashes_match": true,
+    "file_changes_applied": false,
+    "files_read_from_zip": [
+      "study-anything-platform-adoption-pack/manifest.json",
+      "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+      "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+      "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "study-anything-platform-adoption-pack/platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+    ],
+    "manifest_records_checked": true,
+    "recipe_cli_invoked": false,
+    "repo_checkout_required": false,
+    "runtime_started": false
+  }
+}

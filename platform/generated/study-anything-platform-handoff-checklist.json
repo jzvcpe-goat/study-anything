@@ -1,0 +1,169 @@
+{
+  "acceptance": {
+    "evidence": "platform_handoff_checklist.schema_version == platform-handoff-checklist-v1",
+    "minimum_command": "python3 scripts/verify_platform_handoff_checklist.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "checklist": [
+    {
+      "blocks_release": true,
+      "command": "python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check",
+      "operator_action": "Extract the adoption pack and run bundled schema consumer checks.",
+      "step_id": "extract_and_validate_pack"
+    },
+    {
+      "blocks_release": true,
+      "command": "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
+      "operator_action": "Copy the Review Agent workflow from the adoption pack into .github/workflows and run the metadata-only install smoke.",
+      "step_id": "install_review_agent_workflow"
+    },
+    {
+      "blocks_release": true,
+      "command": "python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check",
+      "operator_action": "Run the zip-only Review Agent drill from acceptance bundle through PR comments, policy gate, and workflow install.",
+      "step_id": "run_review_agent_adoption_drill"
+    },
+    {
+      "assets": [
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/generated/study-anything-openai-tools.json",
+        "platform/packs/{codex,kimi,workbuddy}/pack.json"
+      ],
+      "blocks_release": true,
+      "operator_action": "Import the OpenAPI, OpenAI tools, or platform pack assets for the target host.",
+      "step_id": "import_platform_assets"
+    },
+    {
+      "blocks_release": true,
+      "commands": [
+        "python3 scripts/verify_ecosystem_submission_pack.py",
+        "python3 scripts/verify_platform_ecosystem_packs.py",
+        "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --current-worktree"
+      ],
+      "operator_action": "Run ecosystem, platform-pack, and external-adoption verifiers.",
+      "step_id": "run_static_acceptance"
+    },
+    {
+      "blocks_release": false,
+      "commands": [
+        "./scripts/launch_skill_mode.sh",
+        "USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh",
+        "./scripts/launch_self_host.sh"
+      ],
+      "operator_action": "Use Skill Mode first; use published images or source Compose only when needed.",
+      "step_id": "choose_runtime_path"
+    },
+    {
+      "blocks_release": false,
+      "operator_action": "Register a user-owned HTTP Agent endpoint outside Study Anything.",
+      "secret_boundary": "Study Anything stores endpoint metadata and capabilities, not real model keys.",
+      "step_id": "connect_user_owned_agent"
+    },
+    {
+      "blocks_release": false,
+      "command": "python3 scripts/generate_platform_feedback_package.py",
+      "operator_action": "If import fails, generate the local-only redacted feedback package and open a GitHub issue.",
+      "step_id": "collect_redacted_feedback"
+    }
+  ],
+  "handoff_assets": {
+    "adoption_pack_file_count": 523,
+    "adoption_pack_schema": "study-anything-platform-adoption-pack-v1",
+    "all_required_assets_present": true,
+    "required_assets": [
+      "platform/ecosystem-submission.json",
+      "platform/generated/study-anything-platform-adoption-pack.zip",
+      "platform/generated/study-anything-platform-bundle.json",
+      "platform/generated/study-anything-platform-openapi.json",
+      "platform/generated/study-anything-openai-tools.json",
+      "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+      "platform/generated/study-anything-cognitive-loop-event-store.json",
+      "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+      "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
+      "platform/generated/study-anything-platform-feedback-package.json",
+      "platform/generated/study-anything-published-image-evidence.json",
+      "platform/generated/study-anything-release-asset-bootstrap.json",
+      "platform/generated/study-anything-adopter-evidence-archive.json"
+    ]
+  },
+  "platforms": [
+    {
+      "declares_event_store": true,
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_mastra_adapter": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 123,
+      "integration_mode": "terminal_skill",
+      "no_frontend_required": true,
+      "pack_id": "codex",
+      "platform_id": "codex-skill",
+      "submission_integration_mode": "terminal_skill",
+      "verification_command_count": 106
+    },
+    {
+      "declares_event_store": true,
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_mastra_adapter": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 125,
+      "integration_mode": "openai_compatible_tools",
+      "no_frontend_required": true,
+      "pack_id": "kimi",
+      "platform_id": "kimi-compatible",
+      "submission_integration_mode": "openai_compatible_tools",
+      "verification_command_count": 106
+    },
+    {
+      "declares_event_store": true,
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_mastra_adapter": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 124,
+      "integration_mode": "openapi_http_tools",
+      "no_frontend_required": true,
+      "pack_id": "workbuddy",
+      "platform_id": "workbuddy-style-http",
+      "submission_integration_mode": "openapi_http_tools",
+      "verification_command_count": 105
+    },
+    {
+      "declares_event_store": true,
+      "declares_extract_smoke": true,
+      "declares_feedback_package": true,
+      "declares_handoff_checklist": true,
+      "declares_mastra_adapter": true,
+      "declares_review_agent_adoption_drill": true,
+      "declares_review_agent_workflow_install_smoke": true,
+      "import_asset_count": 103,
+      "integration_mode": "generic_openapi_tools",
+      "no_frontend_required": true,
+      "pack_id": null,
+      "platform_id": "generic-openapi-tools",
+      "submission_integration_mode": "generic_openapi_tools",
+      "verification_command_count": 52
+    }
+  ],
+  "privacy_assertions": {
+    "agent_endpoint_secrets_included": false,
+    "automatic_upload": false,
+    "browser_video_private_context_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true,
+    "standalone_frontend_required": false
+  },
+  "purpose": "Give external platform operators a copy-ready handoff checklist for importing, verifying, and escalating Study Anything without a standalone frontend.",
+  "schema_version": "platform-handoff-checklist-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

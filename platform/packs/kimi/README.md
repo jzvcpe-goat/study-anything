@@ -76,17 +76,216 @@ python3 scripts/verify_external_adoption.py \
 The verifier emits `adoption-proof-v1` and proves the Kimi-compatible tool surface without requiring
 browser-only Kimi to call localhost directly.
 
-If an external Kimi adoption run fails, do not paste raw logs or Agent configuration. Use the support
-bundle replay path:
+For a shorter operating path, read `docs/cognitive-loop-adoption-cookbook.md`. In Kimi workflows it
+keeps Kimi as the conversation surface while a terminal, workspace Agent, or private gateway runs the
+local Cognitive Loop commands and returns only redacted artifact metadata.
+
+When a local event ledger is useful, the terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_event_store.py rebuild` and
+`python3 scripts/cognitive_loop_event_store.py export --html`; Kimi should receive only the exported
+metadata summary, not the SQLite file or private source artifacts. Verify with
+`python3 scripts/verify_cognitive_loop_event_store.py --check`.
+
+If Kimi is coordinating an external Mastra workspace, import `platform/mastra/README.md`,
+`platform/mastra/manifest.json`, and `platform/mastra/cognitive-loop-mastra-adapter.ts` as the
+Mastra-side adapter contract. Verify the pack with
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` to prove the
+metadata-only suspend/resume/bail contract before Kimi tells a user the external runtime is ready.
+If the local workspace has Node 22+, run
+`python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` to start the repo-local
+Mastra MVP and verify the same workflow through `@mastra/core`.
+Then run `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` to prove local
+libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata events.
+Then run `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` and inspect
+`platform/generated/study-anything-cognitive-loop-langfuse-observability.json` before enabling real
+observability. The verifier maps Mastra receipts to redacted Langfuse trace/span/generation/score
+DTOs and keeps raw source, learner answers, Agent endpoints, prompts, model keys, storage paths, and
+absolute local paths out of the local receipt.
+Then run `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` and inspect
+`platform/generated/study-anything-cognitive-loop-study-anything-adapter.json` before telling a user
+that the Learning Adapter is connected. The verifier proves metadata-only `ProjectEvent` /
+`DecisionCard` input can create a source-bound Study Anything learning context and project
+`MasteryRecord` / `LoopRun` evidence without source bodies, raw diffs, learner answers, Agent
+endpoints, Agent metadata, or model keys.
+Then run `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html`
+and inspect `platform/generated/study-anything-cognitive-loop-study-adapter-cli.json` before wiring
+this into a Kimi Work action. The CLI Lite writes JSON/HTML learning status, StudyCard, understanding
+gaps, scribe summary, `MasteryRecord`, and `LoopRun` evidence from metadata-only files.
+The pack includes `scripts/cognitive_loop_study_adapter_cli.py` and
+`scripts/verify_cognitive_loop_study_adapter_cli.py` for this handoff.
+
+For bounded local watcher automation, run
+`.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter --changed-path apps/api/study_anything/core/workflow.py --git-diff-summary "Metadata-only workflow boundary changed"`.
+This runner reads `.cognitive-loop/watchers.yaml`, debounces duplicate paths, skips excluded
+paths, writes metadata-only ProjectEvents into the local Event Store, and can trigger the Study
+Anything adapter gate for the first high-risk event. Verify it with
+`.venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-watcher-runner.json`.
+
+For a static HTML Artifact Console Lite, run
+`python3 scripts/cognitive_loop_artifact_console.py build --html --json`.
+It aggregates Event Store rows, watcher runner summaries, Study Adapter outputs, and
+DecisionCard/Human Gate/LoopRun metadata into `.cognitive-loop/artifacts/console/index.html`
+without a daemon, standalone frontend, SSE, WebSocket, raw diffs, source bodies, learner answers,
+Agent endpoints, Agent metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_artifact_console.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-artifact-console.json`.
+
+For Personal Plugin Mode Lite, run
+`python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json`.
+It creates read-only metadata-only Study Cards, quiz items, and Markdown/HTML reports for a file,
+README, webpage metadata, or diff summary without modifying source files or storing raw source or
+diff text, learner answers, Agent endpoints, Agent metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json`.
+
+For Evolution Report Lite, run
+`python3 scripts/cognitive_loop_evolution.py build --html --json`.
+It clusters metadata-only failures, proposes governed next-loop improvements, requires a Human
+Mastery Gate for high-risk suggestions, and writes JSON/HTML reports without modifying source files
+or weakening risk, audit, privacy, rollback, test, or permission policy. Verify it with
+`python3 scripts/verify_cognitive_loop_evolution_report.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-evolution-report.json`.
+
+For Governed Apply Plan Lite, run
+`python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json`.
+It is dry-run by default and only writes an idempotent generated-artifact receipt when explicitly
+called with `--apply --allow-generated-artifacts`; it never writes source files, docs, scripts,
+platform packs, policy files, raw source, raw diff, learner answers, Agent endpoints, Agent
+metadata, prompts, or model keys. Verify it with
+`python3 scripts/verify_cognitive_loop_apply_plan.py --check`, then inspect
+`platform/generated/study-anything-cognitive-loop-apply-plan.json`.
+
+For Measured Improvement Comparator Lite, a terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json`.
+It compares metadata-only loop artifacts, classifies `improved`, `regressed`, `unchanged`,
+`insufficient`, or `ambiguous`, and never calls models, executes apply, modifies source files, or
+stores raw source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model
+keys. Verify it with `python3 scripts/verify_cognitive_loop_improvement_comparator.py --check`, then
+share only `platform/generated/study-anything-cognitive-loop-improvement-comparison.json` metadata
+back to Kimi.
+
+For Patch Proposal Lite, a terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json`.
+It turns metadata-only loop evidence into six patch specification categories: `prompt`, `policy`,
+`eval`, `task`, `doc`, and `retrieval`. It is read-only: high-risk, gated, manual-only, protected
+path, insufficient, secret-like, raw-diff, and policy-weakening inputs are rejected or downgraded to
+manual-only, and it never generates raw unified diffs, calls models, executes apply, modifies source
+files, or stores private learning data. Verify it with
+`python3 scripts/verify_cognitive_loop_patch_proposal.py --check`, then share only
+`platform/generated/study-anything-cognitive-loop-patch-proposal.json` metadata back to Kimi.
+
+For Mastra Evolution Receipt Link Lite, a terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json`.
+It links metadata-only Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal
+artifacts into a future Mastra workflow receipt DTO. It does not start Mastra, call models, execute
+apply, generate raw unified diffs, modify source files, or store private learning data. Verify it
+with `python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check`, then share only
+`platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json` metadata back to
+Kimi.
+
+For Mastra Evolution Workflow Replay Lite, a terminal or workspace Agent can run
+`python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json`.
+It replays a metadata-only EvolutionReceiptLink into future Mastra workflow steps for evidence
+validation, human gate evaluation, patch review, apply-plan review, and observability receipt
+handoff. It does not start production Mastra, call models, execute apply, modify source files, or
+store private learning data. Verify it with
+`python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check`, then share only
+`platform/generated/study-anything-cognitive-loop-mastra-evolution-replay.json` metadata back to
+Kimi.
+
+For machine-readable operation, import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json`, then read
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` before a terminal or workspace
+Agent runs runtime or human-gated steps. The entrypoint proof is
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`. The local operator should
+verify the entrypoint chain with:
 
 ```bash
-python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke
-python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
-python3 scripts/verify_platform_support_bundle_replay.py --check
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+python3 scripts/verify_platform_handoff_checklist.py --check
+python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/cognitive_loop_recipe_cli.py list
+python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
 ```
 
-The replay emits `platform-support-bundle-replay-v1` and a copyable GitHub issue body. Kimi should
-only share redacted fields from `platform-support-bundle-v1`.
+`platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves the read-only recipe CLI
+returns `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` provides deterministic
+sample CLI outputs and hashes for platform Agent import tests.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` provides deterministic
+failure receipts for unknown ids and invalid recipe matrices.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json` provides offline JSON
+Schemas for static Kimi validation of the recipe CLI success, receipt, and failure reports plus PR CI
+receipt/source metadata.
+`platform/schemas/cognitive-loop-pr-ci-receipt.schema.json` and
+`platform/schemas/cognitive-loop-pr-ci-source.schema.json` are standalone schemas Kimi can validate
+without running Python, reading GitHub tokens, fetching job logs, or mutating source files.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json` proves
+those schemas reject drift, unsafe flags, malformed types, unsafe PR CI URLs, unsafe commands, and
+private text probes.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
+discoverable and hash-checked from the adoption pack zip without a repo checkout.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
+`platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
+adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
+`platform/generated/study-anything-platform-handoff-checklist.json` gives Kimi operators a release
+handoff checklist for import, verification, runtime choice, and support escalation.
+`platform/generated/study-anything-launch-acceptance-ledger.json` gives Kimi operators the
+aggregated launch acceptance state and current commercial boundary.
+`platform/generated/study-anything-github-launch-operator-guide.json` gives Kimi operators the
+GitHub release sequence, required release assets, and local-first launch boundary.
+
+For code-review acceptance, use Kimi as the external Review Agent only through an operator-approved
+handoff. The local command creates a temporary request with the real diff; Study Anything should not
+persist that request:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD > /tmp/kimi-review-handoff.json
+```
+
+Paste or attach `/tmp/kimi-review-handoff.json` to Kimi, require JSON-only output, then validate the
+returned report:
+
+```bash
+python3 scripts/cognitive_loop_review_agent_handoff.py validate --report /tmp/kimi-review-report.json
+python3 scripts/cognitive_loop_review_agent_receipt.py build --report /tmp/kimi-review-report.json --provider-id kimi-review-agent --pr-ref PR --commit-sha SHA --output /tmp/kimi-review-receipt.json
+python3 scripts/cognitive_loop_review_agent_pr_comment.py build --receipt /tmp/kimi-review-receipt.json
+python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py build --report /tmp/kimi-review-report.json --provider-id kimi-review-agent --pr-ref PR --commit-sha SHA --output-dir /tmp/kimi-review-acceptance
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
+python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
+python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/kimi-review-acceptance --policy soft
+python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
+```
+
+For GitHub-side reuse, copy `platform/workflows/cognitive-loop-review-agent-manual.yml` only as a
+manual `workflow_dispatch` workflow after the external Kimi report path is clear. It writes a
+metadata-only Checks summary, runs the built-in `advisory` / `soft` / `strict` policy gate,
+uploads only safe metadata artifacts when enabled, and must not upload the raw Review Agent report.
+The workflow applies the captured policy exit code after artifact upload so Kimi evidence is
+available even when `needs-fix` or `needs-review` blocks CI. The install smoke proves the same
+workflow and policy gate can be copied from the adoption pack into `.github/workflows/` without
+requiring a repo checkout or raw report upload. The adoption drill rehearses the full zip-only path
+from acceptance bundle to PR comment pack, policy matrix, and workflow install.
 
 ## Kimi As Reasoning Agent
 
@@ -100,9 +299,9 @@ API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.
 Then switch the gateway to real Kimi credentials:
 
 ```bash
-export AGENT_LLM_BASE_URL="https://api.moonshot.cn/v1"
+export AGENT_LLM_BASE_URL="https://your-openai-compatible-endpoint.example/v1"
 export AGENT_LLM_API_KEY="your-api-key"
-export AGENT_LLM_MODEL="${AGENT_LLM_MODEL:-kimi-k2.6}"
+export AGENT_LLM_MODEL="your-model"
 
 python3 scripts/openai_compatible_agent_gateway.py --host 127.0.0.1 --port 8787
 python3 scripts/study_anything_cli.py agent-add-http \
@@ -110,9 +309,9 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --endpoint "http://127.0.0.1:8787/invoke" \
   --set-default
 ```
+```
 
-The endpoint can be Moonshot/Kimi, OpenAI, DeepSeek, a relay, or any OpenAI-compatible runtime.
-Keep provider credentials in the gateway environment, not in Study Anything. The default
+Keep Moonshot/Kimi credentials in the gateway environment, not in Study Anything. The default
 `agent-add-http --set-default` command registers teaching layers, quiz generation, grading, synthesis,
 scribe notes, source verification, and embedding tasks.
 
@@ -189,7 +388,6 @@ grading feedback, Agent endpoints, or model secrets.
 
 ```bash
 python3 scripts/diagnose_adoption.py --agent-endpoint http://127.0.0.1:8787/invoke
-python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
 ```
 
 If browser-only Kimi cannot call localhost, move the HTTP calls to a terminal-capable Agent, local

@@ -43,7 +43,13 @@ class AgentEvalPolicyTests(unittest.TestCase):
         self.assertIs(body["native_fast_gate"]["required_for_release"], True)
         self.assertEqual(
             body["native_fast_gate"]["required_tasks"],
-            ["quiz.generate", "answer.grade", "insight.synthesize"],
+            [
+                "teach.overview",
+                "teach.glossary",
+                "quiz.generate",
+                "answer.grade",
+                "insight.synthesize",
+            ],
         )
         adapter_ids = {item["adapter_id"] for item in body["external_adapters"]}
         self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})

@@ -16,57 +16,8 @@ from pathlib import Path
 from typing import Any
 
 
-SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = Path(__file__).resolve().parents[1]
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
-
-from localhost_diagnostics import redact_diagnostic  # noqa: E402
-
-
-SCHEMA_VERSION = "learning-enrichment-bridge-verification-v1"
-MIN_PYTHON = (3, 11)
-RELEASE_VERSION = "v0.3.29-alpha"
-DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-learning-enrichment-bridge.json"
-DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
-
-
-def python_version_error_payload(version: str | None = None) -> dict[str, Any]:
-    return {
-        "schema_version": "learning-enrichment-bridge-error-v1",
-        "status": "blocked",
-        "classification": "python_version_unsupported",
-        "diagnostic": "verify_learning_enrichment_bridge requires Python 3.11 or newer.",
-        "python_version": version or sys.version.split()[0],
-        "next_steps": [
-            ".venv/bin/python scripts/verify_learning_enrichment_bridge.py --check",
-            "python3 scripts/setup_env.py",
-            "./scripts/run_skill_mode_demo.sh",
-        ],
-        "privacy": {
-            "local_absolute_paths_included": False,
-            "secrets_recorded": False,
-        },
-    }
-
-
-def ensure_supported_python() -> None:
-    if sys.version_info >= MIN_PYTHON:
-        return
-    print(
-        json.dumps(
-            python_version_error_payload(),
-            ensure_ascii=False,
-            indent=2,
-            sort_keys=True,
-        ),
-        file=sys.stderr,
-    )
-    raise SystemExit(1)
-
-
-ensure_supported_python()
 
 from study_anything.core.learning_context import (  # noqa: E402
     ALLOWED_CONTEXT_SOURCE_TYPES,
@@ -92,6 +43,10 @@ from study_anything.core.workflow import (  # noqa: E402
 )
 
 
+SCHEMA_VERSION = "learning-enrichment-bridge-verification-v1"
+RELEASE_VERSION = "v0.3.31-alpha"
+DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-learning-enrichment-bridge.json"
+DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
 REQUIRED_PACK_COMMAND = "verify_learning_enrichment_bridge.py --check"
 REQUIRED_EVIDENCE = (
@@ -143,8 +98,6 @@ REQUIRED_DOCS = {
         "NotebookLM",
     ],
 }
-RAW_SOURCE_TEXT_SENTINEL = "raw source text " + "returned"
-FAKE_OPERATOR_BRIDGE_SECRET = "fake-operator-bridge-secret-token"
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
@@ -152,7 +105,7 @@ FORBIDDEN_PATTERNS = [
 ]
 FORBIDDEN_LITERALS = [
     "Private platform browser/video context",
-    RAW_SOURCE_TEXT_SENTINEL,
+    "raw source text returned",
     "http://127.0.0.1:8787/private-agent",
     "bridge-secret",
 ]
@@ -160,22 +113,6 @@ FORBIDDEN_LITERALS = [
 
 class LearningEnrichmentBridgeError(RuntimeError):
     """Readable operator-bridge verification failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    return "\n".join(
-        [
-            f"verify_learning_enrichment_bridge failed: {diagnostic}",
-            "",
-            "Next steps:",
-            "  1. Rebuild the bridge report: python3 scripts/verify_learning_enrichment_bridge.py --write",
-            "  2. Check the generated report: python3 scripts/verify_learning_enrichment_bridge.py --check",
-            "  3. Validate the distributed pack: python3 scripts/verify_learning_enrichment_bridge.py --pack platform/generated/study-anything-platform-adoption-pack.zip",
-            "  4. If pack contents changed, refresh: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
-            "  5. See docs/learning-enrichment.md, docs/notebooklm-bridge.md, docs/obsidian-export.md, and docs/second-brain-handoff.md.",
-        ]
-    )
 
 
 class EnrichmentHTMLParser(HTMLParser):
@@ -385,7 +322,7 @@ def build_state() -> tuple[LearningState, dict[str, Any], list[str]]:
                     "endpoint": private_agent_endpoint,
                     "metadata": {
                         "endpoint": private_agent_endpoint,
-                        "api_key": FAKE_OPERATOR_BRIDGE_SECRET,
+                        "api_key": "sk-proj-OperatorBridgeSecret000000",
                         "tokens": {"input": 18, "output": 41},
                     },
                 },
@@ -429,7 +366,7 @@ def build_state() -> tuple[LearningState, dict[str, Any], list[str]]:
         private_answer,
         private_feedback,
         private_agent_endpoint,
-        FAKE_OPERATOR_BRIDGE_SECRET,
+        "sk-proj-OperatorBridgeSecret000000",
         "bridge-secret",
         *[item.text for item in package.items],
     ]
@@ -670,7 +607,7 @@ def verify_adoption_pack_manifest(root: Path) -> dict[str, Any]:
     required = {
         "scripts/verify_learning_enrichment_bridge.py",
         "platform/generated/study-anything-learning-enrichment-bridge.json",
-        "docs/release-notes/v0.3.29-alpha.md",
+        "docs/release-notes/v0.3.31-alpha.md",
     }
     missing = required - paths
     if missing:
@@ -802,5 +739,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_learning_enrichment_bridge failed: {exc}", file=sys.stderr)
         sys.exit(1)

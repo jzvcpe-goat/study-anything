@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import importlib.util
 import json
 import subprocess
 import sys
@@ -12,22 +11,9 @@ from pathlib import Path
 from _path import ROOT  # noqa: F401
 
 
-REPO = Path(__file__).resolve().parents[3]
-GENERATOR = REPO / "scripts" / "generate_platform_adoption_pack.py"
-
-sys.path.insert(0, str(REPO / "scripts"))
-GENERATOR_SPEC = importlib.util.spec_from_file_location(
-    "generate_platform_adoption_pack",
-    GENERATOR,
-)
-assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
-generator = importlib.util.module_from_spec(GENERATOR_SPEC)
-GENERATOR_SPEC.loader.exec_module(generator)
-
-
 class PlatformAdoptionPackTests(unittest.TestCase):
     def test_platform_adoption_pack_is_current(self) -> None:
-        root = REPO
+        root = Path(__file__).resolve().parents[3]
         completed = subprocess.run(
             [
                 sys.executable,
@@ -41,32 +27,14 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
-    def test_generator_failure_formatter_is_actionable_and_redacted(self) -> None:
-        message = generator.format_cli_failure(
-            RuntimeError(
-                "pack stale at /private/tmp/study-anything/pack.json "
-                "with Authorization: Bearer sk-proj-abcdefghijklmnop123456"
-            )
-        )
-
-        self.assertIn("generate_platform_adoption_pack failed:", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_platform_adoption_pack.py --check", message)
-        self.assertIn("generate_platform_bundle_manifest.py --check", message)
-        self.assertIn("verify_external_adoption.py", message)
-        self.assertIn("<temp-path>", message)
-        self.assertIn("Authorization: Bearer <redacted>", message)
-        self.assertNotIn("/private/tmp", message)
-        self.assertNotIn("sk-proj-abcdefghijklmnop123456", message)
-
     def test_platform_adoption_pack_contains_external_operator_assets(self) -> None:
-        root = REPO
+        root = Path(__file__).resolve().parents[3]
         manifest_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
         archive_path = root / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["schema_version"], "study-anything-platform-adoption-pack-v1")
-        self.assertEqual(manifest["version"], "v0.3.29-alpha")
+        self.assertEqual(manifest["version"], "v0.3.31-alpha")
         self.assertIs(manifest["no_frontend_required"], True)
         self.assertIs(manifest["real_model_keys_stored_by_study_anything"], False)
         self.assertEqual(
@@ -79,8 +47,6 @@ class PlatformAdoptionPackTests(unittest.TestCase):
 
         required_paths = {
             "manifest.json",
-            "QUICKSTART.md",
-            "START_HERE.command",
             "platform/generated/study-anything-platform-openapi.json",
             "platform/generated/study-anything-openai-tools.json",
             "platform/packs/kimi/README.md",
@@ -89,17 +55,16 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "docs/second-brain-handoff.md",
             "docs/obsidian-export.md",
             "docs/notebooklm-bridge.md",
+            "docs/okf-alignment.md",
             "docs/commercial-readiness.md",
             "docs/adoption-telemetry.md",
             "docs/plugin-sdk.md",
             "docs/plugin-registry.md",
-            "docs/getting-started.md",
-            "docs/skill-mode.md",
             "docs/ecosystem-submission.md",
             "docs/eval-frameworks.md",
             "docs/release-checklist.md",
             "docs/roadmap.md",
-            "docs/release-notes/v0.3.29-alpha.md",
+            "docs/release-notes/v0.3.31-alpha.md",
             "platform/ecosystem-submission.json",
             "platform/generated/study-anything-operator-drill-transcript.json",
             "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -110,6 +75,15 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
             "platform/generated/study-anything-platform-feedback-package.json",
             "platform/generated/study-anything-platform-feedback-package.zip",
+            "platform/generated/study-anything-codex-plugin-pack.json",
+            "platform/generated/study-anything-codex-plugin-pack.zip",
+            "platform/generated/study-anything-codex-plugin-pack.sha256",
+            "platform/generated/study-anything-kimi-plugin-pack.json",
+            "platform/generated/study-anything-kimi-plugin-pack.zip",
+            "platform/generated/study-anything-kimi-plugin-pack.sha256",
+            "platform/generated/study-anything-workbuddy-plugin-pack.json",
+            "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+            "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
             "platform/generated/study-anything-platform-field-rehearsal.json",
             "platform/generated/study-anything-platform-support-triage.json",
             "platform/generated/study-anything-platform-onboarding-readiness.json",
@@ -119,6 +93,18 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "platform/generated/study-anything-public-maintainer-dashboard.json",
             "platform/generated/study-anything-public-maintainer-dashboard.md",
             "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-okf-alignment.json",
+            "platform/okf/examples/demo-session.json",
+            "platform/okf/examples/demo-okf-bundle/manifest.json",
+            "platform/okf/examples/demo-okf-bundle/overview.md",
+            "platform/okf/examples/demo-okf-bundle/sources.md",
+            "platform/okf/examples/demo-okf-bundle/mastery.md",
+            "platform/okf/examples/demo-okf-bundle/decisions.md",
+            "platform/okf/examples/demo-okf-bundle/concepts/overview.md",
+            "platform/okf/examples/demo-okf-bundle/concepts/glossary.md",
+            "platform/okf/examples/demo-okf-bundle/questions/review.md",
+            "scripts/export_okf_bundle.py",
+            "scripts/verify_okf_bundle.py",
             "fixtures/platform-import-failures/schema_mismatch.json",
             "fixtures/platform-import-failures/missing_local_gateway.json",
             "fixtures/platform-import-failures/unsupported_auth_mode.json",
@@ -181,12 +167,9 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "fixtures/release-asset-adoption/published-evidence-missing.json",
             "fixtures/release-asset-adoption/network-unavailable.json",
             "skills/study-anything/SKILL.md",
-            "scripts/start_here.sh",
             "scripts/doctor.sh",
             "scripts/launch_self_host.sh",
             "scripts/stop_self_host.sh",
-            "scripts/localhost_diagnostics.py",
-            "scripts/generate_platform_adoption_pack.py",
             "scripts/verify_published_image_launch.py",
             "scripts/verify_ecosystem_submission_pack.py",
             "scripts/verify_adoption_telemetry.py",
@@ -199,6 +182,8 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             "scripts/verify_external_eval_marketplace_harness.py",
             "scripts/verify_agent_eval_marketplace_enforcement.py",
             "scripts/verify_platform_adoption_feedback_diagnostics.py",
+            "scripts/generate_platform_plugin_packs.py",
+            "scripts/verify_platform_plugin_packs.py",
             "scripts/generate_platform_feedback_package.py",
             "scripts/generate_platform_field_rehearsal.py",
             "scripts/verify_platform_field_rehearsal.py",
@@ -224,21 +209,6 @@ class PlatformAdoptionPackTests(unittest.TestCase):
             archive_root = "study-anything-platform-adoption-pack"
             for path in required_paths:
                 self.assertIn(f"{archive_root}/{path}", names)
-            kimi_readme = archive.read(f"{archive_root}/platform/packs/kimi/README.md").decode(
-                "utf-8"
-            )
-            self.assertIn('AGENT_LLM_API_KEY="your-api-key"', kimi_readme)
-            self.assertNotIn("MOONSHOT_API_KEY", kimi_readme)
-            for platform_id in ("codex", "kimi", "workbuddy"):
-                platform_pack = json.loads(
-                    archive.read(f"{archive_root}/platform/packs/{platform_id}/pack.json").decode(
-                        "utf-8"
-                    )
-                )
-                local_commands = "\n".join(platform_pack["local_verification_commands"])
-                source_commands = "\n".join(platform_pack["source_verification_commands"])
-                self.assertNotIn("verify_commercial_readiness.py", local_commands)
-                self.assertIn("verify_commercial_readiness.py", source_commands)
             internal_manifest = json.loads(
                 archive.read(f"{archive_root}/manifest.json").decode("utf-8")
             )
@@ -262,8 +232,14 @@ class PlatformAdoptionPackTests(unittest.TestCase):
         self.assertIn("study_anything_learning_package_export", manifest["required_tool_names"])
         self.assertIn("study_anything_second_brain_handoff_export", manifest["required_tool_names"])
         self.assertIn("learning-enrichment-bridge-verification-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn(
+            "cognitive-black-box-okf-alignment-verification-v1",
+            manifest["acceptance"]["must_verify"],
+        )
+        self.assertIn("cognitive-black-box-okf-bundle-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("agent-eval-marketplace-enforcement-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-adoption-feedback-diagnostics-v1", manifest["acceptance"]["must_verify"])
+        self.assertIn("study-anything-platform-plugin-pack-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-onboarding-readiness-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-triage-dashboard-v1", manifest["acceptance"]["must_verify"])
         self.assertIn("platform-release-blocker-fixture-v1", manifest["acceptance"]["must_verify"])

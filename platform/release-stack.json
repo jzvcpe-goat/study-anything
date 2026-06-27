@@ -1,0 +1,3165 @@
+{
+  "current_group": "release-stack-promotion-v0.3.148-v0.3.149",
+  "privacy_assertions": {
+    "agent_endpoint_secrets_included": false,
+    "check_annotations_included": false,
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "learner_answers_included": false,
+    "live_check_payloads_included": false,
+    "metadata_only": true,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "source_mutation_performed": false
+  },
+  "purpose": "Offline release-stack archive for completed and previous PR chains. It records branch order, PR/check metadata, and local gates without storing GitHub tokens, job logs, annotations, artifacts, source text, or live check payloads.",
+  "release_policy": {
+    "after_each_merge": [
+      "sync main with git pull --ff-only",
+      "confirm the next stacked PR base is still current",
+      "confirm required GitHub checks are green"
+    ],
+    "before_tag": [
+      "python3 scripts/verify_release_stack_readiness.py",
+      "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+      "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+      "./scripts/release_check.sh",
+      "python3 scripts/verify_launch_acceptance_ledger.py --check",
+      "python3 scripts/verify_github_launch_operator_guide.py --check",
+      "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
+    ],
+    "merge_mode": "squash_or_merge_commit_by_maintainer_policy",
+    "merge_order": "oldest_to_newest",
+    "target_branch": "main"
+  },
+  "required_checks": [
+    "api-tests",
+    "compose-smoke"
+  ],
+  "schema_version": "study-anything-release-stack-v1",
+  "stack": [
+    {
+      "order": 1,
+      "pr": 258,
+      "branch": "codex/v0.3.148-release-stack-candidate-promotion-lite",
+      "base": "main",
+      "status_expected_before_merge": "checks_pass",
+      "final_state": "MERGED",
+      "merge_commit": "a6b42cb9122e7d16de4a1c74c5f70d995925c6eb",
+      "required_checks": {
+        "api-tests": "pass",
+        "compose-smoke": "pass"
+      },
+      "evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ]
+    },
+    {
+      "order": 2,
+      "pr": 259,
+      "branch": "codex/v0.3.149-release-stack-self-intake-lite",
+      "base": "main",
+      "status_expected_before_merge": "checks_pass",
+      "final_state": "MERGED",
+      "merge_commit": "ed989e5a2e35527bd673d78cabff759435c46991",
+      "required_checks": {
+        "api-tests": "pass",
+        "compose-smoke": "pass"
+      },
+      "evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ]
+    }
+  ],
+  "stack_groups": [
+    {
+      "group_id": "release-stack-v0.3.53-v0.3.60",
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "codex/v0.3.52-cognitive-loop-schema-pack-consumer-failures",
+          "branch": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+          "order": 1,
+          "pr": 134,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.53-cognitive-loop-extracted-pack-smoke",
+          "branch": "codex/v0.3.54-platform-handoff-checklist",
+          "order": 2,
+          "pr": 135,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.54-platform-handoff-checklist",
+          "branch": "codex/v0.3.55-launch-acceptance-ledger",
+          "order": 3,
+          "pr": 136,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.55-launch-acceptance-ledger",
+          "branch": "codex/v0.3.56-github-launch-operator-guide",
+          "order": 4,
+          "pr": 137,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.56-github-launch-operator-guide",
+          "branch": "codex/v0.3.57-release-stack-readiness",
+          "order": 5,
+          "pr": 138,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.57-release-stack-readiness",
+          "branch": "codex/v0.3.58-live-release-stack-status",
+          "order": 6,
+          "pr": 139,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.58-live-release-stack-status",
+          "branch": "codex/v0.3.59-full-stack-lineage",
+          "order": 7,
+          "pr": 140,
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "codex/v0.3.59-full-stack-lineage",
+          "branch": "codex/v0.3.60-merge-runbook-safety-gate",
+          "order": 8,
+          "pr": 141,
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Previous completed release-stack safety chain retained for audit continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "pr-ci-receipt-chain-v0.3.70-v0.3.72",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+        "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "platform/generated/study-anything-platform-adoption-pack.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.70-pr-ci-receipt-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "7e1dab0a2ec56a65e628f8e6ca65c9c899f60552",
+          "order": 1,
+          "pr": 180,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.71-live-gh-ci-receipt-adapter-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+            "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b853066f6de138096ca3be4cffe3907313011d83",
+          "order": 2,
+          "pr": 181,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.72-pr-ci-receipt-schema-pack-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+            "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+            "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+            "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "a26c137a39104e02189356cd8bcabb431d9bf186",
+          "order": 3,
+          "pr": 182,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed PR CI receipt, live GitHub metadata adapter, and offline schema-pack chain.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.73-v0.3.74",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.73-release-stack-archive-refresh-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "32793e4e12314076f89b11f72fd1d2b7a03adec4",
+          "order": 1,
+          "pr": 183,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.74-release-stack-intake-candidate-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f3dd01acc9cd5435a624a062b219fbadd2625e9a",
+          "order": 2,
+          "pr": 184,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for archive refresh and intake promotion.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.75-v0.3.76",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.75-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "a1c8c509ef2712d4e1d52a13f1d480188bd44c4f",
+          "order": 1,
+          "pr": 185,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.76-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "2fcdef8997678a79cc925134bfc4940ba6024254",
+          "order": 2,
+          "pr": 186,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for candidate promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.77-v0.3.78",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.77-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "25d7eac1734802a841cd2efde42d1ec183ec40d8",
+          "order": 1,
+          "pr": 187,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.78-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "234f8d96ca0244f714e0a6c3a8e21196967a7378",
+          "order": 2,
+          "pr": 188,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.79-v0.3.80",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.79-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b24161e2362a432687ee4f29f118ad73bf2fe9eb",
+          "order": 1,
+          "pr": 189,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.80-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "58d74654a1aae10f7f9d16f85bf70a196e04b7e6",
+          "order": 2,
+          "pr": 190,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.81-v0.3.82",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.81-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "5f20d05da8925ea31e0e4b4a1bf6e236b8027b7e",
+          "order": 1,
+          "pr": 191,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.82-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "59ea15e54d9487172ab5487ff90c964cb5b4e7dd",
+          "order": 2,
+          "pr": 192,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.83-v0.3.84",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.83-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "4b61139b9c68b94dc6316adfe98ccbfa4e96f73e",
+          "order": 1,
+          "pr": 193,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.84-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f1218ebad7fad2238d614fdac9248d2d51837f28",
+          "order": 2,
+          "pr": 194,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.85-v0.3.86",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.85-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b767ac4e61af29812c63d2b6bfc7dda0f65491a7",
+          "order": 1,
+          "pr": 195,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.86-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "5567bd9defd2842c6088c87cd96a5ec320d12783",
+          "order": 2,
+          "pr": 196,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.87-v0.3.88",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.87-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "057d7faf28096de27e10e584559418f32aed06c4",
+          "order": 1,
+          "pr": 197,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.88-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "3f6676c46b894da5b68cb72bbb79bb7818da49f6",
+          "order": 2,
+          "pr": 198,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.89-v0.3.90",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.89-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f0aa4f1aec3cbe5dfcd508d0f85d422f5118ee2a",
+          "order": 1,
+          "pr": 199,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.90-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "3a954f08ba4f8a72c0f56230f2bfc638b39a6413",
+          "order": 2,
+          "pr": 200,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.91-v0.3.92",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.91-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b081c5c10d7014e300355323666280468044a2db",
+          "order": 1,
+          "pr": 201,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.92-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "46e32d54db8c135a0fb29dc21fdc6f7ec68703e7",
+          "order": 2,
+          "pr": 202,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.93-v0.3.94",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.93-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "e2cceb0108864470a3c8b6ee9be82019f106064d",
+          "order": 1,
+          "pr": 203,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.94-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "975b00fc84235918cf7d33efb3fec669042d4827",
+          "order": 2,
+          "pr": 204,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.95-v0.3.96",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.95-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f11b222e6dabefb83b11248283c4032acde90bf2",
+          "order": 1,
+          "pr": 205,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.96-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "bbc79217d57f6881b30678d903c1f2d98a5ea2ae",
+          "order": 2,
+          "pr": 206,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.97-v0.3.98",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.97-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "58cde14dc6d016cd4e138f3330aed404817cfabe",
+          "order": 1,
+          "pr": 207,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.98-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "7a39904cb09891529bbf770e55f39a42bf5e28c7",
+          "order": 2,
+          "pr": 208,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.99-v0.3.100",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.99-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f4239e19f2a89c0624a4798f7937cca42071110e",
+          "order": 1,
+          "pr": 209,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.100-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "6463700166098c2d52242d094136a66ab9ff344d",
+          "order": 2,
+          "pr": 210,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.101-v0.3.102",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.101-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "207817f9b9ff4247d551d40cb41129f456778221",
+          "order": 1,
+          "pr": 211,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.102-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "3045d646b98e9cd5ce90dc3e20c238ba311a3b5e",
+          "order": 2,
+          "pr": 212,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.103-v0.3.104",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.103-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "80bc7291cbaab7c01fa92fd384748e6e391e742b",
+          "order": 1,
+          "pr": 213,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.104-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "d4b45c0f033836b79b49fd00729f69b816442fe4",
+          "order": 2,
+          "pr": 214,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.105-v0.3.106",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.105-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "dd614a2d6a4c7902e438d6cd5be0d812abdd51af",
+          "order": 1,
+          "pr": 215,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.106-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "89f9844c2a4a81b84232ab4b753a33e3ebe4b3c4",
+          "order": 2,
+          "pr": 216,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.107-v0.3.108",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.107-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b37d847a2298f392aa2b2b9c7ff9aa6e10c96714",
+          "order": 1,
+          "pr": 217,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.108-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "7d6dd6f372d0e956f10035818c8630e70f071c42",
+          "order": 2,
+          "pr": 218,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.109-v0.3.110",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.109-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "c04f545ce5df02029568e47756bf03f4047e02c2",
+          "order": 1,
+          "pr": 219,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.110-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "a11e8c852b7d86772e08b3820de2a9b4405964dd",
+          "order": 2,
+          "pr": 220,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.111-v0.3.112",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.111-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "85df8870419d5d97fee04536879b423c32a78a98",
+          "order": 1,
+          "pr": 221,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.112-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "58336be81cbac524c09a507a000ac02ef20e3010",
+          "order": 2,
+          "pr": 222,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.113-v0.3.114",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.113-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "fc1d1f3e157bbb52d294e8f631d4867527345946",
+          "order": 1,
+          "pr": 223,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.114-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "f38e04146e2feb24eb01a6162dd7c7300687147e",
+          "order": 2,
+          "pr": 224,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.115-v0.3.116",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.115-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "d8957f7ccffc671b16933c977c910c6ff2fdb962",
+          "order": 1,
+          "pr": 225,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.116-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "785349448169cc03a81f1e22f08f1fc35a072a6f",
+          "order": 2,
+          "pr": 226,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.117-v0.3.118",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.117-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "cee69891cdb2a198d124fa4381116adbdddc2e2f",
+          "order": 1,
+          "pr": 227,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.118-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "defae069e4810329ce281dde2f5df22d4dfd9592",
+          "order": 2,
+          "pr": 228,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.119-v0.3.120",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.119-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "182673a7f2ff844d142024c707d90e4e951e1199",
+          "order": 1,
+          "pr": 229,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.120-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "32a60f9d8ad1b3410e9cdbd015e8db719b3670d6",
+          "order": 2,
+          "pr": 230,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.121-v0.3.122",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.121-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "e9011114747d1dcb34db93a4be63a8ffba539dd0",
+          "order": 1,
+          "pr": 231,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.122-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "4b4c728892751ff1b3551273a26c34407a9ce227",
+          "order": 2,
+          "pr": 232,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.123-v0.3.124",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.123-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "c0f5e16f79627b48d69ea5992b5b808cce2e0aa4",
+          "order": 1,
+          "pr": 233,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.124-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "5ba1906ce839edad5b1080e015b761ba169b3fa6",
+          "order": 2,
+          "pr": 234,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.125-v0.3.126",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.125-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "2544568c00b6fec3be1ff9bfd8a6191f233ca6cb",
+          "order": 1,
+          "pr": 235,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.126-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "114a33816d168f64f5f70fe187392022a4a055fb",
+          "order": 2,
+          "pr": 236,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.127-v0.3.128",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.127-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "8fb44cfb12fda498828ace68f047394009faf9c0",
+          "order": 1,
+          "pr": 237,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.128-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "b4e3c4e05285d535e0cf9038ac2f9f8f5c24c0b9",
+          "order": 2,
+          "pr": 238,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.130-v0.3.131",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.130-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "7780d7b912498639bab5f946369800d45fda6fbe",
+          "order": 1,
+          "pr": 240,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.131-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "de496f2b76f8c231394a635f8893e1be056160d7",
+          "order": 2,
+          "pr": 241,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.133-v0.3.134",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.133-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "db8d1cf7597f48aa41f5e9561c8a774dcebe3019",
+          "order": 1,
+          "pr": 243,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.134-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "c28023ead7c1c841f3f64f790f9a81221eba1be4",
+          "order": 2,
+          "pr": 244,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.136-v0.3.137",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.136-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "d77a563de8262f53cd25b6f13ded25678aa32c94",
+          "order": 1,
+          "pr": 246,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.137-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "6befa0a168d9fba9e2742e8ec34c2c1b2e4281fe",
+          "order": 2,
+          "pr": 247,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.139-v0.3.140",
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
+      },
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "role": "archived",
+      "stack": [
+        {
+          "base": "main",
+          "branch": "codex/v0.3.139-release-stack-candidate-promotion-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "d7a17434c62f588ba47ffb6adc5de944a3921c22",
+          "order": 1,
+          "pr": 249,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        },
+        {
+          "base": "main",
+          "branch": "codex/v0.3.140-release-stack-self-intake-lite",
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ],
+          "final_state": "MERGED",
+          "merge_commit": "dcd76b92888e79fcb7bbef0f2b531cd8b8f5859f",
+          "order": 2,
+          "pr": 250,
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "status_expected_before_merge": "checks_pass"
+        }
+      ],
+      "status": "archived",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "target_branch": "main"
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.142-v0.3.143",
+      "role": "archived",
+      "status": "archived",
+      "target_branch": "main",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 252,
+          "branch": "codex/v0.3.142-release-stack-candidate-promotion-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "de3a1b1e75372ee23983134d8a639e35dec2ab3d",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 253,
+          "branch": "codex/v0.3.143-release-stack-self-intake-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "521c9674a01b0a0497acd8773dbd193b11f7694e",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.145-v0.3.146",
+      "role": "archived",
+      "status": "archived",
+      "target_branch": "main",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 255,
+          "branch": "codex/v0.3.145-release-stack-candidate-promotion-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "c94f8e04f1eca702881e947c23f3fab5d2d5e779",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 256,
+          "branch": "codex/v0.3.146-release-stack-self-intake-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "a558b629dbe0c11c709abc1fede7b23ec0483bbf",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.148-v0.3.149",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed release stack maintenance chain for release-stack promotion and self-intake continuity.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 258,
+          "branch": "codex/v0.3.148-release-stack-candidate-promotion-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "a6b42cb9122e7d16de4a1c74c5f70d995925c6eb",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        },
+        {
+          "order": 2,
+          "pr": 259,
+          "branch": "codex/v0.3.149-release-stack-self-intake-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "ed989e5a2e35527bd673d78cabff759435c46991",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    }
+  ],
+  "version": "v0.3.31-alpha"
+}

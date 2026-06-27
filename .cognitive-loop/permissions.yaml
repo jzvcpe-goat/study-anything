@@ -1,0 +1,19 @@
+schemaVersion: cognitive-loop-permissions-v1
+defaultMode: read_only
+humanApproval:
+  requiredFor:
+    - write_files
+    - run_network
+    - high_risk_decision
+    - rollback_change
+agent:
+  allowedActions:
+    - read_repo
+    - propose_decision_card
+    - run_verifier
+    - write_static_report
+  deniedActions:
+    - store_model_keys
+    - upload_raw_sources
+    - execute_unreviewed_plugins
+    - bypass_human_mastery_gate

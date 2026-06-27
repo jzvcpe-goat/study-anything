@@ -301,6 +301,17 @@ def main() -> None:
         raise RuntimeError(f"Unexpected Agent audit schema: {agent_audit}")
     if agent_audit.get("status") != "verified":
         raise RuntimeError(f"Agent audit did not verify required tasks: {agent_audit}")
+    required_tasks = {
+        "teach.overview",
+        "teach.glossary",
+        "quiz.generate",
+        "answer.grade",
+        "insight.synthesize",
+    }
+    observed_tasks = set(agent_audit.get("observed_tasks") or [])
+    if not required_tasks.issubset(observed_tasks):
+        missing = sorted(required_tasks - observed_tasks)
+        raise RuntimeError(f"Agent audit missed required multi-teacher tasks {missing}: {agent_audit}")
     if agent_audit.get("used_external_agent"):
         raise RuntimeError(f"Skill demo should use the deterministic fake Agent: {agent_audit}")
 
@@ -335,6 +346,7 @@ def main() -> None:
                 "discarded_stage": discarded["stage"],
                 "event_count": len(events),
                 "agent_audit_status": agent_audit["status"],
+                "agent_task_count": len(observed_tasks),
                 "agent_eval_schema": agent_eval["schema_version"],
                 "agent_eval_policy_schema": eval_policy["schema_version"],
                 "agent_eval_report_schema": agent_eval_report["schema_version"],

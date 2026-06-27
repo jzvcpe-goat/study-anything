@@ -1,0 +1,221 @@
+{
+  "archive": {
+    "bytes": 138306,
+    "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+    "root": "study-anything-workbuddy-plugin-pack",
+    "sha256": "1e6ec589840b52c093e7003c98c80a4f7362e6735ce90a734c253af1e846d983"
+  },
+  "entrypoints": {
+    "api_docs": "docs/api.md",
+    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+    "openapi": "platform/generated/study-anything-platform-openapi.json",
+    "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/README.md",
+      "bytes": 37493,
+      "kind": "root_doc",
+      "path": "README.md",
+      "purpose": "Project positioning and local-first adoption overview.",
+      "sha256": "ffd306aee68670ffad7a25f5546c8b018dc3cf5d073e2a78b18a35ddab22a2c9"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/QUICKSTART.md",
+      "bytes": 1258,
+      "kind": "quickstart",
+      "path": "QUICKSTART.md",
+      "purpose": "Beginner-friendly quickstart entrypoint.",
+      "sha256": "11e6c8c29d9516e94d499eace7fbfb581a31220cbaf1a97d0c31c7935df615f5"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/START_HERE.command",
+      "bytes": 1112,
+      "kind": "launcher",
+      "path": "START_HERE.command",
+      "purpose": "Double-click macOS beginner launcher.",
+      "sha256": "03d6e9affc81ecc8cee8cf024f562d6f1c4b5b758d7aa62fbce73992cc059e6b"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/docs/getting-started.md",
+      "bytes": 5247,
+      "kind": "operator_doc",
+      "path": "docs/getting-started.md",
+      "purpose": "Step-by-step first-run guide.",
+      "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/docs/operator-drill.md",
+      "bytes": 3296,
+      "kind": "operator_doc",
+      "path": "docs/operator-drill.md",
+      "purpose": "External platform operator drill.",
+      "sha256": "974633f1f295665339bcf8d9cf9850e33bdb715dc3cfae0708749316a2d5257e"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/platform/study-anything-platform-tools.json",
+      "bytes": 47347,
+      "kind": "tool_manifest",
+      "path": "platform/study-anything-platform-tools.json",
+      "purpose": "Source platform tool contract.",
+      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-tool-catalog.md",
+      "bytes": 24007,
+      "kind": "tool_catalog",
+      "path": "platform/generated/study-anything-tool-catalog.md",
+      "purpose": "Human-readable platform tool catalog.",
+      "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/start_here.sh",
+      "bytes": 10068,
+      "kind": "launcher",
+      "path": "scripts/start_here.sh",
+      "purpose": "One-command local runtime launcher.",
+      "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/launch_skill_mode.sh",
+      "bytes": 27321,
+      "kind": "runtime",
+      "path": "scripts/launch_skill_mode.sh",
+      "purpose": "Local Skill Mode API launcher.",
+      "sha256": "d34df18cb73f4bd4de4ba75abca206b09dbdc1d61fca60c2a7a1d1e7521edff2"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/stop_skill_mode.sh",
+      "bytes": 6063,
+      "kind": "runtime",
+      "path": "scripts/stop_skill_mode.sh",
+      "purpose": "Local Skill Mode API stop helper.",
+      "sha256": "0e253c59de751487b72d07103d29d86d4f35347992b2ccc652ec76eceef40b4f"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/run_skill_mode_demo.sh",
+      "bytes": 10135,
+      "kind": "verification",
+      "path": "scripts/run_skill_mode_demo.sh",
+      "purpose": "One-command local demo and smoke check.",
+      "sha256": "8c5a5ee73293e9945b872c51bc37205408feb6c0202cdf86475ce584023a0bbd"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/study_anything_cli.py",
+      "bytes": 136781,
+      "kind": "cli",
+      "path": "scripts/study_anything_cli.py",
+      "purpose": "CLI for learning loop and evidence commands.",
+      "sha256": "c5fdc5bd64c0050d7e1686b7bd754a6cfa1ecad5305779c27213d0b948cdbc68"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/localhost_diagnostics.py",
+      "bytes": 8255,
+      "kind": "diagnostics",
+      "path": "scripts/localhost_diagnostics.py",
+      "purpose": "Shared localhost diagnostics and redaction helpers.",
+      "sha256": "1d32a7e4cd6533eb211f609692a3e2d597c7c9ff052cb44a2949d155d641dda5"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_platform_agent_tools.py",
+      "bytes": 47018,
+      "kind": "verification",
+      "path": "scripts/verify_platform_agent_tools.py",
+      "purpose": "Live local API tool-surface verifier.",
+      "sha256": "1a4ab6e2964ca51199a8edda35c9ec31dcd7493260bba89fd733a25bb329937c"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
+      "bytes": 69155,
+      "kind": "verification",
+      "path": "scripts/verify_external_adoption.py",
+      "purpose": "Extracted adoption-pack verifier.",
+      "sha256": "15d7134f6c0f053379eccd31b56ee8d87706ad03b33f749db2f8dae30153dd61"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/docs/api.md",
+      "bytes": 17577,
+      "kind": "operator_doc",
+      "path": "docs/api.md",
+      "purpose": "HTTP API reference for platform workspaces.",
+      "sha256": "9206e6e26060fdc54e11a71d76888c1e01e6c930060e41adc0fc93ac67669fd4"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/docs/platform-agent-integrations.md",
+      "bytes": 28242,
+      "kind": "operator_doc",
+      "path": "docs/platform-agent-integrations.md",
+      "purpose": "General external platform Agent integration guide.",
+      "sha256": "191849d740e255ecc77ae3d23f8bd1b182f848ac577851d30705c8fafff59632"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/README.md",
+      "bytes": 21553,
+      "kind": "platform_pack",
+      "path": "platform/packs/workbuddy/README.md",
+      "purpose": "WorkBuddy-style import guide.",
+      "sha256": "ca41cd69c3403f3617794be3944ac56e53383a0107b847a7c1567d9772d3efca"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/pack.json",
+      "bytes": 29318,
+      "kind": "platform_pack",
+      "path": "platform/packs/workbuddy/pack.json",
+      "purpose": "WorkBuddy platform pack source descriptor.",
+      "sha256": "5fcb9b257077ff59567ab8483427c6ffc286d4f8c05415ec680a02088eff0f52"
+    },
+    {
+      "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-platform-openapi.json",
+      "bytes": 83732,
+      "kind": "tool_import",
+      "path": "platform/generated/study-anything-platform-openapi.json",
+      "purpose": "OpenAPI 3.1 import asset.",
+      "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
+    }
+  ],
+  "import_assets": [
+    "platform/generated/study-anything-platform-openapi.json",
+    "platform/generated/study-anything-tool-catalog.md",
+    "platform/packs/workbuddy/pack.json"
+  ],
+  "known_limitations": [
+    "Requires the host workspace to reach the configured local or private HTTP endpoint.",
+    "This is an import package, not an official marketplace listing.",
+    "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent."
+  ],
+  "local_runtime": {
+    "api_base": "http://127.0.0.1:8000",
+    "beginner_launcher": "./START_HERE.command",
+    "script_launcher": "./scripts/start_here.sh",
+    "skill_mode": "./scripts/launch_skill_mode.sh",
+    "stop": "./scripts/stop_skill_mode.sh"
+  },
+  "name": "study-anything-workbuddy-plugin-pack",
+  "package_type": "openapi_http_tools",
+  "platform_id": "workbuddy",
+  "privacy_boundaries": {
+    "must_not_store_or_share": [
+      "raw source text",
+      "learner answers",
+      "grading feedback",
+      "generated insights",
+      "agent endpoints",
+      "agent metadata",
+      "API keys or model secrets",
+      "raw user ids",
+      "browser/video/app private context"
+    ],
+    "real_model_keys": "owned by the user's platform Agent or private gateway",
+    "study_anything_stores": "local learning state, validation evidence, redacted audit metadata"
+  },
+  "schema_version": "study-anything-platform-plugin-pack-v1",
+  "source_pack": "platform/packs/workbuddy/pack.json",
+  "source_pack_sha256": "5fcb9b257077ff59567ab8483427c6ffc286d4f8c05415ec680a02088eff0f52",
+  "summary": "Import the constrained OpenAPI HTTP tools into WorkBuddy-style workspaces that can call a local or private Study Anything runtime.",
+  "title": "Study Anything WorkBuddy Plugin Pack",
+  "verification_commands": [
+    "./START_HERE.command",
+    "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+    "python3 scripts/verify_platform_operator_drill.py --check"
+  ]
+}

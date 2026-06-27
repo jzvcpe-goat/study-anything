@@ -1,0 +1,147 @@
+{
+  "acceptance": {
+    "approved_gate_resumes_across_process": true,
+    "libsql_storage_file_created": true,
+    "metadata_only": true,
+    "receipt_records_created": true,
+    "rejected_gate_bails_across_process": true,
+    "report_path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+    "suspended_state_recovered_before_resume": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check",
+    "watcher_generated_event_used": true
+  },
+  "boundaries": {
+    "external_agent_called": false,
+    "hosted_service_started": false,
+    "realtime_html_console_started": false,
+    "watcher_daemon_started": false
+  },
+  "durable_runs": {
+    "approved": {
+      "result_status": "approved",
+      "resume_schema": "cognitive-loop-mastra-runtime-durable-resume-v1",
+      "start_schema": "cognitive-loop-mastra-runtime-durable-start-v1",
+      "start_status": "suspended"
+    },
+    "rejected": {
+      "result_status": "rejected",
+      "resume_schema": "cognitive-loop-mastra-runtime-durable-resume-v1",
+      "start_schema": "cognitive-loop-mastra-runtime-durable-start-v1",
+      "start_status": "suspended"
+    }
+  },
+  "files": [
+    {
+      "bytes": 767,
+      "path": "platform/mastra-runtime/package.json",
+      "sha256": "0904430d0bfadfe799d5b1ebe00964719149694bb4c9ec066a61acb455c1cb07"
+    },
+    {
+      "bytes": 138191,
+      "path": "platform/mastra-runtime/package-lock.json",
+      "sha256": "55fed52d46596cea6d4165b538e11e8a9194f18007033757722dd1934b4e797e"
+    },
+    {
+      "bytes": 394,
+      "path": "platform/mastra-runtime/tsconfig.json",
+      "sha256": "1b4f55f5db75ab30d85009f7c5e6c398536b239d2c12dc4d470e932affe55b66"
+    },
+    {
+      "bytes": 1826,
+      "path": "platform/mastra-runtime/README.md",
+      "sha256": "c759472438c6963e8dd472cd4667db8375f41d9fa3d971c7c4224b7a6b724f8b"
+    },
+    {
+      "bytes": 694,
+      "path": "platform/mastra-runtime/src/runtime.ts",
+      "sha256": "119bd643ebe1e8d82cc5cd69555b92c0c6d15ec04dd84a00771061ace9aa70c3"
+    },
+    {
+      "bytes": 5122,
+      "path": "platform/mastra-runtime/src/run-once.ts",
+      "sha256": "4f7330cb1c7145f7a477e83ef8edbde83f879b1948803909df5402b3254a5360"
+    },
+    {
+      "bytes": 8067,
+      "path": "platform/mastra-runtime/src/durable-run.ts",
+      "sha256": "b0a63cd11306a0ed1a67a26407947866ecf5960b9d888d6ee412b586fed72193"
+    },
+    {
+      "bytes": 6820,
+      "path": "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
+    },
+    {
+      "bytes": 6820,
+      "path": "platform/mastra/cognitive-loop-mastra-adapter.ts",
+      "sha256": "03b21e98f4ba36b817ad2495aaf63461f63237ed1879e95dc4aea5ff85541d60"
+    }
+  ],
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "diff_bodies_included": false,
+    "file_contents_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "prompt_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "storage_path_included": false
+  },
+  "process_boundary": {
+    "approved_run_cross_process_resume": true,
+    "rejected_run_cross_process_bail": true,
+    "separate_start_and_resume_processes": true
+  },
+  "purpose": "Prove repo-local Mastra workflow snapshots can persist to a local libSQL file, then resume or bail in a separate Node process from watcher-generated metadata evidence.",
+  "receipt_records": [
+    {
+      "bytes": 913,
+      "phase": "suspended",
+      "run_id": "run-durable-approved",
+      "sha256": "853af1a99ecefff75c18ee66fd046b194ef17afe4c33297af79602bf125e1cfe",
+      "status": "suspended"
+    },
+    {
+      "bytes": 993,
+      "phase": "approved",
+      "run_id": "run-durable-approved",
+      "sha256": "ab71fc3f8f2ababe377f18eb491cf9553aa1457f5a496c9ae56417be5d85fb26",
+      "status": "success"
+    },
+    {
+      "bytes": 913,
+      "phase": "suspended",
+      "run_id": "run-durable-rejected",
+      "sha256": "507587603ef5fbeeeb58e04a75d25434f32d2057b105f28ce5b311a9290c8398",
+      "status": "suspended"
+    },
+    {
+      "bytes": 993,
+      "phase": "rejected",
+      "run_id": "run-durable-rejected",
+      "sha256": "71bd14b00f965a1d1876f4b89b18cfd1c21e01ca4f45d495a2c193771e952dd9",
+      "status": "success"
+    }
+  ],
+  "schema_version": "cognitive-loop-mastra-runtime-durable-verification-v1",
+  "status": "pass",
+  "storage": {
+    "adapter": "@mastra/libsql",
+    "adapter_version": "1.13.2",
+    "bytes": 450560,
+    "file_created": true,
+    "kind": "local_libsql_file",
+    "path_included": false
+  },
+  "watcher_event": {
+    "artifact_schema": "cognitive-loop-watcher-ingest-v1",
+    "event_id": "evt-watcher-9632c5d64071e920",
+    "event_store_event_count": 1,
+    "event_store_schema": "cognitive-loop-event-store-v1",
+    "ingest_schema": "cognitive-loop-watcher-ingest-v1",
+    "json_ref": ".cognitive-loop/events/durable-watcher.json",
+    "sha256": "a4643be775037401267558134315e8fce6cb1471f10d42bac050983f61b4a1c5"
+  }
+}

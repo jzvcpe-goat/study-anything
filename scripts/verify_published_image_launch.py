@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import shutil
 import socket
 import subprocess
@@ -20,22 +19,10 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from localhost_diagnostics import (
-    format_localhost_listen_blocked,
-    is_localhost_socket_blocked,
-    verifier_name_from_file,
-)
-
-
 COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.yml"
 IMAGE_COMPOSE_FILE = ROOT / "infra" / "compose" / "docker-compose.images.yml"
 SETUP_ENV = ROOT / "scripts" / "setup_env.py"
 VERIFY_FULL_API_FLOW = ROOT / "scripts" / "verify_full_api_flow.py"
-VERIFIER_NAME = verifier_name_from_file(__file__)
 PORT_KEYS = (
     "API_PORT",
     "APP_POSTGRES_PORT",
@@ -48,15 +35,6 @@ PORT_KEYS = (
     "MINIO_CONSOLE_PORT",
     "REDIS_PORT",
     "LANGFUSE_POSTGRES_PORT",
-)
-FORBIDDEN_LITERALS = (
-    "OPENAI_API_KEY",
-    "MOONSHOT_API_KEY",
-    "AGENT_LLM_API_KEY",
-    "Private answer:",
-    "Private source text:",
-    "raw_source_text=",
-    "learner_answer=",
 )
 
 
@@ -80,165 +58,9 @@ def run(
     )
 
 
-def output_text(value: str | bytes | None) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, bytes):
-        return value.decode("utf-8", errors="replace")
-    return value
-
-
-def sanitize_text(value: str | bytes | None) -> str:
-    text = output_text(value)
-    text = re.sub(r"/Users/[^\s\"']+", "<local-path>", text)
-    text = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", text)
-    text = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", text)
-    text = re.sub(r"(?i)(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
-    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
-    return text.strip()[:1600]
-
-
-def classify_failure(exc: BaseException) -> str:
-    if isinstance(exc, FileNotFoundError):
-        return "docker_missing"
-    text = f"{exc}\n{getattr(exc, 'stderr', '')}\n{getattr(exc, 'output', '')}".lower()
-    if "docker_missing" in text or "no such file or directory: 'docker'" in text or 'no such file or directory: "docker"' in text:
-        return "docker_missing"
-    if "docker: 'compose' is not a docker command" in text or "unknown shorthand flag" in text and "compose" in text:
-        return "docker_compose_missing"
-    if "permission denied" in text and ("docker" in text or "docker.sock" in text or "docker api" in text):
-        return "docker_socket_permission_denied"
-    if "cannot connect to the docker daemon" in text or "is the docker daemon running" in text:
-        return "docker_daemon_unavailable"
-    if "published image manifest is not ready" in text or "manifest inspect" in text:
-        return "published_image_manifest_unavailable"
-    if "api did not become healthy" in text:
-        return "published_image_api_health_timeout"
-    if "published image version mismatch" in text:
-        return "published_image_version_mismatch"
-    if isinstance(exc, subprocess.TimeoutExpired):
-        return "published_image_command_timeout"
-    if isinstance(exc, subprocess.CalledProcessError):
-        return "published_image_command_failed"
-    return "published_image_launch_failed"
-
-
-def failure_next_steps(classification: str, *, tag: str, api_image: str) -> list[str]:
-    common = [
-        "python3 scripts/diagnose_adoption.py",
-        f"python3 scripts/verify_published_image_launch.py --tag {tag} --manifest-only",
-        "./scripts/launch_skill_mode.sh",
-    ]
-    matrix = {
-        "docker_missing": [
-            "Install Docker Desktop or Docker Engine, then reopen your terminal.",
-            "Run `docker --version` and `docker compose version`.",
-        ],
-        "docker_compose_missing": [
-            "Install/enable Docker Compose v2.",
-            "Run `docker compose version` before retrying.",
-        ],
-        "docker_socket_permission_denied": [
-            "Start Docker Desktop and check the active Docker context.",
-            "On Linux, add your user to the docker group or use a rootless Docker context.",
-        ],
-        "docker_daemon_unavailable": [
-            "Start Docker Desktop or the Docker daemon.",
-            "Run `docker info` until it succeeds.",
-        ],
-        "published_image_manifest_unavailable": [
-            f"Run `docker manifest inspect {api_image}`.",
-            "Retry from a network that can reach GHCR.",
-        ],
-        "published_image_api_health_timeout": [
-            "Run `docker compose ps` for the disposable project if you used --keep-on-failure.",
-            "Run compose logs for the api and app-postgres services.",
-        ],
-        "published_image_version_mismatch": [
-            "Confirm the image tag matches the release tag.",
-            f"Retry with `--api-image {api_image}` only if that exact image was published for this release.",
-        ],
-    }
-    return matrix.get(classification, ["Retry with --keep-on-failure and inspect Docker logs."]) + common
-
-
-def failure_report(
-    *,
-    exc: BaseException,
-    tag: str,
-    api_image: str,
-    project_name: str | None = None,
-) -> dict[str, Any]:
-    classification = classify_failure(exc)
-    stdout = getattr(exc, "stdout", None) or getattr(exc, "output", None)
-    stderr = getattr(exc, "stderr", None)
-    report = {
-        "status": "blocked",
-        "classification": classification,
-        "tag": tag,
-        "api_image": api_image,
-        "project": project_name,
-        "diagnostic": sanitize_text(str(exc)),
-        "stdout": sanitize_text(stdout) if stdout else None,
-        "stderr": sanitize_text(stderr) if stderr else None,
-        "next_steps": failure_next_steps(classification, tag=tag, api_image=api_image),
-        "privacy": {
-            "raw_source_text_included": False,
-            "learner_answers_included": False,
-            "agent_endpoint_secrets_included": False,
-            "real_model_keys_included": False,
-            "local_absolute_paths_included": False,
-        },
-    }
-    assert_failure_report_redacted(report)
-    return report
-
-
-def failure_context_from_argv(argv: list[str]) -> tuple[str, str]:
-    tag = "v0.3.29-alpha"
-    api_image: str | None = None
-    index = 0
-    while index < len(argv):
-        item = argv[index]
-        if item == "--tag" and index + 1 < len(argv):
-            tag = argv[index + 1]
-            index += 2
-            continue
-        if item.startswith("--tag="):
-            tag = item.split("=", 1)[1]
-        if item == "--api-image" and index + 1 < len(argv):
-            api_image = argv[index + 1]
-            index += 2
-            continue
-        if item.startswith("--api-image="):
-            api_image = item.split("=", 1)[1]
-        index += 1
-    return tag, api_image or f"ghcr.io/jzvcpe-goat/study-anything/api:{tag}"
-
-
-def assert_failure_report_redacted(report: dict[str, Any]) -> None:
-    serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
-    leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
-    if re.search(r"/Users/[^\s\"']+", serialized):
-        leaks.append("local absolute path")
-    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
-        leaks.append("local temp path")
-    if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
-        leaks.append("secret-looking sk token")
-    if leaks:
-        raise RuntimeError(f"Published image launch report leaked private data: {leaks}")
-
-
 def free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        try:
-            sock.bind(("127.0.0.1", 0))
-        except OSError as exc:
-            if is_localhost_socket_blocked(exc):
-                raise RuntimeError(
-                    format_localhost_listen_blocked(verifier=VERIFIER_NAME)
-                ) from exc
-            raise
+        sock.bind(("127.0.0.1", 0))
         return int(sock.getsockname()[1])
 
 
@@ -248,17 +70,8 @@ def parse_env(path: Path) -> dict[str, str]:
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in line:
             continue
-        if stripped.startswith("export "):
-            stripped = stripped[len("export ") :].lstrip()
-        key, value = stripped.split("=", 1)
-        raw_value = value.strip()
-        if raw_value.startswith(("'", '"')):
-            quote = raw_value[0]
-            end = raw_value.find(quote, 1)
-            parsed_value = raw_value[1:end] if end != -1 else raw_value[1:]
-        else:
-            parsed_value = re.split(r"\s+#", raw_value, maxsplit=1)[0].strip()
-        values[key.strip()] = parsed_value
+        key, value = line.split("=", 1)
+        values[key.strip()] = value.strip().strip("'\"")
     return values
 
 
@@ -531,7 +344,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--tag",
-        default="v0.3.29-alpha",
+        default="v0.3.31-alpha",
         help="Published Study Anything image tag.",
     )
     parser.add_argument(
@@ -738,7 +551,5 @@ if __name__ == "__main__":
         subprocess.TimeoutExpired,
         json.JSONDecodeError,
     ) as exc:
-        tag, api_image = failure_context_from_argv(sys.argv[1:])
-        print(json.dumps(failure_report(exc=exc, tag=tag, api_image=api_image), ensure_ascii=False, sort_keys=True))
-        print(f"verify_published_image_launch failed: {sanitize_text(str(exc))}", file=sys.stderr)
+        print(f"verify_published_image_launch failed: {exc}", file=sys.stderr)
         sys.exit(1)

@@ -1,0 +1,164 @@
+{
+  "agent_evidence": {
+    "audit_schema": "agent-audit-v1",
+    "audit_status": "verified",
+    "eval_schema": "agent-eval-artifact-v1",
+    "eval_status": "ready_for_external_eval",
+    "observed_tasks": [
+      "answer.grade",
+      "insight.synthesize",
+      "quiz.generate",
+      "teach.glossary",
+      "teach.overview"
+    ],
+    "used_external_agent": false,
+    "used_fake_agent": true
+  },
+  "cognitive_loop_projection": {
+    "loop_run": {
+      "artifact_refs": [
+        "mastery-record:mastery-75f3453e5d3c",
+        "learning-package:learning-package-v1",
+        "second-brain-handoff:second-brain-handoff-v1"
+      ],
+      "completed_at": "2026-06-19T00:00:00Z",
+      "decision_card_ids": [
+        "decision-study-adapter-001"
+      ],
+      "objective": "Use Study Anything to close the Cognitive Loop human mastery gate.",
+      "project_event_ids": [
+        "event-study-adapter-001"
+      ],
+      "project_id": "cognitive-loop-demo",
+      "run_id": "loop-study-d682993616ba",
+      "schema_version": "loop-run-v1",
+      "started_at": "2026-06-19T00:00:00Z",
+      "status": "succeeded",
+      "trace_refs": [
+        "study-anything-adapter:metadata-only"
+      ]
+    },
+    "mastery_record": {
+      "bloom": "understand",
+      "evidence_refs": [
+        "learning-context:df335f261d45",
+        "agent-audit:verified",
+        "agent-eval-artifact:ready_for_external_eval"
+      ],
+      "level": 0.5,
+      "project_id": "cognitive-loop-demo",
+      "record_id": "mastery-75f3453e5d3c",
+      "schema_version": "mastery-record-v1",
+      "subject": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py: Route risky project changes through Study Anything mastery checks",
+      "updated_at": "2026-06-19T00:00:00Z"
+    }
+  },
+  "exports": {
+    "learning_package_embedded_in_cognitive_loop_evidence": false,
+    "learning_package_schema": "learning-package-v1",
+    "second_brain_contract": {
+      "local_archive_mode": "write_manifest_and_files",
+      "notebooklm_mode": "manual_export_import",
+      "obsidian_mode": "write_markdown_note_then_review_queue",
+      "official_notebooklm_api_required": false,
+      "platform_agent_owns_original_sources": true,
+      "study_anything_owns_learning_state": true
+    },
+    "second_brain_handoff_schema": "second-brain-handoff-v1",
+    "strict_handoff_excludes_learner_answers": true
+  },
+  "generated_at": "2026-06-19T00:00:00Z",
+  "input_contracts": {
+    "decision_card_schema": "decision-card-v1",
+    "human_gate_status": "approved",
+    "project_event_schema": "project-event-v1",
+    "risk_level": "high"
+  },
+  "learning_context": {
+    "created_at": "2026-06-19T00:00:00Z",
+    "item_count": 1,
+    "item_hashes": [
+      "4aac88c1b4a7a40fa6e7409b34224644dfe4be13044e5a31ece177614b990974"
+    ],
+    "items": [
+      {
+        "excerpt_hash": "4aac88c1b4a7a40fa6e7409b34224644dfe4be13044e5a31ece177614b990974",
+        "item_id": "cl-context-d682993616ba",
+        "locator": "decision=decision-study-adapter-001",
+        "metadata": {
+          "event_type": "git_diff_changed",
+          "risk_level": "high",
+          "target": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+          "verification_status": "passed"
+        },
+        "provenance": {
+          "capture_method": "manual_excerpt",
+          "collected_at": "2026-06-19T00:00:00Z",
+          "collector": "cognitive-loop-adapter",
+          "platform": "study-anything",
+          "source_owner": "user"
+        },
+        "redaction_policy": "summary_only",
+        "reference": "cognitive-loop://event/event-study-adapter-001",
+        "source_type": "markdown_note",
+        "text_included": false,
+        "title": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py: Route risky project changes through Study Anything mastery checks"
+      }
+    ],
+    "language": "zh",
+    "metadata": {
+      "adapter": "study-anything",
+      "decision_card_id": "decision-study-adapter-001",
+      "project_event_id": "event-study-adapter-001",
+      "project_id": "cognitive-loop-demo",
+      "raw_diff_included": false,
+      "source_body_included": false,
+      "source_mode": "bounded_public_summary"
+    },
+    "package_id": "cl-study-75f3453e5d3c",
+    "privacy": {
+      "agent_secrets_allowed": false,
+      "bounded_excerpts_included": false,
+      "notebooklm_official_api_required": false
+    },
+    "producer": "cognitive-loop-study-anything-adapter",
+    "reference": "cognitive-loop://decision/decision-study-adapter-001",
+    "schema_version": "learning-context-package-v1",
+    "source_types": [
+      "markdown_note"
+    ],
+    "title": "Cognitive Loop Learning Gate: Route risky project changes through Study Anything mastery checks",
+    "track": "ENGINEERING"
+  },
+  "next_steps": [
+    "Use the Cognitive Loop study-adapter CLI as the platform-Agent callable bridge.",
+    "Let watcher-generated DecisionCards request the Study Anything mastery gate automatically.",
+    "Render the MasteryRecord in the future HTML Artifact console."
+  ],
+  "privacy": {
+    "agent_endpoints_in_report": false,
+    "agent_metadata_in_report": false,
+    "grading_feedback_in_report": false,
+    "learner_answers_in_report": false,
+    "metadata_only_cognitive_loop_evidence": true,
+    "model_keys_in_report": false,
+    "raw_diff_in_report": false,
+    "raw_source_text_in_report": false,
+    "study_anything_stores_real_model_keys": false
+  },
+  "purpose": "Prove that Cognitive Loop can use Study Anything as a local Learning Adapter: public ProjectEvent/DecisionCard metadata creates a source-bound learning context, a deterministic local learning loop completes, and mastery is projected back as Cognitive Loop evidence.",
+  "schema_version": "cognitive-loop-study-anything-adapter-v1",
+  "status": "pass",
+  "study_anything_loop": {
+    "event_count": 15,
+    "grading_result_count": 1,
+    "insight_count": 1,
+    "quiz_item_count": 1,
+    "scribe_entry_count": 1,
+    "source_excerpt_hash": "e5b33cebeeed37e23ec690de3ee7c6afd2f29245d0ad9ce6b7eb58453187a127",
+    "source_reference": "cognitive-loop://decision/decision-study-adapter-001",
+    "stage": "completed",
+    "teaching_layer_count": 2,
+    "track": "ENGINEERING"
+  }
+}

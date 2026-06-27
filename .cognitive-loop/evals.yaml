@@ -1,0 +1,129 @@
+schemaVersion: cognitive-loop-evals-v1
+required:
+  - id: cognitive-loop.contracts
+    command: python3 scripts/verify_cognitive_loop_contracts.py --check
+    blocking: true
+  - id: cognitive-loop.cli-artifact
+    command: python3 scripts/verify_cognitive_loop_cli.py --check
+    blocking: true
+  - id: cognitive-loop.run-once-evidence
+    command: python3 scripts/verify_cognitive_loop_run_once.py --check
+    blocking: true
+  - id: cognitive-loop.project-snapshot
+    command: python3 scripts/verify_cognitive_loop_snapshot.py --check
+    blocking: true
+  - id: cognitive-loop.human-gate
+    command: python3 scripts/verify_cognitive_loop_human_gate.py --check
+    blocking: true
+  - id: cognitive-loop.evidence-bundle
+    command: python3 scripts/verify_cognitive_loop_evidence_bundle.py --check
+    blocking: true
+  - id: cognitive-loop.event-index
+    command: python3 scripts/verify_cognitive_loop_event_index.py --check
+    blocking: true
+  - id: cognitive-loop.event-store
+    command: python3 scripts/verify_cognitive_loop_event_store.py --check
+    blocking: true
+  - id: cognitive-loop.watcher-ingest
+    command: python3 scripts/verify_cognitive_loop_watcher_ingest.py --check
+    blocking: true
+  - id: cognitive-loop.watcher-runner-lite
+    command: .venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-adapter
+    command: python3 scripts/verify_cognitive_loop_mastra_adapter.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-dry-run
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-service
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-runtime-durable
+    command: python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check
+    blocking: true
+  - id: cognitive-loop.langfuse-observability
+    command: python3 scripts/verify_cognitive_loop_langfuse_observability.py --check
+    blocking: true
+  - id: cognitive-loop.study-anything-adapter
+    command: python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check
+    blocking: true
+  - id: cognitive-loop.study-adapter-cli
+    command: .venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check
+    blocking: true
+  - id: cognitive-loop.artifact-doctor
+    command: python3 scripts/verify_cognitive_loop_artifact_doctor.py --check
+    blocking: true
+  - id: cognitive-loop.repair-plan
+    command: python3 scripts/verify_cognitive_loop_repair_plan.py --check
+    blocking: true
+  - id: cognitive-loop.artifact-index
+    command: python3 scripts/verify_cognitive_loop_artifact_index.py --check
+    blocking: true
+  - id: cognitive-loop.artifact-console
+    command: python3 scripts/verify_cognitive_loop_artifact_console.py --check
+    blocking: true
+  - id: cognitive-loop.personal-plugin-mode
+    command: python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check
+    blocking: true
+  - id: cognitive-loop.evolution-report-lite
+    command: python3 scripts/verify_cognitive_loop_evolution_report.py --check
+    blocking: true
+  - id: cognitive-loop.apply-plan-lite
+    command: python3 scripts/verify_cognitive_loop_apply_plan.py --check
+    blocking: true
+  - id: cognitive-loop.improvement-comparator-lite
+    command: python3 scripts/verify_cognitive_loop_improvement_comparator.py --check
+    blocking: true
+  - id: cognitive-loop.patch-proposal-lite
+    command: python3 scripts/verify_cognitive_loop_patch_proposal.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-evolution-receipt-link-lite
+    command: python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check
+    blocking: true
+  - id: cognitive-loop.mastra-evolution-workflow-replay-lite
+    command: python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check
+    blocking: true
+  - id: cognitive-loop.code-review-advisory
+    command: python3 scripts/verify_cognitive_loop_review.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-prompt
+    command: python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-report
+    command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-handoff-cli
+    command: python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-eval-harness
+    command: python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-ci-receipt
+    command: python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-pr-comment-pack
+    command: python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-acceptance-bundle
+    command: python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-github-workflow
+    command: python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-policy-gate
+    command: python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-workflow-install-smoke
+    command: python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+    blocking: true
+  - id: cognitive-loop.review-agent-adoption-drill
+    command: python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
+    blocking: true
+  - id: study-anything.release-check
+    command: ./scripts/release_check.sh
+    blocking: true
+optional:
+  - id: published-image.manifest
+    command: python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --manifest-only
+    blocking: false

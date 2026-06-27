@@ -34,6 +34,8 @@ python3 scripts/verify_external_adoption.py \
 
 The archive contains OpenAPI/OpenAI tool import assets, Kimi/Codex/WorkBuddy packs, the repo-local
 Skill, gateway examples, mock agent, NotebookLM fixture, verifier scripts, and a SHA256 manifest.
+For scenario-based use, start with `docs/cognitive-loop-adoption-cookbook.md`; it maps first
+adoption, daily project review, risk decisions, and learning handoff to copyable local commands.
 The operator drill emits `study-anything-operator-drill-v1` evidence that the pack can be consumed as
 an external platform tool directory. The submission dry-run emits `platform-submission-dry-run-v1`
 with ready/warning/blocked status for each target platform. The manual rehearsal emits
@@ -102,13 +104,6 @@ not judge learning quality by itself.
 python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo
 ```
 
-If your runner blocks automatic localhost port probing, pin both local API ports:
-
-```bash
-python3 scripts/verify_clean_clone_adoption.py --repo . --with-promptfoo \
-  --api-port 8012 --promptfoo-api-port 8013
-```
-
 Use `--promptfoo-required` only in an environment where Node/npm package installation is allowed to
 fail the run:
 
@@ -128,15 +123,9 @@ Study Anything separates these layers:
 Kimi/OpenAI-compatible:
 
 ```bash
-python3 scripts/verify_openai_compatible_gateway.py --contract-only
-python3 scripts/verify_agent_gateway_hardening.py --contract-only
-python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
 ```
-
-If a sandbox blocks localhost sockets, `--contract-only` separates gateway and adapter contract
-health from runtime socket access. It is not a replacement for host-terminal runtime gates.
 
 Then add real credentials to your own gateway environment. Study Anything does not store model API
 keys.
@@ -289,8 +278,6 @@ source hashes and redaction rules rather than through a separate Study Anything 
 Before connecting Kimi, OpenAI-compatible providers, or another private Agent gateway, run:
 
 ```bash
-python3 scripts/verify_agent_gateway_hardening.py --contract-only
-python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
 python3 scripts/verify_openai_compatible_gateway.py --gateway-only
 python3 scripts/verify_agent_gateway_hardening.py
 python3 scripts/verify_external_agent_adapter_hardening.py
@@ -336,7 +323,7 @@ endpoint guidance, and platform-pack inclusion.
 The normal published-image smoke is:
 
 ```bash
-python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha
+python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha
 ```
 
 If the local machine can inspect the multi-arch manifest but GHCR layer download is too slow, record a
@@ -344,13 +331,13 @@ diagnostic instead of leaving the run ambiguous:
 
 ```bash
 python3 scripts/verify_published_image_launch.py \
-  --tag v0.3.29-alpha \
+  --tag v0.3.31-alpha \
   --pull-timeout-seconds 180 \
   --allow-pull-timeout-report
 ```
 
 This fallback is acceptable only when GitHub `docker-images` succeeded and
-`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.29-alpha` shows `linux/amd64`
+`docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha` shows `linux/amd64`
 and `linux/arm64`. The timeout report includes `manifest_evidence` plus explicit fallback acceptance
 conditions so reviewers do not confuse a local GHCR download stall with a broken release image.
 
@@ -373,7 +360,7 @@ For platform operators who start from the GitHub Release page, publish and verif
 ```bash
 python3 scripts/generate_release_asset_adoption.py --check
 python3 scripts/verify_release_asset_adoption.py \
-  --tag v0.3.29-alpha \
+  --tag v0.3.31-alpha \
   --runtime metadata-only
 ```
 
@@ -398,7 +385,7 @@ cleanroom bootloader from the release assets:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.29-alpha \
+  --tag v0.3.31-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report
@@ -411,7 +398,7 @@ into a temporary directory, so the adopter does not need a prepared checkout.
 
 ## Adopter Evidence Archive
 
-For v0.3.29-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
+For v0.3.31-alpha, publish or hand off `adopter-evidence-archive-v1` alongside the release. It
 packages public support status hashes, platform pack checksums, Docker manifest commands, local GHCR
 pull-timeout fallback evidence, known limitations, and maintainer checklist items.
 

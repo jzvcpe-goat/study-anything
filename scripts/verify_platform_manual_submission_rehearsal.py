@@ -13,12 +13,10 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-manual-submission-rehearsal-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = (
     ROOT / "platform" / "generated" / "study-anything-platform-manual-submission-rehearsal.json"
 )
@@ -186,32 +184,6 @@ FORBIDDEN_LITERALS = [
 
 class ManualSubmissionRehearsalError(RuntimeError):
     """Readable manual-submission rehearsal failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    lowered = diagnostic.lower()
-    lines = [
-        f"verify_platform_manual_submission_rehearsal failed: {diagnostic}",
-        "Next steps:",
-    ]
-    if "stale" in lowered:
-        lines.append(
-            "- Refresh the rehearsal report: python3 scripts/verify_platform_manual_submission_rehearsal.py --write"
-        )
-    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
-        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
-    else:
-        lines.append(
-            "- Recheck the manual rehearsal: python3 scripts/verify_platform_manual_submission_rehearsal.py --check"
-        )
-    lines.extend(
-        [
-            "- Run the submission dry run: python3 scripts/verify_platform_submission_dry_run.py --check",
-            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
-    return "\n".join(lines)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -926,5 +898,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_platform_manual_submission_rehearsal failed: {exc}", file=sys.stderr)
         sys.exit(1)

@@ -10,15 +10,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
 FIXTURE_DIR = ROOT / "fixtures" / "platform-import-failures"
 SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FIXTURE_SCHEMA_VERSION = "platform-import-failure-fixture-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
@@ -29,9 +27,9 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private " + "answer:",
+    "Private answer:",
     "Private platform browser/video context",
-    "Private " + "source text:",
+    "Private source text:",
     "raw_source_text=",
     "learner_answer=",
     "AGENT_ENDPOINT=http",
@@ -40,22 +38,6 @@ FORBIDDEN_LITERALS = [
 
 class PlatformFieldRehearsalGenerationError(RuntimeError):
     """Readable field-rehearsal generation failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    return "\n".join(
-        [
-            f"generate_platform_field_rehearsal failed: {diagnostic}",
-            "",
-            "Next steps:",
-            "1. Rebuild field rehearsal assets: python3 scripts/generate_platform_field_rehearsal.py",
-            "2. Re-check field rehearsal assets: python3 scripts/generate_platform_field_rehearsal.py --check",
-            "3. Verify platform field rehearsal: python3 scripts/verify_platform_field_rehearsal.py --check",
-            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
-            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
 
 
 QUIRKS: list[dict[str, Any]] = [
@@ -349,5 +331,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"generate_platform_field_rehearsal failed: {exc}", file=sys.stderr)
         sys.exit(1)

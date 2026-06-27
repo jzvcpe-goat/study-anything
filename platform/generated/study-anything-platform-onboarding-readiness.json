@@ -32,7 +32,7 @@
       "resolved"
     ],
     "schema_version": "maintainer-rotation-checklist-v1",
-    "version": "v0.3.29-alpha"
+    "version": "v0.3.31-alpha"
   },
   "maintainer_sla": {
     "labels": [
@@ -134,7 +134,7 @@
   ],
   "schema_version": "platform-onboarding-readiness-v1",
   "status": "pass",
-  "version": "v0.3.29-alpha",
+  "version": "v0.3.31-alpha",
   "walkthrough": {
     "platforms": [
       {

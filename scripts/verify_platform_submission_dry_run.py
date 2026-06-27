@@ -12,7 +12,6 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
 from verify_platform_operator_drill import (
     DEFAULT_PACK,
     assert_redacted,
@@ -27,7 +26,7 @@ from generate_platform_adoption_pack import ARCHIVE_PATH, PACK_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "platform-submission-dry-run-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-submission-dry-run.json"
 PUBLIC_SUPPORT_ASSETS = [
     "scripts/generate_platform_public_support_status.py",
@@ -272,28 +271,6 @@ FORBIDDEN_SECRET_PATTERNS = [
 
 class SubmissionDryRunError(RuntimeError):
     """Readable platform submission dry-run failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    lowered = diagnostic.lower()
-    lines = [
-        f"verify_platform_submission_dry_run failed: {diagnostic}",
-        "Next steps:",
-    ]
-    if "stale" in lowered:
-        lines.append("- Refresh the report: python3 scripts/verify_platform_submission_dry_run.py --write")
-    elif "pack archive is missing" in lowered or "manifest.json" in lowered:
-        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
-    else:
-        lines.append("- Recheck the submission dry run: python3 scripts/verify_platform_submission_dry_run.py --check")
-    lines.extend(
-        [
-            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
-            "- Verify the ecosystem submission pack: python3 scripts/verify_ecosystem_submission_pack.py",
-        ]
-    )
-    return "\n".join(lines)
 
 
 def read_json(path: Path) -> Any:
@@ -579,5 +556,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_platform_submission_dry_run failed: {exc}", file=sys.stderr)
         sys.exit(1)

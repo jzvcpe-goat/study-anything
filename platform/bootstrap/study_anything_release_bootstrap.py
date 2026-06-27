@@ -24,13 +24,13 @@ import zipfile
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qsl, quote, urlencode, urlparse, urlunparse
+from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
 SCHEMA_VERSION = "release-cleanroom-bootstrap-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.29-alpha"
+DEFAULT_TAG = "v0.3.31-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 
 REQUIRED_ASSETS = {
@@ -46,28 +46,13 @@ REQUIRED_REPLAY_TOOLS = [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
 ]
-
-SECRET_QUERY_KEYS = {
-    "api_key",
-    "apikey",
-    "access_key",
-    "access_token",
-    "auth",
-    "authorization",
-    "bearer",
-    "client_secret",
-    "credential",
-    "key",
-    "password",
-    "secret",
-    "token",
-}
 
 PLATFORM_ENTRYPOINTS = {
     "kimi": [
@@ -119,11 +104,6 @@ RECOVERY_PLAN = {
     "runtime_launch_failed": [
         "Run metadata-only first, then retry with --runtime skill-mode or --runtime published-image.",
         "Attach the redacted issue body from this report to a GitHub issue.",
-    ],
-    "localhost_socket_blocked": [
-        "Run this runtime check from a normal terminal or host shell that permits localhost sockets.",
-        "If you are inside an AI platform sandbox, use metadata-only first and attach this redacted blocked report.",
-        "If Study Anything is already running elsewhere, retry with --api-base pointing at that reachable API.",
     ],
     "api_unavailable": [
         "Confirm the Study Anything API health endpoint is reachable.",
@@ -430,66 +410,15 @@ def validate_adoption_pack(pack_root: Path, asset_dir: Path, platform_id: str) -
 
 
 def sanitize_text(text: str) -> str:
-    redacted = re.sub(
-        r"https?://[^\s\"'<>]+",
-        lambda match: sanitize_url(match.group(0)),
-        text or "",
-    )
-    redacted = re.sub(r"/Users/[^\s\"']+", "<local-path>", redacted)
-    redacted = re.sub(r"/private/tmp/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/tmp/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(
-        r"(?i)\b(authorization\s*[:=]\s*(?:bearer\s+)?)[A-Za-z0-9._~+/=-]{8,}",
-        r"\1<redacted>",
-        redacted,
-    )
-    redacted = re.sub(
-        r"(?i)\b(api[_-]?key|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}",
-        r"\1=<redacted>",
-        redacted,
-    )
-    redacted = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", redacted)
-    return redacted[:1200]
-
-
-def sanitize_url(url: str) -> str:
-    parsed = urlparse(url)
-    if not parsed.scheme or not parsed.netloc:
-        return url
-    hostname = parsed.hostname or ""
-    netloc = hostname
-    if parsed.username or parsed.password:
-        netloc = f"<redacted>@{hostname}"
-    try:
-        port = parsed.port
-    except ValueError:
-        host_port = parsed.netloc.rsplit("@", 1)[-1]
-        netloc = f"<redacted>@{host_port}" if parsed.username or parsed.password else host_port
-    else:
-        if port is not None:
-            netloc = f"{netloc}:{port}"
-    query_pairs = []
-    for key, value in parse_qsl(parsed.query, keep_blank_values=True):
-        if key.lower() in SECRET_QUERY_KEYS or value.startswith("sk-"):
-            query_pairs.append((key, "<redacted>"))
-        else:
-            query_pairs.append((key, value))
-    query = urlencode(query_pairs).replace("%3Credacted%3E", "<redacted>")
-    return urlunparse((parsed.scheme, netloc, parsed.path, "", query, ""))
+    text = re.sub(r"/Users/[^\s\"']+", "<local-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
+    return text[:1200]
 
 
 def classify_error(message: str) -> str:
     lowered = message.lower()
-    if (
-        "cannot allocate a local port" in lowered
-        or "localhost listening sockets" in lowered
-        or "blocks localhost" in lowered
-        or "operation not permitted" in lowered
-        or "permission denied" in lowered
-    ):
-        return "localhost_socket_blocked"
     if "missing required assets" in lowered or "missing required asset" in lowered:
         return "release_asset_missing"
     if "digest mismatch" in lowered:
@@ -547,12 +476,8 @@ def assert_redacted(payload: Any) -> None:
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
     if re.search(r"/Users/[^\s\"']+", serialized):
         leaks.append("local absolute path")
-    if re.search(r"/private/tmp/[^\s\"']+", serialized):
-        leaks.append("temporary absolute path")
     if re.search(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", serialized):
         leaks.append("secret-looking assignment")
-    if re.search(r"(?i)\bauthorization\s*[:=]\s*bearer\s+[A-Za-z0-9._~+/=-]{8,}", serialized):
-        leaks.append("bearer token")
     if leaks:
         raise CleanroomBootstrapError(f"Cleanroom bootstrap report leaked private data: {leaks}")
 

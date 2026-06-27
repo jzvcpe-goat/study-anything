@@ -10,8 +10,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "platform" / "generated" / "study-anything-platform-support-triage.json"
@@ -20,7 +18,7 @@ ISSUE_TEMPLATE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
 SCHEMA_VERSION = "platform-support-triage-v1"
 TICKET_SCHEMA_VERSION = "platform-support-ticket-fixture-v1"
 ISSUE_TEMPLATE_SCHEMA_VERSION = "platform-support-issue-template-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SUPPORT_CATEGORY_IDS = (
     "platform_import_failure",
@@ -42,21 +40,11 @@ QUIRK_IDS = (
 REQUIRED_SUPPORT_FIELDS = (
     "release_version",
     "platform_id",
-    "runtime",
-    "failure_class",
-    "workflow_stage",
     "command_ran",
     "diagnostic_code",
     "fixture_id",
     "redacted_log_excerpt",
     "next_commands_tried",
-    "recommended_next_steps",
-    "replay_command",
-    "tool_import_status",
-    "manifest_evidence",
-    "image_evidence",
-    "release_assets",
-    "redaction_flags",
 )
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
@@ -67,8 +55,8 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private " + "answer:",
-    "Private " + "source text:",
+    "Private answer:",
+    "Private source text:",
     "Private platform browser/video context",
     "raw_source_text=",
     "learner_answer=",
@@ -78,22 +66,6 @@ FORBIDDEN_LITERALS = [
 
 class PlatformSupportTriageGenerationError(RuntimeError):
     """Readable support-triage generation failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    return "\n".join(
-        [
-            f"generate_platform_support_triage failed: {diagnostic}",
-            "",
-            "Next steps:",
-            "1. Rebuild support triage assets: python3 scripts/generate_platform_support_triage.py",
-            "2. Re-check support triage assets: python3 scripts/generate_platform_support_triage.py --check",
-            "3. Verify support triage: python3 scripts/verify_platform_support_triage.py --check",
-            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
-            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
 
 
 SUPPORT_CATEGORIES: list[dict[str, Any]] = [
@@ -118,7 +90,7 @@ SUPPORT_CATEGORIES: list[dict[str, Any]] = [
         "title": "Published image pull failure",
         "labels": ["support", "deployment"],
         "diagnostic_codes": ["timeout", "package_corruption", "version_drift"],
-        "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+        "minimum_command": "python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
         "fixture_id": "timeout",
     },
     {
@@ -190,10 +162,6 @@ browser/video private context, or personal profile data.
 
 <!-- Use one of: {", ".join(category["diagnostic_codes"])} -->
 
-## Workflow Stage
-
-<!-- cleanroom_bootstrap | platform_import | local_gateway | published_image_pull | agent_eval | docs -->
-
 ## Fixture Or Quirk Id
 
 <!-- Link to a fixture under fixtures/platform-import-failures/ or fixtures/platform-support-tickets/. -->
@@ -212,12 +180,6 @@ model_or_judge_secret=<redacted>
 ## Next Commands Tried
 
 - 
-
-## Maintainer Replay
-
-```sh
-python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
-```
 
 ## Expected Result
 
@@ -239,9 +201,6 @@ def ticket_payload(category: dict[str, Any]) -> dict[str, Any]:
         "support_bundle": {
             "release_version": RELEASE_VERSION,
             "platform_id": "generic",
-            "runtime": "skill-mode",
-            "failure_class": category["diagnostic_codes"][0],
-            "workflow_stage": category["id"],
             "command_ran": category["minimum_command"],
             "diagnostic_code": category["diagnostic_codes"][0],
             "fixture_id": category["fixture_id"],
@@ -254,26 +213,6 @@ def ticket_payload(category: dict[str, Any]) -> dict[str, Any]:
                 "model_or_judge_secret=<redacted>\n"
             ),
             "next_commands_tried": [category["minimum_command"]],
-            "recommended_next_steps": [
-                category["minimum_command"],
-                "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body",
-            ],
-            "replay_command": "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body",
-            "tool_import_status": "unknown",
-            "manifest_evidence": {},
-            "image_evidence": {},
-            "release_assets": {},
-            "redaction_flags": {
-                "raw_source_text_included": False,
-                "learner_answers_included": False,
-                "agent_prompts_included": False,
-                "agent_endpoint_secrets_included": False,
-                "real_model_keys_included": False,
-                "local_absolute_paths_included": False,
-                "browser_video_private_context_included": False,
-                "personal_profile_included": False,
-                "automatic_upload": False,
-            },
         },
         "triage": {
             "first_response": "Ask for the redacted support bundle and exact platform import surface.",
@@ -419,5 +358,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"generate_platform_support_triage failed: {exc}", file=sys.stderr)
         sys.exit(1)

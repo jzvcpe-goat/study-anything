@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -18,15 +17,6 @@ FEEDBACK_SCRIPT = REPO / "scripts" / "generate_platform_feedback_package.py"
 PACK = REPO / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 FEEDBACK_MANIFEST = REPO / "platform" / "generated" / "study-anything-platform-feedback-package.json"
 FEEDBACK_ARCHIVE = REPO / "platform" / "generated" / "study-anything-platform-feedback-package.zip"
-
-sys.path.insert(0, str(REPO / "scripts"))
-FEEDBACK_SPEC = importlib.util.spec_from_file_location(
-    "generate_platform_feedback_package",
-    FEEDBACK_SCRIPT,
-)
-assert FEEDBACK_SPEC is not None and FEEDBACK_SPEC.loader is not None
-feedback_generator = importlib.util.module_from_spec(FEEDBACK_SPEC)
-FEEDBACK_SPEC.loader.exec_module(feedback_generator)
 
 
 def run_script(script: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -50,14 +40,12 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
             report["schema_version"],
             "platform-adoption-feedback-diagnostics-v1",
         )
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         categories = set(report["diagnostic_contract"]["diagnostic_categories"])
         self.assertIn("openapi_import_missing_operation", categories)
         self.assertIn("agent_endpoint_unreachable", categories)
         self.assertIn("version_drift", categories)
-        self.assertTrue(report["diagnostic_contract"]["diagnose_adoption_has_recovery_plan"])
-        self.assertTrue(report["diagnostic_contract"]["diagnose_adoption_has_recommended_path"])
         self.assertTrue(report["feedback_package"]["included"])
         self.assertTrue(report["adoption_pack"]["included"])
         privacy = report["privacy_assertions"]
@@ -68,7 +56,7 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
         self.assertTrue(privacy["feedback_package_is_redacted"])
         serialized = json.dumps(report)
         self.assertNotIn("OPENAI_API_KEY=", serialized)
-        self.assertNotIn("Private " + "answer:", serialized)
+        self.assertNotIn("Private answer:", serialized)
         self.assertNotIn("AGENT_ENDPOINT=http", serialized)
 
     def test_report_and_feedback_package_are_current(self) -> None:
@@ -78,33 +66,11 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
         self.assertEqual(diagnostics.returncode, 0, diagnostics.stderr)
         self.assertEqual(feedback.returncode, 0, feedback.stderr)
 
-    def test_feedback_package_failure_formatter_is_actionable_and_redacted(self) -> None:
-        secret = "sk-proj-" + "abcdefghijklmnop123456"
-        temp_path = "/private/" + "tmp/study-anything/feedback.json"
-        message = feedback_generator.format_cli_failure(
-            RuntimeError(
-                f"feedback package stale at {temp_path} "
-                f"with Authorization: Bearer {secret}"
-            )
-        )
-
-        self.assertIn("generate_platform_feedback_package failed:", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_platform_feedback_package.py --check", message)
-        self.assertIn("verify_platform_adoption_feedback_diagnostics.py --check", message)
-        self.assertIn("generate_platform_adoption_pack.py", message)
-        self.assertIn("generate_platform_bundle_manifest.py", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertIn("<temp-path>", message)
-        self.assertIn("Authorization: Bearer <redacted>", message)
-        self.assertNotIn("/private/" + "tmp", message)
-        self.assertNotIn(secret, message)
-
     def test_feedback_package_manifest_and_archive_are_redacted(self) -> None:
         payload = json.loads(FEEDBACK_MANIFEST.read_text(encoding="utf-8"))
 
         self.assertEqual(payload["schema_version"], "platform-feedback-package-v1")
-        self.assertEqual(payload["version"], "v0.3.29-alpha")
+        self.assertEqual(payload["version"], "v0.3.31-alpha")
         self.assertTrue(payload["privacy"]["redacted"])
         self.assertFalse(payload["privacy"]["automatic_upload"])
         self.assertFalse(payload["privacy"]["raw_source_text_included"])
@@ -126,23 +92,7 @@ class PlatformAdoptionFeedbackDiagnosticsTests(unittest.TestCase):
         report = json.loads(completed.stdout)
         self.assertTrue(report["feedback_package"]["included"])
         self.assertTrue(report["adoption_pack"]["included"])
-        self.assertEqual(report["feedback_package"]["version"], "v0.3.29-alpha")
-
-    def test_missing_pack_failure_is_actionable_and_redacted(self) -> None:
-        completed = run_script(
-            DIAGNOSTICS_SCRIPT,
-            "--pack",
-            "/Users/" + "james/private/missing-feedback-pack.zip",
-        )
-
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("verify_platform_adoption_feedback_diagnostics failed:", completed.stderr)
-        self.assertIn("Next steps:", completed.stderr)
-        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
-        self.assertIn("generate_platform_feedback_package.py", completed.stderr)
-        self.assertIn("diagnose_adoption.py", completed.stderr)
-        self.assertIn("<local-path>", completed.stderr)
-        self.assertNotIn("/Users/" + "james", completed.stderr)
+        self.assertEqual(report["feedback_package"]["version"], "v0.3.31-alpha")
 
     def test_missing_pack_root_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

@@ -16,6 +16,11 @@ generation, answer grading, mastery, scribe logs, HITL state, Agent audit, and e
 Study Anything should not store real model API keys. Keep keys inside the platform Agent or the
 user-owned HTTP gateway.
 
+For a short scenario cookbook, use `docs/cognitive-loop-adoption-cookbook.md`. It gives platform
+Agents four copyable paths: first adoption, daily project review, risk decision, and learning
+handoff. Each path keeps the platform Agent in charge of external context while Study Anything emits
+local, redacted Cognitive Loop artifacts.
+
 ## Machine-Readable Tool Contract
 
 Platform integrations should start from the repo-local manifest:
@@ -78,7 +83,9 @@ python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_platform_submission_dry_run.py --check
 python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/generate_platform_field_rehearsal.py --check
 python3 scripts/verify_platform_field_rehearsal.py --check
 python3 scripts/generate_platform_support_triage.py --check
@@ -123,6 +130,19 @@ The Agent eval marketplace enforcement report emits
 required, optional external judge adapters have readable skip/failure
 diagnostics, required judge mode fails closed, and no external judge keys or
 model credentials enter Study Anything.
+The Cognitive Loop Review Agent handoff CLI emits
+`cognitive-loop-review-agent-handoff-cli-v1`; it proves Kimi, Codex,
+WorkBuddy, and private CI Agents can receive an operator-approved raw diff
+through an ephemeral request, return JSON against the public report schema, and
+have that JSON validated into a redacted summary without committing raw diff,
+file bodies, model keys, or private Agent endpoints.
+The multi-teacher Agent eval hardening verifier emits
+`multiteacher-agent-eval-hardening-v1`; it proves the learning loop records
+provider/task attribution for `teach.overview`, `teach.glossary`,
+`quiz.generate`, `answer.grade`, and `insight.synthesize`, separates fake
+deterministic Agent evidence from user-owned HTTP Agent evidence, rejects
+missing or forged attribution, and keeps judge/model credentials in the
+operator environment.
 The external Agent adapter hardening report emits `external-agent-adapter-hardening-v1`; it proves
 that a user-owned HTTP Agent can produce redacted eval evidence and that malformed JSON, invalid
 status, missing content, bad scores, bad confidence, timeouts, missing citations, and capability gaps
@@ -136,7 +156,9 @@ python3 scripts/verify_platform_manual_submission_rehearsal.py --check
 python3 scripts/verify_first_lesson_authoring_kit.py --check
 python3 scripts/verify_external_agent_adapter_hardening.py
 python3 scripts/verify_learning_enrichment_bridge.py --check
+python3 scripts/verify_multiteacher_agent_eval_hardening.py
 python3 scripts/verify_agent_eval_baseline.py --check
+python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 python3 scripts/generate_platform_support_triage.py --check
 python3 scripts/verify_platform_support_triage.py --check
 python3 scripts/generate_platform_onboarding_readiness.py --check
@@ -202,6 +224,7 @@ platform/generated/study-anything-operator-drill-transcript.json
 platform/generated/study-anything-platform-submission-dry-run.json
 platform/generated/study-anything-platform-manual-submission-rehearsal.json
 platform/generated/study-anything-first-lesson-authoring-kit.json
+platform/generated/study-anything-cognitive-loop-review-agent-handoff-cli.json
 platform/generated/study-anything-platform-adoption-pack.json
 platform/generated/study-anything-platform-adoption-pack.zip
 platform/generated/study-anything-platform-field-rehearsal.json
@@ -364,7 +387,7 @@ python3 scripts/study_anything_cli.py agent-add-http \
   --label "My Kimi gateway" \
   --endpoint "http://127.0.0.1:<agent-port>/invoke" \
   --set-default
-python3 scripts/study_anything_cli.py agent-test
+python3 scripts/study_anything_cli.py agent-test PROVIDER_ID
 ```
 
 See `docs/kimi-agent-gateway.md` for the full flow.
@@ -489,7 +512,7 @@ release asset:
 
 ```bash
 python3 study_anything_release_bootstrap.py \
-  --tag v0.3.29-alpha \
+  --tag v0.3.31-alpha \
   --platform kimi \
   --runtime metadata-only \
   --output-dir study-anything-cleanroom-report

@@ -1,0 +1,94 @@
+{
+  "acceptance": {
+    "blocks_release_check": true,
+    "evidence": "github_launch_operator_guide.schema_version == github-launch-operator-guide-v1",
+    "minimum_command": "python3 scripts/verify_github_launch_operator_guide.py --check"
+  },
+  "evidence_sources": {
+    "adoption_pack": {
+      "file_count": null,
+      "no_frontend_required": true,
+      "path": "platform/generated/study-anything-platform-adoption-pack.json",
+      "real_model_keys_stored_by_study_anything": false,
+      "schema_version": "study-anything-platform-adoption-pack-v1",
+      "status": "ready"
+    },
+    "ecosystem_submission": {
+      "path": "platform/ecosystem-submission.json",
+      "platform_count": 4,
+      "schema_version": "ecosystem-submission-v1",
+      "status": "ready"
+    },
+    "launch_ledger": {
+      "launch_assessment": {
+        "github_oss_launch": "ready",
+        "hosted_paid_services": "not_ready_before_pmf",
+        "platform_agent_distribution": "ready",
+        "self_host_alpha": "ready",
+        "standalone_frontend": "not_in_launch_path"
+      },
+      "path": "platform/generated/study-anything-launch-acceptance-ledger.json",
+      "schema_version": "launch-acceptance-ledger-v1",
+      "status": "pass"
+    },
+    "release_check": {
+      "local_gate": "./scripts/release_check.sh",
+      "minimum_command": "python3 scripts/verify_github_launch_operator_guide.py --check",
+      "path": "scripts/release_check.sh",
+      "status": "registered"
+    }
+  },
+  "guide_docs": [
+    {
+      "path": "docs/github-launch.md",
+      "release_asset_count": 6,
+      "required_marker_count": 24,
+      "status": "pass"
+    },
+    {
+      "path": "docs/release-checklist.md",
+      "release_asset_count": 6,
+      "required_marker_count": 6,
+      "status": "pass"
+    }
+  ],
+  "launch_boundary": {
+    "github_oss_launch": "ready",
+    "hosted_paid_services": "not_ready_before_pmf",
+    "platform_agent_distribution": "ready",
+    "real_reasoning_runtime": "user_owned_agent",
+    "self_host_alpha": "ready",
+    "standalone_frontend": "not_in_launch_path"
+  },
+  "privacy_assertions": {
+    "agent_endpoint_secrets_in_report": false,
+    "automatic_upload": false,
+    "browser_video_private_context_in_report": false,
+    "learner_answers_in_report": false,
+    "raw_source_text_in_report": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "report_is_redacted": true,
+    "standalone_frontend_required": false
+  },
+  "purpose": "Machine-readable proof that GitHub release operators have one local-first, platform-Agent-compatible launch path with redacted evidence and release assets.",
+  "release_assets": [
+    "study-anything-platform-adoption-pack.zip",
+    "study-anything-platform-feedback-package.zip",
+    "study-anything-published-image-evidence.zip",
+    "study-anything-release-asset-bootstrap.zip",
+    "study-anything-platform-agent-replay.zip",
+    "study-anything-adopter-evidence-archive.zip"
+  ],
+  "release_sequence": [
+    "Merge the release PR stack into main from oldest to newest after GitHub CI is green.",
+    "Sync main and run ./scripts/release_check.sh from a clean checkout.",
+    "Create and push the v0.3.31-alpha tag from the exact merge commit.",
+    "Create a GitHub prerelease using docs/release-notes/v0.3.31-alpha.md.",
+    "Attach release zips and checksum sidecars from platform/generated.",
+    "Verify release asset adoption, cleanroom bootstrap, and platform Agent replay.",
+    "Publish only redacted status/support evidence."
+  ],
+  "schema_version": "github-launch-operator-guide-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

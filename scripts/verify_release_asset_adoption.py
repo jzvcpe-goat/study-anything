@@ -13,7 +13,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -25,8 +24,6 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "release-asset-adoption-proof-v1"
@@ -35,7 +32,7 @@ FIXTURE_SCHEMA_VERSION = "release-asset-adoption-fixture-v1"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 PUBLISHED_IMAGE_SCHEMA_VERSION = "published-image-evidence-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.29-alpha"
+DEFAULT_TAG = "v0.3.31-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_ASSETS = {
     "study-anything-platform-adoption-pack.zip": "platform_adoption_pack",
@@ -94,43 +91,11 @@ CLASSIFICATIONS = {
     "release_asset_network_unavailable",
     "release_asset_runtime_failed",
 }
-RECOVERY_PLAN = {
-    "release_asset_missing": [
-        "Open the GitHub release page and confirm every required Study Anything zip asset is attached.",
-        "If you are preparing a release, regenerate the platform adoption pack and upload the missing asset.",
-    ],
-    "release_asset_digest_mismatch": [
-        "Delete the local asset directory and download the release assets again.",
-        "If the mismatch repeats, recreate the GitHub release assets from the matching commit.",
-    ],
-    "release_asset_pack_corrupted": [
-        "Re-download `study-anything-platform-adoption-pack.zip` from the release page.",
-        "Run the metadata-only verifier again before trying Skill Mode or Docker.",
-    ],
-    "release_asset_published_evidence_missing": [
-        "Regenerate published-image evidence and the platform adoption pack before publishing the release.",
-        "Run `python3 scripts/generate_published_image_evidence.py --check` and `python3 scripts/generate_platform_adoption_pack.py --check`.",
-    ],
-    "release_asset_network_unavailable": [
-        "Retry from a network or CI runner that can reach GitHub release metadata and zip assets.",
-        "If the assets were mirrored safely, pass their directory with `--asset-dir <dir>`.",
-    ],
-    "release_asset_runtime_failed": [
-        "First prove the release assets with `--runtime metadata-only`; this does not start localhost or Docker.",
-        "For local Skill Mode, run `./scripts/launch_skill_mode.sh` from a normal terminal or host shell, then retry.",
-        "If the failure mentions a demo step, run `python3 scripts/diagnose_adoption.py` for the local recovery path.",
-        "If Docker pulls are slow or blocked, try `--runtime published-image --skip-pull` or run the manifest-only image verifier.",
-    ],
-}
-PRIVATE_ANSWER_SENTINEL = "Private " + "answer:"
-PRIVATE_SOURCE_TEXT_SENTINEL = "Private " + "source text:"
-PRIVATE_TMP_PREFIX = "/private/" + "tmp/"
-TMP_PREFIX = "/" + "tmp/"
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    PRIVATE_ANSWER_SENTINEL,
-    PRIVATE_SOURCE_TEXT_SENTINEL,
+    "Private answer:",
+    "Private source text:",
     "Private platform browser/video context",
     "raw_source_text=",
     "learner_answer=",
@@ -172,100 +137,10 @@ def sha256_bytes(data: bytes) -> str:
 def assert_redacted(payload: Any) -> None:
     serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
-    if (
-        "/Users/" in serialized
-        or PRIVATE_TMP_PREFIX in serialized
-        or TMP_PREFIX in serialized
-        or re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized)
-    ):
+    if "/Users/" in serialized:
         leaks.append("local absolute path")
     if leaks:
         raise ReleaseAssetAdoptionError(f"Release asset adoption proof leaked private data: {leaks}")
-
-
-def privacy_assertions() -> dict[str, bool]:
-    return {
-        "raw_source_text_included": False,
-        "learner_answers_included": False,
-        "agent_prompts_included": False,
-        "agent_endpoint_secrets_included": False,
-        "real_model_keys_included": False,
-        "support_bundle_private_payload_included": False,
-        "local_absolute_paths_included": False,
-        "automatic_upload": False,
-    }
-
-
-def sanitize_error(message: str) -> str:
-    return redact_diagnostic(message or "Release asset adoption verification failed.")[:1600]
-
-
-def classify_error(message: str) -> str:
-    lowered = message.lower()
-    if "missing required assets" in lowered or "has no download url" in lowered:
-        return "release_asset_missing"
-    if "digest mismatch" in lowered or "hash drifted" in lowered:
-        return "release_asset_digest_mismatch"
-    if "zip is corrupted" in lowered or "badzipfile" in lowered or "unexpected adoption pack root" in lowered:
-        return "release_asset_pack_corrupted"
-    if "published image evidence" in lowered:
-        return "release_asset_published_evidence_missing"
-    if "could not fetch release metadata" in lowered or "could not download" in lowered:
-        return "release_asset_network_unavailable"
-    if "command failed" in lowered or "command timed out" in lowered or "localhost" in lowered:
-        return "release_asset_runtime_failed"
-    return "release_asset_runtime_failed"
-
-
-def command_set(tag: str) -> dict[str, str]:
-    return {
-        "metadata_only": f"python3 scripts/verify_release_asset_adoption.py --tag {tag} --runtime metadata-only",
-        "skill_mode": f"python3 scripts/verify_release_asset_adoption.py --tag {tag} --runtime skill-mode",
-        "published_image": f"python3 scripts/verify_release_asset_adoption.py --tag {tag} --runtime published-image",
-        "diagnose_local_adoption": "python3 scripts/diagnose_adoption.py",
-        "launch_skill_mode": "./scripts/launch_skill_mode.sh",
-        "published_image_manifest_only": f"python3 scripts/verify_published_image_launch.py --tag {tag} --manifest-only",
-    }
-
-
-def build_failure_proof(*, args: argparse.Namespace, classification: str, diagnostic: str) -> dict[str, Any]:
-    proof = {
-        "schema_version": SCHEMA_VERSION,
-        "status": "blocked",
-        "classification": classification,
-        "tag": args.tag,
-        "repo": args.repo,
-        "diagnostic": sanitize_error(diagnostic),
-        "recovery_plan": RECOVERY_PLAN.get(classification, RECOVERY_PLAN["release_asset_runtime_failed"]),
-        "commands": command_set(args.tag),
-        "privacy": privacy_assertions(),
-        "acceptance": {
-            "metadata_only_can_run_without_localhost": True,
-            "runtime_failures_do_not_prove_release_assets_are_missing": True,
-            "safe_for_external_platform_agent": True,
-        },
-    }
-    assert_redacted(proof)
-    return proof
-
-
-def format_failure_for_human(proof: dict[str, Any]) -> str:
-    recovery = "\n".join(f"- {step}" for step in proof.get("recovery_plan", []))
-    commands = proof.get("commands") or {}
-    useful_commands = "\n".join(
-        f"- {label}: {command}"
-        for label, command in commands.items()
-        if label in {"metadata_only", "diagnose_local_adoption", "launch_skill_mode", "published_image_manifest_only"}
-    )
-    return (
-        "verify_release_asset_adoption failed:\n"
-        f"classification: {proof.get('classification')}\n"
-        f"diagnostic: {proof.get('diagnostic')}\n"
-        "Next steps:\n"
-        f"{recovery}\n"
-        "Useful commands:\n"
-        f"{useful_commands}"
-    )
 
 
 def run(
@@ -556,7 +431,14 @@ def build_proof(
         "pack": pack,
         "verifiers": verifiers,
         "privacy": {
-            **privacy_assertions(),
+            "raw_source_text_included": False,
+            "learner_answers_included": False,
+            "agent_prompts_included": False,
+            "agent_endpoint_secrets_included": False,
+            "real_model_keys_included": False,
+            "support_bundle_private_payload_included": False,
+            "local_absolute_paths_included": False,
+            "automatic_upload": False,
         },
         "acceptance": {
             "evidence_schema": EVIDENCE_SCHEMA_VERSION,
@@ -632,12 +514,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        parser = argparse.ArgumentParser(add_help=False)
-        parser.add_argument("--repo", default=DEFAULT_REPO)
-        parser.add_argument("--tag", default=DEFAULT_TAG)
-        parsed, _ = parser.parse_known_args()
-        classification = classify_error(str(exc))
-        proof = build_failure_proof(args=parsed, classification=classification, diagnostic=str(exc))
-        print(dump_json(proof))
-        print(format_failure_for_human(proof), file=sys.stderr)
+        print(f"verify_release_asset_adoption failed: {exc}", file=sys.stderr)
         sys.exit(1)

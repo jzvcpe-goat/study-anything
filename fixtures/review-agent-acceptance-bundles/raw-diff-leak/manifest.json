@@ -1,0 +1,71 @@
+{
+  "schema_version": "cognitive-loop-review-agent-acceptance-bundle-v1",
+  "status": "pass",
+  "bundle_id": "review-agent-acceptance-badrawdiff0001",
+  "generated_at": "2026-06-18T00:00:00+00:00",
+  "source": {
+    "pr_ref": "PR-bad-raw-diff",
+    "commit_sha": "sha-bad-raw-diff",
+    "base_ref": "main",
+    "head_ref": "codex/bad-raw-diff",
+    "report_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "review_agent": {
+    "provider_id": "bad-fixture-review-agent",
+    "provider_label": "Bad fixture Review Agent",
+    "execution_surface": "ci",
+    "user_owned_agent": true,
+    "study_anything_executed_real_model": false
+  },
+  "decision_summary": {
+    "decision": "needs-review",
+    "overall_risk": "medium",
+    "finding_count": 1,
+    "critical_count": 0,
+    "warn_count": 1,
+    "info_count": 0,
+    "suppressed_count": 0,
+    "should_block_merge": false,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-review"
+    ],
+    "human_action": "maintainer_review_required"
+  },
+  "files": {
+    "receipt": {
+      "path": "review-agent-ci-receipt.json",
+      "schema_version": "cognitive-loop-review-agent-ci-receipt-v1",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "comment_pack": {
+      "path": "review-agent-pr-comment-pack.json",
+      "schema_version": "cognitive-loop-review-agent-pr-comment-pack-v1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "summary": {
+      "path": "SUMMARY.md",
+      "format": "markdown"
+    }
+  },
+  "commands": {
+    "source_report_validation": "python3 scripts/cognitive_loop_review_agent_handoff.py validate --report REVIEW_AGENT_REPORT.json",
+    "receipt_validation": "python3 scripts/cognitive_loop_review_agent_receipt.py validate --receipt RECEIPT.json",
+    "comment_pack_validation": "python3 scripts/cognitive_loop_review_agent_pr_comment.py validate --comment-pack COMMENT_PACK.json",
+    "bundle_validation": "python3 scripts/cognitive_loop_review_agent_acceptance_bundle.py validate --bundle-dir REVIEW_AGENT_ACCEPTANCE_BUNDLE_DIR",
+    "release_gate": "python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check"
+  },
+  "privacy": {
+    "raw_diff_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "report_summary_included": false,
+    "raw_handoff_material_written": false,
+    "agent_endpoint_secrets_included": false,
+    "real_model_keys_included": false,
+    "hidden_chain_of_thought_included": false,
+    "metadata_only": true,
+    "safe_to_attach_to_pr": true
+  },
+  "leaked_private_text": "diff --git a/app.py b/app.py"
+}

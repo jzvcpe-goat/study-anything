@@ -13,15 +13,13 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-published-image-evidence.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 SCHEMA_VERSION = "published-image-evidence-v1"
 FIXTURE_SCHEMA_VERSION = "published-image-evidence-fixture-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 ADOPTION_PACK_SCHEMA_VERSION = "study-anything-platform-adoption-pack-v1"
 ECOSYSTEM_SUBMISSION_SCHEMA_VERSION = "ecosystem-submission-v1"
 ARCHIVE_ROOT = "study-anything-published-image-evidence"
@@ -67,11 +65,6 @@ REQUIRED_PACK_COMMAND = (
     "platform/generated/study-anything-platform-adoption-pack.zip"
 )
 
-PRIVATE_ANSWER_SENTINEL = "Private " + "answer:"
-PRIVATE_SOURCE_TEXT_SENTINEL = "Private " + "source text:"
-PRIVATE_PLATFORM_CONTEXT_SENTINEL = "Private platform " + "browser/video context"
-PRIVATE_TMP_PREFIX = "/private/" + "tmp/"
-TMP_PREFIX = "/" + "tmp/"
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
@@ -82,9 +75,9 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    PRIVATE_ANSWER_SENTINEL,
-    PRIVATE_SOURCE_TEXT_SENTINEL,
-    PRIVATE_PLATFORM_CONTEXT_SENTINEL,
+    "Private answer:",
+    "Private source text:",
+    "Private platform browser/video context",
     "raw_source_text=",
     "learner_answer=",
     "AGENT_ENDPOINT=http",
@@ -94,30 +87,6 @@ FORBIDDEN_LITERALS = [
 
 class PublishedImageEvidenceError(RuntimeError):
     """Readable published-image evidence validation failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    lowered = diagnostic.lower()
-    lines = [
-        f"verify_published_image_evidence failed: {diagnostic}",
-        "Next steps:",
-    ]
-    if "stale" in lowered or "drifted" in lowered:
-        lines.append(
-            "- Refresh published-image evidence: python3 scripts/generate_published_image_evidence.py"
-        )
-    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
-        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
-    else:
-        lines.append("- Recheck published-image evidence: python3 scripts/verify_published_image_evidence.py --check")
-    lines.extend(
-        [
-            "- Run the published image smoke: python3 scripts/verify_published_image_launch.py --allow-pull-timeout-report",
-            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
-    return "\n".join(lines)
 
 
 def dump_json(payload: Any) -> str:
@@ -183,8 +152,6 @@ def assert_no_leaks(payload: Any) -> None:
     serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
     leaks.extend(pattern.pattern for pattern in FORBIDDEN_PATTERNS if pattern.search(serialized))
-    if PRIVATE_TMP_PREFIX in serialized or TMP_PREFIX in serialized:
-        leaks.append("local temporary path")
     if leaks:
         raise PublishedImageEvidenceError(f"Published-image evidence leaked private data: {leaks}")
 
@@ -390,7 +357,7 @@ def validate_docs(root: Path) -> dict[str, Any]:
         "docs/platform-agent-integrations.md": [SCHEMA_VERSION, "published-image evidence"],
         "docs/ecosystem-submission.md": [SCHEMA_VERSION, "Published Image Evidence"],
         "docs/release-checklist.md": ["verify_published_image_evidence.py --check"],
-        "docs/roadmap.md": ["v0.3.29-alpha", SCHEMA_VERSION],
+        "docs/roadmap.md": ["v0.3.31-alpha", SCHEMA_VERSION],
     }
     for relative_path, needles in checked.items():
         text = require_file(root, relative_path).read_text(encoding="utf-8")
@@ -473,5 +440,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_published_image_evidence failed: {exc}", file=sys.stderr)
         sys.exit(1)

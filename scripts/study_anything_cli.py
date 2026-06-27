@@ -2528,6 +2528,21 @@ def cmd_demo(args: argparse.Namespace) -> None:
         "demo session",
         purpose="Demo session response",
     )
+    teaching_path = f"/v1/sessions/{quote(args.session_id)}/teaching-layers"
+    require_json_object(
+        post(
+            teaching_path,
+            {
+                "layers": ["overview", "glossary"],
+                "language": "zh",
+                "level": "beginner",
+                "max_terms": 8,
+                "example_mode": "mixed",
+            },
+        ),
+        teaching_path,
+        purpose="Demo teaching layer response",
+    )
     args.item_id = require_string_field(
         quiz,
         "item_id",

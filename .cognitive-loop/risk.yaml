@@ -1,0 +1,36 @@
+schemaVersion: cognitive-loop-risk-v1
+levels:
+  - low
+  - medium
+  - high
+  - blocked
+rules:
+  - id: docs-only
+    riskLevel: low
+    when:
+      - docs
+      - comments
+    humanMasteryGate: optional
+  - id: runtime-contract
+    riskLevel: medium
+    when:
+      - public_contract
+      - verifier
+      - release_asset
+    humanMasteryGate: recommended
+  - id: sensitive-runtime
+    riskLevel: high
+    when:
+      - auth
+      - billing
+      - secrets
+      - plugin_execution
+      - destructive_file_write
+    humanMasteryGate: required
+  - id: external-data-exfiltration
+    riskLevel: blocked
+    when:
+      - raw_source_upload
+      - model_key_storage
+      - hidden_instruction_transfer
+    humanMasteryGate: required

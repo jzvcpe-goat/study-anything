@@ -63,6 +63,8 @@ venv_python="$venv_dir/bin/python3"
 foreground="${SKILL_API_FOREGROUND:-false}"
 health_attempts="${SKILL_API_HEALTH_ATTEMPTS:-30}"
 pip_install_timeout_seconds="${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-600}"
+skill_install_target="${SKILL_PIP_INSTALL_TARGET:-}"
+skill_workflow_engine="${SKILL_WORKFLOW_ENGINE:-deterministic}"
 
 validate_skill_api_port() {
   case "$api_port" in
@@ -539,7 +541,7 @@ if [ ! -x "$venv_python" ]; then
   fi
 fi
 
-if ! "$venv_python" -c "import fastapi, langgraph, uvicorn" >/dev/null 2>&1; then
+if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
   printf "Installing Study Anything API dependencies ...\n"
   mkdir -p "$data_dir/pip-cache"
   : >"$pip_install_log"
@@ -549,28 +551,40 @@ if ! "$venv_python" -c "import fastapi, langgraph, uvicorn" >/dev/null 2>&1; the
   export PIP_RETRIES="${PIP_RETRIES:-2}"
   export PIP_NO_INPUT="${PIP_NO_INPUT:-1}"
   install_failed="false"
-  if "$venv_python" -c "import setuptools" >/dev/null 2>&1; then
-    if run_pip_install -m pip install --no-build-isolation -e .; then
+  if [ -z "$skill_install_target" ]; then
+    if run_pip_install -m pip install \
+      "fastapi>=0.115.0" \
+      "uvicorn>=0.30.0" \
+      "pydantic>=2.8.0" \
+      "httpx>=0.27.0"; then
       :
     else
-      pip_install_status=$?
-      if [ "$pip_install_status" -eq 124 ]; then
-        install_failed="true"
-      else
-        printf "\nNo-build-isolation install failed; retrying with standard build isolation ...\n" >&2
-        run_pip_install -m pip install -e . || install_failed="true"
-      fi
+      install_failed="true"
     fi
   else
-    if run_pip_install -m pip install -e .; then
-      :
-    else
-      pip_install_status=$?
-      if [ "$pip_install_status" -eq 124 ]; then
-        install_failed="true"
+    if "$venv_python" -c "import setuptools" >/dev/null 2>&1; then
+      if run_pip_install -m pip install --no-build-isolation -e "$skill_install_target"; then
+        :
       else
-        printf "\nInitial dependency install failed; retrying without build isolation ...\n" >&2
-        run_pip_install -m pip install --no-build-isolation -e . || install_failed="true"
+        pip_install_status=$?
+        if [ "$pip_install_status" -eq 124 ]; then
+          install_failed="true"
+        else
+          printf "\nNo-build-isolation install failed; retrying with standard build isolation ...\n" >&2
+          run_pip_install -m pip install -e "$skill_install_target" || install_failed="true"
+        fi
+      fi
+    else
+      if run_pip_install -m pip install -e "$skill_install_target"; then
+        :
+      else
+        pip_install_status=$?
+        if [ "$pip_install_status" -eq 124 ]; then
+          install_failed="true"
+        else
+          printf "\nInitial dependency install failed; retrying without build isolation ...\n" >&2
+          run_pip_install -m pip install --no-build-isolation -e "$skill_install_target" || install_failed="true"
+        fi
       fi
     fi
   fi
@@ -582,7 +596,7 @@ if ! "$venv_python" -c "import fastapi, langgraph, uvicorn" >/dev/null 2>&1; the
     printf "  1. Re-run from a normal terminal with network access: ./scripts/launch_skill_mode.sh\n" >&2
     printf "  2. Configure a reachable package index, for example: PIP_INDEX_URL=https://pypi.org/simple ./scripts/launch_skill_mode.sh\n" >&2
     printf "  3. Use Docker published images instead of local Python install: USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh\n" >&2
-    printf "  4. Preinstall build tools and dependencies in the selected venv: %s -m pip install setuptools wheel && %s -m pip install --no-build-isolation -e .\n" "$(display_path "$venv_python")" "$(display_path "$venv_python")" >&2
+    printf "  4. Preinstall Skill Mode runtime deps in the selected venv: %s -m pip install 'fastapi>=0.115.0' 'uvicorn>=0.30.0' 'pydantic>=2.8.0' 'httpx>=0.27.0'\n" "$(display_path "$venv_python")" >&2
     printf "  5. If downloads are just slow, increase the bounded install wait: SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200 ./scripts/launch_skill_mode.sh\n" >&2
     printf "  6. If you are inside an AI platform sandbox, run python3 scripts/diagnose_adoption.py and share the redacted output.\n" >&2
     printf "Full pip log: %s\n" "$(display_path "$pip_install_log")" >&2
@@ -610,9 +624,10 @@ if [ "$foreground" = "true" ]; then
   printf "Starting Study Anything Skill API in foreground at %s ...\n" "$api_base"
   printf "Keep this terminal open. Stop with Ctrl-C.\n"
   SESSION_STORE=json \
-  WORKFLOW_ENGINE=langgraph \
+  WORKFLOW_ENGINE="$skill_workflow_engine" \
   LANGGRAPH_CHECKPOINTER=memory \
   FALKORDB_ENABLED=false \
+  PYTHONPATH="$ROOT/apps/api${PYTHONPATH:+:$PYTHONPATH}" \
   STUDY_ANYTHING_DATA_DIR="$data_dir" \
   exec "$venv_python" -m uvicorn study_anything.api.main:app \
     --host "$api_host" \
@@ -621,9 +636,10 @@ fi
 
 printf "Starting Study Anything Skill API at %s ...\n" "$api_base"
 SESSION_STORE=json \
-WORKFLOW_ENGINE=langgraph \
+WORKFLOW_ENGINE="$skill_workflow_engine" \
 LANGGRAPH_CHECKPOINTER=memory \
 FALKORDB_ENABLED=false \
+PYTHONPATH="$ROOT/apps/api${PYTHONPATH:+:$PYTHONPATH}" \
 STUDY_ANYTHING_DATA_DIR="$data_dir" \
 nohup "$venv_python" -m uvicorn study_anything.api.main:app \
   --host "$api_host" \

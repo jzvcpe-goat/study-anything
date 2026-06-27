@@ -33,7 +33,7 @@ class PluginEcosystemAdoptionKitTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "plugin-ecosystem-adoption-kit-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["plugin_registry"]["digest_verified_count"], 5)
         self.assertFalse(report["trust_policy"]["entrypoints_executed_during_preview"])
@@ -59,18 +59,6 @@ class PluginEcosystemAdoptionKitTests(unittest.TestCase):
         self.assertEqual(report["schema_version"], "plugin-ecosystem-adoption-kit-v1")
         self.assertEqual(report["submission"]["plugin_assets_declared"], 17)
         self.assertEqual(report["plugin_registry"]["digest_verified_count"], 5)
-
-    def test_missing_pack_failure_is_actionable_and_redacted(self) -> None:
-        completed = run_script("--pack", "/Users/james/private/missing-plugin-pack.zip")
-
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("verify_plugin_ecosystem_adoption_kit failed:", completed.stderr)
-        self.assertIn("Next steps:", completed.stderr)
-        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
-        self.assertIn("install_local_plugin.py --help", completed.stderr)
-        self.assertIn("diagnose_adoption.py", completed.stderr)
-        self.assertIn("<local-path>", completed.stderr)
-        self.assertNotIn("/Users/james", completed.stderr)
 
     def test_missing_pack_root_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

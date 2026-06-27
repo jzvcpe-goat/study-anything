@@ -17,10 +17,21 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Optional
 
-from cryptography.exceptions import InvalidTag
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+try:  # Optional in lightweight Skill Mode; required for encrypted sync exports.
+    from cryptography.exceptions import InvalidTag
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+except ImportError:  # pragma: no cover - exercised in clean lightweight installs.
+    class InvalidTag(Exception):
+        pass
+
+    hashes = None  # type: ignore[assignment]
+    AESGCM = None  # type: ignore[assignment]
+    PBKDF2HMAC = None  # type: ignore[assignment]
+    CRYPTOGRAPHY_AVAILABLE = False
+else:
+    CRYPTOGRAPHY_AVAILABLE = True
 
 from .events import utc_now
 from .plugin_registry import PluginStatus
@@ -74,8 +85,11 @@ class EncryptedSyncExport:
 def sync_status() -> dict[str, object]:
     return {
         "schema_version": "sync-status-v1",
-        "status": "local_foundation_ready",
-        "encrypted_package_supported": True,
+        "status": "local_foundation_ready"
+        if CRYPTOGRAPHY_AVAILABLE
+        else "crypto_extra_missing",
+        "encrypted_package_supported": CRYPTOGRAPHY_AVAILABLE,
+        "missing_extra": None if CRYPTOGRAPHY_AVAILABLE else "study-anything[crypto]",
         "hosted_sync_enabled": False,
         "raw_passphrase_stored": False,
         "local_first": True,
@@ -163,6 +177,7 @@ def encrypt_sync_package(
     passphrase: str,
     created_at: Optional[str] = None,
 ) -> EncryptedSyncExport:
+    _require_cryptography()
     _require_passphrase(passphrase)
     plaintext = _canonical_json(payload)
     salt = os.urandom(16)
@@ -194,6 +209,7 @@ def encrypt_sync_package(
 
 
 def decrypt_sync_package(package: Mapping[str, Any], *, passphrase: str) -> dict[str, Any]:
+    _require_cryptography()
     _require_passphrase(passphrase, allow_short=True)
     try:
         if package.get("schema_version") != SYNC_PACKAGE_SCHEMA_VERSION:
@@ -449,12 +465,22 @@ def _derive_key(
     *,
     iterations: int = KDF_ITERATIONS,
 ) -> bytes:
+    _require_cryptography()
+    assert PBKDF2HMAC is not None and hashes is not None
     return PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
         salt=salt,
         iterations=iterations,
     ).derive(passphrase.encode("utf-8"))
+
+
+def _require_cryptography() -> None:
+    if not CRYPTOGRAPHY_AVAILABLE or AESGCM is None:
+        raise SyncPackageError(
+            "Encrypted sync packages require the optional crypto extra. "
+            "Install with `pip install -e '.[crypto]'` or `pip install -e '.[full]'`."
+        )
 
 
 def _require_passphrase(passphrase: str, *, allow_short: bool = False) -> None:

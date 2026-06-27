@@ -1,0 +1,41 @@
+{
+  "decision_id": "decision-study-adapter-cli-001",
+  "event_ids": [
+    "event-study-adapter-cli-001"
+  ],
+  "evidence_refs": [
+    "path:apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+    "check:.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+    "check:.venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check"
+  ],
+  "human_mastery_gate": {
+    "reason": "Operator must complete a source-bound learning check before accepting the adapter bridge.",
+    "required": true,
+    "status": "approved"
+  },
+  "project_id": "cognitive-loop-demo",
+  "risk": {
+    "level": "high",
+    "reasons": [
+      "The adapter crosses project operations and human learning gates.",
+      "A bad bridge could leak private source, answers, Agent endpoints, or model keys into public evidence."
+    ],
+    "score": 0.82
+  },
+  "rollback": {
+    "checkpoint_ref": "git:main",
+    "strategy": "disable_study_anything_adapter_cli"
+  },
+  "schema_version": "decision-card-v1",
+  "status": "approved",
+  "summary": "Use the Study Anything adapter CLI as the Cognitive Loop learning gate so platform Agents can request mastery evidence without a standalone frontend.",
+  "title": "Route risky project changes through Study Anything adapter CLI",
+  "verification": {
+    "commands": [
+      ".venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html",
+      ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
+      "./scripts/release_check.sh"
+    ],
+    "status": "passed"
+  }
+}

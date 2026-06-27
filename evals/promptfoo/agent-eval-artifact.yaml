@@ -37,7 +37,7 @@ tests:
               minItems: 4
             trajectory:
               type: array
-              minItems: 3
+              minItems: 5
             privacy:
               type: object
               properties:
@@ -62,6 +62,8 @@ tests:
           - '"adapter_id":"deepeval"'
           - '"adapter_id":"langchain-agentevals"'
           - '"adapter_id":"ragas"'
+          - '"task_type":"teach.overview"'
+          - '"task_type":"teach.glossary"'
           - '"task_type":"quiz.generate"'
           - '"task_type":"answer.grade"'
           - '"task_type":"insight.synthesize"'

@@ -1,0 +1,211 @@
+{
+  "cases": [
+    {
+      "case_id": "success_wrong_schema_version",
+      "error_sha256": "c25a294f5fae3c9370d3ae880a81c0dda2d134fd97844f33cfcb12b454f4067f",
+      "expected_error_contains": "$cognitive_loop_recipe_cli_verification.schema_version expected const",
+      "mutated_payload_persisted": false,
+      "mutation": "set schema_version to an unexpected value",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_recipe_cli_verification",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-recipe-cli.json"
+    },
+    {
+      "case_id": "success_auto_execute_true",
+      "error_sha256": "1f895ce88334e3e487bdf81ff207682465c8b5137c92a466807f6ecdf860e217",
+      "expected_error_contains": "safe_to_auto_execute expected const False",
+      "mutated_payload_persisted": false,
+      "mutation": "set the first recipe plan safe_to_auto_execute flag to true",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_recipe_cli_verification",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-recipe-cli.json"
+    },
+    {
+      "case_id": "receipts_missing_privacy",
+      "error_sha256": "72f52f450d932aa48c3d7a31427954f28ac96aa6ee35ec061ee53e6fe65c700f",
+      "expected_error_contains": "$cognitive_loop_recipe_cli_receipts missing required key 'privacy'",
+      "mutated_payload_persisted": false,
+      "mutation": "remove required privacy block",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_recipe_cli_receipts",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json"
+    },
+    {
+      "case_id": "failures_exit_code_string",
+      "error_sha256": "78f12cd271a97d7860428848cc96e4e3fd66c66368cf3f14883fab8bd753f610",
+      "expected_error_contains": "$cognitive_loop_recipe_cli_failures.cases[0].exit_code expected type integer",
+      "mutated_payload_persisted": false,
+      "mutation": "change first failure case exit_code from integer to string",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_recipe_cli_failures",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json"
+    },
+    {
+      "case_id": "pr_ci_receipt_missing_required_checks",
+      "error_sha256": "2bc3be3d34f7bd9f5be052c209921fc9ab65decdb43a94fce6c4d90783d84952",
+      "expected_error_contains": "required_checks expected const",
+      "mutated_payload_persisted": false,
+      "mutation": "remove compose-smoke from required_checks",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_receipt",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json"
+    },
+    {
+      "case_id": "pr_ci_receipt_github_tokens_true",
+      "error_sha256": "f2036947242013e9f105237ee476ea3e812f62d5ee889e91ed18f439699d430f",
+      "expected_error_contains": "github_tokens_included expected const False",
+      "mutated_payload_persisted": false,
+      "mutation": "set privacy_flags.github_tokens_included to true",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_receipt",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json"
+    },
+    {
+      "case_id": "pr_ci_source_unsupported_source",
+      "error_sha256": "7778adda9309e3b3b6240d605c5b817b8be3204318309932be5424bd5850ae77",
+      "expected_error_contains": "$cognitive_loop_pr_ci_source.source expected one of",
+      "mutated_payload_persisted": false,
+      "mutation": "set source to unsupported webhook value",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_source",
+      "source_report_path": null
+    },
+    {
+      "case_id": "pr_ci_source_unsafe_url_query",
+      "error_sha256": "bcc6914591d14bec2b729e94170042f7b24ad2402e5199544b7de0af2d41dc8e",
+      "expected_error_contains": "url did not match pattern",
+      "mutated_payload_persisted": false,
+      "mutation": "append a query string to a GitHub details URL",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_source",
+      "source_report_path": null
+    },
+    {
+      "case_id": "pr_ci_source_raw_logs_true",
+      "error_sha256": "5eb383daaa532338dcba17c0ed95ac37a1eb11c1d8c574f92699bb1a98fd0671",
+      "expected_error_contains": "raw_logs_included expected const False",
+      "mutated_payload_persisted": false,
+      "mutation": "set raw_logs_included to true",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_source",
+      "source_report_path": null
+    },
+    {
+      "case_id": "pr_ci_source_unsafe_command",
+      "error_sha256": "b5d24d9d44622cb6af853b1c2556260307c6ecadc591b7abf5b92e22d1479b0e",
+      "expected_error_contains": "operator_next_commands[0] expected one of",
+      "mutated_payload_persisted": false,
+      "mutation": "replace operator command allowlist with gh pr merge",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_source",
+      "source_report_path": null
+    },
+    {
+      "case_id": "private_text_probe_rejected",
+      "error_sha256": "c11ed5ca55066ea0c45096c94d4e0db72e3d631c57595d0af99e8ec4db31a45e",
+      "expected_error_contains": "contains private or secret-like text",
+      "mutated_payload_persisted": false,
+      "mutation": "inject synthetic private marker into scanner only",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "privacy_scanner",
+      "source_report_path": null
+    }
+  ],
+  "coverage": {
+    "all_cases_rejected": true,
+    "all_errors_redacted": true,
+    "all_expected_errors_matched": true,
+    "canonical_reports_validated": [
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "schema_key": "cognitive_loop_recipe_cli_verification",
+        "schema_version": "cognitive-loop-recipe-cli-verification-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "schema_key": "cognitive_loop_recipe_cli_receipts",
+        "schema_version": "cognitive-loop-recipe-cli-receipts-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "schema_key": "cognitive_loop_recipe_cli_failures",
+        "schema_version": "cognitive-loop-recipe-cli-failures-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "schema_key": "cognitive_loop_pr_ci_receipt",
+        "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+        "status": "pass"
+      },
+      {
+        "path": "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
+        "schema_key": "cognitive_loop_pr_ci_source",
+        "schema_version": "cognitive-loop-pr-ci-source-v1",
+        "status": "pass"
+      }
+    ],
+    "case_count": 11,
+    "case_ids": [
+      "success_wrong_schema_version",
+      "success_auto_execute_true",
+      "receipts_missing_privacy",
+      "failures_exit_code_string",
+      "pr_ci_receipt_missing_required_checks",
+      "pr_ci_receipt_github_tokens_true",
+      "pr_ci_source_unsupported_source",
+      "pr_ci_source_unsafe_url_query",
+      "pr_ci_source_raw_logs_true",
+      "pr_ci_source_unsafe_command",
+      "private_text_probe_rejected"
+    ],
+    "file_changes_applied": false,
+    "mutated_payloads_persisted": false,
+    "recipe_cli_invoked": false,
+    "runtime_started": false,
+    "validated_without_running_recipe_cli": true
+  },
+  "distribution": {
+    "negative_fixture_report_path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+    "safe_for_platform_agent_static_import": true,
+    "verification_command": "python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Prove Cognitive Loop recipe CLI JSON Schemas reject representative drift, unsafe flags, malformed types, and private text probes.",
+  "schema_version": "cognitive-loop-recipe-cli-schema-negative-fixtures-v1",
+  "source_schema_bundle": {
+    "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "schema_keys": [
+      "cognitive_loop_pr_ci_receipt",
+      "cognitive_loop_pr_ci_source",
+      "cognitive_loop_recipe_cli_failures",
+      "cognitive_loop_recipe_cli_receipts",
+      "cognitive_loop_recipe_cli_verification"
+    ],
+    "schema_version": "cognitive-loop-recipe-cli-schemas-v1"
+  },
+  "status": "pass"
+}

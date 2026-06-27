@@ -11,8 +11,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "platform" / "generated" / "study-anything-platform-onboarding-readiness.json"
@@ -26,7 +24,7 @@ SLA_SCHEMA_VERSION = "maintainer-sla-labels-v1"
 ROTATION_SCHEMA_VERSION = "maintainer-rotation-checklist-v1"
 DASHBOARD_SCHEMA_VERSION = "platform-triage-dashboard-v1"
 RELEASE_BLOCKER_SCHEMA_VERSION = "platform-release-blocker-fixture-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
 SUPPORT_CATEGORIES = (
     "platform_import_failure",
@@ -69,8 +67,8 @@ FORBIDDEN_PATTERNS = [
 FORBIDDEN_LITERALS = [
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private " + "answer:",
-    "Private " + "source text:",
+    "Private answer:",
+    "Private source text:",
     "Private platform browser/video context",
     "raw_source_text=",
     "learner_answer=",
@@ -80,22 +78,6 @@ FORBIDDEN_LITERALS = [
 
 class PlatformOnboardingReadinessGenerationError(RuntimeError):
     """Readable onboarding-readiness generation failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    return "\n".join(
-        [
-            f"generate_platform_onboarding_readiness failed: {diagnostic}",
-            "",
-            "Next steps:",
-            "1. Rebuild onboarding readiness assets: python3 scripts/generate_platform_onboarding_readiness.py",
-            "2. Re-check onboarding readiness assets: python3 scripts/generate_platform_onboarding_readiness.py --check",
-            "3. Verify onboarding readiness: python3 scripts/verify_platform_onboarding_readiness.py --check",
-            "4. Rebuild distributable platform assets: python3 scripts/generate_platform_adoption_pack.py && python3 scripts/generate_platform_bundle_manifest.py",
-            "5. Run local adoption diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
 
 
 def dump_json(payload: Any) -> str:
@@ -173,7 +155,7 @@ def release_blocker_payload(blocker_id: str) -> dict[str, Any]:
     command_by_blocker = {
         "tool_import_blocker": "python3 scripts/verify_ecosystem_submission_pack.py",
         "local_gateway_blocker": "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
-        "published_image_blocker": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+        "published_image_blocker": "python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
         "agent_eval_blocker": "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
         "support_bundle_privacy_blocker": "python3 scripts/verify_platform_onboarding_readiness.py --check",
     }
@@ -430,5 +412,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"generate_platform_onboarding_readiness failed: {exc}", file=sys.stderr)
         sys.exit(1)

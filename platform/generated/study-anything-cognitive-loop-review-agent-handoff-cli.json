@@ -1,0 +1,39 @@
+{
+  "acceptance": {
+    "minimum_prepare_command": "python3 scripts/cognitive_loop_review_agent_handoff.py prepare --base main --head HEAD",
+    "minimum_validate_command": "python3 scripts/cognitive_loop_review_agent_handoff.py validate --report REVIEW_AGENT_REPORT.json",
+    "release_gate": "python3 scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check"
+  },
+  "cli": "scripts/cognitive_loop_review_agent_handoff.py",
+  "prepare": {
+    "changed_files": [
+      "app.py"
+    ],
+    "diff_sha256": "aade1b1097372647fad8928cde9f1d40735eccf06bcd9d420ed389e533aa83d4",
+    "repo_output_default_refusal": "pass",
+    "schema_version": "cognitive-loop-review-agent-handoff-request-v1",
+    "stdout_json": "pass",
+    "temp_output_files": [
+      "README.md",
+      "review-agent-handoff-request.json",
+      "review-agent-prompt-contract.json",
+      "review-agent-report-schema.json"
+    ]
+  },
+  "privacy": {
+    "prepare_request_contains_raw_diff": true,
+    "private_agent_endpoints_stored_by_study_anything": false,
+    "raw_diff_written_to_cognitive_loop_events": false,
+    "raw_diff_written_to_platform_generated": false,
+    "real_model_keys_stored_by_study_anything": false,
+    "validation_summary_contains_raw_diff": false,
+    "validation_summary_safe_to_store": true
+  },
+  "schema_version": "cognitive-loop-review-agent-handoff-cli-v1",
+  "status": "pass",
+  "validate": {
+    "accepted_decision": "needs-review",
+    "accepted_fixture": "needs-review.json",
+    "invalid_low_confidence_rejected": "pass"
+  }
+}

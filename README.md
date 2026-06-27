@@ -1,143 +1,215 @@
-# Study Anything
+# 认知黑箱 / Cognitive Black Box
 
-Study Anything is an open-source, self-host-first learning system for AI-native study workflows. The core idea is simple: reading should produce artifacts, and artifacts should deepen reading.
+**不是让认知变黑箱，而是记录和打开 AI 协作过程的黑匣子。**
 
-The alpha MVP runs a full local learning loop:
+**Cognitive Black Box** is a local-first cognitive flight recorder for AI-assisted learning, project work, and platform-Agent collaboration. It helps people and Agents capture what was learned, what changed, why a decision was made, how it was verified, and what can be safely handed off to Kimi, Codex, Obsidian, NotebookLM, WorkBuddy-style tools, or a private Agent.
 
-1. Add a reading source.
-2. Generate source-bound quiz items.
-3. Submit answers.
-4. Grade the answers.
-5. Update mastery.
-6. Synthesize an insight.
-7. Save a scribe log.
-8. Detect incubation needs.
-9. Discard or keep the card.
+**认知黑箱** 是一个本地优先的 AI 协作黑匣子：记录学习、项目理解、变更、决策、验证、风险和交接证据。它不是把认知过程变得不透明，而是把 AI 协作过程变成可复盘、可审计、可迁移、可继续演化的认知资产。
 
-## Principles
+Cognitive Loop remains the technical control pattern inside the project.
 
-- Apache-2.0 open-source core.
-- Local-first data ownership.
-- Bring Your Own Agent: no hardcoded real model default, no stored model API keys.
-- Self-host before SaaS.
-- Encrypted local sync packages before hosted Sync.
-- Optional privacy-preserving topology projection: Postgres remains canonical, FalkorDB stays disposable.
-- Optional paid services only after PMF, inspired by Obsidian-style Sync, Publish, Teams, and Catalyst offerings.
-- API/Skill-as-product: external agents, CLIs, and future platform plugins are clients of the public API.
+Cognitive Loop 仍然是项目内部的技术控制模式。
 
-## Start Here
+Study Anything is now positioned as the **Learning Adapter** inside Cognitive Black Box. It remains responsible for source-bound learning sessions, layered teaching, quizzes, mastery state, scribe logs, Agent audit/eval evidence, Obsidian exports, NotebookLM-style handoff packages, OKF-style knowledge bundles, and platform-Agent adoption assets.
 
-For a first-time user, do not start with Docker, model keys, or architecture docs.
+Study Anything 现在定位为认知黑箱里的 **学习适配层**：负责基于来源的学习会话、分层教学、测验、掌握度、scribe log、Agent 审计/eval 证据、Obsidian 导出、NotebookLM 式交接包、OKF-style 知识包，以及平台 Agent 接入资产。
 
-On macOS, double-click:
+## What It Is
+
+- **Study Anything**: learn knowledge, docs, code, papers, and project material.
+- **Reverse Anything**: turn existing repos and legacy systems into maps, traces, and learning paths.
+- **Operate Anything**: watch project diffs, tests, runtime signals, and Agent tool calls as evidence.
+- **Evolve Anything**: let AI suggest and execute bounded improvements with verification, rollback, audit, and human mastery gates.
+
+## 它解决什么
+
+- **学习任何材料**：文档、代码、论文、资料、项目上下文。
+- **逆向任何项目**：把开源项目、遗留系统和当前仓库变成项目地图、功能链路和学习路径。
+- **监听任何变化**：把 diff、测试、CI、运行日志和 Agent 工具调用变成可审计事件。
+- **进化任何项目**：让 AI 在验证、回滚、权限和人类理解确认下持续改进项目。
+
+## Current Foundation
+
+The current alpha already ships a local-first Study Anything foundation:
+
+- FastAPI learning API and repo-local Skill Mode.
+- Deterministic fake Agent for tests and demos.
+- Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
+- Source-bound learning loop: reading, teaching layers, quiz, grading, mastery, synthesis, scribe log, and discard/keep.
+- Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI hosts.
+- Redacted Agent audit/eval artifacts, multi-teacher attribution gates, and optional mature eval adapters.
+- Learning Enrichment bridge for web, document, app, video-slice, Markdown, and Obsidian context.
+- Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
+- Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and GHCR image evidence.
+- Cognitive Loop contract bootstrap with `.cognitive-loop/config.yaml`, `permissions.yaml`, `evals.yaml`, `risk.yaml`, and `cognitive-loop-contract-bootstrap-v1` verification.
+- Optional Cognitive Loop manual watcher ingest with `.cognitive-loop/watchers.yaml`, metadata-only `ProjectEvent` artifacts, Event Index classification, and SQLite Event Store projection.
+
+当前 alpha 已经具备本地优先的 Study Anything 基础：
+
+- FastAPI 学习 API 和仓库内 Skill Mode。
+- 用于测试和 demo 的确定性 fake Agent。
+- Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。
+- 基于来源的学习闭环：阅读、分层教学、测验、评分、掌握度、综合洞察、scribe log、保留或丢弃。
+- 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP 和通用 OpenAPI 平台的 Agent 接入包。
+- 脱敏 Agent audit/eval 证据、多层教学归因验收，以及可选成熟 eval 适配。
+- Learning Enrichment bridge：接收网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段。
+- Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
+- Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
+- Cognitive Loop contract bootstrap：`.cognitive-loop/config.yaml`、`permissions.yaml`、`evals.yaml`、`risk.yaml` 和 `cognitive-loop-contract-bootstrap-v1` 验证。
+- 可选 Cognitive Loop 手动 watcher ingest：`.cognitive-loop/watchers.yaml`、只含 metadata 的 `ProjectEvent` artifact、Event Index 分类和 SQLite Event Store 投影。
+
+## Feasibility And Boundary
+
+This pivot is feasible as a public positioning and architecture reset because the repo already contains a working local learning adapter, platform-Agent adoption assets, eval/audit evidence, privacy boundaries, and self-host paths. It is **not** a claim that the full Cognitive Loop runtime has shipped.
+
+这次 pivot 适合作为公开定位和架构重置，因为仓库已经有可运行的本地学习适配层、平台 Agent 接入资产、eval/audit 证据、隐私边界和自托管路径。它 **不表示** 完整 Cognitive Loop runtime 已经交付。
+
+Current shipped surface: Study Anything API, Skill Mode, platform-Agent packs, Docker self-host, learning/eval/export flows.
+
+Planned surface: daemonized project watchers, production runtime gates, realtime HTML Artifact console, full personal plugins, governed source-changing auto-apply, and hosted/team services. Current bridge: a copy-ready Mastra adapter contract pack, a metadata-only runtime dry-run harness, a minimal repo-started Mastra runtime MVP under `platform/mastra-runtime/`, a local libSQL durable suspend/resume proof, a local Langfuse DTO mapping proof, a metadata-only Study Anything Adapter mastery projection proof, manual watcher ingest for metadata-only ProjectEvents, bounded watcher runner-lite, static metadata-only HTML Artifact Console Lite with Evolution Chain aggregation, Personal Plugin Mode Lite for read-only file/README/webpage/diff-summary learning artifacts, Evolution Report Lite for governed next-loop improvement proposals, Governed Apply Plan Lite for low-risk generated-artifact receipts, Measured Improvement Comparator Lite for read-only loop-to-loop evidence comparison, Patch Proposal Lite for six-category read-only patch specifications, Mastra Evolution Receipt Link Lite for metadata-only future Mastra workflow receipt DTOs, Mastra Evolution Workflow Replay Lite for read-only future workflow transcripts, Governed Patch Apply Sandbox Lite for metadata-only dry-run apply receipts that prove rollback without mutating the real worktree, Professional Evolution Pack Export Lite for redacted JSON/HTML/ZIP handoff to maintainers and platform Agents, Evolution Pack Consumer Smoke Lite for ZIP-only offline validation of that handoff, PR CI Receipt Lite for offline or explicit GitHub CLI metadata-only required-check evidence, and Maintainer Acceptance Ledger Lite for offline go/no-go review before merge or release.
+
+当前已交付表面：Study Anything API、Skill Mode、平台 Agent 包、Docker 自托管、学习/eval/导出闭环。
+
+计划中表面：常驻项目 watcher、生产级 runtime gate、实时 HTML Artifact console、完整个人插件、受治理的源码改写 auto-apply，以及后续 hosted/team 服务。当前桥接能力：一个可复制到外部 Mastra 项目的 Mastra adapter contract pack、只含 metadata 的 runtime dry-run harness、位于 `platform/mastra-runtime/` 的最小 repo-started Mastra runtime MVP、本地 libSQL 持久化 suspend/resume 证明、本地 Langfuse DTO 映射证明、metadata-only Study Anything Adapter 掌握度投影证明、面向 metadata-only ProjectEvent 的手动 watcher ingest、有界 watcher runner-lite、带 Evolution Chain 聚合的静态 metadata-only HTML Artifact Console Lite、用于只读文件/README/网页/diff-summary 学习 artifact 的 Personal Plugin Mode Lite、用于受治理下一轮改进建议的 Evolution Report Lite、用于低风险 generated-artifact receipt 的 Governed Apply Plan Lite、用于只读比较前后 loop evidence 的 Measured Improvement Comparator Lite、用于六类只读补丁规格的 Patch Proposal Lite、用于未来 Mastra workflow receipt DTO 的 metadata-only Mastra Evolution Receipt Link Lite、用于只读未来 workflow transcript 的 Mastra Evolution Workflow Replay Lite、用于证明 rollback 且不修改真实工作树的 metadata-only Governed Patch Apply Sandbox Lite、用于向维护者和平台 Agent 交付脱敏 JSON/HTML/ZIP 的 Professional Evolution Pack Export Lite、用于离线验证该 handoff ZIP 的 Evolution Pack Consumer Smoke Lite、用于离线或显式 GitHub CLI metadata-only required-check evidence 的 PR CI Receipt Lite，以及用于 merge/release 前离线 go/no-go 评审的 Maintainer Acceptance Ledger Lite。
+
+## Target Architecture
 
 ```text
-START_HERE.command
+Cognitive Loop System
+  ├── Product Entries
+  │   ├── Personal Plugin Mode
+  │   └── Professional HTML Artifact Mode
+  ├── Cognitive Loop Core
+  │   ├── ProjectEvent
+  │   ├── DecisionCard
+  │   ├── RiskEngine
+  │   ├── HumanMasteryGate
+  │   ├── EventStore
+  │   ├── EvolutionReport
+  │   ├── ImprovementComparison
+  │   ├── PatchProposal
+  │   ├── EvolutionReceiptLink
+  │   ├── MastraEvolutionWorkflowReplay
+  │   └── EvolutionPackManifest
+  ├── Runtime Layer
+  │   └── Mastra agents, workflows, tools, memory, HITL suspend/resume
+  ├── Observability Layer
+  │   └── Langfuse traces, prompts, evals, costs, scores
+  ├── Learning Layer
+  │   └── Study Anything Adapter
+  ├── Project Layer
+  │   ├── Watchers
+  │   ├── Reverse Engine
+  │   ├── Verifier
+  │   └── Rollback
+  └── Artifact Layer
+      ├── Static HTML reports
+      └── Realtime local HTML console
 ```
 
-Or run this in a terminal:
+Daemonized project watchers, automated production runtime gates, the full realtime HTML Artifact console, full personal plugins, and governed source-changing auto-apply are **planned Cognitive Loop layers**, not shipped production-runtime claims. The current implementation includes public DecisionCard/Risk/Human Mastery Gate contracts, local static evidence artifacts, a local SQLite Event Store MVP for validated metadata-only event records, manual watcher ingest with `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html`, bounded watcher runner-lite with `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter`, a static metadata-only Artifact Console Lite with `python3 scripts/cognitive_loop_artifact_console.py build --html --json` that now aggregates Evolution Report, Apply Plan, Improvement Comparison, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, PatchApplySandboxReceipt refs, and a Professional Evolution Pack export entry, Personal Plugin Mode Lite with `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json`, Evolution Report Lite with `python3 scripts/cognitive_loop_evolution.py build --html --json`, Governed Apply Plan Lite with `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json`, Measured Improvement Comparator Lite with `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json`, Patch Proposal Lite with `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json`, Mastra Evolution Receipt Link Lite with `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json`, Mastra Evolution Workflow Replay Lite with `python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json`, Governed Patch Apply Sandbox Lite with `python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json`, Professional Evolution Pack Export Lite with `python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip`, Evolution Pack Consumer Smoke Lite with `python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack <cognitive-loop-professional-evolution-pack.zip>`, PR CI Receipt Lite with `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check` and optional `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write`, Maintainer Acceptance Ledger Lite with `python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check`, a Mastra adapter contract pack under `platform/mastra/`, `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` for a metadata-only suspend/resume/bail rehearsal, `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` for a minimal repo-started Mastra workflow MVP, `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` for local libSQL suspend/resume or bail across separate Node processes from watcher-generated metadata evidence, `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` for local Langfuse trace/span/generation/score DTO mapping without calling Langfuse, `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` for routing a metadata-only ProjectEvent/DecisionCard through Study Anything into MasteryRecord evidence, and `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html` for a platform-Agent-callable CLI Lite that writes JSON/HTML learning status, StudyCard, understanding gaps, scribe summary, MasteryRecord, and LoopRun evidence. The launch path remains API/Skill/platform-Agent first, without a standalone frontend requirement.
+
+常驻项目监听器、自动化生产级 runtime gate、完整实时 HTML Artifact Console、完整个人插件和受治理源码改写 auto-apply 是 **下一阶段 Cognitive Loop 层**，不是当前仓库已经交付的生产级运行时能力。当前实现已经包含公开的 DecisionCard/Risk/Human Mastery Gate 契约、本地静态 evidence artifact、用于校验后 metadata-only event record 的本地 SQLite Event Store MVP、通过 `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` 执行的手动 watcher ingest、通过 `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` 执行的有界 watcher runner-lite、通过 `python3 scripts/cognitive_loop_artifact_console.py build --html --json` 生成的静态 metadata-only Artifact Console Lite、通过 `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` 执行的 Personal Plugin Mode Lite、通过 `python3 scripts/cognitive_loop_evolution.py build --html --json` 执行的 Evolution Report Lite、通过 `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` 执行的 Governed Apply Plan Lite、通过 `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` 执行的 Measured Improvement Comparator Lite、通过 `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` 执行的 Patch Proposal Lite、通过 `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` 执行的 Mastra Evolution Receipt Link Lite、位于 `platform/mastra/` 的 Mastra adapter contract pack、通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 验证的只含 metadata 的 suspend/resume/bail 演练、通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 验证的最小 repo-started Mastra workflow MVP、通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 验证的本地 libSQL 跨 Node 进程 suspend/resume 或 bail 证明、通过 `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` 验证的不调用 Langfuse 的本地 trace/span/generation/score DTO 映射、通过 `python3 scripts/verify_cognitive_loop_study_anything_adapter.py --check` 验证的 ProjectEvent/DecisionCard 到 Study Anything 再到 MasteryRecord 的 metadata-only 学习桥接，以及通过 `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html` 执行的平台 Agent 可调用 CLI Lite，用来写出 JSON/HTML 学习状态、StudyCard、理解缺口、scribe 摘要、MasteryRecord 和 LoopRun evidence；上线路径仍然是 API/Skill/平台 Agent 优先，不要求独立前端。
+
+## Public Conceptual Contracts
+
+These names are documented now so future implementation work has a stable public vocabulary. They are conceptual contracts, not current HTTP endpoints:
+The first local validator for these contracts is now available in `scripts/verify_cognitive_loop_contracts.py`. A companion local CLI can initialize the contracts, render a static HTML DecisionCard artifact with `python3 scripts/cognitive_loop_cli.py report --html`, produce one bounded local `LoopRun` / `DecisionCard` evidence cycle with `python3 scripts/cognitive_loop_cli.py run-once --html`, capture a redacted path-level project snapshot with `python3 scripts/cognitive_loop_cli.py snapshot --html`, record a local Human Mastery Gate approval or rejection with `python3 scripts/cognitive_loop_cli.py gate --approve --html`, create a metadata-only evidence bundle with `python3 scripts/cognitive_loop_cli.py bundle --html`, build a metadata-only local event timeline with `python3 scripts/cognitive_loop_cli.py index --html`, rebuild a local SQLite Event Store with `python3 scripts/cognitive_loop_event_store.py rebuild`, manually ingest watcher observations with `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html`, batch/debounce explicit watcher signals with `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter`, build a static metadata-only Artifact Console Lite with `python3 scripts/cognitive_loop_artifact_console.py build --html --json`, create read-only Personal Plugin Mode Lite learning artifacts with `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json`, create governed Evolution Report Lite proposals with `python3 scripts/cognitive_loop_evolution.py build --html --json`, create governed low-risk Apply Plan Lite receipts with `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json`, compare loop-to-loop improvement evidence with `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json`, create read-only PatchProposal specs with `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json`, create read-only EvolutionReceiptLink specs with `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json`, check local artifact consistency with `python3 scripts/cognitive_loop_cli.py doctor --html`, create a manual-only repair plan with `python3 scripts/cognitive_loop_cli.py repair-plan --html`, open a static local artifact index with `python3 scripts/cognitive_loop_cli.py artifact-index --html`, run the Study Anything learning gate with `.venv/bin/python scripts/cognitive_loop_cli.py study-adapter --event fixtures/cognitive-loop-study-adapter/project-event.json --decision fixtures/cognitive-loop-study-adapter/decision-card.json --html`, and generate developer/operator advisory code-review evidence with `python3 scripts/cognitive_loop_review.py --base main --head HEAD --html`. `platform/mastra/cognitive-loop-mastra-adapter.ts` is a copy-ready Mastra workflow scaffold that maps Cognitive Loop evidence validation and Human Mastery Gate state to Mastra workflow step, suspend/resume, and bail semantics; verify it with `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`, rehearse the runtime boundary with `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check`, start the minimal repo-local runtime with `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check`, prove local durable suspend/resume with `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check`, then verify local Langfuse DTO mapping with `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check`. The external Review Agent prompt contract for real line-level CI review lives at `platform/prompts/cognitive-loop-review-agent.json`, and its machine-checkable report schema lives at `platform/schemas/cognitive-loop-review-agent-report.schema.json`; this is delivery-assurance tooling for maintainers and platform Agents, not a Study Anything end-user learning feature. Watcher daemons, governed source-changing auto-apply, and the full realtime HTML console are still planned layers.
+
+- `ProjectEvent`: normalized file, git, CI, runtime, human, or Agent event.
+- `DecisionCard`: evidence-bound decision record with impact, risk, verification, human gate, and rollback plan.
+- `LoopRun`: one bounded workflow execution cycle with status, trace refs, verification results, and artifacts.
+- `MasteryRecord`: human understanding state for a topic, file, subsystem, or risky change.
+- `EvolutionReport`: governed proposal for improving prompts, policies, evals, docs, tasks, retrieval, or learning paths.
+- `ImprovementComparison`: read-only comparison of metadata-only loop artifacts showing whether the latest loop improved, regressed, stayed unchanged, lacks enough evidence, or needs review.
+- `PatchProposal`: read-only patch specification across prompt, policy, eval, task, doc, and retrieval categories; it never contains raw unified diffs or executes apply.
+- `EvolutionReceiptLink`: metadata-only linkage record that turns Evolution Report, Apply Plan, Improvement Comparison, and Patch Proposal evidence into a future Mastra workflow receipt DTO without starting Mastra, calling models, executing apply, or modifying source files.
+- `MastraEvolutionWorkflowReplay`: metadata-only replay transcript that maps an EvolutionReceiptLink into future Mastra workflow steps, manual review gates, blocked states, and observability handoff without starting production Mastra or applying changes.
+- `PatchApplySandboxReceipt`: metadata-only dry-run receipt that consumes PatchProposal, Apply Plan, EvolutionReceiptLink, and MastraEvolutionWorkflowReplay refs, proves rollback with a temporary sandbox preview, and confirms the real worktree was not mutated.
+- `EvolutionPackManifest`: metadata-only professional handoff manifest that packages Artifact Console, EvolutionReport, ApplyPlan, ImprovementComparison, PatchProposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and PatchApplySandboxReceipt refs into redacted JSON/HTML/ZIP evidence for maintainers and platform Agents.
+- `ReviewRun` / `ReviewFinding` / `ReviewDecision` / `ReviewMetrics`: advisory code-review evidence from path-level git or PR summary metadata, documented in `docs/cognitive-loop-code-review.md`; external CI/platform Agents can use `platform/prompts/cognitive-loop-review-agent.json` plus `platform/schemas/cognitive-loop-review-agent-report.schema.json` when the operator wants JSON-only line-level diff review.
+
+这些名称先作为公开概念契约，方便后续实现保持稳定词汇。它们现在不是 HTTP endpoint：
+第一版本地 validator 已经在 `scripts/verify_cognitive_loop_contracts.py` 中可用。配套本地 CLI 可以初始化契约，通过 `python3 scripts/cognitive_loop_cli.py report --html` 渲染静态 HTML DecisionCard artifact，通过 `python3 scripts/cognitive_loop_cli.py run-once --html` 生成一次有边界的本地 `LoopRun` / `DecisionCard` evidence cycle，通过 `python3 scripts/cognitive_loop_cli.py snapshot --html` 捕获脱敏的路径级项目 snapshot，通过 `python3 scripts/cognitive_loop_cli.py gate --approve --html` 记录本地 Human Mastery Gate 的批准或拒绝，通过 `python3 scripts/cognitive_loop_cli.py bundle --html` 创建只含 metadata 的 evidence bundle，通过 `python3 scripts/cognitive_loop_cli.py index --html` 构建只含 metadata 的本地事件 timeline，通过 `python3 scripts/cognitive_loop_event_store.py rebuild` 重建本地 SQLite Event Store，通过 `python3 scripts/cognitive_loop_watcher_ingest.py ingest --html` 手动摄入 watcher observation，通过 `.venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter` 批处理/去重显式 watcher 信号，通过 `python3 scripts/cognitive_loop_artifact_console.py build --html --json` 生成静态 metadata-only Artifact Console Lite，通过 `python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json` 生成只读 Personal Plugin Mode Lite 学习 artifact，通过 `python3 scripts/cognitive_loop_evolution.py build --html --json` 生成受治理的 Evolution Report Lite 改进建议，通过 `python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json` 生成 Governed Apply Plan Lite，通过 `python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json` 比较 loop 改进证据，通过 `python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json` 生成只读 PatchProposal 规格，通过 `python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json` 生成只读 EvolutionReceiptLink 规格，通过 `python3 scripts/cognitive_loop_cli.py doctor --html` 检查本地 artifact consistency，通过 `python3 scripts/cognitive_loop_cli.py repair-plan --html` 创建仅手动执行的 repair plan，通过 `python3 scripts/cognitive_loop_cli.py artifact-index --html` 打开一个静态本地 artifact 入口页，并通过 `python3 scripts/cognitive_loop_review.py --base main --head HEAD --html` 生成面向 developer/operator 的咨询式代码审查证据；`platform/mastra/cognitive-loop-mastra-adapter.ts` 是可复制到 Mastra 项目的 workflow scaffold，会把 Cognitive Loop evidence validation 与 Human Mastery Gate 状态映射到 Mastra workflow step、suspend/resume 和 bail 语义，可用 `python3 scripts/verify_cognitive_loop_mastra_adapter.py --check` 验证，通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_dry_run.py --check` 演练 runtime 边界，通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_service.py --check` 启动最小本仓库 runtime，通过 `python3 scripts/verify_cognitive_loop_mastra_runtime_durable.py --check` 验证本地持久化 suspend/resume，再通过 `python3 scripts/verify_cognitive_loop_langfuse_observability.py --check` 验证本地 Langfuse DTO 映射；真实行级 CI 审查的外部 Review Agent prompt contract 位于 `platform/prompts/cognitive-loop-review-agent.json`，机器可验收报告 schema 位于 `platform/schemas/cognitive-loop-review-agent-report.schema.json`，它服务维护者和平台 Agent，不是 Study Anything 面向终端用户的学习功能。常驻 watcher daemon、受治理 auto-apply 和完整实时 HTML console 仍然是计划中的层。
+
+- `ProjectEvent`：标准化的文件、Git、CI、运行时、人类或 Agent 事件。
+- `DecisionCard`：绑定证据的决策记录，包含影响、风险、验证、人类门禁和回滚计划。
+- `LoopRun`：一次有边界的 workflow 执行循环，包含状态、trace 引用、验证结果和产物。
+- `MasteryRecord`：人类对 topic、文件、子系统或高风险变更的理解状态。
+- `EvolutionReport`：对 prompt、policy、eval、文档、任务、检索或学习路径的受治理改进提案。
+- `ImprovementComparison`：只读比较 metadata-only loop artifacts，用来判断最新 loop 是改进、退化、无变化、证据不足，还是需要人工复核。
+- `ReviewRun` / `ReviewFinding` / `ReviewDecision` / `ReviewMetrics`：来自路径级 git 或 PR 摘要元数据的咨询式代码审查证据，详见 `docs/cognitive-loop-code-review.md`；如果操作者需要 JSON-only 的真实 diff 行级审查，外部 CI/平台 Agent 应使用 `platform/prompts/cognitive-loop-review-agent.json` 和 `platform/schemas/cognitive-loop-review-agent-report.schema.json`。
+
+Future project contract files:
+
+```text
+.cognitive-loop/config.yaml
+.cognitive-loop/permissions.yaml
+.cognitive-loop/evals.yaml
+.cognitive-loop/risk.yaml
+.cognitive-loop/watchers.yaml
+```
+
+Future CLI names, not implemented in this pivot:
 
 ```bash
-./scripts/start_here.sh
+cognitive-loop init
+cognitive-loop import-repo .
+cognitive-loop explain-diff --html
+cognitive-loop report --html
+cognitive-loop watch --html
 ```
 
-It runs a zero-key, no-Docker disposable demo, verifies the learning loop, and stops the temporary
-API before exiting. Success means you see:
+## Fastest Local Demo
 
-```text
-Done. You have proved the local learning loop once.
-```
-
-Read the ultra-short Chinese quickstart at `QUICKSTART.md`, then the fuller beginner guide at
-`docs/getting-started.md`. Use `./scripts/start_here.sh --foreground` only when an Agent shell does
-not preserve background processes.
-
-Use Skill Mode directly when you want to try the learning loop without Docker:
+Use Skill Mode when you want to try the current Study Anything learning loop without Docker:
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
 ```
 
-This creates a local Python virtual environment when needed, starts the API, verifies the CLI learning
-loop, and stops the API in one command. This is the safest path for terminal-capable LLM agents whose
-shell tools may not preserve background processes. For a persistent local API, run
-`./scripts/launch_skill_mode.sh` and stop it with `./scripts/stop_skill_mode.sh`. If your agent or
-desktop shell does not preserve background processes, use `./scripts/launch_skill_mode.sh --foreground`
-and keep that terminal open while a browser or another agent uses the API.
-
-## Adoption Smoke
-
-For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, or another platform Agent, verify the
-copy-ready adoption pack:
+For a persistent local API:
 
 ```bash
+./scripts/launch_skill_mode.sh
+```
+
+If your shell does not preserve background processes:
+
+```bash
+./scripts/launch_skill_mode.sh --foreground
+```
+
+## Platform-Agent Adoption
+
+Downloadable plugin packs are generated under `platform/generated/`:
+
+- `study-anything-codex-plugin-pack.zip` for Codex Skills and terminal-capable Agents.
+- `study-anything-kimi-plugin-pack.zip` for Kimi-compatible OpenAI tool imports.
+- `study-anything-workbuddy-plugin-pack.zip` for WorkBuddy-style OpenAPI HTTP workspaces.
+
+Each pack has a matching `.json` manifest and `.sha256` checksum. The packs still call a local or
+private Study Anything runtime; they do not contain model keys and they are not marketplace listings.
+
+For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, or another platform Agent, verify the copy-ready adoption pack:
+
+```bash
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
 python3 scripts/generate_platform_adoption_pack.py --check
-python3 scripts/verify_platform_operator_drill.py --check
-python3 scripts/verify_first_lesson_authoring_kit.py --check
-python3 scripts/verify_external_eval_marketplace_harness.py --check
-python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
-python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check
-python3 scripts/generate_platform_feedback_package.py --check
-python3 scripts/generate_platform_field_rehearsal.py --check
-python3 scripts/verify_platform_field_rehearsal.py --check
-python3 scripts/generate_platform_support_triage.py --check
-python3 scripts/verify_platform_support_triage.py --check
-python3 scripts/generate_platform_onboarding_readiness.py --check
-python3 scripts/verify_platform_onboarding_readiness.py --check
-python3 scripts/generate_platform_public_support_status.py --check
-python3 scripts/verify_platform_public_support_status.py --check
-python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
-python3 scripts/verify_learning_enrichment_bridge.py --check
-python3 scripts/verify_agent_eval_baseline.py --check
+python3 scripts/verify_ecosystem_submission_pack.py
 python3 scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --copy-worktree
 ```
 
-The operator drill emits `study-anything-operator-drill-v1`, proving the pack can be consumed as an
-external platform tool directory. The first lesson kit emits `first-run-lesson-authoring-kit-v1`,
-with copyable Kimi/Codex/WorkBuddy prompts, tool-call sequence, context-package template, local Agent
-setup, and export evidence. The external eval harness emits
-`external-eval-marketplace-harness-v1`, tying native eval gates, optional mature adapters, fixtures,
-timeouts, and redaction checks into one platform-submission contract. The Agent eval marketplace
-enforcement verifier emits `agent-eval-marketplace-enforcement-v1`, proving external judge adapters
-are optional until explicitly required, required judge mode fails closed, baseline evidence is current,
-and no judge/model keys are stored by Study Anything. The plugin ecosystem kit emits
-`plugin-ecosystem-adoption-kit-v1`, proving bundled sample plugins, registry digests,
-quarantine-first trust policy, platform-pack commands, and redacted evidence are aligned without
-executing plugin entrypoints. The field adoption rehearsal emits
-`platform-field-adoption-rehearsal-v1` and includes `platform-import-failure-fixture-v1` mock
-fixtures for common platform import failures such as schema mismatch, missing local gateway,
-unsupported auth mode, tool naming drift, timeout, localhost restrictions, package corruption, and
-version drift. The Learning Enrichment bridge verifier emits
-`learning-enrichment-bridge-verification-v1`, proving platform-collected web, document, app,
-video-slice, Markdown, and Obsidian context can become source-bound micro-lessons, NotebookLM-style
-manual bridge evidence, Obsidian handoff, and strict second-brain exports without a standalone
-frontend. The support triage verifier emits `platform-support-triage-v1`, proving GitHub issue templates,
-mock support tickets, support bundle fields, and maintainer playbook entries are present and redacted
-for external platform failures. The onboarding readiness verifier emits
-`platform-onboarding-readiness-v1` and `platform-triage-dashboard-v1`, proving first external
-adopter walkthroughs, maintainer SLA labels, release-blocker fixtures, and privacy-safe triage
-dashboard evidence are included before handoff. The public support status verifier emits
-`public-support-status-v1` and `public-maintainer-dashboard-v1`, proving maintainers can publish
-platform status, known blocker fixtures, SLA labels, commands, and fixture hashes without exposing
-support bundle private fields. The adoption verifier emits `adoption-proof-v1`,
-proving the Skill Mode runtime, importer/enrichment/retrieval/teaching/eval
-loop, enrichment artifact, Obsidian export, and NotebookLM-style handoff without requiring the
-standalone frontend or storing real model keys in Study Anything.
+The platform packs prove that an external Agent can import the tool surface, run one source-bound learning loop, return audit/eval evidence, and export Obsidian or NotebookLM-style handoff artifacts without requiring a standalone frontend or storing real model keys in Study Anything.
+For scenario-based operation, use `docs/cognitive-loop-adoption-cookbook.md` to map Kimi, Codex, WorkBuddy, or a private platform Agent to first adoption, daily project review, risk decisions, and learning handoff.
 
-Maintainers and external testers can verify the project from a disposable clean clone:
+三个可下载插件包分别面向 Codex、Kimi-compatible 和 WorkBuddy-style 平台。它们只负责导入工具和启动本地运行时；真实模型、浏览器、外部应用和密钥仍然由用户自己的平台 Agent 管理。
 
-```bash
-python3 scripts/verify_clean_clone_adoption.py --repo .
-python3 scripts/verify_deployment_hardening.py --check
-```
-
-This checks Skill Mode, the OpenAI-compatible gateway dry-run, teaching layers, quiz, grading,
-mastery, `agent-audit`, `agent-eval/artifact`, `agent-eval/report`, and the deployment-hardening
-contract for Skill Mode, published images, source builds, Docker diagnostics, GHCR fallback, and
-operator pack inclusion. See `docs/adoption.md` for Promptfoo, Kimi, Codex, WorkBuddy, diagnostics,
-and published-image fallback paths.
+平台接入包证明：外部 Agent 可以导入工具面、跑完一次基于来源的学习闭环、返回 audit/eval 证据，并导出 Obsidian 或 NotebookLM 式交接材料；整个过程不要求独立前端，也不把真实模型密钥存入 Study Anything。
+如果要按场景操作，请使用 `docs/cognitive-loop-adoption-cookbook.md`，它把 Kimi、Codex、WorkBuddy 或私有平台 Agent 映射到首次接入、日常项目审查、风险决策和学习交接四条路径。
 
 ## Docker Self-Host
 
@@ -149,372 +221,97 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
-`doctor.sh` checks Docker, Compose, required tools, port availability, API health, Agent gateway
-reachability hints, plugin directories, and recovery commands before you launch.
+The default Docker profile is `core`: API and Postgres. Enable observability and optional topology services later with:
 
-The default Docker profile is `core`: API and Postgres. It starts in the background so the
-terminal returns. Enable observability and optional topology services later with
-`STACK_PROFILE=full ./scripts/launch_self_host.sh`.
+```bash
+STACK_PROFILE=full ./scripts/launch_self_host.sh
+```
 
-If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/buildx may fail before
-the app build starts. Use `USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh` or clone the repo
-to an ASCII-only path such as `~/study-anything` for local source builds.
+If your checkout path contains non-ASCII characters, Docker Desktop BuildKit/buildx may fail before the app build starts. Use published images or clone to an ASCII-only path for local source builds.
 
-Open:
+## Published Image Evidence
 
-- API docs: http://localhost:8000/docs
-- API health: http://localhost:8000/v1/health
-- Deployment guide: http://localhost:8000/v1/deployment/guide
-- Commercial readiness: http://localhost:8000/v1/commercial/readiness
-- Adoption telemetry: http://localhost:8000/v1/adoption/telemetry
-- PMF readiness: http://localhost:8000/v1/pmf/readiness
-- Recovery status: http://localhost:8000/v1/recovery/status
-- Encrypted sync status: http://localhost:8000/v1/sync/status
-- Knowledge graph status: http://localhost:8000/v1/graph/status
-- Agent eval policy: http://localhost:8000/v1/evals/policy
-- Agent eval artifact: `GET /v1/sessions/{session_id}/agent-eval/artifact`
-- Agent eval report: `GET /v1/sessions/{session_id}/agent-eval/report`
-- Langfuse: http://localhost:3000
-
-## Published Images
-
-Use the multi-architecture `v0.3.22-alpha` API image when you want to skip local API builds:
+The current release evidence line is `v0.3.31-alpha`. If local source builds are blocked by non-ASCII checkout paths, slow build layers, or Docker Desktop friction, use the published API image path:
 
 ```bash
 python3 scripts/setup_env.py
 USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh
+python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --manifest-only
 ```
 
-The launcher pulls the API image and shows layer progress so first-run downloads remain
-understandable on slower connections. The release image supports `linux/amd64` and `linux/arm64`.
-
-Maintainers can verify the public images with:
-
-```bash
-python3 scripts/verify_deployment_hardening.py --check
-python3 scripts/verify_published_image_launch.py --tag v0.3.22-alpha
-python3 scripts/generate_published_image_evidence.py --check
-python3 scripts/verify_published_image_evidence.py --check
-```
-
-`published-image-evidence-v1` records manifest platforms, docker-images workflow evidence,
-local pull-timeout fallback rules, optional remote smoke replay, and release-blocking
-classifications without learning data, Agent endpoints, local paths, or model secrets.
-
-Release handoff evidence is packaged as `adopter-evidence-archive-v1`:
-
-```bash
-python3 scripts/generate_adopter_evidence_archive.py --check
-python3 scripts/verify_adopter_evidence_archive.py --check
-```
-
-If a platform Agent is driving setup, it can call `GET /v1/deployment/guide`,
-`GET /v1/commercial/readiness`, `GET /v1/adoption/telemetry`, and `GET /v1/pmf/readiness` after the
-API is reachable. `deployment-guide-v1` gives copyable launch commands, failure classes, and the
-privacy boundary for user-owned Agents.
-`commercial-readiness-v1` states that the GitHub OSS/platform-Agent launch path is ready while hosted
-Sync, Publish, Teams, Catalyst, billing, SSO, and a standalone app remain future work.
-`adoption-telemetry-v1` and `pmf-readiness-v1` expose local aggregate evidence only; no source text,
-answers, insights, raw user ids, Agent endpoints, API keys, or browser/video/app private context are
-included. `ecosystem-submission-v1` is the v0.3.4 no-frontend submission contract for
-Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI platforms.
+This keeps Cognitive Loop positioning separate from deployability proof: the current published image evidence still belongs to the Study Anything learning-adapter runtime, while Mastra/watchers/HTML Artifact console remain planned layers.
 
 ## Bring Your Own Agent
 
-Study Anything ships with a deterministic fake agent for tests and demos. Real reasoning is performed by an agent that the user owns and runs outside Study Anything.
+Real reasoning stays outside Study Anything. The user-owned Agent controls model choice, credentials, tools, browser access, and external data. Study Anything sends structured learning tasks, validates structured results, and records redacted evidence.
 
-Supported MVP provider shapes:
+真实推理留在 Study Anything 外部。用户自己的 Agent 负责模型选择、密钥、工具、浏览器和外部数据；Study Anything 只发送结构化学习任务、校验结构化结果，并记录脱敏证据。
+
+Provider shapes:
 
 - `fake_agent`: deterministic local provider for tests and demos.
-- `http_agent`: user-owned local or private HTTP gateway. This is the recommended MVP path.
+- `http_agent`: user-owned local or private HTTP gateway, recommended for MVP usage.
 - `cli_agent`: reserved adapter, disabled by default until explicitly allowlisted.
-- `mcp_agent`: plugin ecosystem extension point.
+- `mcp_agent`: future plugin ecosystem extension point.
 
-The agent flow mirrors tools such as OpenClaw and Codex: the user controls the model, credentials, tools, and reasoning inside their own agent; Study Anything sends structured learning tasks and validates structured results.
+## Product Direction
 
-For Kimi/OpenAI-compatible providers, verify the local gateway without a real key first:
+Short term:
 
-```bash
-python3 scripts/verify_openai_compatible_gateway.py --contract-only
-python3 scripts/verify_agent_gateway_hardening.py --contract-only
-python3 scripts/verify_external_agent_adapter_hardening.py --contract-only
-python3 scripts/verify_openai_compatible_gateway.py --gateway-only
-python3 scripts/verify_agent_gateway_hardening.py
-python3 scripts/verify_notebooklm_obsidian_bridge_hardening.py
-python3 scripts/verify_plugin_quarantine.py
-python3 scripts/verify_security_recovery_hardening.py
-API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py
-```
+- Keep Study Anything stable as the learning adapter and platform-Agent tool surface.
+- Publish the Cognitive Loop positioning and architecture.
+- Add conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`.
 
-Use `--contract-only` when your current Agent runner cannot open localhost sockets; it proves the
-gateway, adapter, and eval redaction contracts in-process. `--gateway-only` and the hardening
-commands without `--contract-only` remain the stricter runtime checks.
+Next stages:
 
-Then replace dry-run mode with your own gateway, model, credentials, tools, and network policy.
-Keep credentials in the gateway environment; Study Anything rejects endpoint URLs or provider
-metadata that contain secret-like fields.
+- Harden Cognitive Loop Core around the local SQLite Event Store and static HTML reports.
+- Add Mastra runtime as the workflow/Agent/HITL adapter.
+- Keep extending LoopRun, DecisionCard, RiskScore, HumanGateResult, and EvalResult mapping into Langfuse-style traces and scores from local receipts.
+- Convert project diffs and events into Study Anything learning sessions.
+- Add file/Git/test/Agent watchers and a realtime local HTML console.
 
-## Agent Eval
+短期目标：
 
-Study Anything now emits a redacted Agent eval artifact that can be consumed by mature open-source
-eval tools instead of relying on a small homegrown judge. It also emits `agent-eval-policy-v1` and
-`agent-eval-report-v1` so platform Agents can prove the Study Anything Agent workflow actually ran.
-The foundation targets Promptfoo for
-HTTP/CI contract gates, DeepEval for Python task-completion and quality metrics, LangChain AgentEvals
-for trajectory matching, and Ragas-style retrieval/context grounding.
+- 保持 Study Anything 作为学习适配层和平台 Agent 工具面的稳定性。
+- 发布 Cognitive Loop 的新定位和架构说明。
+- 明确 `ProjectEvent`、`DecisionCard`、`LoopRun`、`MasteryRecord`、`EvolutionReport` 等概念契约。
 
-Against a running API:
+下一阶段：
 
-```bash
-API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py
-.venv/bin/python scripts/verify_agent_eval_assets.py
-.venv/bin/python scripts/verify_external_eval_marketplace_harness.py --check
-.venv/bin/python scripts/verify_agent_eval_marketplace_enforcement.py --check
-API_BASE=http://127.0.0.1:8000 .venv/bin/python scripts/run_external_agent_evals.py --tool report --create-session --required
-```
+- 围绕本地 SQLite Event Store 和静态 HTML 报告继续加固 Cognitive Loop Core。
+- 用 Mastra 作为 workflow、Agent、HITL 的运行时适配层。
+- 继续把 LoopRun、DecisionCard、RiskScore、HumanGateResult、EvalResult 从本地 receipt 映射到 Langfuse 风格 trace 和 score。
+- 把项目 diff 与事件转成 Study Anything 学习会话。
+- 增加文件/Git/测试/Agent watcher 和实时本地 HTML Console。
 
-When Node/npm package installation is allowed, run the Promptfoo adapter directly through the wrapper:
+## Commercial Path
 
-```bash
-API_BASE=http://127.0.0.1:8000 \
-  .venv/bin/python scripts/run_external_agent_evals.py --tool promptfoo --create-session --required
-```
+The project remains Apache-2.0 and local-first. Monetization is not a paid app gate. Future paid services should sell convenience, collaboration, reliability, and trust infrastructure:
 
-See `docs/agent-eval.md`, `docs/eval-frameworks.md`, and `evals/promptfoo/agent-eval-artifact.yaml`.
+- hosted encrypted sync
+- team workspaces
+- publish/share workflows
+- trusted plugin/ecosystem distribution
+- professional support and managed infrastructure
 
-For retrieval/context quality gates:
+项目保持 Apache-2.0 和本地优先。商业化不应该变成“付费才能使用核心能力”。未来付费服务只销售便利性、协作性、可靠性和可信生态基础设施：
 
-```bash
-STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 \
-  .venv/bin/python scripts/run_external_agent_evals.py --tool retrieval --create-session --required
-```
-
-## Platform Agent Package
-
-Use the constrained tool manifest when integrating Study Anything into Codex, Kimi Work,
-WorkBuddy-style workspaces, or private Agent platforms:
-
-```text
-platform/study-anything-platform-tools.json
-```
-
-The manifest exposes only the learning loop tools and redacted evidence endpoints. It does not expose
-model/provider setup, plugin installation, encrypted sync export, or other management APIs.
-
-Generated import assets are checked in for platforms that prefer OpenAPI or function tools:
-
-```text
-platform/generated/study-anything-platform-openapi.json
-platform/generated/study-anything-openai-tools.json
-platform/generated/study-anything-tool-catalog.md
-platform/ecosystem-submission.json
-platform/generated/study-anything-platform-bundle.json
-platform/generated/study-anything-first-lesson-authoring-kit.json
-platform/generated/study-anything-plugin-ecosystem-adoption-kit.json
-platform/generated/study-anything-platform-field-rehearsal.json
-fixtures/platform-import-failures/*.json
-```
-
-Copy-ready starter packs are checked in for platform ecosystems:
-
-```text
-platform/packs/codex
-platform/packs/kimi
-platform/packs/workbuddy
-```
-
-Regenerate or verify these assets after editing the manifest, platform packs, or bundled docs:
-
-```bash
-python3 scripts/generate_platform_agent_assets.py
-python3 scripts/generate_platform_agent_assets.py --check
-python3 scripts/verify_ecosystem_submission_pack.py
-python3 scripts/verify_platform_ecosystem_packs.py
-python3 scripts/verify_first_lesson_authoring_kit.py --check
-python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
-python3 scripts/generate_platform_field_rehearsal.py --check
-python3 scripts/verify_platform_field_rehearsal.py --check
-python3 scripts/generate_platform_bundle_manifest.py --check
-```
-
-Validate a running platform-tool integration with:
-
-```bash
-API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py
-API_BASE=http://127.0.0.1:8000 python3 scripts/verify_importer_lesson_flow.py
-STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py
-API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_lesson_flow.py
-```
-
-`./scripts/run_skill_mode_demo.sh` runs these checks automatically after the CLI smoke.
-
-## Skill Mode
-
-The repo includes a standard-library CLI and a repo-local Codex skill:
-
-```bash
-./scripts/run_skill_mode_demo.sh
-```
-
-For persistent sessions, use `./scripts/launch_skill_mode.sh` and then
-`python3 scripts/study_anything_cli.py demo`.
-
-Connect a user-owned HTTP agent, import Learning Context Packages, start source-bound sessions, attach
-enrichment, generate teaching layers, answer questions, inspect mastery, export Obsidian notes, and
-create enrichment artifacts plus portable learning packages through the same public API. Chat-only LLM products cannot run local scripts or reach
-`localhost`; use a terminal-capable agent or expose the API securely. Kimi can be the user-owned
-reasoning agent through the local gateway, but a browser-only Kimi chat cannot operate the repo-local
-skill by itself. For Kimi API setup, see `docs/kimi-agent-gateway.md`. For general Skill Mode usage,
-see `docs/skill-mode.md`.
-
-For Codex, Kimi, WorkBuddy, or another platform Agent, see `docs/platform-agent-integrations.md`.
-Platform integrations should return `agent-audit`, `agent-eval`, `agent-eval-report`, `agent-quality-eval`,
-`retrieval-quality-eval`, `learning-enrichment-artifact-v1`,
-`learning-enrichment-bridge-verification-v1`, Obsidian, and `learning-package-v1` evidence after completed learning and
-retrieval-backed loops. Importer integrations should first validate `learning-context-package-v1`.
-
-## Repository Layout
-
-```text
-apps/api/                  FastAPI app and learning engine
-docs/                      Architecture, roadmap, plugin SDK, commercial model
-evals/                     External eval tool templates
-infra/compose/             Docker Compose stack
-platform/                  Platform Agent tool manifest and generated import assets
-fixtures/notebooklm/       NotebookLM-style Learning Context Package fixtures
-plugins/example-exporter/  Example exporter and second-brain handoff template
-plugins/example-agent-provider/ Example agent provider manifest
-plugins/example-web-importer/ Example web importer manifest
-plugins/example-note-importer/ Example Markdown/Obsidian importer manifest
-plugins/example-enrichment-importer/ Example importer plus enrichment template
-scripts/                   Local smoke helpers
-skills/study-anything/     Repo-local Agent skill for CLI learning flows
-```
-
-## Plugin Ecosystem
-
-The alpha plugin surface supports SDK contracts, manifest validation, capability indexing, local
-package validation, discovery, registry digest review, and permission-gated local installation for
-importers, enrichment builders, agent providers, agent tools, source verifiers, quiz generators,
-graders, exporters, and future client panels. See `docs/plugin-sdk.md`, `docs/plugin-registry.md`,
-`docs/plugins.md`, and `plugins/example-exporter`.
-
-Inspect the SDK and validate a local package without executing plugin code:
-
-```bash
-python3 scripts/study_anything_cli.py plugin-sdk
-python3 scripts/study_anything_cli.py plugin-capabilities
-python3 scripts/study_anything_cli.py plugin-validate plugins/example-exporter
-```
-
-Install an explicitly selected local plugin with the CLI without downloading or executing remote code:
-
-```bash
-python3 scripts/install_local_plugin.py plugins/example-exporter
-```
-
-Review local registry metadata before installing or updating community plugins:
-
-```bash
-curl http://localhost:8000/v1/plugins/registry-review
-```
-
-The registry review path reports digest/signature status, update candidates, blocked entries, and
-manual-review actions without downloading or executing plugin code.
-
-For external platform submissions, run:
-
-```bash
-python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check
-python3 scripts/verify_plugin_ecosystem_adoption_kit.py \
-  --pack platform/generated/study-anything-platform-adoption-pack.zip
-```
-
-The report proves the adoption pack includes `plugins/registry.json`, all bundled sample plugin
-manifests and sources, digest-verified registry metadata, quarantine-first install policy, and
-redacted platform-pack evidence.
-
-## Local PMF Signals
-
-Study Anything includes local-only API metrics for PMF validation:
-
-- completed learning loops and completion rate
-- active learner hashes and repeat usage
-- mastery delta and answer volume
-- ready plugin count
-- opt-in local interest for future Sync, Publish, Teams, Catalyst, or hosted alpha services
-
-These metrics stay on the self-hosted machine by default. They do not expose reading prose, quiz prompts,
-answers, grading feedback, insights, Agent metadata, raw user IDs, or raw contact values.
-
-## Self-Hosting
-
-See `docs/self-hosting.md` for launch, data, agent provider, and plugin mounting notes.
-
-## Local Backups
-
-Protect the local-first learning state with an explicit backup before upgrades:
-
-```bash
-python3 scripts/self_host_data.py backup
-```
-
-The backup includes the canonical app Postgres dump, Agent configuration volume, checksums, and a
-private `env.snapshot`. See `docs/self-hosting.md` for restore commands and optional operational
-volume backups.
-
-For portable local-first state packages, the API can also generate an encrypted sync package with a
-user-supplied passphrase:
-
-```bash
-curl -X POST http://localhost:8000/v1/sync/export \
-  -H 'Content-Type: application/json' \
-  -d '{"passphrase":"choose a long local passphrase"}'
-```
-
-Study Anything does not store the passphrase or upload the package. You can inspect or preview restore
-impact without returning plaintext or writing local data:
-
-```bash
-curl -X POST http://localhost:8000/v1/sync/restore-preview \
-  -H 'Content-Type: application/json' \
-  -d '{"passphrase":"choose a long local passphrase","package":{...}}'
-```
-
-## Commercial Readiness
-
-Study Anything is now a public self-host Alpha foundation with a machine-readable commercial
-readiness contract. The current commercial path is GitHub OSS plus platform-Agent adoption; it is not
-yet a paid hosted app. Run:
-
-```bash
-python3 scripts/verify_commercial_readiness.py
-python3 scripts/verify_ecosystem_submission_pack.py
-```
-
-See `docs/commercial-readiness.md` for the hosted-service contracts and launch limits. See
-`docs/ecosystem-submission.md` before publishing or submitting platform assets.
-For external operators who start from GitHub instead of a checkout, use
-`docs/release-asset-adoption.md` and run:
-
-```bash
-python3 scripts/verify_release_asset_adoption.py --tag v0.3.29-alpha --runtime metadata-only
-```
-
-## GitHub Launch
-
-The repository includes GitHub Actions for Python tests, Docker Compose smoke, and GHCR API image publishing. See `docs/github-launch.md` before cutting the current alpha release.
-
-Before a risky local upgrade, rehearse backup and restore without touching your real volumes:
-
-```bash
-python3 scripts/verify_backup_restore_drill.py
-```
-
-The drill runs against a disposable Docker Compose project. It verifies the API learning loop, creates
-a local backup, mutates state, restores the backup, and confirms the session count rolls back while
-destructive restore remains unavailable from the API.
+- 托管加密同步
+- 团队工作区
+- 发布/分享工作流
+- 可信插件/生态分发
+- 专业支持和托管基础设施
 
 ## Status
 
-This repository is a self-host alpha. The deterministic learning workflow, Skill Mode, agent registry, plugin manifest validation, local encrypted sync package, local PMF metrics, API surface, Postgres-backed Docker session store, optional FalkorDB topology projection, and Docker Compose stack are present. Hosted services are intentionally staged after PMF validation. A polished standalone Web UI is not part of the current launch path.
+This repository is a public self-host alpha. The current implementation is strongest as a Study Anything learning adapter and platform-Agent integration package. The Cognitive Loop System pivot is the next product layer: a local-first control system for learning, reversing, operating, verifying, auditing, and evolving any AI-assisted project.
+
+本仓库目前是公开 self-host alpha。当前实现最成熟的是 Study Anything 学习适配层和平台 Agent 接入包。Cognitive Loop System 是下一层产品定位：一个本地优先的控制系统，用于学习、逆向、运行、验证、审计和进化任何 AI 辅助项目。
+
+See:
+
+- `docs/product-positioning.md`
+- `docs/architecture.md`
+- `docs/roadmap.md`
+- `docs/platform-agent-integrations.md`
+- `docs/security.md`

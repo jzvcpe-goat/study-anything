@@ -13,12 +13,10 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "first-run-lesson-authoring-kit-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-first-lesson-authoring-kit.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
@@ -76,32 +74,6 @@ FORBIDDEN_LITERALS = [
 
 class FirstLessonAuthoringKitError(RuntimeError):
     """Readable first-lesson authoring-kit failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    lowered = diagnostic.lower()
-    lines = [
-        f"verify_first_lesson_authoring_kit failed: {diagnostic}",
-        "Next steps:",
-    ]
-    if "stale" in lowered:
-        lines.append(
-            "- Refresh the first-lesson kit: python3 scripts/verify_first_lesson_authoring_kit.py --write"
-        )
-    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
-        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
-    else:
-        lines.append(
-            "- Recheck the first-lesson kit: python3 scripts/verify_first_lesson_authoring_kit.py --check"
-        )
-    lines.extend(
-        [
-            "- Run the platform lesson flow: python3 scripts/verify_platform_lesson_flow.py",
-            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
-    return "\n".join(lines)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -528,5 +500,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_first_lesson_authoring_kit failed: {exc}", file=sys.stderr)
         sys.exit(1)

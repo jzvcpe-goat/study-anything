@@ -21,36 +21,13 @@
   "support_bundle": {
     "command_ran": "python3 scripts/verify_ecosystem_submission_pack.py",
     "diagnostic_code": "docs_step_unclear",
-    "failure_class": "docs_step_unclear",
     "fixture_id": "tool_naming_drift",
-    "image_evidence": {},
-    "manifest_evidence": {},
     "next_commands_tried": [
       "python3 scripts/verify_ecosystem_submission_pack.py"
     ],
     "platform_id": "generic",
-    "recommended_next_steps": [
-      "python3 scripts/verify_ecosystem_submission_pack.py",
-      "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body"
-    ],
     "redacted_log_excerpt": "status=needs_attention\ndiagnostic_code=docs_step_unclear\nsource_text_redacted=<yes>\nanswer_redacted=<yes>\nagent_endpoint=<redacted>\nmodel_or_judge_secret=<redacted>\n",
-    "redaction_flags": {
-      "agent_endpoint_secrets_included": false,
-      "agent_prompts_included": false,
-      "automatic_upload": false,
-      "browser_video_private_context_included": false,
-      "learner_answers_included": false,
-      "local_absolute_paths_included": false,
-      "personal_profile_included": false,
-      "raw_source_text_included": false,
-      "real_model_keys_included": false
-    },
-    "release_assets": {},
-    "release_version": "v0.3.29-alpha",
-    "replay_command": "python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body",
-    "runtime": "skill-mode",
-    "tool_import_status": "unknown",
-    "workflow_stage": "docs_confusion"
+    "release_version": "v0.3.31-alpha"
   },
   "support_category": "docs_confusion",
   "ticket_id": "docs_confusion",
@@ -60,5 +37,5 @@
     "first_response": "Ask for the redacted support bundle and exact platform import surface.",
     "reproduction": "Re-run the minimum command against the same adoption pack version."
   },
-  "version": "v0.3.29-alpha"
+  "version": "v0.3.31-alpha"
 }

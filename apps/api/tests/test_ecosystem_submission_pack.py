@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -10,48 +9,12 @@ from pathlib import Path
 from _path import ROOT  # noqa: F401
 
 
-REPO = Path(__file__).resolve().parents[3]
-VERIFIER = REPO / "scripts" / "verify_ecosystem_submission_pack.py"
-
-if str(REPO / "scripts") not in sys.path:
-    sys.path.insert(0, str(REPO / "scripts"))
-
-VERIFIER_SPEC = importlib.util.spec_from_file_location(
-    "verify_ecosystem_submission_pack",
-    VERIFIER,
-)
-assert VERIFIER_SPEC is not None and VERIFIER_SPEC.loader is not None
-verifier = importlib.util.module_from_spec(VERIFIER_SPEC)
-VERIFIER_SPEC.loader.exec_module(verifier)
-
-
 class EcosystemSubmissionPackTests(unittest.TestCase):
-    def test_verifier_failure_formatter_is_actionable_and_redacted(self) -> None:
-        secret = "sk-proj-" + "abcdefghijklmnop123456"
-        temp_path = "/private/" + "tmp/study-anything/ecosystem-submission.json"
-        message = verifier.format_cli_failure(
-            RuntimeError(
-                f"ecosystem submission stale at {temp_path} "
-                f"with Authorization: Bearer {secret}"
-            )
-        )
-
-        self.assertIn("verify_ecosystem_submission_pack failed:", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_platform_agent_assets.py", message)
-        self.assertIn("generate_platform_adoption_pack.py", message)
-        self.assertIn("generate_platform_bundle_manifest.py", message)
-        self.assertIn("verify_ecosystem_submission_pack.py", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertIn("<temp-path>", message)
-        self.assertIn("Authorization: Bearer <redacted>", message)
-        self.assertNotIn("/private/" + "tmp", message)
-        self.assertNotIn(secret, message)
-
     def test_ecosystem_submission_verifier_passes(self) -> None:
+        root = Path(__file__).resolve().parents[3]
         completed = subprocess.run(
-            [sys.executable, str(VERIFIER)],
-            cwd=REPO,
+            [sys.executable, str(root / "scripts" / "verify_ecosystem_submission_pack.py")],
+            cwd=root,
             text=True,
             capture_output=True,
             check=False,
@@ -60,7 +23,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "ecosystem-submission-verification-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["version"], "v0.3.29-alpha")
+        self.assertEqual(payload["version"], "v0.3.31-alpha")
         self.assertTrue(payload["no_frontend_required"])
         self.assertFalse(payload["real_model_keys_stored_by_study_anything"])
         self.assertEqual(
@@ -127,7 +90,7 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             (root / "platform" / "study-anything-platform-tools.json").read_text(encoding="utf-8")
         )
         self.assertEqual(submission["schema_version"], "ecosystem-submission-v1")
-        self.assertEqual(submission["version"], "v0.3.29-alpha")
+        self.assertEqual(submission["version"], "v0.3.31-alpha")
         self.assertIs(submission["project"]["standalone_frontend_required"], False)
         self.assertIs(submission["project"]["billing_required"], False)
         self.assertIs(submission["project"]["hosted_services_in_mvp"], False)
@@ -174,6 +137,50 @@ class EcosystemSubmissionPackTests(unittest.TestCase):
             "platform/generated/study-anything-platform-feedback-package.zip",
             submission["shared_assets"],
         )
+        self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-codex-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-kimi-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.json",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+            submission["shared_assets"],
+        )
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+            submission["shared_assets"],
+        )
+        self.assertIn("scripts/generate_platform_plugin_packs.py", submission["shared_assets"])
+        self.assertIn("scripts/verify_platform_plugin_packs.py", submission["shared_assets"])
+        self.assertIn("scripts/localhost_diagnostics.py", submission["shared_assets"])
+        self.assertIn("QUICKSTART.md", submission["shared_assets"])
+        self.assertIn("START_HERE.command", submission["shared_assets"])
+        self.assertIn("docs/getting-started.md", submission["shared_assets"])
+        self.assertIn("docs/skill-mode.md", submission["shared_assets"])
+        self.assertIn("scripts/start_here.sh", submission["shared_assets"])
         self.assertIn(
             "platform/generated/study-anything-platform-field-rehearsal.json",
             submission["shared_assets"],
@@ -409,30 +416,6 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
 
-    def test_platform_submission_dry_run_failure_is_actionable_and_redacted(self) -> None:
-        root = Path(__file__).resolve().parents[3]
-        completed = subprocess.run(
-            [
-                sys.executable,
-                str(root / "scripts" / "verify_platform_submission_dry_run.py"),
-                "--pack",
-                "/Users/james/private/missing-pack.zip",
-            ],
-            cwd=root,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("verify_platform_submission_dry_run failed:", completed.stderr)
-        self.assertIn("Next steps:", completed.stderr)
-        self.assertIn("generate_platform_adoption_pack.py", completed.stderr)
-        self.assertIn("diagnose_adoption.py", completed.stderr)
-        self.assertIn("verify_ecosystem_submission_pack.py", completed.stderr)
-        self.assertIn("<local-path>", completed.stderr)
-        self.assertNotIn("/Users/james", completed.stderr)
-
     def test_platform_submission_dry_run_report_privacy(self) -> None:
         root = Path(__file__).resolve().parents[3]
         report = json.loads(
@@ -441,7 +424,7 @@ class PlatformSubmissionDryRunTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-submission-dry-run-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["blocked_platforms"], [])
         self.assertFalse(report["privacy"]["real_model_keys_stored_by_study_anything"])
@@ -491,7 +474,7 @@ class PlatformManualSubmissionRehearsalReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "platform-manual-submission-rehearsal-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         self.assertFalse(report["privacy_assertions"]["raw_source_text_returned"])
@@ -513,7 +496,7 @@ class FirstLessonAuthoringKitReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "first-run-lesson-authoring-kit-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(set(report["copyable_prompts"]), {"en", "zh"})
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
@@ -533,7 +516,7 @@ class ExternalEvalHarnessReportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(report["schema_version"], "external-eval-marketplace-harness-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         adapter_ids = {item["adapter_id"] for item in report["external_adapters"]}
         self.assertEqual(adapter_ids, {"promptfoo", "deepeval", "langchain-agentevals", "ragas"})

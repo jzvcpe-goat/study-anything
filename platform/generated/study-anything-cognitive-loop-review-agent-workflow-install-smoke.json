@@ -1,0 +1,192 @@
+{
+  "acceptance": {
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check",
+    "workflow_template": "platform/workflows/cognitive-loop-review-agent-manual.yml"
+  },
+  "dry_run": {
+    "acceptance_bundles": [
+      {
+        "bundle_dir_name": "review-agent-acceptance/approved",
+        "decision": "approved",
+        "fixture": "approved.json",
+        "manifest_sha256": "b963748379a357976ed49ebb874a508960b9b80727878faed63cf1ef82ddc7a7",
+        "metadata_files": [
+          "manifest.json",
+          "SUMMARY.md",
+          "review-agent-ci-receipt.json",
+          "review-agent-pr-comment-pack.json"
+        ]
+      },
+      {
+        "bundle_dir_name": "review-agent-acceptance/needs-review",
+        "decision": "needs-review",
+        "fixture": "needs-review.json",
+        "manifest_sha256": "eecbedd516199c0007c4c9390f1247b9ed29cf23f63b06ca505e7dd36f1db006",
+        "metadata_files": [
+          "manifest.json",
+          "SUMMARY.md",
+          "review-agent-ci-receipt.json",
+          "review-agent-pr-comment-pack.json"
+        ]
+      },
+      {
+        "bundle_dir_name": "review-agent-acceptance/needs-fix",
+        "decision": "needs-fix",
+        "fixture": "needs-fix.json",
+        "manifest_sha256": "6d6f8fe8e34cb430f078dc4ff6283ff0e59e6be6bc431c16d25862da7e9e9cc2",
+        "metadata_files": [
+          "manifest.json",
+          "SUMMARY.md",
+          "review-agent-ci-receipt.json",
+          "review-agent-pr-comment-pack.json"
+        ]
+      }
+    ],
+    "decision_path_coverage": [
+      "approved",
+      "needs-review",
+      "needs-fix"
+    ],
+    "fixture_count": 3,
+    "policy_matrix": {
+      "approved": {
+        "advisory": {
+          "decision": "approved",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "pass"
+        },
+        "soft": {
+          "decision": "approved",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "pass"
+        },
+        "strict": {
+          "decision": "approved",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "pass"
+        }
+      },
+      "needs-fix": {
+        "advisory": {
+          "decision": "needs-fix",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "advisory_block_recommended"
+        },
+        "soft": {
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "metadata_only": true,
+          "status": "blocked"
+        },
+        "strict": {
+          "decision": "needs-fix",
+          "exit_code": 2,
+          "metadata_only": true,
+          "status": "blocked"
+        }
+      },
+      "needs-review": {
+        "advisory": {
+          "decision": "needs-review",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "needs_human_review"
+        },
+        "soft": {
+          "decision": "needs-review",
+          "exit_code": 0,
+          "metadata_only": true,
+          "status": "needs_human_review"
+        },
+        "strict": {
+          "decision": "needs-review",
+          "exit_code": 2,
+          "metadata_only": true,
+          "status": "blocked"
+        }
+      }
+    },
+    "policy_path_coverage": [
+      "advisory",
+      "soft",
+      "strict"
+    ]
+  },
+  "install": {
+    "copied_from_adoption_pack": true,
+    "file_changes_persisted": false,
+    "repo_checkout_required": false,
+    "runtime_started": false,
+    "source_template": "platform/workflows/cognitive-loop-review-agent-manual.yml",
+    "target_workflow": {
+      "automatic_pr_trigger": false,
+      "automatic_push_trigger": false,
+      "content_sha256": "7a1e716e3c85d4a7a1120171634382af8ea211d979d8088bd01dc434c3b15d9b",
+      "installed_path": ".github/workflows/cognitive-loop-review-agent-manual.yml",
+      "manual_only_trigger": true,
+      "read_only_permissions": true,
+      "requires_external_agent_secret": false,
+      "upload_allowlist": [
+        "manifest.json",
+        "SUMMARY.md",
+        "review-agent-ci-receipt.json",
+        "review-agent-pr-comment-pack.json",
+        "review-agent-policy-gate.json",
+        "review-agent-checks-summary.md"
+      ],
+      "uploads_raw_report": false
+    }
+  },
+  "pack": {
+    "file_count": 523,
+    "no_frontend_required": true,
+    "path": "platform/generated/study-anything-platform-adoption-pack.zip",
+    "real_model_keys_stored_by_study_anything": false,
+    "required_review_agent_files_present": [
+      "manifest.json",
+      "platform/workflows/cognitive-loop-review-agent-manual.yml",
+      "scripts/cognitive_loop_review_agent_acceptance_bundle.py",
+      "scripts/cognitive_loop_review_agent_policy_gate.py",
+      "scripts/cognitive_loop_review_agent_receipt.py",
+      "scripts/cognitive_loop_review_agent_pr_comment.py",
+      "docs/github-review-agent-workflow.md",
+      "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
+      "platform/generated/study-anything-cognitive-loop-review-agent-policy-gate.json",
+      "fixtures/review-agent/approved.json",
+      "fixtures/review-agent/needs-review.json",
+      "fixtures/review-agent/needs-fix.json"
+    ],
+    "schema_version": "study-anything-platform-adoption-pack-v1"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "command_stderr_included": false,
+    "command_stdout_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "raw_report_uploaded": false,
+    "real_model_keys_included": false,
+    "safe_for_public_evidence": true,
+    "temporary_paths_included": false
+  },
+  "purpose": "Prove an external adopter can extract the platform adoption pack, install the manual Review Agent GitHub workflow into .github/workflows, and reproduce metadata-only policy gate behavior without a repo checkout or raw report artifact upload.",
+  "quality_gates": {
+    "decision_path_coverage": "pass",
+    "installed_workflow_matches_pack": "pass",
+    "manual_only_trigger": "pass",
+    "metadata_only_upload_allowlist": "pass",
+    "policy_gate_runnable_from_pack": "pass",
+    "raw_report_not_uploaded": "pass",
+    "read_only_permissions": "pass",
+    "zip_only_install": "pass"
+  },
+  "schema_version": "cognitive-loop-review-agent-workflow-install-smoke-v1",
+  "status": "pass"
+}

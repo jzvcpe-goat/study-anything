@@ -75,14 +75,18 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertEqual(payload["schema_version"], "study-anything-platform-bundle-v1")
         self.assertEqual(payload["platforms"], ["codex", "kimi", "workbuddy"])
         file_paths = {item["path"] for item in payload["files"]}
-        forbidden_recursive_outputs = {
+        bundle_forbidden_recursive_outputs = {
             "platform/generated/study-anything-platform-bundle.json",
             "platform/generated/study-anything-platform-adoption-pack.json",
             "platform/generated/study-anything-platform-adoption-pack.zip",
         }
+        adoption_forbidden_recursive_outputs = {
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-platform-adoption-pack.zip",
+        }
         adoption_file_paths = {item["path"] for item in adoption["files"]}
-        self.assertFalse(file_paths.intersection(forbidden_recursive_outputs))
-        self.assertFalse(adoption_file_paths.intersection(forbidden_recursive_outputs))
+        self.assertFalse(file_paths.intersection(bundle_forbidden_recursive_outputs))
+        self.assertFalse(adoption_file_paths.intersection(adoption_forbidden_recursive_outputs))
         self.assertIn("platform/study-anything-platform-tools.json", file_paths)
         self.assertIn("platform/ecosystem-submission.json", file_paths)
         self.assertIn("platform/packs/codex/pack.json", file_paths)
@@ -112,7 +116,26 @@ class PlatformBundleManifestTests(unittest.TestCase):
         )
         self.assertIn("platform/generated/study-anything-platform-feedback-package.json", file_paths)
         self.assertIn("platform/generated/study-anything-platform-feedback-package.zip", file_paths)
+        self.assertIn("platform/generated/study-anything-codex-plugin-pack.json", file_paths)
+        self.assertIn("platform/generated/study-anything-codex-plugin-pack.zip", file_paths)
+        self.assertIn("platform/generated/study-anything-codex-plugin-pack.sha256", file_paths)
+        self.assertIn("platform/generated/study-anything-kimi-plugin-pack.json", file_paths)
+        self.assertIn("platform/generated/study-anything-kimi-plugin-pack.zip", file_paths)
+        self.assertIn("platform/generated/study-anything-kimi-plugin-pack.sha256", file_paths)
+        self.assertIn("platform/generated/study-anything-workbuddy-plugin-pack.json", file_paths)
+        self.assertIn("platform/generated/study-anything-workbuddy-plugin-pack.zip", file_paths)
+        self.assertIn("platform/generated/study-anything-workbuddy-plugin-pack.sha256", file_paths)
+        self.assertIn("scripts/generate_platform_plugin_packs.py", file_paths)
+        self.assertIn("scripts/verify_platform_plugin_packs.py", file_paths)
         self.assertIn("platform/generated/study-anything-learning-enrichment-bridge.json", file_paths)
+        self.assertIn("platform/generated/study-anything-okf-alignment.json", file_paths)
+        self.assertIn("docs/okf-alignment.md", file_paths)
+        self.assertIn("platform/okf/examples/demo-session.json", file_paths)
+        self.assertIn("platform/okf/examples/demo-okf-bundle/manifest.json", file_paths)
+        self.assertIn("platform/okf/examples/demo-okf-bundle/overview.md", file_paths)
+        self.assertIn("platform/okf/examples/demo-okf-bundle/questions/review.md", file_paths)
+        self.assertIn("scripts/export_okf_bundle.py", file_paths)
+        self.assertIn("scripts/verify_okf_bundle.py", file_paths)
         self.assertIn("docs/commercial-readiness.md", file_paths)
         self.assertIn("docs/ecosystem-submission.md", file_paths)
         self.assertIn("docs/eval-frameworks.md", file_paths)

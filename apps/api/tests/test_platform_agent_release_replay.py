@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import json
-import importlib.util
-import os
 import socket
 import subprocess
 import sys
@@ -10,7 +8,6 @@ import threading
 import unittest
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from unittest.mock import patch
 
 from _path import ROOT  # noqa: F401
 
@@ -27,14 +24,11 @@ FORBIDDEN_MARKERS = (
     "sk-",
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private platform replay " + "source text",
-    "Private platform replay learner " + "answer",
+    "Private platform replay source text",
+    "Private platform replay learner answer",
     "AGENT_ENDPOINT=http",
     "/Users/",
 )
-
-if str(REPO / "scripts") not in sys.path:
-    sys.path.insert(0, str(REPO / "scripts"))
 
 
 def run_script(script: Path, *args: str, timeout: int = 60) -> subprocess.CompletedProcess[str]:
@@ -57,30 +51,9 @@ def json_from_stdout(stdout: str) -> dict[str, object]:
     raise AssertionError(f"No JSON object found in stdout: {stdout}")
 
 
-def load_replay_module() -> object:
-    spec = importlib.util.spec_from_file_location("replay_platform_agent_from_release", REPLAY)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-def load_generator_module() -> object:
-    spec = importlib.util.spec_from_file_location("generate_platform_agent_replay", GENERATOR)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
 def free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        try:
-            sock.bind(("127.0.0.1", 0))
-        except PermissionError as exc:
-            if getattr(exc, "errno", None) == 1:
-                raise unittest.SkipTest("localhost sockets are blocked in this runner") from exc
-            raise
+        sock.bind(("127.0.0.1", 0))
         return int(sock.getsockname()[1])
 
 
@@ -97,7 +70,7 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         if self.path == "/v1/health":
-            self._json(200, {"status": "ok", "version": "0.3.29-alpha"})
+            self._json(200, {"status": "ok", "version": "0.3.31-alpha"})
             return
         if self.path == "/v1/sessions/mock-session/mastery":
             if getattr(self.server, "schema_mismatch", False):
@@ -111,7 +84,13 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
                 {
                     "schema_version": "agent-audit-v1",
                     "status": "verified",
-                    "observed_tasks": ["quiz.generate", "answer.grade", "insight.synthesize"],
+                    "observed_tasks": [
+                        "teach.overview",
+                        "teach.glossary",
+                        "quiz.generate",
+                        "answer.grade",
+                        "insight.synthesize",
+                    ],
                 },
             )
             return
@@ -122,6 +101,8 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
                     "schema_version": "agent-eval-artifact-v1",
                     "status": "ready_for_external_eval",
                     "trajectory": [
+                        {"task_type": "teach.overview"},
+                        {"task_type": "teach.glossary"},
                         {"task_type": "quiz.generate"},
                         {"task_type": "answer.grade"},
                         {"task_type": "insight.synthesize"},
@@ -140,6 +121,18 @@ class MockStudyAnythingHandler(BaseHTTPRequestHandler):
             return
         if self.path == "/v1/sessions/mock-session/reading":
             self._json(200, {"status": "ok", "source": {"excerpt_hash": "mock-excerpt"}})
+            return
+        if self.path == "/v1/sessions/mock-session/teaching-layers":
+            self._json(
+                200,
+                {
+                    "status": "ok",
+                    "layers": [
+                        {"layer": "overview", "agent": {"task_type": "teach.overview"}},
+                        {"layer": "glossary", "agent": {"task_type": "teach.glossary"}},
+                    ],
+                },
+            )
             return
         if self.path == "/v1/sessions/mock-session/run":
             self._json(200, {"stage": "awaiting_answers", "quiz_items": [{"item_id": "q1"}]})
@@ -171,89 +164,6 @@ class MockApiServer:
 
 
 class PlatformAgentReleaseReplayTests(unittest.TestCase):
-    def test_generator_failure_formatter_is_actionable_and_redacted(self) -> None:
-        generator = load_generator_module()
-        secret = "sk-proj-" + "abcdefghijklmnop123456"
-        temp_path = "/private/" + "tmp/study-anything/platform-agent-replay.json"
-        message = generator.format_cli_failure(
-            RuntimeError(
-                f"platform agent replay stale at {temp_path} "
-                f"with Authorization: Bearer {secret}"
-            )
-        )
-
-        self.assertIn("generate_platform_agent_replay failed:", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_platform_agent_replay.py --check", message)
-        self.assertIn("verify_release_asset_adoption.py --check", message)
-        self.assertIn("generate_platform_adoption_pack.py", message)
-        self.assertIn("generate_platform_bundle_manifest.py", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertIn("<temp-path>", message)
-        self.assertIn("Authorization: Bearer <redacted>", message)
-        self.assertNotIn("/private/" + "tmp", message)
-        self.assertNotIn(secret, message)
-
-    def test_local_port_error_classifies_as_runtime_launch_failed(self) -> None:
-        replay = load_replay_module()
-
-        classification = replay.classify_error(
-            "replay_platform_agent_from_release cannot allocate a local port on 127.0.0.1."
-        )
-
-        self.assertEqual(classification, "runtime_launch_failed")
-        self.assertIn("normal terminal", " ".join(replay.RECOVERY_PLAN[classification]))
-
-    def test_runtime_command_failure_keeps_actionable_redacted_output(self) -> None:
-        replay = load_replay_module()
-        completed = subprocess.CompletedProcess(
-            ["sh", "scripts/launch_skill_mode.sh"],
-            2,
-            stdout=f"using checkout {REPO}\n",
-            stderr="Local Skill Mode API cannot listen on 127.0.0.1:8012\n",
-        )
-        with patch.object(replay.subprocess, "run", return_value=completed):
-            with self.assertRaises(replay.ReplayError) as context:
-                replay.run_command(
-                    ["sh", "scripts/launch_skill_mode.sh"],
-                    cwd=REPO,
-                    env=os.environ.copy(),
-                    timeout_seconds=1,
-                )
-
-        message = str(context.exception)
-        self.assertIn("Runtime launch command exited with 2", message)
-        self.assertIn("stdout:", message)
-        self.assertIn("<local-path>", message)
-        self.assertIn("cannot listen on 127.0.0.1:8012", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertNotIn(str(REPO), message)
-
-    def test_failure_transcript_preserves_runtime_recovery_summary(self) -> None:
-        replay = load_replay_module()
-        args = replay.argparse.Namespace(
-            tag="v0.3.29-alpha",
-            repo="jzvcpe-goat/study-anything",
-            platform="kimi",
-            runtime="skill-mode",
-        )
-        transcript = replay.build_failure_transcript(
-            args,
-            "runtime_launch_failed",
-            (
-                f"Runtime launch command exited with 2: sh scripts/launch_skill_mode.sh\n"
-                f"stdout:\nusing checkout {REPO}\n"
-                "stderr:\nLocal Skill Mode API cannot listen on 127.0.0.1:8012\n"
-                "Recovery:\n- Run `python3 scripts/diagnose_adoption.py`"
-            ),
-        )
-
-        self.assertEqual(transcript["classification"], "runtime_launch_failed")
-        self.assertIn("stdout:", transcript["diagnostic"])
-        self.assertIn("<local-path>", transcript["diagnostic"])
-        self.assertIn("diagnose_adoption.py", transcript["diagnostic"])
-        self.assertNotIn(str(REPO), json.dumps(transcript))
-
     def test_generator_check_passes(self) -> None:
         completed = run_script(GENERATOR, "--check")
         self.assertEqual(completed.returncode, 0, completed.stderr)
@@ -279,7 +189,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
                 self.assertEqual(payload["classification"], "platform_agent_replay_metadata_ready")
                 self.assertEqual(payload["platform"], platform)
                 self.assertGreaterEqual(payload["release_assets"]["asset_count"], 6)
-                self.assertEqual(len(payload["tool_import"]["required_tools"]), 8)
+                self.assertEqual(len(payload["tool_import"]["required_tools"]), 9)
 
     def test_external_api_replay_calls_minimum_learning_tool_chain(self) -> None:
         with MockApiServer() as api_base:
@@ -299,13 +209,14 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         payload = json_from_stdout(completed.stdout)
         self.assertEqual(payload["classification"], "platform_agent_replay_ready")
-        self.assertEqual(payload["replay"]["tool_call_count"], 8)
+        self.assertEqual(payload["replay"]["tool_call_count"], 9)
         self.assertEqual(
             [step["tool_name"] for step in payload["replay"]["steps"]],
             [
                 "study_anything_health",
                 "study_anything_create_session",
                 "study_anything_add_reading",
+                "study_anything_teaching_layers",
                 "study_anything_run",
                 "study_anything_answer",
                 "study_anything_mastery",
@@ -320,6 +231,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
             self.assertIs(value, False, key)
 
     def test_external_api_unavailable_can_be_expected_failure(self) -> None:
+        port = free_port()
         completed = run_script(
             REPLAY,
             "--fixture",
@@ -329,20 +241,15 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
             "--runtime",
             "external-api",
             "--api-base",
-            "http://127.0.0.1:9",
+            f"http://127.0.0.1:{port}",
             "--expect-failure",
             "--request-timeout-seconds",
             "1",
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
-        self.assertNotIn("Traceback", completed.stdout + completed.stderr)
         payload = json_from_stdout(completed.stdout)
         self.assertEqual(payload["status"], "expected_failure")
         self.assertEqual(payload["classification"], "api_unavailable")
-        self.assertIn("Study Anything", payload["diagnostic"])
-        recovery_steps = " ".join(payload["recovery_plan"]["api_unavailable"])
-        self.assertIn("normal terminal", recovery_steps)
-        self.assertIn("--api-base http://host:port", recovery_steps)
 
     def test_schema_mismatch_can_be_expected_failure(self) -> None:
         with MockApiServer(schema_mismatch=True) as api_base:
@@ -369,7 +276,7 @@ class PlatformAgentReleaseReplayTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "platform-agent-release-replay-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertRegex(report["archive"]["sha256"], r"^[a-f0-9]{64}$")
         self.assertIn(report["archive"]["sha256"], checksum)

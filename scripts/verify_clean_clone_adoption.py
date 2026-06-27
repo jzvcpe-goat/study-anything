@@ -162,7 +162,7 @@ def failure_next_steps(classification: str) -> list[str]:
             "If this came from Codex or another sandboxed Agent, keep the blocked report and rerun outside the sandbox.",
         ],
         "clean_clone_timeout": [
-            "Rerun once with `--timeout-seconds 1200` to separate a slow install from a real hang.",
+            "Rerun once with `--timeout-seconds 1800` to separate a slow install from a real hang.",
             "Inspect the emitted command and local logs before filing a support ticket.",
         ],
         "dependency_install_failed": [
@@ -658,7 +658,7 @@ def run_promptfoo(
     api_env.update(
         {
             "SESSION_STORE": "json",
-            "WORKFLOW_ENGINE": "langgraph",
+            "WORKFLOW_ENGINE": "deterministic",
             "LANGGRAPH_CHECKPOINTER": "memory",
             "FALKORDB_ENABLED": "false",
         }
@@ -726,7 +726,11 @@ def main() -> None:
         action="store_true",
         help="Developer convenience: copy the current worktree instead of git clone.",
     )
-    parser.add_argument("--timeout-seconds", type=int, default=900)
+    parser.add_argument(
+        "--timeout-seconds",
+        type=int,
+        default=int(os.environ.get("STUDY_ANYTHING_CLEAN_CLONE_TIMEOUT_SECONDS", "900")),
+    )
     parser.add_argument(
         "--api-port",
         type=int,

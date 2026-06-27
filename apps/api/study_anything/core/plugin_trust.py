@@ -13,8 +13,17 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Mapping, Optional
 
-from cryptography.exceptions import InvalidSignature
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+try:  # Optional in lightweight Skill Mode; full installs verify registry signatures.
+    from cryptography.exceptions import InvalidSignature
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+except ImportError:  # pragma: no cover - exercised in clean lightweight installs.
+    class InvalidSignature(Exception):
+        pass
+
+    Ed25519PublicKey = None  # type: ignore[assignment]
+    CRYPTOGRAPHY_AVAILABLE = False
+else:
+    CRYPTOGRAPHY_AVAILABLE = True
 
 from .plugin_manifest import (
     ALLOWED_REVIEW_STATUSES,
@@ -261,6 +270,16 @@ def _assess_registry_entry(
             "registry_signature_unverified",
             True,
             ["Registry trusted key is missing publicKey."],
+        )
+    if not CRYPTOGRAPHY_AVAILABLE or Ed25519PublicKey is None:
+        return (
+            "digest_verified",
+            "registry_signature_unverified",
+            True,
+            [
+                "Registry signature is present, but cryptography is not installed. "
+                "Install `study-anything[crypto]` or `study-anything[full]` to verify it."
+            ],
         )
     try:
         public_key = Ed25519PublicKey.from_public_bytes(base64.b64decode(public_key_value))

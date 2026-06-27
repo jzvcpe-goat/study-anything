@@ -1,0 +1,54 @@
+schemaVersion: cognitive-loop-watchers-v1
+mode: manual_ingest
+daemon:
+  enabled: false
+  shipped: false
+defaults:
+  debounceMs: 750
+  maxRefs: 12
+  contentMode: metadata_only
+watchers:
+  - id: file-change
+    kind: file
+    enabled: true
+    eventType: file_changed
+    include:
+      - "**/*.py"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.md"
+      - ".cognitive-loop/*.yaml"
+    exclude:
+      - ".env"
+      - "**/.env"
+      - "**/.git/**"
+      - "**/node_modules/**"
+      - "**/.venv/**"
+  - id: git-diff
+    kind: git_diff
+    enabled: true
+    eventType: git_diff_changed
+    include:
+      - "**/*"
+    exclude:
+      - ".env"
+      - "**/.env"
+      - "**/node_modules/**"
+  - id: test-failure
+    kind: test
+    enabled: true
+    eventType: test_failed
+    include:
+      - "apps/**"
+      - "scripts/**"
+      - "tests/**"
+    exclude:
+      - "**/node_modules/**"
+  - id: runtime-log
+    kind: runtime_log
+    enabled: true
+    eventType: runtime_error
+    include:
+      - "runtime-*"
+      - "mastra-*"
+      - "api-*"

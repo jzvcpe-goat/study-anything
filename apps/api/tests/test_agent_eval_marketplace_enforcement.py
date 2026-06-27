@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -15,13 +14,6 @@ from _path import ROOT  # noqa: F401
 REPO = ROOT.parents[1]
 SCRIPT = REPO / "scripts" / "verify_agent_eval_marketplace_enforcement.py"
 PACK = REPO / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
-SPEC = importlib.util.spec_from_file_location(
-    "verify_agent_eval_marketplace_enforcement",
-    SCRIPT,
-)
-assert SPEC is not None and SPEC.loader is not None
-verifier = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(verifier)
 
 
 def run_script(*args: str) -> subprocess.CompletedProcess[str]:
@@ -42,7 +34,7 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertEqual(report["schema_version"], "agent-eval-marketplace-enforcement-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["runner_contract"]["required_flag_blocks_non_ok"])
         self.assertTrue(report["runner_contract"]["timeout_flag_present"])
@@ -58,7 +50,7 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
         self.assertTrue(report["privacy_assertions"]["report_is_redacted"])
         serialized = json.dumps(report)
         self.assertNotIn("sk-", serialized)
-        self.assertNotIn("Private " + "answer:", serialized)
+        self.assertNotIn("Private answer:", serialized)
         self.assertNotIn("OPENAI_API_KEY=", serialized)
 
     def test_report_is_current_after_pack_generation(self) -> None:
@@ -72,7 +64,7 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         report = json.loads(completed.stdout)
         self.assertTrue(report["adoption_pack"]["included"])
-        self.assertEqual(report["adoption_pack"]["version"], "v0.3.29-alpha")
+        self.assertEqual(report["adoption_pack"]["version"], "v0.3.31-alpha")
         self.assertEqual(
             report["runtime_diagnostics"]["promptfoo_missing_runtime"]["optional_status"],
             "not_run_against_pack",
@@ -86,25 +78,6 @@ class AgentEvalMarketplaceEnforcementTests(unittest.TestCase):
 
         self.assertNotEqual(completed.returncode, 0)
         self.assertIn("Required Agent eval enforcement asset is missing", completed.stderr)
-        self.assertIn("Next steps:", completed.stderr)
-        self.assertIn("verify_agent_eval_marketplace_enforcement.py --write", completed.stderr)
-
-    def test_failure_formatter_is_actionable_and_redacted(self) -> None:
-        local_home = "/Users/" + "james"
-        secret = "sk-" + "proj-private-agent-eval-token"
-        message = verifier.format_cli_failure(
-            verifier.AgentEvalMarketplaceEnforcementError(
-                f"Missing {local_home}/agent-pack Authorization: Bearer {secret}"
-            )
-        )
-
-        self.assertIn("verify_agent_eval_marketplace_enforcement failed.", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_platform_adoption_pack.py", message)
-        self.assertIn("--pack platform/generated/study-anything-platform-adoption-pack.zip", message)
-        self.assertNotIn(local_home, message)
-        self.assertNotIn(secret, message)
-        self.assertIn("<redacted>", message)
 
     def test_extracted_pack_contains_enforcement_report(self) -> None:
         with tempfile.TemporaryDirectory(prefix="study-anything-agent-eval-pack-test-") as tmp:

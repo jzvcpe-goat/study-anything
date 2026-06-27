@@ -1,0 +1,60 @@
+{
+  "schema_version": "cognitive-loop-review-agent-ci-receipt-v1",
+  "status": "pass",
+  "receipt_id": "review-agent-ci-badrawdiff0001",
+  "generated_at": "2026-06-18T00:00:00+00:00",
+  "review_agent": {
+    "provider_id": "bad-fixture-review-agent",
+    "provider_label": "Bad fixture Review Agent",
+    "execution_surface": "ci",
+    "user_owned_agent": true,
+    "study_anything_executed_real_model": false
+  },
+  "source": {
+    "pr_ref": "PR-bad-raw-diff",
+    "commit_sha": "sha-bad-raw-diff",
+    "base_ref": "main",
+    "head_ref": "codex/bad-raw-diff"
+  },
+  "validated_report": {
+    "source_report_name": "bad-raw-diff.json",
+    "report_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "report_schema": "platform/schemas/cognitive-loop-review-agent-report.schema.json",
+    "report_version": "1.0",
+    "decision": "needs-review",
+    "overall_risk": "medium",
+    "finding_count": 1,
+    "suppressed_count": 0,
+    "critical_count": 0,
+    "warn_count": 1,
+    "info_count": 0,
+    "total_files_changed": 1,
+    "total_lines_changed": 8,
+    "review_dimensions_covered": [
+      "test"
+    ],
+    "leaked_private_report_text": "diff --git a/app.py b/app.py"
+  },
+  "ci": {
+    "validation_command": "python3 scripts/cognitive_loop_review_agent_handoff.py validate --report REVIEW_AGENT_REPORT.json",
+    "receipt_validation_command": "python3 scripts/cognitive_loop_review_agent_receipt.py validate --receipt RECEIPT.json",
+    "release_gate": "python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check",
+    "should_block_merge": false,
+    "required_human_review": true,
+    "labels_to_add": [
+      "needs-review"
+    ],
+    "human_action": "maintainer_review_required"
+  },
+  "privacy": {
+    "raw_diff_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "report_summary_included": false,
+    "agent_endpoint_secrets_included": false,
+    "real_model_keys_included": false,
+    "hidden_chain_of_thought_included": false,
+    "only_report_hash_persisted": true,
+    "safe_to_attach_to_pr": true
+  }
+}

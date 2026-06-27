@@ -1,0 +1,26 @@
+{
+  "report_version": "1.0",
+  "pr_id": "eval-approved-docs",
+  "change_type": "docs",
+  "overall_risk": "low",
+  "decision": "approved",
+  "summary": "The change only updates documentation wording and does not alter executable behavior.",
+  "findings": [],
+  "metrics": {
+    "total_files_changed": 1,
+    "total_lines_changed": 2,
+    "critical_count": 0,
+    "warn_count": 0,
+    "info_count": 0,
+    "review_dimensions_covered": [
+      "architecture",
+      "test"
+    ]
+  },
+  "ci_instructions": {
+    "should_block_merge": false,
+    "required_human_review": false,
+    "labels_to_add": []
+  },
+  "suppressed_low_confidence": []
+}

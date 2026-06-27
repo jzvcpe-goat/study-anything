@@ -8,7 +8,7 @@ assignees: ""
 
 <!--
 schema_version: platform-support-issue-template-v1
-release_target: v0.3.29-alpha
+release_target: v0.3.31-alpha
 Do not paste raw source text, learner answers, Agent prompts, Agent endpoints, model keys,
 browser/video private context, or personal profile data.
 -->
@@ -18,7 +18,7 @@ browser/video private context, or personal profile data.
 ## Platform
 
 - Platform id: <!-- kimi | codex | workbuddy | generic -->
-- Study Anything release: v0.3.29-alpha
+- Study Anything release: v0.3.31-alpha
 - Runtime mode: <!-- skill-mode | published-image | source-compose | other -->
 
 ## Command Ran
@@ -30,10 +30,6 @@ python3 scripts/verify_agent_eval_marketplace_enforcement.py --check
 ## Diagnostic Code
 
 <!-- Use one of: agent_eval_evidence_missing, missing_required_command, version_drift -->
-
-## Workflow Stage
-
-<!-- cleanroom_bootstrap | platform_import | local_gateway | published_image_pull | agent_eval | docs -->
 
 ## Fixture Or Quirk Id
 
@@ -53,12 +49,6 @@ model_or_judge_secret=<redacted>
 ## Next Commands Tried
 
 - 
-
-## Maintainer Replay
-
-```sh
-python3 scripts/replay_support_bundle.py --bundle support-bundle.json --issue-body
-```
 
 ## Expected Result
 

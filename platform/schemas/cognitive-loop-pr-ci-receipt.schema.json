@@ -1,0 +1,182 @@
+{
+  "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "checks": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "completed_at": {
+            "type": "string"
+          },
+          "name": {
+            "enum": [
+              "api-tests",
+              "compose-smoke"
+            ],
+            "type": "string"
+          },
+          "started_at": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "pending",
+              "fail",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "url"
+        ],
+        "type": "object"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "decision": {
+      "enum": [
+        "ready",
+        "manual_review",
+        "blocked"
+      ],
+      "type": "string"
+    },
+    "failure_modes": {
+      "type": "object"
+    },
+    "generated_at": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "manual_review_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "operator_next_commands": {
+      "items": {
+        "enum": [
+          "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+          "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+          "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+          "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+          "gh pr checks <PR> --watch --interval 10"
+        ],
+        "type": "string"
+      },
+      "minItems": 5,
+      "type": "array"
+    },
+    "pr_number": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "privacy_flags": {
+      "additionalProperties": true,
+      "properties": {
+        "github_tokens_included": {
+          "const": false,
+          "type": "boolean"
+        },
+        "job_logs_included": {
+          "const": false,
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "type": "boolean"
+        },
+        "model_called": {
+          "const": false,
+          "type": "boolean"
+        },
+        "raw_annotations_included": {
+          "const": false,
+          "type": "boolean"
+        },
+        "raw_logs_included": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_files_modified": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_logs_included",
+        "raw_annotations_included",
+        "github_tokens_included",
+        "job_logs_included",
+        "model_called",
+        "source_files_modified"
+      ],
+      "type": "object"
+    },
+    "required_checks": {
+      "const": [
+        "api-tests",
+        "compose-smoke"
+      ]
+    },
+    "schema_version": {
+      "const": "cognitive-loop-pr-ci-receipt-v1"
+    },
+    "source": {
+      "enum": [
+        "fixture",
+        "gh_json",
+        "gh_live"
+      ],
+      "type": "string"
+    },
+    "source_sha256": {
+      "minLength": 64,
+      "type": "string"
+    },
+    "status": {
+      "const": "pass"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "generated_at",
+    "source",
+    "source_sha256",
+    "pr_number",
+    "head_sha",
+    "required_checks",
+    "checks",
+    "decision",
+    "blocking_reasons",
+    "manual_review_reasons",
+    "privacy_flags",
+    "operator_next_commands"
+  ],
+  "title": "Cognitive Loop PR CI receipt",
+  "type": "object"
+}

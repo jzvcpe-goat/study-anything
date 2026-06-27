@@ -1,0 +1,64 @@
+{
+  "canonical_schema_version": "release-stack-readiness-v1",
+  "canonical_status": "pass",
+  "case_count": 7,
+  "case_ids": [
+    "missing_current_group",
+    "wrong_merge_commit_shape",
+    "missing_required_check",
+    "unsafe_command",
+    "privacy_flag_regression",
+    "stale_current_status",
+    "stale_archived_status"
+  ],
+  "cases": [
+    {
+      "case_id": "missing_current_group",
+      "error": "release-stack manifest must declare current_group.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "wrong_merge_commit_shape",
+      "error": "release-stack-promotion-v0.3.148-v0.3.149.stack[1].merge_commit must be a 40-character lowercase SHA.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_required_check",
+      "error": "release-stack-promotion-v0.3.148-v0.3.149.stack[1].required_checks.compose-smoke must be pass.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "unsafe_command",
+      "error": "current_group.operator_commands contains unsafe commands: ['gh api repos/jzvcpe-goat/study-anything/actions/jobs/1/logs']",
+      "status": "rejected"
+    },
+    {
+      "case_id": "privacy_flag_regression",
+      "error": "release-stack-promotion-v0.3.148-v0.3.149.privacy_assertions.github_tokens_included must be false.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "stale_current_status",
+      "error": "current_group status must be completed or open.",
+      "status": "rejected"
+    },
+    {
+      "case_id": "stale_archived_status",
+      "error": "release-stack-v0.3.53-v0.3.60.status must be archived.",
+      "status": "rejected"
+    }
+  ],
+  "current_group": "release-stack-promotion-v0.3.148-v0.3.149",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "github_tokens_stored": false,
+    "job_logs_stored": false,
+    "learner_answers_included": false,
+    "live_check_payloads_stored": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "schema_version": "release-stack-manifest-fixtures-v1",
+  "source_manifest": "platform/release-stack.json",
+  "status": "pass"
+}

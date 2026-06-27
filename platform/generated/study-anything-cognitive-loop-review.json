@@ -1,0 +1,38 @@
+{
+  "acceptance": {
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review.py --check",
+    "review_command": "python3 scripts/cognitive_loop_review.py --base main --head HEAD --html"
+  },
+  "pr_summary": {
+    "pr_summary_supported": true,
+    "raw_pr_summary_rejected": true
+  },
+  "privacy": {
+    "agent_endpoints_stored": false,
+    "agent_reasoning_included": false,
+    "file_contents_included": false,
+    "model_keys_stored": false,
+    "raw_diff_included": false,
+    "secret_probe_leaked": false
+  },
+  "review_artifact": {
+    "blocking": false,
+    "finding_count": 3,
+    "highest_risk": "high",
+    "html_contains_review": true,
+    "max_findings": 5,
+    "merge_blocked": false,
+    "schema": "cognitive-loop-code-review-artifact-v1",
+    "status": "needs_human_review",
+    "test_gap_count": 2
+  },
+  "risk_mapping": {
+    "advisory_only": true,
+    "evals_source": ".cognitive-loop/evals.yaml",
+    "hard_gate_enabled": false,
+    "source": ".cognitive-loop/risk.yaml"
+  },
+  "schema_version": "cognitive-loop-code-review-verification-v1",
+  "status": "pass"
+}

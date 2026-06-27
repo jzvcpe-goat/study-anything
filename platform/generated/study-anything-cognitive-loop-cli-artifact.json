@@ -1,0 +1,28 @@
+{
+  "artifact_json_schema": "cognitive-loop-cli-artifact-v1",
+  "artifact_schema": "cognitive-loop-cli-artifact-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "html_report": "python3 scripts/cognitive_loop_cli.py report --html",
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "html_artifact": {
+    "contains_brand": true,
+    "contains_contract_table": true,
+    "contains_decision_card": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "forbidden_text_leaked": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "schema_version": "cognitive-loop-cli-artifact-verification-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}

@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 52899,
+    "bytes": 63670,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "205ddbfc46b593fee8e3b6c2e282935444c1087244b356fe5fe450e93daaeb15",
+    "sha256": "de9bdc9008d1230e44685d65ee6c70001b06e8f1632e760fd250f91db905df94",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -59,10 +59,10 @@
     }
   ],
   "commands": {
-    "external_api": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.29-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000",
+    "external_api": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime external-api --api-base http://127.0.0.1:8000",
     "fixture_metadata_only": "python3 scripts/replay_platform_agent_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --platform kimi --runtime metadata-only",
-    "metadata_only": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.29-alpha --platform kimi --runtime metadata-only",
-    "skill_mode": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.29-alpha --platform kimi --runtime skill-mode"
+    "metadata_only": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime metadata-only",
+    "skill_mode": "python3 scripts/replay_platform_agent_from_release.py --tag v0.3.31-alpha --platform kimi --runtime skill-mode"
   },
   "platforms": [
     "kimi",
@@ -84,32 +84,32 @@
     {
       "bytes": 3611,
       "path": "docs/platform-agent-release-replay.md",
-      "sha256": "a85670357300de4d3e86563fe371e74ca62e416a444ee7fa7a9b5e290e0bd747"
+      "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
       "bytes": 3891,
       "path": "docs/release-asset-bootstrap.md",
-      "sha256": "6857d517eab99688f9a9c4f03c3a6de1af8837554e1c769e00fa37fa7e07487a"
+      "sha256": "b95b3b7aa6cc306378c50cd7919e4c66b1d45d83a4276544ca5b9dfa51d95979"
     },
     {
       "bytes": 3259,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "82d2aaec8d66367992b971ea7c3f22ce4f029befdbfd8a69f2a4fbfc8c913229"
+      "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
     },
     {
-      "bytes": 26705,
+      "bytes": 28242,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "1eea0a224d13ad8d33e833e234bf273f53e5e25e9fd2f84efb58ec9a90bf617b"
+      "sha256": "191849d740e255ecc77ae3d23f8bd1b182f848ac577851d30705c8fafff59632"
     },
     {
-      "bytes": 31464,
+      "bytes": 29302,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "c9eeee151f2c5e36518f75e02a543a09437ab48fb85b96e764ef4c0d3f31ee9b"
+      "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
     },
     {
-      "bytes": 20631,
+      "bytes": 20083,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "2263915de265e551f63ebb52e6b178624936cc8c493d0d62301ae6df70532a05"
+      "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
     },
     {
       "bytes": 83732,
@@ -122,31 +122,32 @@
       "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
     },
     {
-      "bytes": 9774,
+      "bytes": 24882,
       "path": "platform/packs/kimi/README.md",
-      "sha256": "61a2c718ecd11c20cfce5b1beed78e3fde268117551389b3d7a4544fc845a91e"
+      "sha256": "742ba7d1dfb8f930c8dda6aa667592453f47742224b97d1d11d7a2608fc6f824"
     },
     {
-      "bytes": 9113,
+      "bytes": 23882,
       "path": "platform/packs/codex/README.md",
-      "sha256": "3e8c1fa17a636c7140545f75510f604660b38f881e6c89f4def2708250b2f522"
+      "sha256": "e940c780e718adb7c2cda596f4956627e379df962e4041dac76ce09e993e7a3d"
     },
     {
-      "bytes": 6974,
+      "bytes": 21553,
       "path": "platform/packs/workbuddy/README.md",
-      "sha256": "786d44823f130438419f1e9f32d4171eaedf53b681544d4b327ba93cdf41c008"
+      "sha256": "ca41cd69c3403f3617794be3944ac56e53383a0107b847a7c1567d9772d3efca"
     }
   ],
   "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",
   "release_identity": {
-    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.29-alpha",
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",
     "repo": "jzvcpe-goat/study-anything",
-    "tag": "v0.3.29-alpha"
+    "tag": "v0.3.31-alpha"
   },
   "required_tools": [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
@@ -161,5 +162,5 @@
   ],
   "schema_version": "platform-agent-release-replay-v1",
   "status": "pass",
-  "version": "v0.3.29-alpha"
+  "version": "v0.3.31-alpha"
 }

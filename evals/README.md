@@ -77,3 +77,41 @@ Ragas, or judge-model dependencies.
 
 This release gate checks the API adapter matrix, redaction-safe sample artifact, Promptfoo config,
 baseline, and docs stay aligned.
+
+## Review Agent Eval
+
+The Cognitive Loop Review Agent has a separate offline eval harness:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
+```
+
+It uses only synthetic git diffs under `evals/review-agent`, then validates golden reports against
+the public Review Agent report schema. Use it before routing real PR diffs to Kimi, Codex,
+WorkBuddy, or a private CI Review Agent.
+
+For CI/PR evidence, pair the external report verifier with the metadata-only receipt verifier:
+
+```bash
+python3 scripts/verify_cognitive_loop_review_agent_ci_receipt.py --check
+python3 scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py --check
+python3 scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py --check
+python3 scripts/verify_cognitive_loop_review_agent_github_workflow.py --check
+python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check
+python3 scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+python3 scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
+```
+
+The receipt path records provider/ref metadata and the validated report hash, but rejects raw diff
+text, finding evidence, report summaries, Agent endpoint secrets, real model keys, and hidden
+chain-of-thought. The PR comment pack turns that receipt into bilingual copy-ready comments and a
+Checks summary without reintroducing report-body content. The acceptance bundle packages the receipt,
+comment pack, manifest, and Markdown summary for operator handoff. The GitHub workflow verifier keeps
+the copy-ready manual workflow on the same metadata-only boundary and rejects unsafe auto-trigger or
+raw-report upload fixtures. The policy gate converts the same safe bundle or receipt into advisory,
+soft, or strict CI exit-code behavior without reopening raw Review Agent content. The workflow
+install smoke proves the same template and policy gate can be used from the adoption pack zip after
+copying the workflow into `.github/workflows/`, still without raw report upload or real model calls.
+The adoption drill ties the zip-only path together by extracting the pack, building acceptance
+bundles, validating PR comment packs, running all policy modes, and checking the manual workflow
+install in one metadata-only rehearsal.

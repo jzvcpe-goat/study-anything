@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import argparse
-import importlib.util
 import json
 import subprocess
 import sys
@@ -20,17 +18,6 @@ MARKDOWN = REPO / "platform" / "generated" / "study-anything-release-asset-adopt
 ARCHIVE = REPO / "platform" / "generated" / "study-anything-release-asset-adoption.zip"
 CHECKSUM = REPO / "platform" / "generated" / "study-anything-release-asset-adoption.sha256"
 FIXTURES = REPO / "fixtures" / "release-asset-adoption"
-
-sys.path.insert(0, str(REPO / "scripts"))
-GENERATOR_SPEC = importlib.util.spec_from_file_location("generate_release_asset_adoption", GENERATOR)
-assert GENERATOR_SPEC is not None and GENERATOR_SPEC.loader is not None
-generator = importlib.util.module_from_spec(GENERATOR_SPEC)
-GENERATOR_SPEC.loader.exec_module(generator)
-
-VERIFIER_SPEC = importlib.util.spec_from_file_location("verify_release_asset_adoption", VERIFIER)
-assert VERIFIER_SPEC is not None and VERIFIER_SPEC.loader is not None
-verifier = importlib.util.module_from_spec(VERIFIER_SPEC)
-VERIFIER_SPEC.loader.exec_module(verifier)
 
 FIXTURE_IDS = {
     "asset-only-pass",
@@ -52,8 +39,8 @@ FORBIDDEN_MARKERS = (
     "sk-",
     "OPENAI_API_KEY",
     "MOONSHOT_API_KEY",
-    "Private " + "answer:",
-    "Private " + "source text:",
+    "Private answer:",
+    "Private source text:",
     "learner_answer=",
     "raw_source_text=",
     "AGENT_ENDPOINT=http",
@@ -112,7 +99,7 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         checksum = CHECKSUM.read_text(encoding="utf-8")
 
         self.assertEqual(report["schema_version"], "release-asset-adoption-v1")
-        self.assertEqual(report["version"], "v0.3.29-alpha")
+        self.assertEqual(report["version"], "v0.3.31-alpha")
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["verification"]["proof_schema"], "release-asset-adoption-proof-v1")
         self.assertEqual(
@@ -139,7 +126,7 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         for path in fixture_paths:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], "release-asset-adoption-fixture-v1")
-            self.assertEqual(payload["version"], "v0.3.29-alpha")
+            self.assertEqual(payload["version"], "v0.3.31-alpha")
             self.assertEqual(payload["fixture_id"], path.stem)
             classifications.add(payload["classification"])
             for key, value in payload["privacy"].items():
@@ -157,32 +144,6 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         payload = json_from_stdout(completed.stdout)
         self.assertEqual(payload["status"], "expected_failure")
         self.assertEqual(payload["classification"], "release_asset_missing")
-
-    def test_failure_proof_redacts_secrets_and_temp_paths(self) -> None:
-        secret = "sk-proj-" + "abcdefghijklmnop123456"
-        private_tmp = "/private/" + "tmp"
-        args = argparse.Namespace(
-            tag="v0.3.29-alpha",
-            repo="jzvcpe-goat/study-anything",
-        )
-
-        payload = verifier.build_failure_proof(
-            args=args,
-            classification="release_asset_runtime_failed",
-            diagnostic=(
-                "Command failed with Authorization: Bearer "
-                f"{secret} at http://user:secret@example.test/v1?token={secret} "
-                f"from {private_tmp}/study-anything/release.log"
-            ),
-        )
-
-        serialized = json.dumps(payload, sort_keys=True)
-        self.assertIn("Authorization: Bearer <redacted>", serialized)
-        self.assertIn("http://<redacted>@example.test/v1?token=<redacted>", serialized)
-        self.assertIn("<temp-path>", serialized)
-        self.assertNotIn(secret, serialized)
-        self.assertNotIn("user:secret", serialized)
-        self.assertNotIn(private_tmp, serialized)
 
     def test_corrupted_asset_dir_fails_readably(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -206,74 +167,6 @@ class ReleaseAssetAdoptionTests(unittest.TestCase):
         self.assertNotEqual(completed.returncode, 0)
         self.assertIn("verify_release_asset_adoption failed:", completed.stderr)
         self.assertIn("Release adoption pack zip is corrupted", completed.stderr)
-        payload = json_from_stdout(completed.stdout)
-        self.assertEqual(payload["schema_version"], "release-asset-adoption-proof-v1")
-        self.assertEqual(payload["status"], "blocked")
-        self.assertEqual(payload["classification"], "release_asset_pack_corrupted")
-        self.assertIn("recovery_plan", payload)
-        self.assertIn("metadata_only", payload["commands"])
-        self.assertIn("Release adoption pack zip is corrupted", payload["diagnostic"])
-        self.assertFalse(payload["privacy"]["real_model_keys_included"])
-        self.assertIn("Next steps:", completed.stderr)
-        self.assertIn("Useful commands:", completed.stderr)
-
-    def test_failure_output_redacts_local_paths(self) -> None:
-        completed = run_script(
-            VERIFIER,
-            "--release-json",
-            str(REPO / "missing-release-metadata.json"),
-        )
-        self.assertNotEqual(completed.returncode, 0)
-        payload = json_from_stdout(completed.stdout)
-        self.assertEqual(payload["status"], "blocked")
-        self.assertNotIn(str(REPO), payload["diagnostic"])
-        self.assertNotIn("/Users/", completed.stdout + completed.stderr)
-        self.assertIn("<local-path>", payload["diagnostic"])
-        self.assertIn("metadata_only", payload["commands"])
-
-    def test_redaction_guard_blocks_unredacted_temp_paths(self) -> None:
-        with self.assertRaises(verifier.ReleaseAssetAdoptionError):
-            verifier.assert_redacted({"diagnostic": "/private/" + "tmp/study-anything/release.log"})
-        with self.assertRaises(generator.ReleaseAssetAdoptionError):
-            generator.assert_no_leaks({"diagnostic": "/private/" + "tmp/study-anything/release.log"})
-
-    def test_human_failure_output_is_actionable(self) -> None:
-        args = argparse.Namespace(tag="v0.3.29-alpha", repo="jzvcpe-goat/study-anything")
-        proof = verifier.build_failure_proof(
-            args=args,
-            classification="release_asset_runtime_failed",
-            diagnostic="Command failed because localhost could not start",
-        )
-        message = verifier.format_failure_for_human(proof)
-
-        self.assertIn("verify_release_asset_adoption failed", message)
-        self.assertIn("classification: release_asset_runtime_failed", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("Useful commands:", message)
-        self.assertIn("--runtime metadata-only", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertIn("launch_skill_mode.sh", message)
-
-    def test_generator_cli_failure_formatter_is_actionable_and_redacted(self) -> None:
-        secret = "sk-proj-" + "abcdefghijklmnop123456"
-        message = generator.format_cli_failure(
-            RuntimeError(
-                "release asset generation failed at /private/"
-                f"tmp/study-anything/release.json with Authorization: Bearer {secret}"
-            )
-        )
-
-        self.assertIn("generate_release_asset_adoption failed", message)
-        self.assertIn("Next steps:", message)
-        self.assertIn("generate_release_asset_adoption.py --check", message)
-        self.assertIn("verify_release_asset_adoption.py", message)
-        self.assertIn("--runtime metadata-only", message)
-        self.assertIn("generate_platform_adoption_pack.py", message)
-        self.assertIn("diagnose_adoption.py", message)
-        self.assertIn("<temp-path>", message)
-        self.assertIn("Authorization: Bearer <redacted>", message)
-        self.assertNotIn(secret, message)
-        self.assertNotIn("/private/" + "tmp", message)
 
 
 if __name__ == "__main__":

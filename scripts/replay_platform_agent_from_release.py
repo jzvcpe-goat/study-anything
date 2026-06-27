@@ -23,28 +23,16 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from localhost_diagnostics import (
-    format_api_unreachable,
-    format_localhost_listen_blocked,
-    is_localhost_socket_blocked,
-    verifier_name_from_file,
-)
-
-
 VERIFIER_PATH = ROOT / "scripts" / "verify_release_asset_adoption.py"
 SCHEMA_VERSION = "platform-agent-release-replay-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
-DEFAULT_TAG = "v0.3.29-alpha"
-VERIFIER_NAME = verifier_name_from_file(__file__)
+DEFAULT_TAG = "v0.3.31-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
 REQUIRED_TOOLS = [
     "study_anything_health",
     "study_anything_create_session",
     "study_anything_add_reading",
+    "study_anything_teaching_layers",
     "study_anything_run",
     "study_anything_answer",
     "study_anything_mastery",
@@ -91,12 +79,10 @@ RECOVERY_PLAN = {
     ],
     "api_unavailable": [
         "Start Study Anything with `./scripts/launch_skill_mode.sh` or provide `--api-base` for a running deployment.",
-        "If localhost sockets are blocked, rerun from a normal terminal or host shell and pass `--api-base http://host:port`.",
         "Confirm `GET /v1/health` returns status ok before replaying platform tools.",
     ],
     "runtime_launch_failed": [
         "Run `./scripts/doctor.sh` and retry Skill Mode from an ASCII-only checkout path.",
-        "If localhost sockets are blocked, rerun from a normal terminal or host shell.",
         "Use `--runtime external-api --api-base <url>` if another platform already launched Study Anything.",
     ],
     "tool_call_failed": [
@@ -158,13 +144,11 @@ def load_release_verifier() -> Any:
 
 
 def sanitize_error(message: str) -> str:
-    text = message or "Replay failed."
-    text = re.sub(r"/Users/[^\s\"']+", "<local-path>", text)
-    text = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", text)
-    text = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", text)
-    text = re.sub(r"(?i)(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", text)
-    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
-    return text[:1600]
+    first_line = (message or "Replay failed.").splitlines()[0]
+    first_line = re.sub(r"/Users/[^\s\"']+", "<local-path>", first_line)
+    first_line = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", first_line)
+    first_line = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", first_line)
+    return first_line[:800]
 
 
 def classify_error(message: str) -> str:
@@ -173,11 +157,6 @@ def classify_error(message: str) -> str:
         return "platform_entrypoint_missing"
     if "tool import" in lowered or "openapi" in lowered or "openai tool" in lowered:
         return "tool_import_invalid"
-    if (
-        "cannot allocate a local port" in lowered
-        or "listening sockets" in lowered
-    ):
-        return "runtime_launch_failed"
     if "api unavailable" in lowered or "cannot reach" in lowered or "connection refused" in lowered:
         return "api_unavailable"
     if "runtime launch" in lowered or "launch_skill_mode" in lowered:
@@ -196,8 +175,6 @@ def assert_redacted(payload: Any) -> None:
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
     if re.search(r"/Users/[^\s\"']+", serialized):
         leaks.append("local absolute path")
-    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
-        leaks.append("local temp path")
     if re.search(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", serialized):
         leaks.append("secret-looking assignment")
     if leaks:
@@ -325,7 +302,7 @@ def call_operation(
         detail = exc.read().decode("utf-8", errors="replace")[:300]
         raise ReplayError(f"Tool call failed with HTTP {exc.code}: {operation['path_template']} {detail}") from exc
     except (URLError, TimeoutError, OSError) as exc:
-        raise ReplayError(format_api_unreachable(api_base, exc, verifier=VERIFIER_NAME)) from exc
+        raise ReplayError(f"API unavailable for {operation['path_template']}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise ReplayError(f"Tool response was not JSON for {operation['path_template']}") from exc
 
@@ -338,6 +315,9 @@ def response_summary(name: str, response: dict[str, Any]) -> dict[str, Any]:
     if name == "study_anything_add_reading":
         source = response.get("source") or {}
         return {"status": response.get("status"), "excerpt_hash_present": bool(source.get("excerpt_hash"))}
+    if name == "study_anything_teaching_layers":
+        layers = response.get("layers") or response.get("teaching_layers") or []
+        return {"status": response.get("status"), "layer_count": len(layers)}
     if name == "study_anything_run":
         return {"stage": response.get("stage"), "quiz_item_count": len(response.get("quiz_items") or [])}
     if name == "study_anything_answer":
@@ -389,6 +369,7 @@ def validate_learning_responses(
     health: dict[str, Any],
     session: dict[str, Any],
     reading: dict[str, Any],
+    teaching: dict[str, Any],
     running: dict[str, Any],
     completed: dict[str, Any],
     mastery: dict[str, Any],
@@ -402,6 +383,9 @@ def validate_learning_responses(
         raise ReplayError("Create session did not return a session_id.")
     if not (reading.get("source") or {}).get("excerpt_hash"):
         raise ReplayError("Add reading did not return a source excerpt hash.")
+    teaching_layers = teaching.get("layers") or teaching.get("teaching_layers") or []
+    if len(teaching_layers) < 2:
+        raise ReplayError("Teaching layers did not return overview and glossary evidence.")
     quiz_items = running.get("quiz_items") or []
     if not quiz_items or not quiz_items[0].get("item_id"):
         raise ReplayError("Run did not return a quiz item id.")
@@ -464,6 +448,11 @@ def replay_tool_chain(
         },
         session_id=session_id,
     )
+    teaching = call(
+        "study_anything_teaching_layers",
+        {"layers": ["overview", "glossary"]},
+        session_id=session_id,
+    )
     running = call("study_anything_run", {}, session_id=session_id)
     quiz_items = running.get("quiz_items") or []
     quiz_id = str((quiz_items[0] or {}).get("item_id") if quiz_items else "")
@@ -475,6 +464,7 @@ def replay_tool_chain(
         health=health,
         session=session,
         reading=reading,
+        teaching=teaching,
         running=running,
         completed=completed,
         mastery=mastery,
@@ -500,14 +490,7 @@ def replay_tool_chain(
 
 def free_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        try:
-            sock.bind(("127.0.0.1", 0))
-        except OSError as exc:
-            if is_localhost_socket_blocked(exc):
-                raise ReplayError(
-                    format_localhost_listen_blocked(verifier=VERIFIER_NAME)
-                ) from exc
-            raise
+        sock.bind(("127.0.0.1", 0))
         return int(sock.getsockname()[1])
 
 
@@ -522,41 +505,9 @@ def wait_for_api(api_base: str, timeout_seconds: int) -> None:
                 if isinstance(payload, dict) and payload.get("status") == "ok":
                     return
         except Exception as exc:
-            if isinstance(exc, (URLError, TimeoutError, OSError)):
-                last_error = format_api_unreachable(api_base, exc, verifier=VERIFIER_NAME)
-            else:
-                last_error = str(exc)
+            last_error = str(exc)
         time.sleep(1)
     raise ReplayError(f"API unavailable after runtime launch: {last_error}")
-
-
-def output_text(value: str | bytes | None) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, bytes):
-        return value.decode("utf-8", errors="replace")
-    return value
-
-
-def runtime_command_failure_message(
-    command: list[str],
-    *,
-    returncode: int | None,
-    stdout: str | bytes | None,
-    stderr: str | bytes | None,
-    timed_out: bool = False,
-) -> str:
-    status = "timed out" if timed_out else f"exited with {returncode}"
-    return (
-        f"Runtime launch command {status}: {' '.join(command)}\n"
-        f"stdout:\n{sanitize_error(output_text(stdout)) or '(empty)'}\n"
-        f"stderr:\n{sanitize_error(output_text(stderr)) or '(empty)'}\n"
-        "Recovery:\n"
-        "- Run `./scripts/launch_skill_mode.sh` directly to see the local startup error.\n"
-        "- Run `python3 scripts/diagnose_adoption.py` for a redacted environment report.\n"
-        "- If localhost sockets are blocked, rerun from a normal terminal or host shell.\n"
-        "- Use `--runtime external-api --api-base <url>` if another platform already launched Study Anything."
-    )
 
 
 def run_command(command: list[str], *, cwd: Path, env: dict[str, str], timeout_seconds: int) -> None:
@@ -571,24 +522,9 @@ def run_command(command: list[str], *, cwd: Path, env: dict[str, str], timeout_s
             check=False,
         )
     except subprocess.TimeoutExpired as exc:
-        raise ReplayError(
-            runtime_command_failure_message(
-                command,
-                returncode=None,
-                stdout=exc.stdout,
-                stderr=exc.stderr,
-                timed_out=True,
-            )
-        ) from exc
+        raise ReplayError(f"Runtime launch command timed out: {' '.join(command)}") from exc
     if completed.returncode != 0:
-        raise ReplayError(
-            runtime_command_failure_message(
-                command,
-                returncode=completed.returncode,
-                stdout=completed.stdout,
-                stderr=completed.stderr,
-            )
-        )
+        raise ReplayError(f"Runtime launch command failed: {' '.join(command)}")
 
 
 def launch_skill_mode(args: argparse.Namespace) -> tuple[str, dict[str, str]]:

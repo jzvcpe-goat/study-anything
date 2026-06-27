@@ -1,0 +1,188 @@
+{
+  "acceptance": {
+    "advisory_command": "python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/review-agent-acceptance --policy advisory",
+    "generated_report": "platform/generated/study-anything-cognitive-loop-review-agent-policy-gate.json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_review_agent_policy_gate.py --check",
+    "soft_command": "python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/review-agent-acceptance --policy soft",
+    "strict_command": "python3 scripts/cognitive_loop_review_agent_policy_gate.py --bundle-dir /tmp/review-agent-acceptance --policy strict"
+  },
+  "bundle_matrix": {
+    "approved.json": {
+      "advisory": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "soft": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "strict": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      }
+    },
+    "needs-fix.json": {
+      "advisory": {
+        "decision": "needs-fix",
+        "exit_code": 0,
+        "status": "advisory_block_recommended"
+      },
+      "soft": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      },
+      "strict": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    },
+    "needs-review.json": {
+      "advisory": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "soft": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "strict": {
+        "decision": "needs-review",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    }
+  },
+  "cli": "scripts/cognitive_loop_review_agent_policy_gate.py",
+  "cli_exit_check": {
+    "decision": "needs-fix",
+    "output_written": "policy-gate-soft.json",
+    "policy": "soft",
+    "returncode": 2
+  },
+  "docs": {
+    ".cognitive-loop/evals.yaml": "pass",
+    "docs/cognitive-loop-code-review.md": "pass",
+    "docs/eval-frameworks.md": "pass",
+    "evals/README.md": "pass",
+    "platform/packs/codex/README.md": "pass",
+    "platform/packs/kimi/README.md": "pass",
+    "platform/packs/workbuddy/README.md": "pass",
+    "scripts/generate_platform_adoption_pack.py": "pass",
+    "scripts/generate_platform_bundle_manifest.py": "pass",
+    "scripts/release_check.sh": "pass"
+  },
+  "gate_schema_version": "cognitive-loop-review-agent-policy-gate-v1",
+  "negative_bundles": {
+    "raw-diff-leak": "Review Agent acceptance bundle manifest contains private report, raw diff, or secret text: literals=['diff --git'] patterns=[]"
+  },
+  "platform_packs": {
+    "codex": "pass",
+    "kimi": "pass",
+    "workbuddy": "pass"
+  },
+  "policy_matrix": {
+    "advisory": {
+      "approved": 0,
+      "needs-fix": 0,
+      "needs-review": 0
+    },
+    "soft": {
+      "approved": 0,
+      "needs-fix": 2,
+      "needs-review": 0
+    },
+    "strict": {
+      "approved": 0,
+      "needs-fix": 2,
+      "needs-review": 2
+    }
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "file_bodies_included": false,
+    "finding_evidence_included": false,
+    "hidden_chain_of_thought_included": false,
+    "raw_diff_included": false,
+    "real_model_keys_included": false,
+    "report_summary_included": false,
+    "safe_to_attach_to_pr": true
+  },
+  "quality_gates": {
+    "bundle_and_receipt_parity": "pass",
+    "decision_path_coverage": [
+      "approved",
+      "needs-fix",
+      "needs-review"
+    ],
+    "metadata_only_gate": "pass",
+    "nonzero_exit_coverage": "pass",
+    "policy_coverage": [
+      "advisory",
+      "soft",
+      "strict"
+    ],
+    "privacy_leak_rejection": "pass"
+  },
+  "receipt_matrix": {
+    "approved.json": {
+      "advisory": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "soft": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      },
+      "strict": {
+        "decision": "approved",
+        "exit_code": 0,
+        "status": "pass"
+      }
+    },
+    "needs-fix.json": {
+      "advisory": {
+        "decision": "needs-fix",
+        "exit_code": 0,
+        "status": "advisory_block_recommended"
+      },
+      "soft": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      },
+      "strict": {
+        "decision": "needs-fix",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    },
+    "needs-review.json": {
+      "advisory": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "soft": {
+        "decision": "needs-review",
+        "exit_code": 0,
+        "status": "needs_human_review"
+      },
+      "strict": {
+        "decision": "needs-review",
+        "exit_code": 2,
+        "status": "blocked"
+      }
+    }
+  },
+  "schema_version": "cognitive-loop-review-agent-policy-gate-verification-v1",
+  "status": "pass"
+}

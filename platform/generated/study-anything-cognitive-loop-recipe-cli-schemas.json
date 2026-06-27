@@ -1,0 +1,1090 @@
+{
+  "distribution": {
+    "safe_for_platform_agent_static_import": true,
+    "schema_bundle_path": "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+    "schema_files": [
+      "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+      "platform/schemas/cognitive-loop-pr-ci-source.schema.json"
+    ],
+    "verification_command": "python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check"
+  },
+  "json_schema": {
+    "dialect": "https://json-schema.org/draft/2020-12/schema",
+    "schema_count": 5,
+    "schema_keys": [
+      "cognitive_loop_pr_ci_receipt",
+      "cognitive_loop_pr_ci_source",
+      "cognitive_loop_recipe_cli_failures",
+      "cognitive_loop_recipe_cli_receipts",
+      "cognitive_loop_recipe_cli_verification"
+    ],
+    "schemas": {
+      "cognitive_loop_pr_ci_receipt": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "blocking_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "checks": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "completed_at": {
+                  "type": "string"
+                },
+                "name": {
+                  "enum": [
+                    "api-tests",
+                    "compose-smoke"
+                  ],
+                  "type": "string"
+                },
+                "started_at": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "pending",
+                    "fail",
+                    "unknown"
+                  ],
+                  "type": "string"
+                },
+                "url": {
+                  "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "url"
+              ],
+              "type": "object"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "decision": {
+            "enum": [
+              "ready",
+              "manual_review",
+              "blocked"
+            ],
+            "type": "string"
+          },
+          "failure_modes": {
+            "type": "object"
+          },
+          "generated_at": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "manual_review_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "operator_next_commands": {
+            "items": {
+              "enum": [
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+                "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+                "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+                "gh pr checks <PR> --watch --interval 10"
+              ],
+              "type": "string"
+            },
+            "minItems": 5,
+            "type": "array"
+          },
+          "pr_number": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "privacy_flags": {
+            "additionalProperties": true,
+            "properties": {
+              "github_tokens_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "job_logs_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "metadata_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "model_called": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_annotations_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_logs_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "source_files_modified": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "metadata_only",
+              "raw_logs_included",
+              "raw_annotations_included",
+              "github_tokens_included",
+              "job_logs_included",
+              "model_called",
+              "source_files_modified"
+            ],
+            "type": "object"
+          },
+          "required_checks": {
+            "const": [
+              "api-tests",
+              "compose-smoke"
+            ]
+          },
+          "schema_version": {
+            "const": "cognitive-loop-pr-ci-receipt-v1"
+          },
+          "source": {
+            "enum": [
+              "fixture",
+              "gh_json",
+              "gh_live"
+            ],
+            "type": "string"
+          },
+          "source_sha256": {
+            "minLength": 64,
+            "type": "string"
+          },
+          "status": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "generated_at",
+          "source",
+          "source_sha256",
+          "pr_number",
+          "head_sha",
+          "required_checks",
+          "checks",
+          "decision",
+          "blocking_reasons",
+          "manual_review_reasons",
+          "privacy_flags",
+          "operator_next_commands"
+        ],
+        "title": "Cognitive Loop PR CI receipt",
+        "type": "object"
+      },
+      "cognitive_loop_pr_ci_source": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-source-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "base_branch": {
+            "type": "string"
+          },
+          "checks": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "completed_at": {
+                  "type": "string"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "started_at": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "pending",
+                    "fail",
+                    "unknown"
+                  ],
+                  "type": "string"
+                },
+                "url": {
+                  "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "url"
+              ],
+              "type": "object"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "expected_head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "operator_next_commands": {
+            "items": {
+              "enum": [
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+                "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+                "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+                "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+                "gh pr checks <PR> --watch --interval 10"
+              ],
+              "type": "string"
+            },
+            "minItems": 5,
+            "type": "array"
+          },
+          "pr_number": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "raw_annotations_included": {
+            "const": false,
+            "type": "boolean"
+          },
+          "raw_logs_included": {
+            "const": false,
+            "type": "boolean"
+          },
+          "schema_version": {
+            "const": "cognitive-loop-pr-ci-source-v1"
+          },
+          "source": {
+            "enum": [
+              "fixture",
+              "gh_json",
+              "gh_live"
+            ],
+            "type": "string"
+          },
+          "source_command": {
+            "enum": [
+              "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow"
+            ],
+            "type": "string"
+          },
+          "source_tool": {
+            "enum": [
+              "gh"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "source",
+          "pr_number",
+          "head_sha",
+          "expected_head_sha",
+          "checks",
+          "raw_logs_included",
+          "operator_next_commands"
+        ],
+        "title": "Cognitive Loop PR CI source",
+        "type": "object"
+      },
+      "cognitive_loop_recipe_cli_failures": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-recipe-cli-failures-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "cases": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "case_id": {
+                  "enum": [
+                    "unknown_recipe_id",
+                    "source_schema_drift",
+                    "source_status_failed",
+                    "empty_recipe_matrix"
+                  ],
+                  "type": "string"
+                },
+                "command": {
+                  "type": "string"
+                },
+                "diagnostic_code": {
+                  "enum": [
+                    "unknown_recipe_id",
+                    "source_schema_drift",
+                    "source_status_failed",
+                    "empty_recipe_matrix"
+                  ],
+                  "type": "string"
+                },
+                "exit_code": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "expected_message": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "safe_to_attach_to_issue": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "stderr_sha256": {
+                  "minLength": 64,
+                  "type": "string"
+                },
+                "stdout_empty": {
+                  "const": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "case_id",
+                "command",
+                "exit_code",
+                "stdout_empty",
+                "stderr_sha256",
+                "diagnostic_code",
+                "expected_message",
+                "safe_to_attach_to_issue"
+              ],
+              "type": "object"
+            },
+            "minItems": 4,
+            "type": "array"
+          },
+          "cli": {
+            "additionalProperties": true,
+            "properties": {
+              "failure_surface": {
+                "const": "nonzero_exit_with_redacted_stderr"
+              },
+              "path": {
+                "const": "scripts/cognitive_loop_recipe_cli.py"
+              },
+              "success_schema_version": {
+                "const": "cognitive-loop-recipe-cli-v1"
+              }
+            },
+            "required": [
+              "path",
+              "success_schema_version",
+              "failure_surface"
+            ],
+            "type": "object"
+          },
+          "coverage": {
+            "additionalProperties": true,
+            "properties": {
+              "all_exit_nonzero": {
+                "const": true,
+                "type": "boolean"
+              },
+              "all_safe_to_attach_to_issue": {
+                "const": true,
+                "type": "boolean"
+              },
+              "all_stderr_redacted": {
+                "const": true,
+                "type": "boolean"
+              },
+              "all_stdout_empty": {
+                "const": true,
+                "type": "boolean"
+              },
+              "case_count": {
+                "const": 4,
+                "type": "integer"
+              },
+              "case_ids": {
+                "items": {
+                  "enum": [
+                    "unknown_recipe_id",
+                    "source_schema_drift",
+                    "source_status_failed",
+                    "empty_recipe_matrix"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 4,
+                "type": "array"
+              }
+            },
+            "required": [
+              "case_count",
+              "case_ids",
+              "all_exit_nonzero",
+              "all_stdout_empty",
+              "all_stderr_redacted",
+              "all_safe_to_attach_to_issue"
+            ],
+            "type": "object"
+          },
+          "privacy": {
+            "additionalProperties": true,
+            "properties": {
+              "agent_endpoints_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "agent_metadata_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "browser_video_app_private_context_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "diff_bodies_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "generated_private_insights_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "grading_feedback_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "learner_answers_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_source_text_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "real_model_keys_stored": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "raw_source_text_included",
+              "diff_bodies_included",
+              "learner_answers_included",
+              "grading_feedback_included",
+              "generated_private_insights_included",
+              "agent_endpoints_included",
+              "agent_metadata_included",
+              "real_model_keys_stored",
+              "browser_video_app_private_context_included"
+            ],
+            "type": "object"
+          },
+          "safe_failure_policy": {
+            "additionalProperties": true,
+            "properties": {
+              "applies_file_changes": {
+                "const": false,
+                "type": "boolean"
+              },
+              "executes_recipe_commands": {
+                "const": false,
+                "type": "boolean"
+              },
+              "invokes_recipe_cli_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "starts_runtime": {
+                "const": false,
+                "type": "boolean"
+              },
+              "temporary_negative_fixtures_removed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "writes_only_temporary_negative_fixtures": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "invokes_recipe_cli_only",
+              "executes_recipe_commands",
+              "starts_runtime",
+              "applies_file_changes",
+              "writes_only_temporary_negative_fixtures",
+              "temporary_negative_fixtures_removed"
+            ],
+            "type": "object"
+          },
+          "schema_version": {
+            "const": "cognitive-loop-recipe-cli-failures-v1"
+          },
+          "status": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "cli",
+          "coverage",
+          "cases",
+          "safe_failure_policy",
+          "privacy"
+        ],
+        "title": "Cognitive Loop recipe CLI failure receipt report",
+        "type": "object"
+      },
+      "cognitive_loop_recipe_cli_receipts": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-recipe-cli-receipts-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "cli": {
+            "additionalProperties": true,
+            "properties": {
+              "path": {
+                "const": "scripts/cognitive_loop_recipe_cli.py"
+              },
+              "receipt_commands": {
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "schema_version": {
+                "const": "cognitive-loop-recipe-cli-v1"
+              }
+            },
+            "required": [
+              "path",
+              "schema_version",
+              "receipt_commands"
+            ],
+            "type": "object"
+          },
+          "coverage": {
+            "additionalProperties": true,
+            "properties": {
+              "all_outputs_safe_to_attach_to_issue": {
+                "const": true,
+                "type": "boolean"
+              },
+              "all_outputs_schema_version": {
+                "const": "cognitive-loop-recipe-cli-v1"
+              },
+              "all_show_outputs_safe_to_auto_execute": {
+                "const": false,
+                "type": "boolean"
+              },
+              "includes_all_show_recipes": {
+                "const": true,
+                "type": "boolean"
+              },
+              "includes_list": {
+                "const": true,
+                "type": "boolean"
+              },
+              "receipt_count": {
+                "minimum": 5,
+                "type": "integer"
+              },
+              "recipe_ids": {
+                "items": {
+                  "enum": [
+                    "first_adoption",
+                    "daily_project_review",
+                    "risk_decision",
+                    "learning_handoff"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 4,
+                "type": "array"
+              }
+            },
+            "required": [
+              "receipt_count",
+              "recipe_ids",
+              "includes_list",
+              "includes_all_show_recipes",
+              "all_outputs_schema_version",
+              "all_outputs_safe_to_attach_to_issue",
+              "all_show_outputs_safe_to_auto_execute"
+            ],
+            "type": "object"
+          },
+          "privacy": {
+            "additionalProperties": true,
+            "properties": {
+              "agent_endpoints_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "agent_metadata_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "browser_video_app_private_context_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "diff_bodies_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "generated_private_insights_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "grading_feedback_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "learner_answers_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_source_text_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "real_model_keys_stored": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "raw_source_text_included",
+              "diff_bodies_included",
+              "learner_answers_included",
+              "grading_feedback_included",
+              "generated_private_insights_included",
+              "agent_endpoints_included",
+              "agent_metadata_included",
+              "real_model_keys_stored",
+              "browser_video_app_private_context_included"
+            ],
+            "type": "object"
+          },
+          "receipts": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "command": {
+                  "type": "string"
+                },
+                "exit_code": {
+                  "const": 0,
+                  "type": "integer"
+                },
+                "output_action": {
+                  "enum": [
+                    "list",
+                    "show"
+                  ],
+                  "type": "string"
+                },
+                "output_schema_version": {
+                  "const": "cognitive-loop-recipe-cli-v1"
+                },
+                "safe_to_attach_to_issue": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "stdout_json": {
+                  "type": "object"
+                },
+                "stdout_sha256": {
+                  "minLength": 64,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "command",
+                "exit_code",
+                "stdout_sha256",
+                "output_schema_version",
+                "output_action",
+                "stdout_json",
+                "safe_to_attach_to_issue"
+              ],
+              "type": "object"
+            },
+            "minItems": 5,
+            "type": "array"
+          },
+          "safe_replay_policy": {
+            "additionalProperties": true,
+            "properties": {
+              "applies_file_changes": {
+                "const": false,
+                "type": "boolean"
+              },
+              "executes_recipe_commands": {
+                "const": false,
+                "type": "boolean"
+              },
+              "invokes_recipe_cli_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "requires_human_gate_for_risk_decisions": {
+                "const": true,
+                "type": "boolean"
+              },
+              "requires_operator_for_runtime_commands": {
+                "const": true,
+                "type": "boolean"
+              },
+              "starts_runtime": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "invokes_recipe_cli_only",
+              "executes_recipe_commands",
+              "starts_runtime",
+              "applies_file_changes",
+              "requires_operator_for_runtime_commands",
+              "requires_human_gate_for_risk_decisions"
+            ],
+            "type": "object"
+          },
+          "schema_version": {
+            "const": "cognitive-loop-recipe-cli-receipts-v1"
+          },
+          "status": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "cli",
+          "coverage",
+          "receipts",
+          "safe_replay_policy",
+          "privacy"
+        ],
+        "title": "Cognitive Loop recipe CLI receipt report",
+        "type": "object"
+      },
+      "cognitive_loop_recipe_cli_verification": {
+        "$id": "https://study-anything.local/schemas/cognitive-loop-recipe-cli-verification-v1.json",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "boundaries": {
+            "additionalProperties": true,
+            "properties": {
+              "platform_agent_owns_browser_files_apps_video_external_data": {
+                "const": true,
+                "type": "boolean"
+              },
+              "recipe_cli_applies_file_changes": {
+                "const": false,
+                "type": "boolean"
+              },
+              "recipe_cli_executes_commands": {
+                "const": false,
+                "type": "boolean"
+              },
+              "recipe_cli_is_read_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "standalone_frontend_required": {
+                "const": false,
+                "type": "boolean"
+              },
+              "study_anything_is_learning_adapter": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "recipe_cli_is_read_only",
+              "recipe_cli_executes_commands",
+              "recipe_cli_applies_file_changes",
+              "standalone_frontend_required",
+              "study_anything_is_learning_adapter",
+              "platform_agent_owns_browser_files_apps_video_external_data"
+            ],
+            "type": "object"
+          },
+          "cli": {
+            "additionalProperties": true,
+            "properties": {
+              "commands": {
+                "type": "object"
+              },
+              "path": {
+                "const": "scripts/cognitive_loop_recipe_cli.py"
+              },
+              "schema_version": {
+                "const": "cognitive-loop-recipe-cli-v1"
+              }
+            },
+            "required": [
+              "path",
+              "schema_version",
+              "commands"
+            ],
+            "type": "object"
+          },
+          "cli_outputs": {
+            "additionalProperties": true,
+            "properties": {
+              "all_steps_reference_existing_scripts": {
+                "const": true,
+                "type": "boolean"
+              },
+              "executes_recipe_commands": {
+                "const": false,
+                "type": "boolean"
+              },
+              "metadata_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "plans": {
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "command_classes": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "command_count": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "recipe_id": {
+                      "enum": [
+                        "first_adoption",
+                        "daily_project_review",
+                        "risk_decision",
+                        "learning_handoff"
+                      ],
+                      "type": "string"
+                    },
+                    "requires_human_mastery_gate": {
+                      "type": "boolean"
+                    },
+                    "requires_operator_before_runtime": {
+                      "type": "boolean"
+                    },
+                    "runtime_required": {
+                      "type": "boolean"
+                    },
+                    "safe_to_auto_execute": {
+                      "const": false,
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "recipe_id",
+                    "command_count",
+                    "command_classes",
+                    "runtime_required",
+                    "requires_operator_before_runtime",
+                    "requires_human_mastery_gate",
+                    "safe_to_auto_execute"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 4,
+                "type": "array"
+              },
+              "recipe_count": {
+                "const": 4,
+                "type": "integer"
+              },
+              "recipe_ids": {
+                "items": {
+                  "enum": [
+                    "first_adoption",
+                    "daily_project_review",
+                    "risk_decision",
+                    "learning_handoff"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 4,
+                "type": "array"
+              }
+            },
+            "required": [
+              "recipe_ids",
+              "recipe_count",
+              "plans",
+              "metadata_only",
+              "executes_recipe_commands",
+              "all_steps_reference_existing_scripts"
+            ],
+            "type": "object"
+          },
+          "privacy": {
+            "additionalProperties": true,
+            "properties": {
+              "agent_endpoints_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "agent_metadata_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "browser_video_app_private_context_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "diff_bodies_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "generated_private_insights_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "grading_feedback_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "learner_answers_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "raw_source_text_included": {
+                "const": false,
+                "type": "boolean"
+              },
+              "real_model_keys_stored": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "raw_source_text_included",
+              "diff_bodies_included",
+              "learner_answers_included",
+              "grading_feedback_included",
+              "generated_private_insights_included",
+              "agent_endpoints_included",
+              "agent_metadata_included",
+              "real_model_keys_stored",
+              "browser_video_app_private_context_included"
+            ],
+            "type": "object"
+          },
+          "schema_version": {
+            "const": "cognitive-loop-recipe-cli-verification-v1"
+          },
+          "status": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "schema_version",
+          "status",
+          "cli",
+          "cli_outputs",
+          "privacy",
+          "boundaries"
+        ],
+        "title": "Cognitive Loop recipe CLI verification report",
+        "type": "object"
+      }
+    }
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Provide offline JSON Schemas for Cognitive Loop recipe CLI reports and PR CI receipt/source metadata reports.",
+  "schema_version": "cognitive-loop-recipe-cli-schemas-v1",
+  "status": "pass",
+  "validation": {
+    "file_changes_applied": false,
+    "recipe_cli_invoked": false,
+    "reports": [
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "schema_key": "cognitive_loop_recipe_cli_verification",
+        "schema_version": "cognitive-loop-recipe-cli-verification-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "schema_key": "cognitive_loop_recipe_cli_receipts",
+        "schema_version": "cognitive-loop-recipe-cli-receipts-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "schema_key": "cognitive_loop_recipe_cli_failures",
+        "schema_version": "cognitive-loop-recipe-cli-failures-v1",
+        "status": "pass"
+      },
+      {
+        "path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "schema_key": "cognitive_loop_pr_ci_receipt",
+        "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+        "status": "pass"
+      },
+      {
+        "path": "<synthetic:fixture:cognitive-loop-pr-ci-source-v1>",
+        "schema_key": "cognitive_loop_pr_ci_source",
+        "schema_version": "cognitive-loop-pr-ci-source-v1",
+        "status": "pass"
+      },
+      {
+        "path": "<synthetic:gh_live:cognitive-loop-pr-ci-source-v1>",
+        "schema_key": "cognitive_loop_pr_ci_source",
+        "schema_version": "cognitive-loop-pr-ci-source-v1",
+        "status": "pass"
+      }
+    ],
+    "runtime_started": false,
+    "validated_without_running_recipe_cli": true
+  }
+}

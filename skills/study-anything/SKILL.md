@@ -23,6 +23,278 @@ Alternatively pass `--api-base` to `scripts/study_anything_cli.py`.
 If the user already runs the Docker stack or a remote private deployment, do not launch another local
 API. Check `health` against their configured API base instead.
 
+## Cognitive Loop Recipes
+
+Use Cognitive Loop recipes when the user wants a platform Agent to operate a project or repo through
+local, auditable steps rather than run only one Study Anything lesson. Start from
+`docs/cognitive-loop-adoption-cookbook.md`, then use the generated recipe matrix and replay report:
+
+```bash
+python3 scripts/verify_cognitive_loop_adoption_cookbook.py --check
+python3 scripts/generate_cognitive_loop_adoption_recipes.py --check
+python3 scripts/verify_cognitive_loop_recipe_replay.py --check
+python3 scripts/verify_cognitive_loop_skill_entrypoint.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+python3 scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+python3 scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+python3 scripts/verify_platform_handoff_checklist.py --check
+python3 scripts/verify_launch_acceptance_ledger.py --check
+python3 scripts/verify_github_launch_operator_guide.py --check
+python3 scripts/cognitive_loop_recipe_cli.py list
+python3 scripts/cognitive_loop_recipe_cli.py show risk_decision
+```
+
+The machine-readable entrypoints are:
+
+- `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
+- `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json`
+- `platform/schemas/cognitive-loop-pr-ci-receipt.schema.json`
+- `platform/schemas/cognitive-loop-pr-ci-source.schema.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json`
+- `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json`
+- `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
+- `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json`
+- `platform/generated/study-anything-platform-handoff-checklist.json`
+- `platform/generated/study-anything-launch-acceptance-ledger.json`
+- `platform/generated/study-anything-github-launch-operator-guide.json`
+- `scripts/cognitive_loop_recipe_cli.py`
+
+Use these recipe ids:
+
+- `first_adoption`: prove platform pack, external adoption, and privacy boundaries before real keys.
+- `daily_project_review`: initialize contracts, snapshot the repo, run one local loop, and open the static artifact index.
+- `risk_decision`: produce report, gate, doctor, and repair-plan evidence; stop for the Human Mastery Gate.
+- `learning_handoff`: run Skill Mode or lesson/importer checks before handing compact mastery evidence back.
+
+Treat the replay report as metadata-only replay. It does not execute recipe commands, start runtime
+processes, apply file changes, or approve risk decisions. Treat the CLI receipts, failures, and
+schemas as the same metadata-only evidence. The PR CI receipt/source schemas are static validation
+contracts for platform Agents; they must not require reading GitHub tokens, fetching job logs, calling
+models, running Docker/API, or mutating source files. The platform Agent owns browser, files,
+applications, external data, video slicing, user conversation, and real model credentials. Study
+Anything owns the local Learning Adapter path. Study Anything owns the local Learning Adapter:
+source-bound learning, mastery, eval evidence,
+Obsidian/NotebookLM-style exports, and redacted Cognitive Loop artifacts.
+
+Do not paste raw source text, diff bodies, learner answers, grading feedback, generated private
+insights, Agent endpoints, raw Agent metadata, API keys, model secrets, or browser/video/app private
+context into shared logs, recipe metadata, or support bundles. Generated private insights must stay
+out of shared logs.
+Boundary check phrase: generated private insights.
+
+## Personal Plugin Mode Lite
+
+Use Personal Plugin Mode Lite when the platform Agent only needs a read-only learning artifact for
+a single file, README, webpage metadata record, or git diff summary. This is the lightweight path for
+Kimi, Codex, WorkBuddy, or another local Agent to explain material and hand Study Cards, quiz items,
+and Markdown/HTML reports back to the user without launching a daemon or standalone frontend.
+
+```bash
+python3 scripts/cognitive_loop_personal_mode.py explain --file README.md --html --markdown --json
+python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check
+```
+
+Machine-readable evidence:
+
+- `platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json`
+- `scripts/cognitive_loop_personal_mode.py`
+- `scripts/verify_cognitive_loop_personal_plugin_mode.py`
+
+Treat Personal Plugin Mode artifacts as metadata-only. They must not contain raw source text, raw
+diff bodies, learner answers, Agent endpoints, Agent metadata, prompts, model keys, or real model
+outputs. The default behavior is explain-only and read-only: do not auto-apply code changes from
+this mode.
+
+## Artifact Console Evolution Chain
+
+Use Artifact Console Lite when the platform Agent or local operator needs one static HTML/JSON entry
+point for local evidence. It aggregates Event Store rows, watcher runner summaries, Study Adapter
+artifacts, Human Gate/Loop metadata, artifact health, the Evolution Chain from `EvolutionReport`
+through `MastraEvolutionWorkflowReplay` and `PatchApplySandboxReceipt`, and the Professional
+Evolution Pack export handoff. Missing Evolution artifacts should degrade the section instead of
+failing the console; invalid, secret-like, raw-diff, privacy-regressing, or policy-weakening artifacts
+must be rejected.
+
+```bash
+python3 scripts/cognitive_loop_artifact_console.py build --html --json
+python3 scripts/verify_cognitive_loop_artifact_console.py --check
+```
+
+Treat the console as metadata-only and static. It must not start a daemon, require a standalone
+frontend, use SSE/WebSocket, call models, execute apply, start production Mastra, modify source
+files, or include source bodies, raw diffs, learner answers, Agent endpoints, Agent metadata,
+prompts, or model keys.
+
+## Evolution Report Lite
+
+Use Evolution Report Lite after a local loop, Personal Plugin Mode run, Artifact Console run, or
+support/eval failure when the platform Agent needs a governed next-loop proposal. It clusters
+metadata-only failures, proposes prompt/policy/eval/task/doc/retrieval improvements, marks high-risk
+suggestions for a Human Mastery Gate, and writes JSON/HTML evidence. It must stay read-only.
+
+```bash
+python3 scripts/cognitive_loop_evolution.py build --html --json
+python3 scripts/verify_cognitive_loop_evolution_report.py --check
+```
+
+Machine-readable evidence:
+
+- `platform/generated/study-anything-cognitive-loop-evolution-report.json`
+- `scripts/cognitive_loop_evolution.py`
+- `scripts/verify_cognitive_loop_evolution_report.py`
+
+Do not use Evolution Report Lite to auto-apply changes, weaken risk thresholds, skip audit, remove
+rollback, reduce test requirements, loosen permissions, bypass Human Mastery Gates, store real model
+keys, or include raw source/diff bodies.
+
+## Governed Apply Plan Lite
+
+Use Apply Plan Lite after Evolution Report Lite when an operator needs a low-risk, receipt-only next
+step without handing source control to the learning system.
+
+```bash
+python3 scripts/cognitive_loop_apply_plan.py plan --proposal .cognitive-loop/artifacts/evolution/evolution-report-lite.json --html --json
+python3 scripts/verify_cognitive_loop_apply_plan.py --check
+```
+
+The command is dry-run by default. Only use `--apply --allow-generated-artifacts` when the proposal
+is low risk and the intended output is an idempotent receipt under `.cognitive-loop/artifacts/applied/`.
+Do not use it to write README, docs, scripts, apps, platform packs, policy files, source code, raw
+source, raw diff, learner answers, Agent endpoints, Agent metadata, prompts, or model keys.
+
+## Measured Improvement Comparator Lite
+
+Use Comparator Lite after at least two metadata-only loop artifacts exist and the operator needs to
+know whether the latest loop actually improved. It compares Evolution Report, Apply Plan, receipt,
+or verification report artifacts and classifies the result as `improved`, `regressed`, `unchanged`,
+`insufficient`, or `ambiguous`.
+
+```bash
+python3 scripts/cognitive_loop_improvement_comparator.py compare --artifact previous.json --artifact current.json --html --json
+python3 scripts/verify_cognitive_loop_improvement_comparator.py --check
+```
+
+Comparator Lite is read-only. Do not use it to call models, execute apply, modify source files,
+weaken policy, or include raw source, raw diff, learner answers, Agent endpoints, Agent metadata,
+prompts, or model keys.
+
+## Patch Proposal Lite
+
+Use Patch Proposal Lite after Evolution Report, Apply Plan, or Comparator evidence exists and the
+operator needs a read-only patch specification instead of source-changing automation. It covers
+`prompt`, `policy`, `eval`, `task`, `doc`, and `retrieval` proposal categories.
+
+```bash
+python3 scripts/cognitive_loop_patch_proposal.py build --artifact evidence.json --html --json
+python3 scripts/verify_cognitive_loop_patch_proposal.py --check
+```
+
+Patch Proposal Lite is read-only. It rejects or downgrades high-risk, Human Mastery Gate required,
+manual-only, protected target path, insufficient evidence, secret-like, raw-diff, and
+policy-weakening inputs. Do not use it to generate raw unified diffs, call models, execute apply,
+modify source files, weaken policy, or include raw source, raw diff, learner answers, Agent
+endpoints, Agent metadata, prompts, or model keys.
+
+## Mastra Evolution Receipt Link Lite
+
+Use Mastra Evolution Receipt Link Lite after Evolution Report, Apply Plan, Comparator, and Patch
+Proposal evidence exists and an operator needs a metadata-only receipt DTO for future Mastra workflow
+handoff.
+
+```bash
+python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json
+python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check
+```
+
+Receipt Link Lite is read-only. It degrades missing or insufficient evidence, blocks high-risk
+ungated artifacts and manual-only PatchProposal candidates, rejects unsupported schemas, secrets,
+raw diffs, and policy weakening, and never starts Mastra, calls models, executes apply, generates raw
+unified diffs, modifies source files, or stores private learning data.
+
+## Mastra Evolution Workflow Replay Lite
+
+Use Mastra Evolution Workflow Replay Lite after a metadata-only EvolutionReceiptLink exists and an
+operator needs a replay transcript for future Mastra workflow handoff.
+
+```bash
+python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json
+python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check
+```
+
+Workflow Replay Lite is read-only. It maps ready receipts to replay-ready workflow steps, degraded
+receipts to manual review, and blocked receipts to blocked/manual-only. It rejects invalid schemas,
+unsupported statuses, missing required roles on ready receipts, high-risk ungated receipts,
+manual-only patch paths, privacy flag regressions, secrets, raw diffs, and policy weakening. It
+never starts production Mastra, calls models, executes apply, modifies source files, or stores
+private learning data.
+
+## Governed Patch Apply Sandbox Lite
+
+Use Patch Apply Sandbox Lite after Patch Proposal, Apply Plan, EvolutionReceiptLink, and
+MastraEvolutionWorkflowReplay evidence exists and the operator needs a dry-run receipt before any
+future source-changing apply path.
+
+```bash
+python3 scripts/cognitive_loop_patch_apply_sandbox.py sandbox --html --json
+python3 scripts/verify_cognitive_loop_patch_apply_sandbox.py --check
+```
+
+Patch Apply Sandbox Lite is metadata-only. It maps ready chains to `sandbox_ready`, degraded chains
+to manual review, blocked chains to blocked, and missing chains to degraded missing artifacts. It
+rejects invalid schemas, protected target paths, secrets, raw diffs, privacy flag regressions, and
+policy weakening. It proves rollback with a temporary sandbox preview reference, but never mutates
+the real worktree, executes apply, starts production Mastra, calls models, or stores private learning
+data.
+
+## Professional Evolution Pack Export Lite
+
+Use Professional Evolution Pack Export Lite after Artifact Console, Evolution Report, Apply Plan,
+Comparator, Patch Proposal, EvolutionReceiptLink, MastraEvolutionWorkflowReplay, and Patch Apply
+Sandbox evidence exists and the operator needs a redacted JSON/HTML/ZIP handoff for maintainers,
+Kimi/Codex/WorkBuddy-style platform Agents, or future hosted team review.
+
+```bash
+python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip
+python3 scripts/verify_cognitive_loop_evolution_pack_export.py --check
+python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --pack .cognitive-loop/artifacts/evolution-pack/cognitive-loop-professional-evolution-pack.zip
+python3 scripts/verify_cognitive_loop_evolution_pack_consumer.py --check
+python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check
+python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check
+```
+
+The export is metadata-only. It maps ready chains to `pack_ready`, degraded chains to missing
+artifact status, manual chains to manual review, and blocked chains to blocked. It verifies ZIP
+entry hashes, rejects invalid schemas, protected target paths, secrets, raw diffs, privacy flag
+regressions, and policy weakening. It never mutates the real worktree, executes apply, starts
+production Mastra, calls models, or stores private learning data.
+
+Use the consumer command when a maintainer or platform Agent receives only the ZIP handoff. Consumer
+mode verifies manifest schema, pack id, archive layout, entry hashes, artifact refs, commands,
+privacy flags, and read-only guardrails without API, Docker, a repo checkout, model calls, or source
+mutation.
+
+Use the maintainer ledger before merge or release. It aggregates export evidence, consumer evidence,
+PR CI receipt evidence, public release/adoption evidence, and release_check status into a metadata-only
+`ready`, `manual_review`, or `blocked` decision. It is a review gate, not hosted automation: it does
+not merge PRs, execute apply, call models, start daemons, require Docker/API, or mutate source.
+
+Use PR CI Receipt Lite when you need to turn required-check status into a portable artifact first.
+The default verifier is offline and fixture-backed; `--from-fixture` can accept a redacted fixture or
+sanitized `gh pr checks --json`-style payload. When a maintainer explicitly wants live PR metadata,
+run `python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write`; this calls the
+local GitHub CLI for PR/check metadata only. It stores check names/statuses, PR number, head SHA, base
+branch, and decision only; it does not read GitHub tokens, annotations, artifacts, or raw job logs.
+
 ## Start A Learning Loop
 
 1. Check API health.

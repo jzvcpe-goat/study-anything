@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 157813,
+    "bytes": 76960,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "b9191cdd962a16efd6298b285e37fdf909c1eb4d0c4a7a7cdb162ca455a2c6e3",
+    "sha256": "fb60b55528f89c36254382665c3a28f3f48d8cf8dd76621462016e03106ad14a",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -50,7 +50,7 @@
     },
     {
       "classification": "local_api_unavailable",
-      "meaning": "Launch Skill Mode or Docker self-host from a normal terminal that permits localhost sockets before running live platform tools.",
+      "meaning": "Launch Skill Mode or Docker self-host before running live platform tools.",
       "release_gate": "runtime_recheck_required"
     },
     {
@@ -70,10 +70,10 @@
     }
   ],
   "commands": {
-    "metadata_only": "python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime metadata-only",
+    "metadata_only": "python3 scripts/bootstrap_from_release.py --tag v0.3.31-alpha --runtime metadata-only",
     "offline_fixture": "python3 scripts/bootstrap_from_release.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
-    "published_image": "python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime published-image",
-    "skill_mode": "python3 scripts/bootstrap_from_release.py --tag v0.3.29-alpha --runtime skill-mode"
+    "published_image": "python3 scripts/bootstrap_from_release.py --tag v0.3.31-alpha --runtime published-image",
+    "skill_mode": "python3 scripts/bootstrap_from_release.py --tag v0.3.31-alpha --runtime skill-mode"
   },
   "platform_imports": {
     "codex": "Skill entrypoint plus CLI/demo commands.",
@@ -94,122 +94,72 @@
     {
       "bytes": 3891,
       "path": "docs/release-asset-bootstrap.md",
-      "sha256": "6857d517eab99688f9a9c4f03c3a6de1af8837554e1c769e00fa37fa7e07487a"
+      "sha256": "b95b3b7aa6cc306378c50cd7919e4c66b1d45d83a4276544ca5b9dfa51d95979"
     },
     {
       "bytes": 2926,
       "path": "docs/release-cleanroom-bootstrap.md",
-      "sha256": "2a01aeb947614fbb7f69f86b3fc5414a1f2d140fe96dfc2d93752bb09171565b"
+      "sha256": "af9b020c121279919e2bf3b02d71f82eb51d001fa5cf9c47d20169af0070fff6"
     },
     {
       "bytes": 3259,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "82d2aaec8d66367992b971ea7c3f22ce4f029befdbfd8a69f2a4fbfc8c913229"
+      "sha256": "b07c834c26cb0470eca6c0709ccc7a8897a2845202b7e5bc9dec8a51ee503ee9"
     },
     {
       "bytes": 3611,
       "path": "docs/platform-agent-release-replay.md",
-      "sha256": "a85670357300de4d3e86563fe371e74ca62e416a444ee7fa7a9b5e290e0bd747"
+      "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
-      "bytes": 7090,
-      "path": "docs/support-desk.md",
-      "sha256": "e210f13fdad2251a4c90395cd535a7e2ad41f6d1ab995f49ae51e760506fdf27"
-    },
-    {
-      "bytes": 20067,
+      "bytes": 19503,
       "path": "docs/adoption.md",
-      "sha256": "793bda9f565425dadd4b1678fe3405b1f8d16b61a295c9a8a26436d163621ea9"
+      "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 6578,
+      "bytes": 11533,
       "path": "docs/github-launch.md",
-      "sha256": "039162c0abd814eb11b5430efc30ae187ace4a86f9abac8815d69b51585a7bc1"
+      "sha256": "8a5b324522650458f90a737e89927fc475da136b553ce3c143ff8868e29fd0cb"
     },
     {
-      "bytes": 11215,
+      "bytes": 11978,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "b951c6611daa69e1efa6a5845a6db279a730111885b492839e563c19307299c6"
+      "sha256": "779dacc06cd5c24f9b64d1da3b04643be67546dee6a3b19b000a649b3f4f9dd2"
     },
     {
-      "bytes": 37757,
+      "bytes": 35043,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "0bc1a91aa6032704c203727a27980e23f76ea9701fdabd696306c7a4c4c20aad"
+      "sha256": "c050e5afe113148b03fb4a54198af30446dfe1465b5594593b5bc2cd62fce216"
     },
     {
-      "bytes": 15140,
+      "bytes": 14063,
       "path": "scripts/generate_release_cleanroom_bootstrap.py",
-      "sha256": "2763a0d91affbed4b755ca745bedb25e97b4247c99d62310c07673488746c7ae"
+      "sha256": "07c7ab08a55912e3f272d7a2a4cb54229b1d7a6b4d1f3847451445cf9cadd450"
     },
     {
-      "bytes": 20631,
+      "bytes": 20083,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "2263915de265e551f63ebb52e6b178624936cc8c493d0d62301ae6df70532a05"
+      "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
     },
     {
-      "bytes": 27036,
+      "bytes": 21139,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "3e74a705615ad4641ea1df47b214c1626698af057833a21715804ae73a00a71c"
+      "sha256": "eda710833e22efe02cb7a0606af8d6fca7b496e16be1724c096c28032e5e61e3"
     },
     {
-      "bytes": 31464,
+      "bytes": 29302,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "c9eeee151f2c5e36518f75e02a543a09437ab48fb85b96e764ef4c0d3f31ee9b"
+      "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
     },
     {
-      "bytes": 16295,
-      "path": "scripts/replay_support_bundle.py",
-      "sha256": "fe20897d4e16570b2e4f382cd7a5ea8c32607cc222efe49ad827bfe127cef258"
-    },
-    {
-      "bytes": 12350,
-      "path": "scripts/generate_platform_support_bundle_replay.py",
-      "sha256": "cdb786e2600803ca56b04ecec326628b4d8a444eb7bb127c813b84deed3f03e6"
-    },
-    {
-      "bytes": 12716,
-      "path": "scripts/verify_platform_support_bundle_replay.py",
-      "sha256": "3448abfb6799cf0d30fd9371014ff58d15f931028846a8b5d2979a57ee0e0054"
-    },
-    {
-      "bytes": 17286,
+      "bytes": 15655,
       "path": "scripts/generate_release_asset_bootstrap.py",
-      "sha256": "4df638724cac965eac3afb7e1725e265ed4774f74a418a6c25647334978f7017"
+      "sha256": "9e43b103f505b148b8db3d8db29843b474438691f0a387618555de6d4fee6e35"
     },
     {
-      "bytes": 3047,
-      "path": "platform/generated/study-anything-platform-support-bundle-replay.json",
-      "sha256": "f771c317bd03f7eca0ba2bb9a3924f0f6d87e402ea34288a26cce0a231993c54"
-    },
-    {
-      "bytes": 8123,
-      "path": "platform/generated/study-anything-release-asset-adoption.json",
-      "sha256": "277629e8dbe4f1fc6dfa1b0d50196aa9916c71d6a90b92314d549af82349b9d7"
-    },
-    {
-      "bytes": 8103,
-      "path": "platform/generated/study-anything-release-cleanroom-bootstrap.json",
-      "sha256": "bce1b969737fd929912a9530c6b2f4b1bd1fda527ab8b54ba1cf26960a2a3946"
-    },
-    {
-      "bytes": 2945,
-      "path": "platform/generated/study-anything-release-cleanroom-bootstrap.md",
-      "sha256": "3582d3c428310ac12c978a0bcc951f9e2537b61975a2f53779d3dbb205eb80ed"
-    },
-    {
-      "bytes": 55937,
-      "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-      "sha256": "2d62ae98e4c8dbe2fadc93920bdc5906631584da98c56f1dc8595f0760f37885"
-    },
-    {
-      "bytes": 113,
-      "path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
-      "sha256": "0dbc529037e36ca1d3a509353a31d2c5501ca97ad84477ce06b5a3246e2a6658"
-    },
-    {
-      "bytes": 6367,
+      "bytes": 6408,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "8081702eceb5d801a108ee60aa94b654e2599bf64eeb63284b54b6ec7488ae6e"
+      "sha256": "14ac1f1be8f0407ebbc141d0ee4ac2ba451e4a54e55608953edb98123ca5413a"
     },
     {
       "bytes": 83732,
@@ -224,9 +174,9 @@
   ],
   "purpose": "Make the GitHub Release page a complete external adoption entrypoint: download assets, verify digests, inspect platform import manifests, and emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts.",
   "release_identity": {
-    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.29-alpha",
+    "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",
     "repo": "jzvcpe-goat/study-anything",
-    "tag": "v0.3.29-alpha"
+    "tag": "v0.3.31-alpha"
   },
   "schema_version": "release-asset-bootstrap-v1",
   "schemas": {
@@ -236,5 +186,5 @@
     "transcript": "release-asset-bootstrap-transcript-v1"
   },
   "status": "pass",
-  "version": "v0.3.29-alpha"
+  "version": "v0.3.31-alpha"
 }

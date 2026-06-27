@@ -1,0 +1,48 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_mastra_evolution_receipt.py build --artifact evidence.json --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-mastra-evolution-receipt-link-v1",
+  "blocked_modes": {
+    "high_risk_gate_blocked": true,
+    "manual_patch_blocked": true,
+    "privacy_regression_blocked": true
+  },
+  "cli": "scripts/cognitive_loop_mastra_evolution_receipt.py",
+  "failure_modes": {
+    "policy_weakening_rejected": true,
+    "raw_diff_artifact_rejected": true,
+    "secret_artifact_rejected": true,
+    "unsupported_schema_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "mastra_workflow_started": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "raw_unified_diff_generated": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_files_modified": false,
+    "source_text_included": false
+  },
+  "schema_version": "cognitive-loop-mastra-evolution-receipt-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "full_set_status": "ready",
+    "html_json_created": true,
+    "insufficient_comparison_status": "degraded",
+    "read_only": true,
+    "single_artifact_status": "degraded",
+    "workflow_step_count": 4
+  },
+  "version": "v0.3.31-alpha"
+}

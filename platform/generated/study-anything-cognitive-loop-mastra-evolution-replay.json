@@ -1,0 +1,51 @@
+{
+  "acceptance": {
+    "example_command": "python3 scripts/cognitive_loop_mastra_evolution_replay.py replay --receipt .cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json --html --json",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+    "release_gate": "scripts/release_check.sh"
+  },
+  "artifact_schema": "cognitive-loop-mastra-evolution-workflow-replay-v1",
+  "cli": "scripts/cognitive_loop_mastra_evolution_replay.py",
+  "failure_modes": {
+    "high_risk_ungated_rejected": true,
+    "invalid_schema_rejected": true,
+    "manual_only_patch_rejected": true,
+    "policy_weakening_rejected": true,
+    "privacy_regression_rejected": true,
+    "raw_diff_receipt_rejected": true,
+    "ready_missing_roles_rejected": true,
+    "secret_receipt_rejected": true,
+    "unsupported_status_rejected": true
+  },
+  "privacy": {
+    "agent_endpoint_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "daemon_started": false,
+    "learner_answers_included": false,
+    "mastra_workflow_started": false,
+    "model_called": false,
+    "policy_weakened": false,
+    "production_mastra_daemon_started": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "raw_unified_diff_generated": false,
+    "read_only": true,
+    "real_model_keys_stored": false,
+    "source_files_modified": false,
+    "source_text_included": false
+  },
+  "receipt_schema": "cognitive-loop-mastra-evolution-receipt-link-v1",
+  "schema_version": "cognitive-loop-mastra-evolution-replay-verification-v1",
+  "status": "pass",
+  "success_modes": {
+    "blocked_high_risk_status": "blocked",
+    "blocked_manual_patch_status": "blocked",
+    "degraded_status": "manual_review",
+    "html_json_created": true,
+    "read_only": true,
+    "ready_status": "replay_ready",
+    "workflow_step_count": 6
+  },
+  "version": "v0.3.31-alpha"
+}

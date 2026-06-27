@@ -12,82 +12,84 @@ from typing import Any, Mapping
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from localhost_diagnostics import redact_diagnostic
-
 BASELINE_PATH = ROOT / "evals" / "baselines" / "study-anything-agent-eval-baseline.json"
 BASELINE_SCHEMA = "study-anything-agent-eval-baseline-v1"
 REGRESSION_SCHEMA = "study-anything-agent-eval-regression-report-v1"
-BASELINE_VERSION = "v0.3.29-alpha"
+BASELINE_VERSION = "v0.3.31-alpha"
 EXPECTED_ADAPTERS = ["deepeval", "langchain-agentevals", "promptfoo", "ragas"]
-EXPECTED_TRAJECTORY = ["quiz.generate", "answer.grade", "insight.synthesize"]
-MIN_PYTHON = (3, 11)
+EXPECTED_TRAJECTORY = [
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+]
 
 
 class AgentEvalBaselineError(RuntimeError):
     """Readable baseline failure."""
 
 
+def sanitize_text(value: object) -> str:
+    text = str(value)
+    text = re.sub(r"/private/tmp/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/tmp/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", text)
+    text = re.sub(r"/Users/[^\s\"']+", "<local-path>", text)
+    text = re.sub(
+        r"(?i)(Authorization\s*:\s*)Bearer\s+[A-Za-z0-9._~+/=-]{8,}",
+        r"\1Bearer <redacted>",
+        text,
+    )
+    text = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", text)
+    text = re.sub(
+        r"(?i)\b(api[_-]?key|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}",
+        r"\1=<redacted>",
+        text,
+    )
+    return text
+
+
 def runtime_failure_payload(
     *,
     classification: str,
-    diagnostic: str,
-    details: dict[str, Any] | None = None,
+    diagnostic: object,
+    details: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    return {
+    payload = {
         "schema_version": "agent-eval-baseline-error-v1",
         "status": "blocked",
-        "classification": classification,
-        "diagnostic": redact_diagnostic(diagnostic),
-        "details": details or {},
+        "classification": sanitize_text(classification),
+        "diagnostic": sanitize_text(diagnostic),
+        "details": {str(key): sanitize_text(value) for key, value in (details or {}).items()},
         "next_steps": [
             ".venv/bin/python scripts/verify_agent_eval_baseline.py --check",
-            "python3 scripts/setup_env.py",
-            "python3 scripts/verify_agent_eval_assets.py",
+            ".venv/bin/python scripts/verify_agent_eval_baseline.py --write",
+            ".venv/bin/python scripts/verify_agent_eval_assets.py",
+            "docs/agent-eval.md",
         ],
         "privacy": {
             "local_absolute_paths_included": False,
             "secrets_recorded": False,
         },
     }
-
-
-def runtime_failure(
-    message: str,
-    *,
-    classification: str = "python_dependency_missing",
-    details: dict[str, Any] | None = None,
-) -> None:
-    print(
-        json.dumps(
-            runtime_failure_payload(
-                classification=classification,
-                diagnostic=message,
-                details=details,
-            ),
-            ensure_ascii=False,
-            indent=2,
-            sort_keys=True,
-        ),
-        file=sys.stderr,
-    )
-    sys.exit(1)
+    return payload
 
 
 def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
+    payload = runtime_failure_payload(
+        classification="agent_eval_baseline_failed",
+        diagnostic=str(exc),
+    )
     return "\n".join(
         [
-            f"verify_agent_eval_baseline failed: {diagnostic}",
-            "",
+            f"verify_agent_eval_baseline failed: {payload['diagnostic']}",
             "Next steps:",
-            "1. Re-run the baseline check: python3 scripts/verify_agent_eval_baseline.py --check",
-            "2. If intentional, regenerate the baseline: python3 scripts/verify_agent_eval_baseline.py --write",
-            "3. Re-run Agent eval assets: python3 scripts/verify_agent_eval_assets.py",
-            "4. Inspect docs/agent-eval.md before changing release thresholds.",
+            "- .venv/bin/python scripts/verify_agent_eval_baseline.py --check",
+            "- .venv/bin/python scripts/verify_agent_eval_baseline.py --write",
+            "- .venv/bin/python scripts/verify_agent_eval_assets.py",
+            "- Read docs/agent-eval.md",
         ]
     )
 
@@ -120,6 +122,24 @@ def sample_audit() -> dict[str, Any]:
         },
         "evidence": [
             {
+                "node": "teaching_layers",
+                "task_type": "teach.overview",
+                "provider_id": "external-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 9,
+                "confidence": 0.9,
+            },
+            {
+                "node": "teaching_layers",
+                "task_type": "teach.glossary",
+                "provider_id": "external-agent-redacted",
+                "provider_kind": "http_agent",
+                "status": "ok",
+                "latency_ms": 10,
+                "confidence": 0.9,
+            },
+            {
                 "node": "quiz",
                 "task_type": "quiz.generate",
                 "provider_id": "external-agent-redacted",
@@ -151,46 +171,32 @@ def sample_audit() -> dict[str, Any]:
 
 
 def build_current_baseline() -> dict[str, Any]:
-    if sys.version_info < MIN_PYTHON:  # pragma: no cover - depends on local interpreter
-        runtime_failure(
-            "verify_agent_eval_baseline requires Python 3.11 or newer.",
-            classification="python_version_unsupported",
-            details={"python_version": sys.version.split()[0]},
-        )
-
     sys.path.insert(0, str(ROOT / "apps" / "api"))
-    try:
-        from study_anything.core.agent_eval import (  # noqa: PLC0415
-            AGENT_EVAL_ADAPTERS,
-            build_agent_eval_artifact,
-            build_agent_eval_report,
-        )
-        from study_anything.core.quality_eval import build_agent_quality_eval  # noqa: PLC0415
-        from study_anything.core.retrieval import (  # noqa: PLC0415
-            RetrievalResult,
-            RetrievalSearchResultSet,
-            RetrievalStatus,
-        )
-        from study_anything.core.retrieval_eval import (  # noqa: PLC0415
-            RetrievalQualityInput,
-            build_retrieval_quality_eval,
-        )
-        from study_anything.core.security import hash_user_id, sha256_text  # noqa: PLC0415
-        from study_anything.core.workflow import (  # noqa: PLC0415
-            Answer,
-            EnrichmentItem,
-            GradingResult,
-            LearningState,
-            Mastery,
-            QuizItem,
-            ReadingSource,
-        )
-    except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
-        runtime_failure(
-            f"Python dependencies are missing for this interpreter ({exc.name}).",
-            classification="python_dependency_missing",
-            details={"missing_module": redact_diagnostic(exc.name or "required module")},
-        )
+    from study_anything.core.agent_eval import (  # noqa: PLC0415
+        AGENT_EVAL_ADAPTERS,
+        build_agent_eval_artifact,
+        build_agent_eval_report,
+    )
+    from study_anything.core.quality_eval import build_agent_quality_eval  # noqa: PLC0415
+    from study_anything.core.retrieval import (  # noqa: PLC0415
+        RetrievalResult,
+        RetrievalSearchResultSet,
+        RetrievalStatus,
+    )
+    from study_anything.core.retrieval_eval import (  # noqa: PLC0415
+        RetrievalQualityInput,
+        build_retrieval_quality_eval,
+    )
+    from study_anything.core.security import hash_user_id, sha256_text  # noqa: PLC0415
+    from study_anything.core.workflow import (  # noqa: PLC0415
+        Answer,
+        EnrichmentItem,
+        GradingResult,
+        LearningState,
+        Mastery,
+        QuizItem,
+        ReadingSource,
+    )
 
     audit = sample_audit()
     artifact = build_agent_eval_artifact(audit)

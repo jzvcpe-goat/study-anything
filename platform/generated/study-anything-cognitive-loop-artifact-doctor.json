@@ -1,0 +1,62 @@
+{
+  "artifact_doctor": {
+    "all_records_exclude_content": true,
+    "all_records_have_hash": true,
+    "content_included": false,
+    "created": true,
+    "error_count": 0,
+    "file_count": 10,
+    "issue_count": 0,
+    "status": "pass",
+    "warning_count": 0
+  },
+  "artifact_json_schema": "cognitive-loop-artifact-doctor-v1",
+  "bundle_schema": "cognitive-loop-evidence-bundle-v1",
+  "cli": "scripts/cognitive_loop_cli.py",
+  "commands": {
+    "doctor": "python3 scripts/cognitive_loop_cli.py doctor --html",
+    "init": "python3 scripts/cognitive_loop_cli.py init",
+    "verify": "python3 scripts/cognitive_loop_cli.py verify"
+  },
+  "doctor_schema": "cognitive-loop-artifact-doctor-v1",
+  "failure_modes": {
+    "detected_codes": [
+      "duplicate_hash",
+      "missing_html_pair",
+      "stale_event_index_hash_mismatch",
+      "stale_event_index_missing_event"
+    ],
+    "duplicate_hash_detected": true,
+    "missing_html_pair_detected": true,
+    "stale_event_index_detected": true
+  },
+  "gate_schema": "cognitive-loop-human-gate-v1",
+  "html_artifact": {
+    "contains_artifact_doctor": true,
+    "contains_brand": true,
+    "contains_redacted_json": true,
+    "created": true,
+    "standalone_frontend_required": false
+  },
+  "index_schema": "cognitive-loop-event-index-v1",
+  "init_schema": "cognitive-loop-cli-init-v1",
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "artifact_contents_included": false,
+    "diff_body_included": false,
+    "event_contents_included": false,
+    "file_contents_included": false,
+    "forbidden_text_leaked": false,
+    "learner_answers_included": false,
+    "mastra_runtime_started": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false,
+    "watcher_daemon_started": false
+  },
+  "run_once_schema": "cognitive-loop-run-once-artifact-v1",
+  "schema_version": "cognitive-loop-artifact-doctor-verification-v1",
+  "snapshot_schema": "cognitive-loop-project-snapshot-v1",
+  "status": "pass",
+  "verify_schema": "cognitive-loop-cli-verify-v1"
+}

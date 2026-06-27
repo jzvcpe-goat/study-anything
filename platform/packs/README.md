@@ -14,6 +14,24 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-operator-drill-transcript.json`
 - `platform/generated/study-anything-platform-adoption-pack.json`
 - `platform/generated/study-anything-platform-adoption-pack.zip`
+- `platform/generated/study-anything-codex-plugin-pack.zip`
+- `platform/generated/study-anything-kimi-plugin-pack.zip`
+- `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+- `docs/cognitive-loop-adoption-cookbook.md`
+- `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
+- `platform/generated/study-anything-cognitive-loop-skill-entrypoint.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json`
+- `platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json`
+- `platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json`
+- `platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json`
+- `platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json`
+- `platform/generated/study-anything-platform-handoff-checklist.json`
+- `platform/generated/study-anything-launch-acceptance-ledger.json`
+- `platform/generated/study-anything-github-launch-operator-guide.json`
 - `evals/baselines/study-anything-agent-eval-baseline.json`
 - `evals/fixtures/fake-agent-learning-loop.json`
 - `evals/fixtures/mock-http-agent-learning-loop.json`
@@ -53,6 +71,8 @@ retrieval, and ecosystem eval capabilities:
   `plugin-package-validation-v1` package check for local plugin ecosystem handoff.
 - a copy-ready platform adoption pack that proves the Kimi/Codex/WorkBuddy-style tool surface works
   without requiring a standalone frontend.
+- three downloadable plugin packs with sidecar manifests and checksums for Codex, Kimi-compatible,
+  and WorkBuddy-style imports.
 - `study-anything-operator-drill-v1` transcript evidence that proves the pack can be consumed as an
   external platform tool directory.
 - `study-anything-agent-eval-regression-report-v1` evidence that the native eval scorecard did not
@@ -65,6 +85,20 @@ retrieval, and ecosystem eval capabilities:
   reasoning model through the local gateway.
 - `workbuddy`: HTTP-tool workspace agents that import OpenAPI tools and call the local API.
 
+## Downloadable Plugin Packs
+
+- `platform/generated/study-anything-codex-plugin-pack.zip`
+- `platform/generated/study-anything-kimi-plugin-pack.zip`
+- `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+
+Each archive has one root directory, a `manifest.json`, a `PLUGIN_PACK_README.md`, and a matching
+`.sha256` file. Generate or verify them from a full checkout with:
+
+```bash
+python3 scripts/generate_platform_plugin_packs.py --check
+python3 scripts/verify_platform_plugin_packs.py --check
+```
+
 ## Verify From A Full Source Checkout
 
 These commands require the complete repository, including `apps/api` and all source-only release
@@ -75,6 +109,25 @@ gates. Do not run this whole block from an extracted adoption pack zip.
 .venv/bin/python scripts/verify_commercial_readiness.py
 .venv/bin/python scripts/verify_ecosystem_submission_pack.py
 .venv/bin/python scripts/verify_platform_ecosystem_packs.py
+.venv/bin/python scripts/verify_cognitive_loop_adoption_cookbook.py --check
+.venv/bin/python scripts/generate_cognitive_loop_adoption_recipes.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_replay.py --check
+.venv/bin/python scripts/verify_cognitive_loop_skill_entrypoint.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli_receipts.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli_failures.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli_schemas.py --check
+.venv/bin/python scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py --check
+.venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer.py --check
+.venv/bin/python scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
+.venv/bin/python scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+.venv/bin/python scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py --check
+.venv/bin/python scripts/verify_cognitive_loop_review_agent_adoption_drill.py --check
+.venv/bin/python scripts/verify_platform_handoff_checklist.py --check
+.venv/bin/python scripts/verify_launch_acceptance_ledger.py --check
+.venv/bin/python scripts/verify_github_launch_operator_guide.py --check
+.venv/bin/python scripts/cognitive_loop_recipe_cli.py list
+.venv/bin/python scripts/cognitive_loop_recipe_cli.py show risk_decision
 .venv/bin/python scripts/generate_platform_bundle_manifest.py --check
 .venv/bin/python scripts/verify_platform_operator_drill.py --check
 .venv/bin/python scripts/generate_platform_adoption_pack.py --check
@@ -115,3 +168,44 @@ python3 scripts/diagnose_adoption.py
 The diagnostic output includes `adoption-diagnostic-plan-v1`, a copyable next-command plan that
 separates missing Docker, slow GHCR pulls, missing `.env`, API reachability, Agent endpoint, and
 provider-default issues.
+
+For day-to-day use, start from `docs/cognitive-loop-adoption-cookbook.md`. It maps Kimi, Codex,
+WorkBuddy, and private platform Agents to the local Cognitive Loop commands for first adoption, daily
+project review, risk decisions, and learning handoff. Platform Agents can also import
+`platform/generated/study-anything-cognitive-loop-adoption-recipes.json` for the same paths as a
+machine-readable recipe matrix, and
+`platform/generated/study-anything-cognitive-loop-recipe-replay.json` to verify the matrix is
+safe for metadata-only replay before an operator runs runtime or human-gated commands.
+`platform/generated/study-anything-cognitive-loop-skill-entrypoint.json` proves the same recipe path
+across the repo-local Skill and all platform packs. The local SQLite Event Store path is verified by
+`python3 scripts/verify_cognitive_loop_event_store.py --check` and should be shared only as exported
+metadata, not as raw source or Agent context. For Mastra-based host Agents, use `platform/mastra/`
+as a copy-ready adapter contract pack verified by
+`python3 scripts/verify_cognitive_loop_mastra_adapter.py --check`.
+`platform/generated/study-anything-cognitive-loop-recipe-cli.json` proves platform Agents can query
+read-only `cognitive-loop-recipe-cli-v1` plans without executing recipe commands.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json` gives deterministic
+sample outputs and hashes for those read-only CLI calls.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json` gives deterministic
+negative-path receipts for unknown recipe ids and invalid recipe matrices.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json` gives offline JSON
+Schemas for static validation of the recipe CLI success, receipt, and failure reports plus PR CI
+receipt/source metadata.
+`platform/schemas/cognitive-loop-pr-ci-receipt.schema.json` and
+`platform/schemas/cognitive-loop-pr-ci-source.schema.json` are standalone PR CI schemas that platform
+Agents can validate without running Python, reading GitHub tokens, fetching job logs, or mutating
+source files.
+`platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json` proves
+those schemas reject drift, unsafe flags, malformed types, unsafe PR CI URLs, unsafe commands, and
+private text probes.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json` proves those assets are
+discoverable and hash-checked from the adoption pack zip without a repo checkout.
+`platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json` proves tampered or policy-violating adoption pack variants fail safely without persisted mutated payloads.
+`platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json` proves the extracted
+adoption pack can run its bundled schema consumer checks without a Study Anything runtime.
+`platform/generated/study-anything-platform-handoff-checklist.json` gives external platform
+operators a release handoff checklist for import, verification, runtime choice, and support escalation.
+`platform/generated/study-anything-launch-acceptance-ledger.json` gives operators the aggregated
+GitHub OSS/platform-Agent launch acceptance state and current commercial boundary.
+`platform/generated/study-anything-github-launch-operator-guide.json` gives operators the GitHub
+release sequence, required release assets, and local-first launch boundary as a machine-readable gate.

@@ -1,63 +1,12 @@
 {
   "adoption_pack": {
-    "deployment_assets_included": 5,
-    "local_python_dependencies_complete": true,
-    "pack_command_path_refs_checked": 179,
-    "pack_command_scripts_checked": 152,
-    "pack_verification_commands_reference_included_paths": true,
-    "pack_verification_commands_reference_included_scripts": true,
-    "python_scripts_checked": 68,
+    "deployment_assets_included": 3,
     "schema": "study-anything-platform-adoption-pack-v1",
-    "version": "v0.3.29-alpha"
-  },
-  "agent_endpoint_normalization": {
-    "compatibility_aliases": [
-      "STUDY_ANYTHING_TEST_AGENT_ENDPOINT"
-    ],
-    "core": "apps/api/study_anything/core/agent_registry.py",
-    "normalizes": [
-      "gateway_root",
-      "localhost_without_scheme",
-      "health_endpoint",
-      "legacy_saved_provider_root"
-    ],
-    "preserves": [
-      "custom_invoke_paths",
-      "non_secret_query_parameters"
-    ],
-    "redacts": [
-      "external_adoption_cli_failures",
-      "external_agent_adapter_cli_failures"
-    ],
-    "rejects": [
-      "inline_credentials",
-      "secret_query_parameters"
-    ],
-    "script_entrypoints": [
-      "scripts/study_anything_cli.py",
-      "scripts/verify_mock_http_agent_flow.py",
-      "scripts/verify_agent_eval_flow.py",
-      "scripts/verify_external_adoption.py",
-      "scripts/verify_external_agent_adapter_hardening.py"
-    ]
-  },
-  "beginner_launcher": {
-    "default_mode": "zero_key_disposable_demo",
-    "one_click_macos_launcher": "START_HERE.command",
-    "privacy_warning": true,
-    "script": "scripts/start_here.sh",
-    "supports_docker_self_host": true,
-    "supports_foreground_skill_mode": true,
-    "supports_no_socket_contract_checks": true,
-    "supports_persistent_skill_mode": true
+    "version": "v0.3.31-alpha"
   },
   "checked_assets": [
     {
       "path": "README.md",
-      "status": "present"
-    },
-    {
-      "path": "QUICKSTART.md",
       "status": "present"
     },
     {
@@ -85,31 +34,11 @@
       "status": "present"
     },
     {
-      "path": "scripts/study_anything_cli.py",
-      "status": "present"
-    },
-    {
-      "path": "scripts/release_check.sh",
-      "status": "present"
-    },
-    {
-      "path": "START_HERE.command",
-      "status": "present"
-    },
-    {
       "path": "scripts/doctor.sh",
       "status": "present"
     },
     {
       "path": "scripts/diagnose_adoption.py",
-      "status": "present"
-    },
-    {
-      "path": "scripts/stop_self_host.sh",
-      "status": "present"
-    },
-    {
-      "path": "scripts/verify_api_smoke.sh",
       "status": "present"
     },
     {
@@ -161,33 +90,6 @@
     "default_runtime": "skill-mode",
     "script": "scripts/verify_clean_clone_adoption.py"
   },
-  "cli_first_run_guidance": {
-    "copyable_next_steps": true,
-    "covers": [
-      "quiz_answer",
-      "teaching_layer",
-      "hitl_resolution",
-      "agent_default_setup",
-      "agent_mode_auto_routing",
-      "partial_agent_defaults_warning",
-      "session_output_or_id_alias",
-      "api_unreachable_recovery",
-      "file_input_output_recovery",
-      "non_json_api_response_recovery",
-      "api_response_shape_recovery",
-      "combo_session_shape_recovery",
-      "export_response_shape_recovery",
-      "inline_json_option_recovery",
-      "mastery_check",
-      "agent_eval_report",
-      "obsidian_export"
-    ],
-    "script": "scripts/study_anything_cli.py",
-    "supports_named_session_aliases": [
-      "--session",
-      "--session-id"
-    ]
-  },
   "compose": {
     "published_image_override": "infra/compose/docker-compose.images.yml",
     "source_build_and_published_image_paths_are_separate": true,
@@ -217,9 +119,6 @@
     "covers": [
       "env_file",
       "localhost_api",
-      "api_health_wrong_service",
-      "release_blocked_reports",
-      "release_blocked_report_cleanup",
       "docker_daemon",
       "ghcr_manifest",
       "agent_endpoint",
@@ -233,121 +132,74 @@
       "docker",
       "docker_compose",
       "docker_daemon",
-      "python_runtime",
       "env_file",
       "non_ascii_source_path",
       "ports",
       "api_health",
-      "api_health_wrong_service",
       "agent_gateway_hint",
-      "agent_gateway_unhealthy",
-      "agent_gateway_bind_address_probe_normalization",
-      "agent_endpoint_contains_secret",
-      "agent_endpoint_secret_query_case_insensitive",
-      "plugin_install_dir",
-      "release_blocked_report_hint",
-      "release_blocked_contract_summary"
+      "plugin_install_dir"
     ],
     "script": "scripts/doctor.sh"
   },
   "ecosystem_submission": {
     "schema": "ecosystem-submission-v1",
     "shared_assets_included": 3,
-    "version": "v0.3.29-alpha"
-  },
-  "env_check": {
-    "blocks": [
-      "weak_or_placeholder_secret",
-      "invalid_langfuse_encryption_key",
-      "missing_database_url",
-      "invalid_port_value",
-      "duplicate_host_port_value",
-      "unsupported_stack_profile"
-    ],
-    "privacy": {
-      "local_absolute_paths_included": false,
-      "raw_env_values_included": false,
-      "secret_values_included": false
-    },
-    "schema": "env-check-result-v1",
-    "script": "scripts/check_env.py",
-    "supports_export_style_env_lines": true
+    "version": "v0.3.31-alpha"
   },
   "failure_classes": [
     "docker_missing_or_daemon_unreachable",
-    "docker_socket_permission_denied",
     "docker_compose_missing",
-    "docker_compose_up_failed",
-    "invalid_env_port_value",
     "port_conflict",
     "non_ascii_source_build_path",
     "ghcr_manifest_unavailable",
     "published_image_pull_timeout",
     "api_health_timeout",
-    "localhost_socket_permission_denied",
-    "agent_endpoint_contains_secret",
     "agent_endpoint_unreachable",
-    "agent_endpoint_unhealthy",
-    "configuration_required",
-    "agent_local_socket_permission_denied",
-    "provider_status_blocked_by_localhost_socket",
     "provider_defaults_missing"
   ],
   "launch_script": {
     "guards_non_ascii_source_builds": true,
-    "honors_env_file_api_port_after_launch": true,
-    "published_image_default_tag": "v0.3.29-alpha",
+    "published_image_default_tag": "v0.3.31-alpha",
     "script": "scripts/launch_self_host.sh",
     "source_build_requires_explicit_bypass_for_non_ascii": true,
     "supports_cached_image_skip": true,
-    "supports_export_style_env_lines": true,
-    "supports_published_images": true,
-    "validates_duplicate_active_host_ports": true
+    "supports_published_images": true
   },
   "operator_commands": {
     "clean_clone": "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "diagnose": "python3 scripts/diagnose_adoption.py",
     "doctor": "./scripts/doctor.sh",
-    "manifest": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.29-alpha",
+    "manifest": "docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha",
     "prepare_env": "python3 scripts/setup_env.py",
-    "published_image": "USE_PUBLISHED_IMAGES=true STUDY_ANYTHING_IMAGE_TAG=v0.3.29-alpha ./scripts/launch_self_host.sh",
+    "published_image": "USE_PUBLISHED_IMAGES=true STUDY_ANYTHING_IMAGE_TAG=v0.3.31-alpha ./scripts/launch_self_host.sh",
     "published_image_cached": "USE_PUBLISHED_IMAGES=true PULL_PUBLISHED_IMAGES=false ./scripts/launch_self_host.sh",
-    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.29-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
+    "published_image_smoke": "python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report",
     "skill_mode": "./scripts/launch_skill_mode.sh",
-    "skill_mode_demo": "./scripts/run_skill_mode_demo.sh",
-    "source_build": "./scripts/launch_self_host.sh",
-    "start_here": "./scripts/start_here.sh"
+    "source_build": "./scripts/launch_self_host.sh"
   },
   "operator_docs": {
     "checked_docs": [
-      "QUICKSTART.md",
       "README.md",
       "docs/adoption.md",
-      "docs/getting-started.md",
       "docs/github-launch.md",
       "docs/platform-agent-integrations.md",
       "docs/self-hosting.md",
-      "docs/skill-mode.md",
-      "docs/use-with-kimi.md",
-      "skills/study-anything/SKILL.md"
+      "docs/use-with-kimi.md"
     ],
     "operator_docs_are_copyable": true
   },
   "platform_packs": {
     "codex": {
       "acceptance_evidence_declared": true,
-      "command_declared": true,
-      "source_command_declared": true
+      "command_declared": true
     },
     "kimi": {
       "acceptance_evidence_declared": true,
-      "command_declared": true,
-      "source_command_declared": true
+      "command_declared": true
     },
     "workbuddy": {
       "acceptance_evidence_declared": true,
-      "command_declared": true,
-      "source_command_declared": true
+      "command_declared": true
     }
   },
   "privacy_assertions": {
@@ -367,90 +219,7 @@
     "schema_when_pull_blocks": "blocked_by_local_ghcr_pull",
     "script": "scripts/verify_published_image_launch.py"
   },
-  "recovery_env_parsers": {
-    "copyable_backup_restore_next_steps": true,
-    "preserves_quoted_values": true,
-    "redacts_backup_restore_cli_errors": true,
-    "scripts": [
-      "scripts/self_host_data.py",
-      "scripts/verify_backup_restore_drill.py",
-      "scripts/verify_published_image_launch.py"
-    ],
-    "strips_unquoted_inline_comments": true,
-    "supports_export_style_env_lines": true
-  },
-  "release_check": {
-    "automatic_localhost_blocked_reports": [
-      "external-adoption.localhost-blocked.json",
-      "agent-gateway-hardening.localhost-blocked.json",
-      "external-agent-adapter-hardening.localhost-blocked.json",
-      "openai-compatible-gateway.contract-only.json",
-      "agent-gateway-hardening.contract-only.json",
-      "external-agent-adapter-hardening.contract-only.json",
-      "README.txt"
-    ],
-    "clears_default_reports_on_success": true,
-    "contract_only_reports_replace_runtime_gates": false,
-    "default_report_dir": "data/release-blocked-reports",
-    "script": "scripts/release_check.sh",
-    "strict_failure_preserved": true,
-    "writes_local_readme": true
-  },
   "schema_version": "deployment-hardening-verification-v1",
-  "skill_mode_demo_script": {
-    "agent_gateway_failure_mentions_two_terminals": true,
-    "script": "scripts/run_skill_mode_demo.sh",
-    "socket_blocked_contract_only_recovery": true
-  },
-  "skill_mode_launcher": {
-    "api_port_sources": [
-      "API_PORT",
-      ".env API_PORT",
-      "default 8000"
-    ],
-    "environment_override_wins": true,
-    "redacted_diagnostics": true,
-    "rejects_non_study_health_responders": true,
-    "script": "scripts/launch_skill_mode.sh",
-    "socket_blocked_contract_only_recovery": true,
-    "validates_api_port_before_start": true
-  },
   "status": "pass",
-  "stop_script": {
-    "checks_docker_before_compose_down": true,
-    "honors_custom_env_file": true,
-    "redacted_diagnostics": true,
-    "script": "scripts/stop_self_host.sh"
-  },
-  "verifier_api_base_resolution": {
-    "api_base_sources": [
-      "API_BASE",
-      "STUDY_ANYTHING_API_BASE",
-      ".env API_PORT",
-      "default 8000"
-    ],
-    "gateway_port_sources": [
-      "--port",
-      "--reuse-running-gateway default 8787",
-      "ephemeral verifier-owned port"
-    ],
-    "helper": "scripts/localhost_diagnostics.py",
-    "script_count": 13,
-    "scripts": [
-      "scripts/verify_full_api_flow.py",
-      "scripts/verify_agent_eval_flow.py",
-      "scripts/verify_mock_http_agent_flow.py",
-      "scripts/verify_platform_lesson_flow.py",
-      "scripts/verify_importer_lesson_flow.py",
-      "scripts/verify_importer_runtime_retrieval_flow.py",
-      "scripts/verify_platform_agent_tools.py",
-      "scripts/verify_platform_ecosystem_eval_flow.py",
-      "scripts/verify_falkordb_flow.py",
-      "scripts/run_external_agent_evals.py",
-      "scripts/verify_openai_compatible_gateway.py",
-      "scripts/verify_skill_cli_flow.py",
-      "scripts/diagnose_adoption.py"
-    ]
-  },
-  "version": "v0.3.29-alpha"
+  "version": "v0.3.31-alpha"
 }

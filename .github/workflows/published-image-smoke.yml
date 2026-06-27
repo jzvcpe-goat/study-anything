@@ -1,0 +1,39 @@
+name: published-image-smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Published Study Anything tag to verify."
+        required: true
+        default: "v0.3.31-alpha"
+      pull_timeout_seconds:
+        description: "Strict pull timeout in seconds. The job fails on timeout."
+        required: true
+        default: "600"
+      api_timeout_seconds:
+        description: "Seconds to wait for the published-image API to become healthy."
+        required: true
+        default: "240"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  published-image-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Inspect published image manifest
+        run: |
+          docker manifest inspect "ghcr.io/${{ github.repository }}/api:${{ inputs.tag }}"
+      - name: Run published image API smoke
+        run: |
+          python scripts/verify_published_image_launch.py \
+            --tag "${{ inputs.tag }}" \
+            --pull-timeout-seconds "${{ inputs.pull_timeout_seconds }}" \
+            --timeout "${{ inputs.api_timeout_seconds }}"

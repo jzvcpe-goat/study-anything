@@ -1,0 +1,139 @@
+{
+  "boundaries": {
+    "cognitive_loop_artifacts_are_metadata_only": true,
+    "mastra_runtime_shipped": false,
+    "platform_agent_owns_browser_files_apps_video_external_data": true,
+    "realtime_html_console_shipped": false,
+    "standalone_frontend_required": false,
+    "study_anything_is_learning_adapter": true,
+    "watcher_daemon_shipped": false
+  },
+  "commands": {
+    "source": "python3 scripts/generate_cognitive_loop_adoption_recipes.py --check",
+    "verify": "python3 scripts/verify_cognitive_loop_recipe_replay.py --check",
+    "write": "python3 scripts/verify_cognitive_loop_recipe_replay.py --write"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "browser_video_app_private_context_included": false,
+    "diff_bodies_included": false,
+    "generated_private_insights_included": false,
+    "grading_feedback_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_stored": false
+  },
+  "purpose": "Verify Cognitive Loop adoption recipes are safe for platform Agent metadata replay.",
+  "replay": {
+    "all_commands_reference_existing_scripts": true,
+    "all_evidence_resolved": true,
+    "human_gate_recipe_ids": [
+      "risk_decision"
+    ],
+    "recipes": [
+      {
+        "all_evidence_resolved": true,
+        "all_scripts_exist": true,
+        "command_classes": [
+          "external_adoption",
+          "metadata_only"
+        ],
+        "command_count": 3,
+        "command_scripts": [
+          "scripts/generate_platform_adoption_pack.py",
+          "scripts/verify_ecosystem_submission_pack.py",
+          "scripts/verify_external_adoption.py"
+        ],
+        "evidence_count": 4,
+        "human_gate_required": false,
+        "metadata_replay_only": true,
+        "recipe_id": "first_adoption",
+        "runtime_required": true
+      },
+      {
+        "all_evidence_resolved": true,
+        "all_scripts_exist": true,
+        "command_classes": [
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "command_scripts": [
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py"
+        ],
+        "evidence_count": 4,
+        "human_gate_required": false,
+        "metadata_replay_only": true,
+        "recipe_id": "daily_project_review",
+        "runtime_required": false
+      },
+      {
+        "all_evidence_resolved": true,
+        "all_scripts_exist": true,
+        "command_classes": [
+          "human_gate",
+          "manual_repair_plan",
+          "metadata_only"
+        ],
+        "command_count": 5,
+        "command_scripts": [
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py",
+          "scripts/cognitive_loop_cli.py"
+        ],
+        "evidence_count": 4,
+        "human_gate_required": true,
+        "metadata_replay_only": true,
+        "recipe_id": "risk_decision",
+        "runtime_required": false
+      },
+      {
+        "all_evidence_resolved": true,
+        "all_scripts_exist": true,
+        "command_classes": [
+          "runtime_required"
+        ],
+        "command_count": 3,
+        "command_scripts": [
+          "scripts/run_skill_mode_demo.sh",
+          "scripts/verify_platform_lesson_flow.py",
+          "scripts/verify_importer_lesson_flow.py"
+        ],
+        "evidence_count": 5,
+        "human_gate_required": false,
+        "metadata_replay_only": true,
+        "recipe_id": "learning_handoff",
+        "runtime_required": true
+      }
+    ],
+    "runtime_required_recipe_ids": [
+      "first_adoption",
+      "learning_handoff"
+    ],
+    "source_doc": "docs/cognitive-loop-adoption-cookbook.md",
+    "source_schema_version": "cognitive-loop-adoption-recipes-v1",
+    "supported_platforms": [
+      "codex",
+      "generic-openapi-tools",
+      "kimi",
+      "private-platform-agent",
+      "workbuddy"
+    ]
+  },
+  "safe_replay_policy": {
+    "applies_file_changes": false,
+    "executes_recipe_commands": false,
+    "metadata_replay_only": true,
+    "requires_human_gate_for_risk_decisions": true,
+    "requires_operator_for_runtime_commands": true,
+    "starts_runtime": false
+  },
+  "schema_version": "cognitive-loop-recipe-replay-verification-v1",
+  "status": "pass"
+}

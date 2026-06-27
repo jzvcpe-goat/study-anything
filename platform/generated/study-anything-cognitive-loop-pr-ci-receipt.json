@@ -1,0 +1,63 @@
+{
+  "blocking_reasons": [],
+  "checks": [
+    {
+      "name": "api-tests",
+      "status": "pass",
+      "url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/redacted-api-tests"
+    },
+    {
+      "name": "compose-smoke",
+      "status": "pass",
+      "url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/redacted-compose-smoke"
+    }
+  ],
+  "decision": "ready",
+  "failure_modes": {
+    "extra_checks_non_blocking": true,
+    "failed_fixture_blocked": true,
+    "gh_auth_or_missing_pr_rejected": true,
+    "gh_json_annotations_rejected": true,
+    "gh_missing_rejected": true,
+    "live_pending_manual_review": true,
+    "malformed_gh_json_rejected": true,
+    "malformed_live_json_rejected": true,
+    "missing_required_check_blocks": true,
+    "pending_fixture_manual_review": true,
+    "policy_weakening_rejected": true,
+    "raw_annotations_rejected": true,
+    "raw_logs_rejected": true,
+    "ready_fixture_decision": true,
+    "secret_like_text_rejected": true,
+    "stale_head_sha_rejected": true,
+    "unsafe_command_rejected": true
+  },
+  "generated_at": "2026-01-01T00:00:00Z",
+  "head_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "manual_review_reasons": [],
+  "operator_next_commands": [
+    "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+    "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --from-gh-pr <PR> --write",
+    "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+    "gh pr checks <PR> --json bucket,completedAt,link,name,startedAt,state,workflow",
+    "gh pr checks <PR> --watch --interval 10"
+  ],
+  "pr_number": 179,
+  "privacy_flags": {
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "metadata_only": true,
+    "model_called": false,
+    "raw_annotations_included": false,
+    "raw_logs_included": false,
+    "source_files_modified": false
+  },
+  "required_checks": [
+    "api-tests",
+    "compose-smoke"
+  ],
+  "schema_version": "cognitive-loop-pr-ci-receipt-v1",
+  "source": "fixture",
+  "source_sha256": "83d42a6375a9dafc172f559a7a918a608a54189ea2361507239d7ad2cb742ac7",
+  "status": "pass"
+}

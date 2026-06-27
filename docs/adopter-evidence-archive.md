@@ -1,6 +1,6 @@
 # Adopter Evidence Archive
 
-Study Anything v0.3.29-alpha adds `adopter-evidence-archive-v1` as a
+Study Anything v0.3.31-alpha adds `adopter-evidence-archive-v1` as a
 metadata-only handoff bundle for external adopters, platform maintainers, and
 reviewers.
 

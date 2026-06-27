@@ -13,18 +13,22 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-from localhost_diagnostics import redact_diagnostic
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "external-eval-marketplace-harness-v1"
-RELEASE_VERSION = "v0.3.29-alpha"
+RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-external-eval-harness.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
 PLATFORM_IDS = ("codex", "kimi", "workbuddy")
 EXPECTED_ADAPTERS = ("promptfoo", "deepeval", "langchain-agentevals", "ragas")
-EXPECTED_TRAJECTORY = ("quiz.generate", "answer.grade", "insight.synthesize")
+EXPECTED_TRAJECTORY = (
+    "teach.overview",
+    "teach.glossary",
+    "quiz.generate",
+    "answer.grade",
+    "insight.synthesize",
+)
 REQUIRED_OPERATOR_ASSETS = [
     "docs/agent-eval.md",
     "docs/eval-frameworks.md",
@@ -71,32 +75,6 @@ FORBIDDEN_LITERALS = [
 
 class ExternalEvalHarnessError(RuntimeError):
     """Readable external-eval harness failure."""
-
-
-def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
-    lowered = diagnostic.lower()
-    lines = [
-        f"verify_external_eval_marketplace_harness failed: {diagnostic}",
-        "Next steps:",
-    ]
-    if "stale" in lowered:
-        lines.append(
-            "- Refresh the external eval harness: python3 scripts/verify_external_eval_marketplace_harness.py --write"
-        )
-    elif "pack archive is missing" in lowered or "pack root does not exist" in lowered:
-        lines.append("- Rebuild the adoption pack: python3 scripts/generate_platform_adoption_pack.py")
-    else:
-        lines.append(
-            "- Recheck the external eval harness: python3 scripts/verify_external_eval_marketplace_harness.py --check"
-        )
-    lines.extend(
-        [
-            "- Run the native Agent eval baseline: python3 scripts/verify_agent_eval_baseline.py",
-            "- Run platform diagnostics: python3 scripts/diagnose_adoption.py",
-        ]
-    )
-    return "\n".join(lines)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -544,5 +522,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        print(f"verify_external_eval_marketplace_harness failed: {exc}", file=sys.stderr)
         sys.exit(1)

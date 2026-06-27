@@ -1,0 +1,97 @@
+{
+  "blocked_replay_console": {
+    "blocked_replay_preserved": true,
+    "blocking_count": 2,
+    "chain_status": "blocked",
+    "receipt_status": "blocked",
+    "replay_status": "blocked"
+  },
+  "commands": {
+    "console": "python3 scripts/cognitive_loop_artifact_console.py build --html",
+    "evolution_chain": "python3 scripts/cognitive_loop_artifact_console.py build --html --json",
+    "evolution_pack_export": "python3 scripts/cognitive_loop_evolution_pack_export.py export --html --json --zip",
+    "runner": ".venv/bin/python scripts/cognitive_loop_watcher_runner.py run --html --study-adapter",
+    "verify": "python3 scripts/verify_cognitive_loop_artifact_console.py --check"
+  },
+  "console_schema": "cognitive-loop-artifact-console-v1",
+  "empty_console": {
+    "artifact_count": 0,
+    "event_count": 0,
+    "evolution_chain_status": "degraded_missing_artifacts",
+    "html_has_empty_state": true,
+    "missing_evolution_artifact_count": 7,
+    "status": "ready"
+  },
+  "evolution_chain_console": {
+    "artifact_count": 7,
+    "blocking_count": 0,
+    "chain_statuses": {
+      "apply_plan_status": "dry_run_ready",
+      "comparison_status": "improved",
+      "evolution_status": "ready",
+      "patch_status": "ready",
+      "receipt_status": "ready",
+      "replay_status": "replay_ready",
+      "sandbox_status": "sandbox_ready"
+    },
+    "export_command_present": true,
+    "export_status": "export_ready",
+    "html_has_evolution_chain": true,
+    "html_has_professional_evolution_pack": true,
+    "manual_review_count": 0,
+    "missing_artifact_count": 0,
+    "operator_commands_present": true,
+    "privacy_flags_present": true,
+    "sha256_values_present": true,
+    "status": "ready"
+  },
+  "failure_modes": {
+    "blocked_replay_preserved": true,
+    "forbidden_private_text_rejected": true,
+    "invalid_schema_rejected": true,
+    "missing_artifact_degrades_console": true,
+    "missing_evolution_chain_degrades_section": true,
+    "policy_weakening_rejected": true,
+    "privacy_regression_rejected": true,
+    "raw_diff_rejected": true,
+    "secret_like_rejected": true
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "agent_metadata_included": false,
+    "apply_executed": false,
+    "event_json_contents_included": false,
+    "html_contents_included": false,
+    "learner_answers_included": false,
+    "markdown_contents_included": false,
+    "metadata_only": true,
+    "model_called": false,
+    "model_keys_included": false,
+    "production_mastra_started": false,
+    "prompt_text_included": false,
+    "raw_diff_included": false,
+    "source_files_modified": false,
+    "source_text_included": false,
+    "standalone_frontend_required": false,
+    "test_output_included": false,
+    "watcher_daemon_started": false
+  },
+  "runner_console": {
+    "accepted_observation_count": 3,
+    "console_status": "ready",
+    "degraded_status": "partial",
+    "duplicate_observation_count": 5,
+    "event_count": 3,
+    "evolution_chain_status": "degraded_missing_artifacts",
+    "manifest_written": true,
+    "missing_event_source_count": 1,
+    "missing_evolution_artifact_count": 7,
+    "mobile_structure": "ok",
+    "runner_status": "pass",
+    "skipped_observation_count": 2,
+    "study_adapter_artifact_count": 1,
+    "study_adapter_html_linked": true
+  },
+  "schema_version": "cognitive-loop-artifact-console-verification-v1",
+  "status": "pass"
+}

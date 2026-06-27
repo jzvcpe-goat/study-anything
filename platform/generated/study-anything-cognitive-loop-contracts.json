@@ -1,0 +1,61 @@
+{
+  "acceptance": {
+    "contract_directory": ".cognitive-loop",
+    "minimum_command": "python3 scripts/verify_cognitive_loop_contracts.py --check",
+    "pack_asset": "platform/generated/study-anything-cognitive-loop-contracts.json"
+  },
+  "contract_files": [
+    {
+      "name": "config",
+      "path": ".cognitive-loop/config.yaml",
+      "schema_version": "cognitive-loop-config-v1",
+      "status": "pass"
+    },
+    {
+      "name": "permissions",
+      "path": ".cognitive-loop/permissions.yaml",
+      "schema_version": "cognitive-loop-permissions-v1",
+      "status": "pass"
+    },
+    {
+      "name": "evals",
+      "path": ".cognitive-loop/evals.yaml",
+      "schema_version": "cognitive-loop-evals-v1",
+      "status": "pass"
+    },
+    {
+      "name": "risk",
+      "path": ".cognitive-loop/risk.yaml",
+      "schema_version": "cognitive-loop-risk-v1",
+      "status": "pass"
+    }
+  ],
+  "failure_modes": {
+    "high_risk_without_gate_rejected": "High or blocked risk decisions require a human mastery gate.",
+    "raw_excerpt_field_rejected": "Forbidden private field in public contract: excerpt.",
+    "secret_like_event_rejected": "Secret-like value found in public contract: summary."
+  },
+  "object_contracts": {
+    "decision_card": "decision-card-v1",
+    "evolution_report": "evolution-report-v1",
+    "loop_run": "loop-run-v1",
+    "mastery_record": "mastery-record-v1",
+    "project_event": "project-event-v1"
+  },
+  "privacy": {
+    "agent_endpoints_included": false,
+    "learner_answers_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "secret_like_values_rejected": true
+  },
+  "risk": {
+    "default_mode": "read_only",
+    "high_risk_requires_human_mastery_gate": true,
+    "mastra_runtime_claimed": false,
+    "runtime_daemon_started": false
+  },
+  "schema_version": "cognitive-loop-contract-bootstrap-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

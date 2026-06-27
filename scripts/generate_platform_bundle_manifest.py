@@ -16,13 +16,18 @@ from localhost_diagnostics import redact_diagnostic
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 BUNDLE_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-bundle.json"
-SELF_REFERENTIAL_OUTPUTS = {
-    "platform/generated/study-anything-platform-bundle.json",
-    "platform/generated/study-anything-platform-adoption-pack.json",
-    "platform/generated/study-anything-platform-adoption-pack.zip",
-}
 
 FILES: list[tuple[str, str, str]] = [
+    (
+        "QUICKSTART.md",
+        "root_doc",
+        "Beginner-friendly quickstart guide.",
+    ),
+    (
+        "START_HERE.command",
+        "launcher",
+        "Double-click macOS beginner launcher.",
+    ),
     (
         "platform/study-anything-platform-tools.json",
         "source_manifest",
@@ -52,6 +57,321 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-operator-drill-transcript.json",
         "generated_asset",
         "Deterministic external-platform operator drill transcript.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-contracts.json",
+        "generated_asset",
+        "Cognitive Loop contract bootstrap verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
+        "generated_asset",
+        "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
+        "generated_asset",
+        "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-project-snapshot.json",
+        "generated_asset",
+        "Cognitive Loop redacted project snapshot verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-human-gate.json",
+        "generated_asset",
+        "Cognitive Loop Human Mastery Gate approval and rejection verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-evidence-bundle.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only evidence bundle verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-event-index.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only local event index verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-event-store.json",
+        "generated_asset",
+        "Cognitive Loop local SQLite Event Store verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-watcher-ingest.json",
+        "generated_asset",
+        "Cognitive Loop manual watcher ingest verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-watcher-runner.json",
+        "generated_asset",
+        "Cognitive Loop bounded watcher runner-lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-artifact-console.json",
+        "generated_asset",
+        "Cognitive Loop static HTML Artifact Console Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-personal-plugin-mode.json",
+        "generated_asset",
+        "Cognitive Loop Personal Plugin Mode Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-evolution-report.json",
+        "generated_asset",
+        "Cognitive Loop Evolution Report Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-apply-plan.json",
+        "generated_asset",
+        "Cognitive Loop Governed Apply Plan Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-improvement-comparison.json",
+        "generated_asset",
+        "Cognitive Loop Measured Improvement Comparator Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-patch-proposal.json",
+        "generated_asset",
+        "Cognitive Loop Patch Proposal Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-evolution-receipt.json",
+        "generated_asset",
+        "Cognitive Loop Mastra Evolution Receipt Link Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-evolution-replay.json",
+        "generated_asset",
+        "Cognitive Loop Mastra Evolution Workflow Replay Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-patch-apply-sandbox.json",
+        "generated_asset",
+        "Cognitive Loop Governed Patch Apply Sandbox Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-evolution-pack-export.json",
+        "generated_asset",
+        "Cognitive Loop Professional Evolution Pack Export Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-evolution-pack-consumer.json",
+        "generated_asset",
+        "Cognitive Loop Professional Evolution Pack zip-only consumer verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json",
+        "generated_asset",
+        "Cognitive Loop PR CI metadata-only receipt verification report with optional GitHub CLI metadata adapter.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
+        "generated_asset",
+        "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-adapter.json",
+        "generated_asset",
+        "Cognitive Loop Mastra adapter contract-pack verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-dry-run.json",
+        "generated_asset",
+        "Cognitive Loop Mastra runtime dry-run verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
+        "generated_asset",
+        "Cognitive Loop repository-started Mastra runtime service verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
+        "generated_asset",
+        "Cognitive Loop durable Mastra runtime suspend/resume verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
+        "generated_asset",
+        "Cognitive Loop Langfuse observability DTO mapping verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-study-anything-adapter.json",
+        "generated_asset",
+        "Cognitive Loop Study Anything Learning Adapter verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-study-adapter-cli.json",
+        "generated_asset",
+        "Cognitive Loop Study Anything Adapter CLI Lite verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-artifact-doctor.json",
+        "generated_asset",
+        "Cognitive Loop metadata-only artifact doctor verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-repair-plan.json",
+        "generated_asset",
+        "Cognitive Loop manual-only repair plan verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-artifact-index.json",
+        "generated_asset",
+        "Cognitive Loop static local artifact index verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review.json",
+        "generated_asset",
+        "Cognitive Loop advisory code review verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-prompt.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent prompt verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-report.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent report handoff verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-handoff-cli.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent prepare/validate CLI verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-eval-harness.json",
+        "generated_asset",
+        "Offline Cognitive Loop Review Agent eval harness verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-ci-receipt.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent CI receipt verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-pr-comment-pack.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent PR comment pack verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-acceptance-bundle.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent acceptance bundle verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-github-workflow.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent GitHub workflow template verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-policy-gate.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent metadata-only policy gate verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
+        "generated_asset",
+        "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
+        "generated_asset",
+        "Cognitive Loop platform-agent adoption cookbook verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-adoption-recipes.json",
+        "generated_asset",
+        "Machine-readable Cognitive Loop platform-agent adoption recipes.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-replay.json",
+        "generated_asset",
+        "Cognitive Loop platform-agent recipe replay verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-skill-entrypoint.json",
+        "generated_asset",
+        "Cognitive Loop Skill and platform-pack recipe entrypoint verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli.json",
+        "generated_asset",
+        "Cognitive Loop read-only recipe CLI verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-receipts.json",
+        "generated_asset",
+        "Deterministic read-only Cognitive Loop recipe CLI output receipts.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-failures.json",
+        "generated_asset",
+        "Deterministic read-only Cognitive Loop recipe CLI failure receipts.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schemas.json",
+        "generated_asset",
+        "Offline JSON Schemas for Cognitive Loop recipe CLI reports and PR CI receipt/source metadata reports.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
+        "generated_asset",
+        "Negative fixtures proving Cognitive Loop recipe CLI schemas reject drift, unsafe flags, malformed types, and private text probes.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
+        "generated_asset",
+        "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
+        "generated_asset",
+        "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
+    ),
+    (
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "generated_asset",
+        "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
+    ),
+    (
+        "platform/generated/study-anything-platform-handoff-checklist.json",
+        "generated_asset",
+        "External platform handoff checklist for import, verification, runtime, and support escalation.",
+    ),
+    (
+        "platform/generated/study-anything-launch-acceptance-ledger.json",
+        "generated_asset",
+        "Public launch acceptance ledger for GitHub OSS and platform-Agent adoption.",
+    ),
+    (
+        "platform/generated/study-anything-github-launch-operator-guide.json",
+        "generated_asset",
+        "GitHub launch operator guide proof for release sequence, assets, and local-first boundaries.",
+    ),
+    (
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "generated_asset",
+        "Negative fixtures proving release stack archive manifest boundary checks.",
+    ),
+    (
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "generated_asset",
+        "Metadata-only release stack intake candidate report for the next PR group.",
+    ),
+    (
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "generated_asset",
+        "Metadata-only release stack candidate promotion report for the current PR group.",
     ),
     (
         "platform/generated/study-anything-platform-submission-dry-run.json",
@@ -102,11 +422,6 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-platform-support-triage.json",
         "generated_asset",
         "GitHub-first support triage, issue template, and maintainer response playbook report.",
-    ),
-    (
-        "platform/generated/study-anything-platform-support-bundle-replay.json",
-        "generated_asset",
-        "Maintainer support bundle replay evidence and issue-to-fix classification report.",
     ),
     (
         "platform/generated/study-anything-platform-onboarding-readiness.json",
@@ -259,6 +574,51 @@ FILES: list[tuple[str, str, str]] = [
         "Platform Agent release replay evidence checksum.",
     ),
     (
+        "platform/generated/study-anything-codex-plugin-pack.json",
+        "generated_asset",
+        "Codex downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-codex-plugin-pack.zip",
+        "generated_asset",
+        "Codex downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-codex-plugin-pack.sha256",
+        "generated_asset",
+        "Codex downloadable plugin pack checksum.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.json",
+        "generated_asset",
+        "Kimi downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.zip",
+        "generated_asset",
+        "Kimi downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-kimi-plugin-pack.sha256",
+        "generated_asset",
+        "Kimi downloadable plugin pack checksum.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.json",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.zip",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+        "generated_asset",
+        "WorkBuddy downloadable plugin pack checksum.",
+    ),
+    (
         "docs/release-asset-bootstrap.md",
         "operator_doc",
         "GitHub Release asset bootstrap guide for external platform Agents.",
@@ -269,14 +629,79 @@ FILES: list[tuple[str, str, str]] = [
         "Release-only cleanroom bootstrap guide for external platform Agents.",
     ),
     (
-        "docs/support-desk.md",
-        "operator_doc",
-        "GitHub-first support desk, support bundle replay, and maintainer triage guide.",
-    ),
-    (
         "docs/platform-agent-release-replay.md",
         "operator_doc",
         "Platform Agent release replay guide for external tool hosts.",
+    ),
+    (
+        "docs/cognitive-loop-contracts.md",
+        "operator_doc",
+        "Cognitive Loop local contract bootstrap guide.",
+    ),
+    (
+        "docs/cognitive-loop-code-review.md",
+        "operator_doc",
+        "Cognitive Loop advisory code review guide.",
+    ),
+    (
+        "platform/prompts/cognitive-loop-review-agent.json",
+        "prompt_contract",
+        "External Cognitive Loop Review Agent JSON-only prompt contract.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-review-agent-report.schema.json",
+        "schema",
+        "External Cognitive Loop Review Agent final report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-pr-ci-receipt.schema.json",
+        "schema",
+        "Cognitive Loop PR CI receipt JSON Schema for offline platform-Agent validation.",
+    ),
+    (
+        "platform/schemas/cognitive-loop-pr-ci-source.schema.json",
+        "schema",
+        "Cognitive Loop PR CI source JSON Schema for offline platform-Agent validation.",
+    ),
+    (
+        "fixtures/review-agent/approved.json",
+        "fixture",
+        "Accepted external Review Agent approved report fixture.",
+    ),
+    (
+        "fixtures/review-agent/needs-review.json",
+        "fixture",
+        "Accepted external Review Agent needs-review report fixture.",
+    ),
+    (
+        "fixtures/review-agent/needs-fix.json",
+        "fixture",
+        "Accepted external Review Agent needs-fix report fixture.",
+    ),
+    (
+        "fixtures/review-agent/invalid-low-confidence-final.json",
+        "fixture",
+        "Rejected external Review Agent low-confidence final finding fixture.",
+    ),
+    (
+        "fixtures/review-agent-receipts/raw-diff-leak.json",
+        "fixture",
+        "Rejected external Review Agent CI receipt raw-diff leak fixture.",
+    ),
+    (
+        "fixtures/review-agent-pr-comments/raw-diff-leak.json",
+        "fixture",
+        "Rejected external Review Agent PR comment raw-diff leak fixture.",
+    ),
+    (
+        "fixtures/review-agent-acceptance-bundles/raw-diff-leak/manifest.json",
+        "fixture",
+        "Rejected external Review Agent acceptance bundle raw-diff leak fixture.",
+    ),
+    (
+        "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml",
+        "fixture",
+        "Rejected unsafe Review Agent GitHub workflow fixture.",
     ),
     (
         "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -549,6 +974,71 @@ FILES: list[tuple[str, str, str]] = [
         "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
     ),
     (
+        "platform/generated/study-anything-okf-alignment.json",
+        "generated_asset",
+        "OKF-style Cognitive Black Box knowledge-bundle verification report.",
+    ),
+    (
+        "docs/okf-alignment.md",
+        "docs",
+        "OKF-style Cognitive Black Box knowledge-bundle alignment guide.",
+    ),
+    (
+        "platform/okf/examples/demo-session.json",
+        "example",
+        "Demo learning session input for OKF-style knowledge-bundle export.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/manifest.json",
+        "example",
+        "Demo OKF-style knowledge-bundle manifest.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/overview.md",
+        "example",
+        "Demo OKF-style session overview note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/sources.md",
+        "example",
+        "Demo OKF-style source-reference note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/mastery.md",
+        "example",
+        "Demo OKF-style mastery note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/decisions.md",
+        "example",
+        "Demo OKF-style handoff decision note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/concepts/overview.md",
+        "example",
+        "Demo OKF-style concept overview note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/concepts/glossary.md",
+        "example",
+        "Demo OKF-style glossary note.",
+    ),
+    (
+        "platform/okf/examples/demo-okf-bundle/questions/review.md",
+        "example",
+        "Demo OKF-style question review note with answers omitted.",
+    ),
+    (
+        "scripts/export_okf_bundle.py",
+        "cli",
+        "Export a Study Anything session into an OKF-style Cognitive Black Box Markdown bundle.",
+    ),
+    (
+        "scripts/verify_okf_bundle.py",
+        "verification",
+        "Verify OKF-style Cognitive Black Box bundle frontmatter, consumers, and privacy boundaries.",
+    ),
+    (
         "platform/packs/README.md",
         "platform_pack",
         "Index for copy-ready platform packs.",
@@ -614,19 +1104,9 @@ FILES: list[tuple[str, str, str]] = [
         "Docker Compose self-host stop helper.",
     ),
     (
-        "scripts/self_host_data.py",
-        "runtime",
-        "Backup and restore helper for self-hosted deployments.",
-    ),
-    (
         "scripts/verify_published_image_launch.py",
         "verification",
         "Disposable GHCR published-image launch verifier with local pull-timeout diagnostics.",
-    ),
-    (
-        "scripts/verify_backup_restore_drill.py",
-        "verification",
-        "Disposable backup and restore drill verifier.",
     ),
     (
         "scripts/verify_commercial_readiness.py",
@@ -789,24 +1269,854 @@ FILES: list[tuple[str, str, str]] = [
         "Ecosystem submission pack verifier for external platform review readiness.",
     ),
     (
+        "scripts/verify_cognitive_loop_contracts.py",
+        "verification",
+        "Cognitive Loop contract bootstrap verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_cli.py",
+        "cli",
+        "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_cli.py",
+        "verification",
+        "Cognitive Loop CLI and static HTML artifact verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_run_once.py",
+        "verification",
+        "Cognitive Loop run-once evidence verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_snapshot.py",
+        "verification",
+        "Cognitive Loop project snapshot verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_human_gate.py",
+        "verification",
+        "Cognitive Loop Human Mastery Gate verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evidence_bundle.py",
+        "verification",
+        "Cognitive Loop metadata-only evidence bundle verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_event_index.py",
+        "verification",
+        "Cognitive Loop metadata-only local event index verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_event_store.py",
+        "cli",
+        "Local SQLite Event Store for validated Cognitive Loop event metadata.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_event_store.py",
+        "verification",
+        "Cognitive Loop local SQLite Event Store verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_watcher_ingest.py",
+        "cli",
+        "Manual watcher-event ingest for Cognitive Loop metadata artifacts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_watcher_ingest.py",
+        "verification",
+        "Cognitive Loop manual watcher ingest verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_watcher_runner.py",
+        "cli",
+        "Bounded watcher runner-lite for metadata-only local project signals.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_watcher_runner.py",
+        "verification",
+        "Cognitive Loop watcher runner-lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_artifact_console.py",
+        "cli",
+        "Static metadata-only Cognitive Loop HTML Artifact Console Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_console.py",
+        "verification",
+        "Cognitive Loop HTML Artifact Console Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_personal_mode.py",
+        "cli",
+        "Read-only Personal Plugin Mode Lite learning artifact builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_personal_plugin_mode.py",
+        "verification",
+        "Cognitive Loop Personal Plugin Mode Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_evolution.py",
+        "cli",
+        "Read-only Cognitive Loop Evolution Report Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evolution_report.py",
+        "verification",
+        "Cognitive Loop Evolution Report Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_apply_plan.py",
+        "cli",
+        "Governed low-risk Cognitive Loop Apply Plan Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_apply_plan.py",
+        "verification",
+        "Cognitive Loop Apply Plan Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_improvement_comparator.py",
+        "cli",
+        "Read-only Cognitive Loop Improvement Comparator Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_improvement_comparator.py",
+        "verification",
+        "Cognitive Loop Improvement Comparator Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_patch_proposal.py",
+        "cli",
+        "Read-only Cognitive Loop Patch Proposal Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_patch_proposal.py",
+        "verification",
+        "Cognitive Loop Patch Proposal Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_mastra_evolution_receipt.py",
+        "cli",
+        "Read-only Cognitive Loop Mastra Evolution Receipt Link Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_evolution_receipt.py",
+        "verification",
+        "Cognitive Loop Mastra Evolution Receipt Link Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_mastra_evolution_replay.py",
+        "cli",
+        "Read-only Cognitive Loop Mastra Evolution Workflow Replay Lite builder.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_evolution_replay.py",
+        "verification",
+        "Cognitive Loop Mastra Evolution Workflow Replay Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_patch_apply_sandbox.py",
+        "cli",
+        "Build metadata-only Cognitive Loop governed patch-apply sandbox receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_patch_apply_sandbox.py",
+        "verification",
+        "Cognitive Loop Governed Patch Apply Sandbox Lite verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_evolution_pack_export.py",
+        "cli",
+        "Export a metadata-only Cognitive Loop professional evolution evidence pack.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evolution_pack_export.py",
+        "verification",
+        "Verify Cognitive Loop professional evolution pack export, zip integrity, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_evolution_pack_consumer.py",
+        "verification",
+        "Verify Cognitive Loop professional evolution pack zip-only consumer import and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_pr_ci_receipt.py",
+        "verification",
+        "Verify Cognitive Loop PR CI metadata-only receipt decisions, optional GitHub CLI metadata adapter, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_release_stack_intake_candidate.py",
+        "verification",
+        "Verify metadata-only release stack intake candidates from PR summary metadata.",
+    ),
+    (
+        "scripts/verify_release_stack_candidate_promotion.py",
+        "verification",
+        "Verify metadata-only release stack candidate promotion into the manifest.",
+    ),
+    (
+        "fixtures/release-stack/pr-183-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 183.",
+    ),
+    (
+        "fixtures/release-stack/pr-184-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 184.",
+    ),
+    (
+        "fixtures/release-stack/pr-185-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 185.",
+    ),
+    (
+        "fixtures/release-stack/pr-186-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 186.",
+    ),
+    (
+        "fixtures/release-stack/pr-187-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 187.",
+    ),
+    (
+        "fixtures/release-stack/pr-188-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 188.",
+    ),
+    (
+        "fixtures/release-stack/pr-189-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 189.",
+    ),
+    (
+        "fixtures/release-stack/pr-190-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 190.",
+    ),
+    (
+        "fixtures/release-stack/pr-191-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 191.",
+    ),
+    (
+        "fixtures/release-stack/pr-192-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 192.",
+    ),
+    (
+        "fixtures/release-stack/pr-193-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 193.",
+    ),
+    (
+        "fixtures/release-stack/pr-194-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 194.",
+    ),
+    (
+        "fixtures/release-stack/pr-195-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 195.",
+    ),
+    (
+        "fixtures/release-stack/pr-196-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 196.",
+    ),
+    (
+        "fixtures/release-stack/pr-197-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 197.",
+    ),
+    (
+        "fixtures/release-stack/pr-198-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 198.",
+    ),
+    (
+        "fixtures/release-stack/pr-199-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 199.",
+    ),
+    (
+        "fixtures/release-stack/pr-200-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 200.",
+    ),
+    (
+        "fixtures/release-stack/pr-201-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 201.",
+    ),
+    (
+        "fixtures/release-stack/pr-202-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 202.",
+    ),
+    (
+        "fixtures/release-stack/pr-203-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 203.",
+    ),
+    (
+        "fixtures/release-stack/pr-204-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 204.",
+    ),
+    (
+        "fixtures/release-stack/pr-205-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 205.",
+    ),
+    (
+        "fixtures/release-stack/pr-206-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 206.",
+    ),
+    (
+        "fixtures/release-stack/pr-207-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 207.",
+    ),
+    (
+        "fixtures/release-stack/pr-208-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 208.",
+    ),
+    (
+        "fixtures/release-stack/pr-209-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 209.",
+    ),
+    (
+        "fixtures/release-stack/pr-210-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 210.",
+    ),
+    (
+        "fixtures/release-stack/pr-211-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 211.",
+    ),
+    (
+        "fixtures/release-stack/pr-212-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 212.",
+    ),
+    (
+        "fixtures/release-stack/pr-213-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 213.",
+    ),
+    (
+        "fixtures/release-stack/pr-214-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 214.",
+    ),
+    (
+        "fixtures/release-stack/pr-215-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 215.",
+    ),
+    (
+        "fixtures/release-stack/pr-216-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 216.",
+    ),
+    (
+        "fixtures/release-stack/pr-217-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 217.",
+    ),
+    (
+        "fixtures/release-stack/pr-218-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 218.",
+    ),
+    (
+        "fixtures/release-stack/pr-219-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 219.",
+    ),
+    (
+        "fixtures/release-stack/pr-220-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 220.",
+    ),
+    (
+        "fixtures/release-stack/pr-221-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 221.",
+    ),
+    (
+        "fixtures/release-stack/pr-222-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 222.",
+    ),
+    (
+        "fixtures/release-stack/pr-223-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 223.",
+    ),
+    (
+        "fixtures/release-stack/pr-224-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 224.",
+    ),
+    (
+        "fixtures/release-stack/pr-225-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 225.",
+    ),
+    (
+        "fixtures/release-stack/pr-226-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 226.",
+    ),
+    (
+        "fixtures/release-stack/pr-227-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 227.",
+    ),
+    (
+        "fixtures/release-stack/pr-228-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 228.",
+    ),
+    (
+        "fixtures/release-stack/pr-229-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 229.",
+    ),
+    (
+        "fixtures/release-stack/pr-230-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 230.",
+    ),
+    (
+        "fixtures/release-stack/pr-231-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 231.",
+    ),
+    (
+        "fixtures/release-stack/pr-232-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 232.",
+    ),
+    (
+        "fixtures/release-stack/pr-233-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 233.",
+    ),
+    (
+        "fixtures/release-stack/pr-234-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 234.",
+    ),
+    (
+        "fixtures/release-stack/pr-235-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 235.",
+    ),
+    (
+        "fixtures/release-stack/pr-236-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 236.",
+    ),
+    (
+        "fixtures/release-stack/pr-237-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 237.",
+    ),
+    (
+        "fixtures/release-stack/pr-238-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 238.",
+    ),
+    (
+        "fixtures/release-stack/pr-240-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 240.",
+    ),
+    (
+        "fixtures/release-stack/pr-241-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 241.",
+    ),
+    (
+        "fixtures/release-stack/pr-243-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 243.",
+    ),
+    (
+        "fixtures/release-stack/pr-244-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 244.",
+    ),
+    (
+        "fixtures/release-stack/pr-246-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 246.",
+    ),
+    (
+        "fixtures/release-stack/pr-247-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 247.",
+    ),
+    (
+        "fixtures/release-stack/pr-249-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 249.",
+    ),
+    (
+        "fixtures/release-stack/pr-250-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 250.",
+    ),
+    (
+        "fixtures/release-stack/pr-252-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 252.",
+    ),
+    (
+        "fixtures/release-stack/pr-253-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 253.",
+    ),
+    (
+        "fixtures/release-stack/pr-255-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 255.",
+    ),
+    (
+        "fixtures/release-stack/pr-256-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 256.",
+    ),
+    (
+        "fixtures/release-stack/pr-258-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 258.",
+    ),
+    (
+        "fixtures/release-stack/pr-259-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 259.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
+        "verification",
+        "Verify Cognitive Loop maintainer go/no-go acceptance ledger and launch handoff boundaries.",
+    ),
+    (
+        "platform/mastra/README.md",
+        "mastra_adapter",
+        "Copy-ready Mastra adapter operator guide.",
+    ),
+    (
+        "platform/mastra/manifest.json",
+        "mastra_adapter",
+        "Machine-readable Mastra adapter contract-pack manifest.",
+    ),
+    (
+        "platform/mastra/cognitive-loop-mastra-adapter.ts",
+        "mastra_adapter",
+        "TypeScript Mastra workflow scaffold for Cognitive Loop HITL mapping.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_adapter.py",
+        "verification",
+        "Cognitive Loop Mastra adapter contract-pack verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_runtime_dry_run.py",
+        "verification",
+        "Cognitive Loop Mastra runtime dry-run verifier.",
+    ),
+    (
+        "platform/mastra-runtime/README.md",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime MVP operator notes.",
+    ),
+    (
+        "platform/mastra-runtime/package.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime package manifest.",
+    ),
+    (
+        "platform/mastra-runtime/package-lock.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime dependency lockfile.",
+    ),
+    (
+        "platform/mastra-runtime/tsconfig.json",
+        "mastra_runtime",
+        "Repository-started Cognitive Loop Mastra runtime TypeScript configuration.",
+    ),
+    (
+        "platform/mastra-runtime/src/runtime.ts",
+        "mastra_runtime",
+        "Repository-started Mastra instance registration for the Cognitive Loop workflow.",
+    ),
+    (
+        "platform/mastra-runtime/src/run-once.ts",
+        "mastra_runtime",
+        "Deterministic Mastra workflow run covering suspend, resume, bail, and no-gate paths.",
+    ),
+    (
+        "platform/mastra-runtime/src/durable-run.ts",
+        "mastra_runtime",
+        "Deterministic durable Mastra workflow run covering cross-process resume and bail paths.",
+    ),
+    (
+        "platform/mastra-runtime/src/observability.ts",
+        "mastra_runtime",
+        "Redacted Langfuse trace, span, generation, and score DTO mapping for Mastra receipts.",
+    ),
+    (
+        "platform/mastra-runtime/src/observability-run.ts",
+        "mastra_runtime",
+        "Deterministic local Langfuse observability receipt runner.",
+    ),
+    (
+        "platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts",
+        "mastra_runtime",
+        "Runtime-local copy of the Cognitive Loop Mastra workflow adapter kept identical to the public pack.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_runtime_service.py",
+        "verification",
+        "Cognitive Loop repository-started Mastra runtime service verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_mastra_runtime_durable.py",
+        "verification",
+        "Cognitive Loop durable Mastra runtime suspend/resume verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_langfuse_observability.py",
+        "verification",
+        "Cognitive Loop Langfuse observability DTO mapping verifier.",
+    ),
+    (
+        "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
+        "api_core",
+        "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
+    ),
+    (
+        "scripts/cognitive_loop_study_adapter_cli.py",
+        "cli",
+        "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_study_anything_adapter.py",
+        "verification",
+        "Cognitive Loop Study Anything Learning Adapter verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_study_adapter_cli.py",
+        "verification",
+        "Cognitive Loop Study Anything Adapter CLI Lite verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_doctor.py",
+        "verification",
+        "Cognitive Loop metadata-only artifact doctor verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_repair_plan.py",
+        "verification",
+        "Cognitive Loop manual-only repair plan verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_artifact_index.py",
+        "verification",
+        "Cognitive Loop static local artifact index verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review.py",
+        "cli",
+        "Cognitive Loop advisory code review CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review.py",
+        "verification",
+        "Cognitive Loop advisory code review verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_prompt.py",
+        "verification",
+        "External Cognitive Loop Review Agent prompt verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_report.py",
+        "verification",
+        "External Cognitive Loop Review Agent report handoff verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_handoff.py",
+        "cli",
+        "External Cognitive Loop Review Agent prepare/validate handoff CLI.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_receipt.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only CI receipt CLI.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_pr_comment.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only PR comment pack CLI.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_acceptance_bundle.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only acceptance bundle CLI.",
+    ),
+    (
+        "platform/workflows/cognitive-loop-review-agent-manual.yml",
+        "workflow_template",
+        "Manual GitHub Actions template for metadata-only external Review Agent evidence.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_handoff_cli.py",
+        "verification",
+        "External Cognitive Loop Review Agent handoff CLI verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_eval_harness.py",
+        "verification",
+        "Offline Cognitive Loop Review Agent eval harness verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_ci_receipt.py",
+        "verification",
+        "External Cognitive Loop Review Agent CI receipt verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_pr_comment_pack.py",
+        "verification",
+        "External Cognitive Loop Review Agent PR comment pack verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_acceptance_bundle.py",
+        "verification",
+        "External Cognitive Loop Review Agent acceptance bundle verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_github_workflow.py",
+        "verification",
+        "External Cognitive Loop Review Agent GitHub workflow template verifier.",
+    ),
+    (
+        "scripts/cognitive_loop_review_agent_policy_gate.py",
+        "cli",
+        "External Cognitive Loop Review Agent metadata-only policy gate CLI.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_policy_gate.py",
+        "verification",
+        "External Cognitive Loop Review Agent policy gate verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_workflow_install_smoke.py",
+        "verification",
+        "External Cognitive Loop Review Agent workflow install smoke verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_review_agent_adoption_drill.py",
+        "verification",
+        "External Cognitive Loop Review Agent zip-only adoption drill verifier.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_adoption_cookbook.py",
+        "verification",
+        "Cognitive Loop platform-agent adoption cookbook verifier.",
+    ),
+    (
+        "scripts/generate_cognitive_loop_adoption_recipes.py",
+        "verification",
+        "Generate machine-readable Cognitive Loop platform-agent adoption recipes.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_replay.py",
+        "verification",
+        "Verify Cognitive Loop adoption recipes are replay-ready for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_skill_entrypoint.py",
+        "verification",
+        "Verify Cognitive Loop recipe entrypoints are visible from the Skill and platform packs.",
+    ),
+    (
+        "scripts/cognitive_loop_recipe_cli.py",
+        "cli",
+        "Read-only Cognitive Loop recipe query CLI for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli.py",
+        "verification",
+        "Verify the read-only Cognitive Loop recipe CLI for platform Agents.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_receipts.py",
+        "verification",
+        "Generate and verify deterministic Cognitive Loop recipe CLI receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_failures.py",
+        "verification",
+        "Generate and verify deterministic Cognitive Loop recipe CLI failure receipts.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schemas.py",
+        "verification",
+        "Generate and verify offline JSON Schemas for Cognitive Loop recipe CLI reports.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_recipe_cli_schema_negative_fixtures.py",
+        "verification",
+        "Verify negative fixtures for Cognitive Loop recipe CLI JSON Schemas.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer.py",
+        "verification",
+        "Verify Cognitive Loop schema evidence can be consumed from the adoption pack only.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_schema_pack_consumer_failures.py",
+        "verification",
+        "Verify Cognitive Loop schema pack consumer failure cases are safe and deterministic.",
+    ),
+    (
+        "scripts/verify_cognitive_loop_pack_extract_smoke.py",
+        "verification",
+        "Verify the extracted adoption pack can run its included schema consumer checks.",
+    ),
+    (
+        "scripts/verify_platform_handoff_checklist.py",
+        "verification",
+        "Generate and verify the external platform handoff checklist.",
+    ),
+    (
+        "scripts/verify_launch_acceptance_ledger.py",
+        "verification",
+        "Generate and verify the public launch acceptance ledger.",
+    ),
+    (
+        "scripts/verify_github_launch_operator_guide.py",
+        "verification",
+        "Generate and verify the GitHub launch operator guide proof.",
+    ),
+    (
         "scripts/run_skill_mode_demo.sh",
         "verification",
         "One-command Skill Mode learning-loop smoke for terminal-capable agents.",
-    ),
-    (
-        "scripts/start_here.sh",
-        "runtime",
-        "Beginner launcher for zero-key demo, persistent Skill Mode, Docker, and diagnostics.",
-    ),
-    (
-        "START_HERE.command",
-        "runtime",
-        "macOS double-click one-key beginner launcher.",
-    ),
-    (
-        "scripts/release_check.sh",
-        "verification",
-        "Strict release gate with automatic localhost-blocked report collection.",
     ),
     (
         "scripts/launch_skill_mode.sh",
@@ -814,14 +2124,14 @@ FILES: list[tuple[str, str, str]] = [
         "Local API launcher for Skill Mode and adoption verification.",
     ),
     (
+        "scripts/start_here.sh",
+        "runtime",
+        "Beginner-friendly one-command local launcher.",
+    ),
+    (
         "scripts/study_anything_cli.py",
         "cli",
         "Command-line learning loop and Agent evidence entrypoint.",
-    ),
-    (
-        "scripts/localhost_diagnostics.py",
-        "diagnostics",
-        "Shared localhost socket diagnostics for platform verifiers.",
     ),
     (
         "scripts/install_local_plugin.py",
@@ -829,34 +2139,19 @@ FILES: list[tuple[str, str, str]] = [
         "CLI for explicit local plugin quarantine and approved install.",
     ),
     (
+        "scripts/localhost_diagnostics.py",
+        "diagnostics",
+        "Shared localhost diagnostics and redaction helpers.",
+    ),
+    (
         "scripts/verify_clean_clone_adoption.py",
         "verification",
         "Disposable clean-clone adoption verifier for external-user smoke testing.",
     ),
     (
-        "scripts/verify_api_smoke.sh",
-        "verification",
-        "Minimal API health/system/plugin smoke that follows .env API_PORT.",
-    ),
-    (
         "scripts/verify_openai_compatible_gateway.py",
         "verification",
         "Dry-run verifier for the OpenAI-compatible Agent gateway and API registration flow.",
-    ),
-    (
-        "scripts/verify_mock_http_agent_flow.py",
-        "verification",
-        "User-owned mock HTTP Agent learning-loop smoke verifier.",
-    ),
-    (
-        "scripts/verify_full_api_flow.py",
-        "verification",
-        "Full public API learning-loop smoke verifier used by published-image checks.",
-    ),
-    (
-        "scripts/verify_skill_cli_flow.py",
-        "verification",
-        "Skill Mode CLI learning-loop verifier with actionable recovery output.",
     ),
     (
         "infra/compose/docker-compose.yml",
@@ -884,9 +2179,14 @@ FILES: list[tuple[str, str, str]] = [
         "Importer-runtime and retrieval verifier for local Agent platform flows.",
     ),
     (
-        "scripts/verify_falkordb_flow.py",
+        "scripts/generate_platform_plugin_packs.py",
         "verification",
-        "Optional FalkorDB topology projection API verifier.",
+        "Generate downloadable Codex, Kimi, and WorkBuddy platform plugin packs.",
+    ),
+    (
+        "scripts/verify_platform_plugin_packs.py",
+        "verification",
+        "Verify platform plugin pack archives, manifests, hashes, and privacy boundaries.",
     ),
     (
         "scripts/verify_platform_ecosystem_eval_flow.py",
@@ -959,6 +2259,31 @@ FILES: list[tuple[str, str, str]] = [
         "Mock HTTP/user-owned Agent eval fixture.",
     ),
     (
+        ".cognitive-loop/config.yaml",
+        "cognitive_loop_contract",
+        "Local-first Cognitive Loop project configuration contract.",
+    ),
+    (
+        ".cognitive-loop/permissions.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop permission and human approval contract.",
+    ),
+    (
+        ".cognitive-loop/evals.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop required eval command contract.",
+    ),
+    (
+        ".cognitive-loop/risk.yaml",
+        "cognitive_loop_contract",
+        "Cognitive Loop risk and human mastery gate contract.",
+    ),
+    (
+        ".cognitive-loop/watchers.yaml",
+        "cognitive_loop_contract",
+        "Optional Cognitive Loop manual watcher ingest contract.",
+    ),
+    (
         "docs/adoption.md",
         "docs",
         "Clean-clone adoption, diagnostics, platform pack, and published-image fallback guide.",
@@ -969,9 +2294,24 @@ FILES: list[tuple[str, str, str]] = [
         "GitHub launch, tag, release, and published-image verification guide.",
     ),
     (
+        "docs/getting-started.md",
+        "docs",
+        "Step-by-step first-run guide.",
+    ),
+    (
+        "docs/skill-mode.md",
+        "docs",
+        "Skill Mode startup and CLI guide.",
+    ),
+    (
         "docs/platform-agent-integrations.md",
         "docs",
         "General platform Agent integration guide.",
+    ),
+    (
+        "docs/cognitive-loop-adoption-cookbook.md",
+        "docs",
+        "Scenario cookbook for local Cognitive Loop operations from platform Agents.",
     ),
     (
         "docs/commercial-readiness.md",
@@ -992,6 +2332,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/ecosystem-submission.md",
         "docs",
         "Ecosystem submission metadata, verification, and no-frontend launch guide.",
+    ),
+    (
+        "docs/support-desk.md",
+        "docs",
+        "GitHub-first support desk, support bundle, and maintainer triage playbook.",
     ),
     (
         "docs/adopter-onboarding.md",
@@ -1074,21 +2419,6 @@ FILES: list[tuple[str, str, str]] = [
         "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway.",
     ),
     (
-        "docs/getting-started.md",
-        "docs",
-        "Chinese-first beginner guide and one-command launch path.",
-    ),
-    (
-        "QUICKSTART.md",
-        "docs",
-        "Ultra-short Chinese first-run guide.",
-    ),
-    (
-        "docs/skill-mode.md",
-        "docs",
-        "Zero-key Skill Mode CLI and local Agent gateway first-run guide.",
-    ),
-    (
         "docs/operator-drill.md",
         "docs",
         "External platform operator drill and transcript guide.",
@@ -1109,7 +2439,7 @@ FILES: list[tuple[str, str, str]] = [
         "HTTP API reference for platform workspaces.",
     ),
     (
-        "docs/release-notes/v0.3.29-alpha.md",
+        "docs/release-notes/v0.3.31-alpha.md",
         "docs",
         "Release notes for the ecosystem submission pack release.",
     ),
@@ -1196,16 +2526,16 @@ class BundleManifestError(RuntimeError):
 
 
 def format_cli_failure(exc: BaseException) -> str:
-    diagnostic = redact_diagnostic(str(exc))
+    message = redact_diagnostic(str(exc))
     return "\n".join(
         [
-            f"generate_platform_bundle_manifest failed: {diagnostic}",
+            f"generate_platform_bundle_manifest failed: {message}",
             "",
             "Next steps:",
-            "1. Rebuild the platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py",
-            "2. Re-check the platform bundle manifest: python3 scripts/generate_platform_bundle_manifest.py --check",
-            "3. Re-check the adoption pack: python3 scripts/generate_platform_adoption_pack.py --check",
-            "4. Verify ecosystem submission assets: python3 scripts/verify_ecosystem_submission_pack.py",
+            "1. python3 scripts/generate_platform_bundle_manifest.py --check",
+            "2. python3 scripts/generate_platform_adoption_pack.py --check",
+            "3. python3 scripts/verify_ecosystem_submission_pack.py",
+            "4. python3 scripts/diagnose_adoption.py",
         ]
     )
 
@@ -1249,12 +2579,6 @@ def build_manifest() -> dict[str, object]:
     file_paths = [path for path, _kind, _purpose in FILES]
     if len(file_paths) != len(set(file_paths)):
         raise BundleManifestError("Bundle file list contains duplicates.")
-    recursive_outputs = sorted(SELF_REFERENTIAL_OUTPUTS.intersection(file_paths))
-    if recursive_outputs:
-        raise BundleManifestError(
-            "Bundle manifest must not include generated outputs that hash "
-            f"the manifest/adoption pack itself: {recursive_outputs}"
-        )
     return {
         "schema_version": "study-anything-platform-bundle-v1",
         "name": "study-anything-platform-bundle",
@@ -1279,12 +2603,26 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
+            ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
+            "python3 scripts/verify_cognitive_loop_artifact_console.py --check",
+            "python3 scripts/verify_cognitive_loop_personal_plugin_mode.py --check",
+            "python3 scripts/verify_cognitive_loop_evolution_report.py --check",
+            "python3 scripts/verify_cognitive_loop_apply_plan.py --check",
+            "python3 scripts/verify_cognitive_loop_improvement_comparator.py --check",
+            "python3 scripts/verify_cognitive_loop_patch_proposal.py --check",
+            "python3 scripts/verify_cognitive_loop_mastra_evolution_receipt.py --check",
+            "python3 scripts/verify_cognitive_loop_mastra_evolution_replay.py --check",
+            "python3 scripts/verify_cognitive_loop_pr_ci_receipt.py --check",
+            "python3 scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py --check",
+            ".venv/bin/python scripts/verify_cognitive_loop_study_adapter_cli.py --check",
             "python3 scripts/generate_platform_feedback_package.py --check",
             "python3 scripts/verify_plugin_ecosystem_adoption_kit.py --check",
             "python3 scripts/verify_deployment_hardening.py --check",
             "python3 scripts/verify_ecosystem_submission_pack.py",
             "python3 scripts/verify_clean_clone_adoption.py --repo .",
             "python3 scripts/verify_platform_ecosystem_packs.py",
+            "python3 scripts/generate_platform_plugin_packs.py --check",
+            "python3 scripts/verify_platform_plugin_packs.py --check",
             "python3 scripts/generate_release_cleanroom_bootstrap.py --check",
             "python3 platform/bootstrap/study_anything_release_bootstrap.py --fixture fixtures/release-asset-adoption/asset-only-pass.json --asset-dir platform/generated --runtime metadata-only",
             "python3 scripts/generate_platform_bundle_manifest.py --check",
@@ -1293,9 +2631,6 @@ def build_manifest() -> dict[str, object]:
                 "python3 scripts/verify_external_adoption.py --pack "
                 "platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree"
             ),
-            "python3 scripts/verify_openai_compatible_gateway.py --contract-only",
-            "python3 scripts/verify_agent_gateway_hardening.py --contract-only",
-            "python3 scripts/verify_external_agent_adapter_hardening.py --contract-only",
             "python3 scripts/verify_openai_compatible_gateway.py --gateway-only",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_openai_compatible_gateway.py",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",

@@ -96,11 +96,20 @@ def request_json(
     return value
 
 
+def failure_reason(exc: BaseException) -> str:
+    reason = redact_diagnostic(str(exc))
+    if reason.startswith("Cannot reach Study Anything"):
+        reason = "cannot reach Study Anything" + reason[len("Cannot reach Study Anything") :]
+    if "cannot reach Study Anything" in reason and "API_BASE=http://host:port" not in reason:
+        reason = f"{reason}. Set API_BASE=http://host:port or pass --api-base for a running Study Anything API."
+    return reason
+
+
 def session_creation_failure(tool: str, exc: BaseException, *, required: bool) -> dict[str, Any]:
     return {
         "status": "failed",
         "tool": tool,
-        "reason": redact_diagnostic(str(exc)),
+        "reason": failure_reason(exc),
         "required": required,
         "recovery_hint": (
             "Start Study Anything with ./scripts/launch_skill_mode.sh from a normal terminal, "
@@ -327,7 +336,7 @@ def run_retrieval_eval(args: argparse.Namespace) -> dict[str, Any]:
         return {
             "status": "failed",
             "tool": "retrieval",
-            "reason": redact_diagnostic(str(exc)),
+            "reason": failure_reason(exc),
             "diagnostic_code": "retrieval_parse_error"
             if "Could not parse retrieval eval output" in str(exc)
             else "retrieval_eval_request_failed",
@@ -374,7 +383,7 @@ def run_agent_eval_report(args: argparse.Namespace) -> dict[str, Any]:
         return {
             "status": "failed",
             "tool": "report",
-            "reason": redact_diagnostic(str(exc)),
+            "reason": failure_reason(exc),
             "diagnostic_code": "agent_eval_report_parse_error"
             if "Could not parse Agent eval report output" in str(exc)
             else "agent_eval_report_request_failed",
