@@ -33,6 +33,16 @@ SECRET_QUERY_KEYS = {
     "token",
     "x-api-key",
 }
+LOCAL_PATH_REDACTIONS = (
+    (re.compile(r"/Users/[^\s\"']+"), "<local-path>"),
+    (re.compile(r"/home/runner/work/[^\s\"']+"), "<local-path>"),
+    (re.compile(r"/github/workspace[^\s\"']*"), "<local-path>"),
+    (re.compile(r"/home/[^/\s\"']+/[^\s\"']+"), "<local-path>"),
+    (re.compile(r"/private/tmp/[^\s\"']+"), "<temp-path>"),
+    (re.compile(r"/tmp/[^\s\"']+"), "<temp-path>"),
+    (re.compile(r"/private/var/folders/[^\s\"']+"), "<temp-path>"),
+    (re.compile(r"/var/folders/[^\s\"']+"), "<temp-path>"),
+)
 
 
 def _parse_env_file_value(raw_value: str) -> str:
@@ -159,11 +169,8 @@ def redact_diagnostic(text: str) -> str:
         lambda match: redact_url(match.group(0)),
         text or "",
     )
-    redacted = re.sub(r"/Users/[^\s\"']+", "<local-path>", redacted)
-    redacted = re.sub(r"/private/tmp/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/tmp/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", redacted)
-    redacted = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", redacted)
+    for pattern, replacement in LOCAL_PATH_REDACTIONS:
+        redacted = pattern.sub(replacement, redacted)
     redacted = re.sub(
         r"(?i)\b(authorization\s*[:=]\s*(?:bearer\s+)?)[A-Za-z0-9._~+/=-]{8,}",
         r"\1<redacted>",
@@ -175,6 +182,10 @@ def redact_diagnostic(text: str) -> str:
         redacted,
     )
     return re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", redacted)
+
+
+def contains_unredacted_local_path(text: str) -> bool:
+    return any(pattern.search(text or "") for pattern, _replacement in LOCAL_PATH_REDACTIONS)
 
 
 def is_localhost_socket_blocked(exc: BaseException) -> bool:

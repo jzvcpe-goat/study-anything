@@ -16,7 +16,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from localhost_diagnostics import resolve_api_base
+from localhost_diagnostics import contains_unredacted_local_path, redact_diagnostic, resolve_api_base
 
 
 ROOT = SCRIPT_DIR.parent
@@ -59,9 +59,7 @@ def sanitize(text: str | None) -> str:
     value = re.sub(r"(?i)a learning loop should bind a question[^\"'\n.]*\.?", "<private-source-text>", value)
     value = re.sub(r"(?i)the learning loop uses source evidence[^\"'\n.]*\.?", "<private-answer>", value)
     value = re.sub(r"\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b", "<uuid>", value)
-    value = re.sub(r"/Users/[^\s\"']+", "<local-path>", value)
-    value = re.sub(r"/private/var/folders/[^\s\"']+", "<temp-path>", value)
-    value = re.sub(r"/var/folders/[^\s\"']+", "<temp-path>", value)
+    value = redact_diagnostic(value)
     value = re.sub(r"(?i)(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", r"\1=<redacted>", value)
     value = re.sub(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", "sk-<redacted>", value)
     return value.strip()[:1600]
@@ -213,10 +211,8 @@ def format_failure_for_human(report: dict[str, Any]) -> str:
 def assert_failure_report_redacted(report: dict[str, Any]) -> None:
     serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
     leaks = [literal for literal in FORBIDDEN_LITERALS if literal in serialized]
-    if re.search(r"/Users/[^\s\"']+", serialized):
+    if contains_unredacted_local_path(serialized):
         leaks.append("local absolute path")
-    if re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
-        leaks.append("local temp path")
     if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
         leaks.append("secret-looking sk token")
     if leaks:

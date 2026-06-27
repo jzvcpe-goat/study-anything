@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 138306,
+    "bytes": 138388,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "1e6ec589840b52c093e7003c98c80a4f7362e6735ce90a734c253af1e846d983"
+    "sha256": "22b911f8bb5f38121949f79230e8383560ee702621520024762371ec77ca03f7"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -110,11 +110,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/localhost_diagnostics.py",
-      "bytes": 8255,
+      "bytes": 8669,
       "kind": "diagnostics",
       "path": "scripts/localhost_diagnostics.py",
       "purpose": "Shared localhost diagnostics and redaction helpers.",
-      "sha256": "1d32a7e4cd6533eb211f609692a3e2d597c7c9ff052cb44a2949d155d641dda5"
+      "sha256": "aa0bbe62ea68497e45c8621755e303b39d6da90cf956bb64935c6cd4d1008cf1"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_platform_agent_tools.py",
@@ -126,11 +126,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
-      "bytes": 69155,
+      "bytes": 68921,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Extracted adoption-pack verifier.",
-      "sha256": "15d7134f6c0f053379eccd31b56ee8d87706ad03b33f749db2f8dae30153dd61"
+      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/api.md",

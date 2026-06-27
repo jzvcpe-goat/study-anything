@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 128924,
+    "bytes": 129009,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "33656d433ff8a587291e5e7200dc243359f5590970f328afb44eb80d3dc1b94c"
+    "sha256": "428fc724b032769e17bde88c2fa926bb39800625b0f1a6d8a81bb2dce5fea705"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -110,11 +110,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/localhost_diagnostics.py",
-      "bytes": 8255,
+      "bytes": 8669,
       "kind": "diagnostics",
       "path": "scripts/localhost_diagnostics.py",
       "purpose": "Shared localhost diagnostics and redaction helpers.",
-      "sha256": "1d32a7e4cd6533eb211f609692a3e2d597c7c9ff052cb44a2949d155d641dda5"
+      "sha256": "aa0bbe62ea68497e45c8621755e303b39d6da90cf956bb64935c6cd4d1008cf1"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/verify_platform_agent_tools.py",
@@ -126,11 +126,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/verify_external_adoption.py",
-      "bytes": 69155,
+      "bytes": 68921,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Extracted adoption-pack verifier.",
-      "sha256": "15d7134f6c0f053379eccd31b56ee8d87706ad03b33f749db2f8dae30153dd61"
+      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/skill-mode.md",

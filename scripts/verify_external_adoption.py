@@ -25,7 +25,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from localhost_diagnostics import is_localhost_socket_blocked, redact_diagnostic, verifier_name_from_file
+from localhost_diagnostics import (
+    contains_unredacted_local_path,
+    is_localhost_socket_blocked,
+    redact_diagnostic,
+    verifier_name_from_file,
+)
 
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 DEFAULT_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.json"
@@ -1272,7 +1277,7 @@ def assert_redacted(proof: dict[str, Any]) -> None:
         leaks.append("secret-looking sk token")
     if re.search(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{12,}", serialized):
         leaks.append("secret-looking key/value text")
-    if re.search(r"/Users/[^\s\"']+", serialized) or re.search(r"/private/(?:var/)?folders/[^\s\"']+", serialized):
+    if contains_unredacted_local_path(serialized):
         leaks.append("local absolute path")
     if leaks:
         raise AdoptionProofError(f"Adoption proof leaked private data: {leaks}")
@@ -1377,12 +1382,8 @@ def failure_next_steps(classification: str) -> list[str]:
 def assert_failure_report_redacted(report: dict[str, Any]) -> None:
     serialized = json.dumps(report, ensure_ascii=False, sort_keys=True)
     leaks = [literal for literal in FORBIDDEN_FAILURE_LITERALS if literal in serialized]
-    if re.search(r"/Users/[^\s\"']+", serialized):
+    if contains_unredacted_local_path(serialized):
         leaks.append("local absolute path")
-    if re.search(r"/private/" + r"(?:tmp|var/folders)/[^\s\"']+", serialized):
-        leaks.append("local temp path")
-    if re.search(r"/var/" + r"folders/[^\s\"']+", serialized):
-        leaks.append("local temp path")
     if re.search(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}", serialized):
         leaks.append("secret-looking sk token")
     if re.search(r"(?i)(api[_-]?key|access[_-]?token|authorization|secret|token|password)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}", serialized):
