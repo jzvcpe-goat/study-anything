@@ -20,8 +20,8 @@ FEEDBACK_SCHEMA_VERSION = "platform-feedback-package-v1"
 RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
-REHEARSAL_PLATFORM_IDS = ("kimi", "codex", "workbuddy", "generic")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
+REHEARSAL_PLATFORM_IDS = ("kimi", "codex", "workbuddy", "hermes", "generic")
 QUIRK_IDS = (
     "schema_mismatch",
     "missing_local_gateway",

@@ -52,6 +52,17 @@ PLATFORM_REQUIREMENTS = {
             "platform/generated/study-anything-tool-catalog.md",
         ],
     },
+    "hermes": {
+        "display": "Hermes Agent Skill / local HTTP tools",
+        "terms": ["Hermes", "Skill", "adoption-proof-v1"],
+        "required_entrypoints": ["guide", "skill", "openapi", "tool_catalog"],
+        "must_import": [
+            "docs/use-with-hermes.md",
+            "skills/study-anything/SKILL.md",
+            "platform/generated/study-anything-platform-openapi.json",
+            "platform/generated/study-anything-tool-catalog.md",
+        ],
+    },
 }
 
 REQUIRED_EXPORT_EVIDENCE = [
@@ -180,6 +191,10 @@ def relative_exists(pack_root: Path, relative_path: str) -> bool:
     return (pack_root / relative_path).is_file()
 
 
+def is_external_url(value: str) -> bool:
+    return value.startswith(("http://", "https://"))
+
+
 def validate_archive_manifest(pack_root: Path) -> dict[str, Any]:
     manifest = read_json(pack_root / "manifest.json")
     if manifest.get("schema_version") != ARCHIVE_SCHEMA:
@@ -291,6 +306,8 @@ def validate_platform(pack_root: Path, platform_id: str) -> dict[str, Any]:
     missing_paths: list[str] = []
     for value in list(entrypoints.values()) + list(pack.get("import_assets", [])):
         path = str(value)
+        if is_external_url(path):
+            continue
         if not relative_exists(pack_root, path):
             missing_paths.append(path)
     for path in requirements["must_import"]:

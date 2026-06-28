@@ -26,7 +26,7 @@ DEFAULT_FEEDBACK_MANIFEST = (
 DEFAULT_FEEDBACK_ARCHIVE = (
     ROOT / "platform" / "generated" / "study-anything-platform-feedback-package.zip"
 )
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 REQUIRED_PACK_COMMAND = "verify_platform_adoption_feedback_diagnostics.py --check"
 REQUIRED_FEEDBACK_COMMAND = "generate_platform_feedback_package.py --check"
 REQUIRED_EVIDENCE = (

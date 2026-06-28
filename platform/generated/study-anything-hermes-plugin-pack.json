@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 143451,
+    "bytes": 143476,
     "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
     "root": "study-anything-hermes-plugin-pack",
-    "sha256": "7adf825541715064c9a0f3ed32facb0e155cb2819306298a666e1b40b24431b4"
+    "sha256": "3ed3f43a94cef5b5292be998ef53dbb9d5e79ef139e0869cea0ad87ebb142fcd"
   },
   "entrypoints": {
     "direct_skill_install": "https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md",
@@ -48,11 +48,11 @@
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/docs/operator-drill.md",
-      "bytes": 3296,
+      "bytes": 3393,
       "kind": "operator_doc",
       "path": "docs/operator-drill.md",
       "purpose": "External platform operator drill.",
-      "sha256": "974633f1f295665339bcf8d9cf9850e33bdb715dc3cfae0708749316a2d5257e"
+      "sha256": "ab16e1e6c93548fe62950827b15a0b5ccf1a9f7947a1cf69ae8a0a734531a611"
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/platform/study-anything-platform-tools.json",

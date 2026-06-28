@@ -20,7 +20,7 @@ RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-external-eval-harness.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 EXPECTED_ADAPTERS = ("promptfoo", "deepeval", "langchain-agentevals", "ragas")
 EXPECTED_TRAJECTORY = (
     "teach.overview",

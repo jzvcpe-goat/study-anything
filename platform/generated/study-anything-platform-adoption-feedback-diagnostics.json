@@ -52,7 +52,7 @@
   "ecosystem_submission": {
     "schema_version": "ecosystem-submission-v1",
     "shared_assets_included": 5,
-    "submission_count": 4,
+    "submission_count": 5,
     "version": "v0.3.31-alpha"
   },
   "feedback_package": {
@@ -88,6 +88,11 @@
       "command_declared": true,
       "feedback_package_declared": true,
       "integration_mode": "terminal_skill"
+    },
+    "hermes": {
+      "command_declared": true,
+      "feedback_package_declared": true,
+      "integration_mode": "hermes_skill_http_tools"
     },
     "kimi": {
       "command_declared": true,

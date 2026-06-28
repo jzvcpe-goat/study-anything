@@ -209,6 +209,61 @@ PLATFORM_PROFILES: dict[str, dict[str, Any]] = {
             "The workspace must be allowed to call local or private HTTP endpoints.",
         ],
     },
+    "hermes-agent": {
+        "pack_id": "hermes",
+        "display": "Hermes Agent Skill",
+        "expected_mode": "hermes_skill_http_tools",
+        "required_assets": [
+            "skills/study-anything/SKILL.md",
+            "docs/use-with-hermes.md",
+            "platform/generated/study-anything-platform-openapi.json",
+            "platform/generated/study-anything-tool-catalog.md",
+            "docs/plugins.md",
+            "platform/generated/study-anything-plugin-ecosystem-adoption-kit.json",
+            "platform/generated/study-anything-deployment-hardening.json",
+            "platform/generated/study-anything-learning-enrichment-bridge.json",
+            "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
+            "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
+            "platform/generated/study-anything-platform-feedback-package.json",
+            "platform/generated/study-anything-platform-field-rehearsal.json",
+            "platform/generated/study-anything-platform-support-triage.json",
+            "platform/generated/study-anything-platform-onboarding-readiness.json",
+            "platform/generated/study-anything-platform-triage-dashboard.json",
+            "platform/packs/hermes/README.md",
+            "platform/packs/hermes/pack.json",
+        ],
+        "required_commands": [
+            "verify_platform_submission_dry_run.py",
+            "verify_platform_manual_submission_rehearsal.py",
+            "verify_first_lesson_authoring_kit.py",
+            "verify_external_eval_marketplace_harness.py",
+            "verify_agent_eval_marketplace_enforcement.py",
+            "verify_platform_adoption_feedback_diagnostics.py",
+            "generate_platform_feedback_package.py",
+            "generate_platform_field_rehearsal.py",
+            "verify_platform_field_rehearsal.py",
+            "generate_platform_support_triage.py",
+            "verify_platform_support_triage.py",
+            "generate_platform_onboarding_readiness.py",
+            "verify_platform_onboarding_readiness.py",
+            "verify_plugin_ecosystem_adoption_kit.py",
+            "verify_deployment_hardening.py",
+            "verify_learning_enrichment_bridge.py",
+            "verify_platform_ecosystem_packs.py",
+            "verify_external_adoption.py",
+            "hermes skills inspect",
+        ],
+        "manual_steps": [
+            "Install or expose the Study Anything Skill in Hermes Agent.",
+            "Start the local Study Anything runtime before asking Hermes to teach.",
+            "Let Hermes call the local CLI or local/private HTTP tools.",
+            "Record only redacted adoption proof and Hermes skill import evidence.",
+        ],
+        "warnings": [
+            "This is a Hermes Skill and local HTTP/CLI pack, not a published Hermes-native Python plugin repo.",
+            "Hermes owns model credentials, browser/app tools, and conversation memory.",
+        ],
+    },
     "generic-openapi-tools": {
         "pack_id": "workbuddy",
         "display": "Generic OpenAPI Tool Platform",
@@ -459,6 +514,7 @@ def build_report(pack_root: Path, pack_path: Path | None) -> dict[str, Any]:
             "codex-skill",
             "kimi-compatible",
             "workbuddy-style-http",
+            "hermes-agent",
             "generic-openapi-tools",
         ],
         "privacy": {
@@ -494,7 +550,7 @@ def build_transcript_for_root(pack_root: Path, pack_path: Path | None) -> dict[s
     generated_assets = validate_tool_import_assets(pack_root, required_tools)
     platforms = {
         platform_id: validate_platform(pack_root, platform_id)
-        for platform_id in ("codex", "kimi", "workbuddy")
+        for platform_id in ("codex", "kimi", "workbuddy", "hermes")
     }
     return {
         "schema_version": "study-anything-operator-drill-v1",

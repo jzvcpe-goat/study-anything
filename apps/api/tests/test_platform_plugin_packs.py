@@ -36,6 +36,15 @@ PACKS = {
             "platform/packs/workbuddy/pack.json",
         },
     },
+    "hermes": {
+        "package_type": "hermes_skill_http_tools",
+        "required_assets": {
+            "docs/use-with-hermes.md",
+            "skills/study-anything/SKILL.md",
+            "platform/generated/study-anything-platform-openapi.json",
+            "platform/packs/hermes/pack.json",
+        },
+    },
 }
 
 
@@ -61,7 +70,7 @@ class PlatformPluginPackTests(unittest.TestCase):
         self.run_script("generate_platform_plugin_downloads.py", "--check")
         output = self.run_script("verify_platform_plugin_downloads.py", "--check")
         self.assertIn('"schema_version": "platform-plugin-downloads-v1"', output)
-        self.assertIn('"release_asset_count": 9', output)
+        self.assertIn('"release_asset_count": 12', output)
         report = json.loads((GENERATED / "study-anything-platform-plugin-downloads.json").read_text(encoding="utf-8"))
         self.assertEqual(report["schema_version"], "platform-plugin-downloads-v1")
         self.assertEqual(
@@ -76,6 +85,9 @@ class PlatformPluginPackTests(unittest.TestCase):
                 "study-anything-workbuddy-plugin-pack.json",
                 "study-anything-workbuddy-plugin-pack.zip",
                 "study-anything-workbuddy-plugin-pack.sha256",
+                "study-anything-hermes-plugin-pack.json",
+                "study-anything-hermes-plugin-pack.zip",
+                "study-anything-hermes-plugin-pack.sha256",
             },
         )
 

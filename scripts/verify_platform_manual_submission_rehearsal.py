@@ -22,7 +22,7 @@ DEFAULT_REPORT = (
 )
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 REQUIRED_REPORT_EVIDENCE = [
     "platform/generated/study-anything-platform-submission-dry-run.json",
     "platform/generated/study-anything-operator-drill-transcript.json",

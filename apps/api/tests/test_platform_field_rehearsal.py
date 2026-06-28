@@ -16,7 +16,7 @@ VERIFIER = REPO / "scripts" / "verify_platform_field_rehearsal.py"
 REPORT = REPO / "platform" / "generated" / "study-anything-platform-field-rehearsal.json"
 FIXTURE_DIR = REPO / "fixtures" / "platform-import-failures"
 ADOPTION_PACK = REPO / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
-PLATFORM_IDS = {"kimi", "codex", "workbuddy", "generic"}
+PLATFORM_IDS = {"kimi", "codex", "workbuddy", "hermes", "generic"}
 QUIRK_IDS = {
     "schema_mismatch",
     "missing_local_gateway",
@@ -114,7 +114,7 @@ class PlatformFieldRehearsalTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertEqual(payload["schema_version"], "platform-field-adoption-rehearsal-v1")
         self.assertEqual(payload["status"], "pass")
-        self.assertEqual(payload["field_rehearsal"]["platform_count"], 4)
+        self.assertEqual(payload["field_rehearsal"]["platform_count"], 5)
         self.assertEqual(payload["field_rehearsal"]["quirk_count"], 8)
         self.assertEqual(payload["field_rehearsal"]["fixture_count"], 8)
         self.assertEqual(

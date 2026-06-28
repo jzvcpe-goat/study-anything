@@ -2,8 +2,8 @@
 
 This drill proves that Study Anything can be adopted through a platform Agent
 without a standalone frontend. It is for Kimi Work, Codex, WorkBuddy-style HTTP
-workspaces, and other agents that can import local HTTP tools or run the repo
-Skill.
+workspaces, Hermes Agent, and other agents that can import local HTTP tools or
+run the repo Skill.
 
 ## What The Operator Owns
 
@@ -21,11 +21,13 @@ environment.
 1. Pick the platform package:
    `study-anything-codex-plugin-pack.zip`,
    `study-anything-kimi-plugin-pack.zip`, or
-   `study-anything-workbuddy-plugin-pack.zip`.
+   `study-anything-workbuddy-plugin-pack.zip`, or
+   `study-anything-hermes-plugin-pack.zip`.
 2. Verify the package with its `.sha256` file, then unpack it. Each archive has
    one root directory and a `manifest.json`.
-3. Open `platform/packs/kimi`, `platform/packs/codex`, or
-   `platform/packs/workbuddy`, depending on the host platform.
+3. Open `platform/packs/kimi`, `platform/packs/codex`,
+   `platform/packs/workbuddy`, or `platform/packs/hermes`, depending on the
+   host platform.
 4. Import `platform/generated/study-anything-platform-openapi.json` or
    `platform/generated/study-anything-openai-tools.json`, or install
    `skills/study-anything` for Codex.
@@ -66,7 +68,7 @@ learning/eval/export loop.
 - `study-anything-operator-drill-v1` transcript is current.
 - `study-anything-platform-plugin-pack-v1` manifests and zip checksums are current.
 - `adoption-proof-v1` is emitted within the target window.
-- Kimi, Codex, and WorkBuddy packs reference existing files only.
+- Kimi, Codex, WorkBuddy, and Hermes packs reference existing files only.
 - Generated OpenAPI/OpenAI tool assets expose the required Study Anything tool
   names.
 - Obsidian export and learning package schemas are present.

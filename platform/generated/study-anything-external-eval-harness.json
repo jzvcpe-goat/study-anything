@@ -160,6 +160,20 @@
       "integration_mode": "terminal_skill",
       "platform_id": "codex"
     },
+    "hermes": {
+      "acceptance_evidence_count": 110,
+      "commands": [
+        "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+        "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_ecosystem_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_agent_eval_flow.py",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool report --create-session --required",
+        "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool deepeval --create-session --allow-native-quality-fallback",
+        "STUDY_ANYTHING_RETRIEVAL_BACKEND=memory API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
+      ],
+      "integration_mode": "hermes_skill_http_tools",
+      "platform_id": "hermes"
+    },
     "kimi": {
       "acceptance_evidence_count": 110,
       "commands": [
@@ -238,7 +252,7 @@
   "status": "pass",
   "submission": {
     "no_frontend_required": true,
-    "platform_count": 4,
+    "platform_count": 5,
     "schema_version": "ecosystem-submission-v1",
     "version": "v0.3.31-alpha"
   },

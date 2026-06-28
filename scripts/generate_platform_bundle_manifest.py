@@ -2863,7 +2863,7 @@ def build_manifest() -> dict[str, object]:
         ),
         "source_manifest": "platform/study-anything-platform-tools.json",
         "source_manifest_sha256": sha256(SOURCE_MANIFEST),
-        "platforms": ["codex", "kimi", "workbuddy"],
+        "platforms": ["codex", "kimi", "workbuddy", "hermes"],
         "privacy_contract": source.get("privacy_contract", {}),
         "acceptance_commands": [
             "python3 scripts/generate_platform_agent_assets.py --check",

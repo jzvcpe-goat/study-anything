@@ -140,6 +140,11 @@
       "command_declared": true,
       "integration_mode": "terminal_skill"
     },
+    "hermes": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "hermes_skill_http_tools"
+    },
     "kimi": {
       "acceptance_evidence_declared": true,
       "command_declared": true,

@@ -304,7 +304,7 @@ def materialize_assets(args: argparse.Namespace, release: dict[str, Any], asset_
 
 
 def validate_plugin_sidecars(asset_dir: Path) -> None:
-    for platform_id in ("codex", "kimi", "workbuddy"):
+    for platform_id in ("codex", "kimi", "workbuddy", "hermes"):
         base = f"study-anything-{platform_id}-plugin-pack"
         manifest_path = asset_dir / f"{base}.json"
         archive_path = asset_dir / f"{base}.zip"

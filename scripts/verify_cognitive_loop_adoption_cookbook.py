@@ -21,7 +21,7 @@ SCHEMA_VERSION = "cognitive-loop-adoption-cookbook-verification-v1"
 REPORT_RELATIVE_PATH = "platform/generated/study-anything-cognitive-loop-adoption-cookbook.json"
 SCRIPT_RELATIVE_PATH = "scripts/verify_cognitive_loop_adoption_cookbook.py"
 COOKBOOK_RELATIVE_PATH = "docs/cognitive-loop-adoption-cookbook.md"
-REQUIRED_PACKS = ("codex", "kimi", "workbuddy")
+REQUIRED_PACKS = ("codex", "kimi", "workbuddy", "hermes")
 
 REQUIRED_SECTIONS = (
     "# Cognitive Loop Adoption Cookbook / 认知自循环接入手册",
