@@ -77,10 +77,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 2646689,
+  "archive_bytes": 2646871,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "db15d82af2b0e59afdf9575d0a653887c87afbedd18b64042afc8c7c35ae369e",
+  "archive_sha256": "e148ad18737e97edad238d67128f1eca2f25db2b9145c4e6dc02f7af674534c9",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -261,11 +261,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/workbuddy-field-report.md",
-      "bytes": 6006,
+      "bytes": 7298,
       "kind": "operator_doc",
       "path": "docs/workbuddy-field-report.md",
       "purpose": "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary.",
-      "sha256": "bd61e4d7751cb9b8164ed4ed0a81b2ab657296fc21f518984fbe128b24887a53"
+      "sha256": "b496af69e12d5b29be1c91e01eae7faedf5e274f32c3f14b7e1cfb757d1c704b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-drill.md",
@@ -713,7 +713,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "089019801a02442f8b6028d9ced32aca04adc474a223eb8fb0d89d0baf6b15d4"
+      "sha256": "463e9c8d85deb832a8e192bf2b0af2a98ef333be8b0d43b51c8dab3dc31bb9b2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",

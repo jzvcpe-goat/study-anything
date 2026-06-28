@@ -1,6 +1,7 @@
 # WorkBuddy / CodeBuddy Field Report
 
 Date: 2026-06-27 21:45 PDT
+Last updated: 2026-06-27 22:34 PDT
 
 Purpose: verify the Study Anything plugin in a real CodeBuddy Code CLI runtime,
 not only with repository-local generators.
@@ -94,6 +95,31 @@ HOME=<temp-codebuddy-home-local> \
 | Headless command with explicit channel | partial pass | command reached CodeBuddy model/auth boundary |
 | Full first lesson through CodeBuddy | not complete | blocked by CodeBuddy authentication in isolated HOME |
 
+## Post-Merge Public Shorthand Run
+
+After PR #267 was merged to `main`, the public GitHub shorthand path was
+rerun from the normal host environment instead of a local marketplace path:
+
+```bash
+codebuddy plugin marketplace add jzvcpe-goat/study-anything
+codebuddy plugin install study-anything@study-anything --scope local
+STUDY_ANYTHING_DATA_DIR=<temp-runtime> API_PORT=8000 ./scripts/launch_skill_mode.sh --foreground
+python3 scripts/study_anything_cli.py --api-base http://127.0.0.1:8000 health
+codebuddy -p \
+  --output-format json \
+  --max-turns 6 \
+  --permission-mode bypassPermissions \
+  --channels plugin:study-anything@study-anything \
+  "/study-anything:learn Rust ownership basics"
+```
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Public marketplace add | pass | `Marketplace 'study-anything' added successfully` |
+| Public plugin install | pass | `Successfully installed plugin: study-anything@study-anything` |
+| Skill Mode runtime health | pass | `status=ok`, `version=0.3.31-alpha` |
+| Public shorthand first lesson | not complete | `Authentication required. Please use /login command to sign in to your account` |
+
 ## Findings
 
 1. Real CodeBuddy validation rejected the original plugin manifest because
@@ -115,8 +141,9 @@ HOME=<temp-codebuddy-home-local> \
 
 That file is field-run state and should not be committed.
 
-4. In an isolated HOME without CodeBuddy login, the first lesson cannot reach
-   the model execution step. The real output is:
+4. Without a logged-in CodeBuddy account, the first lesson cannot reach the
+   model execution step. This reproduced both in an isolated HOME and after
+   the post-merge public shorthand install. The real output is:
 
 ```text
 Authentication required. Please use /login command to sign in to your account
@@ -131,14 +158,14 @@ This is a platform-account prerequisite, not a Study Anything runtime failure.
 ## Current Verdict
 
 The CodeBuddy/WorkBuddy plugin is now installable and schema-valid in real
-CodeBuddy Code CLI 2.112.1. The full first lesson is not yet accepted as
-complete because the final Agent execution requires a logged-in CodeBuddy
-account or equivalent configured platform Agent.
+CodeBuddy Code CLI 2.112.1. The public GitHub shorthand install path also
+works from `main`. The full first lesson is not yet accepted as complete
+because the final Agent execution requires a logged-in CodeBuddy account or
+equivalent configured platform Agent.
 
 ## Next Acceptance Step
 
-After this branch is merged to `main`, rerun the public GitHub shorthand path
-from a logged-in CodeBuddy environment:
+Rerun the public GitHub shorthand path from a logged-in CodeBuddy environment:
 
 ```bash
 HOME=<logged-in-codebuddy-home> codebuddy plugin marketplace add jzvcpe-goat/study-anything
