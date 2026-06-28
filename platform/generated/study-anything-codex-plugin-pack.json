@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 129334,
+    "bytes": 129486,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "c1d204e17ff2fe0083c8c0811ff70084a8b1f6bb9fba037ee6faf3cfcbd31f31"
+    "sha256": "50682658625c0c73aee3a12fddb754b53740a39247c01351b65b017846da68cf"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -78,11 +78,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/launch_skill_mode.sh",
-      "bytes": 27321,
+      "bytes": 28010,
       "kind": "runtime",
       "path": "scripts/launch_skill_mode.sh",
       "purpose": "Local Skill Mode API launcher.",
-      "sha256": "d34df18cb73f4bd4de4ba75abca206b09dbdc1d61fca60c2a7a1d1e7521edff2"
+      "sha256": "c2816380364c7cf0acbf9cefde5ce0a3db4d5a851aea78f906628a73d56bb517"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/stop_skill_mode.sh",
