@@ -61,7 +61,14 @@ If you prefer explicit commands:
 python3 scripts/study_anything_cli.py health
 ```
 
-If your platform cannot keep background processes alive, run the bounded demo:
+If your platform cannot keep background processes alive but you need a
+long-running API for plugin validation, keep a terminal open with:
+
+```bash
+./scripts/launch_skill_mode.sh --foreground
+```
+
+If you only need a bounded local proof, run the demo:
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
@@ -126,11 +133,25 @@ python3 scripts/diagnose_adoption.py
 python3 scripts/verify_workbuddy_plugin_marketplace.py --check
 ```
 
+For CodeBuddy Code CLI headless validation, explicitly load the installed
+plugin channel:
+
+```bash
+codebuddy -p \
+  --channels plugin:study-anything@study-anything \
+  "/study-anything:diagnose"
+```
+
+Without `--channels`, a headless run may report `/study-anything:... not found`
+even when `codebuddy plugin install study-anything@study-anything` succeeded.
+See `docs/workbuddy-field-report.md` for the current field validation record.
+
 Common failures:
 
 - API unreachable: run `./START_HERE.command`.
 - Localhost blocked: use a private reachable endpoint.
 - OpenAPI import rejected: verify the JSON file and try the CLI fallback.
+- Headless command says `not found`: add `--channels plugin:study-anything@study-anything`.
 - Python dependency download slow: set `PIP_INDEX_URL` or retry from a normal terminal.
 - Model key missing: configure it in WorkBuddy/CodeBuddy or your private Agent, not in Study Anything.
 
@@ -181,4 +202,3 @@ platform/generated/study-anything-platform-openapi.json
 
 真实模型、浏览器和外部工具由 WorkBuddy/CodeBuddy 管；Study Anything 只负责本地学习流程、
 测验、掌握度、审计证据和导出。
-

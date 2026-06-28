@@ -664,6 +664,11 @@ FILES: list[tuple[str, str, str]] = [
         "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide.",
     ),
     (
+        "docs/workbuddy-field-report.md",
+        "operator_doc",
+        "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary.",
+    ),
+    (
         "docs/cognitive-loop-contracts.md",
         "operator_doc",
         "Cognitive Loop local contract bootstrap guide.",

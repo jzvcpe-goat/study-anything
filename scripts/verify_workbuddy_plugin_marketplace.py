@@ -92,7 +92,7 @@ def verify_marketplace() -> dict[str, Any]:
         raise WorkBuddyPluginMarketplaceVerificationError("Marketplace plugin source must be relative path ./plugins/study-anything.")
     if plugin.get("strict") is not True:
         raise WorkBuddyPluginMarketplaceVerificationError("Marketplace plugin must require strict plugin.json.")
-    if plugin.get("commands") != "commands" or plugin.get("skills") != "skills":
+    if plugin.get("commands") != ["commands"] or plugin.get("skills") != ["skills"]:
         raise WorkBuddyPluginMarketplaceVerificationError("Marketplace plugin must expose commands and skills directories.")
     return marketplace
 
@@ -101,7 +101,7 @@ def verify_plugin_manifest() -> dict[str, Any]:
     manifest = read_json(PLUGIN_MANIFEST_PATH)
     if manifest.get("name") != "study-anything":
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest name must be study-anything.")
-    if manifest.get("commands") != "commands" or manifest.get("skills") != "skills":
+    if manifest.get("commands") != ["commands"] or manifest.get("skills") != ["skills"]:
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must expose commands and skills.")
     metadata = manifest.get("metadata") or {}
     contracts = metadata.get("tool_contracts") or {}
@@ -212,4 +212,3 @@ if __name__ == "__main__":
     except Exception as exc:  # pragma: no cover - CLI failure path
         print(f"verify_workbuddy_plugin_marketplace failed: {exc}", file=sys.stderr)
         sys.exit(1)
-

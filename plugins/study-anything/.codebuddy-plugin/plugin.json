@@ -4,7 +4,9 @@
     "url": "https://github.com/jzvcpe-goat/study-anything"
   },
   "category": "AI Agents",
-  "commands": "commands",
+  "commands": [
+    "commands"
+  ],
   "description": "Local-first learning engine for CodeBuddy/WorkBuddy. Start Study Anything locally, call its OpenAPI/local HTTP tools, and export source-bound learning evidence without storing model keys.",
   "homepage": "https://github.com/jzvcpe-goat/study-anything",
   "keywords": [
@@ -36,6 +38,8 @@
   },
   "name": "study-anything",
   "repository": "https://github.com/jzvcpe-goat/study-anything",
-  "skills": "skills",
+  "skills": [
+    "skills"
+  ],
   "version": "0.3.31-alpha"
 }
