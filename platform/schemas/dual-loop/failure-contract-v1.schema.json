@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "failure-contract-v1",
+  "title": "Dual-Loop Failure Contract v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "contract_id",
+    "project_id",
+    "task_ref",
+    "risk",
+    "failure_boundaries",
+    "minimum_reconstructable_units",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "failure-contract-v1"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "task_ref": {
+      "type": "string"
+    },
+    "candidate_artifact_ref": {
+      "type": "string"
+    },
+    "risk": {
+      "type": "object",
+      "required": [
+        "level",
+        "budget_level",
+        "production_mutation_allowed",
+        "real_user_exposure_allowed",
+        "irreversible_effects_allowed"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "blocked"
+          ]
+        },
+        "budget_level": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "blocked"
+          ]
+        },
+        "production_mutation_allowed": {
+          "const": false
+        },
+        "real_user_exposure_allowed": {
+          "const": false
+        },
+        "irreversible_effects_allowed": {
+          "const": false
+        }
+      }
+    },
+    "failure_boundaries": {
+      "type": "object",
+      "required": [
+        "allowed_failure_modes",
+        "forbidden_propagations",
+        "rollback_required"
+      ],
+      "properties": {
+        "allowed_failure_modes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbidden_propagations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rollback_required": {
+          "const": true
+        }
+      }
+    },
+    "minimum_reconstructable_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "mru_id",
+          "kind",
+          "blocking",
+          "prompt_ref"
+        ]
+      }
+    },
+    "isolation": {
+      "$ref": "#/$defs/isolation"
+    },
+    "privacy": {
+      "$ref": "#/$defs/privacy"
+    }
+  },
+  "$defs": {
+    "isolation": {
+      "type": "object",
+      "required": [
+        "physical_isolation",
+        "structured_artifact_bridge_only",
+        "ai_sandbox_has_attention_stream_access",
+        "attention_layer_has_execution_authority",
+        "production_mutation_allowed",
+        "daemon_or_hosted_service_started"
+      ]
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "screenshots_included",
+        "keystrokes_included",
+        "mouse_coordinates_included",
+        "eye_tracking_included",
+        "biometrics_included",
+        "real_secrets_included",
+        "cookies_included",
+        "bearer_tokens_included",
+        "signed_urls_included",
+        "user_owned_agent_credentials_included",
+        "model_calls_performed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "acceptance": {
+    "attention_command": "python3 scripts/verify_attention_reconstruction_lite.py --check",
+    "failure_sandbox_command": "python3 scripts/verify_failure_sandbox_lite.py --check",
+    "gate_command": "python3 scripts/verify_dual_loop_gate.py --check",
+    "minimum_command": "python3 scripts/verify_dual_loop_contracts.py --check"
+  },
+  "architecture": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_in_v0_1": false,
+    "daemon_or_hosted_service_started": false,
+    "deterministic_fixtures_first": true,
+    "model_calls_in_v0_1": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "artifact_contracts": {
+    "attention_reconstruction_summary": "attention-reconstruction-summary-v1",
+    "attention_reconstruction_trace": "attention-reconstruction-trace-v1",
+    "dual_loop_gate_receipt": "dual-loop-gate-receipt-v1",
+    "failure_contract": "failure-contract-v1",
+    "sandbox_receipt": "sandbox-receipt-v1"
+  },
+  "failure_modes": {
+    "passive_attention_only_rejected": "attention summary cannot rely on passive attention only",
+    "production_mutation_rejected": "sandbox receipt must not mutate production",
+    "raw_source_text_rejected": "failure-contract-v1:$.raw_source_text uses forbidden field",
+    "secret_like_attention_trace_rejected": "attention-reconstruction-trace-v1:$.active_reconstruction_checkpoints[0].note contains private-looking data: ['OPENAI_API_KEY=', 'sk-(?:proj-)?[A-Za-z0-9_-]{16,}']"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_verifier": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "secret_like_values_rejected": true,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/dual-loop/failure-contract-v1.schema.json",
+      "schema_version": "failure-contract-v1",
+      "sha256": "20341d40cc3d74c2fb99ba6d78afa069a533d11bd373f7c34483de0cf433b09f"
+    },
+    {
+      "path": "platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+      "schema_version": "sandbox-receipt-v1",
+      "sha256": "5e85143f98c98d770a08ad3e65a6e6d7889be216153c9568cee9592af6f29857"
+    },
+    {
+      "path": "platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+      "schema_version": "attention-reconstruction-trace-v1",
+      "sha256": "14e9f0fc5cccab04afbb1a15b842b069d8833b5b8198e632daf789bb1a8ff1ee"
+    },
+    {
+      "path": "platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+      "schema_version": "attention-reconstruction-summary-v1",
+      "sha256": "6a65f04a95de31c9ade72ba6f88d527f337dbd57927e413a2298a07e7412ad7a"
+    },
+    {
+      "path": "platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+      "schema_version": "dual-loop-gate-receipt-v1",
+      "sha256": "426ad98f4f11224af85ce8d1588514befb7c454a811fa16f54619d3dac2d2b72"
+    }
+  ],
+  "schema_version": "dual-loop-contracts-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

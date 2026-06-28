@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sandbox-receipt-v1",
+  "title": "Dual-Loop Sandbox Receipt v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "contract_id",
+    "sandbox_run_id",
+    "sandbox_level",
+    "status",
+    "observed_failures",
+    "mutation_summary",
+    "rollback",
+    "risk_budget",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "sandbox-receipt-v1"
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed",
+        "blocked"
+      ]
+    },
+    "observed_failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "failure_id",
+          "category",
+          "containment_status",
+          "reversible",
+          "propagated"
+        ]
+      }
+    },
+    "mutation_summary": {
+      "type": "object",
+      "required": [
+        "production_mutation",
+        "irreversible_external_effects",
+        "real_user_exposure"
+      ],
+      "properties": {
+        "production_mutation": {
+          "const": false
+        },
+        "irreversible_external_effects": {
+          "const": false
+        },
+        "real_user_exposure": {
+          "const": false
+        }
+      }
+    },
+    "risk_budget": {
+      "type": "object",
+      "required": [
+        "budget_level",
+        "observed_level",
+        "within_budget"
+      ]
+    }
+  }
+}

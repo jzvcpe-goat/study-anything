@@ -39,6 +39,10 @@ if [ -f .env ]; then
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
 "$python_bin" scripts/verify_cognitive_loop_contracts.py --check
+"$python_bin" scripts/verify_dual_loop_contracts.py --check
+"$python_bin" scripts/verify_failure_sandbox_lite.py --check
+"$python_bin" scripts/verify_attention_reconstruction_lite.py --check
+"$python_bin" scripts/verify_dual_loop_gate.py --check
 "$python_bin" scripts/verify_cognitive_loop_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_run_once.py --check
 "$python_bin" scripts/verify_cognitive_loop_snapshot.py --check

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "attention-reconstruction-trace-v1",
+  "title": "Attention Reconstruction Trace v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "trace_id",
+    "contract_id",
+    "environment_id",
+    "data_collection_mode",
+    "passive_attention",
+    "active_reconstruction_checkpoints",
+    "forbidden_streams",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "attention-reconstruction-trace-v1"
+    },
+    "data_collection_mode": {
+      "const": "active_reconstruction_metadata_only"
+    },
+    "passive_attention": {
+      "type": "object",
+      "required": [
+        "evidence_strength",
+        "blocking"
+      ],
+      "properties": {
+        "evidence_strength": {
+          "const": "weak"
+        },
+        "blocking": {
+          "const": false
+        }
+      }
+    },
+    "active_reconstruction_checkpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "checkpoint_id",
+          "mru_id",
+          "mru_kind",
+          "status",
+          "evidence_strength"
+        ],
+        "properties": {
+          "status": {
+            "const": "passed"
+          },
+          "evidence_strength": {
+            "const": "strong"
+          }
+        }
+      }
+    },
+    "forbidden_streams": {
+      "type": "object",
+      "required": [
+        "screenshots",
+        "keystrokes",
+        "mouse_coordinates",
+        "eye_tracking",
+        "biometrics",
+        "raw_report_text"
+      ]
+    }
+  }
+}

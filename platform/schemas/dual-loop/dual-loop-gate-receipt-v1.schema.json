@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dual-loop-gate-receipt-v1",
+  "title": "Dual-Loop Gate Receipt v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "gate_id",
+    "contract_id",
+    "status",
+    "decision",
+    "reasons",
+    "input_refs",
+    "checks",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "dual-loop-gate-receipt-v1"
+    },
+    "status": {
+      "enum": [
+        "allowed",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "promote_to_next_sandbox",
+        "block_promotion"
+      ]
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "sandbox_within_budget",
+        "sandbox_contained_failures",
+        "attention_reconstruction_passed",
+        "attention_reconstruction_required",
+        "isolation_boundary_valid",
+        "structured_artifact_bridge_only",
+        "neither_loop_dominates"
+      ],
+      "properties": {
+        "attention_reconstruction_required": {
+          "const": true
+        },
+        "structured_artifact_bridge_only": {
+          "const": true
+        },
+        "neither_loop_dominates": {
+          "const": true
+        }
+      }
+    }
+  }
+}

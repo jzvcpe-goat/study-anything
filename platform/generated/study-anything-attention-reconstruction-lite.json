@@ -1,0 +1,46 @@
+{
+  "acceptance": {
+    "demo_command": "python3 scripts/attention_reconstruction_lite.py demo --html",
+    "minimum_command": "python3 scripts/verify_attention_reconstruction_lite.py --check"
+  },
+  "artifact_contracts": [
+    "attention-reconstruction-trace-v1",
+    "attention-reconstruction-summary-v1"
+  ],
+  "attention": {
+    "active_checkpoint_count": 3,
+    "passive_attention_evidence": "weak",
+    "passive_attention_only": false,
+    "status": "passed",
+    "strong_evidence_count": 3
+  },
+  "cli_result_schema": "attention-reconstruction-lite-cli-result-v1",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "fine_grained_attention_streams_included": false,
+    "keystrokes_included": false,
+    "metadata_only_html": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "attention-reconstruction-lite-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}
