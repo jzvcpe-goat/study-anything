@@ -960,11 +960,11 @@
       "sha256": "563157f7655b732a338ef0ed42a36ab0b372fe0d4d2726386ed53a1116f82363"
     },
     {
-      "bytes": 6006,
+      "bytes": 7298,
       "kind": "operator_doc",
       "path": "docs/workbuddy-field-report.md",
       "purpose": "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary.",
-      "sha256": "bd61e4d7751cb9b8164ed4ed0a81b2ab657296fc21f518984fbe128b24887a53"
+      "sha256": "b496af69e12d5b29be1c91e01eae7faedf5e274f32c3f14b7e1cfb757d1c704b"
     },
     {
       "bytes": 69530,
