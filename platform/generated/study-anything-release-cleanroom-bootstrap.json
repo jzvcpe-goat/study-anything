@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 54936,
+    "bytes": 55050,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "4b8d62fd54d54c6fd68acf97334a15f6adb73d257dc81320f0411d14e5405535",
+    "sha256": "be0ee54997c4af8b321d3bc85ab2cb9da33bd8760a173dc8cb2019a8ebebebcc",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -34,7 +34,7 @@
     },
     {
       "classification": "platform_entrypoint_missing",
-      "meaning": "The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing.",
+      "meaning": "The selected Kimi, Codex, WorkBuddy, Hermes, or generic entrypoint is missing.",
       "release_gate": "block_platform_submission"
     },
     {
@@ -118,6 +118,7 @@
     "kimi",
     "codex",
     "workbuddy",
+    "hermes",
     "generic-openapi"
   ],
   "privacy_assertions": {
@@ -132,9 +133,9 @@
   },
   "public_assets": [
     {
-      "bytes": 35043,
+      "bytes": 35186,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "c050e5afe113148b03fb4a54198af30446dfe1465b5594593b5bc2cd62fce216"
+      "sha256": "c640a779e8763fb7506a7e7d03d773d528ee4d4d4f9508da539588278e3ded64"
     },
     {
       "bytes": 2926,
@@ -167,19 +168,19 @@
       "sha256": "2fe909834a5d22884c6ae90d35e0416dba5fb1153c1d7700383e2ebd682158d3"
     },
     {
-      "bytes": 28242,
+      "bytes": 28276,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "191849d740e255ecc77ae3d23f8bd1b182f848ac577851d30705c8fafff59632"
+      "sha256": "df9358d2e316e5a2c0754f0c63ea3d76b6a4f6ba8ed36bc5bf5cbd8dcb62d77a"
     },
     {
-      "bytes": 20083,
+      "bytes": 20315,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
+      "sha256": "6679fa6cbbf24485f371ade55f81ae2d3922fee754039aa2ebab77965252c667"
     },
     {
-      "bytes": 29302,
+      "bytes": 29445,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
+      "sha256": "996c5b059c240f8968dd56f91090c11f8176b3e4ab451ea62891f1265dd29985"
     }
   ],
   "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",

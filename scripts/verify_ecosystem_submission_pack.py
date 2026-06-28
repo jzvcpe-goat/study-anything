@@ -5182,7 +5182,7 @@ def verify_platform_agent_replay_report() -> None:
     if required_tools != expected_tools:
         raise EcosystemSubmissionError(f"Platform Agent replay required tools drifted: {sorted(required_tools)}")
     platforms = set(str(item) for item in report.get("platforms", []))
-    if platforms != {"kimi", "codex", "workbuddy", "generic-openapi"}:
+    if platforms != {"kimi", "codex", "workbuddy", "hermes", "generic-openapi"}:
         raise EcosystemSubmissionError(f"Platform Agent replay platforms drifted: {sorted(platforms)}")
     commands = report.get("commands") or {}
     command_text = " ".join(str(item) for item in commands.values())

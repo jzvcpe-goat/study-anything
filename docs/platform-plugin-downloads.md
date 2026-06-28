@@ -12,6 +12,7 @@ Download one platform pack:
 - Codex: `study-anything-codex-plugin-pack.zip`
 - Kimi-compatible: `study-anything-kimi-plugin-pack.zip`
 - WorkBuddy-style HTTP: `study-anything-workbuddy-plugin-pack.zip`
+- Hermes Agent: `study-anything-hermes-plugin-pack.zip`
 
 For CodeBuddy/WorkBuddy, prefer the installable marketplace wrapper when the
 host supports plugin marketplaces:
@@ -29,6 +30,10 @@ That wrapper lives in:
 - `plugins/study-anything/commands/{start,learn,diagnose,export}.md`
 
 Read `docs/use-with-workbuddy.md` for the beginner flow.
+
+For Hermes Agent, install the Skill from `skills/study-anything/SKILL.md` or use
+the direct GitHub `SKILL.md` URL documented in `docs/use-with-hermes.md`. This
+release does not claim a Hermes-native Python plugin repo is published.
 
 Each pack has a sidecar manifest and checksum:
 

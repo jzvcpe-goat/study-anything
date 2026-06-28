@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 87903,
+    "bytes": 89110,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "69fce51c16a6ae69063a2379e178aa35ead14f4f30f37a10c5f20adde3fe2317",
+    "sha256": "3927610b480c155b32d5df6be11d65e27d56160c1abd0b9fdfd6ecf2940dec2d",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -77,6 +77,7 @@
   },
   "platform_imports": {
     "codex": "Skill entrypoint plus CLI/demo commands.",
+    "hermes": "Hermes Skill entrypoint plus local HTTP/CLI commands.",
     "kimi": "OpenAI-compatible tools plus local HTTP API endpoint.",
     "workbuddy": "OpenAPI import plus tool catalog."
   },
@@ -107,9 +108,9 @@
       "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
     },
     {
-      "bytes": 2096,
+      "bytes": 2385,
       "path": "docs/platform-plugin-downloads.md",
-      "sha256": "bb5a9071664a8d072e451f0b8b1d14caec6eab5649ff0440e0344b924f308305"
+      "sha256": "4c7ad8d6478e2b22d09e4a1d484d10e73b06bdb6b3076c7a6535cec79161ddc7"
     },
     {
       "bytes": 3611,
@@ -122,69 +123,69 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 12582,
+      "bytes": 12747,
       "path": "docs/github-launch.md",
-      "sha256": "e50fbedb19702e331bb360da7181c8c5946ae1a1ae32c38e1195835bf22d8b0a"
+      "sha256": "60f14226879acecb67768486273195ff47b4167695d56ea2895869a0d607fab1"
     },
     {
-      "bytes": 12152,
+      "bytes": 12500,
       "path": "docs/ecosystem-submission.md",
-      "sha256": "ce99d81983e3a6ebfc20000a416fded3c65a437575dd09b91e20ac733f6397d9"
+      "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 35043,
+      "bytes": 35186,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "c050e5afe113148b03fb4a54198af30446dfe1465b5594593b5bc2cd62fce216"
+      "sha256": "c640a779e8763fb7506a7e7d03d773d528ee4d4d4f9508da539588278e3ded64"
     },
     {
-      "bytes": 14063,
+      "bytes": 14081,
       "path": "scripts/generate_release_cleanroom_bootstrap.py",
-      "sha256": "07c7ab08a55912e3f272d7a2a4cb54229b1d7a6b4d1f3847451445cf9cadd450"
+      "sha256": "0338ca54e00da167e47581aea8faad38b5cdbb42cd3b2a89772a595b1f020349"
     },
     {
-      "bytes": 20083,
+      "bytes": 20315,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
+      "sha256": "6679fa6cbbf24485f371ade55f81ae2d3922fee754039aa2ebab77965252c667"
     },
     {
-      "bytes": 23862,
+      "bytes": 24281,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "a9d04857744e6b0ef4deb73dc83a437a5bfe3af2f0bf0cd62a9f01dc74a69c97"
+      "sha256": "17b246152919f20b1a31d65dcb2f4bf907c63cdbcce5c892a169270c75f44165"
     },
     {
-      "bytes": 9492,
+      "bytes": 9625,
       "path": "scripts/generate_platform_plugin_downloads.py",
-      "sha256": "6704973374ed42b51583fd1ded4bbda59f15f9265b92c732ffc833dc6c788cf0"
+      "sha256": "bdb8af7390d1891320621568b139c9360733242621d164649a9fe26e7d77eeb2"
     },
     {
-      "bytes": 5097,
+      "bytes": 5127,
       "path": "scripts/verify_platform_plugin_downloads.py",
-      "sha256": "186479fa0569ef1e02b0e82d24d1e479fba6edc7fc5dfc92404f58e0c3d8c5d8"
+      "sha256": "94b409c5a459d3abf01a21df9166c6418614f60366e22e953c032269cc878cc9"
     },
     {
-      "bytes": 29302,
+      "bytes": 29445,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
+      "sha256": "996c5b059c240f8968dd56f91090c11f8176b3e4ab451ea62891f1265dd29985"
     },
     {
-      "bytes": 15957,
+      "bytes": 16036,
       "path": "scripts/generate_release_asset_bootstrap.py",
-      "sha256": "0f8a6cf508b8a569d35d92e68b658ae18f40f1211a1ac8193df78c2b95faa0bb"
+      "sha256": "7d818f779e510ab75bd4a1a91176a4234793e3a23a3ebec2fca85005b7dedfc6"
     },
     {
-      "bytes": 6408,
+      "bytes": 6597,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "9c9a4401eab4fcf6dbfd27a4d455a3761161c5a595f7e7afb9c6ae740d0e8564"
+      "sha256": "6c95dc08c747cfb1e3a001a4cdd00c4db3bdd5cfb1a71de2ebea2ded123316d7"
     },
     {
-      "bytes": 9963,
+      "bytes": 13503,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "c3a9b4da44849d275f87017ac43729f529252502152a6f7d66595269030b5fcc"
+      "sha256": "5bfe2a4c8cbf802a09fb33f3a7fd2309004fbd0e5089cbcb20677db6cd7ad8d7"
     },
     {
-      "bytes": 1502,
+      "bytes": 1764,
       "path": "platform/generated/study-anything-platform-plugin-downloads.md",
-      "sha256": "f7878648839f0ac39aa366fe403bd6342a359005ea393eda29f31590d6bb416a"
+      "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
       "bytes": 83732,

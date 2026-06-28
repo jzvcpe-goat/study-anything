@@ -50,6 +50,9 @@ REQUIRED_ASSETS = {
     "study-anything-workbuddy-plugin-pack.json": "workbuddy_plugin_pack_manifest",
     "study-anything-workbuddy-plugin-pack.zip": "workbuddy_plugin_pack",
     "study-anything-workbuddy-plugin-pack.sha256": "workbuddy_plugin_pack_checksum",
+    "study-anything-hermes-plugin-pack.json": "hermes_plugin_pack_manifest",
+    "study-anything-hermes-plugin-pack.zip": "hermes_plugin_pack",
+    "study-anything-hermes-plugin-pack.sha256": "hermes_plugin_pack_checksum",
 }
 REQUIRED_PACK_PATHS = {
     "manifest.json",
@@ -81,6 +84,9 @@ REQUIRED_PACK_PATHS = {
     "platform/generated/study-anything-workbuddy-plugin-pack.json",
     "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
+    "platform/generated/study-anything-hermes-plugin-pack.json",
+    "platform/generated/study-anything-hermes-plugin-pack.zip",
+    "platform/generated/study-anything-hermes-plugin-pack.sha256",
     "scripts/bootstrap_from_release.py",
     "scripts/generate_release_asset_bootstrap.py",
     "docs/release-asset-bootstrap.md",

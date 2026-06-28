@@ -63,7 +63,7 @@ Confirm:
   Package import, NotebookLM-style fixture handling, Obsidian backlinks, quality eval, and
   `learning-package-v1`.
 - `scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
-  emits `adoption-proof-v1`, proving the distributable Kimi/Codex/WorkBuddy platform pack can be used
+  emits `adoption-proof-v1`, proving the distributable Kimi/Codex/WorkBuddy/Hermes platform pack can be used
   by an external operator without the standalone frontend.
 - `scripts/verify_deployment_hardening.py --check` and
   `scripts/verify_deployment_hardening.py --pack platform/generated/study-anything-platform-adoption-pack.zip`
@@ -72,7 +72,7 @@ Confirm:
 - `scripts/verify_published_image_launch.py --tag v0.3.31-alpha` can pull the public API image,
   verify the running API version, and complete the API learning loop.
 - `scripts/verify_ecosystem_submission_pack.py` returns `ecosystem-submission-verification-v1` for
-  Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI submission assets.
+  Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI submission assets.
 - `scripts/verify_launch_acceptance_ledger.py --check` returns `launch-acceptance-ledger-v1` and
   proves the GitHub OSS launch, platform-Agent distribution, self-host alpha, Skill Mode, published
   image evidence, commercial boundary, and privacy assertions are aligned.
@@ -81,7 +81,7 @@ Confirm:
   `./scripts/release_check.sh`, the launch ledger, ecosystem submission, and adoption pack all expose
   the same release sequence.
 - `scripts/verify_platform_plugin_downloads.py --check` returns `platform-plugin-downloads-v1` and
-  proves the Codex, Kimi, and WorkBuddy plugin packs have release download URLs, sha256 checksums,
+  proves the Codex, Kimi, WorkBuddy, and Hermes plugin packs have release download URLs, sha256 checksums,
   import manifests, and no model keys.
 - `scripts/verify_release_stack_readiness.py` returns `release-stack-readiness-v1` and proves the
   current stacked GitHub PR order, required `api-tests` and `compose-smoke` checks, and local
@@ -138,6 +138,9 @@ Attach these release assets to the GitHub prerelease:
 - `study-anything-workbuddy-plugin-pack.json`
 - `study-anything-workbuddy-plugin-pack.zip`
 - `study-anything-workbuddy-plugin-pack.sha256`
+- `study-anything-hermes-plugin-pack.json`
+- `study-anything-hermes-plugin-pack.zip`
+- `study-anything-hermes-plugin-pack.sha256`
 
 The human download entrypoint is `docs/platform-plugin-downloads.md`; the machine-readable download
 index is `platform/generated/study-anything-platform-plugin-downloads.json`.

@@ -33,7 +33,7 @@ Feasibility is high if this is treated as a public positioning and architecture 
 Already reusable:
 
 - local-first learning loop
-- platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI hosts
+- platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI hosts
 - Bring Your Own Agent boundary
 - redacted Agent audit/eval evidence
 - Obsidian export and NotebookLM-style handoff
@@ -53,7 +53,7 @@ Still missing:
 已经可复用：
 
 - 本地优先学习闭环
-- 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP 和通用 OpenAPI host 的平台 Agent 包
+- 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP、Hermes Agent Skill 和通用 OpenAPI host 的平台 Agent 包
 - Bring Your Own Agent 边界
 - 脱敏 Agent audit/eval 证据
 - Obsidian 导出和 NotebookLM 式交接
@@ -75,7 +75,7 @@ Primary users:
 - builders using AI Agents to work inside real repos
 - maintainers who need audit, verification, and rollback evidence
 - learners reverse-engineering open-source or legacy projects
-- platform-Agent users in Kimi, Codex, WorkBuddy-style workspaces, and private tool hosts
+- platform-Agent users in Kimi, Codex, Hermes Agent, WorkBuddy-style workspaces, and private tool hosts
 - teams that want local-first AI operation before hosted collaboration
 
 主要用户：
@@ -83,7 +83,7 @@ Primary users:
 - 用 AI Agent 在真实仓库里工作的开发者
 - 需要审计、验证和回滚证据的维护者
 - 逆向学习开源项目或遗留系统的学习者
-- Kimi、Codex、WorkBuddy-style workspace 和私有工具平台里的平台 Agent 用户
+- Kimi、Codex、Hermes Agent、WorkBuddy-style workspace 和私有工具平台里的平台 Agent 用户
 - 在引入托管协作前，希望先本地优先运行 AI 工作流的团队
 
 ## Product Promise
@@ -159,6 +159,7 @@ The current product does not need to win by forcing users into a new frontend. T
 - Kimi Work or Kimi-compatible tool hosts
 - Codex Skill workflows
 - WorkBuddy-style HTTP tool environments
+- Hermes Agent Skill environments
 - local Agent gateways owned by the user
 - future browser, editor, and Obsidian plugins
 
@@ -169,6 +170,7 @@ The professional product surface should become HTML artifacts because they are e
 - Kimi Work 或 Kimi-compatible tool host
 - Codex Skill workflow
 - WorkBuddy-style HTTP tool environment
+- Hermes Agent Skill environment
 - 用户自己控制的本地 Agent gateway
 - 未来的浏览器、编辑器和 Obsidian 插件
 

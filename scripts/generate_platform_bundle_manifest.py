@@ -639,6 +639,21 @@ FILES: list[tuple[str, str, str]] = [
         "WorkBuddy downloadable plugin pack checksum.",
     ),
     (
+        "platform/generated/study-anything-hermes-plugin-pack.json",
+        "generated_asset",
+        "Hermes downloadable plugin pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-hermes-plugin-pack.zip",
+        "generated_asset",
+        "Hermes downloadable plugin pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-hermes-plugin-pack.sha256",
+        "generated_asset",
+        "Hermes downloadable plugin pack checksum.",
+    ),
+    (
         "platform/generated/study-anything-platform-plugin-downloads.json",
         "generated_asset",
         "Public GitHub Release download index for platform plugin packs.",
@@ -676,12 +691,17 @@ FILES: list[tuple[str, str, str]] = [
     (
         "docs/platform-plugin-downloads.md",
         "operator_doc",
-        "GitHub Release download guide for Codex, Kimi, and WorkBuddy plugin packs.",
+        "GitHub Release download guide for Codex, Kimi, WorkBuddy, and Hermes plugin packs.",
     ),
     (
         "docs/use-with-workbuddy.md",
         "operator_doc",
         "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide.",
+    ),
+    (
+        "docs/use-with-hermes.md",
+        "operator_doc",
+        "Hermes Agent Skill setup, local runtime, and first learning flow guide.",
     ),
     (
         "docs/workbuddy-field-report.md",
@@ -1217,6 +1237,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/packs/workbuddy/pack.json",
         "platform_pack",
         "Machine-readable WorkBuddy pack metadata.",
+    ),
+    (
+        "platform/packs/hermes/README.md",
+        "platform_pack",
+        "Hermes Agent Skill setup guide.",
+    ),
+    (
+        "platform/packs/hermes/pack.json",
+        "platform_pack",
+        "Machine-readable Hermes Agent pack metadata.",
     ),
     (
         ".codebuddy-plugin/marketplace.json",
@@ -2406,7 +2436,7 @@ FILES: list[tuple[str, str, str]] = [
     (
         "scripts/generate_platform_plugin_packs.py",
         "verification",
-        "Generate downloadable Codex, Kimi, and WorkBuddy platform plugin packs.",
+        "Generate downloadable Codex, Kimi, WorkBuddy, and Hermes platform plugin packs.",
     ),
     (
         "scripts/verify_platform_plugin_packs.py",

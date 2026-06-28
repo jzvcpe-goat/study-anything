@@ -51,6 +51,14 @@ PLATFORM_PACKS = {
             "platform/packs/workbuddy/README.md",
         ],
     },
+    "hermes": {
+        "display": "Hermes Agent Skill",
+        "entrypoints": [
+            "skills/study-anything/SKILL.md",
+            "docs/use-with-hermes.md",
+            "platform/packs/hermes/README.md",
+        ],
+    },
 }
 
 RECOVERY_PLAN = {

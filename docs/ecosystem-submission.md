@@ -1,7 +1,7 @@
 # Ecosystem Submission Pack
 
 Study Anything v0.3.31-alpha treats Kimi-compatible tools, Codex Skill usage,
-WorkBuddy-style HTTP workspaces, and generic OpenAPI platforms as the first
+WorkBuddy-style HTTP workspaces, Hermes Agent Skill usage, and generic OpenAPI platforms as the first
 public distribution surface.
 
 The submission pack is intentionally not a standalone frontend. The platform
@@ -19,7 +19,7 @@ submission metadata. It declares:
 
 - `schema_version=ecosystem-submission-v1`
 - supported submission targets: Kimi-compatible tools, Codex Skill,
-  WorkBuddy-style HTTP, and generic OpenAPI tools
+  WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI tools
 - no standalone frontend requirement
 - no billing requirement
 - no managed hosted service in the MVP
@@ -126,6 +126,7 @@ For download-first adoption, use the generated plugin packs:
 - `platform/generated/study-anything-codex-plugin-pack.zip`
 - `platform/generated/study-anything-kimi-plugin-pack.zip`
 - `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+- `platform/generated/study-anything-hermes-plugin-pack.zip`
 
 Each archive has a sidecar `.json` manifest and `.sha256` checksum. These are import helpers for
 local-first usage, not marketplace listings. The user still runs Study Anything locally or on a
@@ -145,6 +146,11 @@ Codex or other terminal-capable Agents should use
 WorkBuddy-style HTTP workspaces should import
 `platform/generated/study-anything-platform-openapi.json` and keep the API
 local or private.
+
+Hermes Agent should install the Study Anything Skill from
+`skills/study-anything/SKILL.md`, follow `docs/use-with-hermes.md`, and keep
+Hermes-native plugin installation separate until a standalone plugin repo is
+published and field-tested.
 
 Generic OpenAPI platforms should import the generated OpenAPI asset and use
 `platform/generated/study-anything-tool-catalog.md` as the fallback tool map.

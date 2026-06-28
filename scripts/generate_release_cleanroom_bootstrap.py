@@ -47,7 +47,7 @@ CLASSIFICATION_MATRIX = [
     ("release_asset_digest_mismatch", "block_release_claim", "A downloaded asset does not match GitHub sha256 metadata."),
     ("release_asset_pack_corrupted", "block_release_claim", "The platform adoption pack cannot be unpacked safely."),
     ("tool_import_invalid", "block_platform_submission", "OpenAI tools or OpenAPI operation IDs are malformed or incomplete."),
-    ("platform_entrypoint_missing", "block_platform_submission", "The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing."),
+    ("platform_entrypoint_missing", "block_platform_submission", "The selected Kimi, Codex, WorkBuddy, Hermes, or generic entrypoint is missing."),
     ("source_download_failed", "needs_network_or_source_dir", "Runtime replay needs source code but the GitHub tag source archive could not be downloaded."),
     ("runtime_launch_failed", "needs_runtime_triage", "The selected Skill Mode, external API, or published-image runtime could not be launched."),
     ("api_unavailable", "needs_runtime_triage", "The Study Anything API was not reachable for tool replay."),
@@ -199,7 +199,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
                 "study-anything-release-asset-bootstrap.zip",
             ]
         ),
-        "platforms": ["kimi", "codex", "workbuddy", "generic-openapi"],
+        "platforms": ["kimi", "codex", "workbuddy", "hermes", "generic-openapi"],
         "runtime_modes": ["metadata-only", "skill-mode", "published-image", "external-api"],
         "classification_matrix": [
             {"classification": item[0], "release_gate": item[1], "meaning": item[2]}

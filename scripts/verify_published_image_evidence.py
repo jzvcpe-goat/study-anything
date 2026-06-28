@@ -46,7 +46,7 @@ EXPECTED_CLASSIFICATIONS = {
     "published_image_ready",
     "published_image_runtime_failed",
 }
-PLATFORMS = {"codex", "kimi", "workbuddy"}
+PLATFORMS = {"codex", "kimi", "workbuddy", "hermes"}
 
 REQUIRED_REPORT_ASSETS = {
     "scripts/generate_published_image_evidence.py",

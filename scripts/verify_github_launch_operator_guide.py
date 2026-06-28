@@ -39,6 +39,9 @@ RELEASE_ASSETS = (
     "study-anything-workbuddy-plugin-pack.json",
     "study-anything-workbuddy-plugin-pack.zip",
     "study-anything-workbuddy-plugin-pack.sha256",
+    "study-anything-hermes-plugin-pack.json",
+    "study-anything-hermes-plugin-pack.zip",
+    "study-anything-hermes-plugin-pack.sha256",
 )
 REQUIRED_GUIDE_MARKERS = (
     "GitHub Release Guide",
@@ -79,6 +82,7 @@ REQUIRED_CHECKLIST_MARKERS = (
     "study-anything-codex-plugin-pack.zip",
     "study-anything-kimi-plugin-pack.zip",
     "study-anything-workbuddy-plugin-pack.zip",
+    "study-anything-hermes-plugin-pack.zip",
 )
 PRIVATE_NEEDLES = (
     "sk-proj-",

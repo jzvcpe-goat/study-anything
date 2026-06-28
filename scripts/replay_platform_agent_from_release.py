@@ -55,6 +55,11 @@ PLATFORM_ENTRYPOINTS = {
         "platform/generated/study-anything-tool-catalog.md",
         "platform/packs/workbuddy/README.md",
     ],
+    "hermes": [
+        "skills/study-anything/SKILL.md",
+        "docs/use-with-hermes.md",
+        "platform/packs/hermes/README.md",
+    ],
     "generic-openapi": [
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",

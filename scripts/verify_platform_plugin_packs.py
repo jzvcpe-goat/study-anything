@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify generated Codex/Kimi/WorkBuddy platform plugin packs."""
+"""Verify generated platform plugin packs."""
 
 from __future__ import annotations
 
@@ -36,6 +36,12 @@ REQUIRED_IMPORT_ASSETS = {
     "workbuddy": {
         "platform/generated/study-anything-platform-openapi.json",
         "platform/packs/workbuddy/pack.json",
+    },
+    "hermes": {
+        "skills/study-anything/SKILL.md",
+        "platform/generated/study-anything-platform-openapi.json",
+        "platform/packs/hermes/pack.json",
+        "docs/use-with-hermes.md",
     },
 }
 

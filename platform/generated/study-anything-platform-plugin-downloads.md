@@ -10,7 +10,9 @@ Use the GitHub Release page as the public download entrypoint:
 
 These zip archives are import helpers for user-owned platform Agents. They do
 not contain real model keys and still call a local or private Study Anything
-runtime. CodeBuddy/WorkBuddy marketplace installation is provided separately by
+runtime. Hermes uses a Skill plus local HTTP/CLI tools in this release; a
+Hermes-native Python plugin repo is a future package. CodeBuddy/WorkBuddy
+marketplace installation is provided separately by
 `.codebuddy-plugin/marketplace.json` and `plugins/study-anything/`.
 
 | Platform | Archive | Manifest | Checksum |
@@ -18,6 +20,7 @@ runtime. CodeBuddy/WorkBuddy marketplace installation is provided separately by
 | `codex` | `study-anything-codex-plugin-pack.zip` | `study-anything-codex-plugin-pack.json` | `study-anything-codex-plugin-pack.sha256` |
 | `kimi` | `study-anything-kimi-plugin-pack.zip` | `study-anything-kimi-plugin-pack.json` | `study-anything-kimi-plugin-pack.sha256` |
 | `workbuddy` | `study-anything-workbuddy-plugin-pack.zip` | `study-anything-workbuddy-plugin-pack.json` | `study-anything-workbuddy-plugin-pack.sha256` |
+| `hermes` | `study-anything-hermes-plugin-pack.zip` | `study-anything-hermes-plugin-pack.json` | `study-anything-hermes-plugin-pack.sha256` |
 
 ## Verification
 
