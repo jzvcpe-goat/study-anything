@@ -125,9 +125,12 @@ class EnvScriptTests(unittest.TestCase):
         script = (REPO_ROOT / "scripts" / "launch_skill_mode.sh").read_text(encoding="utf-8")
 
         self.assertIn("SKILL_PIP_INSTALL_TIMEOUT_SECONDS", script)
+        self.assertIn("PIP_INSTALL_TIMEOUT_SECONDS", script)
         self.assertIn("PIP_DEFAULT_TIMEOUT", script)
         self.assertIn("PIP_RETRIES", script)
         self.assertIn("PIP_NO_INPUT", script)
+        self.assertIn("--timeout", script)
+        self.assertIn("--retries", script)
         self.assertIn("run_pip_install", script)
         self.assertIn("dependency installation timed out after", script)
         self.assertIn("SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200", script)

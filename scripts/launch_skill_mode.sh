@@ -62,7 +62,9 @@ venv_dir="${STUDY_ANYTHING_VENV:-$ROOT/.venv}"
 venv_python="$venv_dir/bin/python3"
 foreground="${SKILL_API_FOREGROUND:-false}"
 health_attempts="${SKILL_API_HEALTH_ATTEMPTS:-30}"
-pip_install_timeout_seconds="${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-600}"
+pip_install_timeout_seconds="${PIP_INSTALL_TIMEOUT_SECONDS:-${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-900}}"
+pip_default_timeout="${PIP_DEFAULT_TIMEOUT:-60}"
+pip_retries="${PIP_RETRIES:-3}"
 skill_install_target="${SKILL_PIP_INSTALL_TARGET:-}"
 skill_workflow_engine="${SKILL_WORKFLOW_ENGINE:-deterministic}"
 
@@ -89,21 +91,30 @@ validate_skill_api_port() {
   fi
 }
 
-validate_pip_install_timeout() {
-  case "$pip_install_timeout_seconds" in
+validate_positive_integer_setting() {
+  setting_name="$1"
+  setting_value="$2"
+  example="$3"
+  case "$setting_value" in
     ""|*[!0-9]*)
-      printf "Invalid SKILL_PIP_INSTALL_TIMEOUT_SECONDS=%s.\n" "$pip_install_timeout_seconds" >&2
+      printf "Invalid %s=%s.\n" "$setting_name" "$setting_value" >&2
       printf "Use a positive number of seconds, for example:\n" >&2
-      printf "  SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200 ./scripts/launch_skill_mode.sh\n" >&2
+      printf "  %s ./scripts/launch_skill_mode.sh\n" "$example" >&2
       exit 1
       ;;
   esac
-  if [ "$pip_install_timeout_seconds" -lt 1 ] 2>/dev/null; then
-    printf "Invalid SKILL_PIP_INSTALL_TIMEOUT_SECONDS=%s.\n" "$pip_install_timeout_seconds" >&2
+  if [ "$setting_value" -lt 1 ] 2>/dev/null; then
+    printf "Invalid %s=%s.\n" "$setting_name" "$setting_value" >&2
     printf "Use a positive number of seconds, for example:\n" >&2
-    printf "  SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200 ./scripts/launch_skill_mode.sh\n" >&2
+    printf "  %s ./scripts/launch_skill_mode.sh\n" "$example" >&2
     exit 1
   fi
+}
+
+validate_pip_install_timeout() {
+  validate_positive_integer_setting PIP_INSTALL_TIMEOUT_SECONDS "$pip_install_timeout_seconds" "PIP_INSTALL_TIMEOUT_SECONDS=900"
+  validate_positive_integer_setting PIP_DEFAULT_TIMEOUT "$pip_default_timeout" "PIP_DEFAULT_TIMEOUT=60"
+  validate_positive_integer_setting PIP_RETRIES "$pip_retries" "PIP_RETRIES=3"
 }
 
 redact_diagnostic() {
@@ -299,12 +310,12 @@ log_path = Path(sys.argv[1])
 try:
     timeout = int(sys.argv[2])
 except ValueError:
-    timeout = 600
+    timeout = 900
 command = [sys.argv[3], *sys.argv[4:]]
 with log_path.open("ab") as log:
     rendered = " ".join(shlex.quote(part) for part in command)
     log.write(
-        f"\n[study-anything] running dependency install with timeout {timeout}s: {rendered}\n".encode()
+        f"\n[study-anything] running dependency install with process timeout {timeout}s: {rendered}\n".encode()
     )
     log.flush()
     try:
@@ -547,12 +558,14 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
   : >"$pip_install_log"
   export PIP_CACHE_DIR="${PIP_CACHE_DIR:-$data_dir/pip-cache}"
   export PIP_DISABLE_PIP_VERSION_CHECK="${PIP_DISABLE_PIP_VERSION_CHECK:-1}"
-  export PIP_DEFAULT_TIMEOUT="${PIP_DEFAULT_TIMEOUT:-60}"
-  export PIP_RETRIES="${PIP_RETRIES:-2}"
+  export PIP_DEFAULT_TIMEOUT="$pip_default_timeout"
+  export PIP_RETRIES="$pip_retries"
   export PIP_NO_INPUT="${PIP_NO_INPUT:-1}"
   install_failed="false"
   if [ -z "$skill_install_target" ]; then
     if run_pip_install -m pip install \
+      --timeout "$pip_default_timeout" \
+      --retries "$pip_retries" \
       "fastapi>=0.115.0" \
       "uvicorn>=0.30.0" \
       "pydantic>=2.8.0" \
@@ -563,7 +576,7 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
     fi
   else
     if "$venv_python" -c "import setuptools" >/dev/null 2>&1; then
-      if run_pip_install -m pip install --no-build-isolation -e "$skill_install_target"; then
+      if run_pip_install -m pip install --timeout "$pip_default_timeout" --retries "$pip_retries" --no-build-isolation -e "$skill_install_target"; then
         :
       else
         pip_install_status=$?
@@ -571,11 +584,11 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
           install_failed="true"
         else
           printf "\nNo-build-isolation install failed; retrying with standard build isolation ...\n" >&2
-          run_pip_install -m pip install -e "$skill_install_target" || install_failed="true"
+          run_pip_install -m pip install --timeout "$pip_default_timeout" --retries "$pip_retries" -e "$skill_install_target" || install_failed="true"
         fi
       fi
     else
-      if run_pip_install -m pip install -e "$skill_install_target"; then
+      if run_pip_install -m pip install --timeout "$pip_default_timeout" --retries "$pip_retries" -e "$skill_install_target"; then
         :
       else
         pip_install_status=$?
@@ -583,7 +596,7 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
           install_failed="true"
         else
           printf "\nInitial dependency install failed; retrying without build isolation ...\n" >&2
-          run_pip_install -m pip install --no-build-isolation -e "$skill_install_target" || install_failed="true"
+          run_pip_install -m pip install --timeout "$pip_default_timeout" --retries "$pip_retries" --no-build-isolation -e "$skill_install_target" || install_failed="true"
         fi
       fi
     fi

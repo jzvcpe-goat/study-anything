@@ -143,6 +143,7 @@ class CleanCloneAdoptionVerifierTests(unittest.TestCase):
 
         next_steps = " ".join(report["next_steps"])
         self.assertEqual(report["classification"], "dependency_install_failed")
+        self.assertIn("PIP_INSTALL_TIMEOUT_SECONDS", next_steps)
         self.assertIn("SKILL_PIP_INSTALL_TIMEOUT_SECONDS", next_steps)
         self.assertIn("PIP_DEFAULT_TIMEOUT", next_steps)
 
@@ -299,6 +300,7 @@ class CleanCloneAdoptionVerifierTests(unittest.TestCase):
         message = str(context.exception)
         self.assertIn("Python dependency installation failed", message)
         self.assertIn("bounded install timeout", message)
+        self.assertIn("PIP_INSTALL_TIMEOUT_SECONDS", message)
         self.assertIn("SKILL_PIP_INSTALL_TIMEOUT_SECONDS", message)
         self.assertIn("PIP_INDEX_URL", message)
 
@@ -310,7 +312,7 @@ class CleanCloneAdoptionVerifierTests(unittest.TestCase):
                 {
                     "PIP_DEFAULT_TIMEOUT": "90",
                     "PIP_RETRIES": "1",
-                    "SKILL_PIP_INSTALL_TIMEOUT_SECONDS": "777",
+                    "PIP_INSTALL_TIMEOUT_SECONDS": "777",
                 },
                 clear=True,
             ),
@@ -323,6 +325,7 @@ class CleanCloneAdoptionVerifierTests(unittest.TestCase):
         self.assertEqual(env["PIP_RETRIES"], "1")
         self.assertEqual(env["PIP_NO_INPUT"], "1")
         self.assertEqual(env["SKILL_PIP_INSTALL_TIMEOUT_SECONDS"], "777")
+        self.assertEqual(env["PIP_INSTALL_TIMEOUT_SECONDS"], "777")
 
     def test_generic_command_failure_is_actionable_and_redacted(self) -> None:
         completed = clean_clone.subprocess.CompletedProcess(

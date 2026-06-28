@@ -103,7 +103,8 @@ def command_failure_message(
         "- Run `./scripts/launch_skill_mode.sh` directly to isolate local API startup issues.\n"
         "- If localhost sockets are blocked, rerun from a normal terminal or host shell.\n"
         "- If dependency installation failed, configure PIP_INDEX_URL or retry from a networked shell.\n"
-        "- If pip downloads are slow, retry with SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200."
+        "- If pip downloads are slow, retry with PIP_INSTALL_TIMEOUT_SECONDS=1200 "
+        "(or legacy SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200)."
     )
 
 
@@ -173,8 +174,9 @@ def failure_next_steps(classification: str) -> list[str]:
         "dependency_install_failed": [
             "Configure `PIP_INDEX_URL` or an internal package mirror, then rerun the smoke.",
             "If the network is restricted, run `./scripts/launch_skill_mode.sh` first to prebuild the local .venv.",
-            "If downloads are slow but reachable, retry with `SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200`.",
-            "For flaky package indexes, try `PIP_DEFAULT_TIMEOUT=120 PIP_RETRIES=1`.",
+            "If downloads are slow but reachable, retry with `PIP_INSTALL_TIMEOUT_SECONDS=1200`.",
+            "Legacy `SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200` is still accepted.",
+            "For flaky package indexes, try `PIP_DEFAULT_TIMEOUT=60 PIP_RETRIES=3`.",
         ],
         "skill_mode_demo_step_failed": [
             "Run `./scripts/run_skill_mode_demo.sh` directly and use the reported step name as the first failing boundary.",
@@ -262,6 +264,10 @@ def format_failure_for_human(report: dict[str, Any]) -> str:
             *(steps or ["- Run python3 scripts/diagnose_adoption.py, then rerun the clean-clone smoke."]),
         ]
     )
+
+
+def progress(message: str) -> None:
+    print(f"progress {sanitize_text(message)}", file=sys.stderr, flush=True)
 
 
 def run(
@@ -418,7 +424,8 @@ def dependency_download_message(command: list[str], stdout: str, stderr: str) ->
         "configured package index, or a package download exceeded the bounded install "
         "timeout; it is not a Study Anything learning-flow failure. "
         "Retry from a networked terminal, configure PIP_INDEX_URL / an internal mirror, "
-        "increase SKILL_PIP_INSTALL_TIMEOUT_SECONDS if downloads are slow, "
+        "increase PIP_INSTALL_TIMEOUT_SECONDS if downloads are slow "
+        "(legacy SKILL_PIP_INSTALL_TIMEOUT_SECONDS is also accepted), "
         "or prebuild the .venv with ./scripts/launch_skill_mode.sh before running the "
         "adoption smoke again. "
         f"Command: {' '.join(command)}\n"
@@ -583,12 +590,16 @@ def make_env(clone: Path, work_dir: Path, *, api_port: int) -> dict[str, str]:
             "STUDY_ANYTHING_API_BASE": f"http://127.0.0.1:{api_port}",
             "API_BASE": f"http://127.0.0.1:{api_port}",
             "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+            "PIP_INSTALL_TIMEOUT_SECONDS": os.environ.get(
+                "PIP_INSTALL_TIMEOUT_SECONDS",
+                os.environ.get("SKILL_PIP_INSTALL_TIMEOUT_SECONDS", "900"),
+            ),
             "PIP_DEFAULT_TIMEOUT": os.environ.get("PIP_DEFAULT_TIMEOUT", "60"),
-            "PIP_RETRIES": os.environ.get("PIP_RETRIES", "2"),
+            "PIP_RETRIES": os.environ.get("PIP_RETRIES", "3"),
             "PIP_NO_INPUT": "1",
             "SKILL_PIP_INSTALL_TIMEOUT_SECONDS": os.environ.get(
                 "SKILL_PIP_INSTALL_TIMEOUT_SECONDS",
-                "600",
+                os.environ.get("PIP_INSTALL_TIMEOUT_SECONDS", "900"),
             ),
         }
     )
@@ -768,10 +779,20 @@ def main() -> None:
     promptfoo_result: dict[str, Any] | None = None
 
     try:
+        progress("clean-clone setup: preparing disposable checkout")
         clone_repo(args.repo, clone, ref=args.ref, copy=args.copy_worktree)
+        progress("repository sanity: writing local environment defaults")
         run([sys.executable, "scripts/setup_env.py", "--force"], cwd=clone, timeout_seconds=60)
+        progress(
+            "dependency install: launching bounded Skill Mode demo "
+            f"(PIP_INSTALL_TIMEOUT_SECONDS={env['PIP_INSTALL_TIMEOUT_SECONDS']}, "
+            f"PIP_DEFAULT_TIMEOUT={env['PIP_DEFAULT_TIMEOUT']}, "
+            f"PIP_RETRIES={env['PIP_RETRIES']})"
+        )
         demo_stdout = run_skill_mode_demo(clone, env, timeout_seconds=args.timeout_seconds)
+        progress("existing release gates: clean-clone Skill Mode demo passed")
         if args.with_promptfoo:
+            progress("existing release gates: running optional Promptfoo adapter")
             promptfoo_result = run_promptfoo(
                 clone,
                 env,

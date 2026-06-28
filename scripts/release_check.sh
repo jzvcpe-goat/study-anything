@@ -4,8 +4,202 @@ set -eu
 ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 cd "$ROOT"
 
+dual_loop_only="${DUAL_LOOP_ONLY:-0}"
+skip_clean_clone="${SKIP_CLEAN_CLONE:-0}"
+receipt_path=".cognitive-loop/artifacts/release/release-check-receipt.json"
+receipt_written="false"
+full_release_check_completed="false"
+clean_clone_completed="false"
+dependency_install_completed="false"
+dual_loop_verifiers_integrated="true"
+dual_loop_verifiers_passed_individually="false"
+known_issue="none"
+claim_boundary="Full release validation has not completed yet."
+PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
+PIP_DEFAULT_TIMEOUT="${PIP_DEFAULT_TIMEOUT:-60}"
+PIP_RETRIES="${PIP_RETRIES:-3}"
+
+usage() {
+  cat <<'EOF'
+Usage: ./scripts/release_check.sh [--dual-loop-only] [--skip-clean-clone]
+
+Modes:
+  --dual-loop-only   Run only the Dual-Loop verifier gates. This is NOT full release validation.
+  --skip-clean-clone Run all local gates except clean-clone adoption. This is NOT full release validation.
+
+Environment:
+  DUAL_LOOP_ONLY=1
+  SKIP_CLEAN_CLONE=1
+  PIP_INSTALL_TIMEOUT_SECONDS=900
+  PIP_DEFAULT_TIMEOUT=60
+  PIP_RETRIES=3
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --dual-loop-only)
+      dual_loop_only="1"
+      ;;
+    --skip-clean-clone)
+      skip_clean_clone="1"
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    *)
+      printf "error unknown release_check option: %s\n" "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+is_enabled() {
+  case "$1" in
+    1|true|TRUE|yes|YES|on|ON)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+dual_loop_only_enabled="false"
+skip_clean_clone_enabled="false"
+if is_enabled "$dual_loop_only"; then
+  dual_loop_only_enabled="true"
+  skip_clean_clone_enabled="true"
+  known_issue="dual-loop-only partial validation mode requested"
+  claim_boundary="Partial verification only: do not claim full release_check.sh passed."
+fi
+if is_enabled "$skip_clean_clone"; then
+  skip_clean_clone_enabled="true"
+  if [ "$dual_loop_only_enabled" != "true" ]; then
+    known_issue="clean-clone adoption phase skipped by operator request"
+    claim_boundary="Partial verification only: clean-clone adoption was skipped, so do not claim full release_check.sh passed."
+  fi
+fi
+
+phase() {
+  printf "\n== Phase: %s ==\n" "$1"
+}
+
+validate_positive_int() {
+  name="$1"
+  value="$2"
+  case "$value" in
+    ""|*[!0-9]*)
+      printf "error %s must be a positive integer, got: %s\n" "$name" "$value" >&2
+      exit 2
+      ;;
+  esac
+  if [ "$value" -lt 1 ] 2>/dev/null; then
+    printf "error %s must be a positive integer, got: %s\n" "$name" "$value" >&2
+    exit 2
+  fi
+}
+
+json_bool() {
+  if [ "$1" = "true" ]; then
+    printf "True"
+  else
+    printf "False"
+  fi
+}
+
+write_release_receipt() {
+  rc="$1"
+  if [ "$receipt_written" = "true" ]; then
+    return 0
+  fi
+  if [ "$rc" -ne 0 ] && [ "$known_issue" = "none" ]; then
+    known_issue="release_check.sh failed or was interrupted before every phase completed"
+    claim_boundary="Failed or partial verification only: do not claim full release_check.sh passed."
+  fi
+  mkdir -p "$(dirname "$receipt_path")"
+  receipt_python="${python_bin:-python3}"
+  "$receipt_python" - "$receipt_path" <<PY
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+path = Path(sys.argv[1])
+payload = {
+    "schema_version": "release-check-receipt-v1",
+    "generated_at_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+    "status": "completed" if int("$rc") == 0 else "failed",
+    "exit_code": int("$rc"),
+    "full_release_check_completed": $(json_bool "$full_release_check_completed"),
+    "clean_clone_completed": $(json_bool "$clean_clone_completed"),
+    "dependency_install_completed": $(json_bool "$dependency_install_completed"),
+    "dual_loop_verifiers_integrated": $(json_bool "$dual_loop_verifiers_integrated"),
+    "dual_loop_verifiers_passed_individually": $(json_bool "$dual_loop_verifiers_passed_individually"),
+    "partial_modes": {
+        "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
+        "skip_clean_clone": $(json_bool "$skip_clean_clone_enabled"),
+    },
+    "dependency_install_bounds": {
+        "pip_install_timeout_seconds": int("$PIP_INSTALL_TIMEOUT_SECONDS"),
+        "pip_default_timeout": int("$PIP_DEFAULT_TIMEOUT"),
+        "pip_retries": int("$PIP_RETRIES"),
+    },
+    "known_issue": "$known_issue",
+    "claim_boundary": "$claim_boundary",
+    "privacy": {
+        "metadata_only": True,
+        "raw_logs_included": False,
+        "local_absolute_paths_included": False,
+        "real_secrets_included": False,
+        "model_calls_performed": False,
+        "production_mutation_performed": False,
+    },
+}
+path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+PY
+  receipt_written="true"
+}
+
+on_exit() {
+  rc="$?"
+  if [ "$receipt_written" != "true" ]; then
+    phase "release receipt summary"
+    write_release_receipt "$rc"
+    printf "release receipt: %s\n" "$receipt_path"
+    if [ "$rc" -ne 0 ]; then
+      printf "release check did not complete; see receipt claim_boundary.\n" >&2
+    fi
+  fi
+  exit "$rc"
+}
+trap on_exit EXIT
+
+run_dual_loop_verifier_gates() {
+  phase "Dual-Loop verifier gates"
+  "$python_bin" scripts/verify_dual_loop_contracts.py --check
+  "$python_bin" scripts/verify_failure_sandbox_lite.py --check
+  "$python_bin" scripts/verify_attention_reconstruction_lite.py --check
+  "$python_bin" scripts/verify_dual_loop_gate.py --check
+  dual_loop_verifiers_passed_individually="true"
+}
+
 printf "Study Anything release check\n"
 printf "============================\n"
+if [ "$dual_loop_only_enabled" = "true" ]; then
+  printf "mode  dual-loop-only partial verification; this is NOT full release validation.\n"
+elif [ "$skip_clean_clone_enabled" = "true" ]; then
+  printf "mode  skip-clean-clone partial verification; this is NOT full release validation.\n"
+else
+  printf "mode  full release validation\n"
+fi
+
+validate_positive_int PIP_INSTALL_TIMEOUT_SECONDS "$PIP_INSTALL_TIMEOUT_SECONDS"
+validate_positive_int PIP_DEFAULT_TIMEOUT "$PIP_DEFAULT_TIMEOUT"
+validate_positive_int PIP_RETRIES "$PIP_RETRIES"
 
 python_bin="${STUDY_ANYTHING_PYTHON:-}"
 if [ -z "$python_bin" ]; then
@@ -14,6 +208,19 @@ if [ -z "$python_bin" ]; then
   else
     python_bin="python3"
   fi
+fi
+
+phase "repository sanity"
+printf "Using Python runtime: %s\n" "$python_bin"
+if [ "$dual_loop_only_enabled" = "true" ]; then
+  printf "partial  skipping FastAPI/full dependency sanity; running Dual-Loop gates only.\n"
+  run_dual_loop_verifier_gates
+  phase "release receipt summary"
+  write_release_receipt 0
+  printf "release receipt: %s\n" "$receipt_path"
+  printf "ok    Dual-Loop-only partial verification completed; full release validation was not run.\n"
+  trap - EXIT
+  exit 0
 fi
 
 if ! "$python_bin" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)'; then
@@ -29,8 +236,6 @@ if ! "$python_bin" -c 'import fastapi' >/dev/null 2>&1; then
   exit 1
 fi
 
-printf "Using Python runtime: %s\n" "$python_bin"
-
 tmp_env="${TMPDIR:-/tmp}/study-anything-release.env"
 "$python_bin" scripts/setup_env.py --force --output "$tmp_env"
 "$python_bin" scripts/check_env.py --env "$tmp_env" --strict
@@ -38,11 +243,34 @@ if [ -f .env ]; then
   "$python_bin" scripts/check_env.py
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
+
+phase "clean-clone setup"
+if [ "$skip_clean_clone_enabled" = "true" ]; then
+  printf "skip  clean-clone setup skipped; this is NOT full release validation.\n"
+else
+  printf "ok    clean-clone setup will run in a disposable worktree.\n"
+fi
+
+phase "dependency install"
+if [ "$skip_clean_clone_enabled" = "true" ]; then
+  printf "skip  dependency install skipped with clean-clone; this is NOT full release validation.\n"
+else
+  printf "pip   bounded install timeout=%ss default-timeout=%ss retries=%s\n" \
+    "$PIP_INSTALL_TIMEOUT_SECONDS" "$PIP_DEFAULT_TIMEOUT" "$PIP_RETRIES"
+  PIP_INSTALL_TIMEOUT_SECONDS="$PIP_INSTALL_TIMEOUT_SECONDS" \
+    SKILL_PIP_INSTALL_TIMEOUT_SECONDS="${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-$PIP_INSTALL_TIMEOUT_SECONDS}" \
+    PIP_DEFAULT_TIMEOUT="$PIP_DEFAULT_TIMEOUT" \
+    PIP_RETRIES="$PIP_RETRIES" \
+    "$python_bin" scripts/verify_clean_clone_adoption.py \
+    --repo . \
+    --copy-worktree \
+    --timeout-seconds "${STUDY_ANYTHING_CLEAN_CLONE_TIMEOUT_SECONDS:-1800}"
+  clean_clone_completed="true"
+  dependency_install_completed="true"
+fi
+
+phase "existing release gates"
 "$python_bin" scripts/verify_cognitive_loop_contracts.py --check
-"$python_bin" scripts/verify_dual_loop_contracts.py --check
-"$python_bin" scripts/verify_failure_sandbox_lite.py --check
-"$python_bin" scripts/verify_attention_reconstruction_lite.py --check
-"$python_bin" scripts/verify_dual_loop_gate.py --check
 "$python_bin" scripts/verify_cognitive_loop_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_run_once.py --check
 "$python_bin" scripts/verify_cognitive_loop_snapshot.py --check
@@ -172,13 +400,7 @@ fi
   --python "$python_bin"
 "$python_bin" scripts/verify_agent_eval_assets.py
 "$python_bin" scripts/verify_agent_eval_baseline.py --check
-SKILL_PIP_INSTALL_TIMEOUT_SECONDS="${SKILL_PIP_INSTALL_TIMEOUT_SECONDS:-1200}" \
-  PIP_DEFAULT_TIMEOUT="${PIP_DEFAULT_TIMEOUT:-120}" \
-  PIP_RETRIES="${PIP_RETRIES:-1}" \
-  "$python_bin" scripts/verify_clean_clone_adoption.py \
-    --repo . \
-    --copy-worktree \
-    --timeout-seconds "${STUDY_ANYTHING_CLEAN_CLONE_TIMEOUT_SECONDS:-1800}"
+
 "$python_bin" scripts/diagnose_adoption.py --ghcr-timeout-seconds 5
 "$python_bin" -m unittest discover apps/api/tests
 "$python_bin" scripts/smoke_core.py
@@ -194,4 +416,18 @@ fi
 
 printf "hint  after launching Docker Compose, run: API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py\n"
 
+run_dual_loop_verifier_gates
+
+if [ "$skip_clean_clone_enabled" = "true" ]; then
+  full_release_check_completed="false"
+else
+  full_release_check_completed="true"
+  known_issue="none"
+  claim_boundary="Full release_check.sh completed in this run; all phases reached release receipt summary."
+fi
+
+phase "release receipt summary"
+write_release_receipt 0
+printf "release receipt: %s\n" "$receipt_path"
 printf "ok    release check completed\n"
+trap - EXIT
