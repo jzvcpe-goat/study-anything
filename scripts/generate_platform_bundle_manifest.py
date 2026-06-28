@@ -64,6 +64,26 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop contract bootstrap verification report.",
     ),
     (
+        "platform/generated/study-anything-dual-loop-contracts.json",
+        "generated_asset",
+        "Dual-Loop contract schema and privacy verification report.",
+    ),
+    (
+        "platform/generated/study-anything-failure-sandbox-lite.json",
+        "generated_asset",
+        "Dual-Loop Failure Sandbox Lite CLI verification report.",
+    ),
+    (
+        "platform/generated/study-anything-attention-reconstruction-lite.json",
+        "generated_asset",
+        "Dual-Loop Attention Reconstruction Lite CLI verification report.",
+    ),
+    (
+        "platform/generated/study-anything-dual-loop-gate.json",
+        "generated_asset",
+        "Dual-Loop propagation gate pass/fail fixture verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -674,6 +694,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop local contract bootstrap guide.",
     ),
     (
+        "docs/dual-loop-mvp.md",
+        "operator_doc",
+        "Dual-Loop MVP controlled-failure and attention-reconstruction boundary guide.",
+    ),
+    (
         "docs/cognitive-loop-code-review.md",
         "operator_doc",
         "Cognitive Loop advisory code review guide.",
@@ -697,6 +722,91 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cognitive-loop-pr-ci-source.schema.json",
         "schema",
         "Cognitive Loop PR CI source JSON Schema for offline platform-Agent validation.",
+    ),
+    (
+        "platform/schemas/dual-loop/failure-contract-v1.schema.json",
+        "schema",
+        "Dual-Loop failure contract JSON Schema.",
+    ),
+    (
+        "platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+        "schema",
+        "Dual-Loop sandbox receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+        "schema",
+        "Dual-Loop attention reconstruction trace JSON Schema.",
+    ),
+    (
+        "platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+        "schema",
+        "Dual-Loop attention reconstruction summary JSON Schema.",
+    ),
+    (
+        "platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+        "schema",
+        "Dual-Loop propagation gate receipt JSON Schema.",
+    ),
+    (
+        "fixtures/dual-loop/pass/failure-contract.json",
+        "fixture",
+        "Passing Dual-Loop failure contract fixture.",
+    ),
+    (
+        "fixtures/dual-loop/pass/sandbox-receipt.json",
+        "fixture",
+        "Passing Dual-Loop sandbox receipt fixture.",
+    ),
+    (
+        "fixtures/dual-loop/pass/attention-reconstruction-trace.json",
+        "fixture",
+        "Passing Dual-Loop attention reconstruction trace fixture.",
+    ),
+    (
+        "fixtures/dual-loop/pass/attention-reconstruction-summary.json",
+        "fixture",
+        "Passing Dual-Loop attention reconstruction summary fixture.",
+    ),
+    (
+        "fixtures/dual-loop/pass/dual-loop-gate-receipt.json",
+        "fixture",
+        "Passing Dual-Loop propagation gate receipt fixture.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-missing-attention/failure-contract.json",
+        "fixture",
+        "Blocked Dual-Loop fixture with sandbox pass and missing attention reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-missing-attention/sandbox-receipt.json",
+        "fixture",
+        "Blocked Dual-Loop sandbox receipt fixture with missing attention reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-missing-attention/dual-loop-gate-receipt.json",
+        "fixture",
+        "Blocked Dual-Loop gate receipt fixture for missing attention reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-risk-budget/failure-contract.json",
+        "fixture",
+        "Blocked Dual-Loop failure contract fixture for risk-budget overflow.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-risk-budget/sandbox-receipt.json",
+        "fixture",
+        "Blocked Dual-Loop sandbox receipt fixture for risk-budget overflow.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-risk-budget/attention-reconstruction-summary.json",
+        "fixture",
+        "Blocked Dual-Loop attention summary fixture with passing human reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
+        "fixture",
+        "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
     ),
     (
         "fixtures/review-agent/approved.json",
@@ -1349,6 +1459,41 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop contract bootstrap verifier.",
     ),
     (
+        "scripts/verify_dual_loop_contracts.py",
+        "verification",
+        "Dual-Loop schema, artifact, and metadata-only boundary verifier.",
+    ),
+    (
+        "scripts/failure_sandbox_lite.py",
+        "cli",
+        "Dual-Loop deterministic Failure Sandbox Lite artifact generator.",
+    ),
+    (
+        "scripts/verify_failure_sandbox_lite.py",
+        "verification",
+        "Dual-Loop Failure Sandbox Lite CLI verifier.",
+    ),
+    (
+        "scripts/attention_reconstruction_lite.py",
+        "cli",
+        "Dual-Loop deterministic Attention Reconstruction Lite artifact generator.",
+    ),
+    (
+        "scripts/verify_attention_reconstruction_lite.py",
+        "verification",
+        "Dual-Loop Attention Reconstruction Lite CLI verifier.",
+    ),
+    (
+        "scripts/dual_loop_gate.py",
+        "cli",
+        "Dual-Loop propagation gate evaluator for structured sandbox and attention artifacts.",
+    ),
+    (
+        "scripts/verify_dual_loop_gate.py",
+        "verification",
+        "Dual-Loop propagation gate pass/fail fixture verifier.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -1982,6 +2127,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
         "api_core",
         "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
+    ),
+    (
+        "apps/api/study_anything/core/dual_loop.py",
+        "api_core",
+        "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",

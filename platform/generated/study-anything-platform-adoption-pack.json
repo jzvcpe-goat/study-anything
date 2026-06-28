@@ -77,10 +77,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 2647890,
+  "archive_bytes": 2692616,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "7e2a19c036835b527d9cc9a496ecff1e1ce7417fb9b4789ac885da01b6333dc1",
+  "archive_sha256": "77cbec1d1a99a20a89a9e1ab5ad8842e09064cb26bf76a3e895491b662cb3d80",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -412,6 +412,14 @@
       "sha256": "4003d42d8a96d0b8f372d02da5ba4ce5b244c5655b2962b04ac4fd796ac46115"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/docs/dual-loop-mvp.md",
+      "bytes": 5161,
+      "kind": "operator_doc",
+      "path": "docs/dual-loop-mvp.md",
+      "purpose": "Dual-Loop MVP controlled-failure and attention-reconstruction boundary guide.",
+      "sha256": "8cad3530dec8851d91a455cf3c654561bf1daf94fa6dd1a5602cd2667f2b06e6"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/watchers.yaml",
       "bytes": 1043,
       "kind": "cognitive_loop_contract",
@@ -612,6 +620,46 @@
       "sha256": "405acb23f6e9007a7cfc3d38ef61740e819a327f162909a38c2290cee0c98e3b"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/dual-loop/failure-contract-v1.schema.json",
+      "bytes": 3244,
+      "kind": "schema",
+      "path": "platform/schemas/dual-loop/failure-contract-v1.schema.json",
+      "purpose": "Dual-Loop failure contract JSON Schema.",
+      "sha256": "20341d40cc3d74c2fb99ba6d78afa069a533d11bd373f7c34483de0cf433b09f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+      "bytes": 1451,
+      "kind": "schema",
+      "path": "platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+      "purpose": "Dual-Loop sandbox receipt JSON Schema.",
+      "sha256": "5e85143f98c98d770a08ad3e65a6e6d7889be216153c9568cee9592af6f29857"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+      "bytes": 1615,
+      "kind": "schema",
+      "path": "platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+      "purpose": "Dual-Loop attention reconstruction trace JSON Schema.",
+      "sha256": "14e9f0fc5cccab04afbb1a15b842b069d8833b5b8198e632daf789bb1a8ff1ee"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+      "bytes": 912,
+      "kind": "schema",
+      "path": "platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+      "purpose": "Dual-Loop attention reconstruction summary JSON Schema.",
+      "sha256": "6a65f04a95de31c9ade72ba6f88d527f337dbd57927e413a2298a07e7412ad7a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+      "bytes": 1343,
+      "kind": "schema",
+      "path": "platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+      "purpose": "Dual-Loop propagation gate receipt JSON Schema.",
+      "sha256": "426ad98f4f11224af85ce8d1588514befb7c454a811fa16f54619d3dac2d2b72"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_review_agent_handoff.py",
       "bytes": 14585,
       "kind": "cli",
@@ -709,11 +757,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 160458,
+      "bytes": 169363,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "6e0bf4327cdfbf9fc47af87211b9f272c17406085ac1252599953adbcc810686"
+      "sha256": "e3ac0de886d3b96dcb529ef9c51c97b24b1fefa587b1b2fa035700c6829f2738"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -730,6 +778,38 @@
       "path": "platform/generated/study-anything-cognitive-loop-contracts.json",
       "purpose": "Cognitive Loop contract bootstrap verification report.",
       "sha256": "b225c3639979cba10a7a82905b83c4852e182fce51ff4d87bdf8d14fa261e744"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-dual-loop-contracts.json",
+      "bytes": 3502,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-dual-loop-contracts.json",
+      "purpose": "Dual-Loop contract schema and privacy verification report.",
+      "sha256": "ab1b4573b9cc3983135a3a40e312095d3bc4c9d9b283687d86f8e69845f8d151"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-failure-sandbox-lite.json",
+      "bytes": 1452,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-failure-sandbox-lite.json",
+      "purpose": "Dual-Loop Failure Sandbox Lite CLI verification report.",
+      "sha256": "09d170b8f3f37fbbc3b3acb198343136d269b9a1862c5f3374c672f31c3f7872"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-attention-reconstruction-lite.json",
+      "bytes": 1576,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-attention-reconstruction-lite.json",
+      "purpose": "Dual-Loop Attention Reconstruction Lite CLI verification report.",
+      "sha256": "a182a020a858040fd079b68595610f65cd04aaaeedecd73ea4ab65aeaf2fef1c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-dual-loop-gate.json",
+      "bytes": 2098,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-dual-loop-gate.json",
+      "purpose": "Dual-Loop propagation gate pass/fail fixture verification report.",
+      "sha256": "875fe33b8c61b3ce682fe7d3306b60c94f51b63e6bd914855094e91cc29ff86a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -1073,7 +1153,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent workflow install smoke verification report.",
-      "sha256": "3099786aeb3ffe4615d09f2beffdd605d7ef7b72eea113a71c5c71d25ac011b0"
+      "sha256": "3c253e35cb629c60b0b194ed7579ac8e5a0ce50024d8f9d3c26a5e253195079e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
@@ -1081,7 +1161,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "ceff52ffb80364669ae5be437a485f352d199899cc037c1e3e98edcfd3a4eff3"
+      "sha256": "59371fba881b67abee5b47c1f779fffe706b5f414a03613980fe7a44d3c93864"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
@@ -1161,7 +1241,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "08c49902c5e7d8f71ef80b61775b33ae9e2d8e87b2e1bb798fff1f99ea28b6c0"
+      "sha256": "3b4c3dafc4cc832deabfa7bcdd6e50fa4c92dde8f3ea91036032930d90e67aeb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
@@ -1169,7 +1249,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "afe5cc1d75825a61b82f21f2bedf7ffa997c1dd4762788461f8b6341c99b86e3"
+      "sha256": "ae3cfb6de75b35d7bc3643ad15dfc93d7b47c13a773e0008cfa411343392ebf7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
@@ -1177,7 +1257,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "07fea6ec31832fd3742ddbe4ce3e2c8ff763ee806f4fd21565277f73d555f83b"
+      "sha256": "fd5da0488ca4f531e6af451ac8e2fe93cd03babd040b5849c6bc7c26f22ca6f6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-handoff-checklist.json",
@@ -1185,7 +1265,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "75b9e29be9a768e2a9b829f84741290581bfd14245d80d95b1d65909a096e276"
+      "sha256": "de3c1df54c4066c1ce5762060434b595a293fe6f8efc0dca056e389b7e3fe420"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-launch-acceptance-ledger.json",
@@ -1233,7 +1313,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "1e584276ba7da831dc3d03b9c6d08b9ed558b8f6ffd4835b147eeb92d1e8592c"
+      "sha256": "2446589ecf6a25f93a20f9ec4f1882b224a97722ae927299c01523b8f326b717"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -1241,7 +1321,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "30934346282f620b2a976ee93608103112bd281811b1785189a4af2baf48e525"
+      "sha256": "4cdd858d879134c5df5ec4d5ff3a15c2ec364dbd14588efc2e63a279237cf262"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -1537,7 +1617,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "105f54223731f5a0c3bc171af5c866137961f672d4fa2db867866308329859ba"
+      "sha256": "f08b3d8ec0f529d898db91f236b654eaad9ad3bc79ab8055f98f77c4eca9fb76"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -1545,7 +1625,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "7ab7fdb67b416632564335c35e50adfede1ada400f5520d60138924e4665607a"
+      "sha256": "7b6bf4a51b2a0bee3de7190dc78c810c1d9d8a0b8882f95bde3003766ecd4569"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -1553,7 +1633,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "1f8928342b49b3aefee042b2a86ad0f2c2676170e504a9a85c975107f6ba5eb2"
+      "sha256": "63d934c3d356598891d8b67e97a93d46694f9a8c9c9e64a91bf4c575ca090432"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -1561,7 +1641,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "5dc165d44d355d1a5a480e51616203f98ae03dd8d3bdd22610482b2f3a8d5ff8"
+      "sha256": "073b83796d3e786204e0d150eff905fc2ece8b74e0b48c3abf3671be9ac2c63d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -2652,6 +2732,102 @@
       "sha256": "e5fd5dfaadfe4446668f5bbf17d37e42660b5579b33a30b14349c8fa927a0fee"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/pass/failure-contract.json",
+      "bytes": 2460,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/pass/failure-contract.json",
+      "purpose": "Passing Dual-Loop failure contract fixture.",
+      "sha256": "ba95ec8f063336ffeb9ff987298100e8933817579c16c3b4246c5546a2a4c9e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/pass/sandbox-receipt.json",
+      "bytes": 1801,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/pass/sandbox-receipt.json",
+      "purpose": "Passing Dual-Loop sandbox receipt fixture.",
+      "sha256": "bb2bd15861b0b429ce74bf8e4b7e086fdc77b9bc2413354e4887ee042e739c64"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/pass/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/pass/attention-reconstruction-trace.json",
+      "purpose": "Passing Dual-Loop attention reconstruction trace fixture.",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/pass/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/pass/attention-reconstruction-summary.json",
+      "purpose": "Passing Dual-Loop attention reconstruction summary fixture.",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/pass/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/pass/dual-loop-gate-receipt.json",
+      "purpose": "Passing Dual-Loop propagation gate receipt fixture.",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-missing-attention/failure-contract.json",
+      "bytes": 2460,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-missing-attention/failure-contract.json",
+      "purpose": "Blocked Dual-Loop fixture with sandbox pass and missing attention reconstruction.",
+      "sha256": "ba95ec8f063336ffeb9ff987298100e8933817579c16c3b4246c5546a2a4c9e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-missing-attention/sandbox-receipt.json",
+      "bytes": 1801,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-missing-attention/sandbox-receipt.json",
+      "purpose": "Blocked Dual-Loop sandbox receipt fixture with missing attention reconstruction.",
+      "sha256": "bb2bd15861b0b429ce74bf8e4b7e086fdc77b9bc2413354e4887ee042e739c64"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-missing-attention/dual-loop-gate-receipt.json",
+      "bytes": 1587,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-missing-attention/dual-loop-gate-receipt.json",
+      "purpose": "Blocked Dual-Loop gate receipt fixture for missing attention reconstruction.",
+      "sha256": "2ddac1a294bacf5787b1e4f29bbfc8cb1ed94f68f2beb3527f54aa3bc4c073cb"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-risk-budget/failure-contract.json",
+      "bytes": 2460,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-risk-budget/failure-contract.json",
+      "purpose": "Blocked Dual-Loop failure contract fixture for risk-budget overflow.",
+      "sha256": "ba95ec8f063336ffeb9ff987298100e8933817579c16c3b4246c5546a2a4c9e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-risk-budget/sandbox-receipt.json",
+      "bytes": 1800,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-risk-budget/sandbox-receipt.json",
+      "purpose": "Blocked Dual-Loop sandbox receipt fixture for risk-budget overflow.",
+      "sha256": "60f552f27fe42fb50a8ac833073b15116df19951aedcbef1cf664d21d198ece4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-risk-budget/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-risk-budget/attention-reconstruction-summary.json",
+      "purpose": "Blocked Dual-Loop attention summary fixture with passing human reconstruction.",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
+      "bytes": 1602,
+      "kind": "dual_loop_fixture",
+      "path": "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
+      "purpose": "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
+      "sha256": "304937f23945421105cc542aa3a97d98b6fc737b2cc6302e9638c21bab9a1b06"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -3468,6 +3644,62 @@
       "sha256": "9489936418fff05ed506dccda580dece8280f8c385d3d7a0f25ff120c0263159"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_dual_loop_contracts.py",
+      "bytes": 6897,
+      "kind": "verification",
+      "path": "scripts/verify_dual_loop_contracts.py",
+      "purpose": "Dual-Loop schema, artifact, and metadata-only boundary verifier.",
+      "sha256": "1afeed6274640ef8543d270b224f5bdc30896d45c369bb616154aba18047e540"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/failure_sandbox_lite.py",
+      "bytes": 3320,
+      "kind": "cli",
+      "path": "scripts/failure_sandbox_lite.py",
+      "purpose": "Dual-Loop deterministic Failure Sandbox Lite artifact generator.",
+      "sha256": "6c901d6cc993451f63c3383e3abf122b5d32b42c7caefbd8ece4803f67ae3613"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_failure_sandbox_lite.py",
+      "bytes": 4301,
+      "kind": "verification",
+      "path": "scripts/verify_failure_sandbox_lite.py",
+      "purpose": "Dual-Loop Failure Sandbox Lite CLI verifier.",
+      "sha256": "b3a8cf9ee05225a1f06e4ce1b7b2a5d3f77f109accbd2b9fb1dcc1841ebb2f3d"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/attention_reconstruction_lite.py",
+      "bytes": 3896,
+      "kind": "cli",
+      "path": "scripts/attention_reconstruction_lite.py",
+      "purpose": "Dual-Loop deterministic Attention Reconstruction Lite artifact generator.",
+      "sha256": "877f46e323e183682d4cd40be5ec5c3b1d15d64cf514f94fd753ea9bb9365fea"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_attention_reconstruction_lite.py",
+      "bytes": 5209,
+      "kind": "verification",
+      "path": "scripts/verify_attention_reconstruction_lite.py",
+      "purpose": "Dual-Loop Attention Reconstruction Lite CLI verifier.",
+      "sha256": "85cf9fdb9889c9f8ac4d7eda8129f181805f99639b43db4e817d720332aa2d54"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/dual_loop_gate.py",
+      "bytes": 3099,
+      "kind": "cli",
+      "path": "scripts/dual_loop_gate.py",
+      "purpose": "Dual-Loop propagation gate evaluator for structured sandbox and attention artifacts.",
+      "sha256": "d7811ed1c189e79a2b81408af37955d3f00eeb55fdf7d8f4c14046c10644510b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_dual_loop_gate.py",
+      "bytes": 8277,
+      "kind": "verification",
+      "path": "scripts/verify_dual_loop_gate.py",
+      "purpose": "Dual-Loop propagation gate pass/fail fixture verifier.",
+      "sha256": "f55e3237da9a526c7049133dba83304526217cd6b8e39b6773fbb6a2e68c6582"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_cli.py",
       "bytes": 28128,
       "kind": "cli",
@@ -3858,6 +4090,14 @@
       "path": "apps/api/study_anything/core/cognitive_loop_learning_adapter.py",
       "purpose": "Study Anything Learning Adapter bridge for Cognitive Loop mastery records.",
       "sha256": "2d39a63854919eb8edde9e2f10aa20791c6d1f11d9c12fce5046c206b85349b6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/apps/api/study_anything/core/dual_loop.py",
+      "bytes": 25085,
+      "kind": "api_core",
+      "path": "apps/api/study_anything/core/dual_loop.py",
+      "purpose": "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic.",
+      "sha256": "923d4eb636f6363cf16f7e4a996525647d3c5091a8bae29d97c3581671a02e24"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_study_adapter_cli.py",

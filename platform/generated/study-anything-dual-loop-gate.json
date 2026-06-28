@@ -1,0 +1,68 @@
+{
+  "acceptance": {
+    "cli_command": "python3 scripts/dual_loop_gate.py evaluate --failure-contract ... --sandbox-receipt ... --attention-summary ...",
+    "fixture_dir": "fixtures/dual-loop",
+    "minimum_command": "python3 scripts/verify_dual_loop_gate.py --check"
+  },
+  "case_reports": [
+    {
+      "artifact_count": 5,
+      "case_id": "pass",
+      "decision": "promote_to_next_sandbox",
+      "reasons": [],
+      "status": "allowed"
+    },
+    {
+      "artifact_count": 3,
+      "case_id": "blocked-missing-attention",
+      "decision": "block_promotion",
+      "reasons": [
+        "attention_reconstruction_missing"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 4,
+      "case_id": "blocked-risk-budget",
+      "decision": "block_promotion",
+      "reasons": [
+        "sandbox_risk_outside_budget"
+      ],
+      "status": "blocked"
+    }
+  ],
+  "gate_rules": {
+    "attention_pass_sandbox_risk_outside_budget_blocks": true,
+    "both_loops_equal_weight": true,
+    "sandbox_pass_attention_missing_blocks": true,
+    "structured_artifact_bridge_only": true
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_failure_or_attention_payloads_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "dual-loop-gate-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

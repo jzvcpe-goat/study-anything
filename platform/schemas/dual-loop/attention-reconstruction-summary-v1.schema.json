@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "attention-reconstruction-summary-v1",
+  "title": "Attention Reconstruction Summary v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "summary_id",
+    "trace_id",
+    "contract_id",
+    "status",
+    "required_mrus_total",
+    "required_mrus_passed",
+    "missing_mrus",
+    "passive_attention_only",
+    "strong_evidence_count",
+    "weak_evidence_count",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "attention-reconstruction-summary-v1"
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed",
+        "missing"
+      ]
+    },
+    "passive_attention_only": {
+      "const": false
+    },
+    "required_mrus_total": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "required_mrus_passed": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}
