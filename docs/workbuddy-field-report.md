@@ -119,6 +119,7 @@ codebuddy -p \
 | Public plugin install | pass | `Successfully installed plugin: study-anything@study-anything` |
 | Skill Mode runtime health | pass | `status=ok`, `version=0.3.31-alpha` |
 | Public shorthand first lesson | not complete | `Authentication required. Please use /login command to sign in to your account` |
+| Non-interactive `/login` attempt | not complete | `Authentication required. Please use /login command to sign in to your account` |
 
 ## Findings
 
@@ -150,10 +151,16 @@ Authentication required. Please use /login command to sign in to your account
 ```
 
 This is a platform-account prerequisite, not a Study Anything runtime failure.
+Non-interactive `codebuddy -p "/login"` returns the same authentication message;
+login must be completed in a real interactive CodeBuddy/WorkBuddy session.
 
 5. Some agent shells reclaim background processes after a successful launcher
    health check. For CodeBuddy headless validation, keep the Skill Mode API in a
    foreground terminal with `./scripts/launch_skill_mode.sh --foreground`.
+
+6. Use `.github/ISSUE_TEMPLATE/platform_import_failure.md` with diagnostic code
+   `workbuddy_auth_required` for logged-in WorkBuddy/CodeBuddy first-lesson
+   acceptance follow-up.
 
 ## Current Verdict
 

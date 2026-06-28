@@ -73,9 +73,32 @@ SUPPORT_CATEGORIES: list[dict[str, Any]] = [
         "id": "platform_import_failure",
         "title": "Platform import failure",
         "labels": ["support", "platform-import"],
-        "diagnostic_codes": list(QUIRK_IDS),
+        "diagnostic_codes": [*QUIRK_IDS, "workbuddy_auth_required"],
         "minimum_command": "python3 scripts/verify_platform_field_rehearsal.py --check",
         "fixture_id": "schema_mismatch",
+        "extra_template_body": """
+## WorkBuddy / CodeBuddy First-Lesson Acceptance
+
+Use this section when `/plugin marketplace add jzvcpe-goat/study-anything` and
+`/plugin install study-anything@study-anything` worked, but the first lesson did
+not finish.
+
+- CodeBuddy package/version: <!-- e.g. @tencent-ai/codebuddy-code@2.112.1 -->
+- Marketplace add result: <!-- pass | fail -->
+- Plugin install result: <!-- pass | fail -->
+- Study Anything health result: <!-- status=ok | status=failed -->
+- Command used:
+
+```sh
+codebuddy -p --channels plugin:study-anything@study-anything "/study-anything:learn <redacted lesson title>"
+```
+
+- If the output says `Authentication required`, run CodeBuddy interactively and
+  complete `/login`, then rerun the command above.
+- Acceptance evidence must include a session id plus overview/glossary or
+  grading/mastery evidence. Do not paste raw source text, learner answers, or
+  model keys.
+""",
     },
     {
         "id": "local_gateway_failure",
@@ -129,6 +152,8 @@ def assert_no_leaks(payload: Any) -> None:
 def issue_template(category: dict[str, Any]) -> str:
     labels = ",".join(category["labels"])
     title_prefix = category["title"]
+    extra_template_body = category.get("extra_template_body", "").strip()
+    extra_section = f"\n\n{extra_template_body}" if extra_template_body else ""
     return f"""---
 name: {category["title"]}
 about: Request help with a redacted Study Anything platform adoption issue
@@ -160,7 +185,7 @@ browser/video private context, or personal profile data.
 
 ## Diagnostic Code
 
-<!-- Use one of: {", ".join(category["diagnostic_codes"])} -->
+<!-- Use one of: {", ".join(category["diagnostic_codes"])} -->{extra_section}
 
 ## Fixture Or Quirk Id
 
