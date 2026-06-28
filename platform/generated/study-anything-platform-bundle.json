@@ -782,28 +782,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "4d581ebbc858725ef8a6303c2b4d4c7d989975a0f7d3ca5f4202bb5a61e07b66"
+      "sha256": "9dfc477db310c319f59423a8aab3d40da9684999344e3c2edf9fbee288366a90"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "d89ffee81c7f43f5e096575ebe322242a8ebe1848b1b9941dd304f18b5740364"
+      "sha256": "1bcc76ccc7c65a64cca659038f581199385df90a72fc4596660c67b86799fe93"
     },
     {
-      "bytes": 89086,
+      "bytes": 89110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "46e75323e9fa320cff02f328211c1056881d4aea5d56045adc6b0b89771db425"
+      "sha256": "3927610b480c155b32d5df6be11d65e27d56160c1abd0b9fdfd6ecf2940dec2d"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "e41b6ed44a32f1108fd529ad99c105e9fc6535233259dc6c4654c56d61fd4dee"
+      "sha256": "8204768f057bdaad0991c295afeb88409b98e26105ccbba99cf16bc0e8eb8f4a"
     },
     {
       "bytes": 7890,
@@ -2101,11 +2101,11 @@
       "sha256": "0f8a4824351fb35deb67610bb01aa46c3ba3f3dcae8c9530218beeb728f3164a"
     },
     {
-      "bytes": 304286,
+      "bytes": 304296,
       "kind": "verification",
       "path": "scripts/verify_ecosystem_submission_pack.py",
       "purpose": "Ecosystem submission pack verifier for external platform review readiness.",
-      "sha256": "2ba4842f5d44f6b665afe37feb64ebb958c1cce8dcced2aba3ace61c0277006e"
+      "sha256": "256fa75c6cab71ef4b6e57df14142c815b06ba7a43c0820534a27ea7f2acd55b"
     },
     {
       "bytes": 10361,
