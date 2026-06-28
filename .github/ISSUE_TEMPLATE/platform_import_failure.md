@@ -29,7 +29,29 @@ python3 scripts/verify_platform_field_rehearsal.py --check
 
 ## Diagnostic Code
 
-<!-- Use one of: schema_mismatch, missing_local_gateway, unsupported_auth_mode, tool_naming_drift, timeout, cors_localhost, package_corruption, version_drift -->
+<!-- Use one of: schema_mismatch, missing_local_gateway, unsupported_auth_mode, tool_naming_drift, timeout, cors_localhost, package_corruption, version_drift, workbuddy_auth_required -->
+
+## WorkBuddy / CodeBuddy First-Lesson Acceptance
+
+Use this section when `/plugin marketplace add jzvcpe-goat/study-anything` and
+`/plugin install study-anything@study-anything` worked, but the first lesson did
+not finish.
+
+- CodeBuddy package/version: <!-- e.g. @tencent-ai/codebuddy-code@2.112.1 -->
+- Marketplace add result: <!-- pass | fail -->
+- Plugin install result: <!-- pass | fail -->
+- Study Anything health result: <!-- status=ok | status=failed -->
+- Command used:
+
+```sh
+codebuddy -p --channels plugin:study-anything@study-anything "/study-anything:learn <redacted lesson title>"
+```
+
+- If the output says `Authentication required`, run CodeBuddy interactively and
+  complete `/login`, then rerun the command above.
+- Acceptance evidence must include a session id plus overview/glossary or
+  grading/mastery evidence. Do not paste raw source text, learner answers, or
+  model keys.
 
 ## Fixture Or Quirk Id
 

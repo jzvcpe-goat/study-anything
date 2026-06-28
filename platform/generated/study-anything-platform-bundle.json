@@ -960,11 +960,11 @@
       "sha256": "563157f7655b732a338ef0ed42a36ab0b372fe0d4d2726386ed53a1116f82363"
     },
     {
-      "bytes": 7298,
+      "bytes": 7770,
       "kind": "operator_doc",
       "path": "docs/workbuddy-field-report.md",
       "purpose": "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary.",
-      "sha256": "b496af69e12d5b29be1c91e01eae7faedf5e274f32c3f14b7e1cfb757d1c704b"
+      "sha256": "2b5e12ce3f3273b72837d6f844b4401bc69dc32e3fbf5b990f18ee4c4f6bd087"
     },
     {
       "bytes": 69530,
@@ -1107,11 +1107,11 @@
       "sha256": "08dbe202a37c9f0c6461543e70d8512bdb876a7ab3ae3b9fa0bb0f717e31ba2b"
     },
     {
-      "bytes": 1328,
+      "bytes": 2249,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/platform_import_failure.md",
       "purpose": "GitHub issue template for external platform import failures.",
-      "sha256": "8d8c12b3b254defcaf53b86b2ef6dd6420c4d11c4337c2550cdbf80b7bf2de0e"
+      "sha256": "1dd7c730a36d85ec31faad54a7f102c57d4863cd341ed1d1440392fb030c5448"
     },
     {
       "bytes": 1206,
@@ -1800,11 +1800,11 @@
       "sha256": "783e1c0699c81cbeaddc4bed03bfeb743ae07988ec0041d48f6c6833deb739c4"
     },
     {
-      "bytes": 12918,
+      "bytes": 14046,
       "kind": "diagnostics",
       "path": "scripts/generate_platform_support_triage.py",
       "purpose": "Generate GitHub-first issue templates, support ticket fixtures, and maintainer triage report.",
-      "sha256": "9c971c75fc56b3e3b68953c47809a7a3743f421668cbd43af7fd0fb9b3e0c76d"
+      "sha256": "501b7058d2b084d07eac3874e0811dca77f9f7973e014990f473ddee31ed8118"
     },
     {
       "bytes": 22286,

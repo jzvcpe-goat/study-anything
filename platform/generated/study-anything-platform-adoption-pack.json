@@ -77,10 +77,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 2646871,
+  "archive_bytes": 2647890,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "e148ad18737e97edad238d67128f1eca2f25db2b9145c4e6dc02f7af674534c9",
+  "archive_sha256": "7e2a19c036835b527d9cc9a496ecff1e1ce7417fb9b4789ac885da01b6333dc1",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -261,11 +261,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/workbuddy-field-report.md",
-      "bytes": 7298,
+      "bytes": 7770,
       "kind": "operator_doc",
       "path": "docs/workbuddy-field-report.md",
       "purpose": "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary.",
-      "sha256": "b496af69e12d5b29be1c91e01eae7faedf5e274f32c3f14b7e1cfb757d1c704b"
+      "sha256": "2b5e12ce3f3273b72837d6f844b4401bc69dc32e3fbf5b990f18ee4c4f6bd087"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-drill.md",
@@ -713,7 +713,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "463e9c8d85deb832a8e192bf2b0af2a98ef333be8b0d43b51c8dab3dc31bb9b2"
+      "sha256": "6e0bf4327cdfbf9fc47af87211b9f272c17406085ac1252599953adbcc810686"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -1629,11 +1629,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.github/ISSUE_TEMPLATE/platform_import_failure.md",
-      "bytes": 1328,
+      "bytes": 2249,
       "kind": "support_template",
       "path": ".github/ISSUE_TEMPLATE/platform_import_failure.md",
       "purpose": "GitHub issue template for platform import failures.",
-      "sha256": "8d8c12b3b254defcaf53b86b2ef6dd6420c4d11c4337c2550cdbf80b7bf2de0e"
+      "sha256": "1dd7c730a36d85ec31faad54a7f102c57d4863cd341ed1d1440392fb030c5448"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.github/ISSUE_TEMPLATE/local_gateway_failure.md",
@@ -3245,11 +3245,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_platform_support_triage.py",
-      "bytes": 12918,
+      "bytes": 14046,
       "kind": "diagnostics",
       "path": "scripts/generate_platform_support_triage.py",
       "purpose": "Generate GitHub-first issue templates, support ticket fixtures, and support triage report.",
-      "sha256": "9c971c75fc56b3e3b68953c47809a7a3743f421668cbd43af7fd0fb9b3e0c76d"
+      "sha256": "501b7058d2b084d07eac3874e0811dca77f9f7973e014990f473ddee31ed8118"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_support_triage.py",
