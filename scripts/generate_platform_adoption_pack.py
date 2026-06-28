@@ -42,6 +42,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/kimi-agent-gateway.md", "operator_doc", "Kimi-compatible HTTP Agent gateway guide."),
     ("docs/use-with-kimi.md", "operator_doc", "Kimi usage modes for copy-only, HTTP tools, and local Agent gateway."),
     ("docs/use-with-workbuddy.md", "operator_doc", "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide."),
+    ("docs/workbuddy-field-report.md", "operator_doc", "Real CodeBuddy CLI field validation report and remaining first-lesson acceptance boundary."),
     ("docs/operator-drill.md", "operator_doc", "External platform operator drill and transcript guide."),
     ("docs/self-hosting.md", "operator_doc", "Docker/Skill Mode self-hosting guide."),
     ("docs/security.md", "operator_doc", "Local-first security model and recovery hardening guide."),

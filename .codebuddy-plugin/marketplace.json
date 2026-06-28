@@ -12,7 +12,9 @@
         "url": "https://github.com/jzvcpe-goat/study-anything"
       },
       "category": "AI Agents",
-      "commands": "commands",
+      "commands": [
+        "commands"
+      ],
       "description": "Install Study Anything as a CodeBuddy/WorkBuddy plugin that starts a local learning runtime and calls it through OpenAPI/local HTTP tools.",
       "homepage": "https://github.com/jzvcpe-goat/study-anything",
       "keywords": [
@@ -27,7 +29,9 @@
       "license": "Apache-2.0",
       "name": "study-anything",
       "repository": "https://github.com/jzvcpe-goat/study-anything",
-      "skills": "skills",
+      "skills": [
+        "skills"
+      ],
       "source": "./plugins/study-anything",
       "strict": true,
       "version": "0.3.31-alpha"

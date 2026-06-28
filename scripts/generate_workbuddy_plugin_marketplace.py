@@ -118,8 +118,8 @@ def marketplace_payload() -> dict[str, Any]:
                 "keywords": KEYWORDS,
                 "category": "AI Agents",
                 "strict": True,
-                "commands": "commands",
-                "skills": "skills",
+                "commands": ["commands"],
+                "skills": ["skills"],
             }
         ],
     }
@@ -140,8 +140,8 @@ def plugin_payload() -> dict[str, Any]:
         "license": "Apache-2.0",
         "keywords": KEYWORDS,
         "category": "AI Agents",
-        "commands": "commands",
-        "skills": "skills",
+        "commands": ["commands"],
+        "skills": ["skills"],
         "metadata": {
             "local_runtime": {
                 "default_api_base": "http://127.0.0.1:8000",
@@ -534,4 +534,3 @@ if __name__ == "__main__":
     except Exception as exc:  # pragma: no cover - CLI failure path
         print(f"generate_workbuddy_plugin_marketplace failed: {exc}", file=sys.stderr)
         sys.exit(1)
-
