@@ -1405,8 +1405,10 @@
       "status": "ready_for_manual_rehearsal"
     },
     "workbuddy": {
-      "acceptance_evidence_count": 110,
+      "acceptance_evidence_count": 111,
       "commands": [
+        "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+        "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
         "python3 scripts/verify_clean_clone_adoption.py --repo .",
         "python3 scripts/verify_cognitive_loop_contracts.py --check",
         "python3 scripts/verify_cognitive_loop_cli.py --check",
@@ -1516,6 +1518,9 @@
       "entrypoints": {
         "api_docs": "docs/api.md",
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+        "inline_learning_flow": "scripts/workbuddy_learning_flow.py",
+        "inline_learning_input_schema": "platform/schemas/workbuddy-learning-input-v1.schema.json",
+        "inline_learning_output_schema": "platform/schemas/workbuddy-learning-output-v1.schema.json",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
         "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
       },
@@ -1523,6 +1528,13 @@
         "platform/study-anything-platform-tools.json",
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
+        "scripts/workbuddy_learning_flow.py",
+        "scripts/verify_workbuddy_inline_learning_flow.py",
+        "platform/schemas/workbuddy-learning-input-v1.schema.json",
+        "platform/schemas/workbuddy-learning-output-v1.schema.json",
+        "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
+        "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
+        "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
         "platform/generated/study-anything-cognitive-loop-contracts.json",
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -1645,7 +1657,7 @@
         "scripts/cognitive_loop_mastra_evolution_replay.py",
         "scripts/verify_cognitive_loop_mastra_evolution_replay.py"
       ],
-      "integration_mode": "openapi_http_tools",
+      "integration_mode": "inline_learning_workflow",
       "platform_id": "workbuddy",
       "status": "ready_for_manual_rehearsal"
     }

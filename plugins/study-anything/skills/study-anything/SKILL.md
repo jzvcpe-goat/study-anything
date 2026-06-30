@@ -1,17 +1,52 @@
 ---
 name: study-anything
-description: Use when CodeBuddy or WorkBuddy should run a source-bound Study Anything learning loop through a local or private HTTP runtime. Start the runtime, import OpenAPI tools when available, create sessions, add reading material, request teaching layers, answer quizzes, check mastery, diagnose local setup, or export Obsidian/NotebookLM handoff evidence without storing model keys in Study Anything.
+description: Use when CodeBuddy or WorkBuddy should run a source-bound learning workflow for requests like system learning, interview preparation, help me master this topic, build a study plan, quiz me, or review this material. Prefer the WorkBuddy inline flow where WorkBuddy owns real model/search/file/context work and Study Anything records learning state, mastery, evidence, and exports. Use OpenAPI/local HTTP only as fallback. Do not store model keys in Study Anything.
 ---
 
 # Study Anything For CodeBuddy/WorkBuddy
 
-Study Anything is the local learning engine. CodeBuddy/WorkBuddy remains the
-platform Agent: it owns real model credentials, browsing, external apps, files,
-and private tool use. Study Anything owns local learning workflow integrity,
-source binding, mastery, audit/eval evidence, and exports.
+Study Anything is the learning workflow kernel. CodeBuddy/WorkBuddy remains the
+main platform Agent: it owns real model credentials, browsing, external apps,
+files, visualization, and private tool use. Study Anything owns local learning
+workflow integrity, source binding, hidden session refs, mastery, audit/eval
+evidence, and exports.
 
-## Start Or Verify Runtime
+## Trigger Phrases
 
+Use this skill when the user says things like:
+
+- "systematically teach me ..."
+- "prepare me for an interview ..."
+- "help me master this topic"
+- "build a study plan"
+- "quiz me on this material"
+- "review this source and turn it into learning cards"
+
+## Default Inline Flow
+
+1. WorkBuddy collects source material, user context, and any visual/search/file context.
+2. WorkBuddy uses its own model to produce teaching claims, glossary terms, quiz items, and grading feedback.
+3. Call Study Anything inline:
+
+```bash
+python3 scripts/workbuddy_learning_flow.py run --input workbuddy-learning-input.json --output workbuddy-learning-output.json --markdown study-card.md
+```
+
+4. Keep `session_ref` in hidden WorkBuddy context. Do not ask the user to manage it.
+5. Return the teaching summary, quiz, feedback, mastery, and export options conversationally.
+
+Validate the inline path:
+
+```bash
+python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+```
+
+The inline path does not start uvicorn, bind localhost, require a background
+process, or ask for real model API keys.
+
+## HTTP Fallback
+
+Use HTTP only when the workspace can reliably reach a local or private endpoint.
 From the Study Anything checkout:
 
 ```bash
@@ -25,12 +60,12 @@ If a background server will not persist in this host, use the bounded demo:
 ./scripts/run_skill_mode_demo.sh
 ```
 
-Use `STUDY_ANYTHING_API_BASE` or `--api-base` when the runtime is not at
+Use `STUDY_ANYTHING_API_BASE` or `--api-base` when the fallback runtime is not at
 `http://127.0.0.1:8000`.
 
 ## Tool Contract
 
-Preferred WorkBuddy/CodeBuddy import asset:
+Fallback WorkBuddy/CodeBuddy import asset:
 
 ```text
 platform/generated/study-anything-platform-openapi.json

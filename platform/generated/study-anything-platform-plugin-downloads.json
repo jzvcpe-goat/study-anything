@@ -114,48 +114,55 @@
       "entrypoints": {
         "api_docs": "docs/api.md",
         "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+        "inline_learning_flow": "scripts/workbuddy_learning_flow.py",
+        "inline_learning_input_schema": "platform/schemas/workbuddy-learning-input-v1.schema.json",
+        "inline_learning_output_schema": "platform/schemas/workbuddy-learning-output-v1.schema.json",
         "openapi": "platform/generated/study-anything-platform-openapi.json",
         "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
       },
       "import_assets": [
+        "scripts/workbuddy_learning_flow.py",
+        "platform/schemas/workbuddy-learning-input-v1.schema.json",
+        "platform/schemas/workbuddy-learning-output-v1.schema.json",
         "platform/generated/study-anything-platform-openapi.json",
         "platform/generated/study-anything-tool-catalog.md",
         "platform/packs/workbuddy/pack.json"
       ],
       "known_limitations": [
-        "Requires the host workspace to reach the configured local or private HTTP endpoint.",
-        "This is an import package, not an official marketplace listing.",
+        "Inline mode expects WorkBuddy or the platform Agent to generate teaching, quiz, and grading content.",
+        "HTTP/OpenAPI tools are fallback assets and still require the host workspace to reach the configured endpoint.",
         "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent."
       ],
-      "package_type": "openapi_http_tools",
+      "package_type": "inline_learning_workflow",
       "platform_id": "workbuddy",
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-workbuddy-plugin-pack.zip",
-          "bytes": 138946,
+          "bytes": 152185,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.zip",
-          "sha256": "bf6905abe6ba67d9df4a7c159f182057baec12c11190c76f1c24fbe087c7f48d"
+          "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
         },
         "checksum": {
           "asset_name": "study-anything-workbuddy-plugin-pack.sha256",
           "bytes": 107,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
-          "sha256": "0a6d0de4e6af3b7a0b736795a3067cc53521d477a67a406ad2439626453f16c8"
+          "sha256": "a863438fef91e4d277dc5047a43ce36b67333548b54b33ad43ae2bd37a282f78"
         },
         "manifest": {
           "asset_name": "study-anything-workbuddy-plugin-pack.json",
-          "bytes": 9427,
+          "bytes": 13415,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.json",
-          "sha256": "89810a5703bd2e4ae4ea20c0d44db6816621897ac20b0c4a8fe6ccaec61f64a3"
+          "sha256": "8a4f38130047cd059d3240abf3bca91758125980bc7d97a39d24410546d8a637"
         }
       },
-      "summary": "Import the constrained OpenAPI HTTP tools into WorkBuddy-style workspaces that can call a local or private Study Anything runtime.",
+      "summary": "Run the WorkBuddy inline learning workflow first, while keeping constrained OpenAPI HTTP tools as a fallback for workspaces that can call a local or private runtime.",
       "title": "Study Anything WorkBuddy Plugin Pack",
       "verification_commands": [
-        "./START_HERE.command",
+        "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+        "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
         "python3 scripts/verify_platform_operator_drill.py --check"
       ]

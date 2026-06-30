@@ -7,7 +7,7 @@
   "commands": [
     "commands"
   ],
-  "description": "Local-first learning engine for CodeBuddy/WorkBuddy. Start Study Anything locally, call its OpenAPI/local HTTP tools, and export source-bound learning evidence without storing model keys.",
+  "description": "Local-first learning workflow kernel for CodeBuddy/WorkBuddy. WorkBuddy owns the real model, search, files, and conversation; Study Anything records source-bound learning state, mastery, evidence, and exports without storing model keys.",
   "homepage": "https://github.com/jzvcpe-goat/study-anything",
   "keywords": [
     "study-anything",
@@ -20,6 +20,13 @@
   ],
   "license": "Apache-2.0",
   "metadata": {
+    "inline_runtime": {
+      "default_mode": "workbuddy_inline",
+      "input_schema": "platform/schemas/workbuddy-learning-input-v1.schema.json",
+      "output_schema": "platform/schemas/workbuddy-learning-output-v1.schema.json",
+      "script": "scripts/workbuddy_learning_flow.py",
+      "verification": "python3 scripts/verify_workbuddy_inline_learning_flow.py --check"
+    },
     "local_runtime": {
       "default_api_base": "http://127.0.0.1:8000",
       "launch": "./scripts/launch_skill_mode.sh",
@@ -31,7 +38,8 @@
       "study_anything_stores": "local learning state, validation evidence, and redacted audit metadata"
     },
     "tool_contracts": {
-      "local_http": "http://127.0.0.1:8000",
+      "inline": "scripts/workbuddy_learning_flow.py",
+      "local_http": "fallback: http://127.0.0.1:8000",
       "mcp": "planned extension; not shipped by this plugin",
       "openapi": "platform/generated/study-anything-platform-openapi.json"
     }

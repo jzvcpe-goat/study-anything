@@ -15,7 +15,7 @@
       "commands": [
         "commands"
       ],
-      "description": "Install Study Anything as a CodeBuddy/WorkBuddy plugin that starts a local learning runtime and calls it through OpenAPI/local HTTP tools.",
+      "description": "Install Study Anything as a CodeBuddy/WorkBuddy plugin that runs an inline learning workflow first, with OpenAPI/local HTTP kept as a fallback.",
       "homepage": "https://github.com/jzvcpe-goat/study-anything",
       "keywords": [
         "study-anything",

@@ -2,22 +2,24 @@
 
 This is the beginner path for using Study Anything inside WorkBuddy or
 CodeBuddy. Treat WorkBuddy/CodeBuddy as the main Agent. It owns real model
-choice, browsing, external tools, files, and private credentials. Study Anything
-is the local learning engine.
+choice, browsing, external tools, files, visualization, and private credentials.
+Study Anything is the local learning workflow kernel: it records source-bound
+learning state, quiz/mastery evidence, audit metadata, and exports.
 
-## 0. What You Are Installing
+## 0. The Important Change
 
-You are installing a CodeBuddy/WorkBuddy plugin wrapper. It gives the Agent four
-commands and one skill:
+Do **not** start with a local HTTP server in WorkBuddy.
 
-- `/study-anything:start`
-- `/study-anything:learn`
-- `/study-anything:diagnose`
-- `/study-anything:export`
-- `/study-anything:study-anything`
+Preferred WorkBuddy path:
 
-It still calls your local or private Study Anything runtime. It does not contain
-model API keys.
+```text
+User asks for learning -> WorkBuddy gathers context and calls its own model
+-> Study Anything inline flow records learning evidence
+-> WorkBuddy continues the conversation and export flow
+```
+
+HTTP/OpenAPI remains available as fallback for hosts that can reliably reach a
+local or private endpoint.
 
 ## 1. Add The Marketplace
 
@@ -25,17 +27,13 @@ In CodeBuddy/WorkBuddy:
 
 ```text
 /plugin marketplace add jzvcpe-goat/study-anything
+/plugin install study-anything@study-anything
 ```
 
 For local development from a cloned repo:
 
 ```text
 /plugin marketplace add ./path/to/study-anything
-```
-
-Then install:
-
-```text
 /plugin install study-anything@study-anything
 ```
 
@@ -45,44 +43,118 @@ Check that the marketplace is visible:
 /plugin marketplace list
 ```
 
-## 2. Start Study Anything Locally
+## 2. Use It In Conversation
 
-In a terminal:
+Good trigger phrases:
+
+```text
+系统学习 DeepSeek PM 面试准备
+帮我掌握这段材料
+建立一个学习计划
+考我一下这个主题
+复盘这份报告并导出 Obsidian 笔记
+```
+
+WorkBuddy should:
+
+1. collect source material and learner context;
+2. use its own model to create overview, glossary, quiz, and grading feedback;
+3. call the Study Anything inline flow;
+4. keep `session_ref` hidden in WorkBuddy context;
+5. return a conversational learning card, quiz, feedback, mastery, and export options.
+
+The user should not manage session ids, ports, proxy flags, or background
+processes.
+
+## 3. Inline Flow Contract
+
+WorkBuddy passes a JSON file shaped like:
+
+```text
+platform/schemas/workbuddy-learning-input-v1.schema.json
+```
+
+Then runs:
 
 ```bash
-cd /path/to/study-anything
+python3 scripts/workbuddy_learning_flow.py run \
+  --input workbuddy-learning-input.json \
+  --output workbuddy-learning-output.json \
+  --markdown study-card.md
+```
+
+The output follows:
+
+```text
+platform/schemas/workbuddy-learning-output-v1.schema.json
+```
+
+For a deterministic example:
+
+```bash
+python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
+```
+
+Verify the inline path:
+
+```bash
+python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+```
+
+This verifier proves the WorkBuddy path does not start uvicorn, bind localhost,
+depend on background process persistence, require real model keys, leak raw
+source probes, or expose learner answers.
+
+## 4. What WorkBuddy Owns
+
+WorkBuddy owns:
+
+- real model choice and credentials;
+- web search and browsing;
+- file and app access;
+- visualization;
+- conversation context;
+- private tools and external credentials.
+
+Study Anything owns:
+
+- learning session refs;
+- source-bound claim evidence;
+- quiz/mastery structure;
+- audit and verifier evidence;
+- Obsidian / NotebookLM / Markdown handoff contracts.
+
+## 5. HTTP/OpenAPI Fallback
+
+Use this only when the workspace can reliably call a local or private HTTP
+endpoint.
+
+Start fallback runtime:
+
+```bash
 ./START_HERE.command
 ```
 
-If you prefer explicit commands:
+Or explicitly:
 
 ```bash
 ./scripts/launch_skill_mode.sh
 python3 scripts/study_anything_cli.py health
 ```
 
-If your platform cannot keep background processes alive but you need a
-long-running API for plugin validation, keep a terminal open with:
+If the host cannot keep background processes alive, use foreground mode:
 
 ```bash
 ./scripts/launch_skill_mode.sh --foreground
 ```
 
-If you only need a bounded local proof, run the demo:
-
-```bash
-./scripts/run_skill_mode_demo.sh
-```
-
-## 3. Import HTTP Tools
-
-If WorkBuddy/CodeBuddy can import OpenAPI tools, import:
+Import OpenAPI tools:
 
 ```text
 platform/generated/study-anything-platform-openapi.json
 ```
 
-Default API base:
+Default fallback API base:
 
 ```text
 http://127.0.0.1:8000
@@ -91,50 +163,33 @@ http://127.0.0.1:8000
 If localhost is blocked, expose Study Anything through a private endpoint you
 control and point the imported tools at that endpoint.
 
-## 4. Run The First Learning Flow
+## 6. Diagnose Failures
 
-In WorkBuddy/CodeBuddy, ask:
-
-```text
-/study-anything:learn Rust ownership basics
-```
-
-Then paste a short source passage when asked. The Agent should create a Study
-Anything session, request overview and glossary layers, ask or grade an answer,
-and return mastery evidence.
-
-CLI fallback:
+Start with inline diagnostics:
 
 ```bash
-python3 scripts/study_anything_cli.py start \
-  --title "Rust ownership basics" \
-  --text "Rust uses ownership and borrowing to make memory safety a compile-time property." \
-  --reference "rust-book-note"
-
-python3 scripts/study_anything_cli.py teach <SESSION_ID> --layer overview
-python3 scripts/study_anything_cli.py teach <SESSION_ID> --layer glossary
-python3 scripts/study_anything_cli.py answer <SESSION_ID> --text "Ownership controls who can use and free a value."
-python3 scripts/study_anything_cli.py mastery <SESSION_ID>
+python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+python3 scripts/verify_workbuddy_plugin_marketplace.py --check
 ```
 
-## 5. Diagnose Failures
-
-Run:
-
-```text
-/study-anything:diagnose
-```
-
-Or in terminal:
+Use HTTP diagnostics only for fallback mode:
 
 ```bash
 python3 scripts/study_anything_cli.py health
 python3 scripts/diagnose_adoption.py
-python3 scripts/verify_workbuddy_plugin_marketplace.py --check
+python3 scripts/verify_platform_agent_tools.py
 ```
 
-For CodeBuddy Code CLI headless validation, explicitly load the installed
-plugin channel:
+Common failures:
+
+- Inline passes but HTTP fails: keep using inline mode in WorkBuddy.
+- Localhost/proxy issues: avoid HTTP, or use a private endpoint.
+- Background process disappears: use inline mode or foreground fallback.
+- Model key missing: configure it in WorkBuddy/CodeBuddy, not Study Anything.
+- Python dependency download slow: retry from a normal terminal or prebuilt environment.
+
+For CodeBuddy Code CLI headless validation, explicitly load the installed plugin
+channel:
 
 ```bash
 codebuddy -p \
@@ -142,63 +197,46 @@ codebuddy -p \
   "/study-anything:diagnose"
 ```
 
-Without `--channels`, a headless run may report `/study-anything:... not found`
-even when `codebuddy plugin install study-anything@study-anything` succeeded.
-See `docs/workbuddy-field-report.md` for the current field validation record.
+## 7. Export Learning Evidence
 
-Common failures:
+Inline mode writes a Markdown learning card and a JSON learning package:
 
-- API unreachable: run `./START_HERE.command`.
-- Localhost blocked: use a private reachable endpoint.
-- OpenAPI import rejected: verify the JSON file and try the CLI fallback.
-- Headless command says `not found`: add `--channels plugin:study-anything@study-anything`.
-- Python dependency download slow: set `PIP_INDEX_URL` or retry from a normal terminal.
-- Model key missing: configure it in WorkBuddy/CodeBuddy or your private Agent, not in Study Anything.
-
-## 6. Export Learning Evidence
-
-Use:
-
-```text
-/study-anything:export
+```bash
+python3 scripts/workbuddy_learning_flow.py run \
+  --input workbuddy-learning-input.json \
+  --output workbuddy-learning-output.json \
+  --markdown study-card.md
 ```
 
-The export should contain compact session, source reference, mastery, schema,
-and redacted audit/eval evidence. It must not contain real model keys, Agent
-endpoint secrets, raw source text, learner answers, grading feedback, or private
-browser/app/video context.
+WorkBuddy can then offer:
+
+- import into Obsidian;
+- create a NotebookLM context package;
+- save a local learning archive;
+- continue the quiz in conversation.
+
+Exported evidence should include schema names, session refs, mastery state,
+source references, and redacted audit/eval metadata. It must not include real
+model keys, Agent endpoint secrets, raw private source text, learner answers, or
+private browser/app/video context.
 
 ## 中文速通
 
-1. 在 CodeBuddy/WorkBuddy 里添加市场：
+1. 安装插件：
 
 ```text
 /plugin marketplace add jzvcpe-goat/study-anything
-```
-
-2. 安装插件：
-
-```text
 /plugin install study-anything@study-anything
 ```
 
-3. 在本地启动 Study Anything：
-
-```bash
-./START_HERE.command
-```
-
-4. 如果平台支持 OpenAPI 工具导入，导入：
+2. 在 WorkBuddy 里直接说：
 
 ```text
-platform/generated/study-anything-platform-openapi.json
+系统学习 DeepSeek PM 面试准备
 ```
 
-5. 在 WorkBuddy/CodeBuddy 里说：
+3. WorkBuddy 负责搜索、Kimi、文件、上下文和可视化。
 
-```text
-/study-anything:learn 我想学习这段材料
-```
+4. Study Anything 负责把这次学习变成可追踪的学习卡、测验、掌握度和导出证据。
 
-真实模型、浏览器和外部工具由 WorkBuddy/CodeBuddy 管；Study Anything 只负责本地学习流程、
-测验、掌握度、审计证据和导出。
+5. 不需要用户启动服务器、记 session id、处理端口、处理代理或维护后台进程。
