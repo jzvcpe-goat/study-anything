@@ -17,6 +17,7 @@ Each pack points back to the same constrained public contract:
 - `platform/generated/study-anything-codex-plugin-pack.zip`
 - `platform/generated/study-anything-kimi-plugin-pack.zip`
 - `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+- `platform/generated/study-anything-hermes-plugin-pack.zip`
 - `docs/cognitive-loop-adoption-cookbook.md`
 - `platform/generated/study-anything-cognitive-loop-adoption-recipes.json`
 - `platform/generated/study-anything-cognitive-loop-recipe-replay.json`
@@ -47,7 +48,7 @@ retrieval, and ecosystem eval capabilities:
   Docker source builds, published GHCR images, diagnostics, and privacy boundaries.
 - `commercial-readiness-v1` tells platform Agents which launch paths are ready, which hosted
   services remain contract-only, and why billing/SSO/standalone app work is outside this alpha.
-- `ecosystem-submission-v1` turns the Kimi/Codex/WorkBuddy/generic OpenAPI assets into a
+- `ecosystem-submission-v1` turns the Kimi/Codex/WorkBuddy/Hermes/generic OpenAPI assets into a
   submission-ready package with no standalone frontend requirement, no billing requirement, and no
   Study Anything custody of real model keys.
 - `ecosystem-submission-verification-v1` proves the submission metadata, generated assets, privacy
@@ -71,8 +72,8 @@ retrieval, and ecosystem eval capabilities:
   `plugin-package-validation-v1` package check for local plugin ecosystem handoff.
 - a copy-ready platform adoption pack that proves the Kimi/Codex/WorkBuddy-style tool surface works
   without requiring a standalone frontend.
-- three downloadable plugin packs with sidecar manifests and checksums for Codex, Kimi-compatible,
-  and WorkBuddy-style imports.
+- four downloadable plugin packs with sidecar manifests and checksums for Codex, Kimi-compatible,
+  WorkBuddy-style, and Hermes Agent imports.
 - `study-anything-operator-drill-v1` transcript evidence that proves the pack can be consumed as an
   external platform tool directory.
 - `study-anything-agent-eval-regression-report-v1` evidence that the native eval scorecard did not
@@ -84,12 +85,15 @@ retrieval, and ecosystem eval capabilities:
 - `kimi`: Kimi-compatible or OpenAI-compatible tool-calling agents, plus Kimi as a user-owned
   reasoning model through the local gateway.
 - `workbuddy`: HTTP-tool workspace agents that import OpenAPI tools and call the local API.
+- `hermes`: Hermes Agent Skill users who call the local runtime through CLI or local/private HTTP
+  tools.
 
 ## Downloadable Plugin Packs
 
 - `platform/generated/study-anything-codex-plugin-pack.zip`
 - `platform/generated/study-anything-kimi-plugin-pack.zip`
 - `platform/generated/study-anything-workbuddy-plugin-pack.zip`
+- `platform/generated/study-anything-hermes-plugin-pack.zip`
 
 Each archive has one root directory, a `manifest.json`, a `PLUGIN_PACK_README.md`, and a matching
 `.sha256` file. Generate or verify them from a full checkout with:

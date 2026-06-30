@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate deterministic Codex/Kimi/WorkBuddy plugin import packs."""
+"""Generate deterministic platform plugin import packs."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "platform" / "generated"
 SCHEMA_VERSION = "study-anything-platform-plugin-pack-v1"
 PACKAGE_ROOT_PREFIX = "study-anything"
-PLATFORMS = ("codex", "kimi", "workbuddy")
+PLATFORMS = ("codex", "kimi", "workbuddy", "hermes")
 
 
 class PluginPackError(RuntimeError):
@@ -200,6 +200,52 @@ SPECS: dict[str, PackSpec] = {
             "Requires the host workspace to reach the configured local or private HTTP endpoint.",
             "This is an import package, not an official marketplace listing.",
             "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent.",
+        ),
+    ),
+    "hermes": PackSpec(
+        platform_id="hermes",
+        package_type="hermes_skill_http_tools",
+        title="Study Anything Hermes Agent Plugin Pack",
+        summary=(
+            "Expose Study Anything to Hermes Agent through the Hermes Skills system "
+            "and local HTTP/CLI tools while Hermes keeps model credentials, memory, "
+            "browser/app access, MCP servers, and user conversation."
+        ),
+        files=COMMON_FILES
+        + (
+            ("docs/use-with-hermes.md", "operator_doc", "Hermes Agent Skill and local HTTP/CLI setup guide."),
+            (
+                "docs/platform-agent-integrations.md",
+                "operator_doc",
+                "General external platform Agent integration guide.",
+            ),
+            ("platform/packs/hermes/README.md", "platform_pack", "Hermes Agent import guide."),
+            ("platform/packs/hermes/pack.json", "platform_pack", "Hermes platform pack source descriptor."),
+            ("skills/study-anything/SKILL.md", "skill", "Hermes-compatible Skill entrypoint."),
+            (
+                "platform/generated/study-anything-platform-openapi.json",
+                "tool_import",
+                "OpenAPI 3.1 reference asset for local/private HTTP tools.",
+            ),
+        ),
+        import_assets=(
+            "skills/study-anything/SKILL.md",
+            "platform/generated/study-anything-platform-openapi.json",
+            "platform/generated/study-anything-tool-catalog.md",
+            "platform/packs/hermes/pack.json",
+            "docs/use-with-hermes.md",
+        ),
+        verification_commands=(
+            "hermes skills install https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md --name study-anything --yes",
+            "./START_HERE.command",
+            "python3 scripts/study_anything_cli.py health",
+            "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
+            "python3 scripts/verify_platform_plugin_packs.py --platform hermes --check",
+        ),
+        known_limitations=(
+            "This pack is a Hermes Skill and local HTTP/CLI import helper, not a published Hermes-native Python plugin repo.",
+            "Do not claim `hermes plugins install jzvcpe-goat/study-anything` works until a standalone plugin repo is released and field-tested.",
+            "Real model credentials, memory, browser/app access, MCP servers, and outside tools stay in Hermes or the user's private gateway.",
         ),
     ),
 }

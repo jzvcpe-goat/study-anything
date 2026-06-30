@@ -17,7 +17,7 @@ FIXTURE_DIR = ROOT / "fixtures" / "platform-import-failures"
 SCHEMA_VERSION = "platform-field-adoption-rehearsal-v1"
 FIXTURE_SCHEMA_VERSION = "platform-import-failure-fixture-v1"
 RELEASE_VERSION = "v0.3.31-alpha"
-PLATFORMS = ("kimi", "codex", "workbuddy", "generic")
+PLATFORMS = ("kimi", "codex", "workbuddy", "hermes", "generic")
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?i)\b(api[_-]?key|secret|token)\s*[:=]\s*[A-Za-z0-9_./+=-]{8,}"),
@@ -151,12 +151,14 @@ def platform_transcript(platform_id: str) -> dict[str, Any]:
         "kimi": "platform/generated/study-anything-openai-tools.json",
         "codex": "skills/study-anything/SKILL.md",
         "workbuddy": "platform/generated/study-anything-platform-openapi.json",
+        "hermes": "skills/study-anything/SKILL.md",
         "generic": "platform/generated/study-anything-platform-openapi.json",
     }[platform_id]
     platform_name = {
         "kimi": "Kimi-compatible tool workspace",
         "codex": "Codex Skill workspace",
         "workbuddy": "WorkBuddy-style HTTP workspace",
+        "hermes": "Hermes Agent Skill workspace",
         "generic": "Generic OpenAPI or MCP-capable platform",
     }[platform_id]
     return {
@@ -238,7 +240,7 @@ def build_report() -> dict[str, Any]:
         "status": "pass",
         "purpose": (
             "Turn platform adoption diagnostics into reusable Kimi, Codex, WorkBuddy, "
-            "and generic OpenAPI import rehearsals with actionable failed-import fixtures."
+            "Hermes, and generic OpenAPI import rehearsals with actionable failed-import fixtures."
         ),
         "platforms": [platform_transcript(platform_id) for platform_id in PLATFORMS],
         "quirks_catalog": QUIRKS,

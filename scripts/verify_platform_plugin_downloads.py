@@ -67,7 +67,9 @@ def verify_report() -> dict[str, Any]:
         raise PlatformPluginDownloadVerificationError("Download index schema drifted.")
     downloads = actual.get("downloads")
     if not isinstance(downloads, list) or {item.get("platform_id") for item in downloads} != set(PLATFORMS):
-        raise PlatformPluginDownloadVerificationError("Download index must include Codex, Kimi, and WorkBuddy.")
+        raise PlatformPluginDownloadVerificationError(
+            "Download index must include Codex, Kimi, WorkBuddy, and Hermes."
+        )
     required_names = set(actual.get("required_release_asset_names") or [])
     expected_names = {
         asset["asset_name"]

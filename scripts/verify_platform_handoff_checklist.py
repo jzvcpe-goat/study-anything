@@ -29,11 +29,13 @@ PRIVATE_NEEDLES = (
 REQUIRED_PLATFORM_IDS = {
     "codex-skill",
     "generic-openapi-tools",
+    "hermes-agent",
     "kimi-compatible",
     "workbuddy-style-http",
 }
 PACK_BY_PLATFORM = {
     "codex": "codex-skill",
+    "hermes": "hermes-agent",
     "kimi": "kimi-compatible",
     "workbuddy": "workbuddy-style-http",
 }

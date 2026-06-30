@@ -27,7 +27,7 @@ SCRIPT_RELATIVE_PATH = "scripts/verify_cognitive_loop_skill_entrypoint.py"
 COOKBOOK_RELATIVE_PATH = "docs/cognitive-loop-adoption-cookbook.md"
 RECIPES_RELATIVE_PATH = "platform/generated/study-anything-cognitive-loop-adoption-recipes.json"
 REPLAY_RELATIVE_PATH = "platform/generated/study-anything-cognitive-loop-recipe-replay.json"
-REQUIRED_PACKS = ("codex", "kimi", "workbuddy")
+REQUIRED_PACKS = ("codex", "kimi", "workbuddy", "hermes")
 
 REQUIRED_RECIPE_IDS = (
     "first_adoption",

@@ -2,7 +2,7 @@
 
 **不是让认知变黑箱，而是记录和打开 AI 协作过程的黑匣子。**
 
-**Cognitive Black Box** is a local-first cognitive flight recorder for AI-assisted learning, project work, and platform-Agent collaboration. It helps people and Agents capture what was learned, what changed, why a decision was made, how it was verified, and what can be safely handed off to Kimi, Codex, Obsidian, NotebookLM, WorkBuddy-style tools, or a private Agent.
+**Cognitive Black Box** is a local-first cognitive flight recorder for AI-assisted learning, project work, and platform-Agent collaboration. It helps people and Agents capture what was learned, what changed, why a decision was made, how it was verified, and what can be safely handed off to Kimi, Codex, Hermes Agent, Obsidian, NotebookLM, WorkBuddy-style tools, or a private Agent.
 
 **认知黑箱** 是一个本地优先的 AI 协作黑匣子：记录学习、项目理解、变更、决策、验证、风险和交接证据。它不是把认知过程变得不透明，而是把 AI 协作过程变成可复盘、可审计、可迁移、可继续演化的认知资产。
 
@@ -36,7 +36,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Deterministic fake Agent for tests and demos.
 - Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
 - Source-bound learning loop: reading, teaching layers, quiz, grading, mastery, synthesis, scribe log, and discard/keep.
-- Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, and generic OpenAPI hosts.
+- Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI hosts.
 - Redacted Agent audit/eval artifacts, multi-teacher attribution gates, and optional mature eval adapters.
 - Learning Enrichment bridge for web, document, app, video-slice, Markdown, and Obsidian context.
 - Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
@@ -50,7 +50,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - 用于测试和 demo 的确定性 fake Agent。
 - Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。
 - 基于来源的学习闭环：阅读、分层教学、测验、评分、掌握度、综合洞察、scribe log、保留或丢弃。
-- 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP 和通用 OpenAPI 平台的 Agent 接入包。
+- 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP、Hermes Agent Skill 和通用 OpenAPI 平台的 Agent 接入包。
 - 脱敏 Agent audit/eval 证据、多层教学归因验收，以及可选成熟 eval 适配。
 - Learning Enrichment bridge：接收网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段。
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
@@ -187,6 +187,7 @@ Downloadable plugin packs are generated under `platform/generated/`:
 - `study-anything-codex-plugin-pack.zip` for Codex Skills and terminal-capable Agents.
 - `study-anything-kimi-plugin-pack.zip` for Kimi-compatible OpenAI tool imports.
 - `study-anything-workbuddy-plugin-pack.zip` for WorkBuddy-style OpenAPI HTTP workspaces.
+- `study-anything-hermes-plugin-pack.zip` for Hermes Agent Skill plus local HTTP/CLI usage.
 
 Each pack has a matching `.json` manifest and `.sha256` checksum. The packs still call a local or
 private Study Anything runtime; they do not contain model keys. WorkBuddy/CodeBuddy also has an
@@ -204,7 +205,7 @@ For release downloads, use `docs/platform-plugin-downloads.md` or the generated 
 `platform/generated/study-anything-platform-plugin-downloads.json`; the GitHub Release must attach
 each plugin pack archive, manifest, and checksum sidecar.
 
-For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, or another platform Agent, verify the copy-ready adoption pack:
+For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, or another platform Agent, verify the copy-ready adoption pack:
 
 ```bash
 python3 scripts/generate_platform_plugin_packs.py --check
@@ -223,7 +224,7 @@ python3 scripts/verify_external_adoption.py \
 The platform packs prove that an external Agent can import the tool surface, run one source-bound learning loop, return audit/eval evidence, and export Obsidian or NotebookLM-style handoff artifacts without requiring a standalone frontend or storing real model keys in Study Anything.
 For scenario-based operation, use `docs/cognitive-loop-adoption-cookbook.md` to map Kimi, Codex, WorkBuddy, or a private platform Agent to first adoption, daily project review, risk decisions, and learning handoff.
 
-三个可下载插件包分别面向 Codex、Kimi-compatible 和 WorkBuddy-style 平台。它们只负责导入工具和启动本地运行时；真实模型、浏览器、外部应用和密钥仍然由用户自己的平台 Agent 管理。
+四个可下载插件包分别面向 Codex、Kimi-compatible、WorkBuddy-style 和 Hermes Agent 平台。它们只负责导入工具和启动本地运行时；真实模型、浏览器、外部应用和密钥仍然由用户自己的平台 Agent 管理。
 
 WorkBuddy/CodeBuddy 还可以通过 `/plugin marketplace add jzvcpe-goat/study-anything` 和
 `/plugin install study-anything@study-anything` 安装插件包装层。它只负责命令、Skill 和

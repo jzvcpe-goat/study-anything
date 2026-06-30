@@ -143,6 +143,7 @@
   },
   "platform_packs": {
     "codex": "pass",
+    "hermes": "pass",
     "kimi": "pass",
     "workbuddy": "pass"
   },

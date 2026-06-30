@@ -62,6 +62,7 @@ PUBLIC_ASSET_PATHS = (
     "platform/packs/codex/pack.json",
     "platform/packs/kimi/pack.json",
     "platform/packs/workbuddy/pack.json",
+    "platform/packs/hermes/pack.json",
 )
 
 FORBIDDEN_PATTERNS = [

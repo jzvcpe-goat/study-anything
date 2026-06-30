@@ -193,6 +193,10 @@
       "acceptance_evidence_declared": true,
       "command_declared": true
     },
+    "hermes": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true
+    },
     "kimi": {
       "acceptance_evidence_declared": true,
       "command_declared": true

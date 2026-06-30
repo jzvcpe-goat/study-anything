@@ -278,7 +278,7 @@ def validate_dashboard(root: Path) -> dict[str, Any]:
 
 def validate_platform_packs(root: Path) -> dict[str, Any]:
     results: dict[str, Any] = {}
-    for platform_id in ("codex", "kimi", "workbuddy"):
+    for platform_id in ("codex", "kimi", "workbuddy", "hermes"):
         pack = read_json(require_file(root, f"platform/packs/{platform_id}/pack.json"))
         commands = "\n".join(str(command) for command in pack.get("local_verification_commands", []))
         evidence = set(str(item) for item in pack.get("acceptance_evidence", []))

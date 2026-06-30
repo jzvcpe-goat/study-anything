@@ -185,6 +185,12 @@
       "platform_id": "codex",
       "plugin_verifier_command_present": true
     },
+    "hermes": {
+      "acceptance_evidence_count": 110,
+      "integration_mode": "hermes_skill_http_tools",
+      "platform_id": "hermes",
+      "plugin_verifier_command_present": true
+    },
     "kimi": {
       "acceptance_evidence_count": 110,
       "integration_mode": "openai_compatible_tools",
@@ -259,7 +265,7 @@
   "schema_version": "plugin-ecosystem-adoption-kit-v1",
   "status": "pass",
   "submission": {
-    "platform_count": 4,
+    "platform_count": 5,
     "plugin_assets_declared": 17,
     "schema_version": "ecosystem-submission-v1",
     "version": "v0.3.31-alpha"

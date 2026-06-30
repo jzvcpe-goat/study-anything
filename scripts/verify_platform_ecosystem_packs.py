@@ -14,7 +14,7 @@ from localhost_diagnostics import redact_diagnostic
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST_PATH = ROOT / "platform" / "study-anything-platform-tools.json"
 PACKS_DIR = ROOT / "platform" / "packs"
-REQUIRED_PACKS = {"codex", "kimi", "workbuddy"}
+REQUIRED_PACKS = {"codex", "kimi", "workbuddy", "hermes"}
 REQUIRED_ACCEPTANCE = {
     "commercial_readiness.schema_version == commercial-readiness-v1",
     "adoption_telemetry.schema_version == adoption-telemetry-v1",
@@ -559,6 +559,8 @@ def verify_pack(pack_id: str, manifest: dict[str, Any]) -> dict[str, Any]:
         raise PackVerificationError("Codex pack must keep the Skill Mode demo as its primary check")
     if pack_id == "kimi" and "verify_openai_compatible_gateway.py" not in command_text:
         raise PackVerificationError("Kimi pack must verify the OpenAI-compatible gateway dry-run flow")
+    if pack_id == "hermes" and "hermes skills install" not in command_text:
+        raise PackVerificationError("Hermes pack must document the Hermes Skill install command")
 
     acceptance = set(str(item) for item in pack.get("acceptance_evidence", []))
     missing_acceptance = REQUIRED_ACCEPTANCE - acceptance
@@ -673,6 +675,7 @@ def main() -> None:
         "codex",
         "kimi",
         "workbuddy",
+        "hermes",
         "verify_platform_ecosystem_packs.py",
     )
     print(

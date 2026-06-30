@@ -73,6 +73,18 @@
       {
         "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
         "name": "study-anything-workbuddy-plugin-pack.sha256"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.json",
+        "name": "study-anything-hermes-plugin-pack.json"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.zip",
+        "name": "study-anything-hermes-plugin-pack.zip"
+      },
+      {
+        "browser_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.sha256",
+        "name": "study-anything-hermes-plugin-pack.sha256"
       }
     ],
     "html_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",

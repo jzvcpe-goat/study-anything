@@ -95,7 +95,8 @@
       "skills/study-anything/SKILL.md",
       "platform/packs/codex/README.md",
       "platform/packs/kimi/README.md",
-      "platform/packs/workbuddy/README.md"
+      "platform/packs/workbuddy/README.md",
+      "platform/packs/hermes/README.md"
     ],
     "cli_documented": true
   },
@@ -117,6 +118,12 @@
         "accepts_schema": true,
         "imports_cli": true,
         "platform_id": "workbuddy",
+        "runs_verifier": true
+      },
+      {
+        "accepts_schema": true,
+        "imports_cli": true,
+        "platform_id": "hermes",
         "runs_verifier": true
       }
     ]

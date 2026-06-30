@@ -52,6 +52,12 @@
       "imports_report": true,
       "platform_id": "workbuddy",
       "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_report": true,
+      "platform_id": "hermes",
+      "runs_verifier": true
     }
   ],
   "platform_pack_readmes": [
@@ -77,6 +83,14 @@
       "mentions_replay_report": true,
       "path": "platform/packs/workbuddy/README.md",
       "platform_id": "workbuddy",
+      "runs_skill_entrypoint_verifier": true
+    },
+    {
+      "mentions_cookbook": true,
+      "mentions_recipe_matrix": true,
+      "mentions_replay_report": true,
+      "path": "platform/packs/hermes/README.md",
+      "platform_id": "hermes",
       "runs_skill_entrypoint_verifier": true
     }
   ],

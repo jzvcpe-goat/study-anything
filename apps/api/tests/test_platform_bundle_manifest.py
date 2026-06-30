@@ -73,7 +73,7 @@ class PlatformBundleManifestTests(unittest.TestCase):
         adoption = json.loads(adoption_path.read_text(encoding="utf-8"))
 
         self.assertEqual(payload["schema_version"], "study-anything-platform-bundle-v1")
-        self.assertEqual(payload["platforms"], ["codex", "kimi", "workbuddy"])
+        self.assertEqual(payload["platforms"], ["codex", "kimi", "workbuddy", "hermes"])
         file_paths = {item["path"] for item in payload["files"]}
         bundle_forbidden_recursive_outputs = {
             "platform/generated/study-anything-platform-bundle.json",
@@ -92,6 +92,7 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("platform/packs/codex/pack.json", file_paths)
         self.assertIn("platform/packs/kimi/pack.json", file_paths)
         self.assertIn("platform/packs/workbuddy/pack.json", file_paths)
+        self.assertIn("platform/packs/hermes/pack.json", file_paths)
         self.assertIn("scripts/doctor.sh", file_paths)
         self.assertIn("scripts/launch_self_host.sh", file_paths)
         self.assertIn("scripts/localhost_diagnostics.py", file_paths)

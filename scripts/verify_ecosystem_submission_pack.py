@@ -264,6 +264,7 @@ REQUIRED_PLATFORMS = {
     "kimi-compatible",
     "codex-skill",
     "workbuddy-style-http",
+    "hermes-agent",
     "generic-openapi-tools",
 }
 REQUIRED_SHARED_ASSETS = {
@@ -1004,7 +1005,7 @@ def verify_platform_submissions(by_id: dict[str, Any]) -> None:
         if not submission.get("known_limits"):
             raise EcosystemSubmissionError(f"{platform_id} must declare known_limits.")
 
-    for pack_id in ("kimi", "codex", "workbuddy"):
+    for pack_id in ("kimi", "codex", "workbuddy", "hermes"):
         pack = load_json(PACKS_DIR / pack_id / "pack.json")
         if pack.get("schema_version") != "study-anything-platform-pack-v1":
             raise EcosystemSubmissionError(f"{pack_id} pack schema drifted.")
@@ -2817,7 +2818,7 @@ def verify_cognitive_loop_adoption_cookbook_report() -> None:
     if cookbook.get("sections", 0) < 9 or cookbook.get("commands", 0) < 15:
         raise EcosystemSubmissionError("Cognitive Loop adoption cookbook report lost sections or commands.")
     pack_ids = {pack.get("platform_id") for pack in report.get("platform_packs", []) if isinstance(pack, dict)}
-    if pack_ids != {"codex", "kimi", "workbuddy"}:
+    if pack_ids != {"codex", "kimi", "workbuddy", "hermes"}:
         raise EcosystemSubmissionError("Cognitive Loop adoption cookbook platform pack coverage drifted.")
     for pack in report.get("platform_packs", []):
         for key in ("imports_cookbook", "imports_report", "runs_verifier", "accepts_schema"):
@@ -2998,9 +2999,9 @@ def verify_cognitive_loop_skill_entrypoint_report() -> None:
 
     readme_ids = {item.get("platform_id") for item in report.get("platform_pack_readmes", []) if isinstance(item, dict)}
     manifest_ids = {item.get("platform_id") for item in report.get("platform_pack_manifests", []) if isinstance(item, dict)}
-    if readme_ids != {"codex", "kimi", "workbuddy"}:
+    if readme_ids != {"codex", "kimi", "workbuddy", "hermes"}:
         raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint README coverage drifted.")
-    if manifest_ids != {"codex", "kimi", "workbuddy"}:
+    if manifest_ids != {"codex", "kimi", "workbuddy", "hermes"}:
         raise EcosystemSubmissionError("Cognitive Loop Skill entrypoint pack manifest coverage drifted.")
     for item in report.get("platform_pack_readmes", []):
         for key in ("mentions_cookbook", "mentions_recipe_matrix", "mentions_replay_report", "runs_skill_entrypoint_verifier"):
@@ -3108,6 +3109,7 @@ def verify_cognitive_loop_recipe_cli_report() -> None:
         "platform/packs/codex/README.md",
         "platform/packs/kimi/README.md",
         "platform/packs/workbuddy/README.md",
+        "platform/packs/hermes/README.md",
     }:
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI docs coverage drifted.")
     manifest_ids = {
@@ -3115,7 +3117,7 @@ def verify_cognitive_loop_recipe_cli_report() -> None:
         for item in (report.get("platform_pack_manifests") or {}).get("packs", [])
         if isinstance(item, dict)
     }
-    if manifest_ids != {"codex", "kimi", "workbuddy"}:
+    if manifest_ids != {"codex", "kimi", "workbuddy", "hermes"}:
         raise EcosystemSubmissionError("Cognitive Loop recipe CLI pack manifest coverage drifted.")
     ecosystem = report.get("ecosystem_submission") or {}
     for key in (
@@ -4067,7 +4069,7 @@ def verify_platform_handoff_checklist_report() -> None:
             raise EcosystemSubmissionError(f"Platform handoff checklist missing required asset {asset}.")
 
     platforms = report.get("platforms")
-    if not isinstance(platforms, list) or len(platforms) != 4:
+    if not isinstance(platforms, list) or len(platforms) != len(REQUIRED_PLATFORMS):
         raise EcosystemSubmissionError("Platform handoff checklist platform rows drifted.")
     platform_ids = {item.get("platform_id") for item in platforms if isinstance(item, dict)}
     if platform_ids != REQUIRED_PLATFORMS:
@@ -4538,10 +4540,10 @@ def verify_platform_field_rehearsal_report() -> None:
     if report.get("status") != "pass":
         raise EcosystemSubmissionError("Platform field rehearsal report must pass.")
     platforms = report.get("platforms")
-    if not isinstance(platforms, list) or len(platforms) != 4:
-        raise EcosystemSubmissionError("Platform field rehearsal must cover four platform modes.")
+    if not isinstance(platforms, list) or len(platforms) != 5:
+        raise EcosystemSubmissionError("Platform field rehearsal must cover five platform modes.")
     platform_ids = {str(item.get("platform_id")) for item in platforms if isinstance(item, dict)}
-    if platform_ids != {"kimi", "codex", "workbuddy", "generic"}:
+    if platform_ids != {"kimi", "codex", "workbuddy", "hermes", "generic"}:
         raise EcosystemSubmissionError(f"Platform field rehearsal platform ids drifted: {sorted(platform_ids)}")
     quirks = report.get("quirks_catalog")
     if not isinstance(quirks, list) or len(quirks) < 8:
@@ -5182,7 +5184,7 @@ def verify_platform_agent_replay_report() -> None:
     if required_tools != expected_tools:
         raise EcosystemSubmissionError(f"Platform Agent replay required tools drifted: {sorted(required_tools)}")
     platforms = set(str(item) for item in report.get("platforms", []))
-    if platforms != {"kimi", "codex", "workbuddy", "generic-openapi"}:
+    if platforms != {"kimi", "codex", "workbuddy", "hermes", "generic-openapi"}:
         raise EcosystemSubmissionError(f"Platform Agent replay platforms drifted: {sorted(platforms)}")
     commands = report.get("commands") or {}
     command_text = " ".join(str(item) for item in commands.values())

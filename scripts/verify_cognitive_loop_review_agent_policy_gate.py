@@ -254,7 +254,7 @@ def validate_platform_packs() -> dict[str, str]:
         "cognitive-loop-review-agent-policy-gate-verification-v1"
     )
     checked: dict[str, str] = {}
-    for pack_id in ("codex", "kimi", "workbuddy"):
+    for pack_id in ("codex", "kimi", "workbuddy", "hermes"):
         pack_path = ROOT / "platform" / "packs" / pack_id / "pack.json"
         pack = json.loads(pack_path.read_text(encoding="utf-8"))
         assets = set(pack.get("import_assets", []))

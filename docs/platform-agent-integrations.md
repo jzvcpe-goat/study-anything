@@ -29,7 +29,7 @@ Platform integrations should start from the repo-local manifest:
 platform/study-anything-platform-tools.json
 ```
 
-The manifest declares the minimum tool surface for Codex, Kimi Work, WorkBuddy-style workspaces, and
+The manifest declares the minimum tool surface for Codex, Kimi Work, WorkBuddy-style workspaces, Hermes Agent, and
 private Agent platforms:
 
 - deployment guide for Skill Mode, Docker source builds, published GHCR images, diagnostics, and
@@ -116,7 +116,7 @@ python3 scripts/verify_external_adoption.py \
 ```
 
 The dry-run report is the review artifact for manual Kimi-compatible, Codex
-Skill, WorkBuddy-style HTTP, and generic OpenAPI submissions.
+Skill, WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI submissions.
 The manual rehearsal report emits `platform-manual-submission-rehearsal-v1` and
 turns the operator path into a redacted handoff checklist: unpack, import,
 health check, user-owned HTTP Agent setup, first lesson, export evidence, and

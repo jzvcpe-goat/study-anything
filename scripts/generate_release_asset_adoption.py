@@ -64,6 +64,9 @@ REQUIRED_RELEASE_ASSETS = (
     "study-anything-workbuddy-plugin-pack.json",
     "study-anything-workbuddy-plugin-pack.zip",
     "study-anything-workbuddy-plugin-pack.sha256",
+    "study-anything-hermes-plugin-pack.json",
+    "study-anything-hermes-plugin-pack.zip",
+    "study-anything-hermes-plugin-pack.sha256",
 )
 PUBLIC_ASSET_PATHS = (
     "README.md",

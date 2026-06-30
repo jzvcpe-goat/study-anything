@@ -219,6 +219,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
             "kimi": "OpenAI-compatible tools plus local HTTP API endpoint.",
             "codex": "Skill entrypoint plus CLI/demo commands.",
             "workbuddy": "OpenAPI import plus tool catalog.",
+            "hermes": "Hermes Skill entrypoint plus local HTTP/CLI commands.",
         },
         "classification_matrix": [
             {"classification": "release_asset_bootstrap_ready", "release_gate": "pass", "meaning": "Release assets, pack digests, platform imports, and selected runtime replay are usable."},

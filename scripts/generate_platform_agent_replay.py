@@ -37,7 +37,7 @@ REQUIRED_TOOLS = [
     "study_anything_agent_audit",
     "study_anything_agent_eval_artifact",
 ]
-PLATFORMS = ["kimi", "codex", "workbuddy", "generic-openapi"]
+PLATFORMS = ["kimi", "codex", "workbuddy", "hermes", "generic-openapi"]
 PUBLIC_ASSET_PATHS = (
     "docs/platform-agent-release-replay.md",
     "docs/release-asset-bootstrap.md",
@@ -50,6 +50,7 @@ PUBLIC_ASSET_PATHS = (
     "platform/packs/kimi/README.md",
     "platform/packs/codex/README.md",
     "platform/packs/workbuddy/README.md",
+    "platform/packs/hermes/README.md",
 )
 CLASSIFICATION_MATRIX = [
     (
@@ -143,7 +144,7 @@ def build_report(include_archive_metadata: bool = False, archive: bytes | None =
         "version": RELEASE_VERSION,
         "status": "pass",
         "purpose": (
-            "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from "
+            "Prove that a Kimi, Codex, WorkBuddy, Hermes, or generic OpenAPI operator can start from "
             "GitHub Release assets, import platform tool definitions, and replay the minimal "
             "Study Anything learning tool chain without exposing private learning data."
         ),

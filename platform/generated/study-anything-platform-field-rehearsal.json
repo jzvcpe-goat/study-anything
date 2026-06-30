@@ -180,6 +180,44 @@
         },
         {
           "actor": "platform_agent",
+          "evidence": "skills/study-anything/SKILL.md selected without exposing management endpoints",
+          "step": "import_tools"
+        },
+        {
+          "actor": "operator",
+          "evidence": "Skill Mode, source Compose, or published-image runtime started locally",
+          "step": "start_local_runtime"
+        },
+        {
+          "actor": "platform_agent",
+          "evidence": "health, tool catalog, and deterministic fake-agent lesson flow checked",
+          "step": "run_safe_probe"
+        },
+        {
+          "actor": "operator",
+          "evidence": "redacted feedback package available for manual support handoff",
+          "step": "collect_feedback"
+        }
+      ],
+      "expected_evidence": [
+        "platform_field_rehearsal.schema_version == platform-field-adoption-rehearsal-v1",
+        "platform_feedback_package.schema_version == platform-feedback-package-v1",
+        "no raw source text, learner answers, or model secrets in transcript"
+      ],
+      "import_asset": "skills/study-anything/SKILL.md",
+      "platform_id": "hermes",
+      "platform_name": "Hermes Agent Skill workspace",
+      "status": "ready_for_field_rehearsal"
+    },
+    {
+      "events": [
+        {
+          "actor": "operator",
+          "evidence": "study-anything-platform-adoption-pack.zip opened and manifest sha256 checked",
+          "step": "download_pack"
+        },
+        {
+          "actor": "platform_agent",
           "evidence": "platform/generated/study-anything-platform-openapi.json selected without exposing management endpoints",
           "step": "import_tools"
         },
@@ -219,7 +257,7 @@
     "raw_source_text_in_report": false,
     "real_model_keys_in_report": false
   },
-  "purpose": "Turn platform adoption diagnostics into reusable Kimi, Codex, WorkBuddy, and generic OpenAPI import rehearsals with actionable failed-import fixtures.",
+  "purpose": "Turn platform adoption diagnostics into reusable Kimi, Codex, WorkBuddy, Hermes, and generic OpenAPI import rehearsals with actionable failed-import fixtures.",
   "quirks_catalog": [
     {
       "detection_signal": "Imported asset declares an unexpected schema_version or OpenAPI version.",

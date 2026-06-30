@@ -30,7 +30,7 @@ SCRIPT_RELATIVE_PATH = "scripts/verify_cognitive_loop_recipe_cli.py"
 CLI_RELATIVE_PATH = "scripts/cognitive_loop_recipe_cli.py"
 RECIPES_RELATIVE_PATH = "platform/generated/study-anything-cognitive-loop-adoption-recipes.json"
 REPLAY_RELATIVE_PATH = "platform/generated/study-anything-cognitive-loop-recipe-replay.json"
-REQUIRED_PACKS = ("codex", "kimi", "workbuddy")
+REQUIRED_PACKS = ("codex", "kimi", "workbuddy", "hermes")
 EXPECTED_RECIPE_IDS = ("first_adoption", "daily_project_review", "risk_decision", "learning_handoff")
 
 

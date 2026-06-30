@@ -1,19 +1,21 @@
 {
   "archive": {
-    "bytes": 138946,
-    "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
-    "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "bf6905abe6ba67d9df4a7c159f182057baec12c11190c76f1c24fbe087c7f48d"
+    "bytes": 143476,
+    "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
+    "root": "study-anything-hermes-plugin-pack",
+    "sha256": "3ed3f43a94cef5b5292be998ef53dbb9d5e79ef139e0869cea0ad87ebb142fcd"
   },
   "entrypoints": {
-    "api_docs": "docs/api.md",
-    "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+    "direct_skill_install": "https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md",
+    "guide": "docs/use-with-hermes.md",
     "openapi": "platform/generated/study-anything-platform-openapi.json",
+    "pack": "platform/packs/hermes/pack.json",
+    "skill": "skills/study-anything/SKILL.md",
     "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
   },
   "files": [
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/README.md",
+      "archive_path": "study-anything-hermes-plugin-pack/README.md",
       "bytes": 38832,
       "kind": "root_doc",
       "path": "README.md",
@@ -21,7 +23,7 @@
       "sha256": "d5e4ea0119e36f96d871bb536c47fc842881c435a56de656391ba12637977c68"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/QUICKSTART.md",
+      "archive_path": "study-anything-hermes-plugin-pack/QUICKSTART.md",
       "bytes": 1258,
       "kind": "quickstart",
       "path": "QUICKSTART.md",
@@ -29,7 +31,7 @@
       "sha256": "11e6c8c29d9516e94d499eace7fbfb581a31220cbaf1a97d0c31c7935df615f5"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/START_HERE.command",
+      "archive_path": "study-anything-hermes-plugin-pack/START_HERE.command",
       "bytes": 1112,
       "kind": "launcher",
       "path": "START_HERE.command",
@@ -37,7 +39,7 @@
       "sha256": "03d6e9affc81ecc8cee8cf024f562d6f1c4b5b758d7aa62fbce73992cc059e6b"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/docs/getting-started.md",
+      "archive_path": "study-anything-hermes-plugin-pack/docs/getting-started.md",
       "bytes": 5247,
       "kind": "operator_doc",
       "path": "docs/getting-started.md",
@@ -45,7 +47,7 @@
       "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/docs/operator-drill.md",
+      "archive_path": "study-anything-hermes-plugin-pack/docs/operator-drill.md",
       "bytes": 3393,
       "kind": "operator_doc",
       "path": "docs/operator-drill.md",
@@ -53,7 +55,7 @@
       "sha256": "ab16e1e6c93548fe62950827b15a0b5ccf1a9f7947a1cf69ae8a0a734531a611"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/platform/study-anything-platform-tools.json",
+      "archive_path": "study-anything-hermes-plugin-pack/platform/study-anything-platform-tools.json",
       "bytes": 47347,
       "kind": "tool_manifest",
       "path": "platform/study-anything-platform-tools.json",
@@ -61,7 +63,7 @@
       "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-tool-catalog.md",
+      "archive_path": "study-anything-hermes-plugin-pack/platform/generated/study-anything-tool-catalog.md",
       "bytes": 24007,
       "kind": "tool_catalog",
       "path": "platform/generated/study-anything-tool-catalog.md",
@@ -69,7 +71,7 @@
       "sha256": "b03a5d9c1078441bc423844c401e2a01ffe79de7407fc8dba06007e9dd76cbce"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/start_here.sh",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/start_here.sh",
       "bytes": 10068,
       "kind": "launcher",
       "path": "scripts/start_here.sh",
@@ -77,7 +79,7 @@
       "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/launch_skill_mode.sh",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/launch_skill_mode.sh",
       "bytes": 28010,
       "kind": "runtime",
       "path": "scripts/launch_skill_mode.sh",
@@ -85,7 +87,7 @@
       "sha256": "c2816380364c7cf0acbf9cefde5ce0a3db4d5a851aea78f906628a73d56bb517"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/stop_skill_mode.sh",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/stop_skill_mode.sh",
       "bytes": 6063,
       "kind": "runtime",
       "path": "scripts/stop_skill_mode.sh",
@@ -93,7 +95,7 @@
       "sha256": "0e253c59de751487b72d07103d29d86d4f35347992b2ccc652ec76eceef40b4f"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/run_skill_mode_demo.sh",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/run_skill_mode_demo.sh",
       "bytes": 10135,
       "kind": "verification",
       "path": "scripts/run_skill_mode_demo.sh",
@@ -101,7 +103,7 @@
       "sha256": "8c5a5ee73293e9945b872c51bc37205408feb6c0202cdf86475ce584023a0bbd"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/study_anything_cli.py",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/study_anything_cli.py",
       "bytes": 136781,
       "kind": "cli",
       "path": "scripts/study_anything_cli.py",
@@ -109,7 +111,7 @@
       "sha256": "c5fdc5bd64c0050d7e1686b7bd754a6cfa1ecad5305779c27213d0b948cdbc68"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/localhost_diagnostics.py",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/localhost_diagnostics.py",
       "bytes": 8669,
       "kind": "diagnostics",
       "path": "scripts/localhost_diagnostics.py",
@@ -117,7 +119,7 @@
       "sha256": "aa0bbe62ea68497e45c8621755e303b39d6da90cf956bb64935c6cd4d1008cf1"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_platform_agent_tools.py",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/verify_platform_agent_tools.py",
       "bytes": 47018,
       "kind": "verification",
       "path": "scripts/verify_platform_agent_tools.py",
@@ -125,7 +127,7 @@
       "sha256": "1a4ab6e2964ca51199a8edda35c9ec31dcd7493260bba89fd733a25bb329937c"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
+      "archive_path": "study-anything-hermes-plugin-pack/scripts/verify_external_adoption.py",
       "bytes": 68921,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
@@ -133,15 +135,15 @@
       "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/docs/api.md",
-      "bytes": 17577,
+      "archive_path": "study-anything-hermes-plugin-pack/docs/use-with-hermes.md",
+      "bytes": 3370,
       "kind": "operator_doc",
-      "path": "docs/api.md",
-      "purpose": "HTTP API reference for platform workspaces.",
-      "sha256": "9206e6e26060fdc54e11a71d76888c1e01e6c930060e41adc0fc93ac67669fd4"
+      "path": "docs/use-with-hermes.md",
+      "purpose": "Hermes Agent Skill and local HTTP/CLI setup guide.",
+      "sha256": "8c0fe9505e0e1362d37c4d534d307a2d43fb14c0fe9df0294d895c113834df48"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/docs/platform-agent-integrations.md",
+      "archive_path": "study-anything-hermes-plugin-pack/docs/platform-agent-integrations.md",
       "bytes": 28276,
       "kind": "operator_doc",
       "path": "docs/platform-agent-integrations.md",
@@ -149,39 +151,49 @@
       "sha256": "df9358d2e316e5a2c0754f0c63ea3d76b6a4f6ba8ed36bc5bf5cbd8dcb62d77a"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/README.md",
-      "bytes": 21553,
+      "archive_path": "study-anything-hermes-plugin-pack/platform/packs/hermes/README.md",
+      "bytes": 23638,
       "kind": "platform_pack",
-      "path": "platform/packs/workbuddy/README.md",
-      "purpose": "WorkBuddy-style import guide.",
-      "sha256": "ca41cd69c3403f3617794be3944ac56e53383a0107b847a7c1567d9772d3efca"
+      "path": "platform/packs/hermes/README.md",
+      "purpose": "Hermes Agent import guide.",
+      "sha256": "667e632f827b64d1e3c0a3f88669f5d9531f52acfb9392ee96a7ed91da97336a"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/pack.json",
-      "bytes": 29318,
+      "archive_path": "study-anything-hermes-plugin-pack/platform/packs/hermes/pack.json",
+      "bytes": 37926,
       "kind": "platform_pack",
-      "path": "platform/packs/workbuddy/pack.json",
-      "purpose": "WorkBuddy platform pack source descriptor.",
-      "sha256": "5fcb9b257077ff59567ab8483427c6ffc286d4f8c05415ec680a02088eff0f52"
+      "path": "platform/packs/hermes/pack.json",
+      "purpose": "Hermes platform pack source descriptor.",
+      "sha256": "caba1c8632bdc31cf19c783f8813bd53166b986c1ccfd9860c8c36eede82d4b7"
     },
     {
-      "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-platform-openapi.json",
+      "archive_path": "study-anything-hermes-plugin-pack/skills/study-anything/SKILL.md",
+      "bytes": 25327,
+      "kind": "skill",
+      "path": "skills/study-anything/SKILL.md",
+      "purpose": "Hermes-compatible Skill entrypoint.",
+      "sha256": "107e7be78e17716cb070bc160339b3e1353121a0454a5e75256f01f66696b618"
+    },
+    {
+      "archive_path": "study-anything-hermes-plugin-pack/platform/generated/study-anything-platform-openapi.json",
       "bytes": 83732,
       "kind": "tool_import",
       "path": "platform/generated/study-anything-platform-openapi.json",
-      "purpose": "OpenAPI 3.1 import asset.",
+      "purpose": "OpenAPI 3.1 reference asset for local/private HTTP tools.",
       "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
     }
   ],
   "import_assets": [
+    "skills/study-anything/SKILL.md",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-tool-catalog.md",
-    "platform/packs/workbuddy/pack.json"
+    "platform/packs/hermes/pack.json",
+    "docs/use-with-hermes.md"
   ],
   "known_limitations": [
-    "Requires the host workspace to reach the configured local or private HTTP endpoint.",
-    "This is an import package, not an official marketplace listing.",
-    "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent."
+    "This pack is a Hermes Skill and local HTTP/CLI import helper, not a published Hermes-native Python plugin repo.",
+    "Do not claim `hermes plugins install jzvcpe-goat/study-anything` works until a standalone plugin repo is released and field-tested.",
+    "Real model credentials, memory, browser/app access, MCP servers, and outside tools stay in Hermes or the user's private gateway."
   ],
   "local_runtime": {
     "api_base": "http://127.0.0.1:8000",
@@ -190,9 +202,9 @@
     "skill_mode": "./scripts/launch_skill_mode.sh",
     "stop": "./scripts/stop_skill_mode.sh"
   },
-  "name": "study-anything-workbuddy-plugin-pack",
-  "package_type": "openapi_http_tools",
-  "platform_id": "workbuddy",
+  "name": "study-anything-hermes-plugin-pack",
+  "package_type": "hermes_skill_http_tools",
+  "platform_id": "hermes",
   "privacy_boundaries": {
     "must_not_store_or_share": [
       "raw source text",
@@ -209,13 +221,15 @@
     "study_anything_stores": "local learning state, validation evidence, redacted audit metadata"
   },
   "schema_version": "study-anything-platform-plugin-pack-v1",
-  "source_pack": "platform/packs/workbuddy/pack.json",
-  "source_pack_sha256": "5fcb9b257077ff59567ab8483427c6ffc286d4f8c05415ec680a02088eff0f52",
-  "summary": "Import the constrained OpenAPI HTTP tools into WorkBuddy-style workspaces that can call a local or private Study Anything runtime.",
-  "title": "Study Anything WorkBuddy Plugin Pack",
+  "source_pack": "platform/packs/hermes/pack.json",
+  "source_pack_sha256": "caba1c8632bdc31cf19c783f8813bd53166b986c1ccfd9860c8c36eede82d4b7",
+  "summary": "Expose Study Anything to Hermes Agent through the Hermes Skills system and local HTTP/CLI tools while Hermes keeps model credentials, memory, browser/app access, MCP servers, and user conversation.",
+  "title": "Study Anything Hermes Agent Plugin Pack",
   "verification_commands": [
+    "hermes skills install https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md --name study-anything --yes",
     "./START_HERE.command",
+    "python3 scripts/study_anything_cli.py health",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
-    "python3 scripts/verify_platform_operator_drill.py --check"
+    "python3 scripts/verify_platform_plugin_packs.py --platform hermes --check"
   ]
 }

@@ -20,7 +20,7 @@ RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-first-lesson-authoring-kit.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 REQUIRED_TOOLS = [
     "study_anything_health",
     "study_anything_validate_context_package",

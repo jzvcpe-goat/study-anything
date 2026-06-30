@@ -21,7 +21,7 @@ RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-plugin-ecosystem-adoption-kit.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
 
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 EXPECTED_PLUGINS = {
     "example-note-importer": {
         "path": "plugins/example-note-importer",

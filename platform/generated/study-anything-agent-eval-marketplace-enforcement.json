@@ -34,7 +34,7 @@
   "ecosystem_submission": {
     "schema_version": "ecosystem-submission-v1",
     "shared_assets_included": 4,
-    "submission_count": 4,
+    "submission_count": 5,
     "version": "v0.3.31-alpha"
   },
   "external_judge_contracts": [
@@ -80,6 +80,11 @@
       "acceptance_evidence_declared": true,
       "command_declared": true,
       "integration_mode": "terminal_skill"
+    },
+    "hermes": {
+      "acceptance_evidence_declared": true,
+      "command_declared": true,
+      "integration_mode": "hermes_skill_http_tools"
     },
     "kimi": {
       "acceptance_evidence_declared": true,

@@ -132,7 +132,7 @@ def build_report() -> dict[str, Any]:
         },
         "purpose": (
             "Make the GitHub Release page a direct download surface for Codex, "
-            "Kimi-compatible, and WorkBuddy-style platform plugin packs."
+            "Kimi-compatible, WorkBuddy-style, and Hermes Agent platform plugin packs."
         ),
         "downloads": downloads,
         "required_release_asset_names": [
@@ -185,7 +185,9 @@ Use the GitHub Release page as the public download entrypoint:
 
 These zip archives are import helpers for user-owned platform Agents. They do
 not contain real model keys and still call a local or private Study Anything
-runtime. CodeBuddy/WorkBuddy marketplace installation is provided separately by
+runtime. Hermes uses a Skill plus local HTTP/CLI tools in this release; a
+Hermes-native Python plugin repo is a future package. CodeBuddy/WorkBuddy
+marketplace installation is provided separately by
 `.codebuddy-plugin/marketplace.json` and `plugins/study-anything/`.
 
 | Platform | Archive | Manifest | Checksum |

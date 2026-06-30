@@ -47,7 +47,7 @@ SCHEMA_VERSION = "learning-enrichment-bridge-verification-v1"
 RELEASE_VERSION = "v0.3.31-alpha"
 DEFAULT_REPORT = ROOT / "platform" / "generated" / "study-anything-learning-enrichment-bridge.json"
 DEFAULT_PACK = ROOT / "platform" / "generated" / "study-anything-platform-adoption-pack.zip"
-PLATFORM_IDS = ("codex", "kimi", "workbuddy")
+PLATFORM_IDS = ("codex", "kimi", "workbuddy", "hermes")
 REQUIRED_PACK_COMMAND = "verify_learning_enrichment_bridge.py --check"
 REQUIRED_EVIDENCE = (
     "learning_enrichment_bridge.schema_version == learning-enrichment-bridge-verification-v1"

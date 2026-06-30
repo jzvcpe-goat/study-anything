@@ -19,7 +19,7 @@ from GitHub Release assets without assuming an existing repository checkout.
 - `release_asset_digest_mismatch` -> `block_release_claim`: A downloaded asset does not match GitHub sha256 metadata.
 - `release_asset_pack_corrupted` -> `block_release_claim`: The platform adoption pack cannot be unpacked safely.
 - `tool_import_invalid` -> `block_platform_submission`: OpenAI tools or OpenAPI operation IDs are malformed or incomplete.
-- `platform_entrypoint_missing` -> `block_platform_submission`: The selected Kimi, Codex, WorkBuddy, or generic entrypoint is missing.
+- `platform_entrypoint_missing` -> `block_platform_submission`: The selected Kimi, Codex, WorkBuddy, Hermes, or generic entrypoint is missing.
 - `source_download_failed` -> `needs_network_or_source_dir`: Runtime replay needs source code but the GitHub tag source archive could not be downloaded.
 - `runtime_launch_failed` -> `needs_runtime_triage`: The selected Skill Mode, external API, or published-image runtime could not be launched.
 - `api_unavailable` -> `needs_runtime_triage`: The Study Anything API was not reachable for tool replay.
@@ -38,4 +38,4 @@ from GitHub Release assets without assuming an existing repository checkout.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `4b8d62fd54d54c6fd68acf97334a15f6adb73d257dc81320f0411d14e5405535`
+- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `be0ee54997c4af8b321d3bc85ab2cb9da33bd8760a173dc8cb2019a8ebebebcc`

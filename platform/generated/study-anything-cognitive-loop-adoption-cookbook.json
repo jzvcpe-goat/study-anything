@@ -54,6 +54,13 @@
       "imports_report": true,
       "platform_id": "workbuddy",
       "runs_verifier": true
+    },
+    {
+      "accepts_schema": true,
+      "imports_cookbook": true,
+      "imports_report": true,
+      "platform_id": "hermes",
+      "runs_verifier": true
     }
   ],
   "privacy": {

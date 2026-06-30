@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 63783,
+    "bytes": 71011,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "de9eb3d88c1833576726f05aa3067166f72213d8a1652eb6d10ef8351b6b4f30",
+    "sha256": "b74cb4b31642f5740eed770a6b18dede2586940a44a7f11e5f8c4717fae6330a",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -68,6 +68,7 @@
     "kimi",
     "codex",
     "workbuddy",
+    "hermes",
     "generic-openapi"
   ],
   "privacy_assertions": {
@@ -97,19 +98,19 @@
       "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
     },
     {
-      "bytes": 28242,
+      "bytes": 28276,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "191849d740e255ecc77ae3d23f8bd1b182f848ac577851d30705c8fafff59632"
+      "sha256": "df9358d2e316e5a2c0754f0c63ea3d76b6a4f6ba8ed36bc5bf5cbd8dcb62d77a"
     },
     {
-      "bytes": 29302,
+      "bytes": 29445,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "b6c07775c7d69410a50f216709abeb86075be6bc84a91a4cc68570ebb2d62cd9"
+      "sha256": "996c5b059c240f8968dd56f91090c11f8176b3e4ab451ea62891f1265dd29985"
     },
     {
-      "bytes": 20083,
+      "bytes": 20315,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "649146f59999aea5cbcdbe27631edac9a140727171ac9fefd4a6f7500844dbcd"
+      "sha256": "6679fa6cbbf24485f371ade55f81ae2d3922fee754039aa2ebab77965252c667"
     },
     {
       "bytes": 83732,
@@ -135,9 +136,14 @@
       "bytes": 21553,
       "path": "platform/packs/workbuddy/README.md",
       "sha256": "ca41cd69c3403f3617794be3944ac56e53383a0107b847a7c1567d9772d3efca"
+    },
+    {
+      "bytes": 23638,
+      "path": "platform/packs/hermes/README.md",
+      "sha256": "667e632f827b64d1e3c0a3f88669f5d9531f52acfb9392ee96a7ed91da97336a"
     }
   ],
-  "purpose": "Prove that a Kimi, Codex, WorkBuddy, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",
+  "purpose": "Prove that a Kimi, Codex, WorkBuddy, Hermes, or generic OpenAPI operator can start from GitHub Release assets, import platform tool definitions, and replay the minimal Study Anything learning tool chain without exposing private learning data.",
   "release_identity": {
     "release_url": "https://github.com/jzvcpe-goat/study-anything/releases/tag/v0.3.31-alpha",
     "repo": "jzvcpe-goat/study-anything",

@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 153190,
+    "bytes": 153258,
     "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
     "root": "study-anything-kimi-plugin-pack",
-    "sha256": "72bf3e4683351bb4f13cc50a2ee4f930da8f200d40c63f65efeca1a55f4311c3"
+    "sha256": "c4e846896527ada58618613f2adb78942a0514dcae35efa2f0fad59b99f6fb96"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -16,11 +16,11 @@
   "files": [
     {
       "archive_path": "study-anything-kimi-plugin-pack/README.md",
-      "bytes": 38656,
+      "bytes": 38832,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "11eead29e38580b6bcf9711707c69e1ed9cbdf11509ccaf70ff4c786e64046a5"
+      "sha256": "d5e4ea0119e36f96d871bb536c47fc842881c435a56de656391ba12637977c68"
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/QUICKSTART.md",
@@ -48,11 +48,11 @@
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/docs/operator-drill.md",
-      "bytes": 3296,
+      "bytes": 3393,
       "kind": "operator_doc",
       "path": "docs/operator-drill.md",
       "purpose": "External platform operator drill.",
-      "sha256": "974633f1f295665339bcf8d9cf9850e33bdb715dc3cfae0708749316a2d5257e"
+      "sha256": "ab16e1e6c93548fe62950827b15a0b5ccf1a9f7947a1cf69ae8a0a734531a611"
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/platform/study-anything-platform-tools.json",
