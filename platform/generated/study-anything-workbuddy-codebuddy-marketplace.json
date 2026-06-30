@@ -13,28 +13,28 @@
       "sha256": "5888d89d3d9689e29295e8a32d1f5bffe217975e4462a4608a27c542a0ef4401"
     },
     {
-      "bytes": 3508,
+      "bytes": 3903,
       "exists": true,
       "path": "plugins/study-anything/skills/study-anything/SKILL.md",
-      "sha256": "2610d07e2dbb76609e3989fdfe9fc8d702ec2d299dcd611e7f85e07d81e70371"
+      "sha256": "0d098b6b576fbe92acf4ca36df72765d7267a0440c5068c0a74f3288bf42993c"
     },
     {
-      "bytes": 919,
+      "bytes": 998,
       "exists": true,
       "path": "plugins/study-anything/commands/start.md",
-      "sha256": "5fb6a4deddac61988255eddcc420abd574317ea33d6e3a8d6f0d360707b9bd85"
+      "sha256": "e99dc14d7e79294eb921b3eb43400bac7ededc72c038be379f1d26a04b31db03"
     },
     {
-      "bytes": 1458,
+      "bytes": 1889,
       "exists": true,
       "path": "plugins/study-anything/commands/learn.md",
-      "sha256": "6cdbbc70caa5dc39f1986c5c14e5613456da05debd526bd5a86a0b877e546af0"
+      "sha256": "32219417f6c36424162b9ae062e7f44d8f9ec82b621b9b2cb352c667c5260040"
     },
     {
-      "bytes": 944,
+      "bytes": 1385,
       "exists": true,
       "path": "plugins/study-anything/commands/diagnose.md",
-      "sha256": "518f3f304899b807db275ed3981a26165fc289714a4baa9dbcbe6d266c6f04ed"
+      "sha256": "315abecda77bf53df22fa7e583f13745298d74cf6b5bac4c1812f8cf0e0f2970"
     },
     {
       "bytes": 1023,
@@ -43,52 +43,52 @@
       "sha256": "620e2e6fbe177317695661826c00b65e1e45ea8b9a219e4a6883ba281a04e9cd"
     },
     {
-      "bytes": 6020,
+      "bytes": 7500,
       "exists": true,
       "path": "docs/use-with-workbuddy.md",
-      "sha256": "5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a"
+      "sha256": "4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228"
     },
     {
-      "bytes": 3545,
+      "bytes": 6446,
       "exists": true,
       "path": "scripts/workbuddy_learning_flow.py",
-      "sha256": "bb501c94cbf8da1425b5ebc5fe29107b54fbfb7d27c5f47db3b17b66efac8d6d"
+      "sha256": "6fe90b6a7753fb57bba9ff1394262c5c453684f13b26e8daed6b6f2c7147d00c"
     },
     {
-      "bytes": 9134,
+      "bytes": 13248,
       "exists": true,
       "path": "scripts/verify_workbuddy_inline_learning_flow.py",
-      "sha256": "4b907f58fe557637188efcce1ebf435b5e3dd6be1822610e8273af01d51ec813"
+      "sha256": "2cab9e288db5474ffdef612b75588c49c9da3134e782995be942bb280748608b"
     },
     {
-      "bytes": 1533,
+      "bytes": 1940,
       "exists": true,
       "path": "platform/schemas/workbuddy-learning-input-v1.schema.json",
-      "sha256": "3e547ab7a1a252bfe630c227152340fc199359db22cd6fa243415cdcf3a4cd2b"
+      "sha256": "eda257e79f33117bd255e5421e33d55c20f05c76a45b0b1e2c516d24dd71191e"
     },
     {
-      "bytes": 1649,
+      "bytes": 2170,
       "exists": true,
       "path": "platform/schemas/workbuddy-learning-output-v1.schema.json",
-      "sha256": "130baf0b5050dab6a23f4d27311d572033a43fa0af98bf88633c43879b07db24"
+      "sha256": "ddb75f6d2652ec853fd4b37758f2f7dca41ff4e58ccc1aaeeecec149ca5795fa"
     },
     {
-      "bytes": 5127,
+      "bytes": 5319,
       "exists": true,
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
-      "sha256": "5e17f5a2441d95646a9e4af8759b0cbd9bce9780cf2327fa36cc99749dff0715"
+      "sha256": "1565443f015655ae2184ad2b19fd63c22d6a92fce0df278df0b44db2b9634755"
     },
     {
-      "bytes": 476,
+      "bytes": 575,
       "exists": true,
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
-      "sha256": "49419e92e8bc05e87176fcb307e497f75322952cbb2fb0c9632968804161a116"
+      "sha256": "278baaf1946043fc486c40ba085e33f6cc72f5595242c36fe0b431e934749120"
     },
     {
-      "bytes": 898,
+      "bytes": 2049,
       "exists": true,
       "path": "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
-      "sha256": "c2cedb257009bd0c03a608f3037e084eca3358f7ea4fc7fe51f30e166562af4c"
+      "sha256": "913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d"
     },
     {
       "bytes": 83732,

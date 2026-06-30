@@ -10,9 +10,12 @@ context. Study Anything records source-bound learning state, quiz/mastery
 evidence, and exports.
 
 ```bash
+python3 scripts/workbuddy_learning_flow.py doctor
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
 ```
+
+`demo` is a deterministic diagnostic fixture, not the learner-facing lesson.
 
 For a live WorkBuddy handoff, pass `workbuddy-learning-input-v1` JSON into:
 
@@ -22,6 +25,26 @@ python3 scripts/workbuddy_learning_flow.py run \
   --output workbuddy-learning-output.json \
   --markdown study-card.md
 ```
+
+Live input must include WorkBuddy/Kimi agent evidence:
+
+```json
+{
+  "agent_evidence": {
+    "generated_by_platform_agent": true,
+    "platform_agent": "WorkBuddy",
+    "model_label": "Kimi model via WorkBuddy",
+    "mode": "platform_agent"
+  }
+}
+```
+
+If `run` rejects deterministic input, let WorkBuddy/Kimi generate the teaching,
+quiz, and grading content first. If the checkout looks stale inside a
+restricted sandbox, use `python3 scripts/workbuddy_learning_flow.py doctor` and
+update outside the sandbox or reinstall the latest plugin pack. Inline mode
+sanitizes proxy environment variables automatically; users should not need
+manual `env -u HTTP_PROXY` workarounds.
 
 Keep `session_ref` in hidden WorkBuddy context. Do not ask the learner to manage
 session ids, ports, proxy flags, or background processes.

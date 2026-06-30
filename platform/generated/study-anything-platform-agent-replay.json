@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 71268,
+    "bytes": 71569,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "a7a84d85d85b5320b9cb1106e68fc2357c1225919239430f532bacc4c30014d0",
+    "sha256": "3dc0b035b69ddc00c7e81b601e5c61eb33dc526de18588785c2c456d1183118b",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -133,9 +133,9 @@
       "sha256": "e940c780e718adb7c2cda596f4956627e379df962e4041dac76ce09e993e7a3d"
     },
     {
-      "bytes": 22346,
+      "bytes": 23147,
       "path": "platform/packs/workbuddy/README.md",
-      "sha256": "60f8ba2abe00f6d3ac8fb7bfa8b86bb0a5e0a596e5aae5c349366b2464f0ca21"
+      "sha256": "0a2ffd391b9e134395b0149343d48ca1f9b54edb36b723041c14d477c542317e"
     },
     {
       "bytes": 23638,

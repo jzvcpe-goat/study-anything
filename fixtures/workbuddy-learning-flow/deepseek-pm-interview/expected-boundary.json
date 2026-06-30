@@ -2,7 +2,9 @@
   "forbidden_output_text": [
     "RAW_PRIVATE_INTERVIEW_NOTE_SHOULD_NOT_LEAK",
     "PRIVATE_ANSWER_SHOULD_NOT_LEAK",
-    "Understand how deepseek connects"
+    "Understand how deepseek connects",
+    "is a key idea in this source",
+    "key idea in the source"
   ],
   "minimum_terms": [
     "MoE",
@@ -12,7 +14,8 @@
     "background_process_required": false,
     "http_server_started": false,
     "localhost_required": false,
-    "model_calls_performed_by_study_anything": false
+    "model_calls_performed_by_study_anything": false,
+    "proxy_env_sanitized": true
   },
   "schema_version": "workbuddy-learning-boundary-v1"
 }

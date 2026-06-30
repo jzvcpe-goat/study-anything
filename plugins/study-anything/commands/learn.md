@@ -5,6 +5,12 @@ should gather the topic, source material, learner profile, and user answer in
 conversation; then use its own model to create teaching claims, glossary terms,
 quiz items, and grading feedback.
 
+Before calling Study Anything, WorkBuddy must create `workbuddy-learning-input.json`
+with `agent_evidence.generated_by_platform_agent=true`, `platform_agent`, and a
+non-demo `model_label` such as `Kimi model via WorkBuddy`. If this evidence is
+missing, `run` should fail and WorkBuddy should generate the lesson content with
+its own model first.
+
 Preferred inline flow:
 
 ```bash
@@ -14,11 +20,13 @@ python3 scripts/workbuddy_learning_flow.py run \
   --markdown study-card.md
 ```
 
-For a deterministic example:
+For a deterministic diagnostic example only:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
 ```
+
+Never use deterministic demo content as the learner-facing lesson.
 
 Do not show the user raw session ids. Keep `session_ref` in WorkBuddy hidden
 context and respond conversationally with overview, glossary, quiz, feedback,

@@ -77,10 +77,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 2914149,
+  "archive_bytes": 2921802,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "9013bde28617a7008543286f2d465758c73afc314b05a9bb722cda6d599006b5",
+  "archive_sha256": "e2b51386edbc91745e758b2c3200458364fc98b7fcdba2a5dd59cf28e3ab1e92",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -253,11 +253,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/use-with-workbuddy.md",
-      "bytes": 6020,
+      "bytes": 7500,
       "kind": "operator_doc",
       "path": "docs/use-with-workbuddy.md",
       "purpose": "CodeBuddy/WorkBuddy inline learning workflow, fallback runtime, and first learning flow guide.",
-      "sha256": "5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a"
+      "sha256": "4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/use-with-hermes.md",
@@ -669,51 +669,51 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/workbuddy-learning-input-v1.schema.json",
-      "bytes": 1533,
+      "bytes": 1940,
       "kind": "schema",
       "path": "platform/schemas/workbuddy-learning-input-v1.schema.json",
       "purpose": "WorkBuddy inline learning input JSON Schema.",
-      "sha256": "3e547ab7a1a252bfe630c227152340fc199359db22cd6fa243415cdcf3a4cd2b"
+      "sha256": "eda257e79f33117bd255e5421e33d55c20f05c76a45b0b1e2c516d24dd71191e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/workbuddy-learning-output-v1.schema.json",
-      "bytes": 1649,
+      "bytes": 2170,
       "kind": "schema",
       "path": "platform/schemas/workbuddy-learning-output-v1.schema.json",
       "purpose": "WorkBuddy inline learning output JSON Schema.",
-      "sha256": "130baf0b5050dab6a23f4d27311d572033a43fa0af98bf88633c43879b07db24"
+      "sha256": "ddb75f6d2652ec853fd4b37758f2f7dca41ff4e58ccc1aaeeecec149ca5795fa"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
-      "bytes": 5127,
+      "bytes": 5319,
       "kind": "fixture",
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
       "purpose": "WorkBuddy inline DeepSeek PM interview fixture input.",
-      "sha256": "5e17f5a2441d95646a9e4af8759b0cbd9bce9780cf2327fa36cc99749dff0715"
+      "sha256": "1565443f015655ae2184ad2b19fd63c22d6a92fce0df278df0b44db2b9634755"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
-      "bytes": 476,
+      "bytes": 575,
       "kind": "fixture",
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
       "purpose": "WorkBuddy inline privacy and quality boundary fixture.",
-      "sha256": "49419e92e8bc05e87176fcb307e497f75322952cbb2fb0c9632968804161a116"
+      "sha256": "278baaf1946043fc486c40ba085e33f6cc72f5595242c36fe0b431e934749120"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/workbuddy_learning_flow.py",
-      "bytes": 3545,
+      "bytes": 6446,
       "kind": "cli",
       "path": "scripts/workbuddy_learning_flow.py",
       "purpose": "WorkBuddy inline learning flow CLI.",
-      "sha256": "bb501c94cbf8da1425b5ebc5fe29107b54fbfb7d27c5f47db3b17b66efac8d6d"
+      "sha256": "6fe90b6a7753fb57bba9ff1394262c5c453684f13b26e8daed6b6f2c7147d00c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_workbuddy_inline_learning_flow.py",
-      "bytes": 9134,
+      "bytes": 13248,
       "kind": "verification",
       "path": "scripts/verify_workbuddy_inline_learning_flow.py",
       "purpose": "Verify WorkBuddy inline flow runtime, privacy, source-bound, and quality boundaries.",
-      "sha256": "4b907f58fe557637188efcce1ebf435b5e3dd6be1822610e8273af01d51ec813"
+      "sha256": "2cab9e288db5474ffdef612b75588c49c9da3134e782995be942bb280748608b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_review_agent_handoff.py",
@@ -813,11 +813,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 171064,
+      "bytes": 171065,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "573aec3174d381621070baeff5547872bbbe629c531d4f53ccfc55b9d782c2d5"
+      "sha256": "0904370c66f595005896998f27b08ba420ceafb46a28b128614de3e77284ff3b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -869,11 +869,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-inline-learning-flow.json",
-      "bytes": 898,
+      "bytes": 2049,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
       "purpose": "WorkBuddy inline learning flow verification report.",
-      "sha256": "c2cedb257009bd0c03a608f3037e084eca3358f7ea4fc7fe51f30e166562af4c"
+      "sha256": "913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -1553,7 +1553,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "b878b6032abaeed9da101349f4eb5bae13f0096308da1d025239762fac0b77cb"
+      "sha256": "aca6273ac93a7c97eef798cef677eb40052618ef162e1ed0641294e410406561"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.md",
@@ -1561,15 +1561,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "2114285be73a66c0c9a96d4e4ff3102fe69380beb4009df34f1758dbfaecf120"
+      "sha256": "fe2bfe31a8534e080027513cddc710bcf2f2b33d82ac996bcbc4cf22cda0cc23"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.zip",
-      "bytes": 134348,
+      "bytes": 134347,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence package.",
-      "sha256": "44d2571c15c09d01dc1499a554c4156ea5cac20f81cb743eb32f6a65adf153a3"
+      "sha256": "8fa3c2da8f3375d6868fabc01af89f24bc7135615e960018ca6f8b8a0af16ee8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.sha256",
@@ -1577,7 +1577,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "dae72fc8e066e89043359a7fed3749f63dc306642f368aa9638e74d8ce299825"
+      "sha256": "2870ed5ea67583f853855b765fed155d0142cc39c968397650c825a11e06a159"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.json",
@@ -1585,7 +1585,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "a0b9fc24fc3c7b206d44bd1fdf858fd64b9ade27fc14df2a90ad10ae52a20d2d"
+      "sha256": "24f4df1ed92d57e4fcec8ca4184530d7de6bb55fff3ec7b610439170fa25fd4a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.md",
@@ -1593,15 +1593,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "56dfb84fb8cf4583f71a9c402c5b6f53f32e6d3f98171ae7291030517971833b"
+      "sha256": "db0df91e9e3e3a95826ef512cef74c23970b71285a6555fff5662bb1e5dc7522"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.zip",
-      "bytes": 89297,
+      "bytes": 89299,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence package.",
-      "sha256": "340511d9a8c48244519fa5d0d3e4541684d177325c0b4722d7bd7001b483c8a6"
+      "sha256": "fc58543ebcff27b5bc30c79b24b5f65c9800420f35190c76cd340b8bc8827498"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.sha256",
@@ -1609,7 +1609,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "f37d658da15d04bdad83f7c26b3afe3dce3af4b1423bc606ffb95fa9e55d20fb"
+      "sha256": "51c879f857bcd9db9881148b66bd76eb6182e006e087557c840cfa7e6c4e02b6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.json",
@@ -1649,7 +1649,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.json",
       "purpose": "Platform Agent release replay evidence JSON.",
-      "sha256": "8433b4db433bb9ccbaad595bde530238e6a12b406d936f2a6fb2c3b75e99f227"
+      "sha256": "f9840e957a7226fbdc6df2b419cabf833031dc1b948e68ebcb7c64eae2399695"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.md",
@@ -1657,15 +1657,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.md",
       "purpose": "Platform Agent release replay evidence Markdown.",
-      "sha256": "ad9cfec31e32c8c09bbdbff2430888216c794bbcd957c12b3d64a60ed38bcd3e"
+      "sha256": "065cf3cf2b1e7a75c0d8bb2ed5ae05c2785782e06f72e9f318023a8d49db865e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.zip",
-      "bytes": 71268,
+      "bytes": 71569,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.zip",
       "purpose": "Platform Agent release replay evidence package.",
-      "sha256": "a7a84d85d85b5320b9cb1106e68fc2357c1225919239430f532bacc4c30014d0"
+      "sha256": "3dc0b035b69ddc00c7e81b601e5c61eb33dc526de18588785c2c456d1183118b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.sha256",
@@ -1673,7 +1673,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.sha256",
       "purpose": "Platform Agent release replay evidence checksum.",
-      "sha256": "913bb0973f43d5d831ab0c95a5a1491a0b91863868a0a8b2b1bae2cc651f769c"
+      "sha256": "f1219ab277e4ad0141c15d67642b4f7d3e6c0224b18ffc2d7009e3aff83ed323"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.json",
@@ -3029,11 +3029,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/README.md",
-      "bytes": 22346,
+      "bytes": 23147,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP workspace setup.",
-      "sha256": "60f8ba2abe00f6d3ac8fb7bfa8b86bb0a5e0a596e5aae5c349366b2464f0ca21"
+      "sha256": "0a2ffd391b9e134395b0149343d48ca1f9b54edb36b723041c14d477c542317e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/packs/workbuddy/pack.json",
@@ -3085,35 +3085,35 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/plugins/study-anything/skills/study-anything/SKILL.md",
-      "bytes": 3508,
+      "bytes": 3903,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/skills/study-anything/SKILL.md",
       "purpose": "CodeBuddy/WorkBuddy Study Anything skill entrypoint.",
-      "sha256": "2610d07e2dbb76609e3989fdfe9fc8d702ec2d299dcd611e7f85e07d81e70371"
+      "sha256": "0d098b6b576fbe92acf4ca36df72765d7267a0440c5068c0a74f3288bf42993c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/plugins/study-anything/commands/start.md",
-      "bytes": 919,
+      "bytes": 998,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/start.md",
       "purpose": "CodeBuddy/WorkBuddy start command.",
-      "sha256": "5fb6a4deddac61988255eddcc420abd574317ea33d6e3a8d6f0d360707b9bd85"
+      "sha256": "e99dc14d7e79294eb921b3eb43400bac7ededc72c038be379f1d26a04b31db03"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/plugins/study-anything/commands/learn.md",
-      "bytes": 1458,
+      "bytes": 1889,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/learn.md",
       "purpose": "CodeBuddy/WorkBuddy learn command.",
-      "sha256": "6cdbbc70caa5dc39f1986c5c14e5613456da05debd526bd5a86a0b877e546af0"
+      "sha256": "32219417f6c36424162b9ae062e7f44d8f9ec82b621b9b2cb352c667c5260040"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/plugins/study-anything/commands/diagnose.md",
-      "bytes": 944,
+      "bytes": 1385,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/diagnose.md",
       "purpose": "CodeBuddy/WorkBuddy diagnose command.",
-      "sha256": "518f3f304899b807db275ed3981a26165fc289714a4baa9dbcbe6d266c6f04ed"
+      "sha256": "315abecda77bf53df22fa7e583f13745298d74cf6b5bac4c1812f8cf0e0f2970"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/plugins/study-anything/commands/export.md",
@@ -3153,15 +3153,15 @@
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-kimi-plugin-pack.json",
       "purpose": "Kimi downloadable plugin pack sidecar manifest.",
-      "sha256": "5fdf8dd445827afc3e2c503ea7f67fb182829a66ad29cb799eecec7732238733"
+      "sha256": "28838433ab23e6f345a0eeb39700551179a78a59b0b206ef6a61e3a2a6727e8f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-kimi-plugin-pack.zip",
-      "bytes": 153258,
+      "bytes": 153363,
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
       "purpose": "Kimi downloadable plugin pack archive.",
-      "sha256": "c4e846896527ada58618613f2adb78942a0514dcae35efa2f0fad59b99f6fb96"
+      "sha256": "d5d7655f69e2e5ef4a5ea8bfa55a9b0b17f7f4cd859b569685998fcda4369b4c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-kimi-plugin-pack.sha256",
@@ -3169,23 +3169,23 @@
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
       "purpose": "Kimi downloadable plugin pack checksum.",
-      "sha256": "10a89e40c330d7aebe8e77adde0d0e13b9138cd8d20efc9852abdff6e24fdbb7"
+      "sha256": "1e6a79d81f36ed802f465c6eaa2a823e62bcb9ec39a127db82248aba26895107"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-plugin-pack.json",
-      "bytes": 13415,
+      "bytes": 13551,
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
       "purpose": "WorkBuddy downloadable plugin pack sidecar manifest.",
-      "sha256": "8a4f38130047cd059d3240abf3bca91758125980bc7d97a39d24410546d8a637"
+      "sha256": "8f60896e4ad5e712f9ef9525fa443719823f632cb2d73a4b2d51a123374072d9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-plugin-pack.zip",
-      "bytes": 152185,
+      "bytes": 155188,
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
       "purpose": "WorkBuddy downloadable plugin pack archive.",
-      "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
+      "sha256": "9c7be962a6fca14dfa7a90f51f1e0aaa86d7e9953a9fc8d6dbba0c1e9b8ad216"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-plugin-pack.sha256",
@@ -3193,7 +3193,7 @@
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
       "purpose": "WorkBuddy downloadable plugin pack checksum.",
-      "sha256": "a863438fef91e4d277dc5047a43ce36b67333548b54b33ad43ae2bd37a282f78"
+      "sha256": "d21f8616dace76d470f1db479c4c62bdc585c0fe5f2cafdce868a9eadddb85c1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-hermes-plugin-pack.json",
@@ -3221,11 +3221,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-plugin-downloads.json",
-      "bytes": 14195,
+      "bytes": 14256,
       "kind": "plugin_pack",
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
       "purpose": "Public GitHub Release download index for platform plugin packs.",
-      "sha256": "46b9e80b63970bb2c7416fcac6c3c514af2fa1443a3439245cac50f759d59ff2"
+      "sha256": "ca454d161b7c4f4a1d0a9b52f27b7b8a110791f207ef869f2630750f06b49b9f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-plugin-downloads.md",
@@ -3237,11 +3237,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-codebuddy-marketplace.json",
-      "bytes": 4947,
+      "bytes": 4950,
       "kind": "workbuddy_marketplace",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.json",
       "purpose": "Generated CodeBuddy/WorkBuddy marketplace verification report.",
-      "sha256": "728a4e5783769554191e86908b795577e61ddd163eb15b5c210aa6b229ede78b"
+      "sha256": "6d2eefea610b2078d2c6d55e89c5b71d149651c38084d953270d34a69281946d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-codebuddy-marketplace.md",
@@ -3249,7 +3249,7 @@
       "kind": "workbuddy_marketplace",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.md",
       "purpose": "Human-readable CodeBuddy/WorkBuddy marketplace verification report.",
-      "sha256": "0c2f22b53be67cb6502fdf169890df9e445c17f46bfeb498c1c3fc1ed128d1ce"
+      "sha256": "ce31e9fd82c4d7e2515d07346e4b705071d625d9a68ee88302a205d706185b12"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/skills/study-anything/SKILL.md",
@@ -3269,11 +3269,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/openai_compatible_agent_gateway.py",
-      "bytes": 30510,
+      "bytes": 30852,
       "kind": "gateway",
       "path": "scripts/openai_compatible_agent_gateway.py",
       "purpose": "User-owned local HTTP Agent gateway.",
-      "sha256": "0fc645f79953f3bf8611ae7a5932e2806d51a22ed82b76bb51e59514ecc5c208"
+      "sha256": "7720fcf66e3508c6aa098e30b0a719815ea19bc77c3a62dcc800d1af03aee417"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/mock_http_agent.py",
@@ -4501,11 +4501,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_platform_plugin_packs.py",
-      "bytes": 24494,
+      "bytes": 24644,
       "kind": "verification",
       "path": "scripts/generate_platform_plugin_packs.py",
       "purpose": "Generate downloadable Codex, Kimi, WorkBuddy, and Hermes platform plugin packs.",
-      "sha256": "8befb798b9f1fd1263b2debd42d2220cda0516d6a7fe77c504edcb1172c6dd25"
+      "sha256": "ccdda3472f7b0deef9835742a97d3410a9006afae588fc96640043bb4a1c8348"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_plugin_packs.py",
@@ -4533,19 +4533,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_workbuddy_plugin_marketplace.py",
-      "bytes": 22312,
+      "bytes": 23658,
       "kind": "verification",
       "path": "scripts/generate_workbuddy_plugin_marketplace.py",
       "purpose": "Generate installable CodeBuddy/WorkBuddy marketplace plugin files.",
-      "sha256": "dfb4ccb608c95709714201e65773a2dfa1899b433cdbce2893341be55321869f"
+      "sha256": "89cfd5976d20a49acfa5f213757e4d0c5ad83e45841247ed8c0e4d601ea84be3"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_workbuddy_plugin_marketplace.py",
-      "bytes": 10294,
+      "bytes": 10693,
       "kind": "verification",
       "path": "scripts/verify_workbuddy_plugin_marketplace.py",
       "purpose": "Verify CodeBuddy/WorkBuddy marketplace plugin files and privacy boundaries.",
-      "sha256": "f11b0f81f9f6e245a96d0220e91ada8e23fe47491b73bc0e512cf7795b2deb93"
+      "sha256": "983558bbc1c2726b736f907341e5961ab1b611900fb37cd971fddfda65215ac5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_platform_ecosystem_eval_flow.py",

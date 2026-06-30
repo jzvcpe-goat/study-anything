@@ -33,6 +33,23 @@ OUTPUT_SCHEMA_VERSION = "workbuddy-learning-output-v1"
 SUPPORTED_PHASES = {"start", "teach", "quiz", "grade", "export", "resume", "complete"}
 SUPPORTED_PRIVACY_MODES = {"metadata_only", "excerpts_only", "full_context"}
 DEFAULT_PRIVACY_MODE = "excerpts_only"
+PROXY_ENV_KEYS = frozenset(
+    {
+        "HTTP_PROXY",
+        "HTTPS_PROXY",
+        "ALL_PROXY",
+        "http_proxy",
+        "https_proxy",
+        "all_proxy",
+    }
+)
+LOW_QUALITY_PHRASES = (
+    "is a key idea in this source",
+    "key idea in the source",
+    "important concept in this source",
+    "this source explains the topic",
+    "connect this back to the source",
+)
 
 SECRET_PATTERNS = (
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{16,}"),
@@ -55,6 +72,16 @@ class WorkBuddyInlineError(RuntimeError):
 
 def dump_json(payload: Any) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+
+
+def sanitize_runtime_env(env: Mapping[str, str] | None = None) -> tuple[dict[str, str], list[str]]:
+    """Return an env copy without proxy vars so inline mode is not proxy-sensitive."""
+
+    values = dict(env or {})
+    removed = sorted(key for key in values if key in PROXY_ENV_KEYS)
+    for key in removed:
+        values.pop(key, None)
+    return values, removed
 
 
 def _text(value: Any, default: str = "") -> str:
@@ -316,6 +343,103 @@ def _normalize_grading(
     return results
 
 
+def _normalize_agent_evidence(payload: Mapping[str, Any], *, require_platform_agent: bool) -> dict[str, Any]:
+    evidence = _dict(payload.get("agent_evidence"))
+    generated = evidence.get("generated_by_platform_agent") is True
+    platform_agent = _text(evidence.get("platform_agent"), "deterministic-fixture")
+    model_label = _text(evidence.get("model_label"), "deterministic-fixture")
+    evidence_mode = _text(evidence.get("mode"), "deterministic_fixture")
+    lowered_label = model_label.lower()
+    lowered_mode = evidence_mode.lower()
+
+    if require_platform_agent:
+        if not generated:
+            raise WorkBuddyInlineError(
+                "Real WorkBuddy run requires agent_evidence.generated_by_platform_agent=true. "
+                "Use WorkBuddy/Kimi to create workbuddy_teaching, workbuddy_quiz, and workbuddy_grading first; "
+                "use `demo` only for deterministic verifier checks."
+            )
+        if not model_label or any(marker in lowered_label for marker in ("fake", "deterministic", "dry-run", "demo")):
+            raise WorkBuddyInlineError(
+                "Real WorkBuddy run requires agent_evidence.model_label to name the platform-owned model "
+                "or model family used by WorkBuddy/Kimi, not a deterministic demo label."
+            )
+        if lowered_mode in {"deterministic_fixture", "fake", "dry_run", "demo"}:
+            raise WorkBuddyInlineError("Real WorkBuddy run cannot use deterministic/demo agent_evidence.mode.")
+
+    return {
+        "generated_by_platform_agent": generated,
+        "platform_agent": platform_agent,
+        "model_label": model_label,
+        "mode": evidence_mode,
+        "attestation": "platform_provided" if generated else "deterministic_fixture_only",
+        "study_anything_called_model": False,
+        "model_invocation_proven_by_study_anything": False,
+    }
+
+
+def _word_count(value: str) -> int:
+    return len([part for part in re.split(r"\s+", value.strip()) if part])
+
+
+def _assert_text_is_not_placeholder(value: str, path: str) -> None:
+    lowered = value.lower()
+    for phrase in LOW_QUALITY_PHRASES:
+        if phrase in lowered:
+            raise WorkBuddyInlineError(f"{path} looks like placeholder teaching text: {phrase}")
+
+
+def _assert_teaching_quality(
+    teaching: Mapping[str, Any],
+    quiz_items: Iterable[Mapping[str, Any]],
+    grading: Iterable[Mapping[str, Any]],
+) -> dict[str, Any]:
+    overview = [_dict(item) for item in _list(teaching.get("overview"))]
+    glossary = [_dict(item) for item in _list(teaching.get("glossary"))]
+    quiz = [_dict(item) for item in quiz_items]
+    grading_items = [_dict(item) for item in grading]
+
+    if len(overview) + len(glossary) < 2:
+        raise WorkBuddyInlineError("WorkBuddy teaching quality gate requires at least two teaching units.")
+    for index, claim in enumerate(overview):
+        text = _text(claim.get("text"))
+        _assert_text_is_not_placeholder(text, f"workbuddy_teaching.overview[{index}].text")
+        if claim.get("claim_type") in {"source_bound", "factual"} and _word_count(text) < 8:
+            raise WorkBuddyInlineError(f"workbuddy_teaching.overview[{index}].text is too thin for source-bound teaching.")
+    for index, item in enumerate(glossary):
+        explanation = _text(item.get("explanation"))
+        technical_definition = _text(item.get("technical_definition"))
+        example = _text(item.get("example"))
+        _assert_text_is_not_placeholder(explanation, f"workbuddy_teaching.glossary[{index}].explanation")
+        if _word_count(explanation) < 10:
+            raise WorkBuddyInlineError(f"workbuddy_teaching.glossary[{index}].explanation is too thin.")
+        if item.get("claim_type") in {"source_bound", "factual"} and _word_count(technical_definition) < 6:
+            raise WorkBuddyInlineError(
+                f"workbuddy_teaching.glossary[{index}].technical_definition is required for source-bound terms."
+            )
+        if example and _word_count(example) < 6:
+            raise WorkBuddyInlineError(f"workbuddy_teaching.glossary[{index}].example is too thin.")
+    for index, item in enumerate(quiz):
+        prompt = _text(item.get("prompt"))
+        rubric = _text(item.get("rubric"))
+        _assert_text_is_not_placeholder(prompt, f"workbuddy_quiz.items[{index}].prompt")
+        if _word_count(prompt) < 8 or _word_count(rubric) < 8:
+            raise WorkBuddyInlineError(f"workbuddy_quiz.items[{index}] is too thin.")
+    for index, item in enumerate(grading_items):
+        feedback = _text(item.get("feedback"))
+        _assert_text_is_not_placeholder(feedback, f"workbuddy_grading.results[{index}].feedback")
+        if _word_count(feedback) < 10:
+            raise WorkBuddyInlineError(f"workbuddy_grading.results[{index}].feedback is too thin.")
+
+    return {
+        "placeholder_phrases_rejected": True,
+        "overview_count": len(overview),
+        "glossary_count": len(glossary),
+        "quiz_count": len(quiz),
+        "grading_count": len(grading_items),
+    }
+
+
 def _mastery_from_grading(results: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     scores = [float(item["score"]) for item in results]
     average = sum(scores) / len(scores) if scores else 0.0
@@ -403,6 +527,8 @@ def build_workbuddy_learning_package(
     *,
     data_dir: str | None = None,
     env: Mapping[str, str] | None = None,
+    require_platform_agent: bool = False,
+    proxy_env_removed: Iterable[str] | None = None,
 ) -> dict[str, Any]:
     """Build a credential-free source-bound package from WorkBuddy model output."""
 
@@ -427,6 +553,8 @@ def build_workbuddy_learning_package(
     answers = _normalize_answers(payload)
     grading = _normalize_grading(payload, quiz_ids=quiz_ids, source_ids=source_ids)
     mastery = _mastery_from_grading(grading)
+    agent_evidence = _normalize_agent_evidence(payload, require_platform_agent=require_platform_agent)
+    quality_gate = _assert_teaching_quality(teaching, quiz_items, grading)
 
     session_ref = _text(payload.get("session_ref")) or "wb-" + _hash_text(topic)[:12]
     state = new_session(
@@ -514,7 +642,11 @@ def build_workbuddy_learning_package(
             "background_process_required": False,
             "model_calls_performed_by_study_anything": False,
             "data_dir_strategy": _resolve_data_dir_strategy(data_dir=data_dir, env=env),
+            "proxy_env_sanitized": True,
+            "proxy_env_removed_count": len(list(proxy_env_removed or [])),
         },
+        "agent_evidence": agent_evidence,
+        "quality_gate": quality_gate,
         "study_card": {
             "title": topic,
             "learner_profile": {

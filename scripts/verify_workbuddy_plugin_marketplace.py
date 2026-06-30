@@ -130,11 +130,16 @@ def verify_plugin_files() -> None:
     for needle in (
         "Default Inline Flow",
         "scripts/workbuddy_learning_flow.py run",
+        "python3 scripts/workbuddy_learning_flow.py doctor",
         "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+        "generated_by_platform_agent=true",
+        "Kimi model",
+        "Do not use demo output as the",
         "platform/generated/study-anything-platform-openapi.json",
         "http://127.0.0.1:8000",
         "MCP is a planned extension",
         "It must not store real model provider keys",
+        "env -u HTTP_PROXY",
     ):
         if needle not in skill_text:
             raise WorkBuddyPluginMarketplaceVerificationError(f"Plugin skill missing boundary text: {needle}")
@@ -167,8 +172,13 @@ def verify_docs() -> None:
     for needle in (
         "/plugin marketplace add jzvcpe-goat/study-anything",
         "/plugin install study-anything@study-anything",
+        "python3 scripts/workbuddy_learning_flow.py doctor",
         "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
         "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+        "generated_by_platform_agent",
+        "Kimi model via WorkBuddy",
+        "deterministic demo output",
+        "env -u HTTP_PROXY",
         "platform/generated/study-anything-platform-openapi.json",
         "python3 scripts/verify_workbuddy_plugin_marketplace.py --check",
     ):

@@ -1,4 +1,10 @@
 {
+  "agent_evidence": {
+    "generated_by_platform_agent": false,
+    "mode": "deterministic_fixture",
+    "model_label": "deterministic-fixture",
+    "platform_agent": "WorkBuddy fixture"
+  },
   "export_targets": [
     "markdown",
     "obsidian",

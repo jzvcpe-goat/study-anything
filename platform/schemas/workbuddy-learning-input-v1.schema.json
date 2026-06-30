@@ -3,6 +3,24 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": true,
   "properties": {
+    "agent_evidence": {
+      "additionalProperties": true,
+      "properties": {
+        "generated_by_platform_agent": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "model_label": {
+          "type": "string"
+        },
+        "platform_agent": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "phase": {
       "enum": [
         "start",
@@ -72,7 +90,8 @@
     "topic",
     "source_items",
     "workbuddy_teaching",
-    "workbuddy_quiz"
+    "workbuddy_quiz",
+    "agent_evidence"
   ],
   "title": "WorkBuddy learning input",
   "type": "object"

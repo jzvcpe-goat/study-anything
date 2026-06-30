@@ -259,24 +259,30 @@ Use this skill when the user says things like:
 ## Default Inline Flow
 
 1. WorkBuddy collects source material, user context, and any visual/search/file context.
-2. WorkBuddy uses its own model to produce teaching claims, glossary terms, quiz items, and grading feedback.
-3. Call Study Anything inline:
+2. WorkBuddy uses its own model, such as the Kimi model available inside WorkBuddy, to produce teaching claims, glossary terms, quiz items, and grading feedback.
+3. Include `agent_evidence.generated_by_platform_agent=true`, `platform_agent`, and a non-demo `model_label` in `workbuddy-learning-input.json`.
+4. Call Study Anything inline:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py run --input workbuddy-learning-input.json --output workbuddy-learning-output.json --markdown study-card.md
 ```
 
-4. Keep `session_ref` in hidden WorkBuddy context. Do not ask the user to manage it.
-5. Return the teaching summary, quiz, feedback, mastery, and export options conversationally.
+5. Keep `session_ref` in hidden WorkBuddy context. Do not ask the user to manage it.
+6. Return the teaching summary, quiz, feedback, mastery, and export options conversationally.
+
+`demo` is only for deterministic diagnostics. Do not use demo output as the
+learner-facing lesson.
 
 Validate the inline path:
 
 ```bash
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+python3 scripts/workbuddy_learning_flow.py doctor
 ```
 
 The inline path does not start uvicorn, bind localhost, require a background
-process, or ask for real model API keys.
+process, ask for real model API keys, or require manual `env -u HTTP_PROXY`
+workarounds.
 
 ## HTTP Fallback
 
@@ -336,10 +342,11 @@ Check the Study Anything WorkBuddy inline flow and explain HTTP fallback.
 1. Preferred inline check:
 
 ```bash
+python3 scripts/workbuddy_learning_flow.py doctor
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
 ```
 
-2. Run the deterministic WorkBuddy demo:
+2. Run the deterministic WorkBuddy demo only as a diagnostic fixture:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
@@ -375,6 +382,12 @@ should gather the topic, source material, learner profile, and user answer in
 conversation; then use its own model to create teaching claims, glossary terms,
 quiz items, and grading feedback.
 
+Before calling Study Anything, WorkBuddy must create `workbuddy-learning-input.json`
+with `agent_evidence.generated_by_platform_agent=true`, `platform_agent`, and a
+non-demo `model_label` such as `Kimi model via WorkBuddy`. If this evidence is
+missing, `run` should fail and WorkBuddy should generate the lesson content with
+its own model first.
+
 Preferred inline flow:
 
 ```bash
@@ -384,11 +397,13 @@ python3 scripts/workbuddy_learning_flow.py run \\
   --markdown study-card.md
 ```
 
-For a deterministic example:
+For a deterministic diagnostic example only:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
 ```
+
+Never use deterministic demo content as the learner-facing lesson.
 
 Do not show the user raw session ids. Keep `session_ref` in WorkBuddy hidden
 context and respond conversationally with overview, glossary, quiz, feedback,
@@ -422,6 +437,7 @@ marketplace evidence.
 Run local diagnostics when CodeBuddy/WorkBuddy cannot run Study Anything.
 
 ```bash
+python3 scripts/workbuddy_learning_flow.py doctor
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
 python3 scripts/study_anything_cli.py health
 python3 scripts/diagnose_adoption.py
@@ -432,8 +448,11 @@ python3 scripts/verify_workbuddy_plugin_marketplace.py --check
 Common fixes:
 
 - If inline flow passes but HTTP fails, keep using inline mode in WorkBuddy.
+- If `doctor` says feature files are missing, install the latest plugin pack or update the checkout outside the WorkBuddy sandbox; do not rely on `git pull` inside a restricted sandbox.
+- If `run` rejects deterministic input, let WorkBuddy/Kimi generate teaching, quiz, and grading first.
 - Start the fallback runtime with `./START_HERE.command` or `./scripts/launch_skill_mode.sh`.
 - If localhost is blocked by the host platform, use a private reachable HTTP endpoint.
+- Proxy variables are sanitized by the inline CLI; users should not need to type `env -u HTTP_PROXY`.
 - If dependency install is slow, configure `PIP_INDEX_URL` or retry from a normal terminal.
 - If Docker is unavailable, use Skill Mode first.
 

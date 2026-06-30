@@ -58,13 +58,17 @@ Good trigger phrases:
 WorkBuddy should:
 
 1. collect source material and learner context;
-2. use its own model to create overview, glossary, quiz, and grading feedback;
+2. use its own model, such as the Kimi model available inside WorkBuddy, to create overview, glossary, quiz, and grading feedback;
 3. call the Study Anything inline flow;
 4. keep `session_ref` hidden in WorkBuddy context;
 5. return a conversational learning card, quiz, feedback, mastery, and export options.
 
 The user should not manage session ids, ports, proxy flags, or background
 processes.
+
+Do not use deterministic demo output as the learner-facing lesson. Demo mode is
+only a verifier fixture. Real learning should include WorkBuddy/Kimi-generated
+teaching, quiz, and grading content.
 
 ## 3. Inline Flow Contract
 
@@ -83,13 +87,29 @@ python3 scripts/workbuddy_learning_flow.py run \
   --markdown study-card.md
 ```
 
+For real learner sessions, `workbuddy-learning-input.json` must include:
+
+```json
+{
+  "agent_evidence": {
+    "generated_by_platform_agent": true,
+    "platform_agent": "WorkBuddy",
+    "model_label": "Kimi model via WorkBuddy",
+    "mode": "platform_agent"
+  }
+}
+```
+
+If this is missing, `run` fails on purpose. That failure means WorkBuddy has not
+yet used its own model to create the teaching content.
+
 The output follows:
 
 ```text
 platform/schemas/workbuddy-learning-output-v1.schema.json
 ```
 
-For a deterministic example:
+For a deterministic diagnostic example only:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
@@ -98,12 +118,24 @@ python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
 Verify the inline path:
 
 ```bash
+python3 scripts/workbuddy_learning_flow.py doctor
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
 ```
 
 This verifier proves the WorkBuddy path does not start uvicorn, bind localhost,
 depend on background process persistence, require real model keys, leak raw
-source probes, or expose learner answers.
+source probes, expose learner answers, or require manual `env -u HTTP_PROXY`
+workarounds.
+
+If WorkBuddy says the checkout is still old, run:
+
+```bash
+python3 scripts/workbuddy_learning_flow.py doctor
+```
+
+Use the doctor result to decide whether the inline feature files exist. In a
+restricted WorkBuddy sandbox, do not rely on `git pull`; install the latest
+plugin pack or update the checkout from a normal terminal.
 
 ## 4. What WorkBuddy Owns
 
@@ -183,7 +215,10 @@ python3 scripts/verify_platform_agent_tools.py
 Common failures:
 
 - Inline passes but HTTP fails: keep using inline mode in WorkBuddy.
+- `run` rejects deterministic input: ask WorkBuddy/Kimi to generate teaching, quiz, and grading content first.
+- Checkout looks old: run `python3 scripts/workbuddy_learning_flow.py doctor`; update outside the sandbox or reinstall the latest plugin pack.
 - Localhost/proxy issues: avoid HTTP, or use a private endpoint.
+- Proxy variables: inline mode sanitizes proxy environment variables automatically, so users should not need `env -u HTTP_PROXY`.
 - Background process disappears: use inline mode or foreground fallback.
 - Model key missing: configure it in WorkBuddy/CodeBuddy, not Study Anything.
 - Python dependency download slow: retry from a normal terminal or prebuilt environment.
