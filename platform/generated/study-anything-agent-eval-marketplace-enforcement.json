@@ -94,7 +94,7 @@
     "workbuddy": {
       "acceptance_evidence_declared": true,
       "command_declared": true,
-      "integration_mode": "openapi_http_tools"
+      "integration_mode": "inline_learning_workflow"
     }
   },
   "privacy_assertions": {

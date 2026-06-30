@@ -106,11 +106,11 @@
       "sha256": "68b1c3aa895c4e461866b4d84a8f2ecff5c1f9ac2120ecd0dbcd5cec328f6dff"
     },
     {
-      "bytes": 132115,
+      "bytes": 133498,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "70588c2fdaa2479b3b535c57487ceb0ece4e40f2ef14603af8b929f9d3513276"
+      "sha256": "69efb3e6df03c4a09c8caa18c44a3db7a9ffda1cc25808e9fe6cdcfc44d2d990"
     },
     {
       "bytes": 1939,
@@ -582,46 +582,46 @@
       "sha256": "caaba215fa12680277da3df8536fede4673e05a250ebbe62d70234445aec06b1"
     },
     {
-      "bytes": 92616,
+      "bytes": 92944,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "1e28a7d62b28824614c8b81a0ac4e5a7dd123f69c88d0e8b131204122ad85e73"
+      "sha256": "c1401d9861b456ae6f1b7a1dc28c851d218d30ba142f024403c178482a0335f5"
     },
     {
-      "bytes": 106404,
+      "bytes": 107336,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-manual-submission-rehearsal.json",
       "purpose": "Manual platform-submission rehearsal and redacted handoff report.",
-      "sha256": "ac46d7cbd4a09b93ba0a3c07d25ee154a96ad5146924a8965ffd00a27390fd9f"
+      "sha256": "c9aae1226531edd2df691554cab95da2f00cb8b692c206741c85b4ffa8a73c01"
     },
     {
-      "bytes": 48761,
+      "bytes": 49203,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-first-lesson-authoring-kit.json",
       "purpose": "Copyable first-run lesson authoring kit for platform Agents.",
-      "sha256": "223c3896869b392711e1265a341eaa46e89d63ace8943a7910804d0a1ebbf6f6"
+      "sha256": "c30ddbd55fbc618799d56bc33355e1bce6f583099bab24be14420aa5f3b23aa3"
     },
     {
-      "bytes": 12050,
+      "bytes": 12056,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-external-eval-harness.json",
       "purpose": "Marketplace-quality external Agent eval harness for platform submissions.",
-      "sha256": "73bc137c3068b2f4d72d122418e309432e6eff921aaac3e7e802933ba3d58868"
+      "sha256": "a923de62bd3ecac43e886b75f19617f30b57417c331c86ab277ca9eb91f26ef4"
     },
     {
-      "bytes": 5741,
+      "bytes": 5747,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
       "purpose": "Agent eval marketplace enforcement report for optional and required external judge gates.",
-      "sha256": "041d4745ef9a898d3f3e43f193f6ee3b1e82df6f43e6635a8e7462785dd089a4"
+      "sha256": "c6284847289b1f5aa24602b371f4cf3dc7922ffd10d28111f42da3944cdff2ae"
     },
     {
-      "bytes": 4120,
+      "bytes": 4126,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-adoption-feedback-diagnostics.json",
       "purpose": "Platform import diagnostics and redacted feedback boundary report.",
-      "sha256": "98626f7766ba223461cd5dd3ece494ce21d078bf7b80cfb0e90e7977131405d0"
+      "sha256": "c54774ef6be2d46b63bd3a703a34d1dffb3ecdaa01d87c456d94a26feab42a6a"
     },
     {
       "bytes": 2198,
@@ -698,112 +698,112 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "e976bff938a7ac2319d27da7bfab0979f7af228219d95800936d7ad6977fb464"
+      "sha256": "9814b44b992401408630bb5ec62cec4109faba0d68100227e08dd892ee115b7f"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "2e0ffe03e998a949205d9805eeb495ba51b632df922610e9152b63b5d0d17ed7"
+      "sha256": "404b3d3115e3c1e2466a952cf31f25241d9e7001090d793f82c7269d42d0d6a0"
     },
     {
-      "bytes": 130013,
+      "bytes": 130163,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "67bceaee9bdf28be99ce77b9076edcf4ceb22ae17c07251305cf4f9bafcb7a53"
+      "sha256": "b3cc937dd1a763f5f32953db90ac89ff18ef1b26cd77d58627e4213b37d375f5"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "5763fc2da92b0ca951b2e52f0d91ddd4069d8c1513e6384125a2983ca9127385"
+      "sha256": "7bab5ff63b24051da1caef3360c3789cc844a6b514a0792ab416ef567f8094cb"
     },
     {
       "bytes": 13000,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "e2c38805f479cbe60e59515215e2127d378ed3043aa96e53588a604d75c32285"
+      "sha256": "805094d6348d9679afdc44b19affc25d28d765ef99cbf4ec8e50ae6a95d5ecd4"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "e70a95e0545c68a4eeb8282c2d0d36cb0efd087274f35e7a58d42374a8f9f607"
+      "sha256": "734e5cb6802c5861cb32432a0b5e2a1ceeeb0f239c313d37bf65348836b4dce3"
     },
     {
-      "bytes": 247797,
+      "bytes": 248674,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "641bb948a7bc10c81cca77721a97b3231c6749366c545a615549aa3e0c8e904a"
+      "sha256": "df3d2e2f10206e8c5edf39de7d6764fec5a4d8bdca43af8fcb18009ad162ed05"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "bbd10ea8c309f87e155d18d724503401f89eff3891fc1789ab82a2ad1dc25c03"
+      "sha256": "5848b1be446e067217a7ea8a0920b1b972207f2e82907042e91275e52d467ff1"
     },
     {
       "bytes": 9433,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "c5ad9847622f3098d81cea8a741675161fc352f8c229f3ce4bb385ed8606b1e9"
+      "sha256": "b878b6032abaeed9da101349f4eb5bae13f0096308da1d025239762fac0b77cb"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "16c0917c09c549c9e9cab279655c488ce9cb3350aef37691d39abef5a1cafc8c"
+      "sha256": "2114285be73a66c0c9a96d4e4ff3102fe69380beb4009df34f1758dbfaecf120"
     },
     {
-      "bytes": 134165,
+      "bytes": 134348,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "2da1f1771e494b949a5a742b37ce1b64bc26c740129aee15b8f9709d397dfcc8"
+      "sha256": "44d2571c15c09d01dc1499a554c4156ea5cac20f81cb743eb32f6a65adf153a3"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "2c6c142afe3d7540050badc2fa2ca10217cc764e99dff2ca472026fafa9af36c"
+      "sha256": "dae72fc8e066e89043359a7fed3749f63dc306642f368aa9638e74d8ce299825"
     },
     {
       "bytes": 8886,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "abae8079be28f6075c33945c8b06e31a39a880ce53889934d9b430a35e9598bb"
+      "sha256": "a0b9fc24fc3c7b206d44bd1fdf858fd64b9ade27fc14df2a90ad10ae52a20d2d"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "e91bb9d45b77e532d31c2327104cfb8d93dab61f5819121fb2c8ac854c6607f7"
+      "sha256": "56dfb84fb8cf4583f71a9c402c5b6f53f32e6d3f98171ae7291030517971833b"
     },
     {
-      "bytes": 89115,
+      "bytes": 89297,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "d5854e892822b40311a985ae51e6db96c796579feb34049f6df7153f4d45efda"
+      "sha256": "340511d9a8c48244519fa5d0d3e4541684d177325c0b4722d7bd7001b483c8a6"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "e932a1205fb3f32c42666252494b5a6e67767c6de765051825fcc09f64b84150"
+      "sha256": "f37d658da15d04bdad83f7c26b3afe3dce3af4b1423bc606ffb95fa9e55d20fb"
     },
     {
       "bytes": 7890,
@@ -838,28 +838,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.json",
       "purpose": "Platform Agent release replay evidence JSON.",
-      "sha256": "6c95dc08c747cfb1e3a001a4cdd00c4db3bdd5cfb1a71de2ebea2ded123316d7"
+      "sha256": "8433b4db433bb9ccbaad595bde530238e6a12b406d936f2a6fb2c3b75e99f227"
     },
     {
       "bytes": 2854,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.md",
       "purpose": "Platform Agent release replay evidence Markdown.",
-      "sha256": "557a8106ddf25a83c367ac4000f1ef146ef3b2200f66901d18334f9e97e9899d"
+      "sha256": "ad9cfec31e32c8c09bbdbff2430888216c794bbcd957c12b3d64a60ed38bcd3e"
     },
     {
-      "bytes": 71011,
+      "bytes": 71268,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.zip",
       "purpose": "Platform Agent release replay evidence archive.",
-      "sha256": "b74cb4b31642f5740eed770a6b18dede2586940a44a7f11e5f8c4717fae6330a"
+      "sha256": "a7a84d85d85b5320b9cb1106e68fc2357c1225919239430f532bacc4c30014d0"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.sha256",
       "purpose": "Platform Agent release replay evidence checksum.",
-      "sha256": "5580002a2bcb06048f206a4bb826320f5f10e5a41bf6c6eb055642607326cbdc"
+      "sha256": "913bb0973f43d5d831ab0c95a5a1491a0b91863868a0a8b2b1bae2cc651f769c"
     },
     {
       "bytes": 9192,
@@ -904,25 +904,25 @@
       "sha256": "10a89e40c330d7aebe8e77adde0d0e13b9138cd8d20efc9852abdff6e24fdbb7"
     },
     {
-      "bytes": 9427,
+      "bytes": 13415,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
       "purpose": "WorkBuddy downloadable plugin pack sidecar manifest.",
-      "sha256": "89810a5703bd2e4ae4ea20c0d44db6816621897ac20b0c4a8fe6ccaec61f64a3"
+      "sha256": "8a4f38130047cd059d3240abf3bca91758125980bc7d97a39d24410546d8a637"
     },
     {
-      "bytes": 138946,
+      "bytes": 152185,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
       "purpose": "WorkBuddy downloadable plugin pack archive.",
-      "sha256": "bf6905abe6ba67d9df4a7c159f182057baec12c11190c76f1c24fbe087c7f48d"
+      "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
       "purpose": "WorkBuddy downloadable plugin pack checksum.",
-      "sha256": "0a6d0de4e6af3b7a0b736795a3067cc53521d477a67a406ad2439626453f16c8"
+      "sha256": "a863438fef91e4d277dc5047a43ce36b67333548b54b33ad43ae2bd37a282f78"
     },
     {
       "bytes": 10362,
@@ -946,11 +946,11 @@
       "sha256": "92107d463989d2c8dbe77d399646611fb0ca738c3be30cc6837f6925db071021"
     },
     {
-      "bytes": 13503,
+      "bytes": 14195,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
       "purpose": "Public GitHub Release download index for platform plugin packs.",
-      "sha256": "4dff05296b18b034deed410855c8eec7bef16aac9fa17324f6d128745b173faa"
+      "sha256": "46b9e80b63970bb2c7416fcac6c3c514af2fa1443a3439245cac50f759d59ff2"
     },
     {
       "bytes": 1764,
@@ -960,18 +960,18 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 3306,
+      "bytes": 4947,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.json",
       "purpose": "Generated CodeBuddy/WorkBuddy marketplace plugin verification report.",
-      "sha256": "d3770a515c7cff84a15abedbfda9cbed492c3f95cf4314cdcbe409bd5a2c73ec"
+      "sha256": "728a4e5783769554191e86908b795577e61ddd163eb15b5c210aa6b229ede78b"
     },
     {
-      "bytes": 1728,
+      "bytes": 2793,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.md",
       "purpose": "Human-readable CodeBuddy/WorkBuddy marketplace plugin verification report.",
-      "sha256": "3a55deb5974112605a1a12d2babbdf00d5dfad52249f17665c19c94b1419f8a4"
+      "sha256": "0c2f22b53be67cb6502fdf169890df9e445c17f46bfeb498c1c3fc1ed128d1ce"
     },
     {
       "bytes": 3891,
@@ -1002,11 +1002,11 @@
       "sha256": "4c7ad8d6478e2b22d09e4a1d484d10e73b06bdb6b3076c7a6535cec79161ddc7"
     },
     {
-      "bytes": 4961,
+      "bytes": 6020,
       "kind": "operator_doc",
       "path": "docs/use-with-workbuddy.md",
       "purpose": "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide.",
-      "sha256": "563157f7655b732a338ef0ed42a36ab0b372fe0d4d2726386ed53a1116f82363"
+      "sha256": "5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a"
     },
     {
       "bytes": 3370,
@@ -1618,11 +1618,11 @@
       "sha256": "254f3cbed6ef40500615b224c99dac0afedb683a0731fa5f460d078c3b2289c2"
     },
     {
-      "bytes": 6345,
+      "bytes": 6351,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-learning-enrichment-bridge.json",
       "purpose": "Learning Enrichment, NotebookLM, Obsidian, and second-brain operator bridge report.",
-      "sha256": "4bb1c20e64e66990ebd4e88ec4cf1b9c4202c73a1aeea7e04afbc22849a0d025"
+      "sha256": "00b7c926bb6db13321d8e445bdbe0129a086bae88450496b8043bd07a14d61e3"
     },
     {
       "bytes": 1168,
@@ -1751,18 +1751,18 @@
       "sha256": "7a350f82bfe9f3513681eade2f530e87dc3faef8a0c8fef2c8060cbf885b038f"
     },
     {
-      "bytes": 21553,
+      "bytes": 22346,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "ca41cd69c3403f3617794be3944ac56e53383a0107b847a7c1567d9772d3efca"
+      "sha256": "60f8ba2abe00f6d3ac8fb7bfa8b86bb0a5e0a596e5aae5c349366b2464f0ca21"
     },
     {
-      "bytes": 29318,
+      "bytes": 30319,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/pack.json",
       "purpose": "Machine-readable WorkBuddy pack metadata.",
-      "sha256": "5fcb9b257077ff59567ab8483427c6ffc286d4f8c05415ec680a02088eff0f52"
+      "sha256": "b9101d22e6fbdb21c36c5f19f7bad1aafb126a6052b130da8466f20f8d1c71d1"
     },
     {
       "bytes": 23638,
@@ -1779,60 +1779,60 @@
       "sha256": "caba1c8632bdc31cf19c783f8813bd53166b986c1ccfd9860c8c36eede82d4b7"
     },
     {
-      "bytes": 1220,
+      "bytes": 1225,
       "kind": "workbuddy_marketplace",
       "path": ".codebuddy-plugin/marketplace.json",
       "purpose": "CodeBuddy/WorkBuddy marketplace listing for the Study Anything plugin.",
-      "sha256": "a8cf5cdfacfa5041e1a7e2465e7bb902c0e7ad61c7a973fad7a2a47f21892447"
+      "sha256": "d6a6826fa8c4576a55fecf03f579b39ccedc16607ba0a09aad28a604ad16b1c3"
     },
     {
-      "bytes": 1462,
+      "bytes": 1957,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/.codebuddy-plugin/plugin.json",
       "purpose": "Installable CodeBuddy/WorkBuddy plugin manifest.",
-      "sha256": "3fedf621289461042c6869896d04d849f042c03754d8ee098b1b27f7c3df1e36"
+      "sha256": "5888d89d3d9689e29295e8a32d1f5bffe217975e4462a4608a27c542a0ef4401"
     },
     {
-      "bytes": 1322,
+      "bytes": 1690,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/README.md",
       "purpose": "Installable CodeBuddy/WorkBuddy plugin README.",
-      "sha256": "8ff912676e40c08eed85385c69df3558b485de38d11a7e3c081ab2b4bd8de4e2"
+      "sha256": "6c576964ed0c05b7d9fbc86e156914e5a41776c45fc1677e57ca00df7baecce7"
     },
     {
-      "bytes": 2219,
+      "bytes": 3508,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/skills/study-anything/SKILL.md",
       "purpose": "CodeBuddy/WorkBuddy Study Anything skill entrypoint.",
-      "sha256": "a899be0a7138a88d5bbf24b8c41291f604f7f9a45f19526a9a2a7b5ca90b6a49"
+      "sha256": "2610d07e2dbb76609e3989fdfe9fc8d702ec2d299dcd611e7f85e07d81e70371"
     },
     {
-      "bytes": 623,
+      "bytes": 919,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/start.md",
       "purpose": "CodeBuddy/WorkBuddy start command.",
-      "sha256": "f2a729c57780fc0dc18239b6acc83f5fa9962ba2d4b00fc57a540b2e40aa1cb7"
+      "sha256": "5fb6a4deddac61988255eddcc420abd574317ea33d6e3a8d6f0d360707b9bd85"
     },
     {
-      "bytes": 935,
+      "bytes": 1458,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/learn.md",
       "purpose": "CodeBuddy/WorkBuddy learn command.",
-      "sha256": "ee387180a8f6f17278453fde5d1b5a7a7ccf75be13a52e86a7156cfd31552bff"
+      "sha256": "6cdbbc70caa5dc39f1986c5c14e5613456da05debd526bd5a86a0b877e546af0"
     },
     {
-      "bytes": 795,
+      "bytes": 944,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/diagnose.md",
       "purpose": "CodeBuddy/WorkBuddy diagnose command.",
-      "sha256": "3ca08e6a599b16f4b7fa2aeb518792a4e4b838186068e7a3a5f99991bd563fd2"
+      "sha256": "518f3f304899b807db275ed3981a26165fc289714a4baa9dbcbe6d266c6f04ed"
     },
     {
-      "bytes": 779,
+      "bytes": 1023,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/export.md",
       "purpose": "CodeBuddy/WorkBuddy export command.",
-      "sha256": "a30b093a4a9a2777a5bef3cb6583fc8c43b470a90435806270ee8b057823063d"
+      "sha256": "620e2e6fbe177317695661826c00b65e1e45ea8b9a219e4a6883ba281a04e9cd"
     },
     {
       "bytes": 30510,
@@ -3438,18 +3438,18 @@
       "sha256": "6cb204de890695c6e1f83d2bcf70382323ee4a09c584a69494dbff3cf34aab77"
     },
     {
-      "bytes": 21639,
+      "bytes": 24494,
       "kind": "verification",
       "path": "scripts/generate_platform_plugin_packs.py",
       "purpose": "Generate downloadable Codex, Kimi, WorkBuddy, and Hermes platform plugin packs.",
-      "sha256": "72fc6a39d9c4e38def811f209d46540ac8d25b363c517af3a0d66dbd075f1677"
+      "sha256": "8befb798b9f1fd1263b2debd42d2220cda0516d6a7fe77c504edcb1172c6dd25"
     },
     {
-      "bytes": 8960,
+      "bytes": 9143,
       "kind": "verification",
       "path": "scripts/verify_platform_plugin_packs.py",
       "purpose": "Verify platform plugin pack archives, manifests, hashes, and privacy boundaries.",
-      "sha256": "57a5b810172016f5c09f9fb4c814b3d4883f9eee5962c5f63b08bb328d9aa2d6"
+      "sha256": "0ed8735e2ad8216fd39910dcd05218c83301158bfd6438b96d7a099f35ec20e8"
     },
     {
       "bytes": 9625,
@@ -3466,18 +3466,18 @@
       "sha256": "94b409c5a459d3abf01a21df9166c6418614f60366e22e953c032269cc878cc9"
     },
     {
-      "bytes": 18189,
+      "bytes": 22312,
       "kind": "verification",
       "path": "scripts/generate_workbuddy_plugin_marketplace.py",
       "purpose": "Generate installable CodeBuddy/WorkBuddy marketplace plugin files.",
-      "sha256": "e9786935cfb3578587dc1ea6cd0ab8087e38b57d4ce6b8fb50601a159890dfd2"
+      "sha256": "dfb4ccb608c95709714201e65773a2dfa1899b433cdbce2893341be55321869f"
     },
     {
-      "bytes": 9328,
+      "bytes": 10294,
       "kind": "verification",
       "path": "scripts/verify_workbuddy_plugin_marketplace.py",
       "purpose": "Verify CodeBuddy/WorkBuddy marketplace plugin files and privacy boundaries.",
-      "sha256": "85ae40134f79f586f53877b957837efaa499e3c35c742fa1bc643b0b3c9b7864"
+      "sha256": "f11b0f81f9f6e245a96d0220e91ada8e23fe47491b73bc0e512cf7795b2deb93"
     },
     {
       "bytes": 25697,
@@ -3508,11 +3508,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 97172,
+      "bytes": 98131,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "4a267b4758b00a549490265756dc3292e610c5780cae5a1dc9de48e21e440d22"
+      "sha256": "7205e5b54dbddbd3f39aef3658df360e9ce4248631fb83edb59e4134161b6016"
     },
     {
       "bytes": 68921,
@@ -3522,11 +3522,11 @@
       "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
     },
     {
-      "bytes": 29777,
+      "bytes": 30421,
       "kind": "verification",
       "path": "scripts/verify_platform_operator_drill.py",
       "purpose": "Verifier for external platform pack consumption and operator transcript evidence.",
-      "sha256": "ebe16b762c7078a6802ae6c1d1d4441bc6ada559100c8fb55c19d7d3517b0607"
+      "sha256": "92e7571b8cdfc832192b45f400978153b486e60f9f97f8e73d947cd852e191bf"
     },
     {
       "bytes": 13948,

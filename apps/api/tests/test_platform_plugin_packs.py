@@ -30,8 +30,11 @@ PACKS = {
         },
     },
     "workbuddy": {
-        "package_type": "openapi_http_tools",
+        "package_type": "inline_learning_workflow",
         "required_assets": {
+            "scripts/workbuddy_learning_flow.py",
+            "platform/schemas/workbuddy-learning-input-v1.schema.json",
+            "platform/schemas/workbuddy-learning-output-v1.schema.json",
             "platform/generated/study-anything-platform-openapi.json",
             "platform/packs/workbuddy/pack.json",
         },

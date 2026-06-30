@@ -1,21 +1,34 @@
 # Start Study Anything
 
-Start or verify the local Study Anything runtime for CodeBuddy/WorkBuddy.
+Check the Study Anything WorkBuddy inline flow and explain HTTP fallback.
 
-1. From the Study Anything repository checkout, run:
+1. Preferred inline check:
+
+```bash
+python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+```
+
+2. Run the deterministic WorkBuddy demo:
+
+```bash
+python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
+```
+
+3. Use HTTP fallback only when the host can preserve a local runtime:
 
 ```bash
 ./START_HERE.command
 python3 scripts/study_anything_cli.py health
 ```
 
-2. If the host cannot keep background processes alive, run the bounded demo:
+If the host cannot keep background processes alive, do not force HTTP. Use the
+inline flow or the bounded demo:
 
 ```bash
 ./scripts/run_skill_mode_demo.sh
 ```
 
-3. If the runtime is remote or uses another port, set:
+If the fallback runtime is remote or uses another port, set:
 
 ```bash
 export STUDY_ANYTHING_API_BASE="http://127.0.0.1:8000"

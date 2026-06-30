@@ -1,0 +1,79 @@
+{
+  "$id": "workbuddy-learning-input-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "phase": {
+      "enum": [
+        "start",
+        "teach",
+        "quiz",
+        "grade",
+        "export",
+        "resume",
+        "complete"
+      ]
+    },
+    "privacy_mode": {
+      "enum": [
+        "metadata_only",
+        "excerpts_only",
+        "full_context"
+      ]
+    },
+    "schema_version": {
+      "const": "workbuddy-learning-input-v1"
+    },
+    "source_items": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "text"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "workbuddy_grading": {
+      "type": "object"
+    },
+    "workbuddy_quiz": {
+      "type": "object"
+    },
+    "workbuddy_teaching": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "topic",
+    "source_items",
+    "workbuddy_teaching",
+    "workbuddy_quiz"
+  ],
+  "title": "WorkBuddy learning input",
+  "type": "object"
+}

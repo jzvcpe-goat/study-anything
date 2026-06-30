@@ -1,0 +1,141 @@
+{
+  "export_targets": [
+    "markdown",
+    "obsidian",
+    "notebooklm"
+  ],
+  "learner_profile": {
+    "experience_level": "intermediate",
+    "goal": "Prepare for a DeepSeek product manager interview",
+    "role": "AI product manager candidate"
+  },
+  "phase": "complete",
+  "privacy_mode": "excerpts_only",
+  "schema_version": "workbuddy-learning-input-v1",
+  "source_items": [
+    {
+      "locator": "brief:p1",
+      "reference": "workbuddy://deepseek-pm-brief",
+      "source_id": "src_deepseek_pm",
+      "source_type": "workbuddy_research_brief",
+      "text": "DeepSeek PM interviews should test product judgment, AI system literacy, data metrics, cost awareness, and cross-functional collaboration. RAW_PRIVATE_INTERVIEW_NOTE_SHOULD_NOT_LEAK",
+      "title": "DeepSeek PM interview brief"
+    },
+    {
+      "locator": "brief:p2",
+      "reference": "workbuddy://deepseek-technical-brief",
+      "source_id": "src_deepseek_technical",
+      "source_type": "workbuddy_research_brief",
+      "text": "A product manager should understand how MoE architecture can affect inference cost and how R1-style reasoning models change product scenarios, latency expectations, and evaluation criteria.",
+      "title": "DeepSeek technical product brief"
+    }
+  ],
+  "topic": "DeepSeek PM interview preparation",
+  "track": "WORKBUDDY",
+  "workbuddy_answer": {
+    "answers": {
+      "q_moe_cost": "MoE can reduce active parameters per token, which may lower serving cost, but the PM still has to manage latency, routing quality, and product scenarios. PRIVATE_ANSWER_SHOULD_NOT_LEAK"
+    }
+  },
+  "workbuddy_grading": {
+    "results": [
+      {
+        "evidence_refs": [
+          {
+            "locator": {
+              "type": "paragraph",
+              "value": "brief:p2"
+            },
+            "source_id": "src_deepseek_technical"
+          }
+        ],
+        "feedback": "Good answer: it connects MoE to cost and also names latency and routing as PM tradeoffs. Improve by adding one product metric such as cost per successful task.",
+        "improvement": "Add one metric and one user scenario.",
+        "item_id": "q_moe_cost",
+        "score": 0.86
+      }
+    ]
+  },
+  "workbuddy_quiz": {
+    "items": [
+      {
+        "evidence_refs": [
+          {
+            "locator": {
+              "type": "paragraph",
+              "value": "brief:p2"
+            },
+            "source_id": "src_deepseek_technical"
+          }
+        ],
+        "expected_points": [
+          "MoE changes active compute and cost structure.",
+          "PMs must still evaluate latency, quality, and scenarios.",
+          "A strong answer names a product metric."
+        ],
+        "item_id": "q_moe_cost",
+        "item_type": "source_bound",
+        "prompt": "How can MoE architecture affect DeepSeek product cost and what PM tradeoff would you watch?",
+        "rubric": "A strong answer links MoE to inference cost, latency, quality, and product metrics."
+      }
+    ]
+  },
+  "workbuddy_teaching": {
+    "glossary": [
+      {
+        "claim_type": "source_bound",
+        "evidence_refs": [
+          {
+            "locator": {
+              "type": "paragraph",
+              "value": "brief:p2"
+            },
+            "source_id": "src_deepseek_technical"
+          }
+        ],
+        "example": "Ask whether a reasoning feature should use R1 only for complex tasks instead of every query.",
+        "explanation": "Mixture-of-Experts activates part of the model for a token, so PMs should reason about cost, latency, and quality together.",
+        "technical_definition": "A sparse architecture that routes computation to selected expert subnetworks.",
+        "term": "MoE"
+      },
+      {
+        "claim_type": "source_bound",
+        "evidence_refs": [
+          {
+            "locator": {
+              "type": "paragraph",
+              "value": "brief:p2"
+            },
+            "source_id": "src_deepseek_technical"
+          }
+        ],
+        "example": "Use stronger reasoning for code review or math-heavy workflows, but measure latency and task success.",
+        "explanation": "R1-style reasoning models are useful when the product scenario benefits from explicit multi-step reasoning.",
+        "technical_definition": "A reasoning-oriented model family optimized for multi-step problem solving.",
+        "term": "R1 reasoning model"
+      }
+    ],
+    "overview": [
+      {
+        "claim_id": "c_pm_dimensions",
+        "claim_type": "source_bound",
+        "evidence_refs": [
+          {
+            "locator": {
+              "type": "paragraph",
+              "value": "brief:p1"
+            },
+            "source_id": "src_deepseek_pm"
+          }
+        ],
+        "text": "DeepSeek PM interview prep should cover product judgment, AI literacy, metrics, cost awareness, and collaboration."
+      },
+      {
+        "claim_id": "c_practice_method",
+        "claim_type": "pedagogical",
+        "evidence_refs": [],
+        "text": "Practice by answering one architecture-to-product tradeoff question, then force yourself to name a metric and a user scenario."
+      }
+    ]
+  }
+}

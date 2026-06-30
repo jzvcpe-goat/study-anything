@@ -160,15 +160,16 @@ SPECS: dict[str, PackSpec] = {
     ),
     "workbuddy": PackSpec(
         platform_id="workbuddy",
-        package_type="openapi_http_tools",
+        package_type="inline_learning_workflow",
         title="Study Anything WorkBuddy Plugin Pack",
         summary=(
-            "Import the constrained OpenAPI HTTP tools into WorkBuddy-style workspaces "
-            "that can call a local or private Study Anything runtime."
+            "Run the WorkBuddy inline learning workflow first, while keeping constrained "
+            "OpenAPI HTTP tools as a fallback for workspaces that can call a local or private runtime."
         ),
         files=COMMON_FILES
         + (
             ("docs/api.md", "operator_doc", "HTTP API reference for platform workspaces."),
+            ("docs/use-with-workbuddy.md", "operator_doc", "Beginner WorkBuddy inline flow and fallback guide."),
             (
                 "docs/platform-agent-integrations.md",
                 "operator_doc",
@@ -181,24 +182,63 @@ SPECS: dict[str, PackSpec] = {
                 "WorkBuddy platform pack source descriptor.",
             ),
             (
+                "scripts/workbuddy_learning_flow.py",
+                "inline_runtime",
+                "WorkBuddy inline learning flow CLI.",
+            ),
+            (
+                "scripts/verify_workbuddy_inline_learning_flow.py",
+                "verification",
+                "WorkBuddy inline flow verifier.",
+            ),
+            (
+                "platform/schemas/workbuddy-learning-input-v1.schema.json",
+                "schema",
+                "WorkBuddy inline input schema.",
+            ),
+            (
+                "platform/schemas/workbuddy-learning-output-v1.schema.json",
+                "schema",
+                "WorkBuddy inline output schema.",
+            ),
+            (
+                "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
+                "fixture",
+                "DeepSeek PM interview inline learning fixture.",
+            ),
+            (
+                "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
+                "fixture",
+                "WorkBuddy inline privacy and quality boundary fixture.",
+            ),
+            (
+                "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
+                "evidence",
+                "WorkBuddy inline verifier evidence.",
+            ),
+            (
                 "platform/generated/study-anything-platform-openapi.json",
                 "tool_import",
-                "OpenAPI 3.1 import asset.",
+                "OpenAPI 3.1 fallback import asset.",
             ),
         ),
         import_assets=(
+            "scripts/workbuddy_learning_flow.py",
+            "platform/schemas/workbuddy-learning-input-v1.schema.json",
+            "platform/schemas/workbuddy-learning-output-v1.schema.json",
             "platform/generated/study-anything-platform-openapi.json",
             "platform/generated/study-anything-tool-catalog.md",
             "platform/packs/workbuddy/pack.json",
         ),
         verification_commands=(
-            "./START_HERE.command",
+            "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+            "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
             "python3 scripts/verify_platform_operator_drill.py --check",
         ),
         known_limitations=(
-            "Requires the host workspace to reach the configured local or private HTTP endpoint.",
-            "This is an import package, not an official marketplace listing.",
+            "Inline mode expects WorkBuddy or the platform Agent to generate teaching, quiz, and grading content.",
+            "HTTP/OpenAPI tools are fallback assets and still require the host workspace to reach the configured endpoint.",
             "Real model credentials and browser/app access remain owned by WorkBuddy or the user's platform Agent.",
         ),
     ),
@@ -334,6 +374,22 @@ def manifest_without_archive(spec: PackSpec) -> dict[str, object]:
             f"{spec.platform_id} import assets are not included in the package: {missing_import_assets}"
         )
     entrypoints = source_pack.get("entrypoints", {})
+    local_runtime = {
+        "beginner_launcher": "./START_HERE.command",
+        "script_launcher": "./scripts/start_here.sh",
+        "skill_mode": "./scripts/launch_skill_mode.sh",
+        "stop": "./scripts/stop_skill_mode.sh",
+        "api_base": "http://127.0.0.1:8000",
+    }
+    if spec.platform_id == "workbuddy":
+        local_runtime = {
+            "workbuddy_inline": "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
+            "http_fallback_beginner_launcher": "./START_HERE.command",
+            "http_fallback_script_launcher": "./scripts/start_here.sh",
+            "http_fallback_skill_mode": "./scripts/launch_skill_mode.sh",
+            "http_fallback_stop": "./scripts/stop_skill_mode.sh",
+            "http_fallback_api_base": "http://127.0.0.1:8000",
+        }
     return {
         "schema_version": SCHEMA_VERSION,
         "platform_id": spec.platform_id,
@@ -345,13 +401,7 @@ def manifest_without_archive(spec: PackSpec) -> dict[str, object]:
         "source_pack_sha256": sha256(ROOT / f"platform/packs/{spec.platform_id}/pack.json"),
         "entrypoints": entrypoints,
         "import_assets": list(spec.import_assets),
-        "local_runtime": {
-            "beginner_launcher": "./START_HERE.command",
-            "script_launcher": "./scripts/start_here.sh",
-            "skill_mode": "./scripts/launch_skill_mode.sh",
-            "stop": "./scripts/stop_skill_mode.sh",
-            "api_base": "http://127.0.0.1:8000",
-        },
+        "local_runtime": local_runtime,
         "verification_commands": list(spec.verification_commands),
         "privacy_boundaries": {
             "must_not_store_or_share": source_pack.get("must_not_log_or_share", []),
@@ -367,6 +417,14 @@ def pack_readme(spec: PackSpec, manifest: dict[str, object]) -> str:
     commands = "\n".join(f"- `{command}`" for command in manifest["verification_commands"])  # type: ignore[index]
     assets = "\n".join(f"- `{path}`" for path in manifest["import_assets"])  # type: ignore[index]
     limitations = "\n".join(f"- {item}" for item in manifest["known_limitations"])  # type: ignore[index]
+    if spec.platform_id == "workbuddy":
+        runtime = """1. Prefer inline mode: `python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview`.
+2. Let WorkBuddy own real model/search/file/context work and pass structured JSON to the inline script.
+3. Use OpenAPI/local HTTP only as fallback when the workspace can reach the endpoint."""
+    else:
+        runtime = f"""1. Start the local Study Anything runtime with `./START_HERE.command` or `./scripts/start_here.sh`.
+2. Import the assets above into {spec.platform_id}.
+3. Point the host Agent or workspace at `http://127.0.0.1:8000` or your private runtime endpoint."""
     return f"""# {spec.title}
 
 {spec.summary}
@@ -377,9 +435,7 @@ def pack_readme(spec: PackSpec, manifest: dict[str, object]) -> str:
 
 ## Local Runtime
 
-1. Start the local Study Anything runtime with `./START_HERE.command` or `./scripts/start_here.sh`.
-2. Import the assets above into {spec.platform_id}.
-3. Point the host Agent or workspace at `http://127.0.0.1:8000` or your private runtime endpoint.
+{runtime}
 
 ## Verification
 

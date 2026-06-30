@@ -109,12 +109,16 @@
     "cognitive_loop_improvement_comparison.schema_version == cognitive-loop-improvement-comparison-verification-v1",
     "cognitive_loop_patch_proposal.schema_version == cognitive-loop-patch-proposal-verification-v1",
     "cognitive_loop_mastra_evolution_receipt.schema_version == cognitive-loop-mastra-evolution-receipt-verification-v1",
-    "cognitive_loop_mastra_evolution_replay.schema_version == cognitive-loop-mastra-evolution-replay-verification-v1"
+    "cognitive_loop_mastra_evolution_replay.schema_version == cognitive-loop-mastra-evolution-replay-verification-v1",
+    "workbuddy_inline_learning_flow.schema_version == workbuddy-inline-learning-flow-verification-v1"
   ],
-  "description": "Import the constrained Study Anything OpenAPI tools into WorkBuddy-style agent workspaces that can call local or private HTTP endpoints.",
+  "description": "Run Study Anything as a WorkBuddy inline learning workflow first, with constrained OpenAPI HTTP tools kept as fallback for local or private endpoints.",
   "entrypoints": {
     "api_docs": "docs/api.md",
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
+    "inline_learning_flow": "scripts/workbuddy_learning_flow.py",
+    "inline_learning_input_schema": "platform/schemas/workbuddy-learning-input-v1.schema.json",
+    "inline_learning_output_schema": "platform/schemas/workbuddy-learning-output-v1.schema.json",
     "openapi": "platform/generated/study-anything-platform-openapi.json",
     "tool_catalog": "platform/generated/study-anything-tool-catalog.md"
   },
@@ -122,6 +126,13 @@
     "platform/study-anything-platform-tools.json",
     "platform/generated/study-anything-platform-openapi.json",
     "platform/generated/study-anything-tool-catalog.md",
+    "scripts/workbuddy_learning_flow.py",
+    "scripts/verify_workbuddy_inline_learning_flow.py",
+    "platform/schemas/workbuddy-learning-input-v1.schema.json",
+    "platform/schemas/workbuddy-learning-output-v1.schema.json",
+    "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
+    "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
+    "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
     "platform/generated/study-anything-cognitive-loop-contracts.json",
     "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
     "platform/generated/study-anything-cognitive-loop-run-once-evidence.json",
@@ -244,7 +255,7 @@
     "scripts/cognitive_loop_mastra_evolution_replay.py",
     "scripts/verify_cognitive_loop_mastra_evolution_replay.py"
   ],
-  "integration_mode": "openapi_http_tools",
+  "integration_mode": "inline_learning_workflow",
   "local_verification": [
     "python3 scripts/verify_cognitive_loop_mastra_adapter.py --check"
   ],
@@ -252,6 +263,8 @@
     "python3 scripts/verify_commercial_readiness.py"
   ],
   "local_verification_commands": [
+    "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
+    "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
     "python3 scripts/verify_clean_clone_adoption.py --repo .",
     "python3 scripts/verify_cognitive_loop_contracts.py --check",
     "python3 scripts/verify_cognitive_loop_cli.py --check",

@@ -1,0 +1,18 @@
+{
+  "forbidden_output_text": [
+    "RAW_PRIVATE_INTERVIEW_NOTE_SHOULD_NOT_LEAK",
+    "PRIVATE_ANSWER_SHOULD_NOT_LEAK",
+    "Understand how deepseek connects"
+  ],
+  "minimum_terms": [
+    "MoE",
+    "R1 reasoning model"
+  ],
+  "required_output_flags": {
+    "background_process_required": false,
+    "http_server_started": false,
+    "localhost_required": false,
+    "model_calls_performed_by_study_anything": false
+  },
+  "schema_version": "workbuddy-learning-boundary-v1"
+}

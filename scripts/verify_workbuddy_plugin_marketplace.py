@@ -104,11 +104,18 @@ def verify_plugin_manifest() -> dict[str, Any]:
     if manifest.get("commands") != ["commands"] or manifest.get("skills") != ["skills"]:
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must expose commands and skills.")
     metadata = manifest.get("metadata") or {}
+    inline = metadata.get("inline_runtime") or {}
+    if inline.get("script") != "scripts/workbuddy_learning_flow.py":
+        raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must declare the WorkBuddy inline script.")
+    if inline.get("verification") != "python3 scripts/verify_workbuddy_inline_learning_flow.py --check":
+        raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must declare the inline verifier.")
     contracts = metadata.get("tool_contracts") or {}
+    if contracts.get("inline") != "scripts/workbuddy_learning_flow.py":
+        raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must declare inline tool contract.")
     if contracts.get("openapi") != "platform/generated/study-anything-platform-openapi.json":
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must point to the OpenAPI import asset.")
-    if contracts.get("local_http") != "http://127.0.0.1:8000":
-        raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must declare the local HTTP default.")
+    if "fallback" not in str(contracts.get("local_http") or ""):
+        raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must mark local HTTP as fallback.")
     if "planned" not in str(contracts.get("mcp") or ""):
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin manifest must not falsely claim shipped MCP support.")
     return manifest
@@ -121,6 +128,9 @@ def verify_plugin_files() -> None:
         raise WorkBuddyPluginMarketplaceVerificationError("Plugin skill entrypoint is missing.")
     skill_text = PLUGIN_SKILL_PATH.read_text(encoding="utf-8")
     for needle in (
+        "Default Inline Flow",
+        "scripts/workbuddy_learning_flow.py run",
+        "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
         "platform/generated/study-anything-platform-openapi.json",
         "http://127.0.0.1:8000",
         "MCP is a planned extension",
@@ -157,7 +167,8 @@ def verify_docs() -> None:
     for needle in (
         "/plugin marketplace add jzvcpe-goat/study-anything",
         "/plugin install study-anything@study-anything",
-        "./START_HERE.command",
+        "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
+        "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
         "platform/generated/study-anything-platform-openapi.json",
         "python3 scripts/verify_workbuddy_plugin_marketplace.py --check",
     ):
@@ -197,6 +208,7 @@ def main() -> None:
                 "marketplace": marketplace["name"],
                 "plugin": manifest["name"],
                 "commands": sorted(COMMAND_PATHS),
+                "inline_runtime": True,
                 "openapi_tools": 34,
                 "mcp_runtime_shipped": False,
             },

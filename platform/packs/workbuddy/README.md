@@ -1,10 +1,34 @@
 # WorkBuddy Pack
 
-Use this pack for WorkBuddy-style agent workspaces that can import HTTP tools or OpenAPI specs.
+Use this pack for WorkBuddy-style agent workspaces. Prefer the inline learning
+workflow; use HTTP/OpenAPI only as fallback.
+
+## Preferred Inline Flow
+
+WorkBuddy owns real model calls, search, files, visualization, and conversation
+context. Study Anything records source-bound learning state, quiz/mastery
+evidence, and exports.
+
+```bash
+python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
+python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+```
+
+For a live WorkBuddy handoff, pass `workbuddy-learning-input-v1` JSON into:
+
+```bash
+python3 scripts/workbuddy_learning_flow.py run \
+  --input workbuddy-learning-input.json \
+  --output workbuddy-learning-output.json \
+  --markdown study-card.md
+```
+
+Keep `session_ref` in hidden WorkBuddy context. Do not ask the learner to manage
+session ids, ports, proxy flags, or background processes.
 
 ## Import
 
-Preferred:
+Fallback OpenAPI import:
 
 ```text
 platform/generated/study-anything-platform-openapi.json

@@ -44,10 +44,19 @@ PLATFORM_REQUIREMENTS = {
         ],
     },
     "workbuddy": {
-        "display": "WorkBuddy-style HTTP workspace",
-        "terms": ["OpenAPI", "HTTP", "adoption-proof-v1"],
-        "required_entrypoints": ["openapi", "tool_catalog"],
+        "display": "WorkBuddy-style inline learning workspace",
+        "terms": ["inline", "WorkBuddy", "adoption-proof-v1"],
+        "required_entrypoints": [
+            "inline_learning_flow",
+            "inline_learning_input_schema",
+            "inline_learning_output_schema",
+            "openapi",
+            "tool_catalog",
+        ],
         "must_import": [
+            "scripts/workbuddy_learning_flow.py",
+            "platform/schemas/workbuddy-learning-input-v1.schema.json",
+            "platform/schemas/workbuddy-learning-output-v1.schema.json",
             "platform/generated/study-anything-platform-openapi.json",
             "platform/generated/study-anything-tool-catalog.md",
         ],
@@ -121,6 +130,9 @@ REQUIRED_EXPORT_EVIDENCE = [
     "cognitive_loop_review_agent_adoption_drill.schema_version == cognitive-loop-review-agent-adoption-drill-v1",
     "plugin_ecosystem_adoption_kit.schema_version == plugin-ecosystem-adoption-kit-v1",
     "deployment_hardening.schema_version == deployment-hardening-verification-v1",
+]
+WORKBUDDY_REQUIRED_EVIDENCE = [
+    "workbuddy_inline_learning_flow.schema_version == workbuddy-inline-learning-flow-verification-v1",
 ]
 
 FORBIDDEN_PROOF_PATTERNS = [
@@ -323,6 +335,8 @@ def validate_platform(pack_root: Path, platform_id: str) -> dict[str, Any]:
 
     evidence = pack.get("acceptance_evidence", [])
     missing_evidence = [item for item in REQUIRED_EXPORT_EVIDENCE if item not in evidence]
+    if platform_id == "workbuddy":
+        missing_evidence.extend(item for item in WORKBUDDY_REQUIRED_EVIDENCE if item not in evidence)
     if missing_evidence:
         raise OperatorDrillError(f"{platform_id} pack missing acceptance evidence: {missing_evidence}")
 

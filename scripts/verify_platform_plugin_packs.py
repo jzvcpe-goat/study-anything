@@ -34,6 +34,9 @@ REQUIRED_IMPORT_ASSETS = {
         "platform/packs/kimi/pack.json",
     },
     "workbuddy": {
+        "scripts/workbuddy_learning_flow.py",
+        "platform/schemas/workbuddy-learning-input-v1.schema.json",
+        "platform/schemas/workbuddy-learning-output-v1.schema.json",
         "platform/generated/study-anything-platform-openapi.json",
         "platform/packs/workbuddy/pack.json",
     },

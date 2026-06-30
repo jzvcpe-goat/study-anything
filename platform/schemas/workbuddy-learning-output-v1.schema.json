@@ -1,0 +1,77 @@
+{
+  "$id": "workbuddy-learning-output-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "audit": {
+      "properties": {
+        "mcp_runtime_shipped": {
+          "const": false
+        },
+        "model_calls_performed_by_study_anything": {
+          "type": "boolean"
+        },
+        "raw_answer_in_output": {
+          "const": false
+        },
+        "raw_source_in_output": {
+          "const": false
+        },
+        "real_model_keys_in_output": {
+          "const": false
+        }
+      },
+      "type": "object"
+    },
+    "mastery": {
+      "type": "object"
+    },
+    "package_type": {
+      "const": "credential-free-source-bound-learning-package"
+    },
+    "runtime": {
+      "properties": {
+        "background_process_required": {
+          "const": false
+        },
+        "http_server_started": {
+          "const": false
+        },
+        "localhost_required": {
+          "const": false
+        },
+        "mode": {
+          "const": "workbuddy_inline"
+        }
+      },
+      "required": [
+        "mode",
+        "http_server_started",
+        "localhost_required",
+        "background_process_required"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "workbuddy-learning-output-v1"
+    },
+    "session_ref": {
+      "type": "string"
+    },
+    "study_card": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "package_type",
+    "session_ref",
+    "runtime",
+    "study_card",
+    "quiz_items",
+    "mastery",
+    "audit"
+  ],
+  "title": "WorkBuddy learning output",
+  "type": "object"
+}
