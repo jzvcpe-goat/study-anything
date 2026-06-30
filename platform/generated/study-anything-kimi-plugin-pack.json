@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 153258,
+    "bytes": 153363,
     "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
     "root": "study-anything-kimi-plugin-pack",
-    "sha256": "c4e846896527ada58618613f2adb78942a0514dcae35efa2f0fad59b99f6fb96"
+    "sha256": "d5d7655f69e2e5ef4a5ea8bfa55a9b0b17f7f4cd859b569685998fcda4369b4c"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -184,11 +184,11 @@
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/scripts/openai_compatible_agent_gateway.py",
-      "bytes": 30510,
+      "bytes": 30852,
       "kind": "gateway",
       "path": "scripts/openai_compatible_agent_gateway.py",
       "purpose": "User-owned local HTTP Agent gateway.",
-      "sha256": "0fc645f79953f3bf8611ae7a5932e2806d51a22ed82b76bb51e59514ecc5c208"
+      "sha256": "7720fcf66e3508c6aa098e30b0a719815ea19bc77c3a62dcc800d1af03aee417"
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/scripts/verify_openai_compatible_gateway.py",

@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 152185,
+    "bytes": 155188,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
+    "sha256": "9c7be962a6fca14dfa7a90f51f1e0aaa86d7e9953a9fc8d6dbba0c1e9b8ad216"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -145,11 +145,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/use-with-workbuddy.md",
-      "bytes": 6020,
+      "bytes": 7500,
       "kind": "operator_doc",
       "path": "docs/use-with-workbuddy.md",
       "purpose": "Beginner WorkBuddy inline flow and fallback guide.",
-      "sha256": "5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a"
+      "sha256": "4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/platform-agent-integrations.md",
@@ -161,11 +161,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/README.md",
-      "bytes": 22346,
+      "bytes": 23147,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style import guide.",
-      "sha256": "60f8ba2abe00f6d3ac8fb7bfa8b86bb0a5e0a596e5aae5c349366b2464f0ca21"
+      "sha256": "0a2ffd391b9e134395b0149343d48ca1f9b54edb36b723041c14d477c542317e"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/packs/workbuddy/pack.json",
@@ -177,59 +177,59 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/workbuddy_learning_flow.py",
-      "bytes": 3545,
+      "bytes": 6446,
       "kind": "inline_runtime",
       "path": "scripts/workbuddy_learning_flow.py",
       "purpose": "WorkBuddy inline learning flow CLI.",
-      "sha256": "bb501c94cbf8da1425b5ebc5fe29107b54fbfb7d27c5f47db3b17b66efac8d6d"
+      "sha256": "6fe90b6a7753fb57bba9ff1394262c5c453684f13b26e8daed6b6f2c7147d00c"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_workbuddy_inline_learning_flow.py",
-      "bytes": 9134,
+      "bytes": 13248,
       "kind": "verification",
       "path": "scripts/verify_workbuddy_inline_learning_flow.py",
       "purpose": "WorkBuddy inline flow verifier.",
-      "sha256": "4b907f58fe557637188efcce1ebf435b5e3dd6be1822610e8273af01d51ec813"
+      "sha256": "2cab9e288db5474ffdef612b75588c49c9da3134e782995be942bb280748608b"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/schemas/workbuddy-learning-input-v1.schema.json",
-      "bytes": 1533,
+      "bytes": 1940,
       "kind": "schema",
       "path": "platform/schemas/workbuddy-learning-input-v1.schema.json",
       "purpose": "WorkBuddy inline input schema.",
-      "sha256": "3e547ab7a1a252bfe630c227152340fc199359db22cd6fa243415cdcf3a4cd2b"
+      "sha256": "eda257e79f33117bd255e5421e33d55c20f05c76a45b0b1e2c516d24dd71191e"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/schemas/workbuddy-learning-output-v1.schema.json",
-      "bytes": 1649,
+      "bytes": 2170,
       "kind": "schema",
       "path": "platform/schemas/workbuddy-learning-output-v1.schema.json",
       "purpose": "WorkBuddy inline output schema.",
-      "sha256": "130baf0b5050dab6a23f4d27311d572033a43fa0af98bf88633c43879b07db24"
+      "sha256": "ddb75f6d2652ec853fd4b37758f2f7dca41ff4e58ccc1aaeeecec149ca5795fa"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
-      "bytes": 5127,
+      "bytes": 5319,
       "kind": "fixture",
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json",
       "purpose": "DeepSeek PM interview inline learning fixture.",
-      "sha256": "5e17f5a2441d95646a9e4af8759b0cbd9bce9780cf2327fa36cc99749dff0715"
+      "sha256": "1565443f015655ae2184ad2b19fd63c22d6a92fce0df278df0b44db2b9634755"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
-      "bytes": 476,
+      "bytes": 575,
       "kind": "fixture",
       "path": "fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json",
       "purpose": "WorkBuddy inline privacy and quality boundary fixture.",
-      "sha256": "49419e92e8bc05e87176fcb307e497f75322952cbb2fb0c9632968804161a116"
+      "sha256": "278baaf1946043fc486c40ba085e33f6cc72f5595242c36fe0b431e934749120"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-workbuddy-inline-learning-flow.json",
-      "bytes": 898,
+      "bytes": 2049,
       "kind": "evidence",
       "path": "platform/generated/study-anything-workbuddy-inline-learning-flow.json",
       "purpose": "WorkBuddy inline verifier evidence.",
-      "sha256": "c2cedb257009bd0c03a608f3037e084eca3358f7ea4fc7fe51f30e166562af4c"
+      "sha256": "913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-platform-openapi.json",
@@ -259,6 +259,7 @@
     "http_fallback_script_launcher": "./scripts/start_here.sh",
     "http_fallback_skill_mode": "./scripts/launch_skill_mode.sh",
     "http_fallback_stop": "./scripts/stop_skill_mode.sh",
+    "workbuddy_doctor": "python3 scripts/workbuddy_learning_flow.py doctor",
     "workbuddy_inline": "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview"
   },
   "name": "study-anything-workbuddy-plugin-pack",
@@ -285,6 +286,7 @@
   "summary": "Run the WorkBuddy inline learning workflow first, while keeping constrained OpenAPI HTTP tools as a fallback for workspaces that can call a local or private runtime.",
   "title": "Study Anything WorkBuddy Plugin Pack",
   "verification_commands": [
+    "python3 scripts/workbuddy_learning_flow.py doctor",
     "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
     "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
     "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",

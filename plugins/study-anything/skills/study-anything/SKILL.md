@@ -25,24 +25,30 @@ Use this skill when the user says things like:
 ## Default Inline Flow
 
 1. WorkBuddy collects source material, user context, and any visual/search/file context.
-2. WorkBuddy uses its own model to produce teaching claims, glossary terms, quiz items, and grading feedback.
-3. Call Study Anything inline:
+2. WorkBuddy uses its own model, such as the Kimi model available inside WorkBuddy, to produce teaching claims, glossary terms, quiz items, and grading feedback.
+3. Include `agent_evidence.generated_by_platform_agent=true`, `platform_agent`, and a non-demo `model_label` in `workbuddy-learning-input.json`.
+4. Call Study Anything inline:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py run --input workbuddy-learning-input.json --output workbuddy-learning-output.json --markdown study-card.md
 ```
 
-4. Keep `session_ref` in hidden WorkBuddy context. Do not ask the user to manage it.
-5. Return the teaching summary, quiz, feedback, mastery, and export options conversationally.
+5. Keep `session_ref` in hidden WorkBuddy context. Do not ask the user to manage it.
+6. Return the teaching summary, quiz, feedback, mastery, and export options conversationally.
+
+`demo` is only for deterministic diagnostics. Do not use demo output as the
+learner-facing lesson.
 
 Validate the inline path:
 
 ```bash
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
+python3 scripts/workbuddy_learning_flow.py doctor
 ```
 
 The inline path does not start uvicorn, bind localhost, require a background
-process, or ask for real model API keys.
+process, ask for real model API keys, or require manual `env -u HTTP_PROXY`
+workarounds.
 
 ## HTTP Fallback
 

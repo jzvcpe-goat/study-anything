@@ -310,9 +310,18 @@ class FakeAgentProvider:
             content = [
                 {
                     "term": term,
-                    "plain_language": f"{term} is a key idea in this source.",
-                    "technical_definition": f"{term} should be interpreted only within the cited source context.",
-                    "example": f"Use {term} when explaining the source's main relationship.",
+                    "plain_language": (
+                        f"In this source, {term} is a learner-facing handle for a concrete claim, "
+                        "constraint, or tradeoff that must stay tied to the cited excerpt."
+                    ),
+                    "technical_definition": (
+                        f"{term} is treated as a source-scoped concept; use it only when you can point "
+                        "to the excerpt, metric, mechanism, or decision boundary that supports it."
+                    ),
+                    "example": (
+                        f"Turn {term} into one source-backed explanation, then name the evidence "
+                        "or product/technical consequence it changes."
+                    ),
                 }
                 for term in terms
             ]

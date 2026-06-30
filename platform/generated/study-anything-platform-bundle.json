@@ -887,42 +887,42 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.json",
       "purpose": "Kimi downloadable plugin pack sidecar manifest.",
-      "sha256": "5fdf8dd445827afc3e2c503ea7f67fb182829a66ad29cb799eecec7732238733"
+      "sha256": "28838433ab23e6f345a0eeb39700551179a78a59b0b206ef6a61e3a2a6727e8f"
     },
     {
-      "bytes": 153258,
+      "bytes": 153363,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
       "purpose": "Kimi downloadable plugin pack archive.",
-      "sha256": "c4e846896527ada58618613f2adb78942a0514dcae35efa2f0fad59b99f6fb96"
+      "sha256": "d5d7655f69e2e5ef4a5ea8bfa55a9b0b17f7f4cd859b569685998fcda4369b4c"
     },
     {
       "bytes": 102,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
       "purpose": "Kimi downloadable plugin pack checksum.",
-      "sha256": "10a89e40c330d7aebe8e77adde0d0e13b9138cd8d20efc9852abdff6e24fdbb7"
+      "sha256": "1e6a79d81f36ed802f465c6eaa2a823e62bcb9ec39a127db82248aba26895107"
     },
     {
-      "bytes": 13415,
+      "bytes": 13551,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
       "purpose": "WorkBuddy downloadable plugin pack sidecar manifest.",
-      "sha256": "8a4f38130047cd059d3240abf3bca91758125980bc7d97a39d24410546d8a637"
+      "sha256": "8f60896e4ad5e712f9ef9525fa443719823f632cb2d73a4b2d51a123374072d9"
     },
     {
-      "bytes": 152185,
+      "bytes": 155188,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
       "purpose": "WorkBuddy downloadable plugin pack archive.",
-      "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
+      "sha256": "9c7be962a6fca14dfa7a90f51f1e0aaa86d7e9953a9fc8d6dbba0c1e9b8ad216"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
       "purpose": "WorkBuddy downloadable plugin pack checksum.",
-      "sha256": "a863438fef91e4d277dc5047a43ce36b67333548b54b33ad43ae2bd37a282f78"
+      "sha256": "d21f8616dace76d470f1db479c4c62bdc585c0fe5f2cafdce868a9eadddb85c1"
     },
     {
       "bytes": 10362,
@@ -946,11 +946,11 @@
       "sha256": "92107d463989d2c8dbe77d399646611fb0ca738c3be30cc6837f6925db071021"
     },
     {
-      "bytes": 14195,
+      "bytes": 14256,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
       "purpose": "Public GitHub Release download index for platform plugin packs.",
-      "sha256": "46b9e80b63970bb2c7416fcac6c3c514af2fa1443a3439245cac50f759d59ff2"
+      "sha256": "ca454d161b7c4f4a1d0a9b52f27b7b8a110791f207ef869f2630750f06b49b9f"
     },
     {
       "bytes": 1764,
@@ -960,18 +960,18 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 4947,
+      "bytes": 4950,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.json",
       "purpose": "Generated CodeBuddy/WorkBuddy marketplace plugin verification report.",
-      "sha256": "728a4e5783769554191e86908b795577e61ddd163eb15b5c210aa6b229ede78b"
+      "sha256": "6d2eefea610b2078d2c6d55e89c5b71d149651c38084d953270d34a69281946d"
     },
     {
       "bytes": 2793,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-workbuddy-codebuddy-marketplace.md",
       "purpose": "Human-readable CodeBuddy/WorkBuddy marketplace plugin verification report.",
-      "sha256": "0c2f22b53be67cb6502fdf169890df9e445c17f46bfeb498c1c3fc1ed128d1ce"
+      "sha256": "ce31e9fd82c4d7e2515d07346e4b705071d625d9a68ee88302a205d706185b12"
     },
     {
       "bytes": 3891,
@@ -1002,11 +1002,11 @@
       "sha256": "4c7ad8d6478e2b22d09e4a1d484d10e73b06bdb6b3076c7a6535cec79161ddc7"
     },
     {
-      "bytes": 6020,
+      "bytes": 7500,
       "kind": "operator_doc",
       "path": "docs/use-with-workbuddy.md",
       "purpose": "CodeBuddy/WorkBuddy marketplace plugin setup, local runtime, and first learning flow guide.",
-      "sha256": "5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a"
+      "sha256": "4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228"
     },
     {
       "bytes": 3370,
@@ -1751,11 +1751,11 @@
       "sha256": "7a350f82bfe9f3513681eade2f530e87dc3faef8a0c8fef2c8060cbf885b038f"
     },
     {
-      "bytes": 22346,
+      "bytes": 23147,
       "kind": "platform_pack",
       "path": "platform/packs/workbuddy/README.md",
       "purpose": "WorkBuddy-style HTTP tool workspace setup guide.",
-      "sha256": "60f8ba2abe00f6d3ac8fb7bfa8b86bb0a5e0a596e5aae5c349366b2464f0ca21"
+      "sha256": "0a2ffd391b9e134395b0149343d48ca1f9b54edb36b723041c14d477c542317e"
     },
     {
       "bytes": 30319,
@@ -1800,32 +1800,32 @@
       "sha256": "6c576964ed0c05b7d9fbc86e156914e5a41776c45fc1677e57ca00df7baecce7"
     },
     {
-      "bytes": 3508,
+      "bytes": 3903,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/skills/study-anything/SKILL.md",
       "purpose": "CodeBuddy/WorkBuddy Study Anything skill entrypoint.",
-      "sha256": "2610d07e2dbb76609e3989fdfe9fc8d702ec2d299dcd611e7f85e07d81e70371"
+      "sha256": "0d098b6b576fbe92acf4ca36df72765d7267a0440c5068c0a74f3288bf42993c"
     },
     {
-      "bytes": 919,
+      "bytes": 998,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/start.md",
       "purpose": "CodeBuddy/WorkBuddy start command.",
-      "sha256": "5fb6a4deddac61988255eddcc420abd574317ea33d6e3a8d6f0d360707b9bd85"
+      "sha256": "e99dc14d7e79294eb921b3eb43400bac7ededc72c038be379f1d26a04b31db03"
     },
     {
-      "bytes": 1458,
+      "bytes": 1889,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/learn.md",
       "purpose": "CodeBuddy/WorkBuddy learn command.",
-      "sha256": "6cdbbc70caa5dc39f1986c5c14e5613456da05debd526bd5a86a0b877e546af0"
+      "sha256": "32219417f6c36424162b9ae062e7f44d8f9ec82b621b9b2cb352c667c5260040"
     },
     {
-      "bytes": 944,
+      "bytes": 1385,
       "kind": "workbuddy_marketplace",
       "path": "plugins/study-anything/commands/diagnose.md",
       "purpose": "CodeBuddy/WorkBuddy diagnose command.",
-      "sha256": "518f3f304899b807db275ed3981a26165fc289714a4baa9dbcbe6d266c6f04ed"
+      "sha256": "315abecda77bf53df22fa7e583f13745298d74cf6b5bac4c1812f8cf0e0f2970"
     },
     {
       "bytes": 1023,
@@ -1835,11 +1835,11 @@
       "sha256": "620e2e6fbe177317695661826c00b65e1e45ea8b9a219e4a6883ba281a04e9cd"
     },
     {
-      "bytes": 30510,
+      "bytes": 30852,
       "kind": "gateway",
       "path": "scripts/openai_compatible_agent_gateway.py",
       "purpose": "User-owned OpenAI-compatible HTTP Agent gateway for Kimi and similar providers.",
-      "sha256": "0fc645f79953f3bf8611ae7a5932e2806d51a22ed82b76bb51e59514ecc5c208"
+      "sha256": "7720fcf66e3508c6aa098e30b0a719815ea19bc77c3a62dcc800d1af03aee417"
     },
     {
       "bytes": 10317,
@@ -3438,11 +3438,11 @@
       "sha256": "6cb204de890695c6e1f83d2bcf70382323ee4a09c584a69494dbff3cf34aab77"
     },
     {
-      "bytes": 24494,
+      "bytes": 24644,
       "kind": "verification",
       "path": "scripts/generate_platform_plugin_packs.py",
       "purpose": "Generate downloadable Codex, Kimi, WorkBuddy, and Hermes platform plugin packs.",
-      "sha256": "8befb798b9f1fd1263b2debd42d2220cda0516d6a7fe77c504edcb1172c6dd25"
+      "sha256": "ccdda3472f7b0deef9835742a97d3410a9006afae588fc96640043bb4a1c8348"
     },
     {
       "bytes": 9143,
@@ -3466,18 +3466,18 @@
       "sha256": "94b409c5a459d3abf01a21df9166c6418614f60366e22e953c032269cc878cc9"
     },
     {
-      "bytes": 22312,
+      "bytes": 23658,
       "kind": "verification",
       "path": "scripts/generate_workbuddy_plugin_marketplace.py",
       "purpose": "Generate installable CodeBuddy/WorkBuddy marketplace plugin files.",
-      "sha256": "dfb4ccb608c95709714201e65773a2dfa1899b433cdbce2893341be55321869f"
+      "sha256": "89cfd5976d20a49acfa5f213757e4d0c5ad83e45841247ed8c0e4d601ea84be3"
     },
     {
-      "bytes": 10294,
+      "bytes": 10693,
       "kind": "verification",
       "path": "scripts/verify_workbuddy_plugin_marketplace.py",
       "purpose": "Verify CodeBuddy/WorkBuddy marketplace plugin files and privacy boundaries.",
-      "sha256": "f11b0f81f9f6e245a96d0220e91ada8e23fe47491b73bc0e512cf7795b2deb93"
+      "sha256": "983558bbc1c2726b736f907341e5961ab1b611900fb37cd971fddfda65215ac5"
     },
     {
       "bytes": 25697,

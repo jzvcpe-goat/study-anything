@@ -26,6 +26,14 @@ SECRET_PATTERNS = (
     re.compile(r"(?i)\bbearer\s+[A-Za-z0-9_./+=-]{8,}"),
     re.compile(r"/Users/[^\s,'\"<>]+"),
 )
+PROXY_ENV = {
+    "HTTP_PROXY": "http://127.0.0.1:55264",
+    "HTTPS_PROXY": "http://127.0.0.1:55264",
+    "http_proxy": "http://127.0.0.1:55264",
+    "https_proxy": "http://127.0.0.1:55264",
+    "ALL_PROXY": "http://127.0.0.1:55264",
+    "all_proxy": "http://127.0.0.1:55264",
+}
 
 
 class WorkBuddyInlineVerifierError(RuntimeError):
@@ -56,37 +64,36 @@ def assert_no_private_text(label: str, text: str) -> None:
             raise WorkBuddyInlineVerifierError(f"{label} leaked forbidden text: {forbidden}")
 
 
-def run_cli_in_temp() -> dict[str, Any]:
+def proxied_env() -> dict[str, str]:
+    env = dict(os.environ)
+    env.update(PROXY_ENV)
+    env["PYTHONPATH"] = str(ROOT / "apps" / "api")
+    return env
+
+
+def run_cli_in_temp(command_args: list[str], *, input_payload: dict[str, Any] | None = None) -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="study-anything-workbuddy-inline-") as tmp:
         tmp_path = Path(tmp)
+        input_path = tmp_path / "input.json"
         output_path = tmp_path / "out.json"
         markdown_path = tmp_path / "out.md"
-        env = dict(os.environ)
-        env.update(
-            {
-                "HTTP_PROXY": "http://127.0.0.1:55264",
-                "HTTPS_PROXY": "http://127.0.0.1:55264",
-                "http_proxy": "http://127.0.0.1:55264",
-                "https_proxy": "http://127.0.0.1:55264",
-                "ALL_PROXY": "http://127.0.0.1:55264",
-                "all_proxy": "http://127.0.0.1:55264",
-                "PYTHONPATH": str(ROOT / "apps" / "api"),
-            }
-        )
+        if input_payload is not None:
+            input_path.write_text(dump_json(input_payload), encoding="utf-8")
         result = subprocess.run(
             [
                 sys.executable,
                 str(ROOT / "scripts" / "workbuddy_learning_flow.py"),
-                "run",
-                "--input",
-                str(INPUT_FIXTURE),
+                *[
+                    str(input_path) if value == "{input}" else value
+                    for value in command_args
+                ],
                 "--output",
                 str(output_path),
                 "--markdown",
                 str(markdown_path),
             ],
             cwd=tmp_path,
-            env=env,
+            env=proxied_env(),
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -108,6 +115,81 @@ def run_cli_in_temp() -> dict[str, Any]:
         assert_no_private_text("inline stdout", result.stdout)
         assert_no_private_text("inline markdown", markdown_path.read_text(encoding="utf-8"))
         return file_payload
+
+
+def run_demo_in_temp() -> dict[str, Any]:
+    return run_cli_in_temp(["demo", "--case", "deepseek-pm-interview"])
+
+
+def run_platform_agent_input_in_temp() -> dict[str, Any]:
+    payload = read_json(INPUT_FIXTURE)
+    payload["agent_evidence"] = {
+        "generated_by_platform_agent": True,
+        "mode": "platform_agent",
+        "model_label": "Kimi model via WorkBuddy",
+        "platform_agent": "WorkBuddy",
+    }
+    return run_cli_in_temp(["run", "--input", "{input}"], input_payload=payload)
+
+
+def verify_run_rejects_deterministic_input() -> None:
+    with tempfile.TemporaryDirectory(prefix="study-anything-workbuddy-inline-negative-") as tmp:
+        tmp_path = Path(tmp)
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts" / "workbuddy_learning_flow.py"),
+                "run",
+                "--input",
+                str(INPUT_FIXTURE),
+            ],
+            cwd=tmp_path,
+            env=proxied_env(),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=30,
+            check=False,
+        )
+        if result.returncode == 0:
+            raise WorkBuddyInlineVerifierError("Real run accepted deterministic fixture input.")
+        if "generated_by_platform_agent=true" not in result.stderr:
+            raise WorkBuddyInlineVerifierError("Real run rejection did not explain missing WorkBuddy/Kimi agent evidence.")
+
+
+def verify_low_quality_input_is_rejected() -> None:
+    payload = read_json(INPUT_FIXTURE)
+    payload["agent_evidence"] = {
+        "generated_by_platform_agent": True,
+        "mode": "platform_agent",
+        "model_label": "Kimi model via WorkBuddy",
+        "platform_agent": "WorkBuddy",
+    }
+    payload["workbuddy_teaching"]["overview"][0]["text"] = "DeepSeek is a key idea in this source."
+    with tempfile.TemporaryDirectory(prefix="study-anything-workbuddy-inline-quality-") as tmp:
+        tmp_path = Path(tmp)
+        input_path = tmp_path / "bad.json"
+        input_path.write_text(dump_json(payload), encoding="utf-8")
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts" / "workbuddy_learning_flow.py"),
+                "run",
+                "--input",
+                str(input_path),
+            ],
+            cwd=tmp_path,
+            env=proxied_env(),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=30,
+            check=False,
+        )
+        if result.returncode == 0:
+            raise WorkBuddyInlineVerifierError("Low-quality WorkBuddy teaching placeholder was accepted.")
+        if "placeholder teaching text" not in result.stderr:
+            raise WorkBuddyInlineVerifierError("Low-quality rejection did not identify placeholder teaching text.")
 
 
 def verify_schema_files() -> None:
@@ -132,6 +214,8 @@ def verify_output(payload: dict[str, Any]) -> dict[str, Any]:
             raise WorkBuddyInlineVerifierError(f"runtime.{key} must be {expected}.")
     if runtime.get("data_dir_strategy") != "workspace_dot_workbuddy":
         raise WorkBuddyInlineVerifierError("Default data_dir_strategy should be workspace_dot_workbuddy.")
+    if runtime.get("proxy_env_removed_count", 0) < len(PROXY_ENV):
+        raise WorkBuddyInlineVerifierError("Inline flow should sanitize proxy env vars without requiring env -u.")
     if payload.get("package_type") != "credential-free-source-bound-learning-package":
         raise WorkBuddyInlineVerifierError("Output package_type drifted.")
     text = dump_json(payload)
@@ -150,25 +234,34 @@ def verify_output(payload: dict[str, Any]) -> dict[str, Any]:
     ]
     if not source_claims or any(not item.get("evidence_refs") for item in source_claims):
         raise WorkBuddyInlineVerifierError("Source-bound claims must carry evidence_refs.")
+    quality = payload.get("quality_gate") or {}
+    if quality.get("placeholder_phrases_rejected") is not True:
+        raise WorkBuddyInlineVerifierError("Output quality_gate must reject placeholder teaching phrases.")
     return {
         "session_ref": payload.get("session_ref"),
         "source_count": len(payload.get("source_refs", [])),
         "quiz_count": len(payload.get("quiz_items", [])),
         "grading_count": len(payload.get("grading_summary", [])),
         "mastery": payload.get("mastery"),
+        "agent_evidence": payload.get("agent_evidence"),
     }
 
 
 def build_report() -> dict[str, Any]:
     verify_schema_files()
-    output = run_cli_in_temp()
+    demo_output = run_demo_in_temp()
+    demo_summary = verify_output(demo_output)
+    output = run_platform_agent_input_in_temp()
     summary = verify_output(output)
+    verify_run_rejects_deterministic_input()
+    verify_low_quality_input_is_rejected()
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "pass",
         "mode": "workbuddy_inline",
         "fixture": "deepseek-pm-interview",
         "summary": summary,
+        "deterministic_demo_summary": demo_summary,
         "runtime_boundary": {
             "http_server_started": False,
             "localhost_required": False,
@@ -182,6 +275,12 @@ def build_report() -> dict[str, Any]:
             "raw_source_in_report": False,
             "raw_answer_in_report": False,
             "local_absolute_paths_in_report": False,
+        },
+        "quality": {
+            "real_run_requires_platform_agent_evidence": True,
+            "deterministic_demo_cannot_be_used_as_real_run": True,
+            "low_quality_placeholder_rejected": True,
+            "manual_env_unset_required": False,
         },
         "verification_command": "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
     }

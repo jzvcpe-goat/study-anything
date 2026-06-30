@@ -15,19 +15,19 @@ Status: `pass`
 | --- | --- |
 | `.codebuddy-plugin/marketplace.json` | `d6a6826fa8c4576a55fecf03f579b39ccedc16607ba0a09aad28a604ad16b1c3` |
 | `plugins/study-anything/.codebuddy-plugin/plugin.json` | `5888d89d3d9689e29295e8a32d1f5bffe217975e4462a4608a27c542a0ef4401` |
-| `plugins/study-anything/skills/study-anything/SKILL.md` | `2610d07e2dbb76609e3989fdfe9fc8d702ec2d299dcd611e7f85e07d81e70371` |
-| `plugins/study-anything/commands/start.md` | `5fb6a4deddac61988255eddcc420abd574317ea33d6e3a8d6f0d360707b9bd85` |
-| `plugins/study-anything/commands/learn.md` | `6cdbbc70caa5dc39f1986c5c14e5613456da05debd526bd5a86a0b877e546af0` |
-| `plugins/study-anything/commands/diagnose.md` | `518f3f304899b807db275ed3981a26165fc289714a4baa9dbcbe6d266c6f04ed` |
+| `plugins/study-anything/skills/study-anything/SKILL.md` | `0d098b6b576fbe92acf4ca36df72765d7267a0440c5068c0a74f3288bf42993c` |
+| `plugins/study-anything/commands/start.md` | `e99dc14d7e79294eb921b3eb43400bac7ededc72c038be379f1d26a04b31db03` |
+| `plugins/study-anything/commands/learn.md` | `32219417f6c36424162b9ae062e7f44d8f9ec82b621b9b2cb352c667c5260040` |
+| `plugins/study-anything/commands/diagnose.md` | `315abecda77bf53df22fa7e583f13745298d74cf6b5bac4c1812f8cf0e0f2970` |
 | `plugins/study-anything/commands/export.md` | `620e2e6fbe177317695661826c00b65e1e45ea8b9a219e4a6883ba281a04e9cd` |
-| `docs/use-with-workbuddy.md` | `5948ea220fb657606e48dadee9f7e2a694edb9a33201a83d23a6c5cf5a362d0a` |
-| `scripts/workbuddy_learning_flow.py` | `bb501c94cbf8da1425b5ebc5fe29107b54fbfb7d27c5f47db3b17b66efac8d6d` |
-| `scripts/verify_workbuddy_inline_learning_flow.py` | `4b907f58fe557637188efcce1ebf435b5e3dd6be1822610e8273af01d51ec813` |
-| `platform/schemas/workbuddy-learning-input-v1.schema.json` | `3e547ab7a1a252bfe630c227152340fc199359db22cd6fa243415cdcf3a4cd2b` |
-| `platform/schemas/workbuddy-learning-output-v1.schema.json` | `130baf0b5050dab6a23f4d27311d572033a43fa0af98bf88633c43879b07db24` |
-| `fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json` | `5e17f5a2441d95646a9e4af8759b0cbd9bce9780cf2327fa36cc99749dff0715` |
-| `fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json` | `49419e92e8bc05e87176fcb307e497f75322952cbb2fb0c9632968804161a116` |
-| `platform/generated/study-anything-workbuddy-inline-learning-flow.json` | `c2cedb257009bd0c03a608f3037e084eca3358f7ea4fc7fe51f30e166562af4c` |
+| `docs/use-with-workbuddy.md` | `4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228` |
+| `scripts/workbuddy_learning_flow.py` | `6fe90b6a7753fb57bba9ff1394262c5c453684f13b26e8daed6b6f2c7147d00c` |
+| `scripts/verify_workbuddy_inline_learning_flow.py` | `2cab9e288db5474ffdef612b75588c49c9da3134e782995be942bb280748608b` |
+| `platform/schemas/workbuddy-learning-input-v1.schema.json` | `eda257e79f33117bd255e5421e33d55c20f05c76a45b0b1e2c516d24dd71191e` |
+| `platform/schemas/workbuddy-learning-output-v1.schema.json` | `ddb75f6d2652ec853fd4b37758f2f7dca41ff4e58ccc1aaeeecec149ca5795fa` |
+| `fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json` | `1565443f015655ae2184ad2b19fd63c22d6a92fce0df278df0b44db2b9634755` |
+| `fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json` | `278baaf1946043fc486c40ba085e33f6cc72f5595242c36fe0b431e934749120` |
+| `platform/generated/study-anything-workbuddy-inline-learning-flow.json` | `913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d` |
 | `platform/generated/study-anything-platform-openapi.json` | `2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1` |
 
 ## Verify

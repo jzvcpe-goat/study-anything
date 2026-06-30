@@ -231,6 +231,7 @@ SPECS: dict[str, PackSpec] = {
             "platform/packs/workbuddy/pack.json",
         ),
         verification_commands=(
+            "python3 scripts/workbuddy_learning_flow.py doctor",
             "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
             "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
             "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",
@@ -383,6 +384,7 @@ def manifest_without_archive(spec: PackSpec) -> dict[str, object]:
     }
     if spec.platform_id == "workbuddy":
         local_runtime = {
+            "workbuddy_doctor": "python3 scripts/workbuddy_learning_flow.py doctor",
             "workbuddy_inline": "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
             "http_fallback_beginner_launcher": "./START_HERE.command",
             "http_fallback_script_launcher": "./scripts/start_here.sh",

@@ -23,6 +23,17 @@
       },
       "type": "object"
     },
+    "agent_evidence": {
+      "properties": {
+        "model_invocation_proven_by_study_anything": {
+          "const": false
+        },
+        "study_anything_called_model": {
+          "const": false
+        }
+      },
+      "type": "object"
+    },
     "mastery": {
       "type": "object"
     },
@@ -42,6 +53,9 @@
         },
         "mode": {
           "const": "workbuddy_inline"
+        },
+        "proxy_env_sanitized": {
+          "const": true
         }
       },
       "required": [
@@ -60,6 +74,14 @@
     },
     "study_card": {
       "type": "object"
+    },
+    "quality_gate": {
+      "properties": {
+        "placeholder_phrases_rejected": {
+          "const": true
+        }
+      },
+      "type": "object"
     }
   },
   "required": [
@@ -68,6 +90,8 @@
     "session_ref",
     "runtime",
     "study_card",
+    "agent_evidence",
+    "quality_gate",
     "quiz_items",
     "mastery",
     "audit"

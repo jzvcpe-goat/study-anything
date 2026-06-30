@@ -1,4 +1,24 @@
 {
+  "deterministic_demo_summary": {
+    "agent_evidence": {
+      "attestation": "deterministic_fixture_only",
+      "generated_by_platform_agent": false,
+      "mode": "deterministic_fixture",
+      "model_invocation_proven_by_study_anything": false,
+      "model_label": "deterministic-fixture",
+      "platform_agent": "WorkBuddy fixture",
+      "study_anything_called_model": false
+    },
+    "grading_count": 1,
+    "mastery": {
+      "average_score": 0.86,
+      "bloom": "apply",
+      "level": 2.0
+    },
+    "quiz_count": 1,
+    "session_ref": "wb-5eab66d26d80",
+    "source_count": 2
+  },
   "fixture": "deepseek-pm-interview",
   "mode": "workbuddy_inline",
   "privacy": {
@@ -6,6 +26,12 @@
     "local_absolute_paths_in_report": false,
     "raw_answer_in_report": false,
     "raw_source_in_report": false
+  },
+  "quality": {
+    "deterministic_demo_cannot_be_used_as_real_run": true,
+    "low_quality_placeholder_rejected": true,
+    "manual_env_unset_required": false,
+    "real_run_requires_platform_agent_evidence": true
   },
   "runtime_boundary": {
     "background_process_required": false,
@@ -18,6 +44,15 @@
   "schema_version": "workbuddy-inline-learning-flow-verification-v1",
   "status": "pass",
   "summary": {
+    "agent_evidence": {
+      "attestation": "platform_provided",
+      "generated_by_platform_agent": true,
+      "mode": "platform_agent",
+      "model_invocation_proven_by_study_anything": false,
+      "model_label": "Kimi model via WorkBuddy",
+      "platform_agent": "WorkBuddy",
+      "study_anything_called_model": false
+    },
     "grading_count": 1,
     "mastery": {
       "average_score": 0.86,

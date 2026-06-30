@@ -82,24 +82,24 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-kimi-plugin-pack.zip",
-          "bytes": 153258,
+          "bytes": 153363,
           "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.zip",
-          "sha256": "c4e846896527ada58618613f2adb78942a0514dcae35efa2f0fad59b99f6fb96"
+          "sha256": "d5d7655f69e2e5ef4a5ea8bfa55a9b0b17f7f4cd859b569685998fcda4369b4c"
         },
         "checksum": {
           "asset_name": "study-anything-kimi-plugin-pack.sha256",
           "bytes": 102,
           "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.sha256",
-          "sha256": "10a89e40c330d7aebe8e77adde0d0e13b9138cd8d20efc9852abdff6e24fdbb7"
+          "sha256": "1e6a79d81f36ed802f465c6eaa2a823e62bcb9ec39a127db82248aba26895107"
         },
         "manifest": {
           "asset_name": "study-anything-kimi-plugin-pack.json",
           "bytes": 10599,
           "path": "platform/generated/study-anything-kimi-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.json",
-          "sha256": "5fdf8dd445827afc3e2c503ea7f67fb182829a66ad29cb799eecec7732238733"
+          "sha256": "28838433ab23e6f345a0eeb39700551179a78a59b0b206ef6a61e3a2a6727e8f"
         }
       },
       "summary": "Import OpenAI-compatible tool definitions into Kimi-compatible hosts and call the local or private Study Anything HTTP runtime.",
@@ -138,29 +138,30 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-workbuddy-plugin-pack.zip",
-          "bytes": 152185,
+          "bytes": 155188,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.zip",
-          "sha256": "6a1741c6622755e911d099e98675d0c9c0bf849562d7d4bed7913a3c239696c1"
+          "sha256": "9c7be962a6fca14dfa7a90f51f1e0aaa86d7e9953a9fc8d6dbba0c1e9b8ad216"
         },
         "checksum": {
           "asset_name": "study-anything-workbuddy-plugin-pack.sha256",
           "bytes": 107,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
-          "sha256": "a863438fef91e4d277dc5047a43ce36b67333548b54b33ad43ae2bd37a282f78"
+          "sha256": "d21f8616dace76d470f1db479c4c62bdc585c0fe5f2cafdce868a9eadddb85c1"
         },
         "manifest": {
           "asset_name": "study-anything-workbuddy-plugin-pack.json",
-          "bytes": 13415,
+          "bytes": 13551,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.json",
-          "sha256": "8a4f38130047cd059d3240abf3bca91758125980bc7d97a39d24410546d8a637"
+          "sha256": "8f60896e4ad5e712f9ef9525fa443719823f632cb2d73a4b2d51a123374072d9"
         }
       },
       "summary": "Run the WorkBuddy inline learning workflow first, while keeping constrained OpenAPI HTTP tools as a fallback for workspaces that can call a local or private runtime.",
       "title": "Study Anything WorkBuddy Plugin Pack",
       "verification_commands": [
+        "python3 scripts/workbuddy_learning_flow.py doctor",
         "python3 scripts/verify_workbuddy_inline_learning_flow.py --check",
         "python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview",
         "API_BASE=http://127.0.0.1:8000 python3 scripts/verify_platform_agent_tools.py",

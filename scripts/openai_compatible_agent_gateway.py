@@ -356,11 +356,18 @@ def _dry_run_result(task: dict[str, Any]) -> dict[str, Any]:
         result["content"] = [
             {
                 "term": term,
-                "plain_language": f"{term} is a key idea in this source.",
-                "technical_definition": (
-                    f"{term} should be interpreted inside the cited source context."
+                "plain_language": (
+                    f"In this source, {term} marks a concrete claim, mechanism, or tradeoff "
+                    "that the learner should explain with cited evidence."
                 ),
-                "example": f"Use {term} when explaining the source-backed relationship.",
+                "technical_definition": (
+                    f"{term} is source-scoped here; connect it to the excerpt, metric, "
+                    "system behavior, or decision boundary that supports it."
+                ),
+                "example": (
+                    f"Ask what {term} changes for the user, product metric, or technical choice, "
+                    "then cite the source reference."
+                ),
             }
             for term in terms
         ]

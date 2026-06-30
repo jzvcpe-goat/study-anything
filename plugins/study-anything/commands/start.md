@@ -5,10 +5,11 @@ Check the Study Anything WorkBuddy inline flow and explain HTTP fallback.
 1. Preferred inline check:
 
 ```bash
+python3 scripts/workbuddy_learning_flow.py doctor
 python3 scripts/verify_workbuddy_inline_learning_flow.py --check
 ```
 
-2. Run the deterministic WorkBuddy demo:
+2. Run the deterministic WorkBuddy demo only as a diagnostic fixture:
 
 ```bash
 python3 scripts/workbuddy_learning_flow.py demo --case deepseek-pm-interview
