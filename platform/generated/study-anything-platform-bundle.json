@@ -754,56 +754,56 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "b878b6032abaeed9da101349f4eb5bae13f0096308da1d025239762fac0b77cb"
+      "sha256": "aca6273ac93a7c97eef798cef677eb40052618ef162e1ed0641294e410406561"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "2114285be73a66c0c9a96d4e4ff3102fe69380beb4009df34f1758dbfaecf120"
+      "sha256": "fe2bfe31a8534e080027513cddc710bcf2f2b33d82ac996bcbc4cf22cda0cc23"
     },
     {
-      "bytes": 134348,
+      "bytes": 134347,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "44d2571c15c09d01dc1499a554c4156ea5cac20f81cb743eb32f6a65adf153a3"
+      "sha256": "8fa3c2da8f3375d6868fabc01af89f24bc7135615e960018ca6f8b8a0af16ee8"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "dae72fc8e066e89043359a7fed3749f63dc306642f368aa9638e74d8ce299825"
+      "sha256": "2870ed5ea67583f853855b765fed155d0142cc39c968397650c825a11e06a159"
     },
     {
       "bytes": 8886,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "a0b9fc24fc3c7b206d44bd1fdf858fd64b9ade27fc14df2a90ad10ae52a20d2d"
+      "sha256": "24f4df1ed92d57e4fcec8ca4184530d7de6bb55fff3ec7b610439170fa25fd4a"
     },
     {
       "bytes": 2706,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "56dfb84fb8cf4583f71a9c402c5b6f53f32e6d3f98171ae7291030517971833b"
+      "sha256": "db0df91e9e3e3a95826ef512cef74c23970b71285a6555fff5662bb1e5dc7522"
     },
     {
-      "bytes": 89297,
+      "bytes": 89299,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence archive.",
-      "sha256": "340511d9a8c48244519fa5d0d3e4541684d177325c0b4722d7bd7001b483c8a6"
+      "sha256": "fc58543ebcff27b5bc30c79b24b5f65c9800420f35190c76cd340b8bc8827498"
     },
     {
       "bytes": 109,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "f37d658da15d04bdad83f7c26b3afe3dce3af4b1423bc606ffb95fa9e55d20fb"
+      "sha256": "51c879f857bcd9db9881148b66bd76eb6182e006e087557c840cfa7e6c4e02b6"
     },
     {
       "bytes": 7890,
@@ -838,28 +838,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.json",
       "purpose": "Platform Agent release replay evidence JSON.",
-      "sha256": "8433b4db433bb9ccbaad595bde530238e6a12b406d936f2a6fb2c3b75e99f227"
+      "sha256": "f9840e957a7226fbdc6df2b419cabf833031dc1b948e68ebcb7c64eae2399695"
     },
     {
       "bytes": 2854,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.md",
       "purpose": "Platform Agent release replay evidence Markdown.",
-      "sha256": "ad9cfec31e32c8c09bbdbff2430888216c794bbcd957c12b3d64a60ed38bcd3e"
+      "sha256": "065cf3cf2b1e7a75c0d8bb2ed5ae05c2785782e06f72e9f318023a8d49db865e"
     },
     {
-      "bytes": 71268,
+      "bytes": 71569,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.zip",
       "purpose": "Platform Agent release replay evidence archive.",
-      "sha256": "a7a84d85d85b5320b9cb1106e68fc2357c1225919239430f532bacc4c30014d0"
+      "sha256": "3dc0b035b69ddc00c7e81b601e5c61eb33dc526de18588785c2c456d1183118b"
     },
     {
       "bytes": 107,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-agent-replay.sha256",
       "purpose": "Platform Agent release replay evidence checksum.",
-      "sha256": "913bb0973f43d5d831ab0c95a5a1491a0b91863868a0a8b2b1bae2cc651f769c"
+      "sha256": "f1219ab277e4ad0141c15d67642b4f7d3e6c0224b18ffc2d7009e3aff83ed323"
     },
     {
       "bytes": 9192,
