@@ -1,0 +1,157 @@
+{
+  "schema_version": "llm-depth-risk-input-v1",
+  "input_ref": "fixtures/llm-depth-risk/pass.json",
+  "engineering_risk": {
+    "status": "pass",
+    "level": "medium",
+    "evidence_refs": [
+      "cognitive-loop-review",
+      "dual-loop-gate"
+    ]
+  },
+  "prompts": [
+    {
+      "prompt_id": "study-anything-teach-overview",
+      "version": "2026.06.30",
+      "role": "teaching",
+      "previous_template": "Return a short overview from the provided source refs.",
+      "current_template": "Return JSON-only teaching claims grounded in provided source refs. Include citation ids and mark uncertainty.",
+      "variables": [
+        "source_refs",
+        "learner_goal",
+        "citation_ids"
+      ],
+      "json_output_required": true,
+      "source_grounding_required": true,
+      "injection_tests": [
+        {
+          "case_id": "ignore-source-instruction",
+          "attack_class": "prompt_injection",
+          "status": "pass"
+        },
+        {
+          "case_id": "fake-citation-request",
+          "attack_class": "citation_fabrication",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "hallucination_cases": [
+    {
+      "case_id": "deepseek-learning-answer",
+      "answer_ref": "answer:deepseek-learning-answer",
+      "claims": [
+        {
+          "claim_id": "claim-moe-cost",
+          "claim_ref": "moe-cost-claim",
+          "citation_ids": [
+            "src-moe-cost"
+          ],
+          "supported": true,
+          "contradicted": false
+        },
+        {
+          "claim_id": "claim-r1-eval",
+          "claim_ref": "r1-eval-claim",
+          "citation_ids": [
+            "src-r1-eval"
+          ],
+          "supported": true,
+          "contradicted": false
+        }
+      ]
+    }
+  ],
+  "rag_cases": [
+    {
+      "case_id": "rag-deepseek-pm",
+      "question_ref": "question:deepseek-pm-cost",
+      "answer_ref": "answer:deepseek-learning-answer",
+      "expected_context_ids": [
+        "src-moe-cost",
+        "src-r1-eval"
+      ],
+      "retrieved_contexts": [
+        {
+          "context_id": "src-moe-cost",
+          "relevant": true,
+          "cited": true,
+          "position": 1
+        },
+        {
+          "context_id": "src-r1-eval",
+          "relevant": true,
+          "cited": true,
+          "position": 2
+        }
+      ],
+      "faithfulness": 0.94,
+      "answer_relevancy": 0.91
+    }
+  ],
+  "context_cases": [
+    {
+      "case_id": "long-context-learning-pack",
+      "max_context_tokens": 4096,
+      "source_tokens": 12000,
+      "packed_tokens": 3200,
+      "selected_chunks": [
+        {
+          "chunk_id": "src-moe-cost",
+          "tokens": 900,
+          "rank": 1,
+          "position": "front",
+          "contains_required_fact": true
+        },
+        {
+          "chunk_id": "src-r1-eval",
+          "tokens": 1100,
+          "rank": 2,
+          "position": "middle",
+          "contains_required_fact": true
+        }
+      ],
+      "lost_in_middle_probe": {
+        "edge_supported": true,
+        "middle_supported": true
+      }
+    }
+  ],
+  "cost_quality_runs": [
+    {
+      "run_id": "kimi-balanced",
+      "provider_class": "platform_agent",
+      "model_label": "Kimi balanced model via WorkBuddy",
+      "latency_ms": 1800,
+      "input_tokens": 2400,
+      "output_tokens": 820,
+      "cost_usd": 0.004,
+      "quality_score": 0.86,
+      "task_success": true
+    },
+    {
+      "run_id": "premium-reasoner",
+      "provider_class": "platform_agent",
+      "model_label": "Premium reasoning model via user Agent",
+      "latency_ms": 5100,
+      "input_tokens": 2400,
+      "output_tokens": 940,
+      "cost_usd": 0.032,
+      "quality_score": 0.91,
+      "task_success": true
+    },
+    {
+      "run_id": "cheap-fast",
+      "provider_class": "platform_agent",
+      "model_label": "Small fast model via user Agent",
+      "latency_ms": 900,
+      "input_tokens": 2100,
+      "output_tokens": 600,
+      "cost_usd": 0.001,
+      "quality_score": 0.72,
+      "task_success": true
+    }
+  ],
+  "selected_run_id": "kimi-balanced"
+}

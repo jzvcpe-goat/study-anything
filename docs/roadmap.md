@@ -96,6 +96,7 @@ Deliver:
 - `ProjectEvent`
 - `DecisionCard`
 - `RiskEngine`
+- `LLMDepthRiskEngine`
 - `HumanMasteryGate`
 - `LoopRun`
 - `MasteryRecord`

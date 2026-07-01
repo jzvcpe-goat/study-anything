@@ -42,6 +42,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Obsidian export, NotebookLM-style manual bridge, second-brain handoff, and local archive evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and GHCR image evidence.
 - Cognitive Loop contract bootstrap with `.cognitive-loop/config.yaml`, `permissions.yaml`, `evals.yaml`, `risk.yaml`, and `cognitive-loop-contract-bootstrap-v1` verification.
+- LLM Depth Risk Engine Lite with metadata-only `PromptEvidence`, `HallucinationEvidence`, `RAGEvidence`, `ContextBudgetEvidence`, `CostQualityEvidence`, and a combined engineering-risk plus model-risk promotion gate.
 - Optional Cognitive Loop manual watcher ingest with `.cognitive-loop/watchers.yaml`, metadata-only `ProjectEvent` artifacts, Event Index classification, and SQLite Event Store projection.
 
 当前 alpha 已经具备本地优先的 Study Anything 基础：
@@ -56,6 +57,7 @@ The current alpha already ships a local-first Study Anything foundation:
 - Obsidian 导出、NotebookLM 式手动桥接、second-brain handoff、本地归档证据。
 - Docker 自托管路径：Postgres、可选 Langfuse、可选 FalkorDB 拓扑投影、GHCR 镜像证据。
 - Cognitive Loop contract bootstrap：`.cognitive-loop/config.yaml`、`permissions.yaml`、`evals.yaml`、`risk.yaml` 和 `cognitive-loop-contract-bootstrap-v1` 验证。
+- LLM Depth Risk Engine Lite：用 metadata-only 证据覆盖 `PromptEvidence`、`HallucinationEvidence`、`RAGEvidence`、`ContextBudgetEvidence`、`CostQualityEvidence`，并通过“工程风险 + 模型风险”双通过 gate 决定能否 promote。
 - 可选 Cognitive Loop 手动 watcher ingest：`.cognitive-loop/watchers.yaml`、只含 metadata 的 `ProjectEvent` artifact、Event Index 分类和 SQLite Event Store 投影。
 
 ## Feasibility And Boundary

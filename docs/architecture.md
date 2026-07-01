@@ -15,6 +15,7 @@ Cognitive Loop Core
   ProjectEvent
   DecisionCard
   RiskEngine
+  LLMDepthRiskEngine
   HumanMasteryGate
   EventStore
   EvolutionReport
@@ -64,6 +65,7 @@ The current repository already implements the Study Anything foundation:
 - LangGraph-backed and deterministic workflow execution for the Study Anything learning loop.
 - User-owned Agent registry and router; real model credentials stay outside Study Anything.
 - Redacted Agent audit/eval artifacts and platform-Agent tool surfaces.
+- Metadata-only LLM Depth Risk Engine Lite for prompt, hallucination, RAG, context-budget, and cost-quality evidence.
 - Learning Enrichment packages for web, document, app, video-slice, Markdown, and Obsidian excerpts.
 - Obsidian export, second-brain handoff, and NotebookLM-style manual bridge artifacts.
 - Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, Mastra Evolution Workflow Replay Lite, Governed Patch Apply Sandbox Lite, Professional Evolution Pack Export Lite, Evolution Pack Consumer Smoke Lite, PR CI Receipt Lite, Maintainer Acceptance Ledger Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
@@ -75,6 +77,7 @@ The current repository already implements the Study Anything foundation:
 - 用于学习闭环的 LangGraph 和确定性 workflow 执行。
 - 用户自有 Agent registry/router；真实模型密钥留在 Study Anything 外部。
 - 脱敏 Agent audit/eval 证据和平台 Agent 工具面。
+- metadata-only LLM Depth Risk Engine Lite，用于 prompt、幻觉、RAG、上下文预算、成本质量证据。
 - 面向网页、文档、应用上下文、视频切片、Markdown、Obsidian 片段的 Learning Enrichment package。
 - Obsidian 导出、second-brain handoff 和 NotebookLM 式手动桥接材料。
 - Cognitive Loop 契约文件、可选手动 watcher ingest 配置、静态 evidence artifacts、本地 event index、只存 metadata 的 SQLite Event Store MVP、静态 Artifact Console Lite、Personal Plugin Mode Lite、Evolution Report Lite、Governed Apply Plan Lite、Measured Improvement Comparator Lite、Patch Proposal Lite、Mastra Evolution Receipt Link Lite、Mastra Evolution Workflow Replay Lite、Governed Patch Apply Sandbox Lite、Professional Evolution Pack Export Lite、Evolution Pack Consumer Smoke Lite、PR CI Receipt Lite、Maintainer Acceptance Ledger Lite，以及可复制到外部 Mastra 项目的 Mastra adapter contract pack。

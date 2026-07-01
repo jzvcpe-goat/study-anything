@@ -90,6 +90,9 @@ required:
   - id: cognitive-loop.review-agent-prompt
     command: python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check
     blocking: true
+  - id: cognitive-loop.llm-depth-risk-engine
+    command: python3 scripts/verify_llm_depth_risk_engine.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true
