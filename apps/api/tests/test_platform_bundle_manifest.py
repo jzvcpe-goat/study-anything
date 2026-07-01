@@ -100,6 +100,9 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/verify_commercial_readiness.py", file_paths)
         self.assertIn("scripts/verify_ecosystem_submission_pack.py", file_paths)
         self.assertIn("scripts/verify_external_eval_marketplace_harness.py", file_paths)
+        self.assertIn("scripts/real_agent_eval_bridge.py", file_paths)
+        self.assertIn("scripts/verify_real_agent_eval_bridge.py", file_paths)
+        self.assertIn("scripts/verify_workbuddy_real_agent_learning_quality.py", file_paths)
         self.assertIn("scripts/verify_agent_eval_marketplace_enforcement.py", file_paths)
         self.assertIn("scripts/verify_platform_adoption_feedback_diagnostics.py", file_paths)
         self.assertIn("scripts/generate_platform_feedback_package.py", file_paths)
@@ -107,6 +110,11 @@ class PlatformBundleManifestTests(unittest.TestCase):
         self.assertIn("scripts/verify_importer_lesson_flow.py", file_paths)
         self.assertIn("scripts/verify_platform_ecosystem_eval_flow.py", file_paths)
         self.assertIn("platform/generated/study-anything-external-eval-harness.json", file_paths)
+        self.assertIn("platform/generated/study-anything-real-agent-eval-bridge.json", file_paths)
+        self.assertIn(
+            "platform/generated/study-anything-workbuddy-real-agent-learning-quality.json",
+            file_paths,
+        )
         self.assertIn(
             "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
             file_paths,

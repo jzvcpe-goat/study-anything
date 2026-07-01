@@ -14,6 +14,7 @@ Already present:
 - Source-bound learning loop with teaching layers, quiz, grading, mastery, synthesis, scribe logs, and discard/keep.
 - Platform-Agent packs for Kimi-compatible, Codex Skill, WorkBuddy-style HTTP, Hermes Agent Skill, and generic OpenAPI hosts.
 - Agent audit/eval evidence, multi-teacher attribution gates, and optional mature eval adapters.
+- Real-agent eval receipt bridge and WorkBuddy/Kimi/Codex learning-quality harness for user-owned model evidence.
 - Learning Enrichment, Obsidian export, NotebookLM-style manual bridge, and second-brain handoff.
 - Local encrypted sync package foundation, plugin trust boundaries, support diagnostics, and release adoption evidence.
 
@@ -25,6 +26,7 @@ Already present:
 - 基于来源的学习闭环：分层教学、测验、评分、掌握度、综合洞察、scribe log、保留或丢弃。
 - 面向 Kimi-compatible、Codex Skill、WorkBuddy-style HTTP、Hermes Agent Skill 和通用 OpenAPI 平台的 Agent 接入包。
 - Agent audit/eval 证据、多层教学归因验收和可选成熟 eval 适配。
+- real-agent eval receipt bridge，以及面向 WorkBuddy/Kimi/Codex 的用户自有模型学习质量 harness。
 - Learning Enrichment、Obsidian 导出、NotebookLM 式手动桥接和 second-brain handoff。
 - 本地加密同步包基础、插件信任边界、support diagnostics 和 release adoption evidence。
 
@@ -97,6 +99,7 @@ Deliver:
 - `DecisionCard`
 - `RiskEngine`
 - `LLMDepthRiskEngine`
+- `RealAgentEvalBridge`
 - `HumanMasteryGate`
 - `LoopRun`
 - `MasteryRecord`

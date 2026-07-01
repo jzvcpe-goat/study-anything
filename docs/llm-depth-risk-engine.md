@@ -72,3 +72,22 @@ external eval frameworks.
 - LangChain AgentEvals: trajectory and tool-step quality comparison.
 
 Study Anything never stores those evaluator credentials.
+
+## Real-Agent Eval Bridge
+
+The next layer is now `real-agent-eval-bridge-v1`. Users can run Promptfoo,
+Ragas, DeepEval, or LangChain AgentEvals in their own model/eval environment and
+import only `external-eval-adapter-receipt-v1` metadata into Study Anything.
+
+Verification commands:
+
+```bash
+python3 scripts/verify_real_agent_eval_bridge.py --check
+python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check
+```
+
+The WorkBuddy/Kimi/Codex learning-quality harness compares deterministic demo,
+user-owned HTTP Agent, and platform-Agent evidence on the same task. The
+deterministic path is explicitly demo-only; it cannot satisfy real teaching
+quality, citation grounding, hallucination-risk, or cost-quality promotion
+requirements.

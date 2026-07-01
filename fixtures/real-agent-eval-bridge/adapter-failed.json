@@ -1,0 +1,132 @@
+{
+  "schema_version": "real-agent-eval-bridge-input-v1",
+  "task_ref": "deepseek-pm-first-lesson",
+  "adapter_receipts": [
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "promptfoo",
+      "receipt_id": "promptfoo-pass-for-ragas-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T22:00:00Z",
+      "platform_id": "workbuddy",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "prompt_contract_passed": true,
+        "injection_pass_rate": 1.0,
+        "citation_fabrication_pass_rate": 1.0
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "promptfoo-pass-for-ragas-negative",
+          "kind": "promptfoo-json-report",
+          "sha256": "426793f2bc4c801c75e9d83d76a414a7f7b690eb97d9c0fe8d527bb36d7727d7"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "ragas",
+      "receipt_id": "ragas-grounding-failed",
+      "status": "fail",
+      "created_at_utc": "2026-06-30T22:01:00Z",
+      "platform_id": "kimi",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "context_precision": 0.4,
+        "context_recall": 0.45,
+        "faithfulness": 0.52,
+        "answer_relevancy": 0.5,
+        "citation_accuracy": 0.25
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "ragas-grounding-failed",
+          "kind": "ragas-redacted-dataset-report",
+          "sha256": "4d30e0297313f1f2d4a81a69d7cf20798ba7578adaffbce6767f5d74a4c4af61"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "deepeval",
+      "receipt_id": "deepeval-pass-for-ragas-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T22:02:00Z",
+      "platform_id": "codex",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "teaching_quality_score": 0.88,
+        "hallucination_score": 0.04,
+        "answer_relevancy": 0.86
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "deepeval-pass-for-ragas-negative",
+          "kind": "deepeval-redacted-quality-report",
+          "sha256": "4f6bde76e1cf1a99c9aa8c46550aa40b63eaf8fd9fca4a6a5237f18bf7a0fcef"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "langchain-agentevals",
+      "receipt_id": "agentevals-pass-for-ragas-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T22:03:00Z",
+      "platform_id": "workbuddy",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "trajectory_match_score": 0.91,
+        "tool_call_coverage": 0.86,
+        "invalid_tool_call_count": 0
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "agentevals-pass-for-ragas-negative",
+          "kind": "langchain-agentevals-redacted-trajectory",
+          "sha256": "138d3772bddf996c704c842713ef9483f875bde3eb079d209be4614f9e36d112"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    }
+  ]
+}

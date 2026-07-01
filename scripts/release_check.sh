@@ -15,6 +15,8 @@ dual_loop_verifiers_integrated="true"
 dual_loop_verifiers_passed_individually="false"
 llm_depth_verifiers_integrated="true"
 llm_depth_verifiers_passed_individually="false"
+real_agent_eval_verifiers_integrated="true"
+real_agent_eval_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -143,6 +145,8 @@ payload = {
     "dual_loop_verifiers_passed_individually": $(json_bool "$dual_loop_verifiers_passed_individually"),
     "llm_depth_verifiers_integrated": $(json_bool "$llm_depth_verifiers_integrated"),
     "llm_depth_verifiers_passed_individually": $(json_bool "$llm_depth_verifiers_passed_individually"),
+    "real_agent_eval_verifiers_integrated": $(json_bool "$real_agent_eval_verifiers_integrated"),
+    "real_agent_eval_verifiers_passed_individually": $(json_bool "$real_agent_eval_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "skip_clean_clone": $(json_bool "$skip_clean_clone_enabled"),
@@ -195,6 +199,13 @@ run_llm_depth_verifier_gates() {
   phase "LLM Depth verifier gates"
   "$python_bin" scripts/verify_llm_depth_risk_engine.py --check
   llm_depth_verifiers_passed_individually="true"
+}
+
+run_real_agent_eval_verifier_gates() {
+  phase "Real-Agent eval bridge verifier gates"
+  "$python_bin" scripts/verify_real_agent_eval_bridge.py --check
+  "$python_bin" scripts/verify_workbuddy_real_agent_learning_quality.py --check
+  real_agent_eval_verifiers_passed_individually="true"
 }
 
 printf "Study Anything release check\n"
@@ -316,6 +327,8 @@ phase "existing release gates"
 "$python_bin" scripts/verify_cognitive_loop_review.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_prompt.py --check
 "$python_bin" scripts/verify_llm_depth_risk_engine.py --check
+"$python_bin" scripts/verify_real_agent_eval_bridge.py --check
+"$python_bin" scripts/verify_workbuddy_real_agent_learning_quality.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_eval_harness.py --check
@@ -429,6 +442,7 @@ printf "hint  after launching Docker Compose, run: API_BASE=http://127.0.0.1:800
 
 run_dual_loop_verifier_gates
 run_llm_depth_verifier_gates
+run_real_agent_eval_verifier_gates
 
 if [ "$skip_clean_clone_enabled" = "true" ]; then
   full_release_check_completed="false"

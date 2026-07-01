@@ -1,0 +1,132 @@
+{
+  "schema_version": "real-agent-eval-bridge-input-v1",
+  "task_ref": "deepseek-pm-first-lesson",
+  "adapter_receipts": [
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "promptfoo",
+      "receipt_id": "promptfoo-deterministic-only",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T21:00:00Z",
+      "platform_id": "workbuddy",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "prompt_contract_passed": true,
+        "injection_pass_rate": 1.0,
+        "citation_fabrication_pass_rate": 1.0
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "promptfoo-deterministic-only",
+          "kind": "promptfoo-json-report",
+          "sha256": "1e1a970f7d8f88c5d5c6ed6557c5466c00f8c81feab52c677d6dd70c91d241d4"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": false,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "ragas",
+      "receipt_id": "ragas-pass-for-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T21:01:00Z",
+      "platform_id": "kimi",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "context_precision": 0.92,
+        "context_recall": 0.88,
+        "faithfulness": 0.91,
+        "answer_relevancy": 0.87,
+        "citation_accuracy": 0.9
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "ragas-pass-for-negative",
+          "kind": "ragas-redacted-dataset-report",
+          "sha256": "c551b47a30b2ad44222cb8453c4a964185813aebdd79424e2858f12a1db2f12a"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "deepeval",
+      "receipt_id": "deepeval-pass-for-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T21:02:00Z",
+      "platform_id": "codex",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "teaching_quality_score": 0.88,
+        "hallucination_score": 0.04,
+        "answer_relevancy": 0.86
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "deepeval-pass-for-negative",
+          "kind": "deepeval-redacted-quality-report",
+          "sha256": "16d02af6e1dddfcd11126a40ab62eae3535b417222066ff60f35b9cc4c5aa0f1"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    },
+    {
+      "schema_version": "external-eval-adapter-receipt-v1",
+      "adapter_id": "langchain-agentevals",
+      "receipt_id": "agentevals-pass-for-negative",
+      "status": "pass",
+      "created_at_utc": "2026-06-30T21:03:00Z",
+      "platform_id": "workbuddy",
+      "task_ref": "deepseek-pm-first-lesson",
+      "metrics": {
+        "trajectory_match_score": 0.91,
+        "tool_call_coverage": 0.86,
+        "invalid_tool_call_count": 0
+      },
+      "artifact_refs": [
+        {
+          "artifact_id": "agentevals-pass-for-negative",
+          "kind": "langchain-agentevals-redacted-trajectory",
+          "sha256": "12be2b2f17721897e4fdd66d2ad6d8e75c837a46ad777af87809b2b3e857a541"
+        }
+      ],
+      "execution_boundary": {
+        "ran_in_user_owned_environment": true,
+        "external_model_called": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false
+      },
+      "privacy": {
+        "raw_inputs_included": false,
+        "raw_outputs_included": false
+      }
+    }
+  ]
+}

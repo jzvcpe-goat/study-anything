@@ -1,0 +1,57 @@
+{
+  "schema_version": "workbuddy-real-agent-learning-quality-input-v1",
+  "task_ref": "deepseek-pm-first-lesson",
+  "selected_run_id": "workbuddy-claimed-without-model-call",
+  "runs": [
+    {
+      "run_id": "deterministic-demo",
+      "run_type": "deterministic_demo",
+      "platform_id": "demo",
+      "output_ref_hash": "0c52e3dd4b9693e5e332a762b1fb66f4eb9c26f3f7e00f66939b14f5e84250ae",
+      "agent_evidence": {
+        "external_model_called": false,
+        "platform_agent_used": false,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": []
+      },
+      "quality": {
+        "teaching_quality": 0.24,
+        "citation_grounding": 0.2,
+        "hallucination_risk": 0.25,
+        "unsupported_claim_ratio": 0.3,
+        "mechanical_restatement_score": 0.86
+      },
+      "cost": {
+        "latency_ms": 120,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      }
+    },
+    {
+      "run_id": "workbuddy-claimed-without-model-call",
+      "run_type": "platform_agent",
+      "platform_id": "workbuddy",
+      "output_ref_hash": "06db2cddc6fa9958312c8ad25a4b2e21bfa54d88dd9ef2a0e67435583073d79a",
+      "agent_evidence": {
+        "external_model_called": false,
+        "platform_agent_used": true,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": []
+      },
+      "quality": {
+        "teaching_quality": 0.76,
+        "citation_grounding": 0.76,
+        "hallucination_risk": 0.08,
+        "unsupported_claim_ratio": 0.08,
+        "mechanical_restatement_score": 0.22
+      },
+      "cost": {
+        "latency_ms": 500,
+        "input_tokens": 100,
+        "output_tokens": 120,
+        "cost_usd": 0.0
+      }
+    }
+  ]
+}

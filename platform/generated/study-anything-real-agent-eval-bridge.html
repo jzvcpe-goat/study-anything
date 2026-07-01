@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Real Agent Eval Bridge</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 32px; color: #17202a; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #d5dde5; padding: 8px 10px; text-align: left; }
+    th { background: #eef3f8; }
+    .status { font-size: 24px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <h1>Real Agent Eval Bridge</h1>
+  <p class="status">Gate: allowed</p>
+  <p>all required user-owned external eval receipts must pass without importing raw model data</p>
+  <table>
+    <thead><tr><th>Evidence</th><th>Type</th><th>Status</th></tr></thead>
+    <tbody><tr><td>promptfoo</td><td>external-eval-adapter-receipt-v1</td><td>pass</td></tr><tr><td>ragas</td><td>external-eval-adapter-receipt-v1</td><td>pass</td></tr><tr><td>deepeval</td><td>external-eval-adapter-receipt-v1</td><td>pass</td></tr><tr><td>langchain-agentevals</td><td>external-eval-adapter-receipt-v1</td><td>pass</td></tr></tbody>
+  </table>
+</body>
+</html>
