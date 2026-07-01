@@ -1,0 +1,463 @@
+{
+  "commands": {
+    "build": "python3 scripts/llm_depth_risk_engine.py build --input fixtures/llm-depth-risk/pass.json",
+    "verify": "python3 scripts/verify_llm_depth_risk_engine.py --check"
+  },
+  "coverage": {
+    "context_budget_evidence": true,
+    "cost_quality_evidence": true,
+    "engineering_and_model_risk_both_required": true,
+    "hallucination_evidence": true,
+    "prompt_evidence": true,
+    "rag_evidence": true,
+    "risk_engine_summary_gate": true
+  },
+  "engine_report": {
+    "evidence": {
+      "context_budget": {
+        "context_packing_receipts": [
+          {
+            "budget_ok": true,
+            "case_id": "long-context-learning-pack",
+            "compression_ratio": 0.2667,
+            "lost_in_middle_probe": {
+              "degradation_detected": false,
+              "edge_supported": true,
+              "middle_supported": true,
+              "raw_probe_text_included": false
+            },
+            "max_context_tokens": 4096,
+            "packed_tokens": 3200,
+            "selected_chunk_count": 2,
+            "source_tokens": 12000
+          }
+        ],
+        "gates": [
+          {
+            "gate_id": "context_token_budget",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": "1.0"
+          },
+          {
+            "gate_id": "lost_in_middle",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.8"
+          }
+        ],
+        "metrics": {
+          "budget_pass_rate": 1.0,
+          "lost_in_middle_pass_rate": 1.0
+        },
+        "schema_version": "context-budget-evidence-v1",
+        "status": "pass"
+      },
+      "cost_quality": {
+        "dominated_run_ids": [],
+        "efficient_frontier_run_ids": [
+          "kimi-balanced",
+          "premium-reasoner",
+          "cheap-fast"
+        ],
+        "gates": [
+          {
+            "gate_id": "quality_floor",
+            "observed": 0.91,
+            "status": "pass",
+            "threshold": ">=0.82"
+          },
+          {
+            "gate_id": "selected_on_frontier",
+            "observed": "true",
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "cost_metadata_present",
+            "observed": 3,
+            "status": "pass",
+            "threshold": "all"
+          }
+        ],
+        "policy": {
+          "avoid_expensive_model_by_default": true,
+          "cost_quality_frontier_required": true,
+          "model_keys_stored_by_study_anything": false
+        },
+        "runs": [
+          {
+            "cost_usd": 0.004,
+            "dominated": false,
+            "input_tokens": 2400,
+            "latency_ms": 1800,
+            "model_label_hash": "4e76f8e53ed35f840ac4720ee8575fe561344726a9d5eb834635c79810db4741",
+            "output_tokens": 820,
+            "provider_class": "platform_agent",
+            "quality_score": 0.86,
+            "run_id": "kimi-balanced",
+            "task_success": true
+          },
+          {
+            "cost_usd": 0.032,
+            "dominated": false,
+            "input_tokens": 2400,
+            "latency_ms": 5100,
+            "model_label_hash": "6e758d90ba1a3ed8c7a8b3ed583dbcd6e436806254f45e0f21791110ed122730",
+            "output_tokens": 940,
+            "provider_class": "platform_agent",
+            "quality_score": 0.91,
+            "run_id": "premium-reasoner",
+            "task_success": true
+          },
+          {
+            "cost_usd": 0.001,
+            "dominated": false,
+            "input_tokens": 2100,
+            "latency_ms": 900,
+            "model_label_hash": "1f98e67da09bc3c46f83876a3e8c23393ad794e5343a261ce1c2a634b654b1e3",
+            "output_tokens": 600,
+            "provider_class": "platform_agent",
+            "quality_score": 0.72,
+            "run_id": "cheap-fast",
+            "task_success": true
+          }
+        ],
+        "schema_version": "cost-quality-evidence-v1",
+        "selected_run_id": "kimi-balanced",
+        "status": "pass"
+      },
+      "hallucination": {
+        "answer_source_contradiction_count": 0,
+        "cases": [
+          {
+            "answer_ref": "answer:deepseek-learning-answer",
+            "case_id": "deepseek-learning-answer",
+            "claim_count": 2,
+            "claims": [
+              {
+                "citation_ids": [
+                  "src-moe-cost"
+                ],
+                "claim_hash": "366dad50a3dcb5e08f679cfcb3068cb19559eccc93a2a58bc7d7a438bdd81732",
+                "claim_id": "claim-moe-cost",
+                "contradicted": false,
+                "raw_claim_text_included": false,
+                "supported": true
+              },
+              {
+                "citation_ids": [
+                  "src-r1-eval"
+                ],
+                "claim_hash": "da2e2767cab7ded6b13e202119992c49c67cbf57cd2316a86f8d1d01d3b60fc7",
+                "claim_id": "claim-r1-eval",
+                "contradicted": false,
+                "raw_claim_text_included": false,
+                "supported": true
+              }
+            ]
+          }
+        ],
+        "citation_coverage": 1.0,
+        "claim_count": 2,
+        "faithfulness": 1.0,
+        "gates": [
+          {
+            "gate_id": "citation_coverage",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "faithfulness",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.85"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.0,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "answer_source_contradiction",
+            "observed": 0,
+            "status": "pass",
+            "threshold": "0"
+          }
+        ],
+        "schema_version": "hallucination-evidence-v1",
+        "status": "pass",
+        "unsupported_claim_ratio": 0.0
+      },
+      "prompt": {
+        "prompt_count": 1,
+        "promptfoo_red_team": {
+          "adapter_id": "promptfoo",
+          "credentials_stored_by_study_anything": false,
+          "mode": "red_team_and_prompt_contract",
+          "raw_prompts_exported": false
+        },
+        "prompts": [
+          {
+            "current_template_sha256": "7f5ff0e2742aedb23d0abb298ff5471f0a5a66114fe51371010a837d8325b1cb",
+            "diff": {
+              "changed": true,
+              "char_delta": 55,
+              "line_delta": 0,
+              "raw_prompt_included": false
+            },
+            "gates": [
+              {
+                "gate_id": "version_present",
+                "observed": "2026.06.30",
+                "status": "pass",
+                "threshold": "non-empty"
+              },
+              {
+                "gate_id": "template_non_empty",
+                "observed": "True",
+                "status": "pass",
+                "threshold": "non-empty"
+              },
+              {
+                "gate_id": "variables_declared",
+                "observed": 3,
+                "status": "pass",
+                "threshold": ">=1"
+              },
+              {
+                "gate_id": "injection_tests_pass",
+                "observed": "2/2",
+                "status": "pass",
+                "threshold": "all"
+              }
+            ],
+            "lint": {
+              "forbidden_secret_patterns_found": 0,
+              "json_output_required": true,
+              "source_grounding_required": true,
+              "variable_count": 3,
+              "variables": [
+                "source_refs",
+                "learner_goal",
+                "citation_ids"
+              ]
+            },
+            "previous_template_sha256": "23b5f79091acfe885bdec9fd04d3657682c4b1fc3d5c6d353acc399d8c12234c",
+            "prompt_id": "study-anything-teach-overview",
+            "red_team": {
+              "cases": [
+                {
+                  "attack_class": "prompt_injection",
+                  "case_id": "ignore-source-instruction",
+                  "raw_attack_text_included": false,
+                  "status": "pass"
+                },
+                {
+                  "attack_class": "citation_fabrication",
+                  "case_id": "fake-citation-request",
+                  "raw_attack_text_included": false,
+                  "status": "pass"
+                }
+              ],
+              "injection_case_count": 2,
+              "injection_pass_count": 2,
+              "promptfoo_compatible": true
+            },
+            "role": "teaching",
+            "version": "2026.06.30"
+          }
+        ],
+        "schema_version": "prompt-evidence-v1",
+        "status": "pass"
+      },
+      "rag": {
+        "cases": [
+          {
+            "answer_hash": "94aa21312baa5f7fa53fde4deac01b9e739a15ddd65f3844d930b177963cbc75",
+            "answer_relevancy": 0.91,
+            "case_id": "rag-deepseek-pm",
+            "citation_accuracy": 1.0,
+            "context_precision": 1.0,
+            "context_recall": 1.0,
+            "faithfulness": 0.94,
+            "question_hash": "c85ecd6016a4f24459aab3a49424836aa1f8d7e04ecfe9800fc4845f998e5edd",
+            "ragas_compatible_row": {
+              "answer": "<redacted-answer-ref>",
+              "contexts": [
+                "<context:src-moe-cost>",
+                "<context:src-r1-eval>"
+              ],
+              "ground_truth": "<materialize-in-user-eval-env>",
+              "metadata_only": true,
+              "question": "<redacted-question-ref>"
+            }
+          }
+        ],
+        "gates": [
+          {
+            "gate_id": "context_precision",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.7"
+          },
+          {
+            "gate_id": "context_recall",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.7"
+          },
+          {
+            "gate_id": "faithfulness",
+            "observed": 0.94,
+            "status": "pass",
+            "threshold": ">=0.85"
+          },
+          {
+            "gate_id": "answer_relevancy",
+            "observed": 0.91,
+            "status": "pass",
+            "threshold": ">=0.75"
+          },
+          {
+            "gate_id": "citation_accuracy",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=0.8"
+          }
+        ],
+        "metrics": {
+          "answer_relevancy": 0.91,
+          "citation_accuracy": 1.0,
+          "context_precision": 1.0,
+          "context_recall": 1.0,
+          "faithfulness": 0.94
+        },
+        "ragas_dataset_export": {
+          "materialization_boundary": "user_owned_eval_environment",
+          "raw_contexts_included": false,
+          "rows": [
+            {
+              "answer": "<redacted-answer-ref>",
+              "contexts": [
+                "<context:src-moe-cost>",
+                "<context:src-r1-eval>"
+              ],
+              "ground_truth": "<materialize-in-user-eval-env>",
+              "metadata_only": true,
+              "question": "<redacted-question-ref>"
+            }
+          ],
+          "schema": "ragas-compatible-redacted-dataset-v1"
+        },
+        "schema_version": "rag-evidence-v1",
+        "status": "pass"
+      }
+    },
+    "external_adapters": {
+      "deepeval": "judge-model quality metrics in user-owned eval environment",
+      "langchain-agentevals": "trajectory and tool-step quality comparison",
+      "promptfoo": "prompt red-team and injection tests",
+      "ragas": "RAG dataset materialization and grounding metrics in user-owned eval environment"
+    },
+    "input_ref": "fixtures/llm-depth-risk/pass.json",
+    "privacy": {
+      "external_eval_credentials_owned_by_user": true,
+      "metadata_only": true,
+      "model_calls_performed_by_study_anything": false,
+      "model_keys_stored_by_study_anything": false,
+      "raw_answers_included": false,
+      "raw_prompts_included": false,
+      "raw_source_text_included": false
+    },
+    "risk_gate": {
+      "blocked_reasons": [],
+      "engineering_risk_status": "pass",
+      "model_risk_status": "pass",
+      "neither_loop_dominates": true,
+      "rule": "engineering risk and model risk must both pass before promotion",
+      "schema_version": "llm-depth-risk-gate-v1",
+      "status": "allowed"
+    },
+    "schema_version": "llm-depth-risk-engine-report-v1",
+    "status": "pass",
+    "version": "v0.3.31-alpha"
+  },
+  "negative_fixtures": {
+    "blocked_engineering_risk": {
+      "evidence_statuses": {
+        "context_budget": "pass",
+        "cost_quality": "pass",
+        "hallucination": "pass",
+        "prompt": "pass",
+        "rag": "pass"
+      },
+      "privacy": {
+        "external_eval_credentials_owned_by_user": true,
+        "metadata_only": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false,
+        "raw_answers_included": false,
+        "raw_prompts_included": false,
+        "raw_source_text_included": false
+      },
+      "risk_gate": "blocked",
+      "schema_version": "llm-depth-risk-engine-report-v1",
+      "status": "blocked"
+    },
+    "blocked_model_risk": {
+      "evidence_statuses": {
+        "context_budget": "pass",
+        "cost_quality": "pass",
+        "hallucination": "fail",
+        "prompt": "pass",
+        "rag": "pass"
+      },
+      "privacy": {
+        "external_eval_credentials_owned_by_user": true,
+        "metadata_only": true,
+        "model_calls_performed_by_study_anything": false,
+        "model_keys_stored_by_study_anything": false,
+        "raw_answers_included": false,
+        "raw_prompts_included": false,
+        "raw_source_text_included": false
+      },
+      "risk_gate": "blocked",
+      "schema_version": "llm-depth-risk-engine-report-v1",
+      "status": "blocked"
+    }
+  },
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "raw_answers_included": false,
+    "raw_prompts_included": false,
+    "raw_source_text_included": false,
+    "real_model_or_eval_keys_stored": false
+  },
+  "schema_version": "llm-depth-risk-engine-verification-v1",
+  "status": "pass",
+  "summary": {
+    "evidence_statuses": {
+      "context_budget": "pass",
+      "cost_quality": "pass",
+      "hallucination": "pass",
+      "prompt": "pass",
+      "rag": "pass"
+    },
+    "privacy": {
+      "external_eval_credentials_owned_by_user": true,
+      "metadata_only": true,
+      "model_calls_performed_by_study_anything": false,
+      "model_keys_stored_by_study_anything": false,
+      "raw_answers_included": false,
+      "raw_prompts_included": false,
+      "raw_source_text_included": false
+    },
+    "risk_gate": "allowed",
+    "schema_version": "llm-depth-risk-engine-report-v1",
+    "status": "pass"
+  }
+}

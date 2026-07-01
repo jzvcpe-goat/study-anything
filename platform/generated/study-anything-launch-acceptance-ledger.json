@@ -141,7 +141,7 @@
     },
     {
       "path": "platform/ecosystem-submission.json",
-      "platform_count": 4,
+      "platform_count": 5,
       "report_id": "ecosystem_submission",
       "required_for_github_oss_launch": true,
       "schema_version": "ecosystem-submission-v1",
@@ -160,6 +160,7 @@
         "kimi-work",
         "codex",
         "workbuddy-style-http",
+        "hermes-agent",
         "generic-http-tools"
       ],
       "tool_count": null

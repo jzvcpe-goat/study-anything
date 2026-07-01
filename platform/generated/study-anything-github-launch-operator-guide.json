@@ -15,7 +15,7 @@
     },
     "ecosystem_submission": {
       "path": "platform/ecosystem-submission.json",
-      "platform_count": 4,
+      "platform_count": 5,
       "schema_version": "ecosystem-submission-v1",
       "status": "ready"
     },

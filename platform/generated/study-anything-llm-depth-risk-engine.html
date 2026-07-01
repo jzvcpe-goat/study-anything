@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>LLM Depth Risk Engine</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 32px; color: #17202a; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #d5dde5; padding: 8px 10px; text-align: left; }
+    th { background: #eef3f8; }
+    .status { font-size: 24px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <h1>LLM Depth Risk Engine</h1>
+  <p class="status">Gate: allowed</p>
+  <p>engineering risk and model risk must both pass before promotion</p>
+  <table>
+    <thead><tr><th>Evidence</th><th>Schema</th><th>Status</th></tr></thead>
+    <tbody><tr><td>prompt</td><td>prompt-evidence-v1</td><td>pass</td></tr><tr><td>hallucination</td><td>hallucination-evidence-v1</td><td>pass</td></tr><tr><td>rag</td><td>rag-evidence-v1</td><td>pass</td></tr><tr><td>context_budget</td><td>context-budget-evidence-v1</td><td>pass</td></tr><tr><td>cost_quality</td><td>cost-quality-evidence-v1</td><td>pass</td></tr></tbody>
+  </table>
+</body>
+</html>

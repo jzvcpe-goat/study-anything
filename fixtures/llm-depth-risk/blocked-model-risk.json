@@ -1,0 +1,111 @@
+{
+  "schema_version": "llm-depth-risk-input-v1",
+  "input_ref": "fixtures/llm-depth-risk/blocked-model-risk.json",
+  "engineering_risk": {
+    "status": "pass",
+    "level": "medium",
+    "evidence_refs": [
+      "cognitive-loop-review"
+    ]
+  },
+  "prompts": [
+    {
+      "prompt_id": "study-anything-teach-overview",
+      "version": "2026.06.30",
+      "role": "teaching",
+      "previous_template": "Return a short overview from refs.",
+      "current_template": "Return JSON-only teaching claims grounded in source refs.",
+      "variables": [
+        "source_refs"
+      ],
+      "json_output_required": true,
+      "source_grounding_required": true,
+      "injection_tests": [
+        {
+          "case_id": "ignore-source-instruction",
+          "attack_class": "prompt_injection",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "hallucination_cases": [
+    {
+      "case_id": "unsupported-answer",
+      "answer_ref": "answer:unsupported",
+      "claims": [
+        {
+          "claim_id": "claim-supported",
+          "claim_ref": "supported-claim",
+          "citation_ids": [
+            "src-supported"
+          ],
+          "supported": true,
+          "contradicted": false
+        },
+        {
+          "claim_id": "claim-unsupported",
+          "claim_ref": "unsupported-claim",
+          "citation_ids": [],
+          "supported": false,
+          "contradicted": false
+        }
+      ]
+    }
+  ],
+  "rag_cases": [
+    {
+      "case_id": "rag-weak",
+      "question_ref": "question:weak",
+      "answer_ref": "answer:unsupported",
+      "expected_context_ids": [
+        "src-supported"
+      ],
+      "retrieved_contexts": [
+        {
+          "context_id": "src-supported",
+          "relevant": true,
+          "cited": true,
+          "position": 1
+        }
+      ],
+      "faithfulness": 0.86,
+      "answer_relevancy": 0.8
+    }
+  ],
+  "context_cases": [
+    {
+      "case_id": "context-ok",
+      "max_context_tokens": 2048,
+      "source_tokens": 6000,
+      "packed_tokens": 1800,
+      "selected_chunks": [
+        {
+          "chunk_id": "src-supported",
+          "tokens": 800,
+          "rank": 1,
+          "position": "middle",
+          "contains_required_fact": true
+        }
+      ],
+      "lost_in_middle_probe": {
+        "edge_supported": true,
+        "middle_supported": true
+      }
+    }
+  ],
+  "cost_quality_runs": [
+    {
+      "run_id": "balanced",
+      "provider_class": "platform_agent",
+      "model_label": "Balanced model via user Agent",
+      "latency_ms": 1500,
+      "input_tokens": 1400,
+      "output_tokens": 500,
+      "cost_usd": 0.003,
+      "quality_score": 0.84,
+      "task_success": true
+    }
+  ],
+  "selected_run_id": "balanced"
+}
