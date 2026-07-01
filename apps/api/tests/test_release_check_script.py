@@ -53,6 +53,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertFalse(receipt["dependency_install_completed"])
         self.assertTrue(receipt["dual_loop_verifiers_integrated"])
         self.assertTrue(receipt["dual_loop_verifiers_passed_individually"])
+        self.assertTrue(receipt["delivery_trust_verifiers_integrated"])
+        self.assertTrue(receipt["delivery_trust_verifiers_passed_individually"])
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])

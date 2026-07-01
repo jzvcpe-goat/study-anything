@@ -1,0 +1,100 @@
+{
+  "candidate_artifact_ref": "artifact:metadata-only-demo-change",
+  "checks": {
+    "controlled_failure_environment_passed": true,
+    "customer_claim_boundary_present": true,
+    "dual_loop_gate_allowed": false,
+    "failure_contract_valid": true,
+    "human_reconstruction_passed": false,
+    "human_reconstruction_present": false,
+    "no_ai_review_black_box_as_sole_basis": true,
+    "no_excessive_manual_re_review_required": true,
+    "production_mutation_blocked": true,
+    "reversible_delivery_path": true,
+    "sandbox_receipt_valid": true,
+    "structured_artifact_bridge_only": true
+  },
+  "claim_boundary": {
+    "current_claim": "The candidate passed local metadata-only Dual Loop gates for a controlled customer handoff.",
+    "not_claimed": [
+      "general model correctness",
+      "production deployment approval",
+      "customer outcome guarantee",
+      "AI self-review sufficiency",
+      "full human re-review completion"
+    ],
+    "requires_before_real_production": [
+      "domain acceptance tests",
+      "operator-owned deployment approval",
+      "customer-specific rollback plan",
+      "legal and security review when required"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "customer_delivery_scope": {
+    "allowed_handoff": false,
+    "allowed_material_refs": [
+      "candidate_artifact_ref",
+      "known_limitations",
+      "verification_command_refs",
+      "rollback_ref"
+    ],
+    "irreversible_external_effects_allowed": false,
+    "production_mutation_allowed": false,
+    "real_customer_effects_allowed": false,
+    "scope_id": "controlled-customer-handoff-v0.1"
+  },
+  "decision": "block_customer_handoff",
+  "dual_loop_refs": {
+    "attention_summary_ref": null,
+    "failure_contract_ref": "failure-contract.json",
+    "gate_receipt_ref": "dual-loop-gate-receipt.json",
+    "sandbox_receipt_ref": "sandbox-receipt.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "next_actions": [
+    "attach delivery trust receipt to the handoff package",
+    "keep production mutation disabled until a stronger sandbox level passes",
+    "rerun Dual Loop gates after any material change"
+  ],
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "reasons": [
+    "human_reconstruction_missing",
+    "dual_loop_gate_blocked"
+  ],
+  "receipt_id": "delivery-trust-receipt-demo-001",
+  "schema_version": "delivery-trust-receipt-v1",
+  "status": "blocked",
+  "trust_basis": {
+    "ai_eval_receipts_role": "supporting_only_not_sufficient",
+    "controlled_failure_environment": "required",
+    "dual_loop_propagation_gate": "required",
+    "human_attention_reconstruction": "required",
+    "human_review_role": "active_reconstruction_not_full_manual_re_review",
+    "passive_attention_role": "weak_not_sufficient"
+  }
+}

@@ -1,13 +1,17 @@
 # Roadmap / 路线图
 
-This roadmap reframes Study Anything as the Learning Adapter inside Cognitive Loop System. The goal is to grow from a local-first learning loop into a project-level cognitive control layer for AI-assisted work.
+This roadmap reframes the project as Cognitive Black Box: a Dual-Loop Trust Harness for AI delivery. The goal is to grow from a deterministic metadata-only trust harness into a system that lets AI-generated deliverables reach customers through controlled failure, human reconstruction, propagation gates, and delivery trust receipts.
 
-这份路线图将 Study Anything 重新定位为 Cognitive Loop System 内部的学习适配层。目标是从本地优先的学习闭环，升级为面向 AI 辅助项目的项目级认知控制层。
+这份路线图将项目重构为认知黑箱：面向 AI 交付的 Dual-Loop Trust Harness。目标是从确定性、只含 metadata 的信任机制，逐步发展成让 AI 生成交付物可以通过可控失败、人类重构、传播门和交付信任收据进入客户交付的系统。
 
-## Current Foundation: Study Anything Alpha
+## Current Foundation: Dual-Loop Trust Alpha
 
 Already present:
 
+- Controlled Failure Environment with `failure-contract-v1` and `sandbox-receipt-v1`.
+- Human Attention Reconstruction Environment with `attention-reconstruction-trace-v1` and `attention-reconstruction-summary-v1`.
+- Dual-Loop Propagation Gate with pass and blocked fixtures for missing reconstruction and risk-budget overflow.
+- Delivery Trust Receipt with pass and blocked fixtures, AI-review-only rejection, eval-as-sufficient rejection, and claim-boundary enforcement.
 - Local-first FastAPI learning API.
 - Skill Mode and Docker self-host launch paths.
 - Deterministic demo Agent and Bring Your Own Agent HTTP gateway.
@@ -20,6 +24,10 @@ Already present:
 
 已具备：
 
+- 可控失败环境：`failure-contract-v1` 和 `sandbox-receipt-v1`。
+- 人类注意力重构环境：`attention-reconstruction-trace-v1` 和 `attention-reconstruction-summary-v1`。
+- Dual-Loop Propagation Gate：覆盖缺少人类重构和风险超预算的通过/阻断 fixtures。
+- Delivery Trust Receipt：覆盖通过/阻断 fixtures，并拒绝 AI 审 AI 式放行、eval 即充分、缺少 claim boundary。
 - 本地优先 FastAPI 学习 API。
 - Skill Mode 和 Docker 自托管启动路径。
 - 确定性 demo Agent 和 Bring Your Own Agent HTTP gateway。
@@ -50,17 +58,20 @@ The current public alpha line is `v0.3.31-alpha`. Keep these evidence contracts 
 - `published-image-evidence-v1`：区分 GHCR/image 发布证据与本地拉取或网络摩擦。
 - `adopter-evidence-archive-v1`：为维护者和外部测试者打包公开 release/adoption 证据。
 
-## Phase 0: Positioning And Public Contract
+## Phase 0: Trust Model And Public Contract
 
-Goal: make the GitHub project understandable as Cognitive Loop System without claiming unbuilt runtime features.
+Goal: make the GitHub project understandable as an AI delivery trust harness without claiming unbuilt production runtime features.
 
 Deliver:
 
 - bilingual README positioning
+- trust model doc
+- delivery trust receipt doc
 - Cognitive Loop architecture doc
 - product positioning doc
 - roadmap reset
 - clear status boundary between current Study Anything capabilities and planned Cognitive Loop layers
+- public Dual-Loop trust contracts for controlled failure, human reconstruction, propagation gating, and controlled customer handoff
 - public conceptual contracts for `ProjectEvent`, `DecisionCard`, `LoopRun`, `MasteryRecord`, and `EvolutionReport`
 - implemented project contract bootstrap: `.cognitive-loop/config.yaml`, `.cognitive-loop/permissions.yaml`, `.cognitive-loop/evals.yaml`, `.cognitive-loop/risk.yaml`
 - `cognitive-loop-contract-bootstrap-v1` verifier output
@@ -68,12 +79,15 @@ Deliver:
 
 Acceptance:
 
-- A new reader can understand the four-part direction: Study, Reverse, Operate, Evolve.
+- A new reader can understand the four-part trust direction: controlled failure, human reconstruction, propagation gate, and delivery trust receipt.
+- Docs state that Study Anything is a learning adapter, not the project center.
+- Docs state that AI eval evidence can support trust but cannot replace Dual Loop evidence.
 - Docs state that daemonized watchers and the full realtime HTML Artifact console are planned layers, while static metadata-only Console Lite is a current local artifact path.
 - Docs keep the current no-standalone-frontend launch path scoped to Study Anything/platform-Agent usage.
 - Docs keep real model credentials outside Study Anything.
 - Docs preserve current release evidence anchors while changing the product narrative.
 - `python3 scripts/verify_cognitive_loop_contracts.py --check` passes and rejects secret-like values, raw excerpts, and high-risk decisions without a human gate.
+- `python3 scripts/verify_delivery_trust_receipt.py --check` passes and rejects missing reconstruction, risk-budget overflow, AI-review-only promotion, eval-as-sufficient promotion, and missing claim boundaries.
 
 Future CLI vocabulary for this phase:
 

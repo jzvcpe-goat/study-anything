@@ -84,6 +84,16 @@ FILES: list[tuple[str, str, str]] = [
         "Dual-Loop propagation gate pass/fail fixture verification report.",
     ),
     (
+        "platform/generated/study-anything-delivery-trust-receipt.json",
+        "generated_asset",
+        "Delivery Trust Receipt verification report for controlled customer handoff.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-receipt.html",
+        "generated_asset",
+        "Delivery Trust Receipt verification HTML report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -739,6 +749,16 @@ FILES: list[tuple[str, str, str]] = [
         "Dual-Loop MVP controlled-failure and attention-reconstruction boundary guide.",
     ),
     (
+        "docs/trust-model.md",
+        "operator_doc",
+        "Cognitive Black Box AI delivery trust model.",
+    ),
+    (
+        "docs/delivery-trust-receipt.md",
+        "operator_doc",
+        "Delivery Trust Receipt contract and verifier guide.",
+    ),
+    (
         "docs/cognitive-loop-code-review.md",
         "operator_doc",
         "Cognitive Loop advisory code review guide.",
@@ -787,6 +807,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
         "schema",
         "Dual-Loop propagation gate receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/delivery-trust-receipt-v1.schema.json",
+        "schema",
+        "Delivery Trust Receipt JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -847,6 +872,21 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
         "fixture",
         "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
+    ),
+    (
+        "fixtures/delivery-trust/pass/delivery-trust-receipt.json",
+        "fixture",
+        "Passing Delivery Trust Receipt fixture for controlled customer handoff.",
+    ),
+    (
+        "fixtures/delivery-trust/blocked-missing-attention/delivery-trust-receipt.json",
+        "fixture",
+        "Blocked Delivery Trust Receipt fixture for missing human reconstruction.",
+    ),
+    (
+        "fixtures/delivery-trust/blocked-risk-budget/delivery-trust-receipt.json",
+        "fixture",
+        "Blocked Delivery Trust Receipt fixture for sandbox risk outside budget.",
     ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -1597,6 +1637,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_dual_loop_gate.py",
         "verification",
         "Dual-Loop propagation gate pass/fail fixture verifier.",
+    ),
+    (
+        "scripts/delivery_trust_receipt.py",
+        "cli",
+        "Build metadata-only Delivery Trust Receipt artifacts from Dual-Loop evidence.",
+    ),
+    (
+        "scripts/verify_delivery_trust_receipt.py",
+        "verification",
+        "Verify Delivery Trust Receipt pass/fail fixtures and trust-boundary rejection cases.",
     ),
     (
         "scripts/cognitive_loop_cli.py",
@@ -2958,6 +3008,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
             "python3 scripts/verify_real_agent_eval_bridge.py --check",
             "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check",
+            "python3 scripts/verify_delivery_trust_receipt.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",

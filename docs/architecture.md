@@ -1,17 +1,26 @@
 # Architecture / 架构
 
-Cognitive Loop System is a local-first control layer for AI-assisted projects. It keeps project state, evidence, risk, verification, learning, and audit outside the long context of any single Agent conversation.
+Cognitive Black Box is a local-first Dual-Loop Trust Harness for AI-generated deliverables. It keeps failure evidence, human reconstruction evidence, propagation gates, delivery receipts, project state, risk, verification, learning, and audit outside the long context of any single Agent conversation.
 
-Cognitive Loop System 是一个本地优先的 AI 项目控制层。它把项目状态、证据、风险、验证、学习和审计外化到文件、数据库、报告和事件账本中，而不是只存在某一次 Agent 长对话里。
+认知黑箱是一个本地优先的 AI 交付 Dual-Loop Trust Harness。它把失败证据、人类重构证据、传播门、交付收据、项目状态、风险、验证、学习和审计外化到文件、数据库、报告和事件账本中，而不是只存在某一次 Agent 长对话里。
 
 ## Layered Architecture
 
 ```text
 Product Entries
-  Personal Plugin Mode
+  Controlled customer handoff receipt
   Professional HTML Artifact Mode
+  Personal Plugin Mode
 
-Cognitive Loop Core
+Dual-Loop Trust Core
+  FailureContract
+  SandboxReceipt
+  AttentionReconstructionTrace
+  AttentionReconstructionSummary
+  DualLoopGateReceipt
+  DeliveryTrustReceipt
+
+Cognitive Loop Project Core
   ProjectEvent
   DecisionCard
   RiskEngine
@@ -59,8 +68,10 @@ Artifact Layer
 
 ## Current Implementation
 
-The current repository already implements the Study Anything foundation:
+The current repository already implements the deterministic, metadata-only trust-harness foundation:
 
+- Dual-Loop MVP with controlled failure contracts, sandbox receipts, attention reconstruction traces/summaries, and propagation gate receipts.
+- Delivery Trust Receipt for controlled customer handoff decisions that require both loops and reject AI-review-only promotion.
 - FastAPI API layer for local learning workflows.
 - LangGraph-backed and deterministic workflow execution for the Study Anything learning loop.
 - User-owned Agent registry and router; real model credentials stay outside Study Anything.
@@ -73,8 +84,10 @@ The current repository already implements the Study Anything foundation:
 - Cognitive Loop contract files, optional manual watcher ingest config, static evidence artifacts, local event index, SQLite Event Store MVP, static Artifact Console Lite, Personal Plugin Mode Lite, Evolution Report Lite, Governed Apply Plan Lite, Measured Improvement Comparator Lite, Patch Proposal Lite, Mastra Evolution Receipt Link Lite, Mastra Evolution Workflow Replay Lite, Governed Patch Apply Sandbox Lite, Professional Evolution Pack Export Lite, Evolution Pack Consumer Smoke Lite, PR CI Receipt Lite, Maintainer Acceptance Ledger Lite, and a copy-ready Mastra adapter contract pack for metadata-only project evidence.
 - Docker self-host path with Postgres, optional Langfuse, optional FalkorDB topology projection, and release evidence.
 
-当前仓库已经实现的是 Study Anything 基础层：
+当前仓库已经实现的是确定性、只含 metadata 的 trust harness 基础层：
 
+- Dual-Loop MVP：可控失败契约、沙箱收据、注意力重构 trace/summary，以及传播门收据。
+- Delivery Trust Receipt：用于受控客户交付的收据，必须同时满足两个 loop，并拒绝 AI 审 AI 式放行。
 - 面向本地学习工作流的 FastAPI API。
 - 用于学习闭环的 LangGraph 和确定性 workflow 执行。
 - 用户自有 Agent registry/router；真实模型密钥留在 Study Anything 外部。

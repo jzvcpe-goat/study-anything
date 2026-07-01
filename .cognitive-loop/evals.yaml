@@ -99,6 +99,9 @@ required:
   - id: cognitive-loop.workbuddy-real-agent-learning-quality
     command: python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check
     blocking: true
+  - id: cognitive-loop.delivery-trust-receipt
+    command: python3 scripts/verify_delivery_trust_receipt.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true

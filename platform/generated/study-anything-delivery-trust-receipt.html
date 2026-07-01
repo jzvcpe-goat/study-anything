@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Delivery Trust Receipt Verification</title>
+<body>
+<h1>Delivery Trust Receipt Verification</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;cli_command&quot;: &quot;python3 scripts/delivery_trust_receipt.py build --failure-contract ... --sandbox-receipt ... --dual-loop-gate ... --attention-summary ...&quot;,
+    &quot;fixture_dir&quot;: &quot;fixtures/delivery-trust&quot;,
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_delivery_trust_receipt.py --check&quot;
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;customer_handoff_allowed&quot;: true,
+      &quot;decision&quot;: &quot;allow_controlled_customer_handoff&quot;,
+      &quot;reasons&quot;: [],
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-missing-attention&quot;,
+      &quot;customer_handoff_allowed&quot;: false,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;human_reconstruction_missing&quot;,
+        &quot;dual_loop_gate_blocked&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-risk-budget&quot;,
+      &quot;customer_handoff_allowed&quot;: false,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;sandbox_risk_outside_budget&quot;,
+        &quot;dual_loop_gate_blocked&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;ai_eval_sufficient_rejected&quot;: &quot;AI eval receipts cannot be sufficient by themselves&quot;,
+    &quot;ai_review_only_rejected&quot;: &quot;AI-review-only trust basis is forbidden&quot;,
+    &quot;missing_claim_boundary_rejected&quot;: &quot;delivery trust receipt must state a current claim&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;client_secrets_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_payload_included&quot;: false,
+    &quot;customer_payloads_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only_fixtures&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;schema_version&quot;: &quot;delivery-trust-receipt-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;trust_rules&quot;: {
+    &quot;active_human_reconstruction_required&quot;: true,
+    &quot;ai_review_only_forbidden&quot;: true,
+    &quot;controlled_failure_required&quot;: true,
+    &quot;dual_loop_gate_required&quot;: true,
+    &quot;full_manual_re_review_not_required_for_pass&quot;: true,
+    &quot;production_mutation_blocked&quot;: true
+  },
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>
