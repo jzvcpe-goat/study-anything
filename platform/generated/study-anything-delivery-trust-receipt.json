@@ -1,0 +1,79 @@
+{
+  "acceptance": {
+    "cli_command": "python3 scripts/delivery_trust_receipt.py build --failure-contract ... --sandbox-receipt ... --dual-loop-gate ... --attention-summary ...",
+    "fixture_dir": "fixtures/delivery-trust",
+    "minimum_command": "python3 scripts/verify_delivery_trust_receipt.py --check"
+  },
+  "case_reports": [
+    {
+      "case_id": "pass",
+      "customer_handoff_allowed": true,
+      "decision": "allow_controlled_customer_handoff",
+      "reasons": [],
+      "status": "allowed"
+    },
+    {
+      "case_id": "blocked-missing-attention",
+      "customer_handoff_allowed": false,
+      "decision": "block_customer_handoff",
+      "reasons": [
+        "human_reconstruction_missing",
+        "dual_loop_gate_blocked"
+      ],
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-risk-budget",
+      "customer_handoff_allowed": false,
+      "decision": "block_customer_handoff",
+      "reasons": [
+        "sandbox_risk_outside_budget",
+        "dual_loop_gate_blocked"
+      ],
+      "status": "blocked"
+    }
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_checks": {
+    "ai_eval_sufficient_rejected": "AI eval receipts cannot be sufficient by themselves",
+    "ai_review_only_rejected": "AI-review-only trust basis is forbidden",
+    "missing_claim_boundary_rejected": "delivery trust receipt must state a current claim"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "customer_payloads_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "delivery-trust-receipt-verification-v1",
+  "status": "pass",
+  "trust_rules": {
+    "active_human_reconstruction_required": true,
+    "ai_review_only_forbidden": true,
+    "controlled_failure_required": true,
+    "dual_loop_gate_required": true,
+    "full_manual_re_review_not_required_for_pass": true,
+    "production_mutation_blocked": true
+  },
+  "version": "v0.3.31-alpha"
+}

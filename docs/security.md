@@ -1,18 +1,25 @@
 # Security Model
 
-Study Anything is a local-first learning layer for platform Agents. The security
-model is intentionally narrow: Study Anything orchestrates learning state,
-contracts, validation, audit events, and local exports; user-owned Agents keep
-real model credentials, tools, browser access, and external data access outside
-the Study Anything database.
+Cognitive Black Box is a local-first trust harness for AI-generated
+deliverables. Its security model is intentionally narrow: the repository
+orchestrates metadata-only contracts, validation, audit events, local exports,
+Dual-Loop gates, and delivery trust receipts; user-owned Agents keep real model
+credentials, tools, browser access, and external data access outside the
+repository database.
 
 ## Trust Boundaries
 
 - Study Anything stores learning sessions, source references, mastery state,
   aggregate PMF metrics, plugin metadata, and local configuration needed to run
   the API.
+- Dual-Loop and Delivery Trust artifacts store structured refs, hashes, risk
+  summaries, gate results, claim boundaries, and rollback refs only.
 - Study Anything must not store real model API keys, bearer tokens, cookies,
   signed URLs, or platform Agent credentials.
+- AI eval evidence may support a delivery decision, but it must not become the
+  sole trust authority.
+- Full manual re-review is not the default gate; active human reconstruction of
+  failure boundaries is the required human evidence.
 - HTTP Agent provider records may include a local or private endpoint, declared
   capabilities, and non-secret metadata only.
 - Plugin preview and quarantine must validate manifests without importing or
@@ -69,6 +76,13 @@ The full release gate also runs this verifier:
 
 ```bash
 ./scripts/release_check.sh
+```
+
+The release gate also requires the Dual-Loop and Delivery Trust gates:
+
+```bash
+python3 scripts/verify_dual_loop_gate.py --check
+python3 scripts/verify_delivery_trust_receipt.py --check
 ```
 
 ## Reporting

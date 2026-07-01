@@ -1,37 +1,41 @@
 # 认知黑箱 / Cognitive Black Box
 
-**不是让认知变黑箱，而是记录和打开 AI 协作过程的黑匣子。**
+**Dual-Loop Trust Harness for AI delivery. / 面向 AI 交付的双闭环信任机制。**
 
-**Cognitive Black Box** is a local-first cognitive flight recorder for AI-assisted learning, project work, and platform-Agent collaboration. It helps people and Agents capture what was learned, what changed, why a decision was made, how it was verified, and what can be safely handed off to Kimi, Codex, Hermes Agent, Obsidian, NotebookLM, WorkBuddy-style tools, or a private Agent.
+**Cognitive Black Box** is a local-first trust harness for AI-generated deliverables. Its goal is to make AI work handoff-worthy without depending on exhaustive human re-review or opaque AI-reviewing-AI approval. It does this by combining a controlled failure environment, a human attention reconstruction environment, a Dual-Loop propagation gate, and a delivery trust receipt.
 
-**认知黑箱** 是一个本地优先的 AI 协作黑匣子：记录学习、项目理解、变更、决策、验证、风险和交接证据。它不是把认知过程变得不透明，而是把 AI 协作过程变成可复盘、可审计、可迁移、可继续演化的认知资产。
+**认知黑箱** 是一个本地优先的 AI 交付信任机制。它的目标不是让人盲信 AI，也不是让人永远做疲劳式二次人工审核，更不是把 AI 审 AI 当成新的黑箱权威；它通过“可控失败环境 + 人类注意力重构环境 + 双闭环传播门 + 交付信任收据”，证明某个 AI 生成交付物在当前边界内是否可以交给客户。
 
-Cognitive Loop remains the technical control pattern inside the project.
+The current MVP is deterministic and metadata-only. It proves the trust harness shape before any production mutation, model call, daemon, hosted service, or customer-impacting effect is allowed by default.
 
-Cognitive Loop 仍然是项目内部的技术控制模式。
+当前 MVP 是确定性、只含 metadata 的本地版本：它先证明信任机制本身，而不是默认允许生产改写、模型调用、常驻服务、托管服务或影响客户的外部效果。
 
-Study Anything is now positioned as the **Learning Adapter** inside Cognitive Black Box. It remains responsible for source-bound learning sessions, layered teaching, quizzes, mastery state, scribe logs, Agent audit/eval evidence, Obsidian exports, NotebookLM-style handoff packages, OKF-style knowledge bundles, and platform-Agent adoption assets.
+Study Anything is now the **Learning Adapter** inside Cognitive Black Box. It remains useful, but it is no longer the product center. Its job is to help humans reconstruct and retain the boundaries needed for trustworthy AI handoff.
 
-Study Anything 现在定位为认知黑箱里的 **学习适配层**：负责基于来源的学习会话、分层教学、测验、掌握度、scribe log、Agent 审计/eval 证据、Obsidian 导出、NotebookLM 式交接包、OKF-style 知识包，以及平台 Agent 接入资产。
+Study Anything 现在是认知黑箱里的 **学习适配层**。它仍然有价值，但不再是产品中心；它服务的是“人能否重构关键边界，从而支撑可信 AI 交付”。
 
 ## What It Is
 
-- **Study Anything**: learn knowledge, docs, code, papers, and project material.
-- **Reverse Anything**: turn existing repos and legacy systems into maps, traces, and learning paths.
-- **Operate Anything**: watch project diffs, tests, runtime signals, and Agent tool calls as evidence.
-- **Evolve Anything**: let AI suggest and execute bounded improvements with verification, rollback, audit, and human mastery gates.
+- **Controlled Failure Environment**: AI may fail only inside an observable, reversible sandbox.
+- **Human Attention Reconstruction Environment**: humans prove control by reconstructing key failure boundaries, not by approving every AI step.
+- **Dual-Loop Propagation Gate**: promotion is blocked unless sandbox evidence and human reconstruction both pass.
+- **Delivery Trust Receipt**: every customer handoff gets a claim boundary, risk result, rollback boundary, and machine-checkable receipt.
+- **Study Anything Adapter**: a learning adapter that helps humans understand and remember the boundaries behind the handoff.
 
 ## 它解决什么
 
-- **学习任何材料**：文档、代码、论文、资料、项目上下文。
-- **逆向任何项目**：把开源项目、遗留系统和当前仓库变成项目地图、功能链路和学习路径。
-- **监听任何变化**：把 diff、测试、CI、运行日志和 Agent 工具调用变成可审计事件。
-- **进化任何项目**：让 AI 在验证、回滚、权限和人类理解确认下持续改进项目。
+- **可控失败环境**：AI 只能在可观察、可逆的沙箱里失败。
+- **人类注意力重构环境**：人类不是逐步点击批准，而是重构关键失败边界。
+- **双闭环传播门**：沙箱证据和人类重构必须同时通过，否则不能升级交付层级。
+- **交付信任收据**：每次客户交付前都有 claim boundary、风险结果、回滚边界和机器可验收收据。
+- **Study Anything Adapter**：帮助人理解并记住交付背后的关键边界。
 
 ## Current Foundation
 
-The current alpha already ships a local-first Study Anything foundation:
+The current alpha already ships a local-first trust-harness foundation:
 
+- Dual-Loop MVP: `failure-contract-v1`, `sandbox-receipt-v1`, `attention-reconstruction-trace-v1`, `attention-reconstruction-summary-v1`, and `dual-loop-gate-receipt-v1`.
+- Delivery Trust Receipt: `delivery-trust-receipt-v1` turns Dual-Loop evidence into a controlled customer-handoff decision and rejects AI-review-only or eval-as-sufficient shortcuts.
 - FastAPI learning API and repo-local Skill Mode.
 - Deterministic fake Agent for tests and demos.
 - Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
@@ -46,8 +50,10 @@ The current alpha already ships a local-first Study Anything foundation:
 - Real-Agent Eval Bridge for importing user-owned Promptfoo, Ragas, DeepEval, and LangChain AgentEvals receipts, plus WorkBuddy/Kimi/Codex learning-quality harness evidence.
 - Optional Cognitive Loop manual watcher ingest with `.cognitive-loop/watchers.yaml`, metadata-only `ProjectEvent` artifacts, Event Index classification, and SQLite Event Store projection.
 
-当前 alpha 已经具备本地优先的 Study Anything 基础：
+当前 alpha 已经具备本地优先的 trust harness 基础：
 
+- Dual-Loop MVP：`failure-contract-v1`、`sandbox-receipt-v1`、`attention-reconstruction-trace-v1`、`attention-reconstruction-summary-v1` 和 `dual-loop-gate-receipt-v1`。
+- Delivery Trust Receipt：`delivery-trust-receipt-v1` 把 Dual Loop 证据转成受控客户交付决策，并拒绝“AI 审 AI 即可放行”或“eval 结果足以放行”的捷径。
 - FastAPI 学习 API 和仓库内 Skill Mode。
 - 用于测试和 demo 的确定性 fake Agent。
 - Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。

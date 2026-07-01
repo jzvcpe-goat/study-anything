@@ -116,6 +116,21 @@ It blocks when:
 - human reconstruction passes but sandbox risk is outside budget;
 - either side tries to weaken privacy, isolation, or rollback boundaries.
 
+## Delivery Trust Layer
+
+The next layer consumes the Dual-Loop gate and emits `delivery-trust-receipt-v1`.
+This receipt answers a narrower customer-handoff question: may the candidate AI
+delivery be handed to a customer inside the current controlled scope?
+
+```bash
+python3 scripts/verify_delivery_trust_receipt.py --check
+```
+
+The delivery receipt keeps the same metadata-only boundary. It allows controlled
+handoff only when the Dual-Loop gate is allowed, human reconstruction is present,
+sandbox risk is inside budget, AI eval receipts are supporting evidence only,
+and the claim boundary states what is not proven.
+
 ## Deterministic Fixtures
 
 Verifier-managed fixtures live under:
@@ -158,4 +173,3 @@ This is not a runtime daemon, hosted service, browser monitor, real model
 executor, production deployment system, or surveillance layer. It is a
 deterministic local artifact harness that makes the two loops auditable before
 any future autonomy expansion.
-

@@ -2,25 +2,27 @@
 
 ## One-Line Positioning
 
-**Cognitive Loop System is a local-first cognitive control layer for AI-assisted projects: learn, reverse, operate, verify, audit, and evolve any repo with human-understanding gates.**
+**Cognitive Black Box is a local-first Dual-Loop Trust Harness for AI delivery: controlled failure, human boundary reconstruction, propagation gating, and delivery trust receipts before customer handoff.**
 
-**Cognitive Loop System 是一个本地优先的 AI 项目认知控制层：让任何仓库都能被学习、逆向、运行、验证、审计，并在人类理解确认下持续进化。**
+**认知黑箱是一个本地优先的 AI 交付 Dual-Loop Trust Harness：在客户交付前完成可控失败、人类边界重构、传播门控和交付信任收据。**
 
 ## Product Shift
 
-Study Anything started as a learning system. The new positioning keeps that strength but moves the product up one level:
+Study Anything started as a learning system. The new positioning keeps that strength but moves the product up to delivery trust:
 
-- Study Anything becomes the learning adapter.
-- Cognitive Loop Core becomes the project-level control layer.
+- Dual Loop becomes the product center.
+- Study Anything becomes the human reconstruction and learning adapter.
+- Cognitive Loop Core becomes the project evidence and control substrate.
 - Mastra becomes the planned Agent/workflow runtime.
 - Langfuse becomes the observability and eval layer.
 - HTML Artifact becomes the professional product surface.
 - Plugins become the personal adoption surface.
 
-Study Anything 最初是学习系统。新定位保留这个优势，但把产品上移一层：
+Study Anything 最初是学习系统。新定位保留这个优势，但把产品上移到 AI 交付信任：
 
-- Study Anything 成为学习适配层。
-- Cognitive Loop Core 成为项目级控制层。
+- Dual Loop 成为产品中心。
+- Study Anything 成为人类边界重构和学习适配层。
+- Cognitive Loop Core 成为项目证据和控制底座。
 - Mastra 成为计划中的 Agent/workflow 运行时。
 - Langfuse 成为观测和 eval 层。
 - HTML Artifact 成为专业用户的产品表面。
@@ -88,27 +90,25 @@ Primary users:
 
 ## Product Promise
 
-The system does not try to beat future foundation models at reasoning. It becomes the external control layer those models need when they enter real projects:
+The system does not try to beat future foundation models at reasoning. It becomes the external trust layer those models need when they generate real deliverables:
 
-- state externalization
-- evidence-first explanations
-- deterministic verification
-- risk gates
-- rollback planning
-- human mastery checks
-- redacted audit
-- cross-model continuity
+- controlled failure before propagation
+- active human boundary reconstruction instead of step-by-step approval
+- deterministic verification and metadata-only receipts
+- risk budget gates and rollback proof
+- explicit claim boundaries for customer handoff
+- AI eval evidence as support, never as the sole authority
+- redacted audit and cross-model continuity
 
-系统不试图在“智能本身”上和未来大模型竞争。它成为大模型进入真实项目时需要的外部控制层：
+系统不试图在“智能本身”上和未来大模型竞争。它成为大模型生成真实交付物时需要的外部信任层：
 
-- 状态外化
-- 证据优先解释
-- 确定性验证
-- 风险门禁
-- 回滚计划
-- 人类掌握度检查
-- 脱敏审计
-- 跨模型连续性
+- 传播前的可控失败
+- 主动人类边界重构，而不是逐步点击批准
+- 确定性验证和只含 metadata 的收据
+- 风险预算门禁和回滚证明
+- 面向客户交付的明确 claim boundary
+- AI eval 只能支持，不能成为唯一权威
+- 脱敏审计和跨模型连续性
 
 ## Use Modes
 
@@ -180,6 +180,8 @@ The professional product surface should become HTML artifacts because they are e
 
 Current shipped foundation:
 
+- Dual-Loop contracts and verifiers
+- Delivery Trust Receipt contract, CLI, fixtures, and verifier
 - Study Anything learning loop
 - API/Skill/platform-Agent usage
 - Bring Your Own Agent
@@ -190,6 +192,8 @@ Current shipped foundation:
 
 当前已经交付的基础：
 
+- Dual-Loop 契约和 verifier
+- Delivery Trust Receipt 契约、CLI、fixtures 和 verifier
 - Study Anything 学习闭环
 - API/Skill/平台 Agent 使用方式
 - Bring Your Own Agent
