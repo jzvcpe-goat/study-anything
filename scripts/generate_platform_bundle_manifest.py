@@ -414,6 +414,26 @@ FILES: list[tuple[str, str, str]] = [
         "Marketplace-quality external Agent eval harness for platform submissions.",
     ),
     (
+        "platform/generated/study-anything-real-agent-eval-bridge.json",
+        "generated_asset",
+        "User-owned real-agent eval receipt bridge verification report.",
+    ),
+    (
+        "platform/generated/study-anything-real-agent-eval-bridge.html",
+        "generated_asset",
+        "User-owned real-agent eval receipt bridge HTML report.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-real-agent-learning-quality.json",
+        "generated_asset",
+        "WorkBuddy/Kimi/Codex real-agent learning-quality verification report.",
+    ),
+    (
+        "platform/generated/study-anything-workbuddy-real-agent-learning-quality.html",
+        "generated_asset",
+        "WorkBuddy/Kimi/Codex real-agent learning-quality HTML report.",
+    ),
+    (
         "platform/generated/study-anything-agent-eval-marketplace-enforcement.json",
         "generated_asset",
         "Agent eval marketplace enforcement report for optional and required external judge gates.",
@@ -827,6 +847,46 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
         "fixture",
         "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
+    ),
+    (
+        "fixtures/real-agent-eval-bridge/pass.json",
+        "fixture",
+        "Passing user-owned real-agent eval receipt bridge fixture.",
+    ),
+    (
+        "fixtures/real-agent-eval-bridge/missing-model-call.json",
+        "fixture",
+        "Negative real-agent eval bridge fixture for missing model-call evidence.",
+    ),
+    (
+        "fixtures/real-agent-eval-bridge/adapter-failed.json",
+        "fixture",
+        "Negative real-agent eval bridge fixture for failed adapter metrics.",
+    ),
+    (
+        "fixtures/workbuddy-real-agent-learning-quality/pass.json",
+        "fixture",
+        "Passing WorkBuddy/Kimi/Codex real-agent learning-quality fixture.",
+    ),
+    (
+        "fixtures/workbuddy-real-agent-learning-quality/deterministic-only.json",
+        "fixture",
+        "Negative learning-quality fixture for deterministic-only evidence.",
+    ),
+    (
+        "fixtures/workbuddy-real-agent-learning-quality/mechanical-restatement.json",
+        "fixture",
+        "Negative learning-quality fixture for mechanical restatement.",
+    ),
+    (
+        "fixtures/workbuddy-real-agent-learning-quality/missing-citations.json",
+        "fixture",
+        "Negative learning-quality fixture for missing citation grounding.",
+    ),
+    (
+        "fixtures/workbuddy-real-agent-learning-quality/high-cost-low-quality.json",
+        "fixture",
+        "Negative learning-quality fixture for high-cost low-quality output.",
     ),
     (
         "fixtures/review-agent/approved.json",
@@ -1377,6 +1437,21 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_external_eval_marketplace_harness.py",
         "verification",
         "Marketplace-quality external Agent eval harness verifier.",
+    ),
+    (
+        "scripts/real_agent_eval_bridge.py",
+        "verification",
+        "Build user-owned real-agent eval bridge and learning-quality reports.",
+    ),
+    (
+        "scripts/verify_real_agent_eval_bridge.py",
+        "verification",
+        "Verify user-owned real-agent eval receipt bridge reports.",
+    ),
+    (
+        "scripts/verify_workbuddy_real_agent_learning_quality.py",
+        "verification",
+        "Verify WorkBuddy/Kimi/Codex real-agent learning-quality reports.",
     ),
     (
         "scripts/verify_agent_eval_marketplace_enforcement.py",
@@ -2709,6 +2784,11 @@ FILES: list[tuple[str, str, str]] = [
         "External eval framework selection, adapter boundary, and marketplace harness guide.",
     ),
     (
+        "docs/real-agent-eval-bridge.md",
+        "docs",
+        "User-owned real-agent eval receipt bridge and learning-quality harness guide.",
+    ),
+    (
         "docs/api.md",
         "docs",
         "HTTP API reference for platform workspaces.",
@@ -2876,6 +2956,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_platform_manual_submission_rehearsal.py --check",
             "python3 scripts/verify_first_lesson_authoring_kit.py --check",
             "python3 scripts/verify_external_eval_marketplace_harness.py --check",
+            "python3 scripts/verify_real_agent_eval_bridge.py --check",
+            "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",

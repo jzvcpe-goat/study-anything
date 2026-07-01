@@ -1,0 +1,460 @@
+{
+  "commands": {
+    "build": "python3 scripts/real_agent_eval_bridge.py learning-quality --input fixtures/workbuddy-real-agent-learning-quality/pass.json",
+    "verify": "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check"
+  },
+  "coverage": {
+    "citation_grounding_recorded": true,
+    "codex_platform_agent_run": true,
+    "cost_quality_frontier_recorded": true,
+    "deterministic_demo_gates_marked_demo_only": true,
+    "deterministic_demo_not_quality_proof": true,
+    "hallucination_risk_recorded": true,
+    "high_cost_low_quality_blocked": true,
+    "kimi_platform_agent_run": true,
+    "mechanical_restatement_blocked": true,
+    "missing_citation_blocked": true,
+    "missing_model_call_detected": true,
+    "same_task_compares_deterministic_http_and_platform_agents": true,
+    "teaching_quality_recorded": true,
+    "workbuddy_platform_agent_run": true
+  },
+  "negative_fixtures": {
+    "deterministic_only": {
+      "blocked_reasons": [
+        "missing_platform:kimi",
+        "missing_platform:codex",
+        "real_agent_quality_passes_missing",
+        "selected_run_not_on_passing_frontier",
+        "run_failed:workbuddy-claimed-without-model-call:real_agent_model_call,teaching_quality,citation_grounding"
+      ],
+      "rule": "deterministic demo is comparison-only; at least two real user-owned/platform Agent runs must pass quality, grounding, hallucination, and cost-quality gates",
+      "schema_version": "workbuddy-real-agent-learning-quality-gate-v1",
+      "status": "blocked"
+    },
+    "high_cost_low_quality": {
+      "blocked_reasons": [
+        "selected_run_not_on_passing_frontier",
+        "run_failed:expensive-low-quality-agent:teaching_quality,citation_grounding,hallucination_risk,unsupported_claim_ratio,mechanical_restatement"
+      ],
+      "rule": "deterministic demo is comparison-only; at least two real user-owned/platform Agent runs must pass quality, grounding, hallucination, and cost-quality gates",
+      "schema_version": "workbuddy-real-agent-learning-quality-gate-v1",
+      "status": "blocked"
+    },
+    "mechanical_restatement": {
+      "blocked_reasons": [
+        "selected_run_not_on_passing_frontier",
+        "run_failed:workbuddy-mechanical:teaching_quality,mechanical_restatement"
+      ],
+      "rule": "deterministic demo is comparison-only; at least two real user-owned/platform Agent runs must pass quality, grounding, hallucination, and cost-quality gates",
+      "schema_version": "workbuddy-real-agent-learning-quality-gate-v1",
+      "status": "blocked"
+    },
+    "missing_citations": {
+      "blocked_reasons": [
+        "selected_run_not_on_passing_frontier",
+        "run_failed:workbuddy-no-citations:citation_grounding"
+      ],
+      "rule": "deterministic demo is comparison-only; at least two real user-owned/platform Agent runs must pass quality, grounding, hallucination, and cost-quality gates",
+      "schema_version": "workbuddy-real-agent-learning-quality-gate-v1",
+      "status": "blocked"
+    }
+  },
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed_by_study_anything": false,
+    "model_keys_stored_by_study_anything": false,
+    "raw_prompt_source_answer_included": false
+  },
+  "quality_report": {
+    "cost_quality_frontier": {
+      "dominated_run_ids": [],
+      "efficient_frontier_run_ids": [
+        "user-owned-http-agent",
+        "workbuddy-platform-agent",
+        "kimi-platform-agent",
+        "codex-platform-agent"
+      ],
+      "selected_run_id": "workbuddy-platform-agent"
+    },
+    "gate": {
+      "blocked_reasons": [],
+      "rule": "deterministic demo is comparison-only; at least two real user-owned/platform Agent runs must pass quality, grounding, hallucination, and cost-quality gates",
+      "schema_version": "workbuddy-real-agent-learning-quality-gate-v1",
+      "status": "allowed"
+    },
+    "privacy": {
+      "metadata_only": true,
+      "model_calls_performed_by_study_anything": false,
+      "model_keys_stored_by_study_anything": false,
+      "raw_agent_trace_included": false,
+      "raw_answers_included": false,
+      "raw_prompts_included": false,
+      "raw_source_text_included": false
+    },
+    "quality_summary": {
+      "average_citation_grounding": 0.8725,
+      "average_hallucination_risk": 0.045,
+      "average_teaching_quality": 0.8725,
+      "deterministic_demo_only": true,
+      "passing_real_run_count": 4,
+      "real_run_count": 4
+    },
+    "runs": [
+      {
+        "agent_evidence": {
+          "external_model_called": false,
+          "platform_agent_used": false,
+          "raw_agent_trace_included": false,
+          "receipt_ids": [],
+          "user_owned_http_agent_used": false
+        },
+        "cost_quality": {
+          "cost_usd": 0.0,
+          "input_tokens": 0,
+          "latency_ms": 120,
+          "output_tokens": 0,
+          "quality_score": 0.24
+        },
+        "deterministic_demo_only": true,
+        "gates": [
+          {
+            "gate_id": "real_agent_model_call",
+            "observed": false,
+            "status": "demo_only",
+            "threshold": "true for real runs (not evaluated for deterministic demo)"
+          },
+          {
+            "gate_id": "teaching_quality",
+            "observed": 0.24,
+            "status": "demo_only",
+            "threshold": ">=0.8 (not evaluated for deterministic demo)"
+          },
+          {
+            "gate_id": "citation_grounding",
+            "observed": 0.2,
+            "status": "demo_only",
+            "threshold": ">=0.8 (not evaluated for deterministic demo)"
+          },
+          {
+            "gate_id": "hallucination_risk",
+            "observed": 0.25,
+            "status": "demo_only",
+            "threshold": "<=0.1 (not evaluated for deterministic demo)"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.3,
+            "status": "demo_only",
+            "threshold": "<=0.1 (not evaluated for deterministic demo)"
+          },
+          {
+            "gate_id": "mechanical_restatement",
+            "observed": 0.86,
+            "status": "demo_only",
+            "threshold": "<=0.25 (not evaluated for deterministic demo)"
+          }
+        ],
+        "output_ref_hash": "0c52e3dd4b9693e5e332a762b1fb66f4eb9c26f3f7e00f66939b14f5e84250ae",
+        "platform_id": "demo",
+        "quality": {
+          "citation_grounding": 0.2,
+          "hallucination_risk": 0.25,
+          "mechanical_restatement_score": 0.86,
+          "teaching_quality": 0.24,
+          "unsupported_claim_ratio": 0.3
+        },
+        "run_id": "deterministic-demo",
+        "run_type": "deterministic_demo",
+        "status": "demo_only"
+      },
+      {
+        "agent_evidence": {
+          "external_model_called": true,
+          "platform_agent_used": false,
+          "raw_agent_trace_included": false,
+          "receipt_ids": [
+            "promptfoo-deepseek-lesson-pass",
+            "ragas-deepseek-lesson-pass"
+          ],
+          "user_owned_http_agent_used": true
+        },
+        "cost_quality": {
+          "cost_usd": 0.004,
+          "input_tokens": 2100,
+          "latency_ms": 1700,
+          "output_tokens": 720,
+          "quality_score": 0.84
+        },
+        "deterministic_demo_only": false,
+        "gates": [
+          {
+            "gate_id": "real_agent_model_call",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true for real runs"
+          },
+          {
+            "gate_id": "teaching_quality",
+            "observed": 0.84,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "citation_grounding",
+            "observed": 0.86,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "hallucination_risk",
+            "observed": 0.06,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.04,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "mechanical_restatement",
+            "observed": 0.18,
+            "status": "pass",
+            "threshold": "<=0.25"
+          }
+        ],
+        "output_ref_hash": "6ae0c67431af51e905918cf20e2b4f773605fda83645f9030fd47c3cbb948bf0",
+        "platform_id": "generic-http-agent",
+        "quality": {
+          "citation_grounding": 0.86,
+          "hallucination_risk": 0.06,
+          "mechanical_restatement_score": 0.18,
+          "teaching_quality": 0.84,
+          "unsupported_claim_ratio": 0.04
+        },
+        "run_id": "user-owned-http-agent",
+        "run_type": "user_owned_http_agent",
+        "status": "pass"
+      },
+      {
+        "agent_evidence": {
+          "external_model_called": true,
+          "platform_agent_used": true,
+          "raw_agent_trace_included": false,
+          "receipt_ids": [
+            "promptfoo-deepseek-lesson-pass",
+            "deepeval-deepseek-lesson-pass",
+            "agentevals-deepseek-lesson-pass"
+          ],
+          "user_owned_http_agent_used": false
+        },
+        "cost_quality": {
+          "cost_usd": 0.006,
+          "input_tokens": 2400,
+          "latency_ms": 1900,
+          "output_tokens": 860,
+          "quality_score": 0.88
+        },
+        "deterministic_demo_only": false,
+        "gates": [
+          {
+            "gate_id": "real_agent_model_call",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true for real runs"
+          },
+          {
+            "gate_id": "teaching_quality",
+            "observed": 0.88,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "citation_grounding",
+            "observed": 0.9,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "hallucination_risk",
+            "observed": 0.04,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.03,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "mechanical_restatement",
+            "observed": 0.12,
+            "status": "pass",
+            "threshold": "<=0.25"
+          }
+        ],
+        "output_ref_hash": "963238ff3504f1ab207e5544616bc41ed23d3e63ce9b2a64b94987765916de81",
+        "platform_id": "workbuddy",
+        "quality": {
+          "citation_grounding": 0.9,
+          "hallucination_risk": 0.04,
+          "mechanical_restatement_score": 0.12,
+          "teaching_quality": 0.88,
+          "unsupported_claim_ratio": 0.03
+        },
+        "run_id": "workbuddy-platform-agent",
+        "run_type": "platform_agent",
+        "status": "pass"
+      },
+      {
+        "agent_evidence": {
+          "external_model_called": true,
+          "platform_agent_used": true,
+          "raw_agent_trace_included": false,
+          "receipt_ids": [
+            "ragas-deepseek-lesson-pass",
+            "deepeval-deepseek-lesson-pass"
+          ],
+          "user_owned_http_agent_used": false
+        },
+        "cost_quality": {
+          "cost_usd": 0.012,
+          "input_tokens": 2500,
+          "latency_ms": 2500,
+          "output_tokens": 940,
+          "quality_score": 0.91
+        },
+        "deterministic_demo_only": false,
+        "gates": [
+          {
+            "gate_id": "real_agent_model_call",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true for real runs"
+          },
+          {
+            "gate_id": "teaching_quality",
+            "observed": 0.91,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "citation_grounding",
+            "observed": 0.89,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "hallucination_risk",
+            "observed": 0.03,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.02,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "mechanical_restatement",
+            "observed": 0.1,
+            "status": "pass",
+            "threshold": "<=0.25"
+          }
+        ],
+        "output_ref_hash": "2d7d1e1e74d5d336cd835b90fa024a54af8b18d74ea648024475105a109cb843",
+        "platform_id": "kimi",
+        "quality": {
+          "citation_grounding": 0.89,
+          "hallucination_risk": 0.03,
+          "mechanical_restatement_score": 0.1,
+          "teaching_quality": 0.91,
+          "unsupported_claim_ratio": 0.02
+        },
+        "run_id": "kimi-platform-agent",
+        "run_type": "platform_agent",
+        "status": "pass"
+      },
+      {
+        "agent_evidence": {
+          "external_model_called": true,
+          "platform_agent_used": true,
+          "raw_agent_trace_included": false,
+          "receipt_ids": [
+            "promptfoo-deepseek-lesson-pass",
+            "agentevals-deepseek-lesson-pass"
+          ],
+          "user_owned_http_agent_used": false
+        },
+        "cost_quality": {
+          "cost_usd": 0.005,
+          "input_tokens": 2300,
+          "latency_ms": 1500,
+          "output_tokens": 800,
+          "quality_score": 0.86
+        },
+        "deterministic_demo_only": false,
+        "gates": [
+          {
+            "gate_id": "real_agent_model_call",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true for real runs"
+          },
+          {
+            "gate_id": "teaching_quality",
+            "observed": 0.86,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "citation_grounding",
+            "observed": 0.84,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "hallucination_risk",
+            "observed": 0.05,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "unsupported_claim_ratio",
+            "observed": 0.04,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "mechanical_restatement",
+            "observed": 0.16,
+            "status": "pass",
+            "threshold": "<=0.25"
+          }
+        ],
+        "output_ref_hash": "9295f4e83ab28dca5c5a10a59b37d61f49b3bec310f9b15628023b1eae90e756",
+        "platform_id": "codex",
+        "quality": {
+          "citation_grounding": 0.84,
+          "hallucination_risk": 0.05,
+          "mechanical_restatement_score": 0.16,
+          "teaching_quality": 0.86,
+          "unsupported_claim_ratio": 0.04
+        },
+        "run_id": "codex-platform-agent",
+        "run_type": "platform_agent",
+        "status": "pass"
+      }
+    ],
+    "schema_version": "workbuddy-real-agent-learning-quality-report-v1",
+    "status": "pass",
+    "task_ref": "deepseek-pm-first-lesson",
+    "version": "v0.3.31-alpha"
+  },
+  "schema_version": "workbuddy-real-agent-learning-quality-verification-v1",
+  "status": "pass"
+}

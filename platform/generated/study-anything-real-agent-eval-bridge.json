@@ -1,0 +1,496 @@
+{
+  "bridge_report": {
+    "adapter_receipts": [
+      {
+        "adapter_id": "promptfoo",
+        "artifact_refs": [
+          {
+            "artifact_id": "promptfoo-run-deepseek-lesson",
+            "kind": "promptfoo-json-report",
+            "raw_artifact_included": false,
+            "sha256": "a831622636eb2a3d5f1cb2ce16f49e4e2937e53f60fb1f258f6f33476884a5a9"
+          }
+        ],
+        "created_at_utc": "2026-06-30T20:00:00Z",
+        "execution_boundary": {
+          "credentials_stay_in_user_eval_environment": true,
+          "external_model_called": true,
+          "model_calls_performed_by_study_anything": false,
+          "model_keys_stored_by_study_anything": false,
+          "ran_in_user_owned_environment": true
+        },
+        "gates": [
+          {
+            "gate_id": "ran_in_user_owned_environment",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "external_model_called",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "study_anything_model_calls",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "study_anything_model_keys",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_inputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_outputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "prompt_contract_passed",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "injection_pass_rate",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=1.0"
+          },
+          {
+            "gate_id": "citation_fabrication_pass_rate",
+            "observed": 1.0,
+            "status": "pass",
+            "threshold": ">=1.0"
+          }
+        ],
+        "metric_summary": {
+          "citation_fabrication_pass_rate": 1.0,
+          "injection_pass_rate": 1.0,
+          "prompt_contract_passed": true
+        },
+        "platform_id": "workbuddy",
+        "privacy": {
+          "metadata_only": true,
+          "raw_answers_included": false,
+          "raw_inputs_included": false,
+          "raw_outputs_included": false,
+          "raw_prompts_included": false,
+          "raw_source_text_included": false,
+          "real_model_or_eval_keys_stored": false
+        },
+        "receipt_id": "promptfoo-deepseek-lesson-pass",
+        "reported_status": "pass",
+        "schema_version": "external-eval-adapter-receipt-v1",
+        "status": "pass",
+        "task_ref": "deepseek-pm-first-lesson"
+      },
+      {
+        "adapter_id": "ragas",
+        "artifact_refs": [
+          {
+            "artifact_id": "ragas-run-deepseek-lesson",
+            "kind": "ragas-redacted-dataset-report",
+            "raw_artifact_included": false,
+            "sha256": "57f4d821c4e6a201caa67c4f1340f8b0ba4637ab162a87871edba7bc2b6c03e5"
+          }
+        ],
+        "created_at_utc": "2026-06-30T20:01:00Z",
+        "execution_boundary": {
+          "credentials_stay_in_user_eval_environment": true,
+          "external_model_called": true,
+          "model_calls_performed_by_study_anything": false,
+          "model_keys_stored_by_study_anything": false,
+          "ran_in_user_owned_environment": true
+        },
+        "gates": [
+          {
+            "gate_id": "ran_in_user_owned_environment",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "external_model_called",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "study_anything_model_calls",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "study_anything_model_keys",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_inputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_outputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "context_precision",
+            "observed": 0.92,
+            "status": "pass",
+            "threshold": ">=0.7"
+          },
+          {
+            "gate_id": "context_recall",
+            "observed": 0.88,
+            "status": "pass",
+            "threshold": ">=0.7"
+          },
+          {
+            "gate_id": "faithfulness",
+            "observed": 0.91,
+            "status": "pass",
+            "threshold": ">=0.85"
+          },
+          {
+            "gate_id": "answer_relevancy",
+            "observed": 0.87,
+            "status": "pass",
+            "threshold": ">=0.75"
+          },
+          {
+            "gate_id": "citation_accuracy",
+            "observed": 0.9,
+            "status": "pass",
+            "threshold": ">=0.8"
+          }
+        ],
+        "metric_summary": {
+          "answer_relevancy": 0.87,
+          "citation_accuracy": 0.9,
+          "context_precision": 0.92,
+          "context_recall": 0.88,
+          "faithfulness": 0.91
+        },
+        "platform_id": "kimi",
+        "privacy": {
+          "metadata_only": true,
+          "raw_answers_included": false,
+          "raw_inputs_included": false,
+          "raw_outputs_included": false,
+          "raw_prompts_included": false,
+          "raw_source_text_included": false,
+          "real_model_or_eval_keys_stored": false
+        },
+        "receipt_id": "ragas-deepseek-lesson-pass",
+        "reported_status": "pass",
+        "schema_version": "external-eval-adapter-receipt-v1",
+        "status": "pass",
+        "task_ref": "deepseek-pm-first-lesson"
+      },
+      {
+        "adapter_id": "deepeval",
+        "artifact_refs": [
+          {
+            "artifact_id": "deepeval-run-deepseek-lesson",
+            "kind": "deepeval-redacted-quality-report",
+            "raw_artifact_included": false,
+            "sha256": "46688b39a685b6d2c06e99b7682c225614d049266db94b4312ed9187d3ba98aa"
+          }
+        ],
+        "created_at_utc": "2026-06-30T20:02:00Z",
+        "execution_boundary": {
+          "credentials_stay_in_user_eval_environment": true,
+          "external_model_called": true,
+          "model_calls_performed_by_study_anything": false,
+          "model_keys_stored_by_study_anything": false,
+          "ran_in_user_owned_environment": true
+        },
+        "gates": [
+          {
+            "gate_id": "ran_in_user_owned_environment",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "external_model_called",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "study_anything_model_calls",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "study_anything_model_keys",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_inputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_outputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "teaching_quality_score",
+            "observed": 0.88,
+            "status": "pass",
+            "threshold": ">=0.82"
+          },
+          {
+            "gate_id": "hallucination_score",
+            "observed": 0.04,
+            "status": "pass",
+            "threshold": "<=0.1"
+          },
+          {
+            "gate_id": "answer_relevancy",
+            "observed": 0.86,
+            "status": "pass",
+            "threshold": ">=0.75"
+          }
+        ],
+        "metric_summary": {
+          "answer_relevancy": 0.86,
+          "hallucination_score": 0.04,
+          "teaching_quality_score": 0.88
+        },
+        "platform_id": "codex",
+        "privacy": {
+          "metadata_only": true,
+          "raw_answers_included": false,
+          "raw_inputs_included": false,
+          "raw_outputs_included": false,
+          "raw_prompts_included": false,
+          "raw_source_text_included": false,
+          "real_model_or_eval_keys_stored": false
+        },
+        "receipt_id": "deepeval-deepseek-lesson-pass",
+        "reported_status": "pass",
+        "schema_version": "external-eval-adapter-receipt-v1",
+        "status": "pass",
+        "task_ref": "deepseek-pm-first-lesson"
+      },
+      {
+        "adapter_id": "langchain-agentevals",
+        "artifact_refs": [
+          {
+            "artifact_id": "agentevals-run-deepseek-lesson",
+            "kind": "langchain-agentevals-redacted-trajectory",
+            "raw_artifact_included": false,
+            "sha256": "f0efed5749f362c197c2b23f4ae058c831f2f61ca191d37b7c04ecdfad6f9e77"
+          }
+        ],
+        "created_at_utc": "2026-06-30T20:03:00Z",
+        "execution_boundary": {
+          "credentials_stay_in_user_eval_environment": true,
+          "external_model_called": true,
+          "model_calls_performed_by_study_anything": false,
+          "model_keys_stored_by_study_anything": false,
+          "ran_in_user_owned_environment": true
+        },
+        "gates": [
+          {
+            "gate_id": "ran_in_user_owned_environment",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "external_model_called",
+            "observed": true,
+            "status": "pass",
+            "threshold": "true"
+          },
+          {
+            "gate_id": "study_anything_model_calls",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "study_anything_model_keys",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_inputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "raw_outputs_excluded",
+            "observed": false,
+            "status": "pass",
+            "threshold": "false"
+          },
+          {
+            "gate_id": "trajectory_match_score",
+            "observed": 0.91,
+            "status": "pass",
+            "threshold": ">=0.85"
+          },
+          {
+            "gate_id": "tool_call_coverage",
+            "observed": 0.86,
+            "status": "pass",
+            "threshold": ">=0.8"
+          },
+          {
+            "gate_id": "invalid_tool_call_count",
+            "observed": 0,
+            "status": "pass",
+            "threshold": "0"
+          }
+        ],
+        "metric_summary": {
+          "invalid_tool_call_count": 0,
+          "tool_call_coverage": 0.86,
+          "trajectory_match_score": 0.91
+        },
+        "platform_id": "workbuddy",
+        "privacy": {
+          "metadata_only": true,
+          "raw_answers_included": false,
+          "raw_inputs_included": false,
+          "raw_outputs_included": false,
+          "raw_prompts_included": false,
+          "raw_source_text_included": false,
+          "real_model_or_eval_keys_stored": false
+        },
+        "receipt_id": "agentevals-deepseek-lesson-pass",
+        "reported_status": "pass",
+        "schema_version": "external-eval-adapter-receipt-v1",
+        "status": "pass",
+        "task_ref": "deepseek-pm-first-lesson"
+      }
+    ],
+    "adapter_statuses": {
+      "deepeval": "pass",
+      "langchain-agentevals": "pass",
+      "promptfoo": "pass",
+      "ragas": "pass"
+    },
+    "gate": {
+      "blocked_reasons": [],
+      "required_adapters": [
+        "promptfoo",
+        "ragas",
+        "deepeval",
+        "langchain-agentevals"
+      ],
+      "rule": "all required user-owned external eval receipts must pass without importing raw model data",
+      "schema_version": "real-agent-eval-bridge-gate-v1",
+      "status": "allowed"
+    },
+    "import_contract": {
+      "raw_artifacts_allowed": false,
+      "receipt_schema": "external-eval-adapter-receipt-v1",
+      "study_anything_imports_metadata_receipts_only": true,
+      "user_runs_eval_in_own_environment": true
+    },
+    "privacy": {
+      "external_eval_credentials_owned_by_user": true,
+      "metadata_only": true,
+      "model_calls_performed_by_study_anything": false,
+      "model_keys_stored_by_study_anything": false,
+      "raw_answers_included": false,
+      "raw_evaluator_outputs_included": false,
+      "raw_prompts_included": false,
+      "raw_source_text_included": false
+    },
+    "schema_version": "real-agent-eval-bridge-report-v1",
+    "status": "pass",
+    "task_ref": "deepseek-pm-first-lesson",
+    "version": "v0.3.31-alpha"
+  },
+  "commands": {
+    "build": "python3 scripts/real_agent_eval_bridge.py eval-bridge --input fixtures/real-agent-eval-bridge/pass.json",
+    "verify": "python3 scripts/verify_real_agent_eval_bridge.py --check"
+  },
+  "coverage": {
+    "adapter_failure_blocks": true,
+    "deepeval_adapter_receipt": true,
+    "langchain_agentevals_adapter_receipt": true,
+    "missing_model_call_blocks": true,
+    "promptfoo_adapter_receipt": true,
+    "ragas_adapter_receipt": true,
+    "user_owned_eval_environment_required": true
+  },
+  "negative_fixtures": {
+    "adapter_failed": {
+      "gate": {
+        "blocked_reasons": [
+          "adapter_failed:ragas"
+        ],
+        "required_adapters": [
+          "promptfoo",
+          "ragas",
+          "deepeval",
+          "langchain-agentevals"
+        ],
+        "rule": "all required user-owned external eval receipts must pass without importing raw model data",
+        "schema_version": "real-agent-eval-bridge-gate-v1",
+        "status": "blocked"
+      },
+      "status": "blocked"
+    },
+    "missing_model_call": {
+      "gate": {
+        "blocked_reasons": [
+          "adapter_failed:promptfoo",
+          "external_model_call_missing:promptfoo"
+        ],
+        "required_adapters": [
+          "promptfoo",
+          "ragas",
+          "deepeval",
+          "langchain-agentevals"
+        ],
+        "rule": "all required user-owned external eval receipts must pass without importing raw model data",
+        "schema_version": "real-agent-eval-bridge-gate-v1",
+        "status": "blocked"
+      },
+      "status": "blocked"
+    }
+  },
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed_by_study_anything": false,
+    "model_keys_stored_by_study_anything": false,
+    "raw_prompt_source_answer_included": false
+  },
+  "schema_version": "real-agent-eval-bridge-verification-v1",
+  "status": "pass"
+}

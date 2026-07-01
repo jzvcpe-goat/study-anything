@@ -1,0 +1,140 @@
+{
+  "schema_version": "workbuddy-real-agent-learning-quality-input-v1",
+  "task_ref": "deepseek-pm-first-lesson",
+  "selected_run_id": "expensive-low-quality-agent",
+  "runs": [
+    {
+      "run_id": "deterministic-demo",
+      "run_type": "deterministic_demo",
+      "platform_id": "demo",
+      "output_ref_hash": "0c52e3dd4b9693e5e332a762b1fb66f4eb9c26f3f7e00f66939b14f5e84250ae",
+      "agent_evidence": {
+        "external_model_called": false,
+        "platform_agent_used": false,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": []
+      },
+      "quality": {
+        "teaching_quality": 0.24,
+        "citation_grounding": 0.2,
+        "hallucination_risk": 0.25,
+        "unsupported_claim_ratio": 0.3,
+        "mechanical_restatement_score": 0.86
+      },
+      "cost": {
+        "latency_ms": 120,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      }
+    },
+    {
+      "run_id": "workbuddy-platform-agent",
+      "run_type": "platform_agent",
+      "platform_id": "workbuddy",
+      "output_ref_hash": "963238ff3504f1ab207e5544616bc41ed23d3e63ce9b2a64b94987765916de81",
+      "agent_evidence": {
+        "external_model_called": true,
+        "platform_agent_used": true,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": [
+          "promptfoo-deepseek-lesson-pass"
+        ]
+      },
+      "quality": {
+        "teaching_quality": 0.88,
+        "citation_grounding": 0.9,
+        "hallucination_risk": 0.04,
+        "unsupported_claim_ratio": 0.03,
+        "mechanical_restatement_score": 0.12
+      },
+      "cost": {
+        "latency_ms": 1900,
+        "input_tokens": 2400,
+        "output_tokens": 860,
+        "cost_usd": 0.006
+      }
+    },
+    {
+      "run_id": "kimi-platform-agent",
+      "run_type": "platform_agent",
+      "platform_id": "kimi",
+      "output_ref_hash": "2d7d1e1e74d5d336cd835b90fa024a54af8b18d74ea648024475105a109cb843",
+      "agent_evidence": {
+        "external_model_called": true,
+        "platform_agent_used": true,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": [
+          "ragas-deepseek-lesson-pass"
+        ]
+      },
+      "quality": {
+        "teaching_quality": 0.91,
+        "citation_grounding": 0.89,
+        "hallucination_risk": 0.03,
+        "unsupported_claim_ratio": 0.02,
+        "mechanical_restatement_score": 0.1
+      },
+      "cost": {
+        "latency_ms": 2500,
+        "input_tokens": 2500,
+        "output_tokens": 940,
+        "cost_usd": 0.012
+      }
+    },
+    {
+      "run_id": "codex-platform-agent",
+      "run_type": "platform_agent",
+      "platform_id": "codex",
+      "output_ref_hash": "9295f4e83ab28dca5c5a10a59b37d61f49b3bec310f9b15628023b1eae90e756",
+      "agent_evidence": {
+        "external_model_called": true,
+        "platform_agent_used": true,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": [
+          "promptfoo-deepseek-lesson-pass"
+        ]
+      },
+      "quality": {
+        "teaching_quality": 0.86,
+        "citation_grounding": 0.84,
+        "hallucination_risk": 0.05,
+        "unsupported_claim_ratio": 0.04,
+        "mechanical_restatement_score": 0.16
+      },
+      "cost": {
+        "latency_ms": 1500,
+        "input_tokens": 2300,
+        "output_tokens": 800,
+        "cost_usd": 0.005
+      }
+    },
+    {
+      "run_id": "expensive-low-quality-agent",
+      "run_type": "platform_agent",
+      "platform_id": "workbuddy",
+      "output_ref_hash": "9693eb8dcb0f58c4e92745ce4e679b8b5c92d1e5b0e81b9313896ac0c22c1a47",
+      "agent_evidence": {
+        "external_model_called": true,
+        "platform_agent_used": true,
+        "user_owned_http_agent_used": false,
+        "receipt_ids": [
+          "deepeval-expensive-low-quality"
+        ]
+      },
+      "quality": {
+        "teaching_quality": 0.7,
+        "citation_grounding": 0.72,
+        "hallucination_risk": 0.12,
+        "unsupported_claim_ratio": 0.15,
+        "mechanical_restatement_score": 0.31
+      },
+      "cost": {
+        "latency_ms": 5200,
+        "input_tokens": 4200,
+        "output_tokens": 1200,
+        "cost_usd": 0.05
+      }
+    }
+  ]
+}
