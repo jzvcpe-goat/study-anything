@@ -1,0 +1,72 @@
+{
+  "attribution": {
+    "attributed": true,
+    "attributed_to_loop": "external_feedback_loop",
+    "requires_product_change": false,
+    "requires_risk_budget_change": false
+  },
+  "claim_boundary": {
+    "current_claim": "External feedback was reduced to metadata-only scope and attribution signals for the CBB delivery harness.",
+    "not_claimed": [
+      "full customer sentiment",
+      "raw feedback preservation",
+      "production approval",
+      "legal certification"
+    ]
+  },
+  "classification": {
+    "contains_customer_payload": false,
+    "contains_raw_feedback": false,
+    "requested_scope": "controlled_customer_handoff",
+    "severity": "medium",
+    "signal_type": "delivery_acceptance_boundary",
+    "summary_code": "import_path_and_trust_boundary_feedback"
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "feedback_intake_id": "external-feedback-intake-blocked-stale-receipt-chain",
+  "handling": {
+    "manual_upload_required": false,
+    "model_call_required": false,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "external_feedback_original_text_included": false,
+    "external_feedback_private_context_included": false,
+    "external_feedback_raw_payload_included": false,
+    "external_feedback_user_identity_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "schema_version": "cbb-external-feedback-intake-v1",
+  "source": {
+    "collected_at": "2026-06-28T00:00:00Z",
+    "feedback_ref": "external-feedback:blocked-stale-receipt-chain",
+    "platform_ref": "platform:workbuddy-compatible",
+    "source_type": "external_platform_feedback"
+  }
+}

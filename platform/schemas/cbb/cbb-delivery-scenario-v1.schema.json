@@ -1,0 +1,70 @@
+{
+  "$id": "cbb-delivery-scenario-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "candidate": {
+      "type": "object"
+    },
+    "case_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "loops": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "promotion_policy": {
+      "type": "object"
+    },
+    "risk_budget": {
+      "type": "object"
+    },
+    "scenario_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scenario_type": {
+      "const": "controlled_ai_delivery"
+    },
+    "schema_version": {
+      "const": "cbb-delivery-scenario-v1"
+    },
+    "source": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "project_id",
+    "case_id",
+    "source",
+    "scenario_type",
+    "candidate",
+    "loops",
+    "risk_budget",
+    "promotion_policy",
+    "status",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "CBB Delivery Scenario v1",
+  "type": "object"
+}

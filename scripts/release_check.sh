@@ -232,6 +232,7 @@ run_cbb_protocol_verifier_gates() {
   "$python_bin" scripts/verify_cbb_gate.py --check
   "$python_bin" scripts/verify_cbb_receipt_chain.py --check
   "$python_bin" scripts/verify_cbb_self_intake.py --check
+  "$python_bin" scripts/verify_cbb_delivery_harness.py --check
   cbb_protocol_verifiers_passed_individually="true"
 }
 
