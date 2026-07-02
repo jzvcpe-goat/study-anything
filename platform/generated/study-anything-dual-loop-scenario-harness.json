@@ -1,0 +1,103 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/dual-loop-scenarios",
+    "minimum_command": "python3 scripts/verify_dual_loop_scenario_harness.py --check",
+    "runner_command": "python3 scripts/run_dual_loop_scenario_harness.py run --case all"
+  },
+  "case_reports": [
+    {
+      "artifact_count": 8,
+      "case_id": "pass",
+      "customer_handoff_package_emitted": true,
+      "delivery_trust_status": "allowed",
+      "gate_reasons": [],
+      "gate_status": "allowed"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "attention-missing",
+      "customer_handoff_package_emitted": false,
+      "delivery_trust_status": "blocked",
+      "gate_reasons": [
+        "attention_reconstruction_missing"
+      ],
+      "gate_status": "blocked"
+    },
+    {
+      "artifact_count": 7,
+      "case_id": "risk-over-budget",
+      "customer_handoff_package_emitted": false,
+      "delivery_trust_status": "blocked",
+      "gate_reasons": [
+        "sandbox_risk_outside_budget"
+      ],
+      "gate_status": "blocked"
+    },
+    {
+      "artifact_count": 6,
+      "case_id": "both-fail",
+      "customer_handoff_package_emitted": false,
+      "delivery_trust_status": "blocked",
+      "gate_reasons": [
+        "sandbox_failures_not_contained",
+        "sandbox_risk_outside_budget",
+        "attention_reconstruction_failed"
+      ],
+      "gate_status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The deterministic harness proves local Dual Loop promotion behavior for one customer delivery scenario class.",
+    "not_claimed": [
+      "production readiness",
+      "real customer acceptance",
+      "model correctness",
+      "AI self-review sufficiency"
+    ]
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_customer_data_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "scenario_id": "customer_delivery_readiness",
+  "schema_version": "dual-loop-trust-scenario-harness-v1",
+  "status": "pass",
+  "trust_rules": {
+    "blocked_cases_do_not_emit_customer_handoff_package": true,
+    "controlled_failure_loop_required": true,
+    "dual_loop_gate_required": true,
+    "human_attention_reconstruction_required": true,
+    "neither_loop_may_dominate": true,
+    "pass_emits_customer_handoff_package": true
+  },
+  "version": "v0.3.31-alpha"
+}

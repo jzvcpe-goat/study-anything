@@ -114,7 +114,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "3a78140e04163d48eb78e4a75451b94887726c8948c451f14e6e7ca9cf6fb1eb"
+      "sha256": "2fa1741ceb1fc1e50025eee43ab3f2acaf17aef314c755750214c9622d2c8784"
     },
     {
       "bytes": 1939,
@@ -199,6 +199,13 @@
       "path": "platform/generated/study-anything-customer-handoff-package.zip",
       "purpose": "Portable metadata-only Customer Handoff Package archive.",
       "sha256": "b382540c26b9c0410a3d4fc94d0dbfd84b54f14c191cacc3bbd3bd7a32e211c1"
+    },
+    {
+      "bytes": 3386,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-dual-loop-scenario-harness.json",
+      "purpose": "Dual Loop Trust Scenario Harness verification report for customer delivery readiness.",
+      "sha256": "facbcf88e2affdfc284218af3c7b1915e9aa2ddc46d9a1858c57289752d6200a"
     },
     {
       "bytes": 955,
@@ -639,7 +646,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "d7eb9fdd480ecf384c90e18b9ca5d5ec49c36e5caa1c1c37723fca6d48c94b96"
+      "sha256": "63d0eea3d008c5c462c91089e3938a184efe5c2e7d1f40750f83f5ef327eeb75"
     },
     {
       "bytes": 107336,
@@ -807,28 +814,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "43f2ae5b160eb41268e4651a4401c960d002f57bca81b8cf3cca6ac421ffbcf2"
+      "sha256": "8defb89b366ce0c21abfdc1d0c97d4e212aeb029a05d97e8ebe3108d1791f696"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "06ee6e65edbdd90b6947b2e48ba89d8e0db376517e08e22a613e03d5277b293e"
+      "sha256": "945e68b873771c7a77e3696a4e2410d4ae64bb2d8f04b578f38f24ca80e1b517"
     },
     {
-      "bytes": 252271,
+      "bytes": 252272,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "06e1f1491fc32c48bba0f000b9603c860e2dc3f4fde96913127baf3b5403fe22"
+      "sha256": "bf40e9865457ab17f024b5ea44e2f03a6c829f1d0a4264dfe3c1767fdac6f85b"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "9b671be7e568da4d79f1a04f8907eb1ee3e2db346f6dd0ec6a6b60fae24d9ece"
+      "sha256": "7e2d5bff498ad03c24c4349767e65844bbde267eb94105959d3f35cbf7d22419"
     },
     {
       "bytes": 9433,
@@ -1118,6 +1125,13 @@
       "sha256": "6bd633002fa103330ba7aa90affbdf45a80bf2a4a98e446e74ac7895b7d2d5af"
     },
     {
+      "bytes": 3065,
+      "kind": "operator_doc",
+      "path": "docs/dual-loop-scenario-harness.md",
+      "purpose": "Dual Loop Trust Scenario Harness guide for customer delivery readiness.",
+      "sha256": "a551dd9bbed5b46406366104bab977759091a12b0b5cc8c27a1f40c131f73e05"
+    },
+    {
       "bytes": 5493,
       "kind": "operator_doc",
       "path": "docs/trust-model.md",
@@ -1305,6 +1319,62 @@
       "path": "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
       "purpose": "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
       "sha256": "304937f23945421105cc542aa3a97d98b6fc737b2cc6302e9638c21bab9a1b06"
+    },
+    {
+      "bytes": 3140,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/pass/scenario-result.json",
+      "purpose": "Passing Dual Loop trust scenario result for customer delivery readiness.",
+      "sha256": "4c47707556e5b3cbf7c81d58c7bb9f51d03d54b1aad1f271ae8051ee1e0ec021"
+    },
+    {
+      "bytes": 17285,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/pass/customer-handoff-package.json",
+      "purpose": "Passing Dual Loop scenario CustomerHandoffPackage fixture.",
+      "sha256": "a8a90237bc7b622324131a10dfdfedc66e66b2965917fb9be4e5092fa9ffd14e"
+    },
+    {
+      "bytes": 2991,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/attention-missing/scenario-result.json",
+      "purpose": "Blocked Dual Loop scenario result for missing human reconstruction.",
+      "sha256": "bcb91530e363fdf18a57ea219e4ded8f3e26ef32073f3cc95f6194a7ee3d178f"
+    },
+    {
+      "bytes": 3588,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/attention-missing/delivery-trust-receipt.json",
+      "purpose": "Blocked scenario Delivery Trust Receipt for missing human reconstruction.",
+      "sha256": "b049c2f772fcf65d562942c51da65a14a711971732b16c498ed8758c69337154"
+    },
+    {
+      "bytes": 3209,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/scenario-result.json",
+      "purpose": "Blocked Dual Loop scenario result for sandbox risk outside budget.",
+      "sha256": "953ebefbb4cf4d33b044d62bdc2105b7ea16b638f26174e7ac0581b12baeeb54"
+    },
+    {
+      "bytes": 3621,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/delivery-trust-receipt.json",
+      "purpose": "Blocked scenario Delivery Trust Receipt for sandbox risk outside budget.",
+      "sha256": "ad15940637bf9d184658c9c73c1fc6f2e7e099071c6f5cedf8a0a15115741373"
+    },
+    {
+      "bytes": 3302,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/both-fail/scenario-result.json",
+      "purpose": "Blocked Dual Loop scenario result when sandbox and reconstruction both fail.",
+      "sha256": "146e7f5dd8087a82ce5f781f76e01ecb217468d2f4125c4112a398f704e1a340"
+    },
+    {
+      "bytes": 3706,
+      "kind": "fixture",
+      "path": "fixtures/dual-loop-scenarios/both-fail/delivery-trust-receipt.json",
+      "purpose": "Blocked scenario Delivery Trust Receipt when sandbox and reconstruction both fail.",
+      "sha256": "f8bbda65806e79ef4228cc358514b02d8a066c3e7b5a905828bf08e6f3532a3f"
     },
     {
       "bytes": 3552,
@@ -2481,6 +2551,20 @@
       "path": "scripts/verify_customer_handoff_package.py",
       "purpose": "Verify CustomerHandoffPackage pass/fail fixtures, ZIP integrity, and scope boundaries.",
       "sha256": "50f15b4357d3d5cc268f422cf30f6fb59db9a64b80eb30aed0c5f20c68392df5"
+    },
+    {
+      "bytes": 13413,
+      "kind": "cli",
+      "path": "scripts/run_dual_loop_scenario_harness.py",
+      "purpose": "Run deterministic Dual Loop customer-delivery trust scenario harness.",
+      "sha256": "9bb7fb9e5904b93bee01e00131409bb7ef68aae0acb86b44da261a1454c17972"
+    },
+    {
+      "bytes": 10208,
+      "kind": "verification",
+      "path": "scripts/verify_dual_loop_scenario_harness.py",
+      "purpose": "Verify Dual Loop trust scenario fixtures, runner output, and handoff gating.",
+      "sha256": "82735fc17be320850b15a96f5fcb5c547efa67d1b5a31f82d2dad813db383cef"
     },
     {
       "bytes": 28128,
@@ -3841,11 +3925,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 105431,
+      "bytes": 107400,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "8c084d448b71ce9d815ecd65bc5d990306bf42c631cc98060fd29e780655abb5"
+      "sha256": "3d3a73e5ebf7e2d3598553127bd19700f0d7ecdeba0cc27077fc10ca2cfbe82d"
     },
     {
       "bytes": 68921,
@@ -3925,11 +4009,11 @@
       "sha256": "3c4c11b6cd4c25467deb8d494f09f362733ff05f649fcf336d79d2a9b4e7781c"
     },
     {
-      "bytes": 7058,
+      "bytes": 7201,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "3c3a03f7d6b67ddce0bd094cb867c3972be9509340a164cc9b54d8ea6d613ceb"
+      "sha256": "68bc2869b30f3f27deb75902f46b0791a1311ae96d016e548062f44623576603"
     },
     {
       "bytes": 730,
