@@ -107,7 +107,7 @@
     "verification_command": "python3 scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check"
   },
   "pack": {
-    "file_count": 631,
+    "file_count": 635,
     "manifest_schema_version": "study-anything-platform-adoption-pack-v1",
     "no_frontend_required": true,
     "path": "platform/generated/study-anything-platform-adoption-pack.zip",
