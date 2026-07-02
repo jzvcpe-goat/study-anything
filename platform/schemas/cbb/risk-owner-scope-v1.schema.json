@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "risk-owner-scope-v1",
+  "title": "CBB Risk Owner Scope v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "scope_id",
+    "project_id",
+    "risk_owner_ref",
+    "recipient_ref",
+    "known_recipient_risk",
+    "allowed_delivery_modes",
+    "production_mutation_allowed",
+    "irreversible_external_effects_allowed",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "risk-owner-scope-v1"
+    },
+    "known_recipient_risk": {
+      "const": true
+    },
+    "allowed_delivery_modes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "production_mutation_allowed": {
+      "const": false
+    },
+    "irreversible_external_effects_allowed": {
+      "const": false
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "delivery-decision-receipt-v1",
+  "title": "CBB Delivery Decision Receipt v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_id",
+    "project_id",
+    "candidate_artifact_ref",
+    "status",
+    "decision",
+    "reasons",
+    "evidence_refs",
+    "checks",
+    "claim_boundary",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "delivery-decision-receipt-v1"
+    },
+    "status": {
+      "enum": [
+        "allowed",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "allow_controlled_customer_handoff",
+        "block_delivery"
+      ]
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "claim_boundary_valid",
+        "trust_root_valid",
+        "reviewer_qualified",
+        "reviewer_reconstruction_passed",
+        "risk_owner_known",
+        "recipient_risk_known",
+        "ai_review_only_rejected",
+        "production_mutation_blocked",
+        "deterministic_kernel",
+        "metadata_only"
+      ],
+      "properties": {
+        "ai_review_only_rejected": {
+          "const": true
+        },
+        "production_mutation_blocked": {
+          "const": true
+        },
+        "deterministic_kernel": {
+          "const": true
+        },
+        "metadata_only": {
+          "const": true
+        }
+      }
+    }
+  }
+}

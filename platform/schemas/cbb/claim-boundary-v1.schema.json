@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "claim-boundary-v1",
+  "title": "CBB Claim Boundary v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "claim_id",
+    "project_id",
+    "candidate_artifact_ref",
+    "current_claim",
+    "allowed_scope",
+    "not_claimed",
+    "requires_before_production",
+    "evidence_refs",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "claim-boundary-v1"
+    },
+    "current_claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_scope": {
+      "enum": [
+        "controlled_customer_handoff",
+        "sandbox_only",
+        "blocked"
+      ]
+    },
+    "not_claimed": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "requires_before_production": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

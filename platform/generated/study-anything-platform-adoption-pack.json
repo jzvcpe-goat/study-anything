@@ -41,6 +41,13 @@
       "delivery-trust-receipt-verification-v1",
       "customer-handoff-package-v1",
       "customer-handoff-package-verification-v1",
+      "claim-boundary-v1",
+      "trust-root-v1",
+      "reviewer-reconstruction-receipt-v1",
+      "risk-owner-scope-v1",
+      "delivery-decision-receipt-v1",
+      "cbb-protocol-contracts-verification-v1",
+      "cbb-gate-verification-v1",
       "cognitive-loop-review-agent-eval-harness-v1",
       "cognitive-loop-review-agent-ci-receipt-v1",
       "cognitive-loop-review-agent-pr-comment-pack-v1",
@@ -81,10 +88,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 3058930,
+  "archive_bytes": 3111007,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "888b6fdc4ff9a72cc9b1cc56521f9912ddfc81be9b0849a555d39f0009e82823",
+  "archive_sha256": "c4e93f5b7a64687ba4612b9f1625a3598f959a18187699ddc0985b026577b2d9",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -488,6 +495,30 @@
       "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/docs/protocol.md",
+      "bytes": 2518,
+      "kind": "operator_doc",
+      "path": "docs/protocol.md",
+      "purpose": "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
+      "sha256": "d1b1ad5e8d2abbc7c38501061833458724aaa0aa1c726a93812565d441e6f745"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/receipt-protocol.md",
+      "bytes": 2625,
+      "kind": "operator_doc",
+      "path": "docs/receipt-protocol.md",
+      "purpose": "Cognitive Black Box metadata-only receipt protocol guide.",
+      "sha256": "8e7903962c7107748fbb75a88774a38cece70eeac80268987b689bc42e597414"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/adapters/study-anything.md",
+      "bytes": 1779,
+      "kind": "operator_doc",
+      "path": "docs/adapters/study-anything.md",
+      "purpose": "Study Anything adapter boundary for the Cognitive Black Box protocol.",
+      "sha256": "f81aefb92ae4a661bb295f19a09bfae230dc4597b84ab5e1205034383ee4653a"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/loops.yaml",
       "bytes": 7722,
       "kind": "cognitive_loop_contract",
@@ -768,6 +799,46 @@
       "sha256": "7a15702f35a375d85718690fee2c95c640797e75748ff27de56380d6e4f4835e"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/claim-boundary-v1.schema.json",
+      "bytes": 961,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/claim-boundary-v1.schema.json",
+      "purpose": "Cognitive Black Box Claim Boundary JSON Schema.",
+      "sha256": "3e2f45de3c846109e4695b09fe72c126d06bb8f00f78b5a8f29b7d10728bbf7c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/trust-root-v1.schema.json",
+      "bytes": 1188,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/trust-root-v1.schema.json",
+      "purpose": "Cognitive Black Box Trust Root JSON Schema.",
+      "sha256": "2757d2c19adce5bd9ac8d63643a97c34e5892929bd96cd5d1b99d59c3bd0557a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/reviewer-reconstruction-receipt-v1.schema.json",
+      "bytes": 1162,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/reviewer-reconstruction-receipt-v1.schema.json",
+      "purpose": "Cognitive Black Box Reviewer Reconstruction Receipt JSON Schema.",
+      "sha256": "2bef52aa9046d4153ceb0349408f9f7ef6bf4791e5d922c198a7209846156ae6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/risk-owner-scope-v1.schema.json",
+      "bytes": 863,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/risk-owner-scope-v1.schema.json",
+      "purpose": "Cognitive Black Box Risk Owner Scope JSON Schema.",
+      "sha256": "3c93c2e419ae2fb51362bd13bccdde5691e4adf59a64eeb04dca0758d1e86142"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/delivery-decision-receipt-v1.schema.json",
+      "bytes": 1520,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/delivery-decision-receipt-v1.schema.json",
+      "purpose": "Cognitive Black Box Delivery Decision Receipt JSON Schema.",
+      "sha256": "25243de06001a1dafa1e6f87001c13fb84877afe75c7749cc91426717aff2849"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/workbuddy-learning-input-v1.schema.json",
       "bytes": 1940,
       "kind": "schema",
@@ -977,11 +1048,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 189526,
+      "bytes": 202347,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "1250aa7b711af83f9b400d5461ffe33c3da9cb1779204a0f56fce72c25007d77"
+      "sha256": "ca982f5fa6eefdc5808e12406235bcb8d0eee422c45ef57a35fe64d136acc3ef"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -1094,6 +1165,22 @@
       "path": "platform/generated/study-anything-dual-loop-scenario-harness.json",
       "purpose": "Dual Loop Trust Scenario Harness verification report for customer delivery readiness.",
       "sha256": "facbcf88e2affdfc284218af3c7b1915e9aa2ddc46d9a1858c57289752d6200a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cbb-protocol-contracts.json",
+      "bytes": 3793,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-cbb-protocol-contracts.json",
+      "purpose": "Cognitive Black Box protocol contract and privacy verification report.",
+      "sha256": "6b6ce60194d97ec34f323e8877650d4e31039c18be1340fbe6731f99a86e2d3b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cbb-gate.json",
+      "bytes": 3362,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-cbb-gate.json",
+      "purpose": "Cognitive Black Box deterministic delivery gate verification report.",
+      "sha256": "685fcda2e3130b77e14f63aec79193e7fdcfb74871c1f5e1d48bc12559231405"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-inline-learning-flow.json",
@@ -1605,7 +1692,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "2fa1741ceb1fc1e50025eee43ab3f2acaf17aef314c755750214c9622d2c8784"
+      "sha256": "0bbbea6b5c000c267b9770560cba478aa333d137ad15dfd7716d54751efd7fec"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -1613,7 +1700,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "63d0eea3d008c5c462c91089e3938a184efe5c2e7d1f40750f83f5ef327eeb75"
+      "sha256": "dabd92e13ab8d8a695a203902c9cee90497db450e2607f294cbcd4aafba1f0a7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -1941,7 +2028,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "8defb89b366ce0c21abfdc1d0c97d4e212aeb029a05d97e8ebe3108d1791f696"
+      "sha256": "ffa52879ae410977411bd9e5300d343c753b02bb53996d82a40f7f2135e82540"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -1949,15 +2036,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "945e68b873771c7a77e3696a4e2410d4ae64bb2d8f04b578f38f24ca80e1b517"
+      "sha256": "c78f0c3d76de84800045be08c55b20024d4171b13d97a01320e746ef7f0f0b17"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 252272,
+      "bytes": 252273,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "bf40e9865457ab17f024b5ea44e2f03a6c829f1d0a4264dfe3c1767fdac6f85b"
+      "sha256": "08accd8c43606b98557618b15670ac506519de1f4f27ef3ed2258101df0c9270"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -1965,7 +2052,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "7e2d5bff498ad03c24c4349767e65844bbde267eb94105959d3f35cbf7d22419"
+      "sha256": "7c6a9e1cda44a61b324f6fa5b04f404a7bd335491f0d776b55340ad91a052d2c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -3288,6 +3375,206 @@
       "sha256": "6b8d579cb08c3282ac1640539bcec01627a0204552742cd1a52a4fe2a6d5f144"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/safe-controlled-handoff/claim-boundary.json",
+      "bytes": 1957,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/safe-controlled-handoff/claim-boundary.json",
+      "purpose": "Cognitive Black Box protocol safe-controlled-handoff claim-boundary.json fixture.",
+      "sha256": "acdb54c247ab75bfedb030c043be76b0e056ee544342ca54cc9cbdd0389819cd"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/safe-controlled-handoff/trust-root.json",
+      "bytes": 1826,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/safe-controlled-handoff/trust-root.json",
+      "purpose": "Cognitive Black Box protocol safe-controlled-handoff trust-root.json fixture.",
+      "sha256": "b19fe1038964b7434d675bd6029b0396ecce279484d40f2c94556dcd54a03fed"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/safe-controlled-handoff/reviewer-reconstruction-receipt.json",
+      "bytes": 1758,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/safe-controlled-handoff/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box protocol safe-controlled-handoff reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "adb37773790896f69fb4643e553b2644e2cd0d85984d435abde7ae7ae838d970"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/safe-controlled-handoff/risk-owner-scope.json",
+      "bytes": 1564,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/safe-controlled-handoff/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box protocol safe-controlled-handoff risk-owner-scope.json fixture.",
+      "sha256": "c1c2e83d09cf2aa598934856689e31965231aec3fea1cd5ff9ff0d57f706cd17"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/safe-controlled-handoff/delivery-decision-receipt.json",
+      "bytes": 2534,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/safe-controlled-handoff/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box protocol safe-controlled-handoff delivery-decision-receipt.json fixture.",
+      "sha256": "91b8271f364d7048b89978b4f8f7875976736ea82f618aa64d4c4412ebdecc3f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/missing-claim-boundary/claim-boundary.json",
+      "bytes": 1893,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/missing-claim-boundary/claim-boundary.json",
+      "purpose": "Cognitive Black Box protocol missing-claim-boundary claim-boundary.json fixture.",
+      "sha256": "8212286bced39cfb207501289d687e86542367259d770d87f6dd874bbe88224f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/missing-claim-boundary/trust-root.json",
+      "bytes": 1826,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/missing-claim-boundary/trust-root.json",
+      "purpose": "Cognitive Black Box protocol missing-claim-boundary trust-root.json fixture.",
+      "sha256": "b19fe1038964b7434d675bd6029b0396ecce279484d40f2c94556dcd54a03fed"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/missing-claim-boundary/reviewer-reconstruction-receipt.json",
+      "bytes": 1758,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/missing-claim-boundary/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box protocol missing-claim-boundary reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "adb37773790896f69fb4643e553b2644e2cd0d85984d435abde7ae7ae838d970"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/missing-claim-boundary/risk-owner-scope.json",
+      "bytes": 1564,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/missing-claim-boundary/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box protocol missing-claim-boundary risk-owner-scope.json fixture.",
+      "sha256": "c1c2e83d09cf2aa598934856689e31965231aec3fea1cd5ff9ff0d57f706cd17"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/missing-claim-boundary/delivery-decision-receipt.json",
+      "bytes": 2547,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/missing-claim-boundary/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box protocol missing-claim-boundary delivery-decision-receipt.json fixture.",
+      "sha256": "33f2f1bdbd0664eb964252481de4db2f9ce284ee29d823b2956d247b07fb84e4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/reviewer-not-qualified/claim-boundary.json",
+      "bytes": 1957,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/reviewer-not-qualified/claim-boundary.json",
+      "purpose": "Cognitive Black Box protocol reviewer-not-qualified claim-boundary.json fixture.",
+      "sha256": "acdb54c247ab75bfedb030c043be76b0e056ee544342ca54cc9cbdd0389819cd"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/reviewer-not-qualified/trust-root.json",
+      "bytes": 1826,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/reviewer-not-qualified/trust-root.json",
+      "purpose": "Cognitive Black Box protocol reviewer-not-qualified trust-root.json fixture.",
+      "sha256": "b19fe1038964b7434d675bd6029b0396ecce279484d40f2c94556dcd54a03fed"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/reviewer-not-qualified/reviewer-reconstruction-receipt.json",
+      "bytes": 1761,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/reviewer-not-qualified/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box protocol reviewer-not-qualified reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "bcab99b4b8ca6ae8488bb56f29ba99887e5f8c7d162e0a5c39cf7eb02cc1d03d"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/reviewer-not-qualified/risk-owner-scope.json",
+      "bytes": 1564,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/reviewer-not-qualified/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box protocol reviewer-not-qualified risk-owner-scope.json fixture.",
+      "sha256": "c1c2e83d09cf2aa598934856689e31965231aec3fea1cd5ff9ff0d57f706cd17"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/reviewer-not-qualified/delivery-decision-receipt.json",
+      "bytes": 2548,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/reviewer-not-qualified/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box protocol reviewer-not-qualified delivery-decision-receipt.json fixture.",
+      "sha256": "c401ea22c272cf47b6c90ea19c5dae2d8a737ff2a691a776c8d8a7d4cfc39599"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/recipient-risk-unknown/claim-boundary.json",
+      "bytes": 1957,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/recipient-risk-unknown/claim-boundary.json",
+      "purpose": "Cognitive Black Box protocol recipient-risk-unknown claim-boundary.json fixture.",
+      "sha256": "acdb54c247ab75bfedb030c043be76b0e056ee544342ca54cc9cbdd0389819cd"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/recipient-risk-unknown/trust-root.json",
+      "bytes": 1826,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/recipient-risk-unknown/trust-root.json",
+      "purpose": "Cognitive Black Box protocol recipient-risk-unknown trust-root.json fixture.",
+      "sha256": "b19fe1038964b7434d675bd6029b0396ecce279484d40f2c94556dcd54a03fed"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/recipient-risk-unknown/reviewer-reconstruction-receipt.json",
+      "bytes": 1758,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/recipient-risk-unknown/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box protocol recipient-risk-unknown reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "adb37773790896f69fb4643e553b2644e2cd0d85984d435abde7ae7ae838d970"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/recipient-risk-unknown/risk-owner-scope.json",
+      "bytes": 1566,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/recipient-risk-unknown/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box protocol recipient-risk-unknown risk-owner-scope.json fixture.",
+      "sha256": "e3489d1f89c9c83145a15c54dec8c42e56197141748e5a8c49d7b9c404a36702"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/recipient-risk-unknown/delivery-decision-receipt.json",
+      "bytes": 2548,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/recipient-risk-unknown/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box protocol recipient-risk-unknown delivery-decision-receipt.json fixture.",
+      "sha256": "9bb4a99375b2eb6f38f4485b4dc2c46869640e5d8ad55df3de7475ea620e5653"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/ai-review-only-rejected/claim-boundary.json",
+      "bytes": 1957,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/ai-review-only-rejected/claim-boundary.json",
+      "purpose": "Cognitive Black Box protocol ai-review-only-rejected claim-boundary.json fixture.",
+      "sha256": "acdb54c247ab75bfedb030c043be76b0e056ee544342ca54cc9cbdd0389819cd"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/ai-review-only-rejected/trust-root.json",
+      "bytes": 1674,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/ai-review-only-rejected/trust-root.json",
+      "purpose": "Cognitive Black Box protocol ai-review-only-rejected trust-root.json fixture.",
+      "sha256": "9cb240ecf9e47ee4539475e8d882ae1d3b62256571dd3a870ae0984691b82016"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/ai-review-only-rejected/reviewer-reconstruction-receipt.json",
+      "bytes": 1758,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/ai-review-only-rejected/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box protocol ai-review-only-rejected reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "adb37773790896f69fb4643e553b2644e2cd0d85984d435abde7ae7ae838d970"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/ai-review-only-rejected/risk-owner-scope.json",
+      "bytes": 1564,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/ai-review-only-rejected/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box protocol ai-review-only-rejected risk-owner-scope.json fixture.",
+      "sha256": "c1c2e83d09cf2aa598934856689e31965231aec3fea1cd5ff9ff0d57f706cd17"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-protocol/ai-review-only-rejected/delivery-decision-receipt.json",
+      "bytes": 2551,
+      "kind": "cbb_fixture",
+      "path": "fixtures/cbb-protocol/ai-review-only-rejected/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box protocol ai-review-only-rejected delivery-decision-receipt.json fixture.",
+      "sha256": "5aed24c5a9fea4b2ceb10be1ed8d9721180c2e8a8c4cc597395793682ddbd4d0"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -4288,6 +4575,38 @@
       "sha256": "82735fc17be320850b15a96f5fcb5c547efa67d1b5a31f82d2dad813db383cef"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/cbb_protocol_cli.py",
+      "bytes": 2395,
+      "kind": "cli",
+      "path": "scripts/cbb_protocol_cli.py",
+      "purpose": "Cognitive Black Box deterministic protocol demo artifact generator.",
+      "sha256": "26880ce1c48e667140c04089ed42bfe9f30d305b8c8f883621a52712dc4e9ccb"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/cbb_gate.py",
+      "bytes": 1992,
+      "kind": "cli",
+      "path": "scripts/cbb_gate.py",
+      "purpose": "Cognitive Black Box delivery decision gate evaluator.",
+      "sha256": "85253567d30f770e86383d85f853d5cccd1ee58b5b29f063ddb4658d2cde5465"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cbb_protocol_contracts.py",
+      "bytes": 8269,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_protocol_contracts.py",
+      "purpose": "Cognitive Black Box protocol contract and metadata-only privacy verifier.",
+      "sha256": "0eaf3c40357ac5b5795453b291aac037ed0e43b430a4fa7a4b7832ae7a812582"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cbb_gate.py",
+      "bytes": 10407,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_gate.py",
+      "purpose": "Cognitive Black Box delivery gate pass/fail fixture verifier.",
+      "sha256": "ff82c1f8316e0dba13248ce12feb8cba89cfa11083455638f0a0f09ee691daa8"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_cli.py",
       "bytes": 28128,
       "kind": "cli",
@@ -4686,6 +5005,14 @@
       "path": "apps/api/study_anything/core/dual_loop.py",
       "purpose": "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic.",
       "sha256": "923d4eb636f6363cf16f7e4a996525647d3c5091a8bae29d97c3581671a02e24"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/apps/api/study_anything/core/cbb_protocol.py",
+      "bytes": 23148,
+      "kind": "api_core",
+      "path": "apps/api/study_anything/core/cbb_protocol.py",
+      "purpose": "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel.",
+      "sha256": "c963615bd4f9be966ecc9319572bc42a50f6a96ea7032903a4433e508ae8024d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_study_adapter_cli.py",
@@ -5185,11 +5512,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/evals.yaml",
-      "bytes": 7201,
+      "bytes": 7443,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "68bc2869b30f3f27deb75902f46b0791a1311ae96d016e548062f44623576603"
+      "sha256": "801f7a0963109e9896d8a1f949e76a13a1d2c2d7e0e7e9b7c0cf4d87d8666509"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/risk.yaml",

@@ -1,0 +1,75 @@
+{
+  "candidate_artifact_ref": "artifact:customer-handoff-candidate-metadata",
+  "checks": {
+    "ai_review_only_rejected": true,
+    "claim_boundary_valid": false,
+    "controlled_handoff_scope_only": false,
+    "deterministic_kernel": true,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_blocked": true,
+    "recipient_risk_known": true,
+    "reviewer_qualified": true,
+    "reviewer_reconstruction_passed": true,
+    "risk_owner_known": true,
+    "trust_root_valid": true
+  },
+  "claim_boundary": {
+    "current_claim": "The deterministic CBB protocol gate evaluated only metadata receipts for the current controlled handoff scope.",
+    "not_claimed": [
+      "production readiness",
+      "legal certification",
+      "regulatory approval",
+      "general model correctness",
+      "AI self-review sufficiency"
+    ],
+    "reference_implementation_only": true
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_delivery",
+  "decision_id": "delivery-decision-demo-001",
+  "evidence_refs": {
+    "claim_boundary_ref": "claim-boundary.json",
+    "reviewer_reconstruction_ref": "reviewer-reconstruction-receipt.json",
+    "risk_owner_scope_ref": "risk-owner-scope.json",
+    "trust_root_ref": "trust-root.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "next_actions": [
+    "do not hand off the candidate",
+    "repair missing or invalid protocol evidence",
+    "rerun deterministic gate after repairs"
+  ],
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "reasons": [
+    "claim_boundary_missing"
+  ],
+  "schema_version": "delivery-decision-receipt-v1",
+  "status": "blocked"
+}

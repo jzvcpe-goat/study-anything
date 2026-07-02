@@ -17,6 +17,21 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE_MANIFEST = ROOT / "platform" / "study-anything-platform-tools.json"
 BUNDLE_MANIFEST = ROOT / "platform" / "generated" / "study-anything-platform-bundle.json"
 
+CBB_PROTOCOL_CASES = [
+    "safe-controlled-handoff",
+    "missing-claim-boundary",
+    "reviewer-not-qualified",
+    "recipient-risk-unknown",
+    "ai-review-only-rejected",
+]
+CBB_PROTOCOL_ARTIFACTS = [
+    "claim-boundary.json",
+    "trust-root.json",
+    "reviewer-reconstruction-receipt.json",
+    "risk-owner-scope.json",
+    "delivery-decision-receipt.json",
+]
+
 FILES: list[tuple[str, str, str]] = [
     (
         "QUICKSTART.md",
@@ -122,6 +137,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-dual-loop-scenario-harness.json",
         "generated_asset",
         "Dual Loop Trust Scenario Harness verification report for customer delivery readiness.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-protocol-contracts.json",
+        "generated_asset",
+        "Cognitive Black Box protocol contract and privacy verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-gate.json",
+        "generated_asset",
+        "Cognitive Black Box deterministic delivery gate verification report.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -799,6 +824,21 @@ FILES: list[tuple[str, str, str]] = [
         "CustomerHandoffPackage portable evidence package guide.",
     ),
     (
+        "docs/protocol.md",
+        "operator_doc",
+        "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
+    ),
+    (
+        "docs/receipt-protocol.md",
+        "operator_doc",
+        "Cognitive Black Box metadata-only receipt protocol guide.",
+    ),
+    (
+        "docs/adapters/study-anything.md",
+        "operator_doc",
+        "Study Anything adapter boundary for the Cognitive Black Box protocol.",
+    ),
+    (
         "docs/cognitive-loop-code-review.md",
         "operator_doc",
         "Cognitive Loop advisory code review guide.",
@@ -857,6 +897,31 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/customer-handoff/customer-handoff-package-v1.schema.json",
         "schema",
         "CustomerHandoffPackage JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/claim-boundary-v1.schema.json",
+        "schema",
+        "Cognitive Black Box Claim Boundary JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/trust-root-v1.schema.json",
+        "schema",
+        "Cognitive Black Box Trust Root JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/reviewer-reconstruction-receipt-v1.schema.json",
+        "schema",
+        "Cognitive Black Box Reviewer Reconstruction Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/risk-owner-scope-v1.schema.json",
+        "schema",
+        "Cognitive Black Box Risk Owner Scope JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/delivery-decision-receipt-v1.schema.json",
+        "schema",
+        "Cognitive Black Box Delivery Decision Receipt JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -993,6 +1058,15 @@ FILES: list[tuple[str, str, str]] = [
         "fixture",
         "CustomerHandoffPackage negative fixture for missing claim boundary.",
     ),
+    *[
+        (
+            f"fixtures/cbb-protocol/{case_id}/{artifact}",
+            "fixture",
+            f"Cognitive Black Box protocol {case_id} {artifact} fixture.",
+        )
+        for case_id in CBB_PROTOCOL_CASES
+        for artifact in CBB_PROTOCOL_ARTIFACTS
+    ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
         "fixture",
@@ -1809,6 +1883,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Dual Loop trust scenario fixtures, runner output, and handoff gating.",
     ),
     (
+        "scripts/cbb_protocol_cli.py",
+        "cli",
+        "Cognitive Black Box deterministic protocol demo artifact generator.",
+    ),
+    (
+        "scripts/cbb_gate.py",
+        "cli",
+        "Cognitive Black Box delivery decision gate evaluator.",
+    ),
+    (
+        "scripts/verify_cbb_protocol_contracts.py",
+        "verification",
+        "Cognitive Black Box protocol contract and metadata-only privacy verifier.",
+    ),
+    (
+        "scripts/verify_cbb_gate.py",
+        "verification",
+        "Cognitive Black Box delivery gate pass/fail fixture verifier.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -2457,6 +2551,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/dual_loop.py",
         "api_core",
         "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic.",
+    ),
+    (
+        "apps/api/study_anything/core/cbb_protocol.py",
+        "api_core",
+        "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",
@@ -3180,6 +3279,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check",
             "python3 scripts/verify_delivery_trust_receipt.py --check",
             "python3 scripts/verify_customer_handoff_package.py --check",
+            "python3 scripts/verify_cbb_protocol_contracts.py --check",
+            "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
