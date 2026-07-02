@@ -607,25 +607,25 @@
       "sha256": "64e5f84f0bc929d10773312bf2383c27e0d5780d18f4fea8a88002c2e06d431d"
     },
     {
-      "bytes": 2094,
+      "bytes": 2066,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "bdff6aed92810afcdb386024393a5d471570a611db7c5060e41464bbbfa7a4e4"
+      "sha256": "7ffda025d8cfeb77d2673b2e5f5be3c12ec3cba13f5705143d577cbc981874b5"
     },
     {
-      "bytes": 4257,
+      "bytes": 4249,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "380cfa5321a09e276fe8f52fb3cef54d56fc15d9dd54abf0a798ef8103ab8c82"
+      "sha256": "0f537a78433c1b45bc9c0528ad525a4b7d0087399ea5f33dd227ffc1dded9828"
     },
     {
-      "bytes": 2627,
+      "bytes": 2504,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "53461dcfb6d2379da08a7f9f24793694a9ba8177409b81b7b4dd8711a0cada6b"
+      "sha256": "a659c6a6e33fe45d0fe8bd7f5734407c21d89b95a7c253b9ac6fbdb40a979ac0"
     },
     {
       "bytes": 92944,
@@ -2697,14 +2697,14 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "b1f45b736a9da8e066bf9da8e1ca0b354ee55129292cb4eecb343cc566a9328a"
+      "sha256": "6b3f6eca704806a6f449f4e95397bbb4fbb1322990f927aa2cd3edb2626f0ac5"
     },
     {
-      "bytes": 19185,
+      "bytes": 17565,
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "bc29190686abef8d0e30165b786643b08a059f441c2126b92ea3da8f286f6897"
+      "sha256": "8f13dff4c779ddea23a372c91f01be50390a10701833b8b3e59ae7bba0b2dce8"
     },
     {
       "bytes": 1138,

@@ -1,5 +1,5 @@
 {
-  "current_group": "release-stack-promotion-v0.3.44-v0.3.45",
+  "current_group": "release-stack-promotion-v0.3.152",
   "privacy_assertions": {
     "agent_endpoint_secrets_included": false,
     "check_annotations_included": false,
@@ -40,12 +40,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 277,
-      "branch": "codex/v0.3.44-dual-loop-delivery-trust-core",
+      "pr": 280,
+      "branch": "codex/v0.3.152-operating-model-loops",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "67a154bf659faf6fbf9ae4a776000349ef8c837a",
+      "merge_commit": "d950376d3708a721e8380b95cc841c54af162f1e",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -57,31 +57,7 @@
         "platform/generated/study-anything-platform-bundle.json",
         "platform/generated/study-anything-platform-adoption-pack.json",
         "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
-        "platform/generated/study-anything-dual-loop-contracts.json",
-        "platform/generated/study-anything-delivery-trust-receipt.json"
-      ]
-    },
-    {
-      "order": 2,
-      "pr": 278,
-      "branch": "codex/v0.3.45-customer-handoff-package",
-      "base": "main",
-      "status_expected_before_merge": "checks_pass",
-      "final_state": "MERGED",
-      "merge_commit": "15f65f377cd07c48483d1692547cf7b9e2472bb2",
-      "required_checks": {
-        "api-tests": "pass",
-        "compose-smoke": "pass"
-      },
-      "evidence_refs": [
-        "platform/generated/study-anything-release-stack-intake-candidate.json",
-        "platform/generated/study-anything-release-stack-candidate-promotion.json",
-        "platform/generated/study-anything-platform-bundle.json",
-        "platform/generated/study-anything-platform-adoption-pack.json",
-        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
-        "platform/generated/study-anything-delivery-trust-receipt.json",
-        "platform/generated/study-anything-customer-handoff-package.json",
-        "platform/generated/study-anything-customer-handoff-package.zip"
+        "platform/generated/study-anything-operating-model-loops.json"
       ]
     }
   ],
@@ -3167,8 +3143,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.44-v0.3.45",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed Dual Loop delivery trust and Customer Handoff self-intake chain.",
       "required_checks": [
@@ -3241,6 +3217,72 @@
             "platform/generated/study-anything-delivery-trust-receipt.json",
             "platform/generated/study-anything-customer-handoff-package.json",
             "platform/generated/study-anything-customer-handoff-package.zip"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.152",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed operating-model loop gate self-intake chain.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-operating-model-loops.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 280,
+          "branch": "codex/v0.3.152-operating-model-loops",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "d950376d3708a721e8380b95cc841c54af162f1e",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+            "platform/generated/study-anything-operating-model-loops.json"
           ]
         }
       ],
