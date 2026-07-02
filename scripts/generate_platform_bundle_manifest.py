@@ -31,6 +31,25 @@ CBB_PROTOCOL_ARTIFACTS = [
     "risk-owner-scope.json",
     "delivery-decision-receipt.json",
 ]
+CBB_SELF_INTAKE_POSITIVE_ARTIFACTS = [
+    "claim-boundary.json",
+    "trust-root.json",
+    "reviewer-reconstruction-receipt.json",
+    "risk-owner-scope.json",
+    "delivery-decision-receipt.json",
+    "receipt-chain.json",
+    "self-intake-receipt.json",
+    "delivery-evidence-pack.json",
+]
+CBB_SELF_INTAKE_NEGATIVE_CASES = {
+    "receipt-hash-mismatch": ["receipt-chain.json", "expected-error.json"],
+    "receipt-chain-stale-source-commit": ["receipt-chain.json", "expected-error.json"],
+    "missing-reviewer-reconstruction": ["self-intake-receipt.json", "expected-error.json"],
+    "stale-source-commit": ["self-intake-receipt.json", "expected-error.json"],
+    "scope-expansion": ["self-intake-receipt.json", "expected-error.json"],
+    "ci-evidence-missing": ["self-intake-receipt.json", "expected-error.json"],
+    "ai-review-only-evidence-rejected": ["self-intake-receipt.json", "expected-error.json"],
+}
 
 FILES: list[tuple[str, str, str]] = [
     (
@@ -147,6 +166,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-cbb-gate.json",
         "generated_asset",
         "Cognitive Black Box deterministic delivery gate verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-receipt-chain.json",
+        "generated_asset",
+        "Cognitive Black Box tamper-evident receipt-chain verification report for PR 285.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-self-intake.json",
+        "generated_asset",
+        "Cognitive Black Box self-intake verification report for PR 285.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -924,6 +953,21 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box Delivery Decision Receipt JSON Schema.",
     ),
     (
+        "platform/schemas/cbb/cbb-receipt-chain-v1.schema.json",
+        "schema",
+        "Cognitive Black Box tamper-evident receipt chain JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb-self-intake-receipt-v1.schema.json",
+        "schema",
+        "Cognitive Black Box self-intake receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb-delivery-evidence-pack-v1.schema.json",
+        "schema",
+        "Cognitive Black Box delivery evidence pack JSON Schema.",
+    ),
+    (
         "fixtures/dual-loop/pass/failure-contract.json",
         "fixture",
         "Passing Dual-Loop failure contract fixture.",
@@ -1066,6 +1110,23 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in CBB_PROTOCOL_CASES
         for artifact in CBB_PROTOCOL_ARTIFACTS
+    ],
+    *[
+        (
+            f"fixtures/cbb-self-intake/pr-285/{artifact}",
+            "fixture",
+            f"Cognitive Black Box PR 285 self-intake {artifact} fixture.",
+        )
+        for artifact in CBB_SELF_INTAKE_POSITIVE_ARTIFACTS
+    ],
+    *[
+        (
+            f"fixtures/cbb-self-intake/negative/{case_id}/{artifact}",
+            "fixture",
+            f"Cognitive Black Box self-intake negative {case_id} {artifact} fixture.",
+        )
+        for case_id, artifacts in CBB_SELF_INTAKE_NEGATIVE_CASES.items()
+        for artifact in artifacts
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -1903,6 +1964,26 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box delivery gate pass/fail fixture verifier.",
     ),
     (
+        "scripts/cbb_receipt_chain.py",
+        "cli",
+        "Cognitive Black Box tamper-evident receipt-chain builder.",
+    ),
+    (
+        "scripts/cbb_self_intake.py",
+        "cli",
+        "Cognitive Black Box PR self-intake receipt and evidence-pack builder.",
+    ),
+    (
+        "scripts/verify_cbb_receipt_chain.py",
+        "verification",
+        "Verify Cognitive Black Box receipt-chain contracts, fixtures, and tamper rejection.",
+    ),
+    (
+        "scripts/verify_cbb_self_intake.py",
+        "verification",
+        "Verify Cognitive Black Box PR self-intake receipts, evidence packs, and negative cases.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -2556,6 +2637,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/cbb_protocol.py",
         "api_core",
         "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel.",
+    ),
+    (
+        "apps/api/study_anything/core/cbb_receipt_chain.py",
+        "api_core",
+        "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",
@@ -3281,6 +3367,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_customer_handoff_package.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
+            "python3 scripts/verify_cbb_receipt_chain.py --check",
+            "python3 scripts/verify_cbb_self_intake.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",

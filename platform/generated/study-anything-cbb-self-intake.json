@@ -1,0 +1,94 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/cbb-self-intake",
+    "minimum_command": "python3 scripts/verify_cbb_self_intake.py --check"
+  },
+  "claim_boundary": {
+    "current_claim": "PR 285 has CBB self-intake evidence that can be replayed from metadata-only receipts and GitHub check metadata.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness",
+      "full release validation"
+    ]
+  },
+  "delivery_evidence_pack": {
+    "included_artifact_count": 7,
+    "pack_digest": "919c37049fe8975308c31be8bc4ec15e6c4383d2ed4a5fb9929359b95263d450",
+    "pack_id": "cbb-delivery-evidence-pack-pr-285",
+    "status": "ready"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_checks": {
+    "ai_review_only_evidence_rejected": "AI-review-only evidence rejected",
+    "ci_evidence_missing_rejected": "CI evidence missing",
+    "missing_reviewer_reconstruction_rejected": "missing reviewer reconstruction",
+    "receipt_hash_mismatch_rejected": "receipt hash mismatch",
+    "scope_expansion_rejected": "scope expansion",
+    "stale_source_commit_rejected": "stale source commit"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_customer_data_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "cbb-self-intake-verification-v1",
+  "self_intake": {
+    "chain_digest": "c520383b4767923538024ad4aedcf6289d55fe3b595011faec4db2d7afea8355",
+    "decision": "self_intake_passed",
+    "required_ci_checks": [
+      "api-tests",
+      "compose-smoke"
+    ],
+    "self_intake_id": "cbb-self-intake-pr-285",
+    "status": "passed"
+  },
+  "source": {
+    "base_ref": "main",
+    "head_ref": "codex/v0.3.157-cbb-protocol-core",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "merged_at": "2026-07-02T11:39:49Z",
+    "pr_number": 285,
+    "pr_url": "https://github.com/jzvcpe-goat/study-anything/pull/285",
+    "repository": "jzvcpe-goat/study-anything",
+    "source_type": "github_pull_request",
+    "title": "Add Cognitive Black Box protocol core"
+  },
+  "status": "pass",
+  "trust_rules": {
+    "ai_review_only_blocks": true,
+    "metadata_only": true,
+    "receipt_hash_mismatch_blocks": true,
+    "required_ci_evidence_must_pass": true,
+    "reviewer_reconstruction_required": true,
+    "scope_expansion_blocks": true,
+    "source_commit_must_match": true
+  },
+  "version": "v0.3.31-alpha"
+}

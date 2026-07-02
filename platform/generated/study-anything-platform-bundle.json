@@ -16,6 +16,8 @@
     "python3 scripts/verify_customer_handoff_package.py --check",
     "python3 scripts/verify_cbb_protocol_contracts.py --check",
     "python3 scripts/verify_cbb_gate.py --check",
+    "python3 scripts/verify_cbb_receipt_chain.py --check",
+    "python3 scripts/verify_cbb_self_intake.py --check",
     "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
     "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
     ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",
@@ -116,7 +118,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "0bbbea6b5c000c267b9770560cba478aa333d137ad15dfd7716d54751efd7fec"
+      "sha256": "f93f72e24f7bb9978042b0bb6242e6422555d0c1b7b5c1c761116828cba8dfb1"
     },
     {
       "bytes": 1939,
@@ -222,6 +224,20 @@
       "path": "platform/generated/study-anything-cbb-gate.json",
       "purpose": "Cognitive Black Box deterministic delivery gate verification report.",
       "sha256": "685fcda2e3130b77e14f63aec79193e7fdcfb74871c1f5e1d48bc12559231405"
+    },
+    {
+      "bytes": 3645,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-receipt-chain.json",
+      "purpose": "Cognitive Black Box tamper-evident receipt-chain verification report for PR 285.",
+      "sha256": "eaef304637cd62e1be1de65e0bbced47f2af1160b15a9f5159bfdd6d0ebe1edf"
+    },
+    {
+      "bytes": 3391,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-self-intake.json",
+      "purpose": "Cognitive Black Box self-intake verification report for PR 285.",
+      "sha256": "f1d0532bf445c80090608286a73a97d12fd3b31e433a8aa87304ebd769bc3c7b"
     },
     {
       "bytes": 955,
@@ -662,7 +678,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "dabd92e13ab8d8a695a203902c9cee90497db450e2607f294cbcd4aafba1f0a7"
+      "sha256": "bf752f08fc3afc3b2aac5df797ff112525dbe45deacb2509c22d4bc1d20d0ce1"
     },
     {
       "bytes": 107336,
@@ -830,28 +846,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "ffa52879ae410977411bd9e5300d343c753b02bb53996d82a40f7f2135e82540"
+      "sha256": "477f8b01fb13260cf5e40bc18e62b477029fbe810267d929d25de3b27c5cae32"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "c78f0c3d76de84800045be08c55b20024d4171b13d97a01320e746ef7f0f0b17"
+      "sha256": "b26468a0c644697f1a0df68ba0752991094c47295d78e18e93bf07d3f2506550"
     },
     {
-      "bytes": 252273,
+      "bytes": 252271,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "08accd8c43606b98557618b15670ac506519de1f4f27ef3ed2258101df0c9270"
+      "sha256": "56f5080ab7067fe8b0165a99388b3c9a45c8c3e94e2fe93c19c58936f25f39c7"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "7c6a9e1cda44a61b324f6fa5b04f404a7bd335491f0d776b55340ad91a052d2c"
+      "sha256": "4f43d7576cb64c3846ca1a2c5d09b43b31cc684d2ebeebf7a080a2c0576b6e8f"
     },
     {
       "bytes": 9433,
@@ -1169,18 +1185,18 @@
       "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
     },
     {
-      "bytes": 2518,
+      "bytes": 3260,
       "kind": "operator_doc",
       "path": "docs/protocol.md",
       "purpose": "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
-      "sha256": "d1b1ad5e8d2abbc7c38501061833458724aaa0aa1c726a93812565d441e6f745"
+      "sha256": "16fb0ffce171ce35c34612dccbd6cb32afb4c829bb92e9e6b42ba8b8955a5e16"
     },
     {
-      "bytes": 2625,
+      "bytes": 4242,
       "kind": "operator_doc",
       "path": "docs/receipt-protocol.md",
       "purpose": "Cognitive Black Box metadata-only receipt protocol guide.",
-      "sha256": "8e7903962c7107748fbb75a88774a38cece70eeac80268987b689bc42e597414"
+      "sha256": "c62379a6264b16a587fdfe28e57ccecaaa6b18c3521484128caf9d491eade83c"
     },
     {
       "bytes": 1779,
@@ -1307,6 +1323,27 @@
       "path": "platform/schemas/cbb/delivery-decision-receipt-v1.schema.json",
       "purpose": "Cognitive Black Box Delivery Decision Receipt JSON Schema.",
       "sha256": "25243de06001a1dafa1e6f87001c13fb84877afe75c7749cc91426717aff2849"
+    },
+    {
+      "bytes": 1414,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-receipt-chain-v1.schema.json",
+      "purpose": "Cognitive Black Box tamper-evident receipt chain JSON Schema.",
+      "sha256": "3ce9c99e999290a055636d853fd3adfa394a1a56588dd9ba54a5c4c9ebc33f5c"
+    },
+    {
+      "bytes": 1482,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-self-intake-receipt-v1.schema.json",
+      "purpose": "Cognitive Black Box self-intake receipt JSON Schema.",
+      "sha256": "b8992e2225c75cec91ed3fcf82f42ce3688d3e2a0186404a80cfa0e5f136862c"
+    },
+    {
+      "bytes": 1244,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-delivery-evidence-pack-v1.schema.json",
+      "purpose": "Cognitive Black Box delivery evidence pack JSON Schema.",
+      "sha256": "ffe16fb68c69e898742659023ee519d9084e89bfc430b09e01cce418038b20a8"
     },
     {
       "bytes": 2460,
@@ -1671,6 +1708,160 @@
       "path": "fixtures/cbb-protocol/ai-review-only-rejected/delivery-decision-receipt.json",
       "purpose": "Cognitive Black Box protocol ai-review-only-rejected delivery-decision-receipt.json fixture.",
       "sha256": "5aed24c5a9fea4b2ceb10be1ed8d9721180c2e8a8c4cc597395793682ddbd4d0"
+    },
+    {
+      "bytes": 1989,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/claim-boundary.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake claim-boundary.json fixture.",
+      "sha256": "f5364d55a94e908f986561f2b0a442eb44616abf14fa2c5fe53c7b4bf5c8152c"
+    },
+    {
+      "bytes": 1894,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/trust-root.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake trust-root.json fixture.",
+      "sha256": "2708d36b0c9987a6b889b847e57b864b304088a3d7573f93cae781f57a3a884b"
+    },
+    {
+      "bytes": 1830,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/reviewer-reconstruction-receipt.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake reviewer-reconstruction-receipt.json fixture.",
+      "sha256": "f1012106103aa3009a3a76881631dd7c6905e21dfedac4f813aa2e77315f42c3"
+    },
+    {
+      "bytes": 1610,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/risk-owner-scope.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake risk-owner-scope.json fixture.",
+      "sha256": "3cf80188d44f7f23c5f835aac84998bd647d46121c2908684e20b6f0ef5ac8d7"
+    },
+    {
+      "bytes": 2599,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/delivery-decision-receipt.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake delivery-decision-receipt.json fixture.",
+      "sha256": "141978ed85de55b6ab6cd721017ea83dbb8e2ee981c8840d307a0ae505e41d0d"
+    },
+    {
+      "bytes": 3196,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/receipt-chain.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "bytes": 3137,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "bytes": 3790,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/pr-285/delivery-evidence-pack.json",
+      "purpose": "Cognitive Black Box PR 285 self-intake delivery-evidence-pack.json fixture.",
+      "sha256": "8e5a3741c23c7a3c5d0a674e63c39e2d54bac5ed8603691ee5f398a380519a44"
+    },
+    {
+      "bytes": 3196,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/receipt-hash-mismatch/receipt-chain.json",
+      "purpose": "Cognitive Black Box self-intake negative receipt-hash-mismatch receipt-chain.json fixture.",
+      "sha256": "13a7ef2d1c962ffee5288b24f4bc66d8df224901dc16676bbc32e2819053e188"
+    },
+    {
+      "bytes": 133,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/receipt-hash-mismatch/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative receipt-hash-mismatch expected-error.json fixture.",
+      "sha256": "a7cbb795a3508523194b7c45ace915fc8811179ebc5bff21deb7a9624341ec24"
+    },
+    {
+      "bytes": 3196,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/receipt-chain-stale-source-commit/receipt-chain.json",
+      "purpose": "Cognitive Black Box self-intake negative receipt-chain-stale-source-commit receipt-chain.json fixture.",
+      "sha256": "829c0739b80e5fd5b1d455d6462ef7d3a8a8108ad6b0fafad35de37b6b5b86d1"
+    },
+    {
+      "bytes": 160,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/receipt-chain-stale-source-commit/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative receipt-chain-stale-source-commit expected-error.json fixture.",
+      "sha256": "d8697f923ecec5e15bb9fc547cf2139421c6f6dc735d0a0fecaa639a12fa09a8"
+    },
+    {
+      "bytes": 3105,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/missing-reviewer-reconstruction/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box self-intake negative missing-reviewer-reconstruction self-intake-receipt.json fixture.",
+      "sha256": "5d6912d2444a13aba0d91b8333baac2dc2a9bf76b22dbc1fac8cc153758e0583"
+    },
+    {
+      "bytes": 153,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/missing-reviewer-reconstruction/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative missing-reviewer-reconstruction expected-error.json fixture.",
+      "sha256": "a4d20de005b6949824a34d286d5e8bedb0d4960f4f5caf2916dddf0e63639b1f"
+    },
+    {
+      "bytes": 3138,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/stale-source-commit/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box self-intake negative stale-source-commit self-intake-receipt.json fixture.",
+      "sha256": "329bdc2f402b814a4ec4f2b8d17822367d36087a7342d17d005f96a5633b9277"
+    },
+    {
+      "bytes": 129,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/stale-source-commit/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative stale-source-commit expected-error.json fixture.",
+      "sha256": "a73a688260fdfa090b8ca07d518d0312b9c672fe4fa9d0fcc109c39598b1ef8e"
+    },
+    {
+      "bytes": 3138,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/scope-expansion/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box self-intake negative scope-expansion self-intake-receipt.json fixture.",
+      "sha256": "2904965068fc1957fb9ef93647c6210d074c7f36d8ddbf5f9822e7051494ce69"
+    },
+    {
+      "bytes": 121,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/scope-expansion/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative scope-expansion expected-error.json fixture.",
+      "sha256": "ac7be2c391ceec1cb3a7e32a87d0e4dfd9483302db98137768f3c001afa7abb1"
+    },
+    {
+      "bytes": 2979,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/ci-evidence-missing/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box self-intake negative ci-evidence-missing self-intake-receipt.json fixture.",
+      "sha256": "918faaf8f6421f22d66db5e959982608ef6f3536165f584c02c6378d3fb1a5e2"
+    },
+    {
+      "bytes": 129,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/ci-evidence-missing/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative ci-evidence-missing expected-error.json fixture.",
+      "sha256": "e711350b59bac60f97f1989e835f645cd1c6d16acf82c45d61c279c347d8ff50"
+    },
+    {
+      "bytes": 3138,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/ai-review-only-evidence-rejected/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box self-intake negative ai-review-only-evidence-rejected self-intake-receipt.json fixture.",
+      "sha256": "3967522a220b47ff08007c55fa121a7739d41a2cb2f77894cb35b31ce98825e5"
+    },
+    {
+      "bytes": 155,
+      "kind": "fixture",
+      "path": "fixtures/cbb-self-intake/negative/ai-review-only-evidence-rejected/expected-error.json",
+      "purpose": "Cognitive Black Box self-intake negative ai-review-only-evidence-rejected expected-error.json fixture.",
+      "sha256": "dabb42a3d2797be17522a670eb7e51ed4d21d7f73250261f11dbcdbe5476911e"
     },
     {
       "bytes": 4348,
@@ -2842,6 +3033,34 @@
       "sha256": "ff82c1f8316e0dba13248ce12feb8cba89cfa11083455638f0a0f09ee691daa8"
     },
     {
+      "bytes": 3552,
+      "kind": "cli",
+      "path": "scripts/cbb_receipt_chain.py",
+      "purpose": "Cognitive Black Box tamper-evident receipt-chain builder.",
+      "sha256": "1f5bd17c936f0c1b17ee245aaf0f490eaf0c308a8c03210438853edfedca593a"
+    },
+    {
+      "bytes": 4666,
+      "kind": "cli",
+      "path": "scripts/cbb_self_intake.py",
+      "purpose": "Cognitive Black Box PR self-intake receipt and evidence-pack builder.",
+      "sha256": "bfc7db8d82ec4b3e94ce77e101ce04e7a0e63f36b308660c738941e41ffa2b10"
+    },
+    {
+      "bytes": 12668,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_receipt_chain.py",
+      "purpose": "Verify Cognitive Black Box receipt-chain contracts, fixtures, and tamper rejection.",
+      "sha256": "2f1d8ea52c3ca2480b3e4ce005bfa22c15e247051d344d71b27fc583b39e174f"
+    },
+    {
+      "bytes": 15059,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_self_intake.py",
+      "purpose": "Verify Cognitive Black Box PR self-intake receipts, evidence packs, and negative cases.",
+      "sha256": "e5a5dc3f5d9b138f34f5e1769a24002e36b3cbae7d46279e1b72c9c4f705221b"
+    },
+    {
       "bytes": 28128,
       "kind": "cli",
       "path": "scripts/cognitive_loop_cli.py",
@@ -3759,6 +3978,13 @@
       "sha256": "c963615bd4f9be966ecc9319572bc42a50f6a96ea7032903a4433e508ae8024d"
     },
     {
+      "bytes": 28704,
+      "kind": "api_core",
+      "path": "apps/api/study_anything/core/cbb_receipt_chain.py",
+      "purpose": "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators.",
+      "sha256": "5c4b0776fa534ec04d44e8fc05999f19a393ac0556617282b46ebe0519eac183"
+    },
+    {
       "bytes": 20560,
       "kind": "cli",
       "path": "scripts/cognitive_loop_study_adapter_cli.py",
@@ -4207,11 +4433,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 110331,
+      "bytes": 113509,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "3ab12cd2834b55b822039fb5efab580729e5b56c3c25e4ee3579ba1d267e6df1"
+      "sha256": "ad0833af030473b4207bf05a105caea7354a8da95709cc992bcb01d33a4df564"
     },
     {
       "bytes": 68921,
@@ -4291,11 +4517,11 @@
       "sha256": "3c4c11b6cd4c25467deb8d494f09f362733ff05f649fcf336d79d2a9b4e7781c"
     },
     {
-      "bytes": 7443,
+      "bytes": 7689,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "801f7a0963109e9896d8a1f949e76a13a1d2c2d7e0e7e9b7c0cf4d87d8666509"
+      "sha256": "5c637f49cd7b3299f437fe3b4a0f0cc5f673e28de1c120e859940f9009b9cfcd"
     },
     {
       "bytes": 730,

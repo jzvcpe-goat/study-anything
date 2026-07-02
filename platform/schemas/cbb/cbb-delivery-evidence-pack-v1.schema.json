@@ -1,0 +1,66 @@
+{
+  "$id": "cbb-delivery-evidence-pack-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "claim_boundary": {
+      "type": "object"
+    },
+    "included_artifacts": {
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "pack_digest": {
+      "minLength": 64,
+      "type": "string"
+    },
+    "pack_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipt_chain_ref": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "cbb-delivery-evidence-pack-v1"
+    },
+    "self_intake_ref": {
+      "type": "object"
+    },
+    "source": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "pack_id",
+    "project_id",
+    "source",
+    "status",
+    "receipt_chain_ref",
+    "self_intake_ref",
+    "included_artifacts",
+    "claim_boundary",
+    "pack_digest",
+    "privacy"
+  ],
+  "title": "CBB Delivery Evidence Pack v1",
+  "type": "object"
+}

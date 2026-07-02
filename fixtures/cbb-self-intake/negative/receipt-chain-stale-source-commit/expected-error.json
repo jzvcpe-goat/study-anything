@@ -1,0 +1,5 @@
+{
+  "case_id": "receipt-chain-stale-source-commit",
+  "expected_error": "receipt chain source commit is stale",
+  "schema_version": "cbb-negative-fixture-v1"
+}

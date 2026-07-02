@@ -1,0 +1,89 @@
+{
+  "checks": {
+    "ai_review_only_rejected": true,
+    "ci_required_checks_passed": false,
+    "full_release_check_claimed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "no_scope_expansion": true,
+    "production_mutation_blocked": true,
+    "receipt_chain_valid": true,
+    "reviewer_reconstruction_present": true,
+    "source_commit_matches": true
+  },
+  "ci_checks": [
+    {
+      "duration_seconds": 131,
+      "name": "api-tests",
+      "run_ref": "actions/runs/28587029112/jobs/84761086096",
+      "status": "pass"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "PR 285 CBB Protocol Core has metadata-only self-intake evidence for controlled reference handoff.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness",
+      "full release validation"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "self_intake_passed",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "reasons": [],
+  "receipt_chain": {
+    "chain_digest": "c520383b4767923538024ad4aedcf6289d55fe3b595011faec4db2d7afea8355",
+    "chain_id": "cbb-receipt-chain-pr-285",
+    "chain_ref": "receipt-chain.json",
+    "receipt_count": 5
+  },
+  "reviewer_reconstruction_summary": {
+    "active_reconstruction_required": true,
+    "passive_attention_only_sufficient": false,
+    "present": true,
+    "receipt_ref": "reviewer-reconstruction-receipt.json"
+  },
+  "schema_version": "cbb-self-intake-receipt-v1",
+  "self_intake_id": "cbb-self-intake-pr-285",
+  "source": {
+    "base_ref": "main",
+    "head_ref": "codex/v0.3.157-cbb-protocol-core",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "merged_at": "2026-07-02T11:39:49Z",
+    "pr_number": 285,
+    "pr_url": "https://github.com/jzvcpe-goat/study-anything/pull/285",
+    "repository": "jzvcpe-goat/study-anything",
+    "source_type": "github_pull_request",
+    "title": "Add Cognitive Black Box protocol core"
+  },
+  "status": "passed"
+}

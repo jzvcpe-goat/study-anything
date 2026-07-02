@@ -1,0 +1,56 @@
+{
+  "allowed_scope": "controlled_customer_handoff",
+  "candidate_artifact_ref": "github-pr:285@f88d2ddbe414",
+  "claim_id": "claim-boundary-pr-285",
+  "created_at": "2026-06-28T00:00:00Z",
+  "current_claim": "PR 285 may be treated as a controlled CBB reference-implementation handoff after local CBB gates and required GitHub CI checks passed.",
+  "evidence_refs": {
+    "api_tests": "github-check:api-tests",
+    "compose_smoke": "github-check:compose-smoke",
+    "github_pr": "github-pr:285",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "receipt_chain": "receipt-chain.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "not_claimed": [
+    "production customer trust",
+    "legal certification",
+    "security certification",
+    "regulatory approval",
+    "general model correctness"
+  ],
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "requires_before_production": [
+    "domain owner acceptance",
+    "deployment owner approval",
+    "recipient-specific rollback plan",
+    "production security review"
+  ],
+  "schema_version": "claim-boundary-v1"
+}

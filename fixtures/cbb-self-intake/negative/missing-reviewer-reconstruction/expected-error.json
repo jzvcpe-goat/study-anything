@@ -1,0 +1,5 @@
+{
+  "case_id": "missing-reviewer-reconstruction",
+  "expected_error": "missing reviewer reconstruction",
+  "schema_version": "cbb-negative-fixture-v1"
+}

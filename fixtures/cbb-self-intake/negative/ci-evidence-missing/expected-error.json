@@ -1,0 +1,5 @@
+{
+  "case_id": "ci-evidence-missing",
+  "expected_error": "CI evidence missing",
+  "schema_version": "cbb-negative-fixture-v1"
+}

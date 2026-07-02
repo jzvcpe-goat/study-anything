@@ -46,6 +46,34 @@ a claim boundary for the decision itself.
 
 It must not become a new trust source. It only summarizes the gate result.
 
+### `cbb-receipt-chain-v1`
+
+Binds a protocol receipt set into a deterministic digest manifest. The chain
+stores receipt IDs, schema versions, paths, hashes, source PR metadata, and the
+chain digest. It does not store raw diffs, raw source text, customer data,
+model prompts, browser records, or user Agent credentials.
+
+The verifier rejects hash mismatches and stale source commits before any
+self-intake receipt can be trusted.
+
+### `cbb-self-intake-receipt-v1`
+
+Records a metadata-only self-intake of a real repository delivery. For the
+reference fixture, PR `#285` is checked against its merge commit, required CI
+checks, reviewer reconstruction summary, risk-owner scope, and delivery
+decision receipt.
+
+Self-intake is blocked when reviewer reconstruction is missing, the source
+commit is stale, the scope expands beyond the claim boundary, required CI
+evidence is missing, or the evidence is AI-review-only.
+
+### `cbb-delivery-evidence-pack-v1`
+
+Packages the receipt chain and self-intake receipt into a portable evidence
+set. The pack is a manifest of metadata-only artifacts and hashes; it is not a
+raw archive of implementation text, prompts, screenshots, secrets, browser
+records, or customer payloads.
+
 ## Privacy Boundary
 
 Receipts must stay metadata-only.
@@ -69,3 +97,16 @@ Every receipt that supports delivery must keep its claim boundary explicit:
 
 The v0.1 kernel is deterministic and local. It does not call models, browse,
 start daemons, send customer messages, or mutate production systems.
+
+## Verifier Commands
+
+```bash
+python3 scripts/verify_cbb_protocol_contracts.py --check
+python3 scripts/verify_cbb_gate.py --check
+python3 scripts/verify_cbb_receipt_chain.py --check
+python3 scripts/verify_cbb_self_intake.py --check
+```
+
+These commands prove the local reference contracts, positive fixtures, and
+negative fixtures. They do not claim production customer trust or full release
+validation.
