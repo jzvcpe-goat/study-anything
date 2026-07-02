@@ -611,21 +611,21 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "7ffda025d8cfeb77d2673b2e5f5be3c12ec3cba13f5705143d577cbc981874b5"
+      "sha256": "f01f34bccc43be1d53223eb3c6bff05cdb371739000cc390ae63d05b3294b02d"
     },
     {
-      "bytes": 4249,
+      "bytes": 4269,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "0f537a78433c1b45bc9c0528ad525a4b7d0087399ea5f33dd227ffc1dded9828"
+      "sha256": "4af2b861b0afa3ca42717dc116b4f04ef7476c7ea160a7fe20ecc6f49e22b4e9"
     },
     {
-      "bytes": 2504,
+      "bytes": 2497,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "a659c6a6e33fe45d0fe8bd7f5734407c21d89b95a7c253b9ac6fbdb40a979ac0"
+      "sha256": "bae8a600e5f1e8154f5bbc1953a6a86f5064f0feee6cb06bd575c148a0911d87"
     },
     {
       "bytes": 92944,
@@ -2697,14 +2697,14 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "6b3f6eca704806a6f449f4e95397bbb4fbb1322990f927aa2cd3edb2626f0ac5"
+      "sha256": "4866da60a87ee078c82fa9b6888674791d8f8b61d7067bf9bc99f0f9cee123cb"
     },
     {
-      "bytes": 17565,
+      "bytes": 17570,
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "8f13dff4c779ddea23a372c91f01be50390a10701833b8b3e59ae7bba0b2dce8"
+      "sha256": "b5e32710d969ae0a3ad6c0e96fa7df1de0ff13dd1f0936841b34a7e66a8b83cd"
     },
     {
       "bytes": 1138,
