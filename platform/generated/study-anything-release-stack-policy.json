@@ -1,0 +1,88 @@
+{
+  "claim_boundary": "This proves the release-stack recursion guard, product-runway reset, and metadata-only integration are present. It does not prove a full clean-clone release check.",
+  "docs": {
+    "product_runway": {
+      "path": "docs/product-runway.md",
+      "required_markers_present": true
+    },
+    "release_stack_policy": {
+      "path": "docs/release-stack-policy.md",
+      "required_markers_present": true
+    }
+  },
+  "integration": {
+    "adoption_policy_contract": true,
+    "adoption_policy_doc": true,
+    "adoption_policy_report": true,
+    "adoption_policy_verifier": true,
+    "adoption_runway_doc": true,
+    "bundle_policy_contract": true,
+    "bundle_policy_doc": true,
+    "bundle_policy_report": true,
+    "bundle_policy_verifier": true,
+    "bundle_runway_doc": true,
+    "evals": true,
+    "release_check": true
+  },
+  "policy": {
+    "batch_archive_when": [
+      "generated_hash_refresh_only",
+      "maintenance_only_evidence",
+      "minor_operator_doc_copy",
+      "self_intake_only_pr"
+    ],
+    "product_runway": {
+      "default_next_destination": "dual_loop_trust_protocol",
+      "focus": "AI delivery trust without excessive human re-review or black-box AI-reviewing-AI",
+      "next_harness": "dual_loop_trust_scenario_harness",
+      "release_stack_recursion_default": false,
+      "standalone_frontend_default": false
+    },
+    "recursion_guard": {
+      "batch_archive_allowed": true,
+      "default_self_intake_for_every_merged_pr": false,
+      "last_self_intake_pr_without_forced_followup": 282,
+      "next_forced_self_intake_pr": null,
+      "product_runway_redirect_allowed": true,
+      "self_intake_only_pr_is_terminal_by_default": true,
+      "self_intake_pr_requires_next_self_intake": false
+    },
+    "self_intake_not_required_when": [
+      "docs_copy_only_without_policy_change",
+      "generated_hash_refresh_only",
+      "ordinary_maintenance_pr",
+      "self_intake_only_pr"
+    ],
+    "self_intake_required_when": [
+      "current_group_changed",
+      "public_evidence_chain_changed",
+      "release_policy_changed",
+      "release_stack_verifier_changed"
+    ]
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "check_annotations_included": false,
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "learner_answers_included": false,
+    "live_check_payloads_included": false,
+    "metadata_only": true,
+    "production_mutation_allowed_by_default": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false
+  },
+  "release_stack": {
+    "current_group": "release-stack-promotion-v0.3.153",
+    "current_group_status": "completed",
+    "forced_pr_283_fixture_exists": false,
+    "pr_282_auto_promoted": false,
+    "pr_282_fixture_exists": false,
+    "stack_prs": [
+      281
+    ]
+  },
+  "schema_version": "release-stack-policy-verification-v1",
+  "source_contract": ".cognitive-loop/release-stack-policy.yaml",
+  "status": "pass"
+}

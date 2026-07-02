@@ -6,6 +6,9 @@ required:
   - id: cognitive-loop.operating-model-loops
     command: python3 scripts/verify_operating_model_loops.py --check
     blocking: true
+  - id: cognitive-loop.release-stack-policy
+    command: python3 scripts/verify_release_stack_policy.py --check
+    blocking: true
   - id: cognitive-loop.cli-artifact
     command: python3 scripts/verify_cognitive_loop_cli.py --check
     blocking: true
