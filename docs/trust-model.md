@@ -105,6 +105,18 @@ The answer is allowed only when:
 - production mutation and irreversible effects remain blocked by default;
 - the claim boundary states what is and is not proven.
 
+## Customer Handoff Package
+
+The portable package layer emits:
+
+- `customer-handoff-package-v1`
+
+This package is not a new trust source. It cannot approve anything that the
+Delivery Trust Receipt blocked, and it cannot expand the customer delivery
+scope. It only bundles scoped metadata evidence, limitations, rollback,
+human reconstruction summaries, external eval receipt refs, artifact digests,
+and WorkBuddy/Hermes/Codex handoff instructions.
+
 ## What This Does Not Claim
 
 The current local-first deterministic MVP does not claim:
@@ -127,8 +139,12 @@ python3 scripts/verify_failure_sandbox_lite.py --check
 python3 scripts/verify_attention_reconstruction_lite.py --check
 python3 scripts/verify_dual_loop_gate.py --check
 python3 scripts/verify_delivery_trust_receipt.py --check
+python3 scripts/verify_customer_handoff_package.py --check
 ```
 
-The final command verifies pass and blocked fixtures, rejects AI-review-only
-promotion, rejects eval-as-sufficient promotion, and rejects missing claim
-boundaries.
+The delivery trust command verifies pass and blocked fixtures, rejects
+AI-review-only promotion, rejects eval-as-sufficient promotion, and rejects
+missing claim boundaries. The customer handoff command verifies the portable
+package cannot bypass delivery trust, expand scope, rely on eval receipts as
+sufficient proof, omit rollback or claim boundaries, leak secret-like content,
+ship digest drift, or ask platform Agents for production mutation.

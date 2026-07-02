@@ -131,6 +131,20 @@ handoff only when the Dual-Loop gate is allowed, human reconstruction is present
 sandbox risk is inside budget, AI eval receipts are supporting evidence only,
 and the claim boundary states what is not proven.
 
+## Customer Handoff Package Layer
+
+The portable package layer consumes an allowed `delivery-trust-receipt-v1` and
+emits `customer-handoff-package-v1` JSON/HTML/ZIP artifacts.
+
+```bash
+python3 scripts/verify_customer_handoff_package.py --check
+```
+
+This layer is not a new trust source. It cannot approve blocked delivery trust,
+expand the scoped customer delivery boundary, rely on eval receipts as
+sufficient proof, omit high-risk rollback, omit claim boundaries, ship digest
+drift, or ask WorkBuddy/Hermes/Codex agents for production mutation.
+
 ## Deterministic Fixtures
 
 Verifier-managed fixtures live under:
@@ -139,6 +153,11 @@ Verifier-managed fixtures live under:
 fixtures/dual-loop/pass/
 fixtures/dual-loop/blocked-missing-attention/
 fixtures/dual-loop/blocked-risk-budget/
+fixtures/customer-handoff/pass/
+fixtures/customer-handoff/block-missing-delivery-trust/
+fixtures/customer-handoff/block-scope-expansion/
+fixtures/customer-handoff/block-missing-claim-boundary/
+fixtures/customer-handoff/block-secret-like-content/
 ```
 
 These fixtures prove the two required blocking paths:

@@ -102,6 +102,9 @@ required:
   - id: cognitive-loop.delivery-trust-receipt
     command: python3 scripts/verify_delivery_trust_receipt.py --check
     blocking: true
+  - id: cognitive-loop.customer-handoff-package
+    command: python3 scripts/verify_customer_handoff_package.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true

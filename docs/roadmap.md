@@ -1,8 +1,8 @@
 # Roadmap / 路线图
 
-This roadmap reframes the project as Cognitive Black Box: a Dual-Loop Trust Harness for AI delivery. The goal is to grow from a deterministic metadata-only trust harness into a system that lets AI-generated deliverables reach customers through controlled failure, human reconstruction, propagation gates, and delivery trust receipts.
+This roadmap reframes the project as Cognitive Black Box: a Dual-Loop Trust Harness for AI delivery. The goal is to grow from a deterministic metadata-only trust harness into a system that lets AI-generated deliverables reach customers through controlled failure, human reconstruction, propagation gates, delivery trust receipts, and portable customer handoff packages.
 
-这份路线图将项目重构为认知黑箱：面向 AI 交付的 Dual-Loop Trust Harness。目标是从确定性、只含 metadata 的信任机制，逐步发展成让 AI 生成交付物可以通过可控失败、人类重构、传播门和交付信任收据进入客户交付的系统。
+这份路线图将项目重构为认知黑箱：面向 AI 交付的 Dual-Loop Trust Harness。目标是从确定性、只含 metadata 的信任机制，逐步发展成让 AI 生成交付物可以通过可控失败、人类重构、传播门、交付信任收据和可携带客户交付包进入客户交付的系统。
 
 ## Current Foundation: Dual-Loop Trust Alpha
 
@@ -12,6 +12,7 @@ Already present:
 - Human Attention Reconstruction Environment with `attention-reconstruction-trace-v1` and `attention-reconstruction-summary-v1`.
 - Dual-Loop Propagation Gate with pass and blocked fixtures for missing reconstruction and risk-budget overflow.
 - Delivery Trust Receipt with pass and blocked fixtures, AI-review-only rejection, eval-as-sufficient rejection, and claim-boundary enforcement.
+- CustomerHandoffPackage with JSON/HTML/ZIP output, offline ZIP validation, digest checks, scope-expansion rejection, and platform Agent handoff guardrails.
 - Local-first FastAPI learning API.
 - Skill Mode and Docker self-host launch paths.
 - Deterministic demo Agent and Bring Your Own Agent HTTP gateway.
@@ -28,6 +29,7 @@ Already present:
 - 人类注意力重构环境：`attention-reconstruction-trace-v1` 和 `attention-reconstruction-summary-v1`。
 - Dual-Loop Propagation Gate：覆盖缺少人类重构和风险超预算的通过/阻断 fixtures。
 - Delivery Trust Receipt：覆盖通过/阻断 fixtures，并拒绝 AI 审 AI 式放行、eval 即充分、缺少 claim boundary。
+- CustomerHandoffPackage：提供 JSON/HTML/ZIP 输出、离线 ZIP 验证、digest 校验、scope 扩张拒绝和平台 Agent handoff 防护。
 - 本地优先 FastAPI 学习 API。
 - Skill Mode 和 Docker 自托管启动路径。
 - 确定性 demo Agent 和 Bring Your Own Agent HTTP gateway。

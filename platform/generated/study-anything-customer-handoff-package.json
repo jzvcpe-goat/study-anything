@@ -1,0 +1,121 @@
+{
+  "acceptance": {
+    "cli_command": "python3 scripts/customer_handoff_package.py build --delivery-trust-receipt ... --zip-output ...",
+    "fixture_dir": "fixtures/customer-handoff",
+    "minimum_command": "python3 scripts/verify_customer_handoff_package.py --check",
+    "zip_output": "platform/generated/study-anything-customer-handoff-package.zip"
+  },
+  "claim_boundary": {
+    "current_claim": "This package is consistent with the scoped local deterministic DeliveryTrustReceipt and referenced Dual Loop evidence.",
+    "not_claimed": [
+      "production approval",
+      "legal certification",
+      "compliance certification",
+      "security certification",
+      "general model correctness"
+    ]
+  },
+  "fixture_reports": [
+    {
+      "case_id": "pass",
+      "customer_handoff_ready": true,
+      "package_status": "ready_for_controlled_customer_handoff",
+      "status": "pass"
+    },
+    {
+      "case_id": "block-missing-delivery-trust",
+      "expected_error": "customer handoff package missing delivery_trust_receipt",
+      "status": "blocked_as_expected"
+    },
+    {
+      "case_id": "block-scope-expansion",
+      "expected_error": "customer handoff package scope exceeds delivery trust scope",
+      "status": "blocked_as_expected"
+    },
+    {
+      "case_id": "block-missing-claim-boundary",
+      "expected_error": "customer handoff package must state a current claim",
+      "status": "blocked_as_expected"
+    },
+    {
+      "case_id": "block-secret-like-content",
+      "expected_error": "private-looking data",
+      "status": "blocked_as_expected"
+    }
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_checks": {
+    "agent_handoff_scope_escalation_rejected": "agent instructions must not request production mutation",
+    "artifact_digest_mismatch_rejected": "artifact digest mismatch for limitations.json",
+    "blocked_delivery_trust_rejected": "blocked delivery trust cannot produce handoff package",
+    "eval_receipts_sufficient_rejected": "external eval receipts cannot be sufficient trust basis",
+    "missing_claim_boundary_rejected": "customer handoff package must state a current claim",
+    "missing_delivery_trust_rejected": "customer handoff package missing delivery_trust_receipt",
+    "missing_rollback_high_risk_rejected": "high-risk handoff requires available rehearsed rollback",
+    "scope_expansion_rejected": "customer handoff package scope exceeds delivery trust scope",
+    "secret_like_content_rejected": "customer-handoff-package-v1:$.provenance.operator_note contains private-looking data: ['(?i)\\\\b(api[_-]?key|secret|token)\\\\s*[:=]\\\\s*[A-Za-z0-9_./+=-]{8,}']"
+  },
+  "package_schema_version": "customer-handoff-package-v1",
+  "package_summary": {
+    "artifact_count": 10,
+    "customer_delivery_scope": "controlled-customer-handoff-v0.1",
+    "external_eval_role": "supporting_only_not_sufficient",
+    "package_id": "customer-handoff-package-demo-001",
+    "package_status": "ready_for_controlled_customer_handoff",
+    "platform_instructions": [
+      "workbuddy",
+      "hermes",
+      "codex"
+    ]
+  },
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "customer-handoff-package-verification-v1",
+  "status": "pass",
+  "trust_rules": {
+    "agent_handoff_cannot_mutate_or_escalate": true,
+    "automatic_customer_sending_forbidden": true,
+    "cannot_expand_customer_scope": true,
+    "claim_boundary_required": true,
+    "delivery_trust_must_be_allowed": true,
+    "delivery_trust_required": true,
+    "external_eval_receipts_supporting_only": true,
+    "rollback_required_for_high_risk": true
+  },
+  "version": "v0.3.31-alpha",
+  "zip": {
+    "html_metadata_only": true,
+    "json_matches_fixture": true,
+    "zip_bytes": 14752,
+    "zip_validates_offline": true
+  }
+}

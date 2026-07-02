@@ -94,6 +94,21 @@ FILES: list[tuple[str, str, str]] = [
         "Delivery Trust Receipt verification HTML report.",
     ),
     (
+        "platform/generated/study-anything-customer-handoff-package.json",
+        "generated_asset",
+        "Customer Handoff Package verification report and package metadata.",
+    ),
+    (
+        "platform/generated/study-anything-customer-handoff-package.html",
+        "generated_asset",
+        "Customer Handoff Package verification HTML report.",
+    ),
+    (
+        "platform/generated/study-anything-customer-handoff-package.zip",
+        "generated_asset",
+        "Portable metadata-only Customer Handoff Package archive.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -759,6 +774,11 @@ FILES: list[tuple[str, str, str]] = [
         "Delivery Trust Receipt contract and verifier guide.",
     ),
     (
+        "docs/customer-handoff-package.md",
+        "operator_doc",
+        "CustomerHandoffPackage portable evidence package guide.",
+    ),
+    (
         "docs/cognitive-loop-code-review.md",
         "operator_doc",
         "Cognitive Loop advisory code review guide.",
@@ -812,6 +832,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/delivery-trust-receipt-v1.schema.json",
         "schema",
         "Delivery Trust Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/customer-handoff/customer-handoff-package-v1.schema.json",
+        "schema",
+        "CustomerHandoffPackage JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -887,6 +912,26 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/delivery-trust/blocked-risk-budget/delivery-trust-receipt.json",
         "fixture",
         "Blocked Delivery Trust Receipt fixture for sandbox risk outside budget.",
+    ),
+    (
+        "fixtures/customer-handoff/pass/customer-handoff-package.json",
+        "fixture",
+        "Passing CustomerHandoffPackage fixture for controlled customer handoff.",
+    ),
+    (
+        "fixtures/customer-handoff/block-missing-delivery-trust/expected-error.json",
+        "fixture",
+        "CustomerHandoffPackage negative fixture for missing DeliveryTrustReceipt.",
+    ),
+    (
+        "fixtures/customer-handoff/block-scope-expansion/expected-error.json",
+        "fixture",
+        "CustomerHandoffPackage negative fixture for scope expansion.",
+    ),
+    (
+        "fixtures/customer-handoff/block-missing-claim-boundary/expected-error.json",
+        "fixture",
+        "CustomerHandoffPackage negative fixture for missing claim boundary.",
     ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -1647,6 +1692,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_delivery_trust_receipt.py",
         "verification",
         "Verify Delivery Trust Receipt pass/fail fixtures and trust-boundary rejection cases.",
+    ),
+    (
+        "scripts/customer_handoff_package.py",
+        "cli",
+        "Build and validate metadata-only CustomerHandoffPackage JSON, HTML, and ZIP artifacts.",
+    ),
+    (
+        "scripts/verify_customer_handoff_package.py",
+        "verification",
+        "Verify CustomerHandoffPackage pass/fail fixtures, ZIP integrity, and scope boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",
@@ -3009,6 +3064,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_real_agent_eval_bridge.py --check",
             "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check",
             "python3 scripts/verify_delivery_trust_receipt.py --check",
+            "python3 scripts/verify_customer_handoff_package.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",

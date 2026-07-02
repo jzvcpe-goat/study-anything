@@ -1,0 +1,4 @@
+{
+  "case_id": "block-secret-like-content",
+  "expected_error": "private-looking data"
+}

@@ -47,6 +47,10 @@ A blocked receipt has:
 - concrete `reasons`, such as `human_reconstruction_missing`,
   `sandbox_risk_outside_budget`, or `dual_loop_gate_blocked`
 
+The portable package above this receipt is `customer-handoff-package-v1`. That
+package can only wrap an already allowed receipt; it cannot approve a blocked
+receipt or expand the delivery scope.
+
 ## Why It Exists
 
 The receipt prevents two bad shortcuts:
@@ -77,6 +81,7 @@ python3 scripts/delivery_trust_receipt.py build \
 
 ```bash
 python3 scripts/verify_delivery_trust_receipt.py --check
+python3 scripts/verify_customer_handoff_package.py --check
 ```
 
 The verifier proves:
@@ -89,12 +94,22 @@ The verifier proves:
 - missing claim boundary is rejected;
 - generated JSON/HTML reports stay metadata-only.
 
+The CustomerHandoffPackage verifier then proves the allowed receipt can be
+wrapped into JSON/HTML/ZIP evidence and that missing delivery trust, scope
+expansion, eval-as-sufficient shortcuts, missing rollback, missing claim
+boundary, secret-like content, digest drift, offline ZIP failure, and unsafe
+Agent handoff instructions all block the package.
+
 Generated evidence:
 
 ```text
 platform/generated/study-anything-delivery-trust-receipt.json
 platform/generated/study-anything-delivery-trust-receipt.html
+platform/generated/study-anything-customer-handoff-package.json
+platform/generated/study-anything-customer-handoff-package.html
+platform/generated/study-anything-customer-handoff-package.zip
 fixtures/delivery-trust/
+fixtures/customer-handoff/
 ```
 
 ## Claim Boundary
