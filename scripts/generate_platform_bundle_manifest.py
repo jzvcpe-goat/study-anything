@@ -119,6 +119,11 @@ FILES: list[tuple[str, str, str]] = [
         "Portable metadata-only Customer Handoff Package archive.",
     ),
     (
+        "platform/generated/study-anything-dual-loop-scenario-harness.json",
+        "generated_asset",
+        "Dual Loop Trust Scenario Harness verification report for customer delivery readiness.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -774,6 +779,11 @@ FILES: list[tuple[str, str, str]] = [
         "Dual-Loop MVP controlled-failure and attention-reconstruction boundary guide.",
     ),
     (
+        "docs/dual-loop-scenario-harness.md",
+        "operator_doc",
+        "Dual Loop Trust Scenario Harness guide for customer delivery readiness.",
+    ),
+    (
         "docs/trust-model.md",
         "operator_doc",
         "Cognitive Black Box AI delivery trust model.",
@@ -907,6 +917,46 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/dual-loop/blocked-risk-budget/dual-loop-gate-receipt.json",
         "fixture",
         "Blocked Dual-Loop gate receipt fixture for risk-budget overflow.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/pass/scenario-result.json",
+        "fixture",
+        "Passing Dual Loop trust scenario result for customer delivery readiness.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/pass/customer-handoff-package.json",
+        "fixture",
+        "Passing Dual Loop scenario CustomerHandoffPackage fixture.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/attention-missing/scenario-result.json",
+        "fixture",
+        "Blocked Dual Loop scenario result for missing human reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/attention-missing/delivery-trust-receipt.json",
+        "fixture",
+        "Blocked scenario Delivery Trust Receipt for missing human reconstruction.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/risk-over-budget/scenario-result.json",
+        "fixture",
+        "Blocked Dual Loop scenario result for sandbox risk outside budget.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/risk-over-budget/delivery-trust-receipt.json",
+        "fixture",
+        "Blocked scenario Delivery Trust Receipt for sandbox risk outside budget.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/both-fail/scenario-result.json",
+        "fixture",
+        "Blocked Dual Loop scenario result when sandbox and reconstruction both fail.",
+    ),
+    (
+        "fixtures/dual-loop-scenarios/both-fail/delivery-trust-receipt.json",
+        "fixture",
+        "Blocked scenario Delivery Trust Receipt when sandbox and reconstruction both fail.",
     ),
     (
         "fixtures/delivery-trust/pass/delivery-trust-receipt.json",
@@ -1747,6 +1797,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_customer_handoff_package.py",
         "verification",
         "Verify CustomerHandoffPackage pass/fail fixtures, ZIP integrity, and scope boundaries.",
+    ),
+    (
+        "scripts/run_dual_loop_scenario_harness.py",
+        "cli",
+        "Run deterministic Dual Loop customer-delivery trust scenario harness.",
+    ),
+    (
+        "scripts/verify_dual_loop_scenario_harness.py",
+        "verification",
+        "Verify Dual Loop trust scenario fixtures, runner output, and handoff gating.",
     ),
     (
         "scripts/cognitive_loop_cli.py",

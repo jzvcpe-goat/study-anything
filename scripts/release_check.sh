@@ -202,6 +202,7 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_dual_loop_gate.py --check
   "$python_bin" scripts/verify_delivery_trust_receipt.py --check
   "$python_bin" scripts/verify_customer_handoff_package.py --check
+  "$python_bin" scripts/verify_dual_loop_scenario_harness.py --check
   dual_loop_verifiers_passed_individually="true"
   delivery_trust_verifiers_passed_individually="true"
   customer_handoff_verifiers_passed_individually="true"

@@ -1,0 +1,96 @@
+{
+  "artifact_refs": [
+    {
+      "kind": "attention-reconstruction-summary",
+      "path": "attention-reconstruction-summary.json"
+    },
+    {
+      "kind": "attention-reconstruction-trace",
+      "path": "attention-reconstruction-trace.json"
+    },
+    {
+      "kind": "customer-handoff-package",
+      "path": "customer-handoff-package.json"
+    },
+    {
+      "kind": "delivery-trust-receipt",
+      "path": "delivery-trust-receipt.json"
+    },
+    {
+      "kind": "dual-loop-gate-receipt",
+      "path": "dual-loop-gate-receipt.json"
+    },
+    {
+      "kind": "failure-contract",
+      "path": "failure-contract.json"
+    },
+    {
+      "kind": "sandbox-receipt",
+      "path": "sandbox-receipt.json"
+    }
+  ],
+  "case_id": "pass",
+  "claim_boundary": {
+    "current_claim": "This deterministic metadata-only scenario proves local Dual Loop promotion behavior for a controlled customer handoff candidate.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer delivery",
+      "general model correctness",
+      "legal compliance certification",
+      "security certification"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "expected": {
+    "delivery": "allowed",
+    "gate": "allowed",
+    "handoff_package": true,
+    "required_reasons": []
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "non_production_statement": "The harness performs no model calls, starts no daemon, sends nothing to customers, and mutates no production system.",
+  "observed": {
+    "customer_handoff_candidate_allowed": true,
+    "customer_handoff_package_emitted": true,
+    "delivery_reasons": [],
+    "delivery_trust_status": "allowed",
+    "dual_loop_gate_status": "allowed",
+    "gate_reasons": []
+  },
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "scenario_fixture_only": true,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "scenario_id": "customer_delivery_readiness",
+  "schema_version": "dual-loop-trust-scenario-result-v1",
+  "status": "pass",
+  "trust_question": "May this AI-generated customer handoff candidate be promoted inside the controlled local scope?"
+}
