@@ -305,6 +305,7 @@ fi
 phase "existing release gates"
 "$python_bin" scripts/verify_cognitive_loop_contracts.py --check
 "$python_bin" scripts/verify_operating_model_loops.py --check
+"$python_bin" scripts/verify_release_stack_policy.py --check
 "$python_bin" scripts/verify_cognitive_loop_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_run_once.py --check
 "$python_bin" scripts/verify_cognitive_loop_snapshot.py --check

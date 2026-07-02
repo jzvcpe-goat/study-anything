@@ -1,0 +1,55 @@
+{
+  "schema_version": "release-stack-recursion-policy-v1",
+  "project": {
+    "id": "study-anything",
+    "public_name": "Cognitive Black Box",
+    "mode": "local_first_metadata_only"
+  },
+  "purpose": "Prevent release-stack self-intake from becoming infinite recursion, while keeping substantive release evidence auditable.",
+  "recursion_guard": {
+    "default_self_intake_for_every_merged_pr": false,
+    "self_intake_pr_requires_next_self_intake": false,
+    "self_intake_only_pr_is_terminal_by_default": true,
+    "last_self_intake_pr_without_forced_followup": 282,
+    "next_forced_self_intake_pr": null,
+    "batch_archive_allowed": true,
+    "product_runway_redirect_allowed": true
+  },
+  "self_intake_required_when": [
+    "release_policy_changed",
+    "release_stack_verifier_changed",
+    "public_evidence_chain_changed",
+    "current_group_changed"
+  ],
+  "self_intake_not_required_when": [
+    "self_intake_only_pr",
+    "generated_hash_refresh_only",
+    "ordinary_maintenance_pr",
+    "docs_copy_only_without_policy_change"
+  ],
+  "batch_archive_when": [
+    "maintenance_only_evidence",
+    "generated_hash_refresh_only",
+    "self_intake_only_pr",
+    "minor_operator_doc_copy"
+  ],
+  "product_runway": {
+    "default_next_destination": "dual_loop_trust_protocol",
+    "next_harness": "dual_loop_trust_scenario_harness",
+    "focus": "AI delivery trust without excessive human re-review or black-box AI-reviewing-AI",
+    "standalone_frontend_default": false,
+    "release_stack_recursion_default": false
+  },
+  "privacy": {
+    "metadata_only": true,
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "check_annotations_included": false,
+    "live_check_payloads_included": false,
+    "raw_source_text_included": false,
+    "learner_answers_included": false,
+    "agent_endpoint_secrets_included": false,
+    "real_model_keys_included": false,
+    "production_mutation_allowed_by_default": false
+  }
+}

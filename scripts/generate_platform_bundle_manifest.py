@@ -69,6 +69,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box three-loop operating model verification report.",
     ),
     (
+        "platform/generated/study-anything-release-stack-policy.json",
+        "generated_asset",
+        "Release-stack recursion guard and product runway verification report.",
+    ),
+    (
         "platform/generated/study-anything-dual-loop-contracts.json",
         "generated_asset",
         "Dual-Loop contract schema and privacy verification report.",
@@ -1304,14 +1309,34 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box three-loop operating model and PR evidence rules.",
     ),
     (
+        "docs/release-stack-policy.md",
+        "docs",
+        "Release-stack recursion guard and batch archive policy.",
+    ),
+    (
+        "docs/product-runway.md",
+        "docs",
+        "Next product runway for Dual Loop trust protocol development.",
+    ),
+    (
         ".cognitive-loop/loops.yaml",
         "cognitive_loop_contract",
         "Machine-readable three-loop operating model contract.",
     ),
     (
+        ".cognitive-loop/release-stack-policy.yaml",
+        "cognitive_loop_contract",
+        "Machine-readable release-stack recursion guard contract.",
+    ),
+    (
         "scripts/verify_operating_model_loops.py",
         "verification",
         "Verify Cognitive Black Box operating-model loop contract and release-stack boundaries.",
+    ),
+    (
+        "scripts/verify_release_stack_policy.py",
+        "verification",
+        "Verify release-stack recursion guard and product runway reset.",
     ),
     (
         "platform/okf/examples/demo-session.json",
