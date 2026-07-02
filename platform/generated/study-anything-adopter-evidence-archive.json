@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 252273,
+    "bytes": 252271,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "2cd7c476e05301ae1bc8c38bcc5a8cb1f7750b1f5a2ab5d86944eb899ece065a",
+    "sha256": "f3ee836b7e2315ea787e73238a290ce98473eb907988e3a8db6c8833e290b12e",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -231,7 +231,7 @@
     {
       "bytes": 133498,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "27af5185d80cd73d533effb1a4ecd9d8ba8794db1d1557c43c1553d840ce233b"
+      "sha256": "e2319ed2d302cac54e4bb18a340abd6679d6ba801258fdfd13236f826028d970"
     },
     {
       "bytes": 107336,
