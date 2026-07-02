@@ -1,0 +1,90 @@
+{
+  "$id": "cbb-tri-loop-run-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "case_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "promote_next_sandbox_level",
+        "block_delivery_scenario"
+      ],
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "object"
+    },
+    "loop_parity": {
+      "type": "object"
+    },
+    "loop_statuses": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "promotion": {
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "scenario_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "cbb-tri-loop-run-v1"
+    },
+    "source": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "allowed",
+        "blocked"
+      ],
+      "type": "string"
+    },
+    "tri_loop_run_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tri_loop_run_id",
+    "project_id",
+    "scenario_id",
+    "case_id",
+    "source",
+    "status",
+    "decision",
+    "reasons",
+    "loop_statuses",
+    "loop_parity",
+    "evidence_refs",
+    "promotion",
+    "checks",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "CBB Tri-Loop Run v1",
+  "type": "object"
+}

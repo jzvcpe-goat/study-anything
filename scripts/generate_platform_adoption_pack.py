@@ -51,6 +51,21 @@ CBB_SELF_INTAKE_NEGATIVE_CASES = {
     "ci-evidence-missing": ["self-intake-receipt.json", "expected-error.json"],
     "ai-review-only-evidence-rejected": ["self-intake-receipt.json", "expected-error.json"],
 }
+CBB_DELIVERY_HARNESS_CASES = [
+    "pass",
+    "blocked-missing-developer-reconstruction",
+    "blocked-risk-over-budget",
+    "blocked-external-scope-expansion",
+    "blocked-stale-receipt-chain",
+    "blocked-ai-review-only",
+]
+CBB_DELIVERY_HARNESS_ARTIFACTS = [
+    "delivery-scenario.json",
+    "external-feedback-intake.json",
+    "receipt-chain.json",
+    "self-intake-receipt.json",
+    "tri-loop-run.json",
+]
 
 
 PACK_FILES: list[tuple[str, str, str]] = [
@@ -150,6 +165,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/cbb-receipt-chain-v1.schema.json", "schema", "Cognitive Black Box tamper-evident receipt chain JSON Schema."),
     ("platform/schemas/cbb/cbb-self-intake-receipt-v1.schema.json", "schema", "Cognitive Black Box self-intake receipt JSON Schema."),
     ("platform/schemas/cbb/cbb-delivery-evidence-pack-v1.schema.json", "schema", "Cognitive Black Box delivery evidence pack JSON Schema."),
+    ("platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json", "schema", "Cognitive Black Box delivery scenario JSON Schema."),
+    ("platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json", "schema", "Cognitive Black Box external feedback intake JSON Schema."),
+    ("platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json", "schema", "Cognitive Black Box tri-loop run JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -195,6 +213,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cbb-gate.json", "submission_report", "Cognitive Black Box deterministic delivery gate verification report."),
     ("platform/generated/study-anything-cbb-receipt-chain.json", "submission_report", "Cognitive Black Box tamper-evident receipt-chain verification report for PR 285."),
     ("platform/generated/study-anything-cbb-self-intake.json", "submission_report", "Cognitive Black Box self-intake verification report for PR 285."),
+    ("platform/generated/study-anything-cbb-delivery-scenario-harness.json", "submission_report", "Cognitive Black Box tri-loop delivery scenario harness verification report."),
     ("platform/generated/study-anything-workbuddy-inline-learning-flow.json", "submission_report", "WorkBuddy inline learning flow verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -495,6 +514,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id, artifacts in CBB_SELF_INTAKE_NEGATIVE_CASES.items()
         for artifact in artifacts
     ],
+    *[
+        (
+            f"fixtures/cbb-delivery-harness/{case_id}/{artifact}",
+            "cbb_delivery_harness_fixture",
+            f"Cognitive Black Box delivery harness {case_id} {artifact} fixture.",
+        )
+        for case_id in CBB_DELIVERY_HARNESS_CASES
+        for artifact in CBB_DELIVERY_HARNESS_ARTIFACTS
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -628,6 +656,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/cbb_self_intake.py", "cli", "Cognitive Black Box PR self-intake receipt and evidence-pack builder."),
     ("scripts/verify_cbb_receipt_chain.py", "verification", "Verify Cognitive Black Box receipt-chain contracts, fixtures, and tamper rejection."),
     ("scripts/verify_cbb_self_intake.py", "verification", "Verify Cognitive Black Box PR self-intake receipts, evidence packs, and negative cases."),
+    ("scripts/cbb_delivery_harness.py", "cli", "Cognitive Black Box tri-loop delivery scenario harness CLI."),
+    ("scripts/verify_cbb_delivery_harness.py", "verification", "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
     ("scripts/verify_cognitive_loop_cli.py", "verification", "Cognitive Loop CLI and static HTML artifact verifier."),
     ("scripts/verify_cognitive_loop_run_once.py", "verification", "Cognitive Loop run-once evidence verifier."),
@@ -680,6 +710,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("apps/api/study_anything/core/dual_loop.py", "api_core", "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic."),
     ("apps/api/study_anything/core/cbb_protocol.py", "api_core", "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel."),
     ("apps/api/study_anything/core/cbb_receipt_chain.py", "api_core", "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators."),
+    ("apps/api/study_anything/core/cbb_delivery_harness.py", "api_core", "Cognitive Black Box delivery scenario tri-loop harness validators."),
     ("scripts/cognitive_loop_study_adapter_cli.py", "cli", "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence."),
     ("scripts/verify_cognitive_loop_mastra_runtime_service.py", "verification", "Verify the repository-started Cognitive Loop Mastra runtime service and privacy boundary."),
     ("scripts/verify_cognitive_loop_mastra_runtime_durable.py", "verification", "Verify the durable Cognitive Loop Mastra runtime suspend/resume privacy boundary."),
@@ -972,6 +1003,10 @@ def manifest_payload() -> dict[str, object]:
                 "cbb-delivery-evidence-pack-v1",
                 "cbb-receipt-chain-verification-v1",
                 "cbb-self-intake-verification-v1",
+                "cbb-delivery-scenario-v1",
+                "cbb-external-feedback-intake-v1",
+                "cbb-tri-loop-run-v1",
+                "cbb-delivery-scenario-harness-verification-v1",
                 "cognitive-loop-review-agent-eval-harness-v1",
                 "cognitive-loop-review-agent-ci-receipt-v1",
                 "cognitive-loop-review-agent-pr-comment-pack-v1",

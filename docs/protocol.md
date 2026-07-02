@@ -63,6 +63,17 @@ approval, or general model correctness.
      [#285](https://github.com/jzvcpe-goat/study-anything/pull/285) at merge
      commit `f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4`.
 
+8. Delivery Scenario Harness
+   - Emits `cbb-delivery-scenario-v1`,
+     `cbb-external-feedback-intake-v1`, and `cbb-tri-loop-run-v1`.
+   - Maps the protocol onto three equal-weight loops: Agentic Coding,
+     Developer Feedback, and External Feedback.
+   - Allows promotion to the next sandbox level only when the receipt chain is
+     current, self-intake passes, developer reconstruction is present, external
+     feedback is structured and attributed, and risk stays inside budget.
+   - Blocks stale receipt chains, missing developer reconstruction, sandbox risk
+     overflow, external scope expansion, and AI-review-only evidence.
+
 ## Reference Implementation Boundary
 
 This repository is a deterministic reference implementation. It is useful for
@@ -77,6 +88,7 @@ python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
 python3 scripts/verify_cbb_self_intake.py --check
+python3 scripts/verify_cbb_delivery_harness.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 

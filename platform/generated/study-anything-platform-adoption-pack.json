@@ -53,6 +53,10 @@
       "cbb-delivery-evidence-pack-v1",
       "cbb-receipt-chain-verification-v1",
       "cbb-self-intake-verification-v1",
+      "cbb-delivery-scenario-v1",
+      "cbb-external-feedback-intake-v1",
+      "cbb-tri-loop-run-v1",
+      "cbb-delivery-scenario-harness-verification-v1",
       "cognitive-loop-review-agent-eval-harness-v1",
       "cognitive-loop-review-agent-ci-receipt-v1",
       "cognitive-loop-review-agent-pr-comment-pack-v1",
@@ -93,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 3161088,
+  "archive_bytes": 3223968,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "e0ac077250f997e25c026347e1b30bfd1cac17f6593774458acb8231614b62ab",
+  "archive_sha256": "d3f43b3e256c0d408f4b668992b778ad3445006692678f53e6e99c1634bae861",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -501,19 +505,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/protocol.md",
-      "bytes": 3260,
+      "bytes": 3953,
       "kind": "operator_doc",
       "path": "docs/protocol.md",
       "purpose": "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
-      "sha256": "16fb0ffce171ce35c34612dccbd6cb32afb4c829bb92e9e6b42ba8b8955a5e16"
+      "sha256": "fa1db6865082d71c0b40dec43b6d3fe9af763f983dee6002b7d7cff0479bd23e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/receipt-protocol.md",
-      "bytes": 4242,
+      "bytes": 5191,
       "kind": "operator_doc",
       "path": "docs/receipt-protocol.md",
       "purpose": "Cognitive Black Box metadata-only receipt protocol guide.",
-      "sha256": "c62379a6264b16a587fdfe28e57ccecaaa6b18c3521484128caf9d491eade83c"
+      "sha256": "dde7fd437a6cc90653322e6e0fc8b2ec21eacd7537228f648554d4b06f2ddf3d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/adapters/study-anything.md",
@@ -868,6 +872,30 @@
       "sha256": "ffe16fb68c69e898742659023ee519d9084e89bfc430b09e01cce418038b20a8"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+      "bytes": 1278,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+      "purpose": "Cognitive Black Box delivery scenario JSON Schema.",
+      "sha256": "52404cd300bc19fa871c73360cd73eadfee9cc3399e4f4371ed99366e1b463e5"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+      "bytes": 954,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+      "purpose": "Cognitive Black Box external feedback intake JSON Schema.",
+      "sha256": "5a450b27e7e67328d72f457849b2b0c25935f948a8f80796e0e2b6130b26cbb8"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+      "bytes": 1617,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+      "purpose": "Cognitive Black Box tri-loop run JSON Schema.",
+      "sha256": "d36d0180349d0de77483440decf66e9bbe2037d4ddfd8aaf8897a379c98b96ac"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/workbuddy-learning-input-v1.schema.json",
       "bytes": 1940,
       "kind": "schema",
@@ -1077,11 +1105,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 212897,
+      "bytes": 225614,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "12eb5b921618bbb304db3ed14060298abda22be078d017f540cc1aa1e1fb3987"
+      "sha256": "3aabfee4bbd1def4a4dec288c5e39e34d7efed43723f858ba53e85af8487a72d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -1226,6 +1254,14 @@
       "path": "platform/generated/study-anything-cbb-self-intake.json",
       "purpose": "Cognitive Black Box self-intake verification report for PR 285.",
       "sha256": "f1d0532bf445c80090608286a73a97d12fd3b31e433a8aa87304ebd769bc3c7b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+      "bytes": 5934,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+      "purpose": "Cognitive Black Box tri-loop delivery scenario harness verification report.",
+      "sha256": "4f9c0b226d8ef541b362e03595671c1bf4bfa0c6ddf832d5ff5a72612a68f75a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-workbuddy-inline-learning-flow.json",
@@ -1737,7 +1773,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "f93f72e24f7bb9978042b0bb6242e6422555d0c1b7b5c1c761116828cba8dfb1"
+      "sha256": "24ef16c07f97369510754a4a4a680bd30e7c5d637f29e004ea5c6ee4b7a2c6ec"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -1745,7 +1781,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "bf752f08fc3afc3b2aac5df797ff112525dbe45deacb2509c22d4bc1d20d0ce1"
+      "sha256": "9c626430ea67d98db432eafe994a5b183ee3fdd5eae6f9b7f2a652df613fed73"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -2073,7 +2109,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "477f8b01fb13260cf5e40bc18e62b477029fbe810267d929d25de3b27c5cae32"
+      "sha256": "7a0ea087a831953a6b9ea47703c8439c4861e1d492a459fc4db949411f3efbca"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -2081,7 +2117,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "b26468a0c644697f1a0df68ba0752991094c47295d78e18e93bf07d3f2506550"
+      "sha256": "424bba7dc0211a80ab0ea05faefd98ddeeb571e57579eec5c8b37e3212e41276"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -2089,7 +2125,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "56f5080ab7067fe8b0165a99388b3c9a45c8c3e94e2fe93c19c58936f25f39c7"
+      "sha256": "a9d04e348f6ea6825c889b6ca3b2c4ddc98ae33ca7d509c30689a7e28a34a0db"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -2097,7 +2133,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "4f43d7576cb64c3846ca1a2c5d09b43b31cc684d2ebeebf7a080a2c0576b6e8f"
+      "sha256": "74ea9b9782e133ecf0eee3f4974e80ffa10b09a9e5276b9281b930e704319c53"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -3796,6 +3832,246 @@
       "sha256": "dabb42a3d2797be17522a670eb7e51ed4d21d7f73250261f11dbcdbe5476911e"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/pass/delivery-scenario.json",
+      "bytes": 3893,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/pass/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness pass delivery-scenario.json fixture.",
+      "sha256": "69ea1e2b9d49a8468c498386216339fcb17a26024a3d3d0b05e7d05a521224a2"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/pass/external-feedback-intake.json",
+      "bytes": 2540,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/pass/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness pass external-feedback-intake.json fixture.",
+      "sha256": "7819e964cd3fb14de39a43f282b46b23a7e2b5fac5e004a97302254f5b971be4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/pass/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/pass/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness pass receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/pass/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/pass/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness pass self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/pass/tri-loop-run.json",
+      "bytes": 3526,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/pass/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness pass tri-loop-run.json fixture.",
+      "sha256": "fffff9f081067576bc5637bffdeed75501b4710663b728e5ff2309523dbb8a55"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/delivery-scenario.json",
+      "bytes": 3932,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-missing-developer-reconstruction delivery-scenario.json fixture.",
+      "sha256": "cad55b03f76e46727a05fc5fd09cc7241d8a94b262102d983fe320c00b7ffb6c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/external-feedback-intake.json",
+      "bytes": 2612,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-missing-developer-reconstruction external-feedback-intake.json fixture.",
+      "sha256": "33f8680b45dffbb1edb80adb9bd80478449241c7239761be3e88fa4206fc1e22"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-missing-developer-reconstruction receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-missing-developer-reconstruction self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/tri-loop-run.json",
+      "bytes": 3662,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-missing-developer-reconstruction tri-loop-run.json fixture.",
+      "sha256": "ead30d44e80d90c4ce97bb9ddd900dbf13b376ed2ece1c67b7d3d7011d123060"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/delivery-scenario.json",
+      "bytes": 3934,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-risk-over-budget delivery-scenario.json fixture.",
+      "sha256": "bb7557e890045a71fedba7124134da78e8ede5b64ddbc0adda5cdf0818bfc685"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/external-feedback-intake.json",
+      "bytes": 2580,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-risk-over-budget external-feedback-intake.json fixture.",
+      "sha256": "b222628f8cf7850e898aa6123670c16baf827b087ce003565a708ffbfca842d7"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-risk-over-budget receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-risk-over-budget self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/tri-loop-run.json",
+      "bytes": 3609,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-risk-over-budget tri-loop-run.json fixture.",
+      "sha256": "2a9872792da0a553aba0f6ca9abeda143d851832ada17a1fc2fb7da610321306"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/delivery-scenario.json",
+      "bytes": 3949,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-external-scope-expansion delivery-scenario.json fixture.",
+      "sha256": "b5a2350355991e92141fe7238e863ed994c94d99ac2b4f41b9a86c449ab81b8f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/external-feedback-intake.json",
+      "bytes": 2595,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-external-scope-expansion external-feedback-intake.json fixture.",
+      "sha256": "1fc75cfcc348f6188b901f304e10d3d2a61832f7cfa9d32e8c69f13eda66e859"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-external-scope-expansion receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-external-scope-expansion self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/tri-loop-run.json",
+      "bytes": 3630,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-external-scope-expansion tri-loop-run.json fixture.",
+      "sha256": "aee611a027594ddb5042eef0a39031677da9197fa8c127a42d6a1166c0835ef0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/delivery-scenario.json",
+      "bytes": 3939,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-stale-receipt-chain delivery-scenario.json fixture.",
+      "sha256": "f23c2cc1b9276a11282cb47de2169cd47a565c9acfaa90c9d1661c5fcc29b487"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/external-feedback-intake.json",
+      "bytes": 2586,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-stale-receipt-chain external-feedback-intake.json fixture.",
+      "sha256": "0d43c0585e4f0019b4773e17397c4c52808bcd886152fc79d98a4a5185bf3d0a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-stale-receipt-chain receipt-chain.json fixture.",
+      "sha256": "829c0739b80e5fd5b1d455d6462ef7d3a8a8108ad6b0fafad35de37b6b5b86d1"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-stale-receipt-chain self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/tri-loop-run.json",
+      "bytes": 3638,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-stale-receipt-chain tri-loop-run.json fixture.",
+      "sha256": "242285cee701161fb8f25adaef95bd64a0ff5e21063fe7fd02476d42b086e8f0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/delivery-scenario.json",
+      "bytes": 3928,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-ai-review-only delivery-scenario.json fixture.",
+      "sha256": "105764b95a636aea2ebd98c8c70b61a52b1befdea5d7b72c78bd9866b84f1d43"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/external-feedback-intake.json",
+      "bytes": 2576,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-ai-review-only external-feedback-intake.json fixture.",
+      "sha256": "1fbdc82c6ce4bf40298078a8a3bb028bf297639baa517a2abd00fc55251c69df"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/receipt-chain.json",
+      "bytes": 3196,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-ai-review-only receipt-chain.json fixture.",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/self-intake-receipt.json",
+      "bytes": 3137,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-ai-review-only self-intake-receipt.json fixture.",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/tri-loop-run.json",
+      "bytes": 3608,
+      "kind": "cbb_delivery_harness_fixture",
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery harness blocked-ai-review-only tri-loop-run.json fixture.",
+      "sha256": "4d4e637b3da8dddf9fd54ad29cae184ba3ddc8926f40b9608277135e65eaa73c"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -4860,6 +5136,22 @@
       "sha256": "e5a5dc3f5d9b138f34f5e1769a24002e36b3cbae7d46279e1b72c9c4f705221b"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/cbb_delivery_harness.py",
+      "bytes": 3232,
+      "kind": "cli",
+      "path": "scripts/cbb_delivery_harness.py",
+      "purpose": "Cognitive Black Box tri-loop delivery scenario harness CLI.",
+      "sha256": "5e3257a8bc69cdf8edd82b52c6ac6771980000dc3a4427bb2de9adbe817d3390"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_cbb_delivery_harness.py",
+      "bytes": 10539,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_delivery_harness.py",
+      "purpose": "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries.",
+      "sha256": "e8184234437995763f3569afe9d0b12b326bc9ed26b055577777f004c877f392"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_cli.py",
       "bytes": 28128,
       "kind": "cli",
@@ -5274,6 +5566,14 @@
       "path": "apps/api/study_anything/core/cbb_receipt_chain.py",
       "purpose": "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators.",
       "sha256": "5c4b0776fa534ec04d44e8fc05999f19a393ac0556617282b46ebe0519eac183"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/apps/api/study_anything/core/cbb_delivery_harness.py",
+      "bytes": 29476,
+      "kind": "api_core",
+      "path": "apps/api/study_anything/core/cbb_delivery_harness.py",
+      "purpose": "Cognitive Black Box delivery scenario tri-loop harness validators.",
+      "sha256": "946d703392dae822dcc25849a8472389ef4c5bcb2a91772a50060ffc7776c47e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/cognitive_loop_study_adapter_cli.py",
@@ -5773,11 +6073,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/evals.yaml",
-      "bytes": 7689,
+      "bytes": 7820,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "5c637f49cd7b3299f437fe3b4a0f0cc5f673e28de1c120e859940f9009b9cfcd"
+      "sha256": "7526fcc60ddd12dd9bf43d1600976ca958b034f26e0526a09138a4757a72a52a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.cognitive-loop/risk.yaml",

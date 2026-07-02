@@ -50,6 +50,21 @@ CBB_SELF_INTAKE_NEGATIVE_CASES = {
     "ci-evidence-missing": ["self-intake-receipt.json", "expected-error.json"],
     "ai-review-only-evidence-rejected": ["self-intake-receipt.json", "expected-error.json"],
 }
+CBB_DELIVERY_HARNESS_CASES = [
+    "pass",
+    "blocked-missing-developer-reconstruction",
+    "blocked-risk-over-budget",
+    "blocked-external-scope-expansion",
+    "blocked-stale-receipt-chain",
+    "blocked-ai-review-only",
+]
+CBB_DELIVERY_HARNESS_ARTIFACTS = [
+    "delivery-scenario.json",
+    "external-feedback-intake.json",
+    "receipt-chain.json",
+    "self-intake-receipt.json",
+    "tri-loop-run.json",
+]
 
 FILES: list[tuple[str, str, str]] = [
     (
@@ -176,6 +191,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-cbb-self-intake.json",
         "generated_asset",
         "Cognitive Black Box self-intake verification report for PR 285.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+        "generated_asset",
+        "Cognitive Black Box tri-loop delivery scenario harness verification report.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -968,6 +988,21 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box delivery evidence pack JSON Schema.",
     ),
     (
+        "platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+        "schema",
+        "Cognitive Black Box delivery scenario JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+        "schema",
+        "Cognitive Black Box external feedback intake JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+        "schema",
+        "Cognitive Black Box tri-loop run JSON Schema.",
+    ),
+    (
         "fixtures/dual-loop/pass/failure-contract.json",
         "fixture",
         "Passing Dual-Loop failure contract fixture.",
@@ -1127,6 +1162,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id, artifacts in CBB_SELF_INTAKE_NEGATIVE_CASES.items()
         for artifact in artifacts
+    ],
+    *[
+        (
+            f"fixtures/cbb-delivery-harness/{case_id}/{artifact}",
+            "fixture",
+            f"Cognitive Black Box delivery harness {case_id} {artifact} fixture.",
+        )
+        for case_id in CBB_DELIVERY_HARNESS_CASES
+        for artifact in CBB_DELIVERY_HARNESS_ARTIFACTS
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -1984,6 +2028,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Cognitive Black Box PR self-intake receipts, evidence packs, and negative cases.",
     ),
     (
+        "scripts/cbb_delivery_harness.py",
+        "cli",
+        "Cognitive Black Box tri-loop delivery scenario harness CLI.",
+    ),
+    (
+        "scripts/verify_cbb_delivery_harness.py",
+        "verification",
+        "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -2642,6 +2696,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/cbb_receipt_chain.py",
         "api_core",
         "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators.",
+    ),
+    (
+        "apps/api/study_anything/core/cbb_delivery_harness.py",
+        "api_core",
+        "Cognitive Black Box delivery scenario tri-loop harness validators.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",
@@ -3369,6 +3428,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",
             "python3 scripts/verify_cbb_self_intake.py --check",
+            "python3 scripts/verify_cbb_delivery_harness.py --check",
             "python3 scripts/verify_agent_eval_marketplace_enforcement.py --check",
             "python3 scripts/verify_platform_adoption_feedback_diagnostics.py --check",
             ".venv/bin/python scripts/verify_cognitive_loop_watcher_runner.py --check",

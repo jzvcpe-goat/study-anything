@@ -1,0 +1,181 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/cbb-delivery-harness",
+    "minimum_command": "python3 scripts/verify_cbb_delivery_harness.py --check"
+  },
+  "artifact_contracts": {
+    "delivery_scenario": "cbb-delivery-scenario-v1",
+    "external_feedback_intake": "cbb-external-feedback-intake-v1",
+    "tri_loop_run": "cbb-tri-loop-run-v1"
+  },
+  "case_reports": [
+    {
+      "artifact_count": 5,
+      "case_id": "pass",
+      "decision": "promote_next_sandbox_level",
+      "loop_statuses": {
+        "agentic_coding_loop": "passed",
+        "developer_feedback_loop": "passed",
+        "external_feedback_loop": "passed"
+      },
+      "reasons": [],
+      "status": "allowed"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "blocked-missing-developer-reconstruction",
+      "decision": "block_delivery_scenario",
+      "loop_statuses": {
+        "agentic_coding_loop": "passed",
+        "developer_feedback_loop": "blocked",
+        "external_feedback_loop": "passed"
+      },
+      "reasons": [
+        "developer_reconstruction_missing"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "blocked-risk-over-budget",
+      "decision": "block_delivery_scenario",
+      "loop_statuses": {
+        "agentic_coding_loop": "blocked",
+        "developer_feedback_loop": "passed",
+        "external_feedback_loop": "passed"
+      },
+      "reasons": [
+        "sandbox_risk_outside_budget"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "blocked-external-scope-expansion",
+      "decision": "block_delivery_scenario",
+      "loop_statuses": {
+        "agentic_coding_loop": "passed",
+        "developer_feedback_loop": "passed",
+        "external_feedback_loop": "blocked"
+      },
+      "reasons": [
+        "external_scope_expansion"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "blocked-stale-receipt-chain",
+      "decision": "block_delivery_scenario",
+      "loop_statuses": {
+        "agentic_coding_loop": "blocked",
+        "developer_feedback_loop": "passed",
+        "external_feedback_loop": "passed"
+      },
+      "reasons": [
+        "stale_receipt_chain",
+        "self_intake_invalid"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 5,
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_delivery_scenario",
+      "loop_statuses": {
+        "agentic_coding_loop": "blocked",
+        "developer_feedback_loop": "passed",
+        "external_feedback_loop": "passed"
+      },
+      "reasons": [
+        "ai_review_only_evidence_rejected"
+      ],
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "CBB delivery scenario harness proves metadata-only tri-loop gating for controlled AI delivery promotion.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness"
+    ]
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "external_feedback_original_text_included": false,
+    "external_feedback_private_context_included": false,
+    "external_feedback_raw_payload_included": false,
+    "external_feedback_user_identity_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_customer_data_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+      "schema_version": "cbb-delivery-scenario-v1",
+      "sha256": "52404cd300bc19fa871c73360cd73eadfee9cc3399e4f4371ed99366e1b463e5"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+      "schema_version": "cbb-external-feedback-intake-v1",
+      "sha256": "5a450b27e7e67328d72f457849b2b0c25935f948a8f80796e0e2b6130b26cbb8"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+      "schema_version": "cbb-tri-loop-run-v1",
+      "sha256": "d36d0180349d0de77483440decf66e9bbe2037d4ddfd8aaf8897a379c98b96ac"
+    }
+  ],
+  "schema_version": "cbb-delivery-scenario-harness-verification-v1",
+  "source": {
+    "base_ref": "main",
+    "head_ref": "codex/v0.3.157-cbb-protocol-core",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "merged_at": "2026-07-02T11:39:49Z",
+    "pr_number": 285,
+    "pr_url": "https://github.com/jzvcpe-goat/study-anything/pull/285",
+    "repository": "jzvcpe-goat/study-anything",
+    "source_type": "github_pull_request",
+    "title": "Add Cognitive Black Box protocol core"
+  },
+  "status": "pass",
+  "trust_rules": {
+    "ai_review_only_blocks": true,
+    "all_three_loops_required": true,
+    "developer_reconstruction_required": true,
+    "external_feedback_must_be_structured": true,
+    "external_scope_expansion_blocks": true,
+    "metadata_only": true,
+    "neither_loop_may_dominate": true,
+    "receipt_chain_must_be_current": true
+  },
+  "version": "v0.3.31-alpha"
+}

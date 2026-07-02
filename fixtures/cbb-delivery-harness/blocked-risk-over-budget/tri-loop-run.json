@@ -1,0 +1,100 @@
+{
+  "case_id": "blocked-risk-over-budget",
+  "checks": {
+    "ai_review_only_rejected": true,
+    "developer_reconstruction_present": true,
+    "external_feedback_attributed": true,
+    "external_scope_within_policy": true,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_blocked": true,
+    "receipt_chain_valid": true,
+    "sandbox_risk_within_budget": false,
+    "self_intake_passed": true
+  },
+  "claim_boundary": {
+    "current_claim": "The CBB delivery scenario may promote only when agentic coding, developer reconstruction, and external feedback intake all pass.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_delivery_scenario",
+  "evidence_refs": {
+    "delivery_scenario_ref": "delivery-scenario.json",
+    "external_feedback_intake_ref": "external-feedback-intake.json",
+    "receipt_chain_digest": "c520383b4767923538024ad4aedcf6289d55fe3b595011faec4db2d7afea8355",
+    "receipt_chain_ref": "receipt-chain.json",
+    "self_intake_id": "cbb-self-intake-pr-285",
+    "self_intake_ref": "self-intake-receipt.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "loop_parity": {
+    "agentic_loop_required": true,
+    "developer_loop_required": true,
+    "external_loop_required": true,
+    "neither_loop_may_dominate": true
+  },
+  "loop_statuses": {
+    "agentic_coding_loop": "blocked",
+    "developer_feedback_loop": "passed",
+    "external_feedback_loop": "passed"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "external_feedback_original_text_included": false,
+    "external_feedback_private_context_included": false,
+    "external_feedback_raw_payload_included": false,
+    "external_feedback_user_identity_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "promotion": {
+    "allowed_next_scope": null,
+    "production_mutation_allowed": false,
+    "requested_scope": "controlled_customer_handoff"
+  },
+  "reasons": [
+    "sandbox_risk_outside_budget"
+  ],
+  "scenario_id": "cbb-delivery-scenario-blocked-risk-over-budget",
+  "schema_version": "cbb-tri-loop-run-v1",
+  "source": {
+    "base_ref": "main",
+    "head_ref": "codex/v0.3.157-cbb-protocol-core",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "merged_at": "2026-07-02T11:39:49Z",
+    "pr_number": 285,
+    "pr_url": "https://github.com/jzvcpe-goat/study-anything/pull/285",
+    "repository": "jzvcpe-goat/study-anything",
+    "source_type": "github_pull_request",
+    "title": "Add Cognitive Black Box protocol core"
+  },
+  "status": "blocked",
+  "tri_loop_run_id": "tri-loop-run-blocked-risk-over-budget"
+}

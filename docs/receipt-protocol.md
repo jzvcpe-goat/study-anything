@@ -74,6 +74,27 @@ set. The pack is a manifest of metadata-only artifacts and hashes; it is not a
 raw archive of implementation text, prompts, screenshots, secrets, browser
 records, or customer payloads.
 
+### `cbb-delivery-scenario-v1`
+
+Defines one controlled AI delivery scenario and its three required loops:
+Agentic Coding, Developer Feedback, and External Feedback. The scenario carries
+risk budget, allowed promotion scope, and candidate evidence references. It
+does not contain raw implementation text, raw user feedback, prompts, customer
+payloads, or production credentials.
+
+### `cbb-external-feedback-intake-v1`
+
+Reduces external feedback into metadata-only scope, severity, attribution, and
+handling signals. It explicitly records that original external feedback text,
+private platform context, user identity, and raw feedback payloads are not
+included.
+
+### `cbb-tri-loop-run-v1`
+
+Records the deterministic tri-loop gate decision. It can promote the candidate
+to the next sandbox level only when all three loops pass. It blocks when any
+one loop fails; no loop may dominate the others.
+
 ## Privacy Boundary
 
 Receipts must stay metadata-only.
@@ -105,6 +126,7 @@ python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
 python3 scripts/verify_cbb_self_intake.py --check
+python3 scripts/verify_cbb_delivery_harness.py --check
 ```
 
 These commands prove the local reference contracts, positive fixtures, and

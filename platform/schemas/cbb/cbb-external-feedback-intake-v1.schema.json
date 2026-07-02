@@ -1,0 +1,49 @@
+{
+  "$id": "cbb-external-feedback-intake-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "attribution": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "classification": {
+      "type": "object"
+    },
+    "feedback_intake_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "handling": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "cbb-external-feedback-intake-v1"
+    },
+    "source": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "feedback_intake_id",
+    "project_id",
+    "source",
+    "classification",
+    "attribution",
+    "handling",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "CBB External Feedback Intake v1",
+  "type": "object"
+}
