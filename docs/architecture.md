@@ -72,6 +72,7 @@ The current repository already implements the deterministic, metadata-only trust
 
 - Dual-Loop MVP with controlled failure contracts, sandbox receipts, attention reconstruction traces/summaries, and propagation gate receipts.
 - Delivery Trust Receipt for controlled customer handoff decisions that require both loops and reject AI-review-only promotion.
+- CustomerHandoffPackage for portable JSON/HTML/ZIP handoff evidence that wraps allowed Delivery Trust receipts without expanding scope.
 - FastAPI API layer for local learning workflows.
 - LangGraph-backed and deterministic workflow execution for the Study Anything learning loop.
 - User-owned Agent registry and router; real model credentials stay outside Study Anything.
@@ -88,6 +89,7 @@ The current repository already implements the deterministic, metadata-only trust
 
 - Dual-Loop MVP：可控失败契约、沙箱收据、注意力重构 trace/summary，以及传播门收据。
 - Delivery Trust Receipt：用于受控客户交付的收据，必须同时满足两个 loop，并拒绝 AI 审 AI 式放行。
+- CustomerHandoffPackage：用于可携带 JSON/HTML/ZIP 交付证据，只包装已 allowed 的 Delivery Trust receipt，不扩张 scope。
 - 面向本地学习工作流的 FastAPI API。
 - 用于学习闭环的 LangGraph 和确定性 workflow 执行。
 - 用户自有 Agent registry/router；真实模型密钥留在 Study Anything 外部。

@@ -1,0 +1,4 @@
+{
+  "case_id": "block-missing-delivery-trust",
+  "expected_error": "customer handoff package missing delivery_trust_receipt"
+}

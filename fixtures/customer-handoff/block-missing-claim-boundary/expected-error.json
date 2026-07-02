@@ -1,0 +1,4 @@
+{
+  "case_id": "block-missing-claim-boundary",
+  "expected_error": "customer handoff package must state a current claim"
+}

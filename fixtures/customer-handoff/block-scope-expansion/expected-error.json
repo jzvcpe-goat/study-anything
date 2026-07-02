@@ -1,0 +1,4 @@
+{
+  "case_id": "block-scope-expansion",
+  "expected_error": "customer handoff package scope exceeds delivery trust scope"
+}

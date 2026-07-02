@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 135868,
+    "bytes": 136146,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "2b5cae98e89cb17037250206da155c5b6f056af05cf47b93659042825230255c",
+    "sha256": "13febadd44ef17501ae0613aba79ad85d8e24be45528a623689e07b0452d4eb7",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 40831,
+      "bytes": 41224,
       "path": "README.md",
-      "sha256": "29ad86d37c669bdb4682536958e42fdc733ce67493ebceec8eb829d318ad9908"
+      "sha256": "8ca13672589fee62e1033754f9e9f63eb92e2118e28b5aeb288a14855ecff4fd"
     },
     {
       "bytes": 19503,
@@ -128,14 +128,14 @@
       "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
-      "bytes": 34285,
+      "bytes": 34361,
       "path": "docs/release-checklist.md",
-      "sha256": "f6df9058756dc2619a259c16eea21afccdf9dbee4db42e1a7b07fdfca064cc9c"
+      "sha256": "75305e9657280de791585ecf4a15c51349767df536ade1681841e898b31be9c3"
     },
     {
-      "bytes": 31887,
+      "bytes": 32252,
       "path": "docs/roadmap.md",
-      "sha256": "92c52c318ae7de90d003647835a1aa5a4ea6603cd25092374ac0e7a97b67dede"
+      "sha256": "f78e068d37a5aab6fae23f9643641ee0e38b6433d1ef81c5bf8183da4ffd6c0f"
     },
     {
       "bytes": 140580,
@@ -145,12 +145,12 @@
     {
       "bytes": 11247,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "04465059b372cb6054f01a8d9b20e1272577b0c0ecffc999531f6667383abbc0"
+      "sha256": "a1876928b977781ba3e2d7bb16bb61432373790b64782e6ac31561ed6ee7171b"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "e1ac0d41ace410cc1dfe6fbbb5cad9023824d08287fc3e35eb76bce9c1476319"
+      "sha256": "6cd944b58e8fa343860dd4b13971dc4d0f4868be8a33458d791c77ec2db0175a"
     },
     {
       "bytes": 1764,

@@ -19,6 +19,8 @@ real_agent_eval_verifiers_integrated="true"
 real_agent_eval_verifiers_passed_individually="false"
 delivery_trust_verifiers_integrated="true"
 delivery_trust_verifiers_passed_individually="false"
+customer_handoff_verifiers_integrated="true"
+customer_handoff_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -151,6 +153,8 @@ payload = {
     "real_agent_eval_verifiers_passed_individually": $(json_bool "$real_agent_eval_verifiers_passed_individually"),
     "delivery_trust_verifiers_integrated": $(json_bool "$delivery_trust_verifiers_integrated"),
     "delivery_trust_verifiers_passed_individually": $(json_bool "$delivery_trust_verifiers_passed_individually"),
+    "customer_handoff_verifiers_integrated": $(json_bool "$customer_handoff_verifiers_integrated"),
+    "customer_handoff_verifiers_passed_individually": $(json_bool "$customer_handoff_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "skip_clean_clone": $(json_bool "$skip_clean_clone_enabled"),
@@ -197,8 +201,10 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_attention_reconstruction_lite.py --check
   "$python_bin" scripts/verify_dual_loop_gate.py --check
   "$python_bin" scripts/verify_delivery_trust_receipt.py --check
+  "$python_bin" scripts/verify_customer_handoff_package.py --check
   dual_loop_verifiers_passed_individually="true"
   delivery_trust_verifiers_passed_individually="true"
+  customer_handoff_verifiers_passed_individually="true"
 }
 
 run_llm_depth_verifier_gates() {
@@ -336,6 +342,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_real_agent_eval_bridge.py --check
 "$python_bin" scripts/verify_workbuddy_real_agent_learning_quality.py --check
 "$python_bin" scripts/verify_delivery_trust_receipt.py --check
+"$python_bin" scripts/verify_customer_handoff_package.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_eval_harness.py --check

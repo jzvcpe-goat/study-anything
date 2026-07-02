@@ -18,6 +18,7 @@
 - [ ] `.venv/bin/python scripts/verify_attention_reconstruction_lite.py --check`
 - [ ] `.venv/bin/python scripts/verify_dual_loop_gate.py --check`
 - [ ] `.venv/bin/python scripts/verify_delivery_trust_receipt.py --check`
+- [ ] `.venv/bin/python scripts/verify_customer_handoff_package.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_doctor.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_repair_plan.py --check`
 - [ ] `.venv/bin/python scripts/verify_cognitive_loop_artifact_index.py --check`
