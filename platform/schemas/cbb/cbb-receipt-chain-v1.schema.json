@@ -1,0 +1,73 @@
+{
+  "$id": "cbb-receipt-chain-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "canonicalization": {
+      "const": "json-sort-keys-v1"
+    },
+    "chain_digest": {
+      "minLength": 64,
+      "type": "string"
+    },
+    "chain_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "hash_algorithm": {
+      "const": "sha256"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "receipts": {
+      "items": {
+        "additionalProperties": true,
+        "required": [
+          "receipt_ref",
+          "receipt_type",
+          "role",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "required_receipt_roles": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "cbb-receipt-chain-v1"
+    },
+    "source": {
+      "type": "object"
+    },
+    "tamper_evidence": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "chain_id",
+    "project_id",
+    "source",
+    "hash_algorithm",
+    "canonicalization",
+    "receipts",
+    "required_receipt_roles",
+    "tamper_evidence",
+    "chain_digest",
+    "privacy"
+  ],
+  "title": "CBB Receipt Chain v1",
+  "type": "object"
+}

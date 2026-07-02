@@ -120,6 +120,12 @@ required:
   - id: cognitive-loop.cbb-gate
     command: python3 scripts/verify_cbb_gate.py --check
     blocking: true
+  - id: cognitive-loop.cbb-receipt-chain
+    command: python3 scripts/verify_cbb_receipt_chain.py --check
+    blocking: true
+  - id: cognitive-loop.cbb-self-intake
+    command: python3 scripts/verify_cbb_self_intake.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true

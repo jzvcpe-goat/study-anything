@@ -48,6 +48,21 @@ approval, or general model correctness.
    - Emits `delivery-decision-receipt-v1`.
    - Allows controlled handoff only when every protocol layer passes.
 
+6. Receipt Chain
+   - Emits `cbb-receipt-chain-v1`.
+   - Binds the five protocol receipts to a deterministic digest.
+   - Rejects receipt hash mismatch and stale source commit evidence.
+
+7. Self-Intake
+   - Emits `cbb-self-intake-receipt-v1` and
+     `cbb-delivery-evidence-pack-v1`.
+   - Uses PR metadata, required CI check metadata, reviewer reconstruction,
+     risk-owner scope, and delivery decision receipts to intake a real
+     repository delivery.
+   - The first reference fixture self-intakes PR
+     [#285](https://github.com/jzvcpe-goat/study-anything/pull/285) at merge
+     commit `f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4`.
+
 ## Reference Implementation Boundary
 
 This repository is a deterministic reference implementation. It is useful for
@@ -60,6 +75,8 @@ legal review when required, deployment approval, and customer-specific rollback.
 ```bash
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
+python3 scripts/verify_cbb_receipt_chain.py --check
+python3 scripts/verify_cbb_self_intake.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 

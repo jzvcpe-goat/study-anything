@@ -1,0 +1,5 @@
+{
+  "case_id": "ai-review-only-evidence-rejected",
+  "expected_error": "AI-review-only evidence rejected",
+  "schema_version": "cbb-negative-fixture-v1"
+}

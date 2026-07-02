@@ -1,0 +1,102 @@
+{
+  "claim_boundary": {
+    "current_claim": "This evidence pack is a metadata-only proof package for PR 285 controlled reference handoff.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "included_artifacts": [
+    {
+      "artifact_ref": "claim-boundary.json",
+      "schema_version": "claim-boundary-v1",
+      "sha256": "f5364d55a94e908f986561f2b0a442eb44616abf14fa2c5fe53c7b4bf5c8152c"
+    },
+    {
+      "artifact_ref": "delivery-decision-receipt.json",
+      "schema_version": "delivery-decision-receipt-v1",
+      "sha256": "141978ed85de55b6ab6cd721017ea83dbb8e2ee981c8840d307a0ae505e41d0d"
+    },
+    {
+      "artifact_ref": "reviewer-reconstruction-receipt.json",
+      "schema_version": "reviewer-reconstruction-receipt-v1",
+      "sha256": "f1012106103aa3009a3a76881631dd7c6905e21dfedac4f813aa2e77315f42c3"
+    },
+    {
+      "artifact_ref": "risk-owner-scope.json",
+      "schema_version": "risk-owner-scope-v1",
+      "sha256": "3cf80188d44f7f23c5f835aac84998bd647d46121c2908684e20b6f0ef5ac8d7"
+    },
+    {
+      "artifact_ref": "trust-root.json",
+      "schema_version": "trust-root-v1",
+      "sha256": "2708d36b0c9987a6b889b847e57b864b304088a3d7573f93cae781f57a3a884b"
+    },
+    {
+      "artifact_ref": "receipt-chain.json",
+      "schema_version": "cbb-receipt-chain-v1",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "artifact_ref": "self-intake-receipt.json",
+      "schema_version": "cbb-self-intake-receipt-v1",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    }
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "pack_digest": "919c37049fe8975308c31be8bc4ec15e6c4383d2ed4a5fb9929359b95263d450",
+  "pack_id": "cbb-delivery-evidence-pack-pr-285",
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "receipt_chain_ref": {
+    "artifact_ref": "receipt-chain.json",
+    "chain_digest": "c520383b4767923538024ad4aedcf6289d55fe3b595011faec4db2d7afea8355",
+    "chain_id": "cbb-receipt-chain-pr-285"
+  },
+  "schema_version": "cbb-delivery-evidence-pack-v1",
+  "self_intake_ref": {
+    "artifact_ref": "self-intake-receipt.json",
+    "self_intake_id": "cbb-self-intake-pr-285",
+    "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+  },
+  "source": {
+    "base_ref": "main",
+    "head_ref": "codex/v0.3.157-cbb-protocol-core",
+    "merge_commit": "f88d2ddbe4142c59d0a0f98bb9c7930b824d0fd4",
+    "merged_at": "2026-07-02T11:39:49Z",
+    "pr_number": 285,
+    "pr_url": "https://github.com/jzvcpe-goat/study-anything/pull/285",
+    "repository": "jzvcpe-goat/study-anything",
+    "source_type": "github_pull_request",
+    "title": "Add Cognitive Black Box protocol core"
+  },
+  "status": "ready"
+}
