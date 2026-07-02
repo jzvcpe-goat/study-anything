@@ -1,0 +1,223 @@
+{
+  "schema_version": "cognitive-loop-operating-model-loops-v1",
+  "project": {
+    "id": "study-anything",
+    "public_name": "Cognitive Black Box",
+    "local_adapter": "Study Anything",
+    "mode": "local_first_metadata_only"
+  },
+  "source_model": {
+    "name": "3 key product development loops",
+    "origin": "operator_supplied_diagram",
+    "claim_boundary": "This contract defines repository operating rules. It does not claim full release validation, production approval, or customer outcome guarantees."
+  },
+  "loops": [
+    {
+      "id": "agentic_coding_loop",
+      "name": "Agentic Coding Loop",
+      "cadence": "~minutes",
+      "cadence_unit": "minutes",
+      "left_actor": "coding_agent",
+      "right_actor": "product_spec_evals",
+      "purpose": "Turn product specs, evals, fixtures, schemas, and verifier failures into bounded code changes.",
+      "entry_triggers": [
+        "implementation_change",
+        "verifier_failure",
+        "schema_or_fixture_drift",
+        "release_stack_intake_candidate"
+      ],
+      "allowed_outputs": [
+        "code_patch",
+        "schema_update",
+        "fixture_update",
+        "verifier_update",
+        "generated_receipt",
+        "focused_test_evidence"
+      ],
+      "required_pr_evidence": [
+        "loop_id_declared",
+        "product_spec_or_eval_reference",
+        "focused_verifier_command",
+        "generated_evidence_current",
+        "privacy_boundary_statement",
+        "claim_boundary_statement"
+      ],
+      "promotion_rule": {
+        "release_stack_candidate_allowed_when": [
+          "focused_verifiers_pass",
+          "generated_assets_are_current",
+          "no_raw_private_payloads_or_secrets",
+          "rollback_or_rebuild_path_documented"
+        ],
+        "blocked_when": [
+          "test_output_is_only_asserted_not_run",
+          "claim_boundary_missing",
+          "metadata_only_privacy_boundary_missing"
+        ]
+      },
+      "dual_loop_alignment": {
+        "controlled_failure_environment": "required_for_behavior_or_release_gate_changes",
+        "human_attention_reconstruction": "required_when_risk_or_customer_claim_expands",
+        "propagation_gate": "required_before_customer_handoff_claims"
+      }
+    },
+    {
+      "id": "developer_feedback_loop",
+      "name": "Developer Feedback Loop",
+      "cadence": "~hours",
+      "cadence_unit": "hours",
+      "left_actor": "product_spec_evals",
+      "right_actor": "developer_vision",
+      "purpose": "Convert developer judgment into clearer specs, risk boundaries, acceptance criteria, and next loop assignments.",
+      "entry_triggers": [
+        "product_direction_change",
+        "risk_boundary_change",
+        "acceptance_criteria_change",
+        "architecture_reframe"
+      ],
+      "allowed_outputs": [
+        "decision_card",
+        "risk_note",
+        "prd_delta",
+        "acceptance_criteria_update",
+        "roadmap_delta",
+        "next_loop_goal"
+      ],
+      "required_pr_evidence": [
+        "loop_id_declared",
+        "developer_decision_reference",
+        "spec_or_eval_delta",
+        "in_scope_boundary",
+        "out_of_scope_boundary",
+        "follow_up_loop_assignment",
+        "privacy_boundary_statement",
+        "claim_boundary_statement"
+      ],
+      "promotion_rule": {
+        "release_stack_candidate_allowed_when": [
+          "public_product_claim_changes",
+          "acceptance_criteria_or_release_policy_changes",
+          "corresponding_docs_and_verifiers_are_updated"
+        ],
+        "blocked_when": [
+          "vision_change_without_machine_checkable_boundary",
+          "new_claim_without_verifier_or_receipt",
+          "future_runtime_claimed_as_shipped",
+          "privacy_boundary_missing"
+        ]
+      },
+      "dual_loop_alignment": {
+        "controlled_failure_environment": "defines_what_must_be_sandboxed_next",
+        "human_attention_reconstruction": "primary_loop_output",
+        "propagation_gate": "required_when_decision_expands_autonomy_or_customer_claims"
+      }
+    },
+    {
+      "id": "external_feedback_loop",
+      "name": "External Feedback Loop",
+      "cadence": "~days",
+      "cadence_unit": "days",
+      "left_actor": "developer_vision",
+      "right_actor": "external_feedback",
+      "purpose": "Turn adopter, platform-agent, support, and release-asset feedback into product decisions and reproducible evidence.",
+      "entry_triggers": [
+        "workbuddy_or_kimi_field_report",
+        "codex_or_hermes_plugin_feedback",
+        "github_issue_or_support_ticket",
+        "first_adopter_result",
+        "release_asset_adoption_result"
+      ],
+      "allowed_outputs": [
+        "redacted_field_report",
+        "support_triage_receipt",
+        "adopter_evidence_archive_update",
+        "platform_pack_update",
+        "commercial_or_roadmap_signal",
+        "customer_handoff_boundary_delta"
+      ],
+      "required_pr_evidence": [
+        "loop_id_declared",
+        "external_evidence_reference",
+        "redaction_or_privacy_receipt",
+        "product_decision_summary",
+        "release_stack_or_roadmap_effect",
+        "reproducibility_note",
+        "privacy_boundary_statement",
+        "claim_boundary_statement"
+      ],
+      "promotion_rule": {
+        "release_stack_candidate_allowed_when": [
+          "external_feedback_is_metadata_only",
+          "support_or_adopter_status_is_reproducible",
+          "product_decision_is_captured",
+          "claim_boundary_is_not_expanded_without_gate"
+        ],
+        "blocked_when": [
+          "raw_user_content_included",
+          "secret_or_agent_credential_included",
+          "platform_praise_without_reproducible_evidence",
+          "customer_claim_expands_without_delivery_trust_receipt"
+        ]
+      },
+      "dual_loop_alignment": {
+        "controlled_failure_environment": "replays_external_failure_inside_sandbox_before_promotion",
+        "human_attention_reconstruction": "requires_developer_to_restate_feedback_boundary",
+        "propagation_gate": "blocks_external_feedback_from_directly_expanding_release_claims"
+      }
+    }
+  ],
+  "pull_request_contract": {
+    "required_fields": [
+      "Loop",
+      "Evidence",
+      "Claim boundary",
+      "Privacy boundary",
+      "Release-stack effect"
+    ],
+    "primary_loop_exactly_one": true,
+    "secondary_loops_allowed_as_refs": true,
+    "claim_boundary_required": true,
+    "privacy_boundary_required": true,
+    "evidence_refs_required": true
+  },
+  "release_stack": {
+    "candidate_entry_requires": [
+      "primary_loop_declared",
+      "focused_verifier_passed",
+      "generated_evidence_current",
+      "metadata_only_privacy_confirmed",
+      "claim_boundary_confirmed"
+    ],
+    "intake_requires": [
+      "release_stack_fixture",
+      "required_github_checks_named",
+      "local_gate_summary",
+      "privacy_assertions",
+      "loop_classification"
+    ],
+    "promotion_requires": [
+      "candidate_group_defined",
+      "previous_group_archived",
+      "top_level_stack_updated",
+      "bundle_and_adoption_pack_refreshed",
+      "self_intake_goal_defined_after_merge",
+      "loop_classification_preserved"
+    ],
+    "self_intake_after_merge": true
+  },
+  "privacy": {
+    "metadata_only": true,
+    "raw_source_text_included": false,
+    "raw_report_text_included": false,
+    "learner_answers_included": false,
+    "screenshots_included": false,
+    "keystrokes_included": false,
+    "mouse_coordinates_included": false,
+    "biometrics_included": false,
+    "real_model_keys_included": false,
+    "agent_credentials_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "signed_urls_included": false,
+    "production_mutation_allowed_by_default": false
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "acceptance": {
+    "generated_report": "platform/generated/study-anything-operating-model-loops.json",
+    "minimum_command": "python3 scripts/verify_operating_model_loops.py --check",
+    "release_check_integrated": true
+  },
+  "claim_boundary": "This verifier proves the repository operating-model loop contract is present, metadata-only, and release-stack bounded. It does not prove a full release_check.sh run.",
+  "loops": [
+    {
+      "actors": [
+        "coding_agent",
+        "product_spec_evals"
+      ],
+      "blocked_conditions": 3,
+      "cadence": "~minutes",
+      "id": "agentic_coding_loop",
+      "release_stack_candidate_conditions": 4,
+      "required_evidence_count": 6
+    },
+    {
+      "actors": [
+        "product_spec_evals",
+        "developer_vision"
+      ],
+      "blocked_conditions": 4,
+      "cadence": "~hours",
+      "id": "developer_feedback_loop",
+      "release_stack_candidate_conditions": 3,
+      "required_evidence_count": 8
+    },
+    {
+      "actors": [
+        "developer_vision",
+        "external_feedback"
+      ],
+      "blocked_conditions": 4,
+      "cadence": "~days",
+      "id": "external_feedback_loop",
+      "release_stack_candidate_conditions": 4,
+      "required_evidence_count": 8
+    }
+  ],
+  "operating_model_doc": {
+    "mentions_pr_contract": true,
+    "mentions_release_stack_rule": true,
+    "path": "docs/operating-model.md",
+    "required_markers_present": true
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "biometrics_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "forbidden_marker_patterns_scanned": 8,
+    "keystrokes_included": false,
+    "learner_answers_included": false,
+    "metadata_only": true,
+    "mouse_coordinates_included": false,
+    "production_mutation_allowed_by_default": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false
+  },
+  "pull_request_contract": {
+    "primary_loop_exactly_one": true,
+    "required_fields": [
+      "Claim boundary",
+      "Evidence",
+      "Loop",
+      "Privacy boundary",
+      "Release-stack effect"
+    ]
+  },
+  "release_stack": {
+    "candidate_entry_requires": [
+      "primary_loop_declared",
+      "focused_verifier_passed",
+      "generated_evidence_current",
+      "metadata_only_privacy_confirmed",
+      "claim_boundary_confirmed"
+    ],
+    "intake_requires": [
+      "release_stack_fixture",
+      "required_github_checks_named",
+      "local_gate_summary",
+      "privacy_assertions",
+      "loop_classification"
+    ],
+    "promotion_requires": [
+      "candidate_group_defined",
+      "previous_group_archived",
+      "top_level_stack_updated",
+      "bundle_and_adoption_pack_refreshed",
+      "self_intake_goal_defined_after_merge",
+      "loop_classification_preserved"
+    ],
+    "self_intake_after_merge": true
+  },
+  "schema_version": "study-anything-operating-model-loops-verification-v1",
+  "source_contract": ".cognitive-loop/loops.yaml",
+  "source_diagram_model": {
+    "claim_boundary": "This contract defines repository operating rules. It does not claim full release validation, production approval, or customer outcome guarantees.",
+    "name": "3 key product development loops",
+    "origin": "operator_supplied_diagram"
+  },
+  "status": "pass"
+}

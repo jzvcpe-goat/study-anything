@@ -64,6 +64,11 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Loop contract bootstrap verification report.",
     ),
     (
+        "platform/generated/study-anything-operating-model-loops.json",
+        "generated_asset",
+        "Cognitive Black Box three-loop operating model verification report.",
+    ),
+    (
         "platform/generated/study-anything-dual-loop-contracts.json",
         "generated_asset",
         "Dual-Loop contract schema and privacy verification report.",
@@ -1292,6 +1297,21 @@ FILES: list[tuple[str, str, str]] = [
         "docs/okf-alignment.md",
         "docs",
         "OKF-style Cognitive Black Box knowledge-bundle alignment guide.",
+    ),
+    (
+        "docs/operating-model.md",
+        "docs",
+        "Cognitive Black Box three-loop operating model and PR evidence rules.",
+    ),
+    (
+        ".cognitive-loop/loops.yaml",
+        "cognitive_loop_contract",
+        "Machine-readable three-loop operating model contract.",
+    ),
+    (
+        "scripts/verify_operating_model_loops.py",
+        "verification",
+        "Verify Cognitive Black Box operating-model loop contract and release-stack boundaries.",
     ),
     (
         "platform/okf/examples/demo-session.json",
