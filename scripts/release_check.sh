@@ -5,6 +5,7 @@ ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 cd "$ROOT"
 
 dual_loop_only="${DUAL_LOOP_ONLY:-0}"
+cbb_protocol_only="${CBB_PROTOCOL_ONLY:-0}"
 skip_clean_clone="${SKIP_CLEAN_CLONE:-0}"
 receipt_path=".cognitive-loop/artifacts/release/release-check-receipt.json"
 receipt_written="false"
@@ -21,6 +22,8 @@ delivery_trust_verifiers_integrated="true"
 delivery_trust_verifiers_passed_individually="false"
 customer_handoff_verifiers_integrated="true"
 customer_handoff_verifiers_passed_individually="false"
+cbb_protocol_verifiers_integrated="true"
+cbb_protocol_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -29,14 +32,16 @@ PIP_RETRIES="${PIP_RETRIES:-3}"
 
 usage() {
   cat <<'EOF'
-Usage: ./scripts/release_check.sh [--dual-loop-only] [--skip-clean-clone]
+Usage: ./scripts/release_check.sh [--dual-loop-only] [--cbb-protocol-only] [--skip-clean-clone]
 
 Modes:
   --dual-loop-only   Run only the Dual-Loop verifier gates. This is NOT full release validation.
+  --cbb-protocol-only Run only the CBB protocol verifier gates. This is NOT full release validation.
   --skip-clean-clone Run all local gates except clean-clone adoption. This is NOT full release validation.
 
 Environment:
   DUAL_LOOP_ONLY=1
+  CBB_PROTOCOL_ONLY=1
   SKIP_CLEAN_CLONE=1
   PIP_INSTALL_TIMEOUT_SECONDS=900
   PIP_DEFAULT_TIMEOUT=60
@@ -48,6 +53,9 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     --dual-loop-only)
       dual_loop_only="1"
+      ;;
+    --cbb-protocol-only)
+      cbb_protocol_only="1"
       ;;
     --skip-clean-clone)
       skip_clean_clone="1"
@@ -77,6 +85,7 @@ is_enabled() {
 }
 
 dual_loop_only_enabled="false"
+cbb_protocol_only_enabled="false"
 skip_clean_clone_enabled="false"
 if is_enabled "$dual_loop_only"; then
   dual_loop_only_enabled="true"
@@ -84,9 +93,15 @@ if is_enabled "$dual_loop_only"; then
   known_issue="dual-loop-only partial validation mode requested"
   claim_boundary="Partial verification only: do not claim full release_check.sh passed."
 fi
+if is_enabled "$cbb_protocol_only"; then
+  cbb_protocol_only_enabled="true"
+  skip_clean_clone_enabled="true"
+  known_issue="cbb-protocol-only partial validation mode requested"
+  claim_boundary="Partial verification only: do not claim full release_check.sh passed."
+fi
 if is_enabled "$skip_clean_clone"; then
   skip_clean_clone_enabled="true"
-  if [ "$dual_loop_only_enabled" != "true" ]; then
+  if [ "$dual_loop_only_enabled" != "true" ] && [ "$cbb_protocol_only_enabled" != "true" ]; then
     known_issue="clean-clone adoption phase skipped by operator request"
     claim_boundary="Partial verification only: clean-clone adoption was skipped, so do not claim full release_check.sh passed."
   fi
@@ -155,8 +170,11 @@ payload = {
     "delivery_trust_verifiers_passed_individually": $(json_bool "$delivery_trust_verifiers_passed_individually"),
     "customer_handoff_verifiers_integrated": $(json_bool "$customer_handoff_verifiers_integrated"),
     "customer_handoff_verifiers_passed_individually": $(json_bool "$customer_handoff_verifiers_passed_individually"),
+    "cbb_protocol_verifiers_integrated": $(json_bool "$cbb_protocol_verifiers_integrated"),
+    "cbb_protocol_verifiers_passed_individually": $(json_bool "$cbb_protocol_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
+        "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
         "skip_clean_clone": $(json_bool "$skip_clean_clone_enabled"),
     },
     "dependency_install_bounds": {
@@ -208,6 +226,13 @@ run_dual_loop_verifier_gates() {
   customer_handoff_verifiers_passed_individually="true"
 }
 
+run_cbb_protocol_verifier_gates() {
+  phase "CBB protocol verifier gates"
+  "$python_bin" scripts/verify_cbb_protocol_contracts.py --check
+  "$python_bin" scripts/verify_cbb_gate.py --check
+  cbb_protocol_verifiers_passed_individually="true"
+}
+
 run_llm_depth_verifier_gates() {
   phase "LLM Depth verifier gates"
   "$python_bin" scripts/verify_llm_depth_risk_engine.py --check
@@ -225,6 +250,8 @@ printf "Study Anything release check\n"
 printf "============================\n"
 if [ "$dual_loop_only_enabled" = "true" ]; then
   printf "mode  dual-loop-only partial verification; this is NOT full release validation.\n"
+elif [ "$cbb_protocol_only_enabled" = "true" ]; then
+  printf "mode  cbb-protocol-only partial verification; this is NOT full release validation.\n"
 elif [ "$skip_clean_clone_enabled" = "true" ]; then
   printf "mode  skip-clean-clone partial verification; this is NOT full release validation.\n"
 else
@@ -247,12 +274,24 @@ fi
 phase "repository sanity"
 printf "Using Python runtime: %s\n" "$python_bin"
 if [ "$dual_loop_only_enabled" = "true" ]; then
-  printf "partial  skipping FastAPI/full dependency sanity; running Dual-Loop gates only.\n"
+  printf "partial  skipping FastAPI/full dependency sanity; running Dual-Loop and CBB protocol gates only.\n"
   run_dual_loop_verifier_gates
+  run_cbb_protocol_verifier_gates
   phase "release receipt summary"
   write_release_receipt 0
   printf "release receipt: %s\n" "$receipt_path"
   printf "ok    Dual-Loop-only partial verification completed; full release validation was not run.\n"
+  trap - EXIT
+  exit 0
+fi
+
+if [ "$cbb_protocol_only_enabled" = "true" ]; then
+  printf "partial  skipping FastAPI/full dependency sanity; running CBB protocol gates only.\n"
+  run_cbb_protocol_verifier_gates
+  phase "release receipt summary"
+  write_release_receipt 0
+  printf "release receipt: %s\n" "$receipt_path"
+  printf "ok    CBB-protocol-only partial verification completed; full release validation was not run.\n"
   trap - EXIT
   exit 0
 fi
@@ -458,6 +497,7 @@ fi
 printf "hint  after launching Docker Compose, run: API_BASE=http://127.0.0.1:8000 python3 scripts/verify_full_api_flow.py\n"
 
 run_dual_loop_verifier_gates
+run_cbb_protocol_verifier_gates
 run_llm_depth_verifier_gates
 run_real_agent_eval_verifier_gates
 

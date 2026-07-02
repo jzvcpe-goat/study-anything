@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reviewer-reconstruction-receipt-v1",
+  "title": "CBB Reviewer Reconstruction Receipt v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "reviewer_receipt_id",
+    "project_id",
+    "reviewer_ref",
+    "qualification",
+    "reconstruction",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "reviewer-reconstruction-receipt-v1"
+    },
+    "qualification": {
+      "type": "object",
+      "required": [
+        "qualified_for_scope",
+        "scope_ref",
+        "qualification_basis"
+      ]
+    },
+    "reconstruction": {
+      "type": "object",
+      "required": [
+        "status",
+        "active_reconstruction",
+        "passive_attention_only",
+        "claim_boundary_reconstructed",
+        "risk_owner_scope_reconstructed"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "passed",
+            "failed"
+          ]
+        },
+        "active_reconstruction": {
+          "const": true
+        },
+        "passive_attention_only": {
+          "const": false
+        }
+      }
+    }
+  }
+}

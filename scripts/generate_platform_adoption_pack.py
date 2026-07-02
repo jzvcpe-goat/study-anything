@@ -18,6 +18,21 @@ MANIFEST_PATH = OUTPUT_DIR / "study-anything-platform-adoption-pack.json"
 ARCHIVE_PATH = OUTPUT_DIR / "study-anything-platform-adoption-pack.zip"
 ARCHIVE_ROOT = "study-anything-platform-adoption-pack"
 
+CBB_PROTOCOL_CASES = [
+    "safe-controlled-handoff",
+    "missing-claim-boundary",
+    "reviewer-not-qualified",
+    "recipient-risk-unknown",
+    "ai-review-only-rejected",
+]
+CBB_PROTOCOL_ARTIFACTS = [
+    "claim-boundary.json",
+    "trust-root.json",
+    "reviewer-reconstruction-receipt.json",
+    "risk-owner-scope.json",
+    "delivery-decision-receipt.json",
+]
+
 
 PACK_FILES: list[tuple[str, str, str]] = [
     ("README.md", "root_doc", "Repository overview and local-first launch entrypoint."),
@@ -70,6 +85,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/trust-model.md", "operator_doc", "Cognitive Black Box AI delivery trust model."),
     ("docs/delivery-trust-receipt.md", "operator_doc", "Delivery Trust Receipt contract and verifier guide."),
     ("docs/customer-handoff-package.md", "operator_doc", "CustomerHandoffPackage portable evidence package guide."),
+    ("docs/protocol.md", "operator_doc", "Cognitive Black Box protocol core and AI delivery trust boundary guide."),
+    ("docs/receipt-protocol.md", "operator_doc", "Cognitive Black Box metadata-only receipt protocol guide."),
+    ("docs/adapters/study-anything.md", "operator_doc", "Study Anything adapter boundary for the Cognitive Black Box protocol."),
     (".cognitive-loop/loops.yaml", "cognitive_loop_contract", "Machine-readable three-loop operating model contract."),
     (".cognitive-loop/release-stack-policy.yaml", "cognitive_loop_contract", "Machine-readable release-stack recursion guard contract."),
     (".cognitive-loop/watchers.yaml", "cognitive_loop_contract", "Optional Cognitive Loop manual watcher ingest contract."),
@@ -105,6 +123,11 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json", "schema", "Dual-Loop propagation gate receipt JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-receipt-v1.schema.json", "schema", "Delivery Trust Receipt JSON Schema."),
     ("platform/schemas/customer-handoff/customer-handoff-package-v1.schema.json", "schema", "CustomerHandoffPackage JSON Schema."),
+    ("platform/schemas/cbb/claim-boundary-v1.schema.json", "schema", "Cognitive Black Box Claim Boundary JSON Schema."),
+    ("platform/schemas/cbb/trust-root-v1.schema.json", "schema", "Cognitive Black Box Trust Root JSON Schema."),
+    ("platform/schemas/cbb/reviewer-reconstruction-receipt-v1.schema.json", "schema", "Cognitive Black Box Reviewer Reconstruction Receipt JSON Schema."),
+    ("platform/schemas/cbb/risk-owner-scope-v1.schema.json", "schema", "Cognitive Black Box Risk Owner Scope JSON Schema."),
+    ("platform/schemas/cbb/delivery-decision-receipt-v1.schema.json", "schema", "Cognitive Black Box Delivery Decision Receipt JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -146,6 +169,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-customer-handoff-package.html", "submission_report", "Customer Handoff Package verification HTML report."),
     ("platform/generated/study-anything-customer-handoff-package.zip", "submission_report", "Portable metadata-only Customer Handoff Package archive."),
     ("platform/generated/study-anything-dual-loop-scenario-harness.json", "submission_report", "Dual Loop Trust Scenario Harness verification report for customer delivery readiness."),
+    ("platform/generated/study-anything-cbb-protocol-contracts.json", "submission_report", "Cognitive Black Box protocol contract and privacy verification report."),
+    ("platform/generated/study-anything-cbb-gate.json", "submission_report", "Cognitive Black Box deterministic delivery gate verification report."),
     ("platform/generated/study-anything-workbuddy-inline-learning-flow.json", "submission_report", "WorkBuddy inline learning flow verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -420,6 +445,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("fixtures/customer-handoff/block-missing-delivery-trust/expected-error.json", "customer_handoff_fixture", "CustomerHandoffPackage negative fixture for missing DeliveryTrustReceipt."),
     ("fixtures/customer-handoff/block-scope-expansion/expected-error.json", "customer_handoff_fixture", "CustomerHandoffPackage negative fixture for scope expansion."),
     ("fixtures/customer-handoff/block-missing-claim-boundary/expected-error.json", "customer_handoff_fixture", "CustomerHandoffPackage negative fixture for missing claim boundary."),
+    *[
+        (
+            f"fixtures/cbb-protocol/{case_id}/{artifact}",
+            "cbb_fixture",
+            f"Cognitive Black Box protocol {case_id} {artifact} fixture.",
+        )
+        for case_id in CBB_PROTOCOL_CASES
+        for artifact in CBB_PROTOCOL_ARTIFACTS
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -545,6 +579,10 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_customer_handoff_package.py", "verification", "Verify CustomerHandoffPackage pass/fail fixtures, ZIP integrity, and scope boundaries."),
     ("scripts/run_dual_loop_scenario_harness.py", "cli", "Run deterministic Dual Loop customer-delivery trust scenario harness."),
     ("scripts/verify_dual_loop_scenario_harness.py", "verification", "Verify Dual Loop trust scenario fixtures, runner output, and handoff gating."),
+    ("scripts/cbb_protocol_cli.py", "cli", "Cognitive Black Box deterministic protocol demo artifact generator."),
+    ("scripts/cbb_gate.py", "cli", "Cognitive Black Box delivery decision gate evaluator."),
+    ("scripts/verify_cbb_protocol_contracts.py", "verification", "Cognitive Black Box protocol contract and metadata-only privacy verifier."),
+    ("scripts/verify_cbb_gate.py", "verification", "Cognitive Black Box delivery gate pass/fail fixture verifier."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
     ("scripts/verify_cognitive_loop_cli.py", "verification", "Cognitive Loop CLI and static HTML artifact verifier."),
     ("scripts/verify_cognitive_loop_run_once.py", "verification", "Cognitive Loop run-once evidence verifier."),
@@ -595,6 +633,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/mastra-runtime/src/workflows/cognitive-loop-mastra-adapter.ts", "mastra_runtime", "Runtime-local copy of the Cognitive Loop Mastra workflow adapter kept identical to the public pack."),
     ("apps/api/study_anything/core/cognitive_loop_learning_adapter.py", "api_core", "Study Anything Learning Adapter bridge for Cognitive Loop mastery records."),
     ("apps/api/study_anything/core/dual_loop.py", "api_core", "Dual-Loop metadata-only artifact builders, validators, and propagation gate logic."),
+    ("apps/api/study_anything/core/cbb_protocol.py", "api_core", "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel."),
     ("scripts/cognitive_loop_study_adapter_cli.py", "cli", "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence."),
     ("scripts/verify_cognitive_loop_mastra_runtime_service.py", "verification", "Verify the repository-started Cognitive Loop Mastra runtime service and privacy boundary."),
     ("scripts/verify_cognitive_loop_mastra_runtime_durable.py", "verification", "Verify the durable Cognitive Loop Mastra runtime suspend/resume privacy boundary."),
@@ -875,6 +914,13 @@ def manifest_payload() -> dict[str, object]:
                 "delivery-trust-receipt-verification-v1",
                 "customer-handoff-package-v1",
                 "customer-handoff-package-verification-v1",
+                "claim-boundary-v1",
+                "trust-root-v1",
+                "reviewer-reconstruction-receipt-v1",
+                "risk-owner-scope-v1",
+                "delivery-decision-receipt-v1",
+                "cbb-protocol-contracts-verification-v1",
+                "cbb-gate-verification-v1",
                 "cognitive-loop-review-agent-eval-harness-v1",
                 "cognitive-loop-review-agent-ci-receipt-v1",
                 "cognitive-loop-review-agent-pr-comment-pack-v1",

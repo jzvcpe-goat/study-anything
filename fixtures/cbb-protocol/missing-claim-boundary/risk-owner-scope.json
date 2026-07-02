@@ -1,0 +1,46 @@
+{
+  "allowed_delivery_modes": [
+    "controlled_customer_handoff"
+  ],
+  "created_at": "2026-06-28T00:00:00Z",
+  "irreversible_external_effects_allowed": false,
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "known_recipient_risk": true,
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "production_mutation_allowed": false,
+  "project_id": "study-anything",
+  "recipient_ref": "recipient:controlled-customer-reviewer",
+  "risk_budget": {
+    "maximum_scope": "controlled_customer_handoff",
+    "recipient_context_known": true,
+    "requires_recipient_context": true
+  },
+  "risk_owner_ref": "owner:local-operator",
+  "schema_version": "risk-owner-scope-v1",
+  "scope_id": "owner-scope-demo-001"
+}

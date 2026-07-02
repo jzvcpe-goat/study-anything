@@ -1,0 +1,98 @@
+{
+  "acceptance": {
+    "minimum_command": "python3 scripts/verify_cbb_protocol_contracts.py --check",
+    "schema_dir": "platform/schemas/cbb"
+  },
+  "artifact_contracts": {
+    "claim_boundary": "claim-boundary-v1",
+    "delivery_decision": "delivery-decision-receipt-v1",
+    "reviewer_reconstruction": "reviewer-reconstruction-receipt-v1",
+    "risk_owner_scope": "risk-owner-scope-v1",
+    "trust_root": "trust-root-v1"
+  },
+  "claim_boundary": {
+    "current_claim": "CBB protocol contracts are valid for local deterministic reference implementation checks.",
+    "not_claimed": [
+      "production customer trust",
+      "legal certification",
+      "security certification",
+      "general model correctness"
+    ]
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_checks": {
+    "ai_review_only_trust_rejected": "AI-review-only trust basis is forbidden",
+    "forbidden_api_key_field_rejected": "claim-boundary-v1:$.api_key uses forbidden field",
+    "missing_claim_boundary_rejected": "claim boundary must state a current claim",
+    "recipient_risk_unknown_rejected": "recipient risk is unknown",
+    "reviewer_not_qualified_rejected": "reviewer is not qualified for this scope"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_verifier": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_customer_data_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/claim-boundary-v1.schema.json",
+      "schema_version": "claim-boundary-v1",
+      "sha256": "3e2f45de3c846109e4695b09fe72c126d06bb8f00f78b5a8f29b7d10728bbf7c"
+    },
+    {
+      "path": "platform/schemas/cbb/trust-root-v1.schema.json",
+      "schema_version": "trust-root-v1",
+      "sha256": "2757d2c19adce5bd9ac8d63643a97c34e5892929bd96cd5d1b99d59c3bd0557a"
+    },
+    {
+      "path": "platform/schemas/cbb/reviewer-reconstruction-receipt-v1.schema.json",
+      "schema_version": "reviewer-reconstruction-receipt-v1",
+      "sha256": "2bef52aa9046d4153ceb0349408f9f7ef6bf4791e5d922c198a7209846156ae6"
+    },
+    {
+      "path": "platform/schemas/cbb/risk-owner-scope-v1.schema.json",
+      "schema_version": "risk-owner-scope-v1",
+      "sha256": "3c93c2e419ae2fb51362bd13bccdde5691e4adf59a64eeb04dca0758d1e86142"
+    },
+    {
+      "path": "platform/schemas/cbb/delivery-decision-receipt-v1.schema.json",
+      "schema_version": "delivery-decision-receipt-v1",
+      "sha256": "25243de06001a1dafa1e6f87001c13fb84877afe75c7749cc91426717aff2849"
+    }
+  ],
+  "schema_version": "cbb-protocol-contracts-verification-v1",
+  "status": "pass",
+  "trust_rules": {
+    "ai_review_only_forbidden": true,
+    "claim_boundary_required": true,
+    "deterministic_kernel_required": true,
+    "model_calls_forbidden_in_v0_1": true,
+    "production_mutation_blocked": true,
+    "reviewer_active_reconstruction_required": true,
+    "risk_owner_scope_required": true
+  },
+  "version": "v0.3.31-alpha"
+}

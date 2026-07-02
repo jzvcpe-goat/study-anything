@@ -1,0 +1,61 @@
+{
+  "accepted_evidence": [
+    "controlled_failure_environment",
+    "human_attention_reconstruction",
+    "dual_loop_gate",
+    "claim_boundary",
+    "risk_owner_scope",
+    "delivery_trust_receipt"
+  ],
+  "claim_boundary": {
+    "not_claimed": [
+      "production customer trust",
+      "universal model correctness",
+      "regulatory approval"
+    ],
+    "reference_implementation_only": true
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "forbidden_trust_bases": [
+    "ai_review_only",
+    "raw_human_attention_stream",
+    "unbounded_manual_review",
+    "unscoped_external_eval"
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "kernel": {
+    "deterministic": true,
+    "model_calls_allowed": false,
+    "production_mutation_allowed": false,
+    "raw_payload_access_allowed": false
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "schema_version": "trust-root-v1",
+  "trust_root_id": "trust-root-demo-001"
+}

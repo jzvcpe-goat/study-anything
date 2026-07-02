@@ -114,6 +114,12 @@ required:
   - id: cognitive-loop.dual-loop-scenario-harness
     command: python3 scripts/verify_dual_loop_scenario_harness.py --check
     blocking: true
+  - id: cognitive-loop.cbb-protocol-contracts
+    command: python3 scripts/verify_cbb_protocol_contracts.py --check
+    blocking: true
+  - id: cognitive-loop.cbb-gate
+    command: python3 scripts/verify_cbb_gate.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true
