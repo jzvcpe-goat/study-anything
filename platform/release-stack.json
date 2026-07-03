@@ -1,5 +1,5 @@
 {
-  "current_group": "release-stack-promotion-v0.3.160",
+  "current_group": "release-stack-promotion-v0.3.162",
   "privacy_assertions": {
     "agent_endpoint_secrets_included": false,
     "check_annotations_included": false,
@@ -40,12 +40,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 288,
-      "branch": "codex/v0.3.160-release-stack-cbb-current-group",
+      "pr": 290,
+      "branch": "codex/v0.3.162-dual-loop-trust-scenario-pack",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "b40e74125887d4a7697dad1a9bfd3d89ea677b06",
+      "merge_commit": "e4f73aa14ef156b766e95a4e32094983ce4a267b",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -56,7 +56,8 @@
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
         "platform/generated/study-anything-platform-bundle.json",
         "platform/generated/study-anything-platform-adoption-pack.json",
-        "platform/generated/study-anything-release-stack-policy.json",
+        "platform/generated/study-anything-release-asset-adoption.json",
+        "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
         "platform/generated/study-anything-cbb-delivery-scenario-harness.json"
       ]
     }
@@ -3457,8 +3458,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.160",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed self-intake for the Cognitive Black Box release-stack promotion chain.",
       "required_checks": [
@@ -3507,6 +3508,76 @@
             "platform/generated/study-anything-platform-bundle.json",
             "platform/generated/study-anything-platform-adoption-pack.json",
             "platform/generated/study-anything-release-stack-policy.json",
+            "platform/generated/study-anything-cbb-delivery-scenario-harness.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.162",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed self-intake for the Dual Loop Trust Scenario Pack release asset chain.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-operating-model-loops.json",
+        "platform/generated/study-anything-cbb-receipt-chain.json",
+        "platform/generated/study-anything-cbb-self-intake.json",
+        "platform/generated/study-anything-cbb-delivery-scenario-harness.json"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 290,
+          "branch": "codex/v0.3.162-dual-loop-trust-scenario-pack",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "e4f73aa14ef156b766e95a4e32094983ce4a267b",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-release-asset-adoption.json",
+            "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
             "platform/generated/study-anything-cbb-delivery-scenario-harness.json"
           ]
         }
