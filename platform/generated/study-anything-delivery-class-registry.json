@@ -1,0 +1,135 @@
+{
+  "acceptance": {
+    "minimum_command": "python3 scripts/verify_delivery_class_registry.py --check",
+    "registry_report": "platform/generated/study-anything-delivery-class-registry.json"
+  },
+  "claim_boundary": {
+    "current_claim": "The registry proves delivery classes are wired into metadata-only Dual Loop / Delivery Trust evidence. It does not prove production customer delivery, legal certification, or complete factual correctness.",
+    "not_claimed": [
+      "automatic customer delivery",
+      "production trust without external adoption",
+      "legal or financial certification",
+      "replacement for customer-specific review",
+      "general model correctness"
+    ]
+  },
+  "delivery_class_count": 2,
+  "delivery_classes": [
+    {
+      "allowed_case_count": 1,
+      "assets": {
+        "doc": {
+          "path": "docs/code-review-delivery-class.md",
+          "sha256": "37a85eda60cd5dd891aa593931e24f4971293a1b74447b2c998b39a1069e80af"
+        },
+        "fixture_root": "fixtures/code-review-delivery-class",
+        "html_report": {
+          "path": "platform/generated/study-anything-code-review-delivery-class.html",
+          "sha256": "eb0e3ab827b3d1eb8d7c92e806c529fc7f79187b27a411e2e100ecedd1b68d32"
+        },
+        "report": {
+          "path": "platform/generated/study-anything-code-review-delivery-class.json",
+          "sha256": "4e53174c38fd48b0575130f5530edcbf8188328619216b50cf172341c42d721d"
+        },
+        "schema": {
+          "path": "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+          "sha256": "15ed9042ee3375e93f62101efc3d02b4bd02e8561ad4f7fc33341356da8a877e"
+        }
+      },
+      "blocked_case_count": 3,
+      "case_count": 4,
+      "claim_boundary_hash": "e4a168f72f3eea90f4383e656bcb07dab9f78790ce6414b95d7c47d3c077394b",
+      "display_name": "Code Review Handoff",
+      "id": "code_review_handoff",
+      "negative_check_ids": [
+        "automatic_pr_commenting_rejected",
+        "eval_sufficient_alone_rejected",
+        "production_mutation_rejected",
+        "raw_diff_rejected"
+      ],
+      "privacy": {
+        "external_publication_performed": false,
+        "metadata_only": true,
+        "model_calls_performed": false,
+        "production_mutation_performed": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "user_owned_agent_credentials_included": false
+      },
+      "release_check_integrated": true,
+      "schema_version": "code-review-delivery-class-verification-v1",
+      "verifier_command": "python3 scripts/verify_code_review_delivery_class_handoff.py --check"
+    },
+    {
+      "allowed_case_count": 1,
+      "assets": {
+        "doc": {
+          "path": "docs/client-report-delivery-class.md",
+          "sha256": "1d28d7ed11fc7815b13f98019c21a8cb592ba4e2185069276256ba6d08ed3fce"
+        },
+        "fixture_root": "fixtures/client-report-delivery-class",
+        "html_report": {
+          "path": "platform/generated/study-anything-client-report-delivery-class.html",
+          "sha256": "0824aaa1dbc537b93d71554af9fc6eaaad0493731ac500b6630b51ce7601d01a"
+        },
+        "report": {
+          "path": "platform/generated/study-anything-client-report-delivery-class.json",
+          "sha256": "a3658760588fba48a7ca6f607d61a47d42ae6e32db50ad232041ff9611525df8"
+        },
+        "schema": {
+          "path": "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+          "sha256": "29b813a54253f02ccb9f942d1828860e5c4a64932776b36f2a8ccf7174cc532b"
+        }
+      },
+      "blocked_case_count": 4,
+      "case_count": 5,
+      "claim_boundary_hash": "709803cbfc2169253e26bac02c80482e8a622265977397e2c902a0115a3a0caf",
+      "display_name": "Client Report Handoff",
+      "id": "client_report_handoff",
+      "negative_check_ids": [
+        "automatic_customer_sending_rejected",
+        "eval_sufficient_alone_rejected",
+        "external_publication_rejected",
+        "raw_customer_payload_rejected",
+        "raw_report_text_rejected"
+      ],
+      "privacy": {
+        "external_publication_performed": false,
+        "metadata_only": true,
+        "model_calls_performed": false,
+        "production_mutation_performed": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "user_owned_agent_credentials_included": false
+      },
+      "release_check_integrated": true,
+      "schema_version": "client-report-delivery-class-verification-v1",
+      "verifier_command": "python3 scripts/verify_client_report_delivery_class_handoff.py --check"
+    }
+  ],
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "delivery-class-registry-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

@@ -29,24 +29,24 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-codex-plugin-pack.zip",
-          "bytes": 131522,
+          "bytes": 131656,
           "path": "platform/generated/study-anything-codex-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.zip",
-          "sha256": "d500f7023765cc86d07ca994a9e278734baca87b063acac282ecd6103ff4bdb9"
+          "sha256": "153aff128df7c4c2fbe21076283d031f94fbbc1e81fb14f318a9d4e095255c6f"
         },
         "checksum": {
           "asset_name": "study-anything-codex-plugin-pack.sha256",
           "bytes": 103,
           "path": "platform/generated/study-anything-codex-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.sha256",
-          "sha256": "4e98e8c8f7836a04aae8eeb9c8f1275dd59e63ee249a0ea143a5a30c220e659c"
+          "sha256": "7b2409663208f549738095659dcea16255b04edffa6537411ad64f7057be3bbf"
         },
         "manifest": {
           "asset_name": "study-anything-codex-plugin-pack.json",
           "bytes": 9192,
           "path": "platform/generated/study-anything-codex-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-codex-plugin-pack.json",
-          "sha256": "4d16dc86ed07d238468ae5ebca8aae092feee762744d3382db591b73d21ea575"
+          "sha256": "ef81437267cc5c8a4e4c7273606dceede4e8a565c6ff1ea99a5763d9f6adf511"
         }
       },
       "summary": "Install the repo-local Skill in Codex or another terminal-capable Agent and let that Agent call the local Study Anything runtime.",
@@ -82,24 +82,24 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-kimi-plugin-pack.zip",
-          "bytes": 155329,
+          "bytes": 155464,
           "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.zip",
-          "sha256": "cd8d88236a88a644ef327050fab8e9ac04f0733c4cdbe3cdfd74705e9222add7"
+          "sha256": "982237c4f9ebf61c3722ca64497e994bb53f369246ae7ee62f4ce8954f742235"
         },
         "checksum": {
           "asset_name": "study-anything-kimi-plugin-pack.sha256",
           "bytes": 102,
           "path": "platform/generated/study-anything-kimi-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.sha256",
-          "sha256": "854d08d4c3317bd7cb0fb7020422bac2e055155881693b45488a758645296c3b"
+          "sha256": "a6e2b4d962f488192517683a7dc0bd80dda22e504f0fc5b007a23479fd7f787f"
         },
         "manifest": {
           "asset_name": "study-anything-kimi-plugin-pack.json",
           "bytes": 10599,
           "path": "platform/generated/study-anything-kimi-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-kimi-plugin-pack.json",
-          "sha256": "2fe8da7a574510c946d6e2437e97b225c41fdd4251e3fbde7dacc650abf49b04"
+          "sha256": "98fdcf43cc5cec5b358b1c7200fe9a59e2f3ba2feb5944acbe139d88323146c1"
         }
       },
       "summary": "Import OpenAI-compatible tool definitions into Kimi-compatible hosts and call the local or private Study Anything HTTP runtime.",
@@ -138,24 +138,24 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-workbuddy-plugin-pack.zip",
-          "bytes": 157154,
+          "bytes": 157290,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.zip",
-          "sha256": "6486ec9f056992ced9537e3dd400ff349481c720663f8d5f10551da4f388ddc1"
+          "sha256": "8601d3fec318f14ccd9cfa450920e25708b4ddb51dbacc0898255aadbd5a4a8d"
         },
         "checksum": {
           "asset_name": "study-anything-workbuddy-plugin-pack.sha256",
           "bytes": 107,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.sha256",
-          "sha256": "e61ef1112e07d2e1f4b01306646a2c366f98a334400bbd2ff59123014378fa2f"
+          "sha256": "1102d5cd13b4ef0ba6e172fda91f2d3e0a6f624294112da6da2e8bfccf0c387e"
         },
         "manifest": {
           "asset_name": "study-anything-workbuddy-plugin-pack.json",
           "bytes": 13551,
           "path": "platform/generated/study-anything-workbuddy-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-workbuddy-plugin-pack.json",
-          "sha256": "828a49e5df7714b05b6139a16887f71bb9dc6a7c884bf06ede9c2497a4769c0f"
+          "sha256": "564c8d648244d464d0661e202a395faaad5980b4de9c7f327fed03112439ff02"
         }
       },
       "summary": "Run the WorkBuddy inline learning workflow first, while keeping constrained OpenAPI HTTP tools as a fallback for workspaces that can call a local or private runtime.",
@@ -194,24 +194,24 @@
       "release_assets": {
         "archive": {
           "asset_name": "study-anything-hermes-plugin-pack.zip",
-          "bytes": 145441,
+          "bytes": 145575,
           "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.zip",
-          "sha256": "34131a0fd45519a5f3a0d5b4714c31c702103f08b543aa22b5c9b2256b19db5b"
+          "sha256": "35db9fe68f25db8586e1f07e0edcef52750b1f95ebdabb345594f539f778ef6e"
         },
         "checksum": {
           "asset_name": "study-anything-hermes-plugin-pack.sha256",
           "bytes": 104,
           "path": "platform/generated/study-anything-hermes-plugin-pack.sha256",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.sha256",
-          "sha256": "0c1612be09d79c08443987b8986d02482db4dd18d775b0429f86a9f04ba51631"
+          "sha256": "df5ae82d9b9258521c44aad57f6ad40a55b1bedaed4c7c1756e9ce87a2a94ddb"
         },
         "manifest": {
           "asset_name": "study-anything-hermes-plugin-pack.json",
           "bytes": 10362,
           "path": "platform/generated/study-anything-hermes-plugin-pack.json",
           "release_download_url": "https://github.com/jzvcpe-goat/study-anything/releases/download/v0.3.31-alpha/study-anything-hermes-plugin-pack.json",
-          "sha256": "650b0afe46bf3878ffdf42697fa3f500877006bbc0b6cee4306254aa0f111b0e"
+          "sha256": "fae040225ebc28d5c18d425e2975ef2d35ef7d030b5b7202e68b82bec875d220"
         }
       },
       "summary": "Expose Study Anything to Hermes Agent through the Hermes Skills system and local HTTP/CLI tools while Hermes keeps model credentials, memory, browser/app access, MCP servers, and user conversation.",

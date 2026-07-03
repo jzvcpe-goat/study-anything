@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Delivery Class Registry</title>
+<body>
+<h1>Delivery Class Registry</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_delivery_class_registry.py --check&quot;,
+    &quot;registry_report&quot;: &quot;platform/generated/study-anything-delivery-class-registry.json&quot;
+  },
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;The registry proves delivery classes are wired into metadata-only Dual Loop / Delivery Trust evidence. It does not prove production customer delivery, legal certification, or complete factual correctness.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;automatic customer delivery&quot;,
+      &quot;production trust without external adoption&quot;,
+      &quot;legal or financial certification&quot;,
+      &quot;replacement for customer-specific review&quot;,
+      &quot;general model correctness&quot;
+    ]
+  },
+  &quot;delivery_class_count&quot;: 2,
+  &quot;delivery_classes&quot;: [
+    {
+      &quot;allowed_case_count&quot;: 1,
+      &quot;assets&quot;: {
+        &quot;doc&quot;: {
+          &quot;path&quot;: &quot;docs/code-review-delivery-class.md&quot;,
+          &quot;sha256&quot;: &quot;37a85eda60cd5dd891aa593931e24f4971293a1b74447b2c998b39a1069e80af&quot;
+        },
+        &quot;fixture_root&quot;: &quot;fixtures/code-review-delivery-class&quot;,
+        &quot;html_report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-code-review-delivery-class.html&quot;,
+          &quot;sha256&quot;: &quot;eb0e3ab827b3d1eb8d7c92e806c529fc7f79187b27a411e2e100ecedd1b68d32&quot;
+        },
+        &quot;report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-code-review-delivery-class.json&quot;,
+          &quot;sha256&quot;: &quot;4e53174c38fd48b0575130f5530edcbf8188328619216b50cf172341c42d721d&quot;
+        },
+        &quot;schema&quot;: {
+          &quot;path&quot;: &quot;platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json&quot;,
+          &quot;sha256&quot;: &quot;15ed9042ee3375e93f62101efc3d02b4bd02e8561ad4f7fc33341356da8a877e&quot;
+        }
+      },
+      &quot;blocked_case_count&quot;: 3,
+      &quot;case_count&quot;: 4,
+      &quot;claim_boundary_hash&quot;: &quot;e4a168f72f3eea90f4383e656bcb07dab9f78790ce6414b95d7c47d3c077394b&quot;,
+      &quot;display_name&quot;: &quot;Code Review Handoff&quot;,
+      &quot;id&quot;: &quot;code_review_handoff&quot;,
+      &quot;negative_check_ids&quot;: [
+        &quot;automatic_pr_commenting_rejected&quot;,
+        &quot;eval_sufficient_alone_rejected&quot;,
+        &quot;production_mutation_rejected&quot;,
+        &quot;raw_diff_rejected&quot;
+      ],
+      &quot;privacy&quot;: {
+        &quot;external_publication_performed&quot;: false,
+        &quot;metadata_only&quot;: true,
+        &quot;model_calls_performed&quot;: false,
+        &quot;production_mutation_performed&quot;: false,
+        &quot;raw_report_text_included&quot;: false,
+        &quot;raw_source_text_included&quot;: false,
+        &quot;user_owned_agent_credentials_included&quot;: false
+      },
+      &quot;release_check_integrated&quot;: true,
+      &quot;schema_version&quot;: &quot;code-review-delivery-class-verification-v1&quot;,
+      &quot;verifier_command&quot;: &quot;python3 scripts/verify_code_review_delivery_class_handoff.py --check&quot;
+    },
+    {
+      &quot;allowed_case_count&quot;: 1,
+      &quot;assets&quot;: {
+        &quot;doc&quot;: {
+          &quot;path&quot;: &quot;docs/client-report-delivery-class.md&quot;,
+          &quot;sha256&quot;: &quot;1d28d7ed11fc7815b13f98019c21a8cb592ba4e2185069276256ba6d08ed3fce&quot;
+        },
+        &quot;fixture_root&quot;: &quot;fixtures/client-report-delivery-class&quot;,
+        &quot;html_report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-client-report-delivery-class.html&quot;,
+          &quot;sha256&quot;: &quot;0824aaa1dbc537b93d71554af9fc6eaaad0493731ac500b6630b51ce7601d01a&quot;
+        },
+        &quot;report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-client-report-delivery-class.json&quot;,
+          &quot;sha256&quot;: &quot;a3658760588fba48a7ca6f607d61a47d42ae6e32db50ad232041ff9611525df8&quot;
+        },
+        &quot;schema&quot;: {
+          &quot;path&quot;: &quot;platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json&quot;,
+          &quot;sha256&quot;: &quot;29b813a54253f02ccb9f942d1828860e5c4a64932776b36f2a8ccf7174cc532b&quot;
+        }
+      },
+      &quot;blocked_case_count&quot;: 4,
+      &quot;case_count&quot;: 5,
+      &quot;claim_boundary_hash&quot;: &quot;709803cbfc2169253e26bac02c80482e8a622265977397e2c902a0115a3a0caf&quot;,
+      &quot;display_name&quot;: &quot;Client Report Handoff&quot;,
+      &quot;id&quot;: &quot;client_report_handoff&quot;,
+      &quot;negative_check_ids&quot;: [
+        &quot;automatic_customer_sending_rejected&quot;,
+        &quot;eval_sufficient_alone_rejected&quot;,
+        &quot;external_publication_rejected&quot;,
+        &quot;raw_customer_payload_rejected&quot;,
+        &quot;raw_report_text_rejected&quot;
+      ],
+      &quot;privacy&quot;: {
+        &quot;external_publication_performed&quot;: false,
+        &quot;metadata_only&quot;: true,
+        &quot;model_calls_performed&quot;: false,
+        &quot;production_mutation_performed&quot;: false,
+        &quot;raw_report_text_included&quot;: false,
+        &quot;raw_source_text_included&quot;: false,
+        &quot;user_owned_agent_credentials_included&quot;: false
+      },
+      &quot;release_check_integrated&quot;: true,
+      &quot;schema_version&quot;: &quot;client-report-delivery-class-verification-v1&quot;,
+      &quot;verifier_command&quot;: &quot;python3 scripts/verify_client_report_delivery_class_handoff.py --check&quot;
+    }
+  ],
+  &quot;privacy&quot;: {
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;cookies_or_bearer_tokens_included&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_review_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;schema_version&quot;: &quot;delivery-class-registry-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

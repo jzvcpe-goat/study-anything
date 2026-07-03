@@ -191,6 +191,7 @@ python3 scripts/generate_delivery_trust_case_pack.py --check
 python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check
 python3 scripts/verify_code_review_delivery_class_handoff.py --check
 python3 scripts/verify_client_report_delivery_class_handoff.py --check
+python3 scripts/verify_delivery_class_registry.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -215,3 +216,9 @@ budget, claim boundary, and CustomerHandoff checks pass; it still blocks raw
 report text, raw customer payload, automatic customer sending, external
 publication, production mutation, legal/financial certification, and treating an
 AI summary or external eval receipt as sufficient proof by itself.
+
+The Delivery Class Registry command verifies the delivery-class matrix itself.
+It proves each listed class has docs, schema, JSON/HTML evidence, deterministic
+fixtures, negative checks, release-gate wiring, and metadata-only privacy
+boundaries. It is a registry of protocol-supported classes, not a production
+delivery approval.
