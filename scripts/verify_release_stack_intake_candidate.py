@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-294-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-296-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -43,6 +43,7 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
     "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
     "platform/generated/study-anything-product-loop-harness.json",
+    "platform/generated/study-anything-delivery-trust-case-harness.json",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,
