@@ -1,0 +1,61 @@
+{
+  "$id": "code-review-handoff-case-v1",
+  "additionalProperties": true,
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "allow_controlled_code_review_handoff",
+        "block_code_review_handoff"
+      ],
+      "type": "string"
+    },
+    "delivery_class": {
+      "const": "code_review_handoff"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "code-review-handoff-case-v1"
+    },
+    "source_change_ref": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "ready_for_controlled_code_review_handoff",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "case_id",
+    "delivery_class",
+    "status",
+    "decision",
+    "reasons",
+    "source_change_ref",
+    "review_artifact_ref",
+    "checks",
+    "privacy",
+    "claim_boundary"
+  ],
+  "type": "object"
+}
