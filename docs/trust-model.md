@@ -131,6 +131,26 @@ The current local-first deterministic MVP does not claim:
 It claims only that the candidate passed a metadata-only, local, deterministic
 trust harness for controlled handoff.
 
+## Product Loop Harness
+
+Before customer handoff, the product-development layer emits:
+
+- `product-loop-scenario-v1`
+- `product-loop-run-v1`
+
+This layer maps the three product-development loops into machine-checkable
+evidence:
+
+- Agentic Coding Loop: coding agent to product spec/evals, roughly minutes;
+- Developer Feedback Loop: developer vision to product spec/evals, roughly
+  hours;
+- External Feedback Loop: external feedback to developer vision, roughly days.
+
+It blocks if product spec/evals are missing, developer vision is missing,
+external feedback requests production scope, AI-review-only evidence is used as
+the trust basis, or one loop dominates the others. A passing Product Loop run
+may promote only to the Delivery Trust Harness, not to production.
+
 ## Verification Commands
 
 ```bash
@@ -140,6 +160,7 @@ python3 scripts/verify_attention_reconstruction_lite.py --check
 python3 scripts/verify_dual_loop_gate.py --check
 python3 scripts/verify_delivery_trust_receipt.py --check
 python3 scripts/verify_customer_handoff_package.py --check
+python3 scripts/verify_product_loop_harness.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects

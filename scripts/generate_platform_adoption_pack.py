@@ -66,6 +66,18 @@ CBB_DELIVERY_HARNESS_ARTIFACTS = [
     "self-intake-receipt.json",
     "tri-loop-run.json",
 ]
+PRODUCT_LOOP_HARNESS_CASES = [
+    "pass",
+    "blocked-missing-product-spec-evals",
+    "blocked-missing-developer-vision",
+    "blocked-external-scope-expansion",
+    "blocked-ai-review-only",
+    "blocked-loop-dominance",
+]
+PRODUCT_LOOP_HARNESS_ARTIFACTS = [
+    "product-loop-scenario.json",
+    "product-loop-run.json",
+]
 
 
 PACK_FILES: list[tuple[str, str, str]] = [
@@ -117,6 +129,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/dual-loop-mvp.md", "operator_doc", "Dual-Loop MVP controlled-failure and attention-reconstruction boundary guide."),
     ("docs/dual-loop-scenario-harness.md", "operator_doc", "Dual Loop Trust Scenario Harness guide for customer delivery readiness."),
     ("docs/dual-loop-trust-scenario-pack.md", "operator_doc", "Portable Dual Loop trust scenario pack guide."),
+    ("docs/product-loop-harness.md", "operator_doc", "Product Loop Harness guide for three-loop product development gating."),
     ("docs/trust-model.md", "operator_doc", "Cognitive Black Box AI delivery trust model."),
     ("docs/delivery-trust-receipt.md", "operator_doc", "Delivery Trust Receipt contract and verifier guide."),
     ("docs/customer-handoff-package.md", "operator_doc", "CustomerHandoffPackage portable evidence package guide."),
@@ -169,6 +182,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json", "schema", "Cognitive Black Box delivery scenario JSON Schema."),
     ("platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json", "schema", "Cognitive Black Box external feedback intake JSON Schema."),
     ("platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json", "schema", "Cognitive Black Box tri-loop run JSON Schema."),
+    ("platform/schemas/cbb/product-loop-scenario-v1.schema.json", "schema", "Product Loop Harness scenario JSON Schema."),
+    ("platform/schemas/cbb/product-loop-run-v1.schema.json", "schema", "Product Loop Harness run JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -220,6 +235,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cbb-receipt-chain.json", "submission_report", "Cognitive Black Box tamper-evident receipt-chain verification report for PR 285."),
     ("platform/generated/study-anything-cbb-self-intake.json", "submission_report", "Cognitive Black Box self-intake verification report for PR 285."),
     ("platform/generated/study-anything-cbb-delivery-scenario-harness.json", "submission_report", "Cognitive Black Box tri-loop delivery scenario harness verification report."),
+    ("platform/generated/study-anything-product-loop-harness.json", "submission_report", "Product Loop Harness verification report for three-loop product development gating."),
     ("platform/generated/study-anything-workbuddy-inline-learning-flow.json", "submission_report", "WorkBuddy inline learning flow verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -534,6 +550,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in CBB_DELIVERY_HARNESS_CASES
         for artifact in CBB_DELIVERY_HARNESS_ARTIFACTS
     ],
+    *[
+        (
+            f"fixtures/product-loop-harness/{case_id}/{artifact}",
+            "product_loop_harness_fixture",
+            f"Product Loop Harness {case_id} {artifact} fixture.",
+        )
+        for case_id in PRODUCT_LOOP_HARNESS_CASES
+        for artifact in PRODUCT_LOOP_HARNESS_ARTIFACTS
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -672,6 +697,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_cbb_self_intake.py", "verification", "Verify Cognitive Black Box PR self-intake receipts, evidence packs, and negative cases."),
     ("scripts/cbb_delivery_harness.py", "cli", "Cognitive Black Box tri-loop delivery scenario harness CLI."),
     ("scripts/verify_cbb_delivery_harness.py", "verification", "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries."),
+    ("scripts/product_loop_harness.py", "cli", "Product Loop Harness CLI for deterministic three-loop product development artifacts."),
+    ("scripts/verify_product_loop_harness.py", "verification", "Verify Product Loop Harness fixtures, schemas, CLI output, and privacy boundaries."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
     ("scripts/verify_cognitive_loop_cli.py", "verification", "Cognitive Loop CLI and static HTML artifact verifier."),
     ("scripts/verify_cognitive_loop_run_once.py", "verification", "Cognitive Loop run-once evidence verifier."),
@@ -725,6 +752,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("apps/api/study_anything/core/cbb_protocol.py", "api_core", "Cognitive Black Box metadata-only protocol contracts, validators, and deterministic trust kernel."),
     ("apps/api/study_anything/core/cbb_receipt_chain.py", "api_core", "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators."),
     ("apps/api/study_anything/core/cbb_delivery_harness.py", "api_core", "Cognitive Black Box delivery scenario tri-loop harness validators."),
+    ("apps/api/study_anything/core/product_loop_harness.py", "api_core", "Product Loop Harness validators for three-loop product development evidence."),
     ("scripts/cognitive_loop_study_adapter_cli.py", "cli", "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence."),
     ("scripts/verify_cognitive_loop_mastra_runtime_service.py", "verification", "Verify the repository-started Cognitive Loop Mastra runtime service and privacy boundary."),
     ("scripts/verify_cognitive_loop_mastra_runtime_durable.py", "verification", "Verify the durable Cognitive Loop Mastra runtime suspend/resume privacy boundary."),

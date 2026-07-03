@@ -1,0 +1,94 @@
+{
+  "$id": "product-loop-run-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "case_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "promote_to_delivery_trust_harness",
+        "block_product_loop"
+      ],
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "object"
+    },
+    "loop_parity": {
+      "type": "object"
+    },
+    "loop_statuses": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "project_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "promotion": {
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scenario_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "product-loop-run-v1"
+    },
+    "source": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "allowed",
+        "blocked"
+      ],
+      "type": "string"
+    },
+    "time_scales": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "project_id",
+    "scenario_id",
+    "case_id",
+    "source",
+    "status",
+    "decision",
+    "reasons",
+    "loop_statuses",
+    "loop_parity",
+    "time_scales",
+    "evidence_refs",
+    "promotion",
+    "checks",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Product Loop Run v1",
+  "type": "object"
+}

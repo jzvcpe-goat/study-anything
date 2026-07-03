@@ -17,20 +17,41 @@ can prove:
 
 After that, the project needs product proof.
 
-## Next Product Objective
+## Current Product Objective
 
-Build the Dual Loop Trust Scenario Harness.
+Build the Product Loop Harness and connect it to the Dual Loop Trust Scenario
+Harness.
 
-The harness should show, with deterministic and metadata-only evidence first,
-how an AI-generated customer deliverable can become trustworthy without relying
-on either of these weak patterns:
+The Product Loop Harness is the pre-handoff layer; the Dual Loop Trust Scenario Harness remains the customer-delivery layer.
+
+The Product Loop Harness should show, with deterministic and metadata-only
+evidence first, how a product candidate moves across the three real development
+loops before customer handoff:
+
+- Agentic Coding Loop: coding agent to product spec/evals, roughly minutes.
+- Developer Feedback Loop: developer vision to product spec/evals, roughly
+  hours.
+- External Feedback Loop: external feedback to developer vision, roughly days.
+
+The Delivery Trust Harness should then show how an AI-generated customer
+deliverable can become trustworthy without relying on either of these weak
+patterns:
 
 - human over-review of every step;
 - AI reviewing AI through an uninspectable black box.
 
-## First Scenario Class
+## First Scenario Classes
 
-Start with customer-delivery scenarios:
+Start with product-development loop scenarios:
+
+- product spec/evals present;
+- developer vision present;
+- external feedback scope stays controlled;
+- AI-review-only evidence is rejected;
+- no single loop may dominate the others;
+- promotion goes only to the Delivery Trust Harness, not to production.
+
+Then continue with customer-delivery scenarios:
 
 - define a bounded task and failure budget;
 - run the task in a controlled failure environment;
@@ -52,8 +73,9 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Dual Loop Trust Scenario Harness:
-create deterministic scenario fixtures, controlled-failure receipts, attention
-reconstruction summaries, propagation gate receipts, and customer handoff
-packages for one realistic AI delivery scenario.
+Product Loop Harness:
+create deterministic product-loop fixtures, product-loop scenario/run
+contracts, a CLI, a verifier, and generated evidence proving the Agentic
+Coding, Developer Feedback, and External Feedback loops all have equal weight
+before promotion to the Delivery Trust Harness.
 ```
