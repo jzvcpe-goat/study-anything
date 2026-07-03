@@ -1,5 +1,5 @@
 {
-  "current_group": "release-stack-promotion-v0.3.170",
+  "current_group": "release-stack-promotion-v0.3.172",
   "privacy_assertions": {
     "agent_endpoint_secrets_included": false,
     "check_annotations_included": false,
@@ -40,12 +40,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 298,
-      "branch": "codex/v0.3.170-delivery-trust-case-consumer-pack",
+      "pr": 300,
+      "branch": "codex/v0.3.172-code-review-delivery-class-handoff",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "c221a090d4254e3f23156bcbb6f0d3ae083e1a0a",
+      "merge_commit": "68ffa4b101b6621a1b0ae1f0517a955da4227a8c",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -57,12 +57,13 @@
         "platform/generated/study-anything-platform-bundle.json",
         "platform/generated/study-anything-platform-adoption-pack.json",
         "platform/generated/study-anything-release-asset-adoption.json",
-        "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
-        "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
         "platform/generated/study-anything-product-loop-harness.json",
         "platform/generated/study-anything-delivery-trust-case-harness.json",
         "platform/generated/study-anything-delivery-trust-case-pack.json",
-        "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json"
+        "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+        "platform/generated/study-anything-code-review-delivery-class.json",
+        "platform/generated/study-anything-code-review-delivery-class.html",
+        "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json"
       ]
     }
   ],
@@ -3815,8 +3816,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.170",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed self-intake for the Delivery Trust Case consumer pack release asset chain.",
       "required_checks": [
@@ -3888,6 +3889,86 @@
         "learner_answers_included": false,
         "agent_endpoint_secrets_included": false,
         "real_model_keys_included": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.172",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed self-intake for the Code Review Delivery Class handoff release evidence chain.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-operating-model-loops.json",
+        "platform/generated/study-anything-cbb-receipt-chain.json",
+        "platform/generated/study-anything-cbb-self-intake.json",
+        "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+        "platform/generated/study-anything-delivery-trust-case-harness.json",
+        "platform/generated/study-anything-delivery-trust-case-pack.json",
+        "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+        "platform/generated/study-anything-code-review-delivery-class.json",
+        "platform/generated/study-anything-code-review-delivery-class.html"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 300,
+          "branch": "codex/v0.3.172-code-review-delivery-class-handoff",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "68ffa4b101b6621a1b0ae1f0517a955da4227a8c",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-release-asset-adoption.json",
+            "platform/generated/study-anything-product-loop-harness.json",
+            "platform/generated/study-anything-delivery-trust-case-harness.json",
+            "platform/generated/study-anything-delivery-trust-case-pack.json",
+            "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+            "platform/generated/study-anything-code-review-delivery-class.json",
+            "platform/generated/study-anything-code-review-delivery-class.html",
+            "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "agent_endpoint_secrets_included": false,
+        "check_annotations_included": false,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "learner_answers_included": false,
+        "live_check_payloads_included": false,
+        "metadata_only": true,
+        "raw_source_text_included": false,
+        "real_model_keys_included": false,
+        "source_mutation_performed": false
       }
     }
   ],

@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-298-v0.3.170-delivery-trust-case-consumer-pack",
+    "group_id": "release-stack-intake-pr-300-v0.3.172-code-review-delivery-class-handoff",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -40,7 +40,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.170-delivery-trust-case-consumer-pack",
+        "branch": "codex/v0.3.172-code-review-delivery-class-handoff",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -54,9 +54,9 @@
           "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "c221a090d4254e3f23156bcbb6f0d3ae083e1a0a",
+        "merge_commit": "68ffa4b101b6621a1b0ae1f0517a955da4227a8c",
         "order": 1,
-        "pr": 298,
+        "pr": 300,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -65,15 +65,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #298: Add Delivery Trust Case consumer pack.",
+    "summary": "Candidate release stack group for PR #300: Add Code Review delivery class handoff.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.170",
-    "represented_pr_count": 93
+    "current_group": "release-stack-promotion-v0.3.172",
+    "represented_pr_count": 94
   },
   "negative_fixtures": [
     {
