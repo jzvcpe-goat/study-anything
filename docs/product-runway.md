@@ -19,21 +19,16 @@ After that, the project needs product proof.
 
 ## Current Product Objective
 
-Build the Product Loop Harness and connect it to the Dual Loop Trust Scenario
-Harness.
+Build the Delivery Trust Case Harness on top of the completed Product Loop
+Harness and Dual Loop Trust Scenario Harness.
 
 The Product Loop Harness is the pre-handoff layer; the Dual Loop Trust Scenario Harness remains the customer-delivery layer.
 
-The Product Loop Harness should show, with deterministic and metadata-only
-evidence first, how a product candidate moves across the three real development
-loops before customer handoff:
-
-- Agentic Coding Loop: coding agent to product spec/evals, roughly minutes.
-- Developer Feedback Loop: developer vision to product spec/evals, roughly
-  hours.
-- External Feedback Loop: external feedback to developer vision, roughly days.
-
-The Delivery Trust Harness should then show how an AI-generated customer
+The Product Loop Harness now shows, with deterministic and metadata-only
+evidence, how a product candidate moves across the three real development loops
+before customer handoff. The Delivery Trust Case Harness should now assemble
+Product Loop, Dual Loop, Delivery Trust Receipt, and CustomerHandoffPackage
+evidence into one end-to-end case that shows how an AI-generated customer
 deliverable can become trustworthy without relying on either of these weak
 patterns:
 
@@ -73,9 +68,9 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Product Loop Harness:
-create deterministic product-loop fixtures, product-loop scenario/run
-contracts, a CLI, a verifier, and generated evidence proving the Agentic
-Coding, Developer Feedback, and External Feedback loops all have equal weight
-before promotion to the Delivery Trust Harness.
+Delivery Trust Case Harness:
+create deterministic delivery-trust-case fixtures, a delivery-trust-case-v1
+contract, a CLI, a verifier, generated JSON/HTML evidence, and release/adoption
+pack integration proving Product Loop, Dual Loop, Delivery Trust Receipt, and
+CustomerHandoffPackage must all agree before controlled customer handoff.
 ```

@@ -1,0 +1,171 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/delivery-trust-case",
+    "minimum_command": "python3 scripts/verify_delivery_trust_case_harness.py --check"
+  },
+  "artifact_contracts": {
+    "customer_handoff_package": "customer-handoff-package-v1",
+    "delivery_trust_case": "delivery-trust-case-v1",
+    "delivery_trust_receipt": "delivery-trust-receipt-v1",
+    "dual_loop_gate_receipt": "dual-loop-gate-receipt-v1",
+    "product_loop_run": "product-loop-run-v1"
+  },
+  "case_reports": [
+    {
+      "artifact_count": 10,
+      "case_id": "pass",
+      "decision": "allow_controlled_customer_handoff",
+      "layer_statuses": {
+        "customer_handoff": "ready",
+        "delivery_trust": "allowed",
+        "dual_loop_gate": "allowed",
+        "product_loop": "allowed"
+      },
+      "reasons": [],
+      "status": "ready_for_controlled_customer_handoff"
+    },
+    {
+      "artifact_count": 10,
+      "case_id": "blocked-product-loop",
+      "decision": "block_customer_handoff",
+      "layer_statuses": {
+        "customer_handoff": "ready",
+        "delivery_trust": "allowed",
+        "dual_loop_gate": "allowed",
+        "product_loop": "blocked"
+      },
+      "reasons": [
+        "product_loop_not_passed",
+        "developer_vision_missing"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 8,
+      "case_id": "blocked-dual-loop",
+      "decision": "block_customer_handoff",
+      "layer_statuses": {
+        "customer_handoff": "missing",
+        "delivery_trust": "blocked",
+        "dual_loop_gate": "blocked",
+        "product_loop": "allowed"
+      },
+      "reasons": [
+        "dual_loop_gate_blocked",
+        "sandbox_risk_outside_budget",
+        "delivery_trust_not_allowed",
+        "customer_handoff_not_ready"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 10,
+      "case_id": "blocked-customer-handoff",
+      "decision": "block_customer_handoff",
+      "layer_statuses": {
+        "customer_handoff": "blocked",
+        "delivery_trust": "allowed",
+        "dual_loop_gate": "allowed",
+        "product_loop": "allowed"
+      },
+      "reasons": [
+        "customer_handoff_not_ready",
+        "customer_handoff_scope_expansion"
+      ],
+      "status": "blocked"
+    },
+    {
+      "artifact_count": 10,
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_customer_handoff",
+      "layer_statuses": {
+        "customer_handoff": "ready",
+        "delivery_trust": "allowed",
+        "dual_loop_gate": "allowed",
+        "product_loop": "blocked"
+      },
+      "reasons": [
+        "product_loop_not_passed",
+        "ai_review_only_evidence_rejected"
+      ],
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "Delivery Trust Case Harness proves deterministic metadata-only end-to-end gating for controlled customer handoff.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer delivery",
+      "general model correctness",
+      "legal certification",
+      "security certification"
+    ]
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_checks": {
+    "ai_review_only_rejected": "AI-review-only trust basis is forbidden",
+    "automatic_customer_sending_rejected": "delivery trust case must block automatic customer sending",
+    "eval_sufficiency_rejected": "ready delivery trust case requires external_eval_receipts_supporting_only",
+    "missing_claim_boundary_rejected": "delivery trust case must state a current claim"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "attention_streams_included": false,
+    "automatic_customer_delivery_performed": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "delivery_artifact_body_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only_fixtures": true,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
+      "schema_version": "delivery-trust-case-v1",
+      "sha256": "77175ca52cc0122b860d7b7b291c9eeb29c5b1b4b6a409a1220792365c8a4150"
+    }
+  ],
+  "schema_version": "delivery-trust-case-harness-verification-v1",
+  "status": "pass",
+  "trust_rules": {
+    "ai_review_only_forbidden": true,
+    "automatic_customer_sending_blocked": true,
+    "customer_handoff_package_required": true,
+    "delivery_trust_receipt_required": true,
+    "dual_loop_gate_required": true,
+    "external_eval_receipts_supporting_only": true,
+    "full_manual_re_review_not_required_for_pass": true,
+    "metadata_only": true,
+    "product_loop_required": true,
+    "production_mutation_blocked": true
+  },
+  "version": "v0.3.31-alpha"
+}

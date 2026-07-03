@@ -77,6 +77,66 @@ PRODUCT_LOOP_HARNESS_ARTIFACTS = [
     "product-loop-scenario.json",
     "product-loop-run.json",
 ]
+DELIVERY_TRUST_CASE_HARNESS_CASES = {
+    "pass": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-product-loop": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-dual-loop": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-customer-handoff": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-ai-review-only": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+}
 
 FILES: list[tuple[str, str, str]] = [
     (
@@ -238,6 +298,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-product-loop-harness.json",
         "generated_asset",
         "Product Loop Harness verification report for three-loop product development gating.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-harness.json",
+        "generated_asset",
+        "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-harness.html",
+        "generated_asset",
+        "Delivery Trust Case Harness static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -910,6 +980,11 @@ FILES: list[tuple[str, str, str]] = [
         "Product Loop Harness guide for three-loop product development gating.",
     ),
     (
+        "docs/delivery-trust-case-harness.md",
+        "operator_doc",
+        "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
+    ),
+    (
         "docs/trust-model.md",
         "operator_doc",
         "Cognitive Black Box AI delivery trust model.",
@@ -1063,6 +1138,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/product-loop-run-v1.schema.json",
         "schema",
         "Product Loop Harness run JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
+        "schema",
+        "Delivery Trust Case JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1242,6 +1322,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PRODUCT_LOOP_HARNESS_CASES
         for artifact in PRODUCT_LOOP_HARNESS_ARTIFACTS
+    ],
+    *[
+        (
+            f"fixtures/delivery-trust-case/{case_id}/{artifact}",
+            "fixture",
+            f"Delivery Trust Case Harness {case_id} {artifact} fixture.",
+        )
+        for case_id, artifacts in DELIVERY_TRUST_CASE_HARNESS_CASES.items()
+        for artifact in artifacts
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2134,6 +2223,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Product Loop Harness fixtures, schemas, CLI output, and privacy boundaries.",
     ),
     (
+        "scripts/delivery_trust_case_harness.py",
+        "cli",
+        "Delivery Trust Case Harness CLI for end-to-end controlled customer-handoff artifacts.",
+    ),
+    (
+        "scripts/verify_delivery_trust_case_harness.py",
+        "verification",
+        "Verify Delivery Trust Case Harness fixtures, schemas, CLI output, and privacy boundaries.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -2827,6 +2926,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/product_loop_harness.py",
         "api_core",
         "Product Loop Harness validators for three-loop product development evidence.",
+    ),
+    (
+        "apps/api/study_anything/core/delivery_trust_case.py",
+        "api_core",
+        "Delivery Trust Case Harness validators for end-to-end customer handoff evidence.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",

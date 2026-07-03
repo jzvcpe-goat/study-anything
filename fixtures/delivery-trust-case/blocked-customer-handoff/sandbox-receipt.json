@@ -1,0 +1,59 @@
+{
+  "contract_id": "failure-contract-demo-001",
+  "executed_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "mutation_summary": {
+    "external_effects": [],
+    "file_mutations": [],
+    "irreversible_external_effects": false,
+    "production_mutation": false,
+    "real_user_exposure": false
+  },
+  "observed_failures": [
+    {
+      "artifact_ref": "artifact:sandbox-lite-contained-failure",
+      "category": "fixture_validation_failed",
+      "containment_status": "contained",
+      "failure_id": "failure-demo-contained-001",
+      "propagated": false,
+      "reversible": true
+    }
+  ],
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "sandbox-receipt-demo-001",
+  "risk_budget": {
+    "budget_level": "medium",
+    "observed_level": "medium",
+    "within_budget": true
+  },
+  "rollback": {
+    "available": true,
+    "rehearsed": true,
+    "rollback_ref": "rollback:ai-delivery-candidate-withdrawal"
+  },
+  "sandbox_level": "sandbox-lite",
+  "sandbox_run_id": "sandbox-run-demo-001",
+  "schema_version": "sandbox-receipt-v1",
+  "status": "passed"
+}
