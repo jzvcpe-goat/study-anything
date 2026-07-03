@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 146729,
+    "bytes": 153732,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "b82a5e5b94c748ba474f8934411cf5204f922114f21fa5494b5fceb70a7d5230",
+    "sha256": "323b39fb23c461c24edc8df3a2f526cb11e305f04cf4b0f3e1b3ab0450bbc615",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -45,10 +45,10 @@
   ],
   "fixture_refs": [
     {
-      "bytes": 5709,
+      "bytes": 5981,
       "fixture_id": "asset-only-pass",
       "path": "fixtures/release-asset-adoption/asset-only-pass.json",
-      "sha256": "801b4d2a5063367fbd30fe9cb6431a665b53a833adbede4789738067ee044f55"
+      "sha256": "241ec9aba0e618b21f2e5008eac61ad437d7821934cfa80f8fd942947dd21ca9"
     },
     {
       "bytes": 798,
@@ -57,22 +57,22 @@
       "sha256": "df20f1701c66787fa45528c165f0c6e152aa6c7ac853046037ae8c7ffd91cae0"
     },
     {
-      "bytes": 5793,
+      "bytes": 6065,
       "fixture_id": "digest-mismatch",
       "path": "fixtures/release-asset-adoption/digest-mismatch.json",
-      "sha256": "f8dc7fc72437849dba39a02be74aa68371349d765b265347c51a382fca776477"
+      "sha256": "947103edfc6c277486c4d364af4a64fe4c8d21dbaa4c7181d5db4d5faf8aba25"
     },
     {
-      "bytes": 5706,
+      "bytes": 5978,
       "fixture_id": "pack-corrupted",
       "path": "fixtures/release-asset-adoption/pack-corrupted.json",
-      "sha256": "5295250691bd084bde100a34ee77f4ebf7bb240646102ccdc0cc0cf8a55fa0d8"
+      "sha256": "bcbc25ba68bf0c57d4a83b29fa3fe63ce8721c78efc858a2a566b913ad3fc239"
     },
     {
-      "bytes": 5715,
+      "bytes": 5987,
       "fixture_id": "published-evidence-missing",
       "path": "fixtures/release-asset-adoption/published-evidence-missing.json",
-      "sha256": "411d26d9bca376a096d1f4d571781a13be0237be48e5f5cbabc56b2e431ed18b"
+      "sha256": "611978c740604c7d208cf510cc0e44eb03123288ebe94c85511c52d8f5f11980"
     },
     {
       "bytes": 855,
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 41609,
+      "bytes": 41683,
       "path": "README.md",
-      "sha256": "f3a28be000391f8e4afab4802f2d7b8029a899aef34e43a1963377402b007e26"
+      "sha256": "2e578e567f04998491ddd42f8babf4fd611422aa24d924bea18a87a34cb0c5f2"
     },
     {
       "bytes": 19503,
@@ -103,9 +103,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 12910,
+      "bytes": 12976,
       "path": "docs/github-launch.md",
-      "sha256": "e978bda2fd17c9a47f9c0d10d4116a6bef18681ef7e7dd35022457016a0e9ca6"
+      "sha256": "3e8798aa800af69c5295a1a351c0e56d90f0076104ca04fe3acc56f6e8668e22"
     },
     {
       "bytes": 12500,
@@ -113,14 +113,14 @@
       "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 4003,
+      "bytes": 4069,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "ab6263035efde4313c5d716f0f97bf623f45ed1bf0bbbb85bdbf21be99f108d0"
+      "sha256": "3ad36e5047af1fb3f51a54c2fd98e0da6a68c4e9f3deb892a8d45ebff0f7e335"
     },
     {
-      "bytes": 3635,
+      "bytes": 4024,
       "path": "docs/dual-loop-trust-scenario-pack.md",
-      "sha256": "6551038a792a42c051158a42dd7e02c5dd8160b6e40d327a5a0769ce351ac73a"
+      "sha256": "6d14512c526dc474aff1e60bdb463735d705b937d141bca19c44b0d884778c33"
     },
     {
       "bytes": 2385,
@@ -133,9 +133,9 @@
       "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
-      "bytes": 34574,
+      "bytes": 34639,
       "path": "docs/release-checklist.md",
-      "sha256": "2217aaa5fdf29a01f7b5565c706ee342cc7ca63eed0be304241df1d7ec73eafc"
+      "sha256": "e41e80de60afcc8690051c0699bb5ad615fe5b31f40ffdb5bdea5d94385e2208"
     },
     {
       "bytes": 32532,
@@ -150,12 +150,12 @@
     {
       "bytes": 11247,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "23c806f4801dc9023d77269491a5f80ad02abeb34c9489ad8945001f14a4c228"
+      "sha256": "d279450f4aad40cffe90f02683f7a8f8812966d4737a8b82fa755d4f9645c4e4"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "50d9ece35ff7181a74b1558515da649cd683c935e2ad86f5015c097756fd5679"
+      "sha256": "c5d1200ada87cf8749362a368253924c5faefcd0ec433b33793fea8009ea122b"
     },
     {
       "bytes": 1764,
@@ -163,9 +163,9 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 25040,
+      "bytes": 25309,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "f6f875a1bab5c0a75a65031181f1f62dde2dcab88adb680da9c3f8a5fe86a5c3"
+      "sha256": "424991f36848a78531b8122e6c3eb1546a63fa06b0f2cc922637cd65edbdc07a"
     },
     {
       "bytes": 9625,
@@ -188,9 +188,9 @@
       "sha256": "4d31710e1b5e7d52aec473d90486e78a40708e4c211209077a470228df90a80e"
     },
     {
-      "bytes": 19897,
+      "bytes": 20033,
       "path": "scripts/generate_release_asset_adoption.py",
-      "sha256": "8ff8d7f2aeebd91a4282f071eff14247e2d9b20647f1612f56e36dd53580ee12"
+      "sha256": "e05326ad8eade239800341d403aaac898b5b7c71c8b6507f631079578b3b88a3"
     },
     {
       "bytes": 15551,
@@ -201,6 +201,11 @@
       "bytes": 11258,
       "path": "scripts/verify_dual_loop_trust_scenario_pack.py",
       "sha256": "7e490a0212155d956542f5d031b46ac24ac3e5dc46419f76bbed97d77912dbd3"
+    },
+    {
+      "bytes": 26093,
+      "path": "scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py",
+      "sha256": "5122829c3d4ec3249b3a2bf08dcea576d54160b594c2b90dcaeb205ee373a397"
     },
     {
       "bytes": 68921,
@@ -242,7 +247,8 @@
       "study-anything-hermes-plugin-pack.sha256",
       "study-anything-dual-loop-trust-scenario-pack.json",
       "study-anything-dual-loop-trust-scenario-pack.zip",
-      "study-anything-dual-loop-trust-scenario-pack.sha256"
+      "study-anything-dual-loop-trust-scenario-pack.sha256",
+      "study-anything-dual-loop-trust-pack-consumer-walkthrough.json"
     ],
     "tag": "v0.3.31-alpha"
   },

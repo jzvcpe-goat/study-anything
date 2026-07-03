@@ -70,6 +70,7 @@ REQUIRED_RELEASE_ASSETS = (
     "study-anything-dual-loop-trust-scenario-pack.json",
     "study-anything-dual-loop-trust-scenario-pack.zip",
     "study-anything-dual-loop-trust-scenario-pack.sha256",
+    "study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
 )
 PUBLIC_ASSET_PATHS = (
     "README.md",
@@ -94,6 +95,7 @@ PUBLIC_ASSET_PATHS = (
     "scripts/generate_release_asset_adoption.py",
     "scripts/generate_dual_loop_trust_scenario_pack.py",
     "scripts/verify_dual_loop_trust_scenario_pack.py",
+    "scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_published_image_evidence.py",
     "scripts/verify_published_image_launch.py",

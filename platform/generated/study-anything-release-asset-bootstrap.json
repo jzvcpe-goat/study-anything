@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 89446,
+    "bytes": 89515,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "623eb466d73cb298a9c5afc3757d0d2f91f34aaf1762d80909aa7647a58b0fd9",
+    "sha256": "ca6a85904378ba0d3df55828aa7d67b20db4c66b362067c4a37cdcaf34c2afc7",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -103,9 +103,9 @@
       "sha256": "af9b020c121279919e2bf3b02d71f82eb51d001fa5cf9c47d20169af0070fff6"
     },
     {
-      "bytes": 4003,
+      "bytes": 4069,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "ab6263035efde4313c5d716f0f97bf623f45ed1bf0bbbb85bdbf21be99f108d0"
+      "sha256": "3ad36e5047af1fb3f51a54c2fd98e0da6a68c4e9f3deb892a8d45ebff0f7e335"
     },
     {
       "bytes": 2385,
@@ -123,9 +123,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 12910,
+      "bytes": 12976,
       "path": "docs/github-launch.md",
-      "sha256": "e978bda2fd17c9a47f9c0d10d4116a6bef18681ef7e7dd35022457016a0e9ca6"
+      "sha256": "3e8798aa800af69c5295a1a351c0e56d90f0076104ca04fe3acc56f6e8668e22"
     },
     {
       "bytes": 12500,
@@ -148,9 +148,9 @@
       "sha256": "6679fa6cbbf24485f371ade55f81ae2d3922fee754039aa2ebab77965252c667"
     },
     {
-      "bytes": 25040,
+      "bytes": 25309,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "f6f875a1bab5c0a75a65031181f1f62dde2dcab88adb680da9c3f8a5fe86a5c3"
+      "sha256": "424991f36848a78531b8122e6c3eb1546a63fa06b0f2cc922637cd65edbdc07a"
     },
     {
       "bytes": 9625,
@@ -175,12 +175,12 @@
     {
       "bytes": 6597,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "e87e4122ecc7de8d60d9636217b660dbee6182f4ea6635be10be5e485ee9e334"
+      "sha256": "770ffa097330db2c44050a04dd54944e1b1b2dee5f858d4ee55dfa605e5f5482"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "50d9ece35ff7181a74b1558515da649cd683c935e2ad86f5015c097756fd5679"
+      "sha256": "c5d1200ada87cf8749362a368253924c5faefcd0ec433b33793fea8009ea122b"
     },
     {
       "bytes": 1764,
