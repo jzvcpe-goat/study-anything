@@ -1,0 +1,115 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/client-report-delivery-class",
+    "minimum_command": "python3 scripts/verify_client_report_delivery_class_handoff.py --check"
+  },
+  "case_reports": [
+    {
+      "case_id": "pass",
+      "decision": "allow_controlled_client_report_handoff",
+      "reasons": [],
+      "recipient_class": "bounded_client_stakeholder",
+      "risk_observed_level": "medium",
+      "status": "ready_for_controlled_client_report_handoff"
+    },
+    {
+      "case_id": "blocked-missing-reconstruction",
+      "decision": "block_client_report_handoff",
+      "reasons": [
+        "human_reconstruction_missing"
+      ],
+      "recipient_class": "bounded_client_stakeholder",
+      "risk_observed_level": "medium",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-risk-over-budget",
+      "decision": "block_client_report_handoff",
+      "reasons": [
+        "sandbox_risk_outside_budget"
+      ],
+      "recipient_class": "bounded_client_stakeholder",
+      "risk_observed_level": "high",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-unbounded-recipient",
+      "decision": "block_client_report_handoff",
+      "reasons": [
+        "recipient_scope_unbounded"
+      ],
+      "recipient_class": "unknown_external_audience",
+      "risk_observed_level": "medium",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-ai-summary-only",
+      "decision": "block_client_report_handoff",
+      "reasons": [
+        "product_loop_not_passed",
+        "ai_summary_only_evidence_rejected"
+      ],
+      "recipient_class": "bounded_client_stakeholder",
+      "risk_observed_level": "medium",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A client report can be treated as controlled customer handoff evidence only when Product Loop, Dual Loop, active human reconstruction, source grounding, bounded recipient scope, and CustomerHandoff boundaries pass.",
+    "not_claimed": [
+      "automatic customer delivery",
+      "legal certification",
+      "financial advice certification",
+      "complete factual correctness",
+      "general model correctness",
+      "production publication",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "delivery_class": "client_report_handoff",
+  "negative_checks": {
+    "automatic_customer_sending_rejected": "checks.automatic_customer_sending_allowed must stay False",
+    "eval_sufficient_alone_rejected": "allowed case requires checks.external_eval_receipts_supporting_only=True",
+    "external_publication_rejected": "external publication must stay blocked",
+    "raw_customer_payload_rejected": "recipient_context_ref.raw_customer_payload is forbidden",
+    "raw_report_text_rejected": "client-report-handoff-case-v1:$.report_artifact_ref.raw_report_text uses forbidden field"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "eye_tracking_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "runtime": {
+    "customer_message_sent": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+      "schema_version": "client-report-handoff-case-v1",
+      "sha256": "29b813a54253f02ccb9f942d1828860e5c4a64932776b36f2a8ccf7174cc532b"
+    }
+  ],
+  "schema_version": "client-report-delivery-class-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

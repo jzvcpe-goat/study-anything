@@ -190,6 +190,7 @@ python3 scripts/verify_delivery_trust_case_harness.py --check
 python3 scripts/generate_delivery_trust_case_pack.py --check
 python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check
 python3 scripts/verify_code_review_delivery_class_handoff.py --check
+python3 scripts/verify_client_report_delivery_class_handoff.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -205,3 +206,12 @@ off only when Product Loop, Dual Loop, human reconstruction, source grounding,
 and CustomerHandoff boundaries all pass; it still blocks automatic PR comments,
 customer sending, production mutation, merge approval, deployment approval, and
 security-certification claims.
+
+The Client Report Delivery Class command maps the same trust boundary into a
+second real-domain handoff class for reports, memos, and analysis artifacts. It
+verifies that customer-facing report evidence may be handed off only when
+active human reconstruction, source grounding, bounded recipient scope, risk
+budget, claim boundary, and CustomerHandoff checks pass; it still blocks raw
+report text, raw customer payload, automatic customer sending, external
+publication, production mutation, legal/financial certification, and treating an
+AI summary or external eval receipt as sufficient proof by itself.

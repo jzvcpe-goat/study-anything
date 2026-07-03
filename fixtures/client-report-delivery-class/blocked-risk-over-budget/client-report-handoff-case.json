@@ -1,0 +1,115 @@
+{
+  "case_id": "client-report-handoff-blocked-risk-over-budget",
+  "checks": {
+    "ai_summary_only_evidence_rejected": true,
+    "automatic_customer_sending_allowed": false,
+    "claim_boundary_present": true,
+    "customer_handoff_package_ready": true,
+    "delivery_trust_case_allowed": true,
+    "dual_loop_gate_allowed": true,
+    "external_eval_receipts_supporting_only": true,
+    "external_publication_allowed": false,
+    "human_reconstruction_checkpoint_passed": true,
+    "product_loop_passed": true,
+    "production_mutation_allowed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "recipient_scope_bounded": true,
+    "rollback_or_correction_plan_present": true,
+    "sandbox_risk_within_budget": false,
+    "source_grounding_citations_present": true
+  },
+  "claim_boundary": {
+    "current_claim": "A client report can be treated as controlled customer handoff evidence only when Product Loop, Dual Loop, active human reconstruction, source grounding, bounded recipient scope, and CustomerHandoff boundaries pass.",
+    "not_claimed": [
+      "automatic customer delivery",
+      "legal certification",
+      "financial advice certification",
+      "complete factual correctness",
+      "general model correctness",
+      "production publication",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_client_report_handoff",
+  "delivery_class": "client_report_handoff",
+  "evidence_roles": {
+    "ai_summary": "never_sufficient_alone",
+    "dual_loop": "required",
+    "external_eval": "supporting_only_not_sufficient",
+    "human_reconstruction": "required",
+    "product_loop": "required",
+    "recipient_scope": "required",
+    "source_grounding": "required"
+  },
+  "handoff_controls": {
+    "publish_external_allowed": false,
+    "requires_active_reconstruction_summary": true,
+    "requires_claim_boundary_notice": true,
+    "requires_manual_delivery_action": true,
+    "requires_source_bound_citation_map": true,
+    "send_to_customer_allowed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "eye_tracking_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "reasons": [
+    "sandbox_risk_outside_budget"
+  ],
+  "recipient_context_ref": {
+    "customer_payload_hash": "d11536260316dfb61ab24c5c74094b7b76e903baa68686762dca87413241a398",
+    "raw_customer_payload_included": false,
+    "recipient_class": "bounded_client_stakeholder",
+    "recipient_scope_hash": "588ed68f3ae147c1fe6d0d256a80d98a1a94de0aadf7e498ce1e05faa469e73a"
+  },
+  "report_artifact_ref": {
+    "artifact_hash": "a3c97d4f73bc85a96bd069cb66bc549adfb61152b7dc27f6631e48ff4cce3b64",
+    "citation_map_hash": "250890a30ae74a8b370ca2530606a0a23c5bcf762f2709459c42a0f1ef632d99",
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "report_locator": "metadata://client-report/report",
+    "report_type": "analysis_memo",
+    "source_count": 6
+  },
+  "risk_budget": {
+    "budget_level": "medium",
+    "external_effects_allowed": false,
+    "irreversible_effects_allowed": false,
+    "observed_level": "high"
+  },
+  "schema_version": "client-report-handoff-case-v1",
+  "status": "blocked",
+  "upstream_delivery_trust_case_ref": {
+    "artifact_hash": "d0047997edda860fbc1f70b0e850b496e8f18f8b22ce2feb5fb057724b3e9163",
+    "case_id": "delivery-trust-case-pass",
+    "raw_body_included": false
+  },
+  "version": "v0.3.31-alpha"
+}
