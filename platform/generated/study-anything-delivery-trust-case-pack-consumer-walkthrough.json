@@ -1,0 +1,156 @@
+{
+  "case_summary": {
+    "allowed_case_count": 1,
+    "blocked_case_count": 4,
+    "delivery_trust_cases": [
+      {
+        "artifact_count": 0,
+        "case_id": "pass",
+        "decision": "allow_controlled_customer_handoff",
+        "reasons": [],
+        "status": "ready_for_controlled_customer_handoff"
+      },
+      {
+        "artifact_count": 0,
+        "case_id": "blocked-product-loop",
+        "decision": "block_customer_handoff",
+        "reasons": [
+          "developer_vision_missing",
+          "product_loop_not_passed"
+        ],
+        "status": "blocked"
+      },
+      {
+        "artifact_count": 0,
+        "case_id": "blocked-dual-loop",
+        "decision": "block_customer_handoff",
+        "reasons": [
+          "customer_handoff_not_ready",
+          "delivery_trust_not_allowed",
+          "dual_loop_gate_blocked",
+          "sandbox_risk_outside_budget"
+        ],
+        "status": "blocked"
+      },
+      {
+        "artifact_count": 0,
+        "case_id": "blocked-customer-handoff",
+        "decision": "block_customer_handoff",
+        "reasons": [
+          "customer_handoff_not_ready",
+          "customer_handoff_scope_expansion"
+        ],
+        "status": "blocked"
+      },
+      {
+        "artifact_count": 0,
+        "case_id": "blocked-ai-review-only",
+        "decision": "block_customer_handoff",
+        "reasons": [
+          "ai_review_only_evidence_rejected",
+          "product_loop_not_passed"
+        ],
+        "status": "blocked"
+      }
+    ]
+  },
+  "claim_boundary": {
+    "current_claim": "This pack proves deterministic metadata-only end-to-end gating for controlled customer handoff.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer delivery",
+      "customer outcome guarantee",
+      "general model correctness",
+      "legal certification",
+      "security certification"
+    ]
+  },
+  "consumer": {
+    "command": "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --pack platform/generated/study-anything-delivery-trust-case-pack.zip",
+    "repo_checkout_required_for_pack_mode": false,
+    "script": "scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
+    "zip_only": true
+  },
+  "decision": {
+    "ai_review_only_rejected": true,
+    "allowed_customer_handoff_cases": [
+      "pass"
+    ],
+    "blocked_cases_remain_blocked": true,
+    "external_adopter_can_verify_zip_only": true,
+    "production_mutation_blocked": true
+  },
+  "failure_modes": {
+    "blocked_case_semantics_rejected": true,
+    "hash_mismatch_rejected": true,
+    "missing_case_rejected": true,
+    "missing_manifest_rejected": true,
+    "privacy_regression_rejected": true,
+    "secret_like_text_rejected": true,
+    "tampered_zip_rejected": true,
+    "trust_rule_disabled_rejected": true,
+    "unsafe_zip_path_rejected": true
+  },
+  "pack": {
+    "archive_name": "study-anything-delivery-trust-case-pack.zip",
+    "archive_root": "study-anything-delivery-trust-case-pack",
+    "entry_count": 60,
+    "file_record_count": 59,
+    "manifest_schema_version": "delivery-trust-case-pack-v1",
+    "manifest_sha256": "8d836fc845e1cbcb3706708e591d784fed7c341ec8e217b2a4a494789e278cf9",
+    "zip_sha256": "9cb98166b1b7c00409123e54ff7d577ffa7107a02abc489f091a97c3b401e56c"
+  },
+  "privacy": {
+    "automatic_customer_sending_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_artifact_body_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Verify external zip-only consumption of the Delivery Trust Case Pack.",
+  "runtime_boundaries": {
+    "api_required": false,
+    "daemon_started": false,
+    "docker_required": false,
+    "model_called": false,
+    "real_worktree_apply_executed": false,
+    "repo_checkout_required_for_pack_mode": false,
+    "source_files_modified": false
+  },
+  "schema_version": "delivery-trust-case-pack-consumer-walkthrough-v1",
+  "status": "pass",
+  "walkthrough": [
+    {
+      "evidence": "ZIP is valid and has one archive root.",
+      "status": "pass",
+      "step_id": "download_pack"
+    },
+    {
+      "evidence": "Manifest records match archive members and SHA-256 hashes.",
+      "status": "pass",
+      "step_id": "verify_manifest_and_hashes"
+    },
+    {
+      "evidence": "Claim boundary rejects production/customer overclaims.",
+      "status": "pass",
+      "step_id": "inspect_claim_boundary"
+    },
+    {
+      "evidence": "Only the pass case allows controlled customer handoff.",
+      "status": "pass",
+      "step_id": "review_case_matrix"
+    }
+  ]
+}

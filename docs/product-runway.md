@@ -19,18 +19,16 @@ After that, the project needs product proof.
 
 ## Current Product Objective
 
-Build the Delivery Trust Case Harness on top of the completed Product Loop
-Harness and Dual Loop Trust Scenario Harness.
+Package the completed Delivery Trust Case Harness into a ZIP-only external
+consumer pack.
 
-The Product Loop Harness is the pre-handoff layer; the Dual Loop Trust Scenario Harness remains the customer-delivery layer.
+The Product Loop Harness is the pre-handoff layer; the Dual Loop Trust Scenario Harness remains the customer-delivery layer; the Delivery Trust Case Harness is
+the end-to-end assembly layer. The next product proof is that another operator,
+customer reviewer, or platform Agent can verify that assembly from a portable
+metadata-only pack without trusting our prose or reading private source text.
 
-The Product Loop Harness now shows, with deterministic and metadata-only
-evidence, how a product candidate moves across the three real development loops
-before customer handoff. The Delivery Trust Case Harness should now assemble
-Product Loop, Dual Loop, Delivery Trust Receipt, and CustomerHandoffPackage
-evidence into one end-to-end case that shows how an AI-generated customer
-deliverable can become trustworthy without relying on either of these weak
-patterns:
+The pack should show how an AI-generated customer deliverable can become
+handoff-worthy without relying on either of these weak patterns:
 
 - human over-review of every step;
 - AI reviewing AI through an uninspectable black box.
@@ -68,9 +66,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Delivery Trust Case Harness:
-create deterministic delivery-trust-case fixtures, a delivery-trust-case-v1
-contract, a CLI, a verifier, generated JSON/HTML evidence, and release/adoption
-pack integration proving Product Loop, Dual Loop, Delivery Trust Receipt, and
-CustomerHandoffPackage must all agree before controlled customer handoff.
+Delivery Trust Case Consumer Pack:
+create a portable delivery-trust-case-pack-v1 JSON/MD/ZIP/SHA256 bundle plus a
+ZIP-only consumer walkthrough verifier proving an external adopter can inspect
+the claim boundary, hash integrity, pass/blocked case matrix, and metadata-only
+privacy rules without a repo checkout.
 ```
+
+After that, move to the first real-domain delivery class: take one AI-generated
+deliverable type, such as a code-review handoff or client report handoff, and
+map it into the same case-pack contract without weakening the claim boundary.

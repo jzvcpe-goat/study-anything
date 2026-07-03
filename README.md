@@ -40,6 +40,7 @@ The current alpha already ships a local-first trust-harness foundation:
 - Dual Loop Trust Scenario Pack: a downloadable metadata-only ZIP that packages the customer-delivery scenario matrix, schemas, runner scripts, verifiers, and a ZIP-only consumer walkthrough for external operators and platform Agents.
 - Product Loop Harness: `product-loop-scenario-v1` and `product-loop-run-v1` turn the Agentic Coding, Developer Feedback, and External Feedback loops into equal-weight metadata-only promotion evidence before Delivery Trust Harness handoff.
 - Delivery Trust Case Harness: `delivery-trust-case-v1` assembles Product Loop, Dual Loop, Delivery Trust Receipt, and CustomerHandoffPackage evidence into one end-to-end controlled customer-handoff decision.
+- Delivery Trust Case Pack: `delivery-trust-case-pack-v1` makes that decision portable for ZIP-only external consumer verification without source text, secrets, or customer payloads.
 - FastAPI learning API and repo-local Skill Mode.
 - Deterministic fake Agent for tests and demos.
 - Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
@@ -62,6 +63,7 @@ The current alpha already ships a local-first trust-harness foundation:
 - Dual Loop Trust Scenario Pack：可下载的 metadata-only ZIP，把客户交付场景矩阵、schema、runner 脚本、verifier 和只读 ZIP 消费者验收 walkthrough 打包给外部 operator 与平台 Agent 使用。
 - Product Loop Harness：`product-loop-scenario-v1` 和 `product-loop-run-v1` 把 Agentic Coding、Developer Feedback、External Feedback 三个产品开发环变成同等权重的 metadata-only 升级证据，再进入 Delivery Trust Harness。
 - Delivery Trust Case Harness：`delivery-trust-case-v1` 把 Product Loop、Dual Loop、Delivery Trust Receipt 和 CustomerHandoffPackage 证据总装成一次端到端的受控客户交付决策。
+- Delivery Trust Case Pack：`delivery-trust-case-pack-v1` 把这份决策打包成可外部离线验证的 ZIP 证据包，不包含源码正文、密钥或客户载荷。
 - FastAPI 学习 API 和仓库内 Skill Mode。
 - 用于测试和 demo 的确定性 fake Agent。
 - Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。

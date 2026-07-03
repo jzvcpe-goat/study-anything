@@ -129,6 +129,19 @@ and CustomerHandoffPackage evidence to agree. If any one layer blocks, the case
 blocks. A valid package cannot compensate for a failed Product Loop, and a
 passing Product Loop cannot compensate for sandbox risk outside budget.
 
+## Delivery Trust Case Pack
+
+The portable consumer layer emits:
+
+- `delivery-trust-case-pack-v1`
+- `delivery-trust-case-pack-consumer-walkthrough-v1`
+
+This pack is for external adopters. It lets a customer reviewer or platform
+Agent verify the Delivery Trust Case evidence from a ZIP alone: manifest shape,
+file hashes, claim boundary, pass/blocked case semantics, and metadata-only
+privacy boundaries. It is not a new trust source and cannot turn a blocked case
+into an allowed customer handoff.
+
 ## What This Does Not Claim
 
 The current local-first deterministic MVP does not claim:
@@ -174,6 +187,8 @@ python3 scripts/verify_delivery_trust_receipt.py --check
 python3 scripts/verify_customer_handoff_package.py --check
 python3 scripts/verify_product_loop_harness.py --check
 python3 scripts/verify_delivery_trust_case_harness.py --check
+python3 scripts/generate_delivery_trust_case_pack.py --check
+python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects

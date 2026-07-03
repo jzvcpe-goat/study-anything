@@ -118,8 +118,8 @@
     "entry_count": 80,
     "file_record_count": 79,
     "manifest_schema_version": "dual-loop-trust-scenario-pack-v1",
-    "manifest_sha256": "03182251d07e47b3ba689de9f6591f00c9846147534dcaca9318ddd48f7a6e7d",
-    "zip_sha256": "16b94d9afa7501ed232260551fc4898f6b58416a9f6ed6f71ffcedef0550ef54"
+    "manifest_sha256": "1fa972d8dde50ed333e11cff235eb4b79731a2139cd65e5b58b7e79082251082",
+    "zip_sha256": "43a28a654ed92ec0b7bee153f4e447edb662ffc241aad28f0ea0120e729e4b4e"
   },
   "privacy": {
     "cookies_or_bearer_tokens_included": false,
