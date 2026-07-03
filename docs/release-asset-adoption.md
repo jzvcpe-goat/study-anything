@@ -28,6 +28,7 @@ Required assets:
 - `study-anything-dual-loop-trust-scenario-pack.json`
 - `study-anything-dual-loop-trust-scenario-pack.zip`
 - `study-anything-dual-loop-trust-scenario-pack.sha256`
+- `study-anything-dual-loop-trust-pack-consumer-walkthrough.json`
 
 Plugin-pack downloads are indexed in:
 

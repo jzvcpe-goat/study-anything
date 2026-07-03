@@ -37,7 +37,7 @@ The current alpha already ships a local-first trust-harness foundation:
 - Dual-Loop MVP: `failure-contract-v1`, `sandbox-receipt-v1`, `attention-reconstruction-trace-v1`, `attention-reconstruction-summary-v1`, and `dual-loop-gate-receipt-v1`.
 - Delivery Trust Receipt: `delivery-trust-receipt-v1` turns Dual-Loop evidence into a controlled customer-handoff decision and rejects AI-review-only or eval-as-sufficient shortcuts.
 - CustomerHandoffPackage: `customer-handoff-package-v1` packages an already-allowed Delivery Trust Receipt into portable JSON/HTML/ZIP evidence without expanding scope or becoming a new trust source.
-- Dual Loop Trust Scenario Pack: a downloadable metadata-only ZIP that packages the customer-delivery scenario matrix, schemas, runner scripts, and verifiers for external operators and platform Agents.
+- Dual Loop Trust Scenario Pack: a downloadable metadata-only ZIP that packages the customer-delivery scenario matrix, schemas, runner scripts, verifiers, and a ZIP-only consumer walkthrough for external operators and platform Agents.
 - FastAPI learning API and repo-local Skill Mode.
 - Deterministic fake Agent for tests and demos.
 - Bring Your Own Agent via user-owned HTTP gateway; Study Anything does not store real model keys.
@@ -57,7 +57,7 @@ The current alpha already ships a local-first trust-harness foundation:
 - Dual-Loop MVP：`failure-contract-v1`、`sandbox-receipt-v1`、`attention-reconstruction-trace-v1`、`attention-reconstruction-summary-v1` 和 `dual-loop-gate-receipt-v1`。
 - Delivery Trust Receipt：`delivery-trust-receipt-v1` 把 Dual Loop 证据转成受控客户交付决策，并拒绝“AI 审 AI 即可放行”或“eval 结果足以放行”的捷径。
 - CustomerHandoffPackage：`customer-handoff-package-v1` 把已 allowed 的 Delivery Trust Receipt 打包成可携带 JSON/HTML/ZIP 证据，不扩张 scope，也不成为新的信任来源。
-- Dual Loop Trust Scenario Pack：可下载的 metadata-only ZIP，把客户交付场景矩阵、schema、runner 脚本和 verifier 打包给外部 operator 与平台 Agent 使用。
+- Dual Loop Trust Scenario Pack：可下载的 metadata-only ZIP，把客户交付场景矩阵、schema、runner 脚本、verifier 和只读 ZIP 消费者验收 walkthrough 打包给外部 operator 与平台 Agent 使用。
 - FastAPI 学习 API 和仓库内 Skill Mode。
 - 用于测试和 demo 的确定性 fake Agent。
 - Bring Your Own Agent：真实推理由用户自己的 HTTP Agent Gateway 执行，Study Anything 不保存真实模型密钥。

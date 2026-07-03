@@ -193,6 +193,11 @@ FILES: list[tuple[str, str, str]] = [
         "Portable Dual Loop trust scenario pack archive checksum.",
     ),
     (
+        "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
+        "generated_asset",
+        "ZIP-only external consumer walkthrough report for the Dual Loop trust scenario pack.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -2021,6 +2026,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_dual_loop_trust_scenario_pack.py",
         "verification",
         "Verify portable Dual Loop trust scenario pack assets.",
+    ),
+    (
+        "scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py",
+        "verification",
+        "Verify external ZIP-only consumption of the Dual Loop trust scenario pack.",
     ),
     (
         "scripts/cbb_protocol_cli.py",

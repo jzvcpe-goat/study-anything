@@ -45,6 +45,7 @@ RELEASE_ASSETS = (
     "study-anything-dual-loop-trust-scenario-pack.json",
     "study-anything-dual-loop-trust-scenario-pack.zip",
     "study-anything-dual-loop-trust-scenario-pack.sha256",
+    "study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
 )
 REQUIRED_GUIDE_MARKERS = (
     "GitHub Release Guide",

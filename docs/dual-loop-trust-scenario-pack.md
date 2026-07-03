@@ -37,6 +37,7 @@ platform/generated/study-anything-dual-loop-trust-scenario-pack.json
 platform/generated/study-anything-dual-loop-trust-scenario-pack.md
 platform/generated/study-anything-dual-loop-trust-scenario-pack.zip
 platform/generated/study-anything-dual-loop-trust-scenario-pack.sha256
+platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json
 ```
 
 The ZIP has a single root directory and includes:
@@ -62,6 +63,14 @@ Verify the generated pack:
 ```bash
 python3 scripts/generate_dual_loop_trust_scenario_pack.py --check
 python3 scripts/verify_dual_loop_trust_scenario_pack.py --check
+python3 scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py --check
+```
+
+Verify the pack the way an external adopter would, from the ZIP alone:
+
+```bash
+python3 scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py \
+  --pack platform/generated/study-anything-dual-loop-trust-scenario-pack.zip
 ```
 
 Run the source harnesses directly:
