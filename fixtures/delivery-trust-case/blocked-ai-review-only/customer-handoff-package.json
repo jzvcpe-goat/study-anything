@@ -1,0 +1,485 @@
+{
+  "agent_handoff_instructions": [
+    {
+      "allowed_actions": [
+        "open package",
+        "inspect claim boundary",
+        "show rollback and limitations",
+        "ask user before any external customer action"
+      ],
+      "automatic_customer_sending_allowed": false,
+      "entrypoint_ref": "platform:packs/workbuddy",
+      "forbidden_actions": [
+        "production_mutation",
+        "scope_escalation",
+        "automatic_customer_sending",
+        "credential_request"
+      ],
+      "mode": "inline_learning_workflow",
+      "platform_id": "workbuddy",
+      "production_mutation_allowed": false,
+      "scope_escalation_allowed": false
+    },
+    {
+      "allowed_actions": [
+        "validate package",
+        "summarize evidence references",
+        "prepare operator-owned handoff notes"
+      ],
+      "automatic_customer_sending_allowed": false,
+      "entrypoint_ref": "platform:packs/hermes",
+      "forbidden_actions": [
+        "production_mutation",
+        "scope_escalation",
+        "automatic_customer_sending",
+        "credential_request"
+      ],
+      "mode": "agent_skill_http_tools",
+      "platform_id": "hermes",
+      "production_mutation_allowed": false,
+      "scope_escalation_allowed": false
+    },
+    {
+      "allowed_actions": [
+        "run verifier",
+        "inspect metadata package",
+        "prepare local audit notes"
+      ],
+      "automatic_customer_sending_allowed": false,
+      "entrypoint_ref": "skills:study-anything",
+      "forbidden_actions": [
+        "production_mutation",
+        "scope_escalation",
+        "automatic_customer_sending",
+        "credential_request"
+      ],
+      "mode": "terminal_skill",
+      "platform_id": "codex",
+      "production_mutation_allowed": false,
+      "scope_escalation_allowed": false
+    }
+  ],
+  "artifact_refs": [
+    {
+      "kind": "delivery_trust_receipt",
+      "path": "delivery-trust-receipt.json",
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "kind": "claim_boundary",
+      "path": "claim-boundary.json",
+      "sha256": "d4d82d647716c9b2a6ae9ee7b4d19a8d148bec1e9002dbaca54c89128cb795dd"
+    },
+    {
+      "kind": "limitations",
+      "path": "limitations.json",
+      "sha256": "907cbf6b92dc8d42bf47960607b4fc80c916accb82488027afa1e092962ba96e"
+    },
+    {
+      "kind": "rollback_strategy",
+      "path": "rollback-strategy.json",
+      "sha256": "97837801a59f787dd1b19607109f96140e883be2b708230d6dffe6ef712d54f8"
+    },
+    {
+      "kind": "controlled_failure_summary",
+      "path": "controlled-failure-summary.json",
+      "sha256": "62f0cab0e0ea5df337807bacadd0509e23ebaf1f901321404e8aa87046744e87"
+    },
+    {
+      "kind": "human_reconstruction_summary",
+      "path": "human-reconstruction-summary.json",
+      "sha256": "a54d57a67f0efcf991604ea6984a3ca9e4963badc76adce15e8d044969a31c5d"
+    },
+    {
+      "kind": "dual_loop_gate_receipt",
+      "path": "dual-loop-gate-receipt.json",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "kind": "external_eval_receipts",
+      "path": "external-eval-receipts.json",
+      "sha256": "bd4d119450cdaa17e47cc8a973166874a964b7ab7930141987c1de705372de54"
+    },
+    {
+      "kind": "agent_handoff_instructions",
+      "path": "agent-handoff-instructions.json",
+      "sha256": "dd030d3a464a354dbfcf733c9f400efb6a9cb5b55b15d498f9c094764505cc31"
+    },
+    {
+      "kind": "provenance",
+      "path": "provenance.json",
+      "sha256": "8ceaa0498da9ddfa268e73a121b34106be9d6687ae459b4ef8dfe5a643aae25d"
+    }
+  ],
+  "candidate_artifact_ref": "artifact:ai-delivery-candidate-metadata",
+  "claim_boundary": {
+    "current_claim": "The candidate passed local metadata-only Dual Loop gates for a controlled customer handoff.",
+    "not_claimed": [
+      "general model correctness",
+      "production deployment approval",
+      "customer outcome guarantee",
+      "AI self-review sufficiency",
+      "full human re-review completion"
+    ],
+    "requires_before_real_production": [
+      "domain acceptance tests",
+      "operator-owned deployment approval",
+      "customer-specific rollback plan",
+      "legal and security review when required"
+    ]
+  },
+  "controlled_failure_summary": {
+    "budget_level": "medium",
+    "contained_failure_count": 1,
+    "contract_id": "failure-contract-demo-001",
+    "irreversible_external_effects": false,
+    "observed_level": "medium",
+    "production_mutation": false,
+    "risk_level": "medium",
+    "risk_within_budget": true,
+    "rollback_ref": "rollback:ai-delivery-candidate-withdrawal",
+    "sandbox_status": "passed"
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "customer_delivery_scope": {
+    "allowed_handoff": true,
+    "allowed_material_refs": [
+      "candidate_artifact_ref",
+      "known_limitations",
+      "verification_command_refs",
+      "rollback_ref"
+    ],
+    "irreversible_external_effects_allowed": false,
+    "production_mutation_allowed": false,
+    "real_customer_effects_allowed": false,
+    "scope_id": "controlled-customer-handoff-v0.1"
+  },
+  "decision": "package_controlled_customer_handoff",
+  "delivery_trust_receipt": {
+    "candidate_artifact_ref": "artifact:ai-delivery-candidate-metadata",
+    "checks": {
+      "controlled_failure_environment_passed": true,
+      "customer_claim_boundary_present": true,
+      "dual_loop_gate_allowed": true,
+      "failure_contract_valid": true,
+      "human_reconstruction_passed": true,
+      "human_reconstruction_present": true,
+      "no_ai_review_black_box_as_sole_basis": true,
+      "no_excessive_manual_re_review_required": true,
+      "production_mutation_blocked": true,
+      "reversible_delivery_path": true,
+      "sandbox_receipt_valid": true,
+      "structured_artifact_bridge_only": true
+    },
+    "claim_boundary": {
+      "current_claim": "The candidate passed local metadata-only Dual Loop gates for a controlled customer handoff.",
+      "not_claimed": [
+        "general model correctness",
+        "production deployment approval",
+        "customer outcome guarantee",
+        "AI self-review sufficiency",
+        "full human re-review completion"
+      ],
+      "requires_before_real_production": [
+        "domain acceptance tests",
+        "operator-owned deployment approval",
+        "customer-specific rollback plan",
+        "legal and security review when required"
+      ]
+    },
+    "created_at": "2026-06-28T00:00:00Z",
+    "customer_delivery_scope": {
+      "allowed_handoff": true,
+      "allowed_material_refs": [
+        "candidate_artifact_ref",
+        "known_limitations",
+        "verification_command_refs",
+        "rollback_ref"
+      ],
+      "irreversible_external_effects_allowed": false,
+      "production_mutation_allowed": false,
+      "real_customer_effects_allowed": false,
+      "scope_id": "controlled-customer-handoff-v0.1"
+    },
+    "decision": "allow_controlled_customer_handoff",
+    "dual_loop_refs": {
+      "attention_summary_ref": "attention-reconstruction-summary.json",
+      "failure_contract_ref": "failure-contract.json",
+      "gate_receipt_ref": "dual-loop-gate-receipt.json",
+      "sandbox_receipt_ref": "sandbox-receipt.json"
+    },
+    "isolation": {
+      "ai_sandbox_has_attention_stream_access": false,
+      "attention_layer_has_execution_authority": false,
+      "daemon_or_hosted_service_started": false,
+      "physical_isolation": true,
+      "production_mutation_allowed": false,
+      "structured_artifact_bridge_only": true
+    },
+    "next_actions": [
+      "attach delivery trust receipt to the handoff package",
+      "keep production mutation disabled until a stronger sandbox level passes",
+      "rerun Dual Loop gates after any material change"
+    ],
+    "privacy": {
+      "bearer_tokens_included": false,
+      "biometrics_included": false,
+      "client_secrets_included": false,
+      "cookies_included": false,
+      "customer_payload_included": false,
+      "eye_tracking_included": false,
+      "keystrokes_included": false,
+      "model_calls_performed": false,
+      "mouse_coordinates_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "real_secrets_included": false,
+      "screenshots_included": false,
+      "signed_urls_included": false,
+      "user_owned_agent_credentials_included": false
+    },
+    "project_id": "study-anything",
+    "reasons": [],
+    "receipt_id": "delivery-trust-receipt-demo-001",
+    "schema_version": "delivery-trust-receipt-v1",
+    "status": "allowed",
+    "trust_basis": {
+      "ai_eval_receipts_role": "supporting_only_not_sufficient",
+      "controlled_failure_environment": "required",
+      "dual_loop_propagation_gate": "required",
+      "human_attention_reconstruction": "required",
+      "human_review_role": "active_reconstruction_not_full_manual_re_review",
+      "passive_attention_role": "weak_not_sufficient"
+    }
+  },
+  "dual_loop_gate_receipt": {
+    "checks": {
+      "attention_reconstruction_passed": true,
+      "attention_reconstruction_required": true,
+      "isolation_boundary_valid": true,
+      "neither_loop_dominates": true,
+      "sandbox_contained_failures": true,
+      "sandbox_within_budget": true,
+      "structured_artifact_bridge_only": true
+    },
+    "contract_id": "failure-contract-demo-001",
+    "created_at": "2026-06-28T00:00:00Z",
+    "decision": "promote_to_next_sandbox",
+    "gate_id": "dual-loop-gate-demo-001",
+    "input_refs": {
+      "attention_summary_ref": "attention-summary.json",
+      "failure_contract_ref": "failure-contract.json",
+      "sandbox_receipt_ref": "sandbox-receipt.json"
+    },
+    "isolation": {
+      "ai_sandbox_has_attention_stream_access": false,
+      "attention_layer_has_execution_authority": false,
+      "daemon_or_hosted_service_started": false,
+      "physical_isolation": true,
+      "production_mutation_allowed": false,
+      "structured_artifact_bridge_only": true
+    },
+    "next_sandbox_level": "sandbox-1",
+    "privacy": {
+      "bearer_tokens_included": false,
+      "biometrics_included": false,
+      "cookies_included": false,
+      "eye_tracking_included": false,
+      "keystrokes_included": false,
+      "model_calls_performed": false,
+      "mouse_coordinates_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "real_secrets_included": false,
+      "screenshots_included": false,
+      "signed_urls_included": false,
+      "user_owned_agent_credentials_included": false
+    },
+    "reasons": [],
+    "schema_version": "dual-loop-gate-receipt-v1",
+    "status": "allowed"
+  },
+  "external_eval_receipts": {
+    "receipts": [
+      {
+        "adapter_id": "promptfoo",
+        "raw_outputs_included": false,
+        "real_model_or_eval_keys_stored": false,
+        "receipt_ref": "external-eval:promptfoo-deepseek-lesson-pass",
+        "sha256": "d17ea77cb1b4e39d3c38ca81bdb8e98d00f945a471954900338fba86c9a006db",
+        "status": "pass"
+      },
+      {
+        "adapter_id": "ragas",
+        "raw_outputs_included": false,
+        "real_model_or_eval_keys_stored": false,
+        "receipt_ref": "external-eval:ragas-deepseek-lesson-pass",
+        "sha256": "45ec108ba3aee0ad9fbf58104a7c7119fc71770c1bc2c7a0677d73ef869a3422",
+        "status": "pass"
+      }
+    ],
+    "role": "supporting_only_not_sufficient",
+    "trust_sufficient": false
+  },
+  "human_reconstruction_summary": {
+    "active_reconstruction_required": true,
+    "contract_id": "failure-contract-demo-001",
+    "passive_attention_only": false,
+    "required_mrus_passed": 3,
+    "required_mrus_total": 3,
+    "status": "passed",
+    "strong_evidence_count": 3,
+    "summary_id": "attention-summary-demo-001",
+    "weak_evidence_count": 1
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "limitations": {
+    "not_ai_review_black_box": true,
+    "not_claimed": [
+      "general model correctness",
+      "production deployment approval",
+      "customer outcome guarantee",
+      "AI self-review sufficiency",
+      "full human re-review completion"
+    ],
+    "not_customer_outcome_guarantee": true,
+    "not_legal_compliance_or_security_certification": true,
+    "not_production_approval": true,
+    "requires_before_real_production": [
+      "domain acceptance tests",
+      "operator-owned deployment approval",
+      "customer-specific rollback plan",
+      "legal and security review when required"
+    ]
+  },
+  "manifest": {
+    "artifacts": [
+      {
+        "bytes": 3557,
+        "kind": "delivery_trust_receipt",
+        "package_key": "delivery_trust_receipt",
+        "path": "delivery-trust-receipt.json",
+        "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+      },
+      {
+        "bytes": 520,
+        "kind": "claim_boundary",
+        "package_key": "claim_boundary",
+        "path": "claim-boundary.json",
+        "sha256": "d4d82d647716c9b2a6ae9ee7b4d19a8d148bec1e9002dbaca54c89128cb795dd"
+      },
+      {
+        "bytes": 576,
+        "kind": "limitations",
+        "package_key": "limitations",
+        "path": "limitations.json",
+        "sha256": "907cbf6b92dc8d42bf47960607b4fc80c916accb82488027afa1e092962ba96e"
+      },
+      {
+        "bytes": 149,
+        "kind": "rollback_strategy",
+        "package_key": "rollback_strategy",
+        "path": "rollback-strategy.json",
+        "sha256": "97837801a59f787dd1b19607109f96140e883be2b708230d6dffe6ef712d54f8"
+      },
+      {
+        "bytes": 362,
+        "kind": "controlled_failure_summary",
+        "package_key": "controlled_failure_summary",
+        "path": "controlled-failure-summary.json",
+        "sha256": "62f0cab0e0ea5df337807bacadd0509e23ebaf1f901321404e8aa87046744e87"
+      },
+      {
+        "bytes": 309,
+        "kind": "human_reconstruction_summary",
+        "package_key": "human_reconstruction_summary",
+        "path": "human-reconstruction-summary.json",
+        "sha256": "a54d57a67f0efcf991604ea6984a3ca9e4963badc76adce15e8d044969a31c5d"
+      },
+      {
+        "bytes": 1579,
+        "kind": "dual_loop_gate_receipt",
+        "package_key": "dual_loop_gate_receipt",
+        "path": "dual-loop-gate-receipt.json",
+        "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+      },
+      {
+        "bytes": 700,
+        "kind": "external_eval_receipts",
+        "package_key": "external_eval_receipts",
+        "path": "external-eval-receipts.json",
+        "sha256": "bd4d119450cdaa17e47cc8a973166874a964b7ab7930141987c1de705372de54"
+      },
+      {
+        "bytes": 1656,
+        "kind": "agent_handoff_instructions",
+        "package_key": "agent_handoff_instructions",
+        "path": "agent-handoff-instructions.json",
+        "sha256": "dd030d3a464a354dbfcf733c9f400efb6a9cb5b55b15d498f9c094764505cc31"
+      },
+      {
+        "bytes": 378,
+        "kind": "provenance",
+        "package_key": "provenance",
+        "path": "provenance.json",
+        "sha256": "8ceaa0498da9ddfa268e73a121b34106be9d6687ae459b4ef8dfe5a643aae25d"
+      }
+    ],
+    "created_at": "2026-06-28T00:00:00Z",
+    "entrypoint": "customer-handoff-package.json",
+    "package_id": "customer-handoff-package-demo-001",
+    "package_schema_version": "customer-handoff-package-v1",
+    "schema_version": "customer-handoff-package-manifest-v1",
+    "zip_root": "study-anything-customer-handoff-package"
+  },
+  "package_id": "customer-handoff-package-demo-001",
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "provenance": {
+    "automatic_customer_sending_performed": false,
+    "created_by": "study-anything-cognitive-black-box",
+    "delivery_trust_receipt_id": "delivery-trust-receipt-demo-001",
+    "dual_loop_gate_id": "dual-loop-gate-demo-001",
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "risk_level": "medium",
+    "source": "local_deterministic_dual_loop_evidence"
+  },
+  "rollback_strategy": {
+    "available": true,
+    "production_mutation_required": false,
+    "rehearsed": true,
+    "rollback_ref": "rollback:ai-delivery-candidate-withdrawal"
+  },
+  "schema_version": "customer-handoff-package-v1",
+  "status": "ready_for_controlled_customer_handoff"
+}

@@ -1,0 +1,95 @@
+{
+  "case_id": "blocked-missing-developer-vision",
+  "checks": {
+    "ai_review_only_rejected": true,
+    "all_three_loops_required": true,
+    "developer_vision_present": false,
+    "external_feedback_scope_within_policy": true,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "neither_loop_may_dominate": true,
+    "product_spec_evals_present": true,
+    "production_mutation_blocked": true
+  },
+  "claim_boundary": {
+    "current_claim": "This product-development loop run may promote only to the Delivery Trust Harness, not to production or unrestricted customer delivery.",
+    "not_claimed": [
+      "production readiness",
+      "customer outcome guarantee",
+      "general model correctness",
+      "legal certification"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_product_loop",
+  "evidence_refs": {
+    "developer_vision_ref": null,
+    "external_feedback_intake_ref": "external-feedback-intake.json",
+    "product_spec_evals_ref": "product-spec-evals.json",
+    "scenario_ref": "product-loop-scenario.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "loop_parity": {
+    "agentic_loop_required": true,
+    "developer_loop_required": true,
+    "external_loop_required": true,
+    "neither_loop_may_dominate": true
+  },
+  "loop_statuses": {
+    "agentic_coding_loop": "passed",
+    "developer_feedback_loop": "blocked",
+    "external_feedback_loop": "passed"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "promotion": {
+    "allowed_next_layer": null,
+    "production_mutation_allowed": false,
+    "requested_scope": "controlled_customer_handoff"
+  },
+  "reasons": [
+    "developer_vision_missing"
+  ],
+  "run_id": "product-loop-run-blocked-missing-developer-vision",
+  "scenario_id": "product-loop-scenario-blocked-missing-developer-vision",
+  "schema_version": "product-loop-run-v1",
+  "source": {
+    "content_digest": "2d4a7dc36e339477bf17715ca19a2c6367d333a5a36942415038d33de26da5e5",
+    "source_ref": "product-loop:blocked-missing-developer-vision",
+    "source_type": "deterministic_fixture"
+  },
+  "status": "blocked",
+  "time_scales": {
+    "agentic_coding_loop": "minutes",
+    "developer_feedback_loop": "hours",
+    "external_feedback_loop": "days"
+  }
+}

@@ -117,6 +117,18 @@ scope. It only bundles scoped metadata evidence, limitations, rollback,
 human reconstruction summaries, external eval receipt refs, artifact digests,
 and WorkBuddy/Hermes/Codex handoff instructions.
 
+## Delivery Trust Case Harness
+
+The total assembly layer emits:
+
+- `delivery-trust-case-v1`
+
+This layer answers whether one AI-generated candidate is ready for controlled
+customer handoff. It requires Product Loop, Dual Loop, Delivery Trust Receipt,
+and CustomerHandoffPackage evidence to agree. If any one layer blocks, the case
+blocks. A valid package cannot compensate for a failed Product Loop, and a
+passing Product Loop cannot compensate for sandbox risk outside budget.
+
 ## What This Does Not Claim
 
 The current local-first deterministic MVP does not claim:
@@ -161,6 +173,7 @@ python3 scripts/verify_dual_loop_gate.py --check
 python3 scripts/verify_delivery_trust_receipt.py --check
 python3 scripts/verify_customer_handoff_package.py --check
 python3 scripts/verify_product_loop_harness.py --check
+python3 scripts/verify_delivery_trust_case_harness.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects

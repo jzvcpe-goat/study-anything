@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Delivery Trust Case Harness</title>
+<body>
+<h1>Delivery Trust Case Harness</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;fixture_dir&quot;: &quot;fixtures/delivery-trust-case&quot;,
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_delivery_trust_case_harness.py --check&quot;
+  },
+  &quot;artifact_contracts&quot;: {
+    &quot;customer_handoff_package&quot;: &quot;customer-handoff-package-v1&quot;,
+    &quot;delivery_trust_case&quot;: &quot;delivery-trust-case-v1&quot;,
+    &quot;delivery_trust_receipt&quot;: &quot;delivery-trust-receipt-v1&quot;,
+    &quot;dual_loop_gate_receipt&quot;: &quot;dual-loop-gate-receipt-v1&quot;,
+    &quot;product_loop_run&quot;: &quot;product-loop-run-v1&quot;
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;artifact_count&quot;: 10,
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_customer_handoff&quot;,
+      &quot;layer_statuses&quot;: {
+        &quot;customer_handoff&quot;: &quot;ready&quot;,
+        &quot;delivery_trust&quot;: &quot;allowed&quot;,
+        &quot;dual_loop_gate&quot;: &quot;allowed&quot;,
+        &quot;product_loop&quot;: &quot;allowed&quot;
+      },
+      &quot;reasons&quot;: [],
+      &quot;status&quot;: &quot;ready_for_controlled_customer_handoff&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 10,
+      &quot;case_id&quot;: &quot;blocked-product-loop&quot;,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;layer_statuses&quot;: {
+        &quot;customer_handoff&quot;: &quot;ready&quot;,
+        &quot;delivery_trust&quot;: &quot;allowed&quot;,
+        &quot;dual_loop_gate&quot;: &quot;allowed&quot;,
+        &quot;product_loop&quot;: &quot;blocked&quot;
+      },
+      &quot;reasons&quot;: [
+        &quot;product_loop_not_passed&quot;,
+        &quot;developer_vision_missing&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 8,
+      &quot;case_id&quot;: &quot;blocked-dual-loop&quot;,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;layer_statuses&quot;: {
+        &quot;customer_handoff&quot;: &quot;missing&quot;,
+        &quot;delivery_trust&quot;: &quot;blocked&quot;,
+        &quot;dual_loop_gate&quot;: &quot;blocked&quot;,
+        &quot;product_loop&quot;: &quot;allowed&quot;
+      },
+      &quot;reasons&quot;: [
+        &quot;dual_loop_gate_blocked&quot;,
+        &quot;sandbox_risk_outside_budget&quot;,
+        &quot;delivery_trust_not_allowed&quot;,
+        &quot;customer_handoff_not_ready&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 10,
+      &quot;case_id&quot;: &quot;blocked-customer-handoff&quot;,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;layer_statuses&quot;: {
+        &quot;customer_handoff&quot;: &quot;blocked&quot;,
+        &quot;delivery_trust&quot;: &quot;allowed&quot;,
+        &quot;dual_loop_gate&quot;: &quot;allowed&quot;,
+        &quot;product_loop&quot;: &quot;allowed&quot;
+      },
+      &quot;reasons&quot;: [
+        &quot;customer_handoff_not_ready&quot;,
+        &quot;customer_handoff_scope_expansion&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 10,
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;layer_statuses&quot;: {
+        &quot;customer_handoff&quot;: &quot;ready&quot;,
+        &quot;delivery_trust&quot;: &quot;allowed&quot;,
+        &quot;dual_loop_gate&quot;: &quot;allowed&quot;,
+        &quot;product_loop&quot;: &quot;blocked&quot;
+      },
+      &quot;reasons&quot;: [
+        &quot;product_loop_not_passed&quot;,
+        &quot;ai_review_only_evidence_rejected&quot;
+      ],
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;Delivery Trust Case Harness proves deterministic metadata-only end-to-end gating for controlled customer handoff.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;production deployment approval&quot;,
+      &quot;real customer delivery&quot;,
+      &quot;general model correctness&quot;,
+      &quot;legal certification&quot;,
+      &quot;security certification&quot;
+    ]
+  },
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;ai_review_only_rejected&quot;: &quot;AI-review-only trust basis is forbidden&quot;,
+    &quot;automatic_customer_sending_rejected&quot;: &quot;delivery trust case must block automatic customer sending&quot;,
+    &quot;eval_sufficiency_rejected&quot;: &quot;ready delivery trust case requires external_eval_receipts_supporting_only&quot;,
+    &quot;missing_claim_boundary_rejected&quot;: &quot;delivery trust case must state a current claim&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_credentials_included&quot;: false,
+    &quot;attention_streams_included&quot;: false,
+    &quot;automatic_customer_delivery_performed&quot;: false,
+    &quot;automatic_customer_sending_performed&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;client_secrets_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_payload_included&quot;: false,
+    &quot;delivery_artifact_body_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only_fixtures&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;model_prompts_included&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;platform_agent_credentials_included&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_external_feedback_text_included&quot;: false,
+    &quot;raw_product_spec_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;delivery-trust-case-v1&quot;,
+      &quot;sha256&quot;: &quot;77175ca52cc0122b860d7b7b291c9eeb29c5b1b4b6a409a1220792365c8a4150&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;delivery-trust-case-harness-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;trust_rules&quot;: {
+    &quot;ai_review_only_forbidden&quot;: true,
+    &quot;automatic_customer_sending_blocked&quot;: true,
+    &quot;customer_handoff_package_required&quot;: true,
+    &quot;delivery_trust_receipt_required&quot;: true,
+    &quot;dual_loop_gate_required&quot;: true,
+    &quot;external_eval_receipts_supporting_only&quot;: true,
+    &quot;full_manual_re_review_not_required_for_pass&quot;: true,
+    &quot;metadata_only&quot;: true,
+    &quot;product_loop_required&quot;: true,
+    &quot;production_mutation_blocked&quot;: true
+  },
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

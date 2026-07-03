@@ -1,0 +1,153 @@
+{
+  "candidate_artifact_ref": "artifact:ai-delivery-candidate-metadata",
+  "case_id": "delivery-trust-case-pass",
+  "checks": {
+    "automatic_customer_sending_blocked": true,
+    "claim_boundary_present": true,
+    "customer_handoff_valid": true,
+    "delivery_trust_allowed": true,
+    "developer_vision_present": true,
+    "dual_loop_gate_allowed": true,
+    "external_eval_receipts_supporting_only": true,
+    "external_feedback_scope_within_policy": true,
+    "irreversible_external_effects_blocked": true,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "no_ai_review_black_box_as_sole_basis": true,
+    "no_excessive_manual_re_review_required": true,
+    "product_loop_allowed": true,
+    "product_loop_parity_preserved": true,
+    "product_spec_evals_present": true,
+    "production_mutation_blocked": true,
+    "structured_artifact_bridge_only": true
+  },
+  "claim_boundary": {
+    "current_claim": "The AI-generated candidate is ready for controlled customer handoff inside the local metadata-only scope.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer delivery",
+      "general model correctness",
+      "legal certification",
+      "security certification",
+      "AI self-review sufficiency",
+      "full human re-review completion"
+    ],
+    "requires_before_real_production": [
+      "domain acceptance tests",
+      "operator-owned deployment approval",
+      "customer-specific rollback plan",
+      "security and legal review when required"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "customer_delivery_scope": {
+    "automatic_customer_sending_allowed": false,
+    "controlled_handoff_allowed": true,
+    "irreversible_external_effects_allowed": false,
+    "production_mutation_allowed": false,
+    "real_customer_effects_allowed": false,
+    "scope_id": "controlled-customer-handoff-v0.1"
+  },
+  "customer_handoff_summary": {
+    "artifact_count": 10,
+    "automatic_customer_sending_allowed": false,
+    "decision": "package_controlled_customer_handoff",
+    "external_eval_role": "supporting_only_not_sufficient",
+    "package_id": "customer-handoff-package-demo-001",
+    "present": true,
+    "production_mutation_allowed": false,
+    "scope_escalation_allowed": false,
+    "status": "ready_for_controlled_customer_handoff",
+    "validated": true
+  },
+  "decision": "allow_controlled_customer_handoff",
+  "evidence_chain": [
+    {
+      "kind": "product-loop-run",
+      "path": "product-loop-run.json",
+      "raw_body_included": false,
+      "sha256": "3ee6df60e45a194d79768c7d0912de9bb1cc2144d32501411a3427da40d69aa9"
+    },
+    {
+      "kind": "dual-loop-gate-receipt",
+      "path": "dual-loop-gate-receipt.json",
+      "raw_body_included": false,
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "kind": "delivery-trust-receipt",
+      "path": "delivery-trust-receipt.json",
+      "raw_body_included": false,
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "kind": "customer-handoff-package",
+      "path": "customer-handoff-package.json",
+      "raw_body_included": false,
+      "sha256": "8e57f1f76ed8bcc8cf2b09a61e738640ee037c6f4e81591d0140297c5a7121a5"
+    }
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "layer_statuses": {
+    "customer_handoff": "ready",
+    "delivery_trust": "allowed",
+    "dual_loop_gate": "allowed",
+    "product_loop": "allowed"
+  },
+  "next_actions": [
+    "package the controlled customer handoff evidence",
+    "keep production mutation disabled",
+    "rerun the case after any material artifact change"
+  ],
+  "privacy": {
+    "agent_credentials_included": false,
+    "attention_streams_included": false,
+    "automatic_customer_delivery_performed": false,
+    "automatic_customer_sending_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "client_secrets_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "delivery_artifact_body_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "platform_agent_credentials_included": false,
+    "production_mutation_performed": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "reasons": [],
+  "schema_version": "delivery-trust-case-v1",
+  "status": "ready_for_controlled_customer_handoff",
+  "trust_basis": {
+    "ai_eval_receipts_role": "supporting_only_not_sufficient",
+    "controlled_failure_environment": "required",
+    "customer_handoff_package": "required",
+    "delivery_trust_receipt": "required",
+    "dual_loop_propagation_gate": "required",
+    "human_attention_reconstruction": "required",
+    "human_review_role": "active_reconstruction_not_full_manual_re_review",
+    "product_development_loop": "required"
+  }
+}

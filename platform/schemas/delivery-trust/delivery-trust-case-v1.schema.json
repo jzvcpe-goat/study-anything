@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "delivery-trust-case-v1",
+  "title": "Delivery Trust Case v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "case_id",
+    "project_id",
+    "candidate_artifact_ref",
+    "status",
+    "decision",
+    "reasons",
+    "layer_statuses",
+    "evidence_chain",
+    "trust_basis",
+    "checks",
+    "customer_handoff_summary",
+    "customer_delivery_scope",
+    "claim_boundary",
+    "isolation",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "delivery-trust-case-v1"
+    },
+    "status": {
+      "enum": [
+        "ready_for_controlled_customer_handoff",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "allow_controlled_customer_handoff",
+        "block_customer_handoff"
+      ]
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "layer_statuses": {
+      "type": "object",
+      "required": [
+        "product_loop",
+        "dual_loop_gate",
+        "delivery_trust",
+        "customer_handoff"
+      ]
+    },
+    "evidence_chain": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "path",
+          "sha256",
+          "raw_body_included"
+        ],
+        "properties": {
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "raw_body_included": {
+            "const": false
+          }
+        }
+      }
+    },
+    "trust_basis": {
+      "type": "object",
+      "required": [
+        "product_development_loop",
+        "controlled_failure_environment",
+        "human_attention_reconstruction",
+        "dual_loop_propagation_gate",
+        "delivery_trust_receipt",
+        "customer_handoff_package",
+        "ai_eval_receipts_role",
+        "human_review_role"
+      ],
+      "properties": {
+        "product_development_loop": {
+          "const": "required"
+        },
+        "controlled_failure_environment": {
+          "const": "required"
+        },
+        "human_attention_reconstruction": {
+          "const": "required"
+        },
+        "dual_loop_propagation_gate": {
+          "const": "required"
+        },
+        "delivery_trust_receipt": {
+          "const": "required"
+        },
+        "customer_handoff_package": {
+          "const": "required"
+        },
+        "ai_eval_receipts_role": {
+          "const": "supporting_only_not_sufficient"
+        },
+        "human_review_role": {
+          "const": "active_reconstruction_not_full_manual_re_review"
+        }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "product_loop_allowed",
+        "dual_loop_gate_allowed",
+        "delivery_trust_allowed",
+        "customer_handoff_valid",
+        "external_eval_receipts_supporting_only",
+        "no_ai_review_black_box_as_sole_basis",
+        "no_excessive_manual_re_review_required",
+        "structured_artifact_bridge_only",
+        "metadata_only",
+        "model_calls_performed",
+        "production_mutation_blocked",
+        "irreversible_external_effects_blocked",
+        "automatic_customer_sending_blocked",
+        "claim_boundary_present"
+      ],
+      "properties": {
+        "structured_artifact_bridge_only": {
+          "const": true
+        },
+        "metadata_only": {
+          "const": true
+        },
+        "model_calls_performed": {
+          "const": false
+        },
+        "production_mutation_blocked": {
+          "const": true
+        },
+        "irreversible_external_effects_blocked": {
+          "const": true
+        },
+        "automatic_customer_sending_blocked": {
+          "const": true
+        },
+        "no_ai_review_black_box_as_sole_basis": {
+          "const": true
+        },
+        "no_excessive_manual_re_review_required": {
+          "const": true
+        },
+        "claim_boundary_present": {
+          "const": true
+        }
+      }
+    },
+    "customer_delivery_scope": {
+      "type": "object",
+      "required": [
+        "scope_id",
+        "controlled_handoff_allowed",
+        "production_mutation_allowed",
+        "irreversible_external_effects_allowed",
+        "real_customer_effects_allowed",
+        "automatic_customer_sending_allowed"
+      ],
+      "properties": {
+        "production_mutation_allowed": {
+          "const": false
+        },
+        "irreversible_external_effects_allowed": {
+          "const": false
+        },
+        "real_customer_effects_allowed": {
+          "const": false
+        },
+        "automatic_customer_sending_allowed": {
+          "const": false
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": [
+        "current_claim",
+        "not_claimed",
+        "requires_before_real_production"
+      ],
+      "properties": {
+        "current_claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "not_claimed": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "requires_before_real_production": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

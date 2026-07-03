@@ -78,6 +78,66 @@ PRODUCT_LOOP_HARNESS_ARTIFACTS = [
     "product-loop-scenario.json",
     "product-loop-run.json",
 ]
+DELIVERY_TRUST_CASE_HARNESS_CASES = {
+    "pass": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-product-loop": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-dual-loop": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-customer-handoff": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+    "blocked-ai-review-only": [
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "delivery-trust-receipt.json",
+        "customer-handoff-package.json",
+        "delivery-trust-case.json",
+    ],
+}
 
 
 PACK_FILES: list[tuple[str, str, str]] = [
@@ -130,6 +190,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/dual-loop-scenario-harness.md", "operator_doc", "Dual Loop Trust Scenario Harness guide for customer delivery readiness."),
     ("docs/dual-loop-trust-scenario-pack.md", "operator_doc", "Portable Dual Loop trust scenario pack guide."),
     ("docs/product-loop-harness.md", "operator_doc", "Product Loop Harness guide for three-loop product development gating."),
+    ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/trust-model.md", "operator_doc", "Cognitive Black Box AI delivery trust model."),
     ("docs/delivery-trust-receipt.md", "operator_doc", "Delivery Trust Receipt contract and verifier guide."),
     ("docs/customer-handoff-package.md", "operator_doc", "CustomerHandoffPackage portable evidence package guide."),
@@ -184,6 +245,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json", "schema", "Cognitive Black Box tri-loop run JSON Schema."),
     ("platform/schemas/cbb/product-loop-scenario-v1.schema.json", "schema", "Product Loop Harness scenario JSON Schema."),
     ("platform/schemas/cbb/product-loop-run-v1.schema.json", "schema", "Product Loop Harness run JSON Schema."),
+    ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -236,6 +298,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cbb-self-intake.json", "submission_report", "Cognitive Black Box self-intake verification report for PR 285."),
     ("platform/generated/study-anything-cbb-delivery-scenario-harness.json", "submission_report", "Cognitive Black Box tri-loop delivery scenario harness verification report."),
     ("platform/generated/study-anything-product-loop-harness.json", "submission_report", "Product Loop Harness verification report for three-loop product development gating."),
+    ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
+    ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-workbuddy-inline-learning-flow.json", "submission_report", "WorkBuddy inline learning flow verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -559,6 +623,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PRODUCT_LOOP_HARNESS_CASES
         for artifact in PRODUCT_LOOP_HARNESS_ARTIFACTS
     ],
+    *[
+        (
+            f"fixtures/delivery-trust-case/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Delivery Trust Case Harness {case_id} {artifact} fixture.",
+        )
+        for case_id, artifacts in DELIVERY_TRUST_CASE_HARNESS_CASES.items()
+        for artifact in artifacts
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -699,6 +772,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_cbb_delivery_harness.py", "verification", "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries."),
     ("scripts/product_loop_harness.py", "cli", "Product Loop Harness CLI for deterministic three-loop product development artifacts."),
     ("scripts/verify_product_loop_harness.py", "verification", "Verify Product Loop Harness fixtures, schemas, CLI output, and privacy boundaries."),
+    ("scripts/delivery_trust_case_harness.py", "cli", "Delivery Trust Case Harness CLI for end-to-end controlled customer-handoff artifacts."),
+    ("scripts/verify_delivery_trust_case_harness.py", "verification", "Verify Delivery Trust Case Harness fixtures, schemas, CLI output, and privacy boundaries."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
     ("scripts/verify_cognitive_loop_cli.py", "verification", "Cognitive Loop CLI and static HTML artifact verifier."),
     ("scripts/verify_cognitive_loop_run_once.py", "verification", "Cognitive Loop run-once evidence verifier."),
@@ -753,6 +828,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("apps/api/study_anything/core/cbb_receipt_chain.py", "api_core", "Cognitive Black Box receipt-chain, self-intake, and delivery evidence pack validators."),
     ("apps/api/study_anything/core/cbb_delivery_harness.py", "api_core", "Cognitive Black Box delivery scenario tri-loop harness validators."),
     ("apps/api/study_anything/core/product_loop_harness.py", "api_core", "Product Loop Harness validators for three-loop product development evidence."),
+    ("apps/api/study_anything/core/delivery_trust_case.py", "api_core", "Delivery Trust Case Harness validators for end-to-end customer handoff evidence."),
     ("scripts/cognitive_loop_study_adapter_cli.py", "cli", "CLI Lite bridge from Cognitive Loop ProjectEvent/DecisionCard files to Study Anything learning evidence."),
     ("scripts/verify_cognitive_loop_mastra_runtime_service.py", "verification", "Verify the repository-started Cognitive Loop Mastra runtime service and privacy boundary."),
     ("scripts/verify_cognitive_loop_mastra_runtime_durable.py", "verification", "Verify the durable Cognitive Loop Mastra runtime suspend/resume privacy boundary."),
