@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-302-v0.3.174-client-report-delivery-class-handoff",
+    "group_id": "release-stack-intake-pr-304-v0.3.176-delivery-class-registry-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -18,6 +18,10 @@
       "platform/generated/study-anything-delivery-trust-case-harness.json",
       "platform/generated/study-anything-delivery-trust-case-pack.json",
       "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+      "platform/generated/study-anything-delivery-class-registry.json",
+      "platform/generated/study-anything-delivery-class-registry.html",
+      "docs/delivery-class-registry.md",
+      "scripts/verify_delivery_class_registry.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -43,7 +47,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.174-client-report-delivery-class-handoff",
+        "branch": "codex/v0.3.176-delivery-class-registry-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -55,14 +59,18 @@
           "platform/generated/study-anything-delivery-trust-case-harness.json",
           "platform/generated/study-anything-delivery-trust-case-pack.json",
           "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+          "platform/generated/study-anything-delivery-class-registry.json",
+          "platform/generated/study-anything-delivery-class-registry.html",
+          "docs/delivery-class-registry.md",
+          "scripts/verify_delivery_class_registry.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "70b2483cb55c204602504ec0e4c60a1d69b06ee3",
+        "merge_commit": "6d6fe5113a8081a860c09e0c35fa4dfc3001d23a",
         "order": 1,
-        "pr": 302,
+        "pr": 304,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -71,15 +79,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #302: Add Client Report delivery class handoff.",
+    "summary": "Candidate release stack group for PR #304: Add Delivery Class registry.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.174",
-    "represented_pr_count": 95
+    "current_group": "release-stack-promotion-v0.3.176",
+    "represented_pr_count": 96
   },
   "negative_fixtures": [
     {

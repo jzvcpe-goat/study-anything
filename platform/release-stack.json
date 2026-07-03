@@ -1,5 +1,5 @@
 {
-  "current_group": "release-stack-promotion-v0.3.174",
+  "current_group": "release-stack-promotion-v0.3.176",
   "privacy_assertions": {
     "agent_endpoint_secrets_included": false,
     "check_annotations_included": false,
@@ -40,12 +40,12 @@
   "stack": [
     {
       "order": 1,
-      "pr": 302,
-      "branch": "codex/v0.3.174-client-report-delivery-class-handoff",
+      "pr": 304,
+      "branch": "codex/v0.3.176-delivery-class-registry-lite",
       "base": "main",
       "status_expected_before_merge": "checks_pass",
       "final_state": "MERGED",
-      "merge_commit": "70b2483cb55c204602504ec0e4c60a1d69b06ee3",
+      "merge_commit": "6d6fe5113a8081a860c09e0c35fa4dfc3001d23a",
       "required_checks": {
         "api-tests": "pass",
         "compose-smoke": "pass"
@@ -61,6 +61,10 @@
         "platform/generated/study-anything-delivery-trust-case-harness.json",
         "platform/generated/study-anything-delivery-trust-case-pack.json",
         "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+        "platform/generated/study-anything-delivery-class-registry.json",
+        "platform/generated/study-anything-delivery-class-registry.html",
+        "docs/delivery-class-registry.md",
+        "scripts/verify_delivery_class_registry.py",
         "platform/generated/study-anything-client-report-delivery-class.json",
         "platform/generated/study-anything-client-report-delivery-class.html",
         "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -3973,8 +3977,8 @@
     },
     {
       "group_id": "release-stack-promotion-v0.3.174",
-      "role": "current",
-      "status": "completed",
+      "role": "archived",
+      "status": "archived",
       "target_branch": "main",
       "summary": "Completed self-intake for the Client Report Delivery Class handoff release evidence chain.",
       "required_checks": [
@@ -4049,6 +4053,94 @@
         "raw_source_text_included": false,
         "real_model_keys_included": false,
         "source_mutation_performed": false
+      }
+    },
+    {
+      "group_id": "release-stack-promotion-v0.3.176",
+      "role": "current",
+      "status": "completed",
+      "target_branch": "main",
+      "summary": "Completed self-intake for the Delivery Class Registry release evidence chain.",
+      "required_checks": [
+        "api-tests",
+        "compose-smoke"
+      ],
+      "operator_commands": [
+        "python3 scripts/verify_release_stack_readiness.py",
+        "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+        "python3 scripts/verify_release_stack_intake_candidate.py --check",
+        "python3 scripts/verify_release_stack_candidate_promotion.py --check",
+        "python3 scripts/verify_release_stack_live_status.py",
+        "python3 scripts/verify_release_stack_lineage.py",
+        "python3 scripts/verify_release_stack_merge_runbook.py --report-only",
+        "./scripts/release_check.sh"
+      ],
+      "post_merge_evidence_refs": [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+        "platform/generated/study-anything-operating-model-loops.json",
+        "platform/generated/study-anything-cbb-receipt-chain.json",
+        "platform/generated/study-anything-cbb-self-intake.json",
+        "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+        "platform/generated/study-anything-delivery-trust-case-harness.json",
+        "platform/generated/study-anything-delivery-trust-case-pack.json",
+        "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+        "platform/generated/study-anything-delivery-class-registry.json",
+        "platform/generated/study-anything-delivery-class-registry.html",
+        "docs/delivery-class-registry.md",
+        "scripts/verify_delivery_class_registry.py",
+        "platform/generated/study-anything-client-report-delivery-class.json",
+        "platform/generated/study-anything-client-report-delivery-class.html"
+      ],
+      "stack": [
+        {
+          "order": 1,
+          "pr": 304,
+          "branch": "codex/v0.3.176-delivery-class-registry-lite",
+          "base": "main",
+          "status_expected_before_merge": "checks_pass",
+          "final_state": "MERGED",
+          "merge_commit": "6d6fe5113a8081a860c09e0c35fa4dfc3001d23a",
+          "required_checks": {
+            "api-tests": "pass",
+            "compose-smoke": "pass"
+          },
+          "evidence_refs": [
+            "platform/generated/study-anything-release-stack-intake-candidate.json",
+            "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+            "platform/generated/study-anything-release-stack-candidate-promotion.json",
+            "platform/generated/study-anything-platform-bundle.json",
+            "platform/generated/study-anything-platform-adoption-pack.json",
+            "platform/generated/study-anything-release-asset-adoption.json",
+            "platform/generated/study-anything-product-loop-harness.json",
+            "platform/generated/study-anything-delivery-trust-case-harness.json",
+            "platform/generated/study-anything-delivery-trust-case-pack.json",
+            "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+            "platform/generated/study-anything-delivery-class-registry.json",
+            "platform/generated/study-anything-delivery-class-registry.html",
+            "docs/delivery-class-registry.md",
+            "scripts/verify_delivery_class_registry.py",
+            "platform/generated/study-anything-client-report-delivery-class.json",
+            "platform/generated/study-anything-client-report-delivery-class.html",
+            "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
+          ]
+        }
+      ],
+      "privacy_assertions": {
+        "metadata_only": true,
+        "github_tokens_included": false,
+        "job_logs_included": false,
+        "check_annotations_included": false,
+        "live_check_payloads_included": false,
+        "source_mutation_performed": false,
+        "raw_source_text_included": false,
+        "learner_answers_included": false,
+        "agent_endpoint_secrets_included": false,
+        "real_model_keys_included": false
       }
     }
   ],
