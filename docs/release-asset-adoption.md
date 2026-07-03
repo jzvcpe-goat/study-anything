@@ -25,6 +25,9 @@ Required assets:
 - `study-anything-workbuddy-plugin-pack.json`
 - `study-anything-workbuddy-plugin-pack.zip`
 - `study-anything-workbuddy-plugin-pack.sha256`
+- `study-anything-dual-loop-trust-scenario-pack.json`
+- `study-anything-dual-loop-trust-scenario-pack.zip`
+- `study-anything-dual-loop-trust-scenario-pack.sha256`
 
 Plugin-pack downloads are indexed in:
 

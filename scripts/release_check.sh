@@ -221,6 +221,8 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_delivery_trust_receipt.py --check
   "$python_bin" scripts/verify_customer_handoff_package.py --check
   "$python_bin" scripts/verify_dual_loop_scenario_harness.py --check
+  "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
+  "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
   dual_loop_verifiers_passed_individually="true"
   delivery_trust_verifiers_passed_individually="true"
   customer_handoff_verifiers_passed_individually="true"
@@ -388,6 +390,8 @@ phase "existing release gates"
 "$python_bin" scripts/verify_workbuddy_real_agent_learning_quality.py --check
 "$python_bin" scripts/verify_delivery_trust_receipt.py --check
 "$python_bin" scripts/verify_customer_handoff_package.py --check
+"$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
+"$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_report.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_handoff_cli.py --check
 "$python_bin" scripts/verify_cognitive_loop_review_agent_eval_harness.py --check

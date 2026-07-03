@@ -42,6 +42,9 @@ RELEASE_ASSETS = (
     "study-anything-hermes-plugin-pack.json",
     "study-anything-hermes-plugin-pack.zip",
     "study-anything-hermes-plugin-pack.sha256",
+    "study-anything-dual-loop-trust-scenario-pack.json",
+    "study-anything-dual-loop-trust-scenario-pack.zip",
+    "study-anything-dual-loop-trust-scenario-pack.sha256",
 )
 REQUIRED_GUIDE_MARKERS = (
     "GitHub Release Guide",
@@ -83,6 +86,7 @@ REQUIRED_CHECKLIST_MARKERS = (
     "study-anything-kimi-plugin-pack.zip",
     "study-anything-workbuddy-plugin-pack.zip",
     "study-anything-hermes-plugin-pack.zip",
+    "study-anything-dual-loop-trust-scenario-pack.zip",
 )
 PRIVATE_NEEDLES = (
     "sk-proj-",

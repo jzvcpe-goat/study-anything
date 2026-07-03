@@ -1,0 +1,703 @@
+{
+  "archive": {
+    "bytes": 119432,
+    "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.zip",
+    "root": "study-anything-dual-loop-trust-scenario-pack",
+    "sha256": "293deafefa094b23f7b7d37c42f06b1d6558c356ce620754a2ff3a17586aa8fb"
+  },
+  "case_matrix": {
+    "cbb_delivery": [
+      "pass",
+      "blocked-missing-developer-reconstruction",
+      "blocked-risk-over-budget",
+      "blocked-external-scope-expansion",
+      "blocked-stale-receipt-chain",
+      "blocked-ai-review-only"
+    ],
+    "dual_loop": [
+      "pass",
+      "attention-missing",
+      "risk-over-budget",
+      "both-fail"
+    ]
+  },
+  "claim_boundary": {
+    "current_claim": "This pack proves deterministic local metadata-only Dual Loop and CBB scenario behavior for customer-delivery readiness.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer acceptance",
+      "general model correctness",
+      "legal compliance certification",
+      "security certification"
+    ]
+  },
+  "entrypoints": {
+    "run_cbb_delivery_scenarios": "python3 scripts/cbb_delivery_harness.py run --case all",
+    "run_dual_loop_scenarios": "python3 scripts/run_dual_loop_scenario_harness.py run --case all",
+    "verify_cbb_delivery_scenarios": "python3 scripts/verify_cbb_delivery_harness.py --check",
+    "verify_dual_loop_scenarios": "python3 scripts/verify_dual_loop_scenario_harness.py --check"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/dual-loop-scenario-harness.md",
+      "bytes": 3065,
+      "path": "docs/dual-loop-scenario-harness.md",
+      "purpose": "Dual Loop customer-delivery scenario harness guide.",
+      "role": "operator_doc",
+      "sha256": "a551dd9bbed5b46406366104bab977759091a12b0b5cc8c27a1f40c131f73e05"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/dual-loop-mvp.md",
+      "bytes": 6573,
+      "path": "docs/dual-loop-mvp.md",
+      "purpose": "Dual Loop boundary model and MVP contract.",
+      "role": "operator_doc",
+      "sha256": "6bd633002fa103330ba7aa90affbdf45a80bf2a4a98e446e74ac7895b7d2d5af"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/delivery-trust-receipt.md",
+      "bytes": 4249,
+      "path": "docs/delivery-trust-receipt.md",
+      "purpose": "Delivery trust receipt rules and negative cases.",
+      "role": "operator_doc",
+      "sha256": "cf472cf9758951b94f0a4a30d79973c70336e137724340d810eb8687b9274d7d"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/customer-handoff-package.md",
+      "bytes": 4263,
+      "path": "docs/customer-handoff-package.md",
+      "purpose": "Portable customer handoff package rules.",
+      "role": "operator_doc",
+      "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/trust-model.md",
+      "bytes": 5493,
+      "path": "docs/trust-model.md",
+      "purpose": "Cognitive Black Box trust model.",
+      "role": "operator_doc",
+      "sha256": "8714547c8a8fc117697b099921fc88ce71dc975cd340aff7175f817d2266ae2e"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/scripts/run_dual_loop_scenario_harness.py",
+      "bytes": 13413,
+      "path": "scripts/run_dual_loop_scenario_harness.py",
+      "purpose": "Run deterministic Dual Loop customer-delivery scenarios.",
+      "role": "cli",
+      "sha256": "9bb7fb9e5904b93bee01e00131409bb7ef68aae0acb86b44da261a1454c17972"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/scripts/verify_dual_loop_scenario_harness.py",
+      "bytes": 10208,
+      "path": "scripts/verify_dual_loop_scenario_harness.py",
+      "purpose": "Verify Dual Loop scenario fixtures and report.",
+      "role": "verification",
+      "sha256": "82735fc17be320850b15a96f5fcb5c547efa67d1b5a31f82d2dad813db383cef"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/scripts/cbb_delivery_harness.py",
+      "bytes": 3232,
+      "path": "scripts/cbb_delivery_harness.py",
+      "purpose": "Run Cognitive Black Box tri-loop delivery scenarios.",
+      "role": "cli",
+      "sha256": "5e3257a8bc69cdf8edd82b52c6ac6771980000dc3a4427bb2de9adbe817d3390"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/scripts/verify_cbb_delivery_harness.py",
+      "bytes": 10539,
+      "path": "scripts/verify_cbb_delivery_harness.py",
+      "purpose": "Verify Cognitive Black Box tri-loop delivery scenario fixtures.",
+      "role": "verification",
+      "sha256": "e8184234437995763f3569afe9d0b12b326bc9ed26b055577777f004c877f392"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/generated/study-anything-dual-loop-contracts.json",
+      "bytes": 3502,
+      "path": "platform/generated/study-anything-dual-loop-contracts.json",
+      "purpose": "Dual Loop contract verification evidence.",
+      "role": "evidence",
+      "sha256": "ab1b4573b9cc3983135a3a40e312095d3bc4c9d9b283687d86f8e69845f8d151"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/generated/study-anything-dual-loop-scenario-harness.json",
+      "bytes": 3386,
+      "path": "platform/generated/study-anything-dual-loop-scenario-harness.json",
+      "purpose": "Dual Loop trust scenario harness evidence.",
+      "role": "evidence",
+      "sha256": "facbcf88e2affdfc284218af3c7b1915e9aa2ddc46d9a1858c57289752d6200a"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+      "bytes": 5934,
+      "path": "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
+      "purpose": "Cognitive Black Box tri-loop delivery harness evidence.",
+      "role": "evidence",
+      "sha256": "4f9c0b226d8ef541b362e03595671c1bf4bfa0c6ddf832d5ff5a72612a68f75a"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/generated/study-anything-delivery-trust-receipt.json",
+      "bytes": 2688,
+      "path": "platform/generated/study-anything-delivery-trust-receipt.json",
+      "purpose": "Delivery trust receipt verification evidence.",
+      "role": "evidence",
+      "sha256": "9bd8f6bdd6f5ad7f48b660c48bdb415b11c438c858d3561c6801a41fb6abf183"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/generated/study-anything-customer-handoff-package.json",
+      "bytes": 4863,
+      "path": "platform/generated/study-anything-customer-handoff-package.json",
+      "purpose": "Customer handoff package verification evidence.",
+      "role": "evidence",
+      "sha256": "eb762ae5fd11d5e619cd2303600a9c6c236d37a62ef1b13c089c683366f9fae3"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/dual-loop/failure-contract-v1.schema.json",
+      "bytes": 3244,
+      "path": "platform/schemas/dual-loop/failure-contract-v1.schema.json",
+      "purpose": "Controlled failure contract schema.",
+      "role": "schema",
+      "sha256": "20341d40cc3d74c2fb99ba6d78afa069a533d11bd373f7c34483de0cf433b09f"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+      "bytes": 1451,
+      "path": "platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
+      "purpose": "Sandbox receipt schema.",
+      "role": "schema",
+      "sha256": "5e85143f98c98d770a08ad3e65a6e6d7889be216153c9568cee9592af6f29857"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+      "bytes": 1615,
+      "path": "platform/schemas/dual-loop/attention-reconstruction-trace-v1.schema.json",
+      "purpose": "Attention reconstruction trace schema.",
+      "role": "schema",
+      "sha256": "14e9f0fc5cccab04afbb1a15b842b069d8833b5b8198e632daf789bb1a8ff1ee"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+      "bytes": 912,
+      "path": "platform/schemas/dual-loop/attention-reconstruction-summary-v1.schema.json",
+      "purpose": "Attention reconstruction summary schema.",
+      "role": "schema",
+      "sha256": "6a65f04a95de31c9ade72ba6f88d527f337dbd57927e413a2298a07e7412ad7a"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+      "bytes": 1343,
+      "path": "platform/schemas/dual-loop/dual-loop-gate-receipt-v1.schema.json",
+      "purpose": "Dual Loop gate receipt schema.",
+      "role": "schema",
+      "sha256": "426ad98f4f11224af85ce8d1588514befb7c454a811fa16f54619d3dac2d2b72"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+      "bytes": 1278,
+      "path": "platform/schemas/cbb/cbb-delivery-scenario-v1.schema.json",
+      "purpose": "Cognitive Black Box delivery scenario schema.",
+      "role": "schema",
+      "sha256": "52404cd300bc19fa871c73360cd73eadfee9cc3399e4f4371ed99366e1b463e5"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+      "bytes": 954,
+      "path": "platform/schemas/cbb/cbb-external-feedback-intake-v1.schema.json",
+      "purpose": "External feedback intake schema.",
+      "role": "schema",
+      "sha256": "5a450b27e7e67328d72f457849b2b0c25935f948a8f80796e0e2b6130b26cbb8"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+      "bytes": 1617,
+      "path": "platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
+      "purpose": "Tri-loop run schema.",
+      "role": "schema",
+      "sha256": "d36d0180349d0de77483440decf66e9bbe2037d4ddfd8aaf8897a379c98b96ac"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/failure-contract.json",
+      "bytes": 2495,
+      "path": "fixtures/dual-loop-scenarios/pass/failure-contract.json",
+      "purpose": "Dual Loop scenario fixture pass/failure-contract.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "d348996e1187b171c11a9f091680828dbebae30900f00e45b22bced5ccaf90fd"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/sandbox-receipt.json",
+      "bytes": 1813,
+      "path": "fixtures/dual-loop-scenarios/pass/sandbox-receipt.json",
+      "purpose": "Dual Loop scenario fixture pass/sandbox-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "25d50681c82fba0007fb5eacfc4332065cb1759b6942e46ec60934ac00528282"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/dual-loop-scenarios/pass/attention-reconstruction-trace.json",
+      "purpose": "Dual Loop scenario fixture pass/attention-reconstruction-trace.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/dual-loop-scenarios/pass/attention-reconstruction-summary.json",
+      "purpose": "Dual Loop scenario fixture pass/attention-reconstruction-summary.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "path": "fixtures/dual-loop-scenarios/pass/dual-loop-gate-receipt.json",
+      "purpose": "Dual Loop scenario fixture pass/dual-loop-gate-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/delivery-trust-receipt.json",
+      "bytes": 3562,
+      "path": "fixtures/dual-loop-scenarios/pass/delivery-trust-receipt.json",
+      "purpose": "Dual Loop scenario fixture pass/delivery-trust-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "c1550125985b69f1b1ebb18fd4d2cb1f5d15789b5b80a26480580d3cca10bc75"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/customer-handoff-package.json",
+      "bytes": 17285,
+      "path": "fixtures/dual-loop-scenarios/pass/customer-handoff-package.json",
+      "purpose": "Dual Loop scenario fixture pass/customer-handoff-package.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "a8a90237bc7b622324131a10dfdfedc66e66b2965917fb9be4e5092fa9ffd14e"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/pass/scenario-result.json",
+      "bytes": 3140,
+      "path": "fixtures/dual-loop-scenarios/pass/scenario-result.json",
+      "purpose": "Dual Loop scenario fixture pass/scenario-result.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "4c47707556e5b3cbf7c81d58c7bb9f51d03d54b1aad1f271ae8051ee1e0ec021"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/attention-missing/failure-contract.json",
+      "bytes": 2495,
+      "path": "fixtures/dual-loop-scenarios/attention-missing/failure-contract.json",
+      "purpose": "Dual Loop scenario fixture attention-missing/failure-contract.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "d348996e1187b171c11a9f091680828dbebae30900f00e45b22bced5ccaf90fd"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/attention-missing/sandbox-receipt.json",
+      "bytes": 1813,
+      "path": "fixtures/dual-loop-scenarios/attention-missing/sandbox-receipt.json",
+      "purpose": "Dual Loop scenario fixture attention-missing/sandbox-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "25d50681c82fba0007fb5eacfc4332065cb1759b6942e46ec60934ac00528282"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/attention-missing/dual-loop-gate-receipt.json",
+      "bytes": 1587,
+      "path": "fixtures/dual-loop-scenarios/attention-missing/dual-loop-gate-receipt.json",
+      "purpose": "Dual Loop scenario fixture attention-missing/dual-loop-gate-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "2ddac1a294bacf5787b1e4f29bbfc8cb1ed94f68f2beb3527f54aa3bc4c073cb"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/attention-missing/delivery-trust-receipt.json",
+      "bytes": 3588,
+      "path": "fixtures/dual-loop-scenarios/attention-missing/delivery-trust-receipt.json",
+      "purpose": "Dual Loop scenario fixture attention-missing/delivery-trust-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "b049c2f772fcf65d562942c51da65a14a711971732b16c498ed8758c69337154"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/attention-missing/scenario-result.json",
+      "bytes": 2991,
+      "path": "fixtures/dual-loop-scenarios/attention-missing/scenario-result.json",
+      "purpose": "Dual Loop scenario fixture attention-missing/scenario-result.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "bcb91530e363fdf18a57ea219e4ded8f3e26ef32073f3cc95f6194a7ee3d178f"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/failure-contract.json",
+      "bytes": 2495,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/failure-contract.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/failure-contract.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "d348996e1187b171c11a9f091680828dbebae30900f00e45b22bced5ccaf90fd"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/sandbox-receipt.json",
+      "bytes": 1812,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/sandbox-receipt.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/sandbox-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "9a4e36280ddd709af2f2fffa4ea70afa20072e830f8feff85b9eea561a261ac1"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/attention-reconstruction-trace.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/attention-reconstruction-trace.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/attention-reconstruction-summary.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/attention-reconstruction-summary.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/dual-loop-gate-receipt.json",
+      "bytes": 1602,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/dual-loop-gate-receipt.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/dual-loop-gate-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "304937f23945421105cc542aa3a97d98b6fc737b2cc6302e9638c21bab9a1b06"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/delivery-trust-receipt.json",
+      "bytes": 3621,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/delivery-trust-receipt.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/delivery-trust-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "ad15940637bf9d184658c9c73c1fc6f2e7e099071c6f5cedf8a0a15115741373"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/risk-over-budget/scenario-result.json",
+      "bytes": 3209,
+      "path": "fixtures/dual-loop-scenarios/risk-over-budget/scenario-result.json",
+      "purpose": "Dual Loop scenario fixture risk-over-budget/scenario-result.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "953ebefbb4cf4d33b044d62bdc2105b7ea16b638f26174e7ac0581b12baeeb54"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/failure-contract.json",
+      "bytes": 2495,
+      "path": "fixtures/dual-loop-scenarios/both-fail/failure-contract.json",
+      "purpose": "Dual Loop scenario fixture both-fail/failure-contract.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "d348996e1187b171c11a9f091680828dbebae30900f00e45b22bced5ccaf90fd"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/sandbox-receipt.json",
+      "bytes": 1839,
+      "path": "fixtures/dual-loop-scenarios/both-fail/sandbox-receipt.json",
+      "purpose": "Dual Loop scenario fixture both-fail/sandbox-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "9b001dd0bbc66299877d605271c6c68a30e49e8d5a7f5436a38fe18898bc1278"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/attention-reconstruction-summary.json",
+      "bytes": 1495,
+      "path": "fixtures/dual-loop-scenarios/both-fail/attention-reconstruction-summary.json",
+      "purpose": "Dual Loop scenario fixture both-fail/attention-reconstruction-summary.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "ded72ff9796ae9e7915ff6227e333b6cfd22ad2b065e30b89533f57ad6dbe911"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/dual-loop-gate-receipt.json",
+      "bytes": 1681,
+      "path": "fixtures/dual-loop-scenarios/both-fail/dual-loop-gate-receipt.json",
+      "purpose": "Dual Loop scenario fixture both-fail/dual-loop-gate-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "e251a61017bb7f367238ef3acb617ccaff4662571dea762aeb9991d3c8a1e399"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/delivery-trust-receipt.json",
+      "bytes": 3706,
+      "path": "fixtures/dual-loop-scenarios/both-fail/delivery-trust-receipt.json",
+      "purpose": "Dual Loop scenario fixture both-fail/delivery-trust-receipt.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "f8bbda65806e79ef4228cc358514b02d8a066c3e7b5a905828bf08e6f3532a3f"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/dual-loop-scenarios/both-fail/scenario-result.json",
+      "bytes": 3302,
+      "path": "fixtures/dual-loop-scenarios/both-fail/scenario-result.json",
+      "purpose": "Dual Loop scenario fixture both-fail/scenario-result.json.",
+      "role": "dual_loop_fixture",
+      "sha256": "146e7f5dd8087a82ce5f781f76e01ecb217468d2f4125c4112a398f704e1a340"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/pass/delivery-scenario.json",
+      "bytes": 3893,
+      "path": "fixtures/cbb-delivery-harness/pass/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture pass/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "69ea1e2b9d49a8468c498386216339fcb17a26024a3d3d0b05e7d05a521224a2"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/pass/external-feedback-intake.json",
+      "bytes": 2540,
+      "path": "fixtures/cbb-delivery-harness/pass/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture pass/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "7819e964cd3fb14de39a43f282b46b23a7e2b5fac5e004a97302254f5b971be4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/pass/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/pass/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture pass/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/pass/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/pass/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture pass/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/pass/tri-loop-run.json",
+      "bytes": 3526,
+      "path": "fixtures/cbb-delivery-harness/pass/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture pass/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "fffff9f081067576bc5637bffdeed75501b4710663b728e5ff2309523dbb8a55"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/delivery-scenario.json",
+      "bytes": 3932,
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-missing-developer-reconstruction/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "cad55b03f76e46727a05fc5fd09cc7241d8a94b262102d983fe320c00b7ffb6c"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/external-feedback-intake.json",
+      "bytes": 2612,
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-missing-developer-reconstruction/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "33f8680b45dffbb1edb80adb9bd80478449241c7239761be3e88fa4206fc1e22"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-missing-developer-reconstruction/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-missing-developer-reconstruction/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/tri-loop-run.json",
+      "bytes": 3662,
+      "path": "fixtures/cbb-delivery-harness/blocked-missing-developer-reconstruction/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-missing-developer-reconstruction/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "ead30d44e80d90c4ce97bb9ddd900dbf13b376ed2ece1c67b7d3d7011d123060"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/delivery-scenario.json",
+      "bytes": 3934,
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-risk-over-budget/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7557e890045a71fedba7124134da78e8ede5b64ddbc0adda5cdf0818bfc685"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/external-feedback-intake.json",
+      "bytes": 2580,
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-risk-over-budget/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "b222628f8cf7850e898aa6123670c16baf827b087ce003565a708ffbfca842d7"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-risk-over-budget/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-risk-over-budget/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-risk-over-budget/tri-loop-run.json",
+      "bytes": 3609,
+      "path": "fixtures/cbb-delivery-harness/blocked-risk-over-budget/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-risk-over-budget/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "2a9872792da0a553aba0f6ca9abeda143d851832ada17a1fc2fb7da610321306"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/delivery-scenario.json",
+      "bytes": 3949,
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-external-scope-expansion/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "b5a2350355991e92141fe7238e863ed994c94d99ac2b4f41b9a86c449ab81b8f"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/external-feedback-intake.json",
+      "bytes": 2595,
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-external-scope-expansion/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "1fc75cfcc348f6188b901f304e10d3d2a61832f7cfa9d32e8c69f13eda66e859"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-external-scope-expansion/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-external-scope-expansion/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-external-scope-expansion/tri-loop-run.json",
+      "bytes": 3630,
+      "path": "fixtures/cbb-delivery-harness/blocked-external-scope-expansion/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-external-scope-expansion/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "aee611a027594ddb5042eef0a39031677da9197fa8c127a42d6a1166c0835ef0"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/delivery-scenario.json",
+      "bytes": 3939,
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-stale-receipt-chain/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "f23c2cc1b9276a11282cb47de2169cd47a565c9acfaa90c9d1661c5fcc29b487"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/external-feedback-intake.json",
+      "bytes": 2586,
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-stale-receipt-chain/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "0d43c0585e4f0019b4773e17397c4c52808bcd886152fc79d98a4a5185bf3d0a"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-stale-receipt-chain/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "829c0739b80e5fd5b1d455d6462ef7d3a8a8108ad6b0fafad35de37b6b5b86d1"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-stale-receipt-chain/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/tri-loop-run.json",
+      "bytes": 3638,
+      "path": "fixtures/cbb-delivery-harness/blocked-stale-receipt-chain/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-stale-receipt-chain/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "242285cee701161fb8f25adaef95bd64a0ff5e21063fe7fd02476d42b086e8f0"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/delivery-scenario.json",
+      "bytes": 3928,
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/delivery-scenario.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-ai-review-only/delivery-scenario.json.",
+      "role": "cbb_fixture",
+      "sha256": "105764b95a636aea2ebd98c8c70b61a52b1befdea5d7b72c78bd9866b84f1d43"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/external-feedback-intake.json",
+      "bytes": 2576,
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/external-feedback-intake.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-ai-review-only/external-feedback-intake.json.",
+      "role": "cbb_fixture",
+      "sha256": "1fbdc82c6ce4bf40298078a8a3bb028bf297639baa517a2abd00fc55251c69df"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/receipt-chain.json",
+      "bytes": 3196,
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/receipt-chain.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-ai-review-only/receipt-chain.json.",
+      "role": "cbb_fixture",
+      "sha256": "bb7c02a2cd300278f2d3f993869c3d1e0967b3349a89d3303c51c50c3822bed4"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/self-intake-receipt.json",
+      "bytes": 3137,
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/self-intake-receipt.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-ai-review-only/self-intake-receipt.json.",
+      "role": "cbb_fixture",
+      "sha256": "bfc97f4417bf81363fc55f6d3c0586b88141932104b57c8dcf800b7a953a8647"
+    },
+    {
+      "archive_path": "study-anything-dual-loop-trust-scenario-pack/fixtures/cbb-delivery-harness/blocked-ai-review-only/tri-loop-run.json",
+      "bytes": 3608,
+      "path": "fixtures/cbb-delivery-harness/blocked-ai-review-only/tri-loop-run.json",
+      "purpose": "Cognitive Black Box delivery fixture blocked-ai-review-only/tri-loop-run.json.",
+      "role": "cbb_fixture",
+      "sha256": "4d4e637b3da8dddf9fd54ad29cae184ba3ddc8926f40b9608277135e65eaa73c"
+    }
+  ],
+  "name": "study-anything-dual-loop-trust-scenario-pack",
+  "package_type": "dual_loop_trust_scenario_pack",
+  "privacy_boundaries": {
+    "cookies_or_bearer_tokens_included": false,
+    "daemon_or_hosted_service_started": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "scenario_class": "customer_delivery_readiness",
+  "schema_version": "dual-loop-trust-scenario-pack-v1",
+  "summary": "Portable metadata-only fixtures and verifiers showing how an AI-generated customer handoff candidate is allowed only when controlled failure and human attention reconstruction both satisfy the Dual Loop gate.",
+  "title": "Study Anything Dual Loop Trust Scenario Pack",
+  "trust_rules": {
+    "ai_review_only_rejected": true,
+    "controlled_failure_loop_required": true,
+    "customer_handoff_package_only_for_allowed_case": true,
+    "delivery_trust_receipt_required": true,
+    "dual_loop_gate_required": true,
+    "human_attention_reconstruction_required": true,
+    "neither_loop_may_dominate": true
+  },
+  "verification_commands": [
+    "python3 scripts/verify_dual_loop_scenario_harness.py --check",
+    "python3 scripts/verify_cbb_delivery_harness.py --check",
+    "python3 scripts/verify_dual_loop_trust_scenario_pack.py --check"
+  ],
+  "version": "v0.3.31-alpha"
+}
