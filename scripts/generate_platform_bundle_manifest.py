@@ -2583,6 +2583,26 @@ FILES: list[tuple[str, str, str]] = [
         "Redacted release stack intake candidate fixture for PR 278.",
     ),
     (
+        "fixtures/release-stack/pr-280-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 280.",
+    ),
+    (
+        "fixtures/release-stack/pr-281-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 281.",
+    ),
+    (
+        "fixtures/release-stack/pr-286-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 286.",
+    ),
+    (
+        "fixtures/release-stack/pr-287-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 287.",
+    ),
+    (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
         "verification",
         "Verify Cognitive Loop maintainer go/no-go acceptance ledger and launch handoff boundaries.",
