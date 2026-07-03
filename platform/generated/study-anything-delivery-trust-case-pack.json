@@ -1,0 +1,536 @@
+{
+  "archive": {
+    "bytes": 95783,
+    "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
+    "root": "study-anything-delivery-trust-case-pack",
+    "sha256": "9cb98166b1b7c00409123e54ff7d577ffa7107a02abc489f091a97c3b401e56c"
+  },
+  "case_matrix": [
+    "pass",
+    "blocked-product-loop",
+    "blocked-dual-loop",
+    "blocked-customer-handoff",
+    "blocked-ai-review-only"
+  ],
+  "claim_boundary": {
+    "current_claim": "This pack proves deterministic metadata-only end-to-end gating for controlled customer handoff.",
+    "not_claimed": [
+      "production deployment approval",
+      "real customer delivery",
+      "customer outcome guarantee",
+      "general model correctness",
+      "legal certification",
+      "security certification"
+    ]
+  },
+  "entrypoints": {
+    "run_cases": "python3 scripts/delivery_trust_case_harness.py run --case all",
+    "verify_cases": "python3 scripts/verify_delivery_trust_case_harness.py --check"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/docs/delivery-trust-case-harness.md",
+      "bytes": 2206,
+      "path": "docs/delivery-trust-case-harness.md",
+      "purpose": "Delivery Trust Case Harness guide.",
+      "role": "operator_doc",
+      "sha256": "94119789b8b9ae51b1739329703a5ebd5c2492285f5f79b3d14851385e3ad5ed"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/docs/trust-model.md",
+      "bytes": 7495,
+      "path": "docs/trust-model.md",
+      "purpose": "Cognitive Black Box trust model.",
+      "role": "operator_doc",
+      "sha256": "31767f48f7cc0f9a19fef76dbd74a37695b63b608dafcdca3796e89929e20b7c"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/docs/product-runway.md",
+      "bytes": 2940,
+      "path": "docs/product-runway.md",
+      "purpose": "Current product runway and claim boundary.",
+      "role": "operator_doc",
+      "sha256": "033985d7fd55f7f9f9a75aa4538dbcdc388af50a9c46f445e5e4704555109a77"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/docs/delivery-trust-receipt.md",
+      "bytes": 4249,
+      "path": "docs/delivery-trust-receipt.md",
+      "purpose": "Delivery trust receipt rules.",
+      "role": "operator_doc",
+      "sha256": "cf472cf9758951b94f0a4a30d79973c70336e137724340d810eb8687b9274d7d"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/docs/customer-handoff-package.md",
+      "bytes": 4263,
+      "path": "docs/customer-handoff-package.md",
+      "purpose": "Customer handoff package rules.",
+      "role": "operator_doc",
+      "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/scripts/delivery_trust_case_harness.py",
+      "bytes": 3368,
+      "path": "scripts/delivery_trust_case_harness.py",
+      "purpose": "Run deterministic Delivery Trust Case examples.",
+      "role": "cli",
+      "sha256": "47346ddd0aef7bc3286964c1f9f34cb06ac6f41d9cb8481eaceb61b6352d6e00"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/scripts/verify_delivery_trust_case_harness.py",
+      "bytes": 12399,
+      "path": "scripts/verify_delivery_trust_case_harness.py",
+      "purpose": "Verify Delivery Trust Case fixtures.",
+      "role": "verification",
+      "sha256": "ca8ee9adb7d0629d64a285a2147139dd32358414a0dd1a9120b2226e81568031"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/platform/generated/study-anything-delivery-trust-case-harness.json",
+      "bytes": 5766,
+      "path": "platform/generated/study-anything-delivery-trust-case-harness.json",
+      "purpose": "Delivery Trust Case Harness verification report.",
+      "role": "evidence",
+      "sha256": "170b8108850b4bce4d74194acac91339f277141423d0cf5ca4204e24f5e99c7e"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/platform/generated/study-anything-delivery-trust-case-harness.html",
+      "bytes": 7971,
+      "path": "platform/generated/study-anything-delivery-trust-case-harness.html",
+      "purpose": "Static Delivery Trust Case Harness report.",
+      "role": "evidence",
+      "sha256": "84c9807e9a61dc8524e59d6dd44ad5569f2143eb5eee7dc199819e8b0590be2a"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
+      "bytes": 5318,
+      "path": "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
+      "purpose": "Delivery Trust Case schema.",
+      "role": "schema",
+      "sha256": "77175ca52cc0122b860d7b7b291c9eeb29c5b1b4b6a409a1220792365c8a4150"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/failure-contract.json",
+      "bytes": 2477,
+      "path": "fixtures/delivery-trust-case/pass/failure-contract.json",
+      "purpose": "Delivery Trust Case fixture pass/failure-contract.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "7b6ecd3bdb205d3b21307b54623df490978c7a9bf2366ab44f6b312c540a4732"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/sandbox-receipt.json",
+      "bytes": 1808,
+      "path": "fixtures/delivery-trust-case/pass/sandbox-receipt.json",
+      "purpose": "Delivery Trust Case fixture pass/sandbox-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e6f67e2ec8aa301a9841e5146c06e1386fd8f386aef317be9c42b841cd6096c7"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/delivery-trust-case/pass/attention-reconstruction-trace.json",
+      "purpose": "Delivery Trust Case fixture pass/attention-reconstruction-trace.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/delivery-trust-case/pass/attention-reconstruction-summary.json",
+      "purpose": "Delivery Trust Case fixture pass/attention-reconstruction-summary.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "path": "fixtures/delivery-trust-case/pass/dual-loop-gate-receipt.json",
+      "purpose": "Delivery Trust Case fixture pass/dual-loop-gate-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/delivery-trust-receipt.json",
+      "bytes": 3557,
+      "path": "fixtures/delivery-trust-case/pass/delivery-trust-receipt.json",
+      "purpose": "Delivery Trust Case fixture pass/delivery-trust-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/customer-handoff-package.json",
+      "bytes": 17265,
+      "path": "fixtures/delivery-trust-case/pass/customer-handoff-package.json",
+      "purpose": "Delivery Trust Case fixture pass/customer-handoff-package.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "8e57f1f76ed8bcc8cf2b09a61e738640ee037c6f4e81591d0140297c5a7121a5"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/product-loop-scenario.json",
+      "bytes": 3478,
+      "path": "fixtures/delivery-trust-case/pass/product-loop-scenario.json",
+      "purpose": "Delivery Trust Case fixture pass/product-loop-scenario.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "234328dcf8187edee9f31e6bc3d6891aa2306d5330d461eca36dd7238c9a9171"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/product-loop-run.json",
+      "bytes": 3185,
+      "path": "fixtures/delivery-trust-case/pass/product-loop-run.json",
+      "purpose": "Delivery Trust Case fixture pass/product-loop-run.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3ee6df60e45a194d79768c7d0912de9bb1cc2144d32501411a3427da40d69aa9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/pass/delivery-trust-case.json",
+      "bytes": 5639,
+      "path": "fixtures/delivery-trust-case/pass/delivery-trust-case.json",
+      "purpose": "Delivery Trust Case fixture pass/delivery-trust-case.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "5bf6dee635ca0638f666c3e66275cb3db9aefa74214f09573c400a6c465d9578"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/failure-contract.json",
+      "bytes": 2477,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/failure-contract.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/failure-contract.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "7b6ecd3bdb205d3b21307b54623df490978c7a9bf2366ab44f6b312c540a4732"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/sandbox-receipt.json",
+      "bytes": 1808,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/sandbox-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/sandbox-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e6f67e2ec8aa301a9841e5146c06e1386fd8f386aef317be9c42b841cd6096c7"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/attention-reconstruction-trace.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/attention-reconstruction-trace.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/attention-reconstruction-summary.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/attention-reconstruction-summary.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/dual-loop-gate-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/dual-loop-gate-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/delivery-trust-receipt.json",
+      "bytes": 3557,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/delivery-trust-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/delivery-trust-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/customer-handoff-package.json",
+      "bytes": 17265,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/customer-handoff-package.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/customer-handoff-package.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "8e57f1f76ed8bcc8cf2b09a61e738640ee037c6f4e81591d0140297c5a7121a5"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/product-loop-scenario.json",
+      "bytes": 3530,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/product-loop-scenario.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/product-loop-scenario.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "a5d6db282bc89ef1f94d60924351d446bce615925a5b058167e72f081491e856"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/product-loop-run.json",
+      "bytes": 3263,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/product-loop-run.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/product-loop-run.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "5b5c8a2f7f55af55c0b841652c3f3cd31ef2cb0c603a7d80018913a62df3a29c"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-product-loop/delivery-trust-case.json",
+      "bytes": 5674,
+      "path": "fixtures/delivery-trust-case/blocked-product-loop/delivery-trust-case.json",
+      "purpose": "Delivery Trust Case fixture blocked-product-loop/delivery-trust-case.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "952fdd7405a3d2a06547934e8228010b264c627bedc5c842d4fedc8eaeb91c25"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/failure-contract.json",
+      "bytes": 2477,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/failure-contract.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/failure-contract.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "7b6ecd3bdb205d3b21307b54623df490978c7a9bf2366ab44f6b312c540a4732"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/sandbox-receipt.json",
+      "bytes": 1807,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/sandbox-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/sandbox-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "c8846eed251b890426255a3f1ee31d6d11647572a481e8cd09f88010f9bb1a11"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/attention-reconstruction-summary.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/attention-reconstruction-summary.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/dual-loop-gate-receipt.json",
+      "bytes": 1602,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/dual-loop-gate-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/dual-loop-gate-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "304937f23945421105cc542aa3a97d98b6fc737b2cc6302e9638c21bab9a1b06"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/delivery-trust-receipt.json",
+      "bytes": 3616,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/delivery-trust-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/delivery-trust-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "95d22caae22b51fea96cfa91640bfc19daa0358ef5573b16018b1279dc768b91"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/product-loop-scenario.json",
+      "bytes": 3478,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/product-loop-scenario.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/product-loop-scenario.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "234328dcf8187edee9f31e6bc3d6891aa2306d5330d461eca36dd7238c9a9171"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/product-loop-run.json",
+      "bytes": 3185,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/product-loop-run.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/product-loop-run.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3ee6df60e45a194d79768c7d0912de9bb1cc2144d32501411a3427da40d69aa9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-dual-loop/delivery-trust-case.json",
+      "bytes": 5352,
+      "path": "fixtures/delivery-trust-case/blocked-dual-loop/delivery-trust-case.json",
+      "purpose": "Delivery Trust Case fixture blocked-dual-loop/delivery-trust-case.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "6d314536bfdf11c40fcf1f558143d8a6c46ef35ceeddcd3efd1add689a79af47"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/failure-contract.json",
+      "bytes": 2477,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/failure-contract.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/failure-contract.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "7b6ecd3bdb205d3b21307b54623df490978c7a9bf2366ab44f6b312c540a4732"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/sandbox-receipt.json",
+      "bytes": 1808,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/sandbox-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/sandbox-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e6f67e2ec8aa301a9841e5146c06e1386fd8f386aef317be9c42b841cd6096c7"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/attention-reconstruction-trace.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/attention-reconstruction-trace.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/attention-reconstruction-summary.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/attention-reconstruction-summary.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/dual-loop-gate-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/dual-loop-gate-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/delivery-trust-receipt.json",
+      "bytes": 3557,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/delivery-trust-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/delivery-trust-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/customer-handoff-package.json",
+      "bytes": 17305,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/customer-handoff-package.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/customer-handoff-package.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "f059398171f1c0059b735ffa53192df86c2555b17eee8038ce41923758bbfd96"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/product-loop-scenario.json",
+      "bytes": 3478,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/product-loop-scenario.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/product-loop-scenario.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "234328dcf8187edee9f31e6bc3d6891aa2306d5330d461eca36dd7238c9a9171"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/product-loop-run.json",
+      "bytes": 3185,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/product-loop-run.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/product-loop-run.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3ee6df60e45a194d79768c7d0912de9bb1cc2144d32501411a3427da40d69aa9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-customer-handoff/delivery-trust-case.json",
+      "bytes": 5555,
+      "path": "fixtures/delivery-trust-case/blocked-customer-handoff/delivery-trust-case.json",
+      "purpose": "Delivery Trust Case fixture blocked-customer-handoff/delivery-trust-case.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "a8c2d8e29d2801d1ea9afae916b393861e8bddb6452d9a0a080ad4bdee009377"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/failure-contract.json",
+      "bytes": 2477,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/failure-contract.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/failure-contract.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "7b6ecd3bdb205d3b21307b54623df490978c7a9bf2366ab44f6b312c540a4732"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/sandbox-receipt.json",
+      "bytes": 1808,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/sandbox-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/sandbox-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e6f67e2ec8aa301a9841e5146c06e1386fd8f386aef317be9c42b841cd6096c7"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/attention-reconstruction-trace.json",
+      "bytes": 2484,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/attention-reconstruction-trace.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/attention-reconstruction-trace.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "e9740587250416ec8ab3a9b0501575b1716826fe1fca4fdb41743e4aaf9262f3"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/attention-reconstruction-summary.json",
+      "bytes": 1461,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/attention-reconstruction-summary.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/attention-reconstruction-summary.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "3503afc029efcff6ff3b860520d88350cf0def41a0d044add93c72351710a757"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/dual-loop-gate-receipt.json",
+      "bytes": 1579,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/dual-loop-gate-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/dual-loop-gate-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/delivery-trust-receipt.json",
+      "bytes": 3557,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/delivery-trust-receipt.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/delivery-trust-receipt.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "37c64aa3a1a117de966ca5d89cf8ca3e1fdb9d78399932d698b3faabd5aec12f"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/customer-handoff-package.json",
+      "bytes": 17265,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/customer-handoff-package.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/customer-handoff-package.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "8e57f1f76ed8bcc8cf2b09a61e738640ee037c6f4e81591d0140297c5a7121a5"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/product-loop-scenario.json",
+      "bytes": 3533,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/product-loop-scenario.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/product-loop-scenario.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "5ab5021a4f049909f09c18ba80e784b69c8c6398657e7099119cf9023289df12"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/product-loop-run.json",
+      "bytes": 3266,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/product-loop-run.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/product-loop-run.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "cd468b9fb3ccd3bd3dcc2482c5dde05a61206464fb1dc99b81e391424340c2b5"
+    },
+    {
+      "archive_path": "study-anything-delivery-trust-case-pack/fixtures/delivery-trust-case/blocked-ai-review-only/delivery-trust-case.json",
+      "bytes": 5683,
+      "path": "fixtures/delivery-trust-case/blocked-ai-review-only/delivery-trust-case.json",
+      "purpose": "Delivery Trust Case fixture blocked-ai-review-only/delivery-trust-case.json.",
+      "role": "delivery_trust_case_fixture",
+      "sha256": "cb3d0c6b30b74d1936ba63670c072f6408eafdb1a94c630a9e1c02b169cb0f56"
+    }
+  ],
+  "name": "study-anything-delivery-trust-case-pack",
+  "package_type": "delivery_trust_case_pack",
+  "privacy_boundaries": {
+    "automatic_customer_sending_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_artifact_body_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "scenario_class": "controlled_customer_handoff",
+  "schema_version": "delivery-trust-case-pack-v1",
+  "summary": "Portable metadata-only evidence showing how Product Loop, Dual Loop, Delivery Trust Receipt, and CustomerHandoffPackage must agree before a controlled customer handoff is allowed.",
+  "title": "Study Anything Delivery Trust Case Pack",
+  "trust_rules": {
+    "ai_review_only_rejected": true,
+    "automatic_customer_sending_blocked": true,
+    "customer_handoff_package_required": true,
+    "delivery_trust_receipt_required": true,
+    "dual_loop_gate_required": true,
+    "external_eval_receipts_supporting_only": true,
+    "product_loop_required": true,
+    "production_mutation_blocked": true
+  },
+  "verification_commands": [
+    "python3 scripts/generate_delivery_trust_case_pack.py --check",
+    "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check"
+  ],
+  "version": "v0.3.31-alpha"
+}

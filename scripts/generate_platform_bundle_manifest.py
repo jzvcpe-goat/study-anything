@@ -310,6 +310,31 @@ FILES: list[tuple[str, str, str]] = [
         "Delivery Trust Case Harness static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-delivery-trust-case-pack.json",
+        "generated_asset",
+        "Portable Delivery Trust Case pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-pack.md",
+        "generated_asset",
+        "Portable Delivery Trust Case pack operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-pack.zip",
+        "generated_asset",
+        "Portable metadata-only Delivery Trust Case pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-pack.sha256",
+        "generated_asset",
+        "Portable Delivery Trust Case pack archive checksum.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
+        "generated_asset",
+        "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -983,6 +1008,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
+    ),
+    (
+        "docs/delivery-trust-case-pack.md",
+        "operator_doc",
+        "Delivery Trust Case pack guide for ZIP-only external consumer verification.",
     ),
     (
         "docs/trust-model.md",
@@ -2231,6 +2261,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_delivery_trust_case_harness.py",
         "verification",
         "Verify Delivery Trust Case Harness fixtures, schemas, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/generate_delivery_trust_case_pack.py",
+        "cli",
+        "Generate portable Delivery Trust Case pack assets.",
+    ),
+    (
+        "scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
+        "verification",
+        "Verify external ZIP-only consumption of the Delivery Trust Case pack.",
     ),
     (
         "scripts/cognitive_loop_cli.py",
