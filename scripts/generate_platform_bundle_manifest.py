@@ -355,6 +355,16 @@ FILES: list[tuple[str, str, str]] = [
         "Client Report Delivery Class static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-delivery-class-registry.json",
+        "generated_asset",
+        "Delivery Class Registry metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-delivery-class-registry.html",
+        "generated_asset",
+        "Delivery Class Registry static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -1043,6 +1053,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/client-report-delivery-class.md",
         "operator_doc",
         "Client Report Delivery Class metadata-only handoff guide.",
+    ),
+    (
+        "docs/delivery-class-registry.md",
+        "operator_doc",
+        "Delivery Class Registry guide for protocol-supported handoff classes.",
     ),
     (
         "docs/trust-model.md",
@@ -2358,6 +2373,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_client_report_delivery_class_handoff.py",
         "verification",
         "Verify Client Report Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_delivery_class_registry.py",
+        "verification",
+        "Verify Delivery Class Registry assets, release gates, and privacy boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",
