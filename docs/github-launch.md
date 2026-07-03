@@ -141,6 +141,9 @@ Attach these release assets to the GitHub prerelease:
 - `study-anything-hermes-plugin-pack.json`
 - `study-anything-hermes-plugin-pack.zip`
 - `study-anything-hermes-plugin-pack.sha256`
+- `study-anything-dual-loop-trust-scenario-pack.json`
+- `study-anything-dual-loop-trust-scenario-pack.zip`
+- `study-anything-dual-loop-trust-scenario-pack.sha256`
 
 The human download entrypoint is `docs/platform-plugin-downloads.md`; the machine-readable download
 index is `platform/generated/study-anything-platform-plugin-downloads.json`.

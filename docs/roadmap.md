@@ -13,6 +13,7 @@ Already present:
 - Dual-Loop Propagation Gate with pass and blocked fixtures for missing reconstruction and risk-budget overflow.
 - Delivery Trust Receipt with pass and blocked fixtures, AI-review-only rejection, eval-as-sufficient rejection, and claim-boundary enforcement.
 - CustomerHandoffPackage with JSON/HTML/ZIP output, offline ZIP validation, digest checks, scope-expansion rejection, and platform Agent handoff guardrails.
+- Dual Loop Trust Scenario Pack with downloadable metadata-only JSON/Markdown/ZIP/SHA assets for external operators and platform Agents.
 - Local-first FastAPI learning API.
 - Skill Mode and Docker self-host launch paths.
 - Deterministic demo Agent and Bring Your Own Agent HTTP gateway.
@@ -30,6 +31,7 @@ Already present:
 - Dual-Loop Propagation Gate：覆盖缺少人类重构和风险超预算的通过/阻断 fixtures。
 - Delivery Trust Receipt：覆盖通过/阻断 fixtures，并拒绝 AI 审 AI 式放行、eval 即充分、缺少 claim boundary。
 - CustomerHandoffPackage：提供 JSON/HTML/ZIP 输出、离线 ZIP 验证、digest 校验、scope 扩张拒绝和平台 Agent handoff 防护。
+- Dual Loop Trust Scenario Pack：提供可下载的 metadata-only JSON/Markdown/ZIP/SHA 资产，供外部 operator 和平台 Agent 验证。
 - 本地优先 FastAPI 学习 API。
 - Skill Mode 和 Docker 自托管启动路径。
 - 确定性 demo Agent 和 Bring Your Own Agent HTTP gateway。

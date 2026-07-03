@@ -53,6 +53,9 @@ REQUIRED_ASSETS = {
     "study-anything-hermes-plugin-pack.json": "hermes_plugin_pack_manifest",
     "study-anything-hermes-plugin-pack.zip": "hermes_plugin_pack",
     "study-anything-hermes-plugin-pack.sha256": "hermes_plugin_pack_checksum",
+    "study-anything-dual-loop-trust-scenario-pack.json": "dual_loop_trust_scenario_pack_manifest",
+    "study-anything-dual-loop-trust-scenario-pack.zip": "dual_loop_trust_scenario_pack",
+    "study-anything-dual-loop-trust-scenario-pack.sha256": "dual_loop_trust_scenario_pack_checksum",
 }
 REQUIRED_PACK_PATHS = {
     "manifest.json",
@@ -87,6 +90,13 @@ REQUIRED_PACK_PATHS = {
     "platform/generated/study-anything-hermes-plugin-pack.json",
     "platform/generated/study-anything-hermes-plugin-pack.zip",
     "platform/generated/study-anything-hermes-plugin-pack.sha256",
+    "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
+    "platform/generated/study-anything-dual-loop-trust-scenario-pack.md",
+    "platform/generated/study-anything-dual-loop-trust-scenario-pack.zip",
+    "platform/generated/study-anything-dual-loop-trust-scenario-pack.sha256",
+    "docs/dual-loop-trust-scenario-pack.md",
+    "scripts/generate_dual_loop_trust_scenario_pack.py",
+    "scripts/verify_dual_loop_trust_scenario_pack.py",
     "scripts/bootstrap_from_release.py",
     "scripts/generate_release_asset_bootstrap.py",
     "docs/release-asset-bootstrap.md",

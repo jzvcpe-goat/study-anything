@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 136134,
+    "bytes": 146729,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "3452f20e3d5547eb5c212a6924fb87715521941f00b48d2928d6f1c63ffea31d",
+    "sha256": "b82a5e5b94c748ba474f8934411cf5204f922114f21fa5494b5fceb70a7d5230",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -45,10 +45,10 @@
   ],
   "fixture_refs": [
     {
-      "bytes": 4963,
+      "bytes": 5709,
       "fixture_id": "asset-only-pass",
       "path": "fixtures/release-asset-adoption/asset-only-pass.json",
-      "sha256": "e79247b2998f88bb75a3a3adfd161f5560065b17d348f88012e01a8200d978dd"
+      "sha256": "801b4d2a5063367fbd30fe9cb6431a665b53a833adbede4789738067ee044f55"
     },
     {
       "bytes": 798,
@@ -57,22 +57,22 @@
       "sha256": "df20f1701c66787fa45528c165f0c6e152aa6c7ac853046037ae8c7ffd91cae0"
     },
     {
-      "bytes": 5047,
+      "bytes": 5793,
       "fixture_id": "digest-mismatch",
       "path": "fixtures/release-asset-adoption/digest-mismatch.json",
-      "sha256": "46a8bfb62f603fc44632e2a596dce6488afc9f82c7dee23db4a673e5deb9dcd9"
+      "sha256": "f8dc7fc72437849dba39a02be74aa68371349d765b265347c51a382fca776477"
     },
     {
-      "bytes": 4960,
+      "bytes": 5706,
       "fixture_id": "pack-corrupted",
       "path": "fixtures/release-asset-adoption/pack-corrupted.json",
-      "sha256": "f68d6191cbf64a53342b04b7e79adbe27666ae772e77275472fa9dc7ac89c3ce"
+      "sha256": "5295250691bd084bde100a34ee77f4ebf7bb240646102ccdc0cc0cf8a55fa0d8"
     },
     {
-      "bytes": 4969,
+      "bytes": 5715,
       "fixture_id": "published-evidence-missing",
       "path": "fixtures/release-asset-adoption/published-evidence-missing.json",
-      "sha256": "6cfa96df0d0558832e0ef52bc7ef1d5f46ef84fc894aad5844ec35647673998e"
+      "sha256": "411d26d9bca376a096d1f4d571781a13be0237be48e5f5cbabc56b2e431ed18b"
     },
     {
       "bytes": 855,
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 41224,
+      "bytes": 41609,
       "path": "README.md",
-      "sha256": "8ca13672589fee62e1033754f9e9f63eb92e2118e28b5aeb288a14855ecff4fd"
+      "sha256": "f3a28be000391f8e4afab4802f2d7b8029a899aef34e43a1963377402b007e26"
     },
     {
       "bytes": 19503,
@@ -103,9 +103,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 12747,
+      "bytes": 12910,
       "path": "docs/github-launch.md",
-      "sha256": "60f14226879acecb67768486273195ff47b4167695d56ea2895869a0d607fab1"
+      "sha256": "e978bda2fd17c9a47f9c0d10d4116a6bef18681ef7e7dd35022457016a0e9ca6"
     },
     {
       "bytes": 12500,
@@ -113,9 +113,14 @@
       "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 3840,
+      "bytes": 4003,
       "path": "docs/release-asset-adoption.md",
-      "sha256": "47dbc3c0b2d84951435251af1501b7bcc9b7803aab4d81ad918663cfe14a54ef"
+      "sha256": "ab6263035efde4313c5d716f0f97bf623f45ed1bf0bbbb85bdbf21be99f108d0"
+    },
+    {
+      "bytes": 3635,
+      "path": "docs/dual-loop-trust-scenario-pack.md",
+      "sha256": "6551038a792a42c051158a42dd7e02c5dd8160b6e40d327a5a0769ce351ac73a"
     },
     {
       "bytes": 2385,
@@ -128,14 +133,14 @@
       "sha256": "26f6d7fc79505f562d67ff695bc8163e644bf3520597fabfcfe85215a1c005a7"
     },
     {
-      "bytes": 34362,
+      "bytes": 34574,
       "path": "docs/release-checklist.md",
-      "sha256": "f7670c9c9ea03f023543685ff9164e29ede5b64916ab6026f7e89df903a38569"
+      "sha256": "2217aaa5fdf29a01f7b5565c706ee342cc7ca63eed0be304241df1d7ec73eafc"
     },
     {
-      "bytes": 32252,
+      "bytes": 32532,
       "path": "docs/roadmap.md",
-      "sha256": "f78e068d37a5aab6fae23f9643641ee0e38b6433d1ef81c5bf8183da4ffd6c0f"
+      "sha256": "96b8862ad5e83d4ae99fabb06fc0cd450c1cd6217bce05db937c58b278757f2f"
     },
     {
       "bytes": 140580,
@@ -145,12 +150,12 @@
     {
       "bytes": 11247,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "8781b11ff64ed8f0246b6b459a28c544777af5c929a1e9802c177336cd0756e2"
+      "sha256": "23c806f4801dc9023d77269491a5f80ad02abeb34c9489ad8945001f14a4c228"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "6cd944b58e8fa343860dd4b13971dc4d0f4868be8a33458d791c77ec2db0175a"
+      "sha256": "50d9ece35ff7181a74b1558515da649cd683c935e2ad86f5015c097756fd5679"
     },
     {
       "bytes": 1764,
@@ -158,9 +163,9 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 24291,
+      "bytes": 25040,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "60f67a5ea3b19b1fbe187679cd17e4762a560449d07aa9803fb01db3868e102c"
+      "sha256": "f6f875a1bab5c0a75a65031181f1f62dde2dcab88adb680da9c3f8a5fe86a5c3"
     },
     {
       "bytes": 9625,
@@ -183,9 +188,19 @@
       "sha256": "4d31710e1b5e7d52aec473d90486e78a40708e4c211209077a470228df90a80e"
     },
     {
-      "bytes": 19568,
+      "bytes": 19897,
       "path": "scripts/generate_release_asset_adoption.py",
-      "sha256": "b6209d29acf9161592699cfde7d3f50e304c95d65096195d5f0ed4fd71da2c5d"
+      "sha256": "8ff8d7f2aeebd91a4282f071eff14247e2d9b20647f1612f56e36dd53580ee12"
+    },
+    {
+      "bytes": 15551,
+      "path": "scripts/generate_dual_loop_trust_scenario_pack.py",
+      "sha256": "cf00a0e16238fb93b47a324eb993afcc36a27c94f73d6a612e93951616ab5142"
+    },
+    {
+      "bytes": 11258,
+      "path": "scripts/verify_dual_loop_trust_scenario_pack.py",
+      "sha256": "7e490a0212155d956542f5d031b46ac24ac3e5dc46419f76bbed97d77912dbd3"
     },
     {
       "bytes": 68921,
@@ -224,7 +239,10 @@
       "study-anything-workbuddy-plugin-pack.sha256",
       "study-anything-hermes-plugin-pack.json",
       "study-anything-hermes-plugin-pack.zip",
-      "study-anything-hermes-plugin-pack.sha256"
+      "study-anything-hermes-plugin-pack.sha256",
+      "study-anything-dual-loop-trust-scenario-pack.json",
+      "study-anything-dual-loop-trust-scenario-pack.zip",
+      "study-anything-dual-loop-trust-scenario-pack.sha256"
     ],
     "tag": "v0.3.31-alpha"
   },

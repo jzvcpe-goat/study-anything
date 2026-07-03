@@ -67,6 +67,9 @@ REQUIRED_RELEASE_ASSETS = (
     "study-anything-hermes-plugin-pack.json",
     "study-anything-hermes-plugin-pack.zip",
     "study-anything-hermes-plugin-pack.sha256",
+    "study-anything-dual-loop-trust-scenario-pack.json",
+    "study-anything-dual-loop-trust-scenario-pack.zip",
+    "study-anything-dual-loop-trust-scenario-pack.sha256",
 )
 PUBLIC_ASSET_PATHS = (
     "README.md",
@@ -74,6 +77,7 @@ PUBLIC_ASSET_PATHS = (
     "docs/github-launch.md",
     "docs/ecosystem-submission.md",
     "docs/release-asset-adoption.md",
+    "docs/dual-loop-trust-scenario-pack.md",
     "docs/platform-plugin-downloads.md",
     "docs/platform-agent-release-replay.md",
     "docs/release-checklist.md",
@@ -88,6 +92,8 @@ PUBLIC_ASSET_PATHS = (
     "scripts/replay_platform_agent_from_release.py",
     "scripts/generate_platform_agent_replay.py",
     "scripts/generate_release_asset_adoption.py",
+    "scripts/generate_dual_loop_trust_scenario_pack.py",
+    "scripts/verify_dual_loop_trust_scenario_pack.py",
     "scripts/verify_external_adoption.py",
     "scripts/verify_published_image_evidence.py",
     "scripts/verify_published_image_launch.py",

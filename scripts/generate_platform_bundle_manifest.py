@@ -173,6 +173,26 @@ FILES: list[tuple[str, str, str]] = [
         "Dual Loop Trust Scenario Harness verification report for customer delivery readiness.",
     ),
     (
+        "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
+        "generated_asset",
+        "Portable Dual Loop trust scenario pack sidecar manifest.",
+    ),
+    (
+        "platform/generated/study-anything-dual-loop-trust-scenario-pack.md",
+        "generated_asset",
+        "Portable Dual Loop trust scenario pack operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-dual-loop-trust-scenario-pack.zip",
+        "generated_asset",
+        "Portable metadata-only Dual Loop trust scenario pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-dual-loop-trust-scenario-pack.sha256",
+        "generated_asset",
+        "Portable Dual Loop trust scenario pack archive checksum.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -856,6 +876,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/dual-loop-scenario-harness.md",
         "operator_doc",
         "Dual Loop Trust Scenario Harness guide for customer delivery readiness.",
+    ),
+    (
+        "docs/dual-loop-trust-scenario-pack.md",
+        "operator_doc",
+        "Portable Dual Loop trust scenario pack guide.",
     ),
     (
         "docs/trust-model.md",
@@ -1986,6 +2011,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_dual_loop_scenario_harness.py",
         "verification",
         "Verify Dual Loop trust scenario fixtures, runner output, and handoff gating.",
+    ),
+    (
+        "scripts/generate_dual_loop_trust_scenario_pack.py",
+        "cli",
+        "Generate portable Dual Loop trust scenario pack assets.",
+    ),
+    (
+        "scripts/verify_dual_loop_trust_scenario_pack.py",
+        "verification",
+        "Verify portable Dual Loop trust scenario pack assets.",
     ),
     (
         "scripts/cbb_protocol_cli.py",
