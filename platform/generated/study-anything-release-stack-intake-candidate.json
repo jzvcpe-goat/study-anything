@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-294-v0.3.166-tri-loop-product-development-harness-lite",
+    "group_id": "release-stack-intake-pr-296-v0.3.168-delivery-trust-case-harness",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -14,7 +14,8 @@
       "platform/generated/study-anything-release-asset-adoption.json",
       "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
       "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
-      "platform/generated/study-anything-product-loop-harness.json"
+      "platform/generated/study-anything-product-loop-harness.json",
+      "platform/generated/study-anything-delivery-trust-case-harness.json"
     ],
     "privacy_assertions": {
       "agent_endpoint_secrets_included": false,
@@ -37,7 +38,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.166-tri-loop-product-development-harness-lite",
+        "branch": "codex/v0.3.168-delivery-trust-case-harness",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -45,12 +46,13 @@
           "platform/generated/study-anything-release-asset-adoption.json",
           "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
           "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
-          "platform/generated/study-anything-product-loop-harness.json"
+          "platform/generated/study-anything-product-loop-harness.json",
+          "platform/generated/study-anything-delivery-trust-case-harness.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "2acb9bc4538a3b6a3a847402b0e1e18d694b26c2",
+        "merge_commit": "fd112939c45196353025c2c5060e77195d5f05a8",
         "order": 1,
-        "pr": 294,
+        "pr": 296,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -59,15 +61,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #294: Add Product Loop Harness.",
+    "summary": "Candidate release stack group for PR #296: Add Delivery Trust Case Harness.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.166",
-    "represented_pr_count": 91
+    "current_group": "release-stack-promotion-v0.3.168",
+    "represented_pr_count": 92
   },
   "negative_fixtures": [
     {
