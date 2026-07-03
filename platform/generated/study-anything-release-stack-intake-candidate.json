@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-290-v0.3.162-dual-loop-trust-scenario-pack",
+    "group_id": "release-stack-intake-pr-292-v0.3.164-dual-loop-trust-pack-consumer-walkthrough",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -11,7 +11,9 @@
       "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "platform/generated/study-anything-platform-bundle.json",
       "platform/generated/study-anything-platform-adoption-pack.json",
-      "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+      "platform/generated/study-anything-release-asset-adoption.json",
+      "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
+      "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json"
     ],
     "privacy_assertions": {
       "agent_endpoint_secrets_included": false,
@@ -34,17 +36,19 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.162-dual-loop-trust-scenario-pack",
+        "branch": "codex/v0.3.164-dual-loop-trust-pack-consumer-walkthrough",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
           "platform/generated/study-anything-platform-adoption-pack.json",
-          "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
+          "platform/generated/study-anything-release-asset-adoption.json",
+          "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
+          "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "e4f73aa14ef156b766e95a4e32094983ce4a267b",
+        "merge_commit": "4ec3c1630987f6e47eaac7d6c94a2aa22e487bbb",
         "order": 1,
-        "pr": 290,
+        "pr": 292,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -53,15 +57,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #290: Add portable Dual Loop trust scenario pack.",
+    "summary": "Candidate release stack group for PR #292: Add Dual Loop trust pack consumer walkthrough.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.162",
-    "represented_pr_count": 89
+    "current_group": "release-stack-promotion-v0.3.164",
+    "represented_pr_count": 90
   },
   "negative_fixtures": [
     {
