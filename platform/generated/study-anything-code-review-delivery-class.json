@@ -1,0 +1,100 @@
+{
+  "acceptance": {
+    "fixture_dir": "fixtures/code-review-delivery-class",
+    "minimum_command": "python3 scripts/verify_code_review_delivery_class_handoff.py --check"
+  },
+  "case_reports": [
+    {
+      "case_id": "pass",
+      "decision": "allow_controlled_code_review_handoff",
+      "reasons": [],
+      "source_scope": "bounded_review_patch",
+      "status": "ready_for_controlled_code_review_handoff"
+    },
+    {
+      "case_id": "blocked-missing-reconstruction",
+      "decision": "block_code_review_handoff",
+      "reasons": [
+        "human_reconstruction_missing"
+      ],
+      "source_scope": "bounded_review_patch",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-unsafe-diff-scope",
+      "decision": "block_code_review_handoff",
+      "reasons": [
+        "sandbox_risk_outside_budget",
+        "diff_scope_expansion"
+      ],
+      "source_scope": "production_migration",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_code_review_handoff",
+      "reasons": [
+        "product_loop_not_passed",
+        "ai_review_only_evidence_rejected"
+      ],
+      "source_scope": "bounded_review_patch",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A code-review handoff can be treated as controlled customer handoff only when the Product Loop, Dual Loop, human reconstruction, source grounding, and CustomerHandoff boundaries all pass.",
+    "not_claimed": [
+      "production merge approval",
+      "security certification",
+      "legal certification",
+      "general model correctness",
+      "complete vulnerability discovery",
+      "automatic PR commenting or customer sending"
+    ]
+  },
+  "delivery_class": "code_review_handoff",
+  "negative_checks": {
+    "automatic_pr_commenting_rejected": "automatic PR commenting must stay blocked",
+    "eval_sufficient_alone_rejected": "external eval receipts must be supporting only",
+    "production_mutation_rejected": "production mutation must stay blocked",
+    "raw_diff_rejected": "code-review-handoff-case-v1:$.source_change_ref.raw_diff uses forbidden field"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "eye_tracking_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "runtime": {
+    "automatic_pr_commenting_performed": false,
+    "customer_message_sent": false,
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+      "schema_version": "code-review-handoff-case-v1",
+      "sha256": "15ed9042ee3375e93f62101efc3d02b4bd02e8561ad4f7fc33341356da8a877e"
+    }
+  ],
+  "schema_version": "code-review-delivery-class-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

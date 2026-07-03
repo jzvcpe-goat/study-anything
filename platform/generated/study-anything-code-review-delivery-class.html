@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Code Review Delivery Class</title>
+<body>
+<h1>Code Review Delivery Class</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;fixture_dir&quot;: &quot;fixtures/code-review-delivery-class&quot;,
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_code_review_delivery_class_handoff.py --check&quot;
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_code_review_handoff&quot;,
+      &quot;reasons&quot;: [],
+      &quot;source_scope&quot;: &quot;bounded_review_patch&quot;,
+      &quot;status&quot;: &quot;ready_for_controlled_code_review_handoff&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-missing-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_code_review_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;human_reconstruction_missing&quot;
+      ],
+      &quot;source_scope&quot;: &quot;bounded_review_patch&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-unsafe-diff-scope&quot;,
+      &quot;decision&quot;: &quot;block_code_review_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;sandbox_risk_outside_budget&quot;,
+        &quot;diff_scope_expansion&quot;
+      ],
+      &quot;source_scope&quot;: &quot;production_migration&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_code_review_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;product_loop_not_passed&quot;,
+        &quot;ai_review_only_evidence_rejected&quot;
+      ],
+      &quot;source_scope&quot;: &quot;bounded_review_patch&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A code-review handoff can be treated as controlled customer handoff only when the Product Loop, Dual Loop, human reconstruction, source grounding, and CustomerHandoff boundaries all pass.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;production merge approval&quot;,
+      &quot;security certification&quot;,
+      &quot;legal certification&quot;,
+      &quot;general model correctness&quot;,
+      &quot;complete vulnerability discovery&quot;,
+      &quot;automatic PR commenting or customer sending&quot;
+    ]
+  },
+  &quot;delivery_class&quot;: &quot;code_review_handoff&quot;,
+  &quot;negative_checks&quot;: {
+    &quot;automatic_pr_commenting_rejected&quot;: &quot;automatic PR commenting must stay blocked&quot;,
+    &quot;eval_sufficient_alone_rejected&quot;: &quot;external eval receipts must be supporting only&quot;,
+    &quot;production_mutation_rejected&quot;: &quot;production mutation must stay blocked&quot;,
+    &quot;raw_diff_rejected&quot;: &quot;code-review-handoff-case-v1:$.source_change_ref.raw_diff uses forbidden field&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;cookies_or_bearer_tokens_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;eye_tracking_or_biometrics_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_review_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;runtime&quot;: {
+    &quot;automatic_pr_commenting_performed&quot;: false,
+    &quot;customer_message_sent&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;code-review-handoff-case-v1&quot;,
+      &quot;sha256&quot;: &quot;15ed9042ee3375e93f62101efc3d02b4bd02e8561ad4f7fc33341356da8a877e&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;code-review-delivery-class-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

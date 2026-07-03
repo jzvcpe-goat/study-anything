@@ -335,6 +335,16 @@ FILES: list[tuple[str, str, str]] = [
         "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
     ),
     (
+        "platform/generated/study-anything-code-review-delivery-class.json",
+        "generated_asset",
+        "Code Review Delivery Class metadata-only handoff verification report.",
+    ),
+    (
+        "platform/generated/study-anything-code-review-delivery-class.html",
+        "generated_asset",
+        "Code Review Delivery Class static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -1015,6 +1025,11 @@ FILES: list[tuple[str, str, str]] = [
         "Delivery Trust Case pack guide for ZIP-only external consumer verification.",
     ),
     (
+        "docs/code-review-delivery-class.md",
+        "operator_doc",
+        "Code Review Delivery Class metadata-only handoff guide.",
+    ),
+    (
         "docs/trust-model.md",
         "operator_doc",
         "Cognitive Black Box AI delivery trust model.",
@@ -1173,6 +1188,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
         "schema",
         "Delivery Trust Case JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+        "schema",
+        "Code Review Delivery Class handoff JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1361,6 +1381,19 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id, artifacts in DELIVERY_TRUST_CASE_HARNESS_CASES.items()
         for artifact in artifacts
+    ],
+    *[
+        (
+            f"fixtures/code-review-delivery-class/{case_id}/code-review-handoff-case.json",
+            "fixture",
+            f"Code Review Delivery Class {case_id} handoff fixture.",
+        )
+        for case_id in (
+            "pass",
+            "blocked-missing-reconstruction",
+            "blocked-unsafe-diff-scope",
+            "blocked-ai-review-only",
+        )
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2271,6 +2304,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
         "verification",
         "Verify external ZIP-only consumption of the Delivery Trust Case pack.",
+    ),
+    (
+        "scripts/code_review_delivery_class_handoff.py",
+        "cli",
+        "Build deterministic metadata-only Code Review Delivery Class handoff artifacts.",
+    ),
+    (
+        "scripts/verify_code_review_delivery_class_handoff.py",
+        "verification",
+        "Verify Code Review Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",

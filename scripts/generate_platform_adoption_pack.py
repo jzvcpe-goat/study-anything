@@ -192,6 +192,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/product-loop-harness.md", "operator_doc", "Product Loop Harness guide for three-loop product development gating."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
+    ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
     ("docs/trust-model.md", "operator_doc", "Cognitive Black Box AI delivery trust model."),
     ("docs/delivery-trust-receipt.md", "operator_doc", "Delivery Trust Receipt contract and verifier guide."),
     ("docs/customer-handoff-package.md", "operator_doc", "CustomerHandoffPackage portable evidence package guide."),
@@ -247,6 +248,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/product-loop-scenario-v1.schema.json", "schema", "Product Loop Harness scenario JSON Schema."),
     ("platform/schemas/cbb/product-loop-run-v1.schema.json", "schema", "Product Loop Harness run JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
+    ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -306,6 +308,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-delivery-trust-case-pack.zip", "submission_report", "Portable metadata-only Delivery Trust Case pack archive."),
     ("platform/generated/study-anything-delivery-trust-case-pack.sha256", "submission_report", "Portable Delivery Trust Case pack archive checksum."),
     ("platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json", "submission_report", "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack."),
+    ("platform/generated/study-anything-code-review-delivery-class.json", "submission_report", "Code Review Delivery Class metadata-only handoff verification report."),
+    ("platform/generated/study-anything-code-review-delivery-class.html", "submission_report", "Code Review Delivery Class static HTML verification report."),
     ("platform/generated/study-anything-workbuddy-inline-learning-flow.json", "submission_report", "WorkBuddy inline learning flow verification report."),
     ("platform/generated/study-anything-cognitive-loop-cli-artifact.json", "submission_report", "Cognitive Loop CLI init, verify, and static HTML artifact verification report."),
     ("platform/generated/study-anything-cognitive-loop-run-once-evidence.json", "submission_report", "Cognitive Loop run-once LoopRun and DecisionCard evidence verification report."),
@@ -638,6 +642,19 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id, artifacts in DELIVERY_TRUST_CASE_HARNESS_CASES.items()
         for artifact in artifacts
     ],
+    *[
+        (
+            f"fixtures/code-review-delivery-class/{case_id}/code-review-handoff-case.json",
+            "delivery_trust_case_harness_fixture",
+            f"Code Review Delivery Class {case_id} handoff fixture.",
+        )
+        for case_id in (
+            "pass",
+            "blocked-missing-reconstruction",
+            "blocked-unsafe-diff-scope",
+            "blocked-ai-review-only",
+        )
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -782,6 +799,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_delivery_trust_case_harness.py", "verification", "Verify Delivery Trust Case Harness fixtures, schemas, CLI output, and privacy boundaries."),
     ("scripts/generate_delivery_trust_case_pack.py", "cli", "Generate portable Delivery Trust Case pack assets."),
     ("scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py", "verification", "Verify external ZIP-only consumption of the Delivery Trust Case pack."),
+    ("scripts/code_review_delivery_class_handoff.py", "cli", "Build deterministic metadata-only Code Review Delivery Class handoff artifacts."),
+    ("scripts/verify_code_review_delivery_class_handoff.py", "verification", "Verify Code Review Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries."),
     ("scripts/cognitive_loop_cli.py", "cli", "Local Cognitive Loop contract init, verify, and static HTML artifact CLI."),
     ("scripts/verify_cognitive_loop_cli.py", "verification", "Cognitive Loop CLI and static HTML artifact verifier."),
     ("scripts/verify_cognitive_loop_run_once.py", "verification", "Cognitive Loop run-once evidence verifier."),

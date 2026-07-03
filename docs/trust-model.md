@@ -189,6 +189,7 @@ python3 scripts/verify_product_loop_harness.py --check
 python3 scripts/verify_delivery_trust_case_harness.py --check
 python3 scripts/generate_delivery_trust_case_pack.py --check
 python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check
+python3 scripts/verify_code_review_delivery_class_handoff.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -197,3 +198,10 @@ missing claim boundaries. The customer handoff command verifies the portable
 package cannot bypass delivery trust, expand scope, rely on eval receipts as
 sufficient proof, omit rollback or claim boundaries, leak secret-like content,
 ship digest drift, or ask platform Agents for production mutation.
+
+The Code Review Delivery Class command maps those boundaries into a first
+real-domain handoff class. It verifies that code-review evidence may be handed
+off only when Product Loop, Dual Loop, human reconstruction, source grounding,
+and CustomerHandoff boundaries all pass; it still blocks automatic PR comments,
+customer sending, production mutation, merge approval, deployment approval, and
+security-certification claims.

@@ -283,7 +283,11 @@ Current code-review scope:
 - `python3 scripts/verify_cognitive_loop_review.py --check`
 - `python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check`
 - `python3 scripts/verify_cognitive_loop_review_agent_report.py --check`
+- `python3 scripts/verify_code_review_delivery_class_handoff.py --check`
 - v0.1 is advisory only; soft gate and hard gate adoption are later opt-in phases.
+- Code Review Delivery Class handoff is metadata-only and can allow controlled
+  handoff evidence only; it does not approve merge, deploy, automatic PR
+  comments, customer sending, or security certification.
 
 当前代码审查范围：
 
@@ -291,7 +295,10 @@ Current code-review scope:
 - `python3 scripts/verify_cognitive_loop_review.py --check`
 - `python3 scripts/verify_cognitive_loop_review_agent_prompt.py --check`
 - `python3 scripts/verify_cognitive_loop_review_agent_report.py --check`
+- `python3 scripts/verify_code_review_delivery_class_handoff.py --check`
 - v0.1 仅做咨询；soft gate 和 hard gate 是后续可选升级阶段。
+- Code Review Delivery Class handoff 只含 metadata，只能允许受控交付证据；
+  它不批准合并、部署、自动 PR 评论、自动发客户或安全认证。
 
 ## Phase 6: Professional HTML Artifact Mode
 
