@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-290-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-292-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -39,7 +39,9 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-release-stack-manifest-fixtures.json",
     "platform/generated/study-anything-platform-bundle.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
-    "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
+    "platform/generated/study-anything-release-asset-adoption.json",
+    "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
+    "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,
