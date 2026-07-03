@@ -345,6 +345,16 @@ FILES: list[tuple[str, str, str]] = [
         "Code Review Delivery Class static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-client-report-delivery-class.json",
+        "generated_asset",
+        "Client Report Delivery Class metadata-only handoff verification report.",
+    ),
+    (
+        "platform/generated/study-anything-client-report-delivery-class.html",
+        "generated_asset",
+        "Client Report Delivery Class static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -1030,6 +1040,11 @@ FILES: list[tuple[str, str, str]] = [
         "Code Review Delivery Class metadata-only handoff guide.",
     ),
     (
+        "docs/client-report-delivery-class.md",
+        "operator_doc",
+        "Client Report Delivery Class metadata-only handoff guide.",
+    ),
+    (
         "docs/trust-model.md",
         "operator_doc",
         "Cognitive Black Box AI delivery trust model.",
@@ -1193,6 +1208,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
         "schema",
         "Code Review Delivery Class handoff JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+        "schema",
+        "Client Report Delivery Class handoff JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1393,6 +1413,20 @@ FILES: list[tuple[str, str, str]] = [
             "blocked-missing-reconstruction",
             "blocked-unsafe-diff-scope",
             "blocked-ai-review-only",
+        )
+    ],
+    *[
+        (
+            f"fixtures/client-report-delivery-class/{case_id}/client-report-handoff-case.json",
+            "fixture",
+            f"Client Report Delivery Class {case_id} handoff fixture.",
+        )
+        for case_id in (
+            "pass",
+            "blocked-missing-reconstruction",
+            "blocked-risk-over-budget",
+            "blocked-unbounded-recipient",
+            "blocked-ai-summary-only",
         )
     ],
     (
@@ -2314,6 +2348,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_code_review_delivery_class_handoff.py",
         "verification",
         "Verify Code Review Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
+    ),
+    (
+        "scripts/client_report_delivery_class_handoff.py",
+        "cli",
+        "Build deterministic metadata-only Client Report Delivery Class handoff artifacts.",
+    ),
+    (
+        "scripts/verify_client_report_delivery_class_handoff.py",
+        "verification",
+        "Verify Client Report Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",

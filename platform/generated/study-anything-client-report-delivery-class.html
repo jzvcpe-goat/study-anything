@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Client Report Delivery Class</title>
+<body>
+<h1>Client Report Delivery Class</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;fixture_dir&quot;: &quot;fixtures/client-report-delivery-class&quot;,
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_client_report_delivery_class_handoff.py --check&quot;
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_client_report_handoff&quot;,
+      &quot;reasons&quot;: [],
+      &quot;recipient_class&quot;: &quot;bounded_client_stakeholder&quot;,
+      &quot;risk_observed_level&quot;: &quot;medium&quot;,
+      &quot;status&quot;: &quot;ready_for_controlled_client_report_handoff&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-missing-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_client_report_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;human_reconstruction_missing&quot;
+      ],
+      &quot;recipient_class&quot;: &quot;bounded_client_stakeholder&quot;,
+      &quot;risk_observed_level&quot;: &quot;medium&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-risk-over-budget&quot;,
+      &quot;decision&quot;: &quot;block_client_report_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;sandbox_risk_outside_budget&quot;
+      ],
+      &quot;recipient_class&quot;: &quot;bounded_client_stakeholder&quot;,
+      &quot;risk_observed_level&quot;: &quot;high&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-unbounded-recipient&quot;,
+      &quot;decision&quot;: &quot;block_client_report_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;recipient_scope_unbounded&quot;
+      ],
+      &quot;recipient_class&quot;: &quot;unknown_external_audience&quot;,
+      &quot;risk_observed_level&quot;: &quot;medium&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;case_id&quot;: &quot;blocked-ai-summary-only&quot;,
+      &quot;decision&quot;: &quot;block_client_report_handoff&quot;,
+      &quot;reasons&quot;: [
+        &quot;product_loop_not_passed&quot;,
+        &quot;ai_summary_only_evidence_rejected&quot;
+      ],
+      &quot;recipient_class&quot;: &quot;bounded_client_stakeholder&quot;,
+      &quot;risk_observed_level&quot;: &quot;medium&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A client report can be treated as controlled customer handoff evidence only when Product Loop, Dual Loop, active human reconstruction, source grounding, bounded recipient scope, and CustomerHandoff boundaries pass.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;automatic customer delivery&quot;,
+      &quot;legal certification&quot;,
+      &quot;financial advice certification&quot;,
+      &quot;complete factual correctness&quot;,
+      &quot;general model correctness&quot;,
+      &quot;production publication&quot;,
+      &quot;replacement for customer-specific legal or compliance review&quot;
+    ]
+  },
+  &quot;delivery_class&quot;: &quot;client_report_handoff&quot;,
+  &quot;negative_checks&quot;: {
+    &quot;automatic_customer_sending_rejected&quot;: &quot;checks.automatic_customer_sending_allowed must stay False&quot;,
+    &quot;eval_sufficient_alone_rejected&quot;: &quot;allowed case requires checks.external_eval_receipts_supporting_only=True&quot;,
+    &quot;external_publication_rejected&quot;: &quot;external publication must stay blocked&quot;,
+    &quot;raw_customer_payload_rejected&quot;: &quot;recipient_context_ref.raw_customer_payload is forbidden&quot;,
+    &quot;raw_report_text_rejected&quot;: &quot;client-report-handoff-case-v1:$.report_artifact_ref.raw_report_text uses forbidden field&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;cookies_or_bearer_tokens_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;eye_tracking_or_biometrics_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_review_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;runtime&quot;: {
+    &quot;customer_message_sent&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;client-report-handoff-case-v1&quot;,
+      &quot;sha256&quot;: &quot;29b813a54253f02ccb9f942d1828860e5c4a64932776b36f2a8ccf7174cc532b&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;client-report-delivery-class-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>
