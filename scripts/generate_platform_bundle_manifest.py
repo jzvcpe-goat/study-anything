@@ -65,6 +65,18 @@ CBB_DELIVERY_HARNESS_ARTIFACTS = [
     "self-intake-receipt.json",
     "tri-loop-run.json",
 ]
+PRODUCT_LOOP_HARNESS_CASES = [
+    "pass",
+    "blocked-missing-product-spec-evals",
+    "blocked-missing-developer-vision",
+    "blocked-external-scope-expansion",
+    "blocked-ai-review-only",
+    "blocked-loop-dominance",
+]
+PRODUCT_LOOP_HARNESS_ARTIFACTS = [
+    "product-loop-scenario.json",
+    "product-loop-run.json",
+]
 
 FILES: list[tuple[str, str, str]] = [
     (
@@ -221,6 +233,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-cbb-delivery-scenario-harness.json",
         "generated_asset",
         "Cognitive Black Box tri-loop delivery scenario harness verification report.",
+    ),
+    (
+        "platform/generated/study-anything-product-loop-harness.json",
+        "generated_asset",
+        "Product Loop Harness verification report for three-loop product development gating.",
     ),
     (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
@@ -888,6 +905,11 @@ FILES: list[tuple[str, str, str]] = [
         "Portable Dual Loop trust scenario pack guide.",
     ),
     (
+        "docs/product-loop-harness.md",
+        "operator_doc",
+        "Product Loop Harness guide for three-loop product development gating.",
+    ),
+    (
         "docs/trust-model.md",
         "operator_doc",
         "Cognitive Black Box AI delivery trust model.",
@@ -1031,6 +1053,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json",
         "schema",
         "Cognitive Black Box tri-loop run JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/product-loop-scenario-v1.schema.json",
+        "schema",
+        "Product Loop Harness scenario JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/product-loop-run-v1.schema.json",
+        "schema",
+        "Product Loop Harness run JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1201,6 +1233,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in CBB_DELIVERY_HARNESS_CASES
         for artifact in CBB_DELIVERY_HARNESS_ARTIFACTS
+    ],
+    *[
+        (
+            f"fixtures/product-loop-harness/{case_id}/{artifact}",
+            "fixture",
+            f"Product Loop Harness {case_id} {artifact} fixture.",
+        )
+        for case_id in PRODUCT_LOOP_HARNESS_CASES
+        for artifact in PRODUCT_LOOP_HARNESS_ARTIFACTS
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2083,6 +2124,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Cognitive Black Box delivery scenario tri-loop fixtures and privacy boundaries.",
     ),
     (
+        "scripts/product_loop_harness.py",
+        "cli",
+        "Product Loop Harness CLI for deterministic three-loop product development artifacts.",
+    ),
+    (
+        "scripts/verify_product_loop_harness.py",
+        "verification",
+        "Verify Product Loop Harness fixtures, schemas, CLI output, and privacy boundaries.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
@@ -2771,6 +2822,11 @@ FILES: list[tuple[str, str, str]] = [
         "apps/api/study_anything/core/cbb_delivery_harness.py",
         "api_core",
         "Cognitive Black Box delivery scenario tri-loop harness validators.",
+    ),
+    (
+        "apps/api/study_anything/core/product_loop_harness.py",
+        "api_core",
+        "Product Loop Harness validators for three-loop product development evidence.",
     ),
     (
         "scripts/cognitive_loop_study_adapter_cli.py",

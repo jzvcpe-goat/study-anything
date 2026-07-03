@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 252847,
+    "bytes": 253176,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "9decdef632b5692595c5f1155f8ea8038080cd603704cb52065016a366662e9d",
+    "sha256": "90b7e37eb7ea46447a2d575f70655a6dd9fe37e4302395ff60a1469a6dc22419",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -129,9 +129,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 41683,
+      "bytes": 42169,
       "path": "README.md",
-      "sha256": "2e578e567f04998491ddd42f8babf4fd611422aa24d924bea18a87a34cb0c5f2"
+      "sha256": "b748c069a10cdc00a0591dcd2c2c5991d33e9fa3a7d7e0f564004c5fefa0a609"
     },
     {
       "bytes": 19503,
@@ -211,27 +211,27 @@
     {
       "bytes": 11247,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "d279450f4aad40cffe90f02683f7a8f8812966d4737a8b82fa755d4f9645c4e4"
+      "sha256": "52a7b3f7c2fa3ddb05284dda86b6dbefeb5b53a34588d46f51ba0824fbedf375"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "8999ff644a0477d624b9eb293efe2fa19a63867460cc1b6e114fcae655142f0d"
+      "sha256": "1b0632a9432e3985d7c16ccff530ffe32019ad1a18574d8a5b788bfad0927d8a"
     },
     {
-      "bytes": 132248,
+      "bytes": 132413,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "7d221f04a6f1d910f1e9ed1e62ea9d6ce41ba0e074f803144550b413ca53de0d"
+      "sha256": "e99cf3a7c250efc26267c0dd8fd1f98b82a6ffcac2d85a8f96d55673ee4e5577"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "82c4af01b9c4351bb7e9d6daed2c543748fc114291c1fe483c767daa509f72d7"
+      "sha256": "21f5d73ece2872d788616d0f50f0e592069b826ae686136de738d00f438907ee"
     },
     {
       "bytes": 133498,
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
-      "sha256": "04b48de98ede74941ec1a30035b5cc25d14fce96fb294dd0085fd33d05d969c2"
+      "sha256": "fc889eee5ca4e562c18d586de74a1d6663808d593aa3cca34502b7a21ed15a62"
     },
     {
       "bytes": 107336,
@@ -298,7 +298,7 @@
       "ref": {
         "bytes": 11247,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "d279450f4aad40cffe90f02683f7a8f8812966d4737a8b82fa755d4f9645c4e4"
+        "sha256": "52a7b3f7c2fa3ddb05284dda86b6dbefeb5b53a34588d46f51ba0824fbedf375"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"
