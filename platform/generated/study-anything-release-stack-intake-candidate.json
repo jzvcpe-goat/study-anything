@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-287-v0.3.159-cbb-delivery-scenario-harness",
+    "group_id": "release-stack-intake-pr-288-v0.3.160-release-stack-cbb-current-group",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -34,7 +34,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.159-cbb-delivery-scenario-harness",
+        "branch": "codex/v0.3.160-release-stack-cbb-current-group",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -42,9 +42,9 @@
           "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "bdb284105874f4b5c49a2ab7a08ef21ac565d0f5",
+        "merge_commit": "b40e74125887d4a7697dad1a9bfd3d89ea677b06",
         "order": 1,
-        "pr": 287,
+        "pr": 288,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -53,15 +53,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #287: Add CBB delivery scenario harness.",
+    "summary": "Candidate release stack group for PR #288: Promote CBB release stack group for PRs 286 and 287.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.158-v0.3.159",
-    "represented_pr_count": 87
+    "current_group": "release-stack-promotion-v0.3.160",
+    "represented_pr_count": 88
   },
   "negative_fixtures": [
     {
