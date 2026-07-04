@@ -16,6 +16,7 @@
     ],
     "blocked_decision_scenario_count": 5,
     "decision_case_count": 7,
+    "delivery_class_case_count": 9,
     "delivery_class_count": 2,
     "trust_scenario_count": 4
   },
@@ -26,6 +27,11 @@
       "controlled_client_report_handoff",
       "controlled_code_review_handoff"
     ],
+    "delivery_class_case_count": 9,
+    "delivery_class_reports_embedded": [
+      "code_review_handoff",
+      "client_report_handoff"
+    ],
     "external_adopter_can_verify_zip_only": true,
     "production_mutation_blocked": true,
     "truth_certification_blocked": true
@@ -33,11 +39,11 @@
   "pack": {
     "archive_name": "study-anything-trust-evidence-handoff-pack.zip",
     "archive_root": "study-anything-trust-evidence-handoff-pack",
-    "entry_count": 37,
-    "file_record_count": 36,
+    "entry_count": 58,
+    "file_record_count": 57,
     "manifest_schema_version": "trust-evidence-handoff-pack-v1",
-    "manifest_sha256": "5eaece8acb37e7f934c59787e959fa24c3070453941c9e3ae05dd1b7601762c3",
-    "zip_sha256": "34b85c3f927be4afdba370b42988f8f28a3889170e58b1506d5ecf1ebe433e15"
+    "manifest_sha256": "84dc16ea4bb6fbc46a8d14956f8ccd6d12c655329dd4bf7656c6fca724ea758c",
+    "zip_sha256": "3b2c4d906b4156aed8dd12d3fefd56478df274fadfc1791029170f22f0879a67"
   },
   "privacy": {
     "attention_streams_included": false,
@@ -70,9 +76,14 @@
       "step_id": "verify_manifest_and_hashes"
     },
     {
-      "evidence": "Registered delivery classes are present.",
+      "evidence": "Registered delivery classes and embedded class reports are present.",
       "status": "pass",
       "step_id": "inspect_delivery_classes"
+    },
+    {
+      "evidence": "Code review and client report allowed/blocked/negative checks are verifiable.",
+      "status": "pass",
+      "step_id": "inspect_delivery_class_matrices"
     },
     {
       "evidence": "Only supported scenarios are allowed; blocked scenarios remain blocked.",

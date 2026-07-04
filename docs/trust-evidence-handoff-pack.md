@@ -7,6 +7,8 @@ AI delivery trust boundary without reading the whole repository.
 It combines:
 
 - Delivery Class Registry
+- Code Review Delivery Class evidence
+- Client Report Delivery Class evidence
 - Trust Scenario Catalog
 - Trust Scenario Decision Gate
 - Delivery Trust Case Pack
@@ -56,6 +58,8 @@ Trust Evidence Handoff Pack Lite 是一个可下载、可解压、只含 metadat
 Agent 能够从一个包里检查：
 
 - 当前支持哪些受控交付场景；
+- code review / client report 这类具体交付类的 pass、blocked、negative check
+  矩阵是否可离线检查；
 - 哪些场景和 shortcut 必须被阻断；
 - 需要哪些 Dual Loop、Delivery Trust、主动人类重建和交付类证据；
 - 当前 claim boundary 到哪里为止。

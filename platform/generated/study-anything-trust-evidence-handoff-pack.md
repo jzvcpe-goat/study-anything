@@ -4,10 +4,11 @@
 - Package: `study-anything-trust-evidence-handoff-pack`
 - Version: `v0.3.31-alpha`
 - Delivery classes: `2`
+- Delivery class case reports: `9`
 - Trust scenarios: `4`
 - Decision cases: `7`
-- File count: `35`
-- Archive SHA-256: `34b85c3f927be4afdba370b42988f8f28a3889170e58b1506d5ecf1ebe433e15`
+- File count: `56`
+- Archive SHA-256: `3b2c4d906b4156aed8dd12d3fefd56478df274fadfc1791029170f22f0879a67`
 
 ## Claim
 
