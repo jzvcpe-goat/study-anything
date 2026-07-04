@@ -268,7 +268,7 @@
     "report": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
     "schema_version": "trust-evidence-acceptance-drill-v1",
     "status": "pass",
-    "zip_sha256": "7945c5476b507b950d232d350eb0b000d09defbbf0c3a7a6cf65bcf222e4cf89"
+    "zip_sha256": "83fa8b68dd2b5e0fb7e60ae281acd1317d398448f30ede4a6064478b9f6b8581"
   },
   "status": "pass"
 }

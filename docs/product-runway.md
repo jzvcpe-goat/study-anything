@@ -19,16 +19,22 @@ After that, the project needs product proof.
 
 ## Current Product Objective
 
-Package the completed Delivery Trust Case Harness into a ZIP-only external
-consumer pack.
+Move the delivery-trust chain from "evidence can be inspected" to "a platform
+Agent can prepare a customer-delivery envelope without crossing the customer
+send boundary."
 
-The Product Loop Harness is the pre-handoff layer; the Dual Loop Trust Scenario Harness remains the customer-delivery layer; the Delivery Trust Case Harness is
-the end-to-end assembly layer. The next product proof is that another operator,
-customer reviewer, or platform Agent can verify that assembly from a portable
-metadata-only pack without trusting our prose or reading private source text.
+The completed chain now has these layers:
 
-The pack should show how an AI-generated customer deliverable can become
-handoff-worthy without relying on either of these weak patterns:
+- Delivery Trust Case Pack: portable metadata-only pack and ZIP consumer proof;
+- Dual Loop Trust Scenario Harness: customer-delivery scenario layer;
+- Delivery Class Registry: code-review and client-report handoff classes;
+- Trust Evidence Handoff Pack: evidence bundle for external operators;
+- Trust Evidence Acceptance Drill: allow/block rehearsal from packaged evidence;
+- Controlled Handoff Runbook: controlled handoff preparation steps;
+- Customer Delivery Trust Envelope: pre-customer-send envelope boundary.
+
+The next product proof should show how an AI-generated customer deliverable can
+move toward handoff-worthiness without relying on either of these weak patterns:
 
 - human over-review of every step;
 - AI reviewing AI through an uninspectable black box.
@@ -66,13 +72,14 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Delivery Trust Case Consumer Pack:
-create a portable delivery-trust-case-pack-v1 JSON/MD/ZIP/SHA256 bundle plus a
-ZIP-only consumer walkthrough verifier proving an external adopter can inspect
-the claim boundary, hash integrity, pass/blocked case matrix, and metadata-only
-privacy rules without a repo checkout.
+Customer Delivery Rehearsal:
+create a metadata-only rehearsal that lets an external operator or platform
+Agent inspect the customer-delivery trust envelope, confirm the human scope
+boundary, and produce a blocked/ready decision without sending anything to a
+customer, mutating production, or reading raw payloads.
 ```
 
-After that, move to the first real-domain delivery class: take one AI-generated
-deliverable type, such as a code-review handoff or client report handoff, and
-map it into the same case-pack contract without weakening the claim boundary.
+After that, move to a real operator handoff rehearsal for one delivery class,
+such as code-review handoff or client-report handoff, and prove that a human can
+use the envelope to decide whether the result is safe to send outside this
+system.
