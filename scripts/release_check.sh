@@ -232,6 +232,7 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
   "$python_bin" scripts/verify_trust_evidence_acceptance_drill.py --check
   "$python_bin" scripts/verify_controlled_handoff_runbook.py --check
+  "$python_bin" scripts/verify_customer_delivery_trust_envelope.py --check
   "$python_bin" scripts/verify_dual_loop_scenario_harness.py --check
   "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
   "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
@@ -261,6 +262,7 @@ run_cbb_protocol_verifier_gates() {
   "$python_bin" scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
   "$python_bin" scripts/verify_trust_evidence_acceptance_drill.py --check
   "$python_bin" scripts/verify_controlled_handoff_runbook.py --check
+  "$python_bin" scripts/verify_customer_delivery_trust_envelope.py --check
   cbb_protocol_verifiers_passed_individually="true"
 }
 
@@ -429,6 +431,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
 "$python_bin" scripts/verify_trust_evidence_acceptance_drill.py --check
 "$python_bin" scripts/verify_controlled_handoff_runbook.py --check
+"$python_bin" scripts/verify_customer_delivery_trust_envelope.py --check
 "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py --check

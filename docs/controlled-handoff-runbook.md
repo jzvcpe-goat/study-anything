@@ -27,6 +27,10 @@ It emits:
 - `platform/generated/study-anything-controlled-handoff-runbook.json`
 - `platform/generated/study-anything-controlled-handoff-runbook.md`
 
+The next boundary is `docs/customer-delivery-trust-envelope.md`, which may
+prepare a customer-delivery envelope but still must not send anything to a
+customer or mutate production.
+
 ## Boundary
 
 The runbook is metadata-only. It does not call models, start a daemon, mutate

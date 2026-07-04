@@ -2505,6 +2505,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify controlled handoff preparation steps derived from Trust Evidence decisions.",
     ),
     (
+        "docs/customer-delivery-trust-envelope.md",
+        "operator_doc",
+        "Customer Delivery Trust Envelope guide for pre-customer-send boundary checks.",
+    ),
+    (
+        "platform/generated/study-anything-customer-delivery-trust-envelope.json",
+        "generated_asset",
+        "Customer Delivery Trust Envelope report.",
+    ),
+    (
+        "platform/generated/study-anything-customer-delivery-trust-envelope.md",
+        "generated_asset",
+        "Customer Delivery Trust Envelope markdown report.",
+    ),
+    (
+        "scripts/verify_customer_delivery_trust_envelope.py",
+        "verification",
+        "Verify customer-delivery envelope boundaries derived from controlled handoff evidence.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
