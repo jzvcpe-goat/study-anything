@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "real-adopter-scenario-import-v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "status",
+    "purpose",
+    "summary_schema",
+    "case_reports",
+    "chain_rules",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "real-adopter-scenario-import-v1"
+    },
+    "status": {
+      "const": "pass"
+    },
+    "summary_schema": {
+      "const": "real-adopter-issue-summary-v1"
+    },
+    "case_reports": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "case_id",
+          "status",
+          "decision",
+          "blocked_reasons"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "allowed",
+              "blocked"
+            ]
+          },
+          "decision": {
+            "enum": [
+              "create_product_loop_harness_candidate",
+              "block_real_adopter_import"
+            ]
+          },
+          "blocked_reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifact_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "schema_version",
+                "artifact_hash",
+                "body_included"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "schema_version": {
+                  "type": "string"
+                },
+                "artifact_hash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "body_included": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chain_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "external_feedback_receipt_required",
+        "backlog_bridge_required",
+        "product_owner_reconstruction_required",
+        "spec_eval_authoring_reconstruction_required",
+        "product_loop_brief_intake_required",
+        "raw_issue_text_rejected",
+        "requester_identity_rejected",
+        "ai_review_only_rejected",
+        "production_mutation_blocked",
+        "customer_visible_action_blocked"
+      ],
+      "properties": {
+        "external_feedback_receipt_required": {
+          "const": true
+        },
+        "backlog_bridge_required": {
+          "const": true
+        },
+        "product_owner_reconstruction_required": {
+          "const": true
+        },
+        "spec_eval_authoring_reconstruction_required": {
+          "const": true
+        },
+        "product_loop_brief_intake_required": {
+          "const": true
+        },
+        "raw_issue_text_rejected": {
+          "const": true
+        },
+        "requester_identity_rejected": {
+          "const": true
+        },
+        "ai_review_only_rejected": {
+          "const": true
+        },
+        "production_mutation_blocked": {
+          "const": true
+        },
+        "customer_visible_action_blocked": {
+          "const": true
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "metadata_only",
+        "raw_issue_text_included",
+        "requester_identity_included",
+        "real_model_keys_included",
+        "agent_endpoint_secrets_included"
+      ],
+      "properties": {
+        "metadata_only": {
+          "const": true
+        },
+        "raw_issue_text_included": {
+          "const": false
+        },
+        "requester_identity_included": {
+          "const": false
+        },
+        "real_model_keys_included": {
+          "const": false
+        },
+        "agent_endpoint_secrets_included": {
+          "const": false
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "model_calls_performed",
+        "production_mutation_performed",
+        "customer_visible_action_performed",
+        "external_publication_performed"
+      ],
+      "properties": {
+        "model_calls_performed": {
+          "const": false
+        },
+        "production_mutation_performed": {
+          "const": false
+        },
+        "customer_visible_action_performed": {
+          "const": false
+        },
+        "external_publication_performed": {
+          "const": false
+        }
+      }
+    }
+  }
+}

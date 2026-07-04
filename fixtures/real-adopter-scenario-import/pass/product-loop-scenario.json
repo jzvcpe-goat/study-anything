@@ -1,0 +1,105 @@
+{
+  "case_id": "pass",
+  "claim_boundary": {
+    "current_claim": "This Product Loop candidate was created from a metadata-only Product Spec/Eval brief, not from raw spec/eval bodies.",
+    "not_claimed": [
+      "implementation is complete",
+      "customer delivery is allowed",
+      "production mutation is allowed",
+      "Delivery Trust Harness has passed"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "loop_contract": {
+    "agentic_loop_may_promote_alone": false,
+    "all_three_loops_required": true,
+    "developer_loop_may_promote_alone": false,
+    "external_loop_may_promote_alone": false,
+    "neither_loop_may_dominate": true
+  },
+  "loops": {
+    "agentic_coding_loop": {
+      "actor_ref": "coding-agent",
+      "ai_review_only": false,
+      "input_ref": "product-spec-eval-brief.json",
+      "model_calls_required": false,
+      "output_ref": "candidate-change-metadata.json",
+      "product_spec_eval_brief_ref": {
+        "body_included": false,
+        "brief_hash": "d80a97b26f769168d051a0d8a65c058836e80615cea1a8a0be3e889d84dfc6c2",
+        "brief_id": "product-spec-eval-brief-bb2cf843321811c2",
+        "source_candidate_hash": "bb2cf843321811c2ceab8a943d410c29e940598e6796efc4b9b612ccc4b81d04",
+        "source_candidate_id": "product-spec-eval-candidate-e0aa40565038cf2b"
+      },
+      "product_spec_evals_present": true,
+      "production_mutation_allowed": false,
+      "time_scale": "minutes"
+    },
+    "developer_feedback_loop": {
+      "active_reconstruction_required": true,
+      "actor_ref": "developer-vision",
+      "developer_vision_present": true,
+      "passive_attention_only_sufficient": false,
+      "reconstruction_ref": "product-loop-brief-intake-reconstruction.json",
+      "time_scale": "hours"
+    },
+    "external_feedback_loop": {
+      "actor_ref": "external-feedback",
+      "external_feedback_original_text_stored": false,
+      "raw_feedback_access_required": false,
+      "requested_scope": "controlled_customer_handoff",
+      "structured_intake_ref": "external-feedback-intake.json",
+      "time_scale": "days"
+    }
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "promotion_policy": {
+    "allowed_next_layer": "delivery_trust_harness",
+    "allowed_requested_scopes": [
+      "spec_eval_update",
+      "developer_vision_update",
+      "controlled_customer_handoff"
+    ],
+    "irreversible_external_effects_allowed": false,
+    "production_mutation_allowed": false
+  },
+  "scenario_id": "product-loop-brief-intake-scenario-d80a97b26f769168",
+  "scenario_type": "tri_loop_product_development",
+  "schema_version": "product-loop-scenario-v1",
+  "source": {
+    "content_digest": "d80a97b26f769168d051a0d8a65c058836e80615cea1a8a0be3e889d84dfc6c2",
+    "source_ref": "product-spec-eval-brief-bb2cf843321811c2",
+    "source_type": "product_spec_eval_brief"
+  },
+  "status": "ready"
+}

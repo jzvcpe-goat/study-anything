@@ -1,0 +1,81 @@
+{
+  "blocked_destinations": [
+    "production_mutation",
+    "automatic_customer_reply",
+    "external_publication",
+    "model_retraining_payload"
+  ],
+  "claim_boundary": {
+    "current_claim": "Accepted external feedback can be converted into a Product Loop backlog item as metadata only. Blocked feedback cannot create a backlog item.",
+    "not_claimed": [
+      "raw feedback import",
+      "requester identity import",
+      "customer-visible reply",
+      "automatic production mutation",
+      "external publication",
+      "automatic prioritization",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "destination": "product_loop_backlog",
+  "feedback_ref": {
+    "bounded_tags": [
+      "deterministic_quality_gap",
+      "real_agent_not_invoked",
+      "version_drift",
+      "proxy_env_workaround"
+    ],
+    "feedback_hash": "e27e98e001cbe4e118acc1c6",
+    "feedback_kind": "adoption_friction",
+    "sentiment": "negative",
+    "severity": "high",
+    "source_channel": "workbuddy_field_report"
+  },
+  "item_id": "product-loop-backlog-e87a1d619f098a91",
+  "loop": "external_feedback_loop",
+  "next_boundary": "product_owner_prioritization",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "backlog_item_metadata_only": true,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "customer_visible_reply_created": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "feedback_hash_only": true,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_customer_message_included": false,
+    "raw_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "ready_for_delivery_trust_harness": false,
+  "requires_product_owner_prioritization": true,
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "backlog_storage_mutated": false,
+    "customer_visible_reply_created": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_version": "product-loop-backlog-item-v1",
+  "source_delivery_class": "support_response_handoff",
+  "source_handoff_ref": "workbuddy-field-report:metadata-only-summary",
+  "source_receipt_hash": "e87a1d619f098a917f470c63f10e68d956c263def29e04e3040a01414ea5d563",
+  "source_receipt_id": "external-feedback-real-adopter-workbuddy"
+}

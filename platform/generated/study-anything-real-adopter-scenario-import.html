@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Real-Adopter Scenario Import</title>
+<body>
+<h1>Real-Adopter Scenario Import</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;case_reports&quot;: [
+    {
+      &quot;artifact_refs&quot;: [
+        {
+          &quot;artifact_hash&quot;: &quot;c20ca60c1e40bdd6549305c060b8c9d7fff77d0e215d9721b27d9867d3c6c3ff&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;summary&quot;,
+          &quot;schema_version&quot;: &quot;real-adopter-issue-summary-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;e87a1d619f098a917f470c63f10e68d956c263def29e04e3040a01414ea5d563&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;external_feedback_receipt&quot;,
+          &quot;schema_version&quot;: &quot;external-feedback-receipt-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;90f2659b3765fa9b50cabea84b3d9bbac867d8d1e859a2a203ce8f537e5a05b8&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;external_feedback_backlog_bridge&quot;,
+          &quot;schema_version&quot;: &quot;external-feedback-backlog-bridge-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;e0aa40565038cf2b0b9ddde5a8c1c3daa17ce32fb4fa85768725f89ae9dedba1&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_loop_backlog_item&quot;,
+          &quot;schema_version&quot;: &quot;product-loop-backlog-item-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;fd5c96cf58985dc29ca5b14c7b7c2100f287644646369b6178b87d5b5591033b&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_owner_prioritization_receipt&quot;,
+          &quot;schema_version&quot;: &quot;product-owner-prioritization-receipt-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;bb2cf843321811c2ceab8a943d410c29e940598e6796efc4b9b612ccc4b81d04&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_spec_eval_candidate&quot;,
+          &quot;schema_version&quot;: &quot;product-spec-eval-candidate-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;d7173dd53ab0265aa4abb74d4401d78b0eb16b612334a5f3f3569fbf4a7bf87e&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_spec_eval_authoring_receipt&quot;,
+          &quot;schema_version&quot;: &quot;product-spec-eval-authoring-receipt-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;d80a97b26f769168d051a0d8a65c058836e80615cea1a8a0be3e889d84dfc6c2&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_spec_eval_brief&quot;,
+          &quot;schema_version&quot;: &quot;product-spec-eval-brief-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;268e49c9ea9509748613248020990074dfd53089ce6054a1327b32b1ed817778&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_loop_brief_intake_receipt&quot;,
+          &quot;schema_version&quot;: &quot;product-loop-brief-intake-receipt-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;c7d0aac1db79b349385df19ca90b3d81143ed563860c548b7a492e7741304c56&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_loop_scenario&quot;,
+          &quot;schema_version&quot;: &quot;product-loop-scenario-v1&quot;
+        },
+        {
+          &quot;artifact_hash&quot;: &quot;c714ed37a8594df51a0e54cd102825b3fa4f5de315d007d1ed928678c8e30cc4&quot;,
+          &quot;body_included&quot;: false,
+          &quot;name&quot;: &quot;product_loop_run&quot;,
+          &quot;schema_version&quot;: &quot;product-loop-run-v1&quot;
+        }
+      ],
+      &quot;blocked_reasons&quot;: [],
+      &quot;bounded_tags&quot;: [
+        &quot;deterministic_quality_gap&quot;,
+        &quot;real_agent_not_invoked&quot;,
+        &quot;version_drift&quot;,
+        &quot;proxy_env_workaround&quot;
+      ],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;create_product_loop_harness_candidate&quot;,
+      &quot;next_boundary&quot;: &quot;product_loop_harness_candidate&quot;,
+      &quot;platform_id&quot;: &quot;workbuddy&quot;,
+      &quot;status&quot;: &quot;allowed&quot;,
+      &quot;target_spec_eval_theme&quot;: &quot;real_agent_quality_and_version_drift_gate&quot;
+    },
+    {
+      &quot;artifact_refs&quot;: [],
+      &quot;blocked_reasons&quot;: [
+        &quot;private_like_value_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-raw-issue-text&quot;,
+      &quot;decision&quot;: &quot;block_real_adopter_import&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_refs&quot;: [],
+      &quot;blocked_reasons&quot;: [
+        &quot;forbidden_private_field_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-identity&quot;,
+      &quot;decision&quot;: &quot;block_real_adopter_import&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_refs&quot;: [],
+      &quot;blocked_reasons&quot;: [
+        &quot;active_reconstruction_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_real_adopter_import&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_refs&quot;: [],
+      &quot;blocked_reasons&quot;: [
+        &quot;requested_scope_outside_product_loop_budget&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_real_adopter_import&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;chain_rules&quot;: {
+    &quot;ai_review_only_rejected&quot;: true,
+    &quot;backlog_bridge_required&quot;: true,
+    &quot;customer_visible_action_blocked&quot;: true,
+    &quot;external_feedback_receipt_required&quot;: true,
+    &quot;product_loop_brief_intake_required&quot;: true,
+    &quot;product_owner_reconstruction_required&quot;: true,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_issue_text_rejected&quot;: true,
+    &quot;requester_identity_rejected&quot;: true,
+    &quot;spec_eval_authoring_reconstruction_required&quot;: true
+  },
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A bounded real-adopter issue summary can re-enter the Product Loop as metadata-only evidence and produce a Product Spec/Eval brief candidate.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;raw adopter feedback import&quot;,
+      &quot;requester identity import&quot;,
+      &quot;automatic product-owner prioritization&quot;,
+      &quot;automatic implementation&quot;,
+      &quot;customer-visible reply&quot;,
+      &quot;external publication&quot;,
+      &quot;production mutation&quot;,
+      &quot;proof that the reported issue is globally representative&quot;
+    ]
+  },
+  &quot;continuity_checks&quot;: [
+    {
+      &quot;check_id&quot;: &quot;summary_to_external_feedback&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;backlog_to_product_owner&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;candidate_to_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;brief_to_product_loop_intake&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    }
+  ],
+  &quot;negative_checks&quot;: {
+    &quot;missing_ai_review_only_case_rejected&quot;: &quot;real_adopter_summary_invalid&quot;,
+    &quot;missing_product_owner_reconstruction_rule_rejected&quot;: &quot;real_adopter_summary_invalid&quot;,
+    &quot;production_mutation_rejected&quot;: &quot;requested_scope_outside_product_loop_budget&quot;,
+    &quot;raw_issue_text_rejected&quot;: &quot;private_like_value_rejected&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;agent_trace_included&quot;: false,
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_issue_reply_created&quot;: false,
+    &quot;automatic_production_mutation_performed&quot;: false,
+    &quot;backlog_item_metadata_only&quot;: true,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_identity_included&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;feedback_hash_only&quot;: true,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;platform_logs_included&quot;: false,
+    &quot;product_owner_identity_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_customer_message_included&quot;: false,
+    &quot;raw_feedback_text_included&quot;: false,
+    &quot;raw_issue_text_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_adopter_summary_metadata_only&quot;: true,
+    &quot;real_model_keys_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;requester_identity_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove one bounded real-adopter issue summary can enter the Product Loop as metadata-only evidence and reach a concrete spec/eval brief without raw customer content or production effects.&quot;,
+  &quot;runtime&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;backlog_storage_mutated&quot;: false,
+    &quot;customer_visible_action_performed&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;real-adopter-scenario-import-v1&quot;,
+      &quot;sha256&quot;: &quot;ac1fbc33b56d3758652b08ab0bbac18d073fffcf7ebf4d5a425107c0eccb7d7c&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;real-adopter-scenario-import-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;summary_schema&quot;: &quot;real-adopter-issue-summary-v1&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>
