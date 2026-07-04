@@ -83,6 +83,11 @@ The completed chain now has these layers:
   implementation rehearsal after Product Loop and Dual Loop gates pass, while
   missing sandbox evidence, missing human reconstruction, AI-review-only
   evidence, customer-visible action, and production mutation are blocked.
+- Sandboxed Patch Proposal Rehearsal: an allowed Spec/Eval execution rehearsal
+  can prepare only a metadata-only sandbox-local patch proposal envelope with
+  rollback and test boundaries, while raw patch bodies, raw diffs, repository
+  mutation, customer-visible action, external publication, and production
+  mutation are blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -124,16 +129,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Sandboxed Patch Proposal Rehearsal:
-consume the allowed Spec/Eval Scenario Execution Rehearsal receipt, create a
-metadata-only patch proposal envelope, and prove that implementation proposals
-can be prepared only as sandbox-local refs with explicit rollback, test, and
-human reconstruction boundaries before any repository mutation, customer-visible
-action, external publication, or production change.
+Patch Proposal Operator Handoff Bridge:
+consume an allowed Sandboxed Patch Proposal Rehearsal envelope and connect it to
+delivery-class-specific operator handoff rehearsals only as metadata refs, while
+keeping raw customer content, raw spec/eval bodies, raw patch bodies, automatic
+prioritization, automatic execution, repository mutation, customer-visible
+action, external publication, and production mutation out of the trusted path by
+default.
 ```
-
-After that, connect sandbox-local patch proposals to delivery-class-specific
-operator handoff rehearsals only if the protocol still keeps raw customer
-content, raw spec/eval bodies, automatic prioritization, automatic execution,
-repository mutation, customer-visible action, external publication, and
-production mutation out of the trusted path by default.

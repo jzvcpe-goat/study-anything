@@ -1,0 +1,152 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "prepare_sandbox_local_patch_proposal",
+      "proposal_scope": "sandbox_local_refs_only",
+      "status": "allowed"
+    },
+    {
+      "blocked_reasons": [
+        "spec_eval_execution_not_allowed",
+        "sandbox_start_not_authorized",
+        "human_reconstruction_missing",
+        "dual_loop_gate_not_allowed"
+      ],
+      "case_id": "blocked-missing-spec-eval-allowance",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "rollback_plan_missing"
+      ],
+      "case_id": "blocked-missing-rollback-plan",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "test_plan_missing"
+      ],
+      "case_id": "blocked-missing-test-plan",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "repository_mutation_rejected"
+      ],
+      "case_id": "blocked-repository-mutation",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_action_rejected"
+      ],
+      "case_id": "blocked-customer-visible-action",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal",
+      "proposal_scope": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A patch proposal can be prepared as sandbox-local metadata refs only when Spec/Eval, Controlled Failure, and Human Reconstruction gates pass.",
+    "not_claimed": [
+      "patch content generated",
+      "repository changed",
+      "customer handoff approved",
+      "external publication approved",
+      "production change approved"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "customer_visible_action_performed": "patch proposal rehearsal must keep customer_visible_action_performed false",
+    "missing_rollback_on_allowed": "allowed patch proposal requires rollback_plan_present",
+    "patch_body_included": "patch proposal envelope must not include patch body",
+    "raw_diff_body_injected": "sandboxed-patch-proposal-envelope-v1:$.raw_diff uses forbidden field",
+    "repository_mutation_performed": "patch proposal rehearsal must keep repository_mutation_performed false"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove an allowed Spec/Eval execution rehearsal can produce only a metadata-only sandbox-local patch proposal envelope before any repository mutation.",
+  "quality_gates": {
+    "customer_visible_action_rejected": true,
+    "external_publication_rejected": true,
+    "human_reconstruction_required": true,
+    "production_mutation_rejected": true,
+    "raw_diff_body_rejected": true,
+    "raw_patch_body_rejected": true,
+    "repository_mutation_rejected": true,
+    "rollback_plan_required": true,
+    "spec_eval_execution_allowed_required": true,
+    "test_plan_required": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json",
+      "schema_version": "sandboxed-patch-proposal-rehearsal-v1",
+      "sha256": "0d8e94a174afe3c389ddf704fc8b85f01b76bba9b2f261545cd23993a6f13a63"
+    }
+  ],
+  "schema_version": "sandboxed-patch-proposal-rehearsal-v1",
+  "source_chain": {
+    "allowed_execution_receipt": "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
+    "spec_eval_execution_rehearsal_report": "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json"
+  },
+  "status": "pass"
+}

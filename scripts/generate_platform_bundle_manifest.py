@@ -195,6 +195,20 @@ SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS = {
         "spec-eval-execution-rehearsal-receipt.json",
     ],
 }
+SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES = [
+    "pass",
+    "blocked-missing-spec-eval-allowance",
+    "blocked-missing-rollback-plan",
+    "blocked-missing-test-plan",
+    "blocked-repository-mutation",
+    "blocked-customer-visible-action",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+]
+SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS = {
+    case_id: ["sandboxed-patch-proposal-envelope.json"]
+    for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -601,6 +615,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
         "generated_asset",
         "Spec/Eval Scenario Execution Rehearsal static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.json",
+        "generated_asset",
+        "Sandboxed Patch Proposal Rehearsal metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.md",
+        "generated_asset",
+        "Sandboxed Patch Proposal Rehearsal operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.html",
+        "generated_asset",
+        "Sandboxed Patch Proposal Rehearsal static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1323,6 +1352,11 @@ FILES: list[tuple[str, str, str]] = [
         "Spec/Eval Scenario Execution Rehearsal guide for controlled sandbox implementation rehearsal authorization.",
     ),
     (
+        "docs/sandboxed-patch-proposal-rehearsal.md",
+        "operator_doc",
+        "Sandboxed Patch Proposal Rehearsal guide for metadata-only patch proposal envelopes.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1556,6 +1590,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
         "schema",
         "Spec/Eval Scenario Execution Rehearsal JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json",
+        "schema",
+        "Sandboxed Patch Proposal Rehearsal JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -1971,6 +2010,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_CASES
         for artifact in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/sandboxed-patch-proposal-rehearsal/{case_id}/{artifact}",
+            "fixture",
+            f"Sandboxed Patch Proposal Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
+        for artifact in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3191,6 +3239,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
         "verification",
         "Verify Spec/Eval Scenario Execution Rehearsal fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/sandboxed_patch_proposal_rehearsal.py",
+        "verification",
+        "Build metadata-only Sandboxed Patch Proposal Rehearsal artifacts.",
+    ),
+    (
+        "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
+        "verification",
+        "Verify Sandboxed Patch Proposal Rehearsal fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
