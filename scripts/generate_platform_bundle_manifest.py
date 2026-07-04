@@ -2525,6 +2525,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify customer-delivery envelope boundaries derived from controlled handoff evidence.",
     ),
     (
+        "docs/customer-delivery-rehearsal.md",
+        "operator_doc",
+        "Customer Delivery Rehearsal guide for ready/block pre-send decisions.",
+    ),
+    (
+        "platform/generated/study-anything-customer-delivery-rehearsal.json",
+        "generated_asset",
+        "Customer Delivery Rehearsal report.",
+    ),
+    (
+        "platform/generated/study-anything-customer-delivery-rehearsal.md",
+        "generated_asset",
+        "Customer Delivery Rehearsal markdown report.",
+    ),
+    (
+        "scripts/verify_customer_delivery_rehearsal.py",
+        "verification",
+        "Verify customer-delivery ready/block rehearsal boundaries from the trust envelope.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",

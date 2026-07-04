@@ -1,0 +1,244 @@
+{
+  "acceptance": {
+    "markdown_report": "platform/generated/study-anything-customer-delivery-rehearsal.md",
+    "minimum_command": "python3 scripts/verify_customer_delivery_rehearsal.py --check",
+    "report": "platform/generated/study-anything-customer-delivery-rehearsal.json",
+    "source_command": "python3 scripts/verify_customer_delivery_trust_envelope.py --check"
+  },
+  "claim_boundary": {
+    "current_claim": "An external operator or platform Agent can rehearse ready/block decisions from a metadata-only customer-delivery envelope before any customer-visible action.",
+    "not_claimed": [
+      "customer send approval",
+      "actual customer send completed",
+      "production approval",
+      "automatic customer sending",
+      "truth certification",
+      "customer outcome guarantee",
+      "general model correctness",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "negative_fixtures": [
+    {
+      "case_id": "automatic_customer_send_performed",
+      "error": "case.ready.automatic_customer_send_performed must be false",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_ready_case",
+      "error": "rehearsal must include exactly one ready case",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_claim_boundary_confirmation",
+      "error": "ready case must include all active confirmations",
+      "status": "rejected"
+    },
+    {
+      "case_id": "blocked_case_without_reason",
+      "error": "blocked case must include at least one reason",
+      "status": "rejected"
+    },
+    {
+      "case_id": "raw_customer_payload_included",
+      "error": "privacy.raw_customer_payload_included must be false",
+      "status": "rejected"
+    }
+  ],
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Rehearse a pre-customer-send operator decision from the Customer Delivery Trust Envelope without sending, mutating production, reading raw payloads, or certifying truth.",
+  "rehearsal": {
+    "blocked_count": 5,
+    "cases": [
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "ready_for_manual_send_review",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": true,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": true,
+          "recipient_scope_confirmed": true
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 0,
+        "reasons": [],
+        "requested_action": "prepare_manual_send_review",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-envelope-code_review_handoff",
+        "status": "ready",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "block-missing-human-scope",
+        "customer_visible_effect_performed": false,
+        "decision": "block_customer_delivery",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": true,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": true,
+          "recipient_scope_confirmed": false
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "missing_recipient_scope_confirmed"
+        ],
+        "requested_action": "prepare_manual_send_review",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-envelope-code_review_handoff",
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "block-hidden-claim-boundary",
+        "customer_visible_effect_performed": false,
+        "decision": "block_customer_delivery",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": false,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": true,
+          "recipient_scope_confirmed": true
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "missing_claim_boundary_visible"
+        ],
+        "requested_action": "prepare_manual_send_review",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-envelope-code_review_handoff",
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "block-raw-payload-attached",
+        "customer_visible_effect_performed": false,
+        "decision": "block_customer_delivery",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": true,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": false,
+          "recipient_scope_confirmed": true
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 2,
+        "reasons": [
+          "raw_payload_or_secret_attached",
+          "missing_no_raw_payload_or_secret_attached"
+        ],
+        "requested_action": "prepare_manual_send_review",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-envelope-code_review_handoff",
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "block-automatic-customer-send",
+        "customer_visible_effect_performed": false,
+        "decision": "block_customer_delivery",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": true,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": true,
+          "recipient_scope_confirmed": true
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "automatic_customer_send_attempted"
+        ],
+        "requested_action": "automatic_customer_send",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-envelope-code_review_handoff",
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_send_performed": false,
+        "case_id": "block-source-blocked-item",
+        "customer_visible_effect_performed": false,
+        "decision": "block_customer_delivery",
+        "delivery_class": "code_review_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "claim_boundary_visible": true,
+          "customer_context_within_delivery_class": true,
+          "human_actual_send_outside_system_only": true,
+          "no_raw_payload_or_secret_attached": true,
+          "recipient_scope_confirmed": true
+        },
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "source_envelope_item_blocked"
+        ],
+        "requested_action": "prepare_manual_send_review",
+        "requires_human_actual_send_outside_system": true,
+        "source_ref": "customer-block-code_review_handoff-blocked-missing-reconstruction",
+        "status": "blocked",
+        "truth_certification_performed": false
+      }
+    ],
+    "mode": "operator_pre_send_rehearsal_only",
+    "operator_exit_criteria": [
+      "exactly_one_ready_case_requires_all_human_scope_confirmations",
+      "every_blocked_case_has_reasons",
+      "automatic_customer_send_attempts_are_blocked",
+      "blocked_envelope_items_remain_blocked",
+      "raw_payloads_and_credentials_are_absent",
+      "actual_customer_send_happens_outside_this_system_only"
+    ],
+    "ready_count": 1
+  },
+  "schema_version": "customer-delivery-rehearsal-v1",
+  "source": {
+    "blocked_item_count": 7,
+    "envelope_item_count": 2,
+    "report": "platform/generated/study-anything-customer-delivery-trust-envelope.json",
+    "schema_version": "customer-delivery-trust-envelope-v1",
+    "status": "pass"
+  },
+  "status": "pass"
+}
