@@ -1,0 +1,78 @@
+{
+  "blocked_reasons": [
+    "human_reconstruction_missing",
+    "attention_reconstruction_missing"
+  ],
+  "case_id": "blocked-missing-human-reconstruction",
+  "checks": {
+    "acceptance_receipt_passed": true,
+    "ai_review_only_evidence": false,
+    "controlled_failure_sandbox_present": true,
+    "customer_visible_action_requested": false,
+    "dual_loop_gate_allowed": false,
+    "human_reconstruction_passed": false,
+    "human_reconstruction_present": false,
+    "production_mutation_requested": false,
+    "sandbox_failures_contained": true,
+    "sandbox_within_budget": true
+  },
+  "claim_boundary": {
+    "current_claim": "Sandboxed implementation rehearsal may start only when Product Loop and Dual Loop gates both pass.",
+    "not_claimed": [
+      "implementation completed",
+      "customer delivery approved",
+      "production mutation approved",
+      "model output globally correct"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_spec_eval_execution",
+  "execution_boundary": {
+    "authorized_boundary": null,
+    "customer_visible_action_performed": false,
+    "external_publication_performed": false,
+    "implementation_execution_performed": false,
+    "production_mutation_performed": false,
+    "sandbox_start_authorized": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_adopter_feedback_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "spec-eval-execution-rehearsal-blocked-missing-human-reconstruction",
+  "schema_version": "spec-eval-execution-rehearsal-receipt-v1",
+  "source_refs": {
+    "acceptance_receipt_ref": "spec-eval-acceptance-receipt.json",
+    "attention_summary_ref": null,
+    "dual_loop_gate_ref": "dual-loop-gate-receipt.json",
+    "failure_contract_ref": "failure-contract.json",
+    "sandbox_receipt_ref": "sandbox-receipt.json"
+  },
+  "status": "blocked"
+}

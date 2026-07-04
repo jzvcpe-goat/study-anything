@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Spec/Eval Scenario Execution Rehearsal</title>
+<body>
+<h1>Spec/Eval Scenario Execution Rehearsal</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;case_reports&quot;: [
+    {
+      &quot;artifact_count&quot;: 7,
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;start_sandboxed_implementation_rehearsal&quot;,
+      &quot;sandbox_start_authorized&quot;: true,
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 5,
+      &quot;blocked_reasons&quot;: [
+        &quot;controlled_failure_sandbox_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-sandbox&quot;,
+      &quot;decision&quot;: &quot;block_spec_eval_execution&quot;,
+      &quot;sandbox_start_authorized&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 5,
+      &quot;blocked_reasons&quot;: [
+        &quot;human_reconstruction_missing&quot;,
+        &quot;attention_reconstruction_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-human-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_spec_eval_execution&quot;,
+      &quot;sandbox_start_authorized&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 7,
+      &quot;blocked_reasons&quot;: [
+        &quot;ai_review_only_evidence_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_spec_eval_execution&quot;,
+      &quot;sandbox_start_authorized&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 7,
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_action_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-customer-visible-action&quot;,
+      &quot;decision&quot;: &quot;block_spec_eval_execution&quot;,
+      &quot;sandbox_start_authorized&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;artifact_count&quot;: 7,
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_spec_eval_execution&quot;,
+      &quot;sandbox_start_authorized&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A metadata-only spec/eval brief can authorize sandboxed implementation rehearsal only after Product Loop and Dual Loop gates pass.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;implementation was executed&quot;,
+      &quot;customer-visible action was performed&quot;,
+      &quot;production mutation was performed&quot;,
+      &quot;real model call was performed&quot;
+    ]
+  },
+  &quot;created_at&quot;: &quot;2026-06-28T00:00:00Z&quot;,
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_fixtures&quot;: {
+    &quot;customer_visible_action_performed&quot;: &quot;rehearsal must not perform customer-visible action&quot;,
+    &quot;implementation_execution_performed&quot;: &quot;rehearsal must not execute implementation work&quot;,
+    &quot;missing_sandbox_gate_on_allowed&quot;: &quot;allowed execution receipt requires controlled_failure_sandbox_present&quot;,
+    &quot;production_mutation_performed&quot;: &quot;rehearsal must not mutate production&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_payload_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_adopter_feedback_included&quot;: false,
+    &quot;raw_eval_prompt_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;raw_spec_eval_body_included&quot;: false,
+    &quot;real_model_keys_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove Product Spec/Eval execution can start only as a controlled failure sandbox rehearsal with active human boundary reconstruction.&quot;,
+  &quot;quality_gates&quot;: {
+    &quot;ai_review_only_rejected&quot;: true,
+    &quot;controlled_failure_sandbox_required&quot;: true,
+    &quot;customer_visible_action_rejected&quot;: true,
+    &quot;human_reconstruction_required&quot;: true,
+    &quot;product_loop_run_required&quot;: true,
+    &quot;production_mutation_rejected&quot;: true
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;spec-eval-scenario-execution-rehearsal-v1&quot;,
+      &quot;sha256&quot;: &quot;3590a8bf4b05be3686f4e3005fb616c7c13d2fea7451e431e74c83a7bfef15ac&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;spec-eval-scenario-execution-rehearsal-v1&quot;,
+  &quot;source_chain&quot;: {
+    &quot;product_loop_run&quot;: &quot;fixtures/real-adopter-scenario-import/pass/product-loop-run.json&quot;,
+    &quot;product_spec_eval_brief&quot;: &quot;fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json&quot;,
+    &quot;real_adopter_import_report&quot;: &quot;platform/generated/study-anything-real-adopter-scenario-import.json&quot;
+  },
+  &quot;status&quot;: &quot;pass&quot;
+}
+</pre>
+</body>
+</html>

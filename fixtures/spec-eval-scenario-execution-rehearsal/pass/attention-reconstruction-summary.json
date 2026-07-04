@@ -1,0 +1,44 @@
+{
+  "autonomy_expansion_recommendation": true,
+  "contract_id": "failure-contract-spec-eval-pass",
+  "created_at": "2026-06-28T00:00:00Z",
+  "focus_queue_refs": [
+    "mru:mru-failure-path",
+    "mru:mru-rollback-trigger",
+    "mru:mru-acceptance-boundary"
+  ],
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "missing_mrus": [],
+  "passive_attention_only": false,
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "reconstruction_level": "minimum_reconstructable_unit_passed",
+  "required_mrus_passed": 3,
+  "required_mrus_total": 3,
+  "schema_version": "attention-reconstruction-summary-v1",
+  "status": "passed",
+  "strong_evidence_count": 3,
+  "summary_id": "attention-summary-spec-eval-pass",
+  "trace_id": "attention-trace-spec-eval-pass",
+  "weak_evidence_count": 1
+}
