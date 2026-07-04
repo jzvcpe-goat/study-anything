@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-324-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-326-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -95,6 +95,11 @@ EVIDENCE_REFS = [
     "docs/client-report-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+    "docs/operator-handoff-rehearsal-contract.md",
+    "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+    "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
+    "platform/generated/study-anything-operator-handoff-rehearsal-contract.md",
+    "scripts/verify_operator_handoff_rehearsal_contract.py",
     "scripts/generate_trust_evidence_handoff_pack.py",
     "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
     "scripts/verify_trust_evidence_acceptance_drill.py",

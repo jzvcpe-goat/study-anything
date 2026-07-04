@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-324-v0.3.196-client-report-operator-handoff-lite",
+    "group_id": "release-stack-intake-pr-326-v0.3.198-operator-handoff-contract-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -67,6 +67,11 @@
       "docs/client-report-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+      "docs/operator-handoff-rehearsal-contract.md",
+      "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+      "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
+      "platform/generated/study-anything-operator-handoff-rehearsal-contract.md",
+      "scripts/verify_operator_handoff_rehearsal_contract.py",
       "scripts/generate_trust_evidence_handoff_pack.py",
       "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
       "scripts/verify_trust_evidence_acceptance_drill.py",
@@ -100,7 +105,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.196-client-report-operator-handoff-lite",
+        "branch": "codex/v0.3.198-operator-handoff-contract-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -161,6 +166,11 @@
           "docs/client-report-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+          "docs/operator-handoff-rehearsal-contract.md",
+          "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+          "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
+          "platform/generated/study-anything-operator-handoff-rehearsal-contract.md",
+          "scripts/verify_operator_handoff_rehearsal_contract.py",
           "scripts/generate_trust_evidence_handoff_pack.py",
           "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
           "scripts/verify_trust_evidence_acceptance_drill.py",
@@ -174,9 +184,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "8b24366ee2580c1596fef32db280b7cc707ac531",
+        "merge_commit": "d8540c1ff8e7236bb63c7d4b73c5d61d4ff6c20c",
         "order": 1,
-        "pr": 324,
+        "pr": 326,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -185,15 +195,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #324: Add Client Report operator handoff rehearsal.",
+    "summary": "Candidate release stack group for PR #326: Add Operator Handoff rehearsal contract.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.196",
-    "represented_pr_count": 106
+    "current_group": "release-stack-promotion-v0.3.198",
+    "represented_pr_count": 107
   },
   "negative_fixtures": [
     {
