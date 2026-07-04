@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-358-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-360-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -283,6 +283,32 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.json",
     "platform/generated/study-anything-client-report-delivery-class.html",
     "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+    "docs/patch-proposal-customer-delivery-rehearsal.md",
+    "platform/schemas/cbb/patch-proposal-customer-delivery-rehearsal-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.json",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.md",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.html",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/pass/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-envelope-blocked/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-missing-recipient-scope/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-missing-delivery-class-scope/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-missing-claim-boundary/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-missing-privacy-boundary/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-missing-manual-send-boundary/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-raw-customer-draft/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-raw-patch-body/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-raw-diff-body/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-pr-comment-action/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-auto-send/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-external-publication/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-production-mutation/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-secret/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-model-credential/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "scripts/patch_proposal_customer_delivery_rehearsal.py",
+    "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+    "scripts/generate_platform_bundle_manifest.py",
+    "scripts/generate_platform_adoption_pack.py",
+    "scripts/release_check.sh",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,
