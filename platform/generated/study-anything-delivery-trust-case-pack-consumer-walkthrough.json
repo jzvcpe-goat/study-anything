@@ -97,8 +97,8 @@
     "entry_count": 60,
     "file_record_count": 59,
     "manifest_schema_version": "delivery-trust-case-pack-v1",
-    "manifest_sha256": "56a0da5f7ddb68d35d1e791b5e07071a6807a93c8cc70860bbb12550fee4c050",
-    "zip_sha256": "517599ee90e962f19cc29a6a7b48aa1f9943339085c760044cecc295a23958a4"
+    "manifest_sha256": "820a8b82b1bfa3c4a60660f913cfb563dc39c38359ae315c369a1a8d96c4bfb8",
+    "zip_sha256": "9dff056c18f4a3b2e9abd28b32e7a19b4a7c5534c281dbb186b829c4c665270c"
   },
   "privacy": {
     "automatic_customer_sending_performed": false,
