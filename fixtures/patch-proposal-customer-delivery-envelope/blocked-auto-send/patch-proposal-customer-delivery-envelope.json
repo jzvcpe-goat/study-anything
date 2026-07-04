@@ -1,0 +1,105 @@
+{
+  "blocked_reasons": [
+    "automatic_customer_send_rejected"
+  ],
+  "case_id": "blocked-auto-send",
+  "checks": {
+    "auto_send_requested": true,
+    "boundary_ready": true,
+    "claim_boundary_present": true,
+    "external_publication_requested": false,
+    "manual_send_control_present": true,
+    "metadata_only_customer_delivery_envelope": true,
+    "model_credentials_included": false,
+    "pr_comment_body_included": false,
+    "privacy_boundary_present": true,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "secrets_included": false
+  },
+  "claim_boundary": {
+    "current_claim": "A ready envelope permits only metadata-only customer delivery review preparation. It does not include customer-visible prose, send messages, comment on PRs, publish externally, mutate production, or certify correctness/security.",
+    "not_claimed": [
+      "customer-visible draft body included",
+      "customer message sent",
+      "PR comment created",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_customer_delivery_envelope",
+  "effect_boundary": {
+    "automatic_customer_send_performed": false,
+    "customer_visible_payload_included": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "study_anything_pr_commenting_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "envelope_id": "patch-proposal-customer-delivery-envelope-blocked-auto-send",
+  "envelope_summary": {
+    "allowed_customer_visible_refs": [],
+    "delivery_class": null,
+    "package_type": "metadata_only_customer_delivery_envelope",
+    "purpose": null,
+    "requires_before_any_send": [],
+    "withheld_material": [
+      "raw_customer_draft",
+      "raw_patch_body",
+      "raw_diff_body",
+      "repository_file_body",
+      "pr_comment_body",
+      "external_publication_payload",
+      "production_payload",
+      "secrets",
+      "model_keys"
+    ]
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "patch-proposal-customer-delivery-envelope-receipt-v1",
+  "source_refs": {
+    "boundary_receipt_hash": "56aefea731024e9fde741c0db3d02feb82f35072f5f847bdefcb7117ee92e87d",
+    "boundary_receipt_ref": "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+    "boundary_report_ref": "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json"
+  },
+  "status": "blocked"
+}

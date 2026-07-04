@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal Customer Delivery Envelope</title>
+<body><pre># Patch Proposal Customer Delivery Envelope
+
+Metadata-only proof that customer delivery envelope preparation remains pre-send and non-mutating.
+
+- status: `pass`
+- schema: `patch-proposal-customer-delivery-envelope-v1`
+- cases: `14`
+
+## Claim Boundary
+
+The envelope proves only metadata-only customer delivery review preparation. It does not send, publish, deploy, comment on PRs, or certify customer-visible content.
+
+Not claimed:
+- customer-visible draft body included
+- customer message sent
+- PR comment created
+- external publication approved
+- production change approved
+- truth or security certified
+
+## Cases
+
+- `pass`: `ready` / `prepare_metadata_only_customer_delivery_envelope` / reasons: none
+- `blocked-boundary-blocked`: `blocked` / `block_customer_delivery_envelope` / reasons: handoff_boundary_not_ready
+- `blocked-missing-manual-send-control`: `blocked` / `block_customer_delivery_envelope` / reasons: manual_send_control_missing
+- `blocked-missing-claim-boundary`: `blocked` / `block_customer_delivery_envelope` / reasons: claim_boundary_missing
+- `blocked-missing-privacy-boundary`: `blocked` / `block_customer_delivery_envelope` / reasons: privacy_boundary_missing
+- `blocked-raw-customer-draft`: `blocked` / `block_customer_delivery_envelope` / reasons: raw_customer_draft_rejected
+- `blocked-raw-patch-body`: `blocked` / `block_customer_delivery_envelope` / reasons: raw_patch_body_rejected
+- `blocked-raw-diff-body`: `blocked` / `block_customer_delivery_envelope` / reasons: raw_diff_body_rejected
+- `blocked-pr-comment-body`: `blocked` / `block_customer_delivery_envelope` / reasons: pr_comment_body_rejected
+- `blocked-production-payload`: `blocked` / `block_customer_delivery_envelope` / reasons: production_payload_rejected
+- `blocked-auto-send`: `blocked` / `block_customer_delivery_envelope` / reasons: automatic_customer_send_rejected
+- `blocked-external-publication`: `blocked` / `block_customer_delivery_envelope` / reasons: external_publication_rejected
+- `blocked-secret`: `blocked` / `block_customer_delivery_envelope` / reasons: secret_rejected
+- `blocked-model-credential`: `blocked` / `block_customer_delivery_envelope` / reasons: model_credential_rejected
+</pre></body></html>

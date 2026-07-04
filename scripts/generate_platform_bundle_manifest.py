@@ -293,6 +293,26 @@ PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_ARTIFACTS = {
     case_id: ["patch-proposal-customer-handoff-boundary-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES = [
+    "pass",
+    "blocked-boundary-blocked",
+    "blocked-missing-manual-send-control",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-customer-draft",
+    "blocked-raw-patch-body",
+    "blocked-raw-diff-body",
+    "blocked-pr-comment-body",
+    "blocked-production-payload",
+    "blocked-auto-send",
+    "blocked-external-publication",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS = {
+    case_id: ["patch-proposal-customer-delivery-envelope.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -789,6 +809,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
         "generated_asset",
         "Patch Proposal Customer-Handoff Boundary Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.json",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Envelope metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.md",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Envelope operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.html",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Envelope static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1541,6 +1576,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer-Handoff Boundary Gate guide for metadata-only customer handoff preparation boundaries.",
     ),
     (
+        "docs/patch-proposal-customer-delivery-envelope.md",
+        "operator_doc",
+        "Patch Proposal Customer Delivery Envelope guide for metadata-only customer delivery preparation envelopes.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1804,6 +1844,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
         "schema",
         "Patch Proposal Customer-Handoff Boundary Gate JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-delivery-envelope-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Delivery Envelope JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2273,6 +2318,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-delivery-envelope/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Delivery Envelope {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3553,6 +3607,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
         "verification",
         "Verify Patch Proposal Customer-Handoff Boundary Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_delivery_envelope.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Delivery Envelope artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_delivery_envelope.py",
+        "verification",
+        "Verify Patch Proposal Customer Delivery Envelope fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

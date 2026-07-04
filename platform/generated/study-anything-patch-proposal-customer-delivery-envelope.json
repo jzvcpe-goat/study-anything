@@ -1,0 +1,227 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "prepare_metadata_only_customer_delivery_envelope",
+      "envelope_purpose": "prepare_manual_customer_delivery_review_packet",
+      "status": "ready"
+    },
+    {
+      "blocked_reasons": [
+        "handoff_boundary_not_ready"
+      ],
+      "case_id": "blocked-boundary-blocked",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "manual_send_control_missing"
+      ],
+      "case_id": "blocked-missing-manual-send-control",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "claim_boundary_missing"
+      ],
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "privacy_boundary_missing"
+      ],
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_customer_draft_rejected"
+      ],
+      "case_id": "blocked-raw-customer-draft",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_body_rejected"
+      ],
+      "case_id": "blocked-raw-patch-body",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_diff_body_rejected"
+      ],
+      "case_id": "blocked-raw-diff-body",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "pr_comment_body_rejected"
+      ],
+      "case_id": "blocked-pr-comment-body",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_payload_rejected"
+      ],
+      "case_id": "blocked-production-payload",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_customer_send_rejected"
+      ],
+      "case_id": "blocked-auto-send",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_customer_delivery_envelope",
+      "envelope_purpose": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The envelope proves only metadata-only customer delivery review preparation. It does not send, publish, deploy, comment on PRs, or certify customer-visible content.",
+    "not_claimed": [
+      "customer-visible draft body included",
+      "customer message sent",
+      "PR comment created",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "delivery_matrix": {
+    "automatic_customer_send_rejected": true,
+    "blocked_envelopes": 13,
+    "claim_boundary_missing_rejected": true,
+    "external_publication_rejected": true,
+    "handoff_boundary_not_ready_rejected": true,
+    "manual_send_control_missing_rejected": true,
+    "model_credential_rejected": true,
+    "pr_comment_body_rejected": true,
+    "privacy_boundary_missing_rejected": true,
+    "production_payload_rejected": true,
+    "raw_customer_draft_rejected": true,
+    "raw_diff_body_rejected": true,
+    "raw_patch_body_rejected": true,
+    "ready_envelopes": 1,
+    "secret_rejected": true,
+    "total_cases": 14
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_send_performed": "effect_boundary.automatic_customer_send_performed must remain false",
+    "envelope_package_type_escalated": "envelope package_type must remain metadata-only",
+    "missing_manual_send_control_on_ready": "ready customer delivery envelope missing check: manual_send_control_present",
+    "model_credentials_included": "ready customer delivery envelope checks.model_credentials_included must remain false",
+    "pr_comment_performed": "effect_boundary.study_anything_pr_commenting_performed must remain false",
+    "raw_customer_draft_injected": "patch-proposal-customer-delivery-envelope-receipt-v1 includes forbidden raw fields: ['$.raw_customer_draft']"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove customer delivery envelope preparation remains metadata-only and pre-send.",
+  "quality_gates": {
+    "automatic_customer_send_blocked": true,
+    "claim_boundary_required": true,
+    "customer_visible_drafts_rejected": true,
+    "external_publication_blocked": true,
+    "manual_send_control_required": true,
+    "pr_comments_rejected": true,
+    "privacy_boundary_required": true,
+    "production_mutation_blocked": true,
+    "raw_patch_and_diff_rejected": true,
+    "ready_boundary_required": true,
+    "secrets_and_model_credentials_rejected": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-delivery-envelope-v1.schema.json",
+      "schema_version": "patch-proposal-customer-delivery-envelope-v1",
+      "sha256": "0cb926ce81f5bb42c25698347fcc9c63bf5a7e7a4a422eae021b855e4c4787a4"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-delivery-envelope-v1",
+  "source_chain": {
+    "boundary_report": "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+    "ready_boundary_receipt": "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json"
+  },
+  "status": "pass"
+}
