@@ -60,6 +60,26 @@ DELIVERY_CLASSES = (
             "raw_report_text_rejected",
         ),
     },
+    {
+        "id": "support_response_handoff",
+        "display_name": "Support Response Handoff",
+        "verifier_command": "python3 scripts/verify_support_response_delivery_class_handoff.py --check",
+        "report": "platform/generated/study-anything-support-response-delivery-class.json",
+        "html_report": "platform/generated/study-anything-support-response-delivery-class.html",
+        "doc": "docs/support-response-delivery-class.md",
+        "schema": "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
+        "fixture_root": "fixtures/support-response-delivery-class",
+        "allowed_decision": "allow_controlled_support_response_handoff",
+        "blocked_decision": "block_support_response_handoff",
+        "required_negative_checks": (
+            "automatic_customer_sending_rejected",
+            "eval_sufficient_alone_rejected",
+            "external_publication_rejected",
+            "raw_response_text_rejected",
+            "raw_ticket_payload_rejected",
+            "requester_identity_rejected",
+        ),
+    },
 )
 
 PRIVACY = {

@@ -55,12 +55,15 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery trust case pack guide."),
     PackFile("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class guide."),
     PackFile("docs/client-report-delivery-class.md", "operator_doc", "Client Report Delivery Class guide."),
+    PackFile("docs/support-response-delivery-class.md", "operator_doc", "Support Response Delivery Class guide."),
     PackFile("platform/generated/study-anything-delivery-class-registry.json", "evidence", "Delivery Class Registry report."),
     PackFile("platform/generated/study-anything-delivery-class-registry.html", "evidence", "Delivery Class Registry HTML report."),
     PackFile("platform/generated/study-anything-code-review-delivery-class.json", "evidence", "Code Review Delivery Class report."),
     PackFile("platform/generated/study-anything-code-review-delivery-class.html", "evidence", "Code Review Delivery Class HTML report."),
     PackFile("platform/generated/study-anything-client-report-delivery-class.json", "evidence", "Client Report Delivery Class report."),
     PackFile("platform/generated/study-anything-client-report-delivery-class.html", "evidence", "Client Report Delivery Class HTML report."),
+    PackFile("platform/generated/study-anything-support-response-delivery-class.json", "evidence", "Support Response Delivery Class report."),
+    PackFile("platform/generated/study-anything-support-response-delivery-class.html", "evidence", "Support Response Delivery Class HTML report."),
     PackFile("platform/generated/study-anything-trust-scenario-catalog.json", "evidence", "Trust Scenario Catalog report."),
     PackFile("platform/generated/study-anything-trust-scenario-catalog.html", "evidence", "Trust Scenario Catalog HTML report."),
     PackFile("platform/generated/study-anything-trust-scenario-decision-gate.json", "evidence", "Trust Scenario Decision Gate report."),
@@ -70,10 +73,13 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("platform/generated/study-anything-delivery-trust-case-pack.sha256", "checksum", "Delivery Trust Case Pack checksum."),
     PackFile("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class schema."),
     PackFile("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class schema."),
+    PackFile("platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json", "schema", "Support Response Delivery Class schema."),
     PackFile("scripts/code_review_delivery_class_handoff.py", "generator", "Build Code Review Delivery Class artifacts."),
     PackFile("scripts/verify_code_review_delivery_class_handoff.py", "verification", "Verify Code Review Delivery Class artifacts."),
     PackFile("scripts/client_report_delivery_class_handoff.py", "generator", "Build Client Report Delivery Class artifacts."),
     PackFile("scripts/verify_client_report_delivery_class_handoff.py", "verification", "Verify Client Report Delivery Class artifacts."),
+    PackFile("scripts/support_response_delivery_class_handoff.py", "generator", "Build Support Response Delivery Class artifacts."),
+    PackFile("scripts/verify_support_response_delivery_class_handoff.py", "verification", "Verify Support Response Delivery Class artifacts."),
     PackFile("scripts/verify_delivery_class_registry.py", "verification", "Verify Delivery Class Registry."),
     PackFile("scripts/verify_trust_scenario_catalog.py", "verification", "Verify Trust Scenario Catalog."),
     PackFile("scripts/trust_scenario_decision_gate.py", "cli", "Evaluate Trust Scenario decisions."),
@@ -96,16 +102,27 @@ DELIVERY_CLASS_FIXTURES = {
         "blocked-unbounded-recipient",
         "blocked-ai-summary-only",
     ),
+    "support-response-delivery-class": (
+        "pass",
+        "blocked-missing-reconstruction",
+        "blocked-risk-over-budget",
+        "blocked-unbounded-recipient",
+        "blocked-policy-gap",
+        "blocked-ai-summary-only",
+    ),
 }
 DELIVERY_CLASS_FIXTURE_FILES = {
     "code-review-delivery-class": "code-review-handoff-case.json",
     "client-report-delivery-class": "client-report-handoff-case.json",
+    "support-response-delivery-class": "support-response-handoff-case.json",
 }
 
 DECISION_FIXTURE_ROOT = "fixtures/trust-scenario-decision-gate"
 DECISION_FIXTURE_CASES = (
     "allow-code-review",
     "allow-client-report",
+    "allow-support-response",
+    "block-support-response-ticket-payload",
     "block-missing-artifact",
     "block-forbidden-shortcut",
     "block-passive-attention",
@@ -253,13 +270,22 @@ def validate_core_reports() -> dict[str, Any]:
         blocked_decision="block_client_report_handoff",
         minimum_negative_checks=5,
     )
+    support_response = validate_delivery_class_report(
+        relative_path="platform/generated/study-anything-support-response-delivery-class.json",
+        class_id="support_response_handoff",
+        allowed_decision="allow_controlled_support_response_handoff",
+        blocked_decision="block_support_response_handoff",
+        minimum_negative_checks=6,
+    )
 
     delivery_class_ids = sorted(row["id"] for row in registry.get("delivery_classes", []))
-    if delivery_class_ids != ["client_report_handoff", "code_review_handoff"]:
-        raise TrustEvidenceHandoffPackError("Delivery Class Registry must expose code review and client report handoffs.")
-    if catalog.get("scenario_count") != 4 or catalog.get("blocked_scenario_count") != 2:
+    if delivery_class_ids != ["client_report_handoff", "code_review_handoff", "support_response_handoff"]:
+        raise TrustEvidenceHandoffPackError(
+            "Delivery Class Registry must expose code review, client report, and support response handoffs."
+        )
+    if catalog.get("scenario_count") != 5 or catalog.get("supported_scenario_count") != 3 or catalog.get("blocked_scenario_count") != 2:
         raise TrustEvidenceHandoffPackError("Trust Scenario Catalog scenario counts drifted.")
-    if decision.get("allowed_case_count") != 2 or decision.get("blocked_case_count") != 5:
+    if decision.get("allowed_case_count") != 3 or decision.get("blocked_case_count") != 6:
         raise TrustEvidenceHandoffPackError("Trust Scenario Decision Gate case counts drifted.")
     if case_pack.get("package_type") != "delivery_trust_case_pack" or not case_pack.get("archive", {}).get("sha256"):
         raise TrustEvidenceHandoffPackError("Delivery Trust Case Pack must be generated before handoff packaging.")
@@ -276,6 +302,7 @@ def validate_core_reports() -> dict[str, Any]:
         "delivery_class_reports": {
             "code_review_handoff": code_review,
             "client_report_handoff": client_report,
+            "support_response_handoff": support_response,
         },
         "trust_scenario_count": catalog["scenario_count"],
         "blocked_scenario_count": catalog["blocked_scenario_count"],
@@ -305,6 +332,7 @@ def build_manifest(include_archive: bool = False, archive: bytes | None = None) 
         "entrypoints": {
             "inspect_code_review_delivery_class": "python3 scripts/verify_code_review_delivery_class_handoff.py --check",
             "inspect_client_report_delivery_class": "python3 scripts/verify_client_report_delivery_class_handoff.py --check",
+            "inspect_support_response_delivery_class": "python3 scripts/verify_support_response_delivery_class_handoff.py --check",
             "inspect_decision_gate": "python3 scripts/verify_trust_scenario_decision_gate.py --check",
             "inspect_delivery_case_pack": "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check",
         },

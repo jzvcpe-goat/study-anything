@@ -14,6 +14,8 @@ claim boundaries, negative checks, and release-gate coverage.
 - Code Review Handoff: a controlled handoff for AI-assisted code review output.
 - Client Report Handoff: a controlled handoff for AI-assisted report or memo
   output.
+- Support Response Handoff: a controlled handoff for AI-assisted support reply
+  drafts before any requester-visible send.
 
 Each delivery class must include:
 

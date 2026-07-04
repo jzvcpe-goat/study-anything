@@ -12,9 +12,9 @@
     &quot;minimum_command&quot;: &quot;python3 scripts/verify_trust_scenario_decision_gate.py --check&quot;,
     &quot;report&quot;: &quot;platform/generated/study-anything-trust-scenario-decision-gate.json&quot;
   },
-  &quot;allowed_case_count&quot;: 2,
-  &quot;blocked_case_count&quot;: 5,
-  &quot;case_count&quot;: 7,
+  &quot;allowed_case_count&quot;: 3,
+  &quot;blocked_case_count&quot;: 6,
+  &quot;case_count&quot;: 9,
   &quot;case_reports&quot;: [
     {
       &quot;blocked_shortcut_count&quot;: 0,
@@ -33,6 +33,24 @@
       &quot;reason_count&quot;: 0,
       &quot;scenario_id&quot;: &quot;controlled_client_report_handoff&quot;,
       &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 0,
+      &quot;case_id&quot;: &quot;allow-support-response&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_support_response_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 0,
+      &quot;scenario_id&quot;: &quot;controlled_support_response_handoff&quot;,
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 1,
+      &quot;case_id&quot;: &quot;block-support-response-ticket-payload&quot;,
+      &quot;decision&quot;: &quot;block_controlled_support_response_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 1,
+      &quot;scenario_id&quot;: &quot;controlled_support_response_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
     },
     {
       &quot;blocked_shortcut_count&quot;: 0,

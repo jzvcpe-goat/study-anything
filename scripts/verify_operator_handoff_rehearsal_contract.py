@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "platform" / "schemas" / "delivery-trust" / "operator-handoff-rehearsal-contract-v1.schema.json"
 CODE_REVIEW_REPORT = ROOT / "platform" / "generated" / "study-anything-code-review-operator-handoff-rehearsal.json"
 CLIENT_REPORT = ROOT / "platform" / "generated" / "study-anything-client-report-operator-handoff-rehearsal.json"
+SUPPORT_RESPONSE_REPORT = ROOT / "platform" / "generated" / "study-anything-support-response-operator-handoff-rehearsal.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-operator-handoff-rehearsal-contract.json"
 MARKDOWN_REPORT = ROOT / "platform" / "generated" / "study-anything-operator-handoff-rehearsal-contract.md"
 SCHEMA_VERSION = "operator-handoff-rehearsal-contract-v1"
@@ -31,6 +32,8 @@ FORBIDDEN_TEXT = (
     "raw diff:",
     "raw report text:",
     "raw review text:",
+    "raw response text:",
+    "raw ticket payload:",
     "raw customer payload:",
     "screenshot:",
     "cookie:",
@@ -54,10 +57,14 @@ RAW_PAYLOAD_KEYS = (
     "raw_customer_payload_included",
     "raw_diff_or_review_text_included",
     "raw_report_or_customer_payload_included",
+    "raw_response_or_ticket_payload_included",
     "screenshots_included",
     "attention_streams_included",
     "real_secrets_included",
     "user_owned_agent_credentials_included",
+    "raw_response_text_included",
+    "raw_ticket_payload_included",
+    "user_identity_included",
 )
 COMMON_NOT_CLAIMED = {
     "customer send approval",
@@ -98,6 +105,30 @@ CLASS_CONFIGS = {
         },
         "required_confirmations": {
             "recipient_scope_bounded",
+            "claim_boundary_visible",
+            "operator_understands_not_send_approval",
+            "actual_external_delivery_outside_system_only",
+        },
+    },
+    "support_response_handoff": {
+        "report": SUPPORT_RESPONSE_REPORT,
+        "schema_version": "support-response-operator-handoff-rehearsal-v1",
+        "min_blocked": 8,
+        "required_not_claimed": {
+            *COMMON_NOT_CLAIMED,
+            "automatic support reply delivery",
+            "automatic customer delivery",
+            "external publication",
+            "production publication",
+            "complete factual correctness",
+            "support resolution guarantee",
+            "private requester identity disclosure",
+            "legal certification",
+            "financial advice certification",
+        },
+        "required_confirmations": {
+            "recipient_scope_bounded",
+            "support_policy_scope_bounded",
             "claim_boundary_visible",
             "operator_understands_not_send_approval",
             "actual_external_delivery_outside_system_only",
@@ -234,6 +265,7 @@ def build_report(code_review_path: Path, client_report_path: Path) -> dict[str, 
     classes = [
         validate_class_report("code_review_handoff", code_review_path),
         validate_class_report("client_report_handoff", client_report_path),
+        validate_class_report("support_response_handoff", SUPPORT_RESPONSE_REPORT),
     ]
     report = {
         "schema_version": SCHEMA_VERSION,
@@ -274,15 +306,15 @@ def build_report(code_review_path: Path, client_report_path: Path) -> dict[str, 
             "delivery_class_count": len(classes),
             "all_classes_have_one_ready_case": all(item["ready_count"] == 1 for item in classes),
             "all_classes_have_blocked_cases": all(item["blocked_count"] >= 1 for item in classes),
-            "code_review_and_client_report_share_contract": True,
+            "all_supported_delivery_classes_share_contract": True,
             "operator_handoff_is_not_customer_send": True,
             "operator_handoff_is_not_ai_review_only": True,
         },
         "claim_boundary": {
             "current_claim": (
-                "Code Review and Client Report delivery classes share a metadata-only operator handoff "
-                "contract: a platform Agent can prepare a bounded ready/block decision, but cannot send, "
-                "publish, comment, merge, mutate production, certify truth, or replace customer-specific review."
+            "Code Review, Client Report, and Support Response delivery classes share a metadata-only operator handoff "
+            "contract: a platform Agent can prepare a bounded ready/block decision, but cannot send, "
+            "publish, comment, merge, mutate production, certify truth, or replace customer-specific review."
             ),
             "not_claimed": [
                 "customer send approval",
@@ -327,6 +359,7 @@ def build_report(code_review_path: Path, client_report_path: Path) -> dict[str, 
             "source_commands": [
                 "python3 scripts/verify_code_review_operator_handoff_rehearsal.py --check",
                 "python3 scripts/verify_client_report_operator_handoff_rehearsal.py --check",
+                "python3 scripts/verify_support_response_operator_handoff_rehearsal.py --check",
             ],
             "report": str(REPORT.relative_to(ROOT)),
             "markdown_report": str(MARKDOWN_REPORT.relative_to(ROOT)),
@@ -344,7 +377,7 @@ def validate_report(report: Mapping[str, Any]) -> None:
     if not isinstance(classes, list) or len(classes) < 2:
         raise OperatorHandoffContractError("contract must include at least two delivery classes")
     class_ids = [item.get("delivery_class") for item in classes if isinstance(item, Mapping)]
-    if class_ids != ["code_review_handoff", "client_report_handoff"]:
+    if class_ids != ["code_review_handoff", "client_report_handoff", "support_response_handoff"]:
         raise OperatorHandoffContractError(f"delivery class order drifted: {class_ids}")
     for item in classes:
         if not isinstance(item, Mapping):

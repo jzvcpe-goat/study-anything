@@ -36,9 +36,10 @@
     &quot;path&quot;: &quot;platform/generated/study-anything-delivery-class-registry.json&quot;,
     &quot;registered_delivery_class_ids&quot;: [
       &quot;client_report_handoff&quot;,
-      &quot;code_review_handoff&quot;
+      &quot;code_review_handoff&quot;,
+      &quot;support_response_handoff&quot;
     ],
-    &quot;sha256&quot;: &quot;20a687b709bbf5f96c3794860928d0650d0d3a5d08660ca6e9e0fe74ffc1b2c3&quot;
+    &quot;sha256&quot;: &quot;372be485a7ec6aff7c24696978f6f540f21b16469e0e7e4f7f7c13ed5d27b8b3&quot;
   },
   &quot;privacy&quot;: {
     &quot;bearer_tokens_included&quot;: false,
@@ -60,7 +61,7 @@
     &quot;signed_urls_included&quot;: false,
     &quot;user_owned_agent_credentials_included&quot;: false
   },
-  &quot;scenario_count&quot;: 4,
+  &quot;scenario_count&quot;: 5,
   &quot;scenarios&quot;: [
     {
       &quot;active_reconstruction_checkpoints&quot;: [
@@ -145,6 +146,49 @@
     {
       &quot;active_reconstruction_checkpoints&quot;: [
         &quot;failure_boundary_reconstruction&quot;,
+        &quot;risk_budget_reconstruction&quot;,
+        &quot;recipient_scope_reconstruction&quot;,
+        &quot;claim_boundary_reconstruction&quot;
+      ],
+      &quot;autonomy_ceiling&quot;: &quot;controlled_customer_handoff_package&quot;,
+      &quot;customer_visible&quot;: true,
+      &quot;decision&quot;: &quot;allow_controlled_support_response_handoff&quot;,
+      &quot;delivery_class_id&quot;: &quot;support_response_handoff&quot;,
+      &quot;delivery_class_report&quot;: &quot;platform/generated/study-anything-support-response-delivery-class.json&quot;,
+      &quot;display_name&quot;: &quot;Controlled Support Response Handoff&quot;,
+      &quot;disposition&quot;: &quot;supported_controlled_handoff&quot;,
+      &quot;forbidden_shortcuts&quot;: [
+        &quot;automatic_support_reply_send&quot;,
+        &quot;automatic_customer_send&quot;,
+        &quot;external_publication&quot;,
+        &quot;raw_ticket_payload&quot;,
+        &quot;requester_identity_disclosure&quot;,
+        &quot;support_resolution_guarantee&quot;,
+        &quot;ai_summary_only_basis&quot;
+      ],
+      &quot;id&quot;: &quot;controlled_support_response_handoff&quot;,
+      &quot;loop_requirements&quot;: {
+        &quot;agentic_coding_loop&quot;: &quot;sandbox evidence and rollback controls are present&quot;,
+        &quot;developer_feedback_loop&quot;: &quot;operator reconstructs support-policy and claim boundaries&quot;,
+        &quot;external_feedback_loop&quot;: &quot;requester-visible scope and support ticket metadata are bounded&quot;,
+        &quot;loop_dominance_allowed&quot;: false
+      },
+      &quot;recipient_class&quot;: &quot;bounded_support_requester&quot;,
+      &quot;required_artifacts&quot;: [
+        &quot;failure-contract-v1&quot;,
+        &quot;sandbox-receipt-v1&quot;,
+        &quot;attention-reconstruction-trace-v1&quot;,
+        &quot;attention-reconstruction-summary-v1&quot;,
+        &quot;dual-loop-gate-receipt-v1&quot;,
+        &quot;delivery-trust-case-v1&quot;,
+        &quot;customer-handoff-package-v1&quot;,
+        &quot;support-response-handoff-case-v1&quot;
+      ],
+      &quot;verifier_command&quot;: &quot;python3 scripts/verify_support_response_delivery_class_handoff.py --check&quot;
+    },
+    {
+      &quot;active_reconstruction_checkpoints&quot;: [
+        &quot;failure_boundary_reconstruction&quot;,
         &quot;risk_budget_reconstruction&quot;
       ],
       &quot;autonomy_ceiling&quot;: &quot;blocked&quot;,
@@ -207,7 +251,7 @@
   ],
   &quot;schema_version&quot;: &quot;trust-scenario-catalog-v1&quot;,
   &quot;status&quot;: &quot;pass&quot;,
-  &quot;supported_scenario_count&quot;: 2,
+  &quot;supported_scenario_count&quot;: 3,
   &quot;version&quot;: &quot;v0.3.31-alpha&quot;
 }
 </pre>

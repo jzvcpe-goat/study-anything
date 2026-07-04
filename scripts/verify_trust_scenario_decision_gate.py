@@ -60,6 +60,7 @@ def decision_cases() -> dict[str, dict[str, Any]]:
     catalog_payload = catalog()
     code_review = scenario_by_id(catalog_payload, "controlled_code_review_handoff")
     client_report = scenario_by_id(catalog_payload, "controlled_client_report_handoff")
+    support_response = scenario_by_id(catalog_payload, "controlled_support_response_handoff")
     direct_production = scenario_by_id(catalog_payload, "blocked_direct_production_mutation")
     truth_claim = scenario_by_id(catalog_payload, "blocked_certified_truth_claim")
 
@@ -81,6 +82,24 @@ def decision_cases() -> dict[str, dict[str, Any]]:
             "expected_status": "allowed",
             "expected_decision": "allow_controlled_client_report_handoff",
             "expected_reasons": [],
+        },
+        "allow-support-response": {
+            "scenario_id": "controlled_support_response_handoff",
+            "provided_artifacts": list(support_response["required_artifacts"]),
+            "active_checkpoints": list(support_response["active_reconstruction_checkpoints"]),
+            "requested_shortcuts": [],
+            "expected_status": "allowed",
+            "expected_decision": "allow_controlled_support_response_handoff",
+            "expected_reasons": [],
+        },
+        "block-support-response-ticket-payload": {
+            "scenario_id": "controlled_support_response_handoff",
+            "provided_artifacts": list(support_response["required_artifacts"]),
+            "active_checkpoints": list(support_response["active_reconstruction_checkpoints"]),
+            "requested_shortcuts": ["raw_ticket_payload"],
+            "expected_status": "blocked",
+            "expected_decision": "block_controlled_support_response_handoff",
+            "expected_reasons": ["forbidden_shortcut_requested"],
         },
         "block-missing-artifact": {
             "scenario_id": "controlled_client_report_handoff",

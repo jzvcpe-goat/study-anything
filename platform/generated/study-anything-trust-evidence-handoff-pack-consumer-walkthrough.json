@@ -12,25 +12,28 @@
   "core_summary": {
     "allowed_decision_cases": [
       "controlled_client_report_handoff",
-      "controlled_code_review_handoff"
+      "controlled_code_review_handoff",
+      "controlled_support_response_handoff"
     ],
-    "blocked_decision_scenario_count": 5,
-    "decision_case_count": 7,
-    "delivery_class_case_count": 9,
-    "delivery_class_count": 2,
-    "trust_scenario_count": 4
+    "blocked_decision_scenario_count": 6,
+    "decision_case_count": 9,
+    "delivery_class_case_count": 15,
+    "delivery_class_count": 3,
+    "trust_scenario_count": 5
   },
   "decision": {
     "ai_review_only_rejected": true,
     "blocked_scenarios_remain_blocked": true,
     "controlled_handoff_scenarios_allowed": [
       "controlled_client_report_handoff",
-      "controlled_code_review_handoff"
+      "controlled_code_review_handoff",
+      "controlled_support_response_handoff"
     ],
-    "delivery_class_case_count": 9,
+    "delivery_class_case_count": 15,
     "delivery_class_reports_embedded": [
       "code_review_handoff",
-      "client_report_handoff"
+      "client_report_handoff",
+      "support_response_handoff"
     ],
     "external_adopter_can_verify_zip_only": true,
     "production_mutation_blocked": true,
@@ -39,11 +42,11 @@
   "pack": {
     "archive_name": "study-anything-trust-evidence-handoff-pack.zip",
     "archive_root": "study-anything-trust-evidence-handoff-pack",
-    "entry_count": 58,
-    "file_record_count": 57,
+    "entry_count": 74,
+    "file_record_count": 73,
     "manifest_schema_version": "trust-evidence-handoff-pack-v1",
-    "manifest_sha256": "96a855c384bb2099a964a9131420153dde2a3ab9532eb497f11cb166cd9ce832",
-    "zip_sha256": "b187b010b842c8399353bd5351a4a0cfb4b0074a5b8ae13979c997052fd0035e"
+    "manifest_sha256": "3a3d8e72c771b90d912a5c09c3d5e9be020ac5153adddb15c71a60a4be38fef6",
+    "zip_sha256": "28d25b3318bfbcaeec0d17e4f5b3aedbf31c0fd3c4dbba097f58646903f700ab"
   },
   "privacy": {
     "attention_streams_included": false,
@@ -81,7 +84,7 @@
       "step_id": "inspect_delivery_classes"
     },
     {
-      "evidence": "Code review and client report allowed/blocked/negative checks are verifiable.",
+      "evidence": "Supported delivery-class allowed/blocked/negative checks are verifiable.",
       "status": "pass",
       "step_id": "inspect_delivery_class_matrices"
     },

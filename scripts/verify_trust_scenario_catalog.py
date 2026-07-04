@@ -140,6 +140,47 @@ TRUST_SCENARIOS: tuple[dict[str, Any], ...] = (
         ],
     },
     {
+        "id": "controlled_support_response_handoff",
+        "display_name": "Controlled Support Response Handoff",
+        "disposition": "supported_controlled_handoff",
+        "delivery_class_id": "support_response_handoff",
+        "recipient_class": "bounded_support_requester",
+        "customer_visible": True,
+        "autonomy_ceiling": "controlled_customer_handoff_package",
+        "decision": "allow_controlled_support_response_handoff",
+        "required_artifacts": [
+            "failure-contract-v1",
+            "sandbox-receipt-v1",
+            "attention-reconstruction-trace-v1",
+            "attention-reconstruction-summary-v1",
+            "dual-loop-gate-receipt-v1",
+            "delivery-trust-case-v1",
+            "customer-handoff-package-v1",
+            "support-response-handoff-case-v1",
+        ],
+        "active_reconstruction_checkpoints": [
+            "failure_boundary_reconstruction",
+            "risk_budget_reconstruction",
+            "recipient_scope_reconstruction",
+            "claim_boundary_reconstruction",
+        ],
+        "loop_requirements": {
+            "agentic_coding_loop": "sandbox evidence and rollback controls are present",
+            "developer_feedback_loop": "operator reconstructs support-policy and claim boundaries",
+            "external_feedback_loop": "requester-visible scope and support ticket metadata are bounded",
+            "loop_dominance_allowed": False,
+        },
+        "forbidden_shortcuts": [
+            "automatic_support_reply_send",
+            "automatic_customer_send",
+            "external_publication",
+            "raw_ticket_payload",
+            "requester_identity_disclosure",
+            "support_resolution_guarantee",
+            "ai_summary_only_basis",
+        ],
+    },
+    {
         "id": "blocked_direct_production_mutation",
         "display_name": "Blocked Direct Production Mutation",
         "disposition": "blocked_unsafe_claim",
@@ -262,6 +303,7 @@ def validate_supported_scenario(
         delivery_class.get("allowed_decision"),
         "allow_controlled_code_review_handoff",
         "allow_controlled_client_report_handoff",
+        "allow_controlled_support_response_handoff",
     }:
         raise TrustScenarioCatalogError(f"{scenario_id} decision is not aligned with its delivery class")
 

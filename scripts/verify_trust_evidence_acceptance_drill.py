@@ -53,6 +53,19 @@ DELIVERY_CLASS_EXPECTATIONS = {
             "blocked-ai-summary-only": {"product_loop_not_passed", "ai_summary_only_evidence_rejected"},
         },
     },
+    "support_response_handoff": {
+        "member": "platform/generated/study-anything-support-response-delivery-class.json",
+        "allowed_decision": "allow_controlled_support_response_handoff",
+        "blocked_decision": "block_support_response_handoff",
+        "operator_allow_action": "prepare_controlled_support_response_handoff",
+        "required_blocked_cases": {
+            "blocked-missing-reconstruction": {"human_reconstruction_missing"},
+            "blocked-risk-over-budget": {"sandbox_risk_outside_budget"},
+            "blocked-unbounded-recipient": {"recipient_scope_unbounded"},
+            "blocked-policy-gap": {"support_policy_scope_missing"},
+            "blocked-ai-summary-only": {"product_loop_not_passed", "ai_summary_only_evidence_rejected"},
+        },
+    },
 }
 
 

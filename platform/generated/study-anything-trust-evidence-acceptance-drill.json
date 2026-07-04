@@ -45,17 +45,32 @@
         "raw_payload_included": false,
         "user_owned_agent_credentials_included": false
       }
+    },
+    {
+      "case_count": 6,
+      "claim_boundary_hash": "df55f0eda3ea9edceb75a6db8907b6f8bb6d367c889c50d8773047ef1ab8769c",
+      "delivery_class": "support_response_handoff",
+      "negative_check_count": 6,
+      "privacy": {
+        "automatic_customer_sending_performed": false,
+        "external_publication_performed": false,
+        "metadata_only": true,
+        "model_calls_performed": false,
+        "production_mutation_performed": false,
+        "raw_payload_included": false,
+        "user_owned_agent_credentials_included": false
+      }
     }
   ],
   "operator_decision_matrix": {
     "ai_review_only_rejected": true,
-    "allowed_controlled_handoffs": 2,
-    "blocked_handoffs": 7,
+    "allowed_controlled_handoffs": 3,
+    "blocked_handoffs": 12,
     "missing_reconstruction_rejected": true,
     "no_single_loop_dominates": true,
     "risk_over_budget_rejected": true,
     "scope_expansion_rejected": true,
-    "total_decisions": 9
+    "total_decisions": 15
   },
   "operator_decisions": [
     {
@@ -155,13 +170,78 @@
       ],
       "source_decision": "block_client_report_handoff",
       "status": "blocked"
+    },
+    {
+      "case_id": "pass",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "next_boundary": "controlled_handoff_only_not_customer_sending",
+      "operator_decision": "prepare_controlled_support_response_handoff",
+      "source_decision": "allow_controlled_support_response_handoff",
+      "status": "ready_for_controlled_support_response_handoff"
+    },
+    {
+      "case_id": "blocked-missing-reconstruction",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "operator_decision": "block_handoff",
+      "required_reasons_present": [
+        "human_reconstruction_missing"
+      ],
+      "source_decision": "block_support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-risk-over-budget",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "operator_decision": "block_handoff",
+      "required_reasons_present": [
+        "sandbox_risk_outside_budget"
+      ],
+      "source_decision": "block_support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-unbounded-recipient",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "operator_decision": "block_handoff",
+      "required_reasons_present": [
+        "recipient_scope_unbounded"
+      ],
+      "source_decision": "block_support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-policy-gap",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "operator_decision": "block_handoff",
+      "required_reasons_present": [
+        "support_policy_scope_missing"
+      ],
+      "source_decision": "block_support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-ai-summary-only",
+      "claim_boundary_preserved": true,
+      "delivery_class": "support_response_handoff",
+      "operator_decision": "block_handoff",
+      "required_reasons_present": [
+        "ai_summary_only_evidence_rejected",
+        "product_loop_not_passed"
+      ],
+      "source_decision": "block_support_response_handoff",
+      "status": "blocked"
     }
   ],
   "pack": {
     "consumer_walkthrough_schema": "trust-evidence-handoff-pack-consumer-walkthrough-v1",
     "consumer_walkthrough_status": "pass",
     "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
-    "zip_sha256": "b187b010b842c8399353bd5351a4a0cfb4b0074a5b8ae13979c997052fd0035e"
+    "zip_sha256": "28d25b3318bfbcaeec0d17e4f5b3aedbf31c0fd3c4dbba097f58646903f700ab"
   },
   "privacy": {
     "attention_streams_included": false,

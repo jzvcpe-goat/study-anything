@@ -13,7 +13,7 @@
       "general model correctness"
     ]
   },
-  "delivery_class_count": 2,
+  "delivery_class_count": 3,
   "delivery_classes": [
     {
       "allowed_case_count": 1,
@@ -105,6 +105,53 @@
       "release_check_integrated": true,
       "schema_version": "client-report-delivery-class-verification-v1",
       "verifier_command": "python3 scripts/verify_client_report_delivery_class_handoff.py --check"
+    },
+    {
+      "allowed_case_count": 1,
+      "assets": {
+        "doc": {
+          "path": "docs/support-response-delivery-class.md",
+          "sha256": "d122c0cf4336295b9256cd374005b431da67a5c7d13c339cf642e64d9374a5fd"
+        },
+        "fixture_root": "fixtures/support-response-delivery-class",
+        "html_report": {
+          "path": "platform/generated/study-anything-support-response-delivery-class.html",
+          "sha256": "5bd0118ff936ade6c4aad7c1d425963371aae41aaf47a903dac9bfbfd1a27dfa"
+        },
+        "report": {
+          "path": "platform/generated/study-anything-support-response-delivery-class.json",
+          "sha256": "0edf6fa3d166c8a19dc58de608a0903f258f75db628980bf6369339b4cba025c"
+        },
+        "schema": {
+          "path": "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
+          "sha256": "96306cf5db2a3223f9e7e0b8c2182124282367d2232434ad940eecf4854f3292"
+        }
+      },
+      "blocked_case_count": 5,
+      "case_count": 6,
+      "claim_boundary_hash": "df55f0eda3ea9edceb75a6db8907b6f8bb6d367c889c50d8773047ef1ab8769c",
+      "display_name": "Support Response Handoff",
+      "id": "support_response_handoff",
+      "negative_check_ids": [
+        "automatic_customer_sending_rejected",
+        "eval_sufficient_alone_rejected",
+        "external_publication_rejected",
+        "raw_response_text_rejected",
+        "raw_ticket_payload_rejected",
+        "requester_identity_rejected"
+      ],
+      "privacy": {
+        "external_publication_performed": false,
+        "metadata_only": true,
+        "model_calls_performed": false,
+        "production_mutation_performed": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "user_owned_agent_credentials_included": false
+      },
+      "release_check_integrated": true,
+      "schema_version": "support-response-delivery-class-verification-v1",
+      "verifier_command": "python3 scripts/verify_support_response_delivery_class_handoff.py --check"
     }
   ],
   "privacy": {
