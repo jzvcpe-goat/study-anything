@@ -313,6 +313,28 @@ PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS = {
     case_id: ["patch-proposal-customer-delivery-envelope.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES = [
+    "pass",
+    "blocked-envelope-blocked",
+    "blocked-missing-recipient-scope",
+    "blocked-missing-delivery-class-scope",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-missing-manual-send-boundary",
+    "blocked-raw-customer-draft",
+    "blocked-raw-patch-body",
+    "blocked-raw-diff-body",
+    "blocked-pr-comment-action",
+    "blocked-auto-send",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_ARTIFACTS = {
+    case_id: ["patch-proposal-customer-delivery-rehearsal-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -824,6 +846,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.html",
         "generated_asset",
         "Patch Proposal Customer Delivery Envelope static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.json",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Rehearsal metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.md",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Rehearsal operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.html",
+        "generated_asset",
+        "Patch Proposal Customer Delivery Rehearsal static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1581,6 +1618,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Delivery Envelope guide for metadata-only customer delivery preparation envelopes.",
     ),
     (
+        "docs/patch-proposal-customer-delivery-rehearsal.md",
+        "operator_doc",
+        "Patch Proposal Customer Delivery Rehearsal guide for metadata-only manual handoff readiness decisions.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1849,6 +1891,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-delivery-envelope-v1.schema.json",
         "schema",
         "Patch Proposal Customer Delivery Envelope JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-delivery-rehearsal-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Delivery Rehearsal JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2327,6 +2374,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-delivery-rehearsal/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Delivery Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3617,6 +3673,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_delivery_envelope.py",
         "verification",
         "Verify Patch Proposal Customer Delivery Envelope fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_delivery_rehearsal.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Delivery Rehearsal artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+        "verification",
+        "Verify Patch Proposal Customer Delivery Rehearsal fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

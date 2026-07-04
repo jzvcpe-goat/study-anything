@@ -1,0 +1,38 @@
+# Patch Proposal Customer Delivery Rehearsal
+
+Metadata-only proof that patch proposal customer handoff remains manual, pre-send, and non-mutating.
+
+- status: `pass`
+- schema: `patch-proposal-customer-delivery-rehearsal-v1`
+- cases: `16`
+
+## Claim Boundary
+
+The rehearsal proves only metadata-only manual customer handoff readiness. It does not send, publish, deploy, comment on PRs, or certify customer-visible content.
+
+Not claimed:
+- customer-visible draft body included
+- customer message sent
+- PR comment created
+- external publication approved
+- production change approved
+- truth or security certified
+
+## Cases
+
+- `pass`: `ready` / `ready_for_manual_customer_handoff_review` / reasons: none
+- `blocked-envelope-blocked`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: source_envelope_not_ready
+- `blocked-missing-recipient-scope`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: recipient_scope_missing
+- `blocked-missing-delivery-class-scope`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: delivery_class_scope_missing
+- `blocked-missing-claim-boundary`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: claim_boundary_missing
+- `blocked-missing-privacy-boundary`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: privacy_boundary_missing
+- `blocked-missing-manual-send-boundary`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: manual_send_boundary_missing
+- `blocked-raw-customer-draft`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: raw_customer_draft_rejected
+- `blocked-raw-patch-body`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: raw_patch_body_request_rejected
+- `blocked-raw-diff-body`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: raw_diff_body_request_rejected
+- `blocked-pr-comment-action`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: pr_comment_action_rejected
+- `blocked-auto-send`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: automatic_customer_send_rejected
+- `blocked-external-publication`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: external_publication_rejected
+- `blocked-production-mutation`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: production_mutation_rejected
+- `blocked-secret`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: secret_rejected
+- `blocked-model-credential`: `blocked` / `block_patch_proposal_customer_delivery` / reasons: model_credential_rejected

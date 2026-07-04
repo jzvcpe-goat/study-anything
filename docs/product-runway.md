@@ -119,6 +119,12 @@ The completed chain now has these layers:
   patch/diff/repository file bodies, PR comments, external publication
   payloads, production payloads, secrets, model credentials, automatic sending,
   PR commenting, and production mutation remain blocked.
+- Patch Proposal Customer Delivery Rehearsal: a ready customer delivery
+  envelope can produce only a metadata-only ready/block manual handoff rehearsal
+  after active operator boundary reconstruction, while customer-visible drafts,
+  raw patch/diff requests, PR comment actions, automatic sending, external
+  publication, production mutation, secrets, and model credentials remain
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -160,9 +166,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Delivery Rehearsal:
-consume a metadata-only Customer Delivery Envelope and emit a ready/block
-rehearsal receipt for manual customer handoff, while still blocking automatic
-sending, PR comments, external publication, production mutation, raw payloads,
-secrets, and model credentials.
+Patch Proposal Customer Delivery Outcome Receipt:
+consume a ready Patch Proposal Customer Delivery Rehearsal and emit a
+metadata-only outcome receipt for a human or host platform action that happened
+outside Study Anything, while still blocking customer-visible bodies, PR comment
+bodies, external publication payloads, production payloads, automatic sending,
+source mutation, secrets, and model credentials.
 ```

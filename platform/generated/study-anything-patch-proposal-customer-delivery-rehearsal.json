@@ -1,0 +1,247 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "ready_for_manual_customer_handoff_review",
+      "rehearsal_purpose": "rehearse_manual_customer_handoff_review",
+      "status": "ready"
+    },
+    {
+      "blocked_reasons": [
+        "source_envelope_not_ready"
+      ],
+      "case_id": "blocked-envelope-blocked",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "recipient_scope_missing"
+      ],
+      "case_id": "blocked-missing-recipient-scope",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "delivery_class_scope_missing"
+      ],
+      "case_id": "blocked-missing-delivery-class-scope",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "claim_boundary_missing"
+      ],
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "privacy_boundary_missing"
+      ],
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "manual_send_boundary_missing"
+      ],
+      "case_id": "blocked-missing-manual-send-boundary",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_customer_draft_rejected"
+      ],
+      "case_id": "blocked-raw-customer-draft",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_body_request_rejected"
+      ],
+      "case_id": "blocked-raw-patch-body",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_diff_body_request_rejected"
+      ],
+      "case_id": "blocked-raw-diff-body",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "pr_comment_action_rejected"
+      ],
+      "case_id": "blocked-pr-comment-action",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_customer_send_rejected"
+      ],
+      "case_id": "blocked-auto-send",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_patch_proposal_customer_delivery",
+      "rehearsal_purpose": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The rehearsal proves only metadata-only manual customer handoff readiness. It does not send, publish, deploy, comment on PRs, or certify customer-visible content.",
+    "not_claimed": [
+      "customer-visible draft body included",
+      "customer message sent",
+      "PR comment created",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_send_performed": "effect_boundary.automatic_customer_send_performed must remain false",
+    "missing_manual_send_boundary_on_ready": "ready customer delivery rehearsal missing check: manual_send_boundary_acknowledged",
+    "model_credentials_attached": "ready customer delivery rehearsal checks.model_credential_attached must remain false",
+    "passive_attention_only": "passive-only attention evidence must remain rejected",
+    "pr_comment_performed": "effect_boundary.study_anything_pr_commenting_performed must remain false",
+    "raw_customer_draft_injected": "patch-proposal-customer-delivery-rehearsal-receipt-v1 includes forbidden raw fields: ['$.raw_customer_draft']",
+    "rehearsal_package_type_escalated": "rehearsal package_type must remain metadata-only"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove a patch proposal customer delivery envelope can be rehearsed as a manual handoff decision without sending, PR commenting, publishing, mutating production, or exposing raw payloads.",
+  "quality_gates": {
+    "active_operator_reconstruction_required": true,
+    "automatic_customer_send_blocked": true,
+    "customer_visible_drafts_rejected": true,
+    "external_publication_blocked": true,
+    "manual_send_boundary_required": true,
+    "passive_attention_only_rejected": true,
+    "pr_comments_rejected": true,
+    "production_mutation_blocked": true,
+    "raw_patch_and_diff_rejected": true,
+    "ready_envelope_required": true,
+    "secrets_and_model_credentials_rejected": true
+  },
+  "rehearsal_matrix": {
+    "automatic_customer_send_rejected": true,
+    "blocked_rehearsals": 15,
+    "claim_boundary_missing_rejected": true,
+    "delivery_class_scope_missing_rejected": true,
+    "external_publication_rejected": true,
+    "manual_send_boundary_missing_rejected": true,
+    "model_credential_rejected": true,
+    "pr_comment_action_rejected": true,
+    "privacy_boundary_missing_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_customer_draft_rejected": true,
+    "raw_patch_and_diff_requests_rejected": true,
+    "ready_rehearsals": 1,
+    "recipient_scope_missing_rejected": true,
+    "secret_rejected": true,
+    "source_envelope_blocked_rejected": true,
+    "total_cases": 16
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-delivery-rehearsal-v1.schema.json",
+      "schema_version": "patch-proposal-customer-delivery-rehearsal-v1",
+      "sha256": "a13ca6061e29afaa636cdb886666335f8c1bc918d8e54d4c8280b85c2f8824d9"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-delivery-rehearsal-v1",
+  "source_chain": {
+    "envelope_report": "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.json",
+    "ready_envelope_receipt": "fixtures/patch-proposal-customer-delivery-envelope/pass/patch-proposal-customer-delivery-envelope.json"
+  },
+  "status": "pass"
+}
