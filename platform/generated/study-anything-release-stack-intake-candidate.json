@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-332-v0.3.208-external-feedback-backlog-bridge-lite",
+    "group_id": "release-stack-intake-pr-334-v0.3.210-product-owner-prioritization-gate-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -26,6 +26,16 @@
       "platform/generated/study-anything-external-feedback-backlog-bridge.html",
       "scripts/external_feedback_backlog_bridge.py",
       "scripts/verify_external_feedback_backlog_bridge.py",
+      "docs/product-owner-prioritization-gate.md",
+      "platform/schemas/delivery-trust/product-owner-prioritization-receipt-v1.schema.json",
+      "platform/schemas/delivery-trust/product-spec-eval-candidate-v1.schema.json",
+      "platform/generated/study-anything-product-owner-prioritization-gate.json",
+      "platform/generated/study-anything-product-owner-prioritization-gate.md",
+      "platform/generated/study-anything-product-owner-prioritization-gate.html",
+      "fixtures/product-owner-prioritization-gate/pass/product-owner-prioritization-receipt.json",
+      "fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json",
+      "scripts/product_owner_prioritization_gate.py",
+      "scripts/verify_product_owner_prioritization_gate.py",
       "platform/generated/study-anything-release-asset-adoption.json",
       "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
       "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
@@ -130,7 +140,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.208-external-feedback-backlog-bridge-lite",
+        "branch": "codex/v0.3.210-product-owner-prioritization-gate-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -150,6 +160,16 @@
           "platform/generated/study-anything-external-feedback-backlog-bridge.html",
           "scripts/external_feedback_backlog_bridge.py",
           "scripts/verify_external_feedback_backlog_bridge.py",
+          "docs/product-owner-prioritization-gate.md",
+          "platform/schemas/delivery-trust/product-owner-prioritization-receipt-v1.schema.json",
+          "platform/schemas/delivery-trust/product-spec-eval-candidate-v1.schema.json",
+          "platform/generated/study-anything-product-owner-prioritization-gate.json",
+          "platform/generated/study-anything-product-owner-prioritization-gate.md",
+          "platform/generated/study-anything-product-owner-prioritization-gate.html",
+          "fixtures/product-owner-prioritization-gate/pass/product-owner-prioritization-receipt.json",
+          "fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json",
+          "scripts/product_owner_prioritization_gate.py",
+          "scripts/verify_product_owner_prioritization_gate.py",
           "platform/generated/study-anything-release-asset-adoption.json",
           "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
           "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
@@ -234,9 +254,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "9a503fe5de9bce6fad8ad3d96556ae5d4b5eba0c",
+        "merge_commit": "f2cdececc2dfc1b3a91d3c03c0bd5147d6857516",
         "order": 1,
-        "pr": 332,
+        "pr": 334,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -245,15 +265,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #332: Add external feedback backlog bridge.",
+    "summary": "Candidate release stack group for PR #334: [codex] Add product owner prioritization gate.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.208",
-    "represented_pr_count": 110
+    "current_group": "release-stack-promotion-v0.3.210",
+    "represented_pr_count": 111
   },
   "negative_fixtures": [
     {
