@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-314-v0.3.186-trust-evidence-acceptance-drill-lite",
+    "group_id": "release-stack-intake-pr-316-v0.3.188-controlled-handoff-runbook-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -52,9 +52,13 @@
       "docs/trust-evidence-acceptance-drill.md",
       "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
+      "docs/controlled-handoff-runbook.md",
+      "platform/generated/study-anything-controlled-handoff-runbook.json",
+      "platform/generated/study-anything-controlled-handoff-runbook.md",
       "scripts/generate_trust_evidence_handoff_pack.py",
       "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
       "scripts/verify_trust_evidence_acceptance_drill.py",
+      "scripts/verify_controlled_handoff_runbook.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -80,7 +84,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.186-trust-evidence-acceptance-drill-lite",
+        "branch": "codex/v0.3.188-controlled-handoff-runbook-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -126,17 +130,21 @@
           "docs/trust-evidence-acceptance-drill.md",
           "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
           "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
+          "docs/controlled-handoff-runbook.md",
+          "platform/generated/study-anything-controlled-handoff-runbook.json",
+          "platform/generated/study-anything-controlled-handoff-runbook.md",
           "scripts/generate_trust_evidence_handoff_pack.py",
           "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
           "scripts/verify_trust_evidence_acceptance_drill.py",
+          "scripts/verify_controlled_handoff_runbook.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "6b0f3592a3154f58e8678a97c5baf5f233dd8029",
+        "merge_commit": "7dded5c464bd0ae0b23d75b73c03bfd07f3db220",
         "order": 1,
-        "pr": 314,
+        "pr": 316,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -145,15 +153,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #314: Add Trust Evidence acceptance drill.",
+    "summary": "Candidate release stack group for PR #316: Add controlled handoff runbook.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.186",
-    "represented_pr_count": 101
+    "current_group": "release-stack-promotion-v0.3.188",
+    "represented_pr_count": 102
   },
   "negative_fixtures": [
     {
