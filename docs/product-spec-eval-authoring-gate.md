@@ -12,6 +12,9 @@ payloads, or user-owned Agent credentials. It also does not execute work, assign
 priority, publish externally, mutate production, or skip to the Delivery Trust
 Harness.
 
+The generated brief should enter `Product Loop Brief Intake Gate` before Product
+Loop Harness scenario/run artifacts are created.
+
 ## What It Proves
 
 - A spec/eval candidate requires active authoring-boundary reconstruction.

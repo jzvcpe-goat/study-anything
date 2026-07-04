@@ -1,0 +1,104 @@
+{
+  "blocked_reasons": [
+    "production_mutation_rejected"
+  ],
+  "claim_boundary": {
+    "current_claim": "A Product Spec/Eval brief can become a Product Loop Harness candidate only through a metadata-only intake gate that preserves three-loop parity and blocks execution or production mutation.",
+    "not_claimed": [
+      "finished product implementation",
+      "production readiness",
+      "customer outcome guarantee",
+      "general model correctness",
+      "automatic execution approval",
+      "Delivery Trust Harness completion"
+    ]
+  },
+  "decision": "block_product_loop_brief_intake",
+  "intake_policy": {
+    "ai_review_only_allowed": false,
+    "allowed_next_boundary": "product_loop_harness",
+    "automatic_execution_allowed": false,
+    "blocked_destinations": [
+      "automatic_execution",
+      "delivery_trust_harness",
+      "customer_visible_reply",
+      "production_mutation",
+      "external_publication"
+    ],
+    "customer_visible_action_allowed": false,
+    "delivery_trust_harness_skip_allowed": false,
+    "production_mutation_allowed": false,
+    "raw_eval_body_allowed": false,
+    "raw_spec_body_allowed": false,
+    "required_input_schema": "product-spec-eval-brief-v1"
+  },
+  "intake_reconstruction": {
+    "active_developer_vision_present": true,
+    "passive_attention_only_sufficient": false,
+    "reconstructed_boundaries": [
+      "metadata_only_product_spec_eval_brief",
+      "three_loop_product_harness_required",
+      "no_raw_spec_or_eval_body",
+      "no_ai_review_only_promotion",
+      "no_delivery_trust_harness_skip",
+      "no_customer_visible_action",
+      "no_production_mutation"
+    ]
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eval_dataset_body_included": false,
+    "eval_prompt_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "product_loop_brief_intake_metadata_only": true,
+    "product_spec_eval_brief_body_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "product-loop-brief-intake-9e75c22f6f9a1a7b",
+  "requested_transition": {
+    "automatic_execution_requested": false,
+    "customer_visible_action_requested": false,
+    "external_scope": "controlled_customer_handoff",
+    "from": "product_spec_eval_brief",
+    "production_mutation_requested": true,
+    "raw_eval_body_requested": false,
+    "raw_spec_body_requested": false,
+    "to": "product_loop_harness"
+  },
+  "run": null,
+  "runtime": {
+    "automatic_execution_performed": false,
+    "customer_visible_action_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_trust_harness_invoked": false,
+    "deterministic_fixture": true,
+    "model_calls_performed": false,
+    "product_work_executed": false,
+    "production_mutation_performed": false
+  },
+  "scenario": null,
+  "schema_version": "product-loop-brief-intake-receipt-v1",
+  "source_brief_hash": "9e75c22f6f9a1a7b82799dbe586881a4bbb3c9b26427f3d09deb29a747988824",
+  "source_brief_id": "product-spec-eval-brief-f798fc2e3919d9ab",
+  "source_candidate_hash": "f798fc2e3919d9abf01c80b4bc73d2fc3146368ff2bfcb75c64b9aed63d2421f",
+  "source_candidate_id": "product-spec-eval-candidate-7edece41476d9192",
+  "status": "blocked"
+}
