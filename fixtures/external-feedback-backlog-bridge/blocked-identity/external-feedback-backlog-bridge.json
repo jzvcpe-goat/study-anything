@@ -1,0 +1,63 @@
+{
+  "backlog_item": null,
+  "blocked_reasons": [
+    "external_feedback_receipt_not_accepted",
+    "external_feedback_decision_blocked"
+  ],
+  "bridge_id": "external-feedback-backlog-f5f896eb2e2dc09c",
+  "claim_boundary": {
+    "current_claim": "Accepted external feedback can be converted into a Product Loop backlog item as metadata only. Blocked feedback cannot create a backlog item.",
+    "not_claimed": [
+      "raw feedback import",
+      "requester identity import",
+      "customer-visible reply",
+      "automatic production mutation",
+      "external publication",
+      "automatic prioritization",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "decision": "block_backlog_item_creation",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "backlog_item_metadata_only": true,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "customer_visible_reply_created": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "feedback_hash_only": true,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_customer_message_included": false,
+    "raw_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "backlog_storage_mutated": false,
+    "customer_visible_reply_created": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_version": "external-feedback-backlog-bridge-v1",
+  "source_delivery_class": "support_response_handoff",
+  "source_receipt_hash": "f5f896eb2e2dc09c0230c1b9e03a38690398ae365fa6a5c6fb5b10571915d58f",
+  "source_receipt_id": "external-feedback-blocked-identity",
+  "status": "blocked"
+}
