@@ -1,0 +1,186 @@
+{
+  "acceptance": {
+    "markdown_report": "platform/generated/study-anything-operator-handoff-rehearsal-contract.md",
+    "minimum_command": "python3 scripts/verify_operator_handoff_rehearsal_contract.py --check",
+    "report": "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
+    "source_commands": [
+      "python3 scripts/verify_code_review_operator_handoff_rehearsal.py --check",
+      "python3 scripts/verify_client_report_operator_handoff_rehearsal.py --check"
+    ]
+  },
+  "claim_boundary": {
+    "current_claim": "Code Review and Client Report delivery classes share a metadata-only operator handoff contract: a platform Agent can prepare a bounded ready/block decision, but cannot send, publish, comment, merge, mutate production, certify truth, or replace customer-specific review.",
+    "not_claimed": [
+      "customer send approval",
+      "actual customer send completed",
+      "automatic customer delivery",
+      "automatic PR commenting",
+      "external publication",
+      "production mutation",
+      "production merge approval",
+      "security certification",
+      "legal certification",
+      "financial advice certification",
+      "complete factual correctness",
+      "complete vulnerability discovery",
+      "truth certification",
+      "customer outcome guarantee",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "coverage": {
+    "all_classes_have_blocked_cases": true,
+    "all_classes_have_one_ready_case": true,
+    "code_review_and_client_report_share_contract": true,
+    "delivery_class_count": 2,
+    "operator_handoff_is_not_ai_review_only": true,
+    "operator_handoff_is_not_customer_send": true
+  },
+  "delivery_classes": [
+    {
+      "blocked_count": 6,
+      "blocked_reason_categories": [
+        "automatic_customer_send_attempted",
+        "automatic_pr_comment_attempted",
+        "code_review_delivery_class_blocked",
+        "customer_delivery_rehearsal_blocked",
+        "missing_no_raw_diff_or_review_text_attached",
+        "missing_operator_understands_not_send_approval",
+        "raw_diff_or_review_text_requested"
+      ],
+      "delivery_class": "code_review_handoff",
+      "mode": "operator_handoff_decision_only",
+      "not_claimed_count": 9,
+      "ready_case": "ready-code-review-operator-decision",
+      "ready_count": 1,
+      "report": "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
+      "required_confirmations": [
+        "actual_external_send_or_pr_comment_outside_system_only",
+        "claim_boundary_visible",
+        "code_review_delivery_class_ready",
+        "customer_rehearsal_ready",
+        "no_raw_diff_or_review_text_attached",
+        "operator_understands_not_send_approval"
+      ],
+      "schema_version": "code-review-operator-handoff-rehearsal-v1",
+      "status": "pass"
+    },
+    {
+      "blocked_count": 7,
+      "blocked_reason_categories": [
+        "automatic_customer_send_attempted",
+        "client_report_delivery_class_blocked",
+        "customer_delivery_rehearsal_blocked",
+        "external_publication_attempted",
+        "missing_no_raw_report_or_customer_payload_attached",
+        "missing_operator_understands_not_send_approval",
+        "missing_recipient_scope_bounded",
+        "raw_report_or_customer_payload_requested"
+      ],
+      "delivery_class": "client_report_handoff",
+      "mode": "operator_handoff_decision_only",
+      "not_claimed_count": 10,
+      "ready_case": "ready-client-report-operator-decision",
+      "ready_count": 1,
+      "report": "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
+      "required_confirmations": [
+        "actual_external_delivery_outside_system_only",
+        "claim_boundary_visible",
+        "client_report_delivery_class_ready",
+        "customer_rehearsal_ready",
+        "no_raw_report_or_customer_payload_attached",
+        "operator_understands_not_send_approval",
+        "recipient_scope_bounded"
+      ],
+      "schema_version": "client-report-operator-handoff-rehearsal-v1",
+      "status": "pass"
+    }
+  ],
+  "negative_fixtures": [
+    {
+      "case_id": "missing_delivery_class",
+      "error": "contract must include at least two delivery classes",
+      "status": "rejected"
+    },
+    {
+      "case_id": "multiple_ready_cases",
+      "error": "code_review_handoff must have exactly one ready case",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_operator_understanding_confirmation",
+      "error": "client_report_handoff missing operator understanding confirmation",
+      "status": "rejected"
+    },
+    {
+      "case_id": "automatic_customer_sending_performed",
+      "error": "privacy.automatic_customer_sending_performed must be absent or false",
+      "status": "rejected"
+    },
+    {
+      "case_id": "raw_report_text_included",
+      "error": "privacy.raw_report_text_included must be absent or false",
+      "status": "rejected"
+    },
+    {
+      "case_id": "truth_certification_overclaim",
+      "error": "contract claim boundary missing not_claimed items: ['truth certification']",
+      "status": "rejected"
+    }
+  ],
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "automatic_pr_commenting_performed": false,
+    "customer_visible_effect_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Verify the shared operator handoff rehearsal contract across supported delivery classes without replacing class-specific verifiers or crossing customer-visible boundaries.",
+  "schema": {
+    "path": "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+    "schema_version": "operator-handoff-rehearsal-contract-v1"
+  },
+  "schema_version": "operator-handoff-rehearsal-contract-v1",
+  "shared_contract": {
+    "automatic_external_actions_blocked": [
+      "automatic_pr_commenting",
+      "automatic_customer_sending",
+      "external_publication",
+      "production_mutation"
+    ],
+    "blocked_rule": "blocked_cases_must_include_reasons",
+    "class_specific_verifiers_remain_authoritative": true,
+    "human_boundary": "operator may prepare a decision, but actual external action happens outside this system",
+    "mode": "operator_handoff_decision_only",
+    "raw_payloads_forbidden": [
+      "raw_source_text",
+      "raw_diff",
+      "raw_review_text",
+      "raw_report_text",
+      "raw_customer_payload",
+      "screenshots",
+      "attention_streams",
+      "secrets",
+      "user_owned_agent_credentials"
+    ],
+    "ready_rule": "exactly_one_ready_case_with_all_active_confirmations_true",
+    "source_reports_must_pass": true,
+    "supported_delivery_classes": [
+      "code_review_handoff",
+      "client_report_handoff"
+    ]
+  },
+  "status": "pass"
+}

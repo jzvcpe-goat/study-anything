@@ -39,6 +39,8 @@ The completed chain now has these layers:
 - Client Report Operator Handoff Rehearsal: concrete client-report
   delivery-class operator decision before any customer send, external
   publication, or production change.
+- Operator Handoff Rehearsal Contract: shared metadata-only contract that proves
+  code-review and client-report handoffs obey the same operator boundary.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -86,6 +88,5 @@ boundary, and produce a blocked/ready decision without sending anything to a
 customer, mutating production, or reading raw payloads.
 ```
 
-After that, extract a generic Operator Handoff Rehearsal contract shared by both
-supported delivery classes, then keep class-specific verifiers as concrete
-fixtures under that common contract.
+After that, add the next delivery class only if it can satisfy the shared
+Operator Handoff Rehearsal contract instead of inventing a one-off handoff path.

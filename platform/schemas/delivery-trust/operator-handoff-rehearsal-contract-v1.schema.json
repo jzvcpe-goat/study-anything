@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://study-anything.local/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+  "additionalProperties": true,
+  "properties": {
+    "claim_boundary": {
+      "type": "object"
+    },
+    "delivery_classes": {
+      "items": {
+        "type": "object"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "operator-handoff-rehearsal-contract-v1"
+    },
+    "shared_contract": {
+      "type": "object"
+    },
+    "status": {
+      "const": "pass"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "shared_contract",
+    "delivery_classes",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Operator Handoff Rehearsal Contract",
+  "type": "object"
+}
