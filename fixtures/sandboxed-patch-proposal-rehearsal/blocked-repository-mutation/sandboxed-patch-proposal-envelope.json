@@ -1,0 +1,115 @@
+{
+  "blocked_reasons": [
+    "repository_mutation_rejected"
+  ],
+  "case_id": "blocked-repository-mutation",
+  "checks": {
+    "customer_visible_action_requested": false,
+    "dual_loop_gate_allowed": true,
+    "external_publication_requested": false,
+    "human_reconstruction_present": true,
+    "production_mutation_requested": false,
+    "raw_diff_body_absent": true,
+    "raw_patch_body_absent": true,
+    "repository_mutation_requested": true,
+    "rollback_plan_present": true,
+    "sandbox_start_authorized": true,
+    "spec_eval_execution_allowed": true,
+    "test_plan_present": true
+  },
+  "claim_boundary": {
+    "current_claim": "A sandbox-local patch proposal envelope may be prepared from an allowed Spec/Eval rehearsal without applying repository changes.",
+    "not_claimed": [
+      "patch body generated",
+      "repository mutation performed",
+      "customer-visible delivery approved",
+      "external publication approved",
+      "production mutation approved"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_patch_proposal",
+  "envelope_id": "sandboxed-patch-proposal-blocked-repository-mutation",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "patch_boundary": {
+    "customer_visible_action_performed": false,
+    "diff_body_included": false,
+    "external_publication_performed": false,
+    "implementation_execution_performed": false,
+    "irreversible_effects_performed": false,
+    "patch_body_included": false,
+    "production_mutation_performed": false,
+    "proposal_scope": null,
+    "repository_mutation_performed": false,
+    "sandbox_local_refs_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "proposal_refs": {
+    "changed_component_refs": [
+      {
+        "component_ref": "study-anything-learning-runtime-boundary",
+        "operation": "modify",
+        "path_hash": "94cf8e2330f2dfa90ba7f54765fb6c2e8a6dd6a5ceadc32c49ee90a2a62373fb"
+      },
+      {
+        "component_ref": "cognitive-black-box-evidence-gate",
+        "operation": "add",
+        "path_hash": "78c5e92e97dd87dd47248f38fdcceadf89b7ba3c748d31ff05b255bfdff85dfb"
+      }
+    ],
+    "patch_plan_ref_hash": "ddd26f2b461ef9e7aebf60210c31788772b43da2dd304d27ff2105c9a630cdd5",
+    "proposal_ref": "sandbox-local:patch-proposal:blocked-repository-mutation",
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false
+  },
+  "rollback_plan": {
+    "present": true,
+    "production_restore_required": false,
+    "required": true,
+    "strategy_ref": "rollback-ref:blocked-repository-mutation:metadata-only"
+  },
+  "schema_version": "sandboxed-patch-proposal-envelope-v1",
+  "source_refs": {
+    "source_chain_report_ref": "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+    "spec_eval_execution_receipt_hash": "7095fd0b4f8fa40723402fa6151d0683b5cf28474323a3cd417d72cd403883da",
+    "spec_eval_execution_receipt_ref": "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json"
+  },
+  "status": "blocked",
+  "test_plan": {
+    "present": true,
+    "required": true,
+    "test_refs": [
+      "verify_sandboxed_patch_proposal_rehearsal",
+      "release_check_skip_clean_clone"
+    ]
+  }
+}

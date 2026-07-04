@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Sandboxed Patch Proposal Rehearsal</title>
+<body>
+<h1>Sandboxed Patch Proposal Rehearsal</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;prepare_sandbox_local_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: &quot;sandbox_local_refs_only&quot;,
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;spec_eval_execution_not_allowed&quot;,
+        &quot;sandbox_start_not_authorized&quot;,
+        &quot;human_reconstruction_missing&quot;,
+        &quot;dual_loop_gate_not_allowed&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-spec-eval-allowance&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;rollback_plan_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-rollback-plan&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;test_plan_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-test-plan&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;repository_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-repository-mutation&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_action_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-customer-visible-action&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;external_publication_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-external-publication&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_patch_proposal&quot;,
+      &quot;proposal_scope&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A patch proposal can be prepared as sandbox-local metadata refs only when Spec/Eval, Controlled Failure, and Human Reconstruction gates pass.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;patch content generated&quot;,
+      &quot;repository changed&quot;,
+      &quot;customer handoff approved&quot;,
+      &quot;external publication approved&quot;,
+      &quot;production change approved&quot;
+    ]
+  },
+  &quot;created_at&quot;: &quot;2026-06-28T00:00:00Z&quot;,
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_fixtures&quot;: {
+    &quot;customer_visible_action_performed&quot;: &quot;patch proposal rehearsal must keep customer_visible_action_performed false&quot;,
+    &quot;missing_rollback_on_allowed&quot;: &quot;allowed patch proposal requires rollback_plan_present&quot;,
+    &quot;patch_body_included&quot;: &quot;patch proposal envelope must not include patch body&quot;,
+    &quot;raw_diff_body_injected&quot;: &quot;sandboxed-patch-proposal-envelope-v1:$.raw_diff uses forbidden field&quot;,
+    &quot;repository_mutation_performed&quot;: &quot;patch proposal rehearsal must keep repository_mutation_performed false&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_body_included&quot;: false,
+    &quot;raw_eval_prompt_included&quot;: false,
+    &quot;raw_patch_body_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;raw_spec_eval_body_included&quot;: false,
+    &quot;real_model_keys_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;repository_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove an allowed Spec/Eval execution rehearsal can produce only a metadata-only sandbox-local patch proposal envelope before any repository mutation.&quot;,
+  &quot;quality_gates&quot;: {
+    &quot;customer_visible_action_rejected&quot;: true,
+    &quot;external_publication_rejected&quot;: true,
+    &quot;human_reconstruction_required&quot;: true,
+    &quot;production_mutation_rejected&quot;: true,
+    &quot;raw_diff_body_rejected&quot;: true,
+    &quot;raw_patch_body_rejected&quot;: true,
+    &quot;repository_mutation_rejected&quot;: true,
+    &quot;rollback_plan_required&quot;: true,
+    &quot;spec_eval_execution_allowed_required&quot;: true,
+    &quot;test_plan_required&quot;: true
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;sandboxed-patch-proposal-rehearsal-v1&quot;,
+      &quot;sha256&quot;: &quot;0d8e94a174afe3c389ddf704fc8b85f01b76bba9b2f261545cd23993a6f13a63&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;sandboxed-patch-proposal-rehearsal-v1&quot;,
+  &quot;source_chain&quot;: {
+    &quot;allowed_execution_receipt&quot;: &quot;fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json&quot;,
+    &quot;spec_eval_execution_rehearsal_report&quot;: &quot;platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json&quot;
+  },
+  &quot;status&quot;: &quot;pass&quot;
+}
+</pre>
+</body>
+</html>

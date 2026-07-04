@@ -196,6 +196,20 @@ SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS = {
         "spec-eval-execution-rehearsal-receipt.json",
     ],
 }
+SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES = [
+    "pass",
+    "blocked-missing-spec-eval-allowance",
+    "blocked-missing-rollback-plan",
+    "blocked-missing-test-plan",
+    "blocked-repository-mutation",
+    "blocked-customer-visible-action",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+]
+SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS = {
+    case_id: ["sandboxed-patch-proposal-envelope.json"]
+    for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -312,6 +326,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/end-to-end-trust-chain-harness.md", "operator_doc", "End-to-End Trust Chain Harness guide for external feedback to controlled customer handoff rehearsal."),
     ("docs/real-adopter-scenario-import.md", "operator_doc", "Real-Adopter Scenario Import guide for metadata-only field feedback to Product Loop evidence."),
     ("docs/spec-eval-scenario-execution-rehearsal.md", "operator_doc", "Spec/Eval Scenario Execution Rehearsal guide for controlled sandbox implementation rehearsal authorization."),
+    ("docs/sandboxed-patch-proposal-rehearsal.md", "operator_doc", "Sandboxed Patch Proposal Rehearsal guide for metadata-only patch proposal envelopes."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -382,6 +397,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json", "schema", "End-to-End Trust Chain Harness JSON Schema."),
     ("platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json", "schema", "Real-Adopter Scenario Import JSON Schema."),
     ("platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json", "schema", "Spec/Eval Scenario Execution Rehearsal JSON Schema."),
+    ("platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json", "schema", "Sandboxed Patch Proposal Rehearsal JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -457,6 +473,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json", "submission_report", "Spec/Eval Scenario Execution Rehearsal metadata-only verification report."),
     ("platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md", "submission_report", "Spec/Eval Scenario Execution Rehearsal operator summary."),
     ("platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html", "submission_report", "Spec/Eval Scenario Execution Rehearsal static HTML verification report."),
+    ("platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.json", "submission_report", "Sandboxed Patch Proposal Rehearsal metadata-only verification report."),
+    ("platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.md", "submission_report", "Sandboxed Patch Proposal Rehearsal operator summary."),
+    ("platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.html", "submission_report", "Sandboxed Patch Proposal Rehearsal static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -930,6 +949,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_CASES
         for artifact in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS[case_id]
     ],
+    *[
+        (
+            f"fixtures/sandboxed-patch-proposal-rehearsal/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Sandboxed Patch Proposal Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
+        for artifact in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -1136,6 +1164,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_real_adopter_scenario_import.py", "verification", "Verify real-adopter scenario import fixtures, chain continuity, and privacy boundaries."),
     ("scripts/spec_eval_scenario_execution_rehearsal.py", "verification", "Build metadata-only Spec/Eval Scenario Execution Rehearsal artifacts."),
     ("scripts/verify_spec_eval_scenario_execution_rehearsal.py", "verification", "Verify Spec/Eval Scenario Execution Rehearsal fixtures, CLI output, and privacy boundaries."),
+    ("scripts/sandboxed_patch_proposal_rehearsal.py", "verification", "Build metadata-only Sandboxed Patch Proposal Rehearsal artifacts."),
+    ("scripts/verify_sandboxed_patch_proposal_rehearsal.py", "verification", "Verify Sandboxed Patch Proposal Rehearsal fixtures, CLI output, and privacy boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),
