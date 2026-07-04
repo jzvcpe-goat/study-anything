@@ -62,6 +62,11 @@ The completed chain now has these layers:
   authoring-boundary reconstruction, while raw specs, eval prompts, automatic
   execution, customer-visible action, Delivery Trust Harness skips, and
   production mutation stay blocked.
+- Product Loop Brief Intake Gate: metadata-only Product Spec/Eval briefs can
+  create Product Loop Harness scenario/run candidates only after active
+  developer/product-loop boundary reconstruction, while missing briefs, invalid
+  briefs, AI-review-only evidence, external scope expansion, Delivery Trust
+  Harness skips, customer-visible action, and production mutation stay blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:

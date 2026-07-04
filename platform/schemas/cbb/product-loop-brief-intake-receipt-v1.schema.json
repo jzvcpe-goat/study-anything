@@ -1,0 +1,108 @@
+{
+  "$id": "product-loop-brief-intake-receipt-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "create_product_loop_harness_candidate",
+        "block_product_loop_brief_intake"
+      ],
+      "type": "string"
+    },
+    "intake_policy": {
+      "type": "object"
+    },
+    "intake_reconstruction": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "requested_transition": {
+      "type": "object"
+    },
+    "run": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "scenario": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": "product-loop-brief-intake-receipt-v1"
+    },
+    "source_brief_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_brief_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "created_product_loop_candidate",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "source_brief_id",
+    "source_brief_hash",
+    "source_candidate_id",
+    "source_candidate_hash",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "requested_transition",
+    "intake_reconstruction",
+    "intake_policy",
+    "scenario",
+    "run",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "title": "Product Loop Brief Intake Receipt v1",
+  "type": "object"
+}

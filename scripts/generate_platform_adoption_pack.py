@@ -112,6 +112,30 @@ PRODUCT_SPEC_EVAL_AUTHORING_GATE_CASES = [
     "blocked-customer-visible-action",
     "blocked-invalid-candidate-source",
 ]
+PRODUCT_LOOP_BRIEF_INTAKE_CASES = [
+    "pass",
+    "blocked-missing-brief",
+    "blocked-invalid-brief",
+    "blocked-missing-developer-vision",
+    "blocked-external-scope-expansion",
+    "blocked-ai-review-only",
+    "blocked-production-mutation",
+    "blocked-skip-to-delivery-harness",
+]
+PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
+    "pass": [
+        "product-loop-brief-intake-receipt.json",
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+    ],
+    "blocked-missing-brief": ["product-loop-brief-intake-receipt.json"],
+    "blocked-invalid-brief": ["product-loop-brief-intake-receipt.json"],
+    "blocked-missing-developer-vision": ["product-loop-brief-intake-receipt.json"],
+    "blocked-external-scope-expansion": ["product-loop-brief-intake-receipt.json"],
+    "blocked-ai-review-only": ["product-loop-brief-intake-receipt.json"],
+    "blocked-production-mutation": ["product-loop-brief-intake-receipt.json"],
+    "blocked-skip-to-delivery-harness": ["product-loop-brief-intake-receipt.json"],
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -224,6 +248,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/dual-loop-scenario-harness.md", "operator_doc", "Dual Loop Trust Scenario Harness guide for customer delivery readiness."),
     ("docs/dual-loop-trust-scenario-pack.md", "operator_doc", "Portable Dual Loop trust scenario pack guide."),
     ("docs/product-loop-harness.md", "operator_doc", "Product Loop Harness guide for three-loop product development gating."),
+    ("docs/product-loop-brief-intake.md", "operator_doc", "Product Loop Brief Intake Gate guide for consuming Product Spec/Eval briefs."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -290,6 +315,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/cbb-tri-loop-run-v1.schema.json", "schema", "Cognitive Black Box tri-loop run JSON Schema."),
     ("platform/schemas/cbb/product-loop-scenario-v1.schema.json", "schema", "Product Loop Harness scenario JSON Schema."),
     ("platform/schemas/cbb/product-loop-run-v1.schema.json", "schema", "Product Loop Harness run JSON Schema."),
+    ("platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json", "schema", "Product Loop Brief Intake Gate receipt JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -353,6 +379,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-cbb-self-intake.json", "submission_report", "Cognitive Black Box self-intake verification report for PR 285."),
     ("platform/generated/study-anything-cbb-delivery-scenario-harness.json", "submission_report", "Cognitive Black Box tri-loop delivery scenario harness verification report."),
     ("platform/generated/study-anything-product-loop-harness.json", "submission_report", "Product Loop Harness verification report for three-loop product development gating."),
+    ("platform/generated/study-anything-product-loop-brief-intake.json", "submission_report", "Product Loop Brief Intake Gate metadata-only verification report."),
+    ("platform/generated/study-anything-product-loop-brief-intake.md", "submission_report", "Product Loop Brief Intake Gate operator summary."),
+    ("platform/generated/study-anything-product-loop-brief-intake.html", "submission_report", "Product Loop Brief Intake Gate static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -794,6 +823,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PRODUCT_SPEC_EVAL_AUTHORING_GATE_CASES
     ],
     ("fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json", "delivery_trust_case_harness_fixture", "Product Spec/Eval Authoring Gate pass brief fixture."),
+    *[
+        (
+            f"fixtures/product-loop-brief-intake/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Product Loop Brief Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PRODUCT_LOOP_BRIEF_INTAKE_CASES
+        for artifact in PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -992,6 +1030,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_product_owner_prioritization_gate.py", "verification", "Verify Product Owner Prioritization Gate spec/eval candidate boundaries."),
     ("scripts/product_spec_eval_authoring_gate.py", "verification", "Build Product Spec/Eval Authoring Gate fixtures from spec/eval candidates."),
     ("scripts/verify_product_spec_eval_authoring_gate.py", "verification", "Verify Product Spec/Eval Authoring Gate metadata-only brief boundaries."),
+    ("scripts/product_loop_brief_intake.py", "verification", "Build Product Loop Brief Intake fixtures from Product Spec/Eval briefs."),
+    ("scripts/verify_product_loop_brief_intake.py", "verification", "Verify Product Loop Brief Intake metadata-only bridge boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),

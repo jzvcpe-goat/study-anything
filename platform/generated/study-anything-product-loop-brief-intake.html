@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Product Loop Brief Intake Gate</title>
+<body>
+<h1>Product Loop Brief Intake Gate</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;blocked_case_count&quot;: 7,
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;create_product_loop_harness_candidate&quot;,
+      &quot;run_created&quot;: true,
+      &quot;scenario_created&quot;: true,
+      &quot;status&quot;: &quot;created_product_loop_candidate&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;product_spec_eval_brief_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-brief&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;product_spec_eval_brief_invalid&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-invalid-brief&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;developer_vision_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-developer-vision&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;external_feedback_scope_expansion&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-external-scope-expansion&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;ai_review_only_evidence_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;requested_next_boundary_not_product_loop_harness&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-skip-to-delivery-harness&quot;,
+      &quot;decision&quot;: &quot;block_product_loop_brief_intake&quot;,
+      &quot;run_created&quot;: false,
+      &quot;scenario_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A Product Spec/Eval brief can become a Product Loop Harness candidate only through a metadata-only intake gate that preserves three-loop parity and blocks execution or production mutation.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;finished product implementation&quot;,
+      &quot;production readiness&quot;,
+      &quot;customer outcome guarantee&quot;,
+      &quot;general model correctness&quot;,
+      &quot;automatic execution approval&quot;,
+      &quot;Delivery Trust Harness completion&quot;
+    ]
+  },
+  &quot;created_case_count&quot;: 1,
+  &quot;gate_rules&quot;: {
+    &quot;active_developer_vision_required&quot;: true,
+    &quot;ai_review_only_blocks&quot;: true,
+    &quot;automatic_execution_blocked&quot;: true,
+    &quot;customer_visible_action_blocked&quot;: true,
+    &quot;delivery_trust_harness_skip_blocked&quot;: true,
+    &quot;external_scope_expansion_blocks&quot;: true,
+    &quot;metadata_only&quot;: true,
+    &quot;product_loop_harness_required&quot;: true,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_eval_body_blocked&quot;: true,
+    &quot;raw_spec_body_blocked&quot;: true,
+    &quot;source_brief_required&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;ai_review_only_policy_rejected&quot;: &quot;policy.ai_review_only_allowed must be False&quot;,
+    &quot;blocked_receipt_with_run_rejected&quot;: &quot;blocked receipt must not include scenario or run&quot;,
+    &quot;delivery_trust_skip_policy_rejected&quot;: &quot;policy.delivery_trust_harness_skip_allowed must be False&quot;,
+    &quot;non_brief_input_ref_rejected&quot;: &quot;agentic loop input_ref must be the Product Spec/Eval brief&quot;,
+    &quot;production_mutation_runtime_rejected&quot;: &quot;receipt.runtime.production_mutation_performed must be False&quot;,
+    &quot;raw_eval_body_rejected&quot;: &quot;product spec/eval authoring payload contains forbidden fields: [&#x27;raw_eval_body&#x27;]&quot;,
+    &quot;raw_spec_body_requested_rejected&quot;: &quot;created receipt must not request raw_spec_body_requested&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_credentials_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_payload_included&quot;: false,
+    &quot;eval_dataset_body_included&quot;: false,
+    &quot;eval_prompt_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;model_prompts_included&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;product_loop_brief_intake_metadata_only&quot;: true,
+    &quot;product_spec_eval_brief_body_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_acceptance_criteria_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_external_feedback_text_included&quot;: false,
+    &quot;raw_product_spec_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove Product Spec/Eval briefs are consumed through a metadata-only Product Loop Harness intake gate before any executable work or Delivery Trust Harness promotion.&quot;,
+  &quot;run_count&quot;: 1,
+  &quot;runtime&quot;: {
+    &quot;automatic_execution_performed&quot;: false,
+    &quot;customer_visible_action_performed&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;delivery_trust_harness_invoked&quot;: false,
+    &quot;deterministic_fixture&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;product_work_executed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;scenario_count&quot;: 1,
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-loop-brief-intake-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;165fb551ccda02c232e597f93092846fd1913b950f4285a8c8bc84da5c3c1a73&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/product-loop-scenario-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-loop-scenario-v1&quot;,
+      &quot;sha256&quot;: &quot;af726f584abc99f96f66bc65c95835990e5b9b49fd649bfe4874b2b417b10899&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/product-loop-run-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-loop-run-v1&quot;,
+      &quot;sha256&quot;: &quot;320f34f58a465dc6abb01e6bc466fec5a157fb045cf3fd98fcfd989b315f802d&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;product-loop-brief-intake-gate-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

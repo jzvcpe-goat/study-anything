@@ -5,6 +5,19 @@ Box product development. It turns the three feedback loops into deterministic,
 metadata-only evidence before a candidate can move into the Delivery Trust
 Harness.
 
+The canonical upstream path is:
+
+```text
+Product Spec/Eval Authoring Gate
+  -> product-spec-eval-brief-v1
+  -> Product Loop Brief Intake Gate
+  -> product-loop-scenario-v1 + product-loop-run-v1
+  -> Product Loop Harness
+```
+
+This keeps the harness from accepting raw specs, raw eval bodies, or generic
+`product-spec-evals.json` claims as the only bridge evidence.
+
 ## Three Loops
 
 ```text
@@ -40,6 +53,12 @@ Fixtures live under:
 fixtures/product-loop-harness/
 ```
 
+Brief-intake bridge fixtures live under:
+
+```text
+fixtures/product-loop-brief-intake/
+```
+
 ## Acceptance
 
 ```bash
@@ -56,6 +75,12 @@ To run the CLI directly:
 
 ```bash
 python3 scripts/product_loop_harness.py run --case all
+```
+
+To verify the canonical brief-intake bridge:
+
+```bash
+python3 scripts/verify_product_loop_brief_intake.py --check
 ```
 
 ## Gate Rules

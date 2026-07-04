@@ -1,0 +1,178 @@
+{
+  "blocked_case_count": 7,
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "create_product_loop_harness_candidate",
+      "run_created": true,
+      "scenario_created": true,
+      "status": "created_product_loop_candidate"
+    },
+    {
+      "blocked_reasons": [
+        "product_spec_eval_brief_missing"
+      ],
+      "case_id": "blocked-missing-brief",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_spec_eval_brief_invalid"
+      ],
+      "case_id": "blocked-invalid-brief",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "developer_vision_missing"
+      ],
+      "case_id": "blocked-missing-developer-vision",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_feedback_scope_expansion"
+      ],
+      "case_id": "blocked-external-scope-expansion",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "ai_review_only_evidence_rejected"
+      ],
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "requested_next_boundary_not_product_loop_harness"
+      ],
+      "case_id": "blocked-skip-to-delivery-harness",
+      "decision": "block_product_loop_brief_intake",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A Product Spec/Eval brief can become a Product Loop Harness candidate only through a metadata-only intake gate that preserves three-loop parity and blocks execution or production mutation.",
+    "not_claimed": [
+      "finished product implementation",
+      "production readiness",
+      "customer outcome guarantee",
+      "general model correctness",
+      "automatic execution approval",
+      "Delivery Trust Harness completion"
+    ]
+  },
+  "created_case_count": 1,
+  "gate_rules": {
+    "active_developer_vision_required": true,
+    "ai_review_only_blocks": true,
+    "automatic_execution_blocked": true,
+    "customer_visible_action_blocked": true,
+    "delivery_trust_harness_skip_blocked": true,
+    "external_scope_expansion_blocks": true,
+    "metadata_only": true,
+    "product_loop_harness_required": true,
+    "production_mutation_blocked": true,
+    "raw_eval_body_blocked": true,
+    "raw_spec_body_blocked": true,
+    "source_brief_required": true
+  },
+  "negative_checks": {
+    "ai_review_only_policy_rejected": "policy.ai_review_only_allowed must be False",
+    "blocked_receipt_with_run_rejected": "blocked receipt must not include scenario or run",
+    "delivery_trust_skip_policy_rejected": "policy.delivery_trust_harness_skip_allowed must be False",
+    "non_brief_input_ref_rejected": "agentic loop input_ref must be the Product Spec/Eval brief",
+    "production_mutation_runtime_rejected": "receipt.runtime.production_mutation_performed must be False",
+    "raw_eval_body_rejected": "product spec/eval authoring payload contains forbidden fields: ['raw_eval_body']",
+    "raw_spec_body_requested_rejected": "created receipt must not request raw_spec_body_requested"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eval_dataset_body_included": false,
+    "eval_prompt_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "product_loop_brief_intake_metadata_only": true,
+    "product_spec_eval_brief_body_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove Product Spec/Eval briefs are consumed through a metadata-only Product Loop Harness intake gate before any executable work or Delivery Trust Harness promotion.",
+  "run_count": 1,
+  "runtime": {
+    "automatic_execution_performed": false,
+    "customer_visible_action_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_trust_harness_invoked": false,
+    "deterministic_fixture": true,
+    "model_calls_performed": false,
+    "product_work_executed": false,
+    "production_mutation_performed": false
+  },
+  "scenario_count": 1,
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
+      "schema_version": "product-loop-brief-intake-receipt-v1",
+      "sha256": "165fb551ccda02c232e597f93092846fd1913b950f4285a8c8bc84da5c3c1a73"
+    },
+    {
+      "path": "platform/schemas/cbb/product-loop-scenario-v1.schema.json",
+      "schema_version": "product-loop-scenario-v1",
+      "sha256": "af726f584abc99f96f66bc65c95835990e5b9b49fd649bfe4874b2b417b10899"
+    },
+    {
+      "path": "platform/schemas/cbb/product-loop-run-v1.schema.json",
+      "schema_version": "product-loop-run-v1",
+      "sha256": "320f34f58a465dc6abb01e6bc466fec5a157fb045cf3fd98fcfd989b315f802d"
+    }
+  ],
+  "schema_version": "product-loop-brief-intake-gate-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

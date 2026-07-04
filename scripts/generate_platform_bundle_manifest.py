@@ -111,6 +111,30 @@ PRODUCT_SPEC_EVAL_AUTHORING_GATE_CASES = [
     "blocked-customer-visible-action",
     "blocked-invalid-candidate-source",
 ]
+PRODUCT_LOOP_BRIEF_INTAKE_CASES = [
+    "pass",
+    "blocked-missing-brief",
+    "blocked-invalid-brief",
+    "blocked-missing-developer-vision",
+    "blocked-external-scope-expansion",
+    "blocked-ai-review-only",
+    "blocked-production-mutation",
+    "blocked-skip-to-delivery-harness",
+]
+PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
+    "pass": [
+        "product-loop-brief-intake-receipt.json",
+        "product-loop-scenario.json",
+        "product-loop-run.json",
+    ],
+    "blocked-missing-brief": ["product-loop-brief-intake-receipt.json"],
+    "blocked-invalid-brief": ["product-loop-brief-intake-receipt.json"],
+    "blocked-missing-developer-vision": ["product-loop-brief-intake-receipt.json"],
+    "blocked-external-scope-expansion": ["product-loop-brief-intake-receipt.json"],
+    "blocked-ai-review-only": ["product-loop-brief-intake-receipt.json"],
+    "blocked-production-mutation": ["product-loop-brief-intake-receipt.json"],
+    "blocked-skip-to-delivery-harness": ["product-loop-brief-intake-receipt.json"],
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -457,6 +481,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-product-spec-eval-authoring-gate.html",
         "generated_asset",
         "Product Spec/Eval Authoring Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-product-loop-brief-intake.json",
+        "generated_asset",
+        "Product Loop Brief Intake Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-product-loop-brief-intake.md",
+        "generated_asset",
+        "Product Loop Brief Intake Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-product-loop-brief-intake.html",
+        "generated_asset",
+        "Product Loop Brief Intake Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1159,6 +1198,11 @@ FILES: list[tuple[str, str, str]] = [
         "Product Loop Harness guide for three-loop product development gating.",
     ),
     (
+        "docs/product-loop-brief-intake.md",
+        "operator_doc",
+        "Product Loop Brief Intake Gate guide for consuming Product Spec/Eval briefs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1372,6 +1416,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/product-loop-run-v1.schema.json",
         "schema",
         "Product Loop Harness run JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
+        "schema",
+        "Product Loop Brief Intake Gate receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -1705,6 +1754,15 @@ FILES: list[tuple[str, str, str]] = [
         "fixture",
         "Product Spec/Eval Authoring Gate pass brief fixture.",
     ),
+    *[
+        (
+            f"fixtures/product-loop-brief-intake/{case_id}/{artifact}",
+            "fixture",
+            f"Product Loop Brief Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PRODUCT_LOOP_BRIEF_INTAKE_CASES
+        for artifact in PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
+    ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
         "fixture",
@@ -2884,6 +2942,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_product_spec_eval_authoring_gate.py",
         "verification",
         "Verify Product Spec/Eval Authoring Gate metadata-only brief boundaries.",
+    ),
+    (
+        "scripts/product_loop_brief_intake.py",
+        "verification",
+        "Build Product Loop Brief Intake fixtures from Product Spec/Eval briefs.",
+    ),
+    (
+        "scripts/verify_product_loop_brief_intake.py",
+        "verification",
+        "Verify Product Loop Brief Intake metadata-only bridge boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
