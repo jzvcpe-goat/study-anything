@@ -1,0 +1,174 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "allow_external_operator_continuation",
+      "next_allowed_action": "prepare_external_operator_work_order",
+      "status": "allowed"
+    },
+    {
+      "blocked_reasons": [
+        "bridge_not_ready"
+      ],
+      "case_id": "blocked-bridge-blocked",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "operator_decision_missing",
+        "operator_active_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-operator-decision",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_or_diff_evidence_request_rejected"
+      ],
+      "case_id": "blocked-raw-patch-evidence-request",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "apply_patch_request_rejected"
+      ],
+      "case_id": "blocked-apply-patch-request",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "open_pr_request_rejected"
+      ],
+      "case_id": "blocked-open-pr-request",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_action_rejected"
+      ],
+      "case_id": "blocked-customer-visible-action",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_external_operator_continuation",
+      "next_allowed_action": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The drill proves a bounded continuation decision can be derived from metadata-only bridge evidence. It does not execute, apply, publish, send, deploy, or certify.",
+    "not_claimed": [
+      "patch content reviewed",
+      "repository changed",
+      "PR opened or commented",
+      "customer handoff approved",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "acceptance_mode_escalated": "acceptance boundary mode must remain decision_receipt_only",
+    "automatic_pr_commenting_performed": "effect_boundary.automatic_pr_commenting_performed must remain false",
+    "external_publication_performed": "effect_boundary.external_publication_performed must remain false",
+    "missing_operator_decision_on_allowed": "allowed acceptance receipt missing check: operator_decision_present",
+    "raw_patch_body_injected": "patch-proposal-acceptance-drill-receipt-v1 includes forbidden raw fields: ['$.raw_patch_body']",
+    "repository_mutation_performed": "effect_boundary.repository_mutation_performed must remain false"
+  },
+  "operator_decision_matrix": {
+    "allowed_continuations": 1,
+    "blocked_continuations": 8,
+    "bridge_not_ready_rejected": true,
+    "customer_visible_action_rejected": true,
+    "external_publication_rejected": true,
+    "missing_operator_decision_rejected": true,
+    "pr_action_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_patch_or_diff_evidence_rejected": true,
+    "repository_mutation_rejected": true,
+    "total_decisions": 9
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_operator_notes_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove an operator can make allow/block continuation decisions from the Patch Proposal Operator Handoff Bridge metadata package alone.",
+  "quality_gates": {
+    "active_operator_reconstruction_required": true,
+    "apply_patch_rejected": true,
+    "customer_visible_action_rejected": true,
+    "external_publication_rejected": true,
+    "metadata_only_bridge_package_required": true,
+    "open_pr_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_patch_or_diff_rejected": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json",
+      "schema_version": "patch-proposal-acceptance-drill-v1",
+      "sha256": "0e1f9ca31529bdece5749ecb29acfd9b5176b5d4feab90d21abfb0293cba1c35"
+    }
+  ],
+  "schema_version": "patch-proposal-acceptance-drill-v1",
+  "source_chain": {
+    "bridge_report": "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+    "ready_bridge_receipt": "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json"
+  },
+  "status": "pass"
+}

@@ -1,0 +1,32 @@
+# Patch Proposal Acceptance Drill
+
+Metadata-only proof that an external operator can derive allow/block continuation decisions from the Patch Proposal Operator Handoff Bridge package alone.
+
+- status: `pass`
+- schema: `patch-proposal-acceptance-drill-v1`
+- cases: `9`
+
+## Claim Boundary
+
+The drill proves a bounded continuation decision can be derived from metadata-only bridge evidence. It does not execute, apply, publish, send, deploy, or certify.
+
+Not claimed:
+- patch content reviewed
+- repository changed
+- PR opened or commented
+- customer handoff approved
+- external publication approved
+- production change approved
+- truth or security certified
+
+## Cases
+
+- `pass`: `allowed` / `allow_external_operator_continuation` / reasons: none
+- `blocked-bridge-blocked`: `blocked` / `block_external_operator_continuation` / reasons: bridge_not_ready
+- `blocked-missing-operator-decision`: `blocked` / `block_external_operator_continuation` / reasons: operator_decision_missing, operator_active_reconstruction_missing
+- `blocked-raw-patch-evidence-request`: `blocked` / `block_external_operator_continuation` / reasons: raw_patch_or_diff_evidence_request_rejected
+- `blocked-apply-patch-request`: `blocked` / `block_external_operator_continuation` / reasons: apply_patch_request_rejected
+- `blocked-open-pr-request`: `blocked` / `block_external_operator_continuation` / reasons: open_pr_request_rejected
+- `blocked-customer-visible-action`: `blocked` / `block_external_operator_continuation` / reasons: customer_visible_action_rejected
+- `blocked-external-publication`: `blocked` / `block_external_operator_continuation` / reasons: external_publication_rejected
+- `blocked-production-mutation`: `blocked` / `block_external_operator_continuation` / reasons: production_mutation_rejected
