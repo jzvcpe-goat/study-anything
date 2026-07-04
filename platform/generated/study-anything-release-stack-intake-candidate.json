@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-326-v0.3.198-operator-handoff-contract-lite",
+    "group_id": "release-stack-intake-pr-328-v0.3.200-support-response-delivery-class-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -33,16 +33,22 @@
       "scripts/verify_trust_scenario_decision_gate.py",
       "docs/code-review-delivery-class.md",
       "docs/client-report-delivery-class.md",
+      "docs/support-response-delivery-class.md",
       "platform/generated/study-anything-code-review-delivery-class.json",
       "platform/generated/study-anything-code-review-delivery-class.html",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
+      "platform/generated/study-anything-support-response-delivery-class.json",
+      "platform/generated/study-anything-support-response-delivery-class.html",
       "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+      "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
       "scripts/code_review_delivery_class_handoff.py",
       "scripts/verify_code_review_delivery_class_handoff.py",
       "scripts/client_report_delivery_class_handoff.py",
       "scripts/verify_client_report_delivery_class_handoff.py",
+      "scripts/support_response_delivery_class_handoff.py",
+      "scripts/verify_support_response_delivery_class_handoff.py",
       "docs/trust-evidence-handoff-pack.md",
       "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -67,6 +73,9 @@
       "docs/client-report-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+      "docs/support-response-operator-handoff-rehearsal.md",
+      "platform/generated/study-anything-support-response-operator-handoff-rehearsal.json",
+      "platform/generated/study-anything-support-response-operator-handoff-rehearsal.md",
       "docs/operator-handoff-rehearsal-contract.md",
       "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
       "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
@@ -80,6 +89,7 @@
       "scripts/verify_customer_delivery_rehearsal.py",
       "scripts/verify_code_review_operator_handoff_rehearsal.py",
       "scripts/verify_client_report_operator_handoff_rehearsal.py",
+      "scripts/verify_support_response_operator_handoff_rehearsal.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -105,7 +115,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.198-operator-handoff-contract-lite",
+        "branch": "codex/v0.3.200-support-response-delivery-class-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -132,16 +142,22 @@
           "scripts/verify_trust_scenario_decision_gate.py",
           "docs/code-review-delivery-class.md",
           "docs/client-report-delivery-class.md",
+          "docs/support-response-delivery-class.md",
           "platform/generated/study-anything-code-review-delivery-class.json",
           "platform/generated/study-anything-code-review-delivery-class.html",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
+          "platform/generated/study-anything-support-response-delivery-class.json",
+          "platform/generated/study-anything-support-response-delivery-class.html",
           "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+          "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
           "scripts/code_review_delivery_class_handoff.py",
           "scripts/verify_code_review_delivery_class_handoff.py",
           "scripts/client_report_delivery_class_handoff.py",
           "scripts/verify_client_report_delivery_class_handoff.py",
+          "scripts/support_response_delivery_class_handoff.py",
+          "scripts/verify_support_response_delivery_class_handoff.py",
           "docs/trust-evidence-handoff-pack.md",
           "platform/generated/study-anything-trust-evidence-handoff-pack.json",
           "platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -166,6 +182,9 @@
           "docs/client-report-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+          "docs/support-response-operator-handoff-rehearsal.md",
+          "platform/generated/study-anything-support-response-operator-handoff-rehearsal.json",
+          "platform/generated/study-anything-support-response-operator-handoff-rehearsal.md",
           "docs/operator-handoff-rehearsal-contract.md",
           "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
           "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
@@ -179,14 +198,15 @@
           "scripts/verify_customer_delivery_rehearsal.py",
           "scripts/verify_code_review_operator_handoff_rehearsal.py",
           "scripts/verify_client_report_operator_handoff_rehearsal.py",
+          "scripts/verify_support_response_operator_handoff_rehearsal.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "d8540c1ff8e7236bb63c7d4b73c5d61d4ff6c20c",
+        "merge_commit": "a52274e6e37648cd46b24478b96767ec625270fb",
         "order": 1,
-        "pr": 326,
+        "pr": 328,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -195,15 +215,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #326: Add Operator Handoff rehearsal contract.",
+    "summary": "Candidate release stack group for PR #328: Add support response delivery class handoff.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.198",
-    "represented_pr_count": 107
+    "current_group": "release-stack-promotion-v0.3.200",
+    "represented_pr_count": 108
   },
   "negative_fixtures": [
     {
