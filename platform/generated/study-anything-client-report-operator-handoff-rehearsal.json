@@ -1,0 +1,339 @@
+{
+  "acceptance": {
+    "markdown_report": "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
+    "minimum_command": "python3 scripts/verify_client_report_operator_handoff_rehearsal.py --check",
+    "report": "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
+    "source_commands": [
+      "python3 scripts/verify_client_report_delivery_class_handoff.py --check",
+      "python3 scripts/verify_customer_delivery_rehearsal.py --check"
+    ]
+  },
+  "claim_boundary": {
+    "current_claim": "A platform Agent or external operator can prepare a Client Report handoff decision from metadata-only evidence when both the delivery class and customer-delivery rehearsal pass.",
+    "not_claimed": [
+      "customer send approval",
+      "actual customer send completed",
+      "automatic customer delivery",
+      "external publication",
+      "production publication",
+      "complete factual correctness",
+      "legal certification",
+      "financial advice certification",
+      "customer outcome guarantee",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "negative_fixtures": [
+    {
+      "case_id": "automatic_customer_sending_performed",
+      "error": "case.ready.automatic_customer_sending_performed must be false",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_ready_case",
+      "error": "rehearsal must include exactly one ready case",
+      "status": "rejected"
+    },
+    {
+      "case_id": "missing_recipient_scope_confirmation",
+      "error": "ready case must include all active confirmations",
+      "status": "rejected"
+    },
+    {
+      "case_id": "blocked_case_without_reason",
+      "error": "blocked case must include at least one reason",
+      "status": "rejected"
+    },
+    {
+      "case_id": "raw_report_text_included",
+      "error": "privacy.raw_report_text_included must be false",
+      "status": "rejected"
+    },
+    {
+      "case_id": "complete_factual_correctness_overclaim",
+      "error": "report claim boundary missing not_claimed items: ['complete factual correctness']",
+      "status": "rejected"
+    }
+  ],
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Rehearse a Client Report delivery-class operator handoff decision by combining the Client Report Delivery Class report and the Customer Delivery Rehearsal, without sending customer messages, publishing externally, mutating production, or reading raw payloads.",
+  "rehearsal": {
+    "blocked_count": 7,
+    "cases": [
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "ready-client-report-operator-decision",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "ready_for_operator_handoff_decision",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 0,
+        "reasons": [],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "ready",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-client-report-class-blocked",
+        "client_report_case_ref": "blocked-missing-reconstruction",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "client_report_delivery_class_blocked"
+        ],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-customer-rehearsal-blocked",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "block-missing-human-scope",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "customer_delivery_rehearsal_blocked"
+        ],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-missing-recipient-scope-confirmation",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": false
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "missing_recipient_scope_bounded"
+        ],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-missing-not-send-approval-understanding",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": false,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "missing_operator_understands_not_send_approval"
+        ],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-automatic-customer-send",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "automatic_customer_send_attempted"
+        ],
+        "requested_action": "automatic_customer_send",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-external-publication",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": true,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 1,
+        "reasons": [
+          "external_publication_attempted"
+        ],
+        "requested_action": "external_publication",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      },
+      {
+        "automatic_customer_sending_performed": false,
+        "case_id": "block-raw-report-requested",
+        "client_report_case_ref": "pass",
+        "customer_rehearsal_case_ref": "ready-manual-scope-confirmed",
+        "customer_visible_effect_performed": false,
+        "decision": "block_operator_handoff",
+        "delivery_class": "client_report_handoff",
+        "external_publication_performed": false,
+        "operator_confirmation_inputs": {
+          "actual_external_delivery_outside_system_only": true,
+          "claim_boundary_visible": true,
+          "client_report_delivery_class_ready": true,
+          "customer_rehearsal_ready": true,
+          "no_raw_report_or_customer_payload_attached": false,
+          "operator_understands_not_send_approval": true,
+          "recipient_scope_bounded": true
+        },
+        "production_mutation_performed": false,
+        "raw_report_or_customer_payload_included": false,
+        "reason_count": 2,
+        "reasons": [
+          "raw_report_or_customer_payload_requested",
+          "missing_no_raw_report_or_customer_payload_attached"
+        ],
+        "requested_action": "prepare_operator_handoff_decision",
+        "requires_human_external_action_outside_system": true,
+        "status": "blocked",
+        "truth_certification_performed": false
+      }
+    ],
+    "delivery_class": "client_report_handoff",
+    "mode": "operator_handoff_decision_only",
+    "operator_exit_criteria": [
+      "exactly_one_ready_case_requires_both_source_reports_to_pass",
+      "every_blocked_case_has_reasons",
+      "automatic_customer_send_attempts_are_blocked",
+      "external_publication_attempts_are_blocked",
+      "raw_report_customer_payload_and_credentials_are_absent",
+      "actual_external_delivery_happens_outside_this_system_only"
+    ],
+    "ready_count": 1
+  },
+  "schema_version": "client-report-operator-handoff-rehearsal-v1",
+  "sources": {
+    "client_report_delivery_class": {
+      "blocked_case_count": 4,
+      "ready_case": "pass",
+      "report": "platform/generated/study-anything-client-report-delivery-class.json",
+      "schema_version": "client-report-delivery-class-verification-v1",
+      "status": "pass"
+    },
+    "customer_delivery_rehearsal": {
+      "blocked_case_count": 5,
+      "ready_case": "ready-manual-scope-confirmed",
+      "report": "platform/generated/study-anything-customer-delivery-rehearsal.json",
+      "schema_version": "customer-delivery-rehearsal-v1",
+      "status": "pass"
+    }
+  },
+  "status": "pass"
+}
