@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-354-v0.3.230-patch-proposal-external-operator-completion-lite",
+    "group_id": "release-stack-intake-pr-356-v0.3.232-patch-proposal-customer-handoff-boundary-gate-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -208,6 +208,27 @@
       "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
       "scripts/patch_proposal_external_operator_completion.py",
       "scripts/verify_patch_proposal_external_operator_completion.py",
+      "docs/patch-proposal-customer-handoff-boundary-gate.md",
+      "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+      "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+      "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+      "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+      "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -256,7 +277,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.230-patch-proposal-external-operator-completion-lite",
+        "branch": "codex/v0.3.232-patch-proposal-customer-handoff-boundary-gate-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -458,6 +479,27 @@
           "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
           "scripts/patch_proposal_external_operator_completion.py",
           "scripts/verify_patch_proposal_external_operator_completion.py",
+          "docs/patch-proposal-customer-handoff-boundary-gate.md",
+          "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+          "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+          "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+          "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+          "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+          "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+          "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -486,9 +528,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "6ed17b6a2e5dbe56cb37cf787dc8adeda0f0d641",
+        "merge_commit": "ef249d40d47340ec75da5e46d789ae700e5e0146",
         "order": 1,
-        "pr": 354,
+        "pr": 356,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -497,15 +539,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #354: [codex] Add patch proposal external operator completion.",
+    "summary": "Candidate release stack group for PR #356: [codex] Add patch proposal customer handoff boundary gate.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.230",
-    "represented_pr_count": 121
+    "current_group": "release-stack-promotion-v0.3.232",
+    "represented_pr_count": 122
   },
   "negative_fixtures": [
     {

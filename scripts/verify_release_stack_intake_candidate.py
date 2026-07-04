@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-354-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-356-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -236,6 +236,27 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
     "scripts/patch_proposal_external_operator_completion.py",
     "scripts/verify_patch_proposal_external_operator_completion.py",
+    "docs/patch-proposal-customer-handoff-boundary-gate.md",
+    "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+    "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
