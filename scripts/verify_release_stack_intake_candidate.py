@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-336-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-338-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -74,6 +74,16 @@ EVIDENCE_REFS = [
     "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json",
     "scripts/product_spec_eval_authoring_gate.py",
     "scripts/verify_product_spec_eval_authoring_gate.py",
+    "docs/product-loop-brief-intake.md",
+    "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
+    "platform/generated/study-anything-product-loop-brief-intake.json",
+    "platform/generated/study-anything-product-loop-brief-intake.md",
+    "platform/generated/study-anything-product-loop-brief-intake.html",
+    "fixtures/product-loop-brief-intake/pass/product-loop-brief-intake-receipt.json",
+    "fixtures/product-loop-brief-intake/pass/product-loop-scenario.json",
+    "fixtures/product-loop-brief-intake/pass/product-loop-run.json",
+    "scripts/product_loop_brief_intake.py",
+    "scripts/verify_product_loop_brief_intake.py",
     "platform/generated/study-anything-release-asset-adoption.json",
     "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
     "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",

@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    336: ROOT / "fixtures" / "release-stack" / "pr-336-intake-candidate.json",
+    338: ROOT / "fixtures" / "release-stack" / "pr-338-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.212"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.210"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.214"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.212"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -89,6 +89,16 @@ POST_MERGE_EVIDENCE_REFS = [
     "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json",
     "scripts/product_spec_eval_authoring_gate.py",
     "scripts/verify_product_spec_eval_authoring_gate.py",
+    "docs/product-loop-brief-intake.md",
+    "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
+    "platform/generated/study-anything-product-loop-brief-intake.json",
+    "platform/generated/study-anything-product-loop-brief-intake.md",
+    "platform/generated/study-anything-product-loop-brief-intake.html",
+    "fixtures/product-loop-brief-intake/pass/product-loop-brief-intake-receipt.json",
+    "fixtures/product-loop-brief-intake/pass/product-loop-scenario.json",
+    "fixtures/product-loop-brief-intake/pass/product-loop-run.json",
+    "scripts/product_loop_brief_intake.py",
+    "scripts/verify_product_loop_brief_intake.py",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-operating-model-loops.json",
     "platform/generated/study-anything-cbb-receipt-chain.json",
@@ -173,7 +183,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    336: [
+    338: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -214,6 +224,16 @@ PR_EVIDENCE_REFS = {
         "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json",
         "scripts/product_spec_eval_authoring_gate.py",
         "scripts/verify_product_spec_eval_authoring_gate.py",
+        "docs/product-loop-brief-intake.md",
+        "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
+        "platform/generated/study-anything-product-loop-brief-intake.json",
+        "platform/generated/study-anything-product-loop-brief-intake.md",
+        "platform/generated/study-anything-product-loop-brief-intake.html",
+        "fixtures/product-loop-brief-intake/pass/product-loop-brief-intake-receipt.json",
+        "fixtures/product-loop-brief-intake/pass/product-loop-scenario.json",
+        "fixtures/product-loop-brief-intake/pass/product-loop-run.json",
+        "scripts/product_loop_brief_intake.py",
+        "scripts/verify_product_loop_brief_intake.py",
         "platform/generated/study-anything-release-asset-adoption.json",
         "platform/generated/study-anything-product-loop-harness.json",
         "platform/generated/study-anything-delivery-trust-case-harness.json",
@@ -437,10 +457,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[336],
-                expected_pr=336,
+                pr_sources[338],
+                expected_pr=338,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[336],
+                evidence_refs=PR_EVIDENCE_REFS[338],
                 require_promotion_commands=True,
             ),
         ],
@@ -491,13 +511,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [334]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #334 audit rows.")
+    if previous_prs != [336]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #336 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #336 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #338 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -584,7 +604,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-336-intake-candidate.json",
+            "fixtures/release-stack/pr-338-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -623,7 +643,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-336-source", type=Path, default=PR_SOURCES[336])
+    parser.add_argument("--pr-338-source", type=Path, default=PR_SOURCES[338])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -633,7 +653,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        336: load_json(args.pr_336_source),
+        338: load_json(args.pr_338_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)
