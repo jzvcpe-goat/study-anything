@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    354: ROOT / "fixtures" / "release-stack" / "pr-354-intake-candidate.json",
+    356: ROOT / "fixtures" / "release-stack" / "pr-356-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.230"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.228"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.232"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.230"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -252,6 +252,27 @@ POST_MERGE_EVIDENCE_REFS = [
     "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
     "scripts/patch_proposal_external_operator_completion.py",
     "scripts/verify_patch_proposal_external_operator_completion.py",
+    "docs/patch-proposal-customer-handoff-boundary-gate.md",
+    "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+    "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+    "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+    "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -279,7 +300,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    354: [
+    356: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -480,6 +501,27 @@ PR_EVIDENCE_REFS = {
         "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
         "scripts/patch_proposal_external_operator_completion.py",
         "scripts/verify_patch_proposal_external_operator_completion.py",
+        "docs/patch-proposal-customer-handoff-boundary-gate.md",
+        "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+        "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+        "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+        "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
         "docs/code-review-operator-handoff-rehearsal.md",
         "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
         "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -634,7 +676,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the Patch Proposal External Operator Completion evidence chain.",
+        "summary": "Completed self-intake for the Patch Proposal Customer-Handoff Boundary Gate evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -649,10 +691,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[354],
-                expected_pr=354,
+                pr_sources[356],
+                expected_pr=356,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[354],
+                evidence_refs=PR_EVIDENCE_REFS[356],
                 require_promotion_commands=True,
             ),
         ],
@@ -703,13 +745,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [352]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #352 audit rows.")
+    if previous_prs != [354]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #354 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #354 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #356 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -796,7 +838,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-354-intake-candidate.json",
+            "fixtures/release-stack/pr-356-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -835,7 +877,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-354-source", type=Path, default=PR_SOURCES[354])
+    parser.add_argument("--pr-356-source", type=Path, default=PR_SOURCES[356])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -845,7 +887,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        354: load_json(args.pr_354_source),
+        356: load_json(args.pr_356_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)
