@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal External Work Order Pack</title>
+<body><pre># Patch Proposal External Work Order Pack
+
+Metadata-only proof that an allowed Patch Proposal Acceptance Drill can become a bounded external operator work-order package.
+
+- status: `pass`
+- schema: `patch-proposal-external-work-order-pack-v1`
+- cases: `10`
+
+## Claim Boundary
+
+The pack proves a bounded work-order package can be emitted for a host operator. It does not execute, apply, open PRs, comment, publish, send, deploy, or certify.
+
+Not claimed:
+- patch content included
+- repository changed
+- PR opened or commented
+- customer handoff approved
+- external publication approved
+- production change approved
+- truth or security certified
+
+## Cases
+
+- `pass`: `ready` / `emit_external_operator_work_order_pack` / reasons: none
+- `blocked-acceptance-blocked`: `blocked` / `block_external_operator_work_order_pack` / reasons: acceptance_not_allowed
+- `blocked-missing-work-order-purpose`: `blocked` / `block_external_operator_work_order_pack` / reasons: work_order_purpose_missing, operator_reconstruction_missing
+- `blocked-raw-patch-request`: `blocked` / `block_external_operator_work_order_pack` / reasons: raw_patch_or_diff_request_rejected
+- `blocked-apply-patch-request`: `blocked` / `block_external_operator_work_order_pack` / reasons: apply_patch_request_rejected
+- `blocked-open-pr-request`: `blocked` / `block_external_operator_work_order_pack` / reasons: open_pr_request_rejected
+- `blocked-pr-comment-request`: `blocked` / `block_external_operator_work_order_pack` / reasons: pr_comment_request_rejected
+- `blocked-customer-visible-action`: `blocked` / `block_external_operator_work_order_pack` / reasons: customer_visible_action_rejected
+- `blocked-external-publication`: `blocked` / `block_external_operator_work_order_pack` / reasons: external_publication_rejected
+- `blocked-production-mutation`: `blocked` / `block_external_operator_work_order_pack` / reasons: production_mutation_rejected
+</pre></body></html>

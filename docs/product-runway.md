@@ -98,6 +98,11 @@ The completed chain now has these layers:
   operator, while raw patch evidence requests, apply-patch requests, PR actions,
   customer-visible action, external publication, and production mutation are
   blocked.
+- Patch Proposal External Work Order Pack: an allowed acceptance drill can emit
+  only a metadata-only work-order package for a host platform operator, while
+  raw patch bodies, raw diffs, automatic application, PR opening/commenting,
+  customer-visible action, external publication, and production mutation remain
+  blocked inside this system.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -139,10 +144,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal External Work Order Pack:
-consume an allowed Patch Proposal Acceptance Drill receipt and emit a
-metadata-only work-order package that a host platform operator can carry outside
-Study Anything / Cognitive Black Box, while still blocking raw patch bodies,
-automatic application, PR actions, customer-visible content, external
-publication, and production mutation inside this system.
+Patch Proposal External Operator Completion Receipt:
+consume a completed host-operator work-order summary and prove only the
+metadata-level completion boundary can re-enter Study Anything / Cognitive
+Black Box, while raw patch bodies, raw diffs, repository file bodies, PR
+comments, customer-visible content, external publication payloads, production
+payloads, secrets, and model credentials remain blocked.
 ```

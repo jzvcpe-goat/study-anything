@@ -1,0 +1,185 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "emit_external_operator_work_order_pack",
+      "status": "ready",
+      "work_order_purpose": "continue_patch_proposal_outside_cbb_under_local_controls"
+    },
+    {
+      "blocked_reasons": [
+        "acceptance_not_allowed"
+      ],
+      "case_id": "blocked-acceptance-blocked",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "work_order_purpose_missing",
+        "operator_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-work-order-purpose",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_or_diff_request_rejected"
+      ],
+      "case_id": "blocked-raw-patch-request",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "apply_patch_request_rejected"
+      ],
+      "case_id": "blocked-apply-patch-request",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "open_pr_request_rejected"
+      ],
+      "case_id": "blocked-open-pr-request",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "pr_comment_request_rejected"
+      ],
+      "case_id": "blocked-pr-comment-request",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_action_rejected"
+      ],
+      "case_id": "blocked-customer-visible-action",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_external_operator_work_order_pack",
+      "status": "blocked",
+      "work_order_purpose": null
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The pack proves a bounded work-order package can be emitted for a host operator. It does not execute, apply, open PRs, comment, publish, send, deploy, or certify.",
+    "not_claimed": [
+      "patch content included",
+      "repository changed",
+      "PR opened or commented",
+      "customer handoff approved",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_pr_opening_performed": "effect_boundary.automatic_pr_opening_performed must remain false",
+    "external_publication_performed": "effect_boundary.external_publication_performed must remain false",
+    "missing_acceptance_on_ready": "ready work-order receipt missing check: acceptance_allowed",
+    "raw_work_order_body_injected": "patch-proposal-external-work-order-receipt-v1 includes forbidden raw fields: ['$.raw_work_order_body']",
+    "repository_mutation_performed": "effect_boundary.repository_mutation_performed must remain false",
+    "work_order_package_type_escalated": "work order package_type must remain metadata-only"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_operator_notes_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove an allowed Patch Proposal Acceptance Drill can become a metadata-only external operator work-order package without executing or publishing anything.",
+  "quality_gates": {
+    "allowed_acceptance_required": true,
+    "apply_patch_rejected": true,
+    "customer_visible_action_rejected": true,
+    "external_publication_rejected": true,
+    "metadata_only_work_order_required": true,
+    "operator_reconstruction_required": true,
+    "pr_actions_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_patch_or_diff_rejected": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-external-work-order-pack-v1.schema.json",
+      "schema_version": "patch-proposal-external-work-order-pack-v1",
+      "sha256": "6d8debdb4dedb11beaefdaa9d1d2970bbb72a5b202499c6b1fd8a5d436981bf2"
+    }
+  ],
+  "schema_version": "patch-proposal-external-work-order-pack-v1",
+  "source_chain": {
+    "acceptance_report": "platform/generated/study-anything-patch-proposal-acceptance-drill.json",
+    "allowed_acceptance_receipt": "fixtures/patch-proposal-acceptance-drill/pass/patch-proposal-acceptance-drill-receipt.json"
+  },
+  "status": "pass",
+  "work_order_matrix": {
+    "acceptance_not_allowed_rejected": true,
+    "apply_patch_rejected": true,
+    "blocked_work_orders": 9,
+    "customer_visible_action_rejected": true,
+    "external_publication_rejected": true,
+    "missing_purpose_rejected": true,
+    "open_pr_rejected": true,
+    "pr_comment_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_patch_or_diff_rejected": true,
+    "ready_work_orders": 1,
+    "total_cases": 10
+  }
+}
