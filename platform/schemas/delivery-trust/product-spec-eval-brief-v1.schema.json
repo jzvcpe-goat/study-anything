@@ -1,0 +1,102 @@
+{
+  "$id": "product-spec-eval-brief-v1",
+  "additionalProperties": true,
+  "properties": {
+    "acceptance_criteria_refs": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "blocked_destinations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "brief_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "destination": {
+      "const": "product_spec_eval_brief"
+    },
+    "eval_plan_refs": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "loop": {
+      "const": "developer_feedback_loop"
+    },
+    "next_boundary": {
+      "const": "product_loop_harness_candidate"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "quality_gates": {
+      "type": "object"
+    },
+    "ready_for_delivery_trust_harness": {
+      "const": false
+    },
+    "ready_for_execution": {
+      "const": false
+    },
+    "ready_for_product_loop_harness": {
+      "const": true
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "product-spec-eval-brief-v1"
+    },
+    "source_backlog_item_id": {
+      "type": "string"
+    },
+    "source_candidate_hash": {
+      "type": "string"
+    },
+    "source_candidate_id": {
+      "type": "string"
+    },
+    "source_delivery_class": {
+      "type": "string"
+    },
+    "spec_ref": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "brief_id",
+    "source_candidate_id",
+    "source_candidate_hash",
+    "source_backlog_item_id",
+    "source_delivery_class",
+    "feedback_ref",
+    "loop",
+    "destination",
+    "next_boundary",
+    "spec_ref",
+    "acceptance_criteria_refs",
+    "eval_plan_refs",
+    "quality_gates",
+    "ready_for_product_loop_harness",
+    "ready_for_execution",
+    "ready_for_delivery_trust_harness",
+    "blocked_destinations",
+    "privacy",
+    "runtime",
+    "claim_boundary"
+  ],
+  "type": "object"
+}

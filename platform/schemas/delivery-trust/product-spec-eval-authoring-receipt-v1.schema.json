@@ -1,0 +1,99 @@
+{
+  "$id": "product-spec-eval-authoring-receipt-v1",
+  "additionalProperties": true,
+  "properties": {
+    "authoring_policy": {
+      "type": "object"
+    },
+    "authoring_reconstruction": {
+      "type": "object"
+    },
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "brief": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "create_product_spec_eval_brief",
+        "block_product_spec_eval_authoring"
+      ],
+      "type": "string"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "requested_transition": {
+      "type": "object"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "product-spec-eval-authoring-receipt-v1"
+    },
+    "source_backlog_item_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_delivery_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "authored_spec_eval_brief",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "source_candidate_id",
+    "source_candidate_hash",
+    "source_backlog_item_id",
+    "source_delivery_class",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "authoring_reconstruction",
+    "requested_transition",
+    "authoring_policy",
+    "brief",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "type": "object"
+}
