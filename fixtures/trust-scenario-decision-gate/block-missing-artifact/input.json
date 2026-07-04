@@ -1,0 +1,24 @@
+{
+  "active_checkpoints": [
+    "failure_boundary_reconstruction",
+    "risk_budget_reconstruction",
+    "recipient_scope_reconstruction",
+    "claim_boundary_reconstruction"
+  ],
+  "expected_decision": "block_controlled_client_report_handoff",
+  "expected_reasons": [
+    "required_artifacts_missing"
+  ],
+  "expected_status": "blocked",
+  "provided_artifacts": [
+    "failure-contract-v1",
+    "sandbox-receipt-v1",
+    "attention-reconstruction-trace-v1",
+    "attention-reconstruction-summary-v1",
+    "dual-loop-gate-receipt-v1",
+    "delivery-trust-case-v1",
+    "client-report-handoff-case-v1"
+  ],
+  "requested_shortcuts": [],
+  "scenario_id": "controlled_client_report_handoff"
+}

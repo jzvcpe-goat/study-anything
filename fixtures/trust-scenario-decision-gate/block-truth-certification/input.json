@@ -1,0 +1,18 @@
+{
+  "active_checkpoints": [
+    "claim_boundary_reconstruction",
+    "recipient_scope_reconstruction"
+  ],
+  "expected_decision": "block_certified_truth_claim",
+  "expected_reasons": [
+    "scenario_not_supported",
+    "forbidden_shortcut_requested",
+    "autonomy_ceiling_blocks_handoff"
+  ],
+  "expected_status": "blocked",
+  "provided_artifacts": [],
+  "requested_shortcuts": [
+    "truth_certification"
+  ],
+  "scenario_id": "blocked_certified_truth_claim"
+}

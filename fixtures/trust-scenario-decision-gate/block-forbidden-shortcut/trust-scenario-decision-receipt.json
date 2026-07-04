@@ -1,0 +1,92 @@
+{
+  "autonomy_ceiling": "advisory_handoff_only",
+  "blocked_shortcuts": [
+    "merge_approval"
+  ],
+  "catalog_ref": {
+    "path": "platform/generated/study-anything-trust-scenario-catalog.json",
+    "scenario_count": 4,
+    "sha256": "e1932ebfa0fbb9eb4129447115501db9a62497e1b4dd2f6a1d7cfb0bc76573cd"
+  },
+  "claim_boundary": {
+    "current_claim": "This receipt records a metadata-only scenario handoff decision. It does not certify factual truth, approve production mutation, send customer messages, or replace customer-specific review.",
+    "not_claimed": [
+      "production approval",
+      "automatic customer sending",
+      "external publication",
+      "truth certification",
+      "model quality proof"
+    ]
+  },
+  "customer_visible": false,
+  "decision": "block_controlled_code_review_handoff",
+  "loop_gate": {
+    "both_loops_required": true,
+    "human_reconstruction_alone_is_insufficient": true,
+    "loop_dominance_allowed": false,
+    "passive_attention_is_insufficient": true,
+    "sandbox_pass_alone_is_insufficient": true
+  },
+  "missing_active_reconstruction_checkpoints": [],
+  "missing_artifacts": [],
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "provided_active_reconstruction_checkpoints": [
+    "failure_boundary_reconstruction",
+    "recipient_scope_reconstruction",
+    "risk_budget_reconstruction"
+  ],
+  "provided_artifacts": [
+    "attention-reconstruction-summary-v1",
+    "attention-reconstruction-trace-v1",
+    "code-review-handoff-case-v1",
+    "delivery-trust-case-v1",
+    "dual-loop-gate-receipt-v1",
+    "failure-contract-v1",
+    "sandbox-receipt-v1"
+  ],
+  "reasons": [
+    "forbidden_shortcut_requested"
+  ],
+  "recipient_class": "maintainer_or_developer",
+  "requested_shortcuts": [
+    "merge_approval"
+  ],
+  "required_active_reconstruction_checkpoints": [
+    "failure_boundary_reconstruction",
+    "risk_budget_reconstruction",
+    "recipient_scope_reconstruction"
+  ],
+  "required_artifacts": [
+    "failure-contract-v1",
+    "sandbox-receipt-v1",
+    "attention-reconstruction-trace-v1",
+    "attention-reconstruction-summary-v1",
+    "dual-loop-gate-receipt-v1",
+    "delivery-trust-case-v1",
+    "code-review-handoff-case-v1"
+  ],
+  "scenario_disposition": "supported_controlled_handoff",
+  "scenario_id": "controlled_code_review_handoff",
+  "schema_version": "trust-scenario-decision-v1",
+  "status": "blocked",
+  "version": "v0.3.31-alpha"
+}

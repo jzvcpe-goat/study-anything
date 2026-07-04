@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Trust Scenario Decision Gate</title>
+<body>
+<h1>Trust Scenario Decision Gate</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;acceptance&quot;: {
+    &quot;cli_command&quot;: &quot;python3 scripts/trust_scenario_decision_gate.py evaluate --scenario-id ...&quot;,
+    &quot;fixture_dir&quot;: &quot;fixtures/trust-scenario-decision-gate&quot;,
+    &quot;minimum_command&quot;: &quot;python3 scripts/verify_trust_scenario_decision_gate.py --check&quot;,
+    &quot;report&quot;: &quot;platform/generated/study-anything-trust-scenario-decision-gate.json&quot;
+  },
+  &quot;allowed_case_count&quot;: 2,
+  &quot;blocked_case_count&quot;: 5,
+  &quot;case_count&quot;: 7,
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_shortcut_count&quot;: 0,
+      &quot;case_id&quot;: &quot;allow-code-review&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_code_review_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 0,
+      &quot;scenario_id&quot;: &quot;controlled_code_review_handoff&quot;,
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 0,
+      &quot;case_id&quot;: &quot;allow-client-report&quot;,
+      &quot;decision&quot;: &quot;allow_controlled_client_report_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 0,
+      &quot;scenario_id&quot;: &quot;controlled_client_report_handoff&quot;,
+      &quot;status&quot;: &quot;allowed&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 0,
+      &quot;case_id&quot;: &quot;block-missing-artifact&quot;,
+      &quot;decision&quot;: &quot;block_controlled_client_report_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 1,
+      &quot;reason_count&quot;: 1,
+      &quot;scenario_id&quot;: &quot;controlled_client_report_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 1,
+      &quot;case_id&quot;: &quot;block-forbidden-shortcut&quot;,
+      &quot;decision&quot;: &quot;block_controlled_code_review_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 1,
+      &quot;scenario_id&quot;: &quot;controlled_code_review_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 0,
+      &quot;case_id&quot;: &quot;block-passive-attention&quot;,
+      &quot;decision&quot;: &quot;block_controlled_code_review_handoff&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 1,
+      &quot;scenario_id&quot;: &quot;controlled_code_review_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 1,
+      &quot;case_id&quot;: &quot;block-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_direct_production_mutation&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 3,
+      &quot;scenario_id&quot;: &quot;blocked_direct_production_mutation&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_shortcut_count&quot;: 1,
+      &quot;case_id&quot;: &quot;block-truth-certification&quot;,
+      &quot;decision&quot;: &quot;block_certified_truth_claim&quot;,
+      &quot;missing_artifact_count&quot;: 0,
+      &quot;reason_count&quot;: 3,
+      &quot;scenario_id&quot;: &quot;blocked_certified_truth_claim&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;The gate turns the Trust Scenario Catalog into deterministic local handoff receipts. It does not prove adoption, factual truth, or permission to mutate production.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;production approval&quot;,
+      &quot;customer sending&quot;,
+      &quot;external publication&quot;,
+      &quot;truth certification&quot;,
+      &quot;model quality proof&quot;
+    ]
+  },
+  &quot;gate_rules&quot;: {
+    &quot;forbidden_shortcuts_block&quot;: true,
+    &quot;production_mutation_blocks&quot;: true,
+    &quot;structured_artifact_bridge_only&quot;: true,
+    &quot;supported_scenario_requires_active_reconstruction&quot;: true,
+    &quot;supported_scenario_requires_all_artifacts&quot;: true,
+    &quot;truth_certification_blocks&quot;: true,
+    &quot;unsupported_scenarios_block&quot;: true
+  },
+  &quot;privacy&quot;: {
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_review_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;schema_version&quot;: &quot;trust-scenario-decision-gate-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "active_checkpoints": [
+    "failure_boundary_reconstruction",
+    "risk_budget_reconstruction"
+  ],
+  "expected_decision": "block_direct_production_mutation",
+  "expected_reasons": [
+    "scenario_not_supported",
+    "forbidden_shortcut_requested",
+    "autonomy_ceiling_blocks_handoff"
+  ],
+  "expected_status": "blocked",
+  "provided_artifacts": [],
+  "requested_shortcuts": [
+    "production_mutation"
+  ],
+  "scenario_id": "blocked_direct_production_mutation"
+}

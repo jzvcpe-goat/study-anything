@@ -193,6 +193,7 @@ python3 scripts/verify_code_review_delivery_class_handoff.py --check
 python3 scripts/verify_client_report_delivery_class_handoff.py --check
 python3 scripts/verify_delivery_class_registry.py --check
 python3 scripts/verify_trust_scenario_catalog.py --check
+python3 scripts/verify_trust_scenario_decision_gate.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -228,3 +229,8 @@ The Trust Scenario Catalog command maps the registered classes into supported
 and blocked AI delivery scenarios. It proves the current handoff ceiling for
 each scenario and rejects direct production mutation, certified truth claims,
 AI-review-only shortcuts, and loop dominance.
+
+The Trust Scenario Decision Gate command turns those scenarios into deterministic
+local allow/block receipts. It proves missing artifacts, incomplete active
+reconstruction, forbidden shortcuts, production mutation, and truth certification
+remain blocked before any handoff claim is made.
