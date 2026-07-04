@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-342-v0.3.218-real-adopter-scenario-import-lite",
+    "group_id": "release-stack-intake-pr-344-v0.3.220-spec-eval-scenario-execution-rehearsal-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -139,6 +139,14 @@
       "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
       "scripts/real_adopter_scenario_import.py",
       "scripts/verify_real_adopter_scenario_import.py",
+      "docs/spec-eval-scenario-execution-rehearsal.md",
+      "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
+      "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+      "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md",
+      "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
+      "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
+      "scripts/spec_eval_scenario_execution_rehearsal.py",
+      "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -187,7 +195,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.218-real-adopter-scenario-import-lite",
+        "branch": "codex/v0.3.220-spec-eval-scenario-execution-rehearsal-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -320,6 +328,14 @@
           "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
           "scripts/real_adopter_scenario_import.py",
           "scripts/verify_real_adopter_scenario_import.py",
+          "docs/spec-eval-scenario-execution-rehearsal.md",
+          "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
+          "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+          "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md",
+          "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
+          "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
+          "scripts/spec_eval_scenario_execution_rehearsal.py",
+          "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -348,9 +364,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "76c16ed4a27512efd6c532f58004695ce4572fcc",
+        "merge_commit": "59e0a9f6a135ea1286b4f5f1c64b998f1ced6601",
         "order": 1,
-        "pr": 342,
+        "pr": 344,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -359,15 +375,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #342: Add real-adopter scenario import harness.",
+    "summary": "Candidate release stack group for PR #344: Add spec eval execution rehearsal harness.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.218",
-    "represented_pr_count": 115
+    "current_group": "release-stack-promotion-v0.3.220",
+    "represented_pr_count": 116
   },
   "negative_fixtures": [
     {
