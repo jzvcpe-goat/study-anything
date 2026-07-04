@@ -5,7 +5,7 @@
 - Version: `v0.3.31-alpha`
 - Scenario class: `customer_delivery_readiness`
 - File count: `78`
-- Archive SHA-256: `b42900b3f69c64cded7789820a3e42878bf258648c15aa19dc9295b53df850a7`
+- Archive SHA-256: `b12d7723047646c538f64a1cb4ae854d630fc4865d880211eb88046943743fcc`
 
 ## Trust Rules
 
