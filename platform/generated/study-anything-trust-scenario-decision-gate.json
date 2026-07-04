@@ -1,0 +1,118 @@
+{
+  "acceptance": {
+    "cli_command": "python3 scripts/trust_scenario_decision_gate.py evaluate --scenario-id ...",
+    "fixture_dir": "fixtures/trust-scenario-decision-gate",
+    "minimum_command": "python3 scripts/verify_trust_scenario_decision_gate.py --check",
+    "report": "platform/generated/study-anything-trust-scenario-decision-gate.json"
+  },
+  "allowed_case_count": 2,
+  "blocked_case_count": 5,
+  "case_count": 7,
+  "case_reports": [
+    {
+      "blocked_shortcut_count": 0,
+      "case_id": "allow-code-review",
+      "decision": "allow_controlled_code_review_handoff",
+      "missing_artifact_count": 0,
+      "reason_count": 0,
+      "scenario_id": "controlled_code_review_handoff",
+      "status": "allowed"
+    },
+    {
+      "blocked_shortcut_count": 0,
+      "case_id": "allow-client-report",
+      "decision": "allow_controlled_client_report_handoff",
+      "missing_artifact_count": 0,
+      "reason_count": 0,
+      "scenario_id": "controlled_client_report_handoff",
+      "status": "allowed"
+    },
+    {
+      "blocked_shortcut_count": 0,
+      "case_id": "block-missing-artifact",
+      "decision": "block_controlled_client_report_handoff",
+      "missing_artifact_count": 1,
+      "reason_count": 1,
+      "scenario_id": "controlled_client_report_handoff",
+      "status": "blocked"
+    },
+    {
+      "blocked_shortcut_count": 1,
+      "case_id": "block-forbidden-shortcut",
+      "decision": "block_controlled_code_review_handoff",
+      "missing_artifact_count": 0,
+      "reason_count": 1,
+      "scenario_id": "controlled_code_review_handoff",
+      "status": "blocked"
+    },
+    {
+      "blocked_shortcut_count": 0,
+      "case_id": "block-passive-attention",
+      "decision": "block_controlled_code_review_handoff",
+      "missing_artifact_count": 0,
+      "reason_count": 1,
+      "scenario_id": "controlled_code_review_handoff",
+      "status": "blocked"
+    },
+    {
+      "blocked_shortcut_count": 1,
+      "case_id": "block-production-mutation",
+      "decision": "block_direct_production_mutation",
+      "missing_artifact_count": 0,
+      "reason_count": 3,
+      "scenario_id": "blocked_direct_production_mutation",
+      "status": "blocked"
+    },
+    {
+      "blocked_shortcut_count": 1,
+      "case_id": "block-truth-certification",
+      "decision": "block_certified_truth_claim",
+      "missing_artifact_count": 0,
+      "reason_count": 3,
+      "scenario_id": "blocked_certified_truth_claim",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The gate turns the Trust Scenario Catalog into deterministic local handoff receipts. It does not prove adoption, factual truth, or permission to mutate production.",
+    "not_claimed": [
+      "production approval",
+      "customer sending",
+      "external publication",
+      "truth certification",
+      "model quality proof"
+    ]
+  },
+  "gate_rules": {
+    "forbidden_shortcuts_block": true,
+    "production_mutation_blocks": true,
+    "structured_artifact_bridge_only": true,
+    "supported_scenario_requires_active_reconstruction": true,
+    "supported_scenario_requires_all_artifacts": true,
+    "truth_certification_blocks": true,
+    "unsupported_scenarios_block": true
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "trust-scenario-decision-gate-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

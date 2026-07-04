@@ -287,6 +287,7 @@ Current code-review scope:
 - `python3 scripts/verify_client_report_delivery_class_handoff.py --check`
 - `python3 scripts/verify_delivery_class_registry.py --check`
 - `python3 scripts/verify_trust_scenario_catalog.py --check`
+- `python3 scripts/verify_trust_scenario_decision_gate.py --check`
 - v0.1 is advisory only; soft gate and hard gate adoption are later opt-in phases.
 - Code Review Delivery Class handoff is metadata-only and can allow controlled
   handoff evidence only; it does not approve merge, deploy, automatic PR
@@ -301,6 +302,9 @@ Current code-review scope:
 - Trust Scenario Catalog is metadata-only and verifies supported and blocked AI
   delivery scenarios as a protocol matrix; it does not approve production
   delivery, customer sending, or truth certification.
+- Trust Scenario Decision Gate is metadata-only and emits deterministic local
+  allow/block receipts from scenario, artifact, checkpoint, and shortcut
+  metadata; it does not read raw customer/source content or mutate production.
 
 当前代码审查范围：
 
@@ -312,6 +316,7 @@ Current code-review scope:
 - `python3 scripts/verify_client_report_delivery_class_handoff.py --check`
 - `python3 scripts/verify_delivery_class_registry.py --check`
 - `python3 scripts/verify_trust_scenario_catalog.py --check`
+- `python3 scripts/verify_trust_scenario_decision_gate.py --check`
 - v0.1 仅做咨询；soft gate 和 hard gate 是后续可选升级阶段。
 - Code Review Delivery Class handoff 只含 metadata，只能允许受控交付证据；
   它不批准合并、部署、自动 PR 评论、自动发客户或安全认证。
@@ -322,6 +327,9 @@ Current code-review scope:
   它不批准生产交付，也不认证内容真实性。
 - Trust Scenario Catalog 只含 metadata，用来验证当前支持和阻断的 AI 交付
   场景矩阵；它不批准生产交付、自动发客户或认证内容真实性。
+- Trust Scenario Decision Gate 只含 metadata，会根据场景、artifact、checkpoint
+  和 shortcut metadata 生成确定性的允许/阻断 receipt；它不读取客户/来源原文，也不
+  修改生产环境。
 
 ## Phase 6: Professional HTML Artifact Mode
 

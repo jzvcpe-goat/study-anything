@@ -375,6 +375,16 @@ FILES: list[tuple[str, str, str]] = [
         "Trust Scenario Catalog static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-trust-scenario-decision-gate.json",
+        "generated_asset",
+        "Trust Scenario Decision Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-trust-scenario-decision-gate.html",
+        "generated_asset",
+        "Trust Scenario Decision Gate static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -1073,6 +1083,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/trust-scenario-catalog.md",
         "operator_doc",
         "Trust Scenario Catalog guide for supported and blocked AI delivery scenarios.",
+    ),
+    (
+        "docs/trust-scenario-decision-gate.md",
+        "operator_doc",
+        "Trust Scenario Decision Gate guide for deterministic local scenario handoff receipts.",
     ),
     (
         "docs/trust-model.md",
@@ -2398,6 +2413,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_trust_scenario_catalog.py",
         "verification",
         "Verify Trust Scenario Catalog assets, delivery-class alignment, release gates, and privacy boundaries.",
+    ),
+    (
+        "scripts/trust_scenario_decision_gate.py",
+        "cli",
+        "Evaluate metadata-only Trust Scenario Catalog handoff decisions.",
+    ),
+    (
+        "scripts/verify_trust_scenario_decision_gate.py",
+        "verification",
+        "Verify Trust Scenario Decision Gate fixtures, reports, CLI behavior, and privacy boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",

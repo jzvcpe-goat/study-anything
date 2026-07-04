@@ -6,7 +6,7 @@
 - Scenario class: `controlled_customer_handoff`
 - Case count: `5`
 - File count: `58`
-- Archive SHA-256: `9a3118171bca0efacb86f5d7de51c12f1c2d7d9a6ff5defc1cf28ed5b5c0de3c`
+- Archive SHA-256: `ae4a0f9403f836413974aad68978758a7d715ad2b36c90c8eeaf45ac024feb59`
 
 ## Trust Rules
 
