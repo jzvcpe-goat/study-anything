@@ -32,6 +32,8 @@ The completed chain now has these layers:
 - Trust Evidence Acceptance Drill: allow/block rehearsal from packaged evidence;
 - Controlled Handoff Runbook: controlled handoff preparation steps;
 - Customer Delivery Trust Envelope: pre-customer-send envelope boundary.
+- Customer Delivery Rehearsal: ready/block rehearsal before any customer-visible
+  action.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -81,5 +83,5 @@ customer, mutating production, or reading raw payloads.
 
 After that, move to a real operator handoff rehearsal for one delivery class,
 such as code-review handoff or client-report handoff, and prove that a human can
-use the envelope to decide whether the result is safe to send outside this
-system.
+use the rehearsal output to decide whether the result is safe to send outside
+this system.

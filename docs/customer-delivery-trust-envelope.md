@@ -27,6 +27,10 @@ It emits:
 - `platform/generated/study-anything-customer-delivery-trust-envelope.json`
 - `platform/generated/study-anything-customer-delivery-trust-envelope.md`
 
+The next boundary is `docs/customer-delivery-rehearsal.md`, which may rehearse a
+ready/block decision from the envelope but still must not send anything to a
+customer.
+
 ## Boundary
 
 The envelope is metadata-only. It does not call models, start a daemon, mutate
