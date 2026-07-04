@@ -140,7 +140,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-policy.json",
       "purpose": "Release-stack recursion guard and product runway verification report.",
-      "sha256": "9c5ad3fe1f5c8089f0d9dc286bceefb91bb58f5a733335af3b11491362e3a7ca"
+      "sha256": "ea43ad58d1130b096abf464ce2ba3a9485bcbfcf056cbb3574f66e5eeb3e6f6d"
     },
     {
       "bytes": 3502,
@@ -1155,21 +1155,21 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "9dec3139c9828589fcf36b3491720d90e82f7e89a3d3ab137dcc8ecc7e40c3ba"
+      "sha256": "bd987de79ff29cff53f714674bdf0f8c482b4e9b71adf08051495214aea80c87"
     },
     {
-      "bytes": 45748,
+      "bytes": 45736,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "5126c212954ef2be7e1b5c3680a7e1725c95179c848a09ccde0d7d55ae3f7b56"
+      "sha256": "d933934b08f4b92ec742719b0396db2b673fa1a40cdffc7add5c1af78ab65099"
     },
     {
       "bytes": 2497,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "e7d7f910aea1bfe4c9e340c45fbfcdd561100dfa1f7c3c41a1f9ff3eb816845f"
+      "sha256": "bd873120b87e6950c2254fce33bc301300adad02cea2723bdc27cd37542acda8"
     },
     {
       "bytes": 92945,
@@ -6713,14 +6713,14 @@
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "ee9f67c458816e37ba1d70b1ca5060dd7efc36587f2ed382d2dc804d272716d1"
+      "sha256": "47a0cea92f19c8588f8e2739f7f85333467ecd11dcedeec3eaa08c102b669625"
     },
     {
-      "bytes": 57760,
+      "bytes": 59516,
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "68cf1c200f50a87b553990d0ddb0c11d28db1ee2f032c8b3f5fb6d57c6f1927d"
+      "sha256": "f2095ab08aa3f968f45792b10c9d55e84ef3330b5f857e88a2668387ce398454"
     },
     {
       "bytes": 1138,
@@ -7276,11 +7276,11 @@
       "sha256": "292e55bd1ffcb3abebeae4924621219e62d60315da9c84d85beba6c914c4fb7d"
     },
     {
-      "bytes": 1144,
+      "bytes": 1136,
       "kind": "fixture",
-      "path": "fixtures/release-stack/pr-356-intake-candidate.json",
-      "purpose": "Redacted release stack intake candidate fixture for PR 356.",
-      "sha256": "4fa5005d0bd1aa25a004eb0768f9c8403d7b161360f86ce7fbae504452429efe"
+      "path": "fixtures/release-stack/pr-358-intake-candidate.json",
+      "purpose": "Redacted release stack intake candidate fixture for PR 358.",
+      "sha256": "9d650efe8e48b54b4c583319f3420e87878d4d066e5d95836775b8b67ee853cc"
     },
     {
       "bytes": 25229,
@@ -7917,7 +7917,7 @@
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "5ba5529bee174c51f4dfcb9e78aea5a9667b7023b9499c809cd00acb084b0895"
+      "sha256": "53cd8ffd121d59c6b69e13cde6c99bf8dd6439746ae962f3801e37b614eddcd2"
     },
     {
       "bytes": 68921,
