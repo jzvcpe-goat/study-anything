@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-346-v0.3.222-sandboxed-patch-proposal-rehearsal-lite",
+    "group_id": "release-stack-intake-pr-348-v0.3.224-patch-proposal-operator-handoff-bridge-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -155,6 +155,14 @@
       "fixtures/sandboxed-patch-proposal-rehearsal/pass/sandboxed-patch-proposal-envelope.json",
       "scripts/sandboxed_patch_proposal_rehearsal.py",
       "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
+      "docs/patch-proposal-operator-handoff-bridge.md",
+      "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+      "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+      "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.md",
+      "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
+      "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
+      "scripts/patch_proposal_operator_handoff_bridge.py",
+      "scripts/verify_patch_proposal_operator_handoff_bridge.py",
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -203,7 +211,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.222-sandboxed-patch-proposal-rehearsal-lite",
+        "branch": "codex/v0.3.224-patch-proposal-operator-handoff-bridge-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -352,6 +360,14 @@
           "fixtures/sandboxed-patch-proposal-rehearsal/pass/sandboxed-patch-proposal-envelope.json",
           "scripts/sandboxed_patch_proposal_rehearsal.py",
           "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
+          "docs/patch-proposal-operator-handoff-bridge.md",
+          "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+          "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+          "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.md",
+          "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
+          "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
+          "scripts/patch_proposal_operator_handoff_bridge.py",
+          "scripts/verify_patch_proposal_operator_handoff_bridge.py",
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -380,9 +396,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "9121a2f0837abc68028b8c59f037bfce523525b3",
+        "merge_commit": "75a58f2500a3e171728f581428688dc4212114c6",
         "order": 1,
-        "pr": 346,
+        "pr": 348,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -391,15 +407,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #346: [codex] Add sandboxed patch proposal rehearsal harness.",
+    "summary": "Candidate release stack group for PR #348: [codex] Add patch proposal operator handoff bridge.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.222",
-    "represented_pr_count": 117
+    "current_group": "release-stack-promotion-v0.3.224",
+    "represented_pr_count": 118
   },
   "negative_fixtures": [
     {
