@@ -380,6 +380,32 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS = {
     case_id: ["patch-proposal-customer-feedback-intake-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-intake-blocked",
+    "blocked-missing-product-loop-target",
+    "blocked-automatic-priority-assignment",
+    "blocked-automatic-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-raw-customer-reply",
+    "blocked-private-customer-data",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-customer-feedback-backlog-bridge.json",
+        *(
+            ["product-loop-backlog-signal.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -506,6 +532,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/patch-proposal-customer-delivery-rehearsal.md", "operator_doc", "Patch Proposal Customer Delivery Rehearsal guide for metadata-only manual handoff readiness decisions."),
     ("docs/patch-proposal-customer-delivery-outcome.md", "operator_doc", "Patch Proposal Customer Delivery Outcome Receipt guide for metadata-only external handoff outcome records."),
     ("docs/patch-proposal-customer-feedback-intake.md", "operator_doc", "Patch Proposal Customer Feedback Intake Receipt guide for metadata-only response signal records."),
+    ("docs/patch-proposal-customer-feedback-backlog-bridge.md", "operator_doc", "Patch Proposal Customer Feedback Backlog Bridge guide for metadata-only Product Loop backlog signals."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -586,6 +613,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/patch-proposal-customer-delivery-rehearsal-v1.schema.json", "schema", "Patch Proposal Customer Delivery Rehearsal JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json", "schema", "Patch Proposal Customer Delivery Outcome Receipt JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-feedback-intake-v1.schema.json", "schema", "Patch Proposal Customer Feedback Intake Receipt JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json", "schema", "Patch Proposal Customer Feedback Backlog Bridge JSON Schema."),
+    ("platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json", "schema", "Product Loop backlog signal JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -691,6 +720,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-patch-proposal-customer-feedback-intake.json", "submission_report", "Patch Proposal Customer Feedback Intake Receipt metadata-only verification report."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-intake.md", "submission_report", "Patch Proposal Customer Feedback Intake Receipt operator summary."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-intake.html", "submission_report", "Patch Proposal Customer Feedback Intake Receipt static HTML verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.json", "submission_report", "Patch Proposal Customer Feedback Backlog Bridge metadata-only verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.md", "submission_report", "Patch Proposal Customer Feedback Backlog Bridge operator summary."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.html", "submission_report", "Patch Proposal Customer Feedback Backlog Bridge static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -1258,6 +1290,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS[case_id]
     ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-backlog-bridge/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Patch Proposal Customer Feedback Backlog Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -1484,6 +1525,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py", "verification", "Verify Patch Proposal Customer Delivery Outcome Receipt fixtures, CLI output, and privacy boundaries."),
     ("scripts/patch_proposal_customer_feedback_intake_receipt.py", "verification", "Build metadata-only Patch Proposal Customer Feedback Intake Receipt artifacts."),
     ("scripts/verify_patch_proposal_customer_feedback_intake_receipt.py", "verification", "Verify Patch Proposal Customer Feedback Intake Receipt fixtures, CLI output, and privacy boundaries."),
+    ("scripts/patch_proposal_customer_feedback_backlog_bridge.py", "verification", "Build metadata-only Patch Proposal Customer Feedback Backlog Bridge artifacts."),
+    ("scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py", "verification", "Verify Patch Proposal Customer Feedback Backlog Bridge fixtures, CLI output, and privacy boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),

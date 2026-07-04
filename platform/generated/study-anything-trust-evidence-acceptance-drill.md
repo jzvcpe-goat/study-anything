@@ -2,7 +2,7 @@
 
 - Schema: `trust-evidence-acceptance-drill-v1`
 - Status: `pass`
-- ZIP SHA-256: `7ee8cb7387d3c5f6586cd914e5525ee81ab13c88a538a6748bf5ef9a98ff36bc`
+- ZIP SHA-256: `b15e5589883a666f7858c24338ad487cb7e251a9b1186da7f5bc73eb19a3a332`
 - Allowed controlled handoffs: `3`
 - Blocked handoffs: `12`
 

@@ -1,0 +1,101 @@
+{
+  "backlog_signal": null,
+  "blocked_reasons": [
+    "raw_customer_reply_rejected"
+  ],
+  "bridge_id": "patch-proposal-customer-feedback-backlog-7242f92789862356-blocked-raw-customer-reply",
+  "case_id": "blocked-raw-customer-reply",
+  "checks": {
+    "automatic_follow_up_performed": false,
+    "automatic_priority_assignment_performed": false,
+    "metadata_only_backlog_signal": true,
+    "model_credential_attached": false,
+    "private_customer_data_attached": false,
+    "product_loop_target_declared": true,
+    "production_mutation_performed": false,
+    "raw_customer_reply_attached": true,
+    "secret_attached": false,
+    "source_feedback_intake_accepted": true,
+    "source_mutation_performed": false
+  },
+  "claim_boundary": {
+    "current_claim": "An accepted patch-proposal customer-feedback intake receipt can become a metadata-only Product Loop backlog signal. The signal is not prioritized, not sent to a customer, not executed, and not promoted to production.",
+    "not_claimed": [
+      "raw customer reply included",
+      "private customer data included",
+      "automatic priority assigned",
+      "Study Anything sent a follow-up",
+      "Study Anything changed source",
+      "Study Anything changed production",
+      "model call performed",
+      "customer satisfaction certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_product_loop_backlog_signal",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "automatic_priority_rationale_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "private_customer_data_included": false,
+    "production_payload_included": false,
+    "raw_backlog_description_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "quality_gates": {
+    "accepted_feedback_intake_required": true,
+    "automatic_follow_up_blocked": true,
+    "automatic_priority_assignment_blocked": true,
+    "metadata_only_backlog_signal_required": true,
+    "production_mutation_blocked": true,
+    "secrets_and_model_credentials_rejected": true,
+    "source_mutation_blocked": true
+  },
+  "schema_version": "patch-proposal-customer-feedback-backlog-bridge-v1",
+  "source_refs": {
+    "customer_feedback_intake_receipt_hash": "7242f92789862356e96df8623c65f5b1889ec691af025b1d8a30610006b7d535",
+    "customer_feedback_intake_receipt_ref": "fixtures/patch-proposal-customer-feedback-intake/pass-customer-signal/patch-proposal-customer-feedback-intake-receipt.json",
+    "customer_feedback_intake_report_ref": "platform/generated/study-anything-patch-proposal-customer-feedback-intake.json"
+  },
+  "status": "blocked"
+}
