@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-362-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-364-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -328,6 +328,30 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-customer-delivery-outcome/blocked-model-credential/patch-proposal-customer-delivery-outcome-receipt.json",
     "scripts/patch_proposal_customer_delivery_outcome_receipt.py",
     "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
+    "docs/patch-proposal-customer-feedback-intake.md",
+    "platform/schemas/cbb/patch-proposal-customer-feedback-intake-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-intake.json",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-intake.md",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-intake.html",
+    "fixtures/patch-proposal-customer-feedback-intake/pass-customer-signal/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/pass-operator-signal/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/pass-host-platform-agent-signal/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-outcome-blocked/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-missing-response-signal/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-missing-signal-reference/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-missing-claim-boundary/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-missing-privacy-boundary/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-raw-customer-reply/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-private-customer-data/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-pr-comment-body/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-external-publication-payload/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-production-payload/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-automatic-follow-up/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-source-mutation/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-secret/patch-proposal-customer-feedback-intake-receipt.json",
+    "fixtures/patch-proposal-customer-feedback-intake/blocked-model-credential/patch-proposal-customer-feedback-intake-receipt.json",
+    "scripts/patch_proposal_customer_feedback_intake_receipt.py",
+    "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
     "scripts/generate_platform_bundle_manifest.py",
     "scripts/generate_platform_adoption_pack.py",
     "scripts/release_check.sh",
