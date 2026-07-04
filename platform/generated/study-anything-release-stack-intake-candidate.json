@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-360-v0.3.236-patch-proposal-customer-delivery-rehearsal-lite",
+    "group_id": "release-stack-intake-pr-362-v0.3.238-patch-proposal-customer-delivery-outcome-receipt-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -278,6 +278,28 @@
       "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-model-credential/patch-proposal-customer-delivery-rehearsal-receipt.json",
       "scripts/patch_proposal_customer_delivery_rehearsal.py",
       "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+      "docs/patch-proposal-customer-delivery-outcome.md",
+      "platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json",
+      "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.json",
+      "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.md",
+      "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.html",
+      "fixtures/patch-proposal-customer-delivery-outcome/pass-human-operator/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/pass-host-platform-agent/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-rehearsal-blocked/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-external-actor/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-action-reference/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-claim-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-privacy-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-customer-visible-body/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-pr-comment-body/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-external-publication-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-production-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-automatic-send/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-source-mutation/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-secret/patch-proposal-customer-delivery-outcome-receipt.json",
+      "fixtures/patch-proposal-customer-delivery-outcome/blocked-model-credential/patch-proposal-customer-delivery-outcome-receipt.json",
+      "scripts/patch_proposal_customer_delivery_outcome_receipt.py",
+      "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
       "scripts/generate_platform_bundle_manifest.py",
       "scripts/generate_platform_adoption_pack.py",
       "scripts/release_check.sh"
@@ -303,7 +325,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.236-patch-proposal-customer-delivery-rehearsal-lite",
+        "branch": "codex/v0.3.238-patch-proposal-customer-delivery-outcome-receipt-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -575,14 +597,36 @@
           "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-model-credential/patch-proposal-customer-delivery-rehearsal-receipt.json",
           "scripts/patch_proposal_customer_delivery_rehearsal.py",
           "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+          "docs/patch-proposal-customer-delivery-outcome.md",
+          "platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json",
+          "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.json",
+          "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.md",
+          "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.html",
+          "fixtures/patch-proposal-customer-delivery-outcome/pass-human-operator/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/pass-host-platform-agent/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-rehearsal-blocked/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-external-actor/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-action-reference/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-claim-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-privacy-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-customer-visible-body/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-pr-comment-body/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-external-publication-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-production-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-automatic-send/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-source-mutation/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-secret/patch-proposal-customer-delivery-outcome-receipt.json",
+          "fixtures/patch-proposal-customer-delivery-outcome/blocked-model-credential/patch-proposal-customer-delivery-outcome-receipt.json",
+          "scripts/patch_proposal_customer_delivery_outcome_receipt.py",
+          "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
           "scripts/generate_platform_bundle_manifest.py",
           "scripts/generate_platform_adoption_pack.py",
           "scripts/release_check.sh"
         ],
         "final_state": "MERGED",
-        "merge_commit": "493bb32a276349111d8d13fb3ca718dedd292f31",
+        "merge_commit": "4340c4b9660a1914aab32df3faf3bfafb112cca4",
         "order": 1,
-        "pr": 360,
+        "pr": 362,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -591,15 +635,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #360: Add patch proposal customer delivery rehearsal.",
+    "summary": "Candidate release stack group for PR #362: Add patch proposal customer delivery outcome receipt.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.236",
-    "represented_pr_count": 124
+    "current_group": "release-stack-promotion-v0.3.238",
+    "represented_pr_count": 125
   },
   "negative_fixtures": [
     {

@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-360-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-362-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -306,6 +306,28 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-customer-delivery-rehearsal/blocked-model-credential/patch-proposal-customer-delivery-rehearsal-receipt.json",
     "scripts/patch_proposal_customer_delivery_rehearsal.py",
     "scripts/verify_patch_proposal_customer_delivery_rehearsal.py",
+    "docs/patch-proposal-customer-delivery-outcome.md",
+    "platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.json",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.md",
+    "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.html",
+    "fixtures/patch-proposal-customer-delivery-outcome/pass-human-operator/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/pass-host-platform-agent/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-rehearsal-blocked/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-external-actor/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-action-reference/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-claim-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-missing-privacy-boundary/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-customer-visible-body/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-pr-comment-body/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-external-publication-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-production-payload/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-automatic-send/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-source-mutation/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-secret/patch-proposal-customer-delivery-outcome-receipt.json",
+    "fixtures/patch-proposal-customer-delivery-outcome/blocked-model-credential/patch-proposal-customer-delivery-outcome-receipt.json",
+    "scripts/patch_proposal_customer_delivery_outcome_receipt.py",
+    "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
     "scripts/generate_platform_bundle_manifest.py",
     "scripts/generate_platform_adoption_pack.py",
     "scripts/release_check.sh",
