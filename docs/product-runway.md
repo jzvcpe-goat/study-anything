@@ -153,6 +153,12 @@ The completed chain now has these layers:
   spec bodies, raw eval prompts, automatic execution, Delivery Trust Harness
   skips, customer-visible follow-up, source mutation, production mutation,
   secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Product Loop Brief Intake Gate: a Patch
+  Proposal Product Loop brief candidate can produce only metadata-only Product
+  Loop scenario/run candidates after active developer/product-loop boundary
+  reconstruction, while AI-review-only evidence, Delivery Trust Harness
+  invocation/skips, customer-visible follow-up, source mutation, production
+  mutation, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -194,11 +200,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Product Loop Brief Intake Gate:
-consume a Patch Proposal Spec/Eval Authoring Gate Product Loop brief candidate
-and require active developer/product-loop boundary reconstruction before
-creating a metadata-only Product Loop scenario/run candidate, while still
-blocking missing or invalid brief candidates, AI-review-only evidence, Delivery
-Trust Harness skips, customer-visible follow-up, source mutation, production
-mutation, secrets, and model credentials.
+Patch Proposal Customer Feedback Delivery Trust Harness Intake Gate:
+consume a Patch Proposal Product Loop scenario/run candidate and require
+controlled-failure plus attention-reconstruction evidence before creating a
+metadata-only Delivery Trust case candidate, while still blocking missing or
+invalid Product Loop runs, missing sandbox or attention receipts, AI-review-only
+evidence, customer-visible follow-up, source mutation, production mutation,
+secrets, and model credentials.
 ```

@@ -1,0 +1,286 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-customer-signal",
+      "decision": "create_patch_proposal_product_loop_scenario_run_candidate",
+      "run_created": true,
+      "scenario_created": true,
+      "status": "created_product_loop_scenario_run_candidate"
+    },
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-operator-signal",
+      "decision": "create_patch_proposal_product_loop_scenario_run_candidate",
+      "run_created": true,
+      "scenario_created": true,
+      "status": "created_product_loop_scenario_run_candidate"
+    },
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-host-platform-agent-signal",
+      "decision": "create_patch_proposal_product_loop_scenario_run_candidate",
+      "run_created": true,
+      "scenario_created": true,
+      "status": "created_product_loop_scenario_run_candidate"
+    },
+    {
+      "blocked_reasons": [
+        "patch_proposal_brief_candidate_missing"
+      ],
+      "case_id": "blocked-missing-brief-candidate",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "patch_proposal_brief_candidate_invalid"
+      ],
+      "case_id": "blocked-invalid-brief-candidate",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-product-loop-reconstruction",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "ai_review_only_evidence_rejected"
+      ],
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "requested_next_boundary_not_product_loop_harness_candidate"
+      ],
+      "case_id": "blocked-skip-to-delivery-trust",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_follow_up_rejected"
+      ],
+      "case_id": "blocked-customer-visible-follow-up",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_mutation_rejected"
+      ],
+      "case_id": "blocked-source-mutation",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_patch_proposal_product_loop_brief_intake_gate",
+      "run_created": false,
+      "scenario_created": false,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A Patch Proposal Product Loop brief candidate can become metadata-only Product Loop scenario/run candidates only after active developer/product-loop boundary reconstruction. The transition stops before Delivery Trust Harness invocation and cannot perform customer-visible, source, or production effects.",
+    "not_claimed": [
+      "Delivery Trust Harness completed",
+      "customer-visible follow-up allowed",
+      "source mutation allowed",
+      "production mutation allowed",
+      "automatic execution",
+      "finished customer deliverable",
+      "model call performed"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_execution_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_customer_visible_follow_up_performed": false,
+    "study_anything_delivery_trust_harness_invoked": false,
+    "study_anything_delivery_trust_harness_mutated": false,
+    "study_anything_eval_storage_mutated": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_product_loop_brief_candidate_queue_mutated": false,
+    "study_anything_product_loop_run_queue_mutated": false,
+    "study_anything_product_loop_scenario_queue_mutated": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_raw_spec_storage_mutated": false,
+    "study_anything_repository_mutation_performed": false,
+    "study_anything_source_mutation_performed": false,
+    "study_anything_spec_eval_candidate_queue_mutated": false,
+    "study_anything_spec_eval_storage_mutated": false
+  },
+  "gate_rules": {
+    "active_product_loop_reconstruction_required": true,
+    "ai_review_only_blocks": true,
+    "customer_visible_follow_up_blocked": true,
+    "delivery_trust_harness_invocation_blocked": true,
+    "delivery_trust_harness_skip_blocked": true,
+    "metadata_only": true,
+    "production_mutation_blocked": true,
+    "source_brief_candidate_required": true,
+    "source_mutation_blocked": true
+  },
+  "intake_matrix": {
+    "blocked_intake_transitions": 10,
+    "created_product_loop_candidates": 3,
+    "customer_visible_follow_ups": 0,
+    "delivery_trust_invocations": 0,
+    "production_mutations": 0,
+    "source_mutations": 0
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "ai_review_only_policy_injected": "policy.ai_review_only_allowed must be False",
+    "blocked_receipt_with_run": "blocked receipt must not include scenario or run",
+    "customer_follow_up_transition_injected": "created receipt must not request customer_visible_follow_up_requested",
+    "delivery_trust_harness_invoked_effect_injected": "patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.effect_boundary.study_anything_delivery_trust_harness_invoked must be False",
+    "delivery_trust_invocation_policy_injected": "policy.delivery_trust_harness_invocation_allowed must be False",
+    "production_mutation_effect_injected": "patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.effect_boundary.study_anything_production_mutation_performed must be False",
+    "raw_brief_body_injected": "patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1 includes forbidden raw fields: ['$.scenario.loops.agentic_coding_loop.patch_proposal_brief_candidate_ref.raw_brief_body']",
+    "source_mutation_effect_injected": "patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.effect_boundary.study_anything_source_mutation_performed must be False"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "agent_endpoint_secrets_included": false,
+    "automatic_priority_rationale_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "patch_proposal_brief_candidate_metadata_only": true,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_loop_run_candidate_metadata_only": true,
+    "product_loop_scenario_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_backlog_description_included": false,
+    "raw_brief_body_included": false,
+    "raw_customer_feedback_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_diff_body_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove Patch Proposal Product Loop brief candidates can create metadata-only Product Loop scenario/run candidates only after active developer/product-loop reconstruction, without AI-review-only promotion, Delivery Trust Harness invocation, customer follow-up, source mutation, production mutation, secrets, or model credentials.",
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-gate-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-product-loop-brief-intake-gate-v1",
+      "sha256": "7370f2fb9acd6b652a19f882e22a11c753b33ad10575b8b0dad0c5dc476e0ac1"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1",
+      "sha256": "95968d0d9cfcee4ecbc2459055b105488054b2fe87200030c1e55187db91143d"
+    },
+    {
+      "path": "platform/schemas/cbb/product-loop-scenario-v1.schema.json",
+      "schema_version": "product-loop-scenario-v1",
+      "sha256": "af726f584abc99f96f66bc65c95835990e5b9b49fd649bfe4874b2b417b10899"
+    },
+    {
+      "path": "platform/schemas/cbb/product-loop-run-v1.schema.json",
+      "schema_version": "product-loop-run-v1",
+      "sha256": "320f34f58a465dc6abb01e6bc466fec5a157fb045cf3fd98fcfd989b315f802d"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-product-loop-brief-intake-gate-v1",
+  "source_chain": {
+    "allowed_next_boundary": "product_loop_harness_candidate",
+    "input_gate": "patch-proposal-customer-feedback-spec-eval-authoring-gate-v1",
+    "input_schema": "patch-proposal-product-loop-brief-candidate-v1",
+    "output_schemas": [
+      "product-loop-scenario-v1",
+      "product-loop-run-v1"
+    ]
+  },
+  "status": "pass"
+}
