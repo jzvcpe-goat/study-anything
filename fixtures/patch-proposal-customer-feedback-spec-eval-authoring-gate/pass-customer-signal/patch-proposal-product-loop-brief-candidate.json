@@ -1,0 +1,162 @@
+{
+  "acceptance_criteria_refs": [
+    {
+      "body_included": false,
+      "ref_hash": "3c9c9bb0ec0d4bde",
+      "ref_id": "patch-acceptance-criterion-1"
+    },
+    {
+      "body_included": false,
+      "ref_hash": "ccc70c3f17d3cf90",
+      "ref_id": "patch-acceptance-criterion-2"
+    },
+    {
+      "body_included": false,
+      "ref_hash": "3f3a4e6a675aaca6",
+      "ref_id": "patch-acceptance-criterion-3"
+    }
+  ],
+  "blocked_destinations": [
+    "delivery_trust_harness",
+    "automatic_execution",
+    "customer_visible_follow_up",
+    "source_mutation",
+    "external_publication",
+    "production_mutation",
+    "model_call"
+  ],
+  "brief_candidate_id": "patch-proposal-product-loop-brief-candidate-43cdbabc806f14d5",
+  "claim_boundary": {
+    "current_claim": "A Patch Proposal customer-feedback spec/eval candidate can become a metadata-only Product Loop brief candidate only after active authoring-boundary reconstruction. The candidate remains non-executable and cannot skip to the Delivery Trust Harness.",
+    "not_claimed": [
+      "finished product spec",
+      "finished eval suite",
+      "automatic execution",
+      "customer-visible follow-up",
+      "source mutation",
+      "external publication",
+      "production mutation",
+      "Delivery Trust Harness readiness",
+      "model call performed"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "destination": "product_loop_brief_candidate_queue",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_execution_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_customer_visible_follow_up_performed": false,
+    "study_anything_delivery_trust_harness_mutated": false,
+    "study_anything_eval_storage_mutated": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_product_loop_brief_candidate_queue_mutated": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_raw_spec_storage_mutated": false,
+    "study_anything_repository_mutation_performed": false,
+    "study_anything_spec_eval_candidate_queue_mutated": false,
+    "study_anything_spec_eval_storage_mutated": false
+  },
+  "eval_plan_refs": [
+    {
+      "body_included": false,
+      "ref_hash": "c9dbf3bedfd523f7",
+      "ref_id": "patch-eval-plan-1"
+    },
+    {
+      "body_included": false,
+      "ref_hash": "b9a4720862fa595f",
+      "ref_id": "patch-eval-plan-2"
+    },
+    {
+      "body_included": false,
+      "ref_hash": "a6493a6c3fdac8d7",
+      "ref_id": "patch-eval-plan-3"
+    }
+  ],
+  "feedback_ref": {
+    "payload_hash_only": true,
+    "private_customer_data_included": false,
+    "raw_feedback_included": false,
+    "signal_ref_hash": "46e2ff91acbf42ec32960d034aee4dbda8c182699a919b2c544437a7b8411414",
+    "signal_type": "customer_signal"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "loop": "developer_feedback_loop",
+  "next_boundary": "product_loop_brief_intake",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "automatic_priority_rationale_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_backlog_description_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "quality_gates": {
+    "active_authoring_reconstruction_required": true,
+    "ai_review_only_rejected": true,
+    "delivery_trust_harness_skip_blocked": true,
+    "raw_eval_prompt_allowed": false,
+    "raw_spec_body_allowed": false,
+    "source_candidate_required": true
+  },
+  "ready_for_delivery_trust_harness": false,
+  "ready_for_execution": false,
+  "ready_for_product_loop_brief_intake": true,
+  "schema_version": "patch-proposal-product-loop-brief-candidate-v1",
+  "source_backlog_signal_hash": "bfcb89784bd1f36090979c9ee898d05a6f9d513814002b9bdda86e1db5498eec",
+  "source_backlog_signal_id": "patch-proposal-product-loop-backlog-7242f92789862356",
+  "source_delivery_class": "patch-proposal",
+  "source_feedback_intake_hash": "7242f92789862356e96df8623c65f5b1889ec691af025b1d8a30610006b7d535",
+  "source_feedback_intake_id": "patch-proposal-customer-feedback-intake-pass-customer-signal",
+  "source_spec_eval_candidate_hash": "43cdbabc806f14d540e18aa1c43ebd78759dc96da0d55bd3ed390b0251ef6abd",
+  "source_spec_eval_candidate_id": "patch-proposal-product-spec-eval-candidate-bfcb89784bd1f360",
+  "spec_ref": {
+    "problem_statement_hash": "2caf19a609489da5",
+    "raw_spec_body_included": false,
+    "scope_boundary_hash": "ee63b4d123b0f3e2"
+  }
+}
