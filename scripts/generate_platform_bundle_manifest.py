@@ -77,6 +77,13 @@ PRODUCT_LOOP_HARNESS_ARTIFACTS = [
     "product-loop-scenario.json",
     "product-loop-run.json",
 ]
+EXTERNAL_FEEDBACK_RECEIPT_CASES = [
+    "pass",
+    "blocked-raw-feedback",
+    "blocked-identity",
+    "blocked-production-mutation",
+    "blocked-ai-review-only",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -363,6 +370,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-support-response-delivery-class.html",
         "generated_asset",
         "Support Response Delivery Class static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-receipt.json",
+        "generated_asset",
+        "External Feedback Receipt metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-receipt.md",
+        "generated_asset",
+        "External Feedback Receipt operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-receipt.html",
+        "generated_asset",
+        "External Feedback Receipt static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1090,6 +1112,11 @@ FILES: list[tuple[str, str, str]] = [
         "Support Response Delivery Class metadata-only handoff guide.",
     ),
     (
+        "docs/external-feedback-receipt.md",
+        "operator_doc",
+        "External Feedback Receipt metadata-only product-loop feedback guide.",
+    ),
+    (
         "docs/delivery-class-registry.md",
         "operator_doc",
         "Delivery Class Registry guide for protocol-supported handoff classes.",
@@ -1278,6 +1305,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
         "schema",
         "Support Response Delivery Class handoff JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
+        "schema",
+        "External Feedback Receipt JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1508,6 +1540,14 @@ FILES: list[tuple[str, str, str]] = [
             "blocked-policy-gap",
             "blocked-ai-summary-only",
         )
+    ],
+    *[
+        (
+            f"fixtures/external-feedback-receipt/{case_id}/external-feedback-receipt.json",
+            "fixture",
+            f"External Feedback Receipt {case_id} fixture.",
+        )
+        for case_id in EXTERNAL_FEEDBACK_RECEIPT_CASES
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2648,6 +2688,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_support_response_operator_handoff_rehearsal.py",
         "verification",
         "Verify Support Response operator handoff decisions from delivery-class and customer rehearsal evidence.",
+    ),
+    (
+        "scripts/external_feedback_receipt.py",
+        "verification",
+        "Build deterministic External Feedback Receipt fixtures.",
+    ),
+    (
+        "scripts/verify_external_feedback_receipt.py",
+        "verification",
+        "Verify External Feedback Receipt product-loop feedback boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

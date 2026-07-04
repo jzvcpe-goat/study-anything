@@ -1,0 +1,136 @@
+{
+  "accepted_case_count": 1,
+  "blocked_case_count": 4,
+  "case_reports": [
+    {
+      "case_id": "pass",
+      "decision": "accept_external_feedback_into_product_loop",
+      "reason_count": 0,
+      "reasons": [],
+      "requested_next_action": "product_loop_backlog",
+      "source_delivery_class": "support_response_handoff",
+      "status": "accepted_for_product_loop"
+    },
+    {
+      "case_id": "blocked-raw-feedback",
+      "decision": "block_external_feedback_propagation",
+      "reason_count": 1,
+      "reasons": [
+        "missing_no_raw_payload_attached"
+      ],
+      "requested_next_action": "product_loop_backlog",
+      "source_delivery_class": "support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-identity",
+      "decision": "block_external_feedback_propagation",
+      "reason_count": 1,
+      "reasons": [
+        "missing_feedback_source_bounded"
+      ],
+      "requested_next_action": "product_loop_backlog",
+      "source_delivery_class": "support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-production-mutation",
+      "decision": "block_external_feedback_propagation",
+      "reason_count": 2,
+      "reasons": [
+        "automatic_production_mutation_allowed",
+        "requested_next_action_outside_feedback_budget"
+      ],
+      "requested_next_action": "production_mutation",
+      "source_delivery_class": "support_response_handoff",
+      "status": "blocked"
+    },
+    {
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_external_feedback_propagation",
+      "reason_count": 3,
+      "reasons": [
+        "missing_active_human_triage_recorded",
+        "ai_review_only_basis",
+        "passive_attention_only"
+      ],
+      "requested_next_action": "product_loop_backlog",
+      "source_delivery_class": "support_response_handoff",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "External feedback can re-enter the Product Loop as bounded metadata only when source scope, delivery class, active human triage, and claim boundary reconstruction are present.",
+    "not_claimed": [
+      "customer identity disclosure",
+      "raw customer feedback storage",
+      "automatic customer reply",
+      "automatic production mutation",
+      "truth certification",
+      "customer satisfaction guarantee",
+      "replacement for product owner prioritization"
+    ]
+  },
+  "feedback_loop_rules": {
+    "active_human_triage_required": true,
+    "ai_review_only_rejected": true,
+    "automatic_customer_reply_blocked": true,
+    "customer_identity_rejected": true,
+    "external_feedback_is_metadata_only": true,
+    "next_boundary": "product_loop_backlog_only_not_production",
+    "production_mutation_blocked": true,
+    "raw_feedback_text_rejected": true
+  },
+  "negative_checks": {
+    "customer_identity_rejected": "external feedback receipt contains forbidden fields: ['customer_identity']",
+    "privacy_raw_feedback_text_rejected": "external feedback privacy.raw_feedback_text_included must be False",
+    "privacy_requester_identity_rejected": "external feedback privacy.requester_identity_included must be False",
+    "production_payload_rejected": "external feedback receipt contains forbidden fields: ['production_payload']",
+    "raw_customer_message_rejected": "external feedback receipt contains forbidden fields: ['raw_customer_message']",
+    "raw_feedback_text_rejected": "external feedback receipt contains forbidden fields: ['raw_feedback_text']",
+    "requester_identity_rejected": "external feedback receipt contains forbidden fields: ['requester_identity']",
+    "runtime_production_mutation_rejected": "external feedback runtime.production_mutation_performed must be False"
+  },
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_message_included": false,
+    "raw_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove external feedback can re-enter the Product Loop as metadata-only evidence without raw customer content, automatic replies, or production mutation.",
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
+      "schema_version": "external-feedback-receipt-v1",
+      "sha256": "3e8be849bdcfb23905e61319ef36be1aa970b692c374788d2c16be6a1ed39039"
+    }
+  ],
+  "schema_version": "external-feedback-receipt-verification-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

@@ -78,6 +78,13 @@ PRODUCT_LOOP_HARNESS_ARTIFACTS = [
     "product-loop-scenario.json",
     "product-loop-run.json",
 ]
+EXTERNAL_FEEDBACK_RECEIPT_CASES = [
+    "pass",
+    "blocked-raw-feedback",
+    "blocked-identity",
+    "blocked-production-mutation",
+    "blocked-ai-review-only",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -195,6 +202,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
     ("docs/client-report-delivery-class.md", "operator_doc", "Client Report Delivery Class metadata-only handoff guide."),
     ("docs/support-response-delivery-class.md", "operator_doc", "Support Response Delivery Class metadata-only handoff guide."),
+    ("docs/external-feedback-receipt.md", "operator_doc", "External Feedback Receipt metadata-only product-loop feedback guide."),
     ("docs/delivery-class-registry.md", "operator_doc", "Delivery Class Registry guide for protocol-supported handoff classes."),
     ("docs/trust-scenario-catalog.md", "operator_doc", "Trust Scenario Catalog guide for supported and blocked AI delivery scenarios."),
     ("docs/trust-scenario-decision-gate.md", "operator_doc", "Trust Scenario Decision Gate guide for deterministic local scenario handoff receipts."),
@@ -256,6 +264,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json", "schema", "Support Response Delivery Class handoff JSON Schema."),
+    ("platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json", "schema", "External Feedback Receipt JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -321,6 +330,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-client-report-delivery-class.html", "submission_report", "Client Report Delivery Class static HTML verification report."),
     ("platform/generated/study-anything-support-response-delivery-class.json", "submission_report", "Support Response Delivery Class metadata-only handoff verification report."),
     ("platform/generated/study-anything-support-response-delivery-class.html", "submission_report", "Support Response Delivery Class static HTML verification report."),
+    ("platform/generated/study-anything-external-feedback-receipt.json", "submission_report", "External Feedback Receipt metadata-only verification report."),
+    ("platform/generated/study-anything-external-feedback-receipt.md", "submission_report", "External Feedback Receipt operator summary."),
+    ("platform/generated/study-anything-external-feedback-receipt.html", "submission_report", "External Feedback Receipt static HTML verification report."),
     ("platform/generated/study-anything-delivery-class-registry.json", "submission_report", "Delivery Class Registry metadata-only verification report."),
     ("platform/generated/study-anything-delivery-class-registry.html", "submission_report", "Delivery Class Registry static HTML verification report."),
     ("platform/generated/study-anything-trust-scenario-catalog.json", "submission_report", "Trust Scenario Catalog metadata-only verification report."),
@@ -701,6 +713,14 @@ PACK_FILES: list[tuple[str, str, str]] = [
             "blocked-ai-summary-only",
         )
     ],
+    *[
+        (
+            f"fixtures/external-feedback-receipt/{case_id}/external-feedback-receipt.json",
+            "delivery_trust_case_harness_fixture",
+            f"External Feedback Receipt {case_id} fixture.",
+        )
+        for case_id in EXTERNAL_FEEDBACK_RECEIPT_CASES
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -891,6 +911,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-support-response-operator-handoff-rehearsal.json", "generated_asset", "Support Response Operator Handoff Rehearsal report."),
     ("platform/generated/study-anything-support-response-operator-handoff-rehearsal.md", "generated_asset", "Support Response Operator Handoff Rehearsal markdown report."),
     ("scripts/verify_support_response_operator_handoff_rehearsal.py", "verification", "Verify Support Response operator handoff decisions from delivery-class and customer rehearsal evidence."),
+    ("scripts/external_feedback_receipt.py", "verification", "Build deterministic External Feedback Receipt fixtures."),
+    ("scripts/verify_external_feedback_receipt.py", "verification", "Verify External Feedback Receipt product-loop feedback boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),
