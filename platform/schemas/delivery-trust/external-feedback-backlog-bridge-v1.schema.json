@@ -1,0 +1,76 @@
+{
+  "$id": "external-feedback-backlog-bridge-v1",
+  "additionalProperties": true,
+  "properties": {
+    "backlog_item": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "bridge_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "create_product_loop_backlog_item",
+        "block_backlog_item_creation"
+      ],
+      "type": "string"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "external-feedback-backlog-bridge-v1"
+    },
+    "source_delivery_class": {
+      "enum": [
+        "code_review_handoff",
+        "client_report_handoff",
+        "support_response_handoff"
+      ],
+      "type": "string"
+    },
+    "source_receipt_hash": {
+      "type": "string"
+    },
+    "source_receipt_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "queued_for_product_loop",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "bridge_id",
+    "source_receipt_id",
+    "source_receipt_hash",
+    "source_delivery_class",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "backlog_item",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "type": "object"
+}

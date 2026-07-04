@@ -49,6 +49,9 @@ The completed chain now has these layers:
   re-enter the Product Loop as metadata-only backlog evidence, while raw
   feedback, requester identity, automatic customer replies, external
   publication, and production mutation stay blocked.
+- External Feedback Backlog Bridge: accepted feedback receipts can create
+  metadata-only Product Loop backlog items, while blocked feedback cannot enter
+  backlog or skip product-owner prioritization.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -97,6 +100,7 @@ customer, mutating production, or reading raw payloads.
 ```
 
 After that, add stronger real-adopter feedback import/export only if it keeps
-the External Feedback Receipt boundary: metadata-only evidence enters the
-Product Loop, while raw customer content and customer-visible action stay out of
-the protocol.
+the External Feedback Receipt and Backlog Bridge boundary: metadata-only
+evidence enters the Product Loop, while raw customer content, automatic
+prioritization, customer-visible action, and production mutation stay out of the
+protocol.

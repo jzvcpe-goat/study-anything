@@ -84,6 +84,13 @@ EXTERNAL_FEEDBACK_RECEIPT_CASES = [
     "blocked-production-mutation",
     "blocked-ai-review-only",
 ]
+EXTERNAL_FEEDBACK_BACKLOG_BRIDGE_CASES = [
+    "pass",
+    "blocked-raw-feedback",
+    "blocked-identity",
+    "blocked-production-mutation",
+    "blocked-ai-review-only",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -385,6 +392,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-external-feedback-receipt.html",
         "generated_asset",
         "External Feedback Receipt static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-backlog-bridge.json",
+        "generated_asset",
+        "External Feedback Backlog Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-backlog-bridge.md",
+        "generated_asset",
+        "External Feedback Backlog Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-external-feedback-backlog-bridge.html",
+        "generated_asset",
+        "External Feedback Backlog Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1117,6 +1139,11 @@ FILES: list[tuple[str, str, str]] = [
         "External Feedback Receipt metadata-only product-loop feedback guide.",
     ),
     (
+        "docs/external-feedback-backlog-bridge.md",
+        "operator_doc",
+        "External Feedback Backlog Bridge product-loop backlog guide.",
+    ),
+    (
         "docs/delivery-class-registry.md",
         "operator_doc",
         "Delivery Class Registry guide for protocol-supported handoff classes.",
@@ -1310,6 +1337,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
         "schema",
         "External Feedback Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/external-feedback-backlog-bridge-v1.schema.json",
+        "schema",
+        "External Feedback Backlog Bridge JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/product-loop-backlog-item-v1.schema.json",
+        "schema",
+        "Product Loop backlog item JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1549,6 +1586,19 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in EXTERNAL_FEEDBACK_RECEIPT_CASES
     ],
+    *[
+        (
+            f"fixtures/external-feedback-backlog-bridge/{case_id}/external-feedback-backlog-bridge.json",
+            "fixture",
+            f"External Feedback Backlog Bridge {case_id} fixture.",
+        )
+        for case_id in EXTERNAL_FEEDBACK_BACKLOG_BRIDGE_CASES
+    ],
+    (
+        "fixtures/external-feedback-backlog-bridge/pass/product-loop-backlog-item.json",
+        "fixture",
+        "External Feedback Backlog Bridge pass Product Loop backlog item fixture.",
+    ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
         "fixture",
@@ -2698,6 +2748,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_external_feedback_receipt.py",
         "verification",
         "Verify External Feedback Receipt product-loop feedback boundaries.",
+    ),
+    (
+        "scripts/external_feedback_backlog_bridge.py",
+        "verification",
+        "Build Product Loop backlog bridge fixtures from External Feedback receipts.",
+    ),
+    (
+        "scripts/verify_external_feedback_backlog_bridge.py",
+        "verification",
+        "Verify External Feedback Backlog Bridge product-loop boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

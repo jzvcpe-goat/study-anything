@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>External Feedback Backlog Bridge</title>
+<body>
+<h1>External Feedback Backlog Bridge</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;backlog_item_count&quot;: 1,
+  &quot;blocked_case_count&quot;: 4,
+  &quot;bridge_rules&quot;: {
+    &quot;accepted_receipt_required&quot;: true,
+    &quot;blocked_receipt_cannot_create_backlog_item&quot;: true,
+    &quot;customer_visible_reply_blocked&quot;: true,
+    &quot;destination&quot;: &quot;product_loop_backlog&quot;,
+    &quot;next_boundary&quot;: &quot;product_owner_prioritization&quot;,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_feedback_text_rejected&quot;: true,
+    &quot;requester_identity_rejected&quot;: true
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;backlog_item_created&quot;: true,
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;create_product_loop_backlog_item&quot;,
+      &quot;source_delivery_class&quot;: &quot;support_response_handoff&quot;,
+      &quot;status&quot;: &quot;queued_for_product_loop&quot;
+    },
+    {
+      &quot;backlog_item_created&quot;: false,
+      &quot;blocked_reasons&quot;: [
+        &quot;external_feedback_receipt_not_accepted&quot;,
+        &quot;external_feedback_decision_blocked&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-raw-feedback&quot;,
+      &quot;decision&quot;: &quot;block_backlog_item_creation&quot;,
+      &quot;source_delivery_class&quot;: &quot;support_response_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;backlog_item_created&quot;: false,
+      &quot;blocked_reasons&quot;: [
+        &quot;external_feedback_receipt_not_accepted&quot;,
+        &quot;external_feedback_decision_blocked&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-identity&quot;,
+      &quot;decision&quot;: &quot;block_backlog_item_creation&quot;,
+      &quot;source_delivery_class&quot;: &quot;support_response_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;backlog_item_created&quot;: false,
+      &quot;blocked_reasons&quot;: [
+        &quot;external_feedback_receipt_not_accepted&quot;,
+        &quot;external_feedback_decision_blocked&quot;,
+        &quot;requested_next_action_outside_feedback_budget&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_backlog_item_creation&quot;,
+      &quot;source_delivery_class&quot;: &quot;support_response_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;backlog_item_created&quot;: false,
+      &quot;blocked_reasons&quot;: [
+        &quot;external_feedback_receipt_not_accepted&quot;,
+        &quot;external_feedback_decision_blocked&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-ai-review-only&quot;,
+      &quot;decision&quot;: &quot;block_backlog_item_creation&quot;,
+      &quot;source_delivery_class&quot;: &quot;support_response_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;Accepted external feedback can be converted into a Product Loop backlog item as metadata only. Blocked feedback cannot create a backlog item.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;raw feedback import&quot;,
+      &quot;requester identity import&quot;,
+      &quot;customer-visible reply&quot;,
+      &quot;automatic production mutation&quot;,
+      &quot;external publication&quot;,
+      &quot;automatic prioritization&quot;,
+      &quot;customer satisfaction guarantee&quot;
+    ]
+  },
+  &quot;negative_checks&quot;: {
+    &quot;backlog_skip_to_delivery_harness_rejected&quot;: &quot;backlog item must not skip to delivery trust harness&quot;,
+    &quot;blocked_bridge_with_backlog_item_rejected&quot;: &quot;blocked bridge must not include a backlog item&quot;,
+    &quot;production_payload_rejected&quot;: &quot;external feedback receipt contains forbidden fields: [&#x27;production_payload&#x27;]&quot;,
+    &quot;raw_feedback_text_rejected&quot;: &quot;external feedback receipt contains forbidden fields: [&#x27;raw_feedback_text&#x27;]&quot;,
+    &quot;requester_identity_rejected&quot;: &quot;external feedback receipt contains forbidden fields: [&#x27;requester_identity&#x27;]&quot;,
+    &quot;runtime_customer_reply_rejected&quot;: &quot;external feedback runtime.automatic_customer_reply_performed must be False&quot;,
+    &quot;runtime_production_mutation_rejected&quot;: &quot;external feedback runtime.production_mutation_performed must be False&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_production_mutation_performed&quot;: false,
+    &quot;backlog_item_metadata_only&quot;: true,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_identity_included&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;feedback_hash_only&quot;: true,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;product_owner_identity_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_customer_message_included&quot;: false,
+    &quot;raw_feedback_text_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;requester_identity_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove accepted External Feedback receipts can create metadata-only Product Loop backlog items while blocked receipts cannot enter the backlog.&quot;,
+  &quot;queued_case_count&quot;: 1,
+  &quot;runtime&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;backlog_storage_mutated&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/external-feedback-backlog-bridge-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;external-feedback-backlog-bridge-v1&quot;,
+      &quot;sha256&quot;: &quot;020bec4953f53383f557a2b46bb225368677faf4568922261c6b1f9f65a05b21&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/product-loop-backlog-item-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-loop-backlog-item-v1&quot;,
+      &quot;sha256&quot;: &quot;403956625655ceb1acbdba62ab0de431b3a4739985e34000380279e4e550cf0f&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;external-feedback-backlog-bridge-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

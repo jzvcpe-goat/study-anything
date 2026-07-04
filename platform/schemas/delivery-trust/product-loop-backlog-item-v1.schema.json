@@ -1,0 +1,81 @@
+{
+  "$id": "product-loop-backlog-item-v1",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_destinations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "destination": {
+      "const": "product_loop_backlog"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "item_id": {
+      "type": "string"
+    },
+    "loop": {
+      "const": "external_feedback_loop"
+    },
+    "next_boundary": {
+      "const": "product_owner_prioritization"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "ready_for_delivery_trust_harness": {
+      "const": false
+    },
+    "requires_product_owner_prioritization": {
+      "const": true
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "product-loop-backlog-item-v1"
+    },
+    "source_delivery_class": {
+      "enum": [
+        "code_review_handoff",
+        "client_report_handoff",
+        "support_response_handoff"
+      ],
+      "type": "string"
+    },
+    "source_handoff_ref": {
+      "type": "string"
+    },
+    "source_receipt_hash": {
+      "type": "string"
+    },
+    "source_receipt_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "item_id",
+    "source_receipt_id",
+    "source_receipt_hash",
+    "source_delivery_class",
+    "source_handoff_ref",
+    "feedback_ref",
+    "loop",
+    "destination",
+    "next_boundary",
+    "blocked_destinations",
+    "requires_product_owner_prioritization",
+    "ready_for_delivery_trust_harness",
+    "privacy",
+    "runtime",
+    "claim_boundary"
+  ],
+  "type": "object"
+}
