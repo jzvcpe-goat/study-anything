@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-product-loop-brief-candidate-v1",
+  "title": "Patch Proposal Product Loop Brief Candidate",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "brief_candidate_id",
+    "source_spec_eval_candidate_id",
+    "source_spec_eval_candidate_hash",
+    "source_backlog_signal_id",
+    "source_backlog_signal_hash",
+    "source_feedback_intake_id",
+    "source_feedback_intake_hash",
+    "source_delivery_class",
+    "feedback_ref",
+    "loop",
+    "destination",
+    "next_boundary",
+    "spec_ref",
+    "acceptance_criteria_refs",
+    "eval_plan_refs",
+    "quality_gates",
+    "ready_for_product_loop_brief_intake",
+    "ready_for_execution",
+    "ready_for_delivery_trust_harness",
+    "blocked_destinations",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-product-loop-brief-candidate-v1"
+    },
+    "brief_candidate_id": {
+      "type": "string"
+    },
+    "source_spec_eval_candidate_id": {
+      "type": "string"
+    },
+    "source_spec_eval_candidate_hash": {
+      "type": "string"
+    },
+    "source_backlog_signal_id": {
+      "type": "string"
+    },
+    "source_backlog_signal_hash": {
+      "type": "string"
+    },
+    "source_feedback_intake_id": {
+      "type": "string"
+    },
+    "source_feedback_intake_hash": {
+      "type": "string"
+    },
+    "source_delivery_class": {
+      "const": "patch-proposal"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "loop": {
+      "const": "developer_feedback_loop"
+    },
+    "destination": {
+      "const": "product_loop_brief_candidate_queue"
+    },
+    "next_boundary": {
+      "const": "product_loop_brief_intake"
+    },
+    "spec_ref": {
+      "type": "object"
+    },
+    "acceptance_criteria_refs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "eval_plan_refs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "quality_gates": {
+      "type": "object"
+    },
+    "ready_for_product_loop_brief_intake": {
+      "const": true
+    },
+    "ready_for_execution": {
+      "const": false
+    },
+    "ready_for_delivery_trust_harness": {
+      "const": false
+    },
+    "blocked_destinations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

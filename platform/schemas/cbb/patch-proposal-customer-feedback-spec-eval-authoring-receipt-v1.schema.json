@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-customer-feedback-spec-eval-authoring-receipt-v1",
+  "title": "Patch Proposal Customer Feedback Spec/Eval Authoring Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "authoring_receipt_id",
+    "case_id",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "authoring_reconstruction",
+    "requested_transition",
+    "authoring_policy",
+    "checks",
+    "quality_gates",
+    "brief_candidate",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-customer-feedback-spec-eval-authoring-receipt-v1"
+    },
+    "authoring_receipt_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "queued_for_product_loop_brief_candidate",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "create_patch_proposal_product_loop_brief_candidate",
+        "block_patch_proposal_spec_eval_authoring_gate"
+      ]
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "authoring_reconstruction": {
+      "type": "object"
+    },
+    "requested_transition": {
+      "type": "object"
+    },
+    "authoring_policy": {
+      "type": "object"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "quality_gates": {
+      "type": "object"
+    },
+    "brief_candidate": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

@@ -147,6 +147,12 @@ The completed chain now has these layers:
   candidate after active Product Owner boundary reconstruction, while automatic
   priority assignment, automatic execution, customer-visible follow-up, source
   mutation, production mutation, secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Spec/Eval Authoring Gate: a Patch Proposal
+  Product Owner spec/eval candidate can produce only a metadata-only Product
+  Loop brief candidate after active authoring-boundary reconstruction, while raw
+  spec bodies, raw eval prompts, automatic execution, Delivery Trust Harness
+  skips, customer-visible follow-up, source mutation, production mutation,
+  secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -188,10 +194,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Spec/Eval Authoring Gate:
-consume a Patch Proposal Product Owner Gate spec/eval candidate and require
-active authoring-boundary reconstruction before creating a metadata-only Product
-Loop brief candidate, while still blocking raw spec bodies, raw eval prompts,
-automatic execution, Delivery Trust Harness skips, customer-visible follow-up,
-source mutation, production mutation, secrets, and model credentials.
+Patch Proposal Customer Feedback Product Loop Brief Intake Gate:
+consume a Patch Proposal Spec/Eval Authoring Gate Product Loop brief candidate
+and require active developer/product-loop boundary reconstruction before
+creating a metadata-only Product Loop scenario/run candidate, while still
+blocking missing or invalid brief candidates, AI-review-only evidence, Delivery
+Trust Harness skips, customer-visible follow-up, source mutation, production
+mutation, secrets, and model credentials.
 ```
