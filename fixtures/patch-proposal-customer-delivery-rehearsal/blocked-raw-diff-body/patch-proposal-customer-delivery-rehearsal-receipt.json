@@ -1,0 +1,122 @@
+{
+  "blocked_reasons": [
+    "raw_diff_body_request_rejected"
+  ],
+  "case_id": "blocked-raw-diff-body",
+  "checks": {
+    "active_reconstruction_present": true,
+    "auto_send_requested": false,
+    "claim_boundary_visible": true,
+    "delivery_class_scope_confirmed": true,
+    "external_publication_requested": false,
+    "manual_send_boundary_acknowledged": true,
+    "metadata_only_rehearsal": true,
+    "model_credential_attached": false,
+    "passive_attention_only": false,
+    "pr_comment_action_requested": false,
+    "privacy_boundary_visible": true,
+    "production_mutation_requested": false,
+    "raw_customer_draft_attached": false,
+    "raw_diff_body_requested": true,
+    "raw_patch_body_requested": false,
+    "recipient_scope_confirmed": true,
+    "secret_attached": false,
+    "source_envelope_ready": true
+  },
+  "claim_boundary": {
+    "current_claim": "A ready rehearsal permits only manual customer handoff review outside Study Anything. It does not include customer-visible prose, send messages, comment on PRs, publish externally, mutate production, or certify correctness/security.",
+    "not_claimed": [
+      "customer-visible draft body included",
+      "customer message sent",
+      "PR comment created",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_patch_proposal_customer_delivery",
+  "effect_boundary": {
+    "automatic_customer_send_performed": false,
+    "customer_visible_payload_included": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "study_anything_pr_commenting_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "operator_reconstruction": {
+    "attention_streams_included": false,
+    "confirmation_inputs": {
+      "claim_boundary_visible": true,
+      "delivery_class_scope_confirmed": true,
+      "manual_send_boundary_acknowledged": true,
+      "privacy_boundary_visible": true,
+      "recipient_scope_confirmed": true
+    },
+    "mode": "active_boundary_reconstruction",
+    "passive_attention_only": false,
+    "strong_evidence": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "rehearsal_id": "patch-proposal-customer-delivery-rehearsal-blocked-raw-diff-body",
+  "rehearsal_summary": {
+    "allowed_next_step": [],
+    "delivery_class": null,
+    "package_type": "metadata_only_patch_proposal_customer_delivery_rehearsal",
+    "purpose": null,
+    "requires_before_any_send": [],
+    "withheld_material": [
+      "raw_customer_draft",
+      "raw_patch_body",
+      "raw_diff_body",
+      "repository_file_body",
+      "pr_comment_body",
+      "external_publication_payload",
+      "production_payload",
+      "secrets",
+      "model_keys"
+    ]
+  },
+  "schema_version": "patch-proposal-customer-delivery-rehearsal-receipt-v1",
+  "source_refs": {
+    "envelope_receipt_hash": "0e17a6344c65e4eadd0491c690194038cfde70dc68a77ac0c836bff82f157b91",
+    "envelope_receipt_ref": "fixtures/patch-proposal-customer-delivery-envelope/pass/patch-proposal-customer-delivery-envelope.json",
+    "envelope_report_ref": "platform/generated/study-anything-patch-proposal-customer-delivery-envelope.json"
+  },
+  "status": "blocked"
+}

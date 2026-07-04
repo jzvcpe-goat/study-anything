@@ -254,6 +254,7 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_patch_proposal_external_operator_completion.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_handoff_boundary_gate.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_delivery_envelope.py --check
+  "$python_bin" scripts/verify_patch_proposal_customer_delivery_rehearsal.py --check
   "$python_bin" scripts/verify_dual_loop_scenario_harness.py --check
   "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
   "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
@@ -305,6 +306,7 @@ run_cbb_protocol_verifier_gates() {
   "$python_bin" scripts/verify_patch_proposal_external_operator_completion.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_handoff_boundary_gate.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_delivery_envelope.py --check
+  "$python_bin" scripts/verify_patch_proposal_customer_delivery_rehearsal.py --check
   cbb_protocol_verifiers_passed_individually="true"
 }
 
@@ -495,6 +497,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_patch_proposal_external_operator_completion.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_handoff_boundary_gate.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_delivery_envelope.py --check
+"$python_bin" scripts/verify_patch_proposal_customer_delivery_rehearsal.py --check
 "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py --check

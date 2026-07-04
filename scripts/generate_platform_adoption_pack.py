@@ -314,6 +314,28 @@ PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS = {
     case_id: ["patch-proposal-customer-delivery-envelope.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES = [
+    "pass",
+    "blocked-envelope-blocked",
+    "blocked-missing-recipient-scope",
+    "blocked-missing-delivery-class-scope",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-missing-manual-send-boundary",
+    "blocked-raw-customer-draft",
+    "blocked-raw-patch-body",
+    "blocked-raw-diff-body",
+    "blocked-pr-comment-action",
+    "blocked-auto-send",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_ARTIFACTS = {
+    case_id: ["patch-proposal-customer-delivery-rehearsal-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -437,6 +459,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/patch-proposal-external-operator-completion.md", "operator_doc", "Patch Proposal External Operator Completion guide for metadata-only completion receipts."),
     ("docs/patch-proposal-customer-handoff-boundary-gate.md", "operator_doc", "Patch Proposal Customer-Handoff Boundary Gate guide for metadata-only customer handoff preparation boundaries."),
     ("docs/patch-proposal-customer-delivery-envelope.md", "operator_doc", "Patch Proposal Customer Delivery Envelope guide for metadata-only customer delivery preparation envelopes."),
+    ("docs/patch-proposal-customer-delivery-rehearsal.md", "operator_doc", "Patch Proposal Customer Delivery Rehearsal guide for metadata-only manual handoff readiness decisions."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -514,6 +537,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json", "schema", "Patch Proposal External Operator Completion JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json", "schema", "Patch Proposal Customer-Handoff Boundary Gate JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-delivery-envelope-v1.schema.json", "schema", "Patch Proposal Customer Delivery Envelope JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-customer-delivery-rehearsal-v1.schema.json", "schema", "Patch Proposal Customer Delivery Rehearsal JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -610,6 +634,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-patch-proposal-customer-delivery-envelope.json", "submission_report", "Patch Proposal Customer Delivery Envelope metadata-only verification report."),
     ("platform/generated/study-anything-patch-proposal-customer-delivery-envelope.md", "submission_report", "Patch Proposal Customer Delivery Envelope operator summary."),
     ("platform/generated/study-anything-patch-proposal-customer-delivery-envelope.html", "submission_report", "Patch Proposal Customer Delivery Envelope static HTML verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.json", "submission_report", "Patch Proposal Customer Delivery Rehearsal metadata-only verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.md", "submission_report", "Patch Proposal Customer Delivery Rehearsal operator summary."),
+    ("platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.html", "submission_report", "Patch Proposal Customer Delivery Rehearsal static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -1147,6 +1174,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_ENVELOPE_ARTIFACTS[case_id]
     ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-delivery-rehearsal/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Patch Proposal Customer Delivery Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_REHEARSAL_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -1367,6 +1403,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_patch_proposal_customer_handoff_boundary_gate.py", "verification", "Verify Patch Proposal Customer-Handoff Boundary Gate fixtures, CLI output, and privacy boundaries."),
     ("scripts/patch_proposal_customer_delivery_envelope.py", "verification", "Build metadata-only Patch Proposal Customer Delivery Envelope artifacts."),
     ("scripts/verify_patch_proposal_customer_delivery_envelope.py", "verification", "Verify Patch Proposal Customer Delivery Envelope fixtures, CLI output, and privacy boundaries."),
+    ("scripts/patch_proposal_customer_delivery_rehearsal.py", "verification", "Build metadata-only Patch Proposal Customer Delivery Rehearsal artifacts."),
+    ("scripts/verify_patch_proposal_customer_delivery_rehearsal.py", "verification", "Verify Patch Proposal Customer Delivery Rehearsal fixtures, CLI output, and privacy boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),
