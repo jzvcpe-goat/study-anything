@@ -1,0 +1,31 @@
+{
+  "base_branch": "main",
+  "checks": [
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/28707162593/job/85134643010",
+      "name": "api-tests",
+      "status": "COMPLETED"
+    },
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/28707162593/job/85134642996",
+      "name": "compose-smoke",
+      "status": "COMPLETED"
+    }
+  ],
+  "head_branch": "codex/v0.3.220-spec-eval-scenario-execution-rehearsal-lite",
+  "merge_commit": "59e0a9f6a135ea1286b4f5f1c64b998f1ced6601",
+  "operator_commands": [
+    "python3 scripts/verify_release_stack_intake_candidate.py --check",
+    "python3 scripts/verify_release_stack_readiness.py",
+    "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check"
+  ],
+  "pr_number": 344,
+  "raw_logs_included": false,
+  "schema_version": "release-stack-intake-source-v1",
+  "source": "fixture",
+  "state": "MERGED",
+  "title": "Add spec eval execution rehearsal harness"
+}

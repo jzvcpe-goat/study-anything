@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-342-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-344-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -167,6 +167,14 @@ EVIDENCE_REFS = [
     "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
     "scripts/real_adopter_scenario_import.py",
     "scripts/verify_real_adopter_scenario_import.py",
+    "docs/spec-eval-scenario-execution-rehearsal.md",
+    "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
+    "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+    "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md",
+    "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
+    "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
+    "scripts/spec_eval_scenario_execution_rehearsal.py",
+    "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
