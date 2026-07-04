@@ -1,0 +1,205 @@
+{
+  "acceptance": {
+    "catalog_report": "platform/generated/study-anything-trust-scenario-catalog.json",
+    "minimum_command": "python3 scripts/verify_trust_scenario_catalog.py --check",
+    "registry_report": "platform/generated/study-anything-delivery-class-registry.json"
+  },
+  "blocked_scenario_count": 2,
+  "catalog_rule": {
+    "active_reconstruction_is_strong_evidence": true,
+    "ai_review_only_basis_rejected": true,
+    "both_loops_required": true,
+    "human_reconstruction_alone_is_insufficient": true,
+    "passive_attention_is_insufficient": true,
+    "production_mutation_allowed": false,
+    "sandbox_pass_alone_is_insufficient": true
+  },
+  "claim_boundary": {
+    "current_claim": "The catalog shows which delivery scenarios can currently be mapped to metadata-only Dual Loop / Delivery Trust evidence and which shortcuts must be blocked. It does not prove customer adoption, production permission, legal certification, or general factual correctness.",
+    "not_claimed": [
+      "automatic production delivery",
+      "automatic customer sending",
+      "legal or financial certification",
+      "truth certification",
+      "replacement for customer-specific review",
+      "model quality proof"
+    ]
+  },
+  "delivery_class_registry_ref": {
+    "path": "platform/generated/study-anything-delivery-class-registry.json",
+    "registered_delivery_class_ids": [
+      "client_report_handoff",
+      "code_review_handoff"
+    ],
+    "sha256": "20a687b709bbf5f96c3794860928d0650d0d3a5d08660ca6e9e0fe74ffc1b2c3"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "scenario_count": 4,
+  "scenarios": [
+    {
+      "active_reconstruction_checkpoints": [
+        "failure_boundary_reconstruction",
+        "risk_budget_reconstruction",
+        "recipient_scope_reconstruction"
+      ],
+      "autonomy_ceiling": "advisory_handoff_only",
+      "customer_visible": false,
+      "decision": "allow_controlled_code_review_handoff",
+      "delivery_class_id": "code_review_handoff",
+      "delivery_class_report": "platform/generated/study-anything-code-review-delivery-class.json",
+      "display_name": "Controlled Code Review Handoff",
+      "disposition": "supported_controlled_handoff",
+      "forbidden_shortcuts": [
+        "automatic_pr_comment",
+        "merge_approval",
+        "deployment_approval",
+        "security_certification_claim",
+        "ai_review_only_basis"
+      ],
+      "id": "controlled_code_review_handoff",
+      "loop_requirements": {
+        "agentic_coding_loop": "bounded sandbox evidence; no production mutation",
+        "developer_feedback_loop": "developer reconstructs failure boundary and review scope",
+        "external_feedback_loop": "recipient scope is bounded before handoff",
+        "loop_dominance_allowed": false
+      },
+      "recipient_class": "maintainer_or_developer",
+      "required_artifacts": [
+        "failure-contract-v1",
+        "sandbox-receipt-v1",
+        "attention-reconstruction-trace-v1",
+        "attention-reconstruction-summary-v1",
+        "dual-loop-gate-receipt-v1",
+        "delivery-trust-case-v1",
+        "code-review-handoff-case-v1"
+      ],
+      "verifier_command": "python3 scripts/verify_code_review_delivery_class_handoff.py --check"
+    },
+    {
+      "active_reconstruction_checkpoints": [
+        "failure_boundary_reconstruction",
+        "risk_budget_reconstruction",
+        "recipient_scope_reconstruction",
+        "claim_boundary_reconstruction"
+      ],
+      "autonomy_ceiling": "controlled_customer_handoff_package",
+      "customer_visible": true,
+      "decision": "allow_controlled_client_report_handoff",
+      "delivery_class_id": "client_report_handoff",
+      "delivery_class_report": "platform/generated/study-anything-client-report-delivery-class.json",
+      "display_name": "Controlled Client Report Handoff",
+      "disposition": "supported_controlled_handoff",
+      "forbidden_shortcuts": [
+        "automatic_customer_send",
+        "external_publication",
+        "legal_or_financial_certification",
+        "raw_customer_payload",
+        "ai_summary_only_basis"
+      ],
+      "id": "controlled_client_report_handoff",
+      "loop_requirements": {
+        "agentic_coding_loop": "sandbox evidence and rollback controls are present",
+        "developer_feedback_loop": "operator reconstructs claim boundary and unsupported claims",
+        "external_feedback_loop": "recipient and customer-visible scope are bounded",
+        "loop_dominance_allowed": false
+      },
+      "recipient_class": "bounded_client_or_internal_stakeholder",
+      "required_artifacts": [
+        "failure-contract-v1",
+        "sandbox-receipt-v1",
+        "attention-reconstruction-trace-v1",
+        "attention-reconstruction-summary-v1",
+        "dual-loop-gate-receipt-v1",
+        "delivery-trust-case-v1",
+        "customer-handoff-package-v1",
+        "client-report-handoff-case-v1"
+      ],
+      "verifier_command": "python3 scripts/verify_client_report_delivery_class_handoff.py --check"
+    },
+    {
+      "active_reconstruction_checkpoints": [
+        "failure_boundary_reconstruction",
+        "risk_budget_reconstruction"
+      ],
+      "autonomy_ceiling": "blocked",
+      "customer_visible": true,
+      "decision": "block_direct_production_mutation",
+      "delivery_class_id": null,
+      "display_name": "Blocked Direct Production Mutation",
+      "disposition": "blocked_unsafe_claim",
+      "forbidden_shortcuts": [
+        "production_mutation",
+        "irreversible_effect",
+        "real_user_exposure"
+      ],
+      "id": "blocked_direct_production_mutation",
+      "loop_requirements": {
+        "agentic_coding_loop": "sandbox may not mutate production",
+        "developer_feedback_loop": "developer must define a reversible lower-risk scenario first",
+        "external_feedback_loop": "external feedback cannot expand scope into production effects",
+        "loop_dominance_allowed": false
+      },
+      "recipient_class": "real_user_or_production_system",
+      "required_remediation": [
+        "define a reversible sandbox contract",
+        "add rollback receipt evidence",
+        "convert production action into a controlled handoff package"
+      ]
+    },
+    {
+      "active_reconstruction_checkpoints": [
+        "claim_boundary_reconstruction",
+        "recipient_scope_reconstruction"
+      ],
+      "autonomy_ceiling": "blocked",
+      "customer_visible": true,
+      "decision": "block_certified_truth_claim",
+      "delivery_class_id": null,
+      "display_name": "Blocked Certified Truth Claim",
+      "disposition": "blocked_unsafe_claim",
+      "forbidden_shortcuts": [
+        "legal_certification",
+        "financial_certification",
+        "truth_certification",
+        "eval_sufficient_alone",
+        "ai_review_only_basis"
+      ],
+      "id": "blocked_certified_truth_claim",
+      "loop_requirements": {
+        "agentic_coding_loop": "deterministic receipts do not certify factual truth",
+        "developer_feedback_loop": "developer must separate supported evidence from unsupported claims",
+        "external_feedback_loop": "customer context may require domain-specific review outside v0.1",
+        "loop_dominance_allowed": false
+      },
+      "recipient_class": "customer_or_regulated_recipient",
+      "required_remediation": [
+        "downgrade claim to controlled handoff evidence",
+        "add domain-specific owner review outside this v0.1 protocol",
+        "keep customer-facing language inside the claim boundary"
+      ]
+    }
+  ],
+  "schema_version": "trust-scenario-catalog-v1",
+  "status": "pass",
+  "supported_scenario_count": 2,
+  "version": "v0.3.31-alpha"
+}
