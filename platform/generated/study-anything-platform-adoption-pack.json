@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 3919173,
+  "archive_bytes": 3919454,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "17a1043a13ebc9b3222ef99ad91f58d5cd1b4e33fe8830ee5ec098ec32261dfa",
+  "archive_sha256": "4abf2bb6c0bd7dd1073bd44520084569a24b13b85b30d7a67dcac621cf373660",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -1237,7 +1237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "1ee2bcf54e9c563e13fb186706538741503139b1a1ae2cb2eacb98aa11e33232"
+      "sha256": "b671eaff243d1b5859c8376f77c1aa51c4c5e83a2160c715fff9bb2a6d2667c7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -1269,7 +1269,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-policy.json",
       "purpose": "Release-stack recursion guard and product runway verification report.",
-      "sha256": "0419590619e2c9eee63e8155c9533ad02b44da1cc25ef04ac8cefa01e57af40a"
+      "sha256": "0b7ce743ce591abb7784bc7a6db84ac53676fb7c54d7c0e983d97d92862cf63e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-dual-loop-contracts.json",
@@ -2077,15 +2077,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "dcf44b21f57b56356a0a1abf5fbabfeca2efb0298ff882f57e6c9b9f89137605"
+      "sha256": "fd2f8392f73f4fd86a07c2bddf098a7fbcf03b76ed9fdeb5c83ac5d8285e826c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-stack-intake-candidate.json",
-      "bytes": 14264,
+      "bytes": 15792,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "12f3fa8308479404101998998ec281e6a5477a0a5047b6a19cb43498b5d96449"
+      "sha256": "1588435cacc1cc27920080a9b1cd7003d8404e75b91d26bf67f9fd15ad61a3c6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -2093,7 +2093,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "2ae262150837e1a6be903815bc795fa159380def994284b2e9e0603d47756d0a"
+      "sha256": "998eb3f97b0831f011e17f550621d165a05339a0e4c0952a3bec08380bbeaa8b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-operator-drill-transcript.json",
@@ -3289,19 +3289,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_release_stack_intake_candidate.py",
-      "bytes": 25130,
+      "bytes": 25846,
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "184e478057d7984857f90c7dbb7e83b46c9220d41c606b1dbbf4bf5cfa40a6e6"
+      "sha256": "d7972b511a3496dc8481995a0cfb56ed3087340d17c33be5c52cbbc76079dd6e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_release_stack_candidate_promotion.py",
-      "bytes": 27064,
+      "bytes": 28532,
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "d31571136b117b03354c073406de23e6180d77a1bc2896b83906a695484382ff"
+      "sha256": "781380d083f4b505d872dbebf30409d821500617c771ac0ee43d3b0a43f184f7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-status-links/intake.json",
