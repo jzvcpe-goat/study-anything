@@ -485,6 +485,33 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
     ]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-product-loop-run",
+    "blocked-invalid-product-loop-run",
+    "blocked-missing-sandbox-receipt",
+    "blocked-missing-attention-reconstruction",
+    "blocked-dual-loop-gate-blocked",
+    "blocked-ai-review-only",
+    "blocked-customer-visible-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-delivery-trust-intake-receipt.json",
+        *(
+            ["patch-proposal-delivery-trust-case-candidate.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -615,6 +642,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/patch-proposal-customer-feedback-product-owner-gate.md", "operator_doc", "Patch Proposal Customer Feedback Product Owner Gate guide for metadata-only spec/eval candidate boundaries."),
     ("docs/patch-proposal-customer-feedback-spec-eval-authoring-gate.md", "operator_doc", "Patch Proposal Customer Feedback Spec/Eval Authoring Gate guide for metadata-only Product Loop brief candidate boundaries."),
     ("docs/patch-proposal-customer-feedback-product-loop-brief-intake-gate.md", "operator_doc", "Patch Proposal Customer Feedback Product Loop Brief Intake Gate guide for metadata-only Product Loop scenario/run candidate boundaries."),
+    ("docs/patch-proposal-customer-feedback-delivery-trust-intake-gate.md", "operator_doc", "Patch Proposal Customer Feedback Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate boundaries."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -705,6 +733,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/patch-proposal-product-loop-brief-candidate-v1.schema.json", "schema", "Patch Proposal Product Loop Brief Candidate JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-gate-v1.schema.json", "schema", "Patch Proposal Customer Feedback Product Loop Brief Intake Gate report JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.schema.json", "schema", "Patch Proposal Customer Feedback Product Loop Brief Intake Receipt JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-customer-feedback-delivery-trust-intake-gate-v1.schema.json", "schema", "Patch Proposal Customer Feedback Delivery Trust Intake Gate report JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-customer-feedback-delivery-trust-intake-receipt-v1.schema.json", "schema", "Patch Proposal Customer Feedback Delivery Trust Intake Receipt JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-delivery-trust-case-candidate-v1.schema.json", "schema", "Patch Proposal Delivery Trust Case Candidate JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -822,6 +853,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.json", "submission_report", "Patch Proposal Customer Feedback Product Loop Brief Intake Gate metadata-only verification report."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.md", "submission_report", "Patch Proposal Customer Feedback Product Loop Brief Intake Gate operator summary."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.html", "submission_report", "Patch Proposal Customer Feedback Product Loop Brief Intake Gate static HTML verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.json", "submission_report", "Patch Proposal Customer Feedback Delivery Trust Intake Gate metadata-only verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.md", "submission_report", "Patch Proposal Customer Feedback Delivery Trust Intake Gate operator summary."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.html", "submission_report", "Patch Proposal Customer Feedback Delivery Trust Intake Gate static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -1425,6 +1459,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-delivery-trust-intake-gate/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Patch Proposal Customer Feedback Delivery Trust Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_ARTIFACTS[case_id]
     ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
