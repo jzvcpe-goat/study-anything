@@ -210,12 +210,77 @@ def validate_core_reports(manifest: Mapping[str, Any]) -> dict[str, Any]:
     allowed = set(core.get("allowed_decision_cases") or [])
     if allowed != {"controlled_client_report_handoff", "controlled_code_review_handoff"}:
         raise TrustEvidenceHandoffConsumerError("allowed decision cases drifted")
+    delivery_reports = manifest.get("core_reports", {}).get("delivery_class_reports")
+    if not isinstance(delivery_reports, Mapping):
+        raise TrustEvidenceHandoffConsumerError("manifest is missing delivery_class_reports")
+    for class_id, minimum_cases in (("code_review_handoff", 4), ("client_report_handoff", 5)):
+        report = delivery_reports.get(class_id)
+        if not isinstance(report, Mapping):
+            raise TrustEvidenceHandoffConsumerError(f"manifest missing delivery class report summary: {class_id}")
+        if report.get("case_count") < minimum_cases:
+            raise TrustEvidenceHandoffConsumerError(f"{class_id} case count drifted")
+        if report.get("allowed_case_count") != 1 or report.get("blocked_case_count", 0) < 1:
+            raise TrustEvidenceHandoffConsumerError(f"{class_id} allowed/blocked matrix drifted")
     return {
         "delivery_class_count": int(core["delivery_class_count"]),
+        "delivery_class_case_count": sum(int(row["case_count"]) for row in delivery_reports.values()),
         "trust_scenario_count": int(core["trust_scenario_count"]),
         "decision_case_count": int(core["decision_case_count"]),
         "allowed_decision_cases": sorted(allowed),
         "blocked_decision_scenario_count": len(core.get("blocked_decision_scenarios") or []),
+    }
+
+
+def validate_embedded_delivery_class_report(
+    archive: zipfile.ZipFile,
+    *,
+    path: str,
+    class_id: str,
+    allowed_decision: str,
+    blocked_decision: str,
+    minimum_negative_checks: int,
+) -> dict[str, Any]:
+    report = read_json_member(archive, f"{ARCHIVE_ROOT}/{path}")
+    if report.get("delivery_class") != class_id or report.get("status") != "pass":
+        raise TrustEvidenceHandoffConsumerError(f"{class_id} embedded report drifted")
+    cases = report.get("case_reports")
+    if not isinstance(cases, list) or not cases:
+        raise TrustEvidenceHandoffConsumerError(f"{class_id} embedded report missing cases")
+    allowed = [row for row in cases if isinstance(row, Mapping) and row.get("decision") == allowed_decision]
+    blocked = [row for row in cases if isinstance(row, Mapping) and row.get("decision") == blocked_decision]
+    if len(allowed) != 1 or not blocked:
+        raise TrustEvidenceHandoffConsumerError(f"{class_id} embedded allowed/blocked matrix drifted")
+    negative_checks = report.get("negative_checks")
+    if not isinstance(negative_checks, Mapping) or len(negative_checks) < minimum_negative_checks:
+        raise TrustEvidenceHandoffConsumerError(f"{class_id} embedded negative checks drifted")
+    privacy = report.get("privacy")
+    runtime = report.get("runtime")
+    if not isinstance(privacy, Mapping) or not isinstance(runtime, Mapping):
+        raise TrustEvidenceHandoffConsumerError(f"{class_id} embedded privacy/runtime metadata missing")
+    for key in (
+        "metadata_only",
+    ):
+        if privacy.get(key) is not True:
+            raise TrustEvidenceHandoffConsumerError(f"{class_id}.privacy.{key} must stay true")
+    for key in (
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "screenshots_included",
+        "model_calls_performed",
+        "user_owned_agent_credentials_included",
+    ):
+        if privacy.get(key) is not False:
+            raise TrustEvidenceHandoffConsumerError(f"{class_id}.privacy.{key} must stay false")
+    for key in ("model_calls_performed", "production_mutation_performed"):
+        if runtime.get(key) is not False:
+            raise TrustEvidenceHandoffConsumerError(f"{class_id}.runtime.{key} must stay false")
+    return {
+        "delivery_class": class_id,
+        "case_count": len(cases),
+        "allowed_case_count": len(allowed),
+        "blocked_case_count": len(blocked),
+        "negative_check_count": len(negative_checks),
     }
 
 
@@ -239,6 +304,24 @@ def consume_pack(pack_path: Path) -> dict[str, Any]:
         )
         if decision_report.get("allowed_case_count") != 2 or decision_report.get("blocked_case_count") != 5:
             raise TrustEvidenceHandoffConsumerError("embedded decision gate report drifted")
+        delivery_class_reports = [
+            validate_embedded_delivery_class_report(
+                archive,
+                path="platform/generated/study-anything-code-review-delivery-class.json",
+                class_id="code_review_handoff",
+                allowed_decision="allow_controlled_code_review_handoff",
+                blocked_decision="block_code_review_handoff",
+                minimum_negative_checks=4,
+            ),
+            validate_embedded_delivery_class_report(
+                archive,
+                path="platform/generated/study-anything-client-report-delivery-class.json",
+                class_id="client_report_handoff",
+                allowed_decision="allow_controlled_client_report_handoff",
+                blocked_decision="block_client_report_handoff",
+                minimum_negative_checks=5,
+            ),
+        ]
 
     return {
         "schema_version": SCHEMA_VERSION,
@@ -256,13 +339,16 @@ def consume_pack(pack_path: Path) -> dict[str, Any]:
         "walkthrough": [
             {"step_id": "download_pack", "status": "pass", "evidence": "ZIP is valid and has one archive root."},
             {"step_id": "verify_manifest_and_hashes", "status": "pass", "evidence": "Manifest records match archive members and SHA-256 hashes."},
-            {"step_id": "inspect_delivery_classes", "status": "pass", "evidence": "Registered delivery classes are present."},
+            {"step_id": "inspect_delivery_classes", "status": "pass", "evidence": "Registered delivery classes and embedded class reports are present."},
+            {"step_id": "inspect_delivery_class_matrices", "status": "pass", "evidence": "Code review and client report allowed/blocked/negative checks are verifiable."},
             {"step_id": "inspect_decision_gate", "status": "pass", "evidence": "Only supported scenarios are allowed; blocked scenarios remain blocked."},
             {"step_id": "inspect_claim_boundary", "status": "pass", "evidence": "Claim boundary rejects production/customer/truth overclaims."},
         ],
         "core_summary": core_summary,
         "decision": {
             "external_adopter_can_verify_zip_only": True,
+            "delivery_class_reports_embedded": [row["delivery_class"] for row in delivery_class_reports],
+            "delivery_class_case_count": core_summary["delivery_class_case_count"],
             "controlled_handoff_scenarios_allowed": core_summary["allowed_decision_cases"],
             "blocked_scenarios_remain_blocked": True,
             "ai_review_only_rejected": True,

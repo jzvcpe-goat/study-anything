@@ -53,8 +53,14 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("docs/trust-scenario-catalog.md", "operator_doc", "Trust scenario catalog guide."),
     PackFile("docs/trust-scenario-decision-gate.md", "operator_doc", "Trust scenario decision gate guide."),
     PackFile("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery trust case pack guide."),
+    PackFile("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class guide."),
+    PackFile("docs/client-report-delivery-class.md", "operator_doc", "Client Report Delivery Class guide."),
     PackFile("platform/generated/study-anything-delivery-class-registry.json", "evidence", "Delivery Class Registry report."),
     PackFile("platform/generated/study-anything-delivery-class-registry.html", "evidence", "Delivery Class Registry HTML report."),
+    PackFile("platform/generated/study-anything-code-review-delivery-class.json", "evidence", "Code Review Delivery Class report."),
+    PackFile("platform/generated/study-anything-code-review-delivery-class.html", "evidence", "Code Review Delivery Class HTML report."),
+    PackFile("platform/generated/study-anything-client-report-delivery-class.json", "evidence", "Client Report Delivery Class report."),
+    PackFile("platform/generated/study-anything-client-report-delivery-class.html", "evidence", "Client Report Delivery Class HTML report."),
     PackFile("platform/generated/study-anything-trust-scenario-catalog.json", "evidence", "Trust Scenario Catalog report."),
     PackFile("platform/generated/study-anything-trust-scenario-catalog.html", "evidence", "Trust Scenario Catalog HTML report."),
     PackFile("platform/generated/study-anything-trust-scenario-decision-gate.json", "evidence", "Trust Scenario Decision Gate report."),
@@ -62,6 +68,12 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("platform/generated/study-anything-delivery-trust-case-pack.json", "evidence", "Delivery Trust Case Pack manifest."),
     PackFile("platform/generated/study-anything-delivery-trust-case-pack.md", "evidence", "Delivery Trust Case Pack markdown report."),
     PackFile("platform/generated/study-anything-delivery-trust-case-pack.sha256", "checksum", "Delivery Trust Case Pack checksum."),
+    PackFile("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class schema."),
+    PackFile("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class schema."),
+    PackFile("scripts/code_review_delivery_class_handoff.py", "generator", "Build Code Review Delivery Class artifacts."),
+    PackFile("scripts/verify_code_review_delivery_class_handoff.py", "verification", "Verify Code Review Delivery Class artifacts."),
+    PackFile("scripts/client_report_delivery_class_handoff.py", "generator", "Build Client Report Delivery Class artifacts."),
+    PackFile("scripts/verify_client_report_delivery_class_handoff.py", "verification", "Verify Client Report Delivery Class artifacts."),
     PackFile("scripts/verify_delivery_class_registry.py", "verification", "Verify Delivery Class Registry."),
     PackFile("scripts/verify_trust_scenario_catalog.py", "verification", "Verify Trust Scenario Catalog."),
     PackFile("scripts/trust_scenario_decision_gate.py", "cli", "Evaluate Trust Scenario decisions."),
@@ -69,6 +81,26 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("scripts/generate_delivery_trust_case_pack.py", "generator", "Generate Delivery Trust Case Pack."),
     PackFile("scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py", "verification", "Verify Delivery Trust Case Pack from ZIP."),
 )
+
+DELIVERY_CLASS_FIXTURES = {
+    "code-review-delivery-class": (
+        "pass",
+        "blocked-missing-reconstruction",
+        "blocked-unsafe-diff-scope",
+        "blocked-ai-review-only",
+    ),
+    "client-report-delivery-class": (
+        "pass",
+        "blocked-missing-reconstruction",
+        "blocked-risk-over-budget",
+        "blocked-unbounded-recipient",
+        "blocked-ai-summary-only",
+    ),
+}
+DELIVERY_CLASS_FIXTURE_FILES = {
+    "code-review-delivery-class": "code-review-handoff-case.json",
+    "client-report-delivery-class": "client-report-handoff-case.json",
+}
 
 DECISION_FIXTURE_ROOT = "fixtures/trust-scenario-decision-gate"
 DECISION_FIXTURE_CASES = (
@@ -139,7 +171,67 @@ def fixture_records() -> list[dict[str, Any]]:
                     f"Trust Scenario Decision fixture {case_id}/{filename}.",
                 )
             )
+    for fixture_root, case_ids in DELIVERY_CLASS_FIXTURES.items():
+        fixture_file = DELIVERY_CLASS_FIXTURE_FILES[fixture_root]
+        for case_id in case_ids:
+            relative = f"fixtures/{fixture_root}/{case_id}/{fixture_file}"
+            records.append(
+                file_record(
+                    relative,
+                    "delivery_class_fixture",
+                    f"Delivery Class fixture {fixture_root}/{case_id}/{fixture_file}.",
+                )
+            )
     return records
+
+
+def validate_delivery_class_report(
+    *,
+    relative_path: str,
+    class_id: str,
+    allowed_decision: str,
+    blocked_decision: str,
+    minimum_negative_checks: int,
+) -> dict[str, Any]:
+    report = load_json(relative_path)
+    if report.get("delivery_class") != class_id or report.get("status") != "pass":
+        raise TrustEvidenceHandoffPackError(f"{class_id} delivery class report drifted.")
+    cases = report.get("case_reports")
+    if not isinstance(cases, list) or not cases:
+        raise TrustEvidenceHandoffPackError(f"{class_id} delivery class report missing cases.")
+    allowed = [row for row in cases if isinstance(row, Mapping) and row.get("decision") == allowed_decision]
+    blocked = [row for row in cases if isinstance(row, Mapping) and row.get("decision") == blocked_decision]
+    if len(allowed) != 1 or not blocked:
+        raise TrustEvidenceHandoffPackError(f"{class_id} must have one allowed case and blocked cases.")
+    negative_checks = report.get("negative_checks")
+    if not isinstance(negative_checks, Mapping) or len(negative_checks) < minimum_negative_checks:
+        raise TrustEvidenceHandoffPackError(f"{class_id} must include negative checks.")
+    privacy = report.get("privacy")
+    runtime = report.get("runtime")
+    if not isinstance(privacy, Mapping) or not isinstance(runtime, Mapping):
+        raise TrustEvidenceHandoffPackError(f"{class_id} must include privacy and runtime metadata.")
+    for key in (
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "screenshots_included",
+        "model_calls_performed",
+        "user_owned_agent_credentials_included",
+    ):
+        if privacy.get(key) is not False:
+            raise TrustEvidenceHandoffPackError(f"{class_id}.privacy.{key} must stay false.")
+    for key in ("model_calls_performed", "production_mutation_performed"):
+        if runtime.get(key) is not False:
+            raise TrustEvidenceHandoffPackError(f"{class_id}.runtime.{key} must stay false.")
+    return {
+        "delivery_class": class_id,
+        "schema_version": report["schema_version"],
+        "case_count": len(cases),
+        "allowed_case_count": len(allowed),
+        "blocked_case_count": len(blocked),
+        "negative_check_ids": sorted(negative_checks),
+        "claim_boundary_hash": sha256_bytes(str(report.get("claim_boundary", {}).get("current_claim", "")).encode("utf-8")),
+    }
 
 
 def validate_core_reports() -> dict[str, Any]:
@@ -147,6 +239,20 @@ def validate_core_reports() -> dict[str, Any]:
     catalog = load_json("platform/generated/study-anything-trust-scenario-catalog.json")
     decision = load_json("platform/generated/study-anything-trust-scenario-decision-gate.json")
     case_pack = load_json("platform/generated/study-anything-delivery-trust-case-pack.json")
+    code_review = validate_delivery_class_report(
+        relative_path="platform/generated/study-anything-code-review-delivery-class.json",
+        class_id="code_review_handoff",
+        allowed_decision="allow_controlled_code_review_handoff",
+        blocked_decision="block_code_review_handoff",
+        minimum_negative_checks=4,
+    )
+    client_report = validate_delivery_class_report(
+        relative_path="platform/generated/study-anything-client-report-delivery-class.json",
+        class_id="client_report_handoff",
+        allowed_decision="allow_controlled_client_report_handoff",
+        blocked_decision="block_client_report_handoff",
+        minimum_negative_checks=5,
+    )
 
     delivery_class_ids = sorted(row["id"] for row in registry.get("delivery_classes", []))
     if delivery_class_ids != ["client_report_handoff", "code_review_handoff"]:
@@ -167,6 +273,10 @@ def validate_core_reports() -> dict[str, Any]:
     return {
         "delivery_class_count": registry["delivery_class_count"],
         "delivery_class_ids": delivery_class_ids,
+        "delivery_class_reports": {
+            "code_review_handoff": code_review,
+            "client_report_handoff": client_report,
+        },
         "trust_scenario_count": catalog["scenario_count"],
         "blocked_scenario_count": catalog["blocked_scenario_count"],
         "decision_case_count": decision["case_count"],
@@ -193,6 +303,8 @@ def build_manifest(include_archive: bool = False, archive: bytes | None = None) 
         ),
         "core_reports": validate_core_reports(),
         "entrypoints": {
+            "inspect_code_review_delivery_class": "python3 scripts/verify_code_review_delivery_class_handoff.py --check",
+            "inspect_client_report_delivery_class": "python3 scripts/verify_client_report_delivery_class_handoff.py --check",
             "inspect_decision_gate": "python3 scripts/verify_trust_scenario_decision_gate.py --check",
             "inspect_delivery_case_pack": "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check",
         },
@@ -271,6 +383,7 @@ def readme_text(manifest: Mapping[str, Any]) -> str:
 ## What To Inspect
 
 - Delivery classes: {", ".join(manifest["core_reports"]["delivery_class_ids"])}
+- Delivery class case reports: {sum(row["case_count"] for row in manifest["core_reports"]["delivery_class_reports"].values())}
 - Allowed scenarios: {", ".join(manifest["core_reports"]["allowed_decision_cases"])}
 - Blocked scenario decisions: {len(manifest["core_reports"]["blocked_decision_scenarios"])}
 
@@ -295,6 +408,7 @@ def markdown_report(manifest: Mapping[str, Any]) -> str:
 - Package: `{manifest["name"]}`
 - Version: `{manifest["version"]}`
 - Delivery classes: `{manifest["core_reports"]["delivery_class_count"]}`
+- Delivery class case reports: `{sum(row["case_count"] for row in manifest["core_reports"]["delivery_class_reports"].values())}`
 - Trust scenarios: `{manifest["core_reports"]["trust_scenario_count"]}`
 - Decision cases: `{manifest["core_reports"]["decision_case_count"]}`
 - File count: `{len(manifest["files"])}`

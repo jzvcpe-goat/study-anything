@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 70612,
+    "bytes": 112297,
     "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
     "root": "study-anything-trust-evidence-handoff-pack",
-    "sha256": "34b85c3f927be4afdba370b42988f8f28a3889170e58b1506d5ecf1ebe433e15"
+    "sha256": "3b2c4d906b4156aed8dd12d3fefd56478df274fadfc1791029170f22f0879a67"
   },
   "audience": [
     "external_operator",
@@ -42,21 +42,54 @@
       "client_report_handoff",
       "code_review_handoff"
     ],
-    "delivery_trust_case_pack_sha256": "03aa790bdd26ad762b7779fe1e887dd1b6a8675902256afa5377cc0fe037396d",
+    "delivery_class_reports": {
+      "client_report_handoff": {
+        "allowed_case_count": 1,
+        "blocked_case_count": 4,
+        "case_count": 5,
+        "claim_boundary_hash": "709803cbfc2169253e26bac02c80482e8a622265977397e2c902a0115a3a0caf",
+        "delivery_class": "client_report_handoff",
+        "negative_check_ids": [
+          "automatic_customer_sending_rejected",
+          "eval_sufficient_alone_rejected",
+          "external_publication_rejected",
+          "raw_customer_payload_rejected",
+          "raw_report_text_rejected"
+        ],
+        "schema_version": "client-report-delivery-class-verification-v1"
+      },
+      "code_review_handoff": {
+        "allowed_case_count": 1,
+        "blocked_case_count": 3,
+        "case_count": 4,
+        "claim_boundary_hash": "e4a168f72f3eea90f4383e656bcb07dab9f78790ce6414b95d7c47d3c077394b",
+        "delivery_class": "code_review_handoff",
+        "negative_check_ids": [
+          "automatic_pr_commenting_rejected",
+          "eval_sufficient_alone_rejected",
+          "production_mutation_rejected",
+          "raw_diff_rejected"
+        ],
+        "schema_version": "code-review-delivery-class-verification-v1"
+      }
+    },
+    "delivery_trust_case_pack_sha256": "f60078c440948cba19cb61561c26aaddc34b2b656a47a8b1fabfcc3b2599d48d",
     "trust_scenario_count": 4
   },
   "entrypoints": {
+    "inspect_client_report_delivery_class": "python3 scripts/verify_client_report_delivery_class_handoff.py --check",
+    "inspect_code_review_delivery_class": "python3 scripts/verify_code_review_delivery_class_handoff.py --check",
     "inspect_decision_gate": "python3 scripts/verify_trust_scenario_decision_gate.py --check",
     "inspect_delivery_case_pack": "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check"
   },
   "files": [
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/docs/trust-model.md",
-      "bytes": 10196,
+      "bytes": 10273,
       "path": "docs/trust-model.md",
       "purpose": "Cognitive Black Box trust model.",
       "role": "operator_doc",
-      "sha256": "e5b9b47d72a8ff7496539b912ac8b8ec3bf0733a2e363ad66e2d1a23758162af"
+      "sha256": "534f1f617c737e8b12a2c09aea2433ad1ecc9af6a0e2eba6869ec276ceb081f1"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/docs/product-runway.md",
@@ -99,6 +132,22 @@
       "sha256": "4c48e94bf734451aa364f523ea8194508b55b33dd15fcc9274cd3dd924472bde"
     },
     {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/code-review-delivery-class.md",
+      "bytes": 2723,
+      "path": "docs/code-review-delivery-class.md",
+      "purpose": "Code Review Delivery Class guide.",
+      "role": "operator_doc",
+      "sha256": "37a85eda60cd5dd891aa593931e24f4971293a1b74447b2c998b39a1069e80af"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/client-report-delivery-class.md",
+      "bytes": 2976,
+      "path": "docs/client-report-delivery-class.md",
+      "purpose": "Client Report Delivery Class guide.",
+      "role": "operator_doc",
+      "sha256": "1d28d7ed11fc7815b13f98019c21a8cb592ba4e2185069276256ba6d08ed3fce"
+    },
+    {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-class-registry.json",
       "bytes": 5502,
       "path": "platform/generated/study-anything-delivery-class-registry.json",
@@ -113,6 +162,38 @@
       "purpose": "Delivery Class Registry HTML report.",
       "role": "evidence",
       "sha256": "902b306ae1603aa59f2b37d77fd8e1ee4e02905b04ebe7d0bd7b313d5c3b89bf"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-code-review-delivery-class.json",
+      "bytes": 3502,
+      "path": "platform/generated/study-anything-code-review-delivery-class.json",
+      "purpose": "Code Review Delivery Class report.",
+      "role": "evidence",
+      "sha256": "4e53174c38fd48b0575130f5530edcbf8188328619216b50cf172341c42d721d"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-code-review-delivery-class.html",
+      "bytes": 4865,
+      "path": "platform/generated/study-anything-code-review-delivery-class.html",
+      "purpose": "Code Review Delivery Class HTML report.",
+      "role": "evidence",
+      "sha256": "eb0e3ab827b3d1eb8d7c92e806c529fc7f79187b27a411e2e100ecedd1b68d32"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-client-report-delivery-class.json",
+      "bytes": 4216,
+      "path": "platform/generated/study-anything-client-report-delivery-class.json",
+      "purpose": "Client Report Delivery Class report.",
+      "role": "evidence",
+      "sha256": "a3658760588fba48a7ca6f607d61a47d42ae6e32db50ad232041ff9611525df8"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-client-report-delivery-class.html",
+      "bytes": 5803,
+      "path": "platform/generated/study-anything-client-report-delivery-class.html",
+      "purpose": "Client Report Delivery Class HTML report.",
+      "role": "evidence",
+      "sha256": "0824aaa1dbc537b93d71554af9fc6eaaad0493731ac500b6630b51ce7601d01a"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-trust-scenario-catalog.json",
@@ -152,7 +233,7 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Delivery Trust Case Pack manifest.",
       "role": "evidence",
-      "sha256": "9c8c39122014a00266172e201996639d1e2a1149823ada45371e55ca1d022ae7"
+      "sha256": "59348f146908dd240856fbef1d277dbccec8ebaf14006a1f19694518614422f8"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
@@ -160,7 +241,7 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Delivery Trust Case Pack markdown report.",
       "role": "evidence",
-      "sha256": "26049629c79c2af1921825d30c570de5c7459b4713cb44410a4b5d1475fc6fc1"
+      "sha256": "774ea7e84603e57d9de52ba3708b0e4ea16ac30d547186837709cdc3f2d12ab2"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
@@ -168,7 +249,55 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Delivery Trust Case Pack checksum.",
       "role": "checksum",
-      "sha256": "e39fa65874a2b15262d14dad78693ed85d1655b762f35a43a8519f02df3364fb"
+      "sha256": "df2dc469d4416f789d3800fb490b13a890961388b930c9089859c149a84d7d58"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+      "bytes": 1134,
+      "path": "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+      "purpose": "Code Review Delivery Class schema.",
+      "role": "schema",
+      "sha256": "15ed9042ee3375e93f62101efc3d02b4bd02e8561ad4f7fc33341356da8a877e"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+      "bytes": 1283,
+      "path": "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+      "purpose": "Client Report Delivery Class schema.",
+      "role": "schema",
+      "sha256": "29b813a54253f02ccb9f942d1828860e5c4a64932776b36f2a8ccf7174cc532b"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/code_review_delivery_class_handoff.py",
+      "bytes": 11857,
+      "path": "scripts/code_review_delivery_class_handoff.py",
+      "purpose": "Build Code Review Delivery Class artifacts.",
+      "role": "generator",
+      "sha256": "b0cfee2b91dba10caee8f1781387b59452d0b2c5f4e5bb46073cc1dcbb1566af"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_code_review_delivery_class_handoff.py",
+      "bytes": 9086,
+      "path": "scripts/verify_code_review_delivery_class_handoff.py",
+      "purpose": "Verify Code Review Delivery Class artifacts.",
+      "role": "verification",
+      "sha256": "8111951df274082e16b905886c54a51f261762b8ed06f17590628e51d5b9f52a"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/client_report_delivery_class_handoff.py",
+      "bytes": 15003,
+      "path": "scripts/client_report_delivery_class_handoff.py",
+      "purpose": "Build Client Report Delivery Class artifacts.",
+      "role": "generator",
+      "sha256": "98f6ee86a5786c15e9267f12c858e04133befdfac65fe611a256da100d422e19"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_client_report_delivery_class_handoff.py",
+      "bytes": 9807,
+      "path": "scripts/verify_client_report_delivery_class_handoff.py",
+      "purpose": "Verify Client Report Delivery Class artifacts.",
+      "role": "verification",
+      "sha256": "52653aadf1d3a2817f5bb506a500332da9ce02506696beb62482a479d21e34e5"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_delivery_class_registry.py",
@@ -329,6 +458,78 @@
       "purpose": "Trust Scenario Decision fixture block-truth-certification/trust-scenario-decision-receipt.json.",
       "role": "trust_scenario_decision_fixture",
       "sha256": "e4b1aaa06f39a6e45a0c91b6d5706b398c10cfd845fb937d9e77cefaf4b91031"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/code-review-delivery-class/pass/code-review-handoff-case.json",
+      "bytes": 3773,
+      "path": "fixtures/code-review-delivery-class/pass/code-review-handoff-case.json",
+      "purpose": "Delivery Class fixture code-review-delivery-class/pass/code-review-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "5a342aa98b4df716269afa3764909f2a12c22a68574b97b1cd1900221b4f0c59"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/code-review-delivery-class/blocked-missing-reconstruction/code-review-handoff-case.json",
+      "bytes": 3794,
+      "path": "fixtures/code-review-delivery-class/blocked-missing-reconstruction/code-review-handoff-case.json",
+      "purpose": "Delivery Class fixture code-review-delivery-class/blocked-missing-reconstruction/code-review-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "324e6d5bec9168f83df04297fa28f9e21a0452c1157c79cc113852bd9fb70c2e"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/code-review-delivery-class/blocked-unsafe-diff-scope/code-review-handoff-case.json",
+      "bytes": 3816,
+      "path": "fixtures/code-review-delivery-class/blocked-unsafe-diff-scope/code-review-handoff-case.json",
+      "purpose": "Delivery Class fixture code-review-delivery-class/blocked-unsafe-diff-scope/code-review-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "caa0acf2a22a027aa158da6bb1af5d55591dbd0084315417be4aeb9f0dd796d1"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/code-review-delivery-class/blocked-ai-review-only/code-review-handoff-case.json",
+      "bytes": 3822,
+      "path": "fixtures/code-review-delivery-class/blocked-ai-review-only/code-review-handoff-case.json",
+      "purpose": "Delivery Class fixture code-review-delivery-class/blocked-ai-review-only/code-review-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "8ed7fd4709ef4435230a7fff4e33da61010c8e542986bc7c9015d59a62e3cdc8"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/client-report-delivery-class/pass/client-report-handoff-case.json",
+      "bytes": 4408,
+      "path": "fixtures/client-report-delivery-class/pass/client-report-handoff-case.json",
+      "purpose": "Delivery Class fixture client-report-delivery-class/pass/client-report-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "ae8ceec4a06eadc905f5882d4fa28b92b14e53c835b67c34b18de27040914d24"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/client-report-delivery-class/blocked-missing-reconstruction/client-report-handoff-case.json",
+      "bytes": 4427,
+      "path": "fixtures/client-report-delivery-class/blocked-missing-reconstruction/client-report-handoff-case.json",
+      "purpose": "Delivery Class fixture client-report-delivery-class/blocked-missing-reconstruction/client-report-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "d97d59994ce6d66de4217178d9c2552a9918783ed79ceac5e0ac781d16f2ace7"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/client-report-delivery-class/blocked-risk-over-budget/client-report-handoff-case.json",
+      "bytes": 4418,
+      "path": "fixtures/client-report-delivery-class/blocked-risk-over-budget/client-report-handoff-case.json",
+      "purpose": "Delivery Class fixture client-report-delivery-class/blocked-risk-over-budget/client-report-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "cac675316832df30ddcaf486657100d13633edd8271477c97f79c7ef1057f4ad"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/client-report-delivery-class/blocked-unbounded-recipient/client-report-handoff-case.json",
+      "bytes": 4420,
+      "path": "fixtures/client-report-delivery-class/blocked-unbounded-recipient/client-report-handoff-case.json",
+      "purpose": "Delivery Class fixture client-report-delivery-class/blocked-unbounded-recipient/client-report-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "bb6b8e20ec9169a9e79132f5eed078b72b4040ed00dfac80c9fbad9fd0e13131"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/client-report-delivery-class/blocked-ai-summary-only/client-report-handoff-case.json",
+      "bytes": 4457,
+      "path": "fixtures/client-report-delivery-class/blocked-ai-summary-only/client-report-handoff-case.json",
+      "purpose": "Delivery Class fixture client-report-delivery-class/blocked-ai-summary-only/client-report-handoff-case.json.",
+      "role": "delivery_class_fixture",
+      "sha256": "b4bb4f699b043e1b8f13300a2642ce9f7073615707403b6007df1f55361153a5"
     }
   ],
   "name": "study-anything-trust-evidence-handoff-pack",

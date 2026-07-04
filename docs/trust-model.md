@@ -238,6 +238,7 @@ reconstruction, forbidden shortcuts, production mutation, and truth certificatio
 remain blocked before any handoff claim is made.
 
 The Trust Evidence Handoff Pack command bundles the current registry, catalog,
-decision gate, Delivery Trust Case Pack, fixtures, claim boundaries, and privacy
-assertions into a portable ZIP. The consumer walkthrough proves an external
-operator can verify the handoff boundary from package metadata alone.
+concrete delivery-class reports, decision gate, Delivery Trust Case Pack,
+fixtures, claim boundaries, and privacy assertions into a portable ZIP. The
+consumer walkthrough proves an external operator can verify the handoff boundary
+and delivery-class allowed/blocked matrices from package metadata alone.
