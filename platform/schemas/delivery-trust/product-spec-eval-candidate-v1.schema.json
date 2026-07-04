@@ -1,0 +1,88 @@
+{
+  "$id": "product-spec-eval-candidate-v1",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_destinations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "destination": {
+      "const": "product_spec_eval_candidate_queue"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "loop": {
+      "const": "developer_feedback_loop"
+    },
+    "next_boundary": {
+      "const": "product_spec_eval_authoring"
+    },
+    "priority_score_included": {
+      "const": false
+    },
+    "priority_state": {
+      "const": "unassigned"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "ready_for_delivery_trust_harness": {
+      "const": false
+    },
+    "ready_for_execution": {
+      "const": false
+    },
+    "requires_product_owner_prioritization_before_execution": {
+      "const": true
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "product-spec-eval-candidate-v1"
+    },
+    "source_backlog_item_hash": {
+      "type": "string"
+    },
+    "source_backlog_item_id": {
+      "type": "string"
+    },
+    "source_delivery_class": {
+      "type": "string"
+    },
+    "source_receipt_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_backlog_item_id",
+    "source_backlog_item_hash",
+    "source_receipt_id",
+    "source_delivery_class",
+    "feedback_ref",
+    "loop",
+    "destination",
+    "next_boundary",
+    "priority_state",
+    "priority_score_included",
+    "requires_product_owner_prioritization_before_execution",
+    "ready_for_execution",
+    "ready_for_delivery_trust_harness",
+    "blocked_destinations",
+    "privacy",
+    "runtime",
+    "claim_boundary"
+  ],
+  "type": "object"
+}

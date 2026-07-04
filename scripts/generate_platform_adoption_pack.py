@@ -92,6 +92,16 @@ EXTERNAL_FEEDBACK_BACKLOG_BRIDGE_CASES = [
     "blocked-production-mutation",
     "blocked-ai-review-only",
 ]
+PRODUCT_OWNER_PRIORITIZATION_GATE_CASES = [
+    "pass",
+    "blocked-missing-owner-reconstruction",
+    "blocked-automatic-priority",
+    "blocked-skip-to-delivery-harness",
+    "blocked-automatic-execution",
+    "blocked-production-mutation",
+    "blocked-customer-visible-action",
+    "blocked-blocked-backlog-source",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -211,6 +221,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/support-response-delivery-class.md", "operator_doc", "Support Response Delivery Class metadata-only handoff guide."),
     ("docs/external-feedback-receipt.md", "operator_doc", "External Feedback Receipt metadata-only product-loop feedback guide."),
     ("docs/external-feedback-backlog-bridge.md", "operator_doc", "External Feedback Backlog Bridge product-loop backlog guide."),
+    ("docs/product-owner-prioritization-gate.md", "operator_doc", "Product Owner Prioritization Gate spec/eval candidate queue guide."),
     ("docs/delivery-class-registry.md", "operator_doc", "Delivery Class Registry guide for protocol-supported handoff classes."),
     ("docs/trust-scenario-catalog.md", "operator_doc", "Trust Scenario Catalog guide for supported and blocked AI delivery scenarios."),
     ("docs/trust-scenario-decision-gate.md", "operator_doc", "Trust Scenario Decision Gate guide for deterministic local scenario handoff receipts."),
@@ -275,6 +286,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json", "schema", "External Feedback Receipt JSON Schema."),
     ("platform/schemas/delivery-trust/external-feedback-backlog-bridge-v1.schema.json", "schema", "External Feedback Backlog Bridge JSON Schema."),
     ("platform/schemas/delivery-trust/product-loop-backlog-item-v1.schema.json", "schema", "Product Loop backlog item JSON Schema."),
+    ("platform/schemas/delivery-trust/product-owner-prioritization-receipt-v1.schema.json", "schema", "Product Owner Prioritization Gate receipt JSON Schema."),
+    ("platform/schemas/delivery-trust/product-spec-eval-candidate-v1.schema.json", "schema", "Product spec/eval candidate JSON Schema."),
     ("platform/schemas/workbuddy-learning-input-v1.schema.json", "schema", "WorkBuddy inline learning input JSON Schema."),
     ("platform/schemas/workbuddy-learning-output-v1.schema.json", "schema", "WorkBuddy inline learning output JSON Schema."),
     ("fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json", "fixture", "WorkBuddy inline DeepSeek PM interview fixture input."),
@@ -346,6 +359,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-external-feedback-backlog-bridge.json", "submission_report", "External Feedback Backlog Bridge metadata-only verification report."),
     ("platform/generated/study-anything-external-feedback-backlog-bridge.md", "submission_report", "External Feedback Backlog Bridge operator summary."),
     ("platform/generated/study-anything-external-feedback-backlog-bridge.html", "submission_report", "External Feedback Backlog Bridge static HTML verification report."),
+    ("platform/generated/study-anything-product-owner-prioritization-gate.json", "submission_report", "Product Owner Prioritization Gate metadata-only verification report."),
+    ("platform/generated/study-anything-product-owner-prioritization-gate.md", "submission_report", "Product Owner Prioritization Gate operator summary."),
+    ("platform/generated/study-anything-product-owner-prioritization-gate.html", "submission_report", "Product Owner Prioritization Gate static HTML verification report."),
     ("platform/generated/study-anything-delivery-class-registry.json", "submission_report", "Delivery Class Registry metadata-only verification report."),
     ("platform/generated/study-anything-delivery-class-registry.html", "submission_report", "Delivery Class Registry static HTML verification report."),
     ("platform/generated/study-anything-trust-scenario-catalog.json", "submission_report", "Trust Scenario Catalog metadata-only verification report."),
@@ -743,6 +759,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in EXTERNAL_FEEDBACK_BACKLOG_BRIDGE_CASES
     ],
     ("fixtures/external-feedback-backlog-bridge/pass/product-loop-backlog-item.json", "delivery_trust_case_harness_fixture", "External Feedback Backlog Bridge pass Product Loop backlog item fixture."),
+    *[
+        (
+            f"fixtures/product-owner-prioritization-gate/{case_id}/product-owner-prioritization-receipt.json",
+            "delivery_trust_case_harness_fixture",
+            f"Product Owner Prioritization Gate {case_id} fixture.",
+        )
+        for case_id in PRODUCT_OWNER_PRIORITIZATION_GATE_CASES
+    ],
+    ("fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json", "delivery_trust_case_harness_fixture", "Product Owner Prioritization Gate pass spec/eval candidate fixture."),
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -937,6 +962,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_external_feedback_receipt.py", "verification", "Verify External Feedback Receipt product-loop feedback boundaries."),
     ("scripts/external_feedback_backlog_bridge.py", "verification", "Build Product Loop backlog bridge fixtures from External Feedback receipts."),
     ("scripts/verify_external_feedback_backlog_bridge.py", "verification", "Verify External Feedback Backlog Bridge product-loop boundaries."),
+    ("scripts/product_owner_prioritization_gate.py", "verification", "Build Product Owner Prioritization Gate fixtures from Product Loop backlog items."),
+    ("scripts/verify_product_owner_prioritization_gate.py", "verification", "Verify Product Owner Prioritization Gate spec/eval candidate boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Product Owner Prioritization Gate</title>
+<body>
+<h1>Product Owner Prioritization Gate</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;blocked_case_count&quot;: 7,
+  &quot;candidate_count&quot;: 1,
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;candidate_created&quot;: true,
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;create_product_spec_eval_candidate&quot;,
+      &quot;status&quot;: &quot;queued_for_spec_eval_candidate&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;product_owner_reconstruction_missing&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-missing-owner-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;automatic_priority_assignment_rejected&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-automatic-priority&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;requested_next_boundary_not_spec_eval_candidate_queue&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-skip-to-delivery-harness&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;automatic_execution_rejected&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-automatic-execution&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_action_rejected&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-customer-visible-action&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;source_backlog_item_missing&quot;
+      ],
+      &quot;candidate_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-blocked-backlog-source&quot;,
+      &quot;decision&quot;: &quot;block_product_owner_prioritization&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A Product Loop backlog item can enter the product spec/eval candidate queue only after active Product Owner boundary reconstruction.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;automatic priority assignment&quot;,
+      &quot;automatic execution&quot;,
+      &quot;customer-visible reply&quot;,
+      &quot;production mutation&quot;,
+      &quot;external publication&quot;,
+      &quot;readiness for Delivery Trust Harness&quot;,
+      &quot;customer satisfaction guarantee&quot;
+    ]
+  },
+  &quot;gate_rules&quot;: {
+    &quot;allowed_next_boundary&quot;: &quot;product_spec_eval_candidate_queue&quot;,
+    &quot;automatic_execution_blocked&quot;: true,
+    &quot;automatic_priority_assignment_blocked&quot;: true,
+    &quot;customer_visible_action_blocked&quot;: true,
+    &quot;delivery_trust_harness_skip_blocked&quot;: true,
+    &quot;product_owner_reconstruction_required&quot;: true,
+    &quot;production_mutation_blocked&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;blocked_receipt_with_candidate_rejected&quot;: &quot;blocked receipt must not include candidate&quot;,
+    &quot;candidate_ready_for_execution_rejected&quot;: &quot;candidate must not be ready for execution&quot;,
+    &quot;priority_score_rejected&quot;: &quot;product owner prioritization payload contains forbidden fields: [&#x27;priority_score&#x27;]&quot;,
+    &quot;product_owner_identity_rejected&quot;: &quot;product owner prioritization payload contains forbidden fields: [&#x27;product_owner_identity&#x27;]&quot;,
+    &quot;raw_product_spec_rejected&quot;: &quot;product owner prioritization payload contains forbidden fields: [&#x27;raw_product_spec&#x27;]&quot;,
+    &quot;runtime_automatic_execution_rejected&quot;: &quot;receipt runtime.automatic_execution_performed must be False&quot;,
+    &quot;runtime_automatic_priority_rejected&quot;: &quot;receipt runtime.automatic_priority_assignment_performed must be False&quot;,
+    &quot;runtime_production_mutation_rejected&quot;: &quot;receipt runtime.production_mutation_performed must be False&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_production_mutation_performed&quot;: false,
+    &quot;backlog_item_metadata_only&quot;: true,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_identity_included&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;feedback_hash_only&quot;: true,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;priority_score_included&quot;: false,
+    &quot;product_owner_identity_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_customer_message_included&quot;: false,
+    &quot;raw_eval_body_included&quot;: false,
+    &quot;raw_feedback_text_included&quot;: false,
+    &quot;raw_product_spec_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;requester_identity_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;spec_eval_candidate_metadata_only&quot;: true,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove metadata-only Product Loop backlog items can enter a spec/eval candidate queue only after Product Owner boundary reconstruction.&quot;,
+  &quot;queued_case_count&quot;: 1,
+  &quot;runtime&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_execution_performed&quot;: false,
+    &quot;automatic_priority_assignment_performed&quot;: false,
+    &quot;backlog_storage_mutated&quot;: false,
+    &quot;customer_visible_action_performed&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;spec_eval_storage_mutated&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/product-owner-prioritization-receipt-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-owner-prioritization-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;e02923d2cdb5756476c4c839c64339af0109ba5737274607fb63e7b62d825d45&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/product-spec-eval-candidate-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-spec-eval-candidate-v1&quot;,
+      &quot;sha256&quot;: &quot;ec56251bc3aaa11b5ad74a631cab1e4384e799723dc07c39d6303879f51de144&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;product-owner-prioritization-gate-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>
