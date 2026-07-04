@@ -9,6 +9,7 @@
 
 - `code_review_handoff`: `draft_ready_for_human_scope_confirmation`; customer send remains disabled
 - `client_report_handoff`: `draft_ready_for_human_scope_confirmation`; customer send remains disabled
+- `support_response_handoff`: `draft_ready_for_human_scope_confirmation`; customer send remains disabled
 
 ## Blocked Items
 
@@ -19,6 +20,11 @@
 - `client_report_handoff` / `blocked-risk-over-budget`: `not_allowed`
 - `client_report_handoff` / `blocked-unbounded-recipient`: `not_allowed`
 - `client_report_handoff` / `blocked-ai-summary-only`: `not_allowed`
+- `support_response_handoff` / `blocked-missing-reconstruction`: `not_allowed`
+- `support_response_handoff` / `blocked-risk-over-budget`: `not_allowed`
+- `support_response_handoff` / `blocked-unbounded-recipient`: `not_allowed`
+- `support_response_handoff` / `blocked-policy-gap`: `not_allowed`
+- `support_response_handoff` / `blocked-ai-summary-only`: `not_allowed`
 
 ## Claim Boundary
 

@@ -5,11 +5,12 @@
     "report": "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
     "source_commands": [
       "python3 scripts/verify_code_review_operator_handoff_rehearsal.py --check",
-      "python3 scripts/verify_client_report_operator_handoff_rehearsal.py --check"
+      "python3 scripts/verify_client_report_operator_handoff_rehearsal.py --check",
+      "python3 scripts/verify_support_response_operator_handoff_rehearsal.py --check"
     ]
   },
   "claim_boundary": {
-    "current_claim": "Code Review and Client Report delivery classes share a metadata-only operator handoff contract: a platform Agent can prepare a bounded ready/block decision, but cannot send, publish, comment, merge, mutate production, certify truth, or replace customer-specific review.",
+    "current_claim": "Code Review, Client Report, and Support Response delivery classes share a metadata-only operator handoff contract: a platform Agent can prepare a bounded ready/block decision, but cannot send, publish, comment, merge, mutate production, certify truth, or replace customer-specific review.",
     "not_claimed": [
       "customer send approval",
       "actual customer send completed",
@@ -31,8 +32,8 @@
   "coverage": {
     "all_classes_have_blocked_cases": true,
     "all_classes_have_one_ready_case": true,
-    "code_review_and_client_report_share_contract": true,
-    "delivery_class_count": 2,
+    "all_supported_delivery_classes_share_contract": true,
+    "delivery_class_count": 3,
     "operator_handoff_is_not_ai_review_only": true,
     "operator_handoff_is_not_customer_send": true
   },
@@ -93,6 +94,38 @@
         "recipient_scope_bounded"
       ],
       "schema_version": "client-report-operator-handoff-rehearsal-v1",
+      "status": "pass"
+    },
+    {
+      "blocked_count": 8,
+      "blocked_reason_categories": [
+        "automatic_customer_send_attempted",
+        "customer_delivery_rehearsal_blocked",
+        "external_publication_attempted",
+        "missing_no_raw_response_or_ticket_payload_attached",
+        "missing_operator_understands_not_send_approval",
+        "missing_recipient_scope_bounded",
+        "missing_support_policy_scope_bounded",
+        "raw_response_or_ticket_payload_requested",
+        "support_response_delivery_class_blocked"
+      ],
+      "delivery_class": "support_response_handoff",
+      "mode": "operator_handoff_decision_only",
+      "not_claimed_count": 13,
+      "ready_case": "ready-support-response-operator-decision",
+      "ready_count": 1,
+      "report": "platform/generated/study-anything-support-response-operator-handoff-rehearsal.json",
+      "required_confirmations": [
+        "actual_external_delivery_outside_system_only",
+        "claim_boundary_visible",
+        "customer_rehearsal_ready",
+        "no_raw_response_or_ticket_payload_attached",
+        "operator_understands_not_send_approval",
+        "recipient_scope_bounded",
+        "support_policy_scope_bounded",
+        "support_response_delivery_class_ready"
+      ],
+      "schema_version": "support-response-operator-handoff-rehearsal-v1",
       "status": "pass"
     }
   ],
@@ -179,7 +212,8 @@
     "source_reports_must_pass": true,
     "supported_delivery_classes": [
       "code_review_handoff",
-      "client_report_handoff"
+      "client_report_handoff",
+      "support_response_handoff"
     ]
   },
   "status": "pass"

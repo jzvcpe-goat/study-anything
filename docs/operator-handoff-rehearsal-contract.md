@@ -4,8 +4,9 @@ This contract is the shared delivery boundary for class-specific operator
 handoff rehearsals.
 
 It proves that supported delivery classes can prepare an operator decision from
-metadata-only evidence without sending anything to a customer, posting PR
-comments, publishing externally, mutating production, or reading raw payloads.
+metadata-only evidence without sending anything to a customer/requester, posting
+PR comments, publishing externally, mutating production, or reading raw
+payloads.
 
 ## Contract
 
@@ -20,15 +21,18 @@ Every supported delivery class must provide:
 - explicit claim boundaries that keep customer send approval and production
   approval outside the system.
 
+Current supported classes are Code Review, Client Report, and Support Response.
+
 The generic contract does not replace the class-specific verifiers. It checks
 that all current delivery classes obey the same operator handoff shape.
 
 ## Boundary
 
 The contract is metadata-only. It must not include raw source text, raw diffs,
-raw reports, raw customer payloads, screenshots, attention streams, secrets,
-user-owned Agent credentials, model calls, production mutations, customer sends,
-external publication, or automatic PR comments.
+raw reports, raw support replies, raw ticket payloads, requester identity, raw
+customer payloads, screenshots, attention streams, secrets, user-owned Agent
+credentials, model calls, production mutations, customer sends, support reply
+sends, external publication, or automatic PR comments.
 
 ## Verify
 

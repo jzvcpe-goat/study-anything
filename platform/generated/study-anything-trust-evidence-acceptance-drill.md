@@ -2,9 +2,9 @@
 
 - Schema: `trust-evidence-acceptance-drill-v1`
 - Status: `pass`
-- ZIP SHA-256: `b187b010b842c8399353bd5351a4a0cfb4b0074a5b8ae13979c997052fd0035e`
-- Allowed controlled handoffs: `2`
-- Blocked handoffs: `7`
+- ZIP SHA-256: `28d25b3318bfbcaeec0d17e4f5b3aedbf31c0fd3c4dbba097f58646903f700ab`
+- Allowed controlled handoffs: `3`
+- Blocked handoffs: `12`
 
 ## Operator Decisions
 
@@ -17,6 +17,12 @@
 - `client_report_handoff` / `blocked-risk-over-budget`: `block_handoff`
 - `client_report_handoff` / `blocked-unbounded-recipient`: `block_handoff`
 - `client_report_handoff` / `blocked-ai-summary-only`: `block_handoff`
+- `support_response_handoff` / `pass`: `prepare_controlled_support_response_handoff`
+- `support_response_handoff` / `blocked-missing-reconstruction`: `block_handoff`
+- `support_response_handoff` / `blocked-risk-over-budget`: `block_handoff`
+- `support_response_handoff` / `blocked-unbounded-recipient`: `block_handoff`
+- `support_response_handoff` / `blocked-policy-gap`: `block_handoff`
+- `support_response_handoff` / `blocked-ai-summary-only`: `block_handoff`
 
 ## Claim Boundary
 

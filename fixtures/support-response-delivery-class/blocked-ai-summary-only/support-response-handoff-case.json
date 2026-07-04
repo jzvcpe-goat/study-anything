@@ -1,0 +1,133 @@
+{
+  "case_id": "support-response-handoff-blocked-ai-summary-only",
+  "checks": {
+    "ai_summary_only_evidence_rejected": false,
+    "automatic_customer_sending_allowed": false,
+    "claim_boundary_present": true,
+    "customer_handoff_package_ready": true,
+    "delivery_trust_case_allowed": true,
+    "dual_loop_gate_allowed": true,
+    "external_eval_receipts_supporting_only": true,
+    "external_publication_allowed": false,
+    "human_reconstruction_checkpoint_passed": true,
+    "issue_resolution_boundary_present": true,
+    "product_loop_passed": false,
+    "production_mutation_allowed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_response_text_included": false,
+    "raw_ticket_payload_included": false,
+    "recipient_scope_bounded": true,
+    "rollback_or_correction_plan_present": true,
+    "sandbox_risk_within_budget": true,
+    "source_grounding_citations_present": true,
+    "support_policy_scope_present": true,
+    "user_identity_included": false
+  },
+  "claim_boundary": {
+    "current_claim": "A support response draft can be treated as controlled customer handoff evidence only when Product Loop, Dual Loop, active human reconstruction, source grounding, support-policy scope, bounded requester scope, and CustomerHandoff boundaries pass.",
+    "not_claimed": [
+      "automatic support reply delivery",
+      "support resolution guarantee",
+      "private requester identity disclosure",
+      "legal certification",
+      "financial advice certification",
+      "complete factual correctness",
+      "general model correctness",
+      "production publication",
+      "replacement for customer-specific legal or compliance review"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_support_response_handoff",
+  "delivery_class": "support_response_handoff",
+  "evidence_roles": {
+    "ai_summary": "never_sufficient_alone",
+    "dual_loop": "required",
+    "external_eval": "supporting_only_not_sufficient",
+    "human_reconstruction": "required",
+    "product_loop": "required",
+    "recipient_scope": "required",
+    "source_grounding": "required",
+    "support_policy": "required"
+  },
+  "handoff_controls": {
+    "publish_external_allowed": false,
+    "requires_active_reconstruction_summary": true,
+    "requires_claim_boundary_notice": true,
+    "requires_manual_delivery_action": true,
+    "requires_source_bound_citation_map": true,
+    "send_to_customer_allowed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "cookies_or_bearer_tokens_included": false,
+    "eye_tracking_included": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_report_text_included": false,
+    "raw_response_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "raw_ticket_payload_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_identity_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "reasons": [
+    "product_loop_not_passed",
+    "ai_summary_only_evidence_rejected"
+  ],
+  "recipient_context_ref": {
+    "customer_payload_hash": "006f0eab589f51128dfe8396ab59173fde2eb82e6a9a9e479eb004225c9bc279",
+    "raw_customer_payload_included": false,
+    "raw_ticket_payload_included": false,
+    "recipient_class": "bounded_support_requester",
+    "recipient_scope_hash": "285205218535e6eeff87cc8d4b9073d7b4e2adba2c089ddfa8e5063aba8998b5",
+    "user_identity_included": false
+  },
+  "report_artifact_ref": {
+    "artifact_hash": "0cf1e4b27217aa710c7e9c789bd69bbd67d8967c057ac5e396407b34546b17e4",
+    "citation_map_hash": "195315bef6b088627068afc15b8bd9e5ab80085e3a187ed9c6667ea2b327e0a6",
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_response_text_included": false,
+    "raw_ticket_payload_included": false,
+    "report_locator": "metadata://support-response/draft",
+    "report_type": "support_reply_draft",
+    "source_count": 4,
+    "support_policy_hash": "ac073dc06ed1d4e6f1ed679786c79d14d76f2629f9696c44bb5a41e5f4ec519a",
+    "user_identity_included": false
+  },
+  "risk_budget": {
+    "budget_level": "medium",
+    "external_effects_allowed": false,
+    "irreversible_effects_allowed": false,
+    "observed_level": "medium"
+  },
+  "schema_version": "support-response-handoff-case-v1",
+  "status": "blocked",
+  "upstream_delivery_trust_case_ref": {
+    "artifact_hash": "d0047997edda860fbc1f70b0e850b496e8f18f8b22ce2feb5fb057724b3e9163",
+    "case_id": "delivery-trust-case-pass",
+    "raw_body_included": false
+  },
+  "version": "v0.3.31-alpha"
+}

@@ -191,6 +191,122 @@
           "rerun_controlled_handoff_runbook",
           "rebuild_customer_delivery_trust_envelope"
         ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "blocked_item_id": "customer-block-support_response_handoff-blocked-missing-reconstruction",
+        "blocked_reasons": [
+          "human_reconstruction_missing"
+        ],
+        "customer_packet_status": "not_allowed",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "order": 8,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-missing-reconstruction",
+        "source_step_id": "block-support_response_handoff-blocked-missing-reconstruction",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "regenerate_metadata_receipts",
+          "rerun_acceptance_drill",
+          "rerun_controlled_handoff_runbook",
+          "rebuild_customer_delivery_trust_envelope"
+        ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "blocked_item_id": "customer-block-support_response_handoff-blocked-risk-over-budget",
+        "blocked_reasons": [
+          "sandbox_risk_outside_budget"
+        ],
+        "customer_packet_status": "not_allowed",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "order": 9,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-risk-over-budget",
+        "source_step_id": "block-support_response_handoff-blocked-risk-over-budget",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "regenerate_metadata_receipts",
+          "rerun_acceptance_drill",
+          "rerun_controlled_handoff_runbook",
+          "rebuild_customer_delivery_trust_envelope"
+        ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "blocked_item_id": "customer-block-support_response_handoff-blocked-unbounded-recipient",
+        "blocked_reasons": [
+          "recipient_scope_unbounded"
+        ],
+        "customer_packet_status": "not_allowed",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "order": 10,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-unbounded-recipient",
+        "source_step_id": "block-support_response_handoff-blocked-unbounded-recipient",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "regenerate_metadata_receipts",
+          "rerun_acceptance_drill",
+          "rerun_controlled_handoff_runbook",
+          "rebuild_customer_delivery_trust_envelope"
+        ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "blocked_item_id": "customer-block-support_response_handoff-blocked-policy-gap",
+        "blocked_reasons": [
+          "support_policy_scope_missing"
+        ],
+        "customer_packet_status": "not_allowed",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "order": 11,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-policy-gap",
+        "source_step_id": "block-support_response_handoff-blocked-policy-gap",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "regenerate_metadata_receipts",
+          "rerun_acceptance_drill",
+          "rerun_controlled_handoff_runbook",
+          "rebuild_customer_delivery_trust_envelope"
+        ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "blocked_item_id": "customer-block-support_response_handoff-blocked-ai-summary-only",
+        "blocked_reasons": [
+          "ai_summary_only_evidence_rejected",
+          "product_loop_not_passed"
+        ],
+        "customer_packet_status": "not_allowed",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "order": 12,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-ai-summary-only",
+        "source_step_id": "block-support_response_handoff-blocked-ai-summary-only",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "regenerate_metadata_receipts",
+          "rerun_acceptance_drill",
+          "rerun_controlled_handoff_runbook",
+          "rebuild_customer_delivery_trust_envelope"
+        ]
       }
     ],
     "items": [
@@ -283,6 +399,51 @@
           "attention_streams",
           "secrets_or_credentials"
         ]
+      },
+      {
+        "automatic_customer_send_allowed": false,
+        "customer_packet_status": "draft_ready_for_human_scope_confirmation",
+        "customer_visible_effect_allowed": false,
+        "customer_visible_material": [
+          "claim_boundary_summary",
+          "delivery_class_id",
+          "verification_commands",
+          "metadata_receipt_refs",
+          "blocked_path_summary"
+        ],
+        "delivery_class": "support_response_handoff",
+        "envelope_item_id": "customer-envelope-support_response_handoff",
+        "external_publication_allowed": false,
+        "forbidden": [
+          "automatic_customer_send",
+          "production_mutation",
+          "external_publication_without_human_scope_confirmation",
+          "truth_certification_claim",
+          "customer_outcome_guarantee_claim",
+          "raw_payload_attachment"
+        ],
+        "human_scope_confirmation_required": true,
+        "order": 3,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "requires_before_any_customer_send": [
+          "human_confirms_recipient_scope",
+          "human_confirms_customer_context_is_within_delivery_class",
+          "human_confirms_claim_boundary_is_visible",
+          "human_confirms_no_raw_payload_or_secret_is_attached",
+          "human_performs_the_actual_send_outside_this_system"
+        ],
+        "source_operator_action": "prepare_controlled_handoff_packet",
+        "source_step_id": "prepare-support_response_handoff",
+        "withheld_material": [
+          "raw_source_text",
+          "raw_diff",
+          "raw_report_body",
+          "raw_customer_payload",
+          "screenshots",
+          "attention_streams",
+          "secrets_or_credentials"
+        ]
       }
     ],
     "mode": "pre_customer_send_boundary_only",
@@ -341,8 +502,8 @@
   "purpose": "Wrap controlled handoff preparation into a metadata-only customer-delivery trust envelope that can be inspected before any customer-visible action.",
   "schema_version": "customer-delivery-trust-envelope-v1",
   "source": {
-    "allowed_steps": 2,
-    "blocked_steps": 7,
+    "allowed_steps": 3,
+    "blocked_steps": 12,
     "report": "platform/generated/study-anything-controlled-handoff-runbook.json",
     "schema_version": "controlled-handoff-runbook-v1",
     "status": "pass"

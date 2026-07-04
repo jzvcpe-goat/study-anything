@@ -234,8 +234,8 @@
   },
   "schema_version": "customer-delivery-rehearsal-v1",
   "source": {
-    "blocked_item_count": 7,
-    "envelope_item_count": 2,
+    "blocked_item_count": 12,
+    "envelope_item_count": 3,
     "report": "platform/generated/study-anything-customer-delivery-trust-envelope.json",
     "schema_version": "customer-delivery-trust-envelope-v1",
     "status": "pass"

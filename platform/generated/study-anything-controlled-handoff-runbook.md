@@ -3,12 +3,13 @@
 - Schema: `controlled-handoff-runbook-v1`
 - Status: `pass`
 - Mode: `controlled_handoff_preparation_only`
-- Source ZIP SHA-256: `b187b010b842c8399353bd5351a4a0cfb4b0074a5b8ae13979c997052fd0035e`
+- Source ZIP SHA-256: `28d25b3318bfbcaeec0d17e4f5b3aedbf31c0fd3c4dbba097f58646903f700ab`
 
 ## Allowed Preparation Steps
 
 - `code_review_handoff`: `prepare_controlled_handoff_packet` -> `draft_handoff_only`
 - `client_report_handoff`: `prepare_controlled_handoff_packet` -> `draft_handoff_only`
+- `support_response_handoff`: `prepare_controlled_handoff_packet` -> `draft_handoff_only`
 
 ## Blocked Paths
 
@@ -19,6 +20,11 @@
 - `client_report_handoff` / `blocked-risk-over-budget`: `keep_handoff_blocked` because `sandbox_risk_outside_budget`
 - `client_report_handoff` / `blocked-unbounded-recipient`: `keep_handoff_blocked` because `recipient_scope_unbounded`
 - `client_report_handoff` / `blocked-ai-summary-only`: `keep_handoff_blocked` because `ai_summary_only_evidence_rejected, product_loop_not_passed`
+- `support_response_handoff` / `blocked-missing-reconstruction`: `keep_handoff_blocked` because `human_reconstruction_missing`
+- `support_response_handoff` / `blocked-risk-over-budget`: `keep_handoff_blocked` because `sandbox_risk_outside_budget`
+- `support_response_handoff` / `blocked-unbounded-recipient`: `keep_handoff_blocked` because `recipient_scope_unbounded`
+- `support_response_handoff` / `blocked-policy-gap`: `keep_handoff_blocked` because `support_policy_scope_missing`
+- `support_response_handoff` / `blocked-ai-summary-only`: `keep_handoff_blocked` because `ai_summary_only_evidence_rejected, product_loop_not_passed`
 
 ## Claim Boundary
 

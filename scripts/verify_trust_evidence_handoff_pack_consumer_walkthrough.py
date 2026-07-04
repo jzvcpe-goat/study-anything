@@ -201,19 +201,27 @@ def validate_core_reports(manifest: Mapping[str, Any]) -> dict[str, Any]:
     core = manifest.get("core_reports")
     if not isinstance(core, Mapping):
         raise TrustEvidenceHandoffConsumerError("manifest is missing core_reports")
-    if core.get("delivery_class_ids") != ["client_report_handoff", "code_review_handoff"]:
+    if core.get("delivery_class_ids") != ["client_report_handoff", "code_review_handoff", "support_response_handoff"]:
         raise TrustEvidenceHandoffConsumerError("delivery class IDs drifted")
-    if core.get("trust_scenario_count") != 4 or core.get("blocked_scenario_count") != 2:
+    if core.get("trust_scenario_count") != 5 or core.get("blocked_scenario_count") != 2:
         raise TrustEvidenceHandoffConsumerError("trust scenario counts drifted")
-    if core.get("decision_case_count") != 7:
+    if core.get("decision_case_count") != 9:
         raise TrustEvidenceHandoffConsumerError("decision case count drifted")
     allowed = set(core.get("allowed_decision_cases") or [])
-    if allowed != {"controlled_client_report_handoff", "controlled_code_review_handoff"}:
+    if allowed != {
+        "controlled_client_report_handoff",
+        "controlled_code_review_handoff",
+        "controlled_support_response_handoff",
+    }:
         raise TrustEvidenceHandoffConsumerError("allowed decision cases drifted")
     delivery_reports = manifest.get("core_reports", {}).get("delivery_class_reports")
     if not isinstance(delivery_reports, Mapping):
         raise TrustEvidenceHandoffConsumerError("manifest is missing delivery_class_reports")
-    for class_id, minimum_cases in (("code_review_handoff", 4), ("client_report_handoff", 5)):
+    for class_id, minimum_cases in (
+        ("code_review_handoff", 4),
+        ("client_report_handoff", 5),
+        ("support_response_handoff", 6),
+    ):
         report = delivery_reports.get(class_id)
         if not isinstance(report, Mapping):
             raise TrustEvidenceHandoffConsumerError(f"manifest missing delivery class report summary: {class_id}")
@@ -302,7 +310,7 @@ def consume_pack(pack_path: Path) -> dict[str, Any]:
             archive,
             f"{ARCHIVE_ROOT}/platform/generated/study-anything-trust-scenario-decision-gate.json",
         )
-        if decision_report.get("allowed_case_count") != 2 or decision_report.get("blocked_case_count") != 5:
+        if decision_report.get("allowed_case_count") != 3 or decision_report.get("blocked_case_count") != 6:
             raise TrustEvidenceHandoffConsumerError("embedded decision gate report drifted")
         delivery_class_reports = [
             validate_embedded_delivery_class_report(
@@ -320,6 +328,14 @@ def consume_pack(pack_path: Path) -> dict[str, Any]:
                 allowed_decision="allow_controlled_client_report_handoff",
                 blocked_decision="block_client_report_handoff",
                 minimum_negative_checks=5,
+            ),
+            validate_embedded_delivery_class_report(
+                archive,
+                path="platform/generated/study-anything-support-response-delivery-class.json",
+                class_id="support_response_handoff",
+                allowed_decision="allow_controlled_support_response_handoff",
+                blocked_decision="block_support_response_handoff",
+                minimum_negative_checks=6,
             ),
         ]
 
@@ -340,7 +356,7 @@ def consume_pack(pack_path: Path) -> dict[str, Any]:
             {"step_id": "download_pack", "status": "pass", "evidence": "ZIP is valid and has one archive root."},
             {"step_id": "verify_manifest_and_hashes", "status": "pass", "evidence": "Manifest records match archive members and SHA-256 hashes."},
             {"step_id": "inspect_delivery_classes", "status": "pass", "evidence": "Registered delivery classes and embedded class reports are present."},
-            {"step_id": "inspect_delivery_class_matrices", "status": "pass", "evidence": "Code review and client report allowed/blocked/negative checks are verifiable."},
+            {"step_id": "inspect_delivery_class_matrices", "status": "pass", "evidence": "Supported delivery-class allowed/blocked/negative checks are verifiable."},
             {"step_id": "inspect_decision_gate", "status": "pass", "evidence": "Only supported scenarios are allowed; blocked scenarios remain blocked."},
             {"step_id": "inspect_claim_boundary", "status": "pass", "evidence": "Claim boundary rejects production/customer/truth overclaims."},
         ],

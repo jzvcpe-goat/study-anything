@@ -98,6 +98,35 @@
         "source_case_id": "pass",
         "source_decision": "allow_controlled_client_report_handoff",
         "step_id": "prepare-client_report_handoff"
+      },
+      {
+        "allowed_next_action": "draft_handoff_only",
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "final_human_scope_confirmation_required": true,
+        "forbidden": [
+          "send_customer_message_automatically",
+          "mutate_production",
+          "publish_externally",
+          "claim_truth_certification",
+          "claim_customer_outcome_guarantee",
+          "include_raw_source_or_customer_payload"
+        ],
+        "operator_action": "prepare_controlled_handoff_packet",
+        "order": 10,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "requires": [
+          "verify_trust_evidence_zip_digest",
+          "confirm_delivery_class_scope",
+          "confirm_active_human_reconstruction",
+          "confirm_claim_boundary_with_recipient",
+          "attach_metadata_receipts_only"
+        ],
+        "source_case_id": "pass",
+        "source_decision": "allow_controlled_support_response_handoff",
+        "step_id": "prepare-support_response_handoff"
       }
     ],
     "blocked_steps": [
@@ -250,6 +279,112 @@
           "lower_or_re-scope_risk_budget_if_needed",
           "regenerate_metadata_receipts_before_any_handoff"
         ]
+      },
+      {
+        "blocked_reasons": [
+          "human_reconstruction_missing"
+        ],
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "operator_action": "keep_handoff_blocked",
+        "order": 11,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-missing-reconstruction",
+        "source_decision": "block_support_response_handoff",
+        "step_id": "block-support_response_handoff-blocked-missing-reconstruction",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "restore_active_human_reconstruction_if_missing",
+          "lower_or_re-scope_risk_budget_if_needed",
+          "regenerate_metadata_receipts_before_any_handoff"
+        ]
+      },
+      {
+        "blocked_reasons": [
+          "sandbox_risk_outside_budget"
+        ],
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "operator_action": "keep_handoff_blocked",
+        "order": 12,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-risk-over-budget",
+        "source_decision": "block_support_response_handoff",
+        "step_id": "block-support_response_handoff-blocked-risk-over-budget",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "restore_active_human_reconstruction_if_missing",
+          "lower_or_re-scope_risk_budget_if_needed",
+          "regenerate_metadata_receipts_before_any_handoff"
+        ]
+      },
+      {
+        "blocked_reasons": [
+          "recipient_scope_unbounded"
+        ],
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "operator_action": "keep_handoff_blocked",
+        "order": 13,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-unbounded-recipient",
+        "source_decision": "block_support_response_handoff",
+        "step_id": "block-support_response_handoff-blocked-unbounded-recipient",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "restore_active_human_reconstruction_if_missing",
+          "lower_or_re-scope_risk_budget_if_needed",
+          "regenerate_metadata_receipts_before_any_handoff"
+        ]
+      },
+      {
+        "blocked_reasons": [
+          "support_policy_scope_missing"
+        ],
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "operator_action": "keep_handoff_blocked",
+        "order": 14,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-policy-gap",
+        "source_decision": "block_support_response_handoff",
+        "step_id": "block-support_response_handoff-blocked-policy-gap",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "restore_active_human_reconstruction_if_missing",
+          "lower_or_re-scope_risk_budget_if_needed",
+          "regenerate_metadata_receipts_before_any_handoff"
+        ]
+      },
+      {
+        "blocked_reasons": [
+          "ai_summary_only_evidence_rejected",
+          "product_loop_not_passed"
+        ],
+        "customer_visible_effect_allowed": false,
+        "delivery_class": "support_response_handoff",
+        "external_publication_allowed": false,
+        "operator_action": "keep_handoff_blocked",
+        "order": 15,
+        "production_mutation_allowed": false,
+        "raw_payload_allowed": false,
+        "source_case_id": "blocked-ai-summary-only",
+        "source_decision": "block_support_response_handoff",
+        "step_id": "block-support_response_handoff-blocked-ai-summary-only",
+        "unblock_requires": [
+          "rerun_failed_protocol_layer",
+          "restore_active_human_reconstruction_if_missing",
+          "lower_or_re-scope_risk_budget_if_needed",
+          "regenerate_metadata_receipts_before_any_handoff"
+        ]
       }
     ],
     "mode": "controlled_handoff_preparation_only",
@@ -263,12 +398,12 @@
   },
   "schema_version": "controlled-handoff-runbook-v1",
   "source": {
-    "allowed_controlled_handoffs": 2,
-    "blocked_handoffs": 7,
+    "allowed_controlled_handoffs": 3,
+    "blocked_handoffs": 12,
     "report": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
     "schema_version": "trust-evidence-acceptance-drill-v1",
     "status": "pass",
-    "zip_sha256": "b187b010b842c8399353bd5351a4a0cfb4b0074a5b8ae13979c997052fd0035e"
+    "zip_sha256": "28d25b3318bfbcaeec0d17e4f5b3aedbf31c0fd3c4dbba097f58646903f700ab"
   },
   "status": "pass"
 }

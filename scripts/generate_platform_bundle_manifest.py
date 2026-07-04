@@ -355,6 +355,16 @@ FILES: list[tuple[str, str, str]] = [
         "Client Report Delivery Class static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-support-response-delivery-class.json",
+        "generated_asset",
+        "Support Response Delivery Class metadata-only handoff verification report.",
+    ),
+    (
+        "platform/generated/study-anything-support-response-delivery-class.html",
+        "generated_asset",
+        "Support Response Delivery Class static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-delivery-class-registry.json",
         "generated_asset",
         "Delivery Class Registry metadata-only verification report.",
@@ -1075,6 +1085,11 @@ FILES: list[tuple[str, str, str]] = [
         "Client Report Delivery Class metadata-only handoff guide.",
     ),
     (
+        "docs/support-response-delivery-class.md",
+        "operator_doc",
+        "Support Response Delivery Class metadata-only handoff guide.",
+    ),
+    (
         "docs/delivery-class-registry.md",
         "operator_doc",
         "Delivery Class Registry guide for protocol-supported handoff classes.",
@@ -1258,6 +1273,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
         "schema",
         "Client Report Delivery Class handoff JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json",
+        "schema",
+        "Support Response Delivery Class handoff JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1471,6 +1491,21 @@ FILES: list[tuple[str, str, str]] = [
             "blocked-missing-reconstruction",
             "blocked-risk-over-budget",
             "blocked-unbounded-recipient",
+            "blocked-ai-summary-only",
+        )
+    ],
+    *[
+        (
+            f"fixtures/support-response-delivery-class/{case_id}/support-response-handoff-case.json",
+            "fixture",
+            f"Support Response Delivery Class {case_id} handoff fixture.",
+        )
+        for case_id in (
+            "pass",
+            "blocked-missing-reconstruction",
+            "blocked-risk-over-budget",
+            "blocked-unbounded-recipient",
+            "blocked-policy-gap",
             "blocked-ai-summary-only",
         )
     ],
@@ -2405,6 +2440,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Client Report Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
     ),
     (
+        "scripts/support_response_delivery_class_handoff.py",
+        "cli",
+        "Build deterministic metadata-only Support Response Delivery Class handoff artifacts.",
+    ),
+    (
+        "scripts/verify_support_response_delivery_class_handoff.py",
+        "verification",
+        "Verify Support Response Delivery Class handoff fixtures, reports, negative checks, and privacy boundaries.",
+    ),
+    (
         "scripts/verify_delivery_class_registry.py",
         "verification",
         "Verify Delivery Class Registry assets, release gates, and privacy boundaries.",
@@ -2583,6 +2628,26 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_client_report_operator_handoff_rehearsal.py",
         "verification",
         "Verify Client Report operator handoff decisions from delivery-class and customer rehearsal evidence.",
+    ),
+    (
+        "docs/support-response-operator-handoff-rehearsal.md",
+        "operator_doc",
+        "Support Response Operator Handoff Rehearsal guide for metadata-only operator decisions.",
+    ),
+    (
+        "platform/generated/study-anything-support-response-operator-handoff-rehearsal.json",
+        "generated_asset",
+        "Support Response Operator Handoff Rehearsal report.",
+    ),
+    (
+        "platform/generated/study-anything-support-response-operator-handoff-rehearsal.md",
+        "generated_asset",
+        "Support Response Operator Handoff Rehearsal markdown report.",
+    ),
+    (
+        "scripts/verify_support_response_operator_handoff_rehearsal.py",
+        "verification",
+        "Verify Support Response operator handoff decisions from delivery-class and customer rehearsal evidence.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

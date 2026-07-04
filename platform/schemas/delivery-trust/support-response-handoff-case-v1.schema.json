@@ -1,0 +1,68 @@
+{
+  "$id": "support-response-handoff-case-v1",
+  "additionalProperties": true,
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "allow_controlled_support_response_handoff",
+        "block_support_response_handoff"
+      ],
+      "type": "string"
+    },
+    "delivery_class": {
+      "const": "support_response_handoff"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "recipient_context_ref": {
+      "type": "object"
+    },
+    "report_artifact_ref": {
+      "type": "object"
+    },
+    "risk_budget": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "support-response-handoff-case-v1"
+    },
+    "status": {
+      "enum": [
+        "ready_for_controlled_support_response_handoff",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "case_id",
+    "delivery_class",
+    "status",
+    "decision",
+    "reasons",
+    "report_artifact_ref",
+    "recipient_context_ref",
+    "risk_budget",
+    "checks",
+    "privacy",
+    "claim_boundary"
+  ],
+  "type": "object"
+}

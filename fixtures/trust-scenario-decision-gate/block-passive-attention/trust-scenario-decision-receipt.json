@@ -3,8 +3,8 @@
   "blocked_shortcuts": [],
   "catalog_ref": {
     "path": "platform/generated/study-anything-trust-scenario-catalog.json",
-    "scenario_count": 4,
-    "sha256": "e1932ebfa0fbb9eb4129447115501db9a62497e1b4dd2f6a1d7cfb0bc76573cd"
+    "scenario_count": 5,
+    "sha256": "0d9ea4bbf1cd77350b09f413d59e52d6369413be05ce76b169eec0b68fa989ca"
   },
   "claim_boundary": {
     "current_claim": "This receipt records a metadata-only scenario handoff decision. It does not certify factual truth, approve production mutation, send customer messages, or replace customer-specific review.",

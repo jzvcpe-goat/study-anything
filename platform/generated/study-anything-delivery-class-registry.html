@@ -20,7 +20,7 @@
       &quot;general model correctness&quot;
     ]
   },
-  &quot;delivery_class_count&quot;: 2,
+  &quot;delivery_class_count&quot;: 3,
   &quot;delivery_classes&quot;: [
     {
       &quot;allowed_case_count&quot;: 1,
@@ -112,6 +112,53 @@
       &quot;release_check_integrated&quot;: true,
       &quot;schema_version&quot;: &quot;client-report-delivery-class-verification-v1&quot;,
       &quot;verifier_command&quot;: &quot;python3 scripts/verify_client_report_delivery_class_handoff.py --check&quot;
+    },
+    {
+      &quot;allowed_case_count&quot;: 1,
+      &quot;assets&quot;: {
+        &quot;doc&quot;: {
+          &quot;path&quot;: &quot;docs/support-response-delivery-class.md&quot;,
+          &quot;sha256&quot;: &quot;d122c0cf4336295b9256cd374005b431da67a5c7d13c339cf642e64d9374a5fd&quot;
+        },
+        &quot;fixture_root&quot;: &quot;fixtures/support-response-delivery-class&quot;,
+        &quot;html_report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-support-response-delivery-class.html&quot;,
+          &quot;sha256&quot;: &quot;5bd0118ff936ade6c4aad7c1d425963371aae41aaf47a903dac9bfbfd1a27dfa&quot;
+        },
+        &quot;report&quot;: {
+          &quot;path&quot;: &quot;platform/generated/study-anything-support-response-delivery-class.json&quot;,
+          &quot;sha256&quot;: &quot;0edf6fa3d166c8a19dc58de608a0903f258f75db628980bf6369339b4cba025c&quot;
+        },
+        &quot;schema&quot;: {
+          &quot;path&quot;: &quot;platform/schemas/delivery-trust/support-response-handoff-case-v1.schema.json&quot;,
+          &quot;sha256&quot;: &quot;96306cf5db2a3223f9e7e0b8c2182124282367d2232434ad940eecf4854f3292&quot;
+        }
+      },
+      &quot;blocked_case_count&quot;: 5,
+      &quot;case_count&quot;: 6,
+      &quot;claim_boundary_hash&quot;: &quot;df55f0eda3ea9edceb75a6db8907b6f8bb6d367c889c50d8773047ef1ab8769c&quot;,
+      &quot;display_name&quot;: &quot;Support Response Handoff&quot;,
+      &quot;id&quot;: &quot;support_response_handoff&quot;,
+      &quot;negative_check_ids&quot;: [
+        &quot;automatic_customer_sending_rejected&quot;,
+        &quot;eval_sufficient_alone_rejected&quot;,
+        &quot;external_publication_rejected&quot;,
+        &quot;raw_response_text_rejected&quot;,
+        &quot;raw_ticket_payload_rejected&quot;,
+        &quot;requester_identity_rejected&quot;
+      ],
+      &quot;privacy&quot;: {
+        &quot;external_publication_performed&quot;: false,
+        &quot;metadata_only&quot;: true,
+        &quot;model_calls_performed&quot;: false,
+        &quot;production_mutation_performed&quot;: false,
+        &quot;raw_report_text_included&quot;: false,
+        &quot;raw_source_text_included&quot;: false,
+        &quot;user_owned_agent_credentials_included&quot;: false
+      },
+      &quot;release_check_integrated&quot;: true,
+      &quot;schema_version&quot;: &quot;support-response-delivery-class-verification-v1&quot;,
+      &quot;verifier_command&quot;: &quot;python3 scripts/verify_support_response_delivery_class_handoff.py --check&quot;
     }
   ],
   &quot;privacy&quot;: {
