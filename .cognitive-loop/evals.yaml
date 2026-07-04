@@ -129,6 +129,9 @@ required:
   - id: cognitive-loop.cbb-delivery-harness
     command: python3 scripts/verify_cbb_delivery_harness.py --check
     blocking: true
+  - id: cognitive-loop.external-feedback-receipt
+    command: python3 scripts/verify_external_feedback_receipt.py --check
+    blocking: true
   - id: cognitive-loop.review-agent-report
     command: python3 scripts/verify_cognitive_loop_review_agent_report.py --check
     blocking: true

@@ -1,0 +1,85 @@
+{
+  "$id": "external-feedback-receipt-v1",
+  "additionalProperties": true,
+  "properties": {
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "accept_external_feedback_into_product_loop",
+        "block_external_feedback_propagation"
+      ],
+      "type": "string"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "human_reconstruction": {
+      "type": "object"
+    },
+    "next_boundary": {
+      "const": "product_loop_backlog_only_not_production"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "propagation": {
+      "type": "object"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "external-feedback-receipt-v1"
+    },
+    "source_delivery_class": {
+      "enum": [
+        "code_review_handoff",
+        "client_report_handoff",
+        "support_response_handoff"
+      ],
+      "type": "string"
+    },
+    "source_handoff_ref": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "accepted_for_product_loop",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "source_delivery_class",
+    "source_handoff_ref",
+    "feedback_ref",
+    "human_reconstruction",
+    "checks",
+    "propagation",
+    "claim_boundary",
+    "privacy",
+    "runtime",
+    "reasons",
+    "status",
+    "decision",
+    "next_boundary"
+  ],
+  "type": "object"
+}

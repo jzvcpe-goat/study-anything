@@ -45,6 +45,10 @@ The completed chain now has these layers:
 - Operator Handoff Rehearsal Contract: shared metadata-only contract that proves
   code-review, client-report, and support-response handoffs obey the same
   operator boundary.
+- External Feedback Receipt: bounded adopter/customer/operator feedback can
+  re-enter the Product Loop as metadata-only backlog evidence, while raw
+  feedback, requester identity, automatic customer replies, external
+  publication, and production mutation stay blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -92,5 +96,7 @@ boundary, and produce a blocked/ready decision without sending anything to a
 customer, mutating production, or reading raw payloads.
 ```
 
-After that, add the next delivery class only if it can satisfy the shared
-Operator Handoff Rehearsal contract instead of inventing a one-off handoff path.
+After that, add stronger real-adopter feedback import/export only if it keeps
+the External Feedback Receipt boundary: metadata-only evidence enters the
+Product Loop, while raw customer content and customer-visible action stay out of
+the protocol.

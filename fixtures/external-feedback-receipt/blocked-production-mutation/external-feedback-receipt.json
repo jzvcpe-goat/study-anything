@@ -1,0 +1,101 @@
+{
+  "checks": {
+    "active_human_triage_recorded": true,
+    "ai_review_only_basis": false,
+    "automatic_customer_reply_allowed": false,
+    "automatic_production_mutation_allowed": true,
+    "claim_boundary_reconstructed": true,
+    "delivery_class_known": true,
+    "external_publication_allowed": false,
+    "feedback_source_bounded": true,
+    "no_raw_payload_attached": true
+  },
+  "claim_boundary": {
+    "current_claim": "External feedback can re-enter the Product Loop as bounded metadata only when source scope, delivery class, active human triage, and claim boundary reconstruction are present.",
+    "not_claimed": [
+      "customer identity disclosure",
+      "raw customer feedback storage",
+      "automatic customer reply",
+      "automatic production mutation",
+      "truth certification",
+      "customer satisfaction guarantee",
+      "replacement for product owner prioritization"
+    ]
+  },
+  "decision": "block_external_feedback_propagation",
+  "feedback_ref": {
+    "bounded_tags": [
+      "setup-confusion",
+      "handoff-wording",
+      "operator-next-step"
+    ],
+    "feedback_hash": "9f571d05e897b16c3ccfc528",
+    "feedback_kind": "adoption_friction",
+    "sentiment": "mixed",
+    "severity": "medium",
+    "source_channel": "support_ticket"
+  },
+  "human_reconstruction": {
+    "active_human_triage_recorded": true,
+    "active_triage_checkpoint_ids": [
+      "feedback_scope_reconstruction",
+      "claim_boundary_reconstruction",
+      "next_loop_scope_reconstruction"
+    ],
+    "operator_understands_no_customer_reply": true,
+    "passive_attention_only": false
+  },
+  "next_boundary": "product_loop_backlog_only_not_production",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_message_included": false,
+    "raw_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "propagation": {
+    "allowed_destination": "product_loop_backlog",
+    "blocked_destinations": [
+      "production_mutation",
+      "automatic_customer_reply",
+      "external_publication",
+      "model_retraining_payload"
+    ],
+    "requested_next_action": "production_mutation",
+    "requires_product_owner_prioritization": true
+  },
+  "reason_count": 2,
+  "reasons": [
+    "automatic_production_mutation_allowed",
+    "requested_next_action_outside_feedback_budget"
+  ],
+  "receipt_id": "external-feedback-blocked-production-mutation",
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_version": "external-feedback-receipt-v1",
+  "source_delivery_class": "support_response_handoff",
+  "source_handoff_ref": "support-response-handoff:pass",
+  "status": "blocked"
+}
