@@ -1,0 +1,64 @@
+{
+  "$id": "end-to-end-trust-chain-harness-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "case_reports": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "chain_steps": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "continuity_checks": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "gate_rules": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "end-to-end-trust-chain-harness-v1"
+    },
+    "status": {
+      "const": "pass"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "version",
+    "purpose",
+    "chain_steps",
+    "continuity_checks",
+    "case_reports",
+    "gate_rules",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "title": "End-to-End Trust Chain Harness v1",
+  "type": "object"
+}

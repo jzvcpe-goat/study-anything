@@ -67,6 +67,12 @@ The completed chain now has these layers:
   developer/product-loop boundary reconstruction, while missing briefs, invalid
   briefs, AI-review-only evidence, external scope expansion, Delivery Trust
   Harness skips, customer-visible action, and production mutation stay blocked.
+- End-to-End Trust Chain Harness: metadata-only chain proof connects External
+  Feedback Receipt, Backlog Bridge, Product Owner Prioritization, Product
+  Spec/Eval Authoring, Product Loop Brief Intake, Delivery Trust Case, Customer
+  Delivery Envelope, and Customer Delivery Rehearsal while automatic customer
+  send, raw payload exposure, AI-review-only evidence, external publication,
+  and production mutation stay blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -108,11 +114,12 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Customer Delivery Rehearsal:
-create a metadata-only rehearsal that lets an external operator or platform
-Agent inspect the customer-delivery trust envelope, confirm the human scope
-boundary, and produce a blocked/ready decision without sending anything to a
-customer, mutating production, or reading raw payloads.
+Real-Adopter Scenario Import:
+create a metadata-only importer for one real WorkBuddy/Kimi/Codex adoption
+issue summary, map it into External Feedback Receipt and Product Loop backlog
+evidence, and prove the chain can prioritize a concrete next spec/eval without
+reading raw customer content, sending anything to a customer, mutating
+production, or relying on AI-review-only evidence.
 ```
 
 After that, add stronger real-adopter feedback import/export only if it keeps
