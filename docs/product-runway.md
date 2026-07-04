@@ -142,6 +142,11 @@ The completed chain now has these layers:
   while raw customer replies, private customer data, automatic priority
   assignment, automatic follow-up sending, source mutation, production mutation,
   secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Product Owner Gate: a Patch Proposal
+  customer-feedback backlog signal can produce only a metadata-only spec/eval
+  candidate after active Product Owner boundary reconstruction, while automatic
+  priority assignment, automatic execution, customer-visible follow-up, source
+  mutation, production mutation, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -183,10 +188,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Product Owner Gate:
-consume a Patch Proposal Customer Feedback Backlog Bridge signal and require
-active Product Owner boundary reconstruction before creating a spec/eval
-candidate, while still blocking automatic priority assignment, automatic
-execution, customer-visible follow-up, source mutation, production mutation,
-secrets, and model credentials.
+Patch Proposal Customer Feedback Spec/Eval Authoring Gate:
+consume a Patch Proposal Product Owner Gate spec/eval candidate and require
+active authoring-boundary reconstruction before creating a metadata-only Product
+Loop brief candidate, while still blocking raw spec bodies, raw eval prompts,
+automatic execution, Delivery Trust Harness skips, customer-visible follow-up,
+source mutation, production mutation, secrets, and model credentials.
 ```
