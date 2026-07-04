@@ -379,6 +379,32 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS = {
     case_id: ["patch-proposal-customer-feedback-intake-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-intake-blocked",
+    "blocked-missing-product-loop-target",
+    "blocked-automatic-priority-assignment",
+    "blocked-automatic-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-raw-customer-reply",
+    "blocked-private-customer-data",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-customer-feedback-backlog-bridge.json",
+        *(
+            ["product-loop-backlog-signal.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -935,6 +961,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-intake.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Intake Receipt static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Backlog Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Backlog Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Backlog Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1707,6 +1748,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Intake Receipt guide for metadata-only response signal records.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-backlog-bridge.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Backlog Bridge guide for metadata-only Product Loop backlog signals.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1990,6 +2036,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-feedback-intake-v1.schema.json",
         "schema",
         "Patch Proposal Customer Feedback Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Backlog Bridge JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json",
+        "schema",
+        "Product Loop backlog signal JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2495,6 +2551,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-backlog-bridge/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Backlog Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_BACKLOG_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3815,6 +3880,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Intake Receipt fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_backlog_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Backlog Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Backlog Bridge fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

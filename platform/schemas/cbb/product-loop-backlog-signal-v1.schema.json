@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "product-loop-backlog-signal-v1",
+  "title": "Product Loop Backlog Signal",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "signal_id",
+    "source_feedback_intake_id",
+    "source_feedback_intake_hash",
+    "feedback_ref",
+    "loop",
+    "destination",
+    "next_boundary",
+    "priority_assignment",
+    "requires_product_owner_prioritization",
+    "ready_for_execution",
+    "ready_for_customer_delivery",
+    "blocked_destinations",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "product-loop-backlog-signal-v1"
+    },
+    "signal_id": {
+      "type": "string"
+    },
+    "source_feedback_intake_id": {
+      "type": "string"
+    },
+    "source_feedback_intake_hash": {
+      "type": "string"
+    },
+    "feedback_ref": {
+      "type": "object"
+    },
+    "loop": {
+      "const": "external_feedback_loop"
+    },
+    "destination": {
+      "const": "product_loop_backlog"
+    },
+    "next_boundary": {
+      "const": "product_owner_prioritization"
+    },
+    "priority_assignment": {
+      "const": "not_assigned"
+    },
+    "requires_product_owner_prioritization": {
+      "const": true
+    },
+    "ready_for_execution": {
+      "const": false
+    },
+    "ready_for_customer_delivery": {
+      "const": false
+    },
+    "blocked_destinations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

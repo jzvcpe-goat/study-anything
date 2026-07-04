@@ -1,0 +1,238 @@
+{
+  "backlog_matrix": {
+    "automatic_follow_up_rejected": true,
+    "automatic_priority_assignment_rejected": true,
+    "blocked_backlog_signals": 10,
+    "blocked_intake_rejected": true,
+    "customer_signal_queued": true,
+    "host_platform_agent_signal_queued": true,
+    "missing_product_loop_target_rejected": true,
+    "model_credential_rejected": true,
+    "operator_signal_queued": true,
+    "private_customer_data_rejected": true,
+    "production_mutation_rejected": true,
+    "queued_backlog_signals": 3,
+    "raw_customer_reply_rejected": true,
+    "secret_rejected": true,
+    "source_mutation_rejected": true,
+    "total_cases": 13
+  },
+  "case_reports": [
+    {
+      "backlog_signal_created": true,
+      "blocked_reasons": [],
+      "case_id": "pass-customer-signal",
+      "decision": "emit_product_loop_backlog_signal",
+      "status": "queued_for_product_loop"
+    },
+    {
+      "backlog_signal_created": true,
+      "blocked_reasons": [],
+      "case_id": "pass-operator-signal",
+      "decision": "emit_product_loop_backlog_signal",
+      "status": "queued_for_product_loop"
+    },
+    {
+      "backlog_signal_created": true,
+      "blocked_reasons": [],
+      "case_id": "pass-host-platform-agent-signal",
+      "decision": "emit_product_loop_backlog_signal",
+      "status": "queued_for_product_loop"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "source_feedback_intake_not_accepted"
+      ],
+      "case_id": "blocked-intake-blocked",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "product_loop_target_missing"
+      ],
+      "case_id": "blocked-missing-product-loop-target",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "automatic_priority_assignment_rejected"
+      ],
+      "case_id": "blocked-automatic-priority-assignment",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "automatic_follow_up_rejected"
+      ],
+      "case_id": "blocked-automatic-follow-up",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "source_mutation_rejected"
+      ],
+      "case_id": "blocked-source-mutation",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "raw_customer_reply_rejected"
+      ],
+      "case_id": "blocked-raw-customer-reply",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "private_customer_data_rejected"
+      ],
+      "case_id": "blocked-private-customer-data",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    },
+    {
+      "backlog_signal_created": false,
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_product_loop_backlog_signal",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "An accepted patch-proposal customer-feedback intake receipt can become a metadata-only Product Loop backlog signal. The signal is not prioritized, not sent to a customer, not executed, and not promoted to production.",
+    "not_claimed": [
+      "raw customer reply included",
+      "private customer data included",
+      "automatic priority assigned",
+      "Study Anything sent a follow-up",
+      "Study Anything changed source",
+      "Study Anything changed production",
+      "model call performed",
+      "customer satisfaction certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_follow_up_performed": "bridge effect_boundary.study_anything_automatic_follow_up_performed must be False",
+    "automatic_priority_assignment_performed": "bridge effect_boundary.study_anything_priority_assignment_performed must be False",
+    "backlog_signal_priority_assigned": "backlog signal must not assign priority",
+    "backlog_signal_ready_for_execution": "backlog signal ready_for_execution must remain false",
+    "blocked_bridge_with_signal": "blocked bridge must not include backlog signal",
+    "model_call_performed": "bridge effect_boundary.model_calls_performed must be False",
+    "private_customer_data_injected": "patch-proposal-customer-feedback-backlog-bridge-v1 includes forbidden raw fields: ['$.private_customer_data']",
+    "production_mutation_performed": "bridge effect_boundary.study_anything_production_mutation_performed must be False",
+    "raw_customer_reply_injected": "patch-proposal-customer-feedback-backlog-bridge-v1 includes forbidden raw fields: ['$.raw_customer_reply']",
+    "source_mutation_performed": "bridge effect_boundary.study_anything_repository_mutation_performed must be False"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "automatic_priority_rationale_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "private_customer_data_included": false,
+    "production_payload_included": false,
+    "raw_backlog_description_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove accepted Patch Proposal Customer Feedback Intake receipts can create metadata-only Product Loop backlog signals without raw replies, private customer data, automatic priority assignment, follow-up sending, source mutation, production mutation, secrets, or model credentials.",
+  "quality_gates": {
+    "accepted_feedback_intake_required": true,
+    "automatic_follow_up_blocked": true,
+    "automatic_priority_assignment_blocked": true,
+    "metadata_only_backlog_signal_required": true,
+    "priority_assignment_requires_later_product_owner_gate": true,
+    "product_loop_target_required": true,
+    "production_mutation_blocked": true,
+    "secrets_and_model_credentials_rejected": true,
+    "source_mutation_blocked": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-backlog-bridge-v1",
+      "sha256": "0498caa86b9b5053c750d8385792d937cacfb8175e113cdf5c3e7e0431d75299"
+    },
+    {
+      "path": "platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json",
+      "schema_version": "product-loop-backlog-signal-v1",
+      "sha256": "e89caeafa3c7a7310cd1fe35247dc8afc8740c423dca1276b3f0b7d54552cff5"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-backlog-bridge-v1",
+  "source_chain": {
+    "customer_feedback_intake_report": "platform/generated/study-anything-patch-proposal-customer-feedback-intake.json",
+    "recorded_customer_feedback_intake_receipt": "fixtures/patch-proposal-customer-feedback-intake/pass-customer-signal/patch-proposal-customer-feedback-intake-receipt.json"
+  },
+  "status": "pass"
+}

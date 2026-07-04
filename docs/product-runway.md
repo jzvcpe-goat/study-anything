@@ -137,6 +137,11 @@ The completed chain now has these layers:
   private customer data, PR comment bodies, external publication payloads,
   production payloads, automatic follow-up sending, source mutation, secrets,
   and model credentials remain blocked.
+- Patch Proposal Customer Feedback Backlog Bridge: an accepted customer-feedback
+  intake receipt can produce only a metadata-only Product Loop backlog signal,
+  while raw customer replies, private customer data, automatic priority
+  assignment, automatic follow-up sending, source mutation, production mutation,
+  secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -178,10 +183,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Backlog Bridge:
-consume an accepted Patch Proposal Customer Feedback Intake Receipt and emit a
-metadata-only Product Loop backlog signal, while still blocking raw customer
-replies, private customer data, automatic priority assignment, automatic
-follow-up sending, source mutation, production mutation, secrets, and model
-credentials.
+Patch Proposal Customer Feedback Product Owner Gate:
+consume a Patch Proposal Customer Feedback Backlog Bridge signal and require
+active Product Owner boundary reconstruction before creating a spec/eval
+candidate, while still blocking automatic priority assignment, automatic
+execution, customer-visible follow-up, source mutation, production mutation,
+secrets, and model credentials.
 ```
