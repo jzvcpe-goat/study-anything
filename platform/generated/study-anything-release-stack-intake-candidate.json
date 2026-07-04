@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-316-v0.3.188-controlled-handoff-runbook-lite",
+    "group_id": "release-stack-intake-pr-318-v0.3.190-customer-delivery-trust-envelope-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -55,10 +55,14 @@
       "docs/controlled-handoff-runbook.md",
       "platform/generated/study-anything-controlled-handoff-runbook.json",
       "platform/generated/study-anything-controlled-handoff-runbook.md",
+      "docs/customer-delivery-trust-envelope.md",
+      "platform/generated/study-anything-customer-delivery-trust-envelope.json",
+      "platform/generated/study-anything-customer-delivery-trust-envelope.md",
       "scripts/generate_trust_evidence_handoff_pack.py",
       "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
       "scripts/verify_trust_evidence_acceptance_drill.py",
       "scripts/verify_controlled_handoff_runbook.py",
+      "scripts/verify_customer_delivery_trust_envelope.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -84,7 +88,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.188-controlled-handoff-runbook-lite",
+        "branch": "codex/v0.3.190-customer-delivery-trust-envelope-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -133,18 +137,22 @@
           "docs/controlled-handoff-runbook.md",
           "platform/generated/study-anything-controlled-handoff-runbook.json",
           "platform/generated/study-anything-controlled-handoff-runbook.md",
+          "docs/customer-delivery-trust-envelope.md",
+          "platform/generated/study-anything-customer-delivery-trust-envelope.json",
+          "platform/generated/study-anything-customer-delivery-trust-envelope.md",
           "scripts/generate_trust_evidence_handoff_pack.py",
           "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
           "scripts/verify_trust_evidence_acceptance_drill.py",
           "scripts/verify_controlled_handoff_runbook.py",
+          "scripts/verify_customer_delivery_trust_envelope.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "7dded5c464bd0ae0b23d75b73c03bfd07f3db220",
+        "merge_commit": "512c192a60958dbb032b422e068a569855f27577",
         "order": 1,
-        "pr": 316,
+        "pr": 318,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -153,15 +161,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #316: Add controlled handoff runbook.",
+    "summary": "Candidate release stack group for PR #318: Add customer delivery trust envelope.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.188",
-    "represented_pr_count": 102
+    "current_group": "release-stack-promotion-v0.3.190",
+    "represented_pr_count": 103
   },
   "negative_fixtures": [
     {
