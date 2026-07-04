@@ -1,0 +1,100 @@
+{
+  "blocked_reasons": [
+    "pr_comment_body_rejected"
+  ],
+  "case_id": "blocked-pr-comment-body",
+  "checks": {
+    "action_happened_outside_study_anything": true,
+    "action_reference_hash_present": true,
+    "automatic_send_performed": false,
+    "claim_boundary_visible": true,
+    "customer_visible_body_attached": false,
+    "external_action_recorded": true,
+    "external_actor_declared": true,
+    "external_publication_payload_attached": false,
+    "metadata_only_outcome": true,
+    "model_credential_attached": false,
+    "pr_comment_body_attached": true,
+    "privacy_boundary_visible": true,
+    "production_payload_attached": false,
+    "secret_attached": false,
+    "source_mutation_performed": false,
+    "source_rehearsal_ready": true
+  },
+  "claim_boundary": {
+    "current_claim": "A recorded outcome proves only that a human or host platform reported an external customer handoff action by metadata reference. It does not include customer-visible content, perform the send, comment on PRs, publish externally, mutate source, mutate production, or certify correctness.",
+    "not_claimed": [
+      "customer-visible body included",
+      "Study Anything sent the customer message",
+      "Study Anything commented on a PR",
+      "Study Anything published externally",
+      "Study Anything changed source",
+      "Study Anything changed production",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_customer_delivery_outcome",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_send_performed": false,
+    "study_anything_customer_send_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_pr_commenting_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "external_action_summary": {
+    "action_ref_hash": "23a344f7eb5a7f64d15c7c7f5c3e400e76854e606e9be10079a6d510820ed2d8",
+    "action_type": null,
+    "actor_type": "human_operator",
+    "external_system_credentials_included": false,
+    "occurred_outside_study_anything": true,
+    "package_type": "metadata_only_patch_proposal_customer_delivery_outcome",
+    "payload_hash_only": true,
+    "payload_included": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "outcome_id": "patch-proposal-customer-delivery-outcome-blocked-pr-comment-body",
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_body_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "patch-proposal-customer-delivery-outcome-receipt-v1",
+  "source_refs": {
+    "rehearsal_receipt_hash": "cae941ef9b3ee7ee742cc8bc87ba712cbbc4189b85c4d8848e884b5ae00eb4d0",
+    "rehearsal_receipt_ref": "fixtures/patch-proposal-customer-delivery-rehearsal/pass/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "rehearsal_report_ref": "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.json"
+  },
+  "status": "blocked"
+}

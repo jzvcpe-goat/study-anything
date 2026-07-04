@@ -1,0 +1,237 @@
+{
+  "case_reports": [
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [],
+      "case_id": "pass-human-operator",
+      "decision": "record_external_customer_delivery_outcome",
+      "status": "recorded"
+    },
+    {
+      "actor_type": "host_platform_agent",
+      "blocked_reasons": [],
+      "case_id": "pass-host-platform-agent",
+      "decision": "record_external_customer_delivery_outcome",
+      "status": "recorded"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "source_rehearsal_not_ready"
+      ],
+      "case_id": "blocked-rehearsal-blocked",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": null,
+      "blocked_reasons": [
+        "external_actor_missing"
+      ],
+      "case_id": "blocked-missing-external-actor",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "action_reference_hash_missing"
+      ],
+      "case_id": "blocked-missing-action-reference",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "claim_boundary_missing"
+      ],
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "privacy_boundary_missing"
+      ],
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "customer_visible_body_rejected"
+      ],
+      "case_id": "blocked-customer-visible-body",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "pr_comment_body_rejected"
+      ],
+      "case_id": "blocked-pr-comment-body",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "external_publication_payload_rejected"
+      ],
+      "case_id": "blocked-external-publication-payload",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "production_payload_rejected"
+      ],
+      "case_id": "blocked-production-payload",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "automatic_send_rejected"
+      ],
+      "case_id": "blocked-automatic-send",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "source_mutation_rejected"
+      ],
+      "case_id": "blocked-source-mutation",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    },
+    {
+      "actor_type": "human_operator",
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_customer_delivery_outcome",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The outcome receipt proves only metadata-only recording of an external customer handoff result. It does not prove content quality, send messages, publish, comment on PRs, mutate source, or mutate production.",
+    "not_claimed": [
+      "customer-visible body included",
+      "Study Anything sent the customer message",
+      "Study Anything commented on a PR",
+      "Study Anything published externally",
+      "Study Anything changed source",
+      "Study Anything changed production",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_send_performed": "recorded customer delivery outcome checks.automatic_send_performed must remain false",
+    "customer_send_performed": "effect_boundary.study_anything_customer_send_performed must remain false",
+    "customer_visible_body_injected": "patch-proposal-customer-delivery-outcome-receipt-v1 includes forbidden raw fields: ['$.customer_visible_body']",
+    "model_credentials_attached": "recorded customer delivery outcome checks.model_credential_attached must remain false",
+    "payload_included_escalated": "outcome payload must not be included",
+    "pr_comment_performed": "effect_boundary.study_anything_pr_commenting_performed must remain false",
+    "source_mutation_performed": "effect_boundary.study_anything_repository_mutation_performed must remain false"
+  },
+  "outcome_matrix": {
+    "automatic_send_rejected": true,
+    "blocked_outcomes": 13,
+    "blocked_rehearsal_rejected": true,
+    "claim_boundary_missing_rejected": true,
+    "customer_visible_body_rejected": true,
+    "external_publication_payload_rejected": true,
+    "host_platform_agent_outcome_recorded": true,
+    "human_operator_outcome_recorded": true,
+    "missing_action_reference_rejected": true,
+    "missing_external_actor_rejected": true,
+    "model_credential_rejected": true,
+    "pr_comment_body_rejected": true,
+    "privacy_boundary_missing_rejected": true,
+    "production_payload_rejected": true,
+    "recorded_outcomes": 2,
+    "secret_rejected": true,
+    "source_mutation_rejected": true,
+    "total_cases": 15
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_body_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove an external human or host platform customer-delivery action can be recorded as metadata-only outcome evidence without Study Anything sending, commenting, publishing, mutating source, mutating production, or storing customer-visible payloads.",
+  "quality_gates": {
+    "automatic_send_blocked": true,
+    "external_actor_required": true,
+    "external_publication_payload_blocked": true,
+    "metadata_reference_required": true,
+    "payload_body_rejected": true,
+    "pr_comment_body_rejected": true,
+    "production_payload_blocked": true,
+    "ready_rehearsal_required": true,
+    "secrets_and_model_credentials_rejected": true,
+    "source_mutation_blocked": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json",
+      "schema_version": "patch-proposal-customer-delivery-outcome-v1",
+      "sha256": "389ba8d2b0ead4f9df098903fbf203c144f8dae36d58e66824e64bf618d97d7b"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-delivery-outcome-v1",
+  "source_chain": {
+    "ready_rehearsal_receipt": "fixtures/patch-proposal-customer-delivery-rehearsal/pass/patch-proposal-customer-delivery-rehearsal-receipt.json",
+    "rehearsal_report": "platform/generated/study-anything-patch-proposal-customer-delivery-rehearsal.json"
+  },
+  "status": "pass"
+}

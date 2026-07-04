@@ -125,6 +125,12 @@ The completed chain now has these layers:
   raw patch/diff requests, PR comment actions, automatic sending, external
   publication, production mutation, secrets, and model credentials remain
   blocked.
+- Patch Proposal Customer Delivery Outcome Receipt: a ready manual handoff
+  rehearsal can produce only a metadata-only record that a human operator or
+  host platform Agent reports an external customer handoff action happened
+  outside Study Anything, while customer-visible bodies, PR comment bodies,
+  external publication payloads, production payloads, automatic sending, source
+  mutation, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -166,10 +172,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Delivery Outcome Receipt:
-consume a ready Patch Proposal Customer Delivery Rehearsal and emit a
-metadata-only outcome receipt for a human or host platform action that happened
-outside Study Anything, while still blocking customer-visible bodies, PR comment
-bodies, external publication payloads, production payloads, automatic sending,
-source mutation, secrets, and model credentials.
+Patch Proposal Customer Feedback Intake Receipt:
+consume a recorded Patch Proposal Customer Delivery Outcome Receipt and emit a
+metadata-only feedback-intake receipt for customer or operator response signals,
+while still blocking raw customer replies, private customer data, PR comment
+bodies, external publication payloads, production payloads, automatic follow-up
+sending, source mutation, secrets, and model credentials.
 ```
