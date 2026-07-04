@@ -223,6 +223,21 @@ PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_ARTIFACTS = {
     case_id: ["patch-proposal-operator-handoff-bridge-receipt.json"]
     for case_id in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_CASES
 }
+PATCH_PROPOSAL_ACCEPTANCE_DRILL_CASES = [
+    "pass",
+    "blocked-bridge-blocked",
+    "blocked-missing-operator-decision",
+    "blocked-raw-patch-evidence-request",
+    "blocked-apply-patch-request",
+    "blocked-open-pr-request",
+    "blocked-customer-visible-action",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+]
+PATCH_PROPOSAL_ACCEPTANCE_DRILL_ARTIFACTS = {
+    case_id: ["patch-proposal-acceptance-drill-receipt.json"]
+    for case_id in PATCH_PROPOSAL_ACCEPTANCE_DRILL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -659,6 +674,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
         "generated_asset",
         "Patch Proposal Operator Handoff Bridge static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-acceptance-drill.json",
+        "generated_asset",
+        "Patch Proposal Acceptance Drill metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-acceptance-drill.md",
+        "generated_asset",
+        "Patch Proposal Acceptance Drill operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-acceptance-drill.html",
+        "generated_asset",
+        "Patch Proposal Acceptance Drill static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1391,6 +1421,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Operator Handoff Bridge guide for metadata-only operator handoff refs.",
     ),
     (
+        "docs/patch-proposal-acceptance-drill.md",
+        "operator_doc",
+        "Patch Proposal Acceptance Drill guide for metadata-only external operator continuation decisions.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1634,6 +1669,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
         "schema",
         "Patch Proposal Operator Handoff Bridge JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json",
+        "schema",
+        "Patch Proposal Acceptance Drill JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2067,6 +2107,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_CASES
         for artifact in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-acceptance-drill/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Acceptance Drill {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_ACCEPTANCE_DRILL_CASES
+        for artifact in PATCH_PROPOSAL_ACCEPTANCE_DRILL_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3307,6 +3356,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_operator_handoff_bridge.py",
         "verification",
         "Verify Patch Proposal Operator Handoff Bridge fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_acceptance_drill.py",
+        "verification",
+        "Build metadata-only Patch Proposal Acceptance Drill artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_acceptance_drill.py",
+        "verification",
+        "Verify Patch Proposal Acceptance Drill fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

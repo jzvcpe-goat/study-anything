@@ -1,0 +1,118 @@
+{
+  "acceptance_boundary": {
+    "allowed_continuation": null,
+    "mode": "decision_receipt_only",
+    "next_allowed_action": null,
+    "not_allowed_actions": [
+      "read_raw_patch_body",
+      "read_raw_diff_body",
+      "apply_patch",
+      "write_repository_files",
+      "git_commit",
+      "open_pr",
+      "post_pr_comment",
+      "send_customer_message",
+      "publish_externally",
+      "deploy_to_production"
+    ]
+  },
+  "blocked_reasons": [
+    "production_mutation_rejected"
+  ],
+  "case_id": "blocked-production-mutation",
+  "checks": {
+    "apply_patch_requested": false,
+    "bridge_ready": true,
+    "customer_visible_action_requested": false,
+    "external_publication_requested": false,
+    "metadata_only_bridge_package": true,
+    "open_pr_requested": false,
+    "operator_active_reconstruction_present": true,
+    "operator_decision_present": true,
+    "production_mutation_requested": true,
+    "raw_diff_evidence_requested": false,
+    "raw_patch_evidence_requested": false
+  },
+  "claim_boundary": {
+    "current_claim": "A pass means the external operator can continue with a bounded work order outside Study Anything / Cognitive Black Box. It does not apply code, open PRs, comment, send customer-visible output, publish, deploy, or approve production.",
+    "not_claimed": [
+      "patch content reviewed",
+      "repository changed",
+      "PR opened or commented",
+      "customer communication approved",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_external_operator_continuation",
+  "effect_boundary": {
+    "automatic_pr_commenting_performed": false,
+    "customer_visible_action_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "diff_body_included": false,
+    "external_publication_performed": false,
+    "implementation_execution_performed": false,
+    "model_calls_performed": false,
+    "patch_body_included": false,
+    "production_mutation_performed": false,
+    "raw_patch_or_diff_read": false,
+    "repository_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "operator_decision_input": {
+    "mode": "metadata_refs_only",
+    "operator_decision_present": true,
+    "requested_continuation": "prepare_external_operator_work_order",
+    "requested_evidence_class": "bounded_metadata_refs"
+  },
+  "operator_reconstruction": {
+    "customer_visible_output_requires_separate_approval": true,
+    "host_operator_controls_external_actions": true,
+    "metadata_refs_are_sufficient_for_decision": true,
+    "production_mutation_requires_separate_approval": true,
+    "raw_diff_body_must_not_be_requested": true,
+    "raw_patch_body_must_not_be_requested": true,
+    "study_anything_must_not_apply_changes": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_operator_notes_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "patch-proposal-acceptance-drill-blocked-production-mutation",
+  "schema_version": "patch-proposal-acceptance-drill-receipt-v1",
+  "source_refs": {
+    "bridge_receipt_hash": "9dae24bc61f799fa84472dba38850a0d008b72445c29cb6907f9d2ff97352c22",
+    "bridge_receipt_ref": "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
+    "bridge_report_ref": "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json"
+  },
+  "status": "blocked"
+}

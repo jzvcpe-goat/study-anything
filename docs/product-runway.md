@@ -93,6 +93,11 @@ The completed chain now has these layers:
   boundary reconstruction and delivery-class handoff refs, while raw patch
   bodies, raw diffs, automatic execution, repository mutation, customer-visible
   action, external publication, and production mutation are blocked.
+- Patch Proposal Acceptance Drill: a ready operator handoff bridge can produce
+  only a metadata-only allow/block continuation decision for an external
+  operator, while raw patch evidence requests, apply-patch requests, PR actions,
+  customer-visible action, external publication, and production mutation are
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -134,10 +139,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Acceptance Drill:
-consume a ready Patch Proposal Operator Handoff Bridge receipt and prove an
-external operator can make an allow/block continuation decision from the
-metadata-only bridge package alone, without reading raw patch bodies, applying
-changes, opening PRs, posting comments, sending customer-visible content,
-publishing externally, or mutating production.
+Patch Proposal External Work Order Pack:
+consume an allowed Patch Proposal Acceptance Drill receipt and emit a
+metadata-only work-order package that a host platform operator can carry outside
+Study Anything / Cognitive Black Box, while still blocking raw patch bodies,
+automatic application, PR actions, customer-visible content, external
+publication, and production mutation inside this system.
 ```
