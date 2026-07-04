@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-304-v0.3.176-delivery-class-registry-lite",
+    "group_id": "release-stack-intake-pr-306-v0.3.178-trust-scenario-catalog-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -22,6 +22,10 @@
       "platform/generated/study-anything-delivery-class-registry.html",
       "docs/delivery-class-registry.md",
       "scripts/verify_delivery_class_registry.py",
+      "platform/generated/study-anything-trust-scenario-catalog.json",
+      "platform/generated/study-anything-trust-scenario-catalog.html",
+      "docs/trust-scenario-catalog.md",
+      "scripts/verify_trust_scenario_catalog.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -47,7 +51,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.176-delivery-class-registry-lite",
+        "branch": "codex/v0.3.178-trust-scenario-catalog-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -63,14 +67,18 @@
           "platform/generated/study-anything-delivery-class-registry.html",
           "docs/delivery-class-registry.md",
           "scripts/verify_delivery_class_registry.py",
+          "platform/generated/study-anything-trust-scenario-catalog.json",
+          "platform/generated/study-anything-trust-scenario-catalog.html",
+          "docs/trust-scenario-catalog.md",
+          "scripts/verify_trust_scenario_catalog.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "6d6fe5113a8081a860c09e0c35fa4dfc3001d23a",
+        "merge_commit": "b5910b45b4905b1b1633dd6b82b8a92be6505b10",
         "order": 1,
-        "pr": 304,
+        "pr": 306,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -79,15 +87,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #304: Add Delivery Class registry.",
+    "summary": "Candidate release stack group for PR #306: Add Trust Scenario Catalog.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.176",
-    "represented_pr_count": 96
+    "current_group": "release-stack-promotion-v0.3.178",
+    "represented_pr_count": 97
   },
   "negative_fixtures": [
     {

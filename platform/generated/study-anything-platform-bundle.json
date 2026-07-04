@@ -140,7 +140,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-policy.json",
       "purpose": "Release-stack recursion guard and product runway verification report.",
-      "sha256": "8260f58d39f5f4993c3cc50480daf657787f689fce8701ea6bf68f6a6ecdd061"
+      "sha256": "cce4103d8b1d8566a7113062089e500c8c675c91db9cd05436a0190842347ce7"
     },
     {
       "bytes": 3502,
@@ -812,21 +812,21 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "purpose": "Negative fixtures proving release stack archive manifest boundary checks.",
-      "sha256": "e2481fe7e4a203f56df95b0e02d5de0bb27c2657e73b2fa869b12844f04bb1c9"
+      "sha256": "d7986d63aad02a0d5c9e40edc272a25268a4723c9327bc4053c6fe8baa27f3c6"
     },
     {
-      "bytes": 6189,
+      "bytes": 6666,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-intake-candidate.json",
       "purpose": "Metadata-only release stack intake candidate report for the next PR group.",
-      "sha256": "f5079d98ddcd1cb06582135e511a7e095d8c47998faa0e16ed796a92e4c22426"
+      "sha256": "f17464a49e46034e0bf096dda229993e7cfbb96aa11f475d0817c4ca9765399e"
     },
     {
       "bytes": 2497,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-stack-candidate-promotion.json",
       "purpose": "Metadata-only release stack candidate promotion report for the current PR group.",
-      "sha256": "0c205cb062d3348b5b7e132c5ea1558660f39af80839fd41952557ecb3f50538"
+      "sha256": "12ab3e8d11c62908dff48c1e9f45a5494f2a706540414edd9ccd1495debcfaa1"
     },
     {
       "bytes": 92944,
@@ -4385,18 +4385,18 @@
       "sha256": "7fd749b64f54f31eb6959b33a7e60d35a23537e3bc743d4d7ffa8d10ad64dfd1"
     },
     {
-      "bytes": 21333,
+      "bytes": 21557,
       "kind": "verification",
       "path": "scripts/verify_release_stack_intake_candidate.py",
       "purpose": "Verify metadata-only release stack intake candidates from PR summary metadata.",
-      "sha256": "378245005fb7539dfd5f5309a731bae79e692f158beae7e1be898e0b5b6398c9"
+      "sha256": "93a1d307f6e911fb4f0038ea80b486a03a537ec5478ad313d86db89ed5b094af"
     },
     {
-      "bytes": 19226,
+      "bytes": 19689,
       "kind": "verification",
       "path": "scripts/verify_release_stack_candidate_promotion.py",
       "purpose": "Verify metadata-only release stack candidate promotion into the manifest.",
-      "sha256": "ec3272b6faf67e0c71111bd502b0a602878e28f7d4d18205580c79dfc91f48f6"
+      "sha256": "3a03e68412dfaae12b42568b4d05d6c1100661e64d54e200a9a1e859f9fc5e9b"
     },
     {
       "bytes": 1138,
