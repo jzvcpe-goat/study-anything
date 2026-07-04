@@ -286,6 +286,7 @@ Current code-review scope:
 - `python3 scripts/verify_code_review_delivery_class_handoff.py --check`
 - `python3 scripts/verify_client_report_delivery_class_handoff.py --check`
 - `python3 scripts/verify_delivery_class_registry.py --check`
+- `python3 scripts/verify_trust_scenario_catalog.py --check`
 - v0.1 is advisory only; soft gate and hard gate adoption are later opt-in phases.
 - Code Review Delivery Class handoff is metadata-only and can allow controlled
   handoff evidence only; it does not approve merge, deploy, automatic PR
@@ -297,6 +298,9 @@ Current code-review scope:
 - Delivery Class Registry is metadata-only and verifies the currently supported
   handoff classes as a protocol matrix; it does not approve production delivery
   or certify truthfulness.
+- Trust Scenario Catalog is metadata-only and verifies supported and blocked AI
+  delivery scenarios as a protocol matrix; it does not approve production
+  delivery, customer sending, or truth certification.
 
 当前代码审查范围：
 
@@ -307,6 +311,7 @@ Current code-review scope:
 - `python3 scripts/verify_code_review_delivery_class_handoff.py --check`
 - `python3 scripts/verify_client_report_delivery_class_handoff.py --check`
 - `python3 scripts/verify_delivery_class_registry.py --check`
+- `python3 scripts/verify_trust_scenario_catalog.py --check`
 - v0.1 仅做咨询；soft gate 和 hard gate 是后续可选升级阶段。
 - Code Review Delivery Class handoff 只含 metadata，只能允许受控交付证据；
   它不批准合并、部署、自动 PR 评论、自动发客户或安全认证。
@@ -315,6 +320,8 @@ Current code-review scope:
   报告原文或客户原始资料。
 - Delivery Class Registry 只含 metadata，用来验证当前支持的交付类矩阵；
   它不批准生产交付，也不认证内容真实性。
+- Trust Scenario Catalog 只含 metadata，用来验证当前支持和阻断的 AI 交付
+  场景矩阵；它不批准生产交付、自动发客户或认证内容真实性。
 
 ## Phase 6: Professional HTML Artifact Mode
 

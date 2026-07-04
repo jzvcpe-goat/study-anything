@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 120508,
+    "bytes": 120611,
     "path": "platform/generated/study-anything-dual-loop-trust-scenario-pack.zip",
     "root": "study-anything-dual-loop-trust-scenario-pack",
-    "sha256": "6c063817124a7250821416be14d26097f338ba1e0833d8a0a3016bf9ee534325"
+    "sha256": "ce0a9f198c141ccfc67be8a868be057c018323390a6be74c9b283e7ca9ee8ba8"
   },
   "case_matrix": {
     "cbb_delivery": [
@@ -72,11 +72,11 @@
     },
     {
       "archive_path": "study-anything-dual-loop-trust-scenario-pack/docs/trust-model.md",
-      "bytes": 9053,
+      "bytes": 9390,
       "path": "docs/trust-model.md",
       "purpose": "Cognitive Black Box trust model.",
       "role": "operator_doc",
-      "sha256": "74584e32c692c72179c1992b457e6aa77875345aa0a42cb1263a64865e9084ae"
+      "sha256": "03beaec66a18c9d8e3a22720d8658d819dbc61dc19e9348ea8f466194bcac177"
     },
     {
       "archive_path": "study-anything-dual-loop-trust-scenario-pack/scripts/run_dual_loop_scenario_harness.py",

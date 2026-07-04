@@ -365,6 +365,16 @@ FILES: list[tuple[str, str, str]] = [
         "Delivery Class Registry static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-trust-scenario-catalog.json",
+        "generated_asset",
+        "Trust Scenario Catalog metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-trust-scenario-catalog.html",
+        "generated_asset",
+        "Trust Scenario Catalog static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-cognitive-loop-cli-artifact.json",
         "generated_asset",
         "Cognitive Loop CLI init, verify, and static HTML artifact verification report.",
@@ -1058,6 +1068,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/delivery-class-registry.md",
         "operator_doc",
         "Delivery Class Registry guide for protocol-supported handoff classes.",
+    ),
+    (
+        "docs/trust-scenario-catalog.md",
+        "operator_doc",
+        "Trust Scenario Catalog guide for supported and blocked AI delivery scenarios.",
     ),
     (
         "docs/trust-model.md",
@@ -2378,6 +2393,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_delivery_class_registry.py",
         "verification",
         "Verify Delivery Class Registry assets, release gates, and privacy boundaries.",
+    ),
+    (
+        "scripts/verify_trust_scenario_catalog.py",
+        "verification",
+        "Verify Trust Scenario Catalog assets, delivery-class alignment, release gates, and privacy boundaries.",
     ),
     (
         "scripts/cognitive_loop_cli.py",
