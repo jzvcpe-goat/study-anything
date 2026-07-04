@@ -73,13 +73,13 @@
     "real_model_keys_included": false
   },
   "release_stack": {
-    "current_group": "release-stack-promotion-v0.3.192",
+    "current_group": "release-stack-promotion-v0.3.194",
     "current_group_status": "completed",
     "forced_pr_283_fixture_exists": false,
     "pr_282_auto_promoted": false,
     "pr_282_fixture_exists": false,
     "stack_prs": [
-      320
+      322
     ]
   },
   "schema_version": "release-stack-policy-verification-v1",
