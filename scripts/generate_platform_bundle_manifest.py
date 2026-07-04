@@ -458,6 +458,32 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_SPEC_EVAL_AUTHORING_ARTIFACTS = {
     ]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_SPEC_EVAL_AUTHORING_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-brief-candidate",
+    "blocked-invalid-brief-candidate",
+    "blocked-missing-product-loop-reconstruction",
+    "blocked-ai-review-only",
+    "blocked-skip-to-delivery-trust",
+    "blocked-customer-visible-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-product-loop-brief-intake-receipt.json",
+        *(
+            ["product-loop-scenario.json", "product-loop-run.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1059,6 +1085,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-spec-eval-authoring-gate.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Spec/Eval Authoring Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1846,6 +1887,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Spec/Eval Authoring Gate guide for metadata-only Product Loop brief candidate boundaries.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-product-loop-brief-intake-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Gate guide for metadata-only Product Loop scenario/run candidate boundaries.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2169,6 +2215,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-product-loop-brief-candidate-v1.schema.json",
         "schema",
         "Patch Proposal Product Loop Brief Candidate JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Gate report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Product Loop Brief Intake Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2701,6 +2757,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_SPEC_EVAL_AUTHORING_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_SPEC_EVAL_AUTHORING_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-product-loop-brief-intake-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Product Loop Brief Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -4051,6 +4116,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_spec_eval_authoring_gate.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Spec/Eval Authoring Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_product_loop_brief_intake_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Product Loop Brief Intake Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_product_loop_brief_intake_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Product Loop Brief Intake Gate fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

@@ -1,0 +1,110 @@
+{
+  "case_id": "pass",
+  "claim_boundary": {
+    "current_claim": "This Product Loop scenario/run candidate was created from a metadata-only Patch Proposal Product Loop brief candidate, not raw spec/eval/customer bodies.",
+    "not_claimed": [
+      "Delivery Trust Harness has run",
+      "customer delivery is allowed",
+      "source mutation is allowed",
+      "production mutation is allowed"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "loop_contract": {
+    "agentic_loop_may_promote_alone": false,
+    "all_three_loops_required": true,
+    "developer_loop_may_promote_alone": false,
+    "external_loop_may_promote_alone": false,
+    "neither_loop_may_dominate": true
+  },
+  "loops": {
+    "agentic_coding_loop": {
+      "actor_ref": "coding-agent",
+      "ai_review_only": false,
+      "input_ref": "patch-proposal-product-loop-brief-candidate.json",
+      "model_calls_required": false,
+      "output_ref": "candidate-change-metadata.json",
+      "patch_proposal_brief_candidate_ref": {
+        "body_included": false,
+        "brief_candidate_hash": "fdc0449d09536ef2ff3f77519c081ea4f064e5db62dabf7666fb7d87e7067e41",
+        "brief_candidate_id": "patch-proposal-product-loop-brief-candidate-43cdbabc806f14d5",
+        "raw_customer_feedback_included": false,
+        "raw_eval_prompt_included": false,
+        "raw_spec_body_included": false,
+        "source_backlog_signal_id": "patch-proposal-product-loop-backlog-7242f92789862356",
+        "source_feedback_intake_id": "patch-proposal-customer-feedback-intake-pass-customer-signal",
+        "source_spec_eval_candidate_hash": "43cdbabc806f14d540e18aa1c43ebd78759dc96da0d55bd3ed390b0251ef6abd",
+        "source_spec_eval_candidate_id": "patch-proposal-product-spec-eval-candidate-bfcb89784bd1f360"
+      },
+      "product_spec_evals_present": true,
+      "production_mutation_allowed": false,
+      "time_scale": "minutes"
+    },
+    "developer_feedback_loop": {
+      "active_reconstruction_required": true,
+      "actor_ref": "developer-vision",
+      "developer_vision_present": true,
+      "passive_attention_only_sufficient": false,
+      "reconstruction_ref": "patch-proposal-product-loop-brief-intake-reconstruction.json",
+      "time_scale": "hours"
+    },
+    "external_feedback_loop": {
+      "actor_ref": "external-feedback",
+      "external_feedback_original_text_stored": false,
+      "raw_feedback_access_required": false,
+      "requested_scope": "controlled_customer_handoff",
+      "structured_intake_ref": "external-feedback-intake.json",
+      "time_scale": "days"
+    }
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_diff_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "promotion_policy": {
+    "allowed_next_layer": "delivery_trust_harness",
+    "allowed_requested_scopes": [
+      "spec_eval_update",
+      "developer_vision_update",
+      "controlled_customer_handoff"
+    ],
+    "irreversible_external_effects_allowed": false,
+    "production_mutation_allowed": false
+  },
+  "scenario_id": "patch-proposal-product-loop-brief-intake-scenario-fdc0449d09536ef2",
+  "scenario_type": "tri_loop_product_development",
+  "schema_version": "product-loop-scenario-v1",
+  "source": {
+    "content_digest": "fdc0449d09536ef2ff3f77519c081ea4f064e5db62dabf7666fb7d87e7067e41",
+    "source_ref": "patch-proposal-product-loop-brief-candidate-43cdbabc806f14d5",
+    "source_type": "patch_proposal_product_loop_brief_candidate"
+  },
+  "status": "ready"
+}
