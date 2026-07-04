@@ -34,6 +34,8 @@ The completed chain now has these layers:
 - Customer Delivery Trust Envelope: pre-customer-send envelope boundary.
 - Customer Delivery Rehearsal: ready/block rehearsal before any customer-visible
   action.
+- Code Review Operator Handoff Rehearsal: concrete code-review delivery-class
+  operator decision before any PR comment, customer send, or production change.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -81,7 +83,6 @@ boundary, and produce a blocked/ready decision without sending anything to a
 customer, mutating production, or reading raw payloads.
 ```
 
-After that, move to a real operator handoff rehearsal for one delivery class,
-such as code-review handoff or client-report handoff, and prove that a human can
-use the rehearsal output to decide whether the result is safe to send outside
-this system.
+After that, either repeat the same operator-handoff pattern for
+`client_report_handoff`, or extract a generic Operator Handoff Rehearsal
+contract shared by both supported delivery classes.

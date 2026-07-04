@@ -2545,6 +2545,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify customer-delivery ready/block rehearsal boundaries from the trust envelope.",
     ),
     (
+        "docs/code-review-operator-handoff-rehearsal.md",
+        "operator_doc",
+        "Code Review Operator Handoff Rehearsal guide for metadata-only operator decisions.",
+    ),
+    (
+        "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
+        "generated_asset",
+        "Code Review Operator Handoff Rehearsal report.",
+    ),
+    (
+        "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
+        "generated_asset",
+        "Code Review Operator Handoff Rehearsal markdown report.",
+    ),
+    (
+        "scripts/verify_code_review_operator_handoff_rehearsal.py",
+        "verification",
+        "Verify Code Review operator handoff decisions from delivery-class and customer rehearsal evidence.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
