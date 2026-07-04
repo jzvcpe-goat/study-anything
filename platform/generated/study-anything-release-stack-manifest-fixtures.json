@@ -19,12 +19,12 @@
     },
     {
       "case_id": "wrong_merge_commit_shape",
-      "error": "release-stack-promotion-v0.3.174.stack[1].merge_commit must be a 40-character lowercase SHA.",
+      "error": "release-stack-promotion-v0.3.176.stack[1].merge_commit must be a 40-character lowercase SHA.",
       "status": "rejected"
     },
     {
       "case_id": "missing_required_check",
-      "error": "release-stack-promotion-v0.3.174.stack[1].required_checks.compose-smoke must be pass.",
+      "error": "release-stack-promotion-v0.3.176.stack[1].required_checks.compose-smoke must be pass.",
       "status": "rejected"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "case_id": "privacy_flag_regression",
-      "error": "release-stack-promotion-v0.3.174.privacy_assertions.github_tokens_included must be false.",
+      "error": "release-stack-promotion-v0.3.176.privacy_assertions.github_tokens_included must be false.",
       "status": "rejected"
     },
     {
@@ -48,7 +48,7 @@
       "status": "rejected"
     }
   ],
-  "current_group": "release-stack-promotion-v0.3.174",
+  "current_group": "release-stack-promotion-v0.3.176",
   "privacy": {
     "agent_endpoint_secrets_included": false,
     "github_tokens_stored": false,
