@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-328-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-330-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -39,6 +39,13 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-release-stack-manifest-fixtures.json",
     "platform/generated/study-anything-platform-bundle.json",
     "platform/generated/study-anything-platform-adoption-pack.json",
+    "docs/external-feedback-receipt.md",
+    "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
+    "platform/generated/study-anything-external-feedback-receipt.json",
+    "platform/generated/study-anything-external-feedback-receipt.md",
+    "platform/generated/study-anything-external-feedback-receipt.html",
+    "scripts/external_feedback_receipt.py",
+    "scripts/verify_external_feedback_receipt.py",
     "platform/generated/study-anything-release-asset-adoption.json",
     "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
     "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",

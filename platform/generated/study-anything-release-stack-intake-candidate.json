@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-328-v0.3.200-support-response-delivery-class-lite",
+    "group_id": "release-stack-intake-pr-330-v0.3.204-external-feedback-receipt-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -11,6 +11,13 @@
       "platform/generated/study-anything-release-stack-manifest-fixtures.json",
       "platform/generated/study-anything-platform-bundle.json",
       "platform/generated/study-anything-platform-adoption-pack.json",
+      "docs/external-feedback-receipt.md",
+      "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
+      "platform/generated/study-anything-external-feedback-receipt.json",
+      "platform/generated/study-anything-external-feedback-receipt.md",
+      "platform/generated/study-anything-external-feedback-receipt.html",
+      "scripts/external_feedback_receipt.py",
+      "scripts/verify_external_feedback_receipt.py",
       "platform/generated/study-anything-release-asset-adoption.json",
       "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
       "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
@@ -115,11 +122,18 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.200-support-response-delivery-class-lite",
+        "branch": "codex/v0.3.204-external-feedback-receipt-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
           "platform/generated/study-anything-platform-adoption-pack.json",
+          "docs/external-feedback-receipt.md",
+          "platform/schemas/delivery-trust/external-feedback-receipt-v1.schema.json",
+          "platform/generated/study-anything-external-feedback-receipt.json",
+          "platform/generated/study-anything-external-feedback-receipt.md",
+          "platform/generated/study-anything-external-feedback-receipt.html",
+          "scripts/external_feedback_receipt.py",
+          "scripts/verify_external_feedback_receipt.py",
           "platform/generated/study-anything-release-asset-adoption.json",
           "platform/generated/study-anything-dual-loop-trust-scenario-pack.json",
           "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
@@ -204,9 +218,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "a52274e6e37648cd46b24478b96767ec625270fb",
+        "merge_commit": "a94dc5e07e2b56a1eeaa542cb24e12e8a29b9ef0",
         "order": 1,
-        "pr": 328,
+        "pr": 330,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -215,15 +229,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #328: Add support response delivery class handoff.",
+    "summary": "Candidate release stack group for PR #330: Add external feedback receipt lite.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.200",
-    "represented_pr_count": 108
+    "current_group": "release-stack-promotion-v0.3.204",
+    "represented_pr_count": 109
   },
   "negative_fixtures": [
     {
