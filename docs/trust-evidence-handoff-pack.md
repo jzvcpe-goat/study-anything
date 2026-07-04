@@ -51,6 +51,12 @@ Verify from ZIP only:
 python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
 ```
 
+Run the external operator acceptance drill:
+
+```bash
+python3 scripts/verify_trust_evidence_acceptance_drill.py --check
+```
+
 ## 中文说明
 
 Trust Evidence Handoff Pack Lite 是一个可下载、可解压、只含 metadata 的交付信任

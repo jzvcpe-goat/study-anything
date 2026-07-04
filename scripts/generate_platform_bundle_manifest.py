@@ -2465,6 +2465,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify external ZIP-only consumption of the Trust Evidence Handoff Pack.",
     ),
     (
+        "docs/trust-evidence-acceptance-drill.md",
+        "operator_doc",
+        "Trust Evidence Acceptance Drill guide for external operator allow/block rehearsal.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
+        "generated_asset",
+        "Trust Evidence Acceptance Drill report.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
+        "generated_asset",
+        "Trust Evidence Acceptance Drill markdown report.",
+    ),
+    (
+        "scripts/verify_trust_evidence_acceptance_drill.py",
+        "verification",
+        "Verify external operator allow/block decisions from the Trust Evidence ZIP.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",

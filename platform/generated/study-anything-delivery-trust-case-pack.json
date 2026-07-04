@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 96585,
+    "bytes": 96699,
     "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
     "root": "study-anything-delivery-trust-case-pack",
-    "sha256": "f60078c440948cba19cb61561c26aaddc34b2b656a47a8b1fabfcc3b2599d48d"
+    "sha256": "ffa0e314f6bb153f1acfc03b97f4b259c2ef16e1250ee3427c265b84ac512dec"
   },
   "case_matrix": [
     "pass",
@@ -38,11 +38,11 @@
     },
     {
       "archive_path": "study-anything-delivery-trust-case-pack/docs/trust-model.md",
-      "bytes": 10273,
+      "bytes": 10634,
       "path": "docs/trust-model.md",
       "purpose": "Cognitive Black Box trust model.",
       "role": "operator_doc",
-      "sha256": "534f1f617c737e8b12a2c09aea2433ad1ecc9af6a0e2eba6869ec276ceb081f1"
+      "sha256": "9c502399c7da6ee699113ed479386a8bf2ca56a471494102951b008cf3521724"
     },
     {
       "archive_path": "study-anything-delivery-trust-case-pack/docs/product-runway.md",

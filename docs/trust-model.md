@@ -196,6 +196,7 @@ python3 scripts/verify_trust_scenario_catalog.py --check
 python3 scripts/verify_trust_scenario_decision_gate.py --check
 python3 scripts/generate_trust_evidence_handoff_pack.py --check
 python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
+python3 scripts/verify_trust_evidence_acceptance_drill.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -242,3 +243,8 @@ concrete delivery-class reports, decision gate, Delivery Trust Case Pack,
 fixtures, claim boundaries, and privacy assertions into a portable ZIP. The
 consumer walkthrough proves an external operator can verify the handoff boundary
 and delivery-class allowed/blocked matrices from package metadata alone.
+
+The Trust Evidence Acceptance Drill command goes one step further: it consumes
+the portable ZIP and proves a reviewer can derive controlled allow/block
+handoff decisions for code-review and client-report delivery classes without
+raw source text, raw report text, or AI-review-only sufficiency.
