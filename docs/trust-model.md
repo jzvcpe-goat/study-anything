@@ -194,6 +194,8 @@ python3 scripts/verify_client_report_delivery_class_handoff.py --check
 python3 scripts/verify_delivery_class_registry.py --check
 python3 scripts/verify_trust_scenario_catalog.py --check
 python3 scripts/verify_trust_scenario_decision_gate.py --check
+python3 scripts/generate_trust_evidence_handoff_pack.py --check
+python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -234,3 +236,8 @@ The Trust Scenario Decision Gate command turns those scenarios into deterministi
 local allow/block receipts. It proves missing artifacts, incomplete active
 reconstruction, forbidden shortcuts, production mutation, and truth certification
 remain blocked before any handoff claim is made.
+
+The Trust Evidence Handoff Pack command bundles the current registry, catalog,
+decision gate, Delivery Trust Case Pack, fixtures, claim boundaries, and privacy
+assertions into a portable ZIP. The consumer walkthrough proves an external
+operator can verify the handoff boundary from package metadata alone.

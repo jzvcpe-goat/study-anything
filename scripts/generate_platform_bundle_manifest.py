@@ -2425,6 +2425,46 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Trust Scenario Decision Gate fixtures, reports, CLI behavior, and privacy boundaries.",
     ),
     (
+        "docs/trust-evidence-handoff-pack.md",
+        "operator_doc",
+        "Trust Evidence Handoff Pack guide for external operators and customer reviewers.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-handoff-pack.json",
+        "generated_asset",
+        "Trust Evidence Handoff Pack manifest.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-handoff-pack.md",
+        "generated_asset",
+        "Trust Evidence Handoff Pack markdown report.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
+        "generated_asset",
+        "Trust Evidence Handoff Pack checksum.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
+        "generated_asset",
+        "Portable metadata-only Trust Evidence Handoff Pack archive.",
+    ),
+    (
+        "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
+        "generated_asset",
+        "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
+    ),
+    (
+        "scripts/generate_trust_evidence_handoff_pack.py",
+        "generator",
+        "Generate portable Trust Evidence Handoff Pack assets.",
+    ),
+    (
+        "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
+        "verification",
+        "Verify external ZIP-only consumption of the Trust Evidence Handoff Pack.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
