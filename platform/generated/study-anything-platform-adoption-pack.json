@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 4227834,
+  "archive_bytes": 4262895,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "5d8bd02f388eb1d7a58ff4782b0ea8bffdcc5f1b13c3bdf56c7e600f029a3cd5",
+  "archive_sha256": "3b5db3921c3c151df52b58d1b6f982e76967e65adebbfadbbba8c26d9fc243d5",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -449,11 +449,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/product-runway.md",
-      "bytes": 6969,
+      "bytes": 7280,
       "kind": "operator_doc",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "3f6c256bc392ff0a876e376b51197f7fe2a6afd8c8e483c28aa32c728ab43478"
+      "sha256": "9c80b96859dad87b9a0aa29eaa33c62835d39be123cfa3adbe04eae82258c0b1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/cognitive-loop-contracts.md",
@@ -534,6 +534,14 @@
       "path": "docs/sandboxed-patch-proposal-rehearsal.md",
       "purpose": "Sandboxed Patch Proposal Rehearsal guide for metadata-only patch proposal envelopes.",
       "sha256": "0ad50ecbf45ffe05215452118d310318bce47842e1df463a1f93dea9115a6c2a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/patch-proposal-operator-handoff-bridge.md",
+      "bytes": 2767,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-operator-handoff-bridge.md",
+      "purpose": "Patch Proposal Operator Handoff Bridge guide for metadata-only operator handoff refs.",
+      "sha256": "82a06dc4130946152c667ff5cb04027f740665d9c7cab28a182c182fe215382c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/delivery-trust-case-harness.md",
@@ -1104,6 +1112,14 @@
       "sha256": "0d8e94a174afe3c389ddf704fc8b85f01b76bba9b2f261545cd23993a6f13a63"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+      "bytes": 1154,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge JSON Schema.",
+      "sha256": "17a8e051afa7d69fd38e285b1bb763fcbcf42f03a407eaf3ce6e67a6ff7a0253"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
       "bytes": 5318,
       "kind": "schema",
@@ -1401,11 +1417,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 341024,
+      "bytes": 346755,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "b6784ed452f81810f46b17678c09ece4df33120dbc7839cc733a7d69b1354a7e"
+      "sha256": "e9a2a3c464892c99c6945ef50384b4896ab3933d92b8897373712671642e2a7d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -1728,6 +1744,30 @@
       "sha256": "dfcc39214885fa81de6cf8d4b67d5e522eb8c33f2e86ceae7f20beb5a35a8f86"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+      "bytes": 6033,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge metadata-only verification report.",
+      "sha256": "4017ac6b20d2f9ec4f052f7652d08b961837fe5f7697a2a6e8fc366a327c8fac"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-operator-handoff-bridge.md",
+      "bytes": 1674,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.md",
+      "purpose": "Patch Proposal Operator Handoff Bridge operator summary.",
+      "sha256": "3934a30012d182747d035430636cc9717b61097f8aa4b8633958748eed5ea629"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
+      "bytes": 7980,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
+      "purpose": "Patch Proposal Operator Handoff Bridge static HTML verification report.",
+      "sha256": "59a7d67dd16e4efa53d74d2eefbece8840d8c98443f8b900b230578f3d3e17d9"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-harness.json",
       "bytes": 5766,
       "kind": "submission_report",
@@ -1749,7 +1789,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "f5e15d1c5e2116d7921b97a902d0698c50a7b44a859b09264704bc11c7a6ca61"
+      "sha256": "1c76ec7a44c0e4dd5efc45de12a65272d8883ae4f7cd3add8495afe54cf2692d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
@@ -1757,15 +1797,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "17be1900a51930632835d48f44cc50cba5582c1bfc462f142119cb3b30ab018a"
+      "sha256": "93c1a4f6931ed947e2c03fb2af8da2c0ceec77ed689be44ff2729e22c77709b7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.zip",
-      "bytes": 97871,
+      "bytes": 97941,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "6dc4d554b15c26a8061f207fa567f85f11ce6429e80f28422701cc9ae7da2c16"
+      "sha256": "0631bc4911ef1163462bc7cbe426461260e8088b530175df0ff0249f71490b4d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
@@ -1773,7 +1813,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "e08afdffed9633ba6ccabb519fd0850679e73801e1a5746647e2e74605021abc"
+      "sha256": "8372175e9c2d68509c34fedb6d9f0b46439e46a0a7e260f3a1e570508be8dbb9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
@@ -1781,7 +1821,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "3d001eec3ed0e243ff0c777948c8f37ac154d1fe9ebeb1c1aaa29776cff5ee73"
+      "sha256": "8a853d17dbbf636c797febb15802d9ffae68a0b0bc145752559cdcc67935bcd5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-code-review-delivery-class.json",
@@ -2325,7 +2365,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent workflow install smoke verification report.",
-      "sha256": "72b1c1770ede7c9fa952b390e47fde322d68ce2acd12e8fa52181bd2f77682d2"
+      "sha256": "c782b2660fb5b15f8884a1d151c7ec048be6d72d209683b69b35a496b82f7eaa"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
@@ -2333,7 +2373,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "f29951defc324b2c34ae80148310301a7ddd34d6ea485c81b2e0e9cac81c4992"
+      "sha256": "3b95419b4d188f328914cffc10139e4c98ce00c843e1cb35778f681e6d52ca74"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
@@ -2413,7 +2453,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "318a8bb1d2985cf8834d41ccaa16865983f711615e371a70de89aae38ca564d5"
+      "sha256": "068a3e5d7238ac3dbd21d4743fc673ebb8f29f6abcdb6fdbcf1229496638dba0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
@@ -2421,7 +2461,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "64177f77c377fa3643127a1c3d5b5b634288919ccef2884ac8d5665f179eab57"
+      "sha256": "487310eea60dd4826dd32c443b22c7a11ed301fe1e587b3e35fce1d4242763f6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
@@ -2429,7 +2469,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "8c9d401021e493287d599ba9fe060896a4ef43bd32ace556881bf404c03e2a04"
+      "sha256": "d58f7c6136ebe1173181a7b4cf2c8b2fef09617b0845371ad5e4d59bfeb3749a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-handoff-checklist.json",
@@ -2437,7 +2477,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "781047ee62454311b322b6c2399f07eb391b9b60ca999cfbff6b3237e206323d"
+      "sha256": "c9f343a0fbf5eea8aa8ca96d2d05e16b109fd114416ea8d9f8312a61ae6215ef"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-launch-acceptance-ledger.json",
@@ -2485,7 +2525,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "348697e67cd8a18de8b33af1eb27b484ea133f5f09d3de1eb8483a910d634e09"
+      "sha256": "27e379937da89e7d8b6c31ef81512b900cef2ab43488b2659ed572d31790c226"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -2493,7 +2533,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "df20eefc7b788749b548522a556e66fe2dcbe1cf2a64ed80da402e1f8694412e"
+      "sha256": "fe6624682935c4c7a8f7be74939045427d4ca8f4c521264ca0d4a1ae97f3967e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -2821,7 +2861,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "2e15c46417e5ff2e5007881961d577b3b275ee23faf16eaff0f49f0f5fb7c4ef"
+      "sha256": "393c224119b9d61d8f8611d3de1535fd1104bed1a537432b1436e95e35a11bf1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -2829,15 +2869,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "4dc363a54d5548a386a240940d0342b146a97f79b80fa642eaba46bb66f6bd18"
+      "sha256": "58f8b6f790808229d5b7bd7cdac41bf027b622dca3a36dbe36577d4abf61e86f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 257555,
+      "bytes": 257556,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "55223cab3c826da8ce937219859fddd531c743d38771cd5e18dd13129185b5d1"
+      "sha256": "5a448a7e4258f4970ddcf836418dd0d96646fba654c4c312d1f07e17e7e4cb23"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -2845,7 +2885,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "7eaf8c549d2209b7c3e4880e044b1977232aa339272be2e3f88067ba7cca204d"
+      "sha256": "e3e879e3214a56f4ba39b4626a337f957091d4cbb9541f08195b6369ce43670c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -6224,6 +6264,70 @@
       "sha256": "2a2183464ce415ad4915159a08adeb926e45b3198cd25d15a4396cfec479f368"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 5942,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge pass patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "9dae24bc61f799fa84472dba38850a0d008b72445c29cb6907f9d2ff97352c22"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-sandboxed-proposal-blocked/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 6100,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-sandboxed-proposal-blocked/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-sandboxed-proposal-blocked patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "bc7075c63900e149773d1da6fb55dcf58c2624dbc117c1fdbae7cfd7e9619220"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-missing-operator-confirmation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 6029,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-missing-operator-confirmation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-missing-operator-confirmation patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "5364a813c623bf3d6762a01225e10ace62e94d72054fdd90ab836cf75cbd5ef1"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-raw-patch-request/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 5990,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-raw-patch-request/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-raw-patch-request patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "29b922680786e9452e6ed656d8f7cace3325d927d009821588200ddde34a06e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-repository-mutation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 5989,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-repository-mutation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-repository-mutation patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "a7e204d17815849ec28260957142538352d8b1befa68233feeaa1d2a56652d94"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-customer-visible-action/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 6001,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-customer-visible-action/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-customer-visible-action patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "f5ed4acaa6b095acb87ebee6c922998f95994c0daceea8d6a0fed4b34e4ec49b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-external-publication/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 5992,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-external-publication/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-external-publication patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "f179319a911defa84f801924ba7c5234332756424f4df50f1b6261b48da61a4f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-operator-handoff-bridge/blocked-production-mutation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "bytes": 5989,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-operator-handoff-bridge/blocked-production-mutation/patch-proposal-operator-handoff-bridge-receipt.json",
+      "purpose": "Patch Proposal Operator Handoff Bridge blocked-production-mutation patch-proposal-operator-handoff-bridge-receipt.json fixture.",
+      "sha256": "866750708bdf38452836af1620ecf4839aabf3d7d065a26cef94016c5549adbc"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -7469,7 +7573,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "c7b6d39b0584c9eb8d3bea7eeba9e72840b7c5d3d3e9fce054d84326b254a614"
+      "sha256": "9ca2634743b39eb93fe28ecdad264b3007c2518deba572411f3d4e25052bf42d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -7477,7 +7581,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "8057a38226cfead89d861ab9802609a24d91c309b194c5d399a04f68128e21c5"
+      "sha256": "8690920e8a62ee1de4ef44299dc60d773269fdbebbffd8dff38b3bf62d7c66e1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
@@ -7485,15 +7589,15 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "0211b8505428fd211165ad653042ee1b34b2c56812d48224a387ee0ae4a12fa8"
+      "sha256": "ff7e1b94827719285ca3bc73606854000966fd09c0f42216e527447260bc80fb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.zip",
-      "bytes": 145606,
+      "bytes": 145673,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "d6f7fedd4f8e0147dcdbf70160227ad9deb54011e6aab1e96e0ba6e77162caf2"
+      "sha256": "f9edc6b388cdc08eaa075a0f5a4ac5d7187508033ed92c3f4b0c30750410c493"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
@@ -7501,7 +7605,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "c7cbcd39f595ddaa478de7c09ee5857ed1f6111d11b8f25abe18447b97154123"
+      "sha256": "4622a8eedd04ef691b931cea2c50ab19ffcea88e95a23773cbf159ddd2a7d300"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_trust_evidence_handoff_pack.py",
@@ -7533,7 +7637,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "17ebdfe083b2094f46e81297936e6d089bb6ad04b19f1ed2a706916bd427002c"
+      "sha256": "9e3689a8715d177082caa7fdc69dd5189d89da2f9f938359c66b706688d1dd5b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-acceptance-drill.md",
@@ -7541,7 +7645,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "b270cc03e5dd9104c08fe58b5ab0ce4ddc5812ec5ceebc523276983039642b92"
+      "sha256": "c10b14e40c1e61a39598cbe3a2e3503394744c602c0b6f1659f239d9e4179e80"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_trust_evidence_acceptance_drill.py",
@@ -7565,7 +7669,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "90b13f9d0292ae569a43b4f9535353b6f670f38b785c58b0b16386fbee552229"
+      "sha256": "d0d3ff249f441d117d6ec225325601139118cd7ab6d9a6b26c11545d83ff55ed"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-controlled-handoff-runbook.md",
@@ -7573,7 +7677,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "a98e03b4adf5dbe2758b4f0141c9b89f0f7ff01d9f54fa11c190626e95c9bfd2"
+      "sha256": "b194600d85030bfee2c0cea0dad1a908217ec4ba0694e66311c09c1f28985e22"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_controlled_handoff_runbook.py",
@@ -7886,6 +7990,22 @@
       "path": "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
       "purpose": "Verify Sandboxed Patch Proposal Rehearsal fixtures, CLI output, and privacy boundaries.",
       "sha256": "82f32fc7db8bd3dacd4a8dcb7e78b2a123378fa0fc12c884629c981f2c5e53a5"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/patch_proposal_operator_handoff_bridge.py",
+      "bytes": 18930,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_operator_handoff_bridge.py",
+      "purpose": "Build metadata-only Patch Proposal Operator Handoff Bridge artifacts.",
+      "sha256": "36fe7a6c087053fc753c8b1c3474ef3c1f085cff478924203401fe1b702d9052"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_patch_proposal_operator_handoff_bridge.py",
+      "bytes": 12176,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+      "purpose": "Verify Patch Proposal Operator Handoff Bridge fixtures, CLI output, and privacy boundaries.",
+      "sha256": "5793951ffc2505a113a7eb9d3e7781f0d84cc1e98be47642913ae089cfa6c14f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-handoff-rehearsal-contract.md",

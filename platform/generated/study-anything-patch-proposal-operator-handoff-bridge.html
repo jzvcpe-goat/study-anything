@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal Operator Handoff Bridge</title>
+<body>
+<h1>Patch Proposal Operator Handoff Bridge</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;prepare_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: &quot;prepare_operator_handoff_in_host_agent&quot;,
+      &quot;status&quot;: &quot;ready&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;sandboxed_patch_proposal_not_allowed&quot;,
+        &quot;sandbox_local_scope_missing&quot;,
+        &quot;test_plan_ref_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-sandboxed-proposal-blocked&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;operator_active_reconstruction_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-operator-confirmation&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;raw_patch_or_diff_request_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-raw-patch-request&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;repository_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-repository-mutation&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_action_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-customer-visible-action&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;external_publication_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-external-publication&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_operator_handoff_bridge&quot;,
+      &quot;next_allowed_action&quot;: null,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A ready bridge only packages metadata refs so a host platform operator can decide whether to continue; it does not execute, apply, publish, or send anything.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;patch content generated&quot;,
+      &quot;repository changed&quot;,
+      &quot;PR opened or commented&quot;,
+      &quot;customer handoff approved&quot;,
+      &quot;external publication approved&quot;,
+      &quot;production change approved&quot;,
+      &quot;truth or security certified&quot;
+    ]
+  },
+  &quot;created_at&quot;: &quot;2026-06-28T00:00:00Z&quot;,
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_fixtures&quot;: {
+    &quot;bridge_mode_escalated&quot;: &quot;bridge mode must remain metadata_refs_only&quot;,
+    &quot;customer_visible_action_performed&quot;: &quot;bridge effect boundary must keep customer_visible_action_performed false&quot;,
+    &quot;missing_operator_confirmation_on_ready&quot;: &quot;ready bridge requires operator_active_confirmations_present&quot;,
+    &quot;production_mutation_performed&quot;: &quot;bridge effect boundary must keep production_mutation_performed false&quot;,
+    &quot;raw_patch_body_injected&quot;: &quot;bridge receipt includes forbidden raw fields: [&#x27;raw_patch_body&#x27;]&quot;,
+    &quot;repository_mutation_performed&quot;: &quot;bridge effect boundary must keep repository_mutation_performed false&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_body_included&quot;: false,
+    &quot;raw_eval_prompt_included&quot;: false,
+    &quot;raw_operator_notes_included&quot;: false,
+    &quot;raw_patch_body_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;raw_spec_eval_body_included&quot;: false,
+    &quot;real_model_keys_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;repository_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Bridge a sandbox-local patch proposal envelope to operator handoff metadata refs without applying code, opening PRs, commenting, sending customer-visible output, publishing externally, or mutating production.&quot;,
+  &quot;quality_gates&quot;: {
+    &quot;customer_visible_action_rejected&quot;: true,
+    &quot;delivery_class_refs_metadata_only&quot;: true,
+    &quot;external_publication_rejected&quot;: true,
+    &quot;operator_active_reconstruction_required&quot;: true,
+    &quot;production_mutation_rejected&quot;: true,
+    &quot;raw_patch_or_diff_request_rejected&quot;: true,
+    &quot;repository_mutation_rejected&quot;: true,
+    &quot;sandboxed_patch_proposal_allowed_required&quot;: true
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;patch-proposal-operator-handoff-bridge-v1&quot;,
+      &quot;sha256&quot;: &quot;17a8e051afa7d69fd38e285b1bb763fcbcf42f03a407eaf3ce6e67a6ff7a0253&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;patch-proposal-operator-handoff-bridge-v1&quot;,
+  &quot;source_chain&quot;: {
+    &quot;allowed_sandboxed_patch_proposal_envelope&quot;: &quot;fixtures/sandboxed-patch-proposal-rehearsal/pass/sandboxed-patch-proposal-envelope.json&quot;,
+    &quot;delivery_class_operator_handoff_reports&quot;: [
+      &quot;platform/generated/study-anything-code-review-operator-handoff-rehearsal.json&quot;,
+      &quot;platform/generated/study-anything-client-report-operator-handoff-rehearsal.json&quot;,
+      &quot;platform/generated/study-anything-support-response-operator-handoff-rehearsal.json&quot;
+    ],
+    &quot;sandboxed_patch_proposal_rehearsal_report&quot;: &quot;platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.json&quot;
+  },
+  &quot;status&quot;: &quot;pass&quot;
+}
+</pre>
+</body>
+</html>
