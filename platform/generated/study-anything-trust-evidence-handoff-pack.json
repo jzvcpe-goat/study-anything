@@ -1,0 +1,376 @@
+{
+  "archive": {
+    "bytes": 70612,
+    "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
+    "root": "study-anything-trust-evidence-handoff-pack",
+    "sha256": "34b85c3f927be4afdba370b42988f8f28a3889170e58b1506d5ecf1ebe433e15"
+  },
+  "audience": [
+    "external_operator",
+    "customer_reviewer",
+    "platform_agent"
+  ],
+  "claim_boundary": {
+    "current_claim": "This pack proves a portable metadata-only handoff evidence bundle exists for currently supported delivery scenarios.",
+    "not_claimed": [
+      "production approval",
+      "automatic customer sending",
+      "external publication",
+      "truth certification",
+      "legal or financial certification",
+      "security certification",
+      "customer outcome guarantee",
+      "general model correctness"
+    ]
+  },
+  "core_reports": {
+    "allowed_decision_cases": [
+      "controlled_client_report_handoff",
+      "controlled_code_review_handoff"
+    ],
+    "blocked_decision_scenarios": [
+      "blocked_certified_truth_claim",
+      "blocked_direct_production_mutation",
+      "controlled_client_report_handoff",
+      "controlled_code_review_handoff",
+      "controlled_code_review_handoff"
+    ],
+    "blocked_scenario_count": 2,
+    "decision_case_count": 7,
+    "delivery_class_count": 2,
+    "delivery_class_ids": [
+      "client_report_handoff",
+      "code_review_handoff"
+    ],
+    "delivery_trust_case_pack_sha256": "03aa790bdd26ad762b7779fe1e887dd1b6a8675902256afa5377cc0fe037396d",
+    "trust_scenario_count": 4
+  },
+  "entrypoints": {
+    "inspect_decision_gate": "python3 scripts/verify_trust_scenario_decision_gate.py --check",
+    "inspect_delivery_case_pack": "python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check"
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/trust-model.md",
+      "bytes": 10196,
+      "path": "docs/trust-model.md",
+      "purpose": "Cognitive Black Box trust model.",
+      "role": "operator_doc",
+      "sha256": "e5b9b47d72a8ff7496539b912ac8b8ec3bf0733a2e363ad66e2d1a23758162af"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/product-runway.md",
+      "bytes": 2940,
+      "path": "docs/product-runway.md",
+      "purpose": "Current product runway and claim boundary.",
+      "role": "operator_doc",
+      "sha256": "033985d7fd55f7f9f9a75aa4538dbcdc388af50a9c46f445e5e4704555109a77"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/delivery-class-registry.md",
+      "bytes": 1796,
+      "path": "docs/delivery-class-registry.md",
+      "purpose": "Delivery class registry guide.",
+      "role": "operator_doc",
+      "sha256": "06791198ec33dbc0032ae2abf7226f277350e8027679e760abac2490b4b62884"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/trust-scenario-catalog.md",
+      "bytes": 2926,
+      "path": "docs/trust-scenario-catalog.md",
+      "purpose": "Trust scenario catalog guide.",
+      "role": "operator_doc",
+      "sha256": "bfb8f0a6521a85d0a913d187b96eee35df692de4c79213315f7213d267ec337b"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/trust-scenario-decision-gate.md",
+      "bytes": 3592,
+      "path": "docs/trust-scenario-decision-gate.md",
+      "purpose": "Trust scenario decision gate guide.",
+      "role": "operator_doc",
+      "sha256": "6d0a642b2811479f24e733aee0f18eff64e1fab53011c14a08f37a655e88842e"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/docs/delivery-trust-case-pack.md",
+      "bytes": 1420,
+      "path": "docs/delivery-trust-case-pack.md",
+      "purpose": "Delivery trust case pack guide.",
+      "role": "operator_doc",
+      "sha256": "4c48e94bf734451aa364f523ea8194508b55b33dd15fcc9274cd3dd924472bde"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-class-registry.json",
+      "bytes": 5502,
+      "path": "platform/generated/study-anything-delivery-class-registry.json",
+      "purpose": "Delivery Class Registry report.",
+      "role": "evidence",
+      "sha256": "20a687b709bbf5f96c3794860928d0650d0d3a5d08660ca6e9e0fe74ffc1b2c3"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-class-registry.html",
+      "bytes": 7229,
+      "path": "platform/generated/study-anything-delivery-class-registry.html",
+      "purpose": "Delivery Class Registry HTML report.",
+      "role": "evidence",
+      "sha256": "902b306ae1603aa59f2b37d77fd8e1ee4e02905b04ebe7d0bd7b313d5c3b89bf"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-trust-scenario-catalog.json",
+      "bytes": 8311,
+      "path": "platform/generated/study-anything-trust-scenario-catalog.json",
+      "purpose": "Trust Scenario Catalog report.",
+      "role": "evidence",
+      "sha256": "e1932ebfa0fbb9eb4129447115501db9a62497e1b4dd2f6a1d7cfb0bc76573cd"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-trust-scenario-catalog.html",
+      "bytes": 10816,
+      "path": "platform/generated/study-anything-trust-scenario-catalog.html",
+      "purpose": "Trust Scenario Catalog HTML report.",
+      "role": "evidence",
+      "sha256": "b7e184d8f5d3c9afa9000d8a433cba71cfcc92417134521d2e47b6943e5e0b5f"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-trust-scenario-decision-gate.json",
+      "bytes": 4032,
+      "path": "platform/generated/study-anything-trust-scenario-decision-gate.json",
+      "purpose": "Trust Scenario Decision Gate report.",
+      "role": "evidence",
+      "sha256": "6e11a3095b5fc52a692556ce913f3cf915ff51205f52a0317d20d78c77e8bd84"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-trust-scenario-decision-gate.html",
+      "bytes": 5649,
+      "path": "platform/generated/study-anything-trust-scenario-decision-gate.html",
+      "purpose": "Trust Scenario Decision Gate HTML report.",
+      "role": "evidence",
+      "sha256": "9d71ad7f2eb122f87a00245f5841f2ee3a243891beb866e20492b03395a587ce"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.json",
+      "bytes": 29925,
+      "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
+      "purpose": "Delivery Trust Case Pack manifest.",
+      "role": "evidence",
+      "sha256": "9c8c39122014a00266172e201996639d1e2a1149823ada45371e55ca1d022ae7"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
+      "bytes": 830,
+      "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
+      "purpose": "Delivery Trust Case Pack markdown report.",
+      "role": "evidence",
+      "sha256": "26049629c79c2af1921825d30c570de5c7459b4713cb44410a4b5d1475fc6fc1"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
+      "bytes": 110,
+      "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
+      "purpose": "Delivery Trust Case Pack checksum.",
+      "role": "checksum",
+      "sha256": "e39fa65874a2b15262d14dad78693ed85d1655b762f35a43a8519f02df3364fb"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_delivery_class_registry.py",
+      "bytes": 12497,
+      "path": "scripts/verify_delivery_class_registry.py",
+      "purpose": "Verify Delivery Class Registry.",
+      "role": "verification",
+      "sha256": "d9cc361119198b264ebc2dc115582f5f4d47f86ede4240bdc1b6d97538c8aab4"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_trust_scenario_catalog.py",
+      "bytes": 19973,
+      "path": "scripts/verify_trust_scenario_catalog.py",
+      "purpose": "Verify Trust Scenario Catalog.",
+      "role": "verification",
+      "sha256": "7159a9b43f25e08d85a2acfc6e3468243b5f8c3e8baf4bd7e0fe88c25077fb31"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/trust_scenario_decision_gate.py",
+      "bytes": 8278,
+      "path": "scripts/trust_scenario_decision_gate.py",
+      "purpose": "Evaluate Trust Scenario decisions.",
+      "role": "cli",
+      "sha256": "b6f679d4b5d770193dc730432e6a8b360ad85b4d23c93e914ff6b44e32fc3bd7"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_trust_scenario_decision_gate.py",
+      "bytes": 15534,
+      "path": "scripts/verify_trust_scenario_decision_gate.py",
+      "purpose": "Verify Trust Scenario Decision Gate.",
+      "role": "verification",
+      "sha256": "0c451f4a82f898daef10e68ca46ee4ec7c1e046ee126542eb3b0cd4d7799577e"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/generate_delivery_trust_case_pack.py",
+      "bytes": 12770,
+      "path": "scripts/generate_delivery_trust_case_pack.py",
+      "purpose": "Generate Delivery Trust Case Pack.",
+      "role": "generator",
+      "sha256": "d97f611f854a9fe272c5dbad3d95bf668beb9f84ed6d47ed60a5bb2f7ecc3dd8"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
+      "bytes": 22479,
+      "path": "scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py",
+      "purpose": "Verify Delivery Trust Case Pack from ZIP.",
+      "role": "verification",
+      "sha256": "9680b1020ea7707094d2be267940ffb5e503042f255f08786255c4051e2b0532"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/allow-code-review/input.json",
+      "bytes": 610,
+      "path": "fixtures/trust-scenario-decision-gate/allow-code-review/input.json",
+      "purpose": "Trust Scenario Decision fixture allow-code-review/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "3a0e92e2b447db03d23bfd2d9195b436b2e75c533884c336bfa5b6bb57e043d8"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/allow-code-review/trust-scenario-decision-receipt.json",
+      "bytes": 2975,
+      "path": "fixtures/trust-scenario-decision-gate/allow-code-review/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture allow-code-review/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "a33393e3a8341f0f81fb1e57ba08a768807692afbfb2eda5d1a373fdac0bcb45"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/allow-client-report/input.json",
+      "bytes": 688,
+      "path": "fixtures/trust-scenario-decision-gate/allow-client-report/input.json",
+      "purpose": "Trust Scenario Decision fixture allow-client-report/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "60043e1c8db97702b73b0bd88ab97c04c5556bdbd37f3b0f49cdc0e722a82c0d"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/allow-client-report/trust-scenario-decision-receipt.json",
+      "bytes": 3155,
+      "path": "fixtures/trust-scenario-decision-gate/allow-client-report/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture allow-client-report/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "b73c903e2fd1ec1403e926e21129269ca706b4c8da4f7f11e14fe1da68b514cf"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-missing-artifact/input.json",
+      "bytes": 689,
+      "path": "fixtures/trust-scenario-decision-gate/block-missing-artifact/input.json",
+      "purpose": "Trust Scenario Decision fixture block-missing-artifact/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "407bf3f98daa848f8a270f449feb1baade5cc3bd3e0b5027d117f5366a27a194"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-missing-artifact/trust-scenario-decision-receipt.json",
+      "bytes": 3193,
+      "path": "fixtures/trust-scenario-decision-gate/block-missing-artifact/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture block-missing-artifact/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "15431eda880f8dafa675b70934415c68ac5eda828395ce846d0b232988766ad0"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-forbidden-shortcut/input.json",
+      "bytes": 672,
+      "path": "fixtures/trust-scenario-decision-gate/block-forbidden-shortcut/input.json",
+      "purpose": "Trust Scenario Decision fixture block-forbidden-shortcut/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "c77dc3fa0c95486504d8a62804f76a15c5ec29d59671064e5d468507b714caa8"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-forbidden-shortcut/trust-scenario-decision-receipt.json",
+      "bytes": 3061,
+      "path": "fixtures/trust-scenario-decision-gate/block-forbidden-shortcut/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture block-forbidden-shortcut/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "c6027982f87ef2b848d0b504b79500a36bdebc340bff7db2a52795145fcdcde0"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-passive-attention/input.json",
+      "bytes": 577,
+      "path": "fixtures/trust-scenario-decision-gate/block-passive-attention/input.json",
+      "purpose": "Trust Scenario Decision fixture block-passive-attention/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "89402e52a693a98f42878fe7674a5599d67431390a756fed0e38cfe7f7cec162"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-passive-attention/trust-scenario-decision-receipt.json",
+      "bytes": 3016,
+      "path": "fixtures/trust-scenario-decision-gate/block-passive-attention/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture block-passive-attention/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "29bb84a7d4f45951bc4b6d0e22fdeb724b213552198438bf1d0b044f0f14b141"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-production-mutation/input.json",
+      "bytes": 471,
+      "path": "fixtures/trust-scenario-decision-gate/block-production-mutation/input.json",
+      "purpose": "Trust Scenario Decision fixture block-production-mutation/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "d4114e99b98845fb0fd0f11c8ebecee934922de018de543b8f1e862240881292"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-production-mutation/trust-scenario-decision-receipt.json",
+      "bytes": 2574,
+      "path": "fixtures/trust-scenario-decision-gate/block-production-mutation/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture block-production-mutation/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "86e8c4554c65c600d193386995041fb121df84510d544d8bd1df4fa5e488f486"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-truth-certification/input.json",
+      "bytes": 463,
+      "path": "fixtures/trust-scenario-decision-gate/block-truth-certification/input.json",
+      "purpose": "Trust Scenario Decision fixture block-truth-certification/input.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "67d8280d3216590ee7f5d4bf8796fdb2301658b934e29f6bf4ccc187d435e402"
+    },
+    {
+      "archive_path": "study-anything-trust-evidence-handoff-pack/fixtures/trust-scenario-decision-gate/block-truth-certification/trust-scenario-decision-receipt.json",
+      "bytes": 2569,
+      "path": "fixtures/trust-scenario-decision-gate/block-truth-certification/trust-scenario-decision-receipt.json",
+      "purpose": "Trust Scenario Decision fixture block-truth-certification/trust-scenario-decision-receipt.json.",
+      "role": "trust_scenario_decision_fixture",
+      "sha256": "e4b1aaa06f39a6e45a0c91b6d5706b398c10cfd845fb937d9e77cefaf4b91031"
+    }
+  ],
+  "name": "study-anything-trust-evidence-handoff-pack",
+  "package_type": "trust_evidence_handoff_pack",
+  "privacy_boundaries": {
+    "automatic_customer_sending_performed": false,
+    "cookies_or_bearer_tokens_included": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_artifact_body_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_or_biometrics_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_review_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "trust-evidence-handoff-pack-v1",
+  "summary": "Portable metadata-only evidence showing which AI delivery handoffs are currently allowed, which remain blocked, and which claim boundaries must survive before external handoff.",
+  "title": "Study Anything Trust Evidence Handoff Pack",
+  "trust_rules": {
+    "active_reconstruction_required": true,
+    "ai_review_only_rejected": true,
+    "automatic_customer_sending_blocked": true,
+    "both_dual_loop_sides_required": true,
+    "delivery_class_must_be_registered": true,
+    "delivery_trust_case_pack_must_be_current": true,
+    "production_mutation_blocked": true,
+    "scenario_decision_must_allow": true,
+    "truth_certification_blocked": true
+  },
+  "verification_commands": [
+    "python3 scripts/generate_trust_evidence_handoff_pack.py --check",
+    "python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check"
+  ],
+  "version": "v0.3.31-alpha"
+}

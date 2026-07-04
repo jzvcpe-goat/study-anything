@@ -1,0 +1,88 @@
+{
+  "claim_boundary": {
+    "current_claim": "An external consumer can verify the handoff evidence pack from ZIP metadata alone.",
+    "not_claimed": [
+      "production approval",
+      "automatic customer sending",
+      "truth certification",
+      "customer outcome guarantee",
+      "general model correctness"
+    ]
+  },
+  "core_summary": {
+    "allowed_decision_cases": [
+      "controlled_client_report_handoff",
+      "controlled_code_review_handoff"
+    ],
+    "blocked_decision_scenario_count": 5,
+    "decision_case_count": 7,
+    "delivery_class_count": 2,
+    "trust_scenario_count": 4
+  },
+  "decision": {
+    "ai_review_only_rejected": true,
+    "blocked_scenarios_remain_blocked": true,
+    "controlled_handoff_scenarios_allowed": [
+      "controlled_client_report_handoff",
+      "controlled_code_review_handoff"
+    ],
+    "external_adopter_can_verify_zip_only": true,
+    "production_mutation_blocked": true,
+    "truth_certification_blocked": true
+  },
+  "pack": {
+    "archive_name": "study-anything-trust-evidence-handoff-pack.zip",
+    "archive_root": "study-anything-trust-evidence-handoff-pack",
+    "entry_count": 37,
+    "file_record_count": 36,
+    "manifest_schema_version": "trust-evidence-handoff-pack-v1",
+    "manifest_sha256": "5eaece8acb37e7f934c59787e959fa24c3070453941c9e3ae05dd1b7601762c3",
+    "zip_sha256": "34b85c3f927be4afdba370b42988f8f28a3889170e58b1506d5ecf1ebe433e15"
+  },
+  "privacy": {
+    "attention_streams_included": false,
+    "automatic_customer_sending_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "delivery_artifact_body_included": false,
+    "external_publication_performed": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Verify external zip-only consumption of the Trust Evidence Handoff Pack.",
+  "schema_version": "trust-evidence-handoff-pack-consumer-walkthrough-v1",
+  "status": "pass",
+  "walkthrough": [
+    {
+      "evidence": "ZIP is valid and has one archive root.",
+      "status": "pass",
+      "step_id": "download_pack"
+    },
+    {
+      "evidence": "Manifest records match archive members and SHA-256 hashes.",
+      "status": "pass",
+      "step_id": "verify_manifest_and_hashes"
+    },
+    {
+      "evidence": "Registered delivery classes are present.",
+      "status": "pass",
+      "step_id": "inspect_delivery_classes"
+    },
+    {
+      "evidence": "Only supported scenarios are allowed; blocked scenarios remain blocked.",
+      "status": "pass",
+      "step_id": "inspect_decision_gate"
+    },
+    {
+      "evidence": "Claim boundary rejects production/customer/truth overclaims.",
+      "status": "pass",
+      "step_id": "inspect_claim_boundary"
+    }
+  ]
+}
