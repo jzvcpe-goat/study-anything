@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "63ddc401e6c756721db97019811a31d4eb2c22de9cd2c73f0e094f3c96493afa"
+      "sha256": "b9c2e77dd5d5430447d248911eb04bd92bba25ba17aa5ed95cb5f1a41e29bff3"
     },
     {
       "bytes": 1939,
@@ -308,35 +308,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "4d2afe7daf05c0696c89a940616e068bf65a1af9d12388249d6468b7054c8cfa"
+      "sha256": "9eed9b8cc00e752d690ff5491420c8c247f65a3999330d81ed46caa58ac46bc3"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "f5b9af18aeff36407755c2148ea2f8d7e9a5116e23aa4b0067e338fff5b460b1"
+      "sha256": "116e4e5ef92b6cf68818252c7b46acab1c5bf2d2b15e3790298c1a193d9168ce"
     },
     {
-      "bytes": 97765,
+      "bytes": 97866,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "230de67bd5eea3395a32ff2a841678a09e5d699596bc4fd82a07d47da622939a"
+      "sha256": "5aeb134c56f6d0ef4caca6ba17d51a1e463e9b9240f2695db2a0199fdffa6a4b"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "28395b1cdcbd4785bc511890009af0dac39e19efe1ad44ad3aadfcd10c5b512f"
+      "sha256": "d3e8df6eec06fe3a4efed023fbb30e0d7cfeff242c8658ccbfd9ad64dbc4b9ed"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "2d43609baf0e7f77c3da106c4d451d4862e3dbeceb03009c3d495d4947c9300f"
+      "sha256": "878ab4a767b62a6e19f1f7c9dd85b3ac15f605203b9a715cbef425efe8678939"
     },
     {
       "bytes": 3502,
@@ -526,6 +526,27 @@
       "path": "platform/generated/study-anything-real-adopter-scenario-import.html",
       "purpose": "Real-Adopter Scenario Import static HTML verification report.",
       "sha256": "3bfb4681e22f110b1349b2a60ff1944b4f376975a1c37f0c054b31a91d13f8f1"
+    },
+    {
+      "bytes": 4729,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal metadata-only verification report.",
+      "sha256": "c7db3e11e77804806ccedff8ec633d15748b2501b86827af8797de095f03ede2"
+    },
+    {
+      "bytes": 1287,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal operator summary.",
+      "sha256": "7baf760ab0abedb4380d7db4b6d4e43a9cedd4a922ebc98ae232bb33e02728a0"
+    },
+    {
+      "bytes": 6396,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal static HTML verification report.",
+      "sha256": "67cc7d67f90e2bd7d01010228f0592ffaab8234e73fd8ea6e957ebb7eb6f27e8"
     },
     {
       "bytes": 7536,
@@ -868,14 +889,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "7a86b9bb3f0cfb1b4e93dee9dc253404b7c0ab0e1c7bf2af11d8bca020dfc00d"
+      "sha256": "394b26a9ce903f2f6b2d5fadda09851718f49d48bed495b332372c3c243b637d"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "89403bd57d77447787baed3ae5f08e7c2811b25760da36e423d8d88a49f83e4a"
+      "sha256": "dc112d78f6a00b10d78492a98152adcb8494e35b59971cf20d1eedf50a28a824"
     },
     {
       "bytes": 2466,
@@ -945,28 +966,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "3d5336258cd4f79aa0fb6b51ca8c5826b51ad5c5b7be34ebb0c126af47806ef4"
+      "sha256": "1957a44162662ccc57351b0fb9953b217503ddca8e0e896f7515783f9316eba5"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "fa46a9a34ab0de5078e5c764210b718304f472efc27227550a2f6cbe140a2083"
+      "sha256": "b5d639eb7bbe13dcc55c757493990b8b154097efe797f583d23afc2822681a7a"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "0f9e2e437b3b010f0240089b5a031744d90af00432dee954b95e91f3a8858f57"
+      "sha256": "333154d9ff8c4f980cc0c369459c2ae69e02756bffad84ac06bf568194ae1a8b"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "54f6b02102151124b0e42e75ca4e0010267e8345db228b1d6bf86ddecb85fa67"
+      "sha256": "c86e091aa4aa94f0bf9e1c876b95375ae307091798832607392da99f77c37e1a"
     },
     {
       "bytes": 9410,
@@ -1008,7 +1029,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "ab6c1714ace76c22fbed59c68be88aa4c040f5d3b0d7789e55610a8bb6580a6d"
+      "sha256": "6b0e9973288387c9e1452150266a9e70ad5ed01d1cbca7885e71f44526415ce3"
     },
     {
       "bytes": 107336,
@@ -1176,28 +1197,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "943d800c18cc725c416fcde4456e24d6340bd73dbb7d31bd774e9a3f61337480"
+      "sha256": "ea8d4ede20f86c942755c3f748af3ef436b7de3943724db661e0a894206e9520"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "a6eece639af3afdacaf5e907a88d7b901ade99984817f2a397f08e3a08869290"
+      "sha256": "c6643df59044b652931f25c229fdbeea82ca52151367b976d3fe08e48e0094d0"
     },
     {
-      "bytes": 257557,
+      "bytes": 257558,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "cf8c29e97d770cb250b65a9d7288067adf6cf05d1ef89bb8d6ba1fbb94aa6f26"
+      "sha256": "b47a1839de86c12eb677d6f620addfb7f20ded79e8d29714fffe6080f4c8213b"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "b04c415bbd9479141184a42d4de01d52c7351ba0e61868801a4eecaaf262bef3"
+      "sha256": "b18152a379b064490bf4984a8d8c7013d388396d6b5bdd4af1ee767c47a22048"
     },
     {
       "bytes": 10417,
@@ -1529,6 +1550,13 @@
       "sha256": "2be2e49f763ea55480b1c06ce4dc8de4d12070306c555515792ad3d69ab4f419"
     },
     {
+      "bytes": 2173,
+      "kind": "operator_doc",
+      "path": "docs/spec-eval-scenario-execution-rehearsal.md",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal guide for controlled sandbox implementation rehearsal authorization.",
+      "sha256": "d458134b5f1de20dbfbf26d83156003df9130de6df1c441be32621f4802ab306"
+    },
+    {
       "bytes": 2206,
       "kind": "operator_doc",
       "path": "docs/delivery-trust-case-harness.md",
@@ -1849,6 +1877,13 @@
       "path": "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
       "purpose": "Real-Adopter Scenario Import JSON Schema.",
       "sha256": "ac1fbc33b56d3758652b08ab0bbac18d073fffcf7ebf4d5a425107c0eccb7d7c"
+    },
+    {
+      "bytes": 1154,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal JSON Schema.",
+      "sha256": "3590a8bf4b05be3686f4e3005fb616c7c13d2fea7451e431e74c83a7bfef15ac"
     },
     {
       "bytes": 5318,
@@ -3545,6 +3580,272 @@
       "sha256": "2a0e563db65c95907d05910f717210a3b54a060f1a12afb2a6c4cab6e94d1f12"
     },
     {
+      "bytes": 2490,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass failure-contract.json fixture.",
+      "sha256": "ba99d20b4f6e67ffd5b8db1ca2745662f184c26b78bb96d4829da999148c1d89"
+    },
+    {
+      "bytes": 1819,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/sandbox-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass sandbox-receipt.json fixture.",
+      "sha256": "370d770417fe3cdea8a28aba1b02df57b3582473a397238bc93ecd2656a46603"
+    },
+    {
+      "bytes": 2496,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/attention-reconstruction-trace.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass attention-reconstruction-trace.json fixture.",
+      "sha256": "c6f64b1d00ec8d5f2a456baf9d2e98dea6aa7e22314ca3b248f46aca9b09f83b"
+    },
+    {
+      "bytes": 1479,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/attention-reconstruction-summary.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass attention-reconstruction-summary.json fixture.",
+      "sha256": "10b2de0753366311356ae78e9b75d8dac8e524d5f3b5b8374acb0137b5726cd0"
+    },
+    {
+      "bytes": 1591,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/dual-loop-gate-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass dual-loop-gate-receipt.json fixture.",
+      "sha256": "b591635ef78c227e5f5de2add2e8969da2f883648512da8d06b9ad872ac0018c"
+    },
+    {
+      "bytes": 2682,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "82ababda262af0e141ced485c2c11a1f358b20d353b3b8f06fc8b73ecdb86256"
+    },
+    {
+      "bytes": 2762,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal pass spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "7095fd0b4f8fa40723402fa6151d0683b5cf28474323a3cd417d72cd403883da"
+    },
+    {
+      "bytes": 2528,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-sandbox/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-sandbox failure-contract.json fixture.",
+      "sha256": "33d2aaa3e2d2471751b2903c87eeff55843b7a2dd843877ad0fa8dc8859cf47d"
+    },
+    {
+      "bytes": 2534,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-sandbox/attention-reconstruction-trace.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-sandbox attention-reconstruction-trace.json fixture.",
+      "sha256": "836c37a6e16f883c4da9790d82e17d5be426a7046db47e744cd02d8b388b802b"
+    },
+    {
+      "bytes": 1536,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-sandbox/attention-reconstruction-summary.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-sandbox attention-reconstruction-summary.json fixture.",
+      "sha256": "5a6734e5f131022238c21b81f65d22662525fcd4bd0dfe8491c7a904a13f6e0b"
+    },
+    {
+      "bytes": 2720,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-sandbox/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-sandbox spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "fca5ca24aeb37be9ed33f248484176ad07b6285739f2b85a312f1a51aa96a349"
+    },
+    {
+      "bytes": 2767,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-sandbox/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-sandbox spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "de4bde72c982ddaeca1e012157cb25614297bfe729639d275c95d4317607f263"
+    },
+    {
+      "bytes": 2554,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-human-reconstruction/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-human-reconstruction failure-contract.json fixture.",
+      "sha256": "cef7fb6f87fe13d0c8df1af18faa74f3234f75b744eaffc193abc4f34c1b3753"
+    },
+    {
+      "bytes": 1915,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-human-reconstruction/sandbox-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-human-reconstruction sandbox-receipt.json fixture.",
+      "sha256": "487748f9964fcadf7b33b3ac95efe359942369160069a4e55534bcbfcb624f61"
+    },
+    {
+      "bytes": 1663,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-human-reconstruction/dual-loop-gate-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-human-reconstruction dual-loop-gate-receipt.json fixture.",
+      "sha256": "7ee55e4813fb6291b9067a67d4eb1c71efd187055685f1a6cea2513cfd8d0ac9"
+    },
+    {
+      "bytes": 2746,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-human-reconstruction/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-human-reconstruction spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "5bd7122f47ce4367f82dea412ca91db4fe7cc196efde4c89fb9d957344f878d9"
+    },
+    {
+      "bytes": 2834,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-missing-human-reconstruction/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-missing-human-reconstruction spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "8f7ade23a6c3f54a19439210506cde27a2d57a033896cac07f8a0cf634830d19"
+    },
+    {
+      "bytes": 2526,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only failure-contract.json fixture.",
+      "sha256": "1dce7a4e174d41f1511e310e52b7b9055887652e9383037d74d7971dbe237322"
+    },
+    {
+      "bytes": 1873,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/sandbox-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only sandbox-receipt.json fixture.",
+      "sha256": "0e8e6b8626b6a657194be6cf24c59a5ca95d2ef6dc025028734579d15631e309"
+    },
+    {
+      "bytes": 2532,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/attention-reconstruction-trace.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only attention-reconstruction-trace.json fixture.",
+      "sha256": "0d97d9beb9912ce7673d30136555da6ddf6a7798d673d9131539f5037894a1ee"
+    },
+    {
+      "bytes": 1533,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/attention-reconstruction-summary.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only attention-reconstruction-summary.json fixture.",
+      "sha256": "2eb3f0acda6265052b6436c84dd9acb5630bb33f8f751dd5dc191c73c9a93ece"
+    },
+    {
+      "bytes": 1627,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/dual-loop-gate-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only dual-loop-gate-receipt.json fixture.",
+      "sha256": "886de36c948c1dbe732399981bd757d6437029533132eae6bb499e81de304f65"
+    },
+    {
+      "bytes": 2759,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "de879b8c986ae658b963786f9b1c31913bd27035d927b64945073e8ba95b0fb6"
+    },
+    {
+      "bytes": 2802,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-ai-review-only/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-ai-review-only spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "71b8e3f064c6488957610e4b99f8e263bcb66c168d7b23b69f1bc982cc701320"
+    },
+    {
+      "bytes": 2544,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action failure-contract.json fixture.",
+      "sha256": "733510507c2d424463affc46e70862b4c55fcd5129cefaf33db76dbd2ecb5906"
+    },
+    {
+      "bytes": 1900,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/sandbox-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action sandbox-receipt.json fixture.",
+      "sha256": "ca637b7ffd46bec4353598c65430a1707bfaf8853deef109b29f145fcb8712b6"
+    },
+    {
+      "bytes": 2550,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/attention-reconstruction-trace.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action attention-reconstruction-trace.json fixture.",
+      "sha256": "f85d0c86940ea035731948efd9c4af916701b3abf377563f2bd932325220b7d7"
+    },
+    {
+      "bytes": 1560,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/attention-reconstruction-summary.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action attention-reconstruction-summary.json fixture.",
+      "sha256": "b240dc73dd765450daafdb3b960c7c82904356f3cbe760bae337e134b10bfe07"
+    },
+    {
+      "bytes": 1645,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/dual-loop-gate-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action dual-loop-gate-receipt.json fixture.",
+      "sha256": "195cafedb132193641c72847b203138736bcde61b53c9fa2a8ba194ef42acb5a"
+    },
+    {
+      "bytes": 2777,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "fe7ecb72ec15b600ac9e6bf7c99275458a5c2324bb298930ca8c5b0bfa7b7a65"
+    },
+    {
+      "bytes": 2820,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-customer-visible-action/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-customer-visible-action spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "c100d2a8a72a4c690e7ea898f6e267a30aa56101328a844a1402c2bd1d5d3688"
+    },
+    {
+      "bytes": 2536,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/failure-contract.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation failure-contract.json fixture.",
+      "sha256": "fcc45a1e615a100e1b7c44208412959ecdd8ce91232ea9079bf115ba923ba6c4"
+    },
+    {
+      "bytes": 1888,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/sandbox-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation sandbox-receipt.json fixture.",
+      "sha256": "bddd0574da06f087207389747a44c85b74d2ff3d2b1895d47bad5193839766a8"
+    },
+    {
+      "bytes": 2542,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/attention-reconstruction-trace.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation attention-reconstruction-trace.json fixture.",
+      "sha256": "d18514d095f67288a5816e535c99b1b4b0e65016aee3abca6084123c4b761421"
+    },
+    {
+      "bytes": 1548,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/attention-reconstruction-summary.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation attention-reconstruction-summary.json fixture.",
+      "sha256": "e8b90d07d0af4d372bf40e2ffc96fba94cfa2d9b167a894bb6296ddcf1c01266"
+    },
+    {
+      "bytes": 1637,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/dual-loop-gate-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation dual-loop-gate-receipt.json fixture.",
+      "sha256": "1c110cec722eeffa6f18e475929b52694ef7ca5a235a91ab2222ed5f738103f2"
+    },
+    {
+      "bytes": 2765,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/spec-eval-acceptance-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation spec-eval-acceptance-receipt.json fixture.",
+      "sha256": "397ace96114b1b816961bf2288787a220277fee2fee0a3c5cd07f44a90a80512"
+    },
+    {
+      "bytes": 2808,
+      "kind": "fixture",
+      "path": "fixtures/spec-eval-scenario-execution-rehearsal/blocked-production-mutation/spec-eval-execution-rehearsal-receipt.json",
+      "purpose": "Spec/Eval Scenario Execution Rehearsal blocked-production-mutation spec-eval-execution-rehearsal-receipt.json fixture.",
+      "sha256": "15faf60182b1ecb8f3ed00ed864426abc605f7809cf46371867d6797aaf9b0b6"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -4063,11 +4364,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 6584,
+      "bytes": 6949,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "760790680d2b61b8fb31e6674e61cba696c69a858e014b0257aeb913d51d58a9"
+      "sha256": "bdca23b337ee0003797f043a753daeaa5f1c6614ebfd610da029ef5d18a249d4"
     },
     {
       "bytes": 7722,
@@ -4900,35 +5201,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "a84552748d0aacdf9e07c71f13e39cdd85b64c36f9afce70b288dadd9423b956"
+      "sha256": "9670783aa7aa244221a47ad0f6ca56e4adfc47649af7b2e2dbd6f58c26eaaae7"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "424517c91f669b73461181bb5a054799f2d9056a212b01527fd150483fc83289"
+      "sha256": "7468fb4324487dc0076561284757e9b3c6873f2c0757ca9b4781a1a2c8f7359a"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "cba72c319c40a45ab9e31b9d0b0f181edeb76d59a85b9d8ac875e6efe23e0f06"
+      "sha256": "beb5c42e0c451e26698ca07d3c9bc0d770b74fb7a04647e8c7abae90d5bde831"
     },
     {
-      "bytes": 145497,
+      "bytes": 145593,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "82d37e1e60f042b3955a3d30253d9fd23da3f6c577ba7dd150db1826e3110f55"
+      "sha256": "3424f121297c6f28cf01c41c9db8faf54596fc3d8051432a9f4dcfd69bf3f69f"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "3402e89f70be10607b4c7084868d67a0730db5016070e0415b7ff5cac5e5641f"
+      "sha256": "ee33e1cffa5446462f6cbeae1fd2b44eb303377e71c898a25af108a286d8177e"
     },
     {
       "bytes": 26355,
@@ -4956,14 +5257,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "c99ae454d1780aa9ecef1a703cee8d7eeee9428c90eda2514c840b259a7779d3"
+      "sha256": "a8dba97f00b5f5c55573cf9cb7deb84605547885f45186afac30658090907162"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "af0c01e9292c421be16e27f71795c0543d4620dac912885a3778f1f2dbe4ba8f"
+      "sha256": "8d6cda38dda7b5b95d576a70f46c4345c337659dde03ac4420ba230a29f58082"
     },
     {
       "bytes": 14544,
@@ -4984,14 +5285,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "6ff2cc7711d8bd53dbcc97846effcf49442f23111670edb800f251ee492e0c2c"
+      "sha256": "69b40e1a0165c5453145eccccf234a183bd8c937cdf126ff6e25035bc2a628fe"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "a229daeeca4922529242ea0054ffd678ae198b7971e5a5f4e0c3823558c6831a"
+      "sha256": "06d1172545b831fcb1649fe9c458f4407d27f20571f85bae6b56256bd94b868f"
     },
     {
       "bytes": 14855,
@@ -5237,6 +5538,20 @@
       "path": "scripts/verify_real_adopter_scenario_import.py",
       "purpose": "Verify real-adopter scenario import fixtures, chain continuity, and privacy boundaries.",
       "sha256": "c580811d517301aca4701b74628050189abad3381103103b938728b4d964c6ee"
+    },
+    {
+      "bytes": 21170,
+      "kind": "verification",
+      "path": "scripts/spec_eval_scenario_execution_rehearsal.py",
+      "purpose": "Build metadata-only Spec/Eval Scenario Execution Rehearsal artifacts.",
+      "sha256": "d7f838e7ccb9c437ae8e476f085e69edb9fea5f87d41fa107e0f799859f0e780"
+    },
+    {
+      "bytes": 12172,
+      "kind": "verification",
+      "path": "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
+      "purpose": "Verify Spec/Eval Scenario Execution Rehearsal fixtures, CLI output, and privacy boundaries.",
+      "sha256": "0a30077e884e9a93af6f9b36fa4174c34c6c104ac3dfb3dbdf2437497da88018"
     },
     {
       "bytes": 1610,
@@ -6716,11 +7031,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 151207,
+      "bytes": 154972,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "720455298d32f594dd813354e3108965ebe96a3043133a5349de46ef1073d376"
+      "sha256": "85f0db11c605043c89652ec116b75cafed1976d12ae2c3cc3bac961d9cff2edf"
     },
     {
       "bytes": 68921,

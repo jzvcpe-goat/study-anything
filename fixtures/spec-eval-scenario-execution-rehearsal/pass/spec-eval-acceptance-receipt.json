@@ -1,0 +1,71 @@
+{
+  "blocked_reasons": [],
+  "case_id": "pass",
+  "claim_boundary": {
+    "current_claim": "The metadata-only spec/eval brief is eligible for sandboxed execution rehearsal.",
+    "not_claimed": [
+      "real implementation completed",
+      "customer-visible reply approved",
+      "production deployment approved",
+      "general model quality certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "accept_spec_eval_execution_candidate",
+  "eval_scenario": {
+    "acceptance_receipt_only": true,
+    "execution_authority_granted": false,
+    "raw_eval_prompt_included": false,
+    "scenario_ref": "real-agent-quality-and-version-drift-gate"
+  },
+  "gates": {
+    "ai_review_only_evidence": false,
+    "customer_visible_action_requested": false,
+    "deterministic_quality_gap_covered": true,
+    "product_loop_run_allowed": true,
+    "production_mutation_requested": false,
+    "proxy_workaround_gate_defined": true,
+    "real_agent_quality_gate_defined": true,
+    "version_drift_gate_defined": true
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_adopter_feedback_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "spec-eval-acceptance-pass",
+  "schema_version": "spec-eval-acceptance-receipt-v1",
+  "source": {
+    "brief_hash": "d80a97b26f769168d051a0d8a65c058836e80615cea1a8a0be3e889d84dfc6c2",
+    "brief_ref": "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+    "product_loop_run_hash": "c714ed37a8594df51a0e54cd102825b3fa4f5de315d007d1ed928678c8e30cc4",
+    "product_loop_run_ref": "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+    "source_type": "real_adopter_scenario_import"
+  },
+  "status": "passed"
+}

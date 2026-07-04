@@ -1,0 +1,79 @@
+{
+  "candidate_artifact_ref": "artifact:spec-eval-brief-metadata-only",
+  "contract_id": "failure-contract-spec-eval-blocked-missing-sandbox",
+  "created_at": "2026-06-28T00:00:00Z",
+  "failure_boundaries": {
+    "allowed_failure_modes": [
+      "fixture_validation_failed",
+      "sandbox_command_failed",
+      "rollback_rehearsal_failed"
+    ],
+    "forbidden_propagations": [
+      "production_mutation",
+      "real_user_exposure",
+      "irreversible_external_effect",
+      "knowledge_base_publication"
+    ],
+    "rollback_required": true,
+    "rollback_strategy_ref": "rollback:metadata-only-revert-plan"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "minimum_reconstructable_units": [
+    {
+      "blocking": true,
+      "kind": "Failure Path",
+      "mru_id": "mru-failure-path",
+      "prompt_ref": "prompt-ref:failure-path"
+    },
+    {
+      "blocking": true,
+      "kind": "Rollback Trigger",
+      "mru_id": "mru-rollback-trigger",
+      "prompt_ref": "prompt-ref:rollback-trigger"
+    },
+    {
+      "blocking": true,
+      "kind": "Acceptance Boundary",
+      "mru_id": "mru-acceptance-boundary",
+      "prompt_ref": "prompt-ref:acceptance-boundary"
+    }
+  ],
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "project_id": "study-anything",
+  "risk": {
+    "budget_level": "medium",
+    "irreversible_effects_allowed": false,
+    "level": "medium",
+    "production_mutation_allowed": false,
+    "real_user_exposure_allowed": false,
+    "score": 0.42
+  },
+  "schema_version": "failure-contract-v1",
+  "task_ref": "task:spec-eval-execution-rehearsal:blocked-missing-sandbox",
+  "verification_commands": [
+    "python3 scripts/verify_failure_sandbox_lite.py --check",
+    "python3 scripts/verify_attention_reconstruction_lite.py --check",
+    "python3 scripts/verify_dual_loop_gate.py --check"
+  ]
+}

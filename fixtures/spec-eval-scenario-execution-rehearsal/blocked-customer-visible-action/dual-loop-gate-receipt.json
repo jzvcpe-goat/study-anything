@@ -1,0 +1,47 @@
+{
+  "checks": {
+    "attention_reconstruction_passed": true,
+    "attention_reconstruction_required": true,
+    "isolation_boundary_valid": true,
+    "neither_loop_dominates": true,
+    "sandbox_contained_failures": true,
+    "sandbox_within_budget": true,
+    "structured_artifact_bridge_only": true
+  },
+  "contract_id": "failure-contract-spec-eval-blocked-customer-visible-action",
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "promote_to_next_sandbox",
+  "gate_id": "dual-loop-gate-spec-eval-blocked-customer-visible-action",
+  "input_refs": {
+    "attention_summary_ref": "attention-summary.json",
+    "failure_contract_ref": "failure-contract.json",
+    "sandbox_receipt_ref": "sandbox-receipt.json"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "next_sandbox_level": "sandbox-1",
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "reasons": [],
+  "schema_version": "dual-loop-gate-receipt-v1",
+  "status": "allowed"
+}

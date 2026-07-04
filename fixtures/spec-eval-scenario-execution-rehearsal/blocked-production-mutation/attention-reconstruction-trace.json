@@ -1,0 +1,75 @@
+{
+  "active_reconstruction_checkpoints": [
+    {
+      "checkpoint_id": "checkpoint-failure-path",
+      "evidence_strength": "strong",
+      "mru_id": "mru-failure-path",
+      "mru_kind": "Failure Path",
+      "response_kind": "selected_boundary_ref",
+      "selected_boundary_ref": "boundary:production-mutation-forbidden",
+      "status": "passed"
+    },
+    {
+      "checkpoint_id": "checkpoint-rollback-trigger",
+      "evidence_strength": "strong",
+      "mru_id": "mru-rollback-trigger",
+      "mru_kind": "Rollback Trigger",
+      "response_kind": "selected_trigger_ref",
+      "selected_trigger_ref": "rollback:metadata-only-revert-plan",
+      "status": "passed"
+    },
+    {
+      "checkpoint_id": "checkpoint-acceptance-boundary",
+      "confirmed_boundary_ref": "risk-budget:medium",
+      "evidence_strength": "strong",
+      "mru_id": "mru-acceptance-boundary",
+      "mru_kind": "Acceptance Boundary",
+      "response_kind": "confirmed_boundary_ref",
+      "status": "passed"
+    }
+  ],
+  "contract_id": "failure-contract-spec-eval-blocked-production-mutation",
+  "created_at": "2026-06-28T00:00:00Z",
+  "data_collection_mode": "active_reconstruction_metadata_only",
+  "environment_id": "attention-reconstruction-lite",
+  "forbidden_streams": {
+    "biometrics": false,
+    "eye_tracking": false,
+    "keystrokes": false,
+    "mouse_coordinates": false,
+    "raw_report_text": false,
+    "screenshots": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "passive_attention": {
+    "blocking": false,
+    "evidence_strength": "weak",
+    "revisit_count_bucket": "1-2",
+    "section_seen_count": 3,
+    "visible_time_bucket": "1-5m"
+  },
+  "privacy": {
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "attention-reconstruction-trace-v1",
+  "trace_id": "attention-trace-spec-eval-blocked-production-mutation"
+}

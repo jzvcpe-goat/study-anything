@@ -135,6 +135,66 @@ PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
     "blocked-production-mutation": ["product-loop-brief-intake-receipt.json"],
     "blocked-skip-to-delivery-harness": ["product-loop-brief-intake-receipt.json"],
 }
+SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_CASES = [
+    "pass",
+    "blocked-missing-sandbox",
+    "blocked-missing-human-reconstruction",
+    "blocked-ai-review-only",
+    "blocked-customer-visible-action",
+    "blocked-production-mutation",
+]
+SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS = {
+    "pass": [
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+    "blocked-missing-sandbox": [
+        "failure-contract.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+    "blocked-missing-human-reconstruction": [
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "dual-loop-gate-receipt.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+    "blocked-ai-review-only": [
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+    "blocked-customer-visible-action": [
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+    "blocked-production-mutation": [
+        "failure-contract.json",
+        "sandbox-receipt.json",
+        "attention-reconstruction-trace.json",
+        "attention-reconstruction-summary.json",
+        "dual-loop-gate-receipt.json",
+        "spec-eval-acceptance-receipt.json",
+        "spec-eval-execution-rehearsal-receipt.json",
+    ],
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -526,6 +586,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-real-adopter-scenario-import.html",
         "generated_asset",
         "Real-Adopter Scenario Import static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.json",
+        "generated_asset",
+        "Spec/Eval Scenario Execution Rehearsal metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.md",
+        "generated_asset",
+        "Spec/Eval Scenario Execution Rehearsal operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-spec-eval-scenario-execution-rehearsal.html",
+        "generated_asset",
+        "Spec/Eval Scenario Execution Rehearsal static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1243,6 +1318,11 @@ FILES: list[tuple[str, str, str]] = [
         "Real-Adopter Scenario Import guide for metadata-only field feedback to Product Loop evidence.",
     ),
     (
+        "docs/spec-eval-scenario-execution-rehearsal.md",
+        "operator_doc",
+        "Spec/Eval Scenario Execution Rehearsal guide for controlled sandbox implementation rehearsal authorization.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1471,6 +1551,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
         "schema",
         "Real-Adopter Scenario Import JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/spec-eval-scenario-execution-rehearsal-v1.schema.json",
+        "schema",
+        "Spec/Eval Scenario Execution Rehearsal JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -1878,6 +1963,15 @@ FILES: list[tuple[str, str, str]] = [
         "fixture",
         "Real-Adopter Scenario Import pass report fixture.",
     ),
+    *[
+        (
+            f"fixtures/spec-eval-scenario-execution-rehearsal/{case_id}/{artifact}",
+            "fixture",
+            f"Spec/Eval Scenario Execution Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_CASES
+        for artifact in SPEC_EVAL_SCENARIO_EXECUTION_REHEARSAL_ARTIFACTS[case_id]
+    ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
         "fixture",
@@ -3087,6 +3181,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_real_adopter_scenario_import.py",
         "verification",
         "Verify real-adopter scenario import fixtures, chain continuity, and privacy boundaries.",
+    ),
+    (
+        "scripts/spec_eval_scenario_execution_rehearsal.py",
+        "verification",
+        "Build metadata-only Spec/Eval Scenario Execution Rehearsal artifacts.",
+    ),
+    (
+        "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
+        "verification",
+        "Verify Spec/Eval Scenario Execution Rehearsal fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

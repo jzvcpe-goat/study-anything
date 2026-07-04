@@ -78,6 +78,11 @@ The completed chain now has these layers:
   produce a concrete spec/eval brief candidate, and prove raw issue text,
   requester identity, AI-review-only evidence, customer-visible action, and
   production mutation are blocked.
+- Spec/Eval Scenario Execution Rehearsal: a Real-Adopter Scenario Import
+  spec/eval brief can authorize only a controlled-failure sandbox
+  implementation rehearsal after Product Loop and Dual Loop gates pass, while
+  missing sandbox evidence, missing human reconstruction, AI-review-only
+  evidence, customer-visible action, and production mutation are blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -119,16 +124,16 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Spec/Eval Scenario Execution Rehearsal:
-consume the Real-Adopter Scenario Import spec/eval brief, create deterministic
-acceptance/eval scenario receipts, and prove that executable implementation work
-can start only inside the controlled failure sandbox with explicit human
-boundary reconstruction and no customer-visible action.
+Sandboxed Patch Proposal Rehearsal:
+consume the allowed Spec/Eval Scenario Execution Rehearsal receipt, create a
+metadata-only patch proposal envelope, and prove that implementation proposals
+can be prepared only as sandbox-local refs with explicit rollback, test, and
+human reconstruction boundaries before any repository mutation, customer-visible
+action, external publication, or production change.
 ```
 
-After that, add stronger real-adopter feedback import/export only if it keeps
-the External Feedback Receipt, Backlog Bridge, Product Owner Prioritization Gate,
-and Product Spec/Eval Authoring Gate boundaries: metadata-only evidence enters
-the Product Loop, while raw customer content, raw spec/eval bodies, automatic
-prioritization, automatic execution, customer-visible action, and production
-mutation stay out of the protocol.
+After that, connect sandbox-local patch proposals to delivery-class-specific
+operator handoff rehearsals only if the protocol still keeps raw customer
+content, raw spec/eval bodies, automatic prioritization, automatic execution,
+repository mutation, customer-visible action, external publication, and
+production mutation out of the trusted path by default.
