@@ -2585,6 +2585,31 @@ FILES: list[tuple[str, str, str]] = [
         "Verify Client Report operator handoff decisions from delivery-class and customer rehearsal evidence.",
     ),
     (
+        "docs/operator-handoff-rehearsal-contract.md",
+        "operator_doc",
+        "Shared Operator Handoff Rehearsal Contract for supported delivery classes.",
+    ),
+    (
+        "platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json",
+        "schema",
+        "Operator Handoff Rehearsal Contract JSON schema.",
+    ),
+    (
+        "platform/generated/study-anything-operator-handoff-rehearsal-contract.json",
+        "generated_asset",
+        "Operator Handoff Rehearsal Contract report.",
+    ),
+    (
+        "platform/generated/study-anything-operator-handoff-rehearsal-contract.md",
+        "generated_asset",
+        "Operator Handoff Rehearsal Contract markdown report.",
+    ),
+    (
+        "scripts/verify_operator_handoff_rehearsal_contract.py",
+        "verification",
+        "Verify the shared operator handoff rehearsal contract across delivery classes.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",
