@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-338-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-340-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -140,6 +140,14 @@ EVIDENCE_REFS = [
     "docs/customer-delivery-rehearsal.md",
     "platform/generated/study-anything-customer-delivery-rehearsal.json",
     "platform/generated/study-anything-customer-delivery-rehearsal.md",
+    "docs/end-to-end-trust-chain-harness.md",
+    "platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json",
+    "platform/generated/study-anything-end-to-end-trust-chain-harness.json",
+    "platform/generated/study-anything-end-to-end-trust-chain-harness.md",
+    "platform/generated/study-anything-end-to-end-trust-chain-harness.html",
+    "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
+    "scripts/end_to_end_trust_chain_harness.py",
+    "scripts/verify_end_to_end_trust_chain_harness.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
