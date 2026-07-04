@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-352-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-354-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -216,6 +216,26 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-external-work-order-pack/blocked-production-mutation/patch-proposal-external-work-order-receipt.json",
     "scripts/patch_proposal_external_work_order_pack.py",
     "scripts/verify_patch_proposal_external_work_order_pack.py",
+    "docs/patch-proposal-external-operator-completion.md",
+    "platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-external-operator-completion.json",
+    "platform/generated/study-anything-patch-proposal-external-operator-completion.md",
+    "platform/generated/study-anything-patch-proposal-external-operator-completion.html",
+    "fixtures/patch-proposal-external-operator-completion/pass/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-work-order-blocked/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-missing-completion-purpose/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-missing-reconstruction/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-raw-patch-return/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-raw-diff-return/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-repository-file-body-return/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-pr-comment-return/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-customer-visible-payload/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-external-publication-payload/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-production-payload/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-secret-return/patch-proposal-external-operator-completion-receipt.json",
+    "fixtures/patch-proposal-external-operator-completion/blocked-model-credential-return/patch-proposal-external-operator-completion-receipt.json",
+    "scripts/patch_proposal_external_operator_completion.py",
+    "scripts/verify_patch_proposal_external_operator_completion.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
