@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-364-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-366-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -352,6 +352,30 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-customer-feedback-intake/blocked-model-credential/patch-proposal-customer-feedback-intake-receipt.json",
     "scripts/patch_proposal_customer_feedback_intake_receipt.py",
     "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
+    "docs/patch-proposal-customer-feedback-backlog-bridge.md",
+    "platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json",
+    "platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.json",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.md",
+    "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.html",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/product-loop-backlog-signal.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/product-loop-backlog-signal.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/product-loop-backlog-signal.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-intake-blocked/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-priority-assignment/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-follow-up/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-source-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-production-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-raw-customer-reply/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-private-customer-data/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-secret/patch-proposal-customer-feedback-backlog-bridge.json",
+    "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-model-credential/patch-proposal-customer-feedback-backlog-bridge.json",
+    "scripts/patch_proposal_customer_feedback_backlog_bridge.py",
+    "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
     "scripts/generate_platform_bundle_manifest.py",
     "scripts/generate_platform_adoption_pack.py",
     "scripts/release_check.sh",

@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-364-v0.3.240-patch-proposal-customer-feedback-intake-lite",
+    "group_id": "release-stack-intake-pr-366-v0.3.242-patch-proposal-feedback-backlog-bridge-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -324,6 +324,30 @@
       "fixtures/patch-proposal-customer-feedback-intake/blocked-model-credential/patch-proposal-customer-feedback-intake-receipt.json",
       "scripts/patch_proposal_customer_feedback_intake_receipt.py",
       "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
+      "docs/patch-proposal-customer-feedback-backlog-bridge.md",
+      "platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json",
+      "platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json",
+      "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.json",
+      "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.md",
+      "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.html",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/product-loop-backlog-signal.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/product-loop-backlog-signal.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/product-loop-backlog-signal.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-intake-blocked/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-priority-assignment/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-follow-up/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-source-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-production-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-raw-customer-reply/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-private-customer-data/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-secret/patch-proposal-customer-feedback-backlog-bridge.json",
+      "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-model-credential/patch-proposal-customer-feedback-backlog-bridge.json",
+      "scripts/patch_proposal_customer_feedback_backlog_bridge.py",
+      "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
       "scripts/generate_platform_bundle_manifest.py",
       "scripts/generate_platform_adoption_pack.py",
       "scripts/release_check.sh"
@@ -349,7 +373,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.240-patch-proposal-customer-feedback-intake-lite",
+        "branch": "codex/v0.3.242-patch-proposal-feedback-backlog-bridge-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -667,14 +691,38 @@
           "fixtures/patch-proposal-customer-feedback-intake/blocked-model-credential/patch-proposal-customer-feedback-intake-receipt.json",
           "scripts/patch_proposal_customer_feedback_intake_receipt.py",
           "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
+          "docs/patch-proposal-customer-feedback-backlog-bridge.md",
+          "platform/schemas/cbb/patch-proposal-customer-feedback-backlog-bridge-v1.schema.json",
+          "platform/schemas/cbb/product-loop-backlog-signal-v1.schema.json",
+          "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.json",
+          "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.md",
+          "platform/generated/study-anything-patch-proposal-customer-feedback-backlog-bridge.html",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-customer-signal/product-loop-backlog-signal.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-operator-signal/product-loop-backlog-signal.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/pass-host-platform-agent-signal/product-loop-backlog-signal.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-intake-blocked/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-priority-assignment/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-automatic-follow-up/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-source-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-production-mutation/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-raw-customer-reply/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-private-customer-data/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-secret/patch-proposal-customer-feedback-backlog-bridge.json",
+          "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-model-credential/patch-proposal-customer-feedback-backlog-bridge.json",
+          "scripts/patch_proposal_customer_feedback_backlog_bridge.py",
+          "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
           "scripts/generate_platform_bundle_manifest.py",
           "scripts/generate_platform_adoption_pack.py",
           "scripts/release_check.sh"
         ],
         "final_state": "MERGED",
-        "merge_commit": "a5ac9fc86288a7dae34e1f4c23f95a01b9c5e2de",
+        "merge_commit": "0efc5f042d50f988625a59ee3f11e95e616f65d8",
         "order": 1,
-        "pr": 364,
+        "pr": 366,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -683,15 +731,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #364: Add patch proposal customer feedback intake receipt.",
+    "summary": "Candidate release stack group for PR #366: Add patch proposal customer feedback backlog bridge.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.240",
-    "represented_pr_count": 126
+    "current_group": "release-stack-promotion-v0.3.242",
+    "represented_pr_count": 127
   },
   "negative_fixtures": [
     {
