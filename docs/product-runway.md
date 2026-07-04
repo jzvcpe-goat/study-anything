@@ -108,6 +108,11 @@ The completed chain now has these layers:
   patch bodies, raw diffs, repository file bodies, PR comments, customer-visible
   payloads, external publication payloads, production payloads, secrets, and
   model credentials remain blocked.
+- Patch Proposal Customer-Handoff Boundary Gate: an accepted external-operator
+  completion receipt can only prepare a metadata-only customer handoff boundary
+  under a separate delivery-class control, while customer-visible drafts, raw
+  patch returns, production payload returns, automatic sending, external
+  publication, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -149,11 +154,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer-Handoff Boundary Gate:
-consume a metadata-only External Operator Completion receipt and prove that
-customer-visible delivery remains blocked unless a separate delivery-class
-scenario, human reconstruction, claim boundary, privacy boundary, and sandbox
-receipt pass. The gate must still reject raw patch bodies, raw diffs, repository
-file bodies, PR comments, customer-visible drafts, external publication payloads,
-production payloads, secrets, and model credentials.
+Patch Proposal Customer Delivery Envelope:
+consume a ready Customer-Handoff Boundary Gate receipt and emit a metadata-only
+customer-delivery envelope for a separate delivery-class control, while still
+blocking customer-visible draft bodies, raw patch/diff/repository file bodies,
+PR comments, external publication payloads, production payloads, secrets, model
+credentials, and automatic sending.
 ```

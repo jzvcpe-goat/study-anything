@@ -1,0 +1,104 @@
+{
+  "blocked_reasons": [
+    "sandbox_receipt_missing"
+  ],
+  "case_id": "blocked-missing-sandbox-receipt",
+  "checks": {
+    "auto_send_requested": false,
+    "claim_boundary_present": true,
+    "completion_accepted": true,
+    "delivery_class_scenario_present": true,
+    "external_publication_requested": false,
+    "human_reconstruction_present": true,
+    "metadata_only_customer_handoff": true,
+    "model_credentials_returned": false,
+    "privacy_boundary_present": true,
+    "production_payload_returned": false,
+    "raw_customer_draft_returned": false,
+    "raw_patch_returned": false,
+    "sandbox_receipt_present": false,
+    "secrets_returned": false
+  },
+  "claim_boundary": {
+    "current_claim": "A ready boundary receipt permits only preparation for a separate customer-handoff control. It does not include or send customer-visible content and does not approve publication, production mutation, correctness, or security.",
+    "not_claimed": [
+      "customer-visible content included",
+      "customer message sent",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_customer_handoff_boundary",
+  "effect_boundary": {
+    "automatic_customer_send_performed": false,
+    "customer_visible_payload_included": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "study_anything_pr_commenting_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "handoff_summary": {
+    "customer_handoff_refs": [],
+    "delivery_class": null,
+    "not_included": [
+      "raw_customer_draft",
+      "raw_patch_body",
+      "raw_diff_body",
+      "repository_file_body",
+      "pr_comment_body",
+      "customer_visible_payload",
+      "external_publication_payload",
+      "production_payload",
+      "secrets",
+      "model_keys"
+    ],
+    "package_type": "metadata_only_customer_handoff_boundary",
+    "purpose": null
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "patch-proposal-customer-handoff-boundary-blocked-missing-sandbox-receipt",
+  "schema_version": "patch-proposal-customer-handoff-boundary-receipt-v1",
+  "source_refs": {
+    "completion_receipt_hash": "0d4cf77d63bf19f59e67899eb765d5cee52b1b0174db5b32fd892d1687b3e80f",
+    "completion_receipt_ref": "fixtures/patch-proposal-external-operator-completion/pass/patch-proposal-external-operator-completion-receipt.json",
+    "completion_report_ref": "platform/generated/study-anything-patch-proposal-external-operator-completion.json"
+  },
+  "status": "blocked"
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal Customer-Handoff Boundary Gate</title>
+<body><pre># Patch Proposal Customer-Handoff Boundary Gate
+
+Metadata-only proof that customer-visible handoff remains blocked unless the boundary gate passes.
+
+- status: `pass`
+- schema: `patch-proposal-customer-handoff-boundary-gate-v1`
+- cases: `14`
+
+## Claim Boundary
+
+The gate proves only customer-handoff preparation may proceed under separate controls. It does not send, publish, deploy, or certify customer-visible content.
+
+Not claimed:
+- customer-visible content included
+- customer message sent
+- external publication approved
+- production change approved
+- truth or security certified
+
+## Cases
+
+- `pass`: `ready` / `allow_customer_handoff_preparation` / reasons: none
+- `blocked-completion-blocked`: `blocked` / `block_customer_handoff_boundary` / reasons: completion_not_accepted
+- `blocked-missing-delivery-class-scenario`: `blocked` / `block_customer_handoff_boundary` / reasons: delivery_class_scenario_missing
+- `blocked-missing-human-reconstruction`: `blocked` / `block_customer_handoff_boundary` / reasons: human_reconstruction_missing
+- `blocked-missing-claim-boundary`: `blocked` / `block_customer_handoff_boundary` / reasons: claim_boundary_missing
+- `blocked-missing-privacy-boundary`: `blocked` / `block_customer_handoff_boundary` / reasons: privacy_boundary_missing
+- `blocked-missing-sandbox-receipt`: `blocked` / `block_customer_handoff_boundary` / reasons: sandbox_receipt_missing
+- `blocked-raw-customer-draft`: `blocked` / `block_customer_handoff_boundary` / reasons: raw_customer_draft_rejected
+- `blocked-raw-patch-return`: `blocked` / `block_customer_handoff_boundary` / reasons: raw_patch_return_rejected
+- `blocked-production-payload`: `blocked` / `block_customer_handoff_boundary` / reasons: production_payload_rejected
+- `blocked-auto-send`: `blocked` / `block_customer_handoff_boundary` / reasons: automatic_customer_send_rejected
+- `blocked-external-publication`: `blocked` / `block_customer_handoff_boundary` / reasons: external_publication_rejected
+- `blocked-secret-return`: `blocked` / `block_customer_handoff_boundary` / reasons: secret_return_rejected
+- `blocked-model-credential-return`: `blocked` / `block_customer_handoff_boundary` / reasons: model_credential_return_rejected
+</pre></body></html>

@@ -273,6 +273,26 @@ PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS = {
     case_id: ["patch-proposal-external-operator-completion-receipt.json"]
     for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_CASES = [
+    "pass",
+    "blocked-completion-blocked",
+    "blocked-missing-delivery-class-scenario",
+    "blocked-missing-human-reconstruction",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-missing-sandbox-receipt",
+    "blocked-raw-customer-draft",
+    "blocked-raw-patch-return",
+    "blocked-production-payload",
+    "blocked-auto-send",
+    "blocked-external-publication",
+    "blocked-secret-return",
+    "blocked-model-credential-return",
+]
+PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_ARTIFACTS = {
+    case_id: ["patch-proposal-customer-handoff-boundary-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -754,6 +774,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-external-operator-completion.html",
         "generated_asset",
         "Patch Proposal External Operator Completion static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer-Handoff Boundary Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer-Handoff Boundary Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer-Handoff Boundary Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1501,6 +1536,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal External Operator Completion guide for metadata-only completion receipts.",
     ),
     (
+        "docs/patch-proposal-customer-handoff-boundary-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer-Handoff Boundary Gate guide for metadata-only customer handoff preparation boundaries.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1759,6 +1799,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json",
         "schema",
         "Patch Proposal External Operator Completion JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer-Handoff Boundary Gate JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2219,6 +2264,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
         for artifact in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-handoff-boundary-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer-Handoff Boundary Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_HANDOFF_BOUNDARY_GATE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3489,6 +3543,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_external_operator_completion.py",
         "verification",
         "Verify Patch Proposal External Operator Completion fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer-Handoff Boundary Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer-Handoff Boundary Gate fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
