@@ -52,6 +52,11 @@ The completed chain now has these layers:
 - External Feedback Backlog Bridge: accepted feedback receipts can create
   metadata-only Product Loop backlog items, while blocked feedback cannot enter
   backlog or skip product-owner prioritization.
+- Product Owner Prioritization Gate: metadata-only backlog items can enter the
+  spec/eval candidate queue only after active Product Owner boundary
+  reconstruction, while automatic priority assignment, automatic execution,
+  customer-visible action, external publication, and production mutation stay
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -100,7 +105,7 @@ customer, mutating production, or reading raw payloads.
 ```
 
 After that, add stronger real-adopter feedback import/export only if it keeps
-the External Feedback Receipt and Backlog Bridge boundary: metadata-only
-evidence enters the Product Loop, while raw customer content, automatic
-prioritization, customer-visible action, and production mutation stay out of the
-protocol.
+the External Feedback Receipt, Backlog Bridge, and Product Owner
+Prioritization Gate boundary: metadata-only evidence enters the Product Loop,
+while raw customer content, automatic prioritization, automatic execution,
+customer-visible action, and production mutation stay out of the protocol.

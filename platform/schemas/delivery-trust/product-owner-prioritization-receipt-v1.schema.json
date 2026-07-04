@@ -1,0 +1,106 @@
+{
+  "$id": "product-owner-prioritization-receipt-v1",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "candidate": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "create_product_spec_eval_candidate",
+        "block_product_owner_prioritization"
+      ],
+      "type": "string"
+    },
+    "prioritization_policy": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "product_owner_reconstruction": {
+      "type": "object"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "requested_transition": {
+      "type": "object"
+    },
+    "runtime": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "product-owner-prioritization-receipt-v1"
+    },
+    "source_backlog_item_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_backlog_item_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_bridge_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_delivery_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_receipt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "queued_for_spec_eval_candidate",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "source_backlog_item_id",
+    "source_backlog_item_hash",
+    "source_bridge_id",
+    "source_receipt_id",
+    "source_delivery_class",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "product_owner_reconstruction",
+    "requested_transition",
+    "prioritization_policy",
+    "candidate",
+    "claim_boundary",
+    "privacy",
+    "runtime"
+  ],
+  "type": "object"
+}
