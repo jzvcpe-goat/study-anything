@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-312-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-314-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -77,8 +77,12 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
     "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
     "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
+    "docs/trust-evidence-acceptance-drill.md",
+    "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
+    "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
     "scripts/generate_trust_evidence_handoff_pack.py",
     "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
+    "scripts/verify_trust_evidence_acceptance_drill.py",
     "platform/generated/study-anything-client-report-delivery-class.json",
     "platform/generated/study-anything-client-report-delivery-class.html",
     "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
