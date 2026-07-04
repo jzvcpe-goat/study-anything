@@ -57,6 +57,11 @@ The completed chain now has these layers:
   reconstruction, while automatic priority assignment, automatic execution,
   customer-visible action, external publication, and production mutation stay
   blocked.
+- Product Spec/Eval Authoring Gate: metadata-only spec/eval candidates can
+  become metadata-only Product Loop Harness briefs only after active
+  authoring-boundary reconstruction, while raw specs, eval prompts, automatic
+  execution, customer-visible action, Delivery Trust Harness skips, and
+  production mutation stay blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -69,6 +74,7 @@ move toward handoff-worthiness without relying on either of these weak patterns:
 Start with product-development loop scenarios:
 
 - product spec/evals present;
+- product spec/evals are represented as metadata-only refs before any execution;
 - developer vision present;
 - external feedback scope stays controlled;
 - AI-review-only evidence is rejected;
@@ -105,7 +111,8 @@ customer, mutating production, or reading raw payloads.
 ```
 
 After that, add stronger real-adopter feedback import/export only if it keeps
-the External Feedback Receipt, Backlog Bridge, and Product Owner
-Prioritization Gate boundary: metadata-only evidence enters the Product Loop,
-while raw customer content, automatic prioritization, automatic execution,
-customer-visible action, and production mutation stay out of the protocol.
+the External Feedback Receipt, Backlog Bridge, Product Owner Prioritization Gate,
+and Product Spec/Eval Authoring Gate boundaries: metadata-only evidence enters
+the Product Loop, while raw customer content, raw spec/eval bodies, automatic
+prioritization, automatic execution, customer-visible action, and production
+mutation stay out of the protocol.

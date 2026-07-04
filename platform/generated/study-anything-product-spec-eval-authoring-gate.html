@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Product Spec/Eval Authoring Gate</title>
+<body>
+<h1>Product Spec/Eval Authoring Gate</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;authored_case_count&quot;: 1,
+  &quot;blocked_case_count&quot;: 7,
+  &quot;brief_count&quot;: 1,
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;brief_created&quot;: true,
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;create_product_spec_eval_brief&quot;,
+      &quot;status&quot;: &quot;authored_spec_eval_brief&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;authoring_reconstruction_missing&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-missing-authoring-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;raw_spec_body_rejected&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-raw-spec-body&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;automatic_execution_rejected&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-automatic-execution&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;requested_next_boundary_not_product_loop_harness_candidate&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-skip-to-delivery-harness&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_action_rejected&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-customer-visible-action&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;source_candidate_invalid&quot;
+      ],
+      &quot;brief_created&quot;: false,
+      &quot;case_id&quot;: &quot;blocked-invalid-candidate-source&quot;,
+      &quot;decision&quot;: &quot;block_product_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A Product Spec/Eval candidate can become a metadata-only spec/eval brief only after active authoring-boundary reconstruction.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;finished product spec&quot;,
+      &quot;finished eval suite&quot;,
+      &quot;automatic priority assignment&quot;,
+      &quot;automatic execution&quot;,
+      &quot;customer-visible reply&quot;,
+      &quot;production mutation&quot;,
+      &quot;external publication&quot;,
+      &quot;readiness for Delivery Trust Harness&quot;,
+      &quot;customer satisfaction guarantee&quot;
+    ]
+  },
+  &quot;gate_rules&quot;: {
+    &quot;allowed_next_boundary&quot;: &quot;product_loop_harness_candidate&quot;,
+    &quot;authoring_reconstruction_required&quot;: true,
+    &quot;automatic_execution_blocked&quot;: true,
+    &quot;customer_visible_action_blocked&quot;: true,
+    &quot;delivery_trust_harness_skip_blocked&quot;: true,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_eval_body_blocked&quot;: true,
+    &quot;raw_spec_body_blocked&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;acceptance_criteria_text_rejected&quot;: &quot;product spec/eval authoring payload contains forbidden fields: [&#x27;acceptance_criteria_text&#x27;]&quot;,
+    &quot;blocked_receipt_with_brief_rejected&quot;: &quot;blocked receipt must not include brief&quot;,
+    &quot;brief_delivery_trust_skip_rejected&quot;: &quot;brief must not skip to delivery trust&quot;,
+    &quot;brief_ready_for_execution_rejected&quot;: &quot;brief must not be executable&quot;,
+    &quot;eval_prompt_rejected&quot;: &quot;product spec/eval authoring payload contains forbidden fields: [&#x27;eval_prompt&#x27;]&quot;,
+    &quot;raw_product_spec_rejected&quot;: &quot;product spec/eval authoring payload contains forbidden fields: [&#x27;raw_product_spec&#x27;]&quot;,
+    &quot;runtime_automatic_execution_rejected&quot;: &quot;receipt runtime.automatic_execution_performed must be False&quot;,
+    &quot;runtime_production_mutation_rejected&quot;: &quot;receipt runtime.production_mutation_performed must be False&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_production_mutation_performed&quot;: false,
+    &quot;backlog_item_metadata_only&quot;: true,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_identity_included&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;eval_dataset_body_included&quot;: false,
+    &quot;eval_prompt_included&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;feedback_hash_only&quot;: true,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;priority_score_included&quot;: false,
+    &quot;product_owner_identity_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_acceptance_criteria_included&quot;: false,
+    &quot;raw_customer_message_included&quot;: false,
+    &quot;raw_eval_body_included&quot;: false,
+    &quot;raw_feedback_text_included&quot;: false,
+    &quot;raw_product_spec_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;requester_identity_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;spec_eval_brief_metadata_only&quot;: true,
+    &quot;spec_eval_candidate_metadata_only&quot;: true,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove metadata-only spec/eval candidates can become bounded spec/eval briefs without creating executable work or raw spec/eval bodies.&quot;,
+  &quot;runtime&quot;: {
+    &quot;automatic_customer_reply_performed&quot;: false,
+    &quot;automatic_execution_performed&quot;: false,
+    &quot;automatic_priority_assignment_performed&quot;: false,
+    &quot;backlog_storage_mutated&quot;: false,
+    &quot;customer_visible_action_performed&quot;: false,
+    &quot;customer_visible_reply_created&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;eval_storage_mutated&quot;: false,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;product_loop_harness_mutated&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;raw_spec_storage_mutated&quot;: false,
+    &quot;spec_eval_storage_mutated&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/product-spec-eval-authoring-receipt-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-spec-eval-authoring-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;1b5f4f81f656b83cd2fea7d3cf4e5da498e1b405c43daedcdb1a1924b1ff985d&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/delivery-trust/product-spec-eval-brief-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;product-spec-eval-brief-v1&quot;,
+      &quot;sha256&quot;: &quot;59173bfd99865d7aa61aab81a2649232584cdbcc8da071ed28d502a357d2523b&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;product-spec-eval-authoring-gate-verification-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

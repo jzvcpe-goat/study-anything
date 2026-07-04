@@ -101,6 +101,16 @@ PRODUCT_OWNER_PRIORITIZATION_GATE_CASES = [
     "blocked-customer-visible-action",
     "blocked-blocked-backlog-source",
 ]
+PRODUCT_SPEC_EVAL_AUTHORING_GATE_CASES = [
+    "pass",
+    "blocked-missing-authoring-reconstruction",
+    "blocked-raw-spec-body",
+    "blocked-automatic-execution",
+    "blocked-skip-to-delivery-harness",
+    "blocked-production-mutation",
+    "blocked-customer-visible-action",
+    "blocked-invalid-candidate-source",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -432,6 +442,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-product-owner-prioritization-gate.html",
         "generated_asset",
         "Product Owner Prioritization Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-product-spec-eval-authoring-gate.json",
+        "generated_asset",
+        "Product Spec/Eval Authoring Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-product-spec-eval-authoring-gate.md",
+        "generated_asset",
+        "Product Spec/Eval Authoring Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-product-spec-eval-authoring-gate.html",
+        "generated_asset",
+        "Product Spec/Eval Authoring Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1174,6 +1199,11 @@ FILES: list[tuple[str, str, str]] = [
         "Product Owner Prioritization Gate spec/eval candidate queue guide.",
     ),
     (
+        "docs/product-spec-eval-authoring-gate.md",
+        "operator_doc",
+        "Product Spec/Eval Authoring Gate metadata-only brief guide.",
+    ),
+    (
         "docs/delivery-class-registry.md",
         "operator_doc",
         "Delivery Class Registry guide for protocol-supported handoff classes.",
@@ -1387,6 +1417,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/delivery-trust/product-spec-eval-candidate-v1.schema.json",
         "schema",
         "Product spec/eval candidate JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/product-spec-eval-authoring-receipt-v1.schema.json",
+        "schema",
+        "Product Spec/Eval Authoring Gate receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/delivery-trust/product-spec-eval-brief-v1.schema.json",
+        "schema",
+        "Product Spec/Eval brief JSON Schema.",
     ),
     (
         "fixtures/dual-loop/pass/failure-contract.json",
@@ -1651,6 +1691,19 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json",
         "fixture",
         "Product Owner Prioritization Gate pass spec/eval candidate fixture.",
+    ),
+    *[
+        (
+            f"fixtures/product-spec-eval-authoring-gate/{case_id}/product-spec-eval-authoring-receipt.json",
+            "fixture",
+            f"Product Spec/Eval Authoring Gate {case_id} fixture.",
+        )
+        for case_id in PRODUCT_SPEC_EVAL_AUTHORING_GATE_CASES
+    ],
+    (
+        "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json",
+        "fixture",
+        "Product Spec/Eval Authoring Gate pass brief fixture.",
     ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2821,6 +2874,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_product_owner_prioritization_gate.py",
         "verification",
         "Verify Product Owner Prioritization Gate spec/eval candidate boundaries.",
+    ),
+    (
+        "scripts/product_spec_eval_authoring_gate.py",
+        "verification",
+        "Build Product Spec/Eval Authoring Gate fixtures from spec/eval candidates.",
+    ),
+    (
+        "scripts/verify_product_spec_eval_authoring_gate.py",
+        "verification",
+        "Verify Product Spec/Eval Authoring Gate metadata-only brief boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

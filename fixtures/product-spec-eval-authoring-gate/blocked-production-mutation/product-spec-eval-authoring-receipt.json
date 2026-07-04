@@ -1,0 +1,116 @@
+{
+  "authoring_policy": {
+    "allowed_next_boundary": "product_loop_harness_candidate",
+    "automatic_execution_allowed": false,
+    "blocked_destinations": [
+      "delivery_trust_harness",
+      "automatic_execution",
+      "customer_visible_reply",
+      "production_mutation",
+      "external_publication"
+    ],
+    "customer_visible_action_allowed": false,
+    "external_publication_allowed": false,
+    "production_mutation_allowed": false,
+    "raw_eval_body_allowed": false,
+    "raw_spec_body_allowed": false
+  },
+  "authoring_reconstruction": {
+    "active_reconstruction_present": true,
+    "passive_attention_only_sufficient": false,
+    "reconstructed_boundaries": [
+      "metadata_only_spec_refs",
+      "metadata_only_eval_refs",
+      "no_raw_spec_body",
+      "no_automatic_execution",
+      "no_customer_visible_action",
+      "no_production_mutation"
+    ]
+  },
+  "blocked_reasons": [
+    "production_mutation_rejected"
+  ],
+  "brief": null,
+  "claim_boundary": {
+    "current_claim": "A Product Spec/Eval candidate can become a metadata-only spec/eval brief only after active authoring-boundary reconstruction.",
+    "not_claimed": [
+      "finished product spec",
+      "finished eval suite",
+      "automatic priority assignment",
+      "automatic execution",
+      "customer-visible reply",
+      "production mutation",
+      "external publication",
+      "readiness for Delivery Trust Harness",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "decision": "block_product_spec_eval_authoring",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "backlog_item_metadata_only": true,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "customer_visible_reply_created": false,
+    "eval_dataset_body_included": false,
+    "eval_prompt_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "feedback_hash_only": true,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "priority_score_included": false,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_customer_message_included": false,
+    "raw_eval_body_included": false,
+    "raw_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "spec_eval_brief_metadata_only": true,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "product-spec-eval-authoring-f798fc2e3919d9ab",
+  "requested_transition": {
+    "automatic_execution_requested": false,
+    "customer_visible_action_requested": false,
+    "from": "product_spec_eval_candidate_queue",
+    "production_mutation_requested": true,
+    "raw_spec_body_requested": false,
+    "to": "product_loop_harness_candidate"
+  },
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "automatic_execution_performed": false,
+    "automatic_priority_assignment_performed": false,
+    "backlog_storage_mutated": false,
+    "customer_visible_action_performed": false,
+    "customer_visible_reply_created": false,
+    "daemon_or_hosted_service_started": false,
+    "eval_storage_mutated": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "product_loop_harness_mutated": false,
+    "production_mutation_performed": false,
+    "raw_spec_storage_mutated": false,
+    "spec_eval_storage_mutated": false
+  },
+  "schema_version": "product-spec-eval-authoring-receipt-v1",
+  "source_backlog_item_id": "product-loop-backlog-8aa2841776640c68",
+  "source_candidate_hash": "f798fc2e3919d9abf01c80b4bc73d2fc3146368ff2bfcb75c64b9aed63d2421f",
+  "source_candidate_id": "product-spec-eval-candidate-7edece41476d9192",
+  "source_delivery_class": "support_response_handoff",
+  "status": "blocked"
+}
