@@ -1,0 +1,31 @@
+{
+  "base_branch": "main",
+  "checks": [
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/28705849270/job/85131241167",
+      "name": "api-tests",
+      "status": "COMPLETED"
+    },
+    {
+      "conclusion": "SUCCESS",
+      "details_url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/28705849270/job/85131241166",
+      "name": "compose-smoke",
+      "status": "COMPLETED"
+    }
+  ],
+  "head_branch": "codex/v0.3.218-real-adopter-scenario-import-lite",
+  "merge_commit": "76c16ed4a27512efd6c532f58004695ce4572fcc",
+  "operator_commands": [
+    "python3 scripts/verify_release_stack_intake_candidate.py --check",
+    "python3 scripts/verify_release_stack_readiness.py",
+    "python3 scripts/verify_release_stack_manifest_fixtures.py --check",
+    "python3 scripts/verify_release_stack_candidate_promotion.py --check"
+  ],
+  "pr_number": 342,
+  "raw_logs_included": false,
+  "schema_version": "release-stack-intake-source-v1",
+  "source": "fixture",
+  "state": "MERGED",
+  "title": "Add real-adopter scenario import harness"
+}

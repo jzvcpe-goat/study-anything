@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-340-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-342-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -148,6 +148,25 @@ EVIDENCE_REFS = [
     "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
     "scripts/end_to_end_trust_chain_harness.py",
     "scripts/verify_end_to_end_trust_chain_harness.py",
+    "docs/real-adopter-scenario-import.md",
+    "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+    "platform/generated/study-anything-real-adopter-scenario-import.json",
+    "platform/generated/study-anything-real-adopter-scenario-import.md",
+    "platform/generated/study-anything-real-adopter-scenario-import.html",
+    "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+    "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+    "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+    "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+    "scripts/real_adopter_scenario_import.py",
+    "scripts/verify_real_adopter_scenario_import.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
