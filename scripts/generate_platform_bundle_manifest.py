@@ -513,6 +513,21 @@ FILES: list[tuple[str, str, str]] = [
         "End-to-End Trust Chain Harness static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-real-adopter-scenario-import.json",
+        "generated_asset",
+        "Real-Adopter Scenario Import metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-real-adopter-scenario-import.md",
+        "generated_asset",
+        "Real-Adopter Scenario Import operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-real-adopter-scenario-import.html",
+        "generated_asset",
+        "Real-Adopter Scenario Import static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-delivery-class-registry.json",
         "generated_asset",
         "Delivery Class Registry metadata-only verification report.",
@@ -1223,6 +1238,11 @@ FILES: list[tuple[str, str, str]] = [
         "End-to-End Trust Chain Harness guide for external feedback to controlled customer handoff rehearsal.",
     ),
     (
+        "docs/real-adopter-scenario-import.md",
+        "operator_doc",
+        "Real-Adopter Scenario Import guide for metadata-only field feedback to Product Loop evidence.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1446,6 +1466,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json",
         "schema",
         "End-to-End Trust Chain Harness JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+        "schema",
+        "Real-Adopter Scenario Import JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -1792,6 +1817,66 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
         "fixture",
         "End-to-End Trust Chain Harness pass report fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass issue summary fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass External Feedback Receipt fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass External Feedback Backlog Bridge fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Loop backlog item fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Owner receipt fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Spec/Eval candidate fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Spec/Eval authoring receipt fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Spec/Eval brief fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Loop Brief Intake receipt fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Loop scenario fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass Product Loop run fixture.",
+    ),
+    (
+        "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+        "fixture",
+        "Real-Adopter Scenario Import pass report fixture.",
     ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -2992,6 +3077,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_end_to_end_trust_chain_harness.py",
         "verification",
         "Verify end-to-end trust-chain fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/real_adopter_scenario_import.py",
+        "verification",
+        "Import bounded real-adopter issue summaries into Product Loop evidence.",
+    ),
+    (
+        "scripts/verify_real_adopter_scenario_import.py",
+        "verification",
+        "Verify real-adopter scenario import fixtures, chain continuity, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

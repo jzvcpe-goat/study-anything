@@ -73,6 +73,11 @@ The completed chain now has these layers:
   Delivery Envelope, and Customer Delivery Rehearsal while automatic customer
   send, raw payload exposure, AI-review-only evidence, external publication,
   and production mutation stay blocked.
+- Real-Adopter Scenario Import: a bounded WorkBuddy/Kimi/Codex/Hermes adoption
+  issue summary can re-enter the Product Loop as metadata-only evidence,
+  produce a concrete spec/eval brief candidate, and prove raw issue text,
+  requester identity, AI-review-only evidence, customer-visible action, and
+  production mutation are blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -114,12 +119,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Real-Adopter Scenario Import:
-create a metadata-only importer for one real WorkBuddy/Kimi/Codex adoption
-issue summary, map it into External Feedback Receipt and Product Loop backlog
-evidence, and prove the chain can prioritize a concrete next spec/eval without
-reading raw customer content, sending anything to a customer, mutating
-production, or relying on AI-review-only evidence.
+Spec/Eval Scenario Execution Rehearsal:
+consume the Real-Adopter Scenario Import spec/eval brief, create deterministic
+acceptance/eval scenario receipts, and prove that executable implementation work
+can start only inside the controlled failure sandbox with explicit human
+boundary reconstruction and no customer-visible action.
 ```
 
 After that, add stronger real-adopter feedback import/export only if it keeps

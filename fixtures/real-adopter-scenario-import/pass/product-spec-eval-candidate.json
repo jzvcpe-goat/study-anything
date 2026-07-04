@@ -1,0 +1,93 @@
+{
+  "blocked_destinations": [
+    "delivery_trust_harness",
+    "automatic_execution",
+    "customer_visible_reply",
+    "production_mutation",
+    "external_publication"
+  ],
+  "candidate_id": "product-spec-eval-candidate-e0aa40565038cf2b",
+  "claim_boundary": {
+    "current_claim": "A Product Loop backlog item can enter the product spec/eval candidate queue only after active Product Owner boundary reconstruction.",
+    "not_claimed": [
+      "automatic priority assignment",
+      "automatic execution",
+      "customer-visible reply",
+      "production mutation",
+      "external publication",
+      "readiness for Delivery Trust Harness",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "destination": "product_spec_eval_candidate_queue",
+  "feedback_ref": {
+    "bounded_tags": [
+      "deterministic_quality_gap",
+      "real_agent_not_invoked",
+      "version_drift",
+      "proxy_env_workaround"
+    ],
+    "feedback_hash": "e27e98e001cbe4e118acc1c6",
+    "feedback_kind": "adoption_friction",
+    "sentiment": "negative",
+    "severity": "high",
+    "source_channel": "workbuddy_field_report"
+  },
+  "loop": "developer_feedback_loop",
+  "next_boundary": "product_spec_eval_authoring",
+  "priority_score_included": false,
+  "priority_state": "unassigned",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "backlog_item_metadata_only": true,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "customer_visible_reply_created": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "feedback_hash_only": true,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "priority_score_included": false,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_customer_message_included": false,
+    "raw_eval_body_included": false,
+    "raw_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "ready_for_delivery_trust_harness": false,
+  "ready_for_execution": false,
+  "requires_product_owner_prioritization_before_execution": true,
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "automatic_execution_performed": false,
+    "automatic_priority_assignment_performed": false,
+    "backlog_storage_mutated": false,
+    "customer_visible_action_performed": false,
+    "customer_visible_reply_created": false,
+    "daemon_or_hosted_service_started": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "spec_eval_storage_mutated": false
+  },
+  "schema_version": "product-spec-eval-candidate-v1",
+  "source_backlog_item_hash": "e0aa40565038cf2b0b9ddde5a8c1c3daa17ce32fb4fa85768725f89ae9dedba1",
+  "source_backlog_item_id": "product-loop-backlog-e87a1d619f098a91",
+  "source_delivery_class": "support_response_handoff",
+  "source_receipt_id": "external-feedback-real-adopter-workbuddy"
+}

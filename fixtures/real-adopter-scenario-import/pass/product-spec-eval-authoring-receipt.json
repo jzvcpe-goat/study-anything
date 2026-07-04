@@ -1,0 +1,260 @@
+{
+  "authoring_policy": {
+    "allowed_next_boundary": "product_loop_harness_candidate",
+    "automatic_execution_allowed": false,
+    "blocked_destinations": [
+      "delivery_trust_harness",
+      "automatic_execution",
+      "customer_visible_reply",
+      "production_mutation",
+      "external_publication"
+    ],
+    "customer_visible_action_allowed": false,
+    "external_publication_allowed": false,
+    "production_mutation_allowed": false,
+    "raw_eval_body_allowed": false,
+    "raw_spec_body_allowed": false
+  },
+  "authoring_reconstruction": {
+    "active_reconstruction_present": true,
+    "passive_attention_only_sufficient": false,
+    "reconstructed_boundaries": [
+      "metadata_only_spec_refs",
+      "metadata_only_eval_refs",
+      "no_raw_spec_body",
+      "no_automatic_execution",
+      "no_customer_visible_action",
+      "no_production_mutation"
+    ]
+  },
+  "blocked_reasons": [],
+  "brief": {
+    "acceptance_criteria_refs": [
+      {
+        "body_included": false,
+        "ref_hash": "c66b77b23d57fe8d",
+        "ref_id": "acceptance-criterion-1"
+      },
+      {
+        "body_included": false,
+        "ref_hash": "4695fbd1a851e039",
+        "ref_id": "acceptance-criterion-2"
+      },
+      {
+        "body_included": false,
+        "ref_hash": "6f117bb52b8c64dc",
+        "ref_id": "acceptance-criterion-3"
+      }
+    ],
+    "blocked_destinations": [
+      "delivery_trust_harness",
+      "automatic_execution",
+      "customer_visible_reply",
+      "production_mutation",
+      "external_publication"
+    ],
+    "brief_id": "product-spec-eval-brief-bb2cf843321811c2",
+    "claim_boundary": {
+      "current_claim": "A Product Spec/Eval candidate can become a metadata-only spec/eval brief only after active authoring-boundary reconstruction.",
+      "not_claimed": [
+        "finished product spec",
+        "finished eval suite",
+        "automatic priority assignment",
+        "automatic execution",
+        "customer-visible reply",
+        "production mutation",
+        "external publication",
+        "readiness for Delivery Trust Harness",
+        "customer satisfaction guarantee"
+      ]
+    },
+    "destination": "product_spec_eval_brief",
+    "eval_plan_refs": [
+      {
+        "body_included": false,
+        "ref_hash": "8a55efbf78543530",
+        "ref_id": "eval-plan-1"
+      },
+      {
+        "body_included": false,
+        "ref_hash": "3cab4b24504bdc86",
+        "ref_id": "eval-plan-2"
+      },
+      {
+        "body_included": false,
+        "ref_hash": "45f253288f62dac8",
+        "ref_id": "eval-plan-3"
+      }
+    ],
+    "feedback_ref": {
+      "bounded_tags": [
+        "deterministic_quality_gap",
+        "real_agent_not_invoked",
+        "version_drift",
+        "proxy_env_workaround"
+      ],
+      "feedback_hash": "e27e98e001cbe4e118acc1c6",
+      "feedback_kind": "adoption_friction",
+      "sentiment": "negative",
+      "severity": "high",
+      "source_channel": "workbuddy_field_report"
+    },
+    "loop": "developer_feedback_loop",
+    "next_boundary": "product_loop_harness_candidate",
+    "privacy": {
+      "automatic_customer_reply_performed": false,
+      "automatic_production_mutation_performed": false,
+      "backlog_item_metadata_only": true,
+      "bearer_tokens_included": false,
+      "biometrics_included": false,
+      "cookies_included": false,
+      "customer_identity_included": false,
+      "customer_visible_reply_created": false,
+      "eval_dataset_body_included": false,
+      "eval_prompt_included": false,
+      "external_publication_performed": false,
+      "eye_tracking_included": false,
+      "feedback_hash_only": true,
+      "keystrokes_included": false,
+      "metadata_only": true,
+      "model_calls_performed": false,
+      "mouse_coordinates_included": false,
+      "priority_score_included": false,
+      "product_owner_identity_included": false,
+      "production_payload_included": false,
+      "raw_acceptance_criteria_included": false,
+      "raw_customer_message_included": false,
+      "raw_eval_body_included": false,
+      "raw_feedback_text_included": false,
+      "raw_product_spec_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "real_secrets_included": false,
+      "requester_identity_included": false,
+      "screenshots_included": false,
+      "signed_urls_included": false,
+      "spec_eval_brief_metadata_only": true,
+      "spec_eval_candidate_metadata_only": true,
+      "user_owned_agent_credentials_included": false
+    },
+    "quality_gates": {
+      "ai_review_only_rejected": true,
+      "claim_boundary_required": true,
+      "human_authoring_reconstruction_required": true,
+      "raw_eval_body_allowed": false,
+      "raw_spec_body_allowed": false,
+      "source_bound": true
+    },
+    "ready_for_delivery_trust_harness": false,
+    "ready_for_execution": false,
+    "ready_for_product_loop_harness": true,
+    "runtime": {
+      "automatic_customer_reply_performed": false,
+      "automatic_execution_performed": false,
+      "automatic_priority_assignment_performed": false,
+      "backlog_storage_mutated": false,
+      "customer_visible_action_performed": false,
+      "customer_visible_reply_created": false,
+      "daemon_or_hosted_service_started": false,
+      "eval_storage_mutated": false,
+      "external_publication_performed": false,
+      "model_calls_performed": false,
+      "product_loop_harness_mutated": false,
+      "production_mutation_performed": false,
+      "raw_spec_storage_mutated": false,
+      "spec_eval_storage_mutated": false
+    },
+    "schema_version": "product-spec-eval-brief-v1",
+    "source_backlog_item_id": "product-loop-backlog-e87a1d619f098a91",
+    "source_candidate_hash": "bb2cf843321811c2ceab8a943d410c29e940598e6796efc4b9b612ccc4b81d04",
+    "source_candidate_id": "product-spec-eval-candidate-e0aa40565038cf2b",
+    "source_delivery_class": "support_response_handoff",
+    "spec_ref": {
+      "problem_statement_hash": "2005eea81b04d03d",
+      "raw_spec_body_included": false,
+      "scope_boundary_hash": "2627408056fa8cbc"
+    }
+  },
+  "claim_boundary": {
+    "current_claim": "A Product Spec/Eval candidate can become a metadata-only spec/eval brief only after active authoring-boundary reconstruction.",
+    "not_claimed": [
+      "finished product spec",
+      "finished eval suite",
+      "automatic priority assignment",
+      "automatic execution",
+      "customer-visible reply",
+      "production mutation",
+      "external publication",
+      "readiness for Delivery Trust Harness",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "decision": "create_product_spec_eval_brief",
+  "privacy": {
+    "automatic_customer_reply_performed": false,
+    "automatic_production_mutation_performed": false,
+    "backlog_item_metadata_only": true,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_identity_included": false,
+    "customer_visible_reply_created": false,
+    "eval_dataset_body_included": false,
+    "eval_prompt_included": false,
+    "external_publication_performed": false,
+    "eye_tracking_included": false,
+    "feedback_hash_only": true,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "priority_score_included": false,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_customer_message_included": false,
+    "raw_eval_body_included": false,
+    "raw_feedback_text_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "requester_identity_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "spec_eval_brief_metadata_only": true,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "product-spec-eval-authoring-bb2cf843321811c2",
+  "requested_transition": {
+    "automatic_execution_requested": false,
+    "customer_visible_action_requested": false,
+    "from": "product_spec_eval_candidate_queue",
+    "production_mutation_requested": false,
+    "raw_spec_body_requested": false,
+    "to": "product_loop_harness_candidate"
+  },
+  "runtime": {
+    "automatic_customer_reply_performed": false,
+    "automatic_execution_performed": false,
+    "automatic_priority_assignment_performed": false,
+    "backlog_storage_mutated": false,
+    "customer_visible_action_performed": false,
+    "customer_visible_reply_created": false,
+    "daemon_or_hosted_service_started": false,
+    "eval_storage_mutated": false,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "product_loop_harness_mutated": false,
+    "production_mutation_performed": false,
+    "raw_spec_storage_mutated": false,
+    "spec_eval_storage_mutated": false
+  },
+  "schema_version": "product-spec-eval-authoring-receipt-v1",
+  "source_backlog_item_id": "product-loop-backlog-e87a1d619f098a91",
+  "source_candidate_hash": "bb2cf843321811c2ceab8a943d410c29e940598e6796efc4b9b612ccc4b81d04",
+  "source_candidate_id": "product-spec-eval-candidate-e0aa40565038cf2b",
+  "source_delivery_class": "support_response_handoff",
+  "status": "authored_spec_eval_brief"
+}
