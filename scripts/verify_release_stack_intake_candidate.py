@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-350-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-352-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -199,6 +199,23 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-acceptance-drill/pass/patch-proposal-acceptance-drill-receipt.json",
     "scripts/patch_proposal_acceptance_drill.py",
     "scripts/verify_patch_proposal_acceptance_drill.py",
+    "docs/patch-proposal-external-work-order-pack.md",
+    "platform/schemas/cbb/patch-proposal-external-work-order-pack-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-external-work-order-pack.json",
+    "platform/generated/study-anything-patch-proposal-external-work-order-pack.md",
+    "platform/generated/study-anything-patch-proposal-external-work-order-pack.html",
+    "fixtures/patch-proposal-external-work-order-pack/pass/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-acceptance-blocked/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-missing-work-order-purpose/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-raw-patch-request/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-apply-patch-request/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-open-pr-request/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-pr-comment-request/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-customer-visible-action/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-external-publication/patch-proposal-external-work-order-receipt.json",
+    "fixtures/patch-proposal-external-work-order-pack/blocked-production-mutation/patch-proposal-external-work-order-receipt.json",
+    "scripts/patch_proposal_external_work_order_pack.py",
+    "scripts/verify_patch_proposal_external_work_order_pack.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
