@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    320: ROOT / "fixtures" / "release-stack" / "pr-320-intake-candidate.json",
+    322: ROOT / "fixtures" / "release-stack" / "pr-322-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.192"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.190"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.194"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.192"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -105,17 +105,21 @@ POST_MERGE_EVIDENCE_REFS = [
     "docs/customer-delivery-rehearsal.md",
     "platform/generated/study-anything-customer-delivery-rehearsal.json",
     "platform/generated/study-anything-customer-delivery-rehearsal.md",
+    "docs/code-review-operator-handoff-rehearsal.md",
+    "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
+    "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
     "scripts/generate_trust_evidence_handoff_pack.py",
     "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
     "scripts/verify_trust_evidence_acceptance_drill.py",
     "scripts/verify_controlled_handoff_runbook.py",
     "scripts/verify_customer_delivery_trust_envelope.py",
     "scripts/verify_customer_delivery_rehearsal.py",
+    "scripts/verify_code_review_operator_handoff_rehearsal.py",
     "platform/generated/study-anything-client-report-delivery-class.json",
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    320: [
+    322: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -169,12 +173,16 @@ PR_EVIDENCE_REFS = {
         "docs/customer-delivery-rehearsal.md",
         "platform/generated/study-anything-customer-delivery-rehearsal.json",
         "platform/generated/study-anything-customer-delivery-rehearsal.md",
+        "docs/code-review-operator-handoff-rehearsal.md",
+        "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
+        "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
         "scripts/generate_trust_evidence_handoff_pack.py",
         "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
         "scripts/verify_trust_evidence_acceptance_drill.py",
         "scripts/verify_controlled_handoff_runbook.py",
         "scripts/verify_customer_delivery_trust_envelope.py",
         "scripts/verify_customer_delivery_rehearsal.py",
+        "scripts/verify_code_review_operator_handoff_rehearsal.py",
         "platform/generated/study-anything-client-report-delivery-class.json",
         "platform/generated/study-anything-client-report-delivery-class.html",
         "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
@@ -306,7 +314,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the customer delivery rehearsal release evidence chain.",
+        "summary": "Completed self-intake for the Code Review operator handoff rehearsal release evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -321,10 +329,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[320],
-                expected_pr=320,
+                pr_sources[322],
+                expected_pr=322,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[320],
+                evidence_refs=PR_EVIDENCE_REFS[322],
                 require_promotion_commands=True,
             ),
         ],
@@ -375,13 +383,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [318]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #318 audit rows.")
+    if previous_prs != [320]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #320 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #320 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #322 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -468,7 +476,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-320-intake-candidate.json",
+            "fixtures/release-stack/pr-322-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -507,7 +515,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-320-source", type=Path, default=PR_SOURCES[320])
+    parser.add_argument("--pr-322-source", type=Path, default=PR_SOURCES[322])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -517,7 +525,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        320: load_json(args.pr_320_source),
+        322: load_json(args.pr_322_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)
