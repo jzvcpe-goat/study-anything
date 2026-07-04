@@ -131,6 +131,12 @@ The completed chain now has these layers:
   outside Study Anything, while customer-visible bodies, PR comment bodies,
   external publication payloads, production payloads, automatic sending, source
   mutation, secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Intake Receipt: a recorded customer delivery
+  outcome can produce only a metadata-only feedback signal receipt for customer,
+  operator, or host platform Agent response signals, while raw customer replies,
+  private customer data, PR comment bodies, external publication payloads,
+  production payloads, automatic follow-up sending, source mutation, secrets,
+  and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -172,10 +178,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Intake Receipt:
-consume a recorded Patch Proposal Customer Delivery Outcome Receipt and emit a
-metadata-only feedback-intake receipt for customer or operator response signals,
-while still blocking raw customer replies, private customer data, PR comment
-bodies, external publication payloads, production payloads, automatic follow-up
-sending, source mutation, secrets, and model credentials.
+Patch Proposal Customer Feedback Backlog Bridge:
+consume an accepted Patch Proposal Customer Feedback Intake Receipt and emit a
+metadata-only Product Loop backlog signal, while still blocking raw customer
+replies, private customer data, automatic priority assignment, automatic
+follow-up sending, source mutation, production mutation, secrets, and model
+credentials.
 ```

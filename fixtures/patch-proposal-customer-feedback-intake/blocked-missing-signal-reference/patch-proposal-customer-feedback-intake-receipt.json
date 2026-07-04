@@ -1,0 +1,102 @@
+{
+  "blocked_reasons": [
+    "feedback_signal_reference_hash_missing"
+  ],
+  "case_id": "blocked-missing-signal-reference",
+  "checks": {
+    "automatic_follow_up_performed": false,
+    "claim_boundary_visible": true,
+    "external_publication_payload_attached": false,
+    "feedback_signal_declared": true,
+    "feedback_signal_happened_outside_study_anything": true,
+    "feedback_signal_reference_hash_present": false,
+    "metadata_only_feedback": true,
+    "model_credential_attached": false,
+    "pr_comment_body_attached": false,
+    "privacy_boundary_visible": true,
+    "private_customer_data_attached": false,
+    "production_payload_attached": false,
+    "raw_customer_reply_attached": false,
+    "secret_attached": false,
+    "source_mutation_performed": false,
+    "source_outcome_recorded": true
+  },
+  "claim_boundary": {
+    "current_claim": "A feedback-intake receipt proves only that a customer/operator response signal was represented as metadata after an external customer delivery outcome. It does not include the response body, identify the customer, follow up automatically, comment on PRs, publish externally, mutate source, mutate production, or certify satisfaction.",
+    "not_claimed": [
+      "raw customer reply included",
+      "private customer data included",
+      "Study Anything sent a follow-up",
+      "Study Anything commented on a PR",
+      "Study Anything published externally",
+      "Study Anything changed source",
+      "Study Anything changed production",
+      "customer satisfaction certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_customer_feedback_intake",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_pr_commenting_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "feedback_intake_id": "patch-proposal-customer-feedback-intake-blocked-missing-signal-reference",
+  "feedback_signal_summary": {
+    "external_system_credentials_included": false,
+    "package_type": "metadata_only_patch_proposal_customer_feedback_intake",
+    "payload_hash_only": true,
+    "pr_comment_body_included": false,
+    "private_customer_data_included": false,
+    "raw_feedback_included": false,
+    "signal_ref_hash": null,
+    "signal_type": "customer_signal"
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "private_customer_data_included": false,
+    "production_payload_included": false,
+    "raw_customer_reply_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "schema_version": "patch-proposal-customer-feedback-intake-receipt-v1",
+  "source_refs": {
+    "delivery_outcome_receipt_hash": "083e9dc6d23b90eeffee14797b2e90a1542c397810b814f75ab5656dd3bb11c6",
+    "delivery_outcome_receipt_ref": "fixtures/patch-proposal-customer-delivery-outcome/pass-human-operator/patch-proposal-customer-delivery-outcome-receipt.json",
+    "delivery_outcome_report_ref": "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.json"
+  },
+  "status": "blocked"
+}

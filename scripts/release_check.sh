@@ -256,6 +256,7 @@ run_dual_loop_verifier_gates() {
   "$python_bin" scripts/verify_patch_proposal_customer_delivery_envelope.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_delivery_rehearsal.py --check
   "$python_bin" scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py --check
+  "$python_bin" scripts/verify_patch_proposal_customer_feedback_intake_receipt.py --check
   "$python_bin" scripts/verify_dual_loop_scenario_harness.py --check
   "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
   "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
@@ -501,6 +502,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_patch_proposal_customer_delivery_envelope.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_delivery_rehearsal.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py --check
+"$python_bin" scripts/verify_patch_proposal_customer_feedback_intake_receipt.py --check
 "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py --check

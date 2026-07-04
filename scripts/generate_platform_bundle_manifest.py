@@ -356,6 +356,29 @@ PATCH_PROPOSAL_CUSTOMER_DELIVERY_OUTCOME_ARTIFACTS = {
     case_id: ["patch-proposal-customer-delivery-outcome-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_OUTCOME_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-outcome-blocked",
+    "blocked-missing-response-signal",
+    "blocked-missing-signal-reference",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-customer-reply",
+    "blocked-private-customer-data",
+    "blocked-pr-comment-body",
+    "blocked-external-publication-payload",
+    "blocked-production-payload",
+    "blocked-automatic-follow-up",
+    "blocked-source-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS = {
+    case_id: ["patch-proposal-customer-feedback-intake-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -897,6 +920,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-delivery-outcome.html",
         "generated_asset",
         "Patch Proposal Customer Delivery Outcome Receipt static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-intake.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Intake Receipt metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-intake.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Intake Receipt operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-intake.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Intake Receipt static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1664,6 +1702,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Delivery Outcome Receipt guide for metadata-only external handoff outcome records.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-intake.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Intake Receipt guide for metadata-only response signal records.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1942,6 +1985,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-delivery-outcome-v1.schema.json",
         "schema",
         "Patch Proposal Customer Delivery Outcome Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-intake-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Intake Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2438,6 +2486,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_DELIVERY_OUTCOME_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_DELIVERY_OUTCOME_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-intake/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Intake Receipt {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_INTAKE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3748,6 +3805,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_delivery_outcome_receipt.py",
         "verification",
         "Verify Patch Proposal Customer Delivery Outcome Receipt fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_intake_receipt.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Intake Receipt artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_intake_receipt.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Intake Receipt fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
