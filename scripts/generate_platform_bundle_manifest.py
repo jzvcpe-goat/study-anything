@@ -209,6 +209,20 @@ SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS = {
     case_id: ["sandboxed-patch-proposal-envelope.json"]
     for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
 }
+PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_CASES = [
+    "pass",
+    "blocked-sandboxed-proposal-blocked",
+    "blocked-missing-operator-confirmation",
+    "blocked-raw-patch-request",
+    "blocked-repository-mutation",
+    "blocked-customer-visible-action",
+    "blocked-external-publication",
+    "blocked-production-mutation",
+]
+PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_ARTIFACTS = {
+    case_id: ["patch-proposal-operator-handoff-bridge-receipt.json"]
+    for case_id in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -630,6 +644,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.html",
         "generated_asset",
         "Sandboxed Patch Proposal Rehearsal static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.json",
+        "generated_asset",
+        "Patch Proposal Operator Handoff Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.md",
+        "generated_asset",
+        "Patch Proposal Operator Handoff Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-operator-handoff-bridge.html",
+        "generated_asset",
+        "Patch Proposal Operator Handoff Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1357,6 +1386,11 @@ FILES: list[tuple[str, str, str]] = [
         "Sandboxed Patch Proposal Rehearsal guide for metadata-only patch proposal envelopes.",
     ),
     (
+        "docs/patch-proposal-operator-handoff-bridge.md",
+        "operator_doc",
+        "Patch Proposal Operator Handoff Bridge guide for metadata-only operator handoff refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1595,6 +1629,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json",
         "schema",
         "Sandboxed Patch Proposal Rehearsal JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+        "schema",
+        "Patch Proposal Operator Handoff Bridge JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2019,6 +2058,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_CASES
         for artifact in SANDBOXED_PATCH_PROPOSAL_REHEARSAL_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-operator-handoff-bridge/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Operator Handoff Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_CASES
+        for artifact in PATCH_PROPOSAL_OPERATOR_HANDOFF_BRIDGE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3249,6 +3297,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
         "verification",
         "Verify Sandboxed Patch Proposal Rehearsal fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_operator_handoff_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Operator Handoff Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+        "verification",
+        "Verify Patch Proposal Operator Handoff Bridge fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

@@ -88,6 +88,11 @@ The completed chain now has these layers:
   rollback and test boundaries, while raw patch bodies, raw diffs, repository
   mutation, customer-visible action, external publication, and production
   mutation are blocked.
+- Patch Proposal Operator Handoff Bridge: a sandbox-local patch proposal
+  envelope can become only a metadata-only operator handoff bridge with active
+  boundary reconstruction and delivery-class handoff refs, while raw patch
+  bodies, raw diffs, automatic execution, repository mutation, customer-visible
+  action, external publication, and production mutation are blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -129,11 +134,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Operator Handoff Bridge:
-consume an allowed Sandboxed Patch Proposal Rehearsal envelope and connect it to
-delivery-class-specific operator handoff rehearsals only as metadata refs, while
-keeping raw customer content, raw spec/eval bodies, raw patch bodies, automatic
-prioritization, automatic execution, repository mutation, customer-visible
-action, external publication, and production mutation out of the trusted path by
-default.
+Patch Proposal Acceptance Drill:
+consume a ready Patch Proposal Operator Handoff Bridge receipt and prove an
+external operator can make an allow/block continuation decision from the
+metadata-only bridge package alone, without reading raw patch bodies, applying
+changes, opening PRs, posting comments, sending customer-visible content,
+publishing externally, or mutating production.
 ```

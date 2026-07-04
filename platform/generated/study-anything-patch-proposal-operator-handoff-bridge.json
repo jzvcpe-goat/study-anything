@@ -1,0 +1,158 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "prepare_operator_handoff_bridge",
+      "next_allowed_action": "prepare_operator_handoff_in_host_agent",
+      "status": "ready"
+    },
+    {
+      "blocked_reasons": [
+        "sandboxed_patch_proposal_not_allowed",
+        "sandbox_local_scope_missing",
+        "test_plan_ref_missing"
+      ],
+      "case_id": "blocked-sandboxed-proposal-blocked",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "operator_active_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-operator-confirmation",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_or_diff_request_rejected"
+      ],
+      "case_id": "blocked-raw-patch-request",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "repository_mutation_rejected"
+      ],
+      "case_id": "blocked-repository-mutation",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_action_rejected"
+      ],
+      "case_id": "blocked-customer-visible-action",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_operator_handoff_bridge",
+      "next_allowed_action": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A ready bridge only packages metadata refs so a host platform operator can decide whether to continue; it does not execute, apply, publish, or send anything.",
+    "not_claimed": [
+      "patch content generated",
+      "repository changed",
+      "PR opened or commented",
+      "customer handoff approved",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "bridge_mode_escalated": "bridge mode must remain metadata_refs_only",
+    "customer_visible_action_performed": "bridge effect boundary must keep customer_visible_action_performed false",
+    "missing_operator_confirmation_on_ready": "ready bridge requires operator_active_confirmations_present",
+    "production_mutation_performed": "bridge effect boundary must keep production_mutation_performed false",
+    "raw_patch_body_injected": "bridge receipt includes forbidden raw fields: ['raw_patch_body']",
+    "repository_mutation_performed": "bridge effect boundary must keep repository_mutation_performed false"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_operator_notes_included": false,
+    "raw_patch_body_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Bridge a sandbox-local patch proposal envelope to operator handoff metadata refs without applying code, opening PRs, commenting, sending customer-visible output, publishing externally, or mutating production.",
+  "quality_gates": {
+    "customer_visible_action_rejected": true,
+    "delivery_class_refs_metadata_only": true,
+    "external_publication_rejected": true,
+    "operator_active_reconstruction_required": true,
+    "production_mutation_rejected": true,
+    "raw_patch_or_diff_request_rejected": true,
+    "repository_mutation_rejected": true,
+    "sandboxed_patch_proposal_allowed_required": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json",
+      "schema_version": "patch-proposal-operator-handoff-bridge-v1",
+      "sha256": "17a8e051afa7d69fd38e285b1bb763fcbcf42f03a407eaf3ce6e67a6ff7a0253"
+    }
+  ],
+  "schema_version": "patch-proposal-operator-handoff-bridge-v1",
+  "source_chain": {
+    "allowed_sandboxed_patch_proposal_envelope": "fixtures/sandboxed-patch-proposal-rehearsal/pass/sandboxed-patch-proposal-envelope.json",
+    "delivery_class_operator_handoff_reports": [
+      "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
+      "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
+      "platform/generated/study-anything-support-response-operator-handoff-rehearsal.json"
+    ],
+    "sandboxed_patch_proposal_rehearsal_report": "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.json"
+  },
+  "status": "pass"
+}
