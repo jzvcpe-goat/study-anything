@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-344-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-346-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -175,6 +175,14 @@ EVIDENCE_REFS = [
     "fixtures/spec-eval-scenario-execution-rehearsal/pass/spec-eval-execution-rehearsal-receipt.json",
     "scripts/spec_eval_scenario_execution_rehearsal.py",
     "scripts/verify_spec_eval_scenario_execution_rehearsal.py",
+    "docs/sandboxed-patch-proposal-rehearsal.md",
+    "platform/schemas/cbb/sandboxed-patch-proposal-rehearsal-v1.schema.json",
+    "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.json",
+    "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.md",
+    "platform/generated/study-anything-sandboxed-patch-proposal-rehearsal.html",
+    "fixtures/sandboxed-patch-proposal-rehearsal/pass/sandboxed-patch-proposal-envelope.json",
+    "scripts/sandboxed_patch_proposal_rehearsal.py",
+    "scripts/verify_sandboxed_patch_proposal_rehearsal.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
