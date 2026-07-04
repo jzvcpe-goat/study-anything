@@ -3,22 +3,22 @@
   "negative_fixtures": [
     {
       "case_id": "already_represented_pr",
-      "error": "promoted current group does not match the expected #306 candidate group.",
+      "error": "promoted current group does not match the expected #308 candidate group.",
       "status": "rejected"
     },
     {
       "case_id": "missing_merge_commit",
-      "error": "release-stack-promotion-v0.3.178.stack[1].merge_commit must be a 40-character lowercase SHA.",
+      "error": "release-stack-promotion-v0.3.180.stack[1].merge_commit must be a 40-character lowercase SHA.",
       "status": "rejected"
     },
     {
       "case_id": "failed_required_check",
-      "error": "release-stack-promotion-v0.3.178.stack[1].required_checks.api-tests must be pass.",
+      "error": "release-stack-promotion-v0.3.180.stack[1].required_checks.api-tests must be pass.",
       "status": "rejected"
     },
     {
       "case_id": "missing_required_check",
-      "error": "release-stack-promotion-v0.3.178.stack[1].required_checks.compose-smoke must be pass.",
+      "error": "release-stack-promotion-v0.3.180.stack[1].required_checks.compose-smoke must be pass.",
       "status": "rejected"
     },
     {
@@ -51,26 +51,26 @@
     "source_mutation_performed": false
   },
   "promotion": {
-    "current_group": "release-stack-promotion-v0.3.178",
-    "previous_current_group": "release-stack-promotion-v0.3.176",
+    "current_group": "release-stack-promotion-v0.3.180",
+    "previous_current_group": "release-stack-promotion-v0.3.178",
     "previous_current_group_archived": true,
     "promoted_prs": [
-      306
+      308
     ],
     "top_level_stack_mirrors_current": true
   },
   "readiness": {
-    "archived_group_count": 50,
-    "current_group": "release-stack-promotion-v0.3.178",
+    "archived_group_count": 51,
+    "current_group": "release-stack-promotion-v0.3.180",
     "schema_version": "release-stack-readiness-v1",
     "stack_prs": [
-      306
+      308
     ],
     "status": "pass"
   },
   "schema_version": "release-stack-candidate-promotion-v1",
   "source_reports": [
-    "fixtures/release-stack/pr-306-intake-candidate.json",
+    "fixtures/release-stack/pr-308-intake-candidate.json",
     "platform/release-stack.json"
   ],
   "status": "pass",

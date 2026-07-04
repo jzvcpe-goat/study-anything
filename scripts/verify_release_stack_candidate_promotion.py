@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    306: ROOT / "fixtures" / "release-stack" / "pr-306-intake-candidate.json",
+    308: ROOT / "fixtures" / "release-stack" / "pr-308-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.178"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.176"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.180"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.178"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -70,11 +70,16 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-trust-scenario-catalog.html",
     "docs/trust-scenario-catalog.md",
     "scripts/verify_trust_scenario_catalog.py",
+    "platform/generated/study-anything-trust-scenario-decision-gate.json",
+    "platform/generated/study-anything-trust-scenario-decision-gate.html",
+    "docs/trust-scenario-decision-gate.md",
+    "scripts/trust_scenario_decision_gate.py",
+    "scripts/verify_trust_scenario_decision_gate.py",
     "platform/generated/study-anything-client-report-delivery-class.json",
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    306: [
+    308: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -93,6 +98,11 @@ PR_EVIDENCE_REFS = {
         "platform/generated/study-anything-trust-scenario-catalog.html",
         "docs/trust-scenario-catalog.md",
         "scripts/verify_trust_scenario_catalog.py",
+        "platform/generated/study-anything-trust-scenario-decision-gate.json",
+        "platform/generated/study-anything-trust-scenario-decision-gate.html",
+        "docs/trust-scenario-decision-gate.md",
+        "scripts/trust_scenario_decision_gate.py",
+        "scripts/verify_trust_scenario_decision_gate.py",
         "platform/generated/study-anything-client-report-delivery-class.json",
         "platform/generated/study-anything-client-report-delivery-class.html",
         "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
@@ -224,7 +234,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the Trust Scenario Catalog release evidence chain.",
+        "summary": "Completed self-intake for the Trust Scenario Decision Gate release evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -239,10 +249,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[306],
-                expected_pr=306,
+                pr_sources[308],
+                expected_pr=308,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[306],
+                evidence_refs=PR_EVIDENCE_REFS[308],
                 require_promotion_commands=True,
             ),
         ],
@@ -293,13 +303,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [304]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #304 audit rows.")
+    if previous_prs != [306]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #306 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #306 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #308 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -386,7 +396,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-306-intake-candidate.json",
+            "fixtures/release-stack/pr-308-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -425,7 +435,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-306-source", type=Path, default=PR_SOURCES[306])
+    parser.add_argument("--pr-308-source", type=Path, default=PR_SOURCES[308])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -435,7 +445,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        306: load_json(args.pr_306_source),
+        308: load_json(args.pr_308_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)

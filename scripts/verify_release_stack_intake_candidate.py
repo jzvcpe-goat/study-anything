@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-306-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-308-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -54,6 +54,11 @@ EVIDENCE_REFS = [
     "platform/generated/study-anything-trust-scenario-catalog.html",
     "docs/trust-scenario-catalog.md",
     "scripts/verify_trust_scenario_catalog.py",
+    "platform/generated/study-anything-trust-scenario-decision-gate.json",
+    "platform/generated/study-anything-trust-scenario-decision-gate.html",
+    "docs/trust-scenario-decision-gate.md",
+    "scripts/trust_scenario_decision_gate.py",
+    "scripts/verify_trust_scenario_decision_gate.py",
     "platform/generated/study-anything-client-report-delivery-class.json",
     "platform/generated/study-anything-client-report-delivery-class.html",
     "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
