@@ -103,6 +103,11 @@ The completed chain now has these layers:
   raw patch bodies, raw diffs, automatic application, PR opening/commenting,
   customer-visible action, external publication, and production mutation remain
   blocked inside this system.
+- Patch Proposal External Operator Completion: a completed host-operator work
+  summary can re-enter only as a metadata-level completion receipt, while raw
+  patch bodies, raw diffs, repository file bodies, PR comments, customer-visible
+  payloads, external publication payloads, production payloads, secrets, and
+  model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -144,10 +149,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal External Operator Completion Receipt:
-consume a completed host-operator work-order summary and prove only the
-metadata-level completion boundary can re-enter Study Anything / Cognitive
-Black Box, while raw patch bodies, raw diffs, repository file bodies, PR
-comments, customer-visible content, external publication payloads, production
-payloads, secrets, and model credentials remain blocked.
+Patch Proposal Customer-Handoff Boundary Gate:
+consume a metadata-only External Operator Completion receipt and prove that
+customer-visible delivery remains blocked unless a separate delivery-class
+scenario, human reconstruction, claim boundary, privacy boundary, and sandbox
+receipt pass. The gate must still reject raw patch bodies, raw diffs, repository
+file bodies, PR comments, customer-visible drafts, external publication payloads,
+production payloads, secrets, and model credentials.
 ```

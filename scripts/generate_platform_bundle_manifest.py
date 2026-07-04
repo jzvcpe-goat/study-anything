@@ -254,6 +254,25 @@ PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_ARTIFACTS = {
     case_id: ["patch-proposal-external-work-order-receipt.json"]
     for case_id in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_CASES
 }
+PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES = [
+    "pass",
+    "blocked-work-order-blocked",
+    "blocked-missing-completion-purpose",
+    "blocked-missing-reconstruction",
+    "blocked-raw-patch-return",
+    "blocked-raw-diff-return",
+    "blocked-repository-file-body-return",
+    "blocked-pr-comment-return",
+    "blocked-customer-visible-payload",
+    "blocked-external-publication-payload",
+    "blocked-production-payload",
+    "blocked-secret-return",
+    "blocked-model-credential-return",
+]
+PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS = {
+    case_id: ["patch-proposal-external-operator-completion-receipt.json"]
+    for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -720,6 +739,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-external-work-order-pack.html",
         "generated_asset",
         "Patch Proposal External Work Order Pack static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-external-operator-completion.json",
+        "generated_asset",
+        "Patch Proposal External Operator Completion metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-external-operator-completion.md",
+        "generated_asset",
+        "Patch Proposal External Operator Completion operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-external-operator-completion.html",
+        "generated_asset",
+        "Patch Proposal External Operator Completion static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1462,6 +1496,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal External Work Order Pack guide for metadata-only host operator work-order packages.",
     ),
     (
+        "docs/patch-proposal-external-operator-completion.md",
+        "operator_doc",
+        "Patch Proposal External Operator Completion guide for metadata-only completion receipts.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1715,6 +1754,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-external-work-order-pack-v1.schema.json",
         "schema",
         "Patch Proposal External Work Order Pack JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json",
+        "schema",
+        "Patch Proposal External Operator Completion JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2166,6 +2210,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_CASES
         for artifact in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-external-operator-completion/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal External Operator Completion {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
+        for artifact in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -3426,6 +3479,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_external_work_order_pack.py",
         "verification",
         "Verify Patch Proposal External Work Order Pack fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_external_operator_completion.py",
+        "verification",
+        "Build metadata-only Patch Proposal External Operator Completion artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_external_operator_completion.py",
+        "verification",
+        "Verify Patch Proposal External Operator Completion fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
