@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    310: ROOT / "fixtures" / "release-stack" / "pr-310-intake-candidate.json",
+    312: ROOT / "fixtures" / "release-stack" / "pr-312-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.182"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.180"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.184"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.182"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -75,6 +75,18 @@ POST_MERGE_EVIDENCE_REFS = [
     "docs/trust-scenario-decision-gate.md",
     "scripts/trust_scenario_decision_gate.py",
     "scripts/verify_trust_scenario_decision_gate.py",
+    "docs/code-review-delivery-class.md",
+    "docs/client-report-delivery-class.md",
+    "platform/generated/study-anything-code-review-delivery-class.json",
+    "platform/generated/study-anything-code-review-delivery-class.html",
+    "platform/generated/study-anything-client-report-delivery-class.json",
+    "platform/generated/study-anything-client-report-delivery-class.html",
+    "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+    "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+    "scripts/code_review_delivery_class_handoff.py",
+    "scripts/verify_code_review_delivery_class_handoff.py",
+    "scripts/client_report_delivery_class_handoff.py",
+    "scripts/verify_client_report_delivery_class_handoff.py",
     "docs/trust-evidence-handoff-pack.md",
     "platform/generated/study-anything-trust-evidence-handoff-pack.json",
     "platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -87,7 +99,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    310: [
+    312: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -111,6 +123,18 @@ PR_EVIDENCE_REFS = {
         "docs/trust-scenario-decision-gate.md",
         "scripts/trust_scenario_decision_gate.py",
         "scripts/verify_trust_scenario_decision_gate.py",
+        "docs/code-review-delivery-class.md",
+        "docs/client-report-delivery-class.md",
+        "platform/generated/study-anything-code-review-delivery-class.json",
+        "platform/generated/study-anything-code-review-delivery-class.html",
+        "platform/generated/study-anything-client-report-delivery-class.json",
+        "platform/generated/study-anything-client-report-delivery-class.html",
+        "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+        "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+        "scripts/code_review_delivery_class_handoff.py",
+        "scripts/verify_code_review_delivery_class_handoff.py",
+        "scripts/client_report_delivery_class_handoff.py",
+        "scripts/verify_client_report_delivery_class_handoff.py",
         "docs/trust-evidence-handoff-pack.md",
         "platform/generated/study-anything-trust-evidence-handoff-pack.json",
         "platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -250,7 +274,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the Trust Evidence Handoff Pack release evidence chain.",
+        "summary": "Completed self-intake for the delivery-class Trust Evidence Handoff Pack release evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -265,10 +289,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[310],
-                expected_pr=310,
+                pr_sources[312],
+                expected_pr=312,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[310],
+                evidence_refs=PR_EVIDENCE_REFS[312],
                 require_promotion_commands=True,
             ),
         ],
@@ -319,13 +343,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [308]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #308 audit rows.")
+    if previous_prs != [310]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #310 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #310 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #312 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -412,7 +436,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-310-intake-candidate.json",
+            "fixtures/release-stack/pr-312-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -451,7 +475,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-310-source", type=Path, default=PR_SOURCES[310])
+    parser.add_argument("--pr-312-source", type=Path, default=PR_SOURCES[312])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -461,7 +485,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        310: load_json(args.pr_310_source),
+        312: load_json(args.pr_312_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)

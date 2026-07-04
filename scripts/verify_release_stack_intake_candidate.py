@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-310-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-312-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -59,6 +59,18 @@ EVIDENCE_REFS = [
     "docs/trust-scenario-decision-gate.md",
     "scripts/trust_scenario_decision_gate.py",
     "scripts/verify_trust_scenario_decision_gate.py",
+    "docs/code-review-delivery-class.md",
+    "docs/client-report-delivery-class.md",
+    "platform/generated/study-anything-code-review-delivery-class.json",
+    "platform/generated/study-anything-code-review-delivery-class.html",
+    "platform/generated/study-anything-client-report-delivery-class.json",
+    "platform/generated/study-anything-client-report-delivery-class.html",
+    "platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",
+    "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json",
+    "scripts/code_review_delivery_class_handoff.py",
+    "scripts/verify_code_review_delivery_class_handoff.py",
+    "scripts/client_report_delivery_class_handoff.py",
+    "scripts/verify_client_report_delivery_class_handoff.py",
     "docs/trust-evidence-handoff-pack.md",
     "platform/generated/study-anything-trust-evidence-handoff-pack.json",
     "platform/generated/study-anything-trust-evidence-handoff-pack.md",
