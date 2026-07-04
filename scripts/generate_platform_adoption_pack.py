@@ -255,6 +255,25 @@ PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_ARTIFACTS = {
     case_id: ["patch-proposal-external-work-order-receipt.json"]
     for case_id in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_CASES
 }
+PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES = [
+    "pass",
+    "blocked-work-order-blocked",
+    "blocked-missing-completion-purpose",
+    "blocked-missing-reconstruction",
+    "blocked-raw-patch-return",
+    "blocked-raw-diff-return",
+    "blocked-repository-file-body-return",
+    "blocked-pr-comment-return",
+    "blocked-customer-visible-payload",
+    "blocked-external-publication-payload",
+    "blocked-production-payload",
+    "blocked-secret-return",
+    "blocked-model-credential-return",
+]
+PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS = {
+    case_id: ["patch-proposal-external-operator-completion-receipt.json"]
+    for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -375,6 +394,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/patch-proposal-operator-handoff-bridge.md", "operator_doc", "Patch Proposal Operator Handoff Bridge guide for metadata-only operator handoff refs."),
     ("docs/patch-proposal-acceptance-drill.md", "operator_doc", "Patch Proposal Acceptance Drill guide for metadata-only external operator continuation decisions."),
     ("docs/patch-proposal-external-work-order-pack.md", "operator_doc", "Patch Proposal External Work Order Pack guide for metadata-only host operator work-order packages."),
+    ("docs/patch-proposal-external-operator-completion.md", "operator_doc", "Patch Proposal External Operator Completion guide for metadata-only completion receipts."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -449,6 +469,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/patch-proposal-operator-handoff-bridge-v1.schema.json", "schema", "Patch Proposal Operator Handoff Bridge JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json", "schema", "Patch Proposal Acceptance Drill JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-external-work-order-pack-v1.schema.json", "schema", "Patch Proposal External Work Order Pack JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json", "schema", "Patch Proposal External Operator Completion JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -536,6 +557,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-patch-proposal-external-work-order-pack.json", "submission_report", "Patch Proposal External Work Order Pack metadata-only verification report."),
     ("platform/generated/study-anything-patch-proposal-external-work-order-pack.md", "submission_report", "Patch Proposal External Work Order Pack operator summary."),
     ("platform/generated/study-anything-patch-proposal-external-work-order-pack.html", "submission_report", "Patch Proposal External Work Order Pack static HTML verification report."),
+    ("platform/generated/study-anything-patch-proposal-external-operator-completion.json", "submission_report", "Patch Proposal External Operator Completion metadata-only verification report."),
+    ("platform/generated/study-anything-patch-proposal-external-operator-completion.md", "submission_report", "Patch Proposal External Operator Completion operator summary."),
+    ("platform/generated/study-anything-patch-proposal-external-operator-completion.html", "submission_report", "Patch Proposal External Operator Completion static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -1045,6 +1069,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_CASES
         for artifact in PATCH_PROPOSAL_EXTERNAL_WORK_ORDER_PACK_ARTIFACTS[case_id]
     ],
+    *[
+        (
+            f"fixtures/patch-proposal-external-operator-completion/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Patch Proposal External Operator Completion {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_CASES
+        for artifact in PATCH_PROPOSAL_EXTERNAL_OPERATOR_COMPLETION_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -1259,6 +1292,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_patch_proposal_acceptance_drill.py", "verification", "Verify Patch Proposal Acceptance Drill fixtures, CLI output, and privacy boundaries."),
     ("scripts/patch_proposal_external_work_order_pack.py", "verification", "Build metadata-only Patch Proposal External Work Order Pack artifacts."),
     ("scripts/verify_patch_proposal_external_work_order_pack.py", "verification", "Verify Patch Proposal External Work Order Pack fixtures, CLI output, and privacy boundaries."),
+    ("scripts/patch_proposal_external_operator_completion.py", "verification", "Build metadata-only Patch Proposal External Operator Completion artifacts."),
+    ("scripts/verify_patch_proposal_external_operator_completion.py", "verification", "Verify Patch Proposal External Operator Completion fixtures, CLI output, and privacy boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),

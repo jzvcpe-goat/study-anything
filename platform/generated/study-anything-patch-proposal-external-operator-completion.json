@@ -1,0 +1,218 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "completion_purpose": "record_external_operator_completion_without_raw_payloads",
+      "decision": "accept_metadata_only_external_operator_completion",
+      "status": "accepted"
+    },
+    {
+      "blocked_reasons": [
+        "work_order_not_ready"
+      ],
+      "case_id": "blocked-work-order-blocked",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "completion_purpose_missing"
+      ],
+      "case_id": "blocked-missing-completion-purpose",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "operator_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-reconstruction",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_return_rejected"
+      ],
+      "case_id": "blocked-raw-patch-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_diff_return_rejected"
+      ],
+      "case_id": "blocked-raw-diff-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "repository_file_body_return_rejected"
+      ],
+      "case_id": "blocked-repository-file-body-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "pr_comment_payload_return_rejected"
+      ],
+      "case_id": "blocked-pr-comment-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_payload_return_rejected"
+      ],
+      "case_id": "blocked-customer-visible-payload",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_payload_return_rejected"
+      ],
+      "case_id": "blocked-external-publication-payload",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_payload_return_rejected"
+      ],
+      "case_id": "blocked-production-payload",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_return_rejected"
+      ],
+      "case_id": "blocked-secret-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_return_rejected"
+      ],
+      "case_id": "blocked-model-credential-return",
+      "completion_purpose": null,
+      "decision": "block_external_operator_completion",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The receipt proves only metadata-level completion evidence may re-enter the system. It does not approve customer delivery, public publication, production mutation, or correctness.",
+    "not_claimed": [
+      "patch content imported",
+      "repository file body imported",
+      "PR comment imported",
+      "customer handoff approved",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "completion_matrix": {
+    "accepted_completions": 1,
+    "blocked_completions": 12,
+    "customer_visible_payload_return_rejected": true,
+    "external_publication_payload_return_rejected": true,
+    "missing_completion_purpose_rejected": true,
+    "missing_reconstruction_rejected": true,
+    "model_credential_return_rejected": true,
+    "pr_comment_payload_return_rejected": true,
+    "production_payload_return_rejected": true,
+    "raw_diff_return_rejected": true,
+    "raw_patch_return_rejected": true,
+    "repository_file_body_return_rejected": true,
+    "secret_return_rejected": true,
+    "total_cases": 13,
+    "work_order_not_ready_rejected": true
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "completion_package_type_escalated": "completion package_type must remain metadata-only",
+    "missing_work_order_ready_on_accepted": "accepted completion missing check: work_order_ready",
+    "model_credentials_returned": "accepted completion checks.model_credentials_returned must remain false",
+    "raw_completion_body_injected": "patch-proposal-external-operator-completion-receipt-v1 includes forbidden raw fields: ['$.raw_completion_body']",
+    "raw_patch_flag_returned": "accepted completion checks.raw_patch_returned must remain false",
+    "repository_mutation_by_study_anything": "effect_boundary.study_anything_repository_mutation_performed must remain false"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove a host-operator completion can re-enter Study Anything / Cognitive Black Box only as metadata-level evidence.",
+  "quality_gates": {
+    "customer_visible_payloads_rejected": true,
+    "external_publication_payloads_rejected": true,
+    "metadata_only_completion_required": true,
+    "operator_reconstruction_required": true,
+    "pr_comment_payloads_rejected": true,
+    "production_payloads_rejected": true,
+    "raw_patch_or_diff_rejected": true,
+    "ready_work_order_required": true,
+    "repository_file_bodies_rejected": true,
+    "secrets_and_model_credentials_rejected": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json",
+      "schema_version": "patch-proposal-external-operator-completion-v1",
+      "sha256": "897d76bc939d1112bcd29575960e4abcf89018f106394a29fc9564c900e063e2"
+    }
+  ],
+  "schema_version": "patch-proposal-external-operator-completion-v1",
+  "source_chain": {
+    "ready_work_order_receipt": "fixtures/patch-proposal-external-work-order-pack/pass/patch-proposal-external-work-order-receipt.json",
+    "work_order_report": "platform/generated/study-anything-patch-proposal-external-work-order-pack.json"
+  },
+  "status": "pass"
+}

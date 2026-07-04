@@ -1,0 +1,125 @@
+{
+  "blocked_reasons": [
+    "repository_file_body_return_rejected"
+  ],
+  "case_id": "blocked-repository-file-body-return",
+  "checks": {
+    "completion_purpose_present": true,
+    "customer_visible_payload_returned": false,
+    "external_publication_payload_returned": false,
+    "metadata_only_completion": true,
+    "model_credentials_returned": false,
+    "operator_reconstruction_present": true,
+    "pr_comment_payload_returned": false,
+    "production_payload_returned": false,
+    "raw_diff_returned": false,
+    "raw_patch_returned": false,
+    "repository_file_body_returned": true,
+    "secrets_returned": false,
+    "work_order_ready": true
+  },
+  "claim_boundary": {
+    "current_claim": "An accepted completion receipt records only metadata-level evidence that a host operator completed work outside Study Anything / Cognitive Black Box. It does not import raw patches, diffs, repository file bodies, PR comments, customer payloads, production payloads, secrets, or model credentials.",
+    "not_claimed": [
+      "patch content imported",
+      "repository file bodies imported",
+      "PR comments imported",
+      "customer-visible delivery approved",
+      "external publication approved",
+      "production mutation approved",
+      "truth or security certified"
+    ]
+  },
+  "completion_summary": {
+    "completion_refs": [],
+    "external_operator_ref": null,
+    "not_included": [
+      "raw_patch_body",
+      "raw_diff_body",
+      "repository_file_body",
+      "pr_comment_body",
+      "customer_visible_content",
+      "external_publication_payload",
+      "production_payload",
+      "secrets",
+      "model_keys",
+      "agent_credentials"
+    ],
+    "package_type": "metadata_only_external_operator_completion",
+    "purpose": null,
+    "result_status": null
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "decision": "block_external_operator_completion",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "external_effects_summarized_only": true,
+    "model_calls_performed": false,
+    "study_anything_automatic_pr_commenting_performed": false,
+    "study_anything_automatic_pr_opening_performed": false,
+    "study_anything_customer_visible_action_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_read_customer_visible_payload": false,
+    "study_anything_read_external_publication_payload": false,
+    "study_anything_read_pr_comment_payload": false,
+    "study_anything_read_production_payload": false,
+    "study_anything_read_raw_patch_or_diff": false,
+    "study_anything_read_repository_file_body": false,
+    "study_anything_repository_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "operator_reconstruction": {
+    "completion_is_metadata_only": true,
+    "customer_visible_payloads_are_absent": true,
+    "external_operator_controls_execution": true,
+    "pr_comment_payloads_are_absent": true,
+    "production_payloads_are_absent": true,
+    "raw_patch_and_diff_are_absent": true,
+    "repository_file_bodies_are_absent": true,
+    "secrets_and_model_credentials_are_absent": true,
+    "study_anything_records_summary_only": true
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_body_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_eval_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "receipt_id": "patch-proposal-external-operator-completion-blocked-repository-file-body-return",
+  "schema_version": "patch-proposal-external-operator-completion-receipt-v1",
+  "source_refs": {
+    "work_order_receipt_hash": "9883bf44d7fd498c1d0c70d9fbe250d4720f4e40d7cb74f03c29bc9b52c87d9a",
+    "work_order_receipt_ref": "fixtures/patch-proposal-external-work-order-pack/pass/patch-proposal-external-work-order-receipt.json",
+    "work_order_report_ref": "platform/generated/study-anything-patch-proposal-external-work-order-pack.json"
+  },
+  "status": "blocked"
+}
