@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    330: ROOT / "fixtures" / "release-stack" / "pr-330-intake-candidate.json",
+    332: ROOT / "fixtures" / "release-stack" / "pr-332-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.204"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.200"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.208"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.204"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -61,6 +61,14 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-external-feedback-receipt.html",
     "scripts/external_feedback_receipt.py",
     "scripts/verify_external_feedback_receipt.py",
+    "docs/external-feedback-backlog-bridge.md",
+    "platform/schemas/delivery-trust/external-feedback-backlog-bridge-v1.schema.json",
+    "platform/schemas/delivery-trust/product-loop-backlog-item-v1.schema.json",
+    "platform/generated/study-anything-external-feedback-backlog-bridge.json",
+    "platform/generated/study-anything-external-feedback-backlog-bridge.md",
+    "platform/generated/study-anything-external-feedback-backlog-bridge.html",
+    "scripts/external_feedback_backlog_bridge.py",
+    "scripts/verify_external_feedback_backlog_bridge.py",
     "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
     "platform/generated/study-anything-operating-model-loops.json",
     "platform/generated/study-anything-cbb-receipt-chain.json",
@@ -145,7 +153,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    330: [
+    332: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -158,6 +166,14 @@ PR_EVIDENCE_REFS = {
         "platform/generated/study-anything-external-feedback-receipt.html",
         "scripts/external_feedback_receipt.py",
         "scripts/verify_external_feedback_receipt.py",
+        "docs/external-feedback-backlog-bridge.md",
+        "platform/schemas/delivery-trust/external-feedback-backlog-bridge-v1.schema.json",
+        "platform/schemas/delivery-trust/product-loop-backlog-item-v1.schema.json",
+        "platform/generated/study-anything-external-feedback-backlog-bridge.json",
+        "platform/generated/study-anything-external-feedback-backlog-bridge.md",
+        "platform/generated/study-anything-external-feedback-backlog-bridge.html",
+        "scripts/external_feedback_backlog_bridge.py",
+        "scripts/verify_external_feedback_backlog_bridge.py",
         "platform/generated/study-anything-release-asset-adoption.json",
         "platform/generated/study-anything-product-loop-harness.json",
         "platform/generated/study-anything-delivery-trust-case-harness.json",
@@ -366,7 +382,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the External Feedback Receipt evidence chain.",
+        "summary": "Completed self-intake for the External Feedback Backlog Bridge evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -381,10 +397,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[330],
-                expected_pr=330,
+                pr_sources[332],
+                expected_pr=332,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[330],
+                evidence_refs=PR_EVIDENCE_REFS[332],
                 require_promotion_commands=True,
             ),
         ],
@@ -435,13 +451,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [328]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #328 audit rows.")
+    if previous_prs != [330]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #330 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #330 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #332 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -528,7 +544,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-330-intake-candidate.json",
+            "fixtures/release-stack/pr-332-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -567,7 +583,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-330-source", type=Path, default=PR_SOURCES[330])
+    parser.add_argument("--pr-332-source", type=Path, default=PR_SOURCES[332])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -577,7 +593,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        330: load_json(args.pr_330_source),
+        332: load_json(args.pr_332_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)
