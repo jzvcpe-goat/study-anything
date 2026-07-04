@@ -197,6 +197,7 @@ python3 scripts/verify_trust_scenario_decision_gate.py --check
 python3 scripts/generate_trust_evidence_handoff_pack.py --check
 python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
 python3 scripts/verify_trust_evidence_acceptance_drill.py --check
+python3 scripts/verify_controlled_handoff_runbook.py --check
 ```
 
 The delivery trust command verifies pass and blocked fixtures, rejects
@@ -248,3 +249,9 @@ The Trust Evidence Acceptance Drill command goes one step further: it consumes
 the portable ZIP and proves a reviewer can derive controlled allow/block
 handoff decisions for code-review and client-report delivery classes without
 raw source text, raw report text, or AI-review-only sufficiency.
+
+The Controlled Handoff Runbook command turns those allow/block decisions into
+next-step operator instructions for Codex, Kimi, WorkBuddy, Hermes, or a human
+reviewer. It permits metadata-only handoff preparation and keeps automatic
+customer sending, production mutation, external publication, truth
+certification, raw payload inclusion, and customer outcome guarantees blocked.

@@ -2485,6 +2485,26 @@ FILES: list[tuple[str, str, str]] = [
         "Verify external operator allow/block decisions from the Trust Evidence ZIP.",
     ),
     (
+        "docs/controlled-handoff-runbook.md",
+        "operator_doc",
+        "Controlled Handoff Runbook guide for external operator handoff preparation.",
+    ),
+    (
+        "platform/generated/study-anything-controlled-handoff-runbook.json",
+        "generated_asset",
+        "Controlled Handoff Runbook report.",
+    ),
+    (
+        "platform/generated/study-anything-controlled-handoff-runbook.md",
+        "generated_asset",
+        "Controlled Handoff Runbook markdown report.",
+    ),
+    (
+        "scripts/verify_controlled_handoff_runbook.py",
+        "verification",
+        "Verify controlled handoff preparation steps derived from Trust Evidence decisions.",
+    ),
+    (
         "scripts/cognitive_loop_cli.py",
         "cli",
         "Local Cognitive Loop contract init, verify, and static HTML artifact CLI.",

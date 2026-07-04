@@ -57,6 +57,12 @@ Run the external operator acceptance drill:
 python3 scripts/verify_trust_evidence_acceptance_drill.py --check
 ```
 
+Then derive the controlled handoff runbook:
+
+```bash
+python3 scripts/verify_controlled_handoff_runbook.py --check
+```
+
 ## 中文说明
 
 Trust Evidence Handoff Pack Lite 是一个可下载、可解压、只含 metadata 的交付信任
