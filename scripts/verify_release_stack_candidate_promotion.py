@@ -32,11 +32,11 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    340: ROOT / "fixtures" / "release-stack" / "pr-340-intake-candidate.json",
+    342: ROOT / "fixtures" / "release-stack" / "pr-342-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.216"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.214"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.218"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.216"
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -164,6 +164,25 @@ POST_MERGE_EVIDENCE_REFS = [
     "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
     "scripts/end_to_end_trust_chain_harness.py",
     "scripts/verify_end_to_end_trust_chain_harness.py",
+    "docs/real-adopter-scenario-import.md",
+    "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+    "platform/generated/study-anything-real-adopter-scenario-import.json",
+    "platform/generated/study-anything-real-adopter-scenario-import.md",
+    "platform/generated/study-anything-real-adopter-scenario-import.html",
+    "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+    "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+    "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+    "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+    "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+    "scripts/real_adopter_scenario_import.py",
+    "scripts/verify_real_adopter_scenario_import.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -191,7 +210,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "platform/generated/study-anything-client-report-delivery-class.html",
 ]
 PR_EVIDENCE_REFS = {
-    340: [
+    342: [
         "platform/generated/study-anything-release-stack-intake-candidate.json",
         "platform/generated/study-anything-release-stack-manifest-fixtures.json",
         "platform/generated/study-anything-release-stack-candidate-promotion.json",
@@ -304,6 +323,25 @@ PR_EVIDENCE_REFS = {
     "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
     "scripts/end_to_end_trust_chain_harness.py",
     "scripts/verify_end_to_end_trust_chain_harness.py",
+        "docs/real-adopter-scenario-import.md",
+        "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+        "platform/generated/study-anything-real-adopter-scenario-import.json",
+        "platform/generated/study-anything-real-adopter-scenario-import.md",
+        "platform/generated/study-anything-real-adopter-scenario-import.html",
+        "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+        "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+        "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+        "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+        "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+        "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+        "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+        "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+        "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+        "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+        "scripts/real_adopter_scenario_import.py",
+        "scripts/verify_real_adopter_scenario_import.py",
     "docs/code-review-operator-handoff-rehearsal.md",
         "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
         "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -458,7 +496,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the End-to-End Trust Chain Harness evidence chain.",
+        "summary": "Completed self-intake for the Real-Adopter Scenario Import evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -473,10 +511,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[340],
-                expected_pr=340,
+                pr_sources[342],
+                expected_pr=342,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[340],
+                evidence_refs=PR_EVIDENCE_REFS[342],
                 require_promotion_commands=True,
             ),
         ],
@@ -527,13 +565,13 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [338]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #338 audit rows.")
+    if previous_prs != [340]:
+        raise ReleaseStackPromotionError("previous current group must retain PR #340 audit rows.")
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #340 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #342 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -620,7 +658,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-340-intake-candidate.json",
+            "fixtures/release-stack/pr-342-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -659,7 +697,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-340-source", type=Path, default=PR_SOURCES[340])
+    parser.add_argument("--pr-342-source", type=Path, default=PR_SOURCES[342])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -669,7 +707,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        340: load_json(args.pr_340_source),
+        342: load_json(args.pr_342_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)

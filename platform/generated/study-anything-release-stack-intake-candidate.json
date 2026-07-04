@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-340-v0.3.216-end-to-end-trust-chain-harness-lite",
+    "group_id": "release-stack-intake-pr-342-v0.3.218-real-adopter-scenario-import-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -120,6 +120,25 @@
       "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
       "scripts/end_to_end_trust_chain_harness.py",
       "scripts/verify_end_to_end_trust_chain_harness.py",
+      "docs/real-adopter-scenario-import.md",
+      "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+      "platform/generated/study-anything-real-adopter-scenario-import.json",
+      "platform/generated/study-anything-real-adopter-scenario-import.md",
+      "platform/generated/study-anything-real-adopter-scenario-import.html",
+      "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+      "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+      "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+      "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+      "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+      "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+      "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+      "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+      "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+      "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+      "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+      "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+      "scripts/real_adopter_scenario_import.py",
+      "scripts/verify_real_adopter_scenario_import.py",
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -168,7 +187,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.216-end-to-end-trust-chain-harness-lite",
+        "branch": "codex/v0.3.218-real-adopter-scenario-import-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -282,6 +301,25 @@
           "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
           "scripts/end_to_end_trust_chain_harness.py",
           "scripts/verify_end_to_end_trust_chain_harness.py",
+          "docs/real-adopter-scenario-import.md",
+          "platform/schemas/cbb/real-adopter-scenario-import-v1.schema.json",
+          "platform/generated/study-anything-real-adopter-scenario-import.json",
+          "platform/generated/study-anything-real-adopter-scenario-import.md",
+          "platform/generated/study-anything-real-adopter-scenario-import.html",
+          "fixtures/real-adopter-scenario-import/pass/real-adopter-issue-summary.json",
+          "fixtures/real-adopter-scenario-import/pass/external-feedback-receipt.json",
+          "fixtures/real-adopter-scenario-import/pass/external-feedback-backlog-bridge.json",
+          "fixtures/real-adopter-scenario-import/pass/product-loop-backlog-item.json",
+          "fixtures/real-adopter-scenario-import/pass/product-owner-prioritization-receipt.json",
+          "fixtures/real-adopter-scenario-import/pass/product-spec-eval-candidate.json",
+          "fixtures/real-adopter-scenario-import/pass/product-spec-eval-authoring-receipt.json",
+          "fixtures/real-adopter-scenario-import/pass/product-spec-eval-brief.json",
+          "fixtures/real-adopter-scenario-import/pass/product-loop-brief-intake-receipt.json",
+          "fixtures/real-adopter-scenario-import/pass/product-loop-scenario.json",
+          "fixtures/real-adopter-scenario-import/pass/product-loop-run.json",
+          "fixtures/real-adopter-scenario-import/pass/real-adopter-scenario-import-report.json",
+          "scripts/real_adopter_scenario_import.py",
+          "scripts/verify_real_adopter_scenario_import.py",
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -310,9 +348,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "b964f730ab00b39d9bc8b2fd6aadb7032623a246",
+        "merge_commit": "76c16ed4a27512efd6c532f58004695ce4572fcc",
         "order": 1,
-        "pr": 340,
+        "pr": 342,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -321,15 +359,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #340: Add end-to-end trust chain harness.",
+    "summary": "Candidate release stack group for PR #342: Add real-adopter scenario import harness.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.216",
-    "represented_pr_count": 114
+    "current_group": "release-stack-promotion-v0.3.218",
+    "represented_pr_count": 115
   },
   "negative_fixtures": [
     {
