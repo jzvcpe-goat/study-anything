@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-322-v0.3.194-code-review-operator-handoff-lite",
+    "group_id": "release-stack-intake-pr-324-v0.3.196-client-report-operator-handoff-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -64,6 +64,9 @@
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
+      "docs/client-report-operator-handoff-rehearsal.md",
+      "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
+      "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
       "scripts/generate_trust_evidence_handoff_pack.py",
       "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
       "scripts/verify_trust_evidence_acceptance_drill.py",
@@ -71,6 +74,7 @@
       "scripts/verify_customer_delivery_trust_envelope.py",
       "scripts/verify_customer_delivery_rehearsal.py",
       "scripts/verify_code_review_operator_handoff_rehearsal.py",
+      "scripts/verify_client_report_operator_handoff_rehearsal.py",
       "platform/generated/study-anything-client-report-delivery-class.json",
       "platform/generated/study-anything-client-report-delivery-class.html",
       "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
@@ -96,7 +100,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.194-code-review-operator-handoff-lite",
+        "branch": "codex/v0.3.196-client-report-operator-handoff-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -154,6 +158,9 @@
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
+          "docs/client-report-operator-handoff-rehearsal.md",
+          "platform/generated/study-anything-client-report-operator-handoff-rehearsal.json",
+          "platform/generated/study-anything-client-report-operator-handoff-rehearsal.md",
           "scripts/generate_trust_evidence_handoff_pack.py",
           "scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py",
           "scripts/verify_trust_evidence_acceptance_drill.py",
@@ -161,14 +168,15 @@
           "scripts/verify_customer_delivery_trust_envelope.py",
           "scripts/verify_customer_delivery_rehearsal.py",
           "scripts/verify_code_review_operator_handoff_rehearsal.py",
+          "scripts/verify_client_report_operator_handoff_rehearsal.py",
           "platform/generated/study-anything-client-report-delivery-class.json",
           "platform/generated/study-anything-client-report-delivery-class.html",
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "af2930da710a25315152fa6818e260b0baf2faf6",
+        "merge_commit": "8b24366ee2580c1596fef32db280b7cc707ac531",
         "order": 1,
-        "pr": 322,
+        "pr": 324,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -177,15 +185,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #322: Add Code Review operator handoff rehearsal.",
+    "summary": "Candidate release stack group for PR #324: Add Client Report operator handoff rehearsal.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.194",
-    "represented_pr_count": 105
+    "current_group": "release-stack-promotion-v0.3.196",
+    "represented_pr_count": 106
   },
   "negative_fixtures": [
     {
