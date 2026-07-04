@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>End-to-End Trust Chain Harness</title>
+<body>
+<h1>End-to-End Trust Chain Harness</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass&quot;,
+      &quot;decision&quot;: &quot;chain_ready_for_manual_rehearsal_boundary&quot;,
+      &quot;status&quot;: &quot;ready_for_customer_delivery_rehearsal&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;product_loop_not_passed&quot;,
+        &quot;ai_review_only_evidence_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-product-loop-run&quot;,
+      &quot;decision&quot;: &quot;block_customer_handoff&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;automatic_customer_send_attempted&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-automatic-customer-send&quot;,
+      &quot;decision&quot;: &quot;block_customer_delivery&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;missing_recipient_scope_confirmed&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-human-scope&quot;,
+      &quot;decision&quot;: &quot;block_customer_delivery&quot;,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;chain_steps&quot;: [
+    {
+      &quot;decision&quot;: &quot;accept_external_feedback_into_product_loop&quot;,
+      &quot;path&quot;: &quot;fixtures/external-feedback-receipt/pass/external-feedback-receipt.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;external-feedback-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;8aa2841776640c68841cb273aab7977aece553aeba59e9310378f94524c0c50b&quot;,
+      &quot;status&quot;: &quot;accepted_for_product_loop&quot;,
+      &quot;step_id&quot;: &quot;external_feedback_receipt&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;create_product_loop_backlog_item&quot;,
+      &quot;path&quot;: &quot;fixtures/external-feedback-backlog-bridge/pass/external-feedback-backlog-bridge.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;external-feedback-backlog-bridge-v1&quot;,
+      &quot;sha256&quot;: &quot;4269478cc3c4a8bf44ec140c84b08ed46a10883371ec5ac98ea447fcacd37ec4&quot;,
+      &quot;status&quot;: &quot;queued_for_product_loop&quot;,
+      &quot;step_id&quot;: &quot;external_feedback_backlog_bridge&quot;
+    },
+    {
+      &quot;decision&quot;: null,
+      &quot;path&quot;: &quot;fixtures/external-feedback-backlog-bridge/pass/product-loop-backlog-item.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-loop-backlog-item-v1&quot;,
+      &quot;sha256&quot;: &quot;7edece41476d919296fd3dfdc7035826873b99475380af43af6832ef5db82250&quot;,
+      &quot;status&quot;: null,
+      &quot;step_id&quot;: &quot;product_loop_backlog_item&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;create_product_spec_eval_candidate&quot;,
+      &quot;path&quot;: &quot;fixtures/product-owner-prioritization-gate/pass/product-owner-prioritization-receipt.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-owner-prioritization-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;5b63b0ef035af5b3a67443d622b666e14885bddfa489abdc55eac0f19e8e958f&quot;,
+      &quot;status&quot;: &quot;queued_for_spec_eval_candidate&quot;,
+      &quot;step_id&quot;: &quot;product_owner_receipt&quot;
+    },
+    {
+      &quot;decision&quot;: null,
+      &quot;path&quot;: &quot;fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-spec-eval-candidate-v1&quot;,
+      &quot;sha256&quot;: &quot;f798fc2e3919d9abf01c80b4bc73d2fc3146368ff2bfcb75c64b9aed63d2421f&quot;,
+      &quot;status&quot;: null,
+      &quot;step_id&quot;: &quot;product_spec_eval_candidate&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;create_product_spec_eval_brief&quot;,
+      &quot;path&quot;: &quot;fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-authoring-receipt.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-spec-eval-authoring-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;8d2fcd60c17fca9c6d715630cdeac29ea8575dc15d23abe57e09e9f65b9bc3d1&quot;,
+      &quot;status&quot;: &quot;authored_spec_eval_brief&quot;,
+      &quot;step_id&quot;: &quot;product_spec_eval_authoring_receipt&quot;
+    },
+    {
+      &quot;decision&quot;: null,
+      &quot;path&quot;: &quot;fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-spec-eval-brief-v1&quot;,
+      &quot;sha256&quot;: &quot;9e75c22f6f9a1a7b82799dbe586881a4bbb3c9b26427f3d09deb29a747988824&quot;,
+      &quot;status&quot;: null,
+      &quot;step_id&quot;: &quot;product_spec_eval_brief&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;create_product_loop_harness_candidate&quot;,
+      &quot;path&quot;: &quot;fixtures/product-loop-brief-intake/pass/product-loop-brief-intake-receipt.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-loop-brief-intake-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;4d3f1b68e482f8c1be2611a5570e91eccc991fec86e6c8eef15d935044657388&quot;,
+      &quot;status&quot;: &quot;created_product_loop_candidate&quot;,
+      &quot;step_id&quot;: &quot;product_loop_brief_intake_receipt&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;promote_to_delivery_trust_harness&quot;,
+      &quot;path&quot;: &quot;fixtures/product-loop-brief-intake/pass/product-loop-run.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;product-loop-run-v1&quot;,
+      &quot;sha256&quot;: &quot;4c6f6b9a6285f4b87001c06180f7beb4cce305a3b32725b5862df1e25e1d2077&quot;,
+      &quot;status&quot;: &quot;allowed&quot;,
+      &quot;step_id&quot;: &quot;product_loop_run&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;promote_to_next_sandbox&quot;,
+      &quot;path&quot;: &quot;fixtures/delivery-trust-case/pass/dual-loop-gate-receipt.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;dual-loop-gate-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9&quot;,
+      &quot;status&quot;: &quot;allowed&quot;,
+      &quot;step_id&quot;: &quot;dual_loop_gate_receipt&quot;
+    },
+    {
+      &quot;decision&quot;: &quot;allow_controlled_customer_handoff&quot;,
+      &quot;path&quot;: &quot;generated-in-memory&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;delivery-trust-case-v1&quot;,
+      &quot;sha256&quot;: &quot;b4147ccec771edda01d95c9c74b13a4c7587b6b8d73422b0f631a835b17a67b0&quot;,
+      &quot;status&quot;: &quot;ready_for_controlled_customer_handoff&quot;,
+      &quot;step_id&quot;: &quot;assembled_delivery_trust_case&quot;
+    },
+    {
+      &quot;decision&quot;: null,
+      &quot;path&quot;: &quot;platform/generated/study-anything-customer-delivery-trust-envelope.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;customer-delivery-trust-envelope-v1&quot;,
+      &quot;sha256&quot;: &quot;c7826384fb4940a4dd4c6163fe304c573002d461cc1f48505303c2796b6012cd&quot;,
+      &quot;status&quot;: &quot;pass&quot;,
+      &quot;step_id&quot;: &quot;customer_delivery_trust_envelope&quot;
+    },
+    {
+      &quot;decision&quot;: null,
+      &quot;path&quot;: &quot;platform/generated/study-anything-customer-delivery-rehearsal.json&quot;,
+      &quot;raw_body_included&quot;: false,
+      &quot;schema_version&quot;: &quot;customer-delivery-rehearsal-v1&quot;,
+      &quot;sha256&quot;: &quot;bf61869df2a57dfcbf6799ea4e692f10805b9feb78172e6bba2076f97c80e9c4&quot;,
+      &quot;status&quot;: &quot;pass&quot;,
+      &quot;step_id&quot;: &quot;customer_delivery_rehearsal&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;The repository can build a metadata-only evidence chain from external feedback through product and delivery trust gates to a customer-delivery rehearsal boundary.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;customer send approval&quot;,
+      &quot;production approval&quot;,
+      &quot;truth certification&quot;,
+      &quot;customer outcome guarantee&quot;,
+      &quot;full release_check.sh completion&quot;,
+      &quot;general model correctness&quot;
+    ]
+  },
+  &quot;continuity_checks&quot;: [
+    {
+      &quot;check_id&quot;: &quot;feedback_receipt_to_backlog_bridge&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;backlog_item_to_product_owner_receipt&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;product_owner_candidate_to_spec_eval_authoring&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;spec_eval_brief_to_product_loop_intake&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;product_loop_run_to_delivery_trust_case&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;delivery_case_to_customer_envelope_boundary&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    },
+    {
+      &quot;check_id&quot;: &quot;customer_envelope_to_rehearsal_boundary&quot;,
+      &quot;status&quot;: &quot;pass&quot;
+    }
+  ],
+  &quot;gate_rules&quot;: {
+    &quot;active_human_boundary_reconstruction_required&quot;: true,
+    &quot;ai_review_only_blocks&quot;: true,
+    &quot;all_handoffs_use_structured_artifact_refs&quot;: true,
+    &quot;automatic_customer_send_blocked&quot;: true,
+    &quot;delivery_rehearsal_required_before_customer_send&quot;: true,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_bodies_are_never_required&quot;: true
+  },
+  &quot;negative_checks&quot;: {
+    &quot;automatic_customer_send_rejected&quot;: &quot;runtime.automatic_customer_send_performed must be False&quot;,
+    &quot;failed_continuity_rejected&quot;: &quot;all end-to-end continuity checks must pass&quot;,
+    &quot;missing_blocked_case_rejected&quot;: &quot;missing end-to-end case report: blocked-product-loop-run&quot;,
+    &quot;raw_body_ref_rejected&quot;: &quot;chain step external_feedback_receipt includes raw body&quot;,
+    &quot;raw_customer_payload_rejected&quot;: &quot;privacy.raw_customer_payload_included must be False&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;attention_streams_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_visible_effect_performed&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;keystrokes_included&quot;: false,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_performed&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;production_mutation_performed&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_eval_body_included&quot;: false,
+    &quot;raw_feedback_text_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;raw_spec_body_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove the Cognitive Black Box product-to-delivery trust chain is connected end to end by metadata-only receipts before any customer send or production mutation.&quot;,
+  &quot;runtime&quot;: {
+    &quot;automatic_customer_send_performed&quot;: false,
+    &quot;customer_visible_effect_performed&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;deterministic_fixture&quot;: true,
+    &quot;external_publication_performed&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;production_mutation_performed&quot;: false
+  },
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;end-to-end-trust-chain-harness-v1&quot;,
+      &quot;sha256&quot;: &quot;2521c32729dc8b8055bfed05dc4d8416ad98f396782a51a12f621824a7dcc23e&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;end-to-end-trust-chain-harness-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;,
+  &quot;version&quot;: &quot;v0.3.31-alpha&quot;
+}
+</pre>
+</body>
+</html>

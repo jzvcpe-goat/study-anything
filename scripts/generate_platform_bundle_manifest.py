@@ -498,6 +498,21 @@ FILES: list[tuple[str, str, str]] = [
         "Product Loop Brief Intake Gate static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-end-to-end-trust-chain-harness.json",
+        "generated_asset",
+        "End-to-End Trust Chain Harness metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-end-to-end-trust-chain-harness.md",
+        "generated_asset",
+        "End-to-End Trust Chain Harness operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-end-to-end-trust-chain-harness.html",
+        "generated_asset",
+        "End-to-End Trust Chain Harness static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-delivery-class-registry.json",
         "generated_asset",
         "Delivery Class Registry metadata-only verification report.",
@@ -1203,6 +1218,11 @@ FILES: list[tuple[str, str, str]] = [
         "Product Loop Brief Intake Gate guide for consuming Product Spec/Eval briefs.",
     ),
     (
+        "docs/end-to-end-trust-chain-harness.md",
+        "operator_doc",
+        "End-to-End Trust Chain Harness guide for external feedback to controlled customer handoff rehearsal.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -1421,6 +1441,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
         "schema",
         "Product Loop Brief Intake Gate receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json",
+        "schema",
+        "End-to-End Trust Chain Harness JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -1763,6 +1788,11 @@ FILES: list[tuple[str, str, str]] = [
         for case_id in PRODUCT_LOOP_BRIEF_INTAKE_CASES
         for artifact in PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
     ],
+    (
+        "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
+        "fixture",
+        "End-to-End Trust Chain Harness pass report fixture.",
+    ),
     (
         "fixtures/real-agent-eval-bridge/pass.json",
         "fixture",
@@ -2952,6 +2982,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_product_loop_brief_intake.py",
         "verification",
         "Verify Product Loop Brief Intake metadata-only bridge boundaries.",
+    ),
+    (
+        "scripts/end_to_end_trust_chain_harness.py",
+        "verification",
+        "Build metadata-only end-to-end Cognitive Black Box trust-chain reports.",
+    ),
+    (
+        "scripts/verify_end_to_end_trust_chain_harness.py",
+        "verification",
+        "Verify end-to-end trust-chain fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

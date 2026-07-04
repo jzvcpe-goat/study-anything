@@ -1,0 +1,256 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "chain_ready_for_manual_rehearsal_boundary",
+      "status": "ready_for_customer_delivery_rehearsal"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_not_passed",
+        "ai_review_only_evidence_rejected"
+      ],
+      "case_id": "blocked-product-loop-run",
+      "decision": "block_customer_handoff",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_customer_send_attempted"
+      ],
+      "case_id": "blocked-automatic-customer-send",
+      "decision": "block_customer_delivery",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "missing_recipient_scope_confirmed"
+      ],
+      "case_id": "blocked-missing-human-scope",
+      "decision": "block_customer_delivery",
+      "status": "blocked"
+    }
+  ],
+  "chain_steps": [
+    {
+      "decision": "accept_external_feedback_into_product_loop",
+      "path": "fixtures/external-feedback-receipt/pass/external-feedback-receipt.json",
+      "raw_body_included": false,
+      "schema_version": "external-feedback-receipt-v1",
+      "sha256": "8aa2841776640c68841cb273aab7977aece553aeba59e9310378f94524c0c50b",
+      "status": "accepted_for_product_loop",
+      "step_id": "external_feedback_receipt"
+    },
+    {
+      "decision": "create_product_loop_backlog_item",
+      "path": "fixtures/external-feedback-backlog-bridge/pass/external-feedback-backlog-bridge.json",
+      "raw_body_included": false,
+      "schema_version": "external-feedback-backlog-bridge-v1",
+      "sha256": "4269478cc3c4a8bf44ec140c84b08ed46a10883371ec5ac98ea447fcacd37ec4",
+      "status": "queued_for_product_loop",
+      "step_id": "external_feedback_backlog_bridge"
+    },
+    {
+      "decision": null,
+      "path": "fixtures/external-feedback-backlog-bridge/pass/product-loop-backlog-item.json",
+      "raw_body_included": false,
+      "schema_version": "product-loop-backlog-item-v1",
+      "sha256": "7edece41476d919296fd3dfdc7035826873b99475380af43af6832ef5db82250",
+      "status": null,
+      "step_id": "product_loop_backlog_item"
+    },
+    {
+      "decision": "create_product_spec_eval_candidate",
+      "path": "fixtures/product-owner-prioritization-gate/pass/product-owner-prioritization-receipt.json",
+      "raw_body_included": false,
+      "schema_version": "product-owner-prioritization-receipt-v1",
+      "sha256": "5b63b0ef035af5b3a67443d622b666e14885bddfa489abdc55eac0f19e8e958f",
+      "status": "queued_for_spec_eval_candidate",
+      "step_id": "product_owner_receipt"
+    },
+    {
+      "decision": null,
+      "path": "fixtures/product-owner-prioritization-gate/pass/product-spec-eval-candidate.json",
+      "raw_body_included": false,
+      "schema_version": "product-spec-eval-candidate-v1",
+      "sha256": "f798fc2e3919d9abf01c80b4bc73d2fc3146368ff2bfcb75c64b9aed63d2421f",
+      "status": null,
+      "step_id": "product_spec_eval_candidate"
+    },
+    {
+      "decision": "create_product_spec_eval_brief",
+      "path": "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-authoring-receipt.json",
+      "raw_body_included": false,
+      "schema_version": "product-spec-eval-authoring-receipt-v1",
+      "sha256": "8d2fcd60c17fca9c6d715630cdeac29ea8575dc15d23abe57e09e9f65b9bc3d1",
+      "status": "authored_spec_eval_brief",
+      "step_id": "product_spec_eval_authoring_receipt"
+    },
+    {
+      "decision": null,
+      "path": "fixtures/product-spec-eval-authoring-gate/pass/product-spec-eval-brief.json",
+      "raw_body_included": false,
+      "schema_version": "product-spec-eval-brief-v1",
+      "sha256": "9e75c22f6f9a1a7b82799dbe586881a4bbb3c9b26427f3d09deb29a747988824",
+      "status": null,
+      "step_id": "product_spec_eval_brief"
+    },
+    {
+      "decision": "create_product_loop_harness_candidate",
+      "path": "fixtures/product-loop-brief-intake/pass/product-loop-brief-intake-receipt.json",
+      "raw_body_included": false,
+      "schema_version": "product-loop-brief-intake-receipt-v1",
+      "sha256": "4d3f1b68e482f8c1be2611a5570e91eccc991fec86e6c8eef15d935044657388",
+      "status": "created_product_loop_candidate",
+      "step_id": "product_loop_brief_intake_receipt"
+    },
+    {
+      "decision": "promote_to_delivery_trust_harness",
+      "path": "fixtures/product-loop-brief-intake/pass/product-loop-run.json",
+      "raw_body_included": false,
+      "schema_version": "product-loop-run-v1",
+      "sha256": "4c6f6b9a6285f4b87001c06180f7beb4cce305a3b32725b5862df1e25e1d2077",
+      "status": "allowed",
+      "step_id": "product_loop_run"
+    },
+    {
+      "decision": "promote_to_next_sandbox",
+      "path": "fixtures/delivery-trust-case/pass/dual-loop-gate-receipt.json",
+      "raw_body_included": false,
+      "schema_version": "dual-loop-gate-receipt-v1",
+      "sha256": "2b6737ca7b6ce174a148f76e0cb00c5b44c55da564a7fc72c1cc54fcae0e38a9",
+      "status": "allowed",
+      "step_id": "dual_loop_gate_receipt"
+    },
+    {
+      "decision": "allow_controlled_customer_handoff",
+      "path": "generated-in-memory",
+      "raw_body_included": false,
+      "schema_version": "delivery-trust-case-v1",
+      "sha256": "b4147ccec771edda01d95c9c74b13a4c7587b6b8d73422b0f631a835b17a67b0",
+      "status": "ready_for_controlled_customer_handoff",
+      "step_id": "assembled_delivery_trust_case"
+    },
+    {
+      "decision": null,
+      "path": "platform/generated/study-anything-customer-delivery-trust-envelope.json",
+      "raw_body_included": false,
+      "schema_version": "customer-delivery-trust-envelope-v1",
+      "sha256": "c7826384fb4940a4dd4c6163fe304c573002d461cc1f48505303c2796b6012cd",
+      "status": "pass",
+      "step_id": "customer_delivery_trust_envelope"
+    },
+    {
+      "decision": null,
+      "path": "platform/generated/study-anything-customer-delivery-rehearsal.json",
+      "raw_body_included": false,
+      "schema_version": "customer-delivery-rehearsal-v1",
+      "sha256": "bf61869df2a57dfcbf6799ea4e692f10805b9feb78172e6bba2076f97c80e9c4",
+      "status": "pass",
+      "step_id": "customer_delivery_rehearsal"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The repository can build a metadata-only evidence chain from external feedback through product and delivery trust gates to a customer-delivery rehearsal boundary.",
+    "not_claimed": [
+      "customer send approval",
+      "production approval",
+      "truth certification",
+      "customer outcome guarantee",
+      "full release_check.sh completion",
+      "general model correctness"
+    ]
+  },
+  "continuity_checks": [
+    {
+      "check_id": "feedback_receipt_to_backlog_bridge",
+      "status": "pass"
+    },
+    {
+      "check_id": "backlog_item_to_product_owner_receipt",
+      "status": "pass"
+    },
+    {
+      "check_id": "product_owner_candidate_to_spec_eval_authoring",
+      "status": "pass"
+    },
+    {
+      "check_id": "spec_eval_brief_to_product_loop_intake",
+      "status": "pass"
+    },
+    {
+      "check_id": "product_loop_run_to_delivery_trust_case",
+      "status": "pass"
+    },
+    {
+      "check_id": "delivery_case_to_customer_envelope_boundary",
+      "status": "pass"
+    },
+    {
+      "check_id": "customer_envelope_to_rehearsal_boundary",
+      "status": "pass"
+    }
+  ],
+  "gate_rules": {
+    "active_human_boundary_reconstruction_required": true,
+    "ai_review_only_blocks": true,
+    "all_handoffs_use_structured_artifact_refs": true,
+    "automatic_customer_send_blocked": true,
+    "delivery_rehearsal_required_before_customer_send": true,
+    "production_mutation_blocked": true,
+    "raw_bodies_are_never_required": true
+  },
+  "negative_checks": {
+    "automatic_customer_send_rejected": "runtime.automatic_customer_send_performed must be False",
+    "failed_continuity_rejected": "all end-to-end continuity checks must pass",
+    "missing_blocked_case_rejected": "missing end-to-end case report: blocked-product-loop-run",
+    "raw_body_ref_rejected": "chain step external_feedback_receipt includes raw body",
+    "raw_customer_payload_rejected": "privacy.raw_customer_payload_included must be False"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "attention_streams_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_effect_performed": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_mutation_performed": false,
+    "raw_customer_payload_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_feedback_text_included": false,
+    "raw_report_text_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove the Cognitive Black Box product-to-delivery trust chain is connected end to end by metadata-only receipts before any customer send or production mutation.",
+  "runtime": {
+    "automatic_customer_send_performed": false,
+    "customer_visible_effect_performed": false,
+    "daemon_or_hosted_service_started": false,
+    "deterministic_fixture": true,
+    "external_publication_performed": false,
+    "model_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json",
+      "schema_version": "end-to-end-trust-chain-harness-v1",
+      "sha256": "2521c32729dc8b8055bfed05dc4d8416ad98f396782a51a12f621824a7dcc23e"
+    }
+  ],
+  "schema_version": "end-to-end-trust-chain-harness-v1",
+  "status": "pass",
+  "version": "v0.3.31-alpha"
+}

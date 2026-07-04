@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "a2e3faefadd4a8c908bcea0ac6ff4900cff557460bd2fce8ad2ee2dd7120442c"
+      "sha256": "79cfc8a83f3d52bfeecf05ca3142d6134a79497b044421aeed2e59e7f9ebee7c"
     },
     {
       "bytes": 1939,
@@ -308,35 +308,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "4199a171a592e0af9f4e6673e42333fd5133638867dad76ab089c21451950f01"
+      "sha256": "64d4c93ec57d422d25563a15204ed637d41abeab8507d6a8a124e29bb4f6861a"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "aa55d838132885d4085f6219bbcc5392a1b8ea7045e0121d4a66facdba87dd2d"
+      "sha256": "f57397e17a6e52791239b907b1c0a41cba00b19dfa25d8f0f574409ba3af5372"
     },
     {
-      "bytes": 97587,
+      "bytes": 97720,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "f0ae0f51eabcff9f61f6079ee9d983c5762872bf232cb182e8979a6071dfff7e"
+      "sha256": "31dfdb3453655c0826f69c6020b23d67d41aad3b797f1026066f07d6bafa4494"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "9b3db0ab40eba5ee09dbcce29bf9621169da754333d5fc4a27646528979ebc0a"
+      "sha256": "2107261e3e13b78ffe6f22dd7ea036f8370caf9f1c279107f0eb1303b27cc04c"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "773cef991ce3a1ef38aed55ce349a482c0c519abc37ecf5556cda8707a1e8178"
+      "sha256": "d405f0dc0a542d8dd2c49d23f6f38b424733a22b5be44fe92ce79ae4d979c7b7"
     },
     {
       "bytes": 3502,
@@ -484,6 +484,27 @@
       "path": "platform/generated/study-anything-product-loop-brief-intake.html",
       "purpose": "Product Loop Brief Intake Gate static HTML verification report.",
       "sha256": "4e36c209f272a31a20c7a3b7d98a0db34579aec9bbb0d2df374dd9349653543b"
+    },
+    {
+      "bytes": 9910,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-end-to-end-trust-chain-harness.json",
+      "purpose": "End-to-End Trust Chain Harness metadata-only verification report.",
+      "sha256": "f973ee19f849906d0d99e3175f68f16d48262b7c6dc76870d246b43c533b8210"
+    },
+    {
+      "bytes": 2309,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-end-to-end-trust-chain-harness.md",
+      "purpose": "End-to-End Trust Chain Harness operator summary.",
+      "sha256": "c9b81da745d4b83d58355ee56ce56de0c8dfe19bd73cbbd10b1eb29096515c43"
+    },
+    {
+      "bytes": 13211,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-end-to-end-trust-chain-harness.html",
+      "purpose": "End-to-End Trust Chain Harness static HTML verification report.",
+      "sha256": "7e9bd90910b008dd083eed4f8c4a9a238cab73fdedb9307375bcc9cca6bbe3a3"
     },
     {
       "bytes": 7536,
@@ -826,14 +847,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "fce26cc39d8191f4100ef332ec1a81792016691844c4ab423433f1f63f87dc02"
+      "sha256": "661518d331b6aa845abe2d3ad54db80aee5b3aaee56e3189aa9fa024f49779c3"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "83553465502db5d885eaccaae3724967de202a6ad1a2e0062e687edcb028908d"
+      "sha256": "1380c6649b7170c97d73235924cf17e50964cbbf4fa89c1ea17e766220dabd70"
     },
     {
       "bytes": 2466,
@@ -903,28 +924,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "39f9460c4e66ab29349d18d6b12e950b330300bb229b6039e9a56508caeb75f7"
+      "sha256": "30188e99121e533f87ee6bc9233c3fc1a0d8e3b390871eddaf6df0920c6d947c"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "cc06227503c90ce4a0c15b6ddf530f365e47426dc57f00c407a0b6ab24cecc7c"
+      "sha256": "090b024531b167848ac3329ca00ec9e4932c5b9c6aacc2864fb29595213a1f26"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "85d9c217d83eb8b5b293d04ed82c3f2bc2ed7d0e731113cae2ba4dcc09b34ced"
+      "sha256": "074466f33612b6da89abcecf3d05637834c532939e896935e1d70ac234adee04"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "e4c180db5cd76cafb9e636bb8a14ecb3d020de64360e25b3cd50881f7d370e8c"
+      "sha256": "079f3a645ec812d36684f17a46e2126eadff8067334ede838f6573a0c5b6b0b2"
     },
     {
       "bytes": 9410,
@@ -966,7 +987,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "b2567dccdfbd63b51f0e6ee0bc545dc7b7bab18fffc058829bfb0c22310c8132"
+      "sha256": "40d17d0be8bb2f785eed03990c19b002e384389d2089cd105278efc37e048912"
     },
     {
       "bytes": 107336,
@@ -1134,28 +1155,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "1d556aef0ac264a786638c8a304feae7ca6d9057481c9e1d24102a264d4026c2"
+      "sha256": "528c923f55dbaf388e91319bd7c5d8aa274bdeed63085f79ca8854d7770a8285"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "b318bd628444324cf341511bdc8856dfbfe426808194c5262d036bd456384554"
+      "sha256": "aef327bec7dfcbaf9145688e968112e4e981bac687639eec815ef3fbe5f6134c"
     },
     {
-      "bytes": 257556,
+      "bytes": 257557,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "3a12fc336f0a5849906dbf37698c90a6205c9f378cd01f7c75fa017dabeec9dc"
+      "sha256": "b8f4a35d0c6689ad4404b88ffd383052f8449e040f221871be5790320b1514f2"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "b13c4b5f2efee84ecde5c262272db951b853570fd46c315fee062722b64efbf4"
+      "sha256": "181692b5e8c448167ba4c669b18f3b553ad2f1c6cadcb9a3e9cbb8068d2d2b38"
     },
     {
       "bytes": 10417,
@@ -1473,6 +1494,13 @@
       "sha256": "bf35b5b6255dc04e0e1c61c7feb7c1a2c262145f1dfdcdfd48f8b8bbe15fa9c4"
     },
     {
+      "bytes": 2511,
+      "kind": "operator_doc",
+      "path": "docs/end-to-end-trust-chain-harness.md",
+      "purpose": "End-to-End Trust Chain Harness guide for external feedback to controlled customer handoff rehearsal.",
+      "sha256": "d333778e40f3d7533d8fbdccfbf5ad0d17459bf1ea88a04f45a0efc9b61a9e62"
+    },
+    {
       "bytes": 2206,
       "kind": "operator_doc",
       "path": "docs/delivery-trust-case-harness.md",
@@ -1779,6 +1807,13 @@
       "path": "platform/schemas/cbb/product-loop-brief-intake-receipt-v1.schema.json",
       "purpose": "Product Loop Brief Intake Gate receipt JSON Schema.",
       "sha256": "165fb551ccda02c232e597f93092846fd1913b950f4285a8c8bc84da5c3c1a73"
+    },
+    {
+      "bytes": 1181,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/end-to-end-trust-chain-harness-v1.schema.json",
+      "purpose": "End-to-End Trust Chain Harness JSON Schema.",
+      "sha256": "2521c32729dc8b8055bfed05dc4d8416ad98f396782a51a12f621824a7dcc23e"
     },
     {
       "bytes": 5318,
@@ -3384,6 +3419,13 @@
       "sha256": "231e883698b72955a9259005a42f02fadb45c60ea7da29d81547ec835b2799fc"
     },
     {
+      "bytes": 9910,
+      "kind": "fixture",
+      "path": "fixtures/end-to-end-trust-chain-harness/pass/end-to-end-trust-chain-report.json",
+      "purpose": "End-to-End Trust Chain Harness pass report fixture.",
+      "sha256": "f973ee19f849906d0d99e3175f68f16d48262b7c6dc76870d246b43c533b8210"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -3902,11 +3944,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 5805,
+      "bytes": 6302,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "a57c0d897472745a477b29cce4b887d541146f0447b15a1b5d0c27ff11514658"
+      "sha256": "94db5d1c45d9916adcbd75f4faf6bd02f0dfa6a033f0d97b56b3246c47f458a3"
     },
     {
       "bytes": 7722,
@@ -4739,35 +4781,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "e4dc75b7ccc667cd10d3d0b04626e3e7c254197e54fea89b028b0d836048e41a"
+      "sha256": "e065f8c1e3a507035798626174e3fca888eb373ff0ea2c4d18289d42f941e797"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "52f47655dbe41f75ec6e281293b37ca6d014013476957527ba4be9f9779cfa9f"
+      "sha256": "8cce41459069ee82b5cad7acf5ca1f6dc9a941b47d0a8551c31812c7b8985fde"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "78ee323f292c42a3923ca79e78cff58831673d3cfd02aa53fe404befdda5e0f4"
+      "sha256": "9030f2eaacb2bce899dcf61c9471fe27d06eedbfc80b33d6a3567ee939408f55"
     },
     {
-      "bytes": 145319,
+      "bytes": 145449,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "4c80eeae3a2df9d1104ef55d73ed7672f12c1204cb0aa48ea78964142f9bb5bd"
+      "sha256": "b7a3c0cbbda0c374300828a4ad5f9ef151ab33d3e2a236af73c453554891c19c"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "1432e475b40c189b555d0d3df7662bbf69a8b48f3ffcbdc2d34da9ea5dab13f5"
+      "sha256": "d2265a4c15734a5e31acac321ff9ec3f17c24bc2e4198048ae9732d0c35ab9f0"
     },
     {
       "bytes": 26355,
@@ -4795,14 +4837,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "e0bacb868e9e443320a46f0836cba4339c46d1d37562857a27e07e3c9111b96e"
+      "sha256": "414e1cff313cb0bb7587ee96f26fba39a1ba9107fc9df9be1850258f6c3e4959"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "7fc7c27182ed31740ba831bac578e3539c3164418e248cfb84e38eac854a1397"
+      "sha256": "dce2831a283d941fd9c8519c3c52f85bf9d8c791d93a3a47f42f62484bdb024f"
     },
     {
       "bytes": 14544,
@@ -4823,14 +4865,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "f2cf66b717f78069fe4dccfac0f132aa9611c2fbad5b39ceac8caae2fbc10ccd"
+      "sha256": "53cf0a44e95c9c93f7a1666d30093c6d9e3e293fffea3f185f8a1637ceb2d10f"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "643e97a972ba73df873fffbb30c0414601face94290cc0ad8a1dab891b413f33"
+      "sha256": "f07a28591784b0d2556f414e8b9111a6bfa130ed5517146c61c5fd3c703729d3"
     },
     {
       "bytes": 14855,
@@ -5048,6 +5090,20 @@
       "path": "scripts/verify_product_loop_brief_intake.py",
       "purpose": "Verify Product Loop Brief Intake metadata-only bridge boundaries.",
       "sha256": "0898121ce233a345281fd9ea1911868f7d410b410ec2da0e9594df6a9622d2a2"
+    },
+    {
+      "bytes": 20006,
+      "kind": "verification",
+      "path": "scripts/end_to_end_trust_chain_harness.py",
+      "purpose": "Build metadata-only end-to-end Cognitive Black Box trust-chain reports.",
+      "sha256": "94dd9ea85c9230f6ace1704514c7a264ba8544466b6681933fc354daabdd0f7e"
+    },
+    {
+      "bytes": 7729,
+      "kind": "verification",
+      "path": "scripts/verify_end_to_end_trust_chain_harness.py",
+      "purpose": "Verify end-to-end trust-chain fixtures, CLI output, and privacy boundaries.",
+      "sha256": "8bda820e2f66ed30fc695bb01ee061357b01c79f5bb05e6d5a1a5481a1724948"
     },
     {
       "bytes": 1610,
@@ -6527,11 +6583,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 146538,
+      "bytes": 147803,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "40e22c6a1c158618b86260f8c48314e953c99a8242678314b233ad2a88f4817f"
+      "sha256": "0d7eb4a24feb13b54f6e8195731e5e6709079a1bfaf028f68bbd24f446f3ee63"
     },
     {
       "bytes": 68921,
@@ -6611,11 +6667,11 @@
       "sha256": "3c4c11b6cd4c25467deb8d494f09f362733ff05f649fcf336d79d2a9b4e7781c"
     },
     {
-      "bytes": 8569,
+      "bytes": 8720,
       "kind": "cognitive_loop_contract",
       "path": ".cognitive-loop/evals.yaml",
       "purpose": "Cognitive Loop required eval command contract.",
-      "sha256": "0132a8e0ee6d8d20b581f4847c8c29d79190901864ffc39158478970f895b2d5"
+      "sha256": "976571edf9f177a8677e5dafde1c2ac1d4110076e5fbe26c6a55635962a5477a"
     },
     {
       "bytes": 730,
