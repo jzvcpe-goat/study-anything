@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-348-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-350-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -191,6 +191,14 @@ EVIDENCE_REFS = [
     "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
     "scripts/patch_proposal_operator_handoff_bridge.py",
     "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+    "docs/patch-proposal-acceptance-drill.md",
+    "platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json",
+    "platform/generated/study-anything-patch-proposal-acceptance-drill.json",
+    "platform/generated/study-anything-patch-proposal-acceptance-drill.md",
+    "platform/generated/study-anything-patch-proposal-acceptance-drill.html",
+    "fixtures/patch-proposal-acceptance-drill/pass/patch-proposal-acceptance-drill-receipt.json",
+    "scripts/patch_proposal_acceptance_drill.py",
+    "scripts/verify_patch_proposal_acceptance_drill.py",
     "docs/code-review-operator-handoff-rehearsal.md",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
     "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
