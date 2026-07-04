@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-348-v0.3.224-patch-proposal-operator-handoff-bridge-lite",
+    "group_id": "release-stack-intake-pr-350-v0.3.226-patch-proposal-acceptance-drill-lite",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -163,6 +163,14 @@
       "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
       "scripts/patch_proposal_operator_handoff_bridge.py",
       "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+      "docs/patch-proposal-acceptance-drill.md",
+      "platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json",
+      "platform/generated/study-anything-patch-proposal-acceptance-drill.json",
+      "platform/generated/study-anything-patch-proposal-acceptance-drill.md",
+      "platform/generated/study-anything-patch-proposal-acceptance-drill.html",
+      "fixtures/patch-proposal-acceptance-drill/pass/patch-proposal-acceptance-drill-receipt.json",
+      "scripts/patch_proposal_acceptance_drill.py",
+      "scripts/verify_patch_proposal_acceptance_drill.py",
       "docs/code-review-operator-handoff-rehearsal.md",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
       "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -211,7 +219,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.224-patch-proposal-operator-handoff-bridge-lite",
+        "branch": "codex/v0.3.226-patch-proposal-acceptance-drill-lite",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -368,6 +376,14 @@
           "fixtures/patch-proposal-operator-handoff-bridge/pass/patch-proposal-operator-handoff-bridge-receipt.json",
           "scripts/patch_proposal_operator_handoff_bridge.py",
           "scripts/verify_patch_proposal_operator_handoff_bridge.py",
+          "docs/patch-proposal-acceptance-drill.md",
+          "platform/schemas/cbb/patch-proposal-acceptance-drill-v1.schema.json",
+          "platform/generated/study-anything-patch-proposal-acceptance-drill.json",
+          "platform/generated/study-anything-patch-proposal-acceptance-drill.md",
+          "platform/generated/study-anything-patch-proposal-acceptance-drill.html",
+          "fixtures/patch-proposal-acceptance-drill/pass/patch-proposal-acceptance-drill-receipt.json",
+          "scripts/patch_proposal_acceptance_drill.py",
+          "scripts/verify_patch_proposal_acceptance_drill.py",
           "docs/code-review-operator-handoff-rehearsal.md",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.json",
           "platform/generated/study-anything-code-review-operator-handoff-rehearsal.md",
@@ -396,9 +412,9 @@
           "platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json"
         ],
         "final_state": "MERGED",
-        "merge_commit": "75a58f2500a3e171728f581428688dc4212114c6",
+        "merge_commit": "a4cf2867892375a5bde4a714c16240043ec99c7e",
         "order": 1,
-        "pr": 348,
+        "pr": 350,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -407,15 +423,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #348: [codex] Add patch proposal operator handoff bridge.",
+    "summary": "Candidate release stack group for PR #350: [codex] Add patch proposal acceptance drill.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.224",
-    "represented_pr_count": 118
+    "current_group": "release-stack-promotion-v0.3.226",
+    "represented_pr_count": 119
   },
   "negative_fixtures": [
     {
