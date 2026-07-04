@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "0c00918e7f582eb6701d49be951777c0a8a3d6f93895f29adf908837189f45a7"
+      "sha256": "bd0e726ea18933b66f961f3b310f8ab2a50cadc9e75a7adb76755980907102a4"
     },
     {
       "bytes": 1939,
@@ -308,35 +308,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "db17d0d45d22084c721372485cc49f652831b2b1208c218f1250496bea096faa"
+      "sha256": "601911d171c68514f749e280c1a75deaa813b424c8ba15779af43115fce221d2"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "a8ce8a7a13eb89934f374845d774f5e9d534fefdaab2ca3cf1a5e813e07d1b70"
+      "sha256": "220dace15cbdaf27603166c99f7cceaeb7329395995e66eac592d5cea50208aa"
     },
     {
-      "bytes": 98190,
+      "bytes": 98242,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "12174ef06a5d03226ead343de8b0acf70749b454b72b8baf2b3ba40f6e3ce20b"
+      "sha256": "7c4ac2f718e4ad935142236ad2d5bdf7c1e302050e234bb4c3f007578f96103d"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "b3192bc08746033ea2afc3976ba4d3ab770396e200cffec1a8d3fc5edc3f90d7"
+      "sha256": "a71f41a4029c085b518dcb118a65f8edc72699b80ddd26f3ac86f2fe036e085d"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "33757ce87d464ae371b4979cf3be32a5efba04a25ee2636a4f9a9803e4fae5a8"
+      "sha256": "4e46a53ec2ef6be0acb0bba42742e245f5159332d043dd47c9fe328c886920a4"
     },
     {
       "bytes": 3502,
@@ -652,6 +652,27 @@
       "path": "platform/generated/study-anything-patch-proposal-external-operator-completion.html",
       "purpose": "Patch Proposal External Operator Completion static HTML verification report.",
       "sha256": "fc515ea749a2e1e0ba780c82d9d733d2bfacfe2890cf29d34cd49c7c0c7bc6f0"
+    },
+    {
+      "bytes": 7851,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate metadata-only verification report.",
+      "sha256": "a6b0652a923f985a8c1cf80b5efba0191b039dbaa5a2fc01b68d6befa66ecef3"
+    },
+    {
+      "bytes": 2213,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.md",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate operator summary.",
+      "sha256": "668da64170a88e8d4569e82944097e4c0954bea2fc41a8803bc40290f58fd620"
+    },
+    {
+      "bytes": 2362,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-handoff-boundary-gate.html",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate static HTML verification report.",
+      "sha256": "878d6f1fb271d6d34ae3064ef0145687941276a888d0e7318edcb5c674c24490"
     },
     {
       "bytes": 7536,
@@ -994,14 +1015,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "ebcf024eee04d0acfb561d3aeb555041f20094185713b1a00b31b8717e7bf5c8"
+      "sha256": "95b3204e2731ff39caca59bd5364cb3f7c22a148fd1593bd266a65be1801465a"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "5a43e71fe11c68a9b3df48486a0684badeb57a485ce96db836eb003073c875e1"
+      "sha256": "f1830dc95bd8737928c8b9ee35ce56c65313bd10d169c707b294701ef72e398c"
     },
     {
       "bytes": 2466,
@@ -1071,28 +1092,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "d8a68a1232d1f9655fafb7d1880756b96741d860aac526f03f67ecda28792713"
+      "sha256": "b1a02da883d7b8c88d4a4736b1204450329e626df029ce7b207bc21b296a5e5b"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "8f83520ad49fa2beb3d7a3d963363116952081ba2997379ad34f7980893b5f73"
+      "sha256": "c98082a2dfb15cf41789822d70618045ec1ab3cd590aa3b24b336e4b7ae6333f"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "c812c93003d146770acd18fe091f59c7af24e250df58f1d460c399c9de8b6c9b"
+      "sha256": "82f1286afaa89bf1480b4692df840a24e84f050e2b9a6ab14674edbd87358603"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "e5c7b99c3260818b407dc973b1a35aeb9ce663a4c74737f420270a90516663aa"
+      "sha256": "6a9b59f13db74315058b0f7fb32a5b48498bb4ce362a444b8a688272c3306d87"
     },
     {
       "bytes": 9410,
@@ -1134,7 +1155,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "eb466399e1c3cfd98c90992bc3d1ff64681ffabff9ca3f88e94b649f385e6dd5"
+      "sha256": "0fe3e0ed778cff5df58f823837b0e84f3c5b30e0585d8d2de42e85120932790c"
     },
     {
       "bytes": 107336,
@@ -1302,28 +1323,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "e3c19332aa5ea34d8f1a78085a6327ff06a3c47f3f7519c0541cd942971379b5"
+      "sha256": "e2cfd0dfcf1bde318c38099e8eeb51420d802eeccdd8e71d36657f6a2e663576"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "c9d0c9d848fb0b3da6b6afddb2bd396d180afa6e454da34081e61bb347f92530"
+      "sha256": "271722f45d884ebd2efcd849021f974f0bf34289ad40ea2a3c652cca37a6b182"
     },
     {
-      "bytes": 257556,
+      "bytes": 257555,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "52968fa9fa2c30828517cdf3516ba1848759f76259c82b6f268bc1b9d3dd34ea"
+      "sha256": "18e00b30bcbd3727a44ed46aa9fe52001f4bcede58cb9a808e59de9891b88cb6"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "0647712016a2a5c06d266f62ea8cea381022de6579648f53fc6ee7cb83c5a29a"
+      "sha256": "d348ebe5c5f4dba470f5998043e512ee09422ab8c2b45bde795a92ab6042c9c5"
     },
     {
       "bytes": 10417,
@@ -1697,6 +1718,13 @@
       "sha256": "0787fc25bca09758f07c0a11c523d9c3bcda45b79b46da0aacc63d5978eb5773"
     },
     {
+      "bytes": 2814,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-handoff-boundary-gate.md",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate guide for metadata-only customer handoff preparation boundaries.",
+      "sha256": "38b443ce097329b7dde9af326a5cd62583e1df9dd992996e9185bc5a29e0f819"
+    },
+    {
       "bytes": 2206,
       "kind": "operator_doc",
       "path": "docs/delivery-trust-case-harness.md",
@@ -2059,6 +2087,13 @@
       "path": "platform/schemas/cbb/patch-proposal-external-operator-completion-v1.schema.json",
       "purpose": "Patch Proposal External Operator Completion JSON Schema.",
       "sha256": "897d76bc939d1112bcd29575960e4abcf89018f106394a29fc9564c900e063e2"
+    },
+    {
+      "bytes": 2401,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate JSON Schema.",
+      "sha256": "71780fcf2765365ae1d2e3a2fcb82f5b45ef6d05778866b6e038bfc68cbb7dbf"
     },
     {
       "bytes": 5318,
@@ -4357,6 +4392,104 @@
       "sha256": "ee0256ef6d5d33e8037036e3730360ae90849a164a327b04af3da5d668f1ad5b"
     },
     {
+      "bytes": 4144,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/pass/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate pass patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "56aefea731024e9fde741c0db3d02feb82f35072f5f847bdefcb7117ee92e87d"
+    },
+    {
+      "bytes": 3979,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-completion-blocked/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-completion-blocked patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "47ee2a466a55df06cc7e0da352e361a1ef626cc5ba7cd09182d26e35ddfbdb7f"
+    },
+    {
+      "bytes": 3991,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-delivery-class-scenario/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-missing-delivery-class-scenario patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "e936672ab4367af3de5bf59df12b946ba59e9c8c7f57bc68dfaec163ef3c5992"
+    },
+    {
+      "bytes": 3982,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-human-reconstruction/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-missing-human-reconstruction patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "38a1d9ecf5d2bcb2e22250f9ae60ea538e728014c79966246273b118a9288075"
+    },
+    {
+      "bytes": 3964,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-claim-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-missing-claim-boundary patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "5ae3adf7a29a2f445b372afbcd328289c98818d9e9fc21f41eabe3d492a26936"
+    },
+    {
+      "bytes": 3970,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-privacy-boundary/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-missing-privacy-boundary patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "47148cd7e3c3e331e20ab55d7e82d4d7ab8df3e0cc0ead0564442f5307a1090e"
+    },
+    {
+      "bytes": 3967,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-missing-sandbox-receipt/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-missing-sandbox-receipt patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "279d063f1eff3825936c41ceea5b1d6dcb8def8b260d78684fe76fb09e5b83d3"
+    },
+    {
+      "bytes": 3959,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-customer-draft/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-raw-customer-draft patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "1af81f33a1018c078b055438e68ea032dcd1e97c3d86be068eb20ee7b6208fd9"
+    },
+    {
+      "bytes": 3953,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-raw-patch-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-raw-patch-return patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "03bb0cee3e8e85d18ecaf02f023fc7b8a5f7df558c9cd4166c7ab9765a26e460"
+    },
+    {
+      "bytes": 3959,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-production-payload/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-production-payload patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "97a0d95018e69028fd5d9ddf1ba065914be14b96725473f42512dffe37ae4ef5"
+    },
+    {
+      "bytes": 3946,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-auto-send/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-auto-send patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "80d3198ccb5970d27b62919c4d6a3bbe273486d593c49c6f40a14f289ffdadb7"
+    },
+    {
+      "bytes": 3965,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-external-publication/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-external-publication patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "0a17ed58055175182d6cf00ba1de5dc5e32ad2f848daccf72362925143a0974c"
+    },
+    {
+      "bytes": 3944,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-secret-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-secret-return patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "4a8ef8b895be20482bce92635bcf514f15be11a9799887e7dd4ba3b6dce36653"
+    },
+    {
+      "bytes": 3974,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-handoff-boundary-gate/blocked-model-credential-return/patch-proposal-customer-handoff-boundary-receipt.json",
+      "purpose": "Patch Proposal Customer-Handoff Boundary Gate blocked-model-credential-return patch-proposal-customer-handoff-boundary-receipt.json fixture.",
+      "sha256": "5dceb7b1f559944896d23bf4fc0b3a2207f3e231cf6890236fe7056b325b8eb2"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -4875,11 +5008,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 8406,
+      "bytes": 8682,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "a4dd5a4a480f585cca15fbde8305dca5ab610535d66b6b7bcdc44e4c221f609f"
+      "sha256": "5a04c707e720be3a8782953f067afdbd61005f854920fd8e63a33610ad5f6e30"
     },
     {
       "bytes": 7722,
@@ -5712,35 +5845,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "63a067b1222e21c4402a7c306a4a815e7ef50d7fba4e2e1c9fe1fefc8c9ab861"
+      "sha256": "b7e960102089c3768e1627ebf1b12e86e29a2df87e01c91ec55f82dc0678babd"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "ff62a23fcce324ad37427fc316278b0f82173420b997f7853ac065fd552811e0"
+      "sha256": "148a4d795030c3c5b0e5ce315ff1b1e401dcbc05f497c6499b8c8aa6b80b2c37"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "b21a7d3d0b62636c8b2815c18516dac59127045f0367351d615ca6402a8f4b5d"
+      "sha256": "2536767ff99a443c060ffdacdc5dee0d607b26029542dcdac11a8adcd0733373"
     },
     {
-      "bytes": 145918,
+      "bytes": 145969,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "f28507a9fb6eb2e7617db53750d320efdf821b7caed001bcbc0c8b9419c9a65c"
+      "sha256": "7d0c5a5b26df14ccd2f7c9dd2050d76254c07e0990610e690f21b3a19065cf99"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "ac400e44eb1ff390e97b629ee396c25fa91cb6a60009770a449a6bd206adc1a0"
+      "sha256": "2f83ee25a2566aed1b5896c955684eb113a3be2eff85506aedb4569c37ca4f3b"
     },
     {
       "bytes": 26355,
@@ -5768,14 +5901,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "1f492858c00768643a9d8356e70f2b773197e742bcbe7a3a2e385160695d50d5"
+      "sha256": "04fb732ef6696a147c97cf0cc00f86698b9561a5574348fbc9351a3bfd80f9d2"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "0a59e20737ad156c906c474486918df75c370e3d9be8a7f251e96653d4621601"
+      "sha256": "4a2c7b7abc0ab125e80d188d0521291dd4569161bbb6ef42d1ace0e3230ee825"
     },
     {
       "bytes": 14544,
@@ -5796,14 +5929,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "c8f35a1b653a460b49d044930e8bc54f45bf7739997c9df5eaf7f6c51e7594b2"
+      "sha256": "429c12435b0d92eae0427cfec6a28f3497593c391569ed796a35bdfb314d90c6"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "880008b78898ab3a3edd24b5d0f1be161767b0095e6b7d05439fd49fff632c21"
+      "sha256": "e8eea3c83650b7eccc7bb61ce6018337e0b2d7e3faf0b15ba71b7ca469fd8724"
     },
     {
       "bytes": 14855,
@@ -6133,6 +6266,20 @@
       "path": "scripts/verify_patch_proposal_external_operator_completion.py",
       "purpose": "Verify Patch Proposal External Operator Completion fixtures, CLI output, and privacy boundaries.",
       "sha256": "b315ce7e0b9718b4d8b2fbc128d7f7aa8e6293dd5dc01ea3c4a9dea6c18e9fd8"
+    },
+    {
+      "bytes": 20252,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_customer_handoff_boundary_gate.py",
+      "purpose": "Build metadata-only Patch Proposal Customer-Handoff Boundary Gate artifacts.",
+      "sha256": "287c5ce04f355a0b33d55b3615677827b84e00713b2e395b5758198512276a51"
+    },
+    {
+      "bytes": 12357,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_customer_handoff_boundary_gate.py",
+      "purpose": "Verify Patch Proposal Customer-Handoff Boundary Gate fixtures, CLI output, and privacy boundaries.",
+      "sha256": "19c27c9829e7d09ec03c3dbd47ab911a5bea4203ac343326e790f4619bd6d94b"
     },
     {
       "bytes": 1610,
@@ -7612,11 +7759,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 165575,
+      "bytes": 168038,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "819451531739a1f5dad96a3df5bad6641a4256f73aaafe4e6ed20365a9d18e07"
+      "sha256": "e95a43a813e672c56f4b687a0942d39288e4645ddf15782ac363bf225802c828"
     },
     {
       "bytes": 68921,

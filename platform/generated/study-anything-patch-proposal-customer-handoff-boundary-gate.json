@@ -1,0 +1,226 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass",
+      "decision": "allow_customer_handoff_preparation",
+      "handoff_purpose": "prepare_customer_handoff_under_separate_delivery_control",
+      "status": "ready"
+    },
+    {
+      "blocked_reasons": [
+        "completion_not_accepted"
+      ],
+      "case_id": "blocked-completion-blocked",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "delivery_class_scenario_missing"
+      ],
+      "case_id": "blocked-missing-delivery-class-scenario",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "human_reconstruction_missing"
+      ],
+      "case_id": "blocked-missing-human-reconstruction",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "claim_boundary_missing"
+      ],
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "privacy_boundary_missing"
+      ],
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "sandbox_receipt_missing"
+      ],
+      "case_id": "blocked-missing-sandbox-receipt",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_customer_draft_rejected"
+      ],
+      "case_id": "blocked-raw-customer-draft",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_patch_return_rejected"
+      ],
+      "case_id": "blocked-raw-patch-return",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_payload_rejected"
+      ],
+      "case_id": "blocked-production-payload",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_customer_send_rejected"
+      ],
+      "case_id": "blocked-auto-send",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_return_rejected"
+      ],
+      "case_id": "blocked-secret-return",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_return_rejected"
+      ],
+      "case_id": "blocked-model-credential-return",
+      "decision": "block_customer_handoff_boundary",
+      "handoff_purpose": null,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "The gate proves only customer-handoff preparation may proceed under separate controls. It does not send, publish, deploy, or certify customer-visible content.",
+    "not_claimed": [
+      "customer-visible content included",
+      "customer message sent",
+      "external publication approved",
+      "production change approved",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "handoff_matrix": {
+    "automatic_customer_send_rejected": true,
+    "blocked_handoffs": 13,
+    "claim_boundary_missing_rejected": true,
+    "completion_not_accepted_rejected": true,
+    "delivery_class_scenario_missing_rejected": true,
+    "external_publication_rejected": true,
+    "human_reconstruction_missing_rejected": true,
+    "model_credential_return_rejected": true,
+    "privacy_boundary_missing_rejected": true,
+    "production_payload_rejected": true,
+    "raw_customer_draft_rejected": true,
+    "raw_patch_return_rejected": true,
+    "ready_handoffs": 1,
+    "sandbox_receipt_missing_rejected": true,
+    "secret_return_rejected": true,
+    "total_cases": 14
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_send_performed": "effect_boundary.automatic_customer_send_performed must remain false",
+    "external_publication_performed": "effect_boundary.external_publication_performed must remain false",
+    "handoff_package_type_escalated": "handoff package_type must remain metadata-only",
+    "missing_human_reconstruction_on_ready": "ready customer handoff missing check: human_reconstruction_present",
+    "model_credentials_returned": "ready customer handoff checks.model_credentials_returned must remain false",
+    "raw_customer_draft_injected": "patch-proposal-customer-handoff-boundary-receipt-v1 includes forbidden raw fields: ['$.raw_customer_draft']"
+  },
+  "privacy": {
+    "agent_endpoint_secrets_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "cookies_included": false,
+    "customer_visible_payload_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "keystrokes_included": false,
+    "model_calls_performed": false,
+    "mouse_coordinates_included": false,
+    "production_payload_included": false,
+    "raw_customer_draft_included": false,
+    "raw_diff_body_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_source_text_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove customer-visible handoff remains blocked unless the metadata-only boundary gate passes.",
+  "quality_gates": {
+    "accepted_completion_required": true,
+    "automatic_customer_send_blocked": true,
+    "claim_boundary_required": true,
+    "customer_visible_payloads_rejected": true,
+    "delivery_class_scenario_required": true,
+    "external_publication_blocked": true,
+    "human_reconstruction_required": true,
+    "privacy_boundary_required": true,
+    "production_mutation_blocked": true,
+    "sandbox_receipt_required": true,
+    "secrets_and_model_credentials_rejected": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-handoff-boundary-gate-v1.schema.json",
+      "schema_version": "patch-proposal-customer-handoff-boundary-gate-v1",
+      "sha256": "71780fcf2765365ae1d2e3a2fcb82f5b45ef6d05778866b6e038bfc68cbb7dbf"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-handoff-boundary-gate-v1",
+  "source_chain": {
+    "accepted_completion_receipt": "fixtures/patch-proposal-external-operator-completion/pass/patch-proposal-external-operator-completion-receipt.json",
+    "completion_report": "platform/generated/study-anything-patch-proposal-external-operator-completion.json"
+  },
+  "status": "pass"
+}

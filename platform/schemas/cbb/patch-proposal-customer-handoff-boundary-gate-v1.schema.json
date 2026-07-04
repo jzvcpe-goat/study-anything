@@ -1,0 +1,98 @@
+{
+  "$id": "patch-proposal-customer-handoff-boundary-gate-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Metadata-only Patch Proposal Customer-Handoff Boundary Gate report.",
+  "properties": {
+    "case_reports": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "allow_customer_handoff_preparation",
+              "block_customer_handoff_boundary"
+            ]
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "blocked"
+            ]
+          }
+        },
+        "required": [
+          "case_id",
+          "status",
+          "decision"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "properties": {
+        "customer_visible_payload_included": {
+          "const": false
+        },
+        "metadata_only": {
+          "const": true
+        },
+        "model_calls_performed": {
+          "const": false
+        },
+        "production_mutation_performed": {
+          "const": false
+        },
+        "raw_customer_draft_included": {
+          "const": false
+        },
+        "raw_diff_body_included": {
+          "const": false
+        },
+        "raw_patch_body_included": {
+          "const": false
+        },
+        "real_model_keys_included": {
+          "const": false
+        },
+        "user_owned_agent_credentials_included": {
+          "const": false
+        }
+      },
+      "required": [
+        "metadata_only",
+        "model_calls_performed",
+        "production_mutation_performed",
+        "customer_visible_payload_included",
+        "raw_customer_draft_included",
+        "raw_diff_body_included",
+        "raw_patch_body_included",
+        "real_model_keys_included",
+        "user_owned_agent_credentials_included"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "patch-proposal-customer-handoff-boundary-gate-v1"
+    },
+    "status": {
+      "const": "pass"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "privacy",
+    "claim_boundary",
+    "case_reports"
+  ],
+  "title": "Patch Proposal Customer-Handoff Boundary Gate",
+  "type": "object"
+}
