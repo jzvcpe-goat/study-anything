@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal Controlled Follow-up Feedback Boundary Gate</title>
+<body>
+<h1>Patch Proposal Controlled Follow-up Feedback Boundary Gate</h1>
+<p>Metadata-only local artifact. No model calls, daemon, production mutation, raw source text, or surveillance streams.</p>
+<pre>{
+  &quot;boundary_matrix&quot;: {
+    &quot;automatic_customer_sends&quot;: 0,
+    &quot;blocked_follow_up_transitions&quot;: 19,
+    &quot;customer_visible_follow_ups&quot;: 0,
+    &quot;customer_visible_sends&quot;: 0,
+    &quot;external_publications&quot;: 0,
+    &quot;model_calls&quot;: 0,
+    &quot;production_mutations&quot;: 0,
+    &quot;raw_follow_up_bodies&quot;: 0,
+    &quot;ready_follow_up_envelope_ref_sets&quot;: 3,
+    &quot;source_mutations&quot;: 0
+  },
+  &quot;boundary_rules&quot;: {
+    &quot;active_operator_or_host_platform_agent_reconstruction_required&quot;: true,
+    &quot;automatic_customer_send_blocked&quot;: true,
+    &quot;customer_visible_follow_up_blocked&quot;: true,
+    &quot;customer_visible_send_blocked&quot;: true,
+    &quot;delivery_trust_case_bridge_receipt_required&quot;: true,
+    &quot;delivery_trust_case_handoff_refs_required&quot;: true,
+    &quot;delivery_trust_case_ref_required&quot;: true,
+    &quot;dual_loop_ref_required&quot;: true,
+    &quot;emit_refs_only&quot;: true,
+    &quot;external_publication_blocked&quot;: true,
+    &quot;metadata_only&quot;: true,
+    &quot;model_calls_blocked&quot;: true,
+    &quot;passive_attention_rejected&quot;: true,
+    &quot;product_loop_ref_required&quot;: true,
+    &quot;production_mutation_blocked&quot;: true,
+    &quot;raw_follow_up_body_blocked&quot;: true,
+    &quot;source_mutation_blocked&quot;: true
+  },
+  &quot;case_reports&quot;: [
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass-customer-signal&quot;,
+      &quot;decision&quot;: &quot;prepare_metadata_only_follow_up_envelope_refs&quot;,
+      &quot;envelope_refs_created&quot;: true,
+      &quot;status&quot;: &quot;follow_up_envelope_refs_ready&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass-operator-signal&quot;,
+      &quot;decision&quot;: &quot;prepare_metadata_only_follow_up_envelope_refs&quot;,
+      &quot;envelope_refs_created&quot;: true,
+      &quot;status&quot;: &quot;follow_up_envelope_refs_ready&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [],
+      &quot;case_id&quot;: &quot;pass-host-platform-agent-signal&quot;,
+      &quot;decision&quot;: &quot;prepare_metadata_only_follow_up_envelope_refs&quot;,
+      &quot;envelope_refs_created&quot;: true,
+      &quot;status&quot;: &quot;follow_up_envelope_refs_ready&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;bridge_receipt_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-bridge-receipt&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;bridge_receipt_invalid&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-invalid-bridge-receipt&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;handoff_refs_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-handoff-refs&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;handoff_refs_mismatch&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-handoff-refs-mismatch&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;active_reconstruction_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;passive_reconstruction_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-passive-reconstruction&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;unsupported_reconstruction_source&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-unsupported-reconstruction-source&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;handoff_refs_mismatch&quot;,
+        &quot;product_loop_ref_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-product-loop-ref&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;handoff_refs_mismatch&quot;,
+        &quot;dual_loop_ref_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-dual-loop-ref&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;handoff_refs_mismatch&quot;,
+        &quot;delivery_trust_case_ref_missing&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-missing-delivery-trust-case-ref&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;raw_follow_up_body_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-raw-follow-up-body&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;automatic_customer_send_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-automatic-customer-send&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;customer_visible_follow_up_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-customer-visible-follow-up&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;source_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-source-mutation&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;production_mutation_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-production-mutation&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;external_publication_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-external-publication&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;model_call_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-model-call&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;secret_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-secret&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    },
+    {
+      &quot;blocked_reasons&quot;: [
+        &quot;model_credential_rejected&quot;
+      ],
+      &quot;case_id&quot;: &quot;blocked-model-credential&quot;,
+      &quot;decision&quot;: &quot;block_controlled_follow_up_boundary&quot;,
+      &quot;envelope_refs_created&quot;: false,
+      &quot;status&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;claim_boundary&quot;: {
+    &quot;current_claim&quot;: &quot;A Patch Proposal Delivery Trust case handoff may be converted into metadata-only customer follow-up envelope refs only after Product Loop, Dual Loop, Delivery Trust Case, and active operator or host-platform Agent boundary reconstruction evidence all match.&quot;,
+    &quot;not_claimed&quot;: [
+      &quot;raw follow-up body generated&quot;,
+      &quot;automatic customer send performed&quot;,
+      &quot;customer-visible send performed&quot;,
+      &quot;customer-visible follow-up performed&quot;,
+      &quot;source mutation allowed&quot;,
+      &quot;production mutation allowed&quot;,
+      &quot;external publication performed&quot;,
+      &quot;model call performed&quot;,
+      &quot;customer delivery completed&quot;,
+      &quot;human over-review replaced for all domains&quot;
+    ]
+  },
+  &quot;created_at&quot;: &quot;2026-06-28T00:00:00Z&quot;,
+  &quot;effect_boundary&quot;: {
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;study_anything_automatic_customer_send_performed&quot;: false,
+    &quot;study_anything_controlled_follow_up_envelope_refs_prepared&quot;: true,
+    &quot;study_anything_customer_visible_follow_up_performed&quot;: false,
+    &quot;study_anything_customer_visible_send_performed&quot;: false,
+    &quot;study_anything_external_publication_performed&quot;: false,
+    &quot;study_anything_production_mutation_performed&quot;: false,
+    &quot;study_anything_source_mutation_performed&quot;: false
+  },
+  &quot;isolation&quot;: {
+    &quot;ai_sandbox_has_attention_stream_access&quot;: false,
+    &quot;attention_layer_has_execution_authority&quot;: false,
+    &quot;daemon_or_hosted_service_started&quot;: false,
+    &quot;physical_isolation&quot;: true,
+    &quot;production_mutation_allowed&quot;: false,
+    &quot;structured_artifact_bridge_only&quot;: true
+  },
+  &quot;negative_fixtures&quot;: {
+    &quot;automatic_customer_send_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_automatic_customer_send_performed must be False&quot;,
+    &quot;automatic_customer_send_policy_injected&quot;: &quot;harness_policy.automatic_customer_send_allowed must be false&quot;,
+    &quot;blocked_receipt_with_envelope_refs&quot;: &quot;blocked receipt must not include envelope refs&quot;,
+    &quot;customer_follow_up_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_customer_visible_follow_up_performed must be False&quot;,
+    &quot;customer_follow_up_policy_injected&quot;: &quot;harness_policy.customer_visible_follow_up_allowed must be false&quot;,
+    &quot;customer_send_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_customer_visible_send_performed must be False&quot;,
+    &quot;customer_send_policy_injected&quot;: &quot;harness_policy.customer_visible_send_allowed must be false&quot;,
+    &quot;external_publication_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_external_publication_performed must be False&quot;,
+    &quot;follow_up_body_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1 includes forbidden raw fields: [&#x27;$.envelope_refs.follow_up_body&#x27;]&quot;,
+    &quot;model_call_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.model_calls_performed must be False&quot;,
+    &quot;model_call_policy_injected&quot;: &quot;harness_policy.model_call_allowed must be false&quot;,
+    &quot;production_mutation_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_production_mutation_performed must be False&quot;,
+    &quot;raw_follow_up_body_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1 includes forbidden raw fields: [&#x27;$.raw_follow_up_body&#x27;]&quot;,
+    &quot;ready_receipt_without_envelope_refs&quot;: &quot;ready receipt must include envelope refs&quot;,
+    &quot;source_mutation_effect_injected&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.effect_boundary.study_anything_source_mutation_performed must be False&quot;
+  },
+  &quot;privacy&quot;: {
+    &quot;agent_credentials_included&quot;: false,
+    &quot;agent_endpoint_secrets_included&quot;: false,
+    &quot;automatic_priority_rationale_included&quot;: false,
+    &quot;bearer_tokens_included&quot;: false,
+    &quot;biometrics_included&quot;: false,
+    &quot;controlled_follow_up_boundary_metadata_only&quot;: true,
+    &quot;controlled_follow_up_feedback_intake_metadata_only&quot;: true,
+    &quot;controlled_follow_up_outcome_metadata_only&quot;: true,
+    &quot;controlled_follow_up_rehearsal_metadata_only&quot;: true,
+    &quot;cookies_included&quot;: false,
+    &quot;customer_handoff_package_body_included&quot;: false,
+    &quot;customer_handoff_package_included&quot;: false,
+    &quot;customer_identity_included&quot;: false,
+    &quot;customer_payload_included&quot;: false,
+    &quot;customer_visible_follow_up_draft_included&quot;: false,
+    &quot;customer_visible_follow_up_included&quot;: false,
+    &quot;customer_visible_payload_included&quot;: false,
+    &quot;delivery_trust_case_body_included&quot;: false,
+    &quot;delivery_trust_case_bridge_metadata_only&quot;: true,
+    &quot;delivery_trust_case_candidate_metadata_only&quot;: true,
+    &quot;external_publication_payload_included&quot;: false,
+    &quot;eye_tracking_included&quot;: false,
+    &quot;follow_up_body_included&quot;: false,
+    &quot;follow_up_envelope_refs_only&quot;: true,
+    &quot;follow_up_outcome_receipt_only&quot;: true,
+    &quot;follow_up_preview_body_included&quot;: false,
+    &quot;follow_up_rehearsal_receipt_only&quot;: true,
+    &quot;handoff_refs_only&quot;: true,
+    &quot;keystrokes_included&quot;: false,
+    &quot;model_call_payload_included&quot;: false,
+    &quot;model_calls_performed&quot;: false,
+    &quot;model_prompts_included&quot;: false,
+    &quot;mouse_coordinates_included&quot;: false,
+    &quot;patch_proposal_brief_candidate_metadata_only&quot;: true,
+    &quot;priority_score_included&quot;: false,
+    &quot;private_customer_data_included&quot;: false,
+    &quot;product_loop_backlog_body_included&quot;: false,
+    &quot;product_loop_backlog_candidate_only&quot;: true,
+    &quot;product_loop_backlog_signal_metadata_only&quot;: true,
+    &quot;product_loop_brief_candidate_metadata_only&quot;: true,
+    &quot;product_loop_run_candidate_metadata_only&quot;: true,
+    &quot;product_loop_scenario_candidate_metadata_only&quot;: true,
+    &quot;product_owner_identity_included&quot;: false,
+    &quot;production_payload_included&quot;: false,
+    &quot;raw_acceptance_criteria_included&quot;: false,
+    &quot;raw_attention_trace_included&quot;: false,
+    &quot;raw_backlog_description_included&quot;: false,
+    &quot;raw_brief_body_included&quot;: false,
+    &quot;raw_customer_feedback_included&quot;: false,
+    &quot;raw_customer_payload_included&quot;: false,
+    &quot;raw_customer_reply_included&quot;: false,
+    &quot;raw_customer_request_included&quot;: false,
+    &quot;raw_delivery_case_included&quot;: false,
+    &quot;raw_diff_body_included&quot;: false,
+    &quot;raw_diff_included&quot;: false,
+    &quot;raw_eval_body_included&quot;: false,
+    &quot;raw_eval_dataset_included&quot;: false,
+    &quot;raw_eval_prompt_included&quot;: false,
+    &quot;raw_external_feedback_text_included&quot;: false,
+    &quot;raw_follow_up_body_included&quot;: false,
+    &quot;raw_follow_up_preview_included&quot;: false,
+    &quot;raw_patch_body_included&quot;: false,
+    &quot;raw_pr_comment_included&quot;: false,
+    &quot;raw_product_spec_included&quot;: false,
+    &quot;raw_report_text_included&quot;: false,
+    &quot;raw_repository_file_body_included&quot;: false,
+    &quot;raw_sandbox_log_included&quot;: false,
+    &quot;raw_source_text_included&quot;: false,
+    &quot;raw_spec_body_included&quot;: false,
+    &quot;real_model_keys_included&quot;: false,
+    &quot;real_secrets_included&quot;: false,
+    &quot;repository_secrets_included&quot;: false,
+    &quot;screenshots_included&quot;: false,
+    &quot;send_payload_included&quot;: false,
+    &quot;signed_urls_included&quot;: false,
+    &quot;source_mutation_payload_included&quot;: false,
+    &quot;spec_eval_candidate_metadata_only&quot;: true,
+    &quot;user_owned_agent_credentials_included&quot;: false
+  },
+  &quot;purpose&quot;: &quot;Prove Patch Proposal Delivery Trust case/handoff refs can prepare only metadata-only customer follow-up envelope refs after active operator or host-platform Agent boundary reconstruction, while customer sends and irreversible effects remain blocked.&quot;,
+  &quot;schema_files&quot;: [
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-boundary-gate-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;patch-proposal-customer-feedback-controlled-follow-up-feedback-boundary-gate-v1&quot;,
+      &quot;sha256&quot;: &quot;530d93d58a7d57ceb6f318bba85fe080a514b33920c854f3af203d1b3db110d5&quot;
+    },
+    {
+      &quot;path&quot;: &quot;platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1.schema.json&quot;,
+      &quot;schema_version&quot;: &quot;patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1&quot;,
+      &quot;sha256&quot;: &quot;54b6250ed4c508e5cbe901ac3de4c7aa7eae5e4efd26c0c8d5057cd6cf9cbe0b&quot;
+    }
+  ],
+  &quot;schema_version&quot;: &quot;patch-proposal-customer-feedback-controlled-follow-up-feedback-boundary-gate-v1&quot;,
+  &quot;status&quot;: &quot;pass&quot;
+}
+</pre>
+</body>
+</html>
