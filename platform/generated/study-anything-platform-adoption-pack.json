@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 5278515,
+  "archive_bytes": 5348192,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "df209a94706b07304d49cef9fb5863c71b8de29612e1755d5ae873688818d889",
+  "archive_sha256": "7a8eceffb3964a9b7e1bf0efb23a54b08348ce05f6bd903778b471d872aae9db",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -449,11 +449,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/product-runway.md",
-      "bytes": 15414,
+      "bytes": 16182,
       "kind": "operator_doc",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "1d6cd0b5ced523d1c74f881a27c26de4866c622e1833c973ff8342f4bb810f89"
+      "sha256": "e8b7518927a917fb51bb18f3f2cca91adcbe7fd0dd29467b3b66cb563fffb8cb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/cognitive-loop-contracts.md",
@@ -686,6 +686,14 @@
       "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.md",
       "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake guide for metadata-only response signal records.",
       "sha256": "16a72f6dc371e06641bb8af435c9e9140c96f2d6b59021599dab3194a99a1e48"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+      "bytes": 2032,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge guide for metadata-only Product Loop backlog signal refs.",
+      "sha256": "3ba5ff629126c3067be576c5ed52a129980c0b25068184b718af5b9236d2a2d3"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/delivery-trust-case-harness.md",
@@ -1512,6 +1520,14 @@
       "sha256": "a95ef8fba5ef871410099b200a5160e44c244705994d8629633b80b8554ce93c"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge-v1.schema.json",
+      "bytes": 2303,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge-v1.schema.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge report JSON Schema.",
+      "sha256": "918fa2e6a01d1458c3a4ea5270d01c10cf9dc314a9215a11db53cfdfcdc812e1"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
       "bytes": 5318,
       "kind": "schema",
@@ -1809,11 +1825,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 543994,
+      "bytes": 557886,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "72dc22a5f41fd6a07f01eff041012c9fa286c037b98d8504a3c9dba4996235ad"
+      "sha256": "3bb023bd817155116728a3d53a1e1402eb64e96d829e5b6ad1f4094ae1c087b8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -2592,6 +2608,30 @@
       "sha256": "063b3eaa10a3c7e6027a06a6388d8e4f04748f6e8e698039e10bc48fe60022f5"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 13787,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge metadata-only verification report.",
+      "sha256": "56eb76a1f3a0274581d65fcc5ab60d6ac674ba4a3a27f366149766d4af7db822"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+      "bytes": 3491,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge operator summary.",
+      "sha256": "ccea9658d115e303ed3cbdd8c9064d4cc568dfe663bda59fc8380459bf3fb35a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.html",
+      "bytes": 3654,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.html",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge static HTML verification report.",
+      "sha256": "a3807f5e63d6719e3f527e3e5319db640850e01570a7f5f6525ad385cc3a55ae"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-harness.json",
       "bytes": 5766,
       "kind": "submission_report",
@@ -2613,7 +2653,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "334c05d25acfef2454cec5ba11f08d6e2df287513a6ef1fca41a611e6c43d7bb"
+      "sha256": "e89125237e303453883a437148419e56f4140074a150056fd84668e0f787e56f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
@@ -2621,15 +2661,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "919ac034cdf56848cc0d4b72ad36514914883ab6a29a993809203bcf2a236c1e"
+      "sha256": "d8edc617cbcfe0ca4a3a9baff8807bc850f08f05d7cbded1e844ef3fb363108e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.zip",
-      "bytes": 99361,
+      "bytes": 99484,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "76816c2da73db3405deb83f54a47a37b6394cc1d2b540f3c1725a553309627f7"
+      "sha256": "c71bacde61ffefd9015e4751108ec68e2279db6064f2cb700ca8e05f93954183"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
@@ -2637,7 +2677,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "74c4762be73cb07113abad1059f09f14ec488a10de79723e7bbb6d8d4f8bc948"
+      "sha256": "787e0b73b4cbba4c5e84e2d837d3d74a95c09009ff83d4aca31fd3447f862b49"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
@@ -2645,7 +2685,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "99aa3d34165fb55b232747450175633fd6a88fe1e39370b28ab8e34c5c08a910"
+      "sha256": "b49c7d9d06e7ec0ccabf09e1af707aaccfae83cf5778f64c5d48db453ac24ec6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-code-review-delivery-class.json",
@@ -3189,7 +3229,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent workflow install smoke verification report.",
-      "sha256": "daf6bf8547e6172e566a6243c6643d863328e0788794b8c337670e8463da0027"
+      "sha256": "3b3a1f7a9fee5e671cac1fea51be47e84f9472d9befc298380c19de03f37df70"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
@@ -3197,7 +3237,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "fac6acdacb0e37e458508efa4843f55b2bfa27adb60b8fdb7e6e9acbed5a7502"
+      "sha256": "63eb66c0eb99a55687c9ab21fbaf11ea02b2d618123697e4decc635780bdeb65"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
@@ -3277,7 +3317,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "3aad08ee1bebd0dc7c663c306cc96fb07f9b79728229dc6d40baca97019819b3"
+      "sha256": "256260e97fc561e6a081d6273e14a19ec0c78b6c46ecca07c848eacec9a5b5d0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
@@ -3285,7 +3325,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "dd83f56cc190c4fec5ee3e31e9b2e3269fb312676968d8d0cae8a053e26dc1f1"
+      "sha256": "2d97d73a4f0b97e24635e2c345c85e6c9eef8c4d4a7c7e9db404f665deb2101b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
@@ -3293,7 +3333,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "6846a38e5b0a26bab254e16b9f7df3dde887f872c71ccfe2572e8da0eda8922f"
+      "sha256": "4641bb1666a808b4bbefa0426bb03352dfc55827cdd228950d6cafbc385b3c57"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-handoff-checklist.json",
@@ -3301,7 +3341,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "bdf4ab9d4504bf1f43d9591986d74032d10becf7bc252dfdfaed3fd093c4f053"
+      "sha256": "be8334151c043d2029dc86532360e1396e70e5b238d0eb03f683f734a2a673e9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-launch-acceptance-ledger.json",
@@ -3349,7 +3389,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "412c24c2a205f43d68f5f8903b8ef21e0bc32641d4895715c2a8805df428274d"
+      "sha256": "cb74f04a9d58dd46000c25cbd843b81f591dd0238e11febfd94b944702629bc0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -3357,7 +3397,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "99ee2cbe3763f29fb984f3e8b5747903e4dbd09c0fcfd46e5542b4e74e918fb8"
+      "sha256": "45947bc4296cd330a97df65dffbe2ad55c987e64c3742724238a3df2930526c3"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -3685,7 +3725,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "7fb9c04e1cc4d377f91a61c76dec0d763b9b9bc9f2cafa0a133a3191df41ebb4"
+      "sha256": "40bf5acc6f2c6eb0663042fd7091ce2130a926f3342d7074f74664ff719d2bc7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -3693,7 +3733,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "eb69cf1a95075f0d027c411f28b128a2bc6d8e482d876d6c7a3b54a07abd4749"
+      "sha256": "cab6bf59339f7ffbb0fd8d547114a8f99eccbae0b48701688220f67b9068a682"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
@@ -3701,7 +3741,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "682482160db14948215202256c755dee974f7132663961fe4c1260f0233e9d79"
+      "sha256": "9a87b73ef057a2f7bcfa5f3fb938307b5d7b205e3f6ecf6ab4bcc3e492b1800c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -3709,7 +3749,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "06246b4d722e1101614b298292c456172a5143ed43042139923f617123a58b6a"
+      "sha256": "a15a9c02b1ecde90c6bd1ffd14893d9b1d1a36c742226d2403e58c11d6a8f8e2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -9688,6 +9728,174 @@
       "sha256": "defddec0f663dbc71654c3397df4d28137504daa39981f97c802bd2e44de9de4"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-customer-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 14902,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-customer-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-customer-signal patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "707deda7fe3604fa567c57bcc9c35aeae6d34a0141ebc1c846ea7c121e1c1a5c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-customer-signal/product-loop-backlog-signal.json",
+      "bytes": 7067,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-customer-signal/product-loop-backlog-signal.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-customer-signal product-loop-backlog-signal.json fixture.",
+      "sha256": "47d9952f4eba32cdb114ec81e9a6932f6c3a785f16fd1160bff7ac87157304b2"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-operator-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 14902,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-operator-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-operator-signal patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "4f510e001c2187025df32102c1de4b8a4d609e0bdd4b6078651d0f799630345c"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-operator-signal/product-loop-backlog-signal.json",
+      "bytes": 7067,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-operator-signal/product-loop-backlog-signal.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-operator-signal product-loop-backlog-signal.json fixture.",
+      "sha256": "1394c896af9df3767e501fc66850f9032d6a55638771346a4bcd77b749c06d70"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-host-platform-agent-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 14984,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-host-platform-agent-signal/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-host-platform-agent-signal patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "928226bd1ac56b0f473e4f39c5d44888254ea6ed9c951fb62eeaf85beab2fb8f"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-host-platform-agent-signal/product-loop-backlog-signal.json",
+      "bytes": 7116,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/pass-host-platform-agent-signal/product-loop-backlog-signal.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge pass-host-platform-agent-signal product-loop-backlog-signal.json fixture.",
+      "sha256": "ece3bb7789e380da4e9450c9d5080009f1b738ad959c216fb1e3e0785acca4b8"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-intake-blocked/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7567,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-intake-blocked/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-intake-blocked patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "9d489aa1cf0bf2d5a1bb239cc86179760dd0753e44b78ede8410c0bfffa2f22a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7579,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-missing-product-loop-target patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "c8a2f4122194265a50c74ab9df1ef2474bf49bc5fabe1211556cdc743d9a467a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-automatic-priority-assignment/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7592,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-automatic-priority-assignment/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-automatic-priority-assignment patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "dd0d7d626f56f15fb480b7016011acaf58ae175606a139c07ff73935894755fc"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-automatic-follow-up/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7562,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-automatic-follow-up/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-automatic-follow-up patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "7a7298b433f9d290b539bef5a23882fa644e46c03d790d5411c185b061de1565"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-product-loop-backlog-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7592,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-product-loop-backlog-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-product-loop-backlog-mutation patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "8007533d92c74a7f22df8dc4dd20fa2a46d3d77eea6dce4ca6b934f6493d701d"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7550,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-source-mutation patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "0391122d85b3c53632056a47cbcbe58eac9dcaee3c3ca388bb747fcf2c46fa38"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7562,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-production-mutation patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "f46dc03cf72dda88ee720502218d2c5008a980daf22afd1cda134300d5a39aa6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-external-publication/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7565,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-external-publication/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-external-publication patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "241592d3448c8a093c3fbdc4666877159c3ca8b3050a620fca75bfbd261b41d3"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-raw-customer-reply/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7559,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-raw-customer-reply/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-raw-customer-reply patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "e0ae6cdc68fd77c25ae178e14005ff6f851f056477eeb470bb6b6b348e5b041a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-customer-identity/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7556,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-customer-identity/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-customer-identity patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "2c84298e91a41484de2e56279d57b78d44fb0a73380fbee0fec7eeb77394b17a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-private-customer-data/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7568,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-private-customer-data/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-private-customer-data patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "f388366a4f64050619a1e76f62aa9d6316bbdc44634424684d925f40db6f9299"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-pr-comment-body/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7550,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-pr-comment-body/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-pr-comment-body patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "e4b5b0aa40ab5b87bdd40a118611aad03a2e5ab4a56471b9adca470c8d352bbf"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-model-call/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7535,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-model-call/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-model-call patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "9ceb8a41e2a369fba54c55a2a7348630038333eb3b8f631d311a67df5a68ed90"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-secret/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7523,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-secret/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-secret patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "8c33af5c6ed8b060f7c22be25a3a744eecc48c4c91fb1446ccd9c5278423f625"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "bytes": 7553,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge blocked-model-credential patch-proposal-controlled-follow-up-feedback-backlog-bridge.json fixture.",
+      "sha256": "2d0393f844abc134e739368a69a3b4520763da139a69ab1c59f6d32cbf9f01de"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -10933,7 +11141,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "c2a36e43fb714daaaafc3da03e5225bc0ae4c1ae630158fbb6d96ed0efc4b775"
+      "sha256": "cee6be8f0bdc08b511dbe3be2f8314e583b80d6a830b2506b84739d0c60827f9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -10941,7 +11149,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "fbfbbfdb9378e270b8664a26fa19b7aef9fa1d5da911e75f5d8fe7fd10d24f75"
+      "sha256": "469ad89d6dc3165a188a00d48ed6d578a4e06abf29b31b21e1ac610a3834096b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
@@ -10949,15 +11157,15 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "43bfffc1edf403df9bafafd39a0ae427b42b1dfacd891b8c13f999c28b660bc8"
+      "sha256": "6eaf5adf66623a5a4f4774280ecfcb4b2deca5104205d5bfacb09edc30e34db1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.zip",
-      "bytes": 147090,
+      "bytes": 147212,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "29724e87c8810bf7e0aeaa42cbf450665b57aec7211953d01323341ac8d22e78"
+      "sha256": "a8bc7c81f57f78707cd8a4cfd70b168dc7bba125d7a45f14e912d333c44b1b8c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
@@ -10965,7 +11173,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "2d534807a6e645c450f19197daeb81f4e85a01474d5687e6ab5444f5dbfd9949"
+      "sha256": "b809ae1e6590659c7c2ba3549f6a2a2026eeabb387b321f0e67f2a01359abd5f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_trust_evidence_handoff_pack.py",
@@ -10997,7 +11205,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "243111bbd99ef075084c75359556eda8ef659f9c168116fb625a59ae39a10c59"
+      "sha256": "799e0d19fc55c02204246bbe672e5caa3ef7b60b623fb01e08895938586cebf3"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-acceptance-drill.md",
@@ -11005,7 +11213,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "565d33d6a027c0990f8074f7d0d00176b65373e3a805777fdb9397f8cfb5f5ae"
+      "sha256": "55745fbdedcf4fc2caf6a0e5bc027b61383e82e5ceb3cbd2081062271fa9fd0a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_trust_evidence_acceptance_drill.py",
@@ -11029,7 +11237,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "b05d793b7fe49ce61318af0b0adde83c67b55b57d5df97286acfeef65f8eff09"
+      "sha256": "51f9fa8e4baeaba1efdb002bd1ac00bf3c754c758d64e35968ad37cac5036759"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-controlled-handoff-runbook.md",
@@ -11037,7 +11245,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "00df28d40b655db990df3f1de13b9a0ce27105b54dd24a0f6cb5337919557233"
+      "sha256": "6e873f84c795409369208a748edad04936a19f0ef7faa63397977d92a4af315a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_controlled_handoff_runbook.py",
@@ -11654,6 +11862,22 @@
       "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_intake.py",
       "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake fixtures, CLI output, and privacy boundaries.",
       "sha256": "1a72baaaf1bd80ee84949d13610a8c310fa9d096438e061e2280bbc02581071b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+      "bytes": 27685,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+      "purpose": "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge artifacts.",
+      "sha256": "ad01752d79a85fd1ea01753ec01fb0fadb21b9b4d4ad40a9a2625d668beadd93"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+      "bytes": 16993,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+      "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge fixtures, CLI output, and privacy boundaries.",
+      "sha256": "4011797345c8666c9c896518d220de42a07bf851d5566715e83982fdaa4cee46"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-handoff-rehearsal-contract.md",

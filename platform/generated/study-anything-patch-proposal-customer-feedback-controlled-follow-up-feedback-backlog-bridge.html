@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Patch Proposal Controlled Follow-up Feedback Backlog Bridge</title>
+<body><pre># Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge
+
+Metadata-only proof that accepted controlled follow-up feedback intake receipts can emit Product Loop backlog signal refs without assigning priority or mutating a live backlog.
+
+- status: `pass`
+- schema: `patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge-v1`
+- queued backlog signals: `3`
+- blocked backlog signals: `15`
+
+## Claim Boundary
+
+An accepted controlled follow-up feedback intake receipt can become a metadata-only Product Loop backlog signal ref. The signal is not prioritized, not written to a live backlog, not sent to a customer, not executed, and not promoted to production.
+
+Not claimed:
+- raw customer reply included
+- customer identity included
+- private customer data included
+- automatic priority assigned
+- Product Loop backlog mutated
+- Study Anything sent a follow-up
+- Study Anything changed source
+- Study Anything changed production
+- Study Anything called a model
+- customer satisfaction certified
+
+## Cases
+
+- `pass-customer-signal`: `queued_for_product_loop` / `emit_product_loop_backlog_signal` / signal: `True` / reasons: none
+- `pass-operator-signal`: `queued_for_product_loop` / `emit_product_loop_backlog_signal` / signal: `True` / reasons: none
+- `pass-host-platform-agent-signal`: `queued_for_product_loop` / `emit_product_loop_backlog_signal` / signal: `True` / reasons: none
+- `blocked-intake-blocked`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: source_feedback_intake_not_accepted
+- `blocked-missing-product-loop-target`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: product_loop_target_missing
+- `blocked-automatic-priority-assignment`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: automatic_priority_assignment_rejected
+- `blocked-automatic-follow-up`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: automatic_follow_up_rejected
+- `blocked-product-loop-backlog-mutation`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: product_loop_backlog_mutation_rejected
+- `blocked-source-mutation`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: source_mutation_rejected
+- `blocked-production-mutation`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: production_mutation_rejected
+- `blocked-external-publication`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: external_publication_rejected
+- `blocked-raw-customer-reply`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: raw_customer_reply_rejected
+- `blocked-customer-identity`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: customer_identity_rejected
+- `blocked-private-customer-data`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: private_customer_data_rejected
+- `blocked-pr-comment-body`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: pr_comment_body_rejected
+- `blocked-model-call`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: model_call_rejected
+- `blocked-secret`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: secret_rejected
+- `blocked-model-credential`: `blocked` / `block_product_loop_backlog_signal` / signal: `False` / reasons: model_credential_rejected
+</pre></body></html>

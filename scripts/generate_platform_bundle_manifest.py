@@ -654,6 +654,38 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_ARTIFACTS 
     case_id: ["patch-proposal-controlled-follow-up-feedback-intake-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-intake-blocked",
+    "blocked-missing-product-loop-target",
+    "blocked-automatic-priority-assignment",
+    "blocked-automatic-follow-up",
+    "blocked-product-loop-backlog-mutation",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication",
+    "blocked-raw-customer-reply",
+    "blocked-customer-identity",
+    "blocked-private-customer-data",
+    "blocked-pr-comment-body",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-feedback-backlog-bridge.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_CASES
+}
+for _case_id in (
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+):
+    PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_ARTIFACTS[
+        _case_id
+    ].append("product-loop-backlog-signal.json")
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1360,6 +1392,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -2182,6 +2229,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake guide for metadata-only response signal records.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge guide for metadata-only Product Loop backlog signal refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2580,6 +2632,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-intake-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Feedback Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge report JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -3175,6 +3232,17 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-backlog-bridge/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_BACKLOG_BRIDGE_ARTIFACTS[
+            case_id
+        ]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -4595,6 +4663,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_intake.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
