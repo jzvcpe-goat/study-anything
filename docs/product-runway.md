@@ -287,6 +287,18 @@ The completed chain now has these layers:
   automatic execution, customer contact, backlog/source/production mutation,
   Delivery Trust Harness skips, external publication payloads, model calls,
   secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Product Loop Brief Intake Gate: reopen-intake Spec/Eval Authoring receipts
+  and Product Loop brief candidate refs can emit only metadata-only Product
+  Loop scenario/run candidate refs after active developer/product-loop boundary
+  reconstruction, preserving the full reopen-intake Spec/Eval Authoring
+  evidence chain while missing or blocked authoring receipts, missing refs,
+  missing claim/privacy boundaries, raw brief/spec/eval/follow-up/customer/
+  backlog data, customer identity, automatic backlog creation, automatic
+  prioritization, automatic execution, customer contact, backlog/source/
+  production mutation, Delivery Trust Harness invocation/skips, external
+  publication payloads, model calls, secrets, and model credentials remain
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -329,20 +341,20 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 
 ```text
 Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
-Product Loop Brief Intake Gate:
-consume reopen-intake Spec/Eval Authoring receipts and Product Loop brief
-candidate refs, then emit only metadata-only Product Loop scenario/run
-candidate refs after active developer/product-loop boundary reconstruction. It
-must reject missing or blocked Spec/Eval Authoring receipts, missing brief
-candidate refs, missing gate/bridge/closure/outcome/action/actor/intake/backlog
-or Product Owner refs, missing claim/privacy boundaries, raw brief/spec/eval/
-follow-up/customer/backlog data, customer identity, automatic backlog creation,
-automatic priority assignment, automatic execution, customer contact,
-backlog/source/production mutation, Delivery Trust Harness invocation or skips,
-external publication payloads, model calls, secrets, and model credentials, and
-it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
-plus boundary gate plus rehearsal plus outcome plus loop-closure plus
-reopen-bridge plus reopen-intake-gate plus reopen-intake-backlog-bridge plus
-reopen-intake Product Owner plus reopen-intake Spec/Eval Authoring evidence
-chain.
+Delivery Trust Intake Gate:
+consume reopen-intake Product Loop scenario/run candidate refs, then emit only
+metadata-only Delivery Trust case candidate refs after Product Loop, controlled
+failure, attention reconstruction, and Dual Loop gate evidence are present. It
+must reject missing or blocked Product Loop run refs, missing Spec/Eval
+Authoring receipts, missing reopen-intake chain refs, missing controlled-failure
+or attention-reconstruction receipts, missing claim/privacy boundaries,
+AI-review-only evidence, raw brief/spec/eval/follow-up/customer/backlog data,
+customer identity, automatic execution, customer contact, backlog/source/
+production mutation, Delivery Trust Harness direct invocation/skips, external
+publication payloads, model calls, secrets, and model credentials, and it must
+preserve the full Product Loop plus Dual Loop plus Delivery Trust Case plus
+boundary gate plus rehearsal plus outcome plus loop-closure plus reopen-bridge
+plus reopen-intake-gate plus reopen-intake-backlog-bridge plus reopen-intake
+Product Owner plus reopen-intake Spec/Eval Authoring plus reopen-intake Product
+Loop Brief Intake evidence chain.
 ```
