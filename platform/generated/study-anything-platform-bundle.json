@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "ec34a1ed24d653c999d35900d6b8a988a996ae5e7b98cd58a8843e6a57773d35"
+      "sha256": "e8bf2b69be1a6c6b28c1d8630eaf06b66b231fbc1c9beb18d3f12ad95b10365f"
     },
     {
       "bytes": 1939,
@@ -304,39 +304,39 @@
       "sha256": "84c9807e9a61dc8524e59d6dd44ad5569f2143eb5eee7dc199819e8b0590be2a"
     },
     {
-      "bytes": 29926,
+      "bytes": 29927,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "f27a53af9dc7ee3d5ca28a356276845a34a6a14884069fe8949beeb0dd070a58"
+      "sha256": "289ecc9b76dd79b25c06398bc48fe011de3a5d788f60d2a0e19eb8691885dc23"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "5820ad5e70faede780678a4895dac7d833f260b5b318e8f61efd620449bc0b92"
+      "sha256": "39a84643fd78a33a59643d89a3340e1852b1b8f7f152947659926728f52d3976"
     },
     {
-      "bytes": 99781,
+      "bytes": 100021,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "3360c464a3650358802b99bc437a1cfe4ae405f0490642eed6c549a72d5bf551"
+      "sha256": "0e4611b3bf6bc6eacdf6df5ca02f941ab582cc2739ceaa22814f6a59a87bf22c"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "d544dbc32d228e95ee2a4fddaa2cb34fe090efb36f2778c2df12f077aeb411c3"
+      "sha256": "88ed5e8d8711136704c58f5a97f929d7130ce538b98d27e02c4a12f1533ca5ac"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "c4771b09bbe8abef56a3b59063750dff9572f3c0647cfed5dd0dfdfc23d12d41"
+      "sha256": "708e2fe300e8c64182e064c940b08c88843feed47a61e3ce1771918b7bd5409d"
     },
     {
       "bytes": 3502,
@@ -1221,6 +1221,27 @@
       "sha256": "e82bdb02439e1b50499792e8ff6c4d9afa0e1f9f313e4e0f3bd91a515709beaf"
     },
     {
+      "bytes": 19162,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge metadata-only verification report.",
+      "sha256": "3087ccdab468090160717ef20dcae20cf7d974d55a0e5899f4ac759de43edfe6"
+    },
+    {
+      "bytes": 5363,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge operator summary.",
+      "sha256": "2dd3f44115a63fec07b648113b5573347f09e243f923d2a6968d0acb319c1e0b"
+    },
+    {
+      "bytes": 5540,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge.html",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge static HTML verification report.",
+      "sha256": "d8917acf7520572d496f9ca51f64406677f4c559c336bc24a7eeacd6b5fb34ef"
+    },
+    {
       "bytes": 7536,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-class-registry.json",
@@ -1561,14 +1582,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "b4400ec95a24762afb8de07bafcd8e2d0c9fc755abc635aed6a8a8adeeb32aa3"
+      "sha256": "3d39f86db3e9d15f741c3f7facf234e1929e4c20e4be6502180fc0fcbff3ad06"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "2a6d9dc617e0f3087e756ce34a3b5b99217e70ea42d0ada6e7ed7af731895b10"
+      "sha256": "eb4405ac52b2bfaea6024baeec765564f2d6685e3674b160f1ef079fe4bbb549"
     },
     {
       "bytes": 2466,
@@ -1638,28 +1659,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "0d069833eb1f61f2f5b235c142431f4ce9277869f149432abc215c0f93c5d301"
+      "sha256": "ce853062f7051a5d8e4a9537ee7b6a5e6d0a77ace6e7df2f46127c4bb8ff9f97"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "3f09e88a0d77bca81054d50accbd3502d78f9408b99bbfba4c368e21a5a18427"
+      "sha256": "62b053cfbb4f90452ecd33435c45992b084ac07980d3c53e8e29a666e2a963a9"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "ab1f90cc3cb622bd99833b896b7a37fe414e6e7f0489ffe03700b771b3799a59"
+      "sha256": "b41904696702603b74c114d0899eb914a00d76636dcdf3899056806f36e60edb"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "9009182bf8a42e8b259c40c07342464ed351707455cc1da77507ae5f1d13f77b"
+      "sha256": "3402ef40791f00feee67e3ea665c8ecbecac4dac09e7ddfbeae96c829c755b58"
     },
     {
       "bytes": 9410,
@@ -1701,7 +1722,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "f2a56a87a9b8752ac2b229a4aad61775f72621d646273f07fefb98fec13ab8fa"
+      "sha256": "33c7066c58f215cef7af2bc40a0e259611870e335737470f2a73e2b7a6e4739e"
     },
     {
       "bytes": 107336,
@@ -1869,28 +1890,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "2ae2784722d4fb8e52891affe89122deb82f4e1a141fe242af2b6f8526081813"
+      "sha256": "6e0ac575d969c61cb01e073c5bb8aefba56f46da2f200a70f27c287d05458d62"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "b2e7334cdefbbb140f14ef55d092e0d7736740b81016a7384565b79b81072611"
+      "sha256": "fe61873713d64dd04200cc01ba9b4c9387775fa1aea32f50c6e69899ac5ccfd1"
     },
     {
-      "bytes": 257558,
+      "bytes": 257555,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "b7de9d9f68147473a448d51128853de96b8197f9c9571ab11edd11a33becd14c"
+      "sha256": "44b72f9891f458a652b61e5b3692d1349d08985685c2c4a76ec4fed2106e5411"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "88dc27e1fdc92689442ff660fe707caeca37add1bd0b3a86e3638882f0fda8ec"
+      "sha256": "3495b10ae96c8f81893e88705c37485250e6c9db3e92a07177ba0d69301837c5"
     },
     {
       "bytes": 10417,
@@ -2451,6 +2472,13 @@
       "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-intake-gate.md",
       "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Gate guide for metadata-only Product Loop intake item refs.",
       "sha256": "22e1a176dfc0d831469bec20bb7d00d00d60f65f3bd92a3cc5d12168943c823d"
+    },
+    {
+      "bytes": 2275,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge guide for metadata-only Product Loop backlog signal refs.",
+      "sha256": "318181226284a4a63ba7736702a925366e15a12ccbff6e4af2a0114c15172daf"
     },
     {
       "bytes": 2206,
@@ -3172,6 +3200,13 @@
       "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-gate-receipt-v1.schema.json",
       "purpose": "Patch Proposal Controlled Follow-up Feedback Reopen Intake Gate Receipt JSON Schema.",
       "sha256": "053c2294c0666cc9915853bc86e918ac0e5b6bec0d69bd0db65d2250dc233276"
+    },
+    {
+      "bytes": 2345,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge-v1.schema.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge report JSON Schema.",
+      "sha256": "dd890b6cb4212dc4f3447884be4c475ca410801374d2d1603322eb9cad18e030"
     },
     {
       "bytes": 5318,
@@ -9313,6 +9348,202 @@
       "sha256": "c627b54a158798adbf2eaf4fb8824fd9730cd6acc4728ddea09e88e639d9bfb1"
     },
     {
+      "bytes": 20417,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/pass/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge pass patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "eb67402fb239caecee5adf9898e7b2dd93da2bf50c82e1801773e81b7c1c0d89"
+    },
+    {
+      "bytes": 9940,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/pass/product-loop-backlog-signal.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge pass product-loop-backlog-signal.json fixture.",
+      "sha256": "084eb653c2a1e780ab97f384046f7d0ac1afe4584717d3d1ec1628ecc13b0724"
+    },
+    {
+      "bytes": 9688,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-gate-receipt/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-gate-receipt patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "da16764b429b7a2e0017bf609b173e4e39face579165b8811a89ce41ad2f8828"
+    },
+    {
+      "bytes": 10195,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-gate-blocked/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-gate-blocked patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "cee75e843b8e55eeaa3325ac43eae99cde36e21aa9372d2f58061ad9ee176f2c"
+    },
+    {
+      "bytes": 10154,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-bridge-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-bridge-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "8e8eb845b08b204ec52b5d6fb06707df59aec23c57eb7650ee34e87e0260b95a"
+    },
+    {
+      "bytes": 10143,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-closure-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-closure-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "b130cd6f97560c64da2b306893e9df919046ff4c3ca2cc8b6d5168c6b243fc71"
+    },
+    {
+      "bytes": 10143,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-outcome-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-outcome-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "9a77d33b43befcec6a77979384dc979075de98b5cc3005a4719e15b1e85d67aa"
+    },
+    {
+      "bytes": 10140,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-action-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-action-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "4ad9aeecb536cf6c4455d0cb5cb1430c434d76548793f809cb396df1d4c50a44"
+    },
+    {
+      "bytes": 10146,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-actor-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-actor-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "2b2ca9b17ff5f0217ca8dee9d4422333a7e0d379f296eb18c76f922425e76be6"
+    },
+    {
+      "bytes": 10170,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-intake-candidate-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-intake-candidate-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "047f379bbff83fd794dd9a9f38a43c5c696c6262275029003c23762f1166502c"
+    },
+    {
+      "bytes": 10168,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-intake-item-ref/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-intake-item-ref patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "857a0d5c1767d7580eda8d468d970013b8e41bb1ef6e9412f82174b41f3f7afa"
+    },
+    {
+      "bytes": 10167,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-product-loop-target/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-product-loop-target patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "826745e19be56ee90ab43d8a908b4ebcb530d2881f58b5381397cc6347097b64"
+    },
+    {
+      "bytes": 10152,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-claim-boundary/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-claim-boundary patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "6355053d2f874ede681380571097be5b8e9716e2e252995fda84f393c23e1ce3"
+    },
+    {
+      "bytes": 10158,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-missing-privacy-boundary/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-missing-privacy-boundary patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "a2ae4364badc3632bca12b81268a5386085185d53653e26f343776700f616774"
+    },
+    {
+      "bytes": 10147,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-raw-follow-up-data/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-raw-follow-up-data patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "0bae654d3b23856420596835b041b5a7a5bd4dc335f29adbbeb0d25aa54bc095"
+    },
+    {
+      "bytes": 10144,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-raw-customer-data/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-raw-customer-data patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "1954b41d61143330297f4ff983d37e2510792d04eb9d885265865ee509a7ff7e"
+    },
+    {
+      "bytes": 10144,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-customer-identity/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-customer-identity patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "3fd6e0b77022883e50b76eb1f3d25eb2e201f4e93b8e326a3e81e701ebd953b7"
+    },
+    {
+      "bytes": 10171,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-automatic-customer-contact/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-automatic-customer-contact patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "4e0dd6c992b18916d6ddd05265a75eb4ccc9c45bcb26e24da9b3752cc90af736"
+    },
+    {
+      "bytes": 10171,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-automatic-backlog-creation/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-automatic-backlog-creation patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "1ff2a4323d46e26e297fcd6a62173e639965853603cee8618accd8e042e558cb"
+    },
+    {
+      "bytes": 10165,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-automatic-prioritization/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-automatic-prioritization patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "d7b239742a5a5de13c8f76def3e6b1a81d772f2c661d5103a5f9e0976bb71def"
+    },
+    {
+      "bytes": 10150,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-automatic-execution/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-automatic-execution patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "c84c3f979b1d86cd99f639c52b5132c535c6015d48cc22c163ac56382a44d229"
+    },
+    {
+      "bytes": 10180,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-product-loop-backlog-mutation/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-product-loop-backlog-mutation patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "fc44ba757e63378b58e7c873677124595eecd63cda348283833deeb112cc8f62"
+    },
+    {
+      "bytes": 10138,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-source-mutation patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "bda359d2656a12df280481d475575c63637d376925d5c7e72e16730e3bd1de5d"
+    },
+    {
+      "bytes": 10150,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-production-mutation patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "9dc47e359589509a35b8a78cd8690207a1c07ea4441756913a1ceb4a59a5fb86"
+    },
+    {
+      "bytes": 10177,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-external-publication-payload/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-external-publication-payload patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "cb093e983ef6f120dc154f6367ba1f3294e4c2680ff00af7c49d2658744abf34"
+    },
+    {
+      "bytes": 10123,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-model-call/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-model-call patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "a09ba3063781266771cfac33c1ae1d97c768d3070ad690381930133cc344fb60"
+    },
+    {
+      "bytes": 10111,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-secret/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-secret patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "09d19858c03970f2223584624fd819282ca385ff6c6e2be08f3ca353a2c40d61"
+    },
+    {
+      "bytes": 10141,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge blocked-model-credential patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json fixture.",
+      "sha256": "c1e7ac1be3042a6e5815f4744b2079cc697fa8e038c47c59cc2b2c1052c16b2a"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -9831,11 +10062,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 18608,
+      "bytes": 20541,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "a06966ea7be38baa4a7b0a802143a24642285340410fb875b1d1a9ea98a6cce6"
+      "sha256": "7fca14fe746e41268dab818af818050278a14e3cf982eb7d3d6b81ef0525cdb7"
     },
     {
       "bytes": 7722,
@@ -10668,35 +10899,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "f55ee05b7e75cc65d1dd539c9234574c1cd39a514906ab72a266a33908b9a208"
+      "sha256": "2e8e1c335f5d6d5576667a6750e08aa1daa5f4ca1d75bf53554c5fa4f4e50a56"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "842884e999558e6c18ee0cef987ed4ed6cf22a9551911226769588bf7c0c0cb4"
+      "sha256": "144220d32150cb73324f082fe4904c28047fcb7c5ba411eff58989fcb01ea75d"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "c94ef33af3e0d3a52759b8e0daa16c72adcfe8341d7450c787613d8cbac0653d"
+      "sha256": "ff90ea8e867fd7eee8c93365144fcc5d9e0d8cdef239218df15988e4cd8f9f17"
     },
     {
-      "bytes": 147508,
+      "bytes": 147745,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "daa7555ff67b27798393add94b7c6e7e2685b9d5322f1f912a841154be1f826b"
+      "sha256": "f74b739419f7f122b5160aa90c021c970cdfb6acb590261ef129fa62e2473cb3"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "d01c19172b7ff3c4770ca7727afbe8715138a1eac61a2ad37456e5372c76bb10"
+      "sha256": "93e9ad00b341430daacd537302b22b62841a47b7bf87b3613978171ca12736b6"
     },
     {
       "bytes": 26355,
@@ -10724,14 +10955,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "cc0f079ea14e3009e6089a4a5a8da2e5eec69ff4095fc83c6daff49f9c7d4b2c"
+      "sha256": "6a2222d177494794e5ec5f4db6c1f2e73585df4b021177db2b8b7b8677f77613"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "28e04ad07908bb486b0608d18ab636245b964924ec0b03a40d8fde8e9807a477"
+      "sha256": "3d8de6016f8f4b8864a6774c1b2f117e561b4f24bdb6c4ea199ebe0c1c4ca770"
     },
     {
       "bytes": 14544,
@@ -10752,14 +10983,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "b1883b7c427103cd918e50aab130b9a08cc9665058bfecdc757d47394a25c713"
+      "sha256": "563ca9e8397ad1570dab024cefba91186ab13f3090451743599f2031aa9760fb"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "d7419454ec8fb4a25f0b57d3e0796397b2a4fb75a1ebce0d1eea30aabccef365"
+      "sha256": "534e2956f88cc8976bf72e32796b73c8d1ed329c97692ff35a31d0b00aab7676"
     },
     {
       "bytes": 14855,
@@ -11341,6 +11572,20 @@
       "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_intake_gate.py",
       "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Gate fixtures, CLI output, and privacy boundaries.",
       "sha256": "32efe9a75a6f8754976ecb96eadb55078257d018fce71e717deb5febef26f152"
+    },
+    {
+      "bytes": 39845,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_backlog_bridge.py",
+      "purpose": "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge artifacts.",
+      "sha256": "5413fbda50c424bc45f70fa3c50e168da5250e291cc2eb4535b11b4ff5baa46b"
+    },
+    {
+      "bytes": 19878,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_backlog_bridge.py",
+      "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge fixtures, CLI output, and privacy boundaries.",
+      "sha256": "1b4e97db77341484dbf0135338fc0e1333f755d00921495b2cd3eb7c6fe043ff"
     },
     {
       "bytes": 34360,
@@ -12981,11 +13226,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 256655,
+      "bytes": 260841,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "31be5cda5a4181cc44e9fb1e099fa8fbf10dc2e96218ef63867552839c120ba4"
+      "sha256": "67348c0d60a301cf3c0a99d3d9c79b21b95c443689e9b206d0eec0f12dd35d7f"
     },
     {
       "bytes": 68921,
