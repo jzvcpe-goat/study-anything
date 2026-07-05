@@ -243,6 +243,30 @@ The completed chain now has these layers:
   package creation, automatic execution, customer-visible follow-up, external
   publication, source mutation, production mutation, model calls, secrets, and
   model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Bridge: controlled follow-up feedback loop-closure receipts can produce only
+  metadata-only reopen-intake candidate refs after closure, outcome, action,
+  external actor, Product Loop, Dual Loop, Delivery Trust Case, and active
+  reconstruction refs remain present, while raw follow-up data, raw customer
+  data, customer identity, send payloads, source mutation, production mutation,
+  external publication payloads, model calls, secrets, and model credentials
+  remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Gate: ready reopen-intake bridge receipts can produce only metadata-only
+  Product Loop intake-item candidate refs after claim and privacy boundaries
+  remain visible, while raw follow-up data, raw customer data, customer
+  identity, automatic customer contact, automatic intake creation, source
+  mutation, production mutation, external publication payloads, model calls,
+  secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Backlog Bridge: allowed reopen-intake gate receipts can emit only
+  metadata-only Product Loop backlog signal refs for the restarted Product Loop,
+  preserving bridge, closure, outcome, action, external actor, intake candidate,
+  Product Loop, Dual Loop, Delivery Trust Case, and active reconstruction refs,
+  while live backlog creation, automatic prioritization, automatic execution,
+  customer contact, raw follow-up or customer data, source mutation, production
+  mutation, external publication payloads, model calls, secrets, and model
+  credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -285,16 +309,19 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 
 ```text
 Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
-Backlog Bridge:
-consume reopen-intake gate receipts and emit only metadata-only Product Loop
-backlog bridge receipts that prepare the allowed intake item as a backlog signal
-under the restarted Product Loop. It must reject missing gate receipts, blocked
-gates, missing bridge/closure/outcome/action/actor/intake item refs, missing
-claim/privacy boundaries, raw follow-up/customer data, automatic customer
-contact, automatic backlog creation, automatic prioritization, automatic
-execution, source/production mutation, external publication payloads, model
-calls, secrets, and model credentials, and it must preserve the full Product
-Loop plus Dual Loop plus Delivery Trust Case plus boundary gate plus rehearsal
-plus outcome plus loop-closure plus reopen-bridge plus reopen-intake-gate
+Product Owner Gate:
+consume reopen-intake backlog bridge receipts and emit only metadata-only
+Product Owner prioritization candidate receipts that let a human Product Owner
+decide whether the restarted Product Loop backlog signal should continue toward
+spec/eval authoring. It must reject missing backlog bridge receipts, blocked
+bridges, missing gate/bridge/closure/outcome/action/actor/intake
+candidate/intake item/backlog signal refs, missing active Product Owner
+reconstruction, missing claim/privacy boundaries, raw follow-up/customer/backlog
+data, customer identity, automatic backlog creation, automatic priority
+assignment, automatic execution, customer contact, source/production mutation,
+external publication payloads, model calls, secrets, and model credentials, and
+it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
+plus boundary gate plus rehearsal plus outcome plus loop-closure plus
+reopen-bridge plus reopen-intake-gate plus reopen-intake-backlog-bridge
 evidence chain.
 ```
