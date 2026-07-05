@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 5415740,
+  "archive_bytes": 5490023,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "45bfabd98b05bbd746f5ae81902b69ed38ec8afd9188b034683e9e9b9ffcf8c9",
+  "archive_sha256": "d49393ce08ebcbfa9e9c003c63a5ce930fb48ff22c72df5e919c587d3e1a8896",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -449,11 +449,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/product-runway.md",
-      "bytes": 16763,
+      "bytes": 17341,
       "kind": "operator_doc",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "9f3ddeefe49e2e76c07fb29c4ea4bbcdf15b2db1fc5ef36d5b50803ac65f4be3"
+      "sha256": "69198c39204da403464d8b3382b3dc27c73dbbfde23f259f7d1a5e5f87ade709"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/cognitive-loop-contracts.md",
@@ -702,6 +702,14 @@
       "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-product-owner-gate.md",
       "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Owner Gate guide for metadata-only spec/eval candidate boundaries.",
       "sha256": "c521854c446e03a605c214b36e13dbc8b0ca095dd7e6879d193f2d2b939f0f87"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.md",
+      "bytes": 2601,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate guide for metadata-only Product Loop brief candidate boundaries.",
+      "sha256": "d44659a6e58565240fc598309858268339f45a0662afcb5fe45a561ee5b9396a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/delivery-trust-case-harness.md",
@@ -1552,6 +1560,22 @@
       "sha256": "3d534d7c36d693b019022dc6be2c4a56905240c26ad8a89d4b155f31b5cdc10c"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate-v1.schema.json",
+      "bytes": 1282,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate-v1.schema.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate report JSON Schema.",
+      "sha256": "aaaea2953686efacb428f907445ae223690c4638569b06a35b076e015e05d4ad"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt-v1.schema.json",
+      "bytes": 1932,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt-v1.schema.json",
+      "purpose": "Patch Proposal Controlled Follow-up Feedback Spec/Eval Authoring Receipt JSON Schema.",
+      "sha256": "f9f35998b0302c62a6ebd08bff29c25ed5fa9cd715fc0ccd44f4662d33ec9ff8"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
       "bytes": 5318,
       "kind": "schema",
@@ -1849,11 +1873,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 570489,
+      "bytes": 584138,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "4161b48111e18229a91f6fe7506041141109f6ef2a49a9b75339264691ea0f40"
+      "sha256": "3bea36ed5852e99a976f3d46d0304dc429ac5dee630183eb2d455f0f8e02fb55"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -2680,6 +2704,30 @@
       "sha256": "c15d64171d7a378355e53594a3cc68f72a796b9b923be0f7da1b23e3eab252f2"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.json",
+      "bytes": 14595,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate metadata-only verification report.",
+      "sha256": "f47b758a8f8d419baa3aa675a3e643ffadb81de8f6cb455406497f45f04f118b"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.md",
+      "bytes": 3441,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate operator summary.",
+      "sha256": "2cdafdc6dc0331104a87a0d8c7da227cee498d6a56d06b1291922d9e9f2fec50"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.html",
+      "bytes": 3614,
+      "kind": "submission_report",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate.html",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate static HTML verification report.",
+      "sha256": "fdf53ed2946f5982383293a7e0c1e2f0a66a491a1639223d96f06c09412e1636"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-harness.json",
       "bytes": 5766,
       "kind": "submission_report",
@@ -2701,7 +2749,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "f5f1763bdf5fac6fdf5c84225aad0ea14422002d42c585ac01a53466e44449d2"
+      "sha256": "dadd6278a582168fde1e8348da11d361ea69817b8fe9a10484db6d25b5c77714"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
@@ -2709,15 +2757,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "19ee5074de7956bbe3d506053ef20c1980396a98e779d910889070c8a51789b5"
+      "sha256": "9590b995cfb639adb368eddf3754b10b6f7d1fcd187799f361d5def2adeacf57"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.zip",
-      "bytes": 99525,
+      "bytes": 99543,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "d99a8345c76fd81487e6ee43383293ccfc73388fa3935f8b02e12c5ef8ea1fa1"
+      "sha256": "91ebf80e635f8dc72a52a7ee534356c35317dbb4db19358dc45178a6c9da7898"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
@@ -2725,7 +2773,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "b2f19de25f24fada3005573f3680ef569c90ad0d0d6b64422aa3a88c0c521e89"
+      "sha256": "fe3931f71c19e70452b85780982a7f60c6612eba7a1441b8a54f8a322c837d44"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
@@ -2733,7 +2781,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "ab7efa08482484aec4b282f2c872f0a87031588890e9f8f25ecf99832229defe"
+      "sha256": "05d517a8834da8e334da78aee63fbbd646f5fe665e53fd65b946e06d8e74c0d5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-code-review-delivery-class.json",
@@ -3277,7 +3325,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent workflow install smoke verification report.",
-      "sha256": "09032a0a77c52ac259d5f6cbc20bafb70659c6f8ed27093e3bad63f6400184f9"
+      "sha256": "e51beb1ec72bfddd02429ce626f5b11e6f70171049c9a6fe737439377259c4c8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
@@ -3285,7 +3333,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "b81c30d84d56e5e79716f220759098c2f4f366808332fd856689c907a64299cd"
+      "sha256": "6d59b1f1df07575bd701f62a821cc7276893a604b4ba12d3484ce334d4936ab1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-adoption-cookbook.json",
@@ -3365,7 +3413,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "2892fc731fce84eb369c43cec8126ef58e78707ecd0e3fc0ea0a66b1e8b263e3"
+      "sha256": "ce6b3e61025ecd3f110e0ff76e0a201c547ddaddd34111822e6a636197f97cb2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
@@ -3373,7 +3421,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "1b0b7f831e2486850d9c2855a16978da5e9d446ec123b76da99041c2644bf5a2"
+      "sha256": "2401eb2068feb9828639c9d82b5692f9cf35511ff3e2752eaeacf10d49db9840"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
@@ -3381,7 +3429,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "d165bdc5a6c645cad9ccb1097d4f277e4227672275f992b1da1c64427f21fc8e"
+      "sha256": "d4a8ccc92c6cc070ee6d3f90ab0616e362475566a1d5a3abc8398b9c4b21b250"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-handoff-checklist.json",
@@ -3389,7 +3437,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "2812828ed3df659883e69e36f47e2475514d73d7fc0aac67ff3a0612913a3dcc"
+      "sha256": "c5eb7f2a5a3d387a5f982c0b5132d8f9f1417663e2df554eb093a0fe929618a5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-launch-acceptance-ledger.json",
@@ -3437,7 +3485,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "External platform operator drill transcript.",
-      "sha256": "1ab7f0ccc5f6316b6ce1e5ee372f558ef2f997102529d3970436480643cd0a38"
+      "sha256": "18a74b23af4b27ca171fe410fd4a00051d9e119766f201d0e9dc219de60bc2e5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-submission-dry-run.json",
@@ -3445,7 +3493,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "c621342329eba9c1a59fecf6103604324bfbf52fc3850d50289ca31843bbf61f"
+      "sha256": "6192e1def124b466a49d593ed3a0ffd683eb119d4b0f7b951c213258549acbed"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-manual-submission-rehearsal.json",
@@ -3773,7 +3821,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "053908010a2eddd8750c942c2d707debbe9eb3be9e417535fb69a630dba059d0"
+      "sha256": "21a55e5907c69b6e3e9c672fc33390d2f00bb8f151f28676a699f5a199a4874d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -3781,15 +3829,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "7f5f0f27b09d158a1457d346879306b936bc08c9de43c12a3c344c4f34b29a10"
+      "sha256": "cc04d88c100e97bfc54abd6a67fc512113e98d9341e2179ea487d7ef410a5ec2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 257559,
+      "bytes": 257555,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "f48b730190117a6466a9af39cd27ad6a16160be7d97c6acf0c74d5aaaa6d6fbd"
+      "sha256": "425fbc807ad662d21a60b4c2d1bad11e5983eda940f70cea70ccc77c1a9a0039"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -3797,7 +3845,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "45d2c2ca8392e5bc2dfc343c414b7e53e7e895a81a6c7d82250fadfc9c74381e"
+      "sha256": "09b7c318a07d67bf93b7889d84f2a7a92de02ee3075cff62d8b2b7f231e1fbb8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -10080,6 +10128,150 @@
       "sha256": "22ee52d4de53f46677f744930d28cc365f28d1ddf682c169ebf38c278eea3cf9"
     },
     {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-customer-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 19166,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-customer-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-customer-signal patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "e3591fa67cc404fd416aebcdb1b112d911dd0473c08c295ed5bdfcb8c308304a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-customer-signal/patch-proposal-product-loop-brief-candidate.json",
+      "bytes": 8830,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-customer-signal/patch-proposal-product-loop-brief-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-customer-signal patch-proposal-product-loop-brief-candidate.json fixture.",
+      "sha256": "983316bac9edd520a7da07f1212859afffa5bcaaf5d0a6e9f8e3802c379b9cf0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-operator-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 19166,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-operator-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-operator-signal patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "d25ddfad4437b8c0634745ea5802b37ecec71661e3c654da61b138072ed6c962"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-operator-signal/patch-proposal-product-loop-brief-candidate.json",
+      "bytes": 8830,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-operator-signal/patch-proposal-product-loop-brief-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-operator-signal patch-proposal-product-loop-brief-candidate.json fixture.",
+      "sha256": "cf7aa678ba7227401c36a12bfe01644b7a8075c19aeb4cab83bf4e614e552ed3"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-host-platform-agent-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 19253,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-host-platform-agent-signal/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-host-platform-agent-signal patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "6e1008264dc0054b48208a5ce55cc2502602d93bb59f5eb8acf804a668499f14"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-host-platform-agent-signal/patch-proposal-product-loop-brief-candidate.json",
+      "bytes": 8868,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/pass-host-platform-agent-signal/patch-proposal-product-loop-brief-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate pass-host-platform-agent-signal patch-proposal-product-loop-brief-candidate.json fixture.",
+      "sha256": "d3d19c907cc277e4ed9ec743dc7924d801991bf1af965657c76178007ce6a0d2"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-missing-authoring-reconstruction/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9958,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-missing-authoring-reconstruction/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-missing-authoring-reconstruction patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "a412b6d00f33b0a4c0215923ee29c7ab884bf3c603c72067b332d43edcba9de9"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-raw-spec-body/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9925,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-raw-spec-body/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-raw-spec-body patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "26bcdd744a66f24cb5a5ccb4c6feeee60c58a72791e06a68833b24c9d50085e6"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-raw-eval-body/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9925,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-raw-eval-body/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-raw-eval-body patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "209f467fb51be2bb17a465f5f134e463f37215149b91374436fa3da8c91558ea"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-automatic-execution/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9937,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-automatic-execution/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-automatic-execution patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "fb23d746ae5b326b5c19d5d61add50f7e7b14b97a56cb9d7223e92aae11581ce"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-skip-to-delivery-trust/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9964,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-skip-to-delivery-trust/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-skip-to-delivery-trust patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "d99c637722dfc42d6a3ac84d46a035feb0aed9a6fbac5976588c406521b85dfe"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-customer-visible-follow-up/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9951,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-customer-visible-follow-up/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-customer-visible-follow-up patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "1c36ad053c75468981a764dc30047911edb5da790ab2d0ffbbfe9152138c611a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9929,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-source-mutation patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "f3c7bc175e8c3deb55a97c92f4ec79adae653f70e84af4bd2301960fd9bdfddf"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9937,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-production-mutation patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "bd3c109d236a37c741bbfa8de6dc99e76ceed1bec16c664cff08434d5adbea2a"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-invalid-product-owner-candidate/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9347,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-invalid-product-owner-candidate/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-invalid-product-owner-candidate patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "b964ee6d9a8da2eb18fb020f714191e41941afd55257414b1f2e4aae67039290"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-model-call/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9919,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-model-call/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-model-call patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "73f6d22daf620c534e423894854376e125cc4e7db72a75f72121ef0589f3b6ec"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-secret/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9912,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-secret/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-secret patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "1f35bd59bc288535bed6ff0384874b237e20ff5bf2de533b36fe30f6910bfeda"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "bytes": 9932,
+      "kind": "delivery_trust_case_harness_fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-spec-eval-authoring-gate/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate blocked-model-credential patch-proposal-controlled-follow-up-feedback-spec-eval-authoring-receipt.json fixture.",
+      "sha256": "79d1f4fa59be609def8adea9ca5585f48152c513198b1fa6afad5971bc2fac98"
+    },
+    {
       "archive_path": "study-anything-platform-adoption-pack/platform/okf/examples/demo-session.json",
       "bytes": 4107,
       "kind": "okf_example",
@@ -11325,7 +11517,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "0b5da84633798f4bc8eaf4c31b23d59dc3008455022fe8cac553f976eb12cab6"
+      "sha256": "dd236101b494889638d71fd08707da8f2353972bb560dceb1970d885285412a2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.md",
@@ -11333,7 +11525,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "6dbf37fa231c8ac826ae9c30ea55b450a43a03a24fa89bebc4f01fee1bc9de1b"
+      "sha256": "0f5f8e9bc586fc384fa51afc57ef31048a7a30a07aeb5aa1b77820098fc8f9c8"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
@@ -11341,15 +11533,15 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "f7f17a91afe10d18c90a6417b2c5dd126aa285fce6958161a2a052192ac062ac"
+      "sha256": "9ce54472a2bf988a5a1ad36135e38cfd2b7502bafcef7eb9332015165f5ecbb1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack.zip",
-      "bytes": 147247,
+      "bytes": 147273,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "c7aa62cfead0d9f1284174da736d58edb1967f4e6ea87099f49e7b3d40ff91a6"
+      "sha256": "825bb44e6e7455c6c7d844d722df6999de4a20dda42c52472bcdd3bfb1de6d36"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
@@ -11357,7 +11549,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "e34bab295186813f6a3e6677184e4e14c7f20ace94b62177ef77ce0c80515928"
+      "sha256": "da4f64191bd4c240c55a9b143d25fc43bc6e6ddbd6eebdd6bef2027621392871"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_trust_evidence_handoff_pack.py",
@@ -11389,7 +11581,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "afadfcd26308562355e31880885bd62d03432d7703819977c789fbdce741192b"
+      "sha256": "86b1760d5a7c204aafaa34aaeb5983a05e0ed079d065b009a076fc7805226a2b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-trust-evidence-acceptance-drill.md",
@@ -11397,7 +11589,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "6c9d732e86453557e8a972f6dc3a09efcbb6462277822d24620aeb967495b758"
+      "sha256": "98abb65055af506f84f270924d24c27890951edfb92e3bddbbfa4bbe46abacd0"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_trust_evidence_acceptance_drill.py",
@@ -11421,7 +11613,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "438c1e9f3f601560f4e8d4e18c8eee2c250b05fa7af57e5fe92fa69807f851e5"
+      "sha256": "1170dc6380258484719daa6cb76186ed662ca6ca68ceaa9d136b533227411908"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-controlled-handoff-runbook.md",
@@ -11429,7 +11621,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "a05bdecb77f564596c8f520fb4d53bf7e62b61f942cae1c0fd2290c3208e5bd1"
+      "sha256": "8249e8c362b9f68aa6be4850670bc9e692d43968d7248ca31059ef5aac160526"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_controlled_handoff_runbook.py",
@@ -12078,6 +12270,22 @@
       "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_product_owner_gate.py",
       "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Owner Gate fixtures, CLI output, and privacy boundaries.",
       "sha256": "d8f73739357e1cd8dea8ab98467225971514d6a7ceb5a64c9e2d8e98b45aae57"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_spec_eval_authoring_gate.py",
+      "bytes": 36095,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_spec_eval_authoring_gate.py",
+      "purpose": "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate artifacts.",
+      "sha256": "7e6b6416878ad0e5dc0008309a9b4dc991da1c4340e2cf757d29e7be454264f0"
+    },
+    {
+      "archive_path": "study-anything-platform-adoption-pack/scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_spec_eval_authoring_gate.py",
+      "bytes": 20225,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_spec_eval_authoring_gate.py",
+      "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Spec/Eval Authoring Gate fixtures, CLI output, and privacy boundaries.",
+      "sha256": "3dd621912391988f0f6c9161bd42d17d6a62c05599759bdf1861da86d17b1b71"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/operator-handoff-rehearsal-contract.md",
