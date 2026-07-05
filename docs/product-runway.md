@@ -267,6 +267,15 @@ The completed chain now has these layers:
   customer contact, raw follow-up or customer data, source mutation, production
   mutation, external publication payloads, model calls, secrets, and model
   credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Product Owner Gate: reopen-intake backlog bridge receipts can emit only
+  metadata-only Product Owner spec/eval candidate receipts after active Product
+  Owner boundary reconstruction, preserving the full reopen-intake evidence
+  chain while missing refs, raw follow-up/customer/backlog data, customer
+  identity, live backlog creation, automatic prioritization, automatic
+  execution, customer contact, backlog/source/production mutation, external
+  publication payloads, model calls, secrets, and model credentials remain
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -309,19 +318,19 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 
 ```text
 Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
-Product Owner Gate:
-consume reopen-intake backlog bridge receipts and emit only metadata-only
-Product Owner prioritization candidate receipts that let a human Product Owner
-decide whether the restarted Product Loop backlog signal should continue toward
-spec/eval authoring. It must reject missing backlog bridge receipts, blocked
-bridges, missing gate/bridge/closure/outcome/action/actor/intake
-candidate/intake item/backlog signal refs, missing active Product Owner
-reconstruction, missing claim/privacy boundaries, raw follow-up/customer/backlog
-data, customer identity, automatic backlog creation, automatic priority
-assignment, automatic execution, customer contact, source/production mutation,
-external publication payloads, model calls, secrets, and model credentials, and
-it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
-plus boundary gate plus rehearsal plus outcome plus loop-closure plus
-reopen-bridge plus reopen-intake-gate plus reopen-intake-backlog-bridge
-evidence chain.
+Spec/Eval Authoring Gate:
+consume reopen-intake Product Owner receipts and spec/eval candidate refs, then
+emit only metadata-only Product Loop Harness brief candidate refs after active
+spec/eval authoring boundary reconstruction. It must reject missing or blocked
+Product Owner receipts, missing spec/eval candidate refs, missing
+gate/bridge/closure/outcome/action/actor/intake/backlog/product-owner refs,
+missing claim/privacy boundaries, raw spec text, raw eval prompts, raw
+follow-up/customer/backlog data, customer identity, automatic backlog creation,
+automatic priority assignment, automatic execution, customer contact,
+backlog/source/production mutation, Delivery Trust Harness skips, external
+publication payloads, model calls, secrets, and model credentials, and it must
+preserve the full Product Loop plus Dual Loop plus Delivery Trust Case plus
+boundary gate plus rehearsal plus outcome plus loop-closure plus reopen-bridge
+plus reopen-intake-gate plus reopen-intake-backlog-bridge plus reopen-intake
+Product Owner evidence chain.
 ```
