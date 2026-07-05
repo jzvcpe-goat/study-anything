@@ -1,0 +1,102 @@
+{
+  "$id": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "bridge_receipt_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "emit_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_handoff_refs",
+        "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge"
+      ],
+      "type": "string"
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "handoff_refs": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "harness_error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "harness_policy": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "requested_actions": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1"
+    },
+    "source_candidate_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_candidate_schema_version": {
+      "const": "patch-proposal-delivery-trust-case-candidate-v1"
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "delivery_trust_case_refs_ready",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "bridge_receipt_id",
+    "case_id",
+    "source_candidate_schema_version",
+    "source_candidate_id",
+    "source_candidate_hash",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "harness_policy",
+    "handoff_refs",
+    "harness_error_code",
+    "requested_actions",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Patch Proposal Controlled Follow-up Feedback Delivery Trust Case Bridge Receipt v1",
+  "type": "object"
+}
