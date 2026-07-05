@@ -241,7 +241,7 @@
     "consumer_walkthrough_schema": "trust-evidence-handoff-pack-consumer-walkthrough-v1",
     "consumer_walkthrough_status": "pass",
     "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
-    "zip_sha256": "a34b624a2a82d63b9fcf1d5de4d66454e8f54222ce5f02f58a1c19be64ecc765"
+    "zip_sha256": "29724e87c8810bf7e0aeaa42cbf450665b57aec7211953d01323341ac8d22e78"
   },
   "privacy": {
     "attention_streams_included": false,

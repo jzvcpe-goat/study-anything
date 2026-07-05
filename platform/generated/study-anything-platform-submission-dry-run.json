@@ -18,7 +18,7 @@
   "pack": {
     "archive_name": "study-anything-platform-adoption-pack.zip",
     "archive_sha256": null,
-    "file_count": 1552,
+    "file_count": 1581,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",

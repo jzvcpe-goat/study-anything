@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-controlled-follow-up-feedback-intake-receipt-v1",
+  "title": "Patch Proposal Controlled Follow-up Feedback Intake Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "feedback_intake_id",
+    "case_id",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "feedback_signal_summary",
+    "product_loop_destination",
+    "effect_boundary",
+    "checks",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-feedback-intake-receipt-v1"
+    },
+    "feedback_intake_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "type": "string"
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "feedback_signal_summary": {
+      "type": "object",
+      "required": [
+        "package_type",
+        "signal_type",
+        "signal_ref_hash",
+        "raw_feedback_included",
+        "raw_customer_reply_included",
+        "customer_identity_included",
+        "private_customer_data_included",
+        "pr_comment_body_included",
+        "external_system_credentials_included"
+      ],
+      "properties": {
+        "package_type": {
+          "const": "metadata_only_patch_proposal_controlled_follow_up_feedback_intake"
+        },
+        "signal_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "signal_ref_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_feedback_included": {
+          "const": false
+        },
+        "raw_customer_reply_included": {
+          "const": false
+        },
+        "customer_identity_included": {
+          "const": false
+        },
+        "private_customer_data_included": {
+          "const": false
+        },
+        "pr_comment_body_included": {
+          "const": false
+        },
+        "external_system_credentials_included": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "product_loop_destination": {
+      "type": "object",
+      "required": [
+        "package_type",
+        "destination",
+        "candidate_ref_hash",
+        "priority_assignment",
+        "ready_for_execution",
+        "ready_for_customer_delivery",
+        "product_loop_storage_mutated"
+      ],
+      "properties": {
+        "package_type": {
+          "const": "metadata_only_product_loop_backlog_candidate_ref"
+        },
+        "destination": {
+          "const": "product_loop_backlog_candidate"
+        },
+        "candidate_ref_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "priority_assignment": {
+          "const": "not_assigned"
+        },
+        "ready_for_execution": {
+          "const": false
+        },
+        "ready_for_customer_delivery": {
+          "const": false
+        },
+        "product_loop_storage_mutated": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
