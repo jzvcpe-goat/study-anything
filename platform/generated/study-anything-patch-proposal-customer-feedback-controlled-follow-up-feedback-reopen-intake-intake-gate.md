@@ -1,0 +1,49 @@
+# Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Gate
+
+Metadata-only proof that a prepared reopen-intake bridge can pass into the next Product Loop intake decision point without Study Anything creating the intake, contacting customers, mutating systems, publishing, or calling models.
+
+- status: `pass`
+- schema: `patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-intake-gate-v1`
+- cases: `21`
+
+## Claim Boundary
+
+A controlled follow-up feedback reopen-intake gate receipt consumes a ready reopen-intake bridge receipt and decides only whether the prepared candidate may proceed as a metadata-only customer-feedback intake item under a separate Product Loop. It does not create the intake item, contact customers, mutate source, mutate production, publish externally, call a model, or store raw customer data.
+
+Not claimed:
+- raw follow-up data included
+- raw customer data included
+- customer identity included
+- Study Anything created a new intake item
+- Study Anything contacted a customer
+- Study Anything mutated source
+- Study Anything mutated production
+- Study Anything published externally
+- Study Anything called a model
+- new Product Loop item fully prioritized
+- customer satisfaction certified
+- truth or security certified
+
+## Cases
+
+- `pass`: `allowed` / `allow_reopen_intake_item_gate` / gate action: `allow_product_loop_intake_item_candidate` / reasons: none
+- `blocked-missing-bridge-receipt`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: bridge_receipt_missing
+- `blocked-bridge-blocked`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: source_bridge_not_ready
+- `blocked-missing-closure-ref`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: closure_ref_missing
+- `blocked-missing-outcome-ref`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: outcome_ref_missing
+- `blocked-missing-action-ref`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: action_ref_missing
+- `blocked-missing-actor-ref`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: external_actor_ref_missing
+- `blocked-missing-claim-boundary`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: claim_boundary_missing
+- `blocked-missing-privacy-boundary`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: privacy_boundary_missing
+- `blocked-raw-follow-up-data`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: raw_follow_up_data_rejected
+- `blocked-raw-customer-data`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: raw_customer_data_rejected
+- `blocked-customer-identity`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: customer_identity_rejected
+- `blocked-send-payload`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: send_payload_rejected
+- `blocked-automatic-contact`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: automatic_customer_contact_rejected
+- `blocked-automatic-intake-creation`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: automatic_intake_creation_rejected
+- `blocked-source-mutation`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: source_mutation_rejected
+- `blocked-production-mutation`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: production_mutation_rejected
+- `blocked-external-publication-payload`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: external_publication_payload_rejected
+- `blocked-model-call`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: model_call_rejected
+- `blocked-secret`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: secret_rejected
+- `blocked-model-credential`: `blocked` / `block_reopen_intake_item_gate` / gate action: `none` / reasons: model_credential_rejected
