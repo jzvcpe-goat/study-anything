@@ -194,6 +194,15 @@ The completed chain now has these layers:
   replies, customer identity, send payloads, source mutation, production
   mutation, external publication payloads, model calls, secrets, and model
   credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake:
+  recorded controlled follow-up outcome receipts can produce only metadata-only
+  customer, operator, or host-platform response signal refs for the Product Loop
+  backlog candidate path, preserving Product Loop, Dual Loop, Delivery Trust
+  Case, active reconstruction, and controlled follow-up refs, while raw replies,
+  customer identity, private customer data, PR comment bodies, external
+  publication payloads, automatic follow-up, Product Loop backlog mutation,
+  source mutation, production mutation, model calls, secrets, and model
+  credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -235,13 +244,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake:
-consume recorded controlled follow-up outcome receipts and record only
-metadata-only customer, operator, or host-platform response signals back into
-the Product Loop backlog candidate path. It must not store raw customer replies,
-customer identity, private customer data, PR comment bodies, external
-publication payloads, source mutation, production mutation, model calls,
-secrets, or model credentials, and it must preserve the Product Loop plus Dual
-Loop plus Delivery Trust Case plus active reconstruction plus controlled
-follow-up evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge:
+consume accepted controlled follow-up feedback intake receipts and emit only a
+metadata-only Product Loop backlog signal ref. It must not assign priority, write
+the Product Loop backlog, send follow-ups, store raw customer replies, identify
+customers, include private customer data or PR comment bodies, publish
+externally, mutate source, mutate production, call models, store secrets, or
+store model credentials, and it must preserve the Product Loop plus Dual Loop
+plus Delivery Trust Case plus active reconstruction plus controlled follow-up
+evidence chain.
 ```

@@ -628,6 +628,33 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_ARTIFACTS = {
     case_id: ["patch-proposal-controlled-follow-up-outcome-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-outcome-blocked",
+    "blocked-missing-response-signal",
+    "blocked-missing-signal-reference",
+    "blocked-missing-product-loop-target",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-customer-reply",
+    "blocked-customer-identity",
+    "blocked-private-customer-data",
+    "blocked-pr-comment-body",
+    "blocked-external-publication-payload",
+    "blocked-automatic-follow-up",
+    "blocked-product-loop-backlog-mutation",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-feedback-intake-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -763,6 +790,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.md", "operator_doc", "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate guide for metadata-only follow-up envelope refs."),
     ("docs/patch-proposal-customer-feedback-controlled-follow-up-rehearsal.md", "operator_doc", "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal guide for metadata-only local rehearsal receipts."),
     ("docs/patch-proposal-customer-feedback-controlled-follow-up-outcome.md", "operator_doc", "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt guide for metadata-only external follow-up outcome records."),
+    ("docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.md", "operator_doc", "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake guide for metadata-only response signal records."),
     ("docs/delivery-trust-case-harness.md", "operator_doc", "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions."),
     ("docs/delivery-trust-case-pack.md", "operator_doc", "Delivery Trust Case pack guide for ZIP-only external consumer verification."),
     ("docs/code-review-delivery-class.md", "operator_doc", "Code Review Delivery Class metadata-only handoff guide."),
@@ -864,6 +892,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/schemas/cbb/patch-proposal-controlled-follow-up-rehearsal-receipt-v1.schema.json", "schema", "Patch Proposal Controlled Follow-up Rehearsal Receipt JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-outcome-v1.schema.json", "schema", "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt report JSON Schema."),
     ("platform/schemas/cbb/patch-proposal-controlled-follow-up-outcome-receipt-v1.schema.json", "schema", "Patch Proposal Controlled Follow-up Outcome Receipt JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-intake-v1.schema.json", "schema", "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake report JSON Schema."),
+    ("platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-intake-receipt-v1.schema.json", "schema", "Patch Proposal Controlled Follow-up Feedback Intake Receipt JSON Schema."),
     ("platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json", "schema", "Delivery Trust Case JSON Schema."),
     ("platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json", "schema", "Code Review Delivery Class handoff JSON Schema."),
     ("platform/schemas/delivery-trust/client-report-handoff-case-v1.schema.json", "schema", "Client Report Delivery Class handoff JSON Schema."),
@@ -996,6 +1026,9 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.json", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt metadata-only verification report."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.md", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt operator summary."),
     ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.html", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt static HTML verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.json", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake metadata-only verification report."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.md", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake operator summary."),
+    ("platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-intake.html", "submission_report", "Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.json", "submission_report", "Delivery Trust Case Harness end-to-end controlled customer-handoff verification report."),
     ("platform/generated/study-anything-delivery-trust-case-harness.html", "submission_report", "Delivery Trust Case Harness static HTML verification report."),
     ("platform/generated/study-anything-delivery-trust-case-pack.json", "submission_report", "Portable Delivery Trust Case pack sidecar manifest."),
@@ -1645,6 +1678,15 @@ PACK_FILES: list[tuple[str, str, str]] = [
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_ARTIFACTS[case_id]
     ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-intake/{case_id}/{artifact}",
+            "delivery_trust_case_harness_fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_INTAKE_ARTIFACTS[case_id]
+    ],
     ("platform/okf/examples/demo-session.json", "okf_example", "Demo learning session input for OKF-style knowledge-bundle export."),
     ("platform/okf/examples/demo-okf-bundle/manifest.json", "okf_example", "Demo OKF-style knowledge-bundle manifest."),
     ("platform/okf/examples/demo-okf-bundle/overview.md", "okf_example", "Demo OKF-style session overview note."),
@@ -1889,6 +1931,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_rehearsal.py", "verification", "Verify Patch Proposal Customer Feedback Controlled Follow-up Rehearsal fixtures, CLI output, and privacy boundaries."),
     ("scripts/patch_proposal_customer_feedback_controlled_follow_up_outcome_receipt.py", "verification", "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt artifacts."),
     ("scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_outcome_receipt.py", "verification", "Verify Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt fixtures, CLI output, and privacy boundaries."),
+    ("scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_intake.py", "verification", "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake artifacts."),
+    ("scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_intake.py", "verification", "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake fixtures, CLI output, and privacy boundaries."),
     ("docs/operator-handoff-rehearsal-contract.md", "operator_doc", "Shared Operator Handoff Rehearsal Contract for supported delivery classes."),
     ("platform/schemas/delivery-trust/operator-handoff-rehearsal-contract-v1.schema.json", "schema", "Operator Handoff Rehearsal Contract JSON schema."),
     ("platform/generated/study-anything-operator-handoff-rehearsal-contract.json", "generated_asset", "Operator Handoff Rehearsal Contract report."),
