@@ -284,13 +284,14 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge:
-consume controlled follow-up feedback Delivery Trust case candidates and emit
-only metadata-only Delivery Trust case/handoff refs after the Delivery Trust Case
-Harness evidence is present. It must reject raw delivery case bodies, customer
-handoff package bodies, automatic customer sending, customer-visible follow-up,
-external publication, source mutation, production mutation, model calls, secrets,
-and model credentials, and it must preserve the full Product Loop plus Dual Loop
-plus Delivery Trust Case plus active reconstruction plus controlled follow-up
-evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Boundary Gate:
+consume controlled follow-up feedback Delivery Trust case/handoff refs and emit
+only metadata-only controlled follow-up envelope refs after active operator or
+host-platform Agent boundary reconstruction is present. It must reject missing
+or mismatched bridge refs, passive reconstruction, raw follow-up bodies,
+automatic customer sending, customer-visible follow-up, external publication,
+source mutation, production mutation, model calls, secrets, and model
+credentials, and it must preserve the full Product Loop plus Dual Loop plus
+Delivery Trust Case plus active reconstruction plus controlled follow-up
+feedback evidence chain.
 ```

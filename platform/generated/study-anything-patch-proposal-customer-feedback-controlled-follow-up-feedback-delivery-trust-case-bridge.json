@@ -1,0 +1,363 @@
+{
+  "bridge_matrix": {
+    "blocked_bridge_transitions": 17,
+    "customer_visible_sends": 0,
+    "model_calls": 0,
+    "production_mutations": 0,
+    "ready_delivery_trust_case_ref_sets": 3,
+    "source_mutations": 0
+  },
+  "bridge_rules": {
+    "active_reconstruction_required": true,
+    "attention_reconstruction_required": true,
+    "automatic_customer_send_blocked": true,
+    "candidate_required": true,
+    "controlled_failure_required": true,
+    "controlled_follow_up_feedback_chain_required": true,
+    "customer_visible_follow_up_blocked": true,
+    "customer_visible_send_blocked": true,
+    "delivery_trust_case_evidence_required": true,
+    "delivery_trust_case_harness_local_deterministic_only": true,
+    "dual_loop_gate_required": true,
+    "emit_refs_only": true,
+    "external_publication_blocked": true,
+    "metadata_only": true,
+    "model_calls_blocked": true,
+    "product_loop_run_required": true,
+    "production_mutation_blocked": true,
+    "source_mutation_blocked": true
+  },
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-customer-signal",
+      "decision": "emit_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_handoff_refs",
+      "handoff_refs_created": true,
+      "status": "delivery_trust_case_refs_ready"
+    },
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-operator-signal",
+      "decision": "emit_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_handoff_refs",
+      "handoff_refs_created": true,
+      "status": "delivery_trust_case_refs_ready"
+    },
+    {
+      "blocked_reasons": [],
+      "case_id": "pass-host-platform-agent-signal",
+      "decision": "emit_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_handoff_refs",
+      "handoff_refs_created": true,
+      "status": "delivery_trust_case_refs_ready"
+    },
+    {
+      "blocked_reasons": [
+        "candidate_missing"
+      ],
+      "case_id": "blocked-missing-candidate",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "candidate_invalid"
+      ],
+      "case_id": "blocked-invalid-candidate",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_run_missing"
+      ],
+      "case_id": "blocked-missing-product-loop-run",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_run_hash_mismatch",
+        "product_loop_run_id_mismatch"
+      ],
+      "case_id": "blocked-product-loop-hash-mismatch",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "sandbox_receipt_missing"
+      ],
+      "case_id": "blocked-missing-dual-loop-evidence",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "dual_loop_evidence_ref_mismatch"
+      ],
+      "case_id": "blocked-dual-loop-evidence-mismatch",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "dual_loop_evidence_ref_mismatch",
+        "dual_loop_gate_blocked",
+        "sandbox_risk_outside_budget"
+      ],
+      "case_id": "blocked-dual-loop-gate-blocked",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_run_invalid"
+      ],
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_customer_send_rejected"
+      ],
+      "case_id": "blocked-automatic-customer-send",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_send_rejected"
+      ],
+      "case_id": "blocked-customer-visible-send",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_visible_follow_up_rejected"
+      ],
+      "case_id": "blocked-customer-visible-follow-up",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_mutation_rejected"
+      ],
+      "case_id": "blocked-source-mutation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_rejected"
+      ],
+      "case_id": "blocked-external-publication",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_call_rejected"
+      ],
+      "case_id": "blocked-model-call",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "case_id": "blocked-secret",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "case_id": "blocked-model-credential",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_delivery_trust_case_bridge",
+      "handoff_refs_created": false,
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A controlled follow-up feedback Patch Proposal Delivery Trust case candidate can be assembled into metadata-only Delivery Trust case and handoff refs only when the Product Loop, controlled follow-up feedback, controlled-failure, active attention reconstruction, Dual Loop gate, and local deterministic Delivery Trust Case Harness evidence all match.",
+    "not_claimed": [
+      "raw customer payload included",
+      "automatic customer send performed",
+      "customer-visible send performed",
+      "customer-visible follow-up performed",
+      "source mutation allowed",
+      "production mutation allowed",
+      "external publication performed",
+      "model call performed",
+      "real customer delivery",
+      "production deployment approval"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_customer_send_performed": false,
+    "study_anything_customer_handoff_package_created_as_metadata_artifact": true,
+    "study_anything_customer_visible_follow_up_performed": false,
+    "study_anything_customer_visible_send_performed": false,
+    "study_anything_delivery_trust_case_created_as_metadata_artifact": true,
+    "study_anything_delivery_trust_case_harness_invoked": true,
+    "study_anything_delivery_trust_receipt_created_as_metadata_artifact": true,
+    "study_anything_external_publication_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_source_mutation_performed": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_customer_send_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_automatic_customer_send_performed must be False",
+    "automatic_customer_send_policy_injected": "harness_policy.automatic_customer_send_allowed must be false",
+    "blocked_receipt_with_handoff_refs": "blocked receipt must not include handoff refs",
+    "customer_follow_up_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_customer_visible_follow_up_performed must be False",
+    "customer_follow_up_policy_injected": "harness_policy.customer_visible_follow_up_allowed must be false",
+    "customer_handoff_package_body_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1 includes forbidden raw fields: ['$.handoff_refs.customer_handoff_package']",
+    "customer_send_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_customer_visible_send_performed must be False",
+    "customer_send_policy_injected": "harness_policy.customer_visible_send_allowed must be false",
+    "delivery_trust_case_body_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1 includes forbidden raw fields: ['$.handoff_refs.delivery_trust_case']",
+    "delivery_trust_case_evidence_missing": "handoff refs require Delivery Trust Case Harness evidence",
+    "external_publication_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_external_publication_performed must be False",
+    "external_publication_policy_injected": "harness_policy.external_publication_allowed must be false",
+    "missing_controlled_follow_up_chain": "handoff refs require Delivery Trust Case Harness evidence",
+    "model_call_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.model_calls_performed must be False",
+    "passive_attention_only_injected": "passive attention alone must not be sufficient",
+    "production_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_production_mutation_performed must be False",
+    "raw_customer_payload_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1 includes forbidden raw fields: ['$.raw_customer_payload']",
+    "ready_receipt_without_handoff_refs": "ready receipt must include handoff refs",
+    "source_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.effect_boundary.study_anything_source_mutation_performed must be False"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "agent_endpoint_secrets_included": false,
+    "automatic_priority_rationale_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "controlled_follow_up_boundary_metadata_only": true,
+    "controlled_follow_up_feedback_intake_metadata_only": true,
+    "controlled_follow_up_outcome_metadata_only": true,
+    "controlled_follow_up_rehearsal_metadata_only": true,
+    "cookies_included": false,
+    "customer_handoff_package_body_included": false,
+    "customer_handoff_package_included": false,
+    "customer_identity_included": false,
+    "customer_payload_included": false,
+    "customer_visible_follow_up_draft_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "delivery_trust_case_body_included": false,
+    "delivery_trust_case_bridge_metadata_only": true,
+    "delivery_trust_case_candidate_metadata_only": true,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "follow_up_body_included": false,
+    "follow_up_envelope_refs_only": true,
+    "follow_up_outcome_receipt_only": true,
+    "follow_up_preview_body_included": false,
+    "follow_up_rehearsal_receipt_only": true,
+    "handoff_refs_only": true,
+    "keystrokes_included": false,
+    "model_call_payload_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "patch_proposal_brief_candidate_metadata_only": true,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_backlog_body_included": false,
+    "product_loop_backlog_candidate_only": true,
+    "product_loop_backlog_signal_metadata_only": true,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_loop_run_candidate_metadata_only": true,
+    "product_loop_scenario_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_attention_trace_included": false,
+    "raw_backlog_description_included": false,
+    "raw_brief_body_included": false,
+    "raw_customer_feedback_included": false,
+    "raw_customer_payload_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_delivery_case_included": false,
+    "raw_diff_body_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_follow_up_body_included": false,
+    "raw_follow_up_preview_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_sandbox_log_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "send_payload_included": false,
+    "signed_urls_included": false,
+    "source_mutation_payload_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove controlled follow-up feedback Patch Proposal Delivery Trust case candidates can invoke the local deterministic Delivery Trust Case Harness only after candidate, Product Loop, controlled follow-up feedback, controlled-failure, active attention-reconstruction, and Dual Loop refs match, while emitting refs only.",
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge-v1",
+      "sha256": "4e686df0882e2c1a990763606234dcc66e33acaa8ea1b2e990b992a560b04e71"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.schema.json",
+      "schema_version": "patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1",
+      "sha256": "221a2f1bd8fb8a3bb579cea469c7457f8fa0ef5606b5331dade97decbdcc1798"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge-v1",
+  "status": "pass"
+}

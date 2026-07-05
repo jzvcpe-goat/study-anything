@@ -806,6 +806,40 @@ for _case_id in (
     PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_INTAKE_GATE_ARTIFACTS[
         _case_id
     ].append("patch-proposal-delivery-trust-case-candidate.json")
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-candidate",
+    "blocked-invalid-candidate",
+    "blocked-missing-product-loop-run",
+    "blocked-product-loop-hash-mismatch",
+    "blocked-missing-dual-loop-evidence",
+    "blocked-dual-loop-evidence-mismatch",
+    "blocked-dual-loop-gate-blocked",
+    "blocked-ai-review-only",
+    "blocked-automatic-customer-send",
+    "blocked-customer-visible-send",
+    "blocked-customer-visible-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_CASES
+}
+for _case_id in (
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+):
+    PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_ARTIFACTS[
+        _case_id
+    ].append("patch-proposal-controlled-follow-up-feedback-delivery-trust-case-handoff-refs.json")
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1587,6 +1621,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -2434,6 +2483,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate boundaries.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge guide for metadata-only Delivery Trust case and handoff refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2877,6 +2931,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Feedback Delivery Trust Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-delivery-trust-case-bridge-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Feedback Delivery Trust Case Bridge Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -3525,6 +3589,17 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_INTAKE_GATE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_INTAKE_GATE_ARTIFACTS[
+            case_id
+        ]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-case-bridge/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_ARTIFACTS[
             case_id
         ]
     ],
@@ -4907,6 +4982,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_intake_gate.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_case_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_case_bridge.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "scripts/patch_proposal_customer_feedback_spec_eval_authoring_gate.py",
