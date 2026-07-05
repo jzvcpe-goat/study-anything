@@ -285,15 +285,16 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 
 ```text
 Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
-Intake Gate:
-consume reopen-intake bridge receipts and emit only metadata-only intake-gate
-receipts that decide whether the prepared candidate can become a new
-customer-feedback intake item under a separate Product Loop. It must reject
-missing bridge receipts, blocked bridges, missing closure/outcome/action/actor
-refs, missing claim/privacy boundaries, raw follow-up/customer data, automatic
-customer contact, automatic intake creation, source/production mutation,
-external publication payloads, model calls, secrets, and model credentials, and
-it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
-plus boundary gate plus rehearsal plus outcome plus loop-closure plus
-reopen-bridge evidence chain.
+Backlog Bridge:
+consume reopen-intake gate receipts and emit only metadata-only Product Loop
+backlog bridge receipts that prepare the allowed intake item as a backlog signal
+under the restarted Product Loop. It must reject missing gate receipts, blocked
+gates, missing bridge/closure/outcome/action/actor/intake item refs, missing
+claim/privacy boundaries, raw follow-up/customer data, automatic customer
+contact, automatic backlog creation, automatic prioritization, automatic
+execution, source/production mutation, external publication payloads, model
+calls, secrets, and model credentials, and it must preserve the full Product
+Loop plus Dual Loop plus Delivery Trust Case plus boundary gate plus rehearsal
+plus outcome plus loop-closure plus reopen-bridge plus reopen-intake-gate
+evidence chain.
 ```
