@@ -227,6 +227,14 @@ The completed chain now has these layers:
   execution, Delivery Trust Harness skips, customer-visible follow-up, source
   mutation, production mutation, external publication, model calls, secrets, and
   model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Loop
+  Brief Intake Gate: a controlled follow-up feedback Product Loop brief
+  candidate can produce only metadata-only Product Loop scenario/run candidates
+  after active developer/product-loop boundary reconstruction, preserving the
+  controlled follow-up feedback evidence chain, while AI-review-only evidence,
+  Delivery Trust Harness invocation or skips, automatic execution,
+  customer-visible follow-up, external publication, source mutation, production
+  mutation, model calls, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -268,14 +276,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Loop Brief Intake Gate:
-consume controlled follow-up feedback Product Loop brief candidates and emit only
-metadata-only Product Loop scenario/run candidates after active developer and
-product-loop boundary reconstruction. It must reject AI-review-only evidence,
-Delivery Trust Harness invocation or skips, raw specs, raw eval prompts, raw
-customer replies, customer identities, private customer data, PR comment bodies,
-automatic execution, customer-visible follow-up, external publication, source
-mutation, production mutation, model calls, secrets, and model credentials, and
-it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
-plus active reconstruction plus controlled follow-up evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate:
+consume controlled follow-up feedback Product Loop scenario/run candidates and
+emit only metadata-only Delivery Trust case candidates after controlled-failure,
+attention-reconstruction, and Dual-Loop gate evidence are present. It must reject
+direct Delivery Trust Harness invocation, customer handoff package creation,
+customer-visible follow-up, external publication, source mutation, production
+mutation, model calls, secrets, and model credentials, and it must preserve the
+full Product Loop plus Dual Loop plus Delivery Trust Case plus active
+reconstruction plus controlled follow-up evidence chain.
 ```

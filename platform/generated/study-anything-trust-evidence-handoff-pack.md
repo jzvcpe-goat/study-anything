@@ -8,7 +8,7 @@
 - Trust scenarios: `5`
 - Decision cases: `9`
 - File count: `72`
-- Archive SHA-256: `825bb44e6e7455c6c7d844d722df6999de4a20dda42c52472bcdd3bfb1de6d36`
+- Archive SHA-256: `9a2e26ed3b30e5fb3eb51c5f1ca9313ae0d3d9214f382be8d998868a24fe00cc`
 
 ## Claim
 
