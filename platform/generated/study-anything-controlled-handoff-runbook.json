@@ -403,7 +403,7 @@
     "report": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
     "schema_version": "trust-evidence-acceptance-drill-v1",
     "status": "pass",
-    "zip_sha256": "75bbbdf23415b93c157d9a5c3b76300524f01b59872aedc07d46efbaed405681"
+    "zip_sha256": "55072dbc92130d319d834881348ffee36dc8d33422c89f606250bd2ce29e72fe"
   },
   "status": "pass"
 }

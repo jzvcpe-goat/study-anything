@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-controlled-follow-up-rehearsal-receipt-v1",
+  "title": "Patch Proposal Controlled Follow-up Rehearsal Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "rehearsal_id",
+    "case_id",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "rehearsal_actor",
+    "rehearsal_summary",
+    "effect_boundary",
+    "checks",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-rehearsal-receipt-v1"
+    },
+    "rehearsal_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "type": "string"
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "rehearsal_actor": {
+      "type": "object",
+      "required": [
+        "source",
+        "mode",
+        "passive_attention_only",
+        "strong_evidence",
+        "checkpoint_ids",
+        "attention_streams_included"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "passive_attention_only": {
+          "type": "boolean"
+        },
+        "strong_evidence": {
+          "type": "boolean"
+        },
+        "checkpoint_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attention_streams_included": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "rehearsal_summary": {
+      "type": "object"
+    },
+    "effect_boundary": {
+      "type": "object",
+      "required": [
+        "follow_up_preview_body_included",
+        "customer_visible_draft_included",
+        "automatic_customer_send_performed",
+        "source_mutation_performed",
+        "production_mutation_performed",
+        "external_publication_performed",
+        "model_calls_performed",
+        "daemon_or_hosted_service_started"
+      ],
+      "properties": {
+        "follow_up_preview_body_included": {
+          "const": false
+        },
+        "customer_visible_draft_included": {
+          "const": false
+        },
+        "automatic_customer_send_performed": {
+          "const": false
+        },
+        "source_mutation_performed": {
+          "const": false
+        },
+        "production_mutation_performed": {
+          "const": false
+        },
+        "external_publication_performed": {
+          "const": false
+        },
+        "model_calls_performed": {
+          "const": false
+        },
+        "daemon_or_hosted_service_started": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
