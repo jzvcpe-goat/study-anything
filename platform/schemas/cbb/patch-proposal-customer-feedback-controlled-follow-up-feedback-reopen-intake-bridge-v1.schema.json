@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1",
+  "title": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge Report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "purpose",
+    "source_chain",
+    "bridge_matrix",
+    "case_reports",
+    "quality_gates",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1"
+    },
+    "status": {
+      "const": "pass"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "source_chain": {
+      "type": "object"
+    },
+    "bridge_matrix": {
+      "type": "object"
+    },
+    "case_reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "status",
+          "decision",
+          "blocked_reasons",
+          "bridge_action"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "blocked"
+            ]
+          },
+          "decision": {
+            "type": "string"
+          },
+          "blocked_reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bridge_action": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "quality_gates": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": [
+        "current_claim",
+        "not_claimed"
+      ],
+      "properties": {
+        "current_claim": {
+          "type": "string"
+        },
+        "not_claimed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

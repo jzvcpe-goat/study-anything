@@ -284,17 +284,16 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge:
-consume loop-closure receipts whose closure action is
-`reopen_as_customer_feedback_intake_candidate` and emit only metadata-only
-reopen-intake bridge receipts that prepare a new customer-feedback intake
-candidate without creating it automatically. It must reject missing closure
-receipts, blocked closures, archive/external-owner closure actions, missing
-outcome/action/actor refs, missing claim/privacy boundaries, raw follow-up
-bodies, raw customer replies, customer identity, send payloads, automatic
-customer re-contact, automatic intake creation, source mutation, production
-mutation, external publication payloads, model calls, secrets, and model
-credentials, and it must preserve the full Product Loop plus Dual Loop plus
-Delivery Trust Case plus boundary gate plus rehearsal plus outcome plus
-loop-closure evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+Intake Gate:
+consume reopen-intake bridge receipts and emit only metadata-only intake-gate
+receipts that decide whether the prepared candidate can become a new
+customer-feedback intake item under a separate Product Loop. It must reject
+missing bridge receipts, blocked bridges, missing closure/outcome/action/actor
+refs, missing claim/privacy boundaries, raw follow-up/customer data, automatic
+customer contact, automatic intake creation, source/production mutation,
+external publication payloads, model calls, secrets, and model credentials, and
+it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
+plus boundary gate plus rehearsal plus outcome plus loop-closure plus
+reopen-bridge evidence chain.
 ```

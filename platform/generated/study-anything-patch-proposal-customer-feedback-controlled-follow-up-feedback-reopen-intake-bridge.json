@@ -1,0 +1,403 @@
+{
+  "bridge_matrix": {
+    "archive_action_rejected": true,
+    "automatic_intake_creation_rejected": true,
+    "automatic_recontact_rejected": true,
+    "blocked_bridges": 21,
+    "blocked_closure_rejected": true,
+    "claim_boundary_missing_rejected": true,
+    "customer_identity_rejected": true,
+    "external_owner_action_rejected": true,
+    "external_publication_payload_rejected": true,
+    "missing_action_ref_rejected": true,
+    "missing_closure_receipt_rejected": true,
+    "missing_external_actor_ref_rejected": true,
+    "missing_outcome_ref_rejected": true,
+    "model_call_rejected": true,
+    "model_credential_rejected": true,
+    "only_reopen_closure_action_allowed": true,
+    "privacy_boundary_missing_rejected": true,
+    "production_mutation_rejected": true,
+    "raw_customer_reply_rejected": true,
+    "raw_follow_up_body_rejected": true,
+    "ready_bridges": 1,
+    "secret_rejected": true,
+    "send_payload_rejected": true,
+    "source_mutation_rejected": true,
+    "total_cases": 22
+  },
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "bridge_action": "prepare_reopen_intake_candidate",
+      "case_id": "pass",
+      "decision": "prepare_reopen_intake_candidate_bridge",
+      "status": "ready"
+    },
+    {
+      "blocked_reasons": [
+        "closure_receipt_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-closure-receipt",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_closure_not_closed"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-closure-blocked",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "closure_action_not_reopen_intake"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-archive-action",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "closure_action_not_reopen_intake"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-external-owner-action",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "outcome_ref_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-outcome-ref",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "action_ref_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-action-ref",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_actor_ref_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-actor-ref",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "claim_boundary_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "privacy_boundary_missing"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_follow_up_body_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-raw-follow-up-body",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_customer_reply_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-raw-customer-reply",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_identity_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-customer-identity",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "send_payload_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-send-payload",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_recontact_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-automatic-recontact",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "automatic_intake_creation_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-automatic-intake-creation",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_mutation_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-source-mutation",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "production_mutation_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-production-mutation",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "external_publication_payload_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-external-publication-payload",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_call_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-model-call",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "secret_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-secret",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "model_credential_rejected"
+      ],
+      "bridge_action": null,
+      "case_id": "blocked-model-credential",
+      "decision": "block_reopen_intake_bridge",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A controlled follow-up feedback reopen-intake bridge receipt consumes a closed loop-closure receipt whose closure action is reopen_as_customer_feedback_intake_candidate. It prepares only metadata refs for a possible next customer-feedback intake gate. It does not create an intake, contact customers, notify owners, mutate source, mutate production, publish externally, call a model, or store raw customer data.",
+    "not_claimed": [
+      "raw follow-up body included",
+      "raw customer reply included",
+      "customer identity included",
+      "Study Anything created a new intake",
+      "Study Anything re-contacted a customer",
+      "Study Anything notified an owner",
+      "Study Anything mutated source",
+      "Study Anything mutated production",
+      "Study Anything published externally",
+      "Study Anything called a model",
+      "new Product Loop intake accepted",
+      "customer satisfaction certified",
+      "truth or security certified"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_intake_payload_included": "reopen_intake_bridge.automatic_intake_creation_payload_included must remain false",
+    "automatic_recontact_performed": "effect_boundary.study_anything_automatic_customer_recontact_performed must remain false",
+    "customer_identity_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1 includes forbidden raw fields: ['$.customer_email']",
+    "dual_loop_ref_missing_on_ready": "ready reopen-intake bridge missing check: dual_loop_refs_preserved",
+    "external_publication_performed": "effect_boundary.study_anything_external_publication_performed must remain false",
+    "model_call_performed": "effect_boundary.model_calls_performed must remain false",
+    "new_intake_created": "effect_boundary.study_anything_new_feedback_intake_created must remain false",
+    "production_mutation_performed": "effect_boundary.study_anything_production_mutation_performed must remain false",
+    "raw_customer_reply_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1 includes forbidden raw fields: ['$.raw_customer_reply']",
+    "raw_follow_up_body_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1 includes forbidden raw fields: ['$.raw_follow_up_body']",
+    "send_payload_included": "reopen_intake_bridge.send_payload_included must remain false",
+    "source_mutation_performed": "effect_boundary.study_anything_source_mutation_performed must remain false"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "agent_endpoint_secrets_included": false,
+    "automatic_intake_creation_payload_included": false,
+    "automatic_priority_rationale_included": false,
+    "automatic_recontact_payload_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "controlled_follow_up_boundary_metadata_only": true,
+    "controlled_follow_up_feedback_intake_metadata_only": true,
+    "controlled_follow_up_feedback_loop_closure_metadata_only": true,
+    "controlled_follow_up_feedback_outcome_metadata_only": true,
+    "controlled_follow_up_feedback_rehearsal_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_bridge_metadata_only": true,
+    "controlled_follow_up_outcome_metadata_only": true,
+    "controlled_follow_up_rehearsal_metadata_only": true,
+    "cookies_included": false,
+    "customer_handoff_package_body_included": false,
+    "customer_handoff_package_included": false,
+    "customer_identity_included": false,
+    "customer_payload_included": false,
+    "customer_visible_follow_up_draft_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "delivery_trust_case_body_included": false,
+    "delivery_trust_case_bridge_metadata_only": true,
+    "delivery_trust_case_candidate_metadata_only": true,
+    "external_owner_message_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "follow_up_body_included": false,
+    "follow_up_envelope_refs_only": true,
+    "follow_up_feedback_loop_closure_receipt_only": true,
+    "follow_up_feedback_outcome_receipt_only": true,
+    "follow_up_feedback_rehearsal_receipt_only": true,
+    "follow_up_outcome_receipt_only": true,
+    "follow_up_preview_body_included": false,
+    "follow_up_rehearsal_receipt_only": true,
+    "handoff_refs_only": true,
+    "intake_payload_included": false,
+    "keystrokes_included": false,
+    "model_call_payload_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "patch_proposal_brief_candidate_metadata_only": true,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_backlog_body_included": false,
+    "product_loop_backlog_candidate_only": true,
+    "product_loop_backlog_signal_metadata_only": true,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_loop_run_candidate_metadata_only": true,
+    "product_loop_scenario_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_attention_trace_included": false,
+    "raw_backlog_description_included": false,
+    "raw_brief_body_included": false,
+    "raw_customer_feedback_included": false,
+    "raw_customer_payload_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_delivery_case_included": false,
+    "raw_diff_body_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_follow_up_body_included": false,
+    "raw_follow_up_preview_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_sandbox_log_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "reopen_intake_bridge_receipt_only": true,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "send_payload_included": false,
+    "signed_urls_included": false,
+    "source_mutation_payload_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove controlled follow-up feedback reopen-intake bridges consume only loop-closure receipts with reopen_as_customer_feedback_intake_candidate actions, prepare metadata-only candidate refs, and never create intakes, contact customers, mutate systems, publish, call models, or store secrets.",
+  "quality_gates": {
+    "action_ref_required": true,
+    "active_reconstruction_ref_preserved": true,
+    "automatic_intake_creation_blocked": true,
+    "automatic_recontact_blocked": true,
+    "claim_boundary_required": true,
+    "closed_loop_closure_required": true,
+    "customer_identity_rejected": true,
+    "delivery_trust_refs_preserved": true,
+    "dual_loop_refs_preserved": true,
+    "external_actor_ref_required": true,
+    "external_publication_payload_blocked": true,
+    "model_calls_blocked": true,
+    "outcome_ref_required": true,
+    "privacy_boundary_required": true,
+    "product_loop_refs_preserved": true,
+    "production_mutation_blocked": true,
+    "raw_customer_reply_rejected": true,
+    "raw_follow_up_body_rejected": true,
+    "reopen_intake_closure_action_required": true,
+    "secrets_and_model_credentials_rejected": true,
+    "send_payload_rejected": true,
+    "source_mutation_blocked": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1",
+      "sha256": "30a7880c5cd851855714cd6f0b8283d37fa2187b172da7327bff841c872fc260"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1.schema.json",
+      "schema_version": "patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1",
+      "sha256": "a82169aa375db66255dcd8f10f6d7692354fb3ca3abcf59b805a887b370704af"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1",
+  "source_chain": {
+    "loop_closure_receipt": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-loop-closure/pass-reopen-as-intake/patch-proposal-controlled-follow-up-feedback-loop-closure-receipt.json",
+    "loop_closure_report": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-loop-closure.json"
+  },
+  "status": "pass"
+}
