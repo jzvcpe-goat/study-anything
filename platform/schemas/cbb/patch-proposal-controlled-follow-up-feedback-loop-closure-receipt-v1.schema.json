@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-controlled-follow-up-feedback-loop-closure-receipt-v1",
+  "title": "Patch Proposal Controlled Follow-up Feedback Loop Closure Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "closure_id",
+    "case_id",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "loop_closure",
+    "effect_boundary",
+    "checks",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-feedback-loop-closure-receipt-v1"
+    },
+    "closure_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "closed",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "type": "string"
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "loop_closure": {
+      "type": "object",
+      "required": [
+        "package_type",
+        "closure_action",
+        "outcome_receipt_hash",
+        "external_actor_ref_hash",
+        "action_ref_hash",
+        "next_intake_candidate_ref_hash",
+        "external_owner_review_ref_hash",
+        "raw_follow_up_body_included",
+        "raw_customer_reply_included",
+        "customer_identity_included",
+        "send_payload_included",
+        "automatic_recontact_payload_included",
+        "external_owner_message_included",
+        "external_system_credentials_included"
+      ],
+      "properties": {
+        "package_type": {
+          "const": "metadata_only_patch_proposal_controlled_follow_up_feedback_loop_closure"
+        },
+        "closure_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "outcome_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "external_actor_ref_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "action_ref_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_follow_up_body_included": {
+          "const": false
+        },
+        "raw_customer_reply_included": {
+          "const": false
+        },
+        "customer_identity_included": {
+          "const": false
+        },
+        "send_payload_included": {
+          "const": false
+        },
+        "automatic_recontact_payload_included": {
+          "const": false
+        },
+        "external_owner_message_included": {
+          "const": false
+        },
+        "external_system_credentials_included": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "effect_boundary": {
+      "type": "object",
+      "required": [
+        "study_anything_customer_follow_up_send_performed",
+        "study_anything_automatic_follow_up_performed",
+        "study_anything_automatic_customer_recontact_performed",
+        "study_anything_new_feedback_intake_created",
+        "study_anything_external_owner_notification_sent",
+        "study_anything_source_mutation_performed",
+        "study_anything_production_mutation_performed",
+        "study_anything_external_publication_performed",
+        "model_calls_performed",
+        "daemon_or_hosted_service_started"
+      ],
+      "properties": {
+        "study_anything_customer_follow_up_send_performed": {
+          "const": false
+        },
+        "study_anything_automatic_follow_up_performed": {
+          "const": false
+        },
+        "study_anything_automatic_customer_recontact_performed": {
+          "const": false
+        },
+        "study_anything_new_feedback_intake_created": {
+          "const": false
+        },
+        "study_anything_external_owner_notification_sent": {
+          "const": false
+        },
+        "study_anything_source_mutation_performed": {
+          "const": false
+        },
+        "study_anything_production_mutation_performed": {
+          "const": false
+        },
+        "study_anything_external_publication_performed": {
+          "const": false
+        },
+        "model_calls_performed": {
+          "const": false
+        },
+        "daemon_or_hosted_service_started": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
