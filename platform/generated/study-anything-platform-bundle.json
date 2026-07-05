@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "cbe2a8b9f4126605353251e1f124e4e18b5488597d1b13466a7a69e0376ee3db"
+      "sha256": "2e4860d27639de4a4a2bbd03a6291675797528288f5cb4fe24c12a4aa7c4aaf4"
     },
     {
       "bytes": 1939,
@@ -308,35 +308,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "eee14c047e80ef778e4ddb8b326cc62c9623df9593e9f3f49c429639cd75858f"
+      "sha256": "d401dfee7c3a3d57ad20f6a692aaddbc82a85860e4f001e3d894b9f3538803b3"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "3c0c837913e39750e5d82bc65b158293953d6111960427ecccd3fe639069273d"
+      "sha256": "fbd03ab60eb10c7d179a97dd444cb34ef03917205e3bb8ecfe394d1e7dacc34a"
     },
     {
-      "bytes": 98871,
+      "bytes": 98968,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "a5b5d28f5d74713d3974c3ed98d79d6c14ee435a403726cbe3382a7806ac3e3f"
+      "sha256": "ff4bc3feea3b98ecd9ad36912c1bf30132dc815a3200f2c4b59421765a9a95da"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "d9bf2b71f6a289f612fef59f579755b71c16da47f6bab4f2af520c1a3ed4e73e"
+      "sha256": "a0aa5b99d576c33af7c382075e6de8feb44ef2880b358224ec3cf26f62977485"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "86cb9d197111d7079d50238603364f265f865782dbdff875f963902308dbffbd"
+      "sha256": "3fac49d9a411914cd7e35f234da28adbb2fe1f8af6110174cf419c597ac8882c"
     },
     {
       "bytes": 3502,
@@ -864,6 +864,27 @@
       "sha256": "80454bff7e761fb8aa5f62ec6903e5cf1693f65a42704486e4df245b94c33ec3"
     },
     {
+      "bytes": 11532,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-case-bridge.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge metadata-only verification report.",
+      "sha256": "9dde14de7a42528616b6ee05e69ead73e7f10d52191553504a8d271453256909"
+    },
+    {
+      "bytes": 3345,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-case-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge operator summary.",
+      "sha256": "a1c9430160ef5aa52e018433dbceeb22233a4e259bf6d7a008aaa5f97ce69d80"
+    },
+    {
+      "bytes": 14845,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-case-bridge.html",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge static HTML verification report.",
+      "sha256": "c82f21ec57c25528a9f890bc526758e05519188a1db11f4ebd5c031a75b0c022"
+    },
+    {
       "bytes": 7536,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-class-registry.json",
@@ -1204,14 +1225,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "948128852d1dff00479b108db04492b4d8f4ff8d355404d915656c5a43cfb9d4"
+      "sha256": "287cdee22785704ab718d6434f5491899c33134b36e837f1f930fa15e4af58f5"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "b7a953e1b288b431b456feb9fa60908280b165edb3db7f3793a70eb353557c7c"
+      "sha256": "fb54d54b5bfe85539fc37c787e635122690446cee6416c63eac313ec14fef79c"
     },
     {
       "bytes": 2466,
@@ -1281,28 +1302,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "481bd5d911e5de3cb8ac84e2533b2a6b308837509225f53ada34b31e013c9f61"
+      "sha256": "334c7df378adcb03c87913ddc8b5951348daecdea2f58e3873c530b4803ed76b"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "614b900ee9ecd4d92a98457802e79b3101d8246b97a4614cdf1671174970b725"
+      "sha256": "341c4896851d32bfa367772cdca84280e3ad7b187a9c45fadfd574fb10525a63"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "f968ccf9bfac1d1861d04cac835455322e7adbc4b8ef71874f98bf324fc934ef"
+      "sha256": "1c6552d70f0166a700e9e9f0f584319babc3f08f75757a87bb8630032fda8b32"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "406372264c11b286cd3b2ec2923e5e2bb0e77a9705961ee0e5e4e8f1459294dd"
+      "sha256": "9c1c90c80fa3b33a6725cab94c9a50c7e38bf6b6934be47dce87c7e6df1f0a03"
     },
     {
       "bytes": 9410,
@@ -1344,7 +1365,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "ae0c873a57214a293acd17adac0bcc18f46831db6fdc775290640e406e3c2df4"
+      "sha256": "df3a8bca0befa1f23ce4cd7e3e98212fac06971dc3f4ad07ff75cb1159bb883a"
     },
     {
       "bytes": 107336,
@@ -1512,28 +1533,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "3ade4d9af8643fa771e9319d18c6b925c4722f6d2e2b4f1401e815e50ccabc03"
+      "sha256": "fbe6cdef3c0ac6a62747634fad02b2ac522aee38e69b2580609c97ddff6ce211"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "0f2121e72393c129dd65d511cba2d1f4bfbcba5f0eae428f4fdcde3a223c0005"
+      "sha256": "e0bd8421b30539fd44863a638a6dac4306c16f06ee13ca0ef618f074842713f7"
     },
     {
-      "bytes": 257556,
+      "bytes": 257557,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "db81aeb32dba5c5f150082c2d1593425b91fbb2d70ba22889f8d938cf5871aa4"
+      "sha256": "cf6eeda2736e7c41eb2fdf7d16194c714fa4ebc63a7d58ae843ff4fbcb04d57b"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "505968e7abfffec6f43a79b67d200506f9fcca92332d235f0dbf2fcd7745de34"
+      "sha256": "34a6d105ca0b57d11b811f988c06a62992da74b738cb09263cdfd0b06ca7de12"
     },
     {
       "bytes": 10417,
@@ -1975,6 +1996,13 @@
       "path": "docs/patch-proposal-customer-feedback-delivery-trust-intake-gate.md",
       "purpose": "Patch Proposal Customer Feedback Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate boundaries.",
       "sha256": "ea7ae6702e2e3d6b7e27635a49ef9d01c8f602c8a27c4e13f458483dea100427"
+    },
+    {
+      "bytes": 2541,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-feedback-delivery-trust-case-bridge.md",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge guide for metadata-only Delivery Trust case/handoff refs.",
+      "sha256": "6edaeabe78f48ba5447deceee5cbb20775a952ccc78b8a95705f761eb36a615a"
     },
     {
       "bytes": 2206,
@@ -2465,6 +2493,20 @@
       "path": "platform/schemas/cbb/patch-proposal-delivery-trust-case-candidate-v1.schema.json",
       "purpose": "Patch Proposal Delivery Trust Case Candidate JSON Schema.",
       "sha256": "ff1c0c1beabd9109f96b6dd6673d5fc567add1c704810a9ab8bc6ec534bfca1a"
+    },
+    {
+      "bytes": 1048,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-delivery-trust-case-bridge-v1.schema.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge report JSON Schema.",
+      "sha256": "bf4a60c0a84f1d18d88cbda5471114e573259279296c221477c1bc1dad8eac28"
+    },
+    {
+      "bytes": 2090,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-delivery-trust-case-bridge-receipt-v1.schema.json",
+      "purpose": "Patch Proposal Delivery Trust Case Bridge Receipt JSON Schema.",
+      "sha256": "ea54b004d46059b72fcc259a6855d270dec369b0a16dd538f4658663c73a69ce"
     },
     {
       "bytes": 5318,
@@ -5890,6 +5932,139 @@
       "sha256": "78dae37a88ceea2aba3fe0f23670bd1b5f0fba06e8b08783c9b8c9a8eb79de85"
     },
     {
+      "bytes": 14419,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-customer-signal/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-customer-signal patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "d927cb7dcf4d6b91a1c1e4e519a0b68c3dc64040006608c0036d6e2736a12d2e"
+    },
+    {
+      "bytes": 8165,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-customer-signal/patch-proposal-delivery-trust-case-handoff-refs.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-customer-signal patch-proposal-delivery-trust-case-handoff-refs.json fixture.",
+      "sha256": "6883f16f70d6fa51690b498b0dde3122376205acaf451da8cf156340f7dd324c"
+    },
+    {
+      "bytes": 14419,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-operator-signal/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-operator-signal patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "57675a7effda9af88b436a2297a7c1424c7419b9bde11070e22f7fad379a8eba"
+    },
+    {
+      "bytes": 8165,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-operator-signal/patch-proposal-delivery-trust-case-handoff-refs.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-operator-signal patch-proposal-delivery-trust-case-handoff-refs.json fixture.",
+      "sha256": "ecc787f3eba3375ba6bdab2835d2e328e3c0809df856adeaa1575e6d052c7c0f"
+    },
+    {
+      "bytes": 14496,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-host-platform-agent-signal/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-host-platform-agent-signal patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "5b5dfebb226093c817ff100957e9eb5dfa3df7c526526c18d59a0747156b2855"
+    },
+    {
+      "bytes": 8220,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/pass-host-platform-agent-signal/patch-proposal-delivery-trust-case-handoff-refs.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge pass-host-platform-agent-signal patch-proposal-delivery-trust-case-handoff-refs.json fixture.",
+      "sha256": "e3a2855588c7761b374bb6f80f2afb0c413935a5365468f52cfc48922782d8ce"
+    },
+    {
+      "bytes": 5793,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-missing-candidate/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-missing-candidate patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "64cb847061ecbc713bda9cf2ddb94f221d00883919955ab8f334b70296824ed1"
+    },
+    {
+      "bytes": 5793,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-invalid-candidate/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-invalid-candidate patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "020a322854ac9a933e4ba1f44d8c58c41c9b6b2b2a55f0ffe9e1955e5ae6f293"
+    },
+    {
+      "bytes": 5911,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-missing-product-loop-run/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-missing-product-loop-run patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "8cc0e6461ae3b2226b695fdf4e6ec626d4405a4d90e0c587dc6ab46d46e01420"
+    },
+    {
+      "bytes": 5955,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-product-loop-hash-mismatch/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-product-loop-hash-mismatch patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "e0119f6c9c9d5ed4c0da83f8dab89bbf9867a95cb1be0c0e19b848af591b949c"
+    },
+    {
+      "bytes": 5912,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-missing-dual-loop-evidence/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-missing-dual-loop-evidence patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "b318c052a5d2a3509a301846c425265f23f7b0f7be02ac6aa44cf3db06fdf930"
+    },
+    {
+      "bytes": 5921,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-dual-loop-evidence-mismatch/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-dual-loop-evidence-mismatch patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "99978c483edb2f42cf8131680a07988bb5eefce8c26a4272997236cbbd37cf09"
+    },
+    {
+      "bytes": 5981,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-dual-loop-gate-blocked/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-dual-loop-gate-blocked patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "2b718015e76642efe1ff9458430643380bf7c2d46837c7fd3c9e0c7ad50823e5"
+    },
+    {
+      "bytes": 5901,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-ai-review-only/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-ai-review-only patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "54fd85f8db3856d356ae44624bfb9cc6ee4110e144061236a47eeece97d5827c"
+    },
+    {
+      "bytes": 5913,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-customer-visible-send/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-customer-visible-send patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "817ed8a092f63a8cd8882af3398d104541312113f18780d14bd6285d8215ff0f"
+    },
+    {
+      "bytes": 5901,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-source-mutation/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-source-mutation patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "ae7802c2c66046acd54bc5d8f1acd807f3a2010dd4fa8a37fd84a6aee11d7ecc"
+    },
+    {
+      "bytes": 5909,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-production-mutation/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-production-mutation patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "c43d7f6da081acfb25ac79f617999f9cc4e81fb6f5dbed500920ad2b00833208"
+    },
+    {
+      "bytes": 5883,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-secret/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-secret patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "6d2da6e642df1c619b3975adb619822f39a272481d2d71e63ad1478b3cff95f3"
+    },
+    {
+      "bytes": 5903,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-delivery-trust-case-bridge/blocked-model-credential/patch-proposal-delivery-trust-case-bridge-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Delivery Trust Case Bridge blocked-model-credential patch-proposal-delivery-trust-case-bridge-receipt.json fixture.",
+      "sha256": "e680dd35128da601082f404aa929821f5dcec62b82a490881b2e00ddf2af6aa8"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -6408,11 +6583,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 12542,
+      "bytes": 13099,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "8a9ca792438c7247f326ee955951f428282190b86ecd396289f72a458b7dab41"
+      "sha256": "286f4f13c4adb65fc096ae8ff234e5ee378917ef9cd744d6194d5b4fe1693314"
     },
     {
       "bytes": 7722,
@@ -7245,35 +7420,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "2b0da304e36ebbd0380a3f362d8a78bd966d78951068c72fb81c4210ca23108e"
+      "sha256": "1fbaf6fb855a74bac3c8218fa2345d34478d0f585425a59a6c9fa2a71df959b3"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "97ae5f4b14dabc3f5afa8752dc7a29c3c6c1fc5b51a564dba06d918b3d60506e"
+      "sha256": "37d72d969b6a579a37fda268c91321852380c5d5cc9ed937c188320656a250e0"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "c7cc7449b0d237a04d4aa9c31d832892a12908d963293266f659c8dcbbdf086c"
+      "sha256": "4c176ffc63caad8be3e4667348422ac05f4400bb4de21420bd5554feaf575791"
     },
     {
-      "bytes": 146595,
+      "bytes": 146697,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "922875c03993d87d596fc3d3416c200e2f43d6e77554f61e3c6cf42c9bc62331"
+      "sha256": "79ff005e055b1a5f91be4390b28284ffc3f0310da927672e0edef61495677738"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "43a981da1542b7323583f5f172392a0e7f59f46973dbead83b7c4281d461584e"
+      "sha256": "8fcf9ed79244f851bfe32389ba96abb0bac386cb31ec8073255cca4b48e1726a"
     },
     {
       "bytes": 26355,
@@ -7301,14 +7476,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "d534f9121fe9327bc31f604dc0d02bbc54fab74995da11e702543345534324c4"
+      "sha256": "6b6a3ad326fc3bc31916784a36b3ce48bb357dbcf010b16a85b55d1362131471"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "b3c9bc3223f226361d0a8615d3787e65d988e5449aae56178693dd763cc1eb2f"
+      "sha256": "b8780513e9bb54d93020310216891fcf42c85a043d5b208ec15ce5b79cb330e1"
     },
     {
       "bytes": 14544,
@@ -7329,14 +7504,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "b68183d502dc7325787ae39c1337df16f0900946fb691443ba0430f1059eda31"
+      "sha256": "3f7cd60995aae1631926f0873bbc38ffa74de982fd1deba3575dd236d7f38d6e"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "37a32208be2414d34af9e03e0b666aee641891650a36189fbd1775288fc56c21"
+      "sha256": "a3556636df991978491890a9fd8d6fcd38e29d77e0acd8f09126a116fa37b8fe"
     },
     {
       "bytes": 14855,
@@ -9306,11 +9481,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 193767,
+      "bytes": 196593,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "7bda0adf148b064ebc888ff1a81f2cbe32f2f7997f7bf0698dc6e13a80d30b23"
+      "sha256": "969d41da21e0f9b1ddac433ce3c601c6846ccb52474fe97dd310b9129756cbef"
     },
     {
       "bytes": 68921,

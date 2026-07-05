@@ -166,6 +166,13 @@ The completed chain now has these layers:
   invocation, customer handoff package creation, customer-visible follow-up,
   source mutation, production mutation, secrets, and model credentials remain
   blocked.
+- Patch Proposal Customer Feedback Delivery Trust Case Bridge: a Patch Proposal
+  Delivery Trust case candidate can invoke the local deterministic Delivery
+  Trust Case Harness only after the candidate still matches Product Loop and
+  Dual-Loop evidence, producing only metadata refs for Delivery Trust receipt,
+  CustomerHandoffPackage, and Delivery Trust Case outputs while raw customer
+  payloads, customer-visible sends, source mutation, production mutation,
+  secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -207,10 +214,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Delivery Trust Case Harness Bridge:
-consume a patch-proposal-delivery-trust-case-candidate and run the existing
-Delivery Trust Case Harness in metadata-only mode, producing only Delivery Trust
-case/handoff evidence refs while still blocking raw customer payloads,
-customer-visible sends, source mutation, production mutation, secrets, model
-credentials, and candidates that lack Product Loop plus Dual Loop evidence.
+Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate:
+consume Patch Proposal Delivery Trust case/handoff refs and require an active
+operator or host-platform Agent reconstruction before preparing a metadata-only
+customer follow-up envelope, while still blocking raw follow-up bodies,
+automatic customer sends, source mutation, production mutation, external
+publication, secrets, model credentials, and refs that lack Product Loop plus
+Dual Loop plus Delivery Trust Case evidence.
 ```
