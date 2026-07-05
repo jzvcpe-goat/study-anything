@@ -1,0 +1,907 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "candidate_created": true,
+      "case_id": "pass",
+      "decision": "create_patch_proposal_reopen_intake_delivery_trust_case_candidate",
+      "status": "queued_for_delivery_trust_case_candidate"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_receipt_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-product-loop-intake-receipt",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "source_reopen_intake_gate_not_allowed",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-product-loop-intake-blocked",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-product-loop-run",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_run_invalid"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-product-loop-run-blocked",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_scenario_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-product-loop-scenario",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-authoring-receipt-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_brief_candidate_ref_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-spec-eval-candidate-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_brief_candidate_ref_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-brief-candidate-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "reopen_intake_gate_receipt_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-gate-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "reopen_intake_bridge_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-bridge-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "closure_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-closure-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "outcome_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-outcome-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "action_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-action-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "external_actor_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-actor-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "intake_candidate_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-intake-candidate-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "product_loop_intake_item_ref_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-intake-item-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "backlog_signal_ref_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-backlog-signal-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "product_owner_reconstruction_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-product-owner-ref",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "failure_contract_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-failure-contract",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "sandbox_receipt_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-sandbox-receipt",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "attention_reconstruction_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-attention-summary",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "dual_loop_gate_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-dual-loop-gate",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "dual_loop_gate_blocked",
+        "sandbox_risk_outside_budget"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-dual-loop-blocked",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "dual_loop_gate_blocked",
+        "sandbox_risk_outside_budget"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-sandbox-risk",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "attention_reconstruction_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-attention-missing",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "claim_boundary_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "privacy_boundary_missing",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "attention_reconstruction_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-attention-reconstruction",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "ai_review_only_evidence_rejected",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-ai-review-only",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "raw_brief_body_rejected",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-brief-body",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "raw_spec_body_rejected",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-spec-body",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "raw_eval_body_rejected",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-eval-body",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "raw_follow_up_data_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-follow-up-data",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "raw_customer_data_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-customer-data",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "raw_backlog_data_rejected",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-backlog-data",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "customer_identity_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-customer-identity",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "delivery_trust_harness_invocation_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-delivery-trust-harness-invocation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "customer_handoff_package_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-customer-handoff-package",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_execution_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-automatic-execution",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_customer_contact_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "customer_contact_rejected",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing",
+        "customer_visible_follow_up_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-customer-contact",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "product_loop_backlog_mutation_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-product-loop-backlog-mutation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "source_mutation_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-source-mutation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "production_mutation_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "external_publication_payload_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing",
+        "external_publication_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-external-publication-payload",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "model_call_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-model-call",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "secret_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-secret",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_loop_intake_blocked",
+        "source_authoring_receipt_not_allowed",
+        "source_product_owner_receipt_not_allowed",
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "model_credential_rejected",
+        "source_backlog_signal_missing",
+        "source_spec_eval_candidate_missing",
+        "source_brief_candidate_missing",
+        "product_loop_scenario_missing",
+        "product_loop_run_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-model-credential",
+      "decision": "block_patch_proposal_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A Patch Proposal controlled follow-up feedback reopen-intake Product Loop run can become a metadata-only Delivery Trust case candidate only when the reopen-intake Product Loop receipt, scenario, run, controlled-failure, attention-reconstruction, and Dual Loop gate evidence are all present. The candidate stops before Delivery Trust Case Harness invocation, customer handoff package creation, external publication, or model calls.",
+    "not_claimed": [
+      "Delivery Trust Case Harness completed",
+      "customer handoff package created",
+      "customer-visible follow-up allowed",
+      "source mutation allowed",
+      "production mutation allowed",
+      "automatic execution",
+      "external publication allowed",
+      "model call performed"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_customer_contact_performed": false,
+    "study_anything_automatic_execution_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_item_created": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_customer_handoff_package_created": false,
+    "study_anything_customer_visible_follow_up_performed": false,
+    "study_anything_delivery_trust_case_candidate_queue_mutated": false,
+    "study_anything_delivery_trust_case_harness_invoked": false,
+    "study_anything_delivery_trust_harness_invoked": false,
+    "study_anything_delivery_trust_harness_mutated": false,
+    "study_anything_eval_storage_mutated": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_patch_execution_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_product_loop_backlog_mutation_performed": false,
+    "study_anything_product_loop_brief_candidate_queue_mutated": false,
+    "study_anything_product_loop_run_queue_mutated": false,
+    "study_anything_product_loop_scenario_queue_mutated": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_raw_spec_storage_mutated": false,
+    "study_anything_repository_mutation_performed": false,
+    "study_anything_source_mutation_performed": false,
+    "study_anything_spec_eval_candidate_queue_mutated": false,
+    "study_anything_spec_eval_storage_mutated": false
+  },
+  "gate_rules": {
+    "attention_reconstruction_required": true,
+    "automatic_execution_blocked": true,
+    "controlled_failure_required": true,
+    "customer_handoff_package_creation_blocked": true,
+    "delivery_trust_case_harness_invocation_blocked": true,
+    "dual_loop_gate_required": true,
+    "external_publication_blocked": true,
+    "metadata_only": true,
+    "model_calls_blocked": true,
+    "product_loop_run_required": true
+  },
+  "intake_matrix": {
+    "automatic_executions": 0,
+    "blocked_intake_transitions": 47,
+    "customer_handoff_packages_created": 0,
+    "customer_visible_follow_ups": 0,
+    "delivery_trust_case_harness_invocations": 0,
+    "external_publications": 0,
+    "model_calls": 0,
+    "production_mutations": 0,
+    "queued_delivery_trust_case_candidates": 1,
+    "source_mutations": 0
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_execution_transition_injected": "queued receipt must not request automatic_execution_requested",
+    "blocked_receipt_with_candidate": "blocked receipt must not include candidate",
+    "customer_follow_up_policy_injected": "policy.customer_visible_follow_up_allowed must be False",
+    "customer_handoff_package_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1:$.candidate.customer_handoff_package.raw uses forbidden field",
+    "customer_handoff_package_policy_injected": "policy.customer_handoff_package_creation_allowed must be False",
+    "customer_handoff_ready_injected": "candidate ready_for_customer_handoff must be false",
+    "delivery_harness_invocation_policy_injected": "policy.delivery_trust_case_harness_invocation_allowed must be False",
+    "delivery_harness_invoked_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1.effect_boundary.study_anything_delivery_trust_case_harness_invoked must be False",
+    "external_publication_transition_injected": "queued receipt must not request external_publication_requested",
+    "model_call_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1.effect_boundary.model_calls_performed must be False",
+    "model_call_transition_injected": "queued receipt must not request model_call_requested",
+    "production_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1.effect_boundary.study_anything_production_mutation_performed must be False",
+    "raw_delivery_case_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1 includes forbidden raw fields: ['$.candidate.raw_delivery_case']"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "agent_endpoint_secrets_included": false,
+    "automatic_backlog_creation_payload_included": false,
+    "automatic_customer_contact_payload_included": false,
+    "automatic_execution_payload_included": false,
+    "automatic_intake_creation_payload_included": false,
+    "automatic_priority_rationale_included": false,
+    "automatic_recontact_payload_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "controlled_follow_up_boundary_metadata_only": true,
+    "controlled_follow_up_feedback_intake_metadata_only": true,
+    "controlled_follow_up_feedback_loop_closure_metadata_only": true,
+    "controlled_follow_up_feedback_outcome_metadata_only": true,
+    "controlled_follow_up_feedback_rehearsal_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_backlog_bridge_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_bridge_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_gate_metadata_only": true,
+    "controlled_follow_up_outcome_metadata_only": true,
+    "controlled_follow_up_rehearsal_metadata_only": true,
+    "cookies_included": false,
+    "customer_handoff_package_body_included": false,
+    "customer_handoff_package_included": false,
+    "customer_identity_included": false,
+    "customer_payload_included": false,
+    "customer_visible_follow_up_draft_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "delivery_trust_case_body_included": false,
+    "delivery_trust_case_bridge_metadata_only": true,
+    "delivery_trust_case_candidate_metadata_only": true,
+    "external_owner_message_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "follow_up_body_included": false,
+    "follow_up_envelope_refs_only": true,
+    "follow_up_feedback_loop_closure_receipt_only": true,
+    "follow_up_feedback_outcome_receipt_only": true,
+    "follow_up_feedback_rehearsal_receipt_only": true,
+    "follow_up_outcome_receipt_only": true,
+    "follow_up_preview_body_included": false,
+    "follow_up_rehearsal_receipt_only": true,
+    "handoff_refs_only": true,
+    "intake_item_payload_included": false,
+    "intake_payload_included": false,
+    "keystrokes_included": false,
+    "model_call_payload_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "patch_proposal_brief_candidate_metadata_only": true,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_backlog_body_included": false,
+    "product_loop_backlog_candidate_only": true,
+    "product_loop_backlog_signal_metadata_only": true,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_loop_run_candidate_metadata_only": true,
+    "product_loop_scenario_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_attention_trace_included": false,
+    "raw_backlog_data_included": false,
+    "raw_backlog_description_included": false,
+    "raw_brief_body_included": false,
+    "raw_customer_data_included": false,
+    "raw_customer_feedback_included": false,
+    "raw_customer_payload_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_delivery_case_included": false,
+    "raw_diff_body_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_follow_up_body_included": false,
+    "raw_follow_up_data_included": false,
+    "raw_follow_up_preview_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_sandbox_log_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "reopen_intake_bridge_receipt_only": true,
+    "reopen_intake_gate_receipt_only": true,
+    "reopen_intake_product_owner_gate_metadata_only": true,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "send_payload_included": false,
+    "signed_urls_included": false,
+    "source_mutation_payload_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "purpose": "Prove Patch Proposal Product Loop runs can create metadata-only Delivery Trust case candidates only when Product Loop, controlled-failure, attention-reconstruction, and Dual Loop gate evidence are present, without invoking Delivery Trust Case Harness or customer handoff.",
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate-v1",
+      "sha256": "b3bea9fd1c0c22ff50a3f5869eb83c5df731102cf5efe900c1609050297939a5"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1.schema.json",
+      "schema_version": "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1",
+      "sha256": "08df5ee8c793419d0caaa74226a5d4deed2671e7118f03ddcc8249100393edbe"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-delivery-trust-case-candidate-v1.schema.json",
+      "schema_version": "patch-proposal-delivery-trust-case-candidate-v1",
+      "sha256": "ff1c0c1beabd9109f96b6dd6673d5fc567add1c704810a9ab8bc6ec534bfca1a"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate-v1",
+  "status": "pass"
+}
