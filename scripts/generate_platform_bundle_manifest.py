@@ -578,6 +578,32 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_ARTIFACTS = 
     ]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-envelope-refs",
+    "blocked-invalid-envelope-refs",
+    "blocked-passive-rehearsal",
+    "blocked-unsupported-rehearsal-source",
+    "blocked-missing-active-reconstruction-ref",
+    "blocked-missing-product-loop-ref",
+    "blocked-missing-dual-loop-ref",
+    "blocked-missing-delivery-trust-ref",
+    "blocked-raw-follow-up-preview",
+    "blocked-customer-visible-draft",
+    "blocked-automatic-customer-send",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-rehearsal-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1239,6 +1265,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-rehearsal.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-rehearsal.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-rehearsal.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -2046,6 +2087,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate guide for metadata-only follow-up envelope refs.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-rehearsal.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal guide for metadata-only local rehearsal receipts.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2414,6 +2460,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-boundary-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Boundary Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-rehearsal-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-rehearsal-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Rehearsal Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2982,6 +3038,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-rehearsal/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Rehearsal {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -4372,6 +4437,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_boundary_gate.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_rehearsal.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Rehearsal artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_rehearsal.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Rehearsal fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

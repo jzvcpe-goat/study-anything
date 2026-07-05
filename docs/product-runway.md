@@ -179,6 +179,13 @@ The completed chain now has these layers:
   recipient scope, claim boundary, evidence refs, and blocked effects, while
   raw follow-up bodies, automatic customer sends, source mutation, production
   mutation, external publication, secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Rehearsal: metadata-only
+  controlled follow-up envelope refs can produce only local operator or
+  host-platform Agent rehearsal receipts after Product Loop, Dual Loop,
+  Delivery Trust Case, and active reconstruction refs remain present, while raw
+  follow-up previews, customer-visible drafts, automatic sends, source mutation,
+  production mutation, external publication, model calls, secrets, and model
+  credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -220,11 +227,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Rehearsal:
-consume metadata-only controlled follow-up envelope refs and produce a local
-operator/host-platform Agent rehearsal receipt that proves the follow-up can be
-previewed without generating raw customer-visible text, sending to customers,
-mutating source or production, publishing externally, calling models, storing
-secrets, or bypassing Product Loop plus Dual Loop plus Delivery Trust Case plus
-active reconstruction evidence.
+Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt:
+consume ready controlled follow-up rehearsal receipts and record only
+metadata-only external follow-up outcome signals after a human or host-platform
+Agent performs any real customer communication outside Study Anything. It must
+not store raw customer-visible text, raw customer replies, customer identity,
+send payloads, source mutation, production mutation, external publication
+payloads, model calls, secrets, or model credentials, and it must preserve the
+Product Loop plus Dual Loop plus Delivery Trust Case plus active reconstruction
+evidence chain.
 ```

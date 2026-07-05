@@ -143,7 +143,7 @@
     }
   },
   "pack": {
-    "file_count": 1499,
+    "file_count": 1527,
     "no_frontend_required": true,
     "path": "platform/generated/study-anything-platform-adoption-pack.zip",
     "real_model_keys_stored_by_study_anything": false,
