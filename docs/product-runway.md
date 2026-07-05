@@ -235,6 +235,14 @@ The completed chain now has these layers:
   Delivery Trust Harness invocation or skips, automatic execution,
   customer-visible follow-up, external publication, source mutation, production
   mutation, model calls, secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust
+  Intake Gate: controlled follow-up feedback Product Loop scenario/run
+  candidates can produce only metadata-only Delivery Trust case candidates after
+  controlled-failure, attention-reconstruction, and Dual-Loop gate evidence are
+  present, while direct Delivery Trust Harness invocation, customer handoff
+  package creation, automatic execution, customer-visible follow-up, external
+  publication, source mutation, production mutation, model calls, secrets, and
+  model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -276,13 +284,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate:
-consume controlled follow-up feedback Product Loop scenario/run candidates and
-emit only metadata-only Delivery Trust case candidates after controlled-failure,
-attention-reconstruction, and Dual-Loop gate evidence are present. It must reject
-direct Delivery Trust Harness invocation, customer handoff package creation,
-customer-visible follow-up, external publication, source mutation, production
-mutation, model calls, secrets, and model credentials, and it must preserve the
-full Product Loop plus Dual Loop plus Delivery Trust Case plus active
-reconstruction plus controlled follow-up evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Case Bridge:
+consume controlled follow-up feedback Delivery Trust case candidates and emit
+only metadata-only Delivery Trust case/handoff refs after the Delivery Trust Case
+Harness evidence is present. It must reject raw delivery case bodies, customer
+handoff package bodies, automatic customer sending, customer-visible follow-up,
+external publication, source mutation, production mutation, model calls, secrets,
+and model credentials, and it must preserve the full Product Loop plus Dual Loop
+plus Delivery Trust Case plus active reconstruction plus controlled follow-up
+evidence chain.
 ```

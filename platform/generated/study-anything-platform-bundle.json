@@ -119,7 +119,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "14e270ba0604c3f5470205818b7744c6660a74ec91324eb3ba3de3dbdf7af2ae"
+      "sha256": "2a54a5bdfdd29a1b187c00cec239f31f24b4e6b914ccb4eea88122c540d5f033"
     },
     {
       "bytes": 1939,
@@ -308,35 +308,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Portable Delivery Trust Case pack sidecar manifest.",
-      "sha256": "c45cb94d37f4adcdabe4c52546f1dba8164c4dd3dc4e4467d7fe761d4b860b7e"
+      "sha256": "85a2c22b73bc9ad0cff88a56912e3ec4e26002a56afe167542049c0f856b7249"
     },
     {
       "bytes": 830,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Portable Delivery Trust Case pack operator summary.",
-      "sha256": "6d8cdf4e3b52d014e09e68be8f0727157170146e512f269f1adb63594a0fb625"
+      "sha256": "00e3bd074b10626041b01be7f8eff3f6f489c18bc3610eb9b4a14be9268d8a65"
     },
     {
-      "bytes": 99587,
+      "bytes": 99657,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
       "purpose": "Portable metadata-only Delivery Trust Case pack archive.",
-      "sha256": "82d1253128cd02f518d15949990629c31001080b1be3a00e36e68c05530943e2"
+      "sha256": "9f09345b3ef593fbe0f7f68d333c364431d1391939aa24b91af163bb4c897d56"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Portable Delivery Trust Case pack archive checksum.",
-      "sha256": "e39a84a6d119f3950d267d7ba4e24a475d0a0507c149bc6a79b9b6ef5a1483b7"
+      "sha256": "a7b325628392775bed147482142ecdb975c55223e78c1744e7cbfac90e447309"
     },
     {
       "bytes": 5081,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-trust-case-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Delivery Trust Case pack.",
-      "sha256": "d8841ac1a15d479084b9f2c778dea088a681c4e3d92c5f3c003ed802c6819e8f"
+      "sha256": "868a0fe22ba3ea7e15c3da2d50f34503daf321d14996fe7f608066a70d51d571"
     },
     {
       "bytes": 3502,
@@ -1053,6 +1053,27 @@
       "sha256": "39517d7c0e93a1b87d635182bae557a249bd92453e11c4f8838006719b929b4b"
     },
     {
+      "bytes": 15734,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate metadata-only verification report.",
+      "sha256": "8dca4516cac35b33d2feb0e02b92c03b066c0d5b4c930a98421d249b9fff60f6"
+    },
+    {
+      "bytes": 4733,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate operator summary.",
+      "sha256": "dac920aad924299db665dee0e964a1176fb6f8fa9ec04a77c5dffd09cf30f1e9"
+    },
+    {
+      "bytes": 19827,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate.html",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate static HTML verification report.",
+      "sha256": "17e2e2355525f671e257ad33d1b32e5dd6bedba5408bbe13fb3dd049439528b5"
+    },
+    {
       "bytes": 7536,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-delivery-class-registry.json",
@@ -1393,14 +1414,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "fbaa6b627a86667ae6e5f41b3d1617c53102fedaf7d734fccc8e366af4fbb8ac"
+      "sha256": "25b76d56508acc961a8dc9e27dc3a3fedf31f36f32ce26b74693378c838de164"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "111145446d4b4c5a65cb955bb4fc21a49d178d4f265a74a48c23e3c434ddc7db"
+      "sha256": "13e5f8908494a45324a7feb997ff2068e147ff9551434717b30d21585a9ac9cc"
     },
     {
       "bytes": 2466,
@@ -1470,28 +1491,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "b43525f145138c0f5c35b0730a176d71b12f0c549c863dad428d9c76c3fcb37a"
+      "sha256": "8be66cb072221b60baa0fed18068f2a9848ef3f9d53308d7a57d1b99e8343ad7"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "2672aa64c9bc1743bb80be9ce4655127ef335dd1ca8f83af5be9417947b1ab1c"
+      "sha256": "6297ed02c4fde604337e965e01c189d69541204c6d3bbdf540a06592f73a1ada"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "e9d78ec32e5e501d1aae61b587523bdb915072995f939388f0b711e2786df861"
+      "sha256": "aeceef8acf8e1d2fcae282e67a7f00bae0990c0bb36ffd7be6d8011d90b1f753"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "8f67ac3414a739e6e635192ea4db2cb300a6a2866f5232b259aa6b3d24841fa4"
+      "sha256": "ecbc7ef3159d630f092c3f5af6641f7512a8b794551b922030531d2d64fe479f"
     },
     {
       "bytes": 9410,
@@ -1533,7 +1554,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "43a3880704b815a716b600f3232dee90214a76dfa67ae4872ab660fed3505176"
+      "sha256": "70667630e95369548f58bbac37257d908a7cc803461e06c0fbe8a9ee78110b8d"
     },
     {
       "bytes": 107336,
@@ -1701,28 +1722,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "8af9cce7989fc33b53b417bdbec4c9fb7752788852c34ca688bc99e329cde1ee"
+      "sha256": "9f21584bacca00fd080d3d796543da2bb94fdf46daa7c75111a20262bc8a17b8"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "c45c25090a503c59fd524ed5cc2f511b54e6a5adda25e0dd17586112dfeb653f"
+      "sha256": "c0cdf820fe0163ae58487d2e68cb5c274ff229bf02754352ce962820cd7ce03a"
     },
     {
-      "bytes": 257557,
+      "bytes": 257556,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "3f0a8657c4e6271219c590e620c13d699419adb1c80a91bd960482eea0b4597f"
+      "sha256": "92767020a2a75965f390f37a2af660a2daac68e24a558cdb53d8e0d8f262d828"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "47c64feffdbb72f491aef63ea4e941620ef20caa3177afd237c729a9dd4f1bdc"
+      "sha256": "7c2a1015328bea7fef9bc340469fc80956ff1b41bbcb2553e5b7efb8f0b6ce0b"
     },
     {
       "bytes": 10417,
@@ -2227,6 +2248,13 @@
       "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-product-loop-brief-intake-gate.md",
       "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Loop Brief Intake Gate guide for metadata-only Product Loop scenario/run candidate boundaries.",
       "sha256": "d3d6c565f24ddd53ebcf6c485f3df462bf860c2d22a5241c8c2dad0b20d0c630"
+    },
+    {
+      "bytes": 2711,
+      "kind": "operator_doc",
+      "path": "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate.md",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate boundaries.",
+      "sha256": "cef0a89e3facbbb2c4263a737f42b6eb64674f4a13e59781d27c3c98ef692b16"
     },
     {
       "bytes": 2206,
@@ -2836,6 +2864,20 @@
       "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-product-loop-brief-intake-receipt-v1.schema.json",
       "purpose": "Patch Proposal Controlled Follow-up Feedback Product Loop Brief Intake Receipt JSON Schema.",
       "sha256": "c3fa01dec3d21a47c4312d4ceebf37d66189a179d608c4f8ce47bd77cedaea28"
+    },
+    {
+      "bytes": 1134,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate-v1.schema.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate report JSON Schema.",
+      "sha256": "e769c4843057cacc51c0185232b9ae8c94392f69ee9e98c3dca3723e2fe4821f"
+    },
+    {
+      "bytes": 2023,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt-v1.schema.json",
+      "purpose": "Patch Proposal Controlled Follow-up Feedback Delivery Trust Intake Receipt JSON Schema.",
+      "sha256": "05bc39ef27a9d36ede224c88bb0a442a545cb3dd498eeff65d70d39487b9c3a1"
     },
     {
       "bytes": 5318,
@@ -7640,6 +7682,160 @@
       "sha256": "3defb470c06a2a44e662f4b9d7219462ae32918530bf04b33198c1b8fec9dfb7"
     },
     {
+      "bytes": 18109,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-customer-signal/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-customer-signal patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "f1b68228fbc2412e027e451445e7dfca6334126e5b344ddee8ce87d390034908"
+    },
+    {
+      "bytes": 8926,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-customer-signal/patch-proposal-delivery-trust-case-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-customer-signal patch-proposal-delivery-trust-case-candidate.json fixture.",
+      "sha256": "a3bb3e30cb6ea2ec7f94d05a4c6cabecabbad1262c71cd80a08d30e9f6d85ed4"
+    },
+    {
+      "bytes": 18109,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-operator-signal/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-operator-signal patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "5f2a6b848b721ad385ac6580fde669adbe5dfe4e8fc50163573f62bc002942b4"
+    },
+    {
+      "bytes": 8926,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-operator-signal/patch-proposal-delivery-trust-case-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-operator-signal patch-proposal-delivery-trust-case-candidate.json fixture.",
+      "sha256": "093591f16ec3f6cd531c8a8f3387f32e8c4aa22d98c72a59c89630ecf7495140"
+    },
+    {
+      "bytes": 18153,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-host-platform-agent-signal/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-host-platform-agent-signal patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "f5181ac71dd0a1d25700fe7a699af3428f7fbef8589995a304bec9173e6a8ca3"
+    },
+    {
+      "bytes": 8926,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/pass-host-platform-agent-signal/patch-proposal-delivery-trust-case-candidate.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate pass-host-platform-agent-signal patch-proposal-delivery-trust-case-candidate.json fixture.",
+      "sha256": "fb217889a98f869ec3269a1fb23c60fdb738d99f8c201ce5095b3f118e86989c"
+    },
+    {
+      "bytes": 8758,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-missing-product-loop-run/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-missing-product-loop-run patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "6b8a141ec9bd41881c1e90db6a63fac5cf9dd610d9f85ac35f6f9a555a812869"
+    },
+    {
+      "bytes": 8758,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-invalid-product-loop-run/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-invalid-product-loop-run patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "ff87970c2d1dbbce7d66eaa9039edc7456752a373f85b290dbd9c6d4cbc3b6c2"
+    },
+    {
+      "bytes": 8813,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-missing-sandbox-receipt/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-missing-sandbox-receipt patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "5086746c2666d99d7e7b8a1c50a8b2dc84b1bcc102f2de31b8d7b01817bbc557"
+    },
+    {
+      "bytes": 8831,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-missing-attention-reconstruction/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-missing-attention-reconstruction patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "f30584e998f5a222bb71c812ab41a3516c6b46a1464521da9c52fb17bc028e67"
+    },
+    {
+      "bytes": 8846,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-dual-loop-gate-blocked/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-dual-loop-gate-blocked patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "b54259a6bf8673fc74bb03ee414d7a9aabc4931bbe68da9f4dbe418839a18dde"
+    },
+    {
+      "bytes": 8738,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-ai-review-only/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-ai-review-only patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "a0c7d01b948faf66ece1c518f3c9a2bdf4d3e7f8460878979af9ff432007a204"
+    },
+    {
+      "bytes": 8837,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-direct-delivery-trust-harness/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-direct-delivery-trust-harness patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "bd8c6040b45f93043dcc9eff05dfb130edd600140121f9662078f25c17fd59ee"
+    },
+    {
+      "bytes": 8823,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-customer-handoff-package/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-customer-handoff-package patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "cc9a9352f691ef214aec5d95cce682418ac77c84825a1c2b87554a1e56f9ecfe"
+    },
+    {
+      "bytes": 8813,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-automatic-execution/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-automatic-execution patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "a7efca3d231b257d092c7085bb8b44c37fd49e74fd1bf723fff858c8cac1c622"
+    },
+    {
+      "bytes": 8827,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-customer-visible-follow-up/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-customer-visible-follow-up patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "3578e0da4e2f35599c7887ebb202a28cae023a9524ffd018ff38a396a2a82894"
+    },
+    {
+      "bytes": 8805,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-source-mutation/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-source-mutation patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "b5f20169f5265035f96a7a99cd74c634ea5c5546565ccabadc6c2ade61eb9916"
+    },
+    {
+      "bytes": 8813,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-production-mutation/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-production-mutation patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "9245a8441d9d731a4d9deb0113794828def882cbd0d55c93b275ad7f62e90f5a"
+    },
+    {
+      "bytes": 8815,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-external-publication/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-external-publication patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "c491de084b9e3c20a17b82ce36dac61e49cd663692d828ee1b7c8122b145e377"
+    },
+    {
+      "bytes": 8795,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-model-call/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-model-call patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "023ca2987218c7c77cde49be83d5111ce3e029d3d009bfb7fd18c1f8a492ac22"
+    },
+    {
+      "bytes": 8788,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-secret/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-secret patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "807f1d72fb07ac2c4a3de8a4715d7ddbcd00d3fa53f5cfa34d07465f8c4ea0e0"
+    },
+    {
+      "bytes": 8808,
+      "kind": "fixture",
+      "path": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/blocked-model-credential/patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json",
+      "purpose": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate blocked-model-credential patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json fixture.",
+      "sha256": "12c0fdb5d5733ecc00bc4032b1856c1b0b9a06c12d75bef4c8946c2c4e8e81d9"
+    },
+    {
       "bytes": 4348,
       "kind": "fixture",
       "path": "fixtures/real-agent-eval-bridge/pass.json",
@@ -8158,11 +8354,11 @@
       "sha256": "4681fd277619a32a207330ca68a16d73fbf478543f97ef262dbf88790846c217"
     },
     {
-      "bytes": 17845,
+      "bytes": 18398,
       "kind": "docs",
       "path": "docs/product-runway.md",
       "purpose": "Next product runway for Dual Loop trust protocol development.",
-      "sha256": "fc7c24d7ae2870b794c26a8e0f44000784ff595918a822f905bb35e168d95ace"
+      "sha256": "883f7c07f7edb1ab4abb71968debe146e68ca1a80736c26c6f27ee7ff3550386"
     },
     {
       "bytes": 7722,
@@ -8995,35 +9191,35 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.json",
       "purpose": "Trust Evidence Handoff Pack manifest.",
-      "sha256": "9c52824d4b50d18f6a4be1bfcc3d314a7739bd8860fdfb0452cccec99ce6be1f"
+      "sha256": "e9df2c77b5781a071ec2dec90a48ac9a09c9041e0ba1b96c4298dff71dd3751c"
     },
     {
       "bytes": 933,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.md",
       "purpose": "Trust Evidence Handoff Pack markdown report.",
-      "sha256": "9f4ae4f9ea6f11c565bf86a3a91219149837475d7796c42f8df2a5b01edc729e"
+      "sha256": "2a1617465560d17909d3add13cc59f579db2525c917d085a3c6bfaeda62ca000"
     },
     {
       "bytes": 113,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.sha256",
       "purpose": "Trust Evidence Handoff Pack checksum.",
-      "sha256": "0e2f4d65aea48fb0223ee8f3e2866f3378960c45e81cd5acdf96ed9dc8893d6c"
+      "sha256": "4402e524204e65520930a0e6ef6680078f71e5e72bd97f4f218bbde8a8f01ced"
     },
     {
-      "bytes": 147310,
+      "bytes": 147382,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
       "purpose": "Portable metadata-only Trust Evidence Handoff Pack archive.",
-      "sha256": "9a2e26ed3b30e5fb3eb51c5f1ca9313ae0d3d9214f382be8d998868a24fe00cc"
+      "sha256": "22fcbd7575fcc0b544579ac03d6e1b3843690a353991e6d14ebcb38b5e1c1581"
     },
     {
       "bytes": 3511,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-handoff-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only consumer walkthrough for the Trust Evidence Handoff Pack.",
-      "sha256": "2e2af4d4b985ba4bb8bc3c209ecd3e8f544649be87e8e23ee483f82ff1944e59"
+      "sha256": "cad8c59d14040e2c8dde3b9f7b24f3f7bb99b9375f45cef7403cdbf951967a33"
     },
     {
       "bytes": 26355,
@@ -9051,14 +9247,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.json",
       "purpose": "Trust Evidence Acceptance Drill report.",
-      "sha256": "7097862a92c4880c7397dbed21d56632142de6ae01535d5044b271956c516331"
+      "sha256": "d2e5f92673118811464b3cdbdbb9cafe79bf31b33496428f98974d33aa36d624"
     },
     {
       "bytes": 1786,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-trust-evidence-acceptance-drill.md",
       "purpose": "Trust Evidence Acceptance Drill markdown report.",
-      "sha256": "a7a52a9e40e61fb39361e9bc6e40c72db89482f0caba8f6c991132da4d855e0d"
+      "sha256": "70c63274a404ed982a2d1a1ebbec16c842f9484b16f523d148eeabefb5fc7470"
     },
     {
       "bytes": 14544,
@@ -9079,14 +9275,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.json",
       "purpose": "Controlled Handoff Runbook report.",
-      "sha256": "2d2544c908b59da6ba8dc643436cb08059979f390311a8c105cc071ebd509a62"
+      "sha256": "fb2217a3db5a500bbcfae4a80834aeeadd6ef8fb7debcb99a90e8aa8d589e8bb"
     },
     {
       "bytes": 2426,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-controlled-handoff-runbook.md",
       "purpose": "Controlled Handoff Runbook markdown report.",
-      "sha256": "573c8dca1b50ff0e19f3b170621582f1d7aef4b963c1c8e3a7711929aacae008"
+      "sha256": "ed2a79312e837db3f5be538661ee9fd33abddd6ac5a763cdfe70cccdbcdf453d"
     },
     {
       "bytes": 14855,
@@ -9556,6 +9752,20 @@
       "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_product_loop_brief_intake_gate.py",
       "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Loop Brief Intake Gate fixtures, CLI output, and privacy boundaries.",
       "sha256": "4d91180bd10b14bdb7e7fac12cd2f76c25146c3333de4f333fe9913450cf036f"
+    },
+    {
+      "bytes": 36550,
+      "kind": "verification",
+      "path": "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_intake_gate.py",
+      "purpose": "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate artifacts.",
+      "sha256": "6e070e4a9b84731fcdeb88a1e7ae7a3961aea788c9a5c22b56c576dfbdc74ecf"
+    },
+    {
+      "bytes": 19139,
+      "kind": "verification",
+      "path": "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_intake_gate.py",
+      "purpose": "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate fixtures, CLI output, and privacy boundaries.",
+      "sha256": "154bcd0da5bb354d0c7b7fc7d202fe09f1561d37ea14c830f50c0da9149f2adc"
     },
     {
       "bytes": 34360,
@@ -11196,11 +11406,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 226367,
+      "bytes": 230526,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "80e8f5ff40a943db923d688698a38aa3a9757d0bcddf2ce5747b8d6092f3ce87"
+      "sha256": "d712c2950f37dcd31e5efced105fa4c30649b19e82864a82e2145298ea35f32c"
     },
     {
       "bytes": 68921,

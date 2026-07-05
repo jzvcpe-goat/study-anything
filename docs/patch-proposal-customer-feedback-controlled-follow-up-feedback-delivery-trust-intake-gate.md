@@ -1,0 +1,84 @@
+# Patch Proposal Customer Feedback Controlled Follow-up Feedback Delivery Trust Intake Gate
+
+This gate is the Patch Proposal controlled follow-up feedback bridge from
+Product Loop evidence into the Delivery Trust case candidate queue.
+
+It consumes a `product-loop-run-v1` artifact emitted by the controlled follow-up
+feedback Product Loop Brief Intake Gate and requires controlled-failure,
+attention-reconstruction, and Dual Loop gate evidence before emitting a
+metadata-only `patch-proposal-delivery-trust-case-candidate-v1`.
+
+## Claim Boundary
+
+The gate claims that a candidate is ready to be handed to the Delivery Trust
+Case Harness later. It does not claim that the Delivery Trust Case Harness has
+run or that a customer handoff package exists.
+
+It does not claim:
+
+- customer handoff package creation;
+- direct Delivery Trust Case Harness invocation;
+- customer-visible follow-up;
+- external publication;
+- source mutation;
+- production mutation;
+- automatic execution;
+- model-call evaluation;
+- real customer delivery.
+
+## Blocked Paths
+
+The gate blocks:
+
+- missing or invalid Product Loop runs;
+- missing sandbox receipts;
+- missing attention reconstruction;
+- blocked Dual Loop gates;
+- AI-review-only Product Loop evidence;
+- direct Delivery Trust Case Harness invocation;
+- customer handoff package creation;
+- automatic execution;
+- customer-visible follow-up;
+- external publication;
+- source mutation;
+- production mutation;
+- model calls;
+- secrets;
+- model credentials.
+
+## Artifacts
+
+Generated fixtures live under:
+
+```text
+fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-delivery-trust-intake-gate/
+```
+
+Passing cases emit both:
+
+- `patch-proposal-controlled-follow-up-feedback-delivery-trust-intake-receipt.json`
+- `patch-proposal-delivery-trust-case-candidate.json`
+
+Blocked cases emit only the receipt.
+
+## Verifier
+
+Run:
+
+```bash
+python3 scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_delivery_trust_intake_gate.py --check
+```
+
+The verifier checks deterministic fixtures, schema identity, CLI roundtrip,
+custom Product Loop run input, metadata-only privacy boundaries, Dual Loop
+evidence requirements, and negative injections for raw delivery case bodies,
+customer handoff package creation, Delivery Trust harness invocation, automatic
+execution, customer follow-up, external publication, model calls, production
+mutation, and unsafe blocked receipts with candidates.
+
+## Runtime Boundary
+
+This gate does not start a daemon, call a model, invoke the Delivery Trust Case
+Harness, create a customer handoff package, send a customer message, mutate
+source, mutate production, or store raw customer/spec/eval/sandbox/attention
+material.

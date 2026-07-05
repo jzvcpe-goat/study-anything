@@ -3,7 +3,7 @@
 - Schema: `controlled-handoff-runbook-v1`
 - Status: `pass`
 - Mode: `controlled_handoff_preparation_only`
-- Source ZIP SHA-256: `9a2e26ed3b30e5fb3eb51c5f1ca9313ae0d3d9214f382be8d998868a24fe00cc`
+- Source ZIP SHA-256: `22fcbd7575fcc0b544579ac03d6e1b3843690a353991e6d14ebcb38b5e1c1581`
 
 ## Allowed Preparation Steps
 
