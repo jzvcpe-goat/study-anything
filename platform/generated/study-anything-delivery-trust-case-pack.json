@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 100021,
+    "bytes": 100085,
     "path": "platform/generated/study-anything-delivery-trust-case-pack.zip",
     "root": "study-anything-delivery-trust-case-pack",
-    "sha256": "0e4611b3bf6bc6eacdf6df5ca02f941ab582cc2739ceaa22814f6a59a87bf22c"
+    "sha256": "fd46591c927e920c16fed95507f2ffcf00470cb249e73fec43284bdc5a56280e"
   },
   "case_matrix": [
     "pass",
@@ -46,11 +46,11 @@
     },
     {
       "archive_path": "study-anything-delivery-trust-case-pack/docs/product-runway.md",
-      "bytes": 20541,
+      "bytes": 21184,
       "path": "docs/product-runway.md",
       "purpose": "Current product runway and claim boundary.",
       "role": "operator_doc",
-      "sha256": "7fca14fe746e41268dab818af818050278a14e3cf982eb7d3d6b81ef0525cdb7"
+      "sha256": "7a1fcb8e64ee095448d131a6273b9fe585253d569ef50073fc42fdd83d456bcf"
     },
     {
       "archive_path": "study-anything-delivery-trust-case-pack/docs/delivery-trust-receipt.md",

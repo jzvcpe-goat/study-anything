@@ -1,0 +1,579 @@
+{
+  "case_reports": [
+    {
+      "blocked_reasons": [],
+      "candidate_created": true,
+      "case_id": "pass",
+      "decision": "create_patch_proposal_spec_eval_candidate",
+      "status": "queued_for_spec_eval_candidate"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-backlog-bridge-receipt",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "source_reopen_intake_gate_not_allowed",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-bridge-blocked",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "reopen_intake_gate_receipt_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-gate-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "reopen_intake_bridge_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-bridge-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "closure_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-closure-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "outcome_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-outcome-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "action_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-action-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "external_actor_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-actor-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "intake_candidate_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-intake-candidate-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "product_loop_intake_item_ref_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-intake-item-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "backlog_signal_ref_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-backlog-signal-ref",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "product_owner_reconstruction_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-owner-reconstruction",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "claim_boundary_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-claim-boundary",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "privacy_boundary_missing",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-missing-privacy-boundary",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "raw_follow_up_data_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-follow-up-data",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "raw_customer_data_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-customer-data",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "raw_backlog_data_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-raw-backlog-data",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "customer_identity_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-customer-identity",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_customer_contact_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-automatic-customer-contact",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_backlog_creation_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-automatic-backlog-creation",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_prioritization_rejected",
+        "source_backlog_signal_missing",
+        "automatic_priority_assignment_rejected"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-automatic-priority-assignment",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "requested_next_boundary_not_product_spec_eval_candidate_queue"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-skip-to-delivery-harness",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "automatic_execution_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-automatic-execution",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "product_loop_backlog_mutation_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-product-loop-backlog-mutation",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "source_mutation_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-source-mutation",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "production_mutation_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-production-mutation",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "external_publication_payload_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-external-publication-payload",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "model_call_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-model-call",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "secret_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-secret",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    },
+    {
+      "blocked_reasons": [
+        "source_reopen_intake_backlog_bridge_not_allowed",
+        "model_credential_rejected",
+        "source_backlog_signal_missing"
+      ],
+      "candidate_created": false,
+      "case_id": "blocked-model-credential",
+      "decision": "block_patch_proposal_product_owner_gate",
+      "status": "blocked"
+    }
+  ],
+  "claim_boundary": {
+    "current_claim": "A restarted Product Loop backlog signal from the reopen-intake bridge can become a metadata-only spec/eval candidate only after active Product Owner boundary reconstruction. The candidate remains unprioritized, non-executable, not customer-visible, and outside source or production effects.",
+    "not_claimed": [
+      "live backlog item created",
+      "automatic priority assignment",
+      "automatic execution",
+      "customer-visible follow-up",
+      "raw backlog data included",
+      "raw follow-up data included",
+      "raw customer data included",
+      "customer identity included",
+      "source mutation",
+      "external publication",
+      "production mutation",
+      "model call performed",
+      "spec/eval authored",
+      "customer satisfaction guarantee"
+    ]
+  },
+  "created_at": "2026-06-28T00:00:00Z",
+  "effect_boundary": {
+    "daemon_or_hosted_service_started": false,
+    "model_calls_performed": false,
+    "study_anything_automatic_customer_contact_performed": false,
+    "study_anything_automatic_execution_performed": false,
+    "study_anything_automatic_follow_up_performed": false,
+    "study_anything_backlog_item_created": false,
+    "study_anything_backlog_storage_mutated": false,
+    "study_anything_customer_follow_up_send_performed": false,
+    "study_anything_customer_visible_follow_up_performed": false,
+    "study_anything_external_publication_performed": false,
+    "study_anything_patch_execution_performed": false,
+    "study_anything_priority_assignment_performed": false,
+    "study_anything_product_loop_backlog_mutation_performed": false,
+    "study_anything_production_mutation_performed": false,
+    "study_anything_repository_mutation_performed": false,
+    "study_anything_spec_eval_candidate_queue_mutated": false,
+    "study_anything_spec_eval_storage_mutated": false
+  },
+  "isolation": {
+    "ai_sandbox_has_attention_stream_access": false,
+    "attention_layer_has_execution_authority": false,
+    "daemon_or_hosted_service_started": false,
+    "physical_isolation": true,
+    "production_mutation_allowed": false,
+    "structured_artifact_bridge_only": true
+  },
+  "negative_fixtures": {
+    "automatic_backlog_creation_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_backlog_item_created must be False",
+    "automatic_customer_contact_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_customer_visible_follow_up_performed must be False",
+    "automatic_execution_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_automatic_execution_performed must be False",
+    "automatic_priority_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_priority_assignment_performed must be False",
+    "candidate_ready_for_execution": "candidate ready_for_execution must remain false",
+    "candidate_skip_to_delivery_trust": "candidate ready_for_delivery_trust_harness must remain false",
+    "external_publication_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_external_publication_performed must be False",
+    "model_call_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.model_calls_performed must be False",
+    "priority_score_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1 includes forbidden raw fields: ['$.candidate.priority_score']",
+    "product_loop_backlog_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_product_loop_backlog_mutation_performed must be False",
+    "product_owner_identity_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1 includes forbidden raw fields: ['$.product_owner_reconstruction.product_owner_identity']",
+    "production_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_production_mutation_performed must be False",
+    "raw_backlog_data_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1 includes forbidden raw fields: ['$.candidate.raw_backlog_data']",
+    "raw_eval_body_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1 includes forbidden raw fields: ['$.candidate.raw_eval_body']",
+    "raw_product_spec_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1 includes forbidden raw fields: ['$.candidate.raw_product_spec']",
+    "source_mutation_effect_injected": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.effect_boundary.study_anything_repository_mutation_performed must be False"
+  },
+  "privacy": {
+    "agent_credentials_included": false,
+    "agent_endpoint_secrets_included": false,
+    "automatic_backlog_creation_payload_included": false,
+    "automatic_customer_contact_payload_included": false,
+    "automatic_execution_payload_included": false,
+    "automatic_intake_creation_payload_included": false,
+    "automatic_priority_rationale_included": false,
+    "automatic_recontact_payload_included": false,
+    "bearer_tokens_included": false,
+    "biometrics_included": false,
+    "controlled_follow_up_boundary_metadata_only": true,
+    "controlled_follow_up_feedback_intake_metadata_only": true,
+    "controlled_follow_up_feedback_loop_closure_metadata_only": true,
+    "controlled_follow_up_feedback_outcome_metadata_only": true,
+    "controlled_follow_up_feedback_rehearsal_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_backlog_bridge_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_bridge_metadata_only": true,
+    "controlled_follow_up_feedback_reopen_intake_gate_metadata_only": true,
+    "controlled_follow_up_outcome_metadata_only": true,
+    "controlled_follow_up_rehearsal_metadata_only": true,
+    "cookies_included": false,
+    "customer_handoff_package_body_included": false,
+    "customer_handoff_package_included": false,
+    "customer_identity_included": false,
+    "customer_payload_included": false,
+    "customer_visible_follow_up_draft_included": false,
+    "customer_visible_follow_up_included": false,
+    "customer_visible_payload_included": false,
+    "delivery_trust_case_body_included": false,
+    "delivery_trust_case_bridge_metadata_only": true,
+    "delivery_trust_case_candidate_metadata_only": true,
+    "external_owner_message_included": false,
+    "external_publication_payload_included": false,
+    "eye_tracking_included": false,
+    "follow_up_body_included": false,
+    "follow_up_envelope_refs_only": true,
+    "follow_up_feedback_loop_closure_receipt_only": true,
+    "follow_up_feedback_outcome_receipt_only": true,
+    "follow_up_feedback_rehearsal_receipt_only": true,
+    "follow_up_outcome_receipt_only": true,
+    "follow_up_preview_body_included": false,
+    "follow_up_rehearsal_receipt_only": true,
+    "handoff_refs_only": true,
+    "intake_item_payload_included": false,
+    "intake_payload_included": false,
+    "keystrokes_included": false,
+    "model_call_payload_included": false,
+    "model_calls_performed": false,
+    "model_prompts_included": false,
+    "mouse_coordinates_included": false,
+    "patch_proposal_brief_candidate_metadata_only": true,
+    "priority_score_included": false,
+    "private_customer_data_included": false,
+    "product_loop_backlog_body_included": false,
+    "product_loop_backlog_candidate_only": true,
+    "product_loop_backlog_signal_metadata_only": true,
+    "product_loop_brief_candidate_metadata_only": true,
+    "product_loop_run_candidate_metadata_only": true,
+    "product_loop_scenario_candidate_metadata_only": true,
+    "product_owner_identity_included": false,
+    "production_payload_included": false,
+    "raw_acceptance_criteria_included": false,
+    "raw_attention_trace_included": false,
+    "raw_backlog_data_included": false,
+    "raw_backlog_description_included": false,
+    "raw_brief_body_included": false,
+    "raw_customer_data_included": false,
+    "raw_customer_feedback_included": false,
+    "raw_customer_payload_included": false,
+    "raw_customer_reply_included": false,
+    "raw_customer_request_included": false,
+    "raw_delivery_case_included": false,
+    "raw_diff_body_included": false,
+    "raw_diff_included": false,
+    "raw_eval_body_included": false,
+    "raw_eval_dataset_included": false,
+    "raw_eval_prompt_included": false,
+    "raw_external_feedback_text_included": false,
+    "raw_follow_up_body_included": false,
+    "raw_follow_up_data_included": false,
+    "raw_follow_up_preview_included": false,
+    "raw_patch_body_included": false,
+    "raw_pr_comment_included": false,
+    "raw_product_spec_included": false,
+    "raw_report_text_included": false,
+    "raw_repository_file_body_included": false,
+    "raw_sandbox_log_included": false,
+    "raw_source_text_included": false,
+    "raw_spec_body_included": false,
+    "real_model_keys_included": false,
+    "real_secrets_included": false,
+    "reopen_intake_bridge_receipt_only": true,
+    "reopen_intake_gate_receipt_only": true,
+    "reopen_intake_product_owner_gate_metadata_only": true,
+    "repository_secrets_included": false,
+    "screenshots_included": false,
+    "send_payload_included": false,
+    "signed_urls_included": false,
+    "source_mutation_payload_included": false,
+    "spec_eval_candidate_metadata_only": true,
+    "user_owned_agent_credentials_included": false
+  },
+  "product_owner_matrix": {
+    "automatic_backlog_creation_rejected": true,
+    "automatic_customer_contact_rejected": true,
+    "automatic_execution_rejected": true,
+    "automatic_priority_assignment_rejected": true,
+    "blocked_backlog_bridge_rejected": true,
+    "blocked_product_owner_transitions": 30,
+    "customer_identity_rejected": true,
+    "external_publication_payload_rejected": true,
+    "missing_action_ref_rejected": true,
+    "missing_actor_ref_rejected": true,
+    "missing_backlog_bridge_receipt_rejected": true,
+    "missing_backlog_signal_ref_rejected": true,
+    "missing_bridge_ref_rejected": true,
+    "missing_claim_boundary_rejected": true,
+    "missing_closure_ref_rejected": true,
+    "missing_gate_ref_rejected": true,
+    "missing_intake_candidate_ref_rejected": true,
+    "missing_intake_item_ref_rejected": true,
+    "missing_outcome_ref_rejected": true,
+    "missing_owner_reconstruction_rejected": true,
+    "missing_privacy_boundary_rejected": true,
+    "model_call_rejected": true,
+    "model_credential_rejected": true,
+    "product_loop_backlog_mutation_rejected": true,
+    "production_mutation_rejected": true,
+    "queued_spec_eval_candidates": 1,
+    "raw_backlog_data_rejected": true,
+    "raw_customer_data_rejected": true,
+    "raw_follow_up_data_rejected": true,
+    "reopen_intake_backlog_signal_queued": true,
+    "secret_rejected": true,
+    "skip_to_delivery_harness_rejected": true,
+    "source_mutation_rejected": true,
+    "total_cases": 31
+  },
+  "purpose": "Prove controlled follow-up feedback reopen-intake backlog signals can create metadata-only spec/eval candidates only after active Product Owner boundary reconstruction, without live backlog creation, priority assignment, execution, customer contact, backlog/source/production mutation, external publication, model calls, secrets, or model credentials.",
+  "quality_gates": {
+    "accepted_backlog_signal_required": true,
+    "active_product_owner_reconstruction_required": true,
+    "automatic_backlog_creation_blocked": true,
+    "automatic_customer_contact_blocked": true,
+    "automatic_execution_blocked": true,
+    "automatic_priority_assignment_blocked": true,
+    "customer_identity_rejected": true,
+    "external_publication_payload_blocked": true,
+    "metadata_only_spec_eval_candidate_required": true,
+    "model_calls_blocked": true,
+    "product_loop_backlog_mutation_blocked": true,
+    "production_mutation_blocked": true,
+    "raw_follow_up_customer_and_backlog_data_rejected": true,
+    "secrets_and_model_credentials_rejected": true,
+    "source_mutation_blocked": true,
+    "source_reopen_intake_backlog_bridge_required": true
+  },
+  "schema_files": [
+    {
+      "path": "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate-v1.schema.json",
+      "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate-v1",
+      "sha256": "c8ec83a96d5c712fe4a8acba8460fd90f7bd14a4fee1048af28eb9cd15eea02c"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.schema.json",
+      "schema_version": "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1",
+      "sha256": "64784b2893a80fd4521bfda492dace4bd98a11f396b5fa08f093186ac9338c3a"
+    },
+    {
+      "path": "platform/schemas/cbb/patch-proposal-product-spec-eval-candidate-v1.schema.json",
+      "schema_version": "patch-proposal-product-spec-eval-candidate-v1",
+      "sha256": "c8420e16cf2f35e09696eafd85bcb8c5d7beff3347fbc224aa3ca96cf9681581"
+    }
+  ],
+  "schema_version": "patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate-v1",
+  "source_chain": {
+    "controlled_follow_up_feedback_reopen_intake_backlog_bridge_report": "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
+    "recorded_backlog_signal": "fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge/pass/product-loop-backlog-signal.json"
+  },
+  "status": "pass"
+}

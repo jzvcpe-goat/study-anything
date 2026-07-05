@@ -1049,6 +1049,49 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BAC
     "patch-proposal-controlled-follow-up-feedback-reopen-intake-backlog-bridge.json",
     "product-loop-backlog-signal.json",
 ]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_CASES = [
+    "pass",
+    "blocked-missing-backlog-bridge-receipt",
+    "blocked-bridge-blocked",
+    "blocked-missing-gate-ref",
+    "blocked-missing-bridge-ref",
+    "blocked-missing-closure-ref",
+    "blocked-missing-outcome-ref",
+    "blocked-missing-action-ref",
+    "blocked-missing-actor-ref",
+    "blocked-missing-intake-candidate-ref",
+    "blocked-missing-intake-item-ref",
+    "blocked-missing-backlog-signal-ref",
+    "blocked-missing-owner-reconstruction",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-follow-up-data",
+    "blocked-raw-customer-data",
+    "blocked-raw-backlog-data",
+    "blocked-customer-identity",
+    "blocked-automatic-customer-contact",
+    "blocked-automatic-backlog-creation",
+    "blocked-automatic-priority-assignment",
+    "blocked-skip-to-delivery-harness",
+    "blocked-automatic-execution",
+    "blocked-product-loop-backlog-mutation",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication-payload",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_CASES
+}
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_ARTIFACTS[
+    "pass"
+] = [
+    "patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt.json",
+    "patch-proposal-product-spec-eval-candidate.json",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1952,6 +1995,21 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-delivery-class-registry.json",
         "generated_asset",
         "Delivery Class Registry metadata-only verification report.",
@@ -2837,6 +2895,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge guide for metadata-only Product Loop backlog signal refs.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate guide for metadata-only spec/eval candidate receipts.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -3355,6 +3418,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-backlog-bridge-v1.schema.json",
         "schema",
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-product-owner-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Feedback Reopen Intake Product Owner Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -4091,6 +4164,17 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BACKLOG_BRIDGE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BACKLOG_BRIDGE_ARTIFACTS[
+            case_id
+        ]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-product-owner-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_OWNER_GATE_ARTIFACTS[
             case_id
         ]
     ],
@@ -5553,6 +5637,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_backlog_bridge.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Backlog Bridge fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_product_owner_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_product_owner_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Owner Gate fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "scripts/patch_proposal_customer_feedback_spec_eval_authoring_gate.py",
