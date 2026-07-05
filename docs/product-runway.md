@@ -203,6 +203,15 @@ The completed chain now has these layers:
   publication payloads, automatic follow-up, Product Loop backlog mutation,
   source mutation, production mutation, model calls, secrets, and model
   credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge:
+  accepted controlled follow-up feedback intake receipts can emit only
+  metadata-only Product Loop backlog signal refs without assigning priority or
+  mutating a live backlog, preserving the full Product Loop, Dual Loop, Delivery
+  Trust Case, active reconstruction, controlled follow-up outcome, and feedback
+  intake evidence chain, while raw replies, customer identity, private data, PR
+  comment bodies, automatic priority assignment, automatic follow-up, Product
+  Loop backlog mutation, source mutation, production mutation, external
+  publication, model calls, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -244,13 +253,14 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Backlog Bridge:
-consume accepted controlled follow-up feedback intake receipts and emit only a
-metadata-only Product Loop backlog signal ref. It must not assign priority, write
-the Product Loop backlog, send follow-ups, store raw customer replies, identify
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Product Owner Gate:
+consume controlled follow-up feedback backlog signal refs and emit only a
+metadata-only Product Owner spec/eval candidate after active Product Owner
+boundary reconstruction. It must not assign priority automatically, execute the
+candidate, send customer follow-ups, store raw customer replies, identify
 customers, include private customer data or PR comment bodies, publish
 externally, mutate source, mutate production, call models, store secrets, or
-store model credentials, and it must preserve the Product Loop plus Dual Loop
-plus Delivery Trust Case plus active reconstruction plus controlled follow-up
-evidence chain.
+store model credentials, and it must preserve the full Product Loop plus Dual
+Loop plus Delivery Trust Case plus active reconstruction plus controlled
+follow-up evidence chain.
 ```

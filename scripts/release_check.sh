@@ -513,6 +513,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_rehearsal.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_outcome_receipt.py --check
 "$python_bin" scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_intake.py --check
+"$python_bin" scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_backlog_bridge.py --check
 "$python_bin" scripts/generate_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_scenario_pack.py --check
 "$python_bin" scripts/verify_dual_loop_trust_pack_consumer_walkthrough.py --check
