@@ -955,6 +955,34 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_LOOP_CLOSURE_ARTI
     case_id: ["patch-proposal-controlled-follow-up-feedback-loop-closure-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_LOOP_CLOSURE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BRIDGE_CASES = [
+    "pass",
+    "blocked-missing-closure-receipt",
+    "blocked-closure-blocked",
+    "blocked-archive-action",
+    "blocked-external-owner-action",
+    "blocked-missing-outcome-ref",
+    "blocked-missing-action-ref",
+    "blocked-missing-actor-ref",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-follow-up-body",
+    "blocked-raw-customer-reply",
+    "blocked-customer-identity",
+    "blocked-send-payload",
+    "blocked-automatic-recontact",
+    "blocked-automatic-intake-creation",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication-payload",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BRIDGE_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BRIDGE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1811,6 +1839,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-loop-closure.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Loop Closure static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -2683,6 +2726,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Loop Closure guide for metadata-only feedback-cycle closure decisions.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge guide for metadata-only reopen-intake candidate refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -3176,6 +3224,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-loop-closure-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Feedback Loop Closure Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-bridge-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Feedback Reopen Intake Bridge Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -3879,6 +3937,17 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_LOOP_CLOSURE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_LOOP_CLOSURE_ARTIFACTS[
+            case_id
+        ]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-bridge/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BRIDGE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_BRIDGE_ARTIFACTS[
             case_id
         ]
     ],
@@ -5311,6 +5380,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_loop_closure.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Loop Closure fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_bridge.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Bridge fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "scripts/patch_proposal_customer_feedback_spec_eval_authoring_gate.py",
