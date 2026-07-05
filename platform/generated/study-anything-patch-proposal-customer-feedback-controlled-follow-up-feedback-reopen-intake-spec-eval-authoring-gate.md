@@ -1,0 +1,63 @@
+# Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Spec/Eval Authoring Gate
+
+Metadata-only proof that Patch Proposal controlled follow-up feedback reopen-intake spec/eval candidates can become Product Loop brief candidates only after active authoring-boundary reconstruction.
+
+- status: `pass`
+- schema: `patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-spec-eval-authoring-gate-v1`
+- queued Product Loop brief candidates: `1`
+- blocked authoring transitions: `34`
+
+## Claim Boundary
+
+A Patch Proposal controlled follow-up feedback reopen-intake spec/eval candidate can become a metadata-only Product Loop brief candidate only after active authoring-boundary reconstruction. The candidate remains non-executable, model-call-free, and cannot skip to the Delivery Trust Harness.
+
+Not claimed:
+- finished product spec
+- finished eval suite
+- automatic execution
+- customer contact
+- automatic backlog creation
+- automatic priority assignment
+- source mutation
+- external publication
+- production mutation
+- Delivery Trust Harness readiness
+- model call performed
+
+## Cases
+
+- `pass`: `queued_for_product_loop_brief_candidate` / `create_patch_proposal_product_loop_brief_candidate` / brief candidate: `True` / reasons: none
+- `blocked-missing-product-owner-receipt`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_missing, source_spec_eval_candidate_missing
+- `blocked-product-owner-blocked`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, source_reopen_intake_gate_not_allowed, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-spec-eval-candidate-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_spec_eval_candidate_ref_missing
+- `blocked-missing-gate-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, reopen_intake_gate_receipt_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-bridge-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, reopen_intake_bridge_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-closure-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, closure_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-outcome-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, outcome_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-action-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, action_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-actor-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, external_actor_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-intake-candidate-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, intake_candidate_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-intake-item-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, product_loop_intake_item_ref_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-backlog-signal-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, backlog_signal_ref_missing, source_spec_eval_candidate_missing
+- `blocked-missing-product-owner-ref`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, product_owner_reconstruction_missing, source_spec_eval_candidate_missing
+- `blocked-missing-authoring-reconstruction`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: authoring_reconstruction_missing
+- `blocked-missing-claim-boundary`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, claim_boundary_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-missing-privacy-boundary`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, privacy_boundary_missing, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-raw-spec-body`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: raw_spec_body_rejected
+- `blocked-raw-eval-body`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: raw_eval_body_rejected
+- `blocked-raw-follow-up-data`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, raw_follow_up_data_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, raw_follow_up_data_rejected
+- `blocked-raw-customer-data`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, raw_customer_data_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, raw_customer_data_rejected
+- `blocked-raw-backlog-data`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, raw_backlog_data_rejected, source_spec_eval_candidate_missing, raw_backlog_data_rejected
+- `blocked-customer-identity`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, customer_identity_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing
+- `blocked-automatic-backlog-creation`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, automatic_backlog_creation_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, automatic_backlog_creation_rejected
+- `blocked-automatic-priority-assignment`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, automatic_prioritization_rejected, source_backlog_signal_missing, automatic_priority_assignment_rejected, source_spec_eval_candidate_missing, automatic_priority_assignment_rejected
+- `blocked-automatic-execution`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, automatic_execution_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, automatic_execution_rejected
+- `blocked-skip-to-delivery-trust`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: requested_next_boundary_not_product_loop_brief_intake
+- `blocked-customer-contact`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, automatic_customer_contact_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, customer_contact_rejected
+- `blocked-product-loop-backlog-mutation`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, product_loop_backlog_mutation_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, product_loop_backlog_mutation_rejected
+- `blocked-source-mutation`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, source_mutation_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, source_mutation_rejected
+- `blocked-production-mutation`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, production_mutation_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, production_mutation_rejected
+- `blocked-external-publication-payload`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, external_publication_payload_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, external_publication_payload_rejected
+- `blocked-model-call`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, model_call_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, model_call_rejected
+- `blocked-secret`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, secret_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, secret_rejected
+- `blocked-model-credential`: `blocked` / `block_patch_proposal_spec_eval_authoring_gate` / brief candidate: `False` / reasons: source_product_owner_receipt_not_allowed, source_reopen_intake_backlog_bridge_not_allowed, model_credential_rejected, source_backlog_signal_missing, source_spec_eval_candidate_missing, model_credential_rejected

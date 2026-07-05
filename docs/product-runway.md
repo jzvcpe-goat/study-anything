@@ -276,6 +276,17 @@ The completed chain now has these layers:
   execution, customer contact, backlog/source/production mutation, external
   publication payloads, model calls, secrets, and model credentials remain
   blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
+  Spec/Eval Authoring Gate: reopen-intake Product Owner receipts and
+  spec/eval candidate refs can emit only metadata-only Product Loop brief
+  candidate refs after active spec/eval authoring boundary reconstruction,
+  preserving the full reopen-intake Product Owner evidence chain while missing
+  Product Owner receipts, blocked Product Owner receipts, missing refs, missing
+  claim/privacy boundaries, raw spec/eval/follow-up/customer/backlog data,
+  customer identity, automatic backlog creation, automatic prioritization,
+  automatic execution, customer contact, backlog/source/production mutation,
+  Delivery Trust Harness skips, external publication payloads, model calls,
+  secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -318,19 +329,20 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 
 ```text
 Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake
-Spec/Eval Authoring Gate:
-consume reopen-intake Product Owner receipts and spec/eval candidate refs, then
-emit only metadata-only Product Loop Harness brief candidate refs after active
-spec/eval authoring boundary reconstruction. It must reject missing or blocked
-Product Owner receipts, missing spec/eval candidate refs, missing
-gate/bridge/closure/outcome/action/actor/intake/backlog/product-owner refs,
-missing claim/privacy boundaries, raw spec text, raw eval prompts, raw
+Product Loop Brief Intake Gate:
+consume reopen-intake Spec/Eval Authoring receipts and Product Loop brief
+candidate refs, then emit only metadata-only Product Loop scenario/run
+candidate refs after active developer/product-loop boundary reconstruction. It
+must reject missing or blocked Spec/Eval Authoring receipts, missing brief
+candidate refs, missing gate/bridge/closure/outcome/action/actor/intake/backlog
+or Product Owner refs, missing claim/privacy boundaries, raw brief/spec/eval/
 follow-up/customer/backlog data, customer identity, automatic backlog creation,
 automatic priority assignment, automatic execution, customer contact,
-backlog/source/production mutation, Delivery Trust Harness skips, external
-publication payloads, model calls, secrets, and model credentials, and it must
-preserve the full Product Loop plus Dual Loop plus Delivery Trust Case plus
-boundary gate plus rehearsal plus outcome plus loop-closure plus reopen-bridge
-plus reopen-intake-gate plus reopen-intake-backlog-bridge plus reopen-intake
-Product Owner evidence chain.
+backlog/source/production mutation, Delivery Trust Harness invocation or skips,
+external publication payloads, model calls, secrets, and model credentials, and
+it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
+plus boundary gate plus rehearsal plus outcome plus loop-closure plus
+reopen-bridge plus reopen-intake-gate plus reopen-intake-backlog-bridge plus
+reopen-intake Product Owner plus reopen-intake Spec/Eval Authoring evidence
+chain.
 ```
