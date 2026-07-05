@@ -1192,6 +1192,68 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRO
     "product-loop-scenario.json",
     "product-loop-run.json",
 ]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_CASES = [
+    "pass",
+    "blocked-missing-product-loop-intake-receipt",
+    "blocked-product-loop-intake-blocked",
+    "blocked-missing-product-loop-run",
+    "blocked-product-loop-run-blocked",
+    "blocked-missing-product-loop-scenario",
+    "blocked-missing-authoring-receipt-ref",
+    "blocked-missing-spec-eval-candidate-ref",
+    "blocked-missing-brief-candidate-ref",
+    "blocked-missing-gate-ref",
+    "blocked-missing-bridge-ref",
+    "blocked-missing-closure-ref",
+    "blocked-missing-outcome-ref",
+    "blocked-missing-action-ref",
+    "blocked-missing-actor-ref",
+    "blocked-missing-intake-candidate-ref",
+    "blocked-missing-intake-item-ref",
+    "blocked-missing-backlog-signal-ref",
+    "blocked-missing-product-owner-ref",
+    "blocked-missing-failure-contract",
+    "blocked-missing-sandbox-receipt",
+    "blocked-missing-attention-summary",
+    "blocked-missing-dual-loop-gate",
+    "blocked-dual-loop-blocked",
+    "blocked-sandbox-risk",
+    "blocked-attention-missing",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-missing-attention-reconstruction",
+    "blocked-ai-review-only",
+    "blocked-raw-brief-body",
+    "blocked-raw-spec-body",
+    "blocked-raw-eval-body",
+    "blocked-raw-follow-up-data",
+    "blocked-raw-customer-data",
+    "blocked-raw-backlog-data",
+    "blocked-customer-identity",
+    "blocked-delivery-trust-harness-invocation",
+    "blocked-customer-handoff-package",
+    "blocked-automatic-execution",
+    "blocked-customer-contact",
+    "blocked-product-loop-backlog-mutation",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication-payload",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt.json"
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_CASES
+}
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_ARTIFACTS[
+    "pass"
+] = [
+    "patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt.json",
+    "patch-proposal-delivery-trust-case-candidate.json",
+]
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -2140,6 +2202,21 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Loop Brief Intake Gate static HTML verification report.",
     ),
     (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate static HTML verification report.",
+    ),
+    (
         "platform/generated/study-anything-delivery-class-registry.json",
         "generated_asset",
         "Delivery Class Registry metadata-only verification report.",
@@ -3040,6 +3117,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Loop Brief Intake Gate guide for metadata-only Product Loop scenario/run candidate refs.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -3588,6 +3670,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-product-loop-brief-intake-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Feedback Reopen Intake Product Loop Brief Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -4357,6 +4449,17 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_LOOP_BRIEF_INTAKE_GATE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_PRODUCT_LOOP_BRIEF_INTAKE_GATE_ARTIFACTS[
+            case_id
+        ]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-feedback-reopen-intake-delivery-trust-intake-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_FEEDBACK_REOPEN_INTAKE_DELIVERY_TRUST_INTAKE_GATE_ARTIFACTS[
             case_id
         ]
     ],
@@ -5849,6 +5952,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_product_loop_brief_intake_gate.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Product Loop Brief Intake Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_feedback_reopen_intake_delivery_trust_intake_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Feedback Reopen Intake Delivery Trust Intake Gate fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "scripts/patch_proposal_customer_feedback_spec_eval_authoring_gate.py",
