@@ -284,14 +284,14 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Boundary Gate:
-consume controlled follow-up feedback Delivery Trust case/handoff refs and emit
-only metadata-only controlled follow-up envelope refs after active operator or
-host-platform Agent boundary reconstruction is present. It must reject missing
-or mismatched bridge refs, passive reconstruction, raw follow-up bodies,
-automatic customer sending, customer-visible follow-up, external publication,
-source mutation, production mutation, model calls, secrets, and model
-credentials, and it must preserve the full Product Loop plus Dual Loop plus
-Delivery Trust Case plus active reconstruction plus controlled follow-up
-feedback evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Rehearsal:
+consume controlled follow-up feedback envelope refs and emit only metadata-only
+local rehearsal receipts after active rehearsal reconstruction confirms the
+follow-up boundary, envelope refs, and blocked effects. It must reject missing
+or mismatched envelope refs, passive reconstruction, raw follow-up preview
+bodies, automatic customer sending, customer-visible follow-up, external
+publication, source mutation, production mutation, model calls, secrets, and
+model credentials, and it must preserve the full Product Loop plus Dual Loop
+plus Delivery Trust Case plus boundary gate plus active reconstruction plus
+controlled follow-up feedback evidence chain.
 ```

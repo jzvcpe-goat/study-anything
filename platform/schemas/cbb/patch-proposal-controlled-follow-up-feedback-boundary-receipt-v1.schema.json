@@ -1,0 +1,120 @@
+{
+  "$id": "patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "active_reconstruction_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "active_reconstruction_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "active_reconstruction_schema_version": {
+      "const": "patch-proposal-follow-up-feedback-boundary-reconstruction-v1"
+    },
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "boundary_receipt_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "prepare_metadata_only_follow_up_envelope_refs",
+        "block_controlled_follow_up_boundary"
+      ],
+      "type": "string"
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "envelope_refs": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "harness_error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "harness_policy": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "requested_actions": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-feedback-boundary-receipt-v1"
+    },
+    "source_bridge_receipt_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_bridge_receipt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_bridge_schema_version": {
+      "const": "patch-proposal-delivery-trust-case-bridge-receipt-v1"
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "follow_up_envelope_refs_ready",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "boundary_receipt_id",
+    "case_id",
+    "source_bridge_schema_version",
+    "source_bridge_receipt_id",
+    "source_bridge_receipt_hash",
+    "active_reconstruction_schema_version",
+    "active_reconstruction_id",
+    "active_reconstruction_hash",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "harness_policy",
+    "envelope_refs",
+    "harness_error_code",
+    "requested_actions",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Patch Proposal Controlled Follow-up Boundary Receipt v1",
+  "type": "object"
+}
