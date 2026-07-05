@@ -1,0 +1,91 @@
+{
+  "$id": "patch-proposal-customer-feedback-delivery-trust-intake-receipt-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "blocked_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "candidate": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "decision": {
+      "enum": [
+        "create_patch_proposal_delivery_trust_case_candidate",
+        "block_patch_proposal_delivery_trust_intake_gate"
+      ],
+      "type": "string"
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "intake_policy": {
+      "type": "object"
+    },
+    "intake_receipt_id": {
+      "type": "string"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "requested_transition": {
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "patch-proposal-customer-feedback-delivery-trust-intake-receipt-v1"
+    },
+    "source_product_loop_run_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_product_loop_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "queued_for_delivery_trust_case_candidate",
+        "blocked"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "intake_receipt_id",
+    "case_id",
+    "source_product_loop_run_id",
+    "source_product_loop_run_hash",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "requested_transition",
+    "intake_policy",
+    "candidate",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Patch Proposal Customer Feedback Delivery Trust Intake Receipt v1",
+  "type": "object"
+}

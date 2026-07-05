@@ -1,0 +1,90 @@
+{
+  "$id": "patch-proposal-delivery-trust-case-candidate-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "attention_reconstruction_ref": {
+      "type": "object"
+    },
+    "blocked_destinations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "controlled_failure_ref": {
+      "type": "object"
+    },
+    "customer_handoff_package_included": {
+      "const": false
+    },
+    "destination": {
+      "const": "delivery_trust_case_candidate_queue"
+    },
+    "dual_loop_gate_ref": {
+      "type": "object"
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "next_boundary": {
+      "const": "delivery_trust_case_harness"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "ready_for_customer_handoff": {
+      "const": false
+    },
+    "ready_for_delivery_trust_case_harness": {
+      "const": true
+    },
+    "ready_for_production": {
+      "const": false
+    },
+    "schema_version": {
+      "const": "patch-proposal-delivery-trust-case-candidate-v1"
+    },
+    "source_delivery_class": {
+      "const": "patch-proposal"
+    },
+    "source_product_loop_run_hash": {
+      "type": "string"
+    },
+    "source_product_loop_run_id": {
+      "type": "string"
+    },
+    "source_product_loop_scenario_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "source_delivery_class",
+    "destination",
+    "next_boundary",
+    "source_product_loop_run_id",
+    "source_product_loop_run_hash",
+    "source_product_loop_scenario_id",
+    "controlled_failure_ref",
+    "attention_reconstruction_ref",
+    "dual_loop_gate_ref",
+    "ready_for_delivery_trust_case_harness",
+    "ready_for_customer_handoff",
+    "ready_for_production",
+    "customer_handoff_package_included",
+    "blocked_destinations",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Patch Proposal Delivery Trust Case Candidate v1",
+  "type": "object"
+}

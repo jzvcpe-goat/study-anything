@@ -159,6 +159,13 @@ The completed chain now has these layers:
   reconstruction, while AI-review-only evidence, Delivery Trust Harness
   invocation/skips, customer-visible follow-up, source mutation, production
   mutation, secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Delivery Trust Intake Gate: a Patch Proposal
+  Product Loop scenario/run candidate can produce only a metadata-only Delivery
+  Trust case candidate after controlled-failure, attention-reconstruction, and
+  Dual-Loop gate evidence are present, while direct Delivery Trust Harness
+  invocation, customer handoff package creation, customer-visible follow-up,
+  source mutation, production mutation, secrets, and model credentials remain
+  blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -200,11 +207,10 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Delivery Trust Harness Intake Gate:
-consume a Patch Proposal Product Loop scenario/run candidate and require
-controlled-failure plus attention-reconstruction evidence before creating a
-metadata-only Delivery Trust case candidate, while still blocking missing or
-invalid Product Loop runs, missing sandbox or attention receipts, AI-review-only
-evidence, customer-visible follow-up, source mutation, production mutation,
-secrets, and model credentials.
+Patch Proposal Customer Feedback Delivery Trust Case Harness Bridge:
+consume a patch-proposal-delivery-trust-case-candidate and run the existing
+Delivery Trust Case Harness in metadata-only mode, producing only Delivery Trust
+case/handoff evidence refs while still blocking raw customer payloads,
+customer-visible sends, source mutation, production mutation, secrets, model
+credentials, and candidates that lack Product Loop plus Dual Loop evidence.
 ```

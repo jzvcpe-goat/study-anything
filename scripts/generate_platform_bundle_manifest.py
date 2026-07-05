@@ -484,6 +484,33 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS = {
     ]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-product-loop-run",
+    "blocked-invalid-product-loop-run",
+    "blocked-missing-sandbox-receipt",
+    "blocked-missing-attention-reconstruction",
+    "blocked-dual-loop-gate-blocked",
+    "blocked-ai-review-only",
+    "blocked-customer-visible-follow-up",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-delivery-trust-intake-receipt.json",
+        *(
+            ["patch-proposal-delivery-trust-case-candidate.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1100,6 +1127,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-product-loop-brief-intake-gate.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Product Loop Brief Intake Gate static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-intake-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1892,6 +1934,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Product Loop Brief Intake Gate guide for metadata-only Product Loop scenario/run candidate boundaries.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-delivery-trust-intake-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Gate guide for metadata-only Delivery Trust case candidate boundaries.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2225,6 +2272,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-customer-feedback-product-loop-brief-intake-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Customer Feedback Product Loop Brief Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-delivery-trust-intake-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Gate report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-delivery-trust-intake-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Delivery Trust Intake Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-delivery-trust-case-candidate-v1.schema.json",
+        "schema",
+        "Patch Proposal Delivery Trust Case Candidate JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2766,6 +2828,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_PRODUCT_LOOP_BRIEF_INTAKE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-delivery-trust-intake-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Delivery Trust Intake Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_INTAKE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
