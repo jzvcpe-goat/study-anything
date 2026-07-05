@@ -173,6 +173,12 @@ The completed chain now has these layers:
   CustomerHandoffPackage, and Delivery Trust Case outputs while raw customer
   payloads, customer-visible sends, source mutation, production mutation,
   secrets, and model credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate: Delivery
+  Trust case/handoff refs can prepare only metadata-only customer follow-up
+  envelope refs after an active operator or host-platform Agent reconstructs
+  recipient scope, claim boundary, evidence refs, and blocked effects, while
+  raw follow-up bodies, automatic customer sends, source mutation, production
+  mutation, external publication, secrets, and model credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -214,11 +220,11 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate:
-consume Patch Proposal Delivery Trust case/handoff refs and require an active
-operator or host-platform Agent reconstruction before preparing a metadata-only
-customer follow-up envelope, while still blocking raw follow-up bodies,
-automatic customer sends, source mutation, production mutation, external
-publication, secrets, model credentials, and refs that lack Product Loop plus
-Dual Loop plus Delivery Trust Case evidence.
+Patch Proposal Customer Feedback Controlled Follow-up Rehearsal:
+consume metadata-only controlled follow-up envelope refs and produce a local
+operator/host-platform Agent rehearsal receipt that proves the follow-up can be
+previewed without generating raw customer-visible text, sending to customers,
+mutating source or production, publishing externally, calling models, storing
+secrets, or bypassing Product Loop plus Dual Loop plus Delivery Trust Case plus
+active reconstruction evidence.
 ```

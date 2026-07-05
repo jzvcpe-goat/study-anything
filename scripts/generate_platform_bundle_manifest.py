@@ -540,6 +540,44 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_ARTIFACTS = {
     ]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_CASES = [
+    "pass-customer-signal",
+    "pass-operator-signal",
+    "pass-host-platform-agent-signal",
+    "blocked-missing-bridge-receipt",
+    "blocked-invalid-bridge-receipt",
+    "blocked-missing-handoff-refs",
+    "blocked-handoff-refs-mismatch",
+    "blocked-missing-reconstruction",
+    "blocked-passive-reconstruction",
+    "blocked-unsupported-reconstruction-source",
+    "blocked-missing-product-loop-ref",
+    "blocked-missing-dual-loop-ref",
+    "blocked-missing-delivery-trust-case-ref",
+    "blocked-raw-follow-up-body",
+    "blocked-automatic-customer-send",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_ARTIFACTS = {
+    case_id: [
+        "patch-proposal-controlled-follow-up-boundary-receipt.json",
+        *(
+            ["patch-proposal-follow-up-boundary-reconstruction.json"]
+            if case_id != "blocked-missing-reconstruction"
+            else []
+        ),
+        *(
+            ["patch-proposal-controlled-follow-up-envelope-refs.json"]
+            if case_id in {"pass-customer-signal", "pass-operator-signal", "pass-host-platform-agent-signal"}
+            else []
+        ),
+    ]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1186,6 +1224,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-delivery-trust-case-bridge.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Delivery Trust Case Bridge static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -1988,6 +2041,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Delivery Trust Case Bridge guide for metadata-only Delivery Trust case/handoff refs.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-boundary-gate.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate guide for metadata-only follow-up envelope refs.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2346,6 +2404,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-delivery-trust-case-bridge-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Delivery Trust Case Bridge Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-boundary-gate-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-boundary-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Boundary Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -2905,6 +2973,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_DELIVERY_TRUST_CASE_BRIDGE_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-boundary-gate/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_BOUNDARY_GATE_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -4265,6 +4342,36 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_product_loop_brief_intake_gate.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Product Loop Brief Intake Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_delivery_trust_intake_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Delivery Trust Intake Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_delivery_trust_intake_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Delivery Trust Intake Gate fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_delivery_trust_case_bridge.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Delivery Trust Case Bridge artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_delivery_trust_case_bridge.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Delivery Trust Case Bridge fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_boundary_gate.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_boundary_gate.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Boundary Gate fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",
