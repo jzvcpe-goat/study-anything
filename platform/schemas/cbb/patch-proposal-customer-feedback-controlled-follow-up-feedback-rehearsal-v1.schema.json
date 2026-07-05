@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-customer-feedback-controlled-follow-up-feedback-rehearsal-v1",
+  "title": "Patch Proposal Customer Feedback Controlled Follow-up Feedback Rehearsal Report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "purpose",
+    "source_chain",
+    "rehearsal_matrix",
+    "case_reports",
+    "quality_gates",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-customer-feedback-controlled-follow-up-feedback-rehearsal-v1"
+    },
+    "status": {
+      "const": "pass"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "source_chain": {
+      "type": "object"
+    },
+    "rehearsal_matrix": {
+      "type": "object"
+    },
+    "case_reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "status",
+          "decision",
+          "blocked_reasons",
+          "rehearsal_source",
+          "rehearsal_purpose"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "blocked"
+            ]
+          },
+          "decision": {
+            "type": "string"
+          },
+          "blocked_reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rehearsal_source": {
+            "type": "string"
+          },
+          "rehearsal_purpose": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "quality_gates": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object",
+      "required": [
+        "current_claim",
+        "not_claimed"
+      ],
+      "properties": {
+        "current_claim": {
+          "type": "string"
+        },
+        "not_claimed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
