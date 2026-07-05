@@ -604,6 +604,29 @@ PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_ARTIFACTS = {
     case_id: ["patch-proposal-controlled-follow-up-rehearsal-receipt.json"]
     for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_CASES
 }
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_CASES = [
+    "pass-human-operator",
+    "pass-host-platform-agent",
+    "blocked-rehearsal-blocked",
+    "blocked-missing-external-actor",
+    "blocked-missing-action-reference",
+    "blocked-missing-claim-boundary",
+    "blocked-missing-privacy-boundary",
+    "blocked-raw-follow-up-body",
+    "blocked-raw-customer-reply",
+    "blocked-customer-identity",
+    "blocked-send-payload",
+    "blocked-source-mutation",
+    "blocked-production-mutation",
+    "blocked-external-publication-payload",
+    "blocked-model-call",
+    "blocked-secret",
+    "blocked-model-credential",
+]
+PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_ARTIFACTS = {
+    case_id: ["patch-proposal-controlled-follow-up-outcome-receipt.json"]
+    for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_CASES
+}
 DELIVERY_TRUST_CASE_HARNESS_CASES = {
     "pass": [
         "product-loop-scenario.json",
@@ -1280,6 +1303,21 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-rehearsal.html",
         "generated_asset",
         "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal static HTML verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.json",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt metadata-only verification report.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.md",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt operator summary.",
+    ),
+    (
+        "platform/generated/study-anything-patch-proposal-customer-feedback-controlled-follow-up-outcome.html",
+        "generated_asset",
+        "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt static HTML verification report.",
     ),
     (
         "platform/generated/study-anything-delivery-class-registry.json",
@@ -2092,6 +2130,11 @@ FILES: list[tuple[str, str, str]] = [
         "Patch Proposal Customer Feedback Controlled Follow-up Rehearsal guide for metadata-only local rehearsal receipts.",
     ),
     (
+        "docs/patch-proposal-customer-feedback-controlled-follow-up-outcome.md",
+        "operator_doc",
+        "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt guide for metadata-only external follow-up outcome records.",
+    ),
+    (
         "docs/delivery-trust-case-harness.md",
         "operator_doc",
         "Delivery Trust Case Harness guide for end-to-end controlled customer-handoff decisions.",
@@ -2470,6 +2513,16 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/patch-proposal-controlled-follow-up-rehearsal-receipt-v1.schema.json",
         "schema",
         "Patch Proposal Controlled Follow-up Rehearsal Receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-customer-feedback-controlled-follow-up-outcome-v1.schema.json",
+        "schema",
+        "Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt report JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/patch-proposal-controlled-follow-up-outcome-receipt-v1.schema.json",
+        "schema",
+        "Patch Proposal Controlled Follow-up Outcome Receipt JSON Schema.",
     ),
     (
         "platform/schemas/delivery-trust/delivery-trust-case-v1.schema.json",
@@ -3047,6 +3100,15 @@ FILES: list[tuple[str, str, str]] = [
         )
         for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_CASES
         for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_REHEARSAL_ARTIFACTS[case_id]
+    ],
+    *[
+        (
+            f"fixtures/patch-proposal-customer-feedback-controlled-follow-up-outcome/{case_id}/{artifact}",
+            "fixture",
+            f"Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt {case_id} {artifact} fixture.",
+        )
+        for case_id in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_CASES
+        for artifact in PATCH_PROPOSAL_CUSTOMER_FEEDBACK_CONTROLLED_FOLLOW_UP_OUTCOME_ARTIFACTS[case_id]
     ],
     (
         "fixtures/real-agent-eval-bridge/pass.json",
@@ -4447,6 +4509,16 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_rehearsal.py",
         "verification",
         "Verify Patch Proposal Customer Feedback Controlled Follow-up Rehearsal fixtures, CLI output, and privacy boundaries.",
+    ),
+    (
+        "scripts/patch_proposal_customer_feedback_controlled_follow_up_outcome_receipt.py",
+        "verification",
+        "Build metadata-only Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt artifacts.",
+    ),
+    (
+        "scripts/verify_patch_proposal_customer_feedback_controlled_follow_up_outcome_receipt.py",
+        "verification",
+        "Verify Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt fixtures, CLI output, and privacy boundaries.",
     ),
     (
         "docs/operator-handoff-rehearsal-contract.md",

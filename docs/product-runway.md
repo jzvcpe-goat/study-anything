@@ -186,6 +186,14 @@ The completed chain now has these layers:
   follow-up previews, customer-visible drafts, automatic sends, source mutation,
   production mutation, external publication, model calls, secrets, and model
   credentials remain blocked.
+- Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt: ready
+  controlled follow-up rehearsal receipts can record only metadata-only
+  external follow-up outcome signals after human or host-platform Agent action
+  outside Study Anything, preserving Product Loop, Dual Loop, Delivery Trust
+  Case, and active reconstruction refs, while raw follow-up bodies, raw customer
+  replies, customer identity, send payloads, source mutation, production
+  mutation, external publication payloads, model calls, secrets, and model
+  credentials remain blocked.
 
 The next product proof should show how an AI-generated customer deliverable can
 move toward handoff-worthiness without relying on either of these weak patterns:
@@ -227,13 +235,13 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Outcome Receipt:
-consume ready controlled follow-up rehearsal receipts and record only
-metadata-only external follow-up outcome signals after a human or host-platform
-Agent performs any real customer communication outside Study Anything. It must
-not store raw customer-visible text, raw customer replies, customer identity,
-send payloads, source mutation, production mutation, external publication
-payloads, model calls, secrets, or model credentials, and it must preserve the
-Product Loop plus Dual Loop plus Delivery Trust Case plus active reconstruction
-evidence chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Intake:
+consume recorded controlled follow-up outcome receipts and record only
+metadata-only customer, operator, or host-platform response signals back into
+the Product Loop backlog candidate path. It must not store raw customer replies,
+customer identity, private customer data, PR comment bodies, external
+publication payloads, source mutation, production mutation, model calls,
+secrets, or model credentials, and it must preserve the Product Loop plus Dual
+Loop plus Delivery Trust Case plus active reconstruction plus controlled
+follow-up evidence chain.
 ```
