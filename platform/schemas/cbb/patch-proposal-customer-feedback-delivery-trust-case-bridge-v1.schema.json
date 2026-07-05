@@ -1,0 +1,50 @@
+{
+  "$id": "patch-proposal-customer-feedback-delivery-trust-case-bridge-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "bridge_matrix": {
+      "type": "object"
+    },
+    "bridge_rules": {
+      "type": "object"
+    },
+    "case_reports": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "effect_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "patch-proposal-customer-feedback-delivery-trust-case-bridge-v1"
+    },
+    "status": {
+      "const": "pass"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "purpose",
+    "case_reports",
+    "bridge_matrix",
+    "bridge_rules",
+    "effect_boundary",
+    "claim_boundary",
+    "privacy"
+  ],
+  "title": "Patch Proposal Customer Feedback Delivery Trust Case Bridge v1",
+  "type": "object"
+}
