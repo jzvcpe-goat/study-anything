@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "patch-proposal-controlled-follow-up-feedback-outcome-receipt-v1",
+  "title": "Patch Proposal Controlled Follow-up Feedback Outcome Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "outcome_id",
+    "case_id",
+    "status",
+    "decision",
+    "blocked_reasons",
+    "source_refs",
+    "external_follow_up_outcome",
+    "effect_boundary",
+    "checks",
+    "claim_boundary",
+    "privacy",
+    "isolation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "patch-proposal-controlled-follow-up-feedback-outcome-receipt-v1"
+    },
+    "outcome_id": {
+      "type": "string"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "recorded",
+        "blocked"
+      ]
+    },
+    "decision": {
+      "type": "string"
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "object"
+    },
+    "external_follow_up_outcome": {
+      "type": "object",
+      "required": [
+        "package_type",
+        "actor_type",
+        "occurred_outside_study_anything",
+        "action_ref_hash",
+        "raw_follow_up_body_included",
+        "raw_customer_reply_included",
+        "customer_identity_included",
+        "send_payload_included",
+        "external_system_credentials_included"
+      ],
+      "properties": {
+        "package_type": {
+          "const": "metadata_only_patch_proposal_controlled_follow_up_feedback_outcome"
+        },
+        "actor_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "occurred_outside_study_anything": {
+          "const": true
+        },
+        "action_ref_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_follow_up_body_included": {
+          "const": false
+        },
+        "raw_customer_reply_included": {
+          "const": false
+        },
+        "customer_identity_included": {
+          "const": false
+        },
+        "send_payload_included": {
+          "const": false
+        },
+        "external_system_credentials_included": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "effect_boundary": {
+      "type": "object",
+      "required": [
+        "study_anything_customer_follow_up_send_performed",
+        "study_anything_automatic_follow_up_performed",
+        "study_anything_source_mutation_performed",
+        "study_anything_production_mutation_performed",
+        "study_anything_external_publication_performed",
+        "model_calls_performed",
+        "daemon_or_hosted_service_started"
+      ],
+      "properties": {
+        "study_anything_customer_follow_up_send_performed": {
+          "const": false
+        },
+        "study_anything_automatic_follow_up_performed": {
+          "const": false
+        },
+        "study_anything_source_mutation_performed": {
+          "const": false
+        },
+        "study_anything_production_mutation_performed": {
+          "const": false
+        },
+        "study_anything_external_publication_performed": {
+          "const": false
+        },
+        "model_calls_performed": {
+          "const": false
+        },
+        "daemon_or_hosted_service_started": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "object"
+    },
+    "claim_boundary": {
+      "type": "object"
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "isolation": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

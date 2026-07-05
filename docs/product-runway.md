@@ -284,15 +284,16 @@ is to earn stronger scenario evidence, one customer-delivery class at a time.
 ## Suggested Next Goal
 
 ```text
-Patch Proposal Customer Feedback Controlled Follow-up Feedback Outcome:
-consume controlled follow-up feedback rehearsal receipts and emit only
-metadata-only outcome receipts for an external human or host-platform Agent
-follow-up action that happened outside Study Anything. It must reject blocked
-rehearsals, missing external actors, missing action refs, missing claim/privacy
-boundaries, raw follow-up bodies, raw customer replies, customer identity,
-send payloads, customer-visible payloads, source mutation, production mutation,
-external publication payloads, model calls, secrets, and model credentials, and
-it must preserve the full Product Loop plus Dual Loop plus Delivery Trust Case
-plus boundary gate plus rehearsal plus controlled follow-up feedback evidence
-chain.
+Patch Proposal Customer Feedback Controlled Follow-up Feedback Loop Closure:
+consume controlled follow-up feedback outcome receipts and emit only
+metadata-only loop-closure receipts that decide whether the follow-up feedback
+cycle should be archived, reopened as a new customer-feedback intake candidate,
+or escalated to external owner review. It must reject missing outcome receipts,
+blocked outcomes, missing external actor refs, missing action refs, missing
+claim/privacy boundaries, raw follow-up bodies, raw customer replies, customer
+identity, send payloads, automatic re-contact, source mutation, production
+mutation, external publication payloads, model calls, secrets, and model
+credentials, and it must preserve the full Product Loop plus Dual Loop plus
+Delivery Trust Case plus boundary gate plus rehearsal plus outcome plus
+controlled follow-up feedback evidence chain.
 ```
