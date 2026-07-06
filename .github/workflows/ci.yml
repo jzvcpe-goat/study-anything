@@ -9,7 +9,7 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -65,7 +65,7 @@ jobs:
       LANGFUSE_WORKER_IMAGE: ghcr.io/langfuse/langfuse-worker:3
       FALKORDB_ENABLED: "true"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
