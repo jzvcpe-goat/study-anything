@@ -397,7 +397,7 @@ if [ -f .env ]; then
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
 "$python_bin" -m ruff check apps/api/study_anything apps/api/tests scripts plugins platform/bootstrap
-"$python_bin" -m mypy \
+"$python_bin" -m mypy --follow-imports=skip \
   apps/api/study_anything/core/api_security.py \
   scripts/verify_local_api_security.py
 

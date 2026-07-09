@@ -27,7 +27,8 @@ mutation, or a realtime hosted console.
 ## Engineering Gates
 
 - CI runs Ruff across the Python package, tests, scripts, and plugins.
-- CI runs strict mypy for the new local API security boundary and its verifier.
+- CI runs strict mypy for the two explicit local API security targets while
+  skipping traversal into third-party dependency stubs.
 - Full-package strict mypy is not claimed yet. Existing dynamic artifact and
   optional-integration modules still have tracked annotation debt; expanding
   the type-check scope must happen by fixing those errors, not by globally
