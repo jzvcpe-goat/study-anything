@@ -26,6 +26,11 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- `generated_evidence_topology.py` now checks the complete declared release-distribution evidence
+  chain in one run and reports every stale node instead of stopping at the first failure.
+- Refresh mode orders hard dependencies and explicitly converges the adoption-pack consumer feedback
+  edges over at most three passes. Its receipt excludes command output, environment values, secrets,
+  source text, answers, and local paths.
 - CI and the release gate now verify deterministic self-host soak aggregation; Compose smoke runs a
   short real health window before backup/restore rollback.
 - `self-host-soak-receipt-v1` records availability, latency, failure categories, consecutive failures,

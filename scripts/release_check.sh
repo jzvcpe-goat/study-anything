@@ -628,6 +628,7 @@ phase "existing release gates"
 "$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer.py --check
 "$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 "$python_bin" scripts/verify_cognitive_loop_pack_extract_smoke.py --check
+"$python_bin" scripts/generated_evidence_topology.py --check
 "$python_bin" scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --current-worktree \
