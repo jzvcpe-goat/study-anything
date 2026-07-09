@@ -119,6 +119,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Local-first backup and restore with checksum verification for canonical Postgres state and Agent configuration.
 - Disposable backup/restore drill script that creates an isolated Compose project, verifies rollback, and removes its test volumes on success.
 - CI for API tests, Compose smoke, FalkorDB projection, and backup/restore rollback.
+- Metadata-only self-host health soak receipts with availability, latency, consecutive-failure,
+  authentication-failure, and observed-recovery evidence; Compose smoke runs a short real window.
 - Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
 - One-command published-image core launch with sequential pulls and visible cold-download progress.
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
@@ -159,6 +161,7 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Disposable published-image smoke that verifies the public GHCR API image, runtime version, and API
   learning flow, with an explicit slow-GHCR diagnostic fallback for local network limits.
 - Published release path for the current recovery, plugin-registry, Skill/API, and Bring Your Own Agent foundations.
+- Beginner recovery walkthrough and privacy-preserving Langfuse trace-retention guidance.
 
 ## What Blocks Commercial Launch
 
@@ -172,7 +175,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by
   cohort, plugin activation, explicit feedback, and hosted waitlist conversion.
 - Product delivery layer: no standalone frontend is currently shippable; the launch path depends on API/Skill/platform-agent integrations until a new UI is designed.
-- Non-developer polish beyond first-run: upgrade confidence, support docs, and guided recovery for rare edge cases.
+- Non-developer polish beyond the current first-run and bounded recovery walkthrough: upgrade
+  confidence and guided handling for rare host-specific edge cases.
 
 ## Suggested Branch Tracks
 
@@ -189,9 +193,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 
 Reach 75% readiness by making the self-host Alpha dependable for real learners without a standalone UI:
 
-- Docker soak testing and trace retention guidance.
-- Longer Docker soak testing of the disposable backup/restore drill across source-build and published-image paths.
-- Documented recovery drill walkthroughs for non-developer self-host operators.
+- Longer multi-hour Docker soak testing and backup/restore drills across both source-build and
+  published-image paths. The current short Compose window is bounded evidence, not a production SLO.
 - Hosted signed plugin registry distribution, maintainer review queue, and explicit update install workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, cohort readout
   templates, and opt-in adoption telemetry review.
