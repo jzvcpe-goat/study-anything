@@ -97,6 +97,11 @@ class SelfHostReliabilityMatrixTests(unittest.TestCase):
         self.assertNotIn(str(matrix.IMAGE_COMPOSE_FILE), source)
         self.assertIn(str(matrix.IMAGE_COMPOSE_FILE), published)
 
+    def test_published_start_allows_missing_dependency_images_to_pull(self) -> None:
+        self.assertEqual(matrix.compose_up_args("source-build"), ["up", "--build", "-d", "api"])
+        self.assertEqual(matrix.compose_up_args("published-image"), ["up", "-d", "api"])
+        self.assertNotIn("never", matrix.compose_up_args("published-image"))
+
     def test_image_digest_parser_excludes_repository_reference(self) -> None:
         completed = matrix.subprocess.CompletedProcess(
             [],

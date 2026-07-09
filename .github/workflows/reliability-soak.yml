@@ -86,7 +86,7 @@ jobs:
             --output "${RUNNER_TEMP}/study-anything-${{ matrix.mode }}-reliability.json"
       - name: Upload metadata-only reliability receipt
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: reliability-${{ matrix.mode }}-${{ github.run_id }}
           path: ${{ runner.temp }}/study-anything-${{ matrix.mode }}-reliability.json

@@ -36,7 +36,8 @@ python3 scripts/self_host_reliability_matrix.py \
 ```
 
 For the published path, add `--mode published-image`, `--tag TAG`, and `--api-image IMAGE:TAG`.
-The runner always pulls the named published image. It does not accept a skip-pull mode.
+The runner always pulls the named published API image first. Compose may still pull missing dependency
+images such as Postgres on a clean runner; there is no API image skip-pull mode.
 
 ## Receipt And Privacy Boundary
 

@@ -102,6 +102,12 @@ def compose(env_file: Path, mode: str, *args: str) -> list[str]:
     return command
 
 
+def compose_up_args(mode: str) -> list[str]:
+    if mode == "source-build":
+        return ["up", "--build", "-d", "api"]
+    return ["up", "-d", "api"]
+
+
 def run_command(
     command: list[str],
     *,
@@ -378,13 +384,8 @@ def run_matrix(args: argparse.Namespace) -> dict[str, object]:
             )
             image_pull_completed = True
             published_image_digest = inspect_image_digest(api_image)
-        up_args = (
-            ["up", "--build", "-d", "api"]
-            if args.mode == "source-build"
-            else ["up", "--pull", "never", "-d", "api"]
-        )
         run_command(
-            compose(env_file, args.mode, *up_args),
+            compose(env_file, args.mode, *compose_up_args(args.mode)),
             phase="compose_start",
             timeout_seconds=args.startup_timeout_seconds,
         )

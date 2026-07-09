@@ -11602,25 +11602,25 @@
       "sha256": "0d29c9b675a7e1458a77b237af4cfb6001a7a8cf47791b9f35dd2d98fe597b77"
     },
     {
-      "bytes": 20290,
+      "bytes": 20292,
       "kind": "diagnostics",
       "path": "scripts/self_host_reliability_matrix.py",
       "purpose": "Isolated source-build and published-image restart/recovery matrix runner.",
-      "sha256": "95f823dbbfd62ba4418edfc897a80914f08e071b53ac881a66e82a64f8f4a1ed"
+      "sha256": "68fb1e8df9f579cc554bafafa5bcb9752ef0f3acd74242df1f687739dcf10218"
     },
     {
-      "bytes": 6304,
+      "bytes": 6612,
       "kind": "verification",
       "path": "scripts/verify_self_host_reliability_matrix.py",
       "purpose": "Deterministic scheduled reliability receipt and workflow verifier.",
-      "sha256": "d06c02dc06c135ffbc957b6e026a566d393143f324504ac4bdfc5716bda7025d"
+      "sha256": "a1debd038272756326b6d571216216861e0beb86ebe1db2e6736ada42bdaa1ff"
     },
     {
       "bytes": 3401,
       "kind": "workflow",
       "path": ".github/workflows/reliability-soak.yml",
       "purpose": "Scheduled real-time source-build and published-image reliability matrix.",
-      "sha256": "7cfb4ad70aec4f1d898531fd978e3567930d85960dd3aceb65db2c85ec0f6c33"
+      "sha256": "2f4e31fa34ea89d1f2748243ecc355ffd2edd6866d59cdbc2b54bc76d54009b5"
     },
     {
       "bytes": 16652,
@@ -14773,11 +14773,11 @@
       "sha256": "65dcaa1145d1537e869692ec20894cbc35107fba3cef1450d50cc5cd1fa7bee2"
     },
     {
-      "bytes": 3359,
+      "bytes": 3455,
       "kind": "docs",
       "path": "docs/scheduled-reliability.md",
       "purpose": "Scheduled source-build and published-image restart/recovery contract.",
-      "sha256": "5e88e3eeb5a7e4926e9de5baeed7314f20abb48f5b2bb143470e12e14db0d9fc"
+      "sha256": "6ada600ad3614e5744df06e24933758d6fbc42c4614a745a6ba3e568d4021610"
     },
     {
       "bytes": 2182,
