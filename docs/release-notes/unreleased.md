@@ -26,6 +26,15 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- CI and the release gate now verify deterministic self-host soak aggregation; Compose smoke runs a
+  short real health window before backup/restore rollback.
+- `self-host-soak-receipt-v1` records availability, latency, failure categories, consecutive failures,
+  and observed recovery without response bodies, tokens, URLs, source text, answers, or local paths.
+- The self-host launcher now stops early with a non-destructive recovery message when a regenerated
+  `.env` no longer matches an existing Postgres volume; it never resets the volume automatically.
+- The soak command refuses to forward a locally loaded API token to a non-loopback host unless the
+  operator explicitly confirms the destination with `--allow-network-token`.
+- Health probes reject HTTP redirects instead of forwarding authorization to another origin.
 - CI runs Ruff across the Python package, tests, scripts, and plugins.
 - CI runs strict mypy for the two explicit local API security targets while
   skipping traversal into third-party dependency stubs.
@@ -33,3 +42,6 @@ mutation, or a realtime hosted console.
   optional-integration modules still have tracked annotation debt; expanding
   the type-check scope must happen by fixing those errors, not by globally
   suppressing them.
+
+The short soak does not prove a multi-hour production SLO, incident response, retention enforcement,
+or disaster recovery across every source-build and published-image environment.

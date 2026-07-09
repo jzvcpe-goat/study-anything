@@ -75,6 +75,19 @@ start_stack() {
   fi
 }
 
+diagnose_api_startup_failure() {
+  logs="$(compose logs --no-color --tail=120 api 2>/dev/null || true)"
+  if printf "%s" "$logs" | grep -Fq "password authentication failed for user"; then
+    printf "API startup stopped: Postgres credentials do not match the existing data volume.\n" >&2
+    printf "Do not delete the volume or regenerate secrets if its data matters.\n" >&2
+    printf "Recover the .env that initialized this volume, or restore its env.snapshot from a trusted backup.\n" >&2
+    printf "After the API is healthy, create a new backup before changing credentials.\n" >&2
+    printf "See docs/self-host-reliability.md for the non-destructive recovery order.\n" >&2
+    return 0
+  fi
+  return 1
+}
+
 if ! docker info >/dev/null 2>&1; then
   printf "Docker daemon is not running. Start Docker Desktop, then retry.\n" >&2
   exit 1
@@ -113,6 +126,9 @@ printf "Waiting for Study Anything API at %s ...\n" "$api_url"
 attempt=0
 until curl -fsS "$api_url" >/dev/null 2>&1; do
   attempt=$((attempt + 1))
+  if [ "$attempt" -ge 5 ] && diagnose_api_startup_failure; then
+    exit 1
+  fi
   if [ "$attempt" -ge 60 ]; then
     printf "API did not become healthy. Inspect logs with:\n" >&2
     if is_true "$use_published_images"; then

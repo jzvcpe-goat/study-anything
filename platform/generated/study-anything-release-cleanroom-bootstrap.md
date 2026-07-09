@@ -38,4 +38,4 @@ from GitHub Release assets without assuming an existing repository checkout.
 
 ## Archive
 
-- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `cb6fe3319d3c7058b2cfdad45829dec220a23a72e859fe2816dac47136126d83`
+- Archive: `platform/generated/study-anything-release-cleanroom-bootstrap.zip` sha256 `423669734b9a097b8ebed0fd3663beb04e78a65afceeabb95dd9a009bd00dc88`

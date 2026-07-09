@@ -126,6 +126,9 @@ Common recovery paths:
 - Risky upgrade or restore: run `python3 scripts/self_host_data.py backup` before changing volumes,
   images, or environment values.
 
+For a one-command bounded health soak, a five-step beginner recovery flow, and explicit Langfuse trace
+retention boundaries, see [Self-Host Reliability And Recovery](self-host-reliability.md).
+
 ## Using Published Images
 
 After the GitHub repository publishes GHCR images, you can skip local API builds:

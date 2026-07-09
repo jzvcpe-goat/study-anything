@@ -5019,6 +5019,16 @@ FILES: list[tuple[str, str, str]] = [
         "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
     ),
     (
+        "scripts/self_host_soak.py",
+        "diagnostics",
+        "Metadata-only bounded self-host health soak receipt generator.",
+    ),
+    (
+        "scripts/verify_self_host_soak.py",
+        "verification",
+        "Deterministic self-host soak and privacy-boundary verifier.",
+    ),
+    (
         "scripts/launch_self_host.sh",
         "runtime",
         "Docker Compose self-host launcher for source builds and published GHCR images.",
@@ -7242,6 +7252,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/commercial-readiness.md",
         "docs",
         "Commercial readiness contract, hosted-service boundaries, and local-first launch limits.",
+    ),
+    (
+        "docs/self-host-reliability.md",
+        "docs",
+        "Bounded self-host soak, recovery, and trace-retention guide.",
     ),
     (
         "docs/security.md",

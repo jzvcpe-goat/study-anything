@@ -30,6 +30,7 @@
 - [ ] `.venv/bin/python scripts/verify_learning_enrichment_bridge.py --check`
 - [ ] `.venv/bin/python scripts/verify_plugin_quarantine.py`
 - [ ] `.venv/bin/python scripts/verify_security_recovery_hardening.py`
+- [ ] `.venv/bin/python scripts/verify_self_host_soak.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_submission_dry_run.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_manual_submission_rehearsal.py --check`
 - [ ] `.venv/bin/python scripts/verify_first_lesson_authoring_kit.py --check`

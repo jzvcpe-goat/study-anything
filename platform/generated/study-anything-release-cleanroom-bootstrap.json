@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 55870,
+    "bytes": 55956,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "cb6fe3319d3c7058b2cfdad45829dec220a23a72e859fe2816dac47136126d83",
+    "sha256": "423669734b9a097b8ebed0fd3663beb04e78a65afceeabb95dd9a009bd00dc88",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -163,9 +163,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 20543,
+      "bytes": 20737,
       "path": "docs/self-hosting.md",
-      "sha256": "769534cbc80d5b8f80845fd899bf669d4fb886fe342413d3b49f26548d4dec49"
+      "sha256": "9d9c002b67828c3ba9e8e1d8389abc90e8f5510b473deea6495243311879048b"
     },
     {
       "bytes": 28276,

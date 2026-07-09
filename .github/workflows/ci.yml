@@ -23,6 +23,8 @@ jobs:
         run: python -m mypy --follow-imports=skip apps/api/study_anything/core/api_security.py scripts/verify_local_api_security.py
       - name: Verify local API security boundary
         run: python scripts/verify_local_api_security.py --check
+      - name: Verify self-host reliability harness
+        run: python scripts/verify_self_host_soak.py --check
       - name: Verify generated platform Agent assets
         run: python scripts/generate_platform_agent_assets.py --check
       - name: Verify platform ecosystem packs
@@ -110,6 +112,14 @@ jobs:
         run: API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 python scripts/verify_mock_http_agent_flow.py
       - name: Verify FalkorDB topology projection
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_falkordb_flow.py
+      - name: Verify bounded self-host health soak
+        run: |
+          python scripts/self_host_soak.py \
+            --samples 10 \
+            --interval-seconds 1 \
+            --min-success-ratio 1 \
+            --max-consecutive-failures 0 \
+            --output "${RUNNER_TEMP}/study-anything-self-host-soak.json"
       - name: Verify self-host backup and restore
         run: |
           backup_dir="${RUNNER_TEMP}/study-anything-backup-check"
