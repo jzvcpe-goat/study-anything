@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import asdict, replace
+from dataclasses import replace
 from hashlib import sha256
 from typing import Any, Iterable, Mapping
 
@@ -18,7 +18,6 @@ from study_anything.core.security import sha256_text
 from study_anything.core.workflow import (
     Answer,
     GradingResult,
-    LearningState,
     Mastery,
     QuizItem,
     append_event,

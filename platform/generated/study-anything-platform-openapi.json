@@ -1,4 +1,14 @@
 {
+  "components": {
+    "securitySchemes": {
+      "localBearerToken": {
+        "bearerFormat": "opaque-local-token",
+        "description": "Optional for loopback-only local mode; required when the operator enables token auth for production or network access.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
   "info": {
     "description": "Minimal public tool contract for Codex, Kimi, WorkBuddy-style agents, and private agent workspaces that call Study Anything as a local-first learning engine.",
     "title": "Study Anything Platform Agent Tools",
@@ -25,6 +35,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -35,6 +48,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read local aggregate adoption telemetry for clean-clone proof, runtime mode, tool import, Agent eval, repeat learning, plugin validation, and explicit opt-in feedback counts.",
         "x-study-anything-output-requirements": [
           "schema_version == adoption-telemetry-v1",
@@ -84,6 +103,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -94,6 +116,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read the OSS/local-first commercial readiness contract, hosted-service boundaries, PMF prerequisites, and launch limits.",
         "x-study-anything-output-requirements": [
           "commercial-readiness-v1",
@@ -161,6 +189,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -171,6 +202,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Validate a Learning Context Package built by a platform Agent before importing web, document, video, app, Markdown, or Obsidian context into Study Anything.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-context-package-v1",
@@ -207,6 +244,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -217,6 +257,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read the redacted first-run deployment guide, local launch commands, failure classes, and platform-agent privacy boundary.",
         "x-study-anything-output-requirements": [
           "schema_version == deployment-guide-v1",
@@ -254,6 +300,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -264,6 +313,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read the redacted Agent eval maturity policy, native release gates, optional external adapter policy, fixtures, and failure classes.",
         "x-study-anything-output-requirements": [
           "schema_version == agent-eval-policy-v1",
@@ -303,6 +358,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -313,6 +371,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Check that the local Study Anything API is reachable before starting a learning loop.",
         "x-study-anything-output-requirements": [
           "status == ok"
@@ -389,6 +453,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -399,6 +466,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Run a locally installed importer plugin after explicit permission confirmation and return a validated Learning Context Package.",
         "x-study-anything-output-requirements": [
           "schema_version == importer-run-v1",
@@ -437,6 +510,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -447,6 +523,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "List installed plugin hooks, capabilities, trust summaries, and alpha runtime contracts without executing plugin code.",
         "x-study-anything-output-requirements": [
           "schema_version == plugin-capability-index-v1",
@@ -479,6 +561,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -489,6 +574,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read the public Study Anything Plugin SDK contract without executing plugin code.",
         "x-study-anything-output-requirements": [
           "schema_version == plugin-sdk-v1",
@@ -543,6 +634,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -553,6 +647,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Validate one explicitly selected local plugin package against the SDK contract without installing or executing it.",
         "x-study-anything-output-requirements": [
           "schema_version == plugin-package-validation-v1",
@@ -586,6 +686,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -596,6 +699,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read a local PMF readiness summary derived from aggregate adoption telemetry; confirms hosted paid services remain not ready before PMF.",
         "x-study-anything-output-requirements": [
           "schema_version == pmf-readiness-v1",
@@ -639,6 +748,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -649,6 +761,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Check whether optional retrieval projection is disabled, healthy, or unavailable.",
         "x-study-anything-output-requirements": [
           "status is disabled, healthy, or unavailable"
@@ -709,6 +827,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -719,6 +840,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Create a learning session for a local user. Use demo mode only for smoke tests.",
         "x-study-anything-output-requirements": [
           "session_id is present",
@@ -784,6 +911,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -794,6 +924,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Create a learning session directly from a validated Learning Context Package.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-context-package-v1",
@@ -877,6 +1013,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -887,6 +1026,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Create a new learning session from retrieval results produced by an existing indexed session.",
         "x-study-anything-output-requirements": [
           "schema_version == retrieval-session-v1",
@@ -933,6 +1078,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -943,6 +1091,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return redacted proof that Study Anything Agent providers handled the required learning tasks.",
         "x-study-anything-output-requirements": [
           "schema_version == agent-audit-v1",
@@ -991,6 +1145,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1001,6 +1158,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return the redacted eval bridge for Promptfoo, DeepEval, LangChain AgentEvals, and Ragas.",
         "x-study-anything-output-requirements": [
           "schema_version == agent-eval-artifact-v1",
@@ -1051,6 +1214,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1061,6 +1227,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return a redacted deterministic quality report that separates invocation proof, schema contract validity, and minimum teaching-quality gates.",
         "x-study-anything-output-requirements": [
           "schema_version == agent-quality-eval-v1",
@@ -1111,6 +1283,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1121,6 +1296,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return the redacted Agent eval maturity report that combines invocation proof, trajectory, teaching quality, export readiness, privacy, and optional external adapter readiness.",
         "x-study-anything-output-requirements": [
           "schema_version == agent-eval-report-v1",
@@ -1196,6 +1377,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1206,6 +1390,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Submit the learner's answer to one or more quiz items and advance mastery evaluation.",
         "x-study-anything-output-requirements": [
           "stage == completed or open HITL is returned",
@@ -1271,6 +1461,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1281,6 +1474,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Expand an existing learning session with a Learning Context Package.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-context-package-v1",
@@ -1448,6 +1647,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1458,6 +1660,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Attach web, document, video-slice, app-context, Markdown, or Obsidian excerpts gathered by the platform agent and convert them into a Study Anything learning source bundle.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-enrichment-v1",
@@ -1506,6 +1714,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1516,6 +1727,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return a redacted Markdown and HTML micro-lesson built from platform-collected enrichment references for Kimi, Codex, WorkBuddy, NotebookLM-style, or Obsidian workflows.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-enrichment-artifact-v1",
@@ -1567,6 +1784,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1577,6 +1797,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return a portable redacted learning package for platform agents, NotebookLM-style bridges, Obsidian pipelines, and local archive workflows.",
         "x-study-anything-output-requirements": [
           "schema_version == learning-package-v1",
@@ -1632,6 +1858,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1642,6 +1871,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return an Obsidian-compatible Markdown note with source references, teaching layers, quiz review, mastery, insights, and enrichment references.",
         "x-study-anything-output-requirements": [
           "schema_version == obsidian-markdown-export-v1",
@@ -1693,6 +1928,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1703,6 +1941,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return the strict redacted second-brain handoff for Obsidian, NotebookLM-style manual import, local archives, Kimi, Codex, and WorkBuddy-style platform Agents.",
         "x-study-anything-output-requirements": [
           "schema_version == second-brain-handoff-v1",
@@ -1756,6 +2000,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1766,6 +2013,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Read the compact mastery state for the completed learning loop.",
         "x-study-anything-output-requirements": [
           "level is numeric",
@@ -1839,6 +2092,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1849,6 +2105,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Attach source material gathered by the platform agent to the learning session.",
         "x-study-anything-output-requirements": [
           "source.excerpt_hash is present"
@@ -1922,6 +2184,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -1932,6 +2197,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Expand an existing learning session with a Learning Context Package generated from retrieval results.",
         "x-study-anything-output-requirements": [
           "schema_version == retrieval-session-v1",
@@ -2004,6 +2275,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -2014,6 +2288,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Return redacted retrieval/context quality gates for a rebuilt retrieval index and query.",
         "x-study-anything-output-requirements": [
           "schema_version == retrieval-quality-eval-v1",
@@ -2077,6 +2357,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -2087,6 +2370,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Rebuild the optional retrieval index for one session from canonical Study Anything session state.",
         "x-study-anything-output-requirements": [
           "status == rebuilt",
@@ -2153,6 +2442,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -2163,6 +2455,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Search the rebuilt retrieval index for one session and return minimal source snippets.",
         "x-study-anything-output-requirements": [
           "schema_version == retrieval-search-v1",
@@ -2220,6 +2518,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -2230,6 +2531,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Advance the Study Anything workflow after a source is attached or after HITL resolution.",
         "x-study-anything-output-requirements": [
           "quiz_items contains at least one item, or open_hitl exists"
@@ -2325,6 +2632,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Local API bearer token required"
+          },
           "404": {
             "description": "Session or resource not found"
           },
@@ -2335,6 +2645,12 @@
             "description": "Optional dependency unavailable"
           }
         },
+        "security": [
+          {
+            "localBearerToken": []
+          },
+          {}
+        ],
         "summary": "Generate layered teaching output such as whole-topic overview, glossary, examples, or Obsidian-style notes through user-owned Agent capabilities.",
         "x-study-anything-output-requirements": [
           "schema_version == teaching-layers-v1",
@@ -2385,6 +2701,13 @@
       "retrieval_eval_command": "API_BASE=http://127.0.0.1:8000 python3 scripts/run_external_agent_evals.py --tool retrieval --create-session --required"
     },
     "api_base_env": "STUDY_ANYTHING_API_BASE",
+    "api_security": {
+      "default_auth_mode": "local_only",
+      "default_bind_scope": "loopback",
+      "network_or_production_auth_mode": "token",
+      "token_env": "STUDY_ANYTHING_API_TOKEN",
+      "wildcard_cors_allowed": false
+    },
     "name": "study-anything-learning-tools",
     "privacy_contract": {
       "must_not_log_or_share": [

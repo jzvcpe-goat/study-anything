@@ -402,7 +402,7 @@ class CleanCloneAdoptionVerifierTests(unittest.TestCase):
             argv = [
                 "verify_clean_clone_adoption.py",
                 "--repo",
-                f"https://user:secret@example.test/repo.git?token=supersecret123",
+                "https://user:secret@example.test/repo.git?token=supersecret123",
                 "--work-dir",
                 tmp,
                 "--keep",

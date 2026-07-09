@@ -65,7 +65,6 @@ from self_host_data import (  # noqa: E402
 )
 from study_anything.core.recovery import recovery_status  # noqa: E402
 from study_anything.core.sync_package import (  # noqa: E402
-    SyncPackageError,
     build_sync_payload,
     encrypt_sync_package,
     inspect_sync_package,

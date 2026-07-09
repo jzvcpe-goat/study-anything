@@ -263,6 +263,26 @@ class StudyAnythingCliTests(unittest.TestCase):
             ):
                 self.assertEqual(cli.api_base(), "http://127.0.0.1:8000")
 
+    def test_api_token_uses_explicit_env_then_private_env_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            env_file = Path(tmpdir) / ".env"
+            env_file.write_text("STUDY_ANYTHING_API_TOKEN=file-token-value\n", encoding="utf-8")
+            with patch.dict(
+                cli.os.environ,
+                {"STUDY_ANYTHING_ENV_FILE": str(env_file)},
+                clear=True,
+            ):
+                self.assertEqual(cli.api_token(), "file-token-value")
+            with patch.dict(
+                cli.os.environ,
+                {
+                    "STUDY_ANYTHING_ENV_FILE": str(env_file),
+                    "STUDY_ANYTHING_API_TOKEN": "explicit-token-value",
+                },
+                clear=True,
+            ):
+                self.assertEqual(cli.api_token(), "explicit-token-value")
+
     def test_api_base_invalid_env_file_api_port_is_actionable_and_redacted(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             env_file = Path(tmpdir) / ".env"
@@ -3234,6 +3254,43 @@ class StudyAnythingCliTests(unittest.TestCase):
         self.assertIn("Cannot reach Study Anything", message)
         self.assertIn("network is unreachable", message)
         self.assertIn("./scripts/launch_skill_mode.sh", message)
+
+    def test_request_sends_api_token_without_putting_it_in_url(self) -> None:
+        captured = []
+
+        def fake_urlopen(request, timeout=15):
+            captured.append((request, timeout))
+            return FakeUrlopenResponse(b'{"status":"ok"}')
+
+        token = "private-local-token-" + "x" * 32
+        with (
+            patch.dict(
+                cli.os.environ,
+                {
+                    "STUDY_ANYTHING_API_BASE": "http://127.0.0.1:8000",
+                    "STUDY_ANYTHING_API_TOKEN": token,
+                },
+                clear=True,
+            ),
+            patch.object(cli, "urlopen", side_effect=fake_urlopen),
+        ):
+            payload = cli.request("/v1/system/integrations")
+
+        request = captured[0][0]
+        self.assertEqual(payload["status"], "ok")
+        self.assertEqual(request.get_header("Authorization"), f"Bearer {token}")
+        self.assertNotIn(token, request.full_url)
+
+    def test_api_401_diagnostic_points_to_private_token_configuration(self) -> None:
+        message = cli._format_api_http_failure(
+            401,
+            "/v1/system/integrations",
+            '{"detail":"A valid local API bearer token is required."}',
+        )
+
+        self.assertIn("requires its local bearer token", message)
+        self.assertIn("STUDY_ANYTHING_API_TOKEN", message)
+        self.assertIn("must not put it in --api-base", message)
 
     def test_request_socket_blocked_includes_contract_only_recovery(self) -> None:
         with patch.object(cli, "urlopen", side_effect=OSError("[Errno 1] Operation not permitted")):

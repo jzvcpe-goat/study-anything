@@ -23,6 +23,25 @@ background. Available profiles:
 - `smoke`: core stack plus the mock HTTP agent and FalkorDB.
 - `full`: core stack plus Langfuse, Redis, ClickHouse, MinIO, and FalkorDB.
 
+The API is published on `127.0.0.1` by default and browser cross-origin access
+is disabled. This is the recommended single-operator local mode.
+
+For an intentional private-network or production deployment, use token mode:
+
+```bash
+APP_ENV=production
+API_BIND_HOST=0.0.0.0
+STUDY_ANYTHING_API_AUTH_MODE=token
+STUDY_ANYTHING_API_TOKEN=<strong-random-value>
+STUDY_ANYTHING_CORS_ORIGINS=https://your-trusted-console.example
+```
+
+`python3 scripts/setup_env.py` generates the token. The CLI automatically reads
+it from the same private `.env`; external tool hosts should send it as
+`Authorization: Bearer <token>`. Never put it in an API URL. Token mode protects
+one private operator API and does not provide hosted user accounts or tenant
+isolation.
+
 Use the heavier full profile only when you want the optional operational services:
 
 ```bash
@@ -43,7 +62,7 @@ The remaining service images are also configurable with `CLICKHOUSE_IMAGE`, `FAL
 
 `scripts/setup_env.py` generates these mirror-friendly defaults automatically. Use `.env.example` as documentation, not as a production secret file.
 
-If you already have services on the default ports, override `API_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`.
+If you already have services on the default ports, override `API_PORT`, `APP_POSTGRES_PORT`, `MOCK_AGENT_PORT`, `LANGFUSE_PORT`, `REDIS_PORT`, `FALKORDB_HOST_PORT`, `CLICKHOUSE_HTTP_PORT`, `CLICKHOUSE_NATIVE_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`, or `LANGFUSE_POSTGRES_PORT` in `.env`. Keep `API_BIND_HOST=127.0.0.1` unless token auth is enabled deliberately.
 
 ## Checkout Path Compatibility
 

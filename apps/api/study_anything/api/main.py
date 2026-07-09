@@ -7,8 +7,9 @@ import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from study_anything import __version__
@@ -27,6 +28,7 @@ from study_anything.core.agent_registry import (
     AgentRouter,
     AgentTask,
 )
+from study_anything.core.api_security import load_api_security_config
 from study_anything.core.commercial_readiness import (
     build_commercial_readiness,
     summarize_commercial_readiness,
@@ -352,18 +354,51 @@ def _legacy_capability(capability: str) -> AgentCapability:
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Study Anything", version=__version__)
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    api_security = load_api_security_config(os.environ)
+    app = FastAPI(title="Cognitive Black Box: Study Anything Adapter", version=__version__)
+    app.state.api_security = api_security
+    if api_security.cors_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=list(api_security.cors_origins),
+            allow_credentials=False,
+            allow_methods=["GET", "POST", "OPTIONS"],
+            allow_headers=["Authorization", "Content-Type"],
+        )
+
+    @app.middleware("http")
+    async def enforce_api_security(request: Request, call_next: Any) -> Any:
+        is_public_health = request.url.path == "/v1/health"
+        if (
+            api_security.token_required
+            and request.method != "OPTIONS"
+            and not is_public_health
+            and not api_security.authorises(request.headers.get("Authorization"))
+        ):
+            return JSONResponse(
+                status_code=401,
+                content={
+                    "schema_version": "study-anything-api-auth-error-v1",
+                    "status": "unauthorized",
+                    "detail": "A valid local API bearer token is required.",
+                    "secret_values_included": False,
+                },
+                headers={
+                    "WWW-Authenticate": "Bearer",
+                    "X-Study-Anything-Auth-Mode": api_security.auth_mode,
+                },
+            )
+        response = await call_next(request)
+        response.headers["X-Study-Anything-Auth-Mode"] = api_security.auth_mode
+        return response
 
     @app.get("/v1/health")
     def health() -> dict[str, object]:
-        return {"status": "ok", "version": __version__}
+        return {
+            "status": "ok",
+            "version": __version__,
+            "api_security": api_security.public_dict(),
+        }
 
     @app.get("/v1/system/status")
     def system_status(user_id: str = "local-user") -> dict[str, object]:
@@ -371,7 +406,9 @@ def create_app() -> FastAPI:
         return {
             "status": "ok",
             "version": __version__,
-            "data_dir": str(data_dir),
+            "data_dir": "<local-data-dir>",
+            "data_dir_path_included": False,
+            "api_security": api_security.public_dict(),
             "session_store": getattr(store, "backend", "unknown"),
             "session_count": len(store.list_sessions()),
             "open_hitl_count": len(store.list_hitl()),
@@ -1405,8 +1442,8 @@ def create_app() -> FastAPI:
         status = plugins.preview_local(Path(payload.source_path).expanduser())
         return {
             **status.public_dict(),
-            "install_dir": str(plugin_install_dir),
-            "quarantine_dir": str(plugin_quarantine_dir),
+            "install_dir": "<plugin-install-dir>",
+            "quarantine_dir": "<plugin-quarantine-dir>",
             "requires_confirmation": bool(status.manifest and status.manifest.permissions),
             "default_action": "quarantine",
         }
@@ -1469,9 +1506,13 @@ def create_app() -> FastAPI:
             "lifecycle_status": lifecycle_status,
             "installed": lifecycle_status == "installed",
             "quarantined": lifecycle_status == "quarantined",
-            "install_dir": str(plugin_install_dir),
-            "quarantine_dir": str(plugin_quarantine_dir),
-            "destination_dir": str(destination),
+            "install_dir": "<plugin-install-dir>",
+            "quarantine_dir": "<plugin-quarantine-dir>",
+            "destination_dir": (
+                "<plugin-install-dir>"
+                if destination == plugin_install_dir
+                else "<plugin-quarantine-dir>"
+            ),
             "manual_approval_required": lifecycle_status == "quarantined",
             "manual_approval_recorded": bool(payload.approve_install),
             "approval_note_recorded": bool(payload.approval_note),

@@ -420,7 +420,17 @@ def _format_api_http_failure(status_code: int, path: str, detail: str) -> str:
     display_message = redact_diagnostic_text(message or detail)
     session_hint = _session_id_from_api_path(path) or "session-123"
     lines = [f"API returned HTTP {status_code} for {path}: {display_message}"]
-    if status_code == 404 and "session not found" in lowered:
+    if status_code == 401:
+        lines.extend(
+            [
+                "The API requires its local bearer token.",
+                "Try these checks:",
+                "1. Keep the token in STUDY_ANYTHING_API_TOKEN; you must not put it in --api-base or a URL.",
+                "2. If you use .env, run the CLI from the same checkout or set STUDY_ANYTHING_ENV_FILE.",
+                "3. Validate the private environment: python3 scripts/check_env.py --env .env.",
+            ]
+        )
+    elif status_code == 404 and "session not found" in lowered:
         lines.extend(
             [
                 "The session id was not found in the current local Study Anything store.",
@@ -751,6 +761,15 @@ def api_base() -> str:
     return normalise_api_base(env_base or DEFAULT_API_BASE)
 
 
+def api_token() -> str | None:
+    explicit_token = os.getenv("STUDY_ANYTHING_API_TOKEN")
+    if explicit_token:
+        return explicit_token.strip() or None
+    env_path = Path(os.getenv("STUDY_ANYTHING_ENV_FILE") or DEFAULT_ENV_FILE)
+    token = read_env_file_value(env_path, "STUDY_ANYTHING_API_TOKEN")
+    return token.strip() if token and token.strip() else None
+
+
 
 def _response_preview(text: str, *, limit: int = 160) -> str:
     compact = " ".join(text.strip().split())
@@ -818,7 +837,7 @@ def require_json_object(value: Any, path: str, *, purpose: str = "API response")
         "\n".join(
             [
                 _api_shape_help(path, purpose),
-                f"expected: JSON object",
+                "expected: JSON object",
                 f"actual: {type(value).__name__}",
             ]
         )
@@ -832,7 +851,7 @@ def require_json_list(value: Any, path: str, *, purpose: str = "API response") -
         "\n".join(
             [
                 _api_shape_help(path, purpose),
-                f"expected: JSON array",
+                "expected: JSON array",
                 f"actual: {type(value).__name__}",
             ]
         )
@@ -881,10 +900,14 @@ def require_object_field(
 
 def request(path: str, payload: Optional[Dict[str, Any]] = None) -> Any:
     body = None if payload is None else json.dumps(payload).encode("utf-8")
+    headers = {"Content-Type": "application/json"}
+    token = api_token()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     req = Request(
         f"{api_base()}{path}",
         data=body,
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="GET" if payload is None else "POST",
     )
     try:
@@ -1463,7 +1486,6 @@ def session_next_steps(summary: Dict[str, Any]) -> list[str]:
     open_hitl = summary.get("open_hitl") or []
     if open_hitl:
         current_hitl = open_hitl[0]
-        task_id = current_hitl.get("task_id") if isinstance(current_hitl, dict) else "TASK_ID"
         if is_agent_configuration_hitl(current_hitl):
             return [
                 "Inspect Agent setup: python3 scripts/study_anything_cli.py agents",

@@ -271,8 +271,19 @@ def validate_tool_assets(root: Path) -> dict[str, Any]:
     missing = sorted(set(required_tools) - openai_names - openapi_names)
     if missing:
         raise ManualSubmissionRehearsalError(f"Tool import assets miss required tools: {missing}")
-    if openapi.get("components", {}).get("securitySchemes"):
-        raise ManualSubmissionRehearsalError("Platform OpenAPI import must not require API keys.")
+    security_schemes = openapi.get("components", {}).get("securitySchemes")
+    local_bearer = security_schemes.get("localBearerToken") if isinstance(security_schemes, dict) else None
+    if (
+        set(security_schemes or {}) != {"localBearerToken"}
+        or not isinstance(local_bearer, dict)
+        or local_bearer.get("type") != "http"
+        or local_bearer.get("scheme") != "bearer"
+        or local_bearer.get("bearerFormat") != "opaque-local-token"
+    ):
+        raise ManualSubmissionRehearsalError(
+            "Platform OpenAPI must declare only the optional opaque local bearer token; "
+            "model API-key schemes are forbidden."
+        )
     return {
         "openai_tool_count": len(openai_tools),
         "openapi_path_count": len(openapi.get("paths", {})),

@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 148112,
+    "bytes": 148110,
     "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
     "root": "study-anything-trust-evidence-handoff-pack",
-    "sha256": "1b8cc24a02ac3e9f726000aac115b92616e6a959c6789b8a6bc698d7d8cb382f"
+    "sha256": "485d53b1fe49e3e5597ad46933b8764ee1cb73b0d64bfcf1ed77b065d543f5be"
   },
   "audience": [
     "external_operator",
@@ -321,11 +321,11 @@
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/code_review_delivery_class_handoff.py",
-      "bytes": 11857,
+      "bytes": 11845,
       "path": "scripts/code_review_delivery_class_handoff.py",
       "purpose": "Build Code Review Delivery Class artifacts.",
       "role": "generator",
-      "sha256": "b0cfee2b91dba10caee8f1781387b59452d0b2c5f4e5bb46073cc1dcbb1566af"
+      "sha256": "8fec8abbd3997c3ccb313d21f0aa01ab8a5ea48c3adb10eb6c4d784162923921"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/scripts/verify_code_review_delivery_class_handoff.py",

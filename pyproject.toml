@@ -1,7 +1,7 @@
 [project]
 name = "study-anything"
 version = "0.3.31-alpha"
-description = "Open-source, self-host-first AI-native learning system."
+description = "Local-first Dual-Loop Trust Harness with the Study Anything learning adapter."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
@@ -32,12 +32,15 @@ dev = [
   "pytest>=8.0.0",
   "pytest-cov>=5.0.0",
   "ruff>=0.6.0",
-  "mypy>=1.11.0",
+  "mypy>=1.11.0,<2.0",
 ]
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["E402"]
 
 [tool.mypy]
 python_version = "3.11"

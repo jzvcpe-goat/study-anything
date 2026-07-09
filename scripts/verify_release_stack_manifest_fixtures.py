@@ -7,7 +7,6 @@ import argparse
 import copy
 import json
 import sys
-from pathlib import Path
 from typing import Any, Callable
 
 from verify_release_stack_readiness import MANIFEST, ROOT, ReleaseStackReadinessError, load_json, verify_manifest

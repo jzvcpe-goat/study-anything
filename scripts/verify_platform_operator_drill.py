@@ -287,8 +287,19 @@ def validate_tool_import_assets(pack_root: Path, required_tools: list[str]) -> d
     server_urls = [str(server.get("url", "")) for server in servers if isinstance(server, dict)]
     if "http://127.0.0.1:8000" not in server_urls:
         raise OperatorDrillError("OpenAPI asset must keep the default local API server.")
-    if openapi.get("components", {}).get("securitySchemes"):
-        raise OperatorDrillError("OpenAPI import asset must not define API key security schemes.")
+    security_schemes = openapi.get("components", {}).get("securitySchemes")
+    local_bearer = security_schemes.get("localBearerToken") if isinstance(security_schemes, dict) else None
+    if (
+        set(security_schemes or {}) != {"localBearerToken"}
+        or not isinstance(local_bearer, dict)
+        or local_bearer.get("type") != "http"
+        or local_bearer.get("scheme") != "bearer"
+        or local_bearer.get("bearerFormat") != "opaque-local-token"
+    ):
+        raise OperatorDrillError(
+            "OpenAPI import must declare only the optional opaque local bearer token; "
+            "model API-key schemes are forbidden."
+        )
 
     return {
         "openai_tool_count": len(openai_tools),

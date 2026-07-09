@@ -8,7 +8,6 @@ import sys
 import unittest
 from contextlib import redirect_stderr
 from pathlib import Path
-from unittest.mock import patch
 
 from _path import ROOT  # noqa: F401
 

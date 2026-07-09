@@ -97,12 +97,14 @@ def operation_for(tool: Dict[str, Any]) -> Dict[str, Any]:
                 "content": {"application/json": {"schema": {"type": "object"}}},
             },
             "400": {"description": "Bad request"},
+            "401": {"description": "Local API bearer token required"},
             "404": {"description": "Session or resource not found"},
             "409": {"description": "Workflow state conflict"},
             "503": {"description": "Optional dependency unavailable"},
         },
         "x-study-anything-output-requirements": tool.get("output_requirements", []),
         "x-study-anything-privacy": tool.get("privacy", {}),
+        "security": [{"localBearerToken": []}, {}],
     }
     if tool["method"] == "POST":
         body_schema = schema_without_properties(tool["input_schema"], params)
@@ -133,12 +135,32 @@ def build_openapi(manifest: Dict[str, Any]) -> Dict[str, Any]:
             }
         ],
         "paths": paths,
+        "components": {
+            "securitySchemes": {
+                "localBearerToken": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "opaque-local-token",
+                    "description": (
+                        "Optional for loopback-only local mode; required when the operator "
+                        "enables token auth for production or network access."
+                    ),
+                }
+            }
+        },
         "x-study-anything-manifest": {
             "schema_version": manifest["schema_version"],
             "name": manifest["name"],
             "api_base_env": manifest.get("api_base_env", "STUDY_ANYTHING_API_BASE"),
             "privacy_contract": manifest.get("privacy_contract", {}),
             "acceptance_evidence": manifest.get("acceptance_evidence", {}),
+            "api_security": {
+                "default_bind_scope": "loopback",
+                "default_auth_mode": "local_only",
+                "network_or_production_auth_mode": "token",
+                "token_env": "STUDY_ANYTHING_API_TOKEN",
+                "wildcard_cors_allowed": False,
+            },
         },
     }
 

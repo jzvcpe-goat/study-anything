@@ -275,6 +275,10 @@ python3 scripts/setup_env.py
 ./scripts/launch_self_host.sh
 ```
 
+The API binds to `127.0.0.1` and disables browser cross-origin access by
+default. Production or private-network exposure requires explicit token mode;
+see `docs/security.md` and `docs/self-hosting.md`.
+
 The default Docker profile is `core`: API and Postgres. Enable observability and optional topology services later with:
 
 ```bash
@@ -358,12 +362,13 @@ The project remains Apache-2.0 and local-first. Monetization is not a paid app g
 
 ## Status
 
-This repository is a public self-host alpha. The current implementation is strongest as a Study Anything learning adapter and platform-Agent integration package. The Cognitive Loop System pivot is the next product layer: a local-first control system for learning, reversing, operating, verifying, auditing, and evolving any AI-assisted project.
+This repository is a public self-host alpha. The tagged binary and image release line remains `v0.3.31-alpha`; `main` is the post-release development line. Current `main` ships a deterministic metadata-only Cognitive Black Box trust harness, static/Lite Cognitive Loop runtime evidence, and the Study Anything learning adapter/platform-Agent package. It does not claim hosted identity, multi-tenant security, production mutation, a daemonized watcher, a realtime console, or paid services.
 
-本仓库目前是公开 self-host alpha。当前实现最成熟的是 Study Anything 学习适配层和平台 Agent 接入包。Cognitive Loop System 是下一层产品定位：一个本地优先的控制系统，用于学习、逆向、运行、验证、审计和进化任何 AI 辅助项目。
+本仓库目前是公开 self-host alpha。已发布二进制和镜像仍属于 `v0.3.31-alpha`；`main` 是该版本之后的开发线。当前 `main` 已包含确定性、metadata-only 的认知黑箱信任机制、静态/Lite Cognitive Loop 运行证据，以及 Study Anything 学习适配层和平台 Agent 包；它不宣称已经具备托管身份、多租户安全、生产改写、常驻 watcher、实时 console 或付费服务。
 
 See:
 
+- `docs/canonical-checkout.md`
 - `docs/product-positioning.md`
 - `docs/architecture.md`
 - `docs/roadmap.md`

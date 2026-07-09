@@ -6,9 +6,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-adoption",
-    "bytes": 156093,
+    "bytes": 156465,
     "path": "platform/generated/study-anything-release-asset-adoption.zip",
-    "sha256": "bcdf5c883e36d4927c547cbdbee50123ed30c24d3130caa6dc5c2ecb413c5cef",
+    "sha256": "2f643163410f360749c5aedb707ee882cf5f88f96629ca20cc81884ce33c7f9c",
     "sha256_path": "platform/generated/study-anything-release-asset-adoption.sha256"
   },
   "classification_matrix": [
@@ -93,9 +93,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 46312,
+      "bytes": 46835,
       "path": "README.md",
-      "sha256": "366f749b921e8805427f9bbe51a29d577a22b2e3156a8b1690e58cd1644702b3"
+      "sha256": "62799b70e9be8ad0b3d459ce17ddbdd6896e48b58797b5a5184a819bed62c967"
     },
     {
       "bytes": 19503,
@@ -150,12 +150,12 @@
     {
       "bytes": 11247,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "582713d9267e718a28bc9bfc681947e340c45f1b5b3a4d062ea2cb4c786311c9"
+      "sha256": "8fd81fd93f5145594fd65bf4bca3230d585fd00c70694dd1a4b0c8149d66cff4"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "737fa29834dc33d8efc1014232dd2539e1ca0168fbf02f8836958e3ac53e638c"
+      "sha256": "3c681526d6ce0e9c56755e76efbc272918a9012022865ecda95903d1caa6a415"
     },
     {
       "bytes": 1764,
@@ -163,9 +163,9 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 25309,
+      "bytes": 25299,
       "path": "scripts/verify_release_asset_adoption.py",
-      "sha256": "424991f36848a78531b8122e6c3eb1546a63fa06b0f2cc922637cd65edbdc07a"
+      "sha256": "f86e44386810bd7dda57f5c4bbc54893805b31c44e08f98af8e649fdfc7880c8"
     },
     {
       "bytes": 9625,
@@ -178,9 +178,9 @@
       "sha256": "94b409c5a459d3abf01a21df9166c6418614f60366e22e953c032269cc878cc9"
     },
     {
-      "bytes": 29445,
+      "bytes": 29928,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "996c5b059c240f8968dd56f91090c11f8176b3e4ab451ea62891f1265dd29985"
+      "sha256": "cc3a7175d0c84e32130692bc696006bf35b2ee6ac724e34587f9983288eb421d"
     },
     {
       "bytes": 13200,
@@ -198,9 +198,9 @@
       "sha256": "cf00a0e16238fb93b47a324eb993afcc36a27c94f73d6a612e93951616ab5142"
     },
     {
-      "bytes": 11258,
+      "bytes": 11251,
       "path": "scripts/verify_dual_loop_trust_scenario_pack.py",
-      "sha256": "7e490a0212155d956542f5d031b46ac24ac3e5dc46419f76bbed97d77912dbd3"
+      "sha256": "05b38cfe5ff655454034483c3afd84a8a19333f75c43f13156d055fc676915ba"
     },
     {
       "bytes": 26093,

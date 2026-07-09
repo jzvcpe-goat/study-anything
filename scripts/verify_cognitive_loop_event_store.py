@@ -235,7 +235,7 @@ def build_report() -> dict[str, Any]:
             cwd=ROOT,
         )
         list_first = run_store(["--root", str(root), "--db", db_path, "list"], cwd=ROOT)
-        rebuild_again = run_store(
+        run_store(
             ["--root", str(root), "--db", db_path, "rebuild", *event_args],
             cwd=ROOT,
         )

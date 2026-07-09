@@ -17,6 +17,12 @@ jobs:
         run: python -m pip install -e '.[dev,full]'
       - name: Compile Python
         run: python -m compileall -q apps/api/study_anything scripts plugins
+      - name: Lint Python
+        run: python -m ruff check apps/api/study_anything apps/api/tests scripts plugins platform/bootstrap
+      - name: Type-check local API security boundary
+        run: python -m mypy --follow-imports=skip apps/api/study_anything/core/api_security.py scripts/verify_local_api_security.py
+      - name: Verify local API security boundary
+        run: python scripts/verify_local_api_security.py --check
       - name: Verify generated platform Agent assets
         run: python scripts/generate_platform_agent_assets.py --check
       - name: Verify platform ecosystem packs

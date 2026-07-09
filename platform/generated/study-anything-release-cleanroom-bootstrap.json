@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 55098,
+    "bytes": 55870,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "d7e897f0b830fe293e19f7b4a5688d21542ff189b8552ecb462e4096965eb6e8",
+    "sha256": "cb6fe3319d3c7058b2cfdad45829dec220a23a72e859fe2816dac47136126d83",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -133,9 +133,9 @@
   },
   "public_assets": [
     {
-      "bytes": 35186,
+      "bytes": 35674,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "c640a779e8763fb7506a7e7d03d773d528ee4d4d4f9508da539588278e3ded64"
+      "sha256": "88909ef925e8b343825c7ab12433865a70029523e051eb10880bf272cff5ffdb"
     },
     {
       "bytes": 2926,
@@ -163,9 +163,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 19724,
+      "bytes": 20543,
       "path": "docs/self-hosting.md",
-      "sha256": "2fe909834a5d22884c6ae90d35e0416dba5fb1153c1d7700383e2ebd682158d3"
+      "sha256": "769534cbc80d5b8f80845fd899bf669d4fb886fe342413d3b49f26548d4dec49"
     },
     {
       "bytes": 28276,
@@ -173,14 +173,14 @@
       "sha256": "df9358d2e316e5a2c0754f0c63ea3d76b6a4f6ba8ed36bc5bf5cbd8dcb62d77a"
     },
     {
-      "bytes": 20315,
+      "bytes": 20813,
       "path": "scripts/bootstrap_from_release.py",
-      "sha256": "6679fa6cbbf24485f371ade55f81ae2d3922fee754039aa2ebab77965252c667"
+      "sha256": "3bf001ed81850a5b63fb0deee90b690b08023e59cbd5123d556817347107d2f9"
     },
     {
-      "bytes": 29445,
+      "bytes": 29928,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "996c5b059c240f8968dd56f91090c11f8176b3e4ab451ea62891f1265dd29985"
+      "sha256": "cc3a7175d0c84e32130692bc696006bf35b2ee6ac724e34587f9983288eb421d"
     }
   ],
   "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",

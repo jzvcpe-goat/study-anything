@@ -28,6 +28,30 @@ external data access outside the repository database.
 - Optional graph and retrieval projections are derived from Postgres. They must
   not become the source of truth.
 
+## Local API Boundary
+
+- Docker publishes the API on `127.0.0.1` by default. Skill Mode already binds
+  to loopback by default.
+- Browser cross-origin access is disabled by default. Set
+  `STUDY_ANYTHING_CORS_ORIGINS` only to an explicit comma-separated allowlist;
+  wildcard and credentialed CORS are rejected.
+- `STUDY_ANYTHING_API_AUTH_MODE=local_only` is for a single local operator. The
+  `user_id` and workspace member fields are local labels, not authenticated
+  multi-tenant identities.
+- Production or non-loopback exposure requires
+  `STUDY_ANYTHING_API_AUTH_MODE=token` and a strong
+  `STUDY_ANYTHING_API_TOKEN`. The CLI reads that token from its environment or
+  the private `.env` file and sends it in the `Authorization` header, never in a
+  URL.
+- Token mode is an operator boundary for a private self-host. It is not hosted
+  account authentication, tenant isolation, SSO, or a Teams security claim.
+
+Verify this boundary with:
+
+```bash
+python3 scripts/verify_local_api_security.py --check
+```
+
 ## Recovery And Backup
 
 Local operators should create a backup before image upgrades, plugin installs,
@@ -61,6 +85,7 @@ Run the security recovery gate before publishing an alpha:
 
 ```bash
 python3 scripts/verify_security_recovery_hardening.py
+python3 scripts/verify_local_api_security.py --check
 ```
 
 This verifier proves:

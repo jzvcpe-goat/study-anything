@@ -8,6 +8,10 @@ services:
     restart: unless-stopped
     environment:
       APP_ENV: ${APP_ENV:-development}
+      API_BIND_HOST: ${API_BIND_HOST:-127.0.0.1}
+      STUDY_ANYTHING_API_AUTH_MODE: ${STUDY_ANYTHING_API_AUTH_MODE:-local_only}
+      STUDY_ANYTHING_API_TOKEN: ${STUDY_ANYTHING_API_TOKEN:-}
+      STUDY_ANYTHING_CORS_ORIGINS: ${STUDY_ANYTHING_CORS_ORIGINS:-}
       DATABASE_URL: ${DATABASE_URL:-postgresql://study:study_dev_password@app-postgres:5432/study_anything}
       SESSION_STORE: ${SESSION_STORE:-postgres}
       WORKFLOW_ENGINE: ${WORKFLOW_ENGINE:-langgraph}
@@ -32,7 +36,7 @@ services:
       STUDY_ANYTHING_DATA_DIR: /data/study-anything
       STUDY_ANYTHING_PLUGIN_DIRS: /app/plugins:/data/study-anything/plugins
     ports:
-      - "${API_PORT:-8000}:8000"
+      - "${API_BIND_HOST:-127.0.0.1}:${API_PORT:-8000}:8000"
     volumes:
       - study_anything_data:/data/study-anything
       - ../../plugins:/app/plugins:ro

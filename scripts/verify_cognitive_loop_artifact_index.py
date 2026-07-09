@@ -232,7 +232,7 @@ def build_report() -> dict[str, Any]:
         command_schemas = build_local_artifacts(root)
         artifact_html_path = root / ".cognitive-loop" / "artifacts" / "artifact-index.html"
         artifact_json_path = root / ".cognitive-loop" / "events" / "artifact-index.json"
-        artifact_index = run_cli(
+        run_cli(
             [
                 "--root",
                 str(root),

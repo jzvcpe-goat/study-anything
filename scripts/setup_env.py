@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import secrets
 import sys
 from pathlib import Path
@@ -161,6 +162,7 @@ def build_generated_values() -> dict[str, str]:
         "MINIO_ROOT_PASSWORD": random_secret(),
         "REDIS_AUTH": random_secret(),
         "ENCRYPTION_KEY_DEV_ONLY": random_secret(32),
+        "STUDY_ANYTHING_API_TOKEN": random_secret(32),
     }
     return values
 
@@ -204,6 +206,7 @@ def write_output(path: Path, content: str) -> None:
         )
     try:
         path.write_text(content, encoding="utf-8")
+        os.chmod(path, 0o600)
     except OSError as exc:
         raise SetupEnvError(
             f"Cannot write env file {path}: {exc}. Check path permissions or choose another --output path."

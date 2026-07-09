@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from study_anything.core import cbb_protocol, dual_loop, product_loop_harness  # noqa: E402
+from study_anything.core import dual_loop, product_loop_harness  # noqa: E402
 import product_spec_eval_authoring_gate as spec_eval_gate  # noqa: E402
 
 
