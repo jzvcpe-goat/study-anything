@@ -46,6 +46,7 @@ class SelfHostReliabilityMatrixTests(unittest.TestCase):
             restart_attempted=status == "pass",
             restart_completed=status == "pass",
             session_recovery_completed=status == "pass",
+            compose_start_attempts=1 if status == "pass" else 0,
             source_revision_sha="a" * 40 if mode == "source-build" else None,
             source_worktree_dirty=False if mode == "source-build" else None,
             published_image_digest=(
@@ -68,6 +69,7 @@ class SelfHostReliabilityMatrixTests(unittest.TestCase):
         self.assertTrue(receipt["runtime"]["recovery_after_failure_observed"])
         self.assertTrue(receipt["runtime"]["pre_restart_session_recovery_completed"])
         self.assertEqual(receipt["runtime"]["source_revision_sha"], "a" * 40)
+        self.assertEqual(receipt["runtime"]["compose_start_attempts"], 1)
 
     def test_blocked_receipt_excludes_raw_failure_output(self) -> None:
         receipt = self.build(mode="published-image", status="blocked")
@@ -96,6 +98,30 @@ class SelfHostReliabilityMatrixTests(unittest.TestCase):
 
         self.assertNotIn(str(matrix.IMAGE_COMPOSE_FILE), source)
         self.assertIn(str(matrix.IMAGE_COMPOSE_FILE), published)
+
+    def test_published_start_allows_missing_dependency_images_to_pull(self) -> None:
+        self.assertEqual(matrix.compose_up_args("source-build"), ["up", "--build", "-d", "api"])
+        self.assertEqual(matrix.compose_up_args("published-image"), ["up", "-d", "api"])
+        self.assertNotIn("never", matrix.compose_up_args("published-image"))
+
+    def test_compose_start_retries_are_bounded_and_report_attempt(self) -> None:
+        failure = matrix.ReliabilityMatrixError("compose_start", "command_failed")
+        completed = matrix.subprocess.CompletedProcess([], 0, "", "")
+        with (
+            mock.patch.object(matrix, "run_command", side_effect=[failure, completed]) as run,
+            mock.patch.object(matrix.time, "sleep") as sleep,
+        ):
+            attempts = matrix.run_command_with_retries(
+                ["docker", "compose", "up"],
+                phase="compose_start",
+                timeout_seconds=60,
+                attempts=3,
+                retry_delay_seconds=10,
+            )
+
+        self.assertEqual(attempts, 2)
+        self.assertEqual(run.call_count, 2)
+        sleep.assert_called_once_with(10)
 
     def test_image_digest_parser_excludes_repository_reference(self) -> None:
         completed = matrix.subprocess.CompletedProcess(

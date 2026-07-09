@@ -58,6 +58,7 @@ def verify() -> dict[str, object]:
         restart_attempted=True,
         restart_completed=True,
         session_recovery_completed=True,
+        compose_start_attempts=1,
         source_revision_sha="a" * 40,
         source_worktree_dirty=False,
     )
@@ -77,6 +78,7 @@ def verify() -> dict[str, object]:
         restart_attempted=False,
         restart_completed=False,
         session_recovery_completed=False,
+        compose_start_attempts=0,
         published_image_digest=None,
         failure_phase="image_pull",
         failure_category="timeout",
@@ -104,6 +106,11 @@ def verify() -> dict[str, object]:
     )
     require(blocked["failure"]["category"] == "timeout", "Failure category drifted.")
     require(blocked["failure"]["raw_error_included"] is False, "Raw errors must be excluded.")
+    require(
+        passing["runtime"]["compose_start_attempts"] == 1
+        and blocked["runtime"]["compose_start_attempts"] == 0,
+        "Compose start attempt counts must remain auditable.",
+    )
 
     serialized = json.dumps([passing, blocked], sort_keys=True)
     for forbidden in (
@@ -125,10 +132,16 @@ def verify() -> dict[str, object]:
         "schedule:",
         "timeout-minutes: 180",
         "--fault-duration-seconds",
-        "actions/upload-artifact@v4",
+        "actions/upload-artifact@v6",
     ):
         require(marker in workflow, f"Reliability workflow marker missing: {marker}")
     require("continue-on-error" not in workflow, "Scheduled reliability failures must block jobs.")
+    require(
+        'return ["up", "-d", "api"]' in (ROOT / "scripts" / "self_host_reliability_matrix.py").read_text(
+            encoding="utf-8"
+        ),
+        "Published-image Compose start must allow missing dependency images to pull.",
+    )
     require(
         "verify_self_host_reliability_matrix.py --check" in release_check,
         "Release gate is missing matrix verification.",
@@ -151,6 +164,8 @@ def verify() -> dict[str, object]:
             "source_or_image_identity_required": True,
             "scheduled_workflow_present": True,
             "workflow_failures_block": True,
+            "published_dependency_pulls_allowed": True,
+            "compose_start_retries_bounded": True,
             "metadata_only_receipts": True,
             "release_gate_integrated": True,
             "ci_verifier_integrated": True,

@@ -57,10 +57,11 @@ from self_host_soak import run_soak  # noqa: E402
 class ReliabilityMatrixError(RuntimeError):
     """Classified failure without carrying raw command output into receipts."""
 
-    def __init__(self, phase: str, category: str) -> None:
+    def __init__(self, phase: str, category: str, *, attempts: int | None = None) -> None:
         super().__init__(f"{phase}:{category}")
         self.phase = phase
         self.category = category
+        self.attempts = attempts
 
 
 def utc_now() -> str:
@@ -100,6 +101,35 @@ def compose(env_file: Path, mode: str, *args: str) -> list[str]:
         command.extend(["-f", str(IMAGE_COMPOSE_FILE)])
     command.extend(args)
     return command
+
+
+def compose_up_args(mode: str) -> list[str]:
+    if mode == "source-build":
+        return ["up", "--build", "-d", "api"]
+    return ["up", "-d", "api"]
+
+
+def run_command_with_retries(
+    command: list[str],
+    *,
+    phase: str,
+    timeout_seconds: int,
+    attempts: int,
+    retry_delay_seconds: float,
+) -> int:
+    for attempt in range(1, attempts + 1):
+        try:
+            run_command(command, phase=phase, timeout_seconds=timeout_seconds)
+            return attempt
+        except ReliabilityMatrixError as exc:
+            if attempt == attempts:
+                raise ReliabilityMatrixError(
+                    phase,
+                    f"{exc.category}_after_retries",
+                    attempts=attempt,
+                ) from exc
+            time.sleep(retry_delay_seconds)
+    raise ReliabilityMatrixError(phase, "retry_contract_error", attempts=attempts)
 
 
 def run_command(
@@ -261,6 +291,7 @@ def build_receipt(
     restart_attempted: bool,
     restart_completed: bool,
     session_recovery_completed: bool,
+    compose_start_attempts: int = 0,
     source_revision_sha: str | None = None,
     source_worktree_dirty: bool | None = None,
     published_image_digest: str | None = None,
@@ -294,6 +325,7 @@ def build_receipt(
             "controlled_restart_completed": restart_completed,
             "recovery_after_failure_observed": recovery_observed,
             "pre_restart_session_recovery_completed": session_recovery_completed,
+            "compose_start_attempts": compose_start_attempts,
             "published_tag": tag if mode == "published-image" else None,
             "published_image_digest": published_image_digest,
             "source_revision_sha": source_revision_sha,
@@ -350,6 +382,7 @@ def run_matrix(args: argparse.Namespace) -> dict[str, object]:
     restart_attempted = False
     restart_completed = False
     session_recovery_completed = False
+    compose_start_attempts = 0
     source_revision_sha: str | None = None
     source_worktree_dirty: bool | None = None
     published_image_digest: str | None = None
@@ -378,15 +411,12 @@ def run_matrix(args: argparse.Namespace) -> dict[str, object]:
             )
             image_pull_completed = True
             published_image_digest = inspect_image_digest(api_image)
-        up_args = (
-            ["up", "--build", "-d", "api"]
-            if args.mode == "source-build"
-            else ["up", "--pull", "never", "-d", "api"]
-        )
-        run_command(
-            compose(env_file, args.mode, *up_args),
+        compose_start_attempts = run_command_with_retries(
+            compose(env_file, args.mode, *compose_up_args(args.mode)),
             phase="compose_start",
             timeout_seconds=args.startup_timeout_seconds,
+            attempts=args.compose_start_attempts,
+            retry_delay_seconds=args.compose_start_retry_delay_seconds,
         )
         source_build_completed = args.mode == "source-build"
         wait_for_api(api_base, args.startup_timeout_seconds)
@@ -446,6 +476,8 @@ def run_matrix(args: argparse.Namespace) -> dict[str, object]:
         if soak["status"] != "pass":
             raise ReliabilityMatrixError("soak", "reliability_gate_blocked")
     except ReliabilityMatrixError as exc:
+        if exc.phase == "compose_start" and exc.attempts is not None:
+            compose_start_attempts = exc.attempts
         failure = exc
     except Exception:
         failure = ReliabilityMatrixError("runtime", "unexpected_error")
@@ -485,6 +517,7 @@ def run_matrix(args: argparse.Namespace) -> dict[str, object]:
         restart_attempted=restart_attempted,
         restart_completed=restart_completed,
         session_recovery_completed=session_recovery_completed,
+        compose_start_attempts=compose_start_attempts,
         source_revision_sha=source_revision_sha,
         source_worktree_dirty=source_worktree_dirty,
         published_image_digest=published_image_digest,
@@ -505,6 +538,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-success-ratio", type=float, default=0.99)
     parser.add_argument("--max-consecutive-failures", type=int, default=8)
     parser.add_argument("--startup-timeout-seconds", type=int, default=300)
+    parser.add_argument("--compose-start-attempts", type=int, default=3)
+    parser.add_argument("--compose-start-retry-delay-seconds", type=float, default=10.0)
     parser.add_argument("--flow-timeout-seconds", type=int, default=180)
     parser.add_argument("--pull-timeout-seconds", type=int, default=600)
     parser.add_argument("--tag", default="main")
@@ -525,6 +560,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--min-success-ratio must be greater than 0 and at most 1")
     if args.max_consecutive_failures < 1:
         parser.error("--max-consecutive-failures must be at least 1")
+    if args.compose_start_attempts < 1 or args.compose_start_retry_delay_seconds < 0:
+        parser.error("compose start attempts must be positive and retry delay non-negative")
     return args
 
 

@@ -36,7 +36,12 @@ python3 scripts/self_host_reliability_matrix.py \
 ```
 
 For the published path, add `--mode published-image`, `--tag TAG`, and `--api-image IMAGE:TAG`.
-The runner always pulls the named published image. It does not accept a skip-pull mode.
+The runner always pulls the named published API image first. Compose may still pull missing dependency
+images such as Postgres on a clean runner; there is no API image skip-pull mode.
+
+Compose startup is retried at most three times with a ten-second delay to absorb transient registry
+or build failures. The receipt records the actual attempt count. Exhausting the retries blocks the
+job with a classified `*_after_retries` failure; retries never weaken soak or recovery thresholds.
 
 ## Receipt And Privacy Boundary
 
