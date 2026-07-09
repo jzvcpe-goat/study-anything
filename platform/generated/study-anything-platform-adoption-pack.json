@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 6973862,
+  "archive_bytes": 6974348,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "53e3cd5a04e876afb93606b18f94e2ff0f18d2ee1b45564a686451f67dd23ef1",
+  "archive_sha256": "3dd33d070515d14a190c230da3958711775d5de66d37ffec7382f983d76829fc",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -321,11 +321,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/scheduled-reliability.md",
-      "bytes": 3455,
+      "bytes": 3754,
       "kind": "operator_doc",
       "path": "docs/scheduled-reliability.md",
       "purpose": "Scheduled source-build and published-image restart/recovery contract.",
-      "sha256": "6ada600ad3614e5744df06e24933758d6fbc42c4614a745a6ba3e568d4021610"
+      "sha256": "9a682ce462187ab47ae96bd6f4ab415fd65961e3cd1ede027beccab592ce9e06"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/generated-evidence-topology.md",
@@ -2229,7 +2229,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "cdeea07df1a34575fa216ff99e0e46b762d75ad428464d6c00a7f4d60dc8f1bb"
+      "sha256": "5b6e7df64d3d5dc3043cab8d0409337fce0f4352d544da72accdd8ca98c4bc23"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -14593,19 +14593,19 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/self_host_reliability_matrix.py",
-      "bytes": 20292,
+      "bytes": 21891,
       "kind": "diagnostics",
       "path": "scripts/self_host_reliability_matrix.py",
       "purpose": "Isolated source-build and published-image restart/recovery matrix runner.",
-      "sha256": "68fb1e8df9f579cc554bafafa5bcb9752ef0f3acd74242df1f687739dcf10218"
+      "sha256": "ab6ee94d4ea33167b22c9cde2d7b91c7cae34d6610ff92a4d04654b44fa84a05"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_self_host_reliability_matrix.py",
-      "bytes": 6612,
+      "bytes": 6934,
       "kind": "verification",
       "path": "scripts/verify_self_host_reliability_matrix.py",
       "purpose": "Deterministic scheduled reliability receipt and workflow verifier.",
-      "sha256": "a1debd038272756326b6d571216216861e0beb86ebe1db2e6736ada42bdaa1ff"
+      "sha256": "4f7f6b5e86c2078b86403c2367ab63e2153f85c1f2d5efc88762c64d95c49220"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.github/workflows/reliability-soak.yml",

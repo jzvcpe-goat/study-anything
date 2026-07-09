@@ -11602,18 +11602,18 @@
       "sha256": "0d29c9b675a7e1458a77b237af4cfb6001a7a8cf47791b9f35dd2d98fe597b77"
     },
     {
-      "bytes": 20292,
+      "bytes": 21891,
       "kind": "diagnostics",
       "path": "scripts/self_host_reliability_matrix.py",
       "purpose": "Isolated source-build and published-image restart/recovery matrix runner.",
-      "sha256": "68fb1e8df9f579cc554bafafa5bcb9752ef0f3acd74242df1f687739dcf10218"
+      "sha256": "ab6ee94d4ea33167b22c9cde2d7b91c7cae34d6610ff92a4d04654b44fa84a05"
     },
     {
-      "bytes": 6612,
+      "bytes": 6934,
       "kind": "verification",
       "path": "scripts/verify_self_host_reliability_matrix.py",
       "purpose": "Deterministic scheduled reliability receipt and workflow verifier.",
-      "sha256": "a1debd038272756326b6d571216216861e0beb86ebe1db2e6736ada42bdaa1ff"
+      "sha256": "4f7f6b5e86c2078b86403c2367ab63e2153f85c1f2d5efc88762c64d95c49220"
     },
     {
       "bytes": 3401,
@@ -14773,11 +14773,11 @@
       "sha256": "65dcaa1145d1537e869692ec20894cbc35107fba3cef1450d50cc5cd1fa7bee2"
     },
     {
-      "bytes": 3455,
+      "bytes": 3754,
       "kind": "docs",
       "path": "docs/scheduled-reliability.md",
       "purpose": "Scheduled source-build and published-image restart/recovery contract.",
-      "sha256": "6ada600ad3614e5744df06e24933758d6fbc42c4614a745a6ba3e568d4021610"
+      "sha256": "9a682ce462187ab47ae96bd6f4ab415fd65961e3cd1ede027beccab592ce9e06"
     },
     {
       "bytes": 2182,

@@ -39,6 +39,10 @@ For the published path, add `--mode published-image`, `--tag TAG`, and `--api-im
 The runner always pulls the named published API image first. Compose may still pull missing dependency
 images such as Postgres on a clean runner; there is no API image skip-pull mode.
 
+Compose startup is retried at most three times with a ten-second delay to absorb transient registry
+or build failures. The receipt records the actual attempt count. Exhausting the retries blocks the
+job with a classified `*_after_retries` failure; retries never weaken soak or recovery thresholds.
+
 ## Receipt And Privacy Boundary
 
 Each job uploads one `self-host-reliability-matrix-receipt-v1` JSON artifact for 14 days. The receipt
