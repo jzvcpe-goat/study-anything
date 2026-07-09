@@ -5029,6 +5029,16 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic self-host soak and privacy-boundary verifier.",
     ),
     (
+        "scripts/generated_evidence_topology.py",
+        "verification",
+        "Release-distribution evidence dependency and feedback-edge orchestrator.",
+    ),
+    (
+        "scripts/verify_generated_evidence_topology.py",
+        "verification",
+        "Deterministic topology, convergence, and privacy-boundary verifier.",
+    ),
+    (
         "scripts/launch_self_host.sh",
         "runtime",
         "Docker Compose self-host launcher for source builds and published GHCR images.",
@@ -7257,6 +7267,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/self-host-reliability.md",
         "docs",
         "Bounded self-host soak, recovery, and trace-retention guide.",
+    ),
+    (
+        "docs/generated-evidence-topology.md",
+        "docs",
+        "Release-distribution evidence refresh and fixed-point convergence guide.",
     ),
     (
         "docs/security.md",

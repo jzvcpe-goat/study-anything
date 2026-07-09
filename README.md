@@ -375,3 +375,4 @@ See:
 - `docs/platform-agent-integrations.md`
 - `docs/security.md`
 - `docs/self-host-reliability.md`
+- `docs/generated-evidence-topology.md`
