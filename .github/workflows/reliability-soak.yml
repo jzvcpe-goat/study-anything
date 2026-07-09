@@ -1,0 +1,94 @@
+name: reliability-soak
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      samples:
+        description: Number of real-time health samples per mode
+        required: true
+        default: "721"
+      interval_seconds:
+        description: Seconds between health samples
+        required: true
+        default: "10"
+      fault_after_seconds:
+        description: Seconds before the controlled API interruption
+        required: true
+        default: "600"
+      fault_duration_seconds:
+        description: Seconds to keep the API stopped
+        required: true
+        default: "45"
+      tag:
+        description: Published API image tag
+        required: true
+        default: main
+      min_success_ratio:
+        description: Minimum successful-probe ratio; lowering it makes a run diagnostic only
+        required: true
+        default: "0.99"
+      max_consecutive_failures:
+        description: Maximum consecutive failed probes; raising it makes a run diagnostic only
+        required: true
+        default: "8"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  reliability-soak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [source-build, published-image]
+    env:
+      SAMPLES: ${{ inputs.samples || '721' }}
+      INTERVAL_SECONDS: ${{ inputs.interval_seconds || '10' }}
+      FAULT_AFTER_SECONDS: ${{ inputs.fault_after_seconds || '600' }}
+      FAULT_DURATION_SECONDS: ${{ inputs.fault_duration_seconds || '45' }}
+      IMAGE_TAG: ${{ inputs.tag || 'main' }}
+      MIN_SUCCESS_RATIO: ${{ inputs.min_success_ratio || '0.99' }}
+      MAX_CONSECUTIVE_FAILURES: ${{ inputs.max_consecutive_failures || '8' }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Compute published image name
+        id: image
+        run: |
+          repo="$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')"
+          echo "name=ghcr.io/${repo}/api" >> "$GITHUB_OUTPUT"
+      - name: Log in to GHCR for published-image verification
+        if: matrix.mode == 'published-image'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run real-time restart and recovery matrix
+        run: |
+          python scripts/self_host_reliability_matrix.py \
+            --mode "${{ matrix.mode }}" \
+            --samples "$SAMPLES" \
+            --interval-seconds "$INTERVAL_SECONDS" \
+            --fault-after-seconds "$FAULT_AFTER_SECONDS" \
+            --fault-duration-seconds "$FAULT_DURATION_SECONDS" \
+            --min-success-ratio "$MIN_SUCCESS_RATIO" \
+            --max-consecutive-failures "$MAX_CONSECUTIVE_FAILURES" \
+            --tag "$IMAGE_TAG" \
+            --api-image "${{ steps.image.outputs.name }}:$IMAGE_TAG" \
+            --output "${RUNNER_TEMP}/study-anything-${{ matrix.mode }}-reliability.json"
+      - name: Upload metadata-only reliability receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reliability-${{ matrix.mode }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/study-anything-${{ matrix.mode }}-reliability.json
+          if-no-files-found: error
+          retention-days: 14

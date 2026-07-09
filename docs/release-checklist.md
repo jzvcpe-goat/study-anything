@@ -31,6 +31,7 @@
 - [ ] `.venv/bin/python scripts/verify_plugin_quarantine.py`
 - [ ] `.venv/bin/python scripts/verify_security_recovery_hardening.py`
 - [ ] `.venv/bin/python scripts/verify_self_host_soak.py --check`
+- [ ] `.venv/bin/python scripts/verify_self_host_reliability_matrix.py --check`
 - [ ] `.venv/bin/python scripts/generated_evidence_topology.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_submission_dry_run.py --check`
 - [ ] `.venv/bin/python scripts/verify_platform_manual_submission_rehearsal.py --check`
@@ -161,6 +162,7 @@
 - [ ] After GHCR publish, run `python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha`.
 - [ ] If local GHCR pulls are too slow, run `python3 scripts/verify_published_image_launch.py --tag v0.3.31-alpha --pull-timeout-seconds 180 --allow-pull-timeout-report` and pair the JSON diagnostic with a successful `docker manifest inspect ghcr.io/jzvcpe-goat/study-anything/api:v0.3.31-alpha`.
 - [ ] For a network-independent maintainer check, dispatch the `published-image-smoke` GitHub Actions workflow with `tag=v0.3.31-alpha`; this strict remote smoke must pull the published GHCR image, start the API, and run `scripts/verify_published_image_launch.py` without `--allow-pull-timeout-report`.
+- [ ] Dispatch `reliability-soak` with its default two-hour inputs and retain passing `source-build` and `published-image` receipts; a short manual dispatch validates mechanics only and must not be reported as the default scheduled window.
 - [ ] Check http://localhost:8000/v1/metrics/pmf returns `schema_version=pmf-v1` without source text, answers, insights, or raw contact values.
 - [ ] Record one local PMF intent with `POST /v1/pmf/interest` and verify `GET /v1/pmf/summary` increments without storing raw contact.
 - [ ] Verify `POST /v1/pmf/export` returns `409` without consent and `schema_version=pmf-export-v1` with `consent_to_share=true`.

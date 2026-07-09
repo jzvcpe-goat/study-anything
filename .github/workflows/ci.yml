@@ -25,6 +25,8 @@ jobs:
         run: python scripts/verify_local_api_security.py --check
       - name: Verify self-host reliability harness
         run: python scripts/verify_self_host_soak.py --check
+      - name: Verify scheduled reliability matrix contract
+        run: python scripts/verify_self_host_reliability_matrix.py --check
       - name: Verify generated evidence topology
         run: python scripts/verify_generated_evidence_topology.py --check
       - name: Verify generated platform Agent assets

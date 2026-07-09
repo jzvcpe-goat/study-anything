@@ -429,6 +429,7 @@ fi
 phase "existing release gates"
 "$python_bin" scripts/verify_local_api_security.py --check
 "$python_bin" scripts/verify_self_host_soak.py --check
+"$python_bin" scripts/verify_self_host_reliability_matrix.py --check
 "$python_bin" scripts/verify_cognitive_loop_contracts.py --check
 "$python_bin" scripts/verify_operating_model_loops.py --check
 "$python_bin" scripts/verify_release_stack_policy.py --check

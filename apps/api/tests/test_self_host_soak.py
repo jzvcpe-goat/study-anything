@@ -104,6 +104,40 @@ class SelfHostSoakTests(unittest.TestCase):
             receipt["sampling"]["failure_categories"]["authentication_failed"], 1
         )
 
+    def test_required_recovery_blocks_all_healthy_window(self) -> None:
+        receipt = soak.build_receipt(
+            [soak.SoakSample(True, 5, "healthy"), soak.SoakSample(True, 4, "healthy")],
+            api_base="http://127.0.0.1:8000",
+            interval_seconds=1,
+            min_success_ratio=1.0,
+            max_consecutive_failures=0,
+            started_at="2026-07-09T00:00:00Z",
+            finished_at="2026-07-09T00:00:02Z",
+            require_recovery=True,
+        )
+
+        self.assertEqual(receipt["status"], "blocked")
+        self.assertIn("required_recovery_not_observed", receipt["blocked_reasons"])
+
+    def test_required_recovery_passes_after_failure(self) -> None:
+        receipt = soak.build_receipt(
+            [
+                soak.SoakSample(True, 5, "healthy"),
+                soak.SoakSample(False, 5, "unavailable"),
+                soak.SoakSample(True, 4, "healthy"),
+            ],
+            api_base="http://127.0.0.1:8000",
+            interval_seconds=1,
+            min_success_ratio=0.5,
+            max_consecutive_failures=1,
+            started_at="2026-07-09T00:00:00Z",
+            finished_at="2026-07-09T00:00:03Z",
+            require_recovery=True,
+        )
+
+        self.assertEqual(receipt["status"], "pass")
+        self.assertTrue(receipt["sampling"]["recovered_after_failure"])
+
     def test_receipt_never_serializes_endpoint_or_secret(self) -> None:
         receipt = soak.build_receipt(
             [soak.SoakSample(False, 4, "authentication_failed")],
