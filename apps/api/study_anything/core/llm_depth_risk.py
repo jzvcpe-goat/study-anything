@@ -13,7 +13,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any, Mapping
 
 
 INPUT_SCHEMA_VERSION = "llm-depth-risk-input-v1"

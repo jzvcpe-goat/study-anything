@@ -17,7 +17,6 @@ from study_anything.core.retrieval import (
     NoopRetrievalIndex,
     RetrievalUnavailable,
     documents_from_state,
-    minimal_snippet,
 )
 from study_anything.core.retrieval_eval import (
     RetrievalQualityInput,

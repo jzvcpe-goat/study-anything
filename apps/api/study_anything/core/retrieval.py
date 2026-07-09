@@ -7,7 +7,7 @@ import os
 import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Callable, Iterable, Optional
+from typing import Any, Callable, Optional
 
 from .learning_context import LEARNING_CONTEXT_SCHEMA_VERSION
 from .security import sha256_text

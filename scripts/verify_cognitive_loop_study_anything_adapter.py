@@ -200,7 +200,7 @@ def check_output(path: Path) -> None:
     expected = dump_json(build_report())
     if not path.is_file():
         raise StudyAnythingAdapterVerificationError(
-            f"Study Anything adapter report is missing. Run: python3 scripts/verify_cognitive_loop_study_anything_adapter.py --write"
+            "Study Anything adapter report is missing. Run: python3 scripts/verify_cognitive_loop_study_anything_adapter.py --write"
         )
     if path.read_text(encoding="utf-8") != expected:
         raise StudyAnythingAdapterVerificationError(

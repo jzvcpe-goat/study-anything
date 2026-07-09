@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
-from .llm_depth_risk import assert_metadata_only, dump_json, sha256_text, stable_id
+from .llm_depth_risk import assert_metadata_only, dump_json as _dump_json, sha256_text, stable_id
 
 
 RELEASE_VERSION = "v0.3.31-alpha"
@@ -33,6 +33,12 @@ REQUIRED_PLATFORMS = ("workbuddy", "kimi", "codex")
 
 class RealAgentEvalBridgeError(ValueError):
     """Raised when imported real-agent eval evidence is unsafe or invalid."""
+
+
+def dump_json(payload: Any) -> str:
+    """Compatibility export used by the standalone eval verifier scripts."""
+
+    return _dump_json(payload)
 
 
 def load_json(path: str | Path) -> dict[str, Any]:

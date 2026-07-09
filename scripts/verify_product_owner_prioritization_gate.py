@@ -17,7 +17,6 @@ sys.path.insert(0, str(ROOT / "apps" / "api"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from study_anything.core import dual_loop  # noqa: E402
-import external_feedback_backlog_bridge as backlog_bridge  # noqa: E402
 import product_owner_prioritization_gate as gate  # noqa: E402
 
 

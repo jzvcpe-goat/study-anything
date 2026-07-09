@@ -6,7 +6,7 @@ import json
 import shutil
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Iterable, List, Mapping, Optional
+from typing import Iterable, List, Mapping, Optional
 
 from .plugin_manifest import PluginManifest, describe_permissions, validate_manifest
 from .plugin_trust import PluginTrustReport, assess_plugin_trust
@@ -21,6 +21,9 @@ class PluginStatus:
     trust: Optional[PluginTrustReport] = None
 
     def public_dict(self) -> dict[str, object]:
+        public_path = _public_plugin_path(self.path)
+        assert public_path is not None
+        public_message = self.message.replace(self.path, public_path)
         permission_details: list[dict[str, str]] = []
         if self.manifest:
             permission_details = [
@@ -29,9 +32,9 @@ class PluginStatus:
         return {
             "manifest": asdict(self.manifest) if self.manifest else None,
             "permission_details": permission_details,
-            "path": self.path,
+            "path": public_path,
             "status": self.status,
-            "message": self.message,
+            "message": public_message,
             "trust": self.trust.public_dict() if self.trust else None,
         }
 
@@ -248,7 +251,7 @@ class PluginRegistry:
                         installed_version=installed_version,
                         registry_version=registry_version,
                         registry_path=document.public_path,
-                        source_path=source_path,
+                        source_path=_public_plugin_path(source_path),
                         registry_status=registry_status,
                         signature_status=signature_status,
                         review_status=review_status,
@@ -270,7 +273,7 @@ class PluginRegistry:
                     installed_version=status.manifest.version,
                     registry_version=None,
                     registry_path="not_listed",
-                    source_path=status.path,
+                    source_path=_public_plugin_path(status.path),
                     registry_status=trust.registry_status if trust else "not_listed",
                     signature_status=trust.signature_status if trust else "unsigned",
                     review_status=trust.review_status if trust else "unreviewed",
@@ -484,3 +487,9 @@ def _registry_path_matches(registry_path: Path, plugin_dir: Path, raw_path: obje
         (registry_path.parent.parent / entry_path).resolve(),
     ]
     return plugin_resolved in candidates or entry_path.name == plugin_dir.name
+
+
+def _public_plugin_path(value: Optional[str]) -> Optional[str]:
+    if value is None:
+        return None
+    return "<local-plugin-path>" if Path(value).is_absolute() else value

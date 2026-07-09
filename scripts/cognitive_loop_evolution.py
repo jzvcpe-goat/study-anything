@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 from dataclasses import dataclass
 import hashlib
 from html import escape

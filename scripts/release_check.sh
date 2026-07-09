@@ -396,6 +396,10 @@ if [ -f .env ]; then
   "$python_bin" scripts/check_env.py
 fi
 "$python_bin" -m compileall -q apps/api/study_anything scripts plugins
+"$python_bin" -m ruff check apps/api/study_anything apps/api/tests scripts plugins platform/bootstrap
+"$python_bin" -m mypy \
+  apps/api/study_anything/core/api_security.py \
+  scripts/verify_local_api_security.py
 
 phase "clean-clone setup"
 if [ "$skip_clean_clone_enabled" = "true" ]; then
@@ -423,6 +427,7 @@ else
 fi
 
 phase "existing release gates"
+"$python_bin" scripts/verify_local_api_security.py --check
 "$python_bin" scripts/verify_cognitive_loop_contracts.py --check
 "$python_bin" scripts/verify_operating_model_loops.py --check
 "$python_bin" scripts/verify_release_stack_policy.py --check

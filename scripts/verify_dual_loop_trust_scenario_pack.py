@@ -256,7 +256,7 @@ def build_report(sidecar: dict[str, Any]) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
-    args = parser.parse_args()
+    parser.parse_args()
     sidecar = verify_generated_assets()
     verify_archive(sidecar)
     run_existing_gates()

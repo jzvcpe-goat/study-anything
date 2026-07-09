@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 157734,
+    "bytes": 158554,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "9070fffe2b87ba4d2a0af3c5b9d967b3cf482fac64ffb106b0ce217c925213e9"
+    "sha256": "106c66982d10c049d9161583e30f9f82a2c371bcb9d489bd7956611fa4fa521d"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -17,11 +17,11 @@
   "files": [
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/README.md",
-      "bytes": 46312,
+      "bytes": 46835,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "366f749b921e8805427f9bbe51a29d577a22b2e3156a8b1690e58cd1644702b3"
+      "sha256": "62799b70e9be8ad0b3d459ce17ddbdd6896e48b58797b5a5184a819bed62c967"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/QUICKSTART.md",
@@ -105,11 +105,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/study_anything_cli.py",
-      "bytes": 136781,
+      "bytes": 137667,
       "kind": "cli",
       "path": "scripts/study_anything_cli.py",
       "purpose": "CLI for learning loop and evidence commands.",
-      "sha256": "c5fdc5bd64c0050d7e1686b7bd754a6cfa1ecad5305779c27213d0b948cdbc68"
+      "sha256": "ab496fd98702bf3b6548114ee810aba41f90a3b626c1a44b2b0da0f2d5995581"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/localhost_diagnostics.py",
@@ -121,11 +121,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_platform_agent_tools.py",
-      "bytes": 47018,
+      "bytes": 47008,
       "kind": "verification",
       "path": "scripts/verify_platform_agent_tools.py",
       "purpose": "Live local API tool-surface verifier.",
-      "sha256": "1a4ab6e2964ca51199a8edda35c9ec31dcd7493260bba89fd733a25bb329937c"
+      "sha256": "0087f2c28401f54d7eac2c91cfb068f42ca007c1fd0acd9a43d32ce56d13afd2"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
@@ -233,11 +233,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-platform-openapi.json",
-      "bytes": 83732,
+      "bytes": 91074,
       "kind": "tool_import",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 fallback import asset.",
-      "sha256": "2dac20f2e3277491f23930b90e8cb52f0d0a78b04e4bfa8458b8c48e0127e3f1"
+      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
     }
   ],
   "import_assets": [

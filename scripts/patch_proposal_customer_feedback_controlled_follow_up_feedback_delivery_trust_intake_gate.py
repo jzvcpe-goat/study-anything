@@ -772,7 +772,6 @@ def main() -> int:
                 "external_publication_performed": False,
                 "source_mutation_performed": False,
                 "production_mutation_performed": False,
-                "model_calls_performed": False,
             }
         ),
         end="",

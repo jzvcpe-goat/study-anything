@@ -7,7 +7,6 @@ import argparse
 import hashlib
 import json
 import re
-import shutil
 import sys
 import tempfile
 import zipfile

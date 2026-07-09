@@ -14,6 +14,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ENV = ROOT / ".env"
 HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
+API_AUTH_MODES = {"local_only", "token"}
+LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
+MIN_API_TOKEN_LENGTH = 32
 
 WEAK_VALUES = {
     "",
@@ -123,6 +126,71 @@ def database_url_issue(env_path: Path) -> dict[str, object]:
         [
             "Set DATABASE_URL to the Postgres URL for the Study Anything app database.",
             f"For local self-host defaults, regenerate .env: python3 scripts/setup_env.py --force --output {env_path}",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def unsupported_api_auth_mode_issue(mode: str, env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "unsupported_api_auth_mode",
+        "STUDY_ANYTHING_API_AUTH_MODE",
+        f"STUDY_ANYTHING_API_AUTH_MODE must be local_only or token; got {mode!r}.",
+        [
+            f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=local_only for loopback-only use.",
+            "For network or production use, set STUDY_ANYTHING_API_AUTH_MODE=token.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def production_api_auth_issue(env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "production_api_auth_required",
+        "STUDY_ANYTHING_API_AUTH_MODE",
+        "APP_ENV=production requires STUDY_ANYTHING_API_AUTH_MODE=token.",
+        [
+            f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=token.",
+            f"Generate a strong token with: python3 scripts/setup_env.py --force --output {env_path}",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
+        ],
+    )
+
+
+def network_bind_without_auth_issue(bind_host: str, env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "network_bind_requires_token_auth",
+        "API_BIND_HOST",
+        f"API_BIND_HOST={bind_host} is not loopback and requires token authentication.",
+        [
+            f"For local-only use, edit {env_path} and set API_BIND_HOST=127.0.0.1.",
+            "For network use, set STUDY_ANYTHING_API_AUTH_MODE=token and generate a strong token.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def missing_api_token_issue(env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "missing_or_weak_api_token",
+        "STUDY_ANYTHING_API_TOKEN",
+        f"Token auth requires STUDY_ANYTHING_API_TOKEN with at least {MIN_API_TOKEN_LENGTH} characters.",
+        [
+            f"Generate a strong token with: python3 scripts/setup_env.py --force --output {env_path}",
+            "Or set STUDY_ANYTHING_API_TOKEN to a strong random value in the private environment.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def wildcard_cors_issue(env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "wildcard_cors_forbidden",
+        "STUDY_ANYTHING_CORS_ORIGINS",
+        "Wildcard CORS is forbidden for the local API.",
+        [
+            f"Leave STUDY_ANYTHING_CORS_ORIGINS empty in {env_path} for CLI and platform-Agent use.",
+            "Or list exact trusted origins separated by commas.",
             f"Recheck with: python3 scripts/check_env.py --env {env_path}",
         ],
     )
@@ -375,6 +443,25 @@ def main() -> None:
 
     if values.get("SESSION_STORE") == "postgres" and not values.get("DATABASE_URL"):
         problems.append(database_url_issue(args.env))
+
+    api_auth_mode = values.get("STUDY_ANYTHING_API_AUTH_MODE", "local_only").strip().lower()
+    api_bind_host = values.get("API_BIND_HOST", "127.0.0.1").strip().lower() or "127.0.0.1"
+    api_token = values.get("STUDY_ANYTHING_API_TOKEN", "").strip()
+    cors_origins = {
+        origin.strip().rstrip("/")
+        for origin in values.get("STUDY_ANYTHING_CORS_ORIGINS", "").split(",")
+        if origin.strip()
+    }
+    if api_auth_mode not in API_AUTH_MODES:
+        problems.append(unsupported_api_auth_mode_issue(api_auth_mode, args.env))
+    elif app_env == "production" and api_auth_mode != "token":
+        problems.append(production_api_auth_issue(args.env))
+    elif api_auth_mode == "local_only" and api_bind_host not in LOOPBACK_BIND_HOSTS:
+        problems.append(network_bind_without_auth_issue(api_bind_host, args.env))
+    elif api_auth_mode == "token" and len(api_token) < MIN_API_TOKEN_LENGTH:
+        problems.append(missing_api_token_issue(args.env))
+    if "*" in cors_origins:
+        problems.append(wildcard_cors_issue(args.env))
 
     for key in PORT_DEFAULTS:
         value = values.get(key)

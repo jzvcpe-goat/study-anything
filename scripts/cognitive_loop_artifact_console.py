@@ -9,7 +9,6 @@ import hashlib
 from html import escape
 import json
 from pathlib import Path
-import sqlite3
 import sys
 from typing import Any, Iterable, Mapping
 

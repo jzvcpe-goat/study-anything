@@ -7,7 +7,7 @@ from collections import Counter
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Optional
+from typing import Iterable, Mapping, Optional
 from uuid import uuid4
 
 from .events import utc_now

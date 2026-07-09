@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import platform
 import re
 import shutil
@@ -335,8 +334,19 @@ def operation_ids_from_openapi(path: Path) -> tuple[set[str], int]:
     openapi = read_json(path)
     if openapi.get("openapi") != "3.1.0":
         raise CleanroomBootstrapError("OpenAPI manifest must be version 3.1.0.")
-    if (openapi.get("components") or {}).get("securitySchemes"):
-        raise CleanroomBootstrapError("OpenAPI manifest must not declare API-key security schemes.")
+    security_schemes = (openapi.get("components") or {}).get("securitySchemes")
+    local_bearer = security_schemes.get("localBearerToken") if isinstance(security_schemes, dict) else None
+    if (
+        set(security_schemes or {}) != {"localBearerToken"}
+        or not isinstance(local_bearer, dict)
+        or local_bearer.get("type") != "http"
+        or local_bearer.get("scheme") != "bearer"
+        or local_bearer.get("bearerFormat") != "opaque-local-token"
+    ):
+        raise CleanroomBootstrapError(
+            "OpenAPI manifest must declare only the optional opaque local bearer token; "
+            "model API-key schemes are forbidden."
+        )
     operations: set[str] = set()
     paths = openapi.get("paths") or {}
     if not isinstance(paths, dict):

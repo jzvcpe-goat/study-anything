@@ -537,11 +537,14 @@ class EnvScriptTests(unittest.TestCase):
                 "--output",
                 str(output),
             )
+            output_mode = output.stat().st_mode & 0o777
 
         self.assertIsNone(code)
         self.assertEqual(stderr, "")
         self.assertIn("Created <env-file> with generated local secrets.", stdout)
         self.assertNotIn(str(root), stdout)
+        if os.name != "nt":
+            self.assertEqual(output_mode, 0o600)
 
     def test_setup_env_json_create_is_redacted_and_actionable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -952,7 +955,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertEqual(payload["schema_version"], "env-check-result-v1")
         self.assertEqual(payload["status"], "fail")
         self.assertEqual(payload["env_file"], "<env-file>")
-        self.assertEqual(payload["problem_count"], 8)
+        self.assertEqual(payload["problem_count"], 9)
         self.assertFalse(payload["privacy"]["local_absolute_paths_included"])
         self.assertFalse(payload["privacy"]["secret_values_included"])
         self.assertFalse(payload["privacy"]["raw_env_values_included"])
@@ -960,6 +963,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertNotIn(str(env_file), stdout)
         self.assertIn("weak_or_placeholder_secret", {item["code"] for item in payload["problems"]})
         self.assertIn("invalid_langfuse_encryption_key", {item["code"] for item in payload["problems"]})
+        self.assertIn("production_api_auth_required", {item["code"] for item in payload["problems"]})
 
     def test_check_env_json_missing_file_redacts_absolute_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -241,7 +241,6 @@ def verify_lineage(manifest: dict[str, Any], allow_missing_top_pr: bool, max_dep
     lineage: list[dict[str, Any]] = []
     blockers: list[str] = []
     visited: set[str] = set()
-    current_branch = top_branch
     current_base = top_base
     pending_top = False
 

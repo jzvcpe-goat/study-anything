@@ -183,8 +183,19 @@ def validate_import_assets(root: Path) -> dict[str, Any]:
         raise PlatformAdoptionFeedbackDiagnosticsError("Platform tool manifest schema drifted.")
     if openapi.get("openapi") != "3.1.0":
         raise PlatformAdoptionFeedbackDiagnosticsError("OpenAPI import asset must be OpenAPI 3.1.0.")
-    if openapi.get("components", {}).get("securitySchemes"):
-        raise PlatformAdoptionFeedbackDiagnosticsError("OpenAPI import asset must not expose API keys.")
+    security_schemes = openapi.get("components", {}).get("securitySchemes")
+    local_bearer = security_schemes.get("localBearerToken") if isinstance(security_schemes, dict) else None
+    if (
+        set(security_schemes or {}) != {"localBearerToken"}
+        or not isinstance(local_bearer, dict)
+        or local_bearer.get("type") != "http"
+        or local_bearer.get("scheme") != "bearer"
+        or local_bearer.get("bearerFormat") != "opaque-local-token"
+    ):
+        raise PlatformAdoptionFeedbackDiagnosticsError(
+            "OpenAPI import must declare only the optional opaque local bearer token; "
+            "model API-key schemes are forbidden."
+        )
     if not isinstance(openai_tools_raw, list):
         raise PlatformAdoptionFeedbackDiagnosticsError("OpenAI-compatible tools must be a list.")
 
