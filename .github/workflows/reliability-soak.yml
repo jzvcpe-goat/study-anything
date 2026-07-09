@@ -55,7 +55,7 @@ jobs:
       MIN_SUCCESS_RATIO: ${{ inputs.min_success_ratio || '0.99' }}
       MAX_CONSECUTIVE_FAILURES: ${{ inputs.max_consecutive_failures || '8' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -86,7 +86,7 @@ jobs:
             --output "${RUNNER_TEMP}/study-anything-${{ matrix.mode }}-reliability.json"
       - name: Upload metadata-only reliability receipt
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: reliability-${{ matrix.mode }}-${{ github.run_id }}
           path: ${{ runner.temp }}/study-anything-${{ matrix.mode }}-reliability.json
