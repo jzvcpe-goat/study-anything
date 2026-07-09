@@ -277,7 +277,8 @@ python3 scripts/setup_env.py
 
 The API binds to `127.0.0.1` and disables browser cross-origin access by
 default. Production or private-network exposure requires explicit token mode;
-see `docs/security.md`, `docs/self-hosting.md`, and `docs/self-host-reliability.md`.
+see `docs/security.md`, `docs/self-hosting.md`, `docs/self-host-reliability.md`, and
+`docs/scheduled-reliability.md`.
 
 The default Docker profile is `core`: API and Postgres. Enable observability and optional topology services later with:
 
@@ -375,4 +376,5 @@ See:
 - `docs/platform-agent-integrations.md`
 - `docs/security.md`
 - `docs/self-host-reliability.md`
+- `docs/scheduled-reliability.md`
 - `docs/generated-evidence-topology.md`

@@ -108,9 +108,10 @@ control, and deletion in their own Langfuse deployment.
   evidence, not the source of truth.
 - Treat optional-service backups as sensitive and encrypt them at rest.
 
-The repository does not currently claim a multi-hour source-build and published-image soak, automated
-incident response, production SLOs, or certified retention enforcement. Those remain launch-hardening
-work.
+The repository now includes a scheduled source-build and published-image restart matrix; see
+[Scheduled Reliability](scheduled-reliability.md). A two-hour result may be claimed only for a real
+GitHub run that produced the corresponding passing receipts. Automated incident response, production
+SLOs, and certified retention enforcement remain outside the current claim boundary.
 
 ## 中文速用
 

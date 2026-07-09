@@ -121,6 +121,9 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - CI for API tests, Compose smoke, FalkorDB projection, and backup/restore rollback.
 - Metadata-only self-host health soak receipts with availability, latency, consecutive-failure,
   authentication-failure, and observed-recovery evidence; Compose smoke runs a short real window.
+- Scheduled source-build and published-image reliability jobs with one controlled API interruption,
+  required post-failure recovery, equal thresholds, and metadata-only receipts. Passing two-hour
+  evidence exists only after the corresponding GitHub artifacts complete.
 - Multi-architecture GHCR image publishing for `linux/amd64` and `linux/arm64`.
 - One-command published-image core launch with sequential pulls and visible cold-download progress.
 - Self-host doctor with Docker, Compose, port, health, Agent gateway, plugin-directory, and recovery-command checks.
@@ -193,8 +196,9 @@ to user-owned local data, or a closed plugin channel as a requirement.
 
 Reach 75% readiness by making the self-host Alpha dependable for real learners without a standalone UI:
 
-- Longer multi-hour Docker soak testing and backup/restore drills across both source-build and
-  published-image paths. The current short Compose window is bounded evidence, not a production SLO.
+- Accumulate and review repeated passing two-hour GitHub receipts across both source-build and
+  published-image paths, then expand backup/restore drills across both modes. One scheduled window
+  remains bounded evidence, not a production SLO.
 - Hosted signed plugin registry distribution, maintainer review queue, and explicit update install workflow.
 - Public PMF sharing workflow: documented collection norms, maintainer review process, cohort readout
   templates, and opt-in adoption telemetry review.

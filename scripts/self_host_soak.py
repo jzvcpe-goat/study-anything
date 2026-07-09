@@ -169,6 +169,7 @@ def build_receipt(
     max_consecutive_failures: int,
     started_at: str,
     finished_at: str,
+    require_recovery: bool = False,
 ) -> dict[str, object]:
     completed = len(samples)
     successes = sum(1 for sample in samples if sample.success)
@@ -185,6 +186,8 @@ def build_receipt(
         blocked_reasons.append("success_ratio_below_threshold")
     if consecutive_failures > max_consecutive_failures:
         blocked_reasons.append("consecutive_failure_budget_exceeded")
+    if require_recovery and recoveries < 1:
+        blocked_reasons.append("required_recovery_not_observed")
 
     latencies = [sample.latency_ms for sample in samples]
     status = "pass" if not blocked_reasons else "blocked"
@@ -209,6 +212,7 @@ def build_receipt(
         "thresholds": {
             "minimum_success_ratio": min_success_ratio,
             "maximum_consecutive_failures": max_consecutive_failures,
+            "recovery_after_failure_required": require_recovery,
         },
         "latency_ms": {
             "minimum": min(latencies, default=0),
@@ -246,6 +250,7 @@ def run_soak(
     request_timeout_seconds: float,
     min_success_ratio: float,
     max_consecutive_failures: int,
+    require_recovery: bool = False,
     probe: Callable[..., SoakSample] = probe_health,
 ) -> dict[str, object]:
     started_at = utc_now()
@@ -262,6 +267,7 @@ def run_soak(
         max_consecutive_failures=max_consecutive_failures,
         started_at=started_at,
         finished_at=utc_now(),
+        require_recovery=require_recovery,
     )
 
 
@@ -280,6 +286,11 @@ def main() -> None:
     parser.add_argument("--request-timeout-seconds", type=float, default=5.0)
     parser.add_argument("--min-success-ratio", type=float, default=0.99)
     parser.add_argument("--max-consecutive-failures", type=int, default=1)
+    parser.add_argument(
+        "--require-recovery",
+        action="store_true",
+        help="Block unless a successful probe follows one or more failed probes.",
+    )
     parser.add_argument(
         "--allow-network-token",
         action="store_true",
@@ -317,6 +328,7 @@ def main() -> None:
         request_timeout_seconds=args.request_timeout_seconds,
         min_success_ratio=args.min_success_ratio,
         max_consecutive_failures=args.max_consecutive_failures,
+        require_recovery=args.require_recovery,
     )
     if args.output:
         write_receipt(args.output, receipt)

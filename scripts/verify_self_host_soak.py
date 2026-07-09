@@ -77,6 +77,16 @@ def verify() -> dict[str, object]:
         ratio=0.6,
         consecutive=1,
     )
+    recovery_required_but_missing = build_receipt(
+        [SoakSample(True, 10, "healthy"), SoakSample(True, 9, "healthy")],
+        api_base="http://127.0.0.1:8000",
+        interval_seconds=1,
+        min_success_ratio=1.0,
+        max_consecutive_failures=0,
+        started_at="2026-07-09T00:00:00Z",
+        finished_at="2026-07-09T00:00:10Z",
+        require_recovery=True,
+    )
 
     require(passing["status"] == "pass", "Healthy samples must pass.")
     require(passing["latency_ms"]["p95"] == 14, "Latency percentile drifted.")
@@ -91,6 +101,12 @@ def verify() -> dict[str, object]:
     )
     require(recovered["status"] == "pass", "A recovered in-budget window must pass.")
     require(recovered["sampling"]["recovery_count"] == 1, "Recovery count drifted.")
+    require(
+        recovery_required_but_missing["status"] == "blocked"
+        and "required_recovery_not_observed"
+        in recovery_required_but_missing["blocked_reasons"],
+        "Required recovery must block a window without an observed failure/recovery transition.",
+    )
     require(
         recovered["sampling"]["failure_categories"]["authentication_failed"] == 1,
         "Authentication failure classification is missing.",
@@ -147,6 +163,7 @@ def verify() -> dict[str, object]:
             "consecutive_failure_budget_blocks": True,
             "authentication_failure_classified": True,
             "recovery_after_failure_recorded": True,
+            "required_recovery_enforced": True,
             "latency_percentiles_recorded": True,
             "release_gate_integrated": True,
             "docker_compose_smoke_integrated": True,

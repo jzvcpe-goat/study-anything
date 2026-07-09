@@ -5029,6 +5029,21 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic self-host soak and privacy-boundary verifier.",
     ),
     (
+        "scripts/self_host_reliability_matrix.py",
+        "diagnostics",
+        "Isolated source-build and published-image restart/recovery matrix runner.",
+    ),
+    (
+        "scripts/verify_self_host_reliability_matrix.py",
+        "verification",
+        "Deterministic scheduled reliability receipt and workflow verifier.",
+    ),
+    (
+        ".github/workflows/reliability-soak.yml",
+        "workflow",
+        "Scheduled real-time source-build and published-image reliability matrix.",
+    ),
+    (
         "scripts/generated_evidence_topology.py",
         "verification",
         "Release-distribution evidence dependency and feedback-edge orchestrator.",
@@ -7272,6 +7287,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/self-host-reliability.md",
         "docs",
         "Bounded self-host soak, recovery, and trace-retention guide.",
+    ),
+    (
+        "docs/scheduled-reliability.md",
+        "docs",
+        "Scheduled source-build and published-image restart/recovery contract.",
     ),
     (
         "docs/generated-evidence-topology.md",
