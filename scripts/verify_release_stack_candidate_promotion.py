@@ -32,12 +32,12 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    396: ROOT / "fixtures" / "release-stack" / "pr-396-intake-candidate.json",
+    398: ROOT / "fixtures" / "release-stack" / "pr-398-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.272"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.242"
-PREVIOUS_CURRENT_PRS = [366]
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.274"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.272"
+PREVIOUS_CURRENT_PRS = [396]
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -400,6 +400,16 @@ POST_MERGE_EVIDENCE_REFS = [
     ".github/workflows/ci.yml",
     "docs/release-checklist.md",
     "docs/release-notes/unreleased.md",
+    "docs/scheduled-reliability.md",
+    "docs/self-host-reliability.md",
+    "docs/quality-audits/phase-14-scheduled-reliability.md",
+    "scripts/self_host_reliability_matrix.py",
+    "scripts/verify_self_host_reliability_matrix.py",
+    "scripts/self_host_soak.py",
+    "scripts/verify_self_host_soak.py",
+    "apps/api/tests/test_self_host_reliability_matrix.py",
+    "apps/api/tests/test_self_host_soak.py",
+    ".github/workflows/reliability-soak.yml",
 ]
 PR_EVIDENCE_REFS = {
     356: [
@@ -815,6 +825,31 @@ PR_EVIDENCE_REFS = {
         "scripts/generate_platform_adoption_pack.py",
         "scripts/release_check.sh",
     ],
+    398: [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "docs/scheduled-reliability.md",
+        "docs/self-host-reliability.md",
+        "docs/quality-audits/phase-14-scheduled-reliability.md",
+        "scripts/self_host_reliability_matrix.py",
+        "scripts/verify_self_host_reliability_matrix.py",
+        "scripts/self_host_soak.py",
+        "scripts/verify_self_host_soak.py",
+        "apps/api/tests/test_self_host_reliability_matrix.py",
+        "apps/api/tests/test_self_host_soak.py",
+        ".github/workflows/reliability-soak.yml",
+        ".github/workflows/ci.yml",
+        "README.md",
+        "docs/commercial-readiness.md",
+        "docs/release-checklist.md",
+        "docs/release-notes/v0.3.31-alpha.md",
+        "scripts/generate_platform_bundle_manifest.py",
+        "scripts/generate_platform_adoption_pack.py",
+        "scripts/release_check.sh",
+    ],
 }
 PRIVACY_ASSERTIONS = {
     "metadata_only": True,
@@ -942,7 +977,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the generated evidence topology orchestration chain.",
+        "summary": "Completed self-intake for the scheduled source-build and published-image reliability evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -957,10 +992,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[396],
-                expected_pr=396,
+                pr_sources[398],
+                expected_pr=398,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[396],
+                evidence_refs=PR_EVIDENCE_REFS[398],
                 require_promotion_commands=True,
             ),
         ],
@@ -1019,7 +1054,7 @@ def verify_promoted_manifest(
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #366 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #398 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -1106,7 +1141,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-396-intake-candidate.json",
+            "fixtures/release-stack/pr-398-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -1145,7 +1180,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-396-source", type=Path, default=PR_SOURCES[396])
+    parser.add_argument("--pr-398-source", type=Path, default=PR_SOURCES[398])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -1155,7 +1190,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        396: load_json(args.pr_396_source),
+        398: load_json(args.pr_398_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)
