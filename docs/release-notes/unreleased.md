@@ -26,6 +26,9 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- PR #396 is recorded as the current metadata-only release-stack group after both required GitHub
+  checks passed. This terminal self-intake does not require another self-intake under the recursion
+  stop rule.
 - `generated_evidence_topology.py` now checks the complete declared release-distribution evidence
   chain in one run and reports every stale node instead of stopping at the first failure.
 - Refresh mode orders hard dependencies and explicitly converges the adoption-pack consumer feedback

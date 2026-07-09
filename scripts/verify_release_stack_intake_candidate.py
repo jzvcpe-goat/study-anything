@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-366-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-396-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -379,6 +379,14 @@ EVIDENCE_REFS = [
     "scripts/generate_platform_bundle_manifest.py",
     "scripts/generate_platform_adoption_pack.py",
     "scripts/release_check.sh",
+    "docs/generated-evidence-topology.md",
+    "docs/quality-audits/phase-12-generated-evidence-topology.md",
+    "scripts/generated_evidence_topology.py",
+    "scripts/verify_generated_evidence_topology.py",
+    "apps/api/tests/test_generated_evidence_topology.py",
+    ".github/workflows/ci.yml",
+    "docs/release-checklist.md",
+    "docs/release-notes/unreleased.md",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,

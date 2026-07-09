@@ -32,11 +32,12 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    366: ROOT / "fixtures" / "release-stack" / "pr-366-intake-candidate.json",
+    396: ROOT / "fixtures" / "release-stack" / "pr-396-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.242"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.240"
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.272"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.242"
+PREVIOUS_CURRENT_PRS = [366]
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -391,6 +392,14 @@ POST_MERGE_EVIDENCE_REFS = [
     "fixtures/patch-proposal-customer-feedback-backlog-bridge/blocked-model-credential/patch-proposal-customer-feedback-backlog-bridge.json",
     "scripts/patch_proposal_customer_feedback_backlog_bridge.py",
     "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
+    "docs/generated-evidence-topology.md",
+    "docs/quality-audits/phase-12-generated-evidence-topology.md",
+    "scripts/generated_evidence_topology.py",
+    "scripts/verify_generated_evidence_topology.py",
+    "apps/api/tests/test_generated_evidence_topology.py",
+    ".github/workflows/ci.yml",
+    "docs/release-checklist.md",
+    "docs/release-notes/unreleased.md",
 ]
 PR_EVIDENCE_REFS = {
     356: [
@@ -788,6 +797,24 @@ PR_EVIDENCE_REFS = {
         "scripts/generate_platform_adoption_pack.py",
         "scripts/release_check.sh",
     ],
+    396: [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "docs/generated-evidence-topology.md",
+        "docs/quality-audits/phase-12-generated-evidence-topology.md",
+        "scripts/generated_evidence_topology.py",
+        "scripts/verify_generated_evidence_topology.py",
+        "apps/api/tests/test_generated_evidence_topology.py",
+        ".github/workflows/ci.yml",
+        "docs/release-checklist.md",
+        "docs/release-notes/unreleased.md",
+        "scripts/generate_platform_bundle_manifest.py",
+        "scripts/generate_platform_adoption_pack.py",
+        "scripts/release_check.sh",
+    ],
 }
 PRIVACY_ASSERTIONS = {
     "metadata_only": True,
@@ -915,7 +942,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the Patch Proposal Customer Feedback Backlog Bridge evidence chain.",
+        "summary": "Completed self-intake for the generated evidence topology orchestration chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -930,10 +957,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[366],
-                expected_pr=366,
+                pr_sources[396],
+                expected_pr=396,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[366],
+                evidence_refs=PR_EVIDENCE_REFS[396],
                 require_promotion_commands=True,
             ),
         ],
@@ -984,8 +1011,10 @@ def verify_promoted_manifest(
     if previous.get("role") != "archived" or previous.get("status") != "archived":
         raise ReleaseStackPromotionError("previous current group must be archived after promotion.")
     previous_prs = [row.get("pr") for row in previous.get("stack", []) if isinstance(row, Mapping)]
-    if previous_prs != [364]:
-        raise ReleaseStackPromotionError("previous current group must retain PR #364 audit rows.")
+    if previous_prs != PREVIOUS_CURRENT_PRS:
+        raise ReleaseStackPromotionError(
+            f"previous current group must retain PR audit rows {PREVIOUS_CURRENT_PRS}."
+        )
 
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
@@ -1077,7 +1106,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-366-intake-candidate.json",
+            "fixtures/release-stack/pr-396-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -1116,7 +1145,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-366-source", type=Path, default=PR_SOURCES[366])
+    parser.add_argument("--pr-396-source", type=Path, default=PR_SOURCES[396])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -1126,7 +1155,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        366: load_json(args.pr_366_source),
+        396: load_json(args.pr_396_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)

@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-366-v0.3.242-patch-proposal-feedback-backlog-bridge-lite",
+    "group_id": "release-stack-intake-pr-396-v0.3.272-generated-evidence-topology-orchestrator",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -350,7 +350,15 @@
       "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
       "scripts/generate_platform_bundle_manifest.py",
       "scripts/generate_platform_adoption_pack.py",
-      "scripts/release_check.sh"
+      "scripts/release_check.sh",
+      "docs/generated-evidence-topology.md",
+      "docs/quality-audits/phase-12-generated-evidence-topology.md",
+      "scripts/generated_evidence_topology.py",
+      "scripts/verify_generated_evidence_topology.py",
+      "apps/api/tests/test_generated_evidence_topology.py",
+      ".github/workflows/ci.yml",
+      "docs/release-checklist.md",
+      "docs/release-notes/unreleased.md"
     ],
     "privacy_assertions": {
       "agent_endpoint_secrets_included": false,
@@ -373,7 +381,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.242-patch-proposal-feedback-backlog-bridge-lite",
+        "branch": "codex/v0.3.272-generated-evidence-topology-orchestrator",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -717,12 +725,20 @@
           "scripts/verify_patch_proposal_customer_feedback_backlog_bridge.py",
           "scripts/generate_platform_bundle_manifest.py",
           "scripts/generate_platform_adoption_pack.py",
-          "scripts/release_check.sh"
+          "scripts/release_check.sh",
+          "docs/generated-evidence-topology.md",
+          "docs/quality-audits/phase-12-generated-evidence-topology.md",
+          "scripts/generated_evidence_topology.py",
+          "scripts/verify_generated_evidence_topology.py",
+          "apps/api/tests/test_generated_evidence_topology.py",
+          ".github/workflows/ci.yml",
+          "docs/release-checklist.md",
+          "docs/release-notes/unreleased.md"
         ],
         "final_state": "MERGED",
-        "merge_commit": "0efc5f042d50f988625a59ee3f11e95e616f65d8",
+        "merge_commit": "a90928183c169b09d226c25bcc2b96c6ef76573a",
         "order": 1,
-        "pr": 366,
+        "pr": 396,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -731,15 +747,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #366: Add patch proposal customer feedback backlog bridge.",
+    "summary": "Candidate release stack group for PR #396: Add generated evidence topology orchestration.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.242",
-    "represented_pr_count": 127
+    "current_group": "release-stack-promotion-v0.3.272",
+    "represented_pr_count": 128
   },
   "negative_fixtures": [
     {
