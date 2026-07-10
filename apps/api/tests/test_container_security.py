@@ -83,6 +83,24 @@ class ContainerSecurityTests(unittest.TestCase):
 
         self.assertIsNone(security.ACTION_PIN_PATTERN.match(line))
 
+    def test_ci_compose_command_without_generated_env_is_rejected(self) -> None:
+        ci = (security.WORKFLOW_DIR / "ci.yml").read_text(encoding="utf-8")
+        broken = ci.replace("docker compose --env-file .env ", "docker compose ", 1)
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_ci_workflow(broken)
+
+    def test_ci_unpinned_python_base_image_is_rejected(self) -> None:
+        ci = (security.WORKFLOW_DIR / "ci.yml").read_text(encoding="utf-8")
+        broken = ci.replace(
+            security.PINNED_PYTHON_BASE_IMAGE,
+            "public.ecr.aws/docker/library/python:3.11-slim",
+            1,
+        )
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_ci_workflow(broken)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7023511,
+  "archive_bytes": 7023843,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "1ad20b38de8796515b177415a5f13c4d620a28a22dc5abdd7275f28915cbace0",
+  "archive_sha256": "5a566f9683deaebdd3c213283cb61e7dcad95369928c4cce066e6bafddc756ce",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "ec4e441ff3da006441fb67c329234b76a8692f3aa6a9bf9b043a1f8c4ff77cab"
+      "sha256": "72ca9e4a3172fb008a9c072bbd3d9c1b304004111bc2ffcf35dba3a57b0350c4"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -14705,11 +14705,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_container_security.py",
-      "bytes": 13422,
+      "bytes": 14525,
       "kind": "verification",
       "path": "scripts/verify_container_security.py",
       "purpose": "Deterministic GitHub Actions and container security baseline verifier.",
-      "sha256": "693b2c67732ef9314dc577b2483690d95c1463c1c884ec6ca7d65b8ccc606d6c"
+      "sha256": "97b7cce4f8ea03fb23ea4cca56e86ebcb7b05639bac86b0397486604a4cad9e9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_github_security_posture.py",

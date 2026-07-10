@@ -11672,11 +11672,11 @@
       "sha256": "10e4304a8e35bc11b8a022ba2e734fdfe8d8dcf72c8cd443fed9bf13b359112e"
     },
     {
-      "bytes": 13422,
+      "bytes": 14525,
       "kind": "verification",
       "path": "scripts/verify_container_security.py",
       "purpose": "Deterministic GitHub Actions and container security baseline verifier.",
-      "sha256": "693b2c67732ef9314dc577b2483690d95c1463c1c884ec6ca7d65b8ccc606d6c"
+      "sha256": "97b7cce4f8ea03fb23ea4cca56e86ebcb7b05639bac86b0397486604a4cad9e9"
     },
     {
       "bytes": 9696,

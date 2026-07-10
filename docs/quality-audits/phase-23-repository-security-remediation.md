@@ -65,7 +65,7 @@ allowlist; current local flexibility is not a hosted SSRF boundary.
 
 | Gate | Result |
 | --- | --- |
-| Focused security and contract tests | Pass; 54 security tests and 51 final release/adoption regressions |
+| Focused security and contract tests | Pass; 54 security tests and 61 final release/adoption/container regressions |
 | Full API suite | Pass; 893 tests, one existing Starlette/httpx deprecation warning |
 | Container security and full-profile Compose config | Pass |
 | Generated evidence topology | Pass; final check confirmed 19/19 nodes in one pass |

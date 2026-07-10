@@ -74,7 +74,7 @@ jobs:
   compose-smoke:
     runs-on: ubuntu-latest
     env:
-      PYTHON_BASE_IMAGE: public.ecr.aws/docker/library/python:3.11-slim
+      PYTHON_BASE_IMAGE: public.ecr.aws/docker/library/python:3.11-slim@sha256:e031123e3d85762b141ad1cbc56452ba69c6e722ebf2f042cc0dc86c47c0d8b3
       POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
       LANGFUSE_POSTGRES_IMAGE: public.ecr.aws/docker/library/postgres:17
       REDIS_IMAGE: public.ecr.aws/docker/library/redis:7
@@ -92,17 +92,17 @@ jobs:
       - name: Generate CI env
         run: python scripts/setup_env.py --force
       - name: Validate Compose config
-        run: docker compose -f infra/compose/docker-compose.yml --profile full config >/dev/null
+        run: docker compose --env-file .env -f infra/compose/docker-compose.yml --profile full config >/dev/null
       - name: Start smoke stack
         run: |
           for attempt in 1 2 3; do
-            if docker compose -f infra/compose/docker-compose.yml --profile smoke up -d --build; then
+            if docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke up -d --build; then
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
               exit 1
             fi
-            docker compose -f infra/compose/docker-compose.yml --profile smoke down -v || true
+            docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke down -v || true
             sleep "$((attempt * 10))"
           done
       - name: Wait for API
@@ -111,8 +111,8 @@ jobs:
             curl -fsS http://127.0.0.1:8000/v1/health && exit 0
             sleep 2
           done
-          docker compose -f infra/compose/docker-compose.yml --profile smoke ps
-          docker compose -f infra/compose/docker-compose.yml --profile smoke logs --tail=200
+          docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke ps
+          docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke logs --tail=200
           exit 1
       - name: Verify fake-agent flow
         run: API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
@@ -135,17 +135,17 @@ jobs:
       - name: Verify self-host backup and restore
         run: |
           backup_dir="${RUNNER_TEMP}/study-anything-backup-check"
-          before="$(docker compose -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
+          before="$(docker compose --env-file .env -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
           python scripts/self_host_data.py backup --output "$backup_dir"
           API_BASE=http://127.0.0.1:8000 python scripts/verify_full_api_flow.py
           python scripts/self_host_data.py restore "$backup_dir" --yes
-          after="$(docker compose -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
+          after="$(docker compose --env-file .env -f infra/compose/docker-compose.yml exec -T app-postgres psql -U study -d study_anything -Atc 'SELECT count(*) FROM study_anything_sessions')"
           test "$before" = "$after"
       - name: Dump stack logs on failure
         if: failure()
         run: |
-          docker compose -f infra/compose/docker-compose.yml --profile smoke ps
-          docker compose -f infra/compose/docker-compose.yml --profile smoke logs --tail=300
+          docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke ps
+          docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke logs --tail=300
       - name: Stop stack
         if: always()
-        run: docker compose -f infra/compose/docker-compose.yml --profile smoke down -v
+        run: docker compose --env-file .env -f infra/compose/docker-compose.yml --profile smoke down -v
