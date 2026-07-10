@@ -61,6 +61,11 @@ Plugins with `install_recommendation=do_not_install` are blocked before both
 quarantine and install copies. This includes digest mismatches and invalid
 registry signatures. Quarantine is a review buffer, not a bypass.
 
+Quarantine and install destinations are resolved as direct children of their
+configured roots. Unsafe plugin ids, destination symlinks, and source-package
+symlinks are rejected before any existing directory is removed or any file is
+copied.
+
 ## Digest Policy
 
 Source digests include install-relevant files and ignore generated or local-only

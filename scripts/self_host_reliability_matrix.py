@@ -219,7 +219,10 @@ def create_env(
         "WORKFLOW_ENGINE": "langgraph",
         "STUDY_ANYTHING_IMAGE_TAG": tag,
         "STUDY_ANYTHING_API_IMAGE": api_image,
-        "PYTHON_BASE_IMAGE": "public.ecr.aws/docker/library/python:3.11-slim",
+        "PYTHON_BASE_IMAGE": (
+            "public.ecr.aws/docker/library/python:3.11-slim@sha256:"
+            "e031123e3d85762b141ad1cbc56452ba69c6e722ebf2f042cc0dc86c47c0d8b3"
+        ),
     }
     additions.update({key: str(free_port()) for key in PORT_KEYS})
     with env_file.open("a", encoding="utf-8") as target:

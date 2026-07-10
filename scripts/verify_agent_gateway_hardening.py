@@ -110,16 +110,37 @@ def dependency_failure(module_name: str) -> None:
 
 ensure_supported_python()
 
-try:
-    from fastapi.testclient import TestClient
+TestClient: Any = None
+api_main: Any = None
+AgentRegistry: Any = None
+AgentRouter: Any = None
+redact_url_secrets: Any = None
+InMemorySessionStore: Any = None
+LearningWorkflow: Any = None
 
-    from study_anything.api import main as api_main  # noqa: E402
-    from study_anything.core.agent_registry import AgentRegistry, AgentRouter  # noqa: E402
-    from study_anything.core.security import redact_url_secrets  # noqa: E402
-    from study_anything.core.store import InMemorySessionStore  # noqa: E402
-    from study_anything.core.workflow import LearningWorkflow  # noqa: E402
-except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
-    dependency_failure(exc.name or "required module")
+
+def load_runtime_dependencies() -> None:
+    global TestClient, api_main, AgentRegistry, AgentRouter
+    global redact_url_secrets, InMemorySessionStore, LearningWorkflow
+    try:
+        from fastapi.testclient import TestClient as FastApiTestClient
+
+        from study_anything.api import main as loaded_api_main
+        from study_anything.core.agent_registry import AgentRegistry as LoadedAgentRegistry
+        from study_anything.core.agent_registry import AgentRouter as LoadedAgentRouter
+        from study_anything.core.security import redact_url_secrets as loaded_redact_url_secrets
+        from study_anything.core.store import InMemorySessionStore as LoadedInMemorySessionStore
+        from study_anything.core.workflow import LearningWorkflow as LoadedLearningWorkflow
+    except ModuleNotFoundError as exc:  # pragma: no cover - depends on local interpreter
+        dependency_failure(exc.name or "required module")
+        return
+    TestClient = FastApiTestClient
+    api_main = loaded_api_main
+    AgentRegistry = LoadedAgentRegistry
+    AgentRouter = LoadedAgentRouter
+    redact_url_secrets = loaded_redact_url_secrets
+    InMemorySessionStore = LoadedInMemorySessionStore
+    LearningWorkflow = LoadedLearningWorkflow
 
 
 SCHEMA_VERSION = "agent-gateway-hardening-verification-v1"
@@ -570,6 +591,7 @@ def patch_api(name: str, value: Any) -> Any:
 
 
 def build_pass_report() -> dict[str, Any]:
+    load_runtime_dependencies()
     running_gateway = verify_running_gateway()
     registry_and_api = verify_registry_and_api()
     return {

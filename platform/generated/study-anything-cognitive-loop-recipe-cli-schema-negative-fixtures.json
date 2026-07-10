@@ -56,6 +56,28 @@
       "source_report_path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json"
     },
     {
+      "case_id": "pr_ci_receipt_duplicate_checks",
+      "error_sha256": "65b9a1101d59c4d5d7d57ba8d862bd9a1e8531166e7a11699d7c162455d6df55",
+      "expected_error_contains": "checks[1].name expected const 'compose-smoke'",
+      "mutated_payload_persisted": false,
+      "mutation": "replace compose-smoke with a duplicate api-tests row",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_receipt",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json"
+    },
+    {
+      "case_id": "pr_ci_receipt_failed_checks_ready",
+      "error_sha256": "ecb2557bcfb4a5f9c6120c71549f32f47fad11fe71c25e7eba85684fbd2ddab7",
+      "expected_error_contains": "checks[0].status expected const 'pass'",
+      "mutated_payload_persisted": false,
+      "mutation": "mark api-tests failed while keeping decision ready",
+      "rejected": true,
+      "safe_to_attach_to_issue": true,
+      "schema_key": "cognitive_loop_pr_ci_receipt",
+      "source_report_path": "platform/generated/study-anything-cognitive-loop-pr-ci-receipt.json"
+    },
+    {
       "case_id": "pr_ci_receipt_github_tokens_true",
       "error_sha256": "f2036947242013e9f105237ee476ea3e812f62d5ee889e91ed18f439699d430f",
       "expected_error_contains": "github_tokens_included expected const False",
@@ -158,13 +180,15 @@
         "status": "pass"
       }
     ],
-    "case_count": 11,
+    "case_count": 13,
     "case_ids": [
       "success_wrong_schema_version",
       "success_auto_execute_true",
       "receipts_missing_privacy",
       "failures_exit_code_string",
       "pr_ci_receipt_missing_required_checks",
+      "pr_ci_receipt_duplicate_checks",
+      "pr_ci_receipt_failed_checks_ready",
       "pr_ci_receipt_github_tokens_true",
       "pr_ci_source_unsupported_source",
       "pr_ci_source_unsafe_url_query",

@@ -29,6 +29,9 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("PIP_RETRIES:-3", script)
         self.assertIn("--dual-loop-only", script)
         self.assertIn("--skip-clean-clone", script)
+        self.assertIn("import fastapi, mypy, pytest, ruff", script)
+        self.assertIn('release_python_prefix="$("$python_bin" -c', script)
+        self.assertIn('--venv "$release_python_prefix"', script)
 
     def test_dual_loop_only_mode_writes_partial_receipt(self) -> None:
         completed = subprocess.run(

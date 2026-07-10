@@ -3490,6 +3490,8 @@ def verify_cognitive_loop_recipe_cli_schema_negative_fixtures_report() -> None:
         "receipts_missing_privacy",
         "failures_exit_code_string",
         "pr_ci_receipt_missing_required_checks",
+        "pr_ci_receipt_duplicate_checks",
+        "pr_ci_receipt_failed_checks_ready",
         "pr_ci_receipt_github_tokens_true",
         "pr_ci_source_unsupported_source",
         "pr_ci_source_unsafe_url_query",
@@ -3657,7 +3659,7 @@ def verify_cognitive_loop_schema_pack_consumer_report() -> None:
     negative_fixtures = report.get("negative_fixtures") or {}
     if negative_fixtures.get("schema_version") != "cognitive-loop-recipe-cli-schema-negative-fixtures-v1":
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixture version drifted.")
-    if negative_fixtures.get("case_count") != 11:
+    if negative_fixtures.get("case_count") != 13:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixture count drifted.")
     if negative_fixtures.get("all_cases_rejected") is not True:
         raise EcosystemSubmissionError("Cognitive Loop schema pack consumer negative fixtures must reject all cases.")

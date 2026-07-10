@@ -121,6 +121,11 @@ def build_report() -> dict[str, Any]:
             json.dumps(rejected_artifact, ensure_ascii=False),
             label="JSON human gate rejected artifact",
         )
+        if (
+            approved_artifact["project_event"]["event_id"]
+            == rejected_artifact["project_event"]["event_id"]
+        ):
+            raise RuntimeError("Distinct human gate resolutions reused an event id.")
         return {
             "schema_version": SCHEMA_VERSION,
             "status": "pass",
@@ -130,6 +135,7 @@ def build_report() -> dict[str, Any]:
             "approved_gate_schema": approved["schema_version"],
             "rejected_gate_schema": rejected["schema_version"],
             "artifact_json_schema": approved_artifact["schema_version"],
+            "distinct_resolution_event_ids": True,
             "approved": {
                 "created": approved_json_path.is_file(),
                 "decision_id": approved_artifact["gate_resolution"]["decision_id"],

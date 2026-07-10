@@ -78,6 +78,8 @@ user-supplied passphrase. Study Anything does not store that passphrase.
 counts, hashes, conflicts, warnings, and restore feasibility. It must not return
 source text, learner answers, insights, Agent endpoints, secrets, or absolute
 backup paths.
+Imported packages reject KDF iteration counts above the supported ceiling before
+key derivation, preventing a crafted package from consuming unbounded local CPU.
 
 ## Release Gate
 

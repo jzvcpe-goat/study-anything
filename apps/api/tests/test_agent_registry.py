@@ -19,6 +19,7 @@ from study_anything.core.agent_registry import (
     AgentResultInvalid,
     AgentRouter,
     AgentTask,
+    MAX_AGENT_RESPONSE_BYTES,
     normalise_http_agent_endpoint,
 )
 from study_anything.core.model_registry import Capability, ModelRegistry, ModelRouter
@@ -128,6 +129,41 @@ class AgentRegistryTests(unittest.TestCase):
                 kind="http_agent",
                 label="Unsafe Gateway",
                 endpoint="http://localhost:8787/invoke?api_key=secret",
+                capabilities=["quiz.generate"],
+            )
+
+        with self.assertRaisesRegex(ValueError, "secret-like query"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Unsafe Gateway",
+                endpoint="http://localhost:8787/invoke?q=sk-proj-abcdefghijklmnop",
+                capabilities=["quiz.generate"],
+            )
+
+        with self.assertRaisesRegex(ValueError, "secret-like query"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Unsafe Gateway",
+                endpoint="http://localhost:8787/sk-proj-abcdefghijklmnop/invoke",
+                capabilities=["quiz.generate"],
+            )
+
+        with self.assertRaisesRegex(ValueError, "URL fragment"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Unsafe Gateway",
+                endpoint="http://localhost:8787/invoke#credential",
+                capabilities=["quiz.generate"],
+            )
+
+    def test_rejects_agent_endpoint_with_out_of_range_port(self) -> None:
+        registry = AgentRegistry()
+
+        with self.assertRaisesRegex(ValueError, "between 1 and 65535"):
+            registry.configure_provider(
+                kind="http_agent",
+                label="Invalid Gateway",
+                endpoint="https://agent.example.test:99999/invoke",
                 capabilities=["quiz.generate"],
             )
 
@@ -301,6 +337,27 @@ class AgentRegistryTests(unittest.TestCase):
             registry.set_default("alice", AgentCapability.QUIZ_GENERATE, provider.provider_id)
 
             with self.assertRaises(AgentResultInvalid):
+                AgentRouter(registry).invoke(
+                    user_id="alice",
+                    capability=AgentCapability.QUIZ_GENERATE,
+                    task=AgentTask(task_type="quiz.generate", session_id="s1"),
+                )
+
+    def test_http_agent_rejects_oversized_response(self) -> None:
+        response = json.dumps(
+            {"status": "ok", "content": "x" * MAX_AGENT_RESPONSE_BYTES}
+        )
+        with self._server(response=response) as endpoint:
+            registry = AgentRegistry()
+            provider = registry.configure_provider(
+                kind="http_agent",
+                label="Oversized Agent",
+                endpoint=endpoint,
+                capabilities=["quiz.generate"],
+            )
+            registry.set_default("alice", AgentCapability.QUIZ_GENERATE, provider.provider_id)
+
+            with self.assertRaisesRegex(AgentResultInvalid, "byte limit"):
                 AgentRouter(registry).invoke(
                     user_id="alice",
                     capability=AgentCapability.QUIZ_GENERATE,

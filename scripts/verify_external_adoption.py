@@ -628,16 +628,20 @@ def python_for_workspace(workspace: Path, args: argparse.Namespace) -> str:
 def make_env(workspace: Path, work_root: Path, args: argparse.Namespace) -> dict[str, str]:
     api_port = select_api_port(args.api_port)
     venv = Path(args.venv) if args.venv else workspace / ".venv"
-    if args.current_worktree and not args.venv and (ROOT / ".venv").exists():
-        venv = ROOT / ".venv"
+    if args.current_worktree and not args.venv:
+        venv = work_root / "external-adoption-venv"
     python_bin = python_for_workspace(workspace, args)
     env = os.environ.copy()
     env.update(
         {
             "PYTHON_BIN": python_bin,
             "STUDY_ANYTHING_VENV": str(venv),
+            "SKILL_PIP_INSTALL_TARGET": ".[crypto]",
             "STUDY_ANYTHING_DATA_DIR": str(work_root / "skill-mode-data"),
             "STUDY_ANYTHING_RETRIEVAL_BACKEND": "memory",
+            "SESSION_STORE": "json",
+            "WORKFLOW_ENGINE": "deterministic",
+            "LANGGRAPH_CHECKPOINTER": "memory",
             "API_PORT": str(api_port),
             "SKILL_API_HOST": "127.0.0.1",
             "STUDY_ANYTHING_API_BASE": f"http://127.0.0.1:{api_port}",
@@ -676,7 +680,9 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
     started = time.monotonic()
     run(["sh", "scripts/launch_skill_mode.sh"], cwd=workspace, env=env, timeout_seconds=args.timeout_seconds)
     wait_for_api(env["API_BASE"], 60)
-    python_bin = python_for_workspace(workspace, args)
+    python_bin = str(Path(env["STUDY_ANYTHING_VENV"]) / "bin" / "python3")
+    if not Path(python_bin).is_file():
+        raise AdoptionProofError("Skill Mode did not create its isolated Python environment.")
     try:
         command_results: dict[str, Any] = {}
         checks = [
@@ -712,12 +718,16 @@ def run_runtime_checks(workspace: Path, env: dict[str, str], args: argparse.Name
             ),
             (
                 "agent_gateway_hardening",
-                [python_bin, "scripts/verify_agent_gateway_hardening.py"],
+                [python_bin, "scripts/verify_agent_gateway_hardening.py", "--contract-only"],
                 90,
             ),
             (
                 "external_agent_adapter_hardening",
-                [python_bin, "scripts/verify_external_agent_adapter_hardening.py"],
+                [
+                    python_bin,
+                    "scripts/verify_external_agent_adapter_hardening.py",
+                    "--contract-only",
+                ],
                 90,
             ),
             (

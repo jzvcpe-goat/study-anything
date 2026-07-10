@@ -383,9 +383,13 @@ if ! "$python_bin" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3,
   exit 1
 fi
 
-if ! "$python_bin" -c 'import fastapi' >/dev/null 2>&1; then
-  printf "error API dependencies are missing for %s. Install them with:\n" "$python_bin" >&2
+if ! "$python_bin" -c 'import fastapi, mypy, pytest, ruff' >/dev/null 2>&1; then
+  known_issue="selected Python runtime lacks dev/full release dependencies"
+  claim_boundary="Failed repository sanity: the selected Python runtime cannot run full release gates."
+  printf "error dev/full release dependencies are missing for %s. Install them with:\n" "$python_bin" >&2
   printf "  %s -m pip install -e '.[dev,full]'\n" "$python_bin" >&2
+  printf "Or select an existing full environment with:\n" >&2
+  printf "  STUDY_ANYTHING_PYTHON=/path/to/python ./scripts/release_check.sh\n" >&2
   exit 1
 fi
 
@@ -634,10 +638,12 @@ phase "existing release gates"
 "$python_bin" scripts/verify_cognitive_loop_schema_pack_consumer_failures.py --check
 "$python_bin" scripts/verify_cognitive_loop_pack_extract_smoke.py --check
 "$python_bin" scripts/generated_evidence_topology.py --check
+release_python_prefix="$("$python_bin" -c 'import sys; print(sys.prefix)')"
 "$python_bin" scripts/verify_external_adoption.py \
   --pack platform/generated/study-anything-platform-adoption-pack.zip \
   --current-worktree \
-  --python "$python_bin"
+  --python "$python_bin" \
+  --venv "$release_python_prefix"
 "$python_bin" scripts/verify_agent_eval_assets.py
 "$python_bin" scripts/verify_agent_eval_baseline.py --check
 

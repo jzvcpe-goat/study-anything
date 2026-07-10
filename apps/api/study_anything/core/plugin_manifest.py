@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+import re
 from typing import Iterable, List, Mapping, Optional
 
 
 PLUGIN_MANIFEST_SCHEMA_VERSION = "plugin-manifest-v1"
+PLUGIN_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9._-]{0,127}$")
 
 ALLOWED_HOOKS = {
     "importer",
@@ -185,6 +187,16 @@ def _require_string(values: Mapping[str, object], key: str) -> str:
     return value
 
 
+def _require_plugin_id(values: Mapping[str, object]) -> str:
+    plugin_id = _require_string(values, "id")
+    if not PLUGIN_ID_PATTERN.fullmatch(plugin_id):
+        raise ValueError(
+            "Plugin manifest 'id' must be a single lowercase filesystem-safe name "
+            "using only letters, numbers, '.', '_', or '-'."
+        )
+    return plugin_id
+
+
 def _optional_string(values: Mapping[str, object], key: str) -> Optional[str]:
     value = values.get(key)
     if value is None:
@@ -277,7 +289,7 @@ def validate_manifest(values: Mapping[str, object]) -> PluginManifest:
     review_values = _optional_mapping(values, "review")
     signature_values = _optional_mapping(values, "signature")
     return PluginManifest(
-        plugin_id=_require_string(values, "id"),
+        plugin_id=_require_plugin_id(values),
         name=_require_string(values, "name"),
         version=_require_string(values, "version"),
         api_version=_require_string(values, "apiVersion"),

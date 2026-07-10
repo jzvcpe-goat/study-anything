@@ -51,7 +51,7 @@ STACK_PROFILE=full ./scripts/launch_self_host.sh
 If Docker Hub is unreachable from Docker Desktop but public ECR works, set these optional overrides in `.env` before building:
 
 ```bash
-PYTHON_BASE_IMAGE=public.ecr.aws/docker/library/python:3.11-slim
+PYTHON_BASE_IMAGE=public.ecr.aws/docker/library/python:3.11-slim@sha256:e031123e3d85762b141ad1cbc56452ba69c6e722ebf2f042cc0dc86c47c0d8b3
 POSTGRES_IMAGE=public.ecr.aws/docker/library/postgres:17
 LANGFUSE_POSTGRES_IMAGE=public.ecr.aws/docker/library/postgres:17
 REDIS_IMAGE=public.ecr.aws/docker/library/redis:7

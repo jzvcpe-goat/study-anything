@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-adopter-evidence-archive",
-    "bytes": 259821,
+    "bytes": 259988,
     "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
-    "sha256": "a879e6803fa66d050395f5cb986af33d698cc49e96fa4725274ae9935d7b5b54",
+    "sha256": "61b6afd90064d1f29e6dde6f74cb8b11a825de78f0b0454608d7ff3fa57d2c0f",
     "sha256_path": "platform/generated/study-anything-adopter-evidence-archive.sha256"
   },
   "ci_evidence": {
@@ -211,22 +211,22 @@
     {
       "bytes": 11248,
       "path": "platform/generated/study-anything-published-image-evidence.json",
-      "sha256": "a6859ecb6827ef53fcf1e787233de1721b885756dc39913b6ba87d5bbaae807b"
+      "sha256": "78fa79f049b9f783238fef4142432c06c943f95fc4c35f7a5ff7ddc7db67af34"
     },
     {
       "bytes": 3442,
       "path": "platform/generated/study-anything-published-image-evidence.md",
-      "sha256": "da5787ab3896e025113ef0c7d541e9415ecbffd37e45e4b3505269959dba4f48"
+      "sha256": "585fed61d4afd13d18fc1de74b8bdf02ce42d5c377dc2ec52669e2549d49a108"
     },
     {
-      "bytes": 136106,
+      "bytes": 136277,
       "path": "platform/generated/study-anything-published-image-evidence.zip",
-      "sha256": "bfcb4ffd93e15542c502a966a7eb7460a44361223df90874ef87aa8f1ca199b3"
+      "sha256": "91a5b1c2b54fba117f5d1e5fb922eede9024220eb6e5bd67417a57198907b267"
     },
     {
       "bytes": 110,
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
-      "sha256": "44dabf02aebec2202273674f206eaf40c254cda14dfe74f4636d082b3636b7d2"
+      "sha256": "777a3177ec7b99b1f4f9eb2a7e926696fd805d210d9d5a26eeedbc406c870525"
     },
     {
       "bytes": 133499,
@@ -298,7 +298,7 @@
       "ref": {
         "bytes": 11248,
         "path": "platform/generated/study-anything-published-image-evidence.json",
-        "sha256": "a6859ecb6827ef53fcf1e787233de1721b885756dc39913b6ba87d5bbaae807b"
+        "sha256": "78fa79f049b9f783238fef4142432c06c943f95fc4c35f7a5ff7ddc7db67af34"
       },
       "schema_version": "published-image-evidence-v1",
       "verification_command": "python3 scripts/verify_published_image_evidence.py --check"

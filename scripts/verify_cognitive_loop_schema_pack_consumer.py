@@ -196,6 +196,8 @@ def build_report(pack_path: Path) -> dict[str, Any]:
         "receipts_missing_privacy",
         "failures_exit_code_string",
         "pr_ci_receipt_missing_required_checks",
+        "pr_ci_receipt_duplicate_checks",
+        "pr_ci_receipt_failed_checks_ready",
         "pr_ci_receipt_github_tokens_true",
         "pr_ci_source_unsupported_source",
         "pr_ci_source_unsafe_url_query",

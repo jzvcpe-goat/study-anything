@@ -186,6 +186,66 @@ class StoreAndPluginTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 registry.install_local(source_dir, install_dir)
 
+    def test_plugin_registry_rejects_traversal_id_without_deleting_sibling_data(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            source_dir = root / "source"
+            quarantine_dir = root / "quarantine"
+            sibling_data = root / "sessions"
+            source_dir.mkdir()
+            sibling_data.mkdir()
+            sentinel = sibling_data / "session.json"
+            sentinel.write_text("private session", encoding="utf-8")
+            (source_dir / "plugin.json").write_text(
+                json.dumps(
+                    {
+                        "id": "../sessions",
+                        "name": "Traversal Plugin",
+                        "version": "0.1.0",
+                        "apiVersion": "0.1",
+                        "entrypoint": "plugin.py",
+                        "hooks": ["exporter"],
+                        "permissions": ["read:sessions"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "filesystem-safe"):
+                PluginRegistry([]).quarantine_local(source_dir, quarantine_dir)
+
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), "private session")
+            self.assertFalse(quarantine_dir.exists())
+
+    def test_plugin_registry_rejects_symbolic_links_before_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            source_dir = root / "source"
+            install_dir = root / "installed"
+            source_dir.mkdir()
+            (source_dir / "plugin.json").write_text(
+                json.dumps(
+                    {
+                        "id": "linked-plugin",
+                        "name": "Linked Plugin",
+                        "version": "0.1.0",
+                        "apiVersion": "0.1",
+                        "entrypoint": "plugin.py",
+                        "hooks": ["exporter"],
+                        "permissions": ["read:sessions"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            secret = root / "outside.txt"
+            secret.write_text("outside", encoding="utf-8")
+            (source_dir / "plugin.py").symlink_to(secret)
+
+            with self.assertRaisesRegex(ValueError, "symbolic links"):
+                PluginRegistry([]).install_local(source_dir, install_dir)
+
+            self.assertFalse((install_dir / "linked-plugin").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 156836,
+    "bytes": 156982,
     "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
     "root": "study-anything-kimi-plugin-pack",
-    "sha256": "bade35ea9d7491458069b29d190009956c20517db6d1f6dc89dc9e802ededce5"
+    "sha256": "4385a4c14504b8a30d673c1d9ea59f2652626b5300572d0fb69c079eb431acf1"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -128,11 +128,11 @@
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/scripts/verify_external_adoption.py",
-      "bytes": 68921,
+      "bytes": 69370,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Extracted adoption-pack verifier.",
-      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
+      "sha256": "911b704af050a1c488462efc19c2fa394bb22a0a056ff8bea2956353e1d700aa"
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/docs/use-with-kimi.md",

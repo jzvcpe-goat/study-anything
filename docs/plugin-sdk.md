@@ -39,6 +39,12 @@ Required fields are `id`, `name`, `version`, `apiVersion`, `entrypoint`,
 `hooks`, and `permissions`. `schemaVersion`, `description`, and `capabilities`
 are optional for old alpha plugins, but new plugins should include them.
 
+Plugin `id` is also the local directory name. It must be one lowercase,
+filesystem-safe segment of at most 128 characters using only letters, numbers,
+`.`, `_`, and `-`. Paths, `..`, absolute names, and hidden-dot names are rejected.
+Plugin packages containing symbolic links are rejected before quarantine or
+installation so a package cannot escape its reviewed source tree.
+
 ## Typed Hooks
 
 `GET /v1/plugins/sdk` returns `plugin-sdk-v1`, the machine-readable source of

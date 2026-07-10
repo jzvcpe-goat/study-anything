@@ -113,6 +113,16 @@ class SyncPackageTests(unittest.TestCase):
         with self.assertRaises(SyncPackageError):
             decrypt_sync_package(export.package, passphrase="wrong passphrase")
 
+    def test_rejects_sync_package_with_excessive_kdf_work(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            payload = build_sync_payload(sessions=[], data_dir=Path(tmpdir))
+            export = encrypt_sync_package(payload, passphrase="correct passphrase")
+        package = dict(export.package)
+        package["kdf"] = dict(package["kdf"], iterations=2_000_001)
+
+        with self.assertRaisesRegex(SyncPackageError, "iterations are invalid"):
+            decrypt_sync_package(package, passphrase="correct passphrase")
+
     def test_restore_preview_is_non_destructive_and_count_only(self) -> None:
         current = new_session("restore-preview-current@example.com")
         current = submit_reading(

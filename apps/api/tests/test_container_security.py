@@ -32,6 +32,7 @@ class ContainerSecurityTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["dockerfile"]["non_root_user_final"])
+        self.assertTrue(report["dockerfile"]["base_image_digest_pinned"])
         self.assertFalse(report["runtime_container"]["checked"])
 
     def test_root_runtime_user_is_rejected(self) -> None:
@@ -59,6 +60,20 @@ class ContainerSecurityTests(unittest.TestCase):
     def test_missing_tmpfs_hardening_is_rejected(self) -> None:
         compose = copy.deepcopy(security.read_compose())
         compose["services"]["api"]["tmpfs"] = ["/tmp:rw"]
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
+    def test_full_profile_public_port_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        compose["services"]["minio"]["ports"] = ["9090:9000"]
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
+    def test_minio_default_root_password_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        compose["services"]["minio"]["environment"]["MINIO_ROOT_PASSWORD"] = "miniosecret"
 
         with self.assertRaises(security.ContainerSecurityError):
             security.validate_compose(compose)

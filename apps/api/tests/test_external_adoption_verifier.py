@@ -24,6 +24,22 @@ SPEC.loader.exec_module(external_adoption)
 
 
 class ExternalAdoptionVerifierTests(unittest.TestCase):
+    def test_runtime_environment_uses_skill_mode_dependencies(self) -> None:
+        args = external_adoption.argparse.Namespace(
+            api_port=8124,
+            venv=None,
+            current_worktree=True,
+            python=sys.executable,
+        )
+
+        env = external_adoption.make_env(REPO_ROOT, REPO_ROOT / ".tmp-adoption", args)
+
+        self.assertEqual(env["SESSION_STORE"], "json")
+        self.assertEqual(env["WORKFLOW_ENGINE"], "deterministic")
+        self.assertEqual(env["LANGGRAPH_CHECKPOINTER"], "memory")
+        self.assertEqual(env["SKILL_PIP_INSTALL_TARGET"], ".[crypto]")
+        self.assertTrue(env["STUDY_ANYTHING_VENV"].endswith("external-adoption-venv"))
+
     def test_explicit_api_port_skips_port_probe(self) -> None:
         with patch.object(external_adoption, "free_port", side_effect=AssertionError("probe")):
             self.assertEqual(external_adoption.select_api_port(8124), 8124)

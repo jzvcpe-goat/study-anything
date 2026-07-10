@@ -52,6 +52,7 @@ def read_compose(path: Path = COMPOSE_FILE) -> dict[str, Any]:
 
 
 def validate_dockerfile(text: str) -> dict[str, Any]:
+    require("PYTHON_BASE_IMAGE=python:3.11-slim@sha256:" in text, "Python base image must be digest pinned")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     user_lines = [line for line in lines if line.startswith("USER ")]
     require(user_lines == [f"USER {EXPECTED_UID}:{EXPECTED_UID}"], "Final image must use UID/GID 10001")
@@ -80,6 +81,7 @@ def validate_dockerfile(text: str) -> dict[str, Any]:
         "fixed_gid": 10001,
         "non_root_user_final": True,
         "package_install_before_user_drop": True,
+        "base_image_digest_pinned": True,
         "runtime_data_owned_by_user": True,
     }
 
@@ -142,6 +144,20 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
     require(
         all(port.startswith("127.0.0.1:") for port in mock_ports),
         "Mock Agent ports must bind to loopback",
+    )
+    for service_name in ("langfuse-web", "minio"):
+        service_ports = normalized_list(require_mapping(services, service_name).get("ports"))
+        require(
+            all(port.startswith("127.0.0.1:") for port in service_ports),
+            f"{service_name} ports must bind to loopback",
+        )
+    minio_environment = require_mapping(services, "minio").get("environment")
+    require(isinstance(minio_environment, Mapping), "MinIO environment must be configured")
+    require(
+        str(minio_environment.get("MINIO_ROOT_PASSWORD", "")).startswith(
+            "${MINIO_ROOT_PASSWORD:?"
+        ),
+        "MinIO root password must not have a fallback default",
     )
     return results
 

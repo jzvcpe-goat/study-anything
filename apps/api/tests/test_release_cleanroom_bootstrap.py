@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from _path import ROOT  # noqa: F401
@@ -51,6 +53,15 @@ def json_from_stdout(stdout: str) -> dict[str, object]:
     raise AssertionError(f"No JSON object found in stdout: {stdout}")
 
 
+def load_bootloader():
+    spec = importlib.util.spec_from_file_location("study_anything_release_bootstrap", BOOTLOADER)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 class ReleaseCleanroomBootstrapTests(unittest.TestCase):
     def test_generator_check_passes(self) -> None:
         completed = run_script(GENERATOR, "--check")
@@ -82,6 +93,8 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
         self.assertEqual(payload["classification"], "cleanroom_bootstrap_ready")
         self.assertEqual(payload["release_assets"]["asset_count"], 6)
         self.assertEqual(payload["tool_import"]["platforms"]["kimi"]["status"], "ready")
+        self.assertFalse(payload["acceptance"]["release_assets_verified"])
+        self.assertEqual(payload["release_assets"]["self_hashed_count"], 6)
         self.assertFalse(payload["acceptance"]["runtime_verified"])
         self.assertIn("issue_body", payload)
         serialized = json.dumps(payload)
@@ -157,6 +170,20 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
             self.assertNotIn(marker, serialized)
         for key, value in report["privacy_assertions"].items():
             self.assertIs(value, False, key)
+
+    def test_zip_bomb_is_rejected_before_extraction(self) -> None:
+        bootloader = load_bootloader()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            archive = root / "oversized-ratio.zip"
+            with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as output:
+                output.writestr("pack/repeated.bin", b"x" * (2 * 1024 * 1024))
+
+            with self.assertRaisesRegex(
+                bootloader.CleanroomBootstrapError,
+                "compression ratio limit",
+            ):
+                bootloader.safe_extract_zip(archive, root / "extract")
 
 
 if __name__ == "__main__":
