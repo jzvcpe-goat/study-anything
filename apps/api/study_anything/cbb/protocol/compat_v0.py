@@ -23,6 +23,7 @@ from study_anything.cbb.protocol.models import (
     PrivacyBoundaryV1,
     QualifiedReconstructionV1,
     ReceiptProvenanceV1,
+    RevocationReferenceV1,
     RiskBudgetV1,
     TrustPolicyV1,
     VerifierIdentityV1,
@@ -389,18 +390,36 @@ def add_v0_decision_evidence(
 def build_unsigned_provenance(
     policy: TrustPolicyV1,
     evidence_bundle: EvidenceBundleV1,
+    reconstruction: QualifiedReconstructionV1,
+    decision: GateDecisionV1,
+    receipt_envelope_digest_sha256: str,
 ) -> ReceiptProvenanceV1:
     verifier_identity = {
         "verifier_id": "cbb-v0-compatibility-adapter",
         "verifier_version": "v1",
+    }
+    package_binding = {
+        "policy_digest_sha256": canonical_sha256(policy),
+        "evidence_digest_sha256": canonical_sha256(evidence_bundle),
+        "reconstruction_digest_sha256": canonical_sha256(reconstruction),
+        "decision_digest_sha256": canonical_sha256(decision),
+        "receipt_envelope_digest_sha256": receipt_envelope_digest_sha256,
     }
     return ReceiptProvenanceV1(
         schema_version=RECEIPT_PROVENANCE_SCHEMA_VERSION,
         provenance_id=f"cbb-provenance:{evidence_bundle.bundle_id}",
         subject_digest_kind="metadata_ref_sha256",
         subject_digest_sha256=canonical_sha256({"subject_ref": policy.subject_ref}),
-        policy_digest_sha256=canonical_sha256(policy),
-        evidence_digest_sha256=canonical_sha256(evidence_bundle),
+        policy_digest_sha256=package_binding["policy_digest_sha256"],
+        evidence_digest_sha256=package_binding["evidence_digest_sha256"],
+        reconstruction_digest_sha256=package_binding[
+            "reconstruction_digest_sha256"
+        ],
+        decision_digest_sha256=package_binding["decision_digest_sha256"],
+        receipt_envelope_digest_sha256=package_binding[
+            "receipt_envelope_digest_sha256"
+        ],
+        package_digest_sha256=canonical_sha256(package_binding),
         verifier=VerifierIdentityV1(
             **verifier_identity,
             verifier_digest_sha256=canonical_sha256(verifier_identity),
@@ -409,7 +428,20 @@ def build_unsigned_provenance(
         signing_status="unsigned_development",
         signature_algorithm=None,
         signature=None,
+        signer=None,
         created_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+        expires_at="2026-09-26T00:00:00Z",
+        replay_nonce=canonical_sha256(
+            {
+                "policy_id": policy.policy_id,
+                "bundle_id": evidence_bundle.bundle_id,
+                "decision_id": decision.decision_id,
+            }
+        )[:32],
+        revocation=RevocationReferenceV1(
+            handle=f"cbb-revocation:{decision.decision_id}",
+            registry_ref="revocation-registry.json",
+        ),
         claim_boundary=ClaimBoundaryV1(
             current_claim="The receipt has deterministic local digest bindings only.",
             maximum_scope=DeliveryScope.BLOCKED,
@@ -436,18 +468,18 @@ def delivery_trust_to_v1_receipt(
         else DeliveryScope.BLOCKED
     )
     assert_scope_not_expanded(source_scope, decision.approved_scope)
-    return DeliveryTrustReceiptV1(
-        schema_version=DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION,
-        receipt_id=f"cbb-receipt:{receipt['receipt_id']}",
-        subject_ref=policy.subject_ref,
-        policy_ref=policy.policy_id,
-        evidence_bundle_ref=evidence_bundle.bundle_id,
-        reconstruction_ref=reconstruction.reconstruction_id,
-        decision_ref=decision.decision_id,
-        status=decision.status,
-        approved_scope=decision.approved_scope,
-        reasons=list(decision.reasons),
-        claim_boundary=ClaimBoundaryV1(
+    receipt_envelope: dict[str, Any] = {
+        "schema_version": DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION,
+        "receipt_id": f"cbb-receipt:{receipt['receipt_id']}",
+        "subject_ref": policy.subject_ref,
+        "policy_ref": policy.policy_id,
+        "evidence_bundle_ref": evidence_bundle.bundle_id,
+        "reconstruction_ref": reconstruction.reconstruction_id,
+        "decision_ref": decision.decision_id,
+        "status": decision.status,
+        "approved_scope": decision.approved_scope,
+        "reasons": list(decision.reasons),
+        "claim_boundary": ClaimBoundaryV1(
             current_claim=(
                 "The candidate may enter controlled customer handoff under the mapped v0 receipt."
                 if decision.status == "allow"
@@ -456,10 +488,19 @@ def delivery_trust_to_v1_receipt(
             maximum_scope=decision.approved_scope,
             not_claimed=list(receipt["claim_boundary"]["not_claimed"])
             + ["portable signed attestation", "scope beyond the source v0 receipt"],
+        ).model_dump(mode="json"),
+        "privacy": privacy_boundary().model_dump(mode="json"),
+        "issued_at": str(receipt.get("created_at") or dual_loop.DETERMINISTIC_TIMESTAMP),
+    }
+    return DeliveryTrustReceiptV1(
+        **receipt_envelope,
+        provenance=build_unsigned_provenance(
+            policy,
+            evidence_bundle,
+            reconstruction,
+            decision,
+            canonical_sha256(receipt_envelope),
         ),
-        provenance=build_unsigned_provenance(policy, evidence_bundle),
-        privacy=privacy_boundary(),
-        issued_at=str(receipt.get("created_at") or dual_loop.DETERMINISTIC_TIMESTAMP),
     )
 
 

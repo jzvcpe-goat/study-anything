@@ -1,0 +1,375 @@
+{
+  "case_count": 12,
+  "cases": [
+    {
+      "case_id": "expired",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": false,
+        "not_revoked": true,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "not_expired"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "pass-signed",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [],
+      "status": "pass"
+    },
+    {
+      "case_id": "replay",
+      "first_status": "pass",
+      "second_reasons": [
+        "replay_nonce_unused"
+      ],
+      "second_status": "fail"
+    },
+    {
+      "case_id": "revoked",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": false,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "not_revoked"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-decision",
+      "checks": {
+        "decision_digest": false,
+        "deterministic_gate": false,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": false,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "decision_digest",
+        "deterministic_gate",
+        "package_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-evidence",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": false,
+        "embedded_provenance": true,
+        "evidence_digest": false,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": false,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "deterministic_gate",
+        "evidence_digest",
+        "package_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-policy",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": false,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": false,
+        "policy_digest": false,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "deterministic_gate",
+        "package_digest",
+        "policy_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-receipt",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": false,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": false,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "package_digest",
+        "receipt_envelope_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-reconstruction",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": false,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": false,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": false,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": true,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "deterministic_gate",
+        "package_digest",
+        "reconstruction_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-signature",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": false,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "signature"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "unsigned-development",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": false,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": false,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": false,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "locally_signed",
+        "public_key_fingerprint",
+        "signature"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "wrong-public-key",
+      "checks": {
+        "decision_digest": true,
+        "deterministic_gate": true,
+        "embedded_provenance": true,
+        "evidence_digest": true,
+        "locally_signed": true,
+        "not_before": true,
+        "not_expired": true,
+        "not_revoked": true,
+        "package_digest": true,
+        "policy_digest": true,
+        "public_key_fingerprint": true,
+        "receipt_envelope_digest": true,
+        "receipt_scope": true,
+        "receipt_status": true,
+        "reconstruction_digest": true,
+        "replay_nonce_unused": true,
+        "safe_metadata": true,
+        "scope_not_expanded": true,
+        "signature": false,
+        "subject_digest": true,
+        "verifier_digest": true
+      },
+      "reasons": [
+        "signature"
+      ],
+      "status": "fail"
+    }
+  ],
+  "claim_boundary": "A passing result proves local Ed25519 key possession and canonical object integrity for this package. It does not prove third-party signer identity, global revocation status, production approval, customer outcomes, or independent security audit completion.",
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "private_key_material_exported": false,
+    "production_mutation_performed": false
+  },
+  "properties": {
+    "algorithm": "Ed25519",
+    "canonicalization": "cbb-json-c14n-v1",
+    "deterministic_gate_replayed_offline": true,
+    "expiry_enforced": true,
+    "local_revocation_registry_enforced": true,
+    "optional_nonce_consumption_enforced": true,
+    "policy_evidence_reconstruction_decision_bound": true,
+    "private_key_material_in_package": false,
+    "scope_escalation_rejected": true,
+    "secret_like_metadata_rejected_without_echo": true,
+    "unsigned_is_development_only": true
+  },
+  "schema_version": "cbb-v1-provenance-verification-v1",
+  "status": "pass"
+}

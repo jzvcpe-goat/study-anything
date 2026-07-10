@@ -32,10 +32,13 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "docs/protocol.md",
     "docs/cbb-protocol-v1-contracts.md",
     "docs/cbb-protocol-v1-kernel.md",
+    "docs/cbb-protocol-v1-provenance.md",
     "platform/generated/study-anything-cbb-v1-contracts.json",
     "platform/generated/study-anything-cbb-v0-compatibility.json",
     "platform/generated/study-anything-cbb-v1-kernel.json",
     "platform/generated/study-anything-cbb-runtime-isolation.json",
+    "platform/generated/study-anything-cbb-v1-provenance.json",
+    "platform/generated/study-anything-cbb-v1-tamper-cases.json",
     "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
     "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
     "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
@@ -58,10 +61,23 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "fixtures/cbb-v1-kernel/hard-deny.json",
     "fixtures/cbb-v1-kernel/reference-mismatch.json",
     "fixtures/cbb-v1-kernel/claim-boundary-narrowing.json",
+    "fixtures/cbb-v1-provenance/pass-signed.json",
+    "fixtures/cbb-v1-provenance/unsigned-development.json",
+    "fixtures/cbb-v1-provenance/expired.json",
+    "fixtures/cbb-v1-provenance/revoked.json",
+    "fixtures/cbb-v1-provenance/replay.json",
+    "fixtures/cbb-v1-provenance/tampered-policy.json",
+    "fixtures/cbb-v1-provenance/tampered-evidence.json",
+    "fixtures/cbb-v1-provenance/tampered-reconstruction.json",
+    "fixtures/cbb-v1-provenance/tampered-decision.json",
+    "fixtures/cbb-v1-provenance/tampered-receipt.json",
+    "fixtures/cbb-v1-provenance/tampered-signature.json",
+    "fixtures/cbb-v1-provenance/wrong-public-key.json",
 }
 EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
     "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
+    "docs/quality-audits/phase-34-cbb-protocol-v1-provenance.md",
 }
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(
@@ -156,6 +172,8 @@ def validate_plan(plan: Mapping[str, Any]) -> None:
             "python3 scripts/verify_cbb_v0_compatibility.py --check",
             "python3 scripts/verify_cbb_v1_kernel.py --check",
             "python3 scripts/verify_cbb_runtime_isolation.py --check",
+            "python3 scripts/verify_cbb_v1_provenance.py --check",
+            "python3 scripts/verify_cbb_v1_tamper_cases.py --check",
         }
         <= set(trust_scope.get("evidence_commands") or []),
         "canonical CBB v1 verifier commands are missing from the audit plan",

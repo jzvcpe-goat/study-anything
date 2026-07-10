@@ -1,5 +1,18 @@
 # Unreleased Main Development Line
 
+## CBB Protocol v1 Local Provenance
+
+- Extended `cbb.receipt-provenance.v1` with canonical policy, evidence,
+  reconstruction, decision, and package-binding digests; local Ed25519 signer
+  metadata; expiry; replay nonce; and revocation references.
+- Added owner-only local key generation, scope-bounded signing, and offline package
+  verification that replays the deterministic Trust Kernel.
+- Added signed, unsigned, expired, revoked, replay, object-tamper, signature-tamper,
+  and wrong-public-key fixtures plus independent provenance and tamper verifiers.
+- Local signatures prove content integrity and embedded-key possession only. They do
+  not prove third-party identity, production approval, customer outcomes, global
+  revocation status, or independent audit completion.
+
 ## CBB Protocol v1 Deterministic Trust Kernel
 
 - Added a pure canonical evaluator from Trust Policy, Evidence Bundle, and

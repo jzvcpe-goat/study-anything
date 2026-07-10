@@ -137,9 +137,26 @@
           "title": "Created At",
           "type": "string"
         },
+        "decision_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Decision Digest Sha256",
+          "type": "string"
+        },
         "evidence_digest_sha256": {
           "pattern": "^[0-9a-f]{64}$",
           "title": "Evidence Digest Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "package_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Package Digest Sha256",
           "type": "string"
         },
         "policy_digest_sha256": {
@@ -153,21 +170,70 @@
           "title": "Provenance Id",
           "type": "string"
         },
+        "receipt_envelope_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Receipt Envelope Digest Sha256",
+          "type": "string"
+        },
+        "reconstruction_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Reconstruction Digest Sha256",
+          "type": "string"
+        },
+        "replay_nonce": {
+          "maxLength": 200,
+          "minLength": 16,
+          "title": "Replay Nonce",
+          "type": "string"
+        },
+        "revocation": {
+          "$ref": "#/$defs/RevocationReferenceV1"
+        },
         "schema_version": {
           "const": "cbb.receipt-provenance.v1",
           "title": "Schema Version",
           "type": "string"
         },
         "signature": {
-          "title": "Signature",
-          "type": "null"
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9_-]{86}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature"
         },
         "signature_algorithm": {
-          "title": "Signature Algorithm",
-          "type": "null"
+          "anyOf": [
+            {
+              "const": "ed25519",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Signature Algorithm"
+        },
+        "signer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SignerIdentityV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "signing_status": {
-          "const": "unsigned_development",
+          "enum": [
+            "unsigned_development",
+            "locally_signed"
+          ],
           "title": "Signing Status",
           "type": "string"
         },
@@ -192,15 +258,92 @@
         "subject_digest_sha256",
         "policy_digest_sha256",
         "evidence_digest_sha256",
+        "reconstruction_digest_sha256",
+        "decision_digest_sha256",
+        "receipt_envelope_digest_sha256",
+        "package_digest_sha256",
         "verifier",
         "canonicalization",
         "signing_status",
         "signature_algorithm",
-        "signature",
+        "signer",
         "created_at",
+        "expires_at",
+        "replay_nonce",
+        "revocation",
         "claim_boundary"
       ],
       "title": "ReceiptProvenanceV1",
+      "type": "object"
+    },
+    "RevocationReferenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "handle": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Handle",
+          "type": "string"
+        },
+        "registry_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Registry Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "handle",
+        "registry_ref"
+      ],
+      "title": "RevocationReferenceV1",
+      "type": "object"
+    },
+    "SignerIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_scope": {
+          "const": "local_self_asserted",
+          "title": "Identity Scope",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Key Id",
+          "type": "string"
+        },
+        "public_key": {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "title": "Public Key",
+          "type": "string"
+        },
+        "public_key_encoding": {
+          "const": "ed25519-raw-base64url",
+          "title": "Public Key Encoding",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        },
+        "signer_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Signer Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signer_id",
+        "key_id",
+        "identity_scope",
+        "public_key_encoding",
+        "public_key",
+        "public_key_fingerprint_sha256"
+      ],
+      "title": "SignerIdentityV1",
       "type": "object"
     },
     "VerifierIdentityV1": {

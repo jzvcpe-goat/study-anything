@@ -4,8 +4,8 @@
 - Status: `ready_for_independent_audit`
 - Version: `v0.3.31-alpha`
 - Scope areas: `7`
-- Source/evidence files: `56`
-- Archive SHA-256: `8e3bb0248a4aa013c4941b5ecca44f48da26211efb9ab0062fe091ac656f59aa`
+- Source/evidence files: `71`
+- Archive SHA-256: `6224ba6f35e9502aa602dd0357cd4af3912ef227178062c2508f6be7b8e3cbbd`
 
 This pack is ready for an external human-led security audit at a pinned commit.
 It does not claim that an audit, penetration test, or production certification

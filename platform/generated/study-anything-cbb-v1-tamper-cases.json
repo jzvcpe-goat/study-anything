@@ -1,0 +1,67 @@
+{
+  "case_count": 7,
+  "cases": [
+    {
+      "case_id": "tampered-policy",
+      "failed_checks": [
+        "deterministic_gate",
+        "package_digest",
+        "policy_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-evidence",
+      "failed_checks": [
+        "deterministic_gate",
+        "evidence_digest",
+        "package_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-reconstruction",
+      "failed_checks": [
+        "deterministic_gate",
+        "package_digest",
+        "reconstruction_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-decision",
+      "failed_checks": [
+        "decision_digest",
+        "deterministic_gate",
+        "package_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-receipt",
+      "failed_checks": [
+        "package_digest",
+        "receipt_envelope_digest"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "tampered-signature",
+      "failed_checks": [
+        "signature"
+      ],
+      "status": "fail"
+    },
+    {
+      "case_id": "wrong-public-key",
+      "failed_checks": [
+        "signature"
+      ],
+      "status": "fail"
+    }
+  ],
+  "changed_byte_invalidates_trust": true,
+  "claim_boundary": "This deterministic fixture suite demonstrates fail-closed verification for selected canonical object, signature, and public-key tampering. It is not a complete cryptographic audit or proof against every implementation defect.",
+  "schema_version": "cbb-v1-tamper-cases-verification-v1",
+  "status": "pass"
+}

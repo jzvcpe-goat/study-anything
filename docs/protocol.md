@@ -134,10 +134,13 @@ artifact names remain supported.
 The canonical contracts now feed the first deterministic Trust Kernel evaluator.
 The evaluator enforces hard denies, blocking evidence, reviewer reconstruction,
 reference integrity, and monotonic scope ceilings without model, RAG, network, or
-tool authority. Portable signing, revocation, outcome degradation, and isolated
-Agentic evidence discovery remain separate milestones. See
+tool authority. The next layer binds those objects with local Ed25519 signatures,
+expiry, optional replay consumption, and supplied-registry revocation checks.
+Outcome degradation and isolated Agentic evidence discovery remain separate
+milestones. See
 [CBB Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
-[CBB Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md).
+[CBB Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
+[CBB Protocol v1 Local Provenance](cbb-protocol-v1-provenance.md).
 
 ## Current Verifier Commands
 
@@ -147,6 +150,8 @@ python3 scripts/verify_cbb_v1_contracts.py --check
 python3 scripts/verify_cbb_v0_compatibility.py --check
 python3 scripts/verify_cbb_v1_kernel.py --check
 python3 scripts/verify_cbb_runtime_isolation.py --check
+python3 scripts/verify_cbb_v1_provenance.py --check
+python3 scripts/verify_cbb_v1_tamper_cases.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check

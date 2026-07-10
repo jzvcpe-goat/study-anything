@@ -73,6 +73,8 @@
 - [ ] `.venv/bin/python scripts/verify_release_stack_live_status.py`
 - [ ] `.venv/bin/python scripts/verify_release_stack_lineage.py`
 - [ ] `.venv/bin/python scripts/verify_release_stack_merge_runbook.py`
+- [ ] `.venv/bin/python scripts/verify_cbb_v1_provenance.py --check`
+- [ ] `.venv/bin/python scripts/verify_cbb_v1_tamper_cases.py --check`
 - [ ] `.venv/bin/python scripts/generate_platform_adoption_pack.py --check`
 - [ ] `.venv/bin/python scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree`
 - [ ] `.venv/bin/python scripts/verify_agent_eval_assets.py`

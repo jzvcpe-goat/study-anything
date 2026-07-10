@@ -1,0 +1,407 @@
+{
+  "case_id": "pass-signed",
+  "expected_status": "pass",
+  "package": {
+    "archive_digest_included": false,
+    "claim_boundary": {
+      "current_claim": "This metadata-only package can be verified offline against its embedded local public key and deterministic CBB gate.",
+      "maximum_scope": "controlled_customer_handoff",
+      "not_claimed": [
+        "production approval",
+        "third-party signer identity",
+        "independent security audit completion",
+        "customer outcome guarantee",
+        "global revocation status outside the supplied registry",
+        "archive byte-for-byte integrity",
+        "concurrent replay prevention across processes",
+        "trusted external time authority",
+        "encrypted private-key storage",
+        "scope beyond the deterministic gate decision"
+      ]
+    },
+    "delivery_trust_receipt": {
+      "approved_scope": "controlled_customer_handoff",
+      "claim_boundary": {
+        "current_claim": "The candidate may enter controlled customer handoff under the mapped v0 receipt.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "general model correctness",
+          "production deployment approval",
+          "customer outcome guarantee",
+          "AI self-review sufficiency",
+          "full human re-review completion",
+          "portable signed attestation",
+          "scope beyond the source v0 receipt"
+        ]
+      },
+      "decision_ref": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+      "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
+      "issued_at": "2026-06-28T00:00:00Z",
+      "policy_ref": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "provenance": {
+        "canonicalization": "cbb-json-c14n-v1",
+        "claim_boundary": {
+          "current_claim": "The local signature binds this policy, evidence bundle, qualified reconstruction, and gate decision.",
+          "maximum_scope": "controlled_customer_handoff",
+          "not_claimed": [
+            "production approval",
+            "third-party signer identity",
+            "independent security audit completion",
+            "customer outcome guarantee",
+            "global revocation status outside the supplied registry",
+            "archive byte-for-byte integrity",
+            "concurrent replay prevention across processes",
+            "trusted external time authority",
+            "encrypted private-key storage",
+            "scope beyond the deterministic gate decision"
+          ]
+        },
+        "created_at": "2026-06-28T00:00:00Z",
+        "decision_digest_sha256": "44cd4e8da4beb98f56024836cec252eb945cf850f6ac4394c0b705f8b8bb3606",
+        "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
+        "expires_at": "2026-09-26T00:00:00Z",
+        "package_digest_sha256": "4022d4166395cb0e9edba376db17811cbd0fbfdb18f8b651cde178f62f2ecffa",
+        "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
+        "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
+        "receipt_envelope_digest_sha256": "c95d6bd490e17b14bde744508af1bc94bb48ce769be8307d9eed662a4af146e8",
+        "reconstruction_digest_sha256": "d876840612a4ca44990fcd0d82d7c39541525c6d42fe52ef1beada66330da8c5",
+        "replay_nonce": "82b4356d75dc95277e40aaa7616935fe",
+        "revocation": {
+          "handle": "cbb-revocation:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+          "registry_ref": "revocation-registry.json"
+        },
+        "schema_version": "cbb.receipt-provenance.v1",
+        "signature": "G5pk5z8W0NHqUT4vDDDhzntT9eOXp9Vd-9NG3oilW7o5iHeDzg73EbHl9xlfMeUtmh9SfUMgEOLsANRNVFHmDg",
+        "signature_algorithm": "ed25519",
+        "signer": {
+          "identity_scope": "local_self_asserted",
+          "key_id": "fixture-ed25519-key-1",
+          "public_key": "2AtIgQPjvQYLrAljQ9xz82e4imW_222b6eJjDnVjbFE",
+          "public_key_encoding": "ed25519-raw-base64url",
+          "public_key_fingerprint_sha256": "9aa2aece9d6e029cca4809d6eff6bf955ff15defe43b5e53d274e61b7069d119",
+          "signer_id": "fixture-local-signer"
+        },
+        "signing_status": "locally_signed",
+        "subject_digest_kind": "metadata_ref_sha256",
+        "subject_digest_sha256": "35ede18ab229e608b6f6099f640f5a21572bac4aee0646216908b7471b0b0a11",
+        "verifier": {
+          "verifier_digest_sha256": "769854db7142ba86ede474ef0f172d264d1c437262482324d93f97b4349fd1b6",
+          "verifier_id": "cbb-v0-compatibility-adapter",
+          "verifier_version": "v1"
+        }
+      },
+      "reasons": [],
+      "receipt_id": "cbb-receipt:delivery-trust-receipt-demo-001",
+      "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
+      "schema_version": "cbb.delivery-trust-receipt.v1",
+      "status": "allow",
+      "subject_ref": "artifact:metadata-only-demo-change"
+    },
+    "evidence_bundle": {
+      "bundle_id": "cbb-evidence:sandbox-run-demo-001",
+      "claim_boundary": {
+        "current_claim": "The complete mapped v0 chain supports controlled customer handoff only.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee",
+          "authority beyond the source v0 receipts"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "evidence": [
+        {
+          "evidence_id": "evidence:failure-contract-demo-001",
+          "evidence_type": "failure_contract",
+          "metadata": {
+            "risk_level": "medium",
+            "rollback_required": true
+          },
+          "source_ref": "failure-contract.json",
+          "source_schema_version": "failure-contract-v1",
+          "status": "passed",
+          "supported_scope": "sandbox_only"
+        },
+        {
+          "evidence_id": "evidence:sandbox-run-demo-001",
+          "evidence_type": "sandbox_receipt",
+          "metadata": {
+            "contained": true,
+            "rollback_rehearsed": true,
+            "within_budget": true
+          },
+          "source_ref": "sandbox-receipt.json",
+          "source_schema_version": "sandbox-receipt-v1",
+          "status": "passed",
+          "supported_scope": "sandbox_only"
+        },
+        {
+          "evidence_id": "evidence:dual-loop-gate-demo-001",
+          "evidence_type": "dual_loop_gate",
+          "metadata": {
+            "both_loops_required": true
+          },
+          "source_ref": "dual-loop-gate-receipt.json",
+          "source_schema_version": "dual-loop-gate-receipt-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:delivery-trust-receipt-demo-001",
+          "evidence_type": "v0_delivery_trust_receipt",
+          "metadata": {
+            "compatibility_source_only": true
+          },
+          "source_ref": "delivery-trust-receipt.json",
+          "source_schema_version": "delivery-trust-receipt-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        }
+      ],
+      "maximum_supported_scope": "controlled_customer_handoff",
+      "policy_ref": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "schema_version": "cbb.evidence-bundle.v1",
+      "subject_ref": "artifact:metadata-only-demo-change"
+    },
+    "gate_decision": {
+      "approved_scope": "controlled_customer_handoff",
+      "claim_boundary": {
+        "current_claim": "The deterministic CBB v1 kernel authorizes only controlled_customer_handoff.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee",
+          "general model correctness",
+          "authority beyond the evaluated policy and evidence"
+        ]
+      },
+      "decided_at": "2026-06-28T00:00:00Z",
+      "decision_id": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+      "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [],
+      "policy_ref": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "reasons": [],
+      "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
+      "schema_version": "cbb.gate-decision.v1",
+      "source_decision_refs": [
+        "attention-reconstruction-summary.json",
+        "delivery-trust-receipt.json",
+        "dual-loop-gate-receipt.json",
+        "failure-contract.json",
+        "policy:cbb-policy:failure-contract-demo-001",
+        "sandbox-receipt.json"
+      ],
+      "status": "allow",
+      "subject_ref": "artifact:metadata-only-demo-change"
+    },
+    "package_id": "cbb-offline-package:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+    "private_key_material_included": false,
+    "qualified_reconstruction": {
+      "active_reconstruction": true,
+      "claim_boundary": {
+        "current_claim": "The mapped v0 reconstruction qualifies the reviewer for this scope.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "global reviewer qualification",
+          "permanent human capability",
+          "passive attention as understanding",
+          "production approval"
+        ]
+      },
+      "evidence_refs": [
+        "attention-reconstruction-summary.json"
+      ],
+      "missing_mru_refs": [],
+      "observed_at": "2026-06-28T00:00:00Z",
+      "passive_attention_only": false,
+      "policy_ref": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "qualified_scope": "controlled_customer_handoff",
+      "reconstruction_id": "cbb-reconstruction:attention-summary-demo-001",
+      "required_mrus_passed": 3,
+      "required_mrus_total": 3,
+      "reviewer_ref": "reviewer:v0-local-operator",
+      "schema_version": "cbb.qualified-reconstruction.v1",
+      "status": "passed",
+      "valid_until": "2026-09-26T00:00:00Z"
+    },
+    "receipt_provenance": {
+      "canonicalization": "cbb-json-c14n-v1",
+      "claim_boundary": {
+        "current_claim": "The local signature binds this policy, evidence bundle, qualified reconstruction, and gate decision.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "third-party signer identity",
+          "independent security audit completion",
+          "customer outcome guarantee",
+          "global revocation status outside the supplied registry",
+          "archive byte-for-byte integrity",
+          "concurrent replay prevention across processes",
+          "trusted external time authority",
+          "encrypted private-key storage",
+          "scope beyond the deterministic gate decision"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "decision_digest_sha256": "44cd4e8da4beb98f56024836cec252eb945cf850f6ac4394c0b705f8b8bb3606",
+      "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
+      "expires_at": "2026-09-26T00:00:00Z",
+      "package_digest_sha256": "4022d4166395cb0e9edba376db17811cbd0fbfdb18f8b651cde178f62f2ecffa",
+      "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
+      "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
+      "receipt_envelope_digest_sha256": "c95d6bd490e17b14bde744508af1bc94bb48ce769be8307d9eed662a4af146e8",
+      "reconstruction_digest_sha256": "d876840612a4ca44990fcd0d82d7c39541525c6d42fe52ef1beada66330da8c5",
+      "replay_nonce": "82b4356d75dc95277e40aaa7616935fe",
+      "revocation": {
+        "handle": "cbb-revocation:cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
+        "registry_ref": "revocation-registry.json"
+      },
+      "schema_version": "cbb.receipt-provenance.v1",
+      "signature": "G5pk5z8W0NHqUT4vDDDhzntT9eOXp9Vd-9NG3oilW7o5iHeDzg73EbHl9xlfMeUtmh9SfUMgEOLsANRNVFHmDg",
+      "signature_algorithm": "ed25519",
+      "signer": {
+        "identity_scope": "local_self_asserted",
+        "key_id": "fixture-ed25519-key-1",
+        "public_key": "2AtIgQPjvQYLrAljQ9xz82e4imW_222b6eJjDnVjbFE",
+        "public_key_encoding": "ed25519-raw-base64url",
+        "public_key_fingerprint_sha256": "9aa2aece9d6e029cca4809d6eff6bf955ff15defe43b5e53d274e61b7069d119",
+        "signer_id": "fixture-local-signer"
+      },
+      "signing_status": "locally_signed",
+      "subject_digest_kind": "metadata_ref_sha256",
+      "subject_digest_sha256": "35ede18ab229e608b6f6099f640f5a21572bac4aee0646216908b7471b0b0a11",
+      "verifier": {
+        "verifier_digest_sha256": "769854db7142ba86ede474ef0f172d264d1c437262482324d93f97b4349fd1b6",
+        "verifier_id": "cbb-v0-compatibility-adapter",
+        "verifier_version": "v1"
+      }
+    },
+    "schema_version": "cbb.offline-provenance-package.v1",
+    "trust_policy": {
+      "claim_boundary": {
+        "current_claim": "The candidate may be evaluated up to the mapped v0 delivery scope only.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee",
+          "general model correctness"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "hard_denies": [
+        "ai_review_only_trust",
+        "irreversible_external_effect",
+        "production_mutation",
+        "unbounded_real_user_exposure"
+      ],
+      "maximum_scope": "controlled_customer_handoff",
+      "policy_id": "cbb-policy:failure-contract-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "required_evidence": [
+        {
+          "blocking": true,
+          "evidence_type": "failure_contract",
+          "required_for_scope": "sandbox_only"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "sandbox_receipt",
+          "required_for_scope": "sandbox_only"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "qualified_reconstruction",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "dual_loop_gate",
+          "required_for_scope": "controlled_customer_handoff"
+        }
+      ],
+      "required_roles": [
+        "qualified_reviewer"
+      ],
+      "risk_budget": {
+        "irreversible_external_effects_allowed": false,
+        "level": "medium",
+        "production_mutation_allowed": false,
+        "real_user_exposure_allowed": false
+      },
+      "scenario_ref": "task:dual-loop-demo",
+      "schema_version": "cbb.trust-policy.v1",
+      "subject_ref": "artifact:metadata-only-demo-change"
+    }
+  },
+  "verification_context": {
+    "now": "2026-07-10T00:00:00Z"
+  }
+}

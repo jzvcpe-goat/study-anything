@@ -310,6 +310,20 @@ class VerifierIdentityV1(StrictProtocolModel):
     verifier_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
+class SignerIdentityV1(StrictProtocolModel):
+    signer_id: str = Field(min_length=1, max_length=160)
+    key_id: str = Field(min_length=1, max_length=160)
+    identity_scope: Literal["local_self_asserted"]
+    public_key_encoding: Literal["ed25519-raw-base64url"]
+    public_key: str = Field(pattern=r"^[A-Za-z0-9_-]{43}$")
+    public_key_fingerprint_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+
+class RevocationReferenceV1(StrictProtocolModel):
+    handle: str = Field(min_length=1, max_length=200)
+    registry_ref: str = Field(min_length=1, max_length=500)
+
+
 class ReceiptProvenanceV1(StrictProtocolModel):
     model_config = ConfigDict(
         extra="forbid",
@@ -324,21 +338,44 @@ class ReceiptProvenanceV1(StrictProtocolModel):
     subject_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     policy_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     evidence_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    reconstruction_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    decision_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    receipt_envelope_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    package_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     verifier: VerifierIdentityV1
     canonicalization: Literal["cbb-json-c14n-v1"]
-    signing_status: Literal["unsigned_development"]
-    signature_algorithm: None
-    signature: None
+    signing_status: Literal["unsigned_development", "locally_signed"]
+    signature_algorithm: Literal["ed25519"] | None
+    signature: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_-]{86}$")
+    signer: SignerIdentityV1 | None
     created_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    expires_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    replay_nonce: str = Field(min_length=16, max_length=200)
+    revocation: RevocationReferenceV1
     claim_boundary: ClaimBoundaryV1
 
     @model_validator(mode="after")
     def validate_provenance_boundary(self) -> ReceiptProvenanceV1:
-        parse_timestamp(self.created_at)
-        if self.claim_boundary.maximum_scope != DeliveryScope.BLOCKED:
-            raise ValueError("unsigned provenance cannot claim delivery authority")
-        if "portable signed attestation" not in self.claim_boundary.not_claimed:
-            raise ValueError("unsigned provenance must disclaim portable signed attestation")
+        created_at = parse_timestamp(self.created_at)
+        expires_at = parse_timestamp(self.expires_at)
+        if expires_at <= created_at:
+            raise ValueError("receipt provenance must expire after creation")
+        if self.signing_status == "unsigned_development":
+            if self.signature_algorithm is not None or self.signature is not None:
+                raise ValueError("unsigned provenance cannot include a signature")
+            if self.signer is not None:
+                raise ValueError("unsigned provenance cannot include a signer")
+            if self.claim_boundary.maximum_scope != DeliveryScope.BLOCKED:
+                raise ValueError("unsigned provenance cannot claim delivery authority")
+            if "portable signed attestation" not in self.claim_boundary.not_claimed:
+                raise ValueError("unsigned provenance must disclaim portable signed attestation")
+        else:
+            if self.signature_algorithm != "ed25519" or self.signature is None:
+                raise ValueError("locally signed provenance requires an Ed25519 signature")
+            if self.signer is None:
+                raise ValueError("locally signed provenance requires signer metadata")
+            if "third-party signer identity" not in self.claim_boundary.not_claimed:
+                raise ValueError("local signatures must disclaim third-party signer identity")
         return self
 
 
