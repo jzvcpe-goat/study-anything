@@ -1,0 +1,128 @@
+{
+  "claim_boundary": "This index records validated metadata from isolated reliability workflow receipts. One strict dual pass is not a longitudinal trend, and no number of these runs alone proves a production SLO, incident response, disaster recovery, or customer availability.",
+  "privacy": {
+    "api_urls_included": false,
+    "image_references_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_source_text_included": false,
+    "receipt_hashes_included": true,
+    "secrets_included": false,
+    "workflow_logs_included": false
+  },
+  "runs": [
+    {
+      "claim_boundary": "A strict dual pass proves only this isolated default-duration workflow run. Diagnostic or mixed profiles cannot satisfy strict reliability evidence.",
+      "decision": "strict_dual_pass",
+      "event": "workflow_dispatch",
+      "head_sha": "93f0b8652628bc4569c3ffc18a094160a63ac638",
+      "modes": {
+        "published-image": {
+          "elapsed_seconds": 7240,
+          "failure": {
+            "category": null,
+            "phase": null
+          },
+          "finished_at": "2026-07-10T02:46:39Z",
+          "mode": "published-image",
+          "profile": "strict-default",
+          "receipt_sha256": "944d81ec15522023b19c2b63e5755a00ca3b7b006ed1ad0d6fe06200ff3a70ae",
+          "runtime": {
+            "compose_start_attempts": 1,
+            "controlled_restart_completed": true,
+            "pre_restart_session_recovery_completed": true,
+            "published_image_digest": "sha256:3426e2077415c58a3c05607cdb7743ece1554efee42cacf589f04c737893ac08",
+            "recovery_after_failure_observed": true
+          },
+          "sampling": {
+            "longest_consecutive_failure_run": 5,
+            "recovery_count": 1,
+            "sample_count": 721,
+            "success_ratio": 0.9931
+          },
+          "schedule": {
+            "fault_after_seconds": 600.0,
+            "fault_duration_seconds": 45.0,
+            "interval_seconds": 10.0,
+            "samples_requested": 721
+          },
+          "started_at": "2026-07-10T00:45:59Z",
+          "status": "pass",
+          "strict_evidence": true,
+          "thresholds": {
+            "maximum_consecutive_failures": 8,
+            "minimum_success_ratio": 0.99,
+            "recovery_after_failure_required": true
+          }
+        },
+        "source-build": {
+          "elapsed_seconds": 7256,
+          "failure": {
+            "category": null,
+            "phase": null
+          },
+          "finished_at": "2026-07-10T02:46:55Z",
+          "mode": "source-build",
+          "profile": "strict-default",
+          "receipt_sha256": "ea5f1f2e957c26a28db8daf90c3f161e0f6f935abef1a49ef44d5fdc74731bbc",
+          "runtime": {
+            "compose_start_attempts": 1,
+            "controlled_restart_completed": true,
+            "pre_restart_session_recovery_completed": true,
+            "recovery_after_failure_observed": true,
+            "source_revision_sha": "93f0b8652628bc4569c3ffc18a094160a63ac638",
+            "source_worktree_dirty": false
+          },
+          "sampling": {
+            "longest_consecutive_failure_run": 5,
+            "recovery_count": 1,
+            "sample_count": 721,
+            "success_ratio": 0.9931
+          },
+          "schedule": {
+            "fault_after_seconds": 600.0,
+            "fault_duration_seconds": 45.0,
+            "interval_seconds": 10.0,
+            "samples_requested": 721
+          },
+          "started_at": "2026-07-10T00:45:59Z",
+          "status": "pass",
+          "strict_evidence": true,
+          "thresholds": {
+            "maximum_consecutive_failures": 8,
+            "minimum_success_ratio": 0.99,
+            "recovery_after_failure_required": true
+          }
+        }
+      },
+      "run_id": "29060766261",
+      "strict_dual_pass": true
+    }
+  ],
+  "schema_version": "self-host-reliability-index-v1",
+  "status": "pass",
+  "strict_contract": {
+    "fault_after_seconds": 600.0,
+    "fault_duration_seconds": 45.0,
+    "interval_seconds": 10.0,
+    "maximum_consecutive_failures": 8,
+    "minimum_elapsed_seconds": 7200.0,
+    "minimum_success_ratio": 0.99,
+    "recovery_after_failure_required": true,
+    "samples": 721,
+    "source_and_published_modes_equal_weight": true
+  },
+  "summary": {
+    "blocked_count": 0,
+    "diagnostic_only_count": 0,
+    "latest_strict_dual_pass_run_id": "29060766261",
+    "longitudinal_trend_claimable": false,
+    "longitudinal_trend_minimum_runs": 3,
+    "production_slo_claimable": false,
+    "runs_total": 1,
+    "strict_dual_pass_count": 1
+  }
+}

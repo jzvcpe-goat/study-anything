@@ -33,6 +33,8 @@ jobs:
         run: python scripts/verify_self_host_reliability_matrix.py --check
       - name: Verify longitudinal reliability evidence index
         run: python scripts/verify_reliability_evidence_index.py --check
+      - name: Verify strict remote reliability acceptance
+        run: python scripts/verify_strict_reliability_acceptance.py --check
       - name: Verify generated evidence topology
         run: python scripts/verify_generated_evidence_topology.py --check
       - name: Verify generated platform Agent assets

@@ -1,0 +1,90 @@
+{
+  "artifacts": {
+    "published_image_receipt": {
+      "archive_digest": "sha256:57d7b5ce333076d99c545d6e9024e746afe6abf39ef96c70e3b30aac542e45fa",
+      "created_at": "2026-07-10T02:46:40Z",
+      "expired": false,
+      "expires_at": "2026-07-24T02:46:40Z",
+      "file_sha256": "d9f87d38911726c8df410f763d2a8e3f6bb7c4c8be7a0f3de21f72ff02460f14",
+      "id": 8216925288,
+      "name": "reliability-published-image-29060766261",
+      "size_in_bytes": 1433
+    },
+    "reliability_index": {
+      "archive_digest": "sha256:eb755615990d8239a4193d1e7d65619147229dd6ff8b11d96416597c12e682da",
+      "created_at": "2026-07-10T03:09:27Z",
+      "expired": false,
+      "expires_at": "2026-10-08T03:09:20Z",
+      "file_sha256": "b2f73cdb7be864cd14d0319cdf71dacbd0188350584bc48d4673bb7cb9e724b1",
+      "id": 8217212228,
+      "name": "reliability-index-29060766261",
+      "size_in_bytes": 1485
+    },
+    "source_build_receipt": {
+      "archive_digest": "sha256:be91af09078115a4e417f371a95f3decfc738a239c1676dd9a17364170f20a26",
+      "created_at": "2026-07-10T02:46:55Z",
+      "expired": false,
+      "expires_at": "2026-07-24T02:46:55Z",
+      "file_sha256": "8eb00e140a12d1647d52efde859c62ed2c088cd3ac53ca66cb355617c4284d1a",
+      "id": 8216928791,
+      "name": "reliability-source-build-29060766261",
+      "size_in_bytes": 1405
+    }
+  },
+  "claim_boundary": "This fixture records metadata-only GitHub run, job, artifact, and validated receipt evidence for one strict dual-path run. It does not prove a longitudinal trend, production SLO, incident response, disaster recovery, security certification, or customer availability.",
+  "failure_classification": {
+    "mode_receipts_affected": false,
+    "raw_job_logs_included": false,
+    "reason": "The original index job retained its source commit workflow and was rejected after full-SHA Action enforcement became active during the two-hour mode window.",
+    "type": "index_job_blocked_by_action_pin_policy_transition"
+  },
+  "privacy": {
+    "api_urls_included": false,
+    "command_output_included": false,
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_source_text_included": false,
+    "secrets_included": false
+  },
+  "replay_run": {
+    "conclusion": "success",
+    "created_at": "2026-07-10T03:09:19Z",
+    "event": "workflow_dispatch",
+    "evidence_run_id": 29060766261,
+    "head_sha": "914faab8d8db264c7d37c6bee434525faf7a20df",
+    "jobs": {
+      "reliability-index": "success",
+      "reliability-soak": "skipped"
+    },
+    "run_attempt": 1,
+    "run_id": 29066220685,
+    "status": "completed",
+    "updated_at": "2026-07-10T03:09:29Z",
+    "url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/29066220685",
+    "workflow_path": ".github/workflows/reliability-soak.yml"
+  },
+  "repository": "jzvcpe-goat/study-anything",
+  "schema_version": "strict-reliability-remote-evidence-v1",
+  "source_run": {
+    "conclusion": "failure",
+    "created_at": "2026-07-10T00:45:51Z",
+    "event": "workflow_dispatch",
+    "head_sha": "93f0b8652628bc4569c3ffc18a094160a63ac638",
+    "jobs": {
+      "reliability-index": "failure",
+      "reliability-soak (published-image)": "success",
+      "reliability-soak (source-build)": "success"
+    },
+    "run_attempt": 1,
+    "run_id": 29060766261,
+    "status": "completed",
+    "updated_at": "2026-07-10T02:47:04Z",
+    "url": "https://github.com/jzvcpe-goat/study-anything/actions/runs/29060766261",
+    "workflow_path": ".github/workflows/reliability-soak.yml"
+  }
+}

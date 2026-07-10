@@ -1,0 +1,68 @@
+{
+  "claim_boundary": "This fixture records metadata-only GitHub run, job, artifact, and validated receipt evidence for one strict dual-path run. It does not prove a longitudinal trend, production SLO, incident response, disaster recovery, security certification, or customer availability.",
+  "index": {
+    "artifact_archive_digest": "sha256:eb755615990d8239a4193d1e7d65619147229dd6ff8b11d96416597c12e682da",
+    "artifact_expires_at": "2026-10-08T03:09:20Z",
+    "artifact_name": "reliability-index-29060766261",
+    "file_sha256": "b2f73cdb7be864cd14d0319cdf71dacbd0188350584bc48d4673bb7cb9e724b1",
+    "longitudinal_trend_claimable": false,
+    "production_slo_claimable": false
+  },
+  "modes": {
+    "published-image": {
+      "elapsed_seconds": 7240,
+      "longest_consecutive_failure_run": 5,
+      "receipt_sha256": "944d81ec15522023b19c2b63e5755a00ca3b7b006ed1ad0d6fe06200ff3a70ae",
+      "recovery_after_failure_observed": true,
+      "recovery_count": 1,
+      "sample_count": 721,
+      "strict_evidence": true,
+      "success_ratio": 0.9931
+    },
+    "source-build": {
+      "elapsed_seconds": 7256,
+      "longest_consecutive_failure_run": 5,
+      "receipt_sha256": "ea5f1f2e957c26a28db8daf90c3f161e0f6f935abef1a49ef44d5fdc74731bbc",
+      "recovery_after_failure_observed": true,
+      "recovery_count": 1,
+      "sample_count": 721,
+      "strict_evidence": true,
+      "success_ratio": 0.9931
+    }
+  },
+  "negative_fixtures": {
+    "different_workflow": "replay workflow drifted",
+    "failed_mode_job": "Original run job conclusions drifted",
+    "failed_replay": "Replay run did not succeed",
+    "job_log_leak": "Remote evidence privacy boundary drifted",
+    "single_run_trend_claim": "Stored reliability index does not match the exact mode receipts"
+  },
+  "privacy": {
+    "api_urls_included": false,
+    "command_output_included": false,
+    "github_tokens_included": false,
+    "job_logs_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_source_text_included": false,
+    "secrets_included": false
+  },
+  "replay_run": {
+    "index_job_passed": true,
+    "mode_jobs_skipped": true,
+    "run_id": "29066220685",
+    "status": "success"
+  },
+  "schema_version": "strict-reliability-acceptance-v1",
+  "source_run": {
+    "decision": "strict_dual_pass",
+    "event": "workflow_dispatch",
+    "head_sha": "93f0b8652628bc4569c3ffc18a094160a63ac638",
+    "run_id": "29060766261",
+    "strict_dual_pass": true
+  },
+  "status": "pass"
+}

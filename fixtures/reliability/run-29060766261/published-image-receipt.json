@@ -1,0 +1,107 @@
+{
+  "claim_boundary": "This receipt proves only one real elapsed-time isolated Compose window for the selected runtime mode, including one controlled API interruption and observed HTTP recovery. It is not a production SLO, disaster-recovery certification, or customer availability guarantee.",
+  "failure": {
+    "category": null,
+    "command_output_included": false,
+    "phase": null,
+    "raw_error_included": false
+  },
+  "finished_at": "2026-07-10T02:46:39Z",
+  "mode": "published-image",
+  "privacy": {
+    "api_url_included": false,
+    "command_stderr_included": false,
+    "command_stdout_included": false,
+    "compose_project_name_included": false,
+    "disposable_test_volumes_only": true,
+    "docker_logs_included": false,
+    "env_file_path_included": false,
+    "learner_answers_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_source_text_included": false,
+    "secrets_included": false
+  },
+  "runtime": {
+    "api_flow_completed": true,
+    "compose_project_included": false,
+    "compose_start_attempts": 1,
+    "controlled_restart_attempted": true,
+    "controlled_restart_completed": true,
+    "image_reference_included": false,
+    "pre_restart_session_recovery_completed": true,
+    "published_image_digest": "sha256:3426e2077415c58a3c05607cdb7743ece1554efee42cacf589f04c737893ac08",
+    "published_image_pull_completed": true,
+    "published_tag": "main",
+    "recovery_after_failure_observed": true,
+    "source_build_completed": false,
+    "source_revision_sha": null,
+    "source_worktree_dirty": null
+  },
+  "schedule": {
+    "accelerated_clock_used": false,
+    "fault_after_seconds": 600.0,
+    "fault_duration_seconds": 45.0,
+    "interval_seconds": 10.0,
+    "real_elapsed_time_required": true,
+    "samples_requested": 721
+  },
+  "schema_version": "self-host-reliability-matrix-receipt-v1",
+  "soak": {
+    "blocked_reasons": [],
+    "claim_boundary": "This receipt proves only bounded HTTP health availability for one self-host window. It does not prove correctness, tenant isolation, production SLO compliance, or recovery.",
+    "classification": "healthy_window",
+    "endpoint": {
+      "host_included": false,
+      "scope": "loopback",
+      "tls_enabled": false,
+      "url_included": false
+    },
+    "finished_at": "2026-07-10T02:46:39Z",
+    "latency_ms": {
+      "maximum": 47,
+      "minimum": 17,
+      "p50": 19,
+      "p95": 31
+    },
+    "privacy": {
+      "agent_metadata_included": false,
+      "api_token_included": false,
+      "api_url_included": false,
+      "docker_logs_included": false,
+      "health_response_body_included": false,
+      "learner_answers_included": false,
+      "local_absolute_paths_included": false,
+      "metadata_only": true,
+      "model_calls_performed": false,
+      "production_mutation_performed": false,
+      "raw_source_text_included": false
+    },
+    "sampling": {
+      "failure_categories": {
+        "healthy": 716,
+        "unavailable": 5
+      },
+      "failure_count": 5,
+      "interval_seconds": 10.0,
+      "longest_consecutive_failure_run": 5,
+      "recovered_after_failure": true,
+      "recovery_count": 1,
+      "sample_count": 721,
+      "success_count": 716,
+      "success_ratio": 0.9931
+    },
+    "schema_version": "self-host-soak-receipt-v1",
+    "started_at": "2026-07-10T00:46:24Z",
+    "status": "pass",
+    "thresholds": {
+      "maximum_consecutive_failures": 8,
+      "minimum_success_ratio": 0.99,
+      "recovery_after_failure_required": true
+    }
+  },
+  "started_at": "2026-07-10T00:45:59Z",
+  "status": "pass"
+}

@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-405-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-407-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -407,6 +407,12 @@ EVIDENCE_REFS = [
     ".github/workflows/security.yml",
     "apps/api/Dockerfile",
     "infra/compose/docker-compose.yml",
+    "scripts/verify_strict_reliability_acceptance.py",
+    "fixtures/reliability/run-29060766261/source-build-receipt.json",
+    "fixtures/reliability/run-29060766261/published-image-receipt.json",
+    "fixtures/reliability/run-29060766261/reliability-index.json",
+    "fixtures/reliability/run-29060766261/remote-evidence.json",
+    "platform/generated/study-anything-strict-reliability-acceptance.json",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,

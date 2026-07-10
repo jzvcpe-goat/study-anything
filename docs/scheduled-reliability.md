@@ -74,6 +74,12 @@ Replay does not repair or replace a failed mode receipt and does not turn a shor
 evidence. A missing artifact, different workflow path, unfinished run, source-commit mismatch,
 mixed profile, failed receipt, or privacy violation still blocks the index.
 
+The first accepted strict dual-path evidence is run `29060766261`, indexed by replay run
+`29066220685`. Both modes used the exact default profile and passed after one controlled interruption.
+The generated acceptance report is
+`platform/generated/study-anything-strict-reliability-acceptance.json`. This is one bounded strict
+dual pass, not a longitudinal trend or production SLO.
+
 To rebuild or append an index offline from downloaded receipts:
 
 ```bash

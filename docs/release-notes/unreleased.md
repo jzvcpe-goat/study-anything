@@ -30,6 +30,11 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- PR #407 is recorded as the current metadata-only release-stack group after all protected GitHub
+  checks passed. This terminal self-intake does not require another self-intake under the recursion
+  stop rule.
+- Strict reliability run `29060766261` now has a verified metadata-only `strict_dual_pass` index,
+  rebuilt by bounded replay run `29066220685`; it remains one run, not a trend or production SLO.
 - Completed reliability runs can now replay only their metadata index by source run ID. The replay
   binds same-repository artifacts to the original reliability workflow, event, and head commit; it
   cannot rerun, repair, or relax failed or diagnostic mode receipts.
