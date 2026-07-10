@@ -30,6 +30,9 @@ API_ROOT = ROOT / "apps/api"
 if str(API_ROOT) not in sys.path:
     sys.path.insert(0, str(API_ROOT))
 
+# This verifier exercises API authorization, not the optional LangGraph runtime.
+os.environ["WORKFLOW_ENGINE"] = "deterministic"
+
 from study_anything.api import main as api_main  # noqa: E402
 from study_anything.core.agent_registry import AgentRegistry, AgentRouter  # noqa: E402
 from study_anything.core.store import InMemorySessionStore  # noqa: E402

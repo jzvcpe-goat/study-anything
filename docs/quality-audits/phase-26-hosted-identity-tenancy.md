@@ -96,6 +96,12 @@ during collection with no tests executed. The command was corrected with the
 repository `PYTHONPATH`; the resulting 14-test run passed. The collection failure
 is not counted as product evidence.
 
+The first GitHub `container policy` run reached the hosted verifier but failed
+before executing it because the minimal policy environment did not install the
+optional LangGraph runtime. The verifier was corrected to select the deterministic
+workflow explicitly, matching its authorization-only scope; this is a harness
+dependency fix, not a weakened identity or tenancy assertion.
+
 ## Acceptance Matrix
 
 | Area | Minimum Passing Condition | Status |

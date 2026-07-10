@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7033461,
+  "archive_bytes": 7033453,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "e9494e7d1e0ea98e774cca60b3c940d9a4c1249a028600ff20d9f52c500e2001",
+  "archive_sha256": "99fbccb3c9f0db662ecceda4561d23f1ca409207cb188938df3e25cf4bfae41b",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "6048f6891624a9b20c05d57f31272ec586c50e83135e3be43459d581119f3ef5"
+      "sha256": "796342e3c78c2480c456715d376a1dea634f249682693687f7d11f5d033cb1a1"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",

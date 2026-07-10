@@ -11581,11 +11581,11 @@
       "sha256": "e81e8cff354ac7febabef1dc32f6f0e04824389e15198053677788eeb2c9d98c"
     },
     {
-      "bytes": 15301,
+      "bytes": 15431,
       "kind": "verification",
       "path": "scripts/verify_hosted_identity_tenancy.py",
       "purpose": "Verify optional OIDC identity and application-layer tenant isolation.",
-      "sha256": "57f00ae3b79b819b13b859ae684c55b0c8806900ea15de22aacb2a7220349267"
+      "sha256": "c76d9ce1497195781fb18f1258601e0192b16e628bbcc1032909f7299e3cc850"
     },
     {
       "bytes": 8317,
