@@ -1,0 +1,183 @@
+{
+  "schema_version": "external-security-audit-plan-v1",
+  "status": "ready_for_independent_audit",
+  "repository": "jzvcpe-goat/study-anything",
+  "scope_commit_binding": "required_at_audit_execution",
+  "independence": {
+    "external_auditor_required": true,
+    "human_security_reviewer_required": true,
+    "ai_only_review_sufficient": false,
+    "self_certification_allowed": false,
+    "signed_report_required": true,
+    "audit_completed": false
+  },
+  "scope_areas": [
+    {
+      "id": "oidc_and_tenant_authorization",
+      "evidence_commands": [
+        "python3 scripts/verify_hosted_identity_tenancy.py --check"
+      ],
+      "evidence_assets": [
+        "docs/hosted-identity-tenancy.md",
+        "docs/quality-audits/phase-26-hosted-identity-tenancy.md"
+      ],
+      "required_methods": [
+        "source_review",
+        "token_negative_testing",
+        "cross_tenant_testing",
+        "cross_workspace_testing"
+      ]
+    },
+    {
+      "id": "api_container_and_filesystem",
+      "evidence_commands": [
+        "python3 scripts/verify_local_api_security.py --check",
+        "python3 scripts/verify_container_security.py --check"
+      ],
+      "evidence_assets": [
+        "docs/security-baseline.md",
+        "docs/quality-audits/phase-23-repository-security-remediation.md"
+      ],
+      "required_methods": [
+        "api_authentication_review",
+        "container_policy_review",
+        "path_traversal_testing",
+        "archive_boundary_testing"
+      ]
+    },
+    {
+      "id": "agent_egress_and_credentials",
+      "evidence_commands": [
+        "python3 scripts/verify_agent_endpoint_policy.py --check"
+      ],
+      "evidence_assets": [
+        "docs/agent-contract.md",
+        "docs/quality-audits/phase-25-dependency-and-agent-egress.md"
+      ],
+      "required_methods": [
+        "ssrf_review",
+        "redirect_testing",
+        "allowlist_bypass_testing",
+        "credential_exposure_review"
+      ]
+    },
+    {
+      "id": "dependency_and_supply_chain",
+      "evidence_commands": [
+        "python3 scripts/generate_python_supply_chain.py --check",
+        "python3 scripts/verify_dependency_risk_acceptance.py --check"
+      ],
+      "evidence_assets": [
+        "platform/generated/study-anything-python-supply-chain.json",
+        "platform/generated/study-anything-python-sbom.cdx.json",
+        "docs/quality-audits/phase-24-python-supply-chain.md"
+      ],
+      "required_methods": [
+        "lockfile_review",
+        "sbom_review",
+        "advisory_review",
+        "ci_dependency_review"
+      ]
+    },
+    {
+      "id": "plugin_backup_sync_and_local_data",
+      "evidence_commands": [
+        "python3 scripts/verify_plugin_quarantine.py",
+        "python3 scripts/verify_security_recovery_hardening.py",
+        "python3 scripts/verify_backup_restore_drill.py"
+      ],
+      "evidence_assets": [
+        "docs/security.md",
+        "docs/self-hosting.md"
+      ],
+      "required_methods": [
+        "plugin_tamper_testing",
+        "archive_traversal_testing",
+        "backup_restore_review",
+        "local_data_privacy_review"
+      ]
+    },
+    {
+      "id": "dual_loop_and_delivery_trust",
+      "evidence_commands": [
+        "python3 scripts/verify_dual_loop_contracts.py --check",
+        "python3 scripts/verify_failure_sandbox_lite.py --check",
+        "python3 scripts/verify_attention_reconstruction_lite.py --check",
+        "python3 scripts/verify_dual_loop_gate.py --check"
+      ],
+      "evidence_assets": [
+        "docs/dual-loop-mvp.md",
+        "docs/trust-model.md",
+        "platform/generated/study-anything-dual-loop-contracts.json",
+        "platform/generated/study-anything-dual-loop-gate.json"
+      ],
+      "required_methods": [
+        "artifact_integrity_review",
+        "negative_fixture_review",
+        "human_reconstruction_boundary_review",
+        "ai_only_approval_rejection_review"
+      ]
+    },
+    {
+      "id": "ci_release_and_reliability",
+      "evidence_commands": [
+        "python3 scripts/verify_github_security_posture.py --check",
+        "python3 scripts/verify_strict_reliability_acceptance.py --check",
+        "python3 scripts/generated_evidence_topology.py --check"
+      ],
+      "evidence_assets": [
+        "platform/generated/study-anything-strict-reliability-acceptance.json",
+        "docs/release-checklist.md"
+      ],
+      "required_methods": [
+        "branch_protection_review",
+        "code_scanning_review",
+        "generated_evidence_integrity_review",
+        "release_claim_boundary_review"
+      ]
+    }
+  ],
+  "acceptance": {
+    "open_critical_findings_allowed": 0,
+    "open_high_findings_allowed": 0,
+    "medium_findings_require_owner_and_deadline": true,
+    "critical_and_high_retest_required": true,
+    "exact_commit_required": true,
+    "final_decision_values": [
+      "pass",
+      "conditional_pass",
+      "fail"
+    ]
+  },
+  "required_outputs": {
+    "finding_schema": "external-security-audit-finding-v1",
+    "report_schema": "external-security-audit-report-v1",
+    "signed_machine_readable_report": true,
+    "redacted_public_summary": true,
+    "private_reproduction_channel": true
+  },
+  "privacy": {
+    "metadata_only_pack": true,
+    "raw_source_text_included": false,
+    "raw_learner_data_included": false,
+    "production_payloads_included": false,
+    "screenshots_included": false,
+    "real_secrets_included": false,
+    "cookies_included": false,
+    "bearer_tokens_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false,
+    "private_exploit_details_included": false
+  },
+  "claim_boundary": {
+    "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
+    "not_claimed": [
+      "audit completed",
+      "audit passed",
+      "penetration test completed",
+      "vulnerability-free software",
+      "hosted production certification",
+      "legal or compliance certification"
+    ]
+  }
+}

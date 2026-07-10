@@ -68,3 +68,7 @@ jobs:
         run: python scripts/verify_agent_endpoint_policy.py --check
       - name: Verify hosted identity and tenant isolation
         run: python scripts/verify_hosted_identity_tenancy.py --check
+      - name: Verify independent security audit preparation pack
+        run: |
+          python scripts/generate_external_security_audit_pack.py --check
+          python scripts/verify_external_security_audit_pack.py --check

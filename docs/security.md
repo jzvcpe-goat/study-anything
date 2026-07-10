@@ -119,8 +119,16 @@ python3 scripts/verify_container_security.py --check
 python3 scripts/verify_dependency_risk_acceptance.py --check
 python3 scripts/verify_agent_endpoint_policy.py --check
 python3 scripts/verify_hosted_identity_tenancy.py --check
+python3 scripts/generate_external_security_audit_pack.py --check
+python3 scripts/verify_external_security_audit_pack.py --check
 python3 scripts/generate_python_supply_chain.py --check
 ```
+
+The external audit kit lives under `security/audit/` and is distributed as
+`platform/generated/study-anything-external-security-audit-pack.zip`. The pack
+contains only public metadata, schemas, hashes, and evidence. It requires an
+external human security reviewer and a signed report bound to an exact commit.
+Generating or verifying the pack does not complete the audit.
 
 The container and GitHub Actions baseline is documented in `docs/security-baseline.md`. The API and
 mock Agent use a fixed non-root runtime identity, read-only root filesystems, dropped capabilities,

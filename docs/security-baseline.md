@@ -53,6 +53,8 @@ The `security` workflow runs:
 - the deterministic container policy verifier.
 - the hosted identity/tenancy verifier, using ephemeral JWT keys and temporary stores with no
   external network or production mutation.
+- the external audit-pack verifier, which rejects self-certified pass claims and checks the
+  metadata-only archive, schemas, evidence hashes, and independent-review requirements.
 
 The repository setting target is:
 
@@ -78,6 +80,7 @@ The deterministic contract is part of CI and the release check:
 ```bash
 python3 scripts/verify_github_security_posture.py --check
 python3 scripts/verify_hosted_identity_tenancy.py --check
+python3 scripts/verify_external_security_audit_pack.py --check
 ```
 
 After the settings are applied, perform a read-only live verification:
@@ -91,14 +94,15 @@ python3 scripts/verify_github_security_posture.py --live \
 ## Claim Boundary
 
 This baseline reduces common container privilege and CI supply-chain risk. CodeQL and Dependency
-Review are supporting controls, not proof that the repository is vulnerability-free. A repository
-wide threat-led scan, remediation of any findings, image/SBOM review, and independent external
-security audit remain separate acceptance stages before a hosted production claim.
+Review are supporting controls, not proof that the repository is vulnerability-free. Repository
+threat-model and image/SBOM evidence are now packaged for an external reviewer, but the independent
+audit, finding remediation, and signed retest report remain separate human acceptance stages before
+a hosted production claim.
 
 ## 中文说明
 
 API 和 mock Agent 容器现在以固定非 root 身份运行，并启用只读根文件系统、丢弃全部
 capability、`no-new-privileges` 和受限 `/tmp`。GitHub Actions 全部固定到完整 commit SHA，
 并新增 CodeQL 与依赖变更审查。上述措施是安全基线，不等于“无漏洞”或生产安全认证；主干
-保护、Dependabot 和其他 GitHub 设置必须在合并后通过实时 API 回读验收，独立安全审计仍是
-人工断点。
+保护、Dependabot 和其他 GitHub 设置必须在合并后通过实时 API 回读验收。仓库现可生成
+`ready_for_independent_audit` 审计准备包，但独立安全审计及签名报告仍是人工断点。

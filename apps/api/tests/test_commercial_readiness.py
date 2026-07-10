@@ -75,6 +75,12 @@ class CommercialReadinessTests(unittest.TestCase):
         self.assertEqual(foundation["status"], "application_layer_foundation")
         self.assertEqual(foundation["principal_binding"], "issuer_tenant_subject")
         self.assertIn("database row-level security", foundation["not_proven"])
+        security_audit = report["security_audit"]
+        self.assertEqual(security_audit["status"], "ready_for_independent_audit")
+        self.assertFalse(security_audit["audit_completed"])
+        self.assertFalse(security_audit["self_certification_allowed"])
+        self.assertTrue(security_audit["human_security_reviewer_required"])
+        self.assertFalse(security_audit["ai_only_review_sufficient"])
 
         for invariant in report["local_core_invariants"]:
             self.assertTrue(invariant["required_for_oss_launch"])
@@ -119,6 +125,8 @@ class CommercialReadinessTests(unittest.TestCase):
         self.assertEqual(summary["schema_version"], "commercial-readiness-v1")
         self.assertEqual(summary["status"], "architecture_ready_for_oss_platform_alpha")
         self.assertEqual(summary["local_invariants_passed"], summary["local_invariant_count"])
+        self.assertEqual(summary["security_audit_status"], "ready_for_independent_audit")
+        self.assertFalse(summary["security_audit_completed"])
 
     def test_verifier_script_passes(self) -> None:
         completed = subprocess.run(

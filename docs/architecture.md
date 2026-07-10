@@ -286,6 +286,19 @@ mode. This is logical application isolation, not database RLS, IdP lifecycle, or
 过滤，工作区执行角色权限，非 demo Agent 按 principal 隔离。尚未租户化的本地全局路由在
 hosted 模式下直接关闭。该能力是应用层逻辑隔离，不是数据库 RLS、IdP 生命周期或托管认证。
 
+## Independent Audit Boundary
+
+`security/audit/audit-plan.json` and the generated external audit pack form a structured bridge from
+repository evidence to an external security reviewer. The bridge contains public metadata, schemas,
+hashes, and verification commands only. The reviewer must bind the engagement to an exact commit,
+perform independent source review and negative testing, then return a signed report. Repository CI
+can prove that the pack is complete and untampered; it cannot grant itself an audit pass.
+
+`security/audit/audit-plan.json` 与生成的外部审计包，把仓库证据通过结构化 artifact 交给外部
+安全审查员。这个桥只包含公开 metadata、schema、hash 和验证命令。审查员必须固定准确
+commit，独立进行源码审查和负向测试，再返回签名报告。仓库 CI 只能证明审计包完整且未被
+篡改，不能给自己授予审计通过结论。
+
 ## Runtime Strategy
 
 Mastra is the planned runtime layer for Agent/workflow/tool/HITL orchestration. It should sit below Cognitive Loop Core:

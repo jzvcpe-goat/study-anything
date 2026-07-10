@@ -1,0 +1,302 @@
+{
+  "acceptance": {
+    "critical_and_high_retest_required": true,
+    "exact_commit_required": true,
+    "final_decision_values": [
+      "pass",
+      "conditional_pass",
+      "fail"
+    ],
+    "medium_findings_require_owner_and_deadline": true,
+    "open_critical_findings_allowed": 0,
+    "open_high_findings_allowed": 0
+  },
+  "archive": {
+    "bytes": 72637,
+    "path": "platform/generated/study-anything-external-security-audit-pack.zip",
+    "root": "study-anything-external-security-audit-pack",
+    "sha256": "a2ab7821fe008e67c17e74cd0b5899a2a50901cc62d1b6285bc6535ca72a6d8c"
+  },
+  "claim_boundary": {
+    "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
+    "not_claimed": [
+      "audit completed",
+      "audit passed",
+      "penetration test completed",
+      "vulnerability-free software",
+      "hosted production certification",
+      "legal or compliance certification"
+    ]
+  },
+  "files": [
+    {
+      "archive_path": "study-anything-external-security-audit-pack/SECURITY.md",
+      "bytes": 2279,
+      "path": "SECURITY.md",
+      "purpose": "Public vulnerability reporting and audit claim boundary.",
+      "role": "security_policy",
+      "sha256": "b294b983099f7330a82cef30e47325efdc58112b068acc9a536511646863d9a8"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/README.md",
+      "bytes": 1662,
+      "path": "security/audit/README.md",
+      "purpose": "Independent auditor start and claim boundary.",
+      "role": "auditor_guide",
+      "sha256": "5e050ac71d8c0a823324953a39ab972fdfe88258345c5c2a6d03387e8f2f8699"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
+      "bytes": 5972,
+      "path": "security/audit/audit-plan.json",
+      "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
+      "role": "audit_plan",
+      "sha256": "99bf165bdc139cc15906e5fba75698f2b672cdc89a34f706a33aeef54af2cb7e"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
+      "bytes": 3121,
+      "path": "security/audit/threat-model.md",
+      "purpose": "Assets, trust boundaries, actors, abuse cases, and exclusions.",
+      "role": "threat_model",
+      "sha256": "86962e250af3064513be3924cafd78bfc735b4a1233d5dcc64c053b2e065244d"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/rules-of-engagement.md",
+      "bytes": 2166,
+      "path": "security/audit/rules-of-engagement.md",
+      "purpose": "Authorized targets, methods, restrictions, and completion rules.",
+      "role": "rules_of_engagement",
+      "sha256": "230db685b7d916adc9980960c92a248c5e2c039c046b6c191081d763b7ddbb90"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/remediation-policy.md",
+      "bytes": 1487,
+      "path": "security/audit/remediation-policy.md",
+      "purpose": "Severity SLA, closure evidence, and commercial gate.",
+      "role": "remediation_policy",
+      "sha256": "1d72ea6700e94014314e74116b2ddfd58cd33fcb1ca32cd37e78c64bf7538206"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/security/audit/report-template.md",
+      "bytes": 1517,
+      "path": "security/audit/report-template.md",
+      "purpose": "Human-readable signed audit report template.",
+      "role": "report_template",
+      "sha256": "9cc9e8c6803e5b09934bc914d41f6f378aad44c0c87c02735db57d07b177c362"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/.github/ISSUE_TEMPLATE/external-security-audit.yml",
+      "bytes": 2088,
+      "path": ".github/ISSUE_TEMPLATE/external-security-audit.yml",
+      "purpose": "Redacted external audit execution issue template.",
+      "role": "coordination_template",
+      "sha256": "8bbb22405e8e9df673b84f6f125e47ea3497e3e24f5ed30245b8d39939c2b9e7"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/security/external-security-audit-finding-v1.schema.json",
+      "bytes": 4004,
+      "path": "platform/schemas/security/external-security-audit-finding-v1.schema.json",
+      "purpose": "Metadata-only security finding schema.",
+      "role": "schema",
+      "sha256": "402d13ab68f583733cbba891cf3a4bc2c597ac6419ee0e80176ed9cd985e2888"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/security/external-security-audit-report-v1.schema.json",
+      "bytes": 4047,
+      "path": "platform/schemas/security/external-security-audit-report-v1.schema.json",
+      "purpose": "Signed independent audit report schema.",
+      "role": "schema",
+      "sha256": "08537d450500c32cf819a841fb1074fc4575d9f526efedee7031be4551d7a152"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
+      "bytes": 7791,
+      "path": "docs/security.md",
+      "purpose": "Local-first security and privacy boundary.",
+      "role": "security_doc",
+      "sha256": "4755f9a93838a9ec5d7c5dd62c3a188f989f531eb0ed44b0bbc517a6e4f42fd2"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
+      "bytes": 4715,
+      "path": "docs/security-baseline.md",
+      "purpose": "Container, CI, supply-chain, and repository security baseline.",
+      "role": "security_doc",
+      "sha256": "4de1ba695d5ce1ca01004e461a7f505930b895a02303b4694ffc2b46ff063011"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/hosted-identity-tenancy.md",
+      "bytes": 4727,
+      "path": "docs/hosted-identity-tenancy.md",
+      "purpose": "OIDC and application-layer tenant authorization boundary.",
+      "role": "security_doc",
+      "sha256": "14c4f904a20d692b73eb74445984f6d71bffdb4837df2bb80d2db665a3e9ccc0"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/agent-contract.md",
+      "bytes": 6616,
+      "path": "docs/agent-contract.md",
+      "purpose": "User-owned Agent contract and egress boundary.",
+      "role": "security_doc",
+      "sha256": "e59ff0b4efed6f8c80df78a2e135edfdb5209e51b7195453593e59ca66791dd7"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/commercial-readiness.md",
+      "bytes": 15737,
+      "path": "docs/commercial-readiness.md",
+      "purpose": "Hosted commercial readiness and non-claims.",
+      "role": "readiness_doc",
+      "sha256": "7bb877c08252814371568c589fa708574c82a6902e899ae7e471fd644e4f3c80"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/dual-loop-mvp.md",
+      "bytes": 6573,
+      "path": "docs/dual-loop-mvp.md",
+      "purpose": "Controlled failure and human reconstruction boundary.",
+      "role": "trust_doc",
+      "sha256": "6bd633002fa103330ba7aa90affbdf45a80bf2a4a98e446e74ac7895b7d2d5af"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
+      "bytes": 11074,
+      "path": "docs/trust-model.md",
+      "purpose": "Delivery trust and AI-only review rejection model.",
+      "role": "trust_doc",
+      "sha256": "3545284f3198669793c4fcd59925dd6504544401122d06fca69ae6ee23833f3b"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
+      "bytes": 36872,
+      "path": "docs/release-checklist.md",
+      "purpose": "Release acceptance and claim-boundary checklist.",
+      "role": "release_doc",
+      "sha256": "2dbf8b99ceba2bc4bfd6809971714df63fced5ab18f7caea3854b9170d29afd1"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-23-repository-security-remediation.md",
+      "bytes": 6161,
+      "path": "docs/quality-audits/phase-23-repository-security-remediation.md",
+      "purpose": "Repository security remediation evidence.",
+      "role": "quality_audit",
+      "sha256": "3a3a8d6eac8de25f5f2bdd460682fb48129013c77f2b27a45d999799ceb16c20"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-24-python-supply-chain.md",
+      "bytes": 4483,
+      "path": "docs/quality-audits/phase-24-python-supply-chain.md",
+      "purpose": "Python supply-chain evidence.",
+      "role": "quality_audit",
+      "sha256": "4c1665469bd8a46bf3c0665dd7ceccdb47e429e19b316e8e33878f9ae812e8a8"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-25-dependency-and-agent-egress.md",
+      "bytes": 4911,
+      "path": "docs/quality-audits/phase-25-dependency-and-agent-egress.md",
+      "purpose": "Dependency risk and Agent egress evidence.",
+      "role": "quality_audit",
+      "sha256": "027dab06068084286ec8dba5a3ef70b61def9f7f23c5f22d877fe057ef61e5e4"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-26-hosted-identity-tenancy.md",
+      "bytes": 8652,
+      "path": "docs/quality-audits/phase-26-hosted-identity-tenancy.md",
+      "purpose": "Hosted identity and tenancy evidence.",
+      "role": "quality_audit",
+      "sha256": "98eb9e24535e26ba093125835dd2b8cca2365730e5fee6f230a4cd72b7489b07"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
+      "bytes": 2213,
+      "path": "platform/generated/study-anything-python-supply-chain.json",
+      "purpose": "Lock, hash export, and SBOM receipt.",
+      "role": "generated_evidence",
+      "sha256": "3756e22b33c1f577194f19fd6c04ddaf11d613477d885cabb9be88aee1b99336"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",
+      "bytes": 30043,
+      "path": "platform/generated/study-anything-python-sbom.cdx.json",
+      "purpose": "CycloneDX Python dependency inventory.",
+      "role": "generated_evidence",
+      "sha256": "1f5ef29770932cd84a05ae584e1ff36e11c1a07182f0aba38c4372c66fe60d53"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-strict-reliability-acceptance.json",
+      "bytes": 2625,
+      "path": "platform/generated/study-anything-strict-reliability-acceptance.json",
+      "purpose": "Strict reliability acceptance receipt.",
+      "role": "generated_evidence",
+      "sha256": "10e4304a8e35bc11b8a022ba2e734fdfe8d8dcf72c8cd443fed9bf13b359112e"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-dual-loop-contracts.json",
+      "bytes": 3502,
+      "path": "platform/generated/study-anything-dual-loop-contracts.json",
+      "purpose": "Dual Loop contract verification receipt.",
+      "role": "generated_evidence",
+      "sha256": "ab1b4573b9cc3983135a3a40e312095d3bc4c9d9b283687d86f8e69845f8d151"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-dual-loop-gate.json",
+      "bytes": 2098,
+      "path": "platform/generated/study-anything-dual-loop-gate.json",
+      "purpose": "Dual Loop propagation gate receipt.",
+      "role": "generated_evidence",
+      "sha256": "875fe33b8c61b3ce682fe7d3306b60c94f51b63e6bd914855094e91cc29ff86a"
+    }
+  ],
+  "independence": {
+    "ai_only_review_sufficient": false,
+    "audit_completed": false,
+    "external_auditor_required": true,
+    "human_security_reviewer_required": true,
+    "self_certification_allowed": false,
+    "signed_report_required": true
+  },
+  "name": "study-anything-external-security-audit-pack",
+  "package_type": "independent_security_audit_preparation",
+  "privacy": {
+    "audit_finding_bodies_included": false,
+    "bearer_tokens_included": false,
+    "cookies_included": false,
+    "environment_values_included": false,
+    "local_absolute_paths_included": false,
+    "metadata_only_pack": true,
+    "private_exploit_details_included": false,
+    "production_payloads_included": false,
+    "raw_learner_data_included": false,
+    "raw_logs_included": false,
+    "raw_source_text_included": false,
+    "real_secrets_included": false,
+    "screenshots_included": false,
+    "signed_urls_included": false,
+    "user_owned_agent_credentials_included": false
+  },
+  "repository": "jzvcpe-goat/study-anything",
+  "required_outputs": {
+    "finding_schema": "external-security-audit-finding-v1",
+    "private_reproduction_channel": true,
+    "redacted_public_summary": true,
+    "report_schema": "external-security-audit-report-v1",
+    "signed_machine_readable_report": true
+  },
+  "schema_version": "external-security-audit-pack-v1",
+  "scope_area_ids": [
+    "oidc_and_tenant_authorization",
+    "api_container_and_filesystem",
+    "agent_egress_and_credentials",
+    "dependency_and_supply_chain",
+    "plugin_backup_sync_and_local_data",
+    "dual_loop_and_delivery_trust",
+    "ci_release_and_reliability"
+  ],
+  "scope_commit_binding": "required_at_audit_execution",
+  "status": "ready_for_independent_audit",
+  "title": "Study Anything External Security Audit Pack",
+  "verification_commands": [
+    "python3 scripts/generate_external_security_audit_pack.py --check",
+    "python3 scripts/verify_external_security_audit_pack.py --check"
+  ],
+  "version": "v0.3.31-alpha"
+}

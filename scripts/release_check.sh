@@ -407,6 +407,8 @@ fi
   apps/api/study_anything/core/api_security.py \
   apps/api/study_anything/core/hosted_identity.py \
   apps/api/study_anything/core/workspace.py \
+  scripts/generate_external_security_audit_pack.py \
+  scripts/verify_external_security_audit_pack.py \
   scripts/verify_hosted_identity_tenancy.py \
   scripts/verify_local_api_security.py
 
@@ -441,6 +443,8 @@ phase "existing release gates"
 "$python_bin" scripts/verify_dependency_risk_acceptance.py --check
 "$python_bin" scripts/verify_agent_endpoint_policy.py --check
 "$python_bin" scripts/verify_hosted_identity_tenancy.py --check
+"$python_bin" scripts/generate_external_security_audit_pack.py --check
+"$python_bin" scripts/verify_external_security_audit_pack.py --check
 "$python_bin" scripts/generate_python_supply_chain.py --check --timeout-seconds 120
 "$python_bin" scripts/verify_github_security_posture.py --check
 "$python_bin" scripts/verify_self_host_soak.py --check

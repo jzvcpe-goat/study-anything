@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://study-anything.local/schemas/security/external-security-audit-report-v1.schema.json",
+  "title": "External Security Audit Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_status",
+    "decision",
+    "repository",
+    "scope_commit",
+    "auditor",
+    "review_period",
+    "scope_areas",
+    "finding_refs",
+    "finding_counts",
+    "signature",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "external-security-audit-report-v1"
+    },
+    "audit_status": {
+      "const": "completed_by_independent_auditor"
+    },
+    "decision": {
+      "enum": [
+        "pass",
+        "conditional_pass",
+        "fail"
+      ]
+    },
+    "repository": {
+      "const": "jzvcpe-goat/study-anything"
+    },
+    "scope_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "auditor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "organization",
+        "lead_human_reviewer",
+        "independence_attested"
+      ],
+      "properties": {
+        "organization": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 160
+        },
+        "lead_human_reviewer": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 160
+        },
+        "independence_attested": {
+          "const": true
+        }
+      }
+    },
+    "review_period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "started_at",
+        "completed_at"
+      ],
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "scope_areas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      },
+      "uniqueItems": true
+    },
+    "finding_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^AUD-[0-9]{4}$"
+      },
+      "uniqueItems": true
+    },
+    "finding_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "informational"
+      ],
+      "properties": {
+        "critical": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "high": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "medium": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "low": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "informational": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "report_sha256",
+        "signature_ref"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "gpg",
+            "minisign",
+            "sigstore",
+            "other"
+          ]
+        },
+        "report_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "signature_ref": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 240
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_completed",
+        "production_certification",
+        "legal_certification",
+        "general_model_correctness"
+      ],
+      "properties": {
+        "audit_completed": {
+          "const": true
+        },
+        "production_certification": {
+          "const": false
+        },
+        "legal_certification": {
+          "const": false
+        },
+        "general_model_correctness": {
+          "const": false
+        }
+      }
+    }
+  }
+}
