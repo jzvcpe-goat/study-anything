@@ -60,6 +60,7 @@ The repository setting target is:
 - `main` protected with strict required checks;
 - force-push and branch deletion disabled;
 - stale branches deleted after merge;
+- dependency graph enabled so dependency review can execute;
 - Dependabot alerts and security updates enabled when the repository owner token and plan allow it.
 
 Repository settings are external state. They are not considered complete until a live GitHub API

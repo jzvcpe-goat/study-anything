@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 6999451,
+  "archive_bytes": 6999540,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "dad843369722f28368c40a5b1ab77134d38bc07d43d7fb1ed205fa2ba30fa614",
+  "archive_sha256": "17b84a664d453f5fa315c43f6df7b9d55f689e4b8a3dae2485f4056a54a938a4",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -345,11 +345,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/security-baseline.md",
-      "bytes": 3757,
+      "bytes": 3818,
       "kind": "operator_doc",
       "path": "docs/security-baseline.md",
       "purpose": "GitHub Actions and non-root container security baseline.",
-      "sha256": "935f46f7f23a7bca38ea4c4ae23b47ae501d1172a1c984329ac356b8714d7bf5"
+      "sha256": "195caa7d29a7351a013af54038ffe250e76905e537d53cd671da60df2f34c871"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/commercial-readiness.md",
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "d4a8013f7e36e8832d876d8399fdf4200b1e3d4253669b897abf46b4699865c9"
+      "sha256": "5960d543ed6d9ff67aaed996f5ce7411271916a241478981d0b66e57af44c234"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -14649,11 +14649,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_github_security_posture.py",
-      "bytes": 9056,
+      "bytes": 9696,
       "kind": "verification",
       "path": "scripts/verify_github_security_posture.py",
       "purpose": "Deterministic and read-only live GitHub repository security posture verifier.",
-      "sha256": "4a723c133757ab100d6de07aaf7cddbd2e08b4d1a479075e8c134c1e93222bd6"
+      "sha256": "3588a8c1854b48113d29cf03cfc0615b1b947e27107550361408a6114582415d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/.github/workflows/reliability-soak.yml",

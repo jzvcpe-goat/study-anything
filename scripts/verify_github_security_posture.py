@@ -12,6 +12,7 @@ from typing import Any, Mapping, Sequence
 
 SCHEMA_VERSION = "github-security-posture-v1"
 DEFAULT_REQUIRED_CHECKS = (
+    "CodeQL",
     "api-tests",
     "compose-smoke",
     "codeql (python)",
@@ -41,6 +42,7 @@ def assess_posture(
     repository: Mapping[str, Any],
     actions_permissions: Mapping[str, Any],
     branch_protection: Mapping[str, Any],
+    dependency_graph_enabled: bool,
     dependabot_alerts_enabled: bool,
     dependabot_security_updates_enabled: bool,
     required_checks: Sequence[str] = DEFAULT_REQUIRED_CHECKS,
@@ -72,6 +74,7 @@ def assess_posture(
         ).get("enabled")
         is True,
         "stale_branches_deleted_after_merge": repository.get("delete_branch_on_merge") is True,
+        "dependency_graph_enabled": dependency_graph_enabled,
         "dependabot_alerts_enabled": dependabot_alerts_enabled,
         "dependabot_security_updates_enabled": dependabot_security_updates_enabled,
     }
@@ -126,6 +129,7 @@ def verify_contract() -> dict[str, Any]:
         repository=repository,
         actions_permissions=actions,
         branch_protection=protection,
+        dependency_graph_enabled=True,
         dependabot_alerts_enabled=True,
         dependabot_security_updates_enabled=True,
         mode="deterministic",
@@ -139,6 +143,7 @@ def verify_contract() -> dict[str, Any]:
         repository=repository,
         actions_permissions=negative_actions,
         branch_protection=protection,
+        dependency_graph_enabled=True,
         dependabot_alerts_enabled=True,
         dependabot_security_updates_enabled=True,
         mode="deterministic-negative",
@@ -152,6 +157,7 @@ def verify_contract() -> dict[str, Any]:
         repository=repository,
         actions_permissions=actions,
         branch_protection=missing_check,
+        dependency_graph_enabled=True,
         dependabot_alerts_enabled=True,
         dependabot_security_updates_enabled=True,
         mode="deterministic-negative",
@@ -191,16 +197,29 @@ def gh_feature_enabled(path: str) -> bool:
     return completed.returncode == 0 and " 204 " in completed.stdout.split("\r\n", 1)[0]
 
 
+def gh_endpoint_available(path: str) -> bool:
+    completed = subprocess.run(
+        ["gh", "api", path, "--silent"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    return completed.returncode == 0
+
+
 def verify_live(*, repo: str, branch: str, required_checks: Sequence[str]) -> dict[str, Any]:
     repository = gh_json(f"repos/{repo}")
     actions = gh_json(f"repos/{repo}/actions/permissions")
     protection = gh_json(f"repos/{repo}/branches/{branch}/protection")
+    security = require_mapping(repository, "security_and_analysis")
     return assess_posture(
         repository=repository,
         actions_permissions=actions,
         branch_protection=protection,
+        dependency_graph_enabled=gh_endpoint_available(f"repos/{repo}/dependency-graph/sbom"),
         dependabot_alerts_enabled=gh_feature_enabled(f"repos/{repo}/vulnerability-alerts"),
-        dependabot_security_updates_enabled=gh_feature_enabled(f"repos/{repo}/automated-security-fixes"),
+        dependabot_security_updates_enabled=enabled_status(security, "dependabot_security_updates"),
         required_checks=required_checks,
         mode="live-read-only",
     )

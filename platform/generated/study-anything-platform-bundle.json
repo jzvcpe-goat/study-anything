@@ -11637,11 +11637,11 @@
       "sha256": "d862436f54432034f02cafa3132e96301d4261d4590004d8fba8dc5286cf3aff"
     },
     {
-      "bytes": 9056,
+      "bytes": 9696,
       "kind": "verification",
       "path": "scripts/verify_github_security_posture.py",
       "purpose": "Deterministic and read-only live GitHub repository security posture verifier.",
-      "sha256": "4a723c133757ab100d6de07aaf7cddbd2e08b4d1a479075e8c134c1e93222bd6"
+      "sha256": "3588a8c1854b48113d29cf03cfc0615b1b947e27107550361408a6114582415d"
     },
     {
       "bytes": 4975,
@@ -14829,11 +14829,11 @@
       "sha256": "45307068ccdd70d2c7b5ffef1e7a09bd4bb20379844e7978c7ca7a4f6769a490"
     },
     {
-      "bytes": 3757,
+      "bytes": 3818,
       "kind": "docs",
       "path": "docs/security-baseline.md",
       "purpose": "GitHub Actions and non-root container security baseline.",
-      "sha256": "935f46f7f23a7bca38ea4c4ae23b47ae501d1172a1c984329ac356b8714d7bf5"
+      "sha256": "195caa7d29a7351a013af54038ffe250e76905e537d53cd671da60df2f34c871"
     },
     {
       "bytes": 2366,

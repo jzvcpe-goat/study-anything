@@ -39,6 +39,7 @@ class GithubSecurityPostureTests(unittest.TestCase):
             repository=repository,
             actions_permissions=actions,
             branch_protection=protection,
+            dependency_graph_enabled=True,
             dependabot_alerts_enabled=True,
             dependabot_security_updates_enabled=True,
             mode="test",
@@ -54,6 +55,7 @@ class GithubSecurityPostureTests(unittest.TestCase):
             repository=repository,
             actions_permissions=actions,
             branch_protection=protection,
+            dependency_graph_enabled=True,
             dependabot_alerts_enabled=False,
             dependabot_security_updates_enabled=True,
             mode="test",
@@ -61,6 +63,22 @@ class GithubSecurityPostureTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "fail")
         self.assertIn("dependabot_alerts_enabled", report["failed_checks"])
+
+    def test_missing_dependency_graph_is_rejected(self) -> None:
+        repository, actions, protection = posture.deterministic_fixture()
+
+        report = posture.assess_posture(
+            repository=repository,
+            actions_permissions=actions,
+            branch_protection=protection,
+            dependency_graph_enabled=False,
+            dependabot_alerts_enabled=True,
+            dependabot_security_updates_enabled=True,
+            mode="test",
+        )
+
+        self.assertEqual(report["status"], "fail")
+        self.assertIn("dependency_graph_enabled", report["failed_checks"])
 
 
 if __name__ == "__main__":

@@ -18,16 +18,15 @@ still an OSS/local-first alpha, not a hosted commercial service.
 
 Largest remaining risks:
 
-1. The new CodeQL, dependency-review, and container-policy jobs have not yet run on GitHub.
-2. Live `main` protection is absent; the read-only posture verifier currently fails at branch protection.
-3. The strict two-hour source-build/published-image reliability run is still in progress and cannot be claimed.
-4. A threat-led repository scan, image/SBOM review, and independent audit remain outstanding.
+1. The final PR head still needs all required GitHub checks after the posture-verifier follow-up.
+2. The strict two-hour source-build/published-image reliability run is still in progress and cannot be claimed.
+3. A threat-led repository scan, image/SBOM review, and independent audit remain outstanding.
 
 Next required actions:
 
-1. Open the Phase 19 PR and require all old and new GitHub checks to pass.
-2. Apply repository security settings and make the live posture verifier pass.
-3. Update this audit with remote evidence, then merge only if the phase decision becomes Pass.
+1. Require all old and new GitHub checks to pass on the final PR head.
+2. Merge only after the final head is green and the live posture verifier remains green.
+3. Preserve strict reliability and independent security as separate acceptance tracks.
 
 Do not:
 
@@ -40,8 +39,8 @@ Do not:
 | Category | Items | Evidence | Risk |
 |---|---|---|---|
 | Included | Non-root API image, read-only application containers, dropped capabilities, hardened tmpfs | Dockerfile, Compose, runtime inspect smoke | Low after remote CI |
-| Included | Full-SHA Action references, CodeQL, dependency review, container policy | Workflow source and deterministic verifier | Medium until GitHub runs it |
-| Included | Read-only live GitHub posture verifier | Positive and negative unit tests | Medium until settings pass live |
+| Included | Full-SHA Action references, CodeQL, dependency review, container policy | First PR run passed; final head pending | Low after final CI |
+| Included | Read-only live GitHub posture verifier | Live 13/13 checks pass | Low |
 | Excluded | Hosted identity, tenant isolation, billing, payments, SSO | Commercial readiness contract | P0 for hosted commercialization, outside this phase |
 | Excluded | Independent penetration test and external audit | Security claim boundary | P1 before hosted production |
 | Claimed but unproven | Strict two-hour dual-path reliability run | GitHub run `29060766261` is in progress | P1 before reliability acceptance |
@@ -75,15 +74,14 @@ without introducing model keys, hosted accounts, production mutation, or a stand
 | Runtime isolation | UID/GID `10001:10001`, read-only root, `cap_drop: ALL`, `no-new-privileges` | Reduces container blast radius |
 | Workflow reproducibility | 29 Action references across 6 repository/distribution workflows use full SHAs | Prevents mutable tag drift |
 | Negative testing | Root user, writable root, missing tmpfs flags, force pushes, missing Dependabot, and unpinned Actions are rejected | Makes controls regression-resistant |
-| Release integration | Full clean-clone release check completed with 873 tests | Covers current working tree, not a partial mode |
+| Release integration | Full clean-clone release check completed with 874 tests | Covers current working tree, not a partial mode |
 | Evidence topology | 19/19 release-distribution nodes converged | Keeps generated packs synchronized |
 
 ## 6. Major Gaps
 
 | Severity | Area | Current | Required | Impact |
 |---|---|---|---|---|
-| P1 | Remote security workflow | Not run for this branch | CodeQL, dependency review, container policy all pass | Merge remains blocked |
-| P1 | Live repository settings | `main` protection read returns unavailable | Strict required checks, no force/delete, SHA pinning, Dependabot enabled | Policy can drift outside source control |
+| P1 | Final-head remote validation | First PR run passed; follow-up commit pending | All six required checks pass on final head | Merge remains blocked until green |
 | P1 | Reliability acceptance | Strict run still in progress | Both paths complete and metadata receipts validate | No strict-run claim yet |
 | P1 | Independent security | No threat-led full scan or external audit | Scan, triage, remediation, independent review | No vulnerability-free or hosted-production claim |
 | P2 | Third-party full profile | API and mock are hardened; Postgres/FalkorDB/Langfuse dependencies are not covered by this policy | Separate image/SBOM and service-hardening review | Optional full profile has broader risk |
@@ -138,13 +136,13 @@ shippable workflow.
 |---|---|---:|---|
 | Container source policy | `verify_container_security.py --check` | Yes | Local pass, CI wired |
 | Runtime container policy | `verify_container_security.py --runtime-container-id ...` | Yes for this phase | Real disposable container pass |
-| GitHub posture contract | `verify_github_security_posture.py --check` | Yes | 3 focused tests and deterministic gate pass |
-| Live GitHub posture | `verify_github_security_posture.py --live ...` | Yes before phase completion | Currently fails because `main` is unprotected |
-| Code scanning | `codeql (python)` | Yes | Pending PR run |
-| Dependency changes | `dependency review` | Yes | Pending PR run |
-| Existing API/Compose gates | `api-tests`, `compose-smoke` | Yes | Pending PR run; local full release pass |
+| GitHub posture contract | `verify_github_security_posture.py --check` | Yes | 4 focused posture tests and deterministic gate pass |
+| Live GitHub posture | `verify_github_security_posture.py --live ...` | Yes before phase completion | Pass, 13/13 settings |
+| Code scanning | `codeql (python)` and `CodeQL` | Yes | First PR run passed; final head pending |
+| Dependency changes | `dependency review` | Yes | First PR run passed after enabling Dependency Graph |
+| Existing API/Compose gates | `api-tests`, `compose-smoke` | Yes | First PR run and local full release passed; final head pending |
 | Distribution consistency | `generated_evidence_topology.py --check` | Yes | 19/19 converged |
-| Full release | `./scripts/release_check.sh` | Yes | Completed, 873 tests, clean clone included |
+| Full release | `./scripts/release_check.sh` | Yes | Completed, 874 tests, clean clone included |
 
 ## 14. Migration And Rollback
 
@@ -160,14 +158,14 @@ plugin must be corrected to use `/data/study-anything`, not granted a writable r
 | Container | Non-root and least-privilege source plus runtime checks pass | Pass |
 | Workflow supply chain | All shipped Action references use full SHAs | Pass |
 | Local release | Full clean-clone release receipt completed | Pass |
-| Remote CI | Old and new required jobs pass on the PR | Pending |
-| Repository settings | Read-only live posture report passes | Fail: branch protection absent |
+| Remote CI | Old and new required jobs pass on the final PR head | Pending final head |
+| Repository settings | Read-only live posture report passes | Pass, 13/13 checks |
 | Reliability | Strict two-hour dual-path artifacts validate | In progress |
 | Hosted production | Identity, tenancy, SLO, incidents, payment, external audit | Out of scope / not ready |
 
 ## 16. Bottom Line
 
-The security baseline code is ready for remote validation. It is not yet ready to merge and does
-not make the whole product commercially production-ready. Phase 19 becomes Pass only after GitHub
-CI and live repository settings are verified; strict reliability and independent security remain
-separate acceptance tracks.
+The security baseline and live repository settings are ready. It is not yet ready to merge and does
+not make the whole product commercially production-ready. Phase 19 becomes Pass only after the
+final PR head is green; strict reliability and independent security remain separate acceptance
+tracks.
