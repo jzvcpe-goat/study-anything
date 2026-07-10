@@ -2636,6 +2636,8 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/verify_self_host_soak.py", "verification", "Deterministic self-host soak and privacy-boundary verifier."),
     ("scripts/self_host_reliability_matrix.py", "diagnostics", "Isolated source-build and published-image restart/recovery matrix runner."),
     ("scripts/verify_self_host_reliability_matrix.py", "verification", "Deterministic scheduled reliability receipt and workflow verifier."),
+    ("scripts/reliability_evidence_index.py", "diagnostics", "Offline metadata-only longitudinal reliability index builder."),
+    ("scripts/verify_reliability_evidence_index.py", "verification", "Deterministic reliability index, privacy, and workflow wiring verifier."),
     (".github/workflows/reliability-soak.yml", "workflow", "Scheduled real-time source-build and published-image reliability matrix."),
     ("scripts/generated_evidence_topology.py", "verification", "Release-distribution evidence dependency and feedback-edge orchestrator."),
     ("scripts/verify_generated_evidence_topology.py", "verification", "Deterministic topology, convergence, and privacy-boundary verifier."),
