@@ -11731,18 +11731,18 @@
       "sha256": "c76d9ce1497195781fb18f1258601e0192b16e628bbcc1032909f7299e3cc850"
     },
     {
-      "bytes": 12431,
+      "bytes": 14842,
       "kind": "generator",
       "path": "scripts/generate_external_security_audit_pack.py",
       "purpose": "Generate the deterministic metadata-only external security audit preparation pack.",
-      "sha256": "76d34470297b0176fdaf28796d83a2bb8bc1463138622bee71fd0a079635d7c3"
+      "sha256": "05a67529b08e6890e6b91ac890e328137f5e05a3dfccd3a3b2a9dc2e0ec805f8"
     },
     {
-      "bytes": 11272,
+      "bytes": 13371,
       "kind": "verification",
       "path": "scripts/verify_external_security_audit_pack.py",
       "purpose": "Verify audit-pack integrity, privacy, scope, and independent-review boundaries.",
-      "sha256": "878e35189535643a0ba75446fd10a54dc9ac5169ab6a689991603f532c2a618f"
+      "sha256": "209dcdd1053cd56f4fc26e4a96c9838ee17049e05057d6c55cee535e08d5630e"
     },
     {
       "bytes": 8317,
@@ -11836,32 +11836,32 @@
       "sha256": "10e4304a8e35bc11b8a022ba2e734fdfe8d8dcf72c8cd443fed9bf13b359112e"
     },
     {
-      "bytes": 13390,
+      "bytes": 20829,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.json",
       "purpose": "Machine-readable external security audit preparation pack manifest.",
-      "sha256": "edfca8487405fef5f8ca95cb50d053d987002a920c1bce692e111371abfde6f5"
+      "sha256": "37b3c331e85b2abdd7007b40247afe5a453fbac34fea4aaef0cc7a3002fc531f"
     },
     {
       "bytes": 673,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.md",
       "purpose": "Human-readable external security audit preparation summary.",
-      "sha256": "7267b1cf3f51237fa8a18af280a000c9388f9695230ce2b94aa13444164af81d"
+      "sha256": "fdae2bed7e926f89c7329176e6e2cd6c17bf7cbc6e99fe92485f2d7e6e9b24ac"
     },
     {
-      "bytes": 72347,
+      "bytes": 108401,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.zip",
       "purpose": "Portable metadata-only external security audit preparation archive.",
-      "sha256": "3f5b5375a0b99cdda2a51722355818a3e81c37f51fa7cc148763c06f2fba31b8"
+      "sha256": "b551f64e723b2c36188fa6882dc69874d79ec286d5c423e03718b2bbf3c0e518"
     },
     {
       "bytes": 114,
       "kind": "audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.sha256",
       "purpose": "SHA-256 checksum for the external security audit preparation archive.",
-      "sha256": "b684f466b6e437671c0f0160ffc5341a9886169bef92321569c520fafecf7a7d"
+      "sha256": "30ea20516a17cf276f3b6b9d5da6fb110b31db510b5b93843d4c9561d0663804"
     },
     {
       "bytes": 17268,
@@ -15196,11 +15196,11 @@
       "sha256": "b294b983099f7330a82cef30e47325efdc58112b068acc9a536511646863d9a8"
     },
     {
-      "bytes": 6074,
+      "bytes": 7382,
       "kind": "security_audit",
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable external audit scope, methods, and acceptance rules.",
-      "sha256": "5af6104975632248773fdd2ec068f8c48331a733fed4e7cc557c81d95e466410"
+      "sha256": "5bb8ea03fd9f712e619f4c8796fc1c0a7ec80b8f287a6e6348858d8759b8ec92"
     },
     {
       "bytes": 3121,

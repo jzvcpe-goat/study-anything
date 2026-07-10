@@ -28,6 +28,30 @@ EXPECTED_SCOPE_AREAS = {
     "dual_loop_and_delivery_trust",
     "ci_release_and_reliability",
 }
+EXPECTED_CBB_V1_PACK_ASSETS = {
+    "docs/protocol.md",
+    "docs/cbb-protocol-v1-contracts.md",
+    "platform/generated/study-anything-cbb-v1-contracts.json",
+    "platform/generated/study-anything-cbb-v0-compatibility.json",
+    "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
+    "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
+    "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
+    "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
+    "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
+    "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+    "fixtures/cbb-v1-contracts/pass.json",
+    "fixtures/cbb-v1-contracts/missing-evidence.json",
+    "fixtures/cbb-v1-contracts/hard-deny.json",
+    "fixtures/cbb-v1-contracts/stale.json",
+    "fixtures/cbb-v1-contracts/secret-like.json",
+    "fixtures/cbb-v1-contracts/malformed.json",
+    "fixtures/cbb-v1-contracts/naive-timestamp.json",
+    "fixtures/cbb-v1-contracts/invalid-state.json",
+    "fixtures/cbb-v1-contracts/scope-expansion.json",
+}
+EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
+    "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
+}
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(
     r"(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|"
@@ -87,6 +111,15 @@ def validate_manifest(manifest: Mapping[str, Any]) -> None:
         "audit_finding_bodies_included",
     ):
         require(privacy.get(key) is False, f"privacy boundary must keep {key}=false")
+    packaged_paths = {
+        str(record.get("path"))
+        for record in manifest.get("files") or []
+        if isinstance(record, Mapping)
+    }
+    require(
+        EXPECTED_CBB_V1_PACK_ASSETS <= packaged_paths,
+        "canonical CBB v1 audit assets are incomplete",
+    )
 
 
 def validate_plan(plan: Mapping[str, Any]) -> None:
@@ -103,6 +136,22 @@ def validate_plan(plan: Mapping[str, Any]) -> None:
             require((ROOT / script_tokens[0]).is_file(), f"evidence command script missing: {script_tokens[0]}")
         for asset in item.get("evidence_assets") or []:
             require((ROOT / asset).is_file(), f"audit evidence asset missing: {asset}")
+    trust_scope = next(
+        item for item in scope_areas if item.get("id") == "dual_loop_and_delivery_trust"
+    )
+    require(
+        {
+            "python3 scripts/verify_cbb_v1_contracts.py --check",
+            "python3 scripts/verify_cbb_v0_compatibility.py --check",
+        }
+        <= set(trust_scope.get("evidence_commands") or []),
+        "canonical CBB v1 verifier commands are missing from the audit plan",
+    )
+    require(
+        EXPECTED_CBB_V1_PLAN_ASSETS
+        <= set(trust_scope.get("evidence_assets") or []),
+        "canonical CBB v1 evidence assets are missing from the audit plan",
+    )
 
 
 def validate_schemas() -> None:

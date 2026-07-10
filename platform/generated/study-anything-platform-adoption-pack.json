@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7042546,
+  "archive_bytes": 7076508,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "14e6891f2543d3e9dedb09d990fdb0e31c47584b57e219605c5c51f94619bcde",
+  "archive_sha256": "bd87e24c2ae07047b438ee9da23185953c4eceb2365d5e8ec7b05e3a03639d64",
   "description": "Copy-ready CBB reference-harness adapter pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -2321,11 +2321,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-bundle.json",
-      "bytes": 889501,
+      "bytes": 889502,
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "c53bcb741953a5b1ca37d6d8663d5e903718e2b99a0ea436bbae53dcb2da04ff"
+      "sha256": "3b2265f59e1e01ab3716a51494a16fc20ef7b276779886bc6b98c0c8edc2620c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -2473,11 +2473,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.json",
-      "bytes": 13390,
+      "bytes": 20829,
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.json",
       "purpose": "Machine-readable external security audit preparation manifest.",
-      "sha256": "edfca8487405fef5f8ca95cb50d053d987002a920c1bce692e111371abfde6f5"
+      "sha256": "37b3c331e85b2abdd7007b40247afe5a453fbac34fea4aaef0cc7a3002fc531f"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.md",
@@ -2485,15 +2485,15 @@
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.md",
       "purpose": "Human-readable external security audit preparation summary.",
-      "sha256": "7267b1cf3f51237fa8a18af280a000c9388f9695230ce2b94aa13444164af81d"
+      "sha256": "fdae2bed7e926f89c7329176e6e2cd6c17bf7cbc6e99fe92485f2d7e6e9b24ac"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.zip",
-      "bytes": 72347,
+      "bytes": 108401,
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.zip",
       "purpose": "Portable metadata-only external security audit preparation archive.",
-      "sha256": "3f5b5375a0b99cdda2a51722355818a3e81c37f51fa7cc148763c06f2fba31b8"
+      "sha256": "b551f64e723b2c36188fa6882dc69874d79ec286d5c423e03718b2bbf3c0e518"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-external-security-audit-pack.sha256",
@@ -2501,7 +2501,7 @@
       "kind": "security_audit_pack",
       "path": "platform/generated/study-anything-external-security-audit-pack.sha256",
       "purpose": "External security audit preparation archive checksum.",
-      "sha256": "b684f466b6e437671c0f0160ffc5341a9886169bef92321569c520fafecf7a7d"
+      "sha256": "30ea20516a17cf276f3b6b9d5da6fb110b31db510b5b93843d4c9561d0663804"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",

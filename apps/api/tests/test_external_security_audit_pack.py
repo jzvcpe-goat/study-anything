@@ -28,6 +28,12 @@ class ExternalSecurityAuditPackTests(unittest.TestCase):
         self.assertFalse(manifest["independence"]["self_certification_allowed"])
         self.assertEqual(len(manifest["scope_area_ids"]), 7)
         self.assertEqual(manifest["archive"]["bytes"], len(archive))
+        packaged_paths = {record["path"] for record in manifest["files"]}
+        self.assertTrue(verifier.EXPECTED_CBB_V1_PACK_ASSETS <= packaged_paths)
+        self.assertNotIn(
+            "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
+            packaged_paths,
+        )
 
     def test_archive_has_one_safe_root(self) -> None:
         with zipfile.ZipFile(generator.ARCHIVE_PATH) as archive:
