@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 135996,
+    "bytes": 136106,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "9fc621d3e23da7fa68538fa1c29a77e23f284e942a1bc38746481eaf1e22dca6",
+    "sha256": "bfcb4ffd93e15542c502a966a7eb7460a44361223df90874ef87aa8f1ca199b3",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -185,9 +185,9 @@
       "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 35097,
+      "bytes": 35336,
       "path": "docs/release-checklist.md",
-      "sha256": "b0ea0219ab346ec6f0e1616aa167260475b196a410f544b060e0cfa546f08449"
+      "sha256": "3d1e555d701db6372301bc0eaff6f9183ebdd055e0576a8f807e83cf9c331ccf"
     },
     {
       "bytes": 35998,
