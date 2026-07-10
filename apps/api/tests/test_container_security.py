@@ -32,6 +32,7 @@ class ContainerSecurityTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["dockerfile"]["non_root_user_final"])
+        self.assertTrue(report["dockerfile"]["base_image_digest_pinned"])
         self.assertFalse(report["runtime_container"]["checked"])
 
     def test_root_runtime_user_is_rejected(self) -> None:
@@ -63,10 +64,42 @@ class ContainerSecurityTests(unittest.TestCase):
         with self.assertRaises(security.ContainerSecurityError):
             security.validate_compose(compose)
 
+    def test_full_profile_public_port_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        compose["services"]["minio"]["ports"] = ["9090:9000"]
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
+    def test_minio_default_root_password_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        compose["services"]["minio"]["environment"]["MINIO_ROOT_PASSWORD"] = "miniosecret"
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
     def test_unpinned_action_is_rejected(self) -> None:
         line = "      - uses: actions/checkout@v6"
 
         self.assertIsNone(security.ACTION_PIN_PATTERN.match(line))
+
+    def test_ci_compose_command_without_generated_env_is_rejected(self) -> None:
+        ci = (security.WORKFLOW_DIR / "ci.yml").read_text(encoding="utf-8")
+        broken = ci.replace("docker compose --env-file .env ", "docker compose ", 1)
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_ci_workflow(broken)
+
+    def test_ci_unpinned_python_base_image_is_rejected(self) -> None:
+        ci = (security.WORKFLOW_DIR / "ci.yml").read_text(encoding="utf-8")
+        broken = ci.replace(
+            security.PINNED_PYTHON_BASE_IMAGE,
+            "public.ecr.aws/docker/library/python:3.11-slim",
+            1,
+        )
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_ci_workflow(broken)
 
 
 if __name__ == "__main__":

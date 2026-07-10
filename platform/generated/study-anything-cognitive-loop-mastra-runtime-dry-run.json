@@ -29,13 +29,13 @@
       "privacy_scan_passed": true
     },
     {
-      "bytes": 6899,
+      "bytes": 6967,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/events/mastra-runtime-human-gate-approved.json",
       "privacy_scan_passed": true
     },
     {
-      "bytes": 6867,
+      "bytes": 6935,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/events/mastra-runtime-human-gate-rejected.json",
       "privacy_scan_passed": true
@@ -47,13 +47,13 @@
       "privacy_scan_passed": true
     },
     {
-      "bytes": 7517,
+      "bytes": 9184,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/events/mastra-runtime-event-store.json",
       "privacy_scan_passed": true
     },
     {
-      "bytes": 13551,
+      "bytes": 15914,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/artifacts/mastra-runtime-event-store.html",
       "privacy_scan_passed": true
@@ -142,7 +142,7 @@
         "artifact_count": 5,
         "content_included": false,
         "engine": "sqlite",
-        "event_count": 4,
+        "event_count": 5,
         "unique_event_count_expected_minimum": 3
       },
       "humanGate": {
@@ -180,7 +180,7 @@
       },
       {
         "artifact_count": 5,
-        "event_count": 4,
+        "event_count": 5,
         "id": "project-event-store-metadata",
         "status": "succeeded"
       }

@@ -22,6 +22,10 @@ WORKFLOW_DIRS = (WORKFLOW_DIR, ROOT / "platform" / "workflows")
 SECURITY_WORKFLOW = WORKFLOW_DIR / "security.yml"
 SCHEMA_VERSION = "container-security-baseline-v1"
 EXPECTED_UID = "10001"
+PINNED_PYTHON_BASE_IMAGE = (
+    "public.ecr.aws/docker/library/python:3.11-slim@"
+    "sha256:e031123e3d85762b141ad1cbc56452ba69c6e722ebf2f042cc0dc86c47c0d8b3"
+)
 ACTION_PIN_PATTERN = re.compile(
     r"^\s*-?\s*uses:\s+[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)?@([0-9a-f]{40})(?:\s+#.*)?$"
 )
@@ -52,6 +56,7 @@ def read_compose(path: Path = COMPOSE_FILE) -> dict[str, Any]:
 
 
 def validate_dockerfile(text: str) -> dict[str, Any]:
+    require("PYTHON_BASE_IMAGE=python:3.11-slim@sha256:" in text, "Python base image must be digest pinned")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     user_lines = [line for line in lines if line.startswith("USER ")]
     require(user_lines == [f"USER {EXPECTED_UID}:{EXPECTED_UID}"], "Final image must use UID/GID 10001")
@@ -80,6 +85,7 @@ def validate_dockerfile(text: str) -> dict[str, Any]:
         "fixed_gid": 10001,
         "non_root_user_final": True,
         "package_install_before_user_drop": True,
+        "base_image_digest_pinned": True,
         "runtime_data_owned_by_user": True,
     }
 
@@ -143,6 +149,20 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
         all(port.startswith("127.0.0.1:") for port in mock_ports),
         "Mock Agent ports must bind to loopback",
     )
+    for service_name in ("langfuse-web", "minio"):
+        service_ports = normalized_list(require_mapping(services, service_name).get("ports"))
+        require(
+            all(port.startswith("127.0.0.1:") for port in service_ports),
+            f"{service_name} ports must bind to loopback",
+        )
+    minio_environment = require_mapping(services, "minio").get("environment")
+    require(isinstance(minio_environment, Mapping), "MinIO environment must be configured")
+    require(
+        str(minio_environment.get("MINIO_ROOT_PASSWORD", "")).startswith(
+            "${MINIO_ROOT_PASSWORD:?"
+        ),
+        "MinIO root password must not have a fallback default",
+    )
     return results
 
 
@@ -194,6 +214,30 @@ def validate_security_workflow(text: str) -> dict[str, Any]:
     }
 
 
+def validate_ci_workflow(text: str) -> dict[str, Any]:
+    require(
+        f"PYTHON_BASE_IMAGE: {PINNED_PYTHON_BASE_IMAGE}" in text,
+        "Compose smoke must use the digest-pinned Python base image",
+    )
+    require(
+        "python scripts/setup_env.py --force" in text,
+        "Compose smoke must generate its local environment file",
+    )
+    compose_commands = [
+        line.strip() for line in text.splitlines() if "docker compose" in line
+    ]
+    require(compose_commands, "Compose smoke commands are missing")
+    require(
+        all("docker compose --env-file .env " in line for line in compose_commands),
+        "Every CI Compose command must read the generated repository .env file",
+    )
+    return {
+        "compose_env_file_explicit": True,
+        "compose_command_count": len(compose_commands),
+        "python_base_image_digest_pinned": True,
+    }
+
+
 def inspect_runtime_container(container_id: str) -> dict[str, Any]:
     require(bool(container_id.strip()), "Runtime container id is empty")
     try:
@@ -238,6 +282,7 @@ def verify(*, runtime_container_id: str | None = None) -> dict[str, Any]:
     action_pins = validate_action_pins()
     security_workflow = validate_security_workflow(SECURITY_WORKFLOW.read_text(encoding="utf-8"))
     ci = (WORKFLOW_DIR / "ci.yml").read_text(encoding="utf-8")
+    ci_workflow = validate_ci_workflow(ci)
     release_check = (ROOT / "scripts" / "release_check.sh").read_text(encoding="utf-8")
     require(
         "verify_container_security.py --check" in ci,
@@ -257,7 +302,7 @@ def verify(*, runtime_container_id: str | None = None) -> dict[str, Any]:
         "status": "pass",
         "dockerfile": dockerfile,
         "compose_services": compose,
-        "github_actions": {**action_pins, **security_workflow},
+        "github_actions": {**action_pins, **security_workflow, **ci_workflow},
         "runtime_container": runtime,
         "repository_settings": {
             "secret_scanning_expected": True,

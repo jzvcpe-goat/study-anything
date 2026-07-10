@@ -159,6 +159,7 @@ without a model key, then see `docs/kimi-agent-gateway.md`.
 - `POST /v1/agents/providers` rejects endpoint credentials and secret-like metadata keys.
 - `GET /v1/agents/status` returns redacted provider metadata and URL-level endpoint redaction.
 - HTTP traces record provider id, task type, latency, status, token/cost metadata if supplied, and redacted metadata only.
+- HTTP Agent responses are limited to 1 MiB before JSON parsing and contract validation.
 - CLI adapters are disabled until an operator explicitly enables a command allowlist and timeout policy.
 - Run `python3 scripts/verify_agent_gateway_hardening.py` and
   `python3 scripts/verify_external_agent_adapter_hardening.py` before release or platform handoff.

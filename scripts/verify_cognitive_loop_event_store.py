@@ -220,6 +220,18 @@ def create_bad_artifact(root: Path) -> str:
     return ".cognitive-loop/events/unsafe-agent-endpoint.json"
 
 
+def create_conflicting_artifact(root: Path, source_path: str) -> str:
+    source = root / source_path
+    artifact = json.loads(source.read_text(encoding="utf-8"))
+    artifact["project_event"]["summary"] = "Conflicting summary for an existing event id."
+    conflict = root / ".cognitive-loop" / "events" / "conflicting-event-id.json"
+    conflict.write_text(
+        json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return ".cognitive-loop/events/conflicting-event-id.json"
+
+
 def build_report() -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="study-anything-cognitive-loop-event-store-") as tmp:
         root = Path(tmp)
@@ -264,6 +276,16 @@ def build_report() -> dict[str, Any]:
             cwd=ROOT,
             expect_success=False,
         )
+        conflicting_path = create_conflicting_artifact(root, event_paths[0])
+        conflicting = run_store(
+            ["--root", str(root), "--db", db_path, "ingest", "--event", conflicting_path],
+            cwd=ROOT,
+            expect_success=False,
+        )
+        list_after_conflict = run_store(
+            ["--root", str(root), "--db", db_path, "list"],
+            cwd=ROOT,
+        )
 
         html = export_html_path.read_text(encoding="utf-8")
         export_payload = json.loads(export_json_path.read_text(encoding="utf-8"))
@@ -292,6 +314,8 @@ def build_report() -> dict[str, Any]:
                 "event_count": export_store["event_count"],
                 "artifact_count": export_store["artifact_count"],
                 "duplicate_rebuild_idempotent": first_store["event_count"] == second_store["event_count"],
+                "conflicting_event_id_rejected": conflicting["returncode"] != 0
+                and list_after_conflict["event_store"]["event_count"] == len(event_paths),
                 "all_items_have_hash": all(
                     bool(item.get("artifact_sha256")) for item in export_store["events"]
                 ),

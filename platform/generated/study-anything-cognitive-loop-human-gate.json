@@ -15,6 +15,7 @@
     "reject_gate": "python3 scripts/cognitive_loop_cli.py gate --reject --html",
     "verify": "python3 scripts/cognitive_loop_cli.py verify"
   },
+  "distinct_resolution_event_ids": true,
   "html_artifact": {
     "contains_brand": true,
     "contains_human_gate": true,

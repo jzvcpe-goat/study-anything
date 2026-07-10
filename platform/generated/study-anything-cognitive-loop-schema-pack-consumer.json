@@ -7,13 +7,15 @@
   "negative_fixtures": {
     "all_cases_rejected": true,
     "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-recipe-cli-schema-negative-fixtures.json",
-    "case_count": 11,
+    "case_count": 13,
     "case_ids": [
       "success_wrong_schema_version",
       "success_auto_execute_true",
       "receipts_missing_privacy",
       "failures_exit_code_string",
       "pr_ci_receipt_missing_required_checks",
+      "pr_ci_receipt_duplicate_checks",
+      "pr_ci_receipt_failed_checks_ready",
       "pr_ci_receipt_github_tokens_true",
       "pr_ci_source_unsupported_source",
       "pr_ci_source_unsafe_url_query",

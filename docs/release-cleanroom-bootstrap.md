@@ -9,7 +9,10 @@ GitHub Release page, not from a prepared repository checkout.
 `release-cleanroom-bootstrap-v1` verifies that an adopter can:
 
 - Download the six required public release zip assets.
-- Verify GitHub sha256 digests when release metadata provides them.
+- Verify GitHub sha256 digests when release metadata provides them. When those
+  trusted digests are absent, the report records self-hashes but keeps
+  `release_assets_verified=false`.
+- Reject oversized downloads and ZIPs before unbounded disk or decompression work.
 - Unpack and validate the platform adoption pack.
 - Import Study Anything tools for Kimi, Codex, WorkBuddy, or generic OpenAPI.
 - Run either metadata-only verification or a bounded runtime replay.

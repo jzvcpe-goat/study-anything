@@ -170,9 +170,17 @@ class PluginRegistry:
             raise ValueError(blocked_message)
 
         destination_root = destination_dir.resolve()
-        target = destination_root / source_status.manifest.plugin_id
+        raw_target = destination_root / source_status.manifest.plugin_id
+        if raw_target.is_symlink():
+            raise ValueError("Plugin destination must not be a symbolic link.")
+        target = raw_target.resolve()
+        if target.parent != destination_root:
+            raise ValueError("Plugin destination must stay directly inside the plugin directory.")
         if target == source or source in target.parents or target in source.parents:
             raise ValueError("Plugin destination must be outside the source directory.")
+        symlink = next((path for path in source.rglob("*") if path.is_symlink()), None)
+        if symlink is not None:
+            raise ValueError("Plugin packages must not contain symbolic links.")
         if target.exists():
             if not replace_existing:
                 raise FileExistsError(

@@ -43,6 +43,7 @@ SYNC_PAYLOAD_SCHEMA_VERSION = "sync-payload-v1"
 KDF_NAME = "pbkdf2-sha256"
 CIPHER_NAME = "AES-256-GCM"
 KDF_ITERATIONS = 390_000
+MAX_KDF_ITERATIONS = 2_000_000
 MIN_PASSPHRASE_LENGTH = 12
 
 
@@ -227,7 +228,7 @@ def decrypt_sync_package(package: Mapping[str, Any], *, passphrase: str) -> dict
         if isinstance(checksum, str) and hashlib.sha256(ciphertext).hexdigest() != checksum:
             raise SyncPackageError("Sync package ciphertext checksum mismatch.")
         iterations = int(kdf.get("iterations", 0))
-        if iterations <= 0:
+        if iterations <= 0 or iterations > MAX_KDF_ITERATIONS:
             raise SyncPackageError("Sync package KDF iterations are invalid.")
         key = _derive_key(passphrase, salt, iterations=iterations)
         plaintext = AESGCM(key).decrypt(nonce, ciphertext, None)

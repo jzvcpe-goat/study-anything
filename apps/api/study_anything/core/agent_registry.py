@@ -21,6 +21,9 @@ from uuid import uuid4
 from .security import is_secret_key, redact_mapping, redact_url_secrets, url_contains_inline_secret
 
 
+MAX_AGENT_RESPONSE_BYTES = 1_048_576
+
+
 class AgentCapability(str, Enum):
     TEACH_OVERVIEW = "teach.overview"
     TEACH_GLOSSARY = "teach.glossary"
@@ -208,6 +211,12 @@ def normalise_http_agent_endpoint(value: str | None) -> str | None:
     parts = urllib.parse.urlsplit(endpoint)
     if parts.scheme not in {"http", "https"} or not parts.netloc:
         raise ValueError("HTTP agent endpoint must be an HTTP(S) URL.")
+    try:
+        parts.port
+    except ValueError as exc:
+        raise ValueError("HTTP agent endpoint port must be between 1 and 65535.") from exc
+    if parts.fragment:
+        raise ValueError("HTTP agent endpoint must not contain a URL fragment.")
     if parts.username or parts.password:
         raise ValueError(
             "Agent endpoint must not contain inline credentials or secret-like query parameters. "
@@ -387,8 +396,13 @@ class HttpAgentProvider:
         )
         try:
             with urllib.request.urlopen(request, timeout=self.provider.timeout_seconds) as response:
-                values = json.loads(response.read().decode("utf-8"))
-        except json.JSONDecodeError as exc:
+                body = response.read(MAX_AGENT_RESPONSE_BYTES + 1)
+                if len(body) > MAX_AGENT_RESPONSE_BYTES:
+                    raise AgentResultInvalid(
+                        f"Agent response exceeds the {MAX_AGENT_RESPONSE_BYTES}-byte limit."
+                    )
+                values = json.loads(body.decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
             raise AgentResultInvalid(f"Agent returned malformed JSON: {exc}") from exc
         except (TimeoutError, urllib.error.URLError, OSError) as exc:
             raise AgentProviderUnavailable(f"HTTP agent unavailable: {exc}") from exc

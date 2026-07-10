@@ -10,6 +10,7 @@
     "all_items_exclude_content": true,
     "all_items_have_hash": true,
     "artifact_count": 5,
+    "conflicting_event_id_rejected": true,
     "duplicate_rebuild_idempotent": true,
     "event_count": 5,
     "kinds": [

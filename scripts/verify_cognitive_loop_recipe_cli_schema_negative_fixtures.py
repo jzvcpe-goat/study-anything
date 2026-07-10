@@ -41,6 +41,8 @@ CASE_IDS = (
     "receipts_missing_privacy",
     "failures_exit_code_string",
     "pr_ci_receipt_missing_required_checks",
+    "pr_ci_receipt_duplicate_checks",
+    "pr_ci_receipt_failed_checks_ready",
     "pr_ci_receipt_github_tokens_true",
     "pr_ci_source_unsupported_source",
     "pr_ci_source_unsafe_url_query",
@@ -81,6 +83,15 @@ def mutate_failures_exit_code_string(payload: dict[str, Any]) -> None:
 
 def mutate_pr_ci_receipt_missing_required_checks(payload: dict[str, Any]) -> None:
     payload["required_checks"] = ["api-tests"]
+
+
+def mutate_pr_ci_receipt_duplicate_checks(payload: dict[str, Any]) -> None:
+    payload["checks"][1]["name"] = "api-tests"
+
+
+def mutate_pr_ci_receipt_failed_checks_ready(payload: dict[str, Any]) -> None:
+    payload["checks"][0]["status"] = "fail"
+    payload["decision"] = "ready"
 
 
 def mutate_pr_ci_receipt_github_tokens_true(payload: dict[str, Any]) -> None:
@@ -265,6 +276,26 @@ def build_report() -> dict[str, Any]:
             mutation="remove compose-smoke from required_checks",
             mutate=mutate_pr_ci_receipt_missing_required_checks,
             expected_error_contains="required_checks expected const",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_receipt_duplicate_checks",
+            schema_key="cognitive_loop_pr_ci_receipt",
+            schema=schemas["cognitive_loop_pr_ci_receipt"],
+            source_path=PR_CI_RECEIPT_REPORT,
+            source_payload=pr_ci_receipt,
+            mutation="replace compose-smoke with a duplicate api-tests row",
+            mutate=mutate_pr_ci_receipt_duplicate_checks,
+            expected_error_contains="checks[1].name expected const 'compose-smoke'",
+        ),
+        expect_schema_rejection(
+            case_id="pr_ci_receipt_failed_checks_ready",
+            schema_key="cognitive_loop_pr_ci_receipt",
+            schema=schemas["cognitive_loop_pr_ci_receipt"],
+            source_path=PR_CI_RECEIPT_REPORT,
+            source_payload=pr_ci_receipt,
+            mutation="mark api-tests failed while keeping decision ready",
+            mutate=mutate_pr_ci_receipt_failed_checks_ready,
+            expected_error_contains="checks[0].status expected const 'pass'",
         ),
         expect_schema_rejection(
             case_id="pr_ci_receipt_github_tokens_true",

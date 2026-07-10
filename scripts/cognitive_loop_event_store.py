@@ -244,55 +244,72 @@ def ingest_artifacts(
         connection.execute("DELETE FROM events")
         connection.execute("DELETE FROM artifacts")
     inserted_paths: list[str] = []
-    for path in paths:
-        payload = _load_event_artifact(root, path)
-        event = payload["project_event"]
-        metadata = payload["metadata"]
-        connection.execute(
-            """
-            INSERT OR REPLACE INTO artifacts(
-              source_path, artifact_kind, schema_version, status, size_bytes, sha256, content_included
+    try:
+        for path in paths:
+            payload = _load_event_artifact(root, path)
+            event = payload["project_event"]
+            metadata = payload["metadata"]
+            existing = connection.execute(
+                "SELECT source_path, artifact_sha256 FROM events WHERE event_id = ?",
+                (event["event_id"],),
+            ).fetchone()
+            if existing is not None and (
+                existing["source_path"] != payload["relative_path"]
+                or existing["artifact_sha256"] != payload["sha256"]
+            ):
+                raise EventStoreError(
+                    f"Conflicting event_id '{event['event_id']}' is already bound to "
+                    f"{existing['source_path']}."
+                )
+            connection.execute(
+                """
+                INSERT OR REPLACE INTO artifacts(
+                  source_path, artifact_kind, schema_version, status, size_bytes, sha256,
+                  content_included
+                )
+                VALUES(?, ?, ?, ?, ?, ?, 0)
+                """,
+                (
+                    payload["relative_path"],
+                    payload["artifact_kind"],
+                    payload["schema_version"],
+                    payload["status"],
+                    payload["size_bytes"],
+                    payload["sha256"],
+                ),
             )
-            VALUES(?, ?, ?, ?, ?, ?, 0)
-            """,
-            (
-                payload["relative_path"],
-                payload["artifact_kind"],
-                payload["schema_version"],
-                payload["status"],
-                payload["size_bytes"],
-                payload["sha256"],
-            ),
-        )
-        connection.execute(
-            """
-            INSERT OR REPLACE INTO events(
-              event_id, project_id, actor, event_type, summary, timestamp, target, refs_json,
-              sensitivity, source_path, artifact_kind, artifact_schema_version, artifact_status,
-              artifact_sha256, metadata_json
+            connection.execute(
+                """
+                INSERT OR REPLACE INTO events(
+                  event_id, project_id, actor, event_type, summary, timestamp, target, refs_json,
+                  sensitivity, source_path, artifact_kind, artifact_schema_version, artifact_status,
+                  artifact_sha256, metadata_json
+                )
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    event["event_id"],
+                    event["project_id"],
+                    event["actor"],
+                    event["event_type"],
+                    event["summary"],
+                    event["timestamp"],
+                    event.get("target"),
+                    json.dumps(event.get("refs", []), ensure_ascii=False, sort_keys=True),
+                    event["sensitivity"],
+                    payload["relative_path"],
+                    payload["artifact_kind"],
+                    payload["schema_version"],
+                    payload["status"],
+                    payload["sha256"],
+                    json.dumps(metadata, ensure_ascii=False, sort_keys=True),
+                ),
             )
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                event["event_id"],
-                event["project_id"],
-                event["actor"],
-                event["event_type"],
-                event["summary"],
-                event["timestamp"],
-                event.get("target"),
-                json.dumps(event.get("refs", []), ensure_ascii=False, sort_keys=True),
-                event["sensitivity"],
-                payload["relative_path"],
-                payload["artifact_kind"],
-                payload["schema_version"],
-                payload["status"],
-                payload["sha256"],
-                json.dumps(metadata, ensure_ascii=False, sort_keys=True),
-            ),
-        )
-        inserted_paths.append(payload["relative_path"])
-    connection.commit()
+            inserted_paths.append(payload["relative_path"])
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
     return {
         "ingested_paths": inserted_paths,
         "event_count": count_rows(connection, "events"),

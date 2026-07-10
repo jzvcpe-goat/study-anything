@@ -23,6 +23,89 @@
         "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": true,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "decision": {
+                  "const": "ready"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "blocking_reasons": {
+                  "maxItems": 0
+                },
+                "checks": {
+                  "prefixItems": [
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "completed_at": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "const": "api-tests",
+                          "type": "string"
+                        },
+                        "started_at": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "const": "pass",
+                          "type": "string"
+                        },
+                        "url": {
+                          "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "status",
+                        "url"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": true,
+                      "properties": {
+                        "completed_at": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "const": "compose-smoke",
+                          "type": "string"
+                        },
+                        "started_at": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "const": "pass",
+                          "type": "string"
+                        },
+                        "url": {
+                          "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "status",
+                        "url"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "manual_review_reasons": {
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        ],
         "properties": {
           "blocking_reasons": {
             "items": {
@@ -31,44 +114,78 @@
             "type": "array"
           },
           "checks": {
-            "items": {
-              "additionalProperties": true,
-              "properties": {
-                "completed_at": {
-                  "type": "string"
-                },
-                "name": {
-                  "enum": [
-                    "api-tests",
-                    "compose-smoke"
-                  ],
-                  "type": "string"
-                },
-                "started_at": {
-                  "type": "string"
-                },
-                "status": {
-                  "enum": [
-                    "pass",
-                    "pending",
-                    "fail",
-                    "unknown"
-                  ],
-                  "type": "string"
-                },
-                "url": {
-                  "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name",
-                "status",
-                "url"
-              ],
-              "type": "object"
-            },
+            "maxItems": 2,
             "minItems": 2,
+            "prefixItems": [
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "completed_at": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "const": "api-tests",
+                    "type": "string"
+                  },
+                  "started_at": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "enum": [
+                      "pass",
+                      "pending",
+                      "fail",
+                      "unknown"
+                    ],
+                    "type": "string"
+                  },
+                  "url": {
+                    "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "status",
+                  "url"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "completed_at": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "const": "compose-smoke",
+                    "type": "string"
+                  },
+                  "started_at": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "enum": [
+                      "pass",
+                      "pending",
+                      "fail",
+                      "unknown"
+                    ],
+                    "type": "string"
+                  },
+                  "url": {
+                    "pattern": "^$|^https://(?:www\\.)?github\\.com/[^?#\\s]+$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "status",
+                  "url"
+                ],
+                "type": "object"
+              }
+            ],
             "type": "array"
           },
           "decision": {

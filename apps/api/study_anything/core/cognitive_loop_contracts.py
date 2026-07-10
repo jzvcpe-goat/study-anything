@@ -1631,10 +1631,13 @@ def build_human_gate_artifact(
         ]
     for evidence_ref in safe_evidence:
         _assert_public_value("evidence_ref", evidence_ref)
+    event_suffix = hashlib.sha256(
+        "\0".join((project["id"], decision_id, resolution, artifact_ref)).encode("utf-8")
+    ).hexdigest()[:16]
 
     event = validate_project_event(
         {
-            "event_id": "evt-cognitive-loop-human-gate",
+            "event_id": f"evt-cognitive-loop-human-gate-{event_suffix}",
             "project_id": project["id"],
             "actor": "human",
             "event_type": "human_note",

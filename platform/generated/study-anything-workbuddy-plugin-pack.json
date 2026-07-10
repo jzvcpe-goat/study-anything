@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 158655,
+    "bytes": 158810,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "7b3cb10bb64b0d3ee35627a88e91d8bd02610f3059b3e13b5719c1e109617bdc"
+    "sha256": "009d29879c2e2130447d8eddf330b7ab4785df5d583a327f2bccad292dcdb7c5"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -129,11 +129,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
-      "bytes": 68921,
+      "bytes": 69370,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Extracted adoption-pack verifier.",
-      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
+      "sha256": "911b704af050a1c488462efc19c2fa394bb22a0a056ff8bea2956353e1d700aa"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/api.md",

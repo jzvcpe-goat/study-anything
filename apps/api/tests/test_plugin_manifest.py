@@ -186,6 +186,22 @@ class PluginManifestTests(unittest.TestCase):
                 }
             )
 
+    def test_rejects_plugin_ids_that_can_escape_storage_roots(self) -> None:
+        for plugin_id in ("../sessions", "nested/plugin", ".hidden", "/tmp/plugin"):
+            with self.subTest(plugin_id=plugin_id):
+                with self.assertRaisesRegex(ValueError, "filesystem-safe"):
+                    validate_manifest(
+                        {
+                            "id": plugin_id,
+                            "name": "Unsafe Plugin",
+                            "version": "0.1.0",
+                            "apiVersion": "0.1",
+                            "entrypoint": "plugin.py",
+                            "hooks": ["exporter"],
+                            "permissions": ["read:sessions"],
+                        }
+                    )
+
     def test_describes_permission_risk(self) -> None:
         details = describe_permissions(["read:sessions", "network:http"])
 

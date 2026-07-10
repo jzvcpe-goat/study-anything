@@ -31,6 +31,12 @@ SCHEMA_VERSION = "release-cleanroom-bootstrap-v1"
 DEFAULT_REPO = "jzvcpe-goat/study-anything"
 DEFAULT_TAG = "v0.3.31-alpha"
 PACK_ROOT = "study-anything-platform-adoption-pack"
+MAX_METADATA_BYTES = 2 * 1024 * 1024
+MAX_DOWNLOAD_BYTES = 512 * 1024 * 1024
+MAX_ZIP_MEMBERS = 10_000
+MAX_ZIP_MEMBER_BYTES = 256 * 1024 * 1024
+MAX_ZIP_TOTAL_BYTES = 1024 * 1024 * 1024
+MAX_ZIP_COMPRESSION_RATIO = 100
 
 REQUIRED_ASSETS = {
     "study-anything-platform-adoption-pack.zip": "platform_adoption_pack",
@@ -185,7 +191,10 @@ def fetch_json(url: str, timeout_seconds: int) -> dict[str, Any]:
     request = Request(url, headers={"Accept": "application/vnd.github+json", "User-Agent": "study-anything-cleanroom-bootstrap"})
     try:
         with urlopen(request, timeout=timeout_seconds) as response:
-            payload = json.loads(response.read().decode("utf-8"))
+            body = response.read(MAX_METADATA_BYTES + 1)
+            if len(body) > MAX_METADATA_BYTES:
+                raise CleanroomBootstrapError("Release metadata response exceeded the size limit.")
+            payload = json.loads(body.decode("utf-8"))
     except (HTTPError, URLError, TimeoutError, OSError, json.JSONDecodeError) as exc:
         raise CleanroomBootstrapError(f"Could not fetch release metadata: {exc}") from exc
     if not isinstance(payload, dict):
@@ -198,9 +207,33 @@ def download(url: str, target: Path, timeout_seconds: int) -> None:
     request = Request(url, headers={"User-Agent": "study-anything-cleanroom-bootstrap"})
     try:
         with urlopen(request, timeout=timeout_seconds) as response:
+            content_length = response.headers.get("Content-Length")
+            if content_length:
+                try:
+                    declared_size = int(content_length)
+                except ValueError as exc:
+                    raise CleanroomBootstrapError(
+                        f"Download returned an invalid size for {target.name}."
+                    ) from exc
+                if declared_size > MAX_DOWNLOAD_BYTES:
+                    raise CleanroomBootstrapError(f"Download exceeds size limit for {target.name}.")
             with target.open("wb") as handle:
-                shutil.copyfileobj(response, handle)
+                downloaded = 0
+                while True:
+                    chunk = response.read(1024 * 1024)
+                    if not chunk:
+                        break
+                    downloaded += len(chunk)
+                    if downloaded > MAX_DOWNLOAD_BYTES:
+                        raise CleanroomBootstrapError(
+                            f"Download exceeds size limit for {target.name}."
+                        )
+                    handle.write(chunk)
+    except CleanroomBootstrapError:
+        target.unlink(missing_ok=True)
+        raise
     except (HTTPError, URLError, TimeoutError, OSError) as exc:
+        target.unlink(missing_ok=True)
         raise CleanroomBootstrapError(f"Could not download {target.name}: {exc}") from exc
 
 
@@ -279,10 +312,28 @@ def safe_extract_zip(archive_path: Path, destination: Path) -> set[str]:
     roots: set[str] = set()
     try:
         with zipfile.ZipFile(archive_path) as archive:
-            for member in archive.infolist():
+            members = archive.infolist()
+            if len(members) > MAX_ZIP_MEMBERS:
+                raise CleanroomBootstrapError(f"Zip contains too many members: {archive_path.name}")
+            total_size = 0
+            for member in members:
                 member_path = Path(member.filename)
                 if member_path.is_absolute() or ".." in member_path.parts:
                     raise CleanroomBootstrapError(f"Unsafe path in zip: {member.filename}")
+                if member.file_size > MAX_ZIP_MEMBER_BYTES:
+                    raise CleanroomBootstrapError(f"Zip member exceeds size limit: {member.filename}")
+                total_size += member.file_size
+                if total_size > MAX_ZIP_TOTAL_BYTES:
+                    raise CleanroomBootstrapError(
+                        f"Zip exceeds total extraction size limit: {archive_path.name}"
+                    )
+                if member.file_size and (
+                    member.compress_size == 0
+                    or member.file_size / member.compress_size > MAX_ZIP_COMPRESSION_RATIO
+                ):
+                    raise CleanroomBootstrapError(
+                        f"Zip member exceeds compression ratio limit: {member.filename}"
+                    )
                 if member.filename and "/" in member.filename:
                     roots.add(member.filename.split("/", 1)[0])
             archive.extractall(destination)
@@ -716,6 +767,7 @@ def success_report(
         "release_assets": {
             "asset_count": len(assets),
             "github_digest_verified_count": sum(1 for item in assets.values() if item.get("github_digest_verified")),
+            "self_hashed_count": sum(1 for item in assets.values() if item.get("sha256")),
             "required_assets": sorted(assets),
         },
         "adoption_pack": {
@@ -733,7 +785,9 @@ def success_report(
         "privacy": privacy_assertions(),
         "acceptance": {
             "no_existing_repo_checkout_required": not bool(args.source_dir),
-            "release_assets_verified": True,
+            "release_assets_verified": all(
+                item.get("github_digest_verified") is True for item in assets.values()
+            ),
             "platform_import_verified": True,
             "runtime_verified": args.runtime != "metadata-only" and runtime.get("status") == "ok",
         },

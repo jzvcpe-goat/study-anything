@@ -114,14 +114,26 @@ def privacy_schema() -> dict[str, Any]:
     }
 
 
-def pr_ci_check_schema() -> dict[str, Any]:
+def pr_ci_check_schema(
+    *,
+    required_name: str | None = None,
+    required_status: str | None = None,
+) -> dict[str, Any]:
     return {
         "type": "object",
         "additionalProperties": True,
         "required": ["name", "status", "url"],
         "properties": {
-            "name": {"type": "string", "enum": list(PR_CI_REQUIRED_CHECKS)},
-            "status": {"type": "string", "enum": list(PR_CI_CHECK_STATUSES)},
+            "name": (
+                {"type": "string", "const": required_name}
+                if required_name
+                else {"type": "string", "enum": list(PR_CI_REQUIRED_CHECKS)}
+            ),
+            "status": (
+                {"type": "string", "const": required_status}
+                if required_status
+                else {"type": "string", "enum": list(PR_CI_CHECK_STATUSES)}
+            ),
             "url": {"type": "string", "pattern": PR_CI_GITHUB_URL_PATTERN},
             "started_at": {"type": "string"},
             "completed_at": {"type": "string"},
@@ -162,7 +174,7 @@ def pr_ci_privacy_flags_schema() -> dict[str, Any]:
 
 
 def build_pr_ci_receipt_schema() -> dict[str, Any]:
-    return {
+    schema = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://study-anything.local/schemas/cognitive-loop-pr-ci-receipt-v1.json",
         "title": "Cognitive Loop PR CI receipt",
@@ -196,7 +208,10 @@ def build_pr_ci_receipt_schema() -> dict[str, Any]:
             "checks": {
                 "type": "array",
                 "minItems": len(PR_CI_REQUIRED_CHECKS),
-                "items": pr_ci_check_schema(),
+                "maxItems": len(PR_CI_REQUIRED_CHECKS),
+                "prefixItems": [
+                    pr_ci_check_schema(required_name=name) for name in PR_CI_REQUIRED_CHECKS
+                ],
             },
             "decision": {"type": "string", "enum": list(PR_CI_DECISIONS)},
             "blocking_reasons": {"type": "array", "items": {"type": "string"}},
@@ -210,6 +225,24 @@ def build_pr_ci_receipt_schema() -> dict[str, Any]:
             "failure_modes": {"type": "object"},
         },
     }
+    schema["allOf"] = [
+        {
+            "if": {"properties": {"decision": {"const": "ready"}}},
+            "then": {
+                "properties": {
+                    "checks": {
+                        "prefixItems": [
+                            pr_ci_check_schema(required_name=name, required_status="pass")
+                            for name in PR_CI_REQUIRED_CHECKS
+                        ]
+                    },
+                    "blocking_reasons": {"maxItems": 0},
+                    "manual_review_reasons": {"maxItems": 0},
+                }
+            },
+        }
+    ]
+    return schema
 
 
 def build_pr_ci_source_schema() -> dict[str, Any]:
@@ -593,6 +626,17 @@ def matches_type(value: Any, expected: str) -> bool:
 
 
 def validate_instance(value: Any, schema: dict[str, Any], *, path: str = "$") -> None:
+    for index, child_schema in enumerate(schema.get("allOf") or []):
+        validate_instance(value, child_schema, path=f"{path}.allOf[{index}]")
+    if isinstance(schema.get("if"), dict):
+        try:
+            validate_instance(value, schema["if"], path=path)
+        except RecipeCliSchemaError:
+            branch = schema.get("else")
+        else:
+            branch = schema.get("then")
+        if isinstance(branch, dict):
+            validate_instance(value, branch, path=path)
     if "const" in schema and value != schema["const"]:
         raise RecipeCliSchemaError(f"{path} expected const {schema['const']!r}, got {value!r}")
     if "enum" in schema and value not in schema["enum"]:
@@ -628,6 +672,13 @@ def validate_instance(value: Any, schema: dict[str, Any], *, path: str = "$") ->
     if isinstance(value, list):
         if "minItems" in schema and len(value) < int(schema["minItems"]):
             raise RecipeCliSchemaError(f"{path} has fewer than minItems {schema['minItems']}")
+        if "maxItems" in schema and len(value) > int(schema["maxItems"]):
+            raise RecipeCliSchemaError(f"{path} has more than maxItems {schema['maxItems']}")
+        prefix_items = schema.get("prefixItems")
+        if isinstance(prefix_items, list):
+            for index, child_schema in enumerate(prefix_items):
+                if index < len(value) and isinstance(child_schema, dict):
+                    validate_instance(value[index], child_schema, path=f"{path}[{index}]")
         item_schema = schema.get("items")
         if isinstance(item_schema, dict):
             for index, item in enumerate(value):

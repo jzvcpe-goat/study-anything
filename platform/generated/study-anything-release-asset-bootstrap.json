@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 90347,
+    "bytes": 90997,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "261739f544d13a88bd9e85cd4b2f1a46d6b5dafb9c56bdc6dd0bce48b71fa5aa",
+    "sha256": "330da9af4dbb4f43e875e2c734678185dc23c3cf481aa3cabbb6a1bbacf2accb",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -98,9 +98,9 @@
       "sha256": "b95b3b7aa6cc306378c50cd7919e4c66b1d45d83a4276544ca5b9dfa51d95979"
     },
     {
-      "bytes": 2926,
+      "bytes": 3126,
       "path": "docs/release-cleanroom-bootstrap.md",
-      "sha256": "af9b020c121279919e2bf3b02d71f82eb51d001fa5cf9c47d20169af0070fff6"
+      "sha256": "c5b2b1eca383d305a8ae7d7fa95ae7cce076250b41791095804eb0223f7fa745"
     },
     {
       "bytes": 4069,
@@ -133,9 +133,9 @@
       "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 35674,
+      "bytes": 38352,
       "path": "platform/bootstrap/study_anything_release_bootstrap.py",
-      "sha256": "88909ef925e8b343825c7ab12433865a70029523e051eb10880bf272cff5ffdb"
+      "sha256": "521ce7d1df0307f5dd182daa0252a31e0957158afdefd8d96340fa3412ecb6c4"
     },
     {
       "bytes": 14081,
@@ -180,7 +180,7 @@
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "91b5d52356b6d2e7ddb4a8d4e621939bb325d15d1376ed2aed089aafc906a041"
+      "sha256": "dce71101aa217213569820d14df19527f95fe364d8978fc315dc5f3eea34c84a"
     },
     {
       "bytes": 1764,

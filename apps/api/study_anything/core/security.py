@@ -85,16 +85,26 @@ def redact_url_secrets(value: str | None) -> str | None:
     hostname = parts.hostname or ""
     if ":" in hostname and not hostname.startswith("["):
         hostname = f"[{hostname}]"
-    port = f":{parts.port}" if parts.port is not None else ""
+    try:
+        parsed_port = parts.port
+    except ValueError:
+        parsed_port = None
+    port = f":{parsed_port}" if parsed_port is not None else ""
     netloc = f"{hostname}{port}"
     safe_query = urlencode(
         [
-            (key, REDACTED if is_secret_key(key) else query_value)
+            (
+                key,
+                REDACTED
+                if is_secret_key(key) or looks_like_secret_value(query_value)
+                else query_value,
+            )
             for key, query_value in parse_qsl(parts.query, keep_blank_values=True)
         ],
         doseq=True,
     )
-    return urlunsplit((parts.scheme, netloc, parts.path, safe_query, parts.fragment))
+    safe_path = REDACTED if looks_like_secret_value(parts.path) else parts.path
+    return urlunsplit((parts.scheme, netloc, safe_path, safe_query, ""))
 
 
 def url_contains_inline_secret(value: str | None) -> bool:
@@ -103,9 +113,18 @@ def url_contains_inline_secret(value: str | None) -> bool:
     if not value:
         return False
     parts = urlsplit(value)
+    try:
+        parts.port
+    except ValueError:
+        return True
     if parts.username or parts.password:
         return True
-    return any(is_secret_key(key) for key, _query_value in parse_qsl(parts.query, keep_blank_values=True))
+    if looks_like_secret_value(parts.path) or bool(parts.fragment):
+        return True
+    return any(
+        is_secret_key(key) or looks_like_secret_value(query_value)
+        for key, query_value in parse_qsl(parts.query, keep_blank_values=True)
+    )
 
 
 def make_dev_encryption_key() -> str:

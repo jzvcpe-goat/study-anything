@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 132624,
+    "bytes": 132775,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "6ae8e38d55731a38b99a87b8b48eacf5b6a35551e1d43cae4251cab2d7633272"
+    "sha256": "cf6cfe0f6dbd70dbd852bb021947439a4caf3117192d48ff5cccfce0706ffb32"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -126,11 +126,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/verify_external_adoption.py",
-      "bytes": 68921,
+      "bytes": 69370,
       "kind": "verification",
       "path": "scripts/verify_external_adoption.py",
       "purpose": "Extracted adoption-pack verifier.",
-      "sha256": "95aef0aac5d58d3f55d74ad69c2018dc6b9166aebb671bf32ff32014cc479def"
+      "sha256": "911b704af050a1c488462efc19c2fa394bb22a0a056ff8bea2956353e1d700aa"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/skill-mode.md",
