@@ -23,6 +23,12 @@ Authority: `通用质检方案.md`, reviewed in S0-S15 order.
   forbidden-value check.
 - These outputs are CLI return channels, not application logs. They now use
   explicit stdout or stderr writes instead of the generic `print` logging sink.
+- The first PR analysis still identified two naming-derived flows. Its SARIF
+  traced fixed operator guidance through `missing_api_token_issue` and traced
+  privacy-pass booleans named `rejected_secret_*` into the Gateway receipt.
+- Internal identifiers now use neutral auth-material and privacy-guard names;
+  the Gateway receipt reports privacy guard results without secret-like field
+  names. The environment check keeps its existing public error code and text.
 - Redaction, forbidden-value checks, error exits, and release-gate behavior are
   unchanged. No CodeQL query, severity, path, or workflow exclusion is added.
 - No model call, production mutation, credential storage, or UI change is added.
@@ -36,7 +42,8 @@ Authority: `通用质检方案.md`, reviewed in S0-S15 order.
 | Gateway contract-only verifier | Pass |
 | Gateway localhost runtime verifier | Pass |
 | Generated evidence topology | Pass; 21 of 21 nodes converged |
-| PR CodeQL | Pending |
+| PR CodeQL first analysis | Blocked as expected; two naming-derived flows remained |
+| PR CodeQL after SARIF-driven fix | Pending |
 | Post-merge main alert ledger | Pending; must be zero |
 
 ## S15 Decision

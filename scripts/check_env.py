@@ -29,7 +29,7 @@ API_AUTH_MODES = {"local_only", "token", "oidc_jwt"}
 AGENT_ENDPOINT_POLICY_MODES = {"operator", "allowlist"}
 PUBLIC_APP_ENV_LABELS = {"development", "production", "test"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
-MIN_API_TOKEN_LENGTH = 32
+MIN_API_AUTH_MATERIAL_LENGTH = 32
 
 WEAK_VALUES = {
     "",
@@ -197,11 +197,12 @@ def invalid_oidc_configuration_issue(env_path: Path) -> dict[str, object]:
     )
 
 
-def missing_api_token_issue(env_path: Path) -> dict[str, object]:
+def missing_api_auth_material_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "missing_or_weak_api_token",
         "STUDY_ANYTHING_API_TOKEN",
-        f"Token auth requires STUDY_ANYTHING_API_TOKEN with at least {MIN_API_TOKEN_LENGTH} characters.",
+        "Token auth requires STUDY_ANYTHING_API_TOKEN with at least "
+        f"{MIN_API_AUTH_MATERIAL_LENGTH} characters.",
         [
             f"Generate a strong token with: python3 scripts/setup_env.py --force --output {env_path}",
             "Or set STUDY_ANYTHING_API_TOKEN to a strong random value in the private environment.",
@@ -589,7 +590,7 @@ def main() -> None:
 
     api_auth_mode = values.get("STUDY_ANYTHING_API_AUTH_MODE", "local_only").strip().lower()
     api_bind_host = values.get("API_BIND_HOST", "127.0.0.1").strip().lower() or "127.0.0.1"
-    api_token = values.get("STUDY_ANYTHING_API_TOKEN", "").strip()
+    api_auth_material = values.get("STUDY_ANYTHING_API_TOKEN", "").strip()
     cors_origins = {
         origin.strip().rstrip("/")
         for origin in values.get("STUDY_ANYTHING_CORS_ORIGINS", "").split(",")
@@ -601,8 +602,8 @@ def main() -> None:
         problems.append(production_api_auth_issue(args.env))
     elif api_auth_mode == "local_only" and api_bind_host not in LOOPBACK_BIND_HOSTS:
         problems.append(network_bind_without_auth_issue(args.env))
-    elif api_auth_mode == "token" and len(api_token) < MIN_API_TOKEN_LENGTH:
-        problems.append(missing_api_token_issue(args.env))
+    elif api_auth_mode == "token" and len(api_auth_material) < MIN_API_AUTH_MATERIAL_LENGTH:
+        problems.append(missing_api_auth_material_issue(args.env))
     elif api_auth_mode == "oidc_jwt":
         try:
             load_hosted_identity_config(values)
