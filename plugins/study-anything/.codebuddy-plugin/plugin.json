@@ -1,18 +1,19 @@
 {
   "author": {
-    "name": "Study Anything Maintainers",
+    "name": "Cognitive Black Box Protocol Maintainers",
     "url": "https://github.com/jzvcpe-goat/study-anything"
   },
   "category": "AI Agents",
   "commands": [
     "commands"
   ],
-  "description": "Local-first learning workflow kernel for CodeBuddy/WorkBuddy. WorkBuddy owns the real model, search, files, and conversation; Study Anything records source-bound learning state, mastery, evidence, and exports without storing model keys.",
+  "description": "Local-first Human Reconstruction / Learning Adapter for CodeBuddy/WorkBuddy. WorkBuddy owns the real model, search, files, and conversation; Study Anything records source-bound learning state, mastery, evidence, and exports without storing model keys.",
   "homepage": "https://github.com/jzvcpe-goat/study-anything",
   "keywords": [
     "study-anything",
+    "cognitive-black-box",
+    "human-reconstruction",
     "learning",
-    "cognitive-loop",
     "workbuddy",
     "codebuddy",
     "local-first",

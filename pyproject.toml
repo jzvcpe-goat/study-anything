@@ -1,11 +1,11 @@
 [project]
 name = "study-anything"
 version = "0.3.31-alpha"
-description = "Local-first Dual-Loop Trust Harness with the Study Anything learning adapter."
+description = "Open, local-first protocol and reference harness for scoped AI delivery trust."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 license = "Apache-2.0"
-authors = [{ name = "Study Anything contributors" }]
+authors = [{ name = "Cognitive Black Box Protocol contributors" }]
 dependencies = [
   "fastapi>=0.115.0",
   "uvicorn>=0.30.0",

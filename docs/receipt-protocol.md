@@ -116,12 +116,13 @@ Every receipt that supports delivery must keep its claim boundary explicit:
 
 ## Deterministic Kernel
 
-The v0.1 kernel is deterministic and local. It does not call models, browse,
+The current reference kernel is deterministic and local. It does not call models, browse,
 start daemons, send customer messages, or mutate production systems.
 
 ## Verifier Commands
 
 ```bash
+python3 scripts/verify_cbb_positioning.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check

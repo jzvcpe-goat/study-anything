@@ -88,14 +88,15 @@ def sha256_file(path: Path) -> str:
 
 
 OWNER = {
-    "name": "Study Anything Maintainers",
+    "name": "Cognitive Black Box Protocol Maintainers",
     "url": "https://github.com/jzvcpe-goat/study-anything",
 }
 
 KEYWORDS = [
     "study-anything",
+    "cognitive-black-box",
+    "human-reconstruction",
     "learning",
-    "cognitive-loop",
     "workbuddy",
     "codebuddy",
     "local-first",
@@ -106,7 +107,10 @@ KEYWORDS = [
 def marketplace_payload() -> dict[str, Any]:
     return {
         "name": "study-anything",
-        "description": "Study Anything local-first learning and cognitive-loop tools for CodeBuddy/WorkBuddy.",
+        "description": (
+            "Cognitive Black Box Protocol adapter for source-bound human reconstruction "
+            "in CodeBuddy/WorkBuddy."
+        ),
         "version": VERSION,
         "owner": OWNER,
         "plugins": [
@@ -115,7 +119,8 @@ def marketplace_payload() -> dict[str, Any]:
                 "source": "./plugins/study-anything",
                 "description": (
                     "Install Study Anything as a CodeBuddy/WorkBuddy plugin that runs an inline "
-                    "learning workflow first, with OpenAPI/local HTTP kept as a fallback."
+                    "Human Reconstruction learning workflow, with OpenAPI/local HTTP kept as a "
+                    "fallback."
                 ),
                 "version": VERSION,
                 "author": OWNER,
@@ -137,9 +142,10 @@ def plugin_payload() -> dict[str, Any]:
         "name": "study-anything",
         "version": VERSION,
         "description": (
-            "Local-first learning workflow kernel for CodeBuddy/WorkBuddy. WorkBuddy owns the "
-            "real model, search, files, and conversation; Study Anything records source-bound "
-            "learning state, mastery, evidence, and exports without storing model keys."
+            "Local-first Human Reconstruction / Learning Adapter for CodeBuddy/WorkBuddy. "
+            "WorkBuddy owns the real model, search, files, and conversation; Study Anything "
+            "records source-bound learning state, mastery, evidence, and exports without "
+            "storing model keys."
         ),
         "author": OWNER,
         "homepage": "https://github.com/jzvcpe-goat/study-anything",
@@ -180,10 +186,11 @@ def plugin_payload() -> dict[str, Any]:
 PLUGIN_README = """# Study Anything CodeBuddy/WorkBuddy Plugin
 
 This plugin lets CodeBuddy/WorkBuddy use Study Anything as a local-first
-learning workflow kernel. The default path is inline: CodeBuddy/WorkBuddy owns
-model choice, browser access, external tools, files, and private credentials;
-Study Anything records source-bound learning state, mastery, audit/eval
-evidence, and exports. OpenAPI/local HTTP remains available as a fallback.
+Human Reconstruction / Learning Adapter. The default path is inline:
+CodeBuddy/WorkBuddy owns model choice, browser access, external tools, files,
+and private credentials; Study Anything records source-bound learning state,
+mastery, audit/eval evidence, and exports. OpenAPI/local HTTP remains available
+as a fallback.
 
 ## Install
 
@@ -237,13 +244,13 @@ name: study-anything
 description: Use when CodeBuddy or WorkBuddy should run a source-bound learning workflow for requests like system learning, interview preparation, help me master this topic, build a study plan, quiz me, or review this material. Prefer the WorkBuddy inline flow where WorkBuddy owns real model/search/file/context work and Study Anything records learning state, mastery, evidence, and exports. Use OpenAPI/local HTTP only as fallback. Do not store model keys in Study Anything.
 ---
 
-# Study Anything For CodeBuddy/WorkBuddy
+# Study Anything Adapter For CodeBuddy/WorkBuddy
 
-Study Anything is the learning workflow kernel. CodeBuddy/WorkBuddy remains the
-main platform Agent: it owns real model credentials, browsing, external apps,
-files, visualization, and private tool use. Study Anything owns local learning
-workflow integrity, source binding, hidden session refs, mastery, audit/eval
-evidence, and exports.
+Study Anything is the Human Reconstruction / Learning Adapter. CodeBuddy/
+WorkBuddy remains the main platform Agent: it owns real model credentials,
+browsing, external apps, files, visualization, and private tool use. Study
+Anything owns local learning workflow integrity, source binding, hidden session
+refs, mastery, audit/eval evidence, and exports.
 
 ## Trigger Phrases
 
@@ -607,9 +614,9 @@ Status: `{report['status']}`
 ## Boundary
 
 This is an installable CodeBuddy/WorkBuddy plugin wrapper around the local
-Study Anything learning workflow kernel. It supports WorkBuddy inline learning
-today, keeps OpenAPI/local HTTP as fallback, and keeps MCP as a planned
-extension rather than a shipped runtime claim.
+Study Anything Human Reconstruction / Learning Adapter. It supports WorkBuddy
+inline learning today, keeps OpenAPI/local HTTP as fallback, and keeps MCP as a
+planned extension rather than a shipped runtime claim.
 """
 
 

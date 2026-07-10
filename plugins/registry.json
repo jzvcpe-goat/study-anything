@@ -12,10 +12,10 @@
       "status": "bundled",
       "review": {
         "status": "maintainer_reviewed",
-        "reviewedBy": "Study Anything maintainers",
+        "reviewedBy": "Cognitive Black Box Protocol maintainers",
         "reviewedAt": "2026-06-04"
       },
-      "sourceDigest": "sha256:6eea9815c495f9c40c6e7773512c7553059327b55246665911a5502c04f70033"
+      "sourceDigest": "sha256:eec257cfbc17c57115584836995874aebd2953e5198bbd228669a203d7809dfc"
     },
     {
       "id": "example-agent-provider",
@@ -26,10 +26,10 @@
       "status": "bundled",
       "review": {
         "status": "maintainer_reviewed",
-        "reviewedBy": "Study Anything maintainers",
+        "reviewedBy": "Cognitive Black Box Protocol maintainers",
         "reviewedAt": "2026-06-04"
       },
-      "sourceDigest": "sha256:1876b371cbebb8ec0b93694b6bfb014a7ccca68df1b33f6486ffc64918b2af15"
+      "sourceDigest": "sha256:6f8a33f9031228ccc787bf346988864227540192203341bb10f341cdca4b633a"
     },
     {
       "id": "example-enrichment-importer",
@@ -40,10 +40,10 @@
       "status": "bundled",
       "review": {
         "status": "maintainer_reviewed",
-        "reviewedBy": "Study Anything maintainers",
+        "reviewedBy": "Cognitive Black Box Protocol maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:5cb435c23be5b63152dcdef3ddaf0c05f755e27e59054ea17d70a97d1f50eeb7"
+      "sourceDigest": "sha256:9b90752e1b489921e0cbb5d3a7d6d4219ca7ce7ee58f872201aa891d8365c640"
     },
     {
       "id": "example-web-importer",
@@ -54,10 +54,10 @@
       "status": "bundled",
       "review": {
         "status": "maintainer_reviewed",
-        "reviewedBy": "Study Anything maintainers",
+        "reviewedBy": "Cognitive Black Box Protocol maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:b4817b1ede8c480950c52932faaa6825d6882bc8783a0c494a127bdedaf170fe"
+      "sourceDigest": "sha256:40793c62ca2d36f5234f73f89bff19244cbbfa2b57572997585461d3a7280664"
     },
     {
       "id": "example-note-importer",
@@ -68,10 +68,10 @@
       "status": "bundled",
       "review": {
         "status": "maintainer_reviewed",
-        "reviewedBy": "Study Anything maintainers",
+        "reviewedBy": "Cognitive Black Box Protocol maintainers",
         "reviewedAt": "2026-06-12"
       },
-      "sourceDigest": "sha256:a7fdb2736d1abfaa1cd9d2a3b47cf8b3d41e59ad402f89564d04d5e2790740e1"
+      "sourceDigest": "sha256:76c5e92285c1fa315bba4c2db5ad6a7d2b0ec383e7219f31960ff5351a0123ec"
     }
   ]
 }

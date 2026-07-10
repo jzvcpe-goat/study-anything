@@ -10,12 +10,12 @@
   "capabilities": ["agent.register_provider", "ui.register_panel"],
   "permissions": ["read:agents", "write:agents", "network:http", "ui:panel"],
   "publisher": {
-    "name": "Study Anything contributors",
+    "name": "Cognitive Black Box Protocol contributors",
     "url": "https://github.com/jzvcpe-goat/study-anything"
   },
   "review": {
     "status": "maintainer_reviewed",
-    "reviewedBy": "Study Anything maintainers",
+    "reviewedBy": "Cognitive Black Box Protocol maintainers",
     "reviewedAt": "2026-06-04",
     "notesUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-agent-provider"
   },

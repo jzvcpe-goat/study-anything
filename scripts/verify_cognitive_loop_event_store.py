@@ -325,7 +325,7 @@ def build_report() -> dict[str, Any]:
             },
             "html_artifact": {
                 "created": export_html_path.is_file(),
-                "contains_brand": "Cognitive Loop System" in html,
+                "contains_brand": "Cognitive Black Box Protocol" in html,
                 "contains_sqlite_event_store": "SQLite Event Store" in html,
                 "contains_redacted_json": "Redacted JSON" in html,
                 "standalone_frontend_required": False,

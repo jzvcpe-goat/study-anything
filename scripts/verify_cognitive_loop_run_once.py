@@ -102,7 +102,7 @@ def build_report() -> dict[str, Any]:
             },
             "html_artifact": {
                 "created": html_path.is_file(),
-                "contains_brand": "Cognitive Loop System" in html,
+                "contains_brand": "Cognitive Black Box Protocol" in html,
                 "contains_decision_card": "Decision Card" in html,
                 "contains_loop_run": "Loop Run" in html,
                 "contains_redacted_json": "Redacted JSON" in html,

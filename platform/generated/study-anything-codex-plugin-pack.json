@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 133254,
+    "bytes": 122280,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "9e3aa882c57fc7ba4018445dab96a3b9b268feb5ce930e2fae2f5b54497f836e"
+    "sha256": "9f95f432e8eee523ef2c9ae739cb71d93b2ee229f78f3459c8ef3c8df189ee3d"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -14,11 +14,11 @@
   "files": [
     {
       "archive_path": "study-anything-codex-plugin-pack/README.md",
-      "bytes": 48129,
+      "bytes": 9319,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "9b8d05150803a3f1499439ef9f75e4d5dcbbcb6699992ce071d96de4318b5902"
+      "sha256": "69a3f70cb5289a727bd1b33b3873aafe54814abcdc24ed9d2e5429a6b6353197"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/QUICKSTART.md",
@@ -46,11 +46,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/operator-drill.md",
-      "bytes": 3393,
+      "bytes": 3405,
       "kind": "operator_doc",
       "path": "docs/operator-drill.md",
       "purpose": "External platform operator drill.",
-      "sha256": "ab16e1e6c93548fe62950827b15a0b5ccf1a9f7947a1cf69ae8a0a734531a611"
+      "sha256": "b6b7374d3486c9f5b87c0ca40bdfa8d9035a9633f491c5602e79405fc5eebcb3"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/study-anything-platform-tools.json",
@@ -134,11 +134,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/skill-mode.md",
-      "bytes": 11810,
+      "bytes": 11841,
       "kind": "operator_doc",
       "path": "docs/skill-mode.md",
       "purpose": "Skill Mode startup and CLI guide.",
-      "sha256": "cdff0151e536588cb0eba5046fd70f733aa43a4517fbcaa53326f7e1e47c4562"
+      "sha256": "8de61dcc076665923b87eff992453dd628c9788fe8e5837a998a7a98bb1b93f3"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/README.md",

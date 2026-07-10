@@ -1,6 +1,6 @@
 # Platform Agent Integrations
 
-Study Anything is designed to be called by a platform Agent rather than to replace one. The platform
+The Study Anything adapter is designed to be called by a platform Agent rather than to replace one. The platform
 Agent owns browsing, files, apps, video tools, external data, user conversation, and model credentials.
 Study Anything owns the learning loop: source binding, optional layered teaching output, quiz
 generation, answer grading, mastery, scribe logs, HITL state, Agent audit, and eval artifacts.

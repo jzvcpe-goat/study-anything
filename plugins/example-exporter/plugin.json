@@ -10,12 +10,12 @@
   "capabilities": ["export.markdown", "export.obsidian_note", "export.second_brain_handoff"],
   "permissions": ["read:sessions"],
   "publisher": {
-    "name": "Study Anything contributors",
+    "name": "Cognitive Black Box Protocol contributors",
     "url": "https://github.com/jzvcpe-goat/study-anything"
   },
   "review": {
     "status": "maintainer_reviewed",
-    "reviewedBy": "Study Anything maintainers",
+    "reviewedBy": "Cognitive Black Box Protocol maintainers",
     "reviewedAt": "2026-06-04",
     "notesUrl": "https://github.com/jzvcpe-goat/study-anything/tree/main/plugins/example-exporter"
   },

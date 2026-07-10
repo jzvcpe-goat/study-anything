@@ -268,6 +268,7 @@ run_dual_loop_verifier_gates() {
 
 run_cbb_protocol_verifier_gates() {
   phase "CBB protocol verifier gates"
+  "$python_bin" scripts/verify_cbb_positioning.py --check
   "$python_bin" scripts/verify_cbb_protocol_contracts.py --check
   "$python_bin" scripts/verify_cbb_gate.py --check
   "$python_bin" scripts/verify_cbb_receipt_chain.py --check

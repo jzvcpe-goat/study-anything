@@ -1,10 +1,11 @@
 # Study Anything CodeBuddy/WorkBuddy Plugin
 
 This plugin lets CodeBuddy/WorkBuddy use Study Anything as a local-first
-learning workflow kernel. The default path is inline: CodeBuddy/WorkBuddy owns
-model choice, browser access, external tools, files, and private credentials;
-Study Anything records source-bound learning state, mastery, audit/eval
-evidence, and exports. OpenAPI/local HTTP remains available as a fallback.
+Human Reconstruction / Learning Adapter. The default path is inline:
+CodeBuddy/WorkBuddy owns model choice, browser access, external tools, files,
+and private credentials; Study Anything records source-bound learning state,
+mastery, audit/eval evidence, and exports. OpenAPI/local HTTP remains available
+as a fallback.
 
 ## Install
 

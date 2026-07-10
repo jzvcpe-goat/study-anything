@@ -2,256 +2,184 @@
 
 ## Core Claim
 
-Cognitive Black Box is a Dual-Loop Trust Harness for AI delivery. It does not
-ask users to trust an AI result because it sounds fluent, because another AI
-approved it, or because a human reread every detail. It asks whether the result
-has passed a controlled failure loop, an active human reconstruction loop, and a
-propagation gate that keeps both loops equal weight.
+CBB Protocol does not prove that an AI is trustworthy in general. It proves that a
+specific candidate may move only as far as a specific policy and receipt allow.
 
-认知黑箱是面向 AI 交付的 Dual-Loop Trust Harness。它不要求用户因为结果流畅、
-另一个 AI 说可以、或人类重新读完所有细节而信任 AI。它只问：这个交付是否通过了
-可控失败闭环、主动人类重构闭环，以及一个不让任一闭环独大的传播门。
+CBB 协议不证明某个 AI 在全局上值得信任。它只证明一个具体候选物可以走到某份策略和
+收据允许的范围。
 
-## Why This Exists
+Trust is scoped, stateful, time-bound, evidence-backed, and reversible. A model,
+human, project, recipient, or delivery context changing can invalidate an earlier
+decision.
 
-The target problem is not generic model quality. The target problem is customer
-delivery trust:
+信任有范围、有状态、有期限、有证据，并且必须可撤销。模型、人、项目、接收者或交付
+场景发生变化，都可能使旧决策失效。
 
-- AI can now create real deliverables quickly.
-- Full human re-review does not scale and often becomes shallow fatigue.
-- AI-reviewing-AI can hide failures behind another black box.
-- Teams need a cheaper, repeatable proof that the delivery boundary was
-  understood, tested, contained, and reversible.
+## Controlled Release, Not Permanent Restraint
 
-目标问题不是泛泛的模型质量，而是客户交付信任：
+The protocol is a mechanism for knowing when to let go. It earns that freedom by
+exposing failure early, bounding propagation, reconstructing control boundaries, and
+leaving an auditable receipt.
 
-- AI 已经可以快速生成真实交付物。
-- 人类逐字逐步二次审核不可扩展，而且容易变成疲劳式走过场。
-- AI 审 AI 可能只是把失败藏进另一个黑箱。
-- 团队需要一种更便宜、可重复的证据，证明交付边界已被理解、测试、隔离，并且可回滚。
-
-## The Trust Equation
+协议的目标不是永久束缚 AI，而是知道何时可以放手。这个自由来自早期暴露失败、限制
+传播、重构控制边界，并留下可审计收据。
 
 ```text
-delivery trust =
-  controlled failure evidence
-+ human boundary reconstruction evidence
-+ propagation gate receipt
-+ explicit claim boundary
-- production mutation by default
-- AI-review-only promotion
-- full manual re-review as the only control
+We know what the candidate can do.
+We know how it has failed.
+We know where failure must stop.
+We know who owns the residual risk.
+We know what remains unproven.
+Therefore we can release it only inside that boundary.
 ```
 
-## Loop 1: Controlled Failure Environment
+## Equal-Weight Dual Loop
 
-AI is allowed to fail only inside an observable, reversible sandbox. The sandbox
-emits:
+### Loop A: Controlled Failure
 
-- `failure-contract-v1`
-- `sandbox-receipt-v1`
+The AI candidate is exercised inside an observable and reversible environment. The
+evidence must show:
 
-The sandbox records risk budget, allowed failure modes, forbidden propagation
-paths, rollback proof, and whether any failure escaped. It must not mutate
-production, expose real users, create irreversible effects, call models in the
-v0.1 deterministic path, or store private payloads.
+- allowed and forbidden failure modes;
+- blast-radius budget;
+- escaped effects, if any;
+- rollback availability and replayability;
+- evidence provenance;
+- whether the candidate stayed inside the declared scope.
 
-## Loop 2: Human Attention Reconstruction Environment
+### Loop B: Qualified Human Reconstruction
 
-Human control is not step-by-step approval. The human layer records whether an
-operator can reconstruct the important failure boundaries:
+The human is not asked to repeat the whole task. The reviewer reconstructs the
+minimum control boundary appropriate to the scenario:
 
-- what may fail;
-- where failure must stop;
-- what triggers rollback;
-- what is and is not being claimed;
-- what evidence is strong enough for the next sandbox level.
+- intent and non-goals;
+- critical failure path;
+- affected parties and recipient scope;
+- rollback trigger;
+- evidence weakness and known limitation;
+- acceptable residual risk.
 
-It emits:
+Passive attention routes the reviewer to likely gaps. Active reconstruction provides
+the stronger evidence. Qualification is local to a project, boundary type, and time
+window. It is not a permanent label attached to a person.
 
-- `attention-reconstruction-trace-v1`
-- `attention-reconstruction-summary-v1`
+### Propagation Gate
 
-Passive attention is weak evidence. Active reconstruction checkpoints are strong
-evidence.
+Both loops must pass. Controlled failure without human reconstruction blocks.
+Human confidence without bounded failure evidence also blocks. Neither loop may
+compensate for the other.
 
-## Dual-Loop Propagation Gate
+## Trust Actors
 
-The gate emits:
+The protocol keeps these roles separate:
 
-- `dual-loop-gate-receipt-v1`
+| Actor | Responsibility |
+|---|---|
+| Producer | Creates the candidate and supporting evidence |
+| Evidence collector | Calls typed tools and records provenance |
+| Qualified reviewer | Reconstructs the required human boundary |
+| Risk owner | Accepts residual organizational or operational risk |
+| Recipient | Receives or operates the candidate |
+| Affected party | May experience the result or harm without being the recipient |
+| Deterministic verifier | Checks policy, evidence, digests, scope, and receipt |
 
-It blocks if the sandbox passes but human reconstruction is missing. It also
-blocks if human reconstruction passes but sandbox risk is outside budget. Neither
-loop may dominate the other.
+One actor may fill multiple low-risk roles, but the receipt must not hide that fact.
+For higher-scope delivery, policy may require separation of duties.
 
-## Delivery Trust Receipt
+## What Counts As Evidence
 
-The delivery layer emits:
+Evidence must be typed, attributable, bounded, and linked to the candidate. Examples:
 
-- `delivery-trust-receipt-v1`
+- sandbox execution and negative fixtures;
+- deterministic tests and scanner output;
+- rollback replay;
+- qualified reconstruction checkpoints;
+- recipient, affected-party, and risk-owner declarations;
+- signed external eval receipts as supporting evidence;
+- post-delivery outcomes and incidents;
+- policy, verifier, and artifact digests.
 
-This receipt answers the customer-facing question: can this AI-generated
-candidate be handed off inside the current controlled scope?
+Natural-language confidence, model reputation, or a generic approval button is not
+sufficient evidence.
 
-The answer is allowed only when:
+## Self-Distrust
 
-- the failure contract is valid;
-- the sandbox receipt proves contained and reversible failure;
-- the human reconstruction summary is present and passed;
-- the Dual-Loop gate is allowed;
-- AI eval receipts are treated as supporting evidence only;
-- full manual re-review is not required as the primary control;
-- production mutation and irreversible effects remain blocked by default;
-- the claim boundary states what is and is not proven.
+The protocol must distrust itself. Its main structural threats are:
 
-## Customer Handoff Package
+1. **Forged or selective receipts**: mitigated by digests, signatures, verifier
+   identity, timestamps, and tamper-evident chains.
+2. **Compromised Agentic runtime**: mitigated by least privilege, typed function
+   calls, untrusted-input isolation, and a model-free Trust Kernel.
+3. **RAG or memory poisoning**: mitigated by provenance, quarantine, expiry,
+   counter-evidence, and incident-triggered rollback.
+4. **Goodhart pressure**: mitigated by negative fixtures, random audit, hidden
+   adversarial cases, post-delivery sampling, and receipt revocation.
+5. **Self-authorization**: mitigated by proposal/decision separation and CBB-on-CBB
+   evolution receipts.
+6. **Affected-party omission**: mitigated by separate recipient, risk-owner,
+   affected-party, disclosure, appeal, and redress fields.
 
-The portable package layer emits:
+Opaque systems may propose trust evidence. They cannot be the final source of trust.
 
-- `customer-handoff-package-v1`
+黑箱系统可以提出信任证据，但不能成为最终信任来源。
 
-This package is not a new trust source. It cannot approve anything that the
-Delivery Trust Receipt blocked, and it cannot expand the customer delivery
-scope. It only bundles scoped metadata evidence, limitations, rollback,
-human reconstruction summaries, external eval receipt refs, artifact digests,
-and WorkBuddy/Hermes/Codex handoff instructions.
+## Trust Growth And Degradation
 
-## Delivery Trust Case Harness
+Repeated success can reduce friction only inside the same bounded scenario. A mature
+Trust Recipe may reuse known fixtures, rollback patterns, and reconstruction evidence.
+New risk, new recipient, new model behavior, new affected party, or changed impact
+returns the case to a higher level of reconstruction.
 
-The total assembly layer emits:
+Trust must also move downward. Incidents, failed rollback, stale evidence, model
+regression, compromised memory, or claim-boundary violation can:
 
-- `delivery-trust-case-v1`
+- lower the autonomy ceiling;
+- expire or revoke receipts;
+- freeze a Trust Recipe;
+- require replay or independent review;
+- narrow the allowed delivery scope.
 
-This layer answers whether one AI-generated candidate is ready for controlled
-customer handoff. It requires Product Loop, Dual Loop, Delivery Trust Receipt,
-and CustomerHandoffPackage evidence to agree. If any one layer blocks, the case
-blocks. A valid package cannot compensate for a failed Product Loop, and a
-passing Product Loop cannot compensate for sandbox risk outside budget.
+## Neural-System Design Analogy
 
-## Delivery Trust Case Pack
+This is a design analogy, not a neuroscience claim:
 
-The portable consumer layer emits:
+| Layer | CBB role |
+|---|---|
+| Spinal reflex | Fast local guardrails and hard stops |
+| Brainstem | Stable Trust Kernel and survival boundaries |
+| Cerebellum | Practiced Trust Recipes and failure memory |
+| Cerebrum | Novel context, value judgment, and human reconstruction |
 
-- `delivery-trust-case-pack-v1`
-- `delivery-trust-case-pack-consumer-walkthrough-v1`
+The engineering rule is useful: hard local danger should be fast and deterministic;
+repeated safe patterns may become lower-friction recipes; novel or consequential
+contexts move upward to human judgment.
 
-This pack is for external adopters. It lets a customer reviewer or platform
-Agent verify the Delivery Trust Case evidence from a ZIP alone: manifest shape,
-file hashes, claim boundary, pass/blocked case semantics, and metadata-only
-privacy boundaries. It is not a new trust source and cannot turn a blocked case
-into an allowed customer handoff.
+## Current Claim Boundary
 
-## What This Does Not Claim
-
-The current local-first deterministic MVP does not claim:
+The current repository proves a local, deterministic, metadata-only reference
+harness. It does not prove:
 
 - production deployment approval;
-- customer outcome guarantee;
+- customer outcome guarantees;
+- legal, security, or domain certification;
 - general model correctness;
-- legal, security, or domain acceptance completion;
-- that AI-reviewing-AI is sufficient;
-- that humans no longer need judgment.
+- independent human security audit completion;
+- safe autonomous self-evolution;
+- hosted multi-tenant operational readiness.
 
-It claims only that the candidate passed a metadata-only, local, deterministic
-trust harness for controlled handoff.
-
-## Product Loop Harness
-
-Before customer handoff, the product-development layer emits:
-
-- `product-loop-scenario-v1`
-- `product-loop-run-v1`
-
-This layer maps the three product-development loops into machine-checkable
-evidence:
-
-- Agentic Coding Loop: coding agent to product spec/evals, roughly minutes;
-- Developer Feedback Loop: developer vision to product spec/evals, roughly
-  hours;
-- External Feedback Loop: external feedback to developer vision, roughly days.
-
-It blocks if product spec/evals are missing, developer vision is missing,
-external feedback requests production scope, AI-review-only evidence is used as
-the trust basis, or one loop dominates the others. A passing Product Loop run
-may promote only to the Delivery Trust Harness, not to production.
-
-## Verification Commands
+## Current Verification
 
 ```bash
+python3 scripts/verify_cbb_positioning.py --check
 python3 scripts/verify_dual_loop_contracts.py --check
 python3 scripts/verify_failure_sandbox_lite.py --check
 python3 scripts/verify_attention_reconstruction_lite.py --check
 python3 scripts/verify_dual_loop_gate.py --check
 python3 scripts/verify_delivery_trust_receipt.py --check
 python3 scripts/verify_customer_handoff_package.py --check
-python3 scripts/verify_product_loop_harness.py --check
-python3 scripts/verify_delivery_trust_case_harness.py --check
-python3 scripts/generate_delivery_trust_case_pack.py --check
-python3 scripts/verify_delivery_trust_case_pack_consumer_walkthrough.py --check
-python3 scripts/verify_code_review_delivery_class_handoff.py --check
-python3 scripts/verify_client_report_delivery_class_handoff.py --check
-python3 scripts/verify_delivery_class_registry.py --check
-python3 scripts/verify_trust_scenario_catalog.py --check
-python3 scripts/verify_trust_scenario_decision_gate.py --check
-python3 scripts/generate_trust_evidence_handoff_pack.py --check
-python3 scripts/verify_trust_evidence_handoff_pack_consumer_walkthrough.py --check
-python3 scripts/verify_trust_evidence_acceptance_drill.py --check
-python3 scripts/verify_controlled_handoff_runbook.py --check
+python3 scripts/verify_cbb_protocol_contracts.py --check
+python3 scripts/verify_cbb_gate.py --check
+python3 scripts/verify_cbb_receipt_chain.py --check
 ```
 
-The delivery trust command verifies pass and blocked fixtures, rejects
-AI-review-only promotion, rejects eval-as-sufficient promotion, and rejects
-missing claim boundaries. The customer handoff command verifies the portable
-package cannot bypass delivery trust, expand scope, rely on eval receipts as
-sufficient proof, omit rollback or claim boundaries, leak secret-like content,
-ship digest drift, or ask platform Agents for production mutation.
-
-The Code Review Delivery Class command maps those boundaries into a first
-real-domain handoff class. It verifies that code-review evidence may be handed
-off only when Product Loop, Dual Loop, human reconstruction, source grounding,
-and CustomerHandoff boundaries all pass; it still blocks automatic PR comments,
-customer sending, production mutation, merge approval, deployment approval, and
-security-certification claims.
-
-The Client Report Delivery Class command maps the same trust boundary into a
-second real-domain handoff class for reports, memos, and analysis artifacts. It
-verifies that customer-facing report evidence may be handed off only when
-active human reconstruction, source grounding, bounded recipient scope, risk
-budget, claim boundary, and CustomerHandoff checks pass; it still blocks raw
-report text, raw customer payload, automatic customer sending, external
-publication, production mutation, legal/financial certification, and treating an
-AI summary or external eval receipt as sufficient proof by itself.
-
-The Delivery Class Registry command verifies the delivery-class matrix itself.
-It proves each listed class has docs, schema, JSON/HTML evidence, deterministic
-fixtures, negative checks, release-gate wiring, and metadata-only privacy
-boundaries. It is a registry of protocol-supported classes, not a production
-delivery approval.
-
-The Trust Scenario Catalog command maps the registered classes into supported
-and blocked AI delivery scenarios. It proves the current handoff ceiling for
-each scenario and rejects direct production mutation, certified truth claims,
-AI-review-only shortcuts, and loop dominance.
-
-The Trust Scenario Decision Gate command turns those scenarios into deterministic
-local allow/block receipts. It proves missing artifacts, incomplete active
-reconstruction, forbidden shortcuts, production mutation, and truth certification
-remain blocked before any handoff claim is made.
-
-The Trust Evidence Handoff Pack command bundles the current registry, catalog,
-concrete delivery-class reports, decision gate, Delivery Trust Case Pack,
-fixtures, claim boundaries, and privacy assertions into a portable ZIP. The
-consumer walkthrough proves an external operator can verify the handoff boundary
-and delivery-class allowed/blocked matrices from package metadata alone.
-
-The Trust Evidence Acceptance Drill command goes one step further: it consumes
-the portable ZIP and proves a reviewer can derive controlled allow/block
-handoff decisions for code-review and client-report delivery classes without
-raw source text, raw report text, or AI-review-only sufficiency.
-
-The Controlled Handoff Runbook command turns those allow/block decisions into
-next-step operator instructions for Codex, Kimi, WorkBuddy, Hermes, or a human
-reviewer. It permits metadata-only handoff preparation and keeps automatic
-customer sending, production mutation, external publication, truth
-certification, raw payload inclusion, and customer outcome guarantees blocked.
+Passing these commands proves only their documented deterministic scope.

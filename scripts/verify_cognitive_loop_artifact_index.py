@@ -292,7 +292,7 @@ def build_report() -> dict[str, Any]:
         },
         "html_artifact": {
             "created": True,
-            "contains_brand": "Cognitive Loop System" in html,
+            "contains_brand": "Cognitive Black Box Protocol" in html,
             "contains_artifact_index": "Artifact Index" in html,
             "contains_run_once_link": "run-once.html" in html,
             "contains_event_link": "../events/run-once.json" in html,

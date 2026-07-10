@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 73113,
+    "bytes": 72347,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "a134d813def36058c555d7d16c7828938538ad5cfb29dd3d5287d722365164d8"
+    "sha256": "3f5b5375a0b99cdda2a51722355818a3e81c37f51fa7cc148763c06f2fba31b8"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -143,11 +143,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/commercial-readiness.md",
-      "bytes": 15737,
+      "bytes": 15838,
       "path": "docs/commercial-readiness.md",
       "purpose": "Hosted commercial readiness and non-claims.",
       "role": "readiness_doc",
-      "sha256": "7bb877c08252814371568c589fa708574c82a6902e899ae7e471fd644e4f3c80"
+      "sha256": "31748f22f3c5be025e7eeba0e2fd2d3e502b0bf049baa37cfc826e0b7eb747ae"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/dual-loop-mvp.md",
@@ -159,11 +159,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 11074,
+      "bytes": 7141,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "3545284f3198669793c4fcd59925dd6504544401122d06fca69ae6ee23833f3b"
+      "sha256": "6f51e90a6bc55ed0fa08aa38b3416fd5adffbf6f9ed4ad9ccc4bc1381b7df5af"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
@@ -211,7 +211,7 @@
       "path": "platform/generated/study-anything-python-supply-chain.json",
       "purpose": "Lock, hash export, and SBOM receipt.",
       "role": "generated_evidence",
-      "sha256": "3756e22b33c1f577194f19fd6c04ddaf11d613477d885cabb9be88aee1b99336"
+      "sha256": "4a8e23926ae9fef6d55e73a3eb3392a616d559d4412f8358f2a639509fe6c098"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-sbom.cdx.json",
