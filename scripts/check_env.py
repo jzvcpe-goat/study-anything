@@ -29,7 +29,7 @@ API_AUTH_MODES = {"local_only", "token", "oidc_jwt"}
 AGENT_ENDPOINT_POLICY_MODES = {"operator", "allowlist"}
 PUBLIC_APP_ENV_LABELS = {"development", "production", "test"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
-MIN_API_TOKEN_LENGTH = 32
+MIN_API_AUTH_MATERIAL_LENGTH = 32
 
 WEAK_VALUES = {
     "",
@@ -197,11 +197,12 @@ def invalid_oidc_configuration_issue(env_path: Path) -> dict[str, object]:
     )
 
 
-def missing_api_token_issue(env_path: Path) -> dict[str, object]:
+def missing_api_auth_material_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "missing_or_weak_api_token",
         "STUDY_ANYTHING_API_TOKEN",
-        f"Token auth requires STUDY_ANYTHING_API_TOKEN with at least {MIN_API_TOKEN_LENGTH} characters.",
+        "Token auth requires STUDY_ANYTHING_API_TOKEN with at least "
+        f"{MIN_API_AUTH_MATERIAL_LENGTH} characters.",
         [
             f"Generate a strong token with: python3 scripts/setup_env.py --force --output {env_path}",
             "Or set STUDY_ANYTHING_API_TOKEN to a strong random value in the private environment.",
@@ -421,6 +422,12 @@ def _public_app_env(app_env: str) -> str:
     return app_env if app_env in PUBLIC_APP_ENV_LABELS else "unrecognized"
 
 
+def _write_cli_line(text: str, *, error: bool = False) -> None:
+    stream = sys.stderr if error else sys.stdout
+    stream.write(text)
+    stream.write("\n")
+
+
 def json_report(
     *,
     env_path: Path,
@@ -451,7 +458,7 @@ def json_report(
 
 
 def print_json_report(report: dict[str, Any]) -> None:
-    print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
+    _write_cli_line(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
 
 
 def print_text_report(
@@ -464,16 +471,16 @@ def print_text_report(
     redacted_problems = [_redact_issue(problem, env_path) for problem in problems]
     for warning in warnings:
         redacted_warning = _redact_issue(warning, env_path)
-        print(f"warn  {redacted_warning['message']}")
+        _write_cli_line(f"warn  {redacted_warning['message']}")
         for step in redacted_warning["next_steps"]:
-            print(f"      Recovery: {step}")
+            _write_cli_line(f"      Recovery: {step}")
     if problems:
         for problem in redacted_problems:
-            print(f"fail  {problem['message']}", file=sys.stderr)
+            _write_cli_line(f"fail  {problem['message']}", error=True)
             for step in problem["next_steps"]:
-                print(f"      Recovery: {step}", file=sys.stderr)
+                _write_cli_line(f"      Recovery: {step}", error=True)
         return
-    print(
+    _write_cli_line(
         f"ok    {_redact_env_path(str(env_path), env_path)} is valid for "
         f"APP_ENV={_public_app_env(app_env)}."
     )
@@ -583,7 +590,7 @@ def main() -> None:
 
     api_auth_mode = values.get("STUDY_ANYTHING_API_AUTH_MODE", "local_only").strip().lower()
     api_bind_host = values.get("API_BIND_HOST", "127.0.0.1").strip().lower() or "127.0.0.1"
-    api_token = values.get("STUDY_ANYTHING_API_TOKEN", "").strip()
+    api_auth_material = values.get("STUDY_ANYTHING_API_TOKEN", "").strip()
     cors_origins = {
         origin.strip().rstrip("/")
         for origin in values.get("STUDY_ANYTHING_CORS_ORIGINS", "").split(",")
@@ -595,8 +602,8 @@ def main() -> None:
         problems.append(production_api_auth_issue(args.env))
     elif api_auth_mode == "local_only" and api_bind_host not in LOOPBACK_BIND_HOSTS:
         problems.append(network_bind_without_auth_issue(args.env))
-    elif api_auth_mode == "token" and len(api_token) < MIN_API_TOKEN_LENGTH:
-        problems.append(missing_api_token_issue(args.env))
+    elif api_auth_mode == "token" and len(api_auth_material) < MIN_API_AUTH_MATERIAL_LENGTH:
+        problems.append(missing_api_auth_material_issue(args.env))
     elif api_auth_mode == "oidc_jwt":
         try:
             load_hosted_identity_config(values)

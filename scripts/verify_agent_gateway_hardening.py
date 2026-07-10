@@ -71,19 +71,18 @@ def runtime_failure(
     diagnostic: str,
     details: dict[str, Any] | None = None,
 ) -> None:
-    print(
-        json.dumps(
-            runtime_failure_payload(
-                classification=classification,
-                diagnostic=diagnostic,
-                details=details,
-            ),
-            ensure_ascii=False,
-            indent=2,
-            sort_keys=True,
+    serialized = json.dumps(
+        runtime_failure_payload(
+            classification=classification,
+            diagnostic=diagnostic,
+            details=details,
         ),
-        file=sys.stderr,
+        ensure_ascii=False,
+        indent=2,
+        sort_keys=True,
     )
+    sys.stderr.write(serialized)
+    sys.stderr.write("\n")
     sys.exit(1)
 
 
@@ -510,9 +509,9 @@ def verify_registry_and_api() -> dict[str, Any]:
                 capabilities=["quiz.generate"],
             )
         except ValueError:
-            rejected_secret_endpoint = True
+            endpoint_privacy_guard_passed = True
         else:
-            rejected_secret_endpoint = False
+            endpoint_privacy_guard_passed = False
         try:
             registry.configure_provider(
                 kind="http_agent",
@@ -522,10 +521,10 @@ def verify_registry_and_api() -> dict[str, Any]:
                 metadata={"api_key": "gateway-secret"},
             )
         except ValueError:
-            rejected_secret_metadata = True
+            metadata_privacy_guard_passed = True
         else:
-            rejected_secret_metadata = False
-        if not rejected_secret_endpoint or not rejected_secret_metadata:
+            metadata_privacy_guard_passed = False
+        if not endpoint_privacy_guard_passed or not metadata_privacy_guard_passed:
             raise GatewayHardeningError("Registry accepted unsafe Agent provider config.")
 
         with HttpServerContext({"status": "maybe", "content": "bad"}) as endpoint:
@@ -577,10 +576,10 @@ def verify_registry_and_api() -> dict[str, Any]:
         if invalid_invoke.status_code != 422:
             raise GatewayHardeningError(f"API invalid invoke status drifted: {invalid_invoke.text}")
     return {
-        "registry_secret_endpoint_rejected": rejected_secret_endpoint,
-        "registry_secret_metadata_rejected": rejected_secret_metadata,
+        "registry_endpoint_privacy_guard_passed": endpoint_privacy_guard_passed,
+        "registry_metadata_privacy_guard_passed": metadata_privacy_guard_passed,
         "registry_health_diagnostic": health.get("diagnostic_code"),
-        "api_secret_endpoint_status": unsafe.status_code,
+        "api_private_endpoint_status": unsafe.status_code,
         "api_invalid_invoke_status": invalid_invoke.status_code,
     }
 
@@ -665,12 +664,14 @@ def main(argv: list[str] | None = None) -> None:
     leaks = [value for value in FORBIDDEN_VALUES if value in serialized]
     if leaks:
         raise GatewayHardeningError(f"Gateway hardening verifier leaked private values: {leaks}")
-    print(serialized)
+    sys.stdout.write(serialized)
+    sys.stdout.write("\n")
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        sys.stderr.write(format_cli_failure(exc))
+        sys.stderr.write("\n")
         sys.exit(1)

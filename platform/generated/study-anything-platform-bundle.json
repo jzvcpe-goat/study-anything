@@ -11623,11 +11623,11 @@
       "sha256": "01d65e1f4d08aeb57f387df3c920e086a91442d99e42d7cce28c2ab8e3e29235"
     },
     {
-      "bytes": 24938,
+      "bytes": 25216,
       "kind": "runtime",
       "path": "scripts/check_env.py",
       "purpose": "Validate required local environment variables before launch.",
-      "sha256": "6472903d97cee535b40ee72d3ca0e358f1abe642dfab0a9094d124ece07a6ecf"
+      "sha256": "711c23b43199dd8a053f610fb6dc59c57b7a7bccb2235e8f85670e7829ed7ff5"
     },
     {
       "bytes": 15431,
@@ -11840,11 +11840,11 @@
       "sha256": "a4f446b51b24d0990a1f582043d6c37a558f3b0fc228260178c241863033cd8d"
     },
     {
-      "bytes": 26454,
+      "bytes": 26558,
       "kind": "verification",
       "path": "scripts/verify_agent_gateway_hardening.py",
       "purpose": "User-owned Agent gateway hardening and privacy verifier.",
-      "sha256": "147eb6ec63996a3af900b30801cd0a064bf42af7d6ffa34ad55d9ea886976e38"
+      "sha256": "deda768b1e92842be10cc3dff627b5fd3555aa3c011ccde0c62655c4454a9cad"
     },
     {
       "bytes": 16262,

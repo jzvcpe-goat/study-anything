@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7118761,
+  "archive_bytes": 7118836,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "8d1619c820aa3db2468fd6bb34d69700e21585ec0ea50b2ce618ed4f3df6789a",
+  "archive_sha256": "aa7adc20572cc70b62995337a561ccda15697624d29a60416b23e1809b4eba3c",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "435a27ce32f71537d0a5c33b4af453d0746894a97dfcd234ba465adc5e6cf6ca"
+      "sha256": "6b643ccde75fa60a36385af2a8cb1bc5bdbd621a7cc0f2b09f4870c7fa1c2bb6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -14665,11 +14665,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/check_env.py",
-      "bytes": 24938,
+      "bytes": 25216,
       "kind": "runtime",
       "path": "scripts/check_env.py",
       "purpose": "Validate required local environment variables before launch.",
-      "sha256": "6472903d97cee535b40ee72d3ca0e358f1abe642dfab0a9094d124ece07a6ecf"
+      "sha256": "711c23b43199dd8a053f610fb6dc59c57b7a7bccb2235e8f85670e7829ed7ff5"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/doctor.sh",
@@ -14921,11 +14921,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_agent_gateway_hardening.py",
-      "bytes": 26454,
+      "bytes": 26558,
       "kind": "verification",
       "path": "scripts/verify_agent_gateway_hardening.py",
       "purpose": "User-owned Agent gateway hardening and privacy verifier.",
-      "sha256": "147eb6ec63996a3af900b30801cd0a064bf42af7d6ffa34ad55d9ea886976e38"
+      "sha256": "deda768b1e92842be10cc3dff627b5fd3555aa3c011ccde0c62655c4454a9cad"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_external_agent_adapter_hardening.py",
