@@ -11,6 +11,12 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- Optional `oidc_jwt` mode validates RS256/ES256 bearer tokens against an operator-supplied static
+  public JWKS, binds opaque principals to issuer + tenant + subject, ignores request-body identity
+  spoofing, tenant-filters sessions/workspaces, and principal-scopes non-demo Agent providers.
+  Cross-tenant session lookups return `404`; unscoped local PMF/Sync/plugin/recovery surfaces are
+  blocked in hosted mode. This is an application-layer foundation, not managed IdP lifecycle,
+  database RLS, hosted infrastructure certification, or an independent external audit.
 - Production HTTP Agent egress now requires a non-empty exact-origin allowlist;
   non-loopback origins require HTTPS, endpoints are revalidated before invocation,
   and redirects are rejected. Local single-operator mode keeps operator-selected
@@ -34,8 +40,9 @@ It is not a release tag or published-image claim.
 
 ## Claim Boundary
 
-These changes harden a private local/self-host API. They do not implement
-hosted accounts, tenant isolation, SSO, billing, paid services, production
+These changes harden a private local/self-host API and add an optional OIDC JWT plus application-layer
+tenant authorization foundation. They do not implement managed hosted accounts, account recovery,
+SCIM, database row-level security, separate tenant databases, billing, paid services, production
 mutation, or a realtime hosted console.
 
 ## Engineering Gates

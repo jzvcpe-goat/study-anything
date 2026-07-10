@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 157069,
+    "bytes": 157200,
     "path": "platform/generated/study-anything-kimi-plugin-pack.zip",
     "root": "study-anything-kimi-plugin-pack",
-    "sha256": "8c5b44553e53913dd961ab0d6d07c28ff6e0cbb1d33da58661b7f7db48eb9449"
+    "sha256": "d5d2e8defbadbf363a7f2fc156c0849d695741b18556d464c98b9a6c58f151e8"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -16,11 +16,11 @@
   "files": [
     {
       "archive_path": "study-anything-kimi-plugin-pack/README.md",
-      "bytes": 47186,
+      "bytes": 47443,
       "kind": "root_doc",
       "path": "README.md",
       "purpose": "Project positioning and local-first adoption overview.",
-      "sha256": "0de5c08315a4bb88c7eaa4cd1909f0208cb6ada9ba83b7671e416685b00b7801"
+      "sha256": "c01c8c8b38a002187948a0378154ff066d61b82c5b0ad3a8664aececf035eb22"
     },
     {
       "archive_path": "study-anything-kimi-plugin-pack/QUICKSTART.md",

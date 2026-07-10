@@ -14,9 +14,18 @@ import urllib.parse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+API_ROOT = ROOT / "apps" / "api"
+if str(API_ROOT) not in sys.path:
+    sys.path.insert(0, str(API_ROOT))
+
+from study_anything.core.hosted_identity import (  # noqa: E402
+    HostedIdentityConfigurationError,
+    load_hosted_identity_config,
+)
+
 DEFAULT_ENV = ROOT / ".env"
 HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
-API_AUTH_MODES = {"local_only", "token"}
+API_AUTH_MODES = {"local_only", "token", "oidc_jwt"}
 AGENT_ENDPOINT_POLICY_MODES = {"operator", "allowlist"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
 MIN_API_TOKEN_LENGTH = 32
@@ -138,10 +147,10 @@ def unsupported_api_auth_mode_issue(mode: str, env_path: Path) -> dict[str, obje
     return env_issue(
         "unsupported_api_auth_mode",
         "STUDY_ANYTHING_API_AUTH_MODE",
-        f"STUDY_ANYTHING_API_AUTH_MODE must be local_only or token; got {mode!r}.",
+        f"STUDY_ANYTHING_API_AUTH_MODE must be local_only, token, or oidc_jwt; got {mode!r}.",
         [
             f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=local_only for loopback-only use.",
-            "For network or production use, set STUDY_ANYTHING_API_AUTH_MODE=token.",
+            "For network or production use, set STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
             f"Recheck with: python3 scripts/check_env.py --env {env_path}",
         ],
     )
@@ -151,9 +160,9 @@ def production_api_auth_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "production_api_auth_required",
         "STUDY_ANYTHING_API_AUTH_MODE",
-        "APP_ENV=production requires STUDY_ANYTHING_API_AUTH_MODE=token.",
+        "APP_ENV=production requires STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
         [
-            f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=token.",
+            f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
             f"Generate a strong token with: python3 scripts/setup_env.py --force --output {env_path}",
             f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
         ],
@@ -164,11 +173,28 @@ def network_bind_without_auth_issue(bind_host: str, env_path: Path) -> dict[str,
     return env_issue(
         "network_bind_requires_token_auth",
         "API_BIND_HOST",
-        f"API_BIND_HOST={bind_host} is not loopback and requires token authentication.",
+        f"API_BIND_HOST={bind_host} is not loopback and requires token or oidc_jwt authentication.",
         [
             f"For local-only use, edit {env_path} and set API_BIND_HOST=127.0.0.1.",
-            "For network use, set STUDY_ANYTHING_API_AUTH_MODE=token and generate a strong token.",
+            "For network use, set STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
             f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def invalid_oidc_configuration_issue(
+    message: str,
+    env_path: Path,
+) -> dict[str, object]:
+    return env_issue(
+        "invalid_oidc_configuration",
+        "STUDY_ANYTHING_OIDC_ISSUER",
+        f"OIDC JWT authentication is not ready: {message}",
+        [
+            "Install the hosted dependency extra: python -m pip install -e '.[hosted]'.",
+            f"Configure the OIDC issuer, audience, tenant claim, and exactly one static JWKS source in {env_path}.",
+            "Keep automatic JWKS network fetching outside Study Anything v0.1; rotate the static JWKS through deployment configuration.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
         ],
     )
 
@@ -548,12 +574,17 @@ def main() -> None:
     }
     if api_auth_mode not in API_AUTH_MODES:
         problems.append(unsupported_api_auth_mode_issue(api_auth_mode, args.env))
-    elif app_env == "production" and api_auth_mode != "token":
+    elif app_env == "production" and api_auth_mode not in {"token", "oidc_jwt"}:
         problems.append(production_api_auth_issue(args.env))
     elif api_auth_mode == "local_only" and api_bind_host not in LOOPBACK_BIND_HOSTS:
         problems.append(network_bind_without_auth_issue(api_bind_host, args.env))
     elif api_auth_mode == "token" and len(api_token) < MIN_API_TOKEN_LENGTH:
         problems.append(missing_api_token_issue(args.env))
+    elif api_auth_mode == "oidc_jwt":
+        try:
+            load_hosted_identity_config(values)
+        except HostedIdentityConfigurationError as exc:
+            problems.append(invalid_oidc_configuration_issue(str(exc), args.env))
     if "*" in cors_origins:
         problems.append(wildcard_cors_issue(args.env))
 

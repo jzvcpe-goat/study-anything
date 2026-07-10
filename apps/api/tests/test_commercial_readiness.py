@@ -71,6 +71,10 @@ class CommercialReadinessTests(unittest.TestCase):
         self.assertEqual(assessment["self_host_alpha"], "ready")
         self.assertEqual(assessment["hosted_paid_services"], "not_ready")
         self.assertEqual(assessment["standalone_app"], "not_in_launch_path")
+        foundation = report["hosted_foundation"]
+        self.assertEqual(foundation["status"], "application_layer_foundation")
+        self.assertEqual(foundation["principal_binding"], "issuer_tenant_subject")
+        self.assertIn("database row-level security", foundation["not_proven"])
 
         for invariant in report["local_core_invariants"]:
             self.assertTrue(invariant["required_for_oss_launch"])

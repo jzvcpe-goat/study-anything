@@ -6,9 +6,11 @@ from dataclasses import dataclass
 import hmac
 from typing import Mapping
 
+from .hosted_identity import HostedIdentityConfig, load_hosted_identity_config
+
 
 API_SECURITY_SCHEMA_VERSION = "study-anything-api-security-v1"
-AUTH_MODES = {"local_only", "token"}
+AUTH_MODES = {"local_only", "token", "oidc_jwt"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
 MIN_API_TOKEN_LENGTH = 32
 
@@ -28,10 +30,15 @@ class ApiSecurityConfig:
     auth_mode: str
     api_token: str | None
     cors_origins: tuple[str, ...]
+    hosted_identity: HostedIdentityConfig | None = None
 
     @property
     def token_required(self) -> bool:
         return self.auth_mode == "token"
+
+    @property
+    def bearer_required(self) -> bool:
+        return self.auth_mode in {"token", "oidc_jwt"}
 
     def authorises(self, authorization: str | None) -> bool:
         if not self.token_required:
@@ -54,8 +61,13 @@ class ApiSecurityConfig:
             "cors_origin_count": len(self.cors_origins),
             "wildcard_cors_allowed": False,
             "credentialed_cors_allowed": False,
-            "identity_mode": "local_operator_labels",
-            "multi_tenant_authentication": False,
+            "identity_mode": (
+                "oidc_jwt_principal" if self.hosted_identity is not None else "local_operator_labels"
+            ),
+            "multi_tenant_authentication": self.hosted_identity is not None,
+            "hosted_identity": (
+                self.hosted_identity.public_dict() if self.hosted_identity is not None else None
+            ),
             "secret_values_included": False,
         }
 
@@ -69,7 +81,7 @@ def load_api_security_config(environ: Mapping[str, str]) -> ApiSecurityConfig:
 
     if auth_mode not in AUTH_MODES:
         raise ApiSecurityConfigurationError(
-            "STUDY_ANYTHING_API_AUTH_MODE must be local_only or token."
+            "STUDY_ANYTHING_API_AUTH_MODE must be local_only, token, or oidc_jwt."
         )
     if "*" in cors_origins:
         raise ApiSecurityConfigurationError(
@@ -77,21 +89,23 @@ def load_api_security_config(environ: Mapping[str, str]) -> ApiSecurityConfig:
         )
     if auth_mode == "local_only" and bind_host not in LOOPBACK_BIND_HOSTS:
         raise ApiSecurityConfigurationError(
-            "A non-loopback API_BIND_HOST requires STUDY_ANYTHING_API_AUTH_MODE=token."
+            "A non-loopback API_BIND_HOST requires token or oidc_jwt authentication."
         )
-    if app_env == "production" and auth_mode != "token":
+    if app_env == "production" and auth_mode not in {"token", "oidc_jwt"}:
         raise ApiSecurityConfigurationError(
-            "APP_ENV=production requires STUDY_ANYTHING_API_AUTH_MODE=token."
+            "APP_ENV=production requires token or oidc_jwt authentication."
         )
     if auth_mode == "token" and (api_token is None or len(api_token) < MIN_API_TOKEN_LENGTH):
         raise ApiSecurityConfigurationError(
             f"Token auth requires STUDY_ANYTHING_API_TOKEN with at least {MIN_API_TOKEN_LENGTH} characters."
         )
 
+    hosted_identity = load_hosted_identity_config(environ) if auth_mode == "oidc_jwt" else None
     return ApiSecurityConfig(
         app_env=app_env,
         bind_host=bind_host,
         auth_mode=auth_mode,
         api_token=api_token,
         cors_origins=cors_origins,
+        hosted_identity=hosted_identity,
     )

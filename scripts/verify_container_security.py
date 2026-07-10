@@ -165,6 +165,22 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
         == "${STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST:-}",
         "API Compose service must pass through the Agent endpoint allowlist",
     )
+    oidc_environment = {
+        "STUDY_ANYTHING_OIDC_ISSUER": "${STUDY_ANYTHING_OIDC_ISSUER:-}",
+        "STUDY_ANYTHING_OIDC_AUDIENCE": "${STUDY_ANYTHING_OIDC_AUDIENCE:-}",
+        "STUDY_ANYTHING_OIDC_TENANT_CLAIM": "${STUDY_ANYTHING_OIDC_TENANT_CLAIM:-org_id}",
+        "STUDY_ANYTHING_OIDC_JWKS_JSON": "${STUDY_ANYTHING_OIDC_JWKS_JSON:-}",
+        "STUDY_ANYTHING_OIDC_JWKS_FILE": "${STUDY_ANYTHING_OIDC_JWKS_FILE:-}",
+        "STUDY_ANYTHING_OIDC_LEEWAY_SECONDS": "${STUDY_ANYTHING_OIDC_LEEWAY_SECONDS:-30}",
+        "STUDY_ANYTHING_OIDC_MAX_TOKEN_AGE_SECONDS": (
+            "${STUDY_ANYTHING_OIDC_MAX_TOKEN_AGE_SECONDS:-3600}"
+        ),
+    }
+    for key, expected in oidc_environment.items():
+        require(
+            api_environment.get(key) == expected,
+            f"API Compose service must pass through {key}",
+        )
     mock_ports = normalized_list(require_mapping(services, "mock-http-agent").get("ports"))
     require(
         all(port.startswith("127.0.0.1:") for port in mock_ports),
@@ -187,6 +203,13 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
     results["agent_endpoint_policy"] = {
         "policy_env_forwarded": True,
         "allowlist_env_forwarded": True,
+    }
+    results["hosted_identity"] = {
+        "auth_mode_env_forwarded": True,
+        "static_jwks_env_forwarded": True,
+        "issuer_audience_env_forwarded": True,
+        "tenant_claim_env_forwarded": True,
+        "token_lifetime_policy_env_forwarded": True,
     }
     return results
 
@@ -226,6 +249,7 @@ def validate_security_workflow(text: str) -> dict[str, Any]:
         "verify_container_security.py --check",
         "verify_dependency_risk_acceptance.py --check",
         "verify_agent_endpoint_policy.py --check",
+        "verify_hosted_identity_tenancy.py --check",
     )
     missing = [marker for marker in required if marker not in text]
     require(not missing, f"Security workflow markers are missing: {missing}")

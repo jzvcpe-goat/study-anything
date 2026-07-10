@@ -30,17 +30,24 @@ class InMemorySessionStore:
         self.sessions[state.session_id] = state
         return state
 
-    def get(self, session_id: str) -> LearningState:
-        return self.sessions[session_id]
+    def get(self, session_id: str, *, tenant_id: Optional[str] = None) -> LearningState:
+        state = self.sessions[session_id]
+        if tenant_id is not None and state.tenant_id != tenant_id:
+            raise KeyError(session_id)
+        return state
 
-    def list_hitl(self) -> List[HitlInterrupt]:
+    def list_hitl(self, *, tenant_id: Optional[str] = None) -> List[HitlInterrupt]:
         interrupts: List[HitlInterrupt] = []
-        for state in self.sessions.values():
+        for state in self.list_sessions(tenant_id=tenant_id):
             interrupts.extend([item for item in state.hitl_interrupts if item.status == "open"])
         return interrupts
 
-    def list_sessions(self) -> List[LearningState]:
-        return list(self.sessions.values())
+    def list_sessions(self, *, tenant_id: Optional[str] = None) -> List[LearningState]:
+        return [
+            state
+            for state in self.sessions.values()
+            if tenant_id is None or state.tenant_id == tenant_id
+        ]
 
 
 class JsonSessionStore:
@@ -60,21 +67,26 @@ class JsonSessionStore:
         tmp.replace(target)
         return state
 
-    def get(self, session_id: str) -> LearningState:
+    def get(self, session_id: str, *, tenant_id: Optional[str] = None) -> LearningState:
         target = self._path_for(session_id)
         if not target.exists():
             raise KeyError(session_id)
-        return learning_state_from_dict(json.loads(target.read_text(encoding="utf-8")))
+        state = learning_state_from_dict(json.loads(target.read_text(encoding="utf-8")))
+        if tenant_id is not None and state.tenant_id != tenant_id:
+            raise KeyError(session_id)
+        return state
 
-    def list_sessions(self) -> List[LearningState]:
+    def list_sessions(self, *, tenant_id: Optional[str] = None) -> List[LearningState]:
         sessions: List[LearningState] = []
         for path in sorted(self.session_dir.glob("*.json")):
-            sessions.append(learning_state_from_dict(json.loads(path.read_text(encoding="utf-8"))))
+            state = learning_state_from_dict(json.loads(path.read_text(encoding="utf-8")))
+            if tenant_id is None or state.tenant_id == tenant_id:
+                sessions.append(state)
         return sessions
 
-    def list_hitl(self) -> List[HitlInterrupt]:
+    def list_hitl(self, *, tenant_id: Optional[str] = None) -> List[HitlInterrupt]:
         interrupts: List[HitlInterrupt] = []
-        for state in self.list_sessions():
+        for state in self.list_sessions(tenant_id=tenant_id):
             interrupts.extend([item for item in state.hitl_interrupts if item.status == "open"])
         return interrupts
 
@@ -105,6 +117,7 @@ class PostgresSessionStore:
                         session_id,
                         user_hash,
                         user_id,
+                        tenant_id,
                         workspace_id,
                         stage,
                         payload,
@@ -112,10 +125,11 @@ class PostgresSessionStore:
                         updated_at
                     )
                 VALUES
-                    (%s, %s, %s, %s, %s, %s::jsonb, now(), now())
+                    (%s, %s, %s, %s, %s, %s, %s::jsonb, now(), now())
                 ON CONFLICT (session_id) DO UPDATE SET
                     user_hash = EXCLUDED.user_hash,
                     user_id = EXCLUDED.user_id,
+                    tenant_id = EXCLUDED.tenant_id,
                     workspace_id = EXCLUDED.workspace_id,
                     stage = EXCLUDED.stage,
                     payload = EXCLUDED.payload,
@@ -125,6 +139,7 @@ class PostgresSessionStore:
                     state.session_id,
                     state.user_hash,
                     state.user_id,
+                    state.tenant_id,
                     state.workspace_id,
                     state.stage,
                     payload,
@@ -132,12 +147,19 @@ class PostgresSessionStore:
             )
         return state
 
-    def get(self, session_id: str) -> LearningState:
+    def get(self, session_id: str, *, tenant_id: Optional[str] = None) -> LearningState:
         with self._connect() as conn:
-            row = conn.execute(
-                "SELECT payload FROM study_anything_sessions WHERE session_id = %s",
-                (session_id,),
-            ).fetchone()
+            if tenant_id is None:
+                row = conn.execute(
+                    "SELECT payload FROM study_anything_sessions WHERE session_id = %s",
+                    (session_id,),
+                ).fetchone()
+            else:
+                row = conn.execute(
+                    "SELECT payload FROM study_anything_sessions "
+                    "WHERE session_id = %s AND tenant_id = %s",
+                    (session_id, tenant_id),
+                ).fetchone()
         if row is None:
             raise KeyError(session_id)
         payload = row[0]
@@ -145,11 +167,18 @@ class PostgresSessionStore:
             payload = json.loads(payload)
         return learning_state_from_dict(payload)
 
-    def list_sessions(self) -> List[LearningState]:
+    def list_sessions(self, *, tenant_id: Optional[str] = None) -> List[LearningState]:
         with self._connect() as conn:
-            rows = conn.execute(
-                "SELECT payload FROM study_anything_sessions ORDER BY updated_at DESC"
-            ).fetchall()
+            if tenant_id is None:
+                rows = conn.execute(
+                    "SELECT payload FROM study_anything_sessions ORDER BY updated_at DESC"
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    "SELECT payload FROM study_anything_sessions "
+                    "WHERE tenant_id = %s ORDER BY updated_at DESC",
+                    (tenant_id,),
+                ).fetchall()
         sessions: List[LearningState] = []
         for row in rows:
             payload = row[0]
@@ -158,9 +187,9 @@ class PostgresSessionStore:
             sessions.append(learning_state_from_dict(payload))
         return sessions
 
-    def list_hitl(self) -> List[HitlInterrupt]:
+    def list_hitl(self, *, tenant_id: Optional[str] = None) -> List[HitlInterrupt]:
         interrupts: List[HitlInterrupt] = []
-        for state in self.list_sessions():
+        for state in self.list_sessions(tenant_id=tenant_id):
             interrupts.extend([item for item in state.hitl_interrupts if item.status == "open"])
         return interrupts
 
@@ -179,12 +208,19 @@ class PostgresSessionStore:
                     session_id TEXT PRIMARY KEY,
                     user_hash TEXT NOT NULL,
                     user_id TEXT NOT NULL,
+                    tenant_id TEXT,
                     workspace_id TEXT,
                     stage TEXT NOT NULL,
                     payload JSONB NOT NULL,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
                 )
+                """
+            )
+            conn.execute(
+                """
+                ALTER TABLE study_anything_sessions
+                ADD COLUMN IF NOT EXISTS tenant_id TEXT
                 """
             )
             conn.execute(
@@ -207,6 +243,12 @@ class PostgresSessionStore:
             )
             conn.execute(
                 """
+                CREATE INDEX IF NOT EXISTS study_anything_sessions_tenant_id_idx
+                ON study_anything_sessions (tenant_id)
+                """
+            )
+            conn.execute(
+                """
                 CREATE INDEX IF NOT EXISTS study_anything_sessions_workspace_id_idx
                 ON study_anything_sessions (workspace_id)
                 """
@@ -221,6 +263,7 @@ class PostgresSessionStore:
                                 session_id,
                                 user_hash,
                                 user_id,
+                                tenant_id,
                                 workspace_id,
                                 stage,
                                 payload,
@@ -231,6 +274,7 @@ class PostgresSessionStore:
                             session_id,
                             user_hash,
                             user_id,
+                            NULL,
                             NULL,
                             stage,
                             payload,
@@ -270,6 +314,7 @@ def learning_state_from_dict(values: Dict[str, Any]) -> LearningState:
         user_id=values.get("user_id", "local-user"),
         user_hash=values["user_hash"],
         workspace_id=values.get("workspace_id"),
+        tenant_id=values.get("tenant_id"),
         track=values.get("track", "ACADEMIC"),
         stage=values.get("stage", "created"),
         source=source,

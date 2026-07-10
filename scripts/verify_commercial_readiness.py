@@ -196,6 +196,22 @@ def validate_report(report: dict[str, Any]) -> None:
         if item.get("status") != "pass":
             raise CommercialReadinessError(f"Local core invariant did not pass: {item}")
 
+    hosted_foundation = report.get("hosted_foundation") or {}
+    if hosted_foundation.get("status") != "application_layer_foundation":
+        raise CommercialReadinessError("Hosted identity foundation status is missing.")
+    if hosted_foundation.get("principal_binding") != "issuer_tenant_subject":
+        raise CommercialReadinessError("Hosted principals must be tenant-bound.")
+    not_proven = set(hosted_foundation.get("not_proven") or [])
+    for boundary in (
+        "database row-level security",
+        "hosted infrastructure security",
+        "independent external audit",
+    ):
+        if boundary not in not_proven:
+            raise CommercialReadinessError(
+                f"Hosted foundation claim boundary is missing: {boundary}"
+            )
+
     services = report.get("hosted_service_contracts")
     if not isinstance(services, list) or len(services) < 4:
         raise CommercialReadinessError("Commercial readiness must include hosted service contracts.")

@@ -449,6 +449,43 @@ class AgentRegistryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "does not declare capability"):
             registry.set_default("alice", AgentCapability.ANSWER_GRADE, provider.provider_id)
 
+    def test_tenant_scoped_providers_are_invisible_across_tenants(self) -> None:
+        tenant_a = "tnt_" + "a" * 32
+        tenant_b = "tnt_" + "b" * 32
+        registry = AgentRegistry()
+        provider = registry.configure_provider(
+            kind="http_agent",
+            label="Tenant A Agent",
+            endpoint="http://localhost:8787/invoke",
+            capabilities=["quiz.generate"],
+            scope_id=tenant_a,
+        )
+        registry.set_default(
+            "principal-a",
+            AgentCapability.QUIZ_GENERATE,
+            provider.provider_id,
+            scope_id=tenant_a,
+        )
+
+        visible_a = {item["provider_id"] for item in registry.status("a", scope_id=tenant_a)["providers"]}
+        visible_b = {item["provider_id"] for item in registry.status("b", scope_id=tenant_b)["providers"]}
+        hidden_defaults = registry.status("principal-a", scope_id=tenant_b)["defaults"]
+
+        self.assertIn(provider.provider_id, visible_a)
+        self.assertNotIn(provider.provider_id, visible_b)
+        self.assertIsNone(hidden_defaults[AgentCapability.QUIZ_GENERATE.value])
+        self.assertNotIn("scope_id", provider.public_dict())
+        self.assertEqual(provider.public_dict()["scope"], "tenant")
+        with self.assertRaises(AgentConfigurationRequired):
+            registry.get_provider(provider.provider_id, scope_id=tenant_b)
+        with self.assertRaises(KeyError):
+            registry.set_default(
+                "principal-b",
+                AgentCapability.QUIZ_GENERATE,
+                provider.provider_id,
+                scope_id=tenant_b,
+            )
+
     def test_cli_agent_is_disabled_by_default(self) -> None:
         registry = AgentRegistry()
         provider = registry.configure_provider(

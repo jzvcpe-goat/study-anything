@@ -84,7 +84,8 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
             "local_foundation": "sync-package-v1 local encrypted export and restore preview.",
             "must_not_block": ["self_host_launch", "skill_mode", "local_exports"],
             "required_before_sale": [
-                "hosted identity and account recovery",
+                "managed identity provisioning and account recovery",
+                "OIDC signing-key rotation operations",
                 "remote encrypted storage",
                 "conflict resolution",
                 "support runbooks",
@@ -115,7 +116,8 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
             "local_foundation": "workspace metadata, hashed members, and role capability names.",
             "must_not_block": ["personal_workspace", "local_session_creation"],
             "required_before_sale": [
-                "tenant isolation",
+                "database-enforced tenant isolation and migration tests",
+                "tenant retention and deletion guarantees",
                 "admin audit/export guarantees",
                 "retention controls",
                 "billing and support workflows",
@@ -155,6 +157,27 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
             ),
         },
         "local_core_invariants": local_core_invariants,
+        "hosted_foundation": {
+            "status": "application_layer_foundation",
+            "authentication": "offline_oidc_jwt_with_static_jwks",
+            "principal_binding": "issuer_tenant_subject",
+            "authorization": [
+                "tenant-filtered sessions",
+                "workspace role permissions",
+                "principal-scoped Agent providers",
+                "cross-tenant resource hiding",
+            ],
+            "verifier": "python3 scripts/verify_hosted_identity_tenancy.py --check",
+            "not_proven": [
+                "managed IdP lifecycle or account recovery",
+                "SCIM provisioning",
+                "database row-level security",
+                "separate tenant databases",
+                "retention and deletion operations",
+                "hosted infrastructure security",
+                "independent external audit",
+            ],
+        },
         "hosted_service_contracts": hosted_services,
         "monetization_alignment": {
             "free_core": [
@@ -199,9 +222,11 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
                 "learning-package-v1",
                 "second-brain-handoff-v1",
                 "sync-package-v1",
+                "hosted-identity-tenancy-verification-v1",
             ],
             "commands": [
                 "python3 scripts/verify_commercial_readiness.py",
+                "python3 scripts/verify_hosted_identity_tenancy.py --check",
                 "python3 scripts/generate_platform_agent_assets.py --check",
                 "python3 scripts/generate_platform_adoption_pack.py --check",
                 "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",

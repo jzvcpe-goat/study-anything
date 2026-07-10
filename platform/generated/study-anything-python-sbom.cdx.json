@@ -497,105 +497,112 @@
       "version": "2.20.0"
     },
     {
-      "bom-ref": "pytest-65@9.1.1",
+      "bom-ref": "pyjwt-65@2.13.0",
+      "name": "pyjwt",
+      "purl": "pkg:pypi/pyjwt@2.13.0",
+      "type": "library",
+      "version": "2.13.0"
+    },
+    {
+      "bom-ref": "pytest-66@9.1.1",
       "name": "pytest",
       "purl": "pkg:pypi/pytest@9.1.1",
       "type": "library",
       "version": "9.1.1"
     },
     {
-      "bom-ref": "pytest-cov-66@7.1.0",
+      "bom-ref": "pytest-cov-67@7.1.0",
       "name": "pytest-cov",
       "purl": "pkg:pypi/pytest-cov@7.1.0",
       "type": "library",
       "version": "7.1.0"
     },
     {
-      "bom-ref": "python-dateutil-67@2.9.0.post0",
+      "bom-ref": "python-dateutil-68@2.9.0.post0",
       "name": "python-dateutil",
       "purl": "pkg:pypi/python-dateutil@2.9.0.post0",
       "type": "library",
       "version": "2.9.0.post0"
     },
     {
-      "bom-ref": "python-dotenv-68@1.2.2",
+      "bom-ref": "python-dotenv-69@1.2.2",
       "name": "python-dotenv",
       "purl": "pkg:pypi/python-dotenv@1.2.2",
       "type": "library",
       "version": "1.2.2"
     },
     {
-      "bom-ref": "pyyaml-69@6.0.3",
+      "bom-ref": "pyyaml-70@6.0.3",
       "name": "pyyaml",
       "purl": "pkg:pypi/pyyaml@6.0.3",
       "type": "library",
       "version": "6.0.3"
     },
     {
-      "bom-ref": "redis-70@8.0.1",
+      "bom-ref": "redis-71@8.0.1",
       "name": "redis",
       "purl": "pkg:pypi/redis@8.0.1",
       "type": "library",
       "version": "8.0.1"
     },
     {
-      "bom-ref": "requests-71@2.34.2",
+      "bom-ref": "requests-72@2.34.2",
       "name": "requests",
       "purl": "pkg:pypi/requests@2.34.2",
       "type": "library",
       "version": "2.34.2"
     },
     {
-      "bom-ref": "requests-toolbelt-72@1.0.0",
+      "bom-ref": "requests-toolbelt-73@1.0.0",
       "name": "requests-toolbelt",
       "purl": "pkg:pypi/requests-toolbelt@1.0.0",
       "type": "library",
       "version": "1.0.0"
     },
     {
-      "bom-ref": "ruff-73@0.15.21",
+      "bom-ref": "ruff-74@0.15.21",
       "name": "ruff",
       "purl": "pkg:pypi/ruff@0.15.21",
       "type": "library",
       "version": "0.15.21"
     },
     {
-      "bom-ref": "setuptools-74@80.10.2",
+      "bom-ref": "setuptools-75@80.10.2",
       "name": "setuptools",
       "purl": "pkg:pypi/setuptools@80.10.2",
       "type": "library",
       "version": "80.10.2"
     },
     {
-      "bom-ref": "six-75@1.17.0",
+      "bom-ref": "six-76@1.17.0",
       "name": "six",
       "purl": "pkg:pypi/six@1.17.0",
       "type": "library",
       "version": "1.17.0"
     },
     {
-      "bom-ref": "sniffio-76@1.3.1",
+      "bom-ref": "sniffio-77@1.3.1",
       "name": "sniffio",
       "purl": "pkg:pypi/sniffio@1.3.1",
       "type": "library",
       "version": "1.3.1"
     },
     {
-      "bom-ref": "starlette-77@1.3.1",
+      "bom-ref": "starlette-78@1.3.1",
       "name": "starlette",
       "purl": "pkg:pypi/starlette@1.3.1",
       "type": "library",
       "version": "1.3.1"
     },
     {
-      "bom-ref": "tenacity-78@9.1.4",
+      "bom-ref": "tenacity-79@9.1.4",
       "name": "tenacity",
       "purl": "pkg:pypi/tenacity@9.1.4",
       "type": "library",
       "version": "9.1.4"
     },
     {
-      "bom-ref": "tomli-79@2.4.1",
+      "bom-ref": "tomli-80@2.4.1",
       "name": "tomli",
       "properties": [
         {
@@ -608,28 +615,28 @@
       "version": "2.4.1"
     },
     {
-      "bom-ref": "tqdm-80@4.68.4",
+      "bom-ref": "tqdm-81@4.68.4",
       "name": "tqdm",
       "purl": "pkg:pypi/tqdm@4.68.4",
       "type": "library",
       "version": "4.68.4"
     },
     {
-      "bom-ref": "typing-extensions-81@4.16.0",
+      "bom-ref": "typing-extensions-82@4.16.0",
       "name": "typing-extensions",
       "purl": "pkg:pypi/typing-extensions@4.16.0",
       "type": "library",
       "version": "4.16.0"
     },
     {
-      "bom-ref": "typing-inspection-82@0.4.2",
+      "bom-ref": "typing-inspection-83@0.4.2",
       "name": "typing-inspection",
       "purl": "pkg:pypi/typing-inspection@0.4.2",
       "type": "library",
       "version": "0.4.2"
     },
     {
-      "bom-ref": "tzdata-83@2026.2",
+      "bom-ref": "tzdata-84@2026.2",
       "name": "tzdata",
       "properties": [
         {
@@ -642,28 +649,28 @@
       "version": "2026.2"
     },
     {
-      "bom-ref": "urllib3-84@2.7.0",
+      "bom-ref": "urllib3-85@2.7.0",
       "name": "urllib3",
       "purl": "pkg:pypi/urllib3@2.7.0",
       "type": "library",
       "version": "2.7.0"
     },
     {
-      "bom-ref": "uuid-utils-85@0.17.0",
+      "bom-ref": "uuid-utils-86@0.17.0",
       "name": "uuid-utils",
       "purl": "pkg:pypi/uuid-utils@0.17.0",
       "type": "library",
       "version": "0.17.0"
     },
     {
-      "bom-ref": "uvicorn-86@0.51.0",
+      "bom-ref": "uvicorn-87@0.51.0",
       "name": "uvicorn",
       "purl": "pkg:pypi/uvicorn@0.51.0",
       "type": "library",
       "version": "0.51.0"
     },
     {
-      "bom-ref": "uvloop-87@0.22.1",
+      "bom-ref": "uvloop-88@0.22.1",
       "name": "uvloop",
       "properties": [
         {
@@ -676,35 +683,35 @@
       "version": "0.22.1"
     },
     {
-      "bom-ref": "watchfiles-88@1.2.0",
+      "bom-ref": "watchfiles-89@1.2.0",
       "name": "watchfiles",
       "purl": "pkg:pypi/watchfiles@1.2.0",
       "type": "library",
       "version": "1.2.0"
     },
     {
-      "bom-ref": "websockets-89@15.0.1",
+      "bom-ref": "websockets-90@15.0.1",
       "name": "websockets",
       "purl": "pkg:pypi/websockets@15.0.1",
       "type": "library",
       "version": "15.0.1"
     },
     {
-      "bom-ref": "wrapt-90@2.2.2",
+      "bom-ref": "wrapt-91@2.2.2",
       "name": "wrapt",
       "purl": "pkg:pypi/wrapt@2.2.2",
       "type": "library",
       "version": "2.2.2"
     },
     {
-      "bom-ref": "xxhash-91@3.8.1",
+      "bom-ref": "xxhash-92@3.8.1",
       "name": "xxhash",
       "purl": "pkg:pypi/xxhash@3.8.1",
       "type": "library",
       "version": "3.8.1"
     },
     {
-      "bom-ref": "zstandard-92@0.25.0",
+      "bom-ref": "zstandard-93@0.25.0",
       "name": "zstandard",
       "purl": "pkg:pypi/zstandard@0.25.0",
       "type": "library",
@@ -721,7 +728,7 @@
     {
       "dependsOn": [
         "idna-23@3.18",
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "anyio-4@4.14.1"
     },
@@ -754,7 +761,7 @@
     },
     {
       "dependsOn": [
-        "tomli-79@2.4.1"
+        "tomli-80@2.4.1"
       ],
       "ref": "coverage-12@7.15.0"
     },
@@ -775,8 +782,8 @@
     },
     {
       "dependsOn": [
-        "python-dateutil-67@2.9.0.post0",
-        "redis-70@8.0.1"
+        "python-dateutil-68@2.9.0.post0",
+        "redis-71@8.0.1"
       ],
       "ref": "falkordb-16@1.6.1"
     },
@@ -784,9 +791,9 @@
       "dependsOn": [
         "annotated-doc-2@0.0.4",
         "pydantic-62@2.13.4",
-        "starlette-77@1.3.1",
-        "typing-extensions-81@4.16.0",
-        "typing-inspection-82@0.4.2"
+        "starlette-78@1.3.1",
+        "typing-extensions-82@4.16.0",
+        "typing-inspection-83@0.4.2"
       ],
       "ref": "fastapi-17@0.139.0"
     },
@@ -842,9 +849,9 @@
     {
       "dependsOn": [
         "pydantic-62@2.13.4",
-        "python-dateutil-67@2.9.0.post0",
-        "typing-extensions-81@4.16.0",
-        "urllib3-84@2.7.0"
+        "python-dateutil-68@2.9.0.post0",
+        "typing-extensions-82@4.16.0",
+        "urllib3-85@2.7.0"
       ],
       "ref": "lance-namespace-urllib3-client-28@0.9.0"
     },
@@ -858,7 +865,7 @@
         "packaging-53@26.2",
         "pyarrow-60@24.0.0",
         "pydantic-62@2.13.4",
-        "tqdm-80@4.68.4"
+        "tqdm-81@4.68.4"
       ],
       "ref": "lancedb-29@0.34.0"
     },
@@ -869,16 +876,16 @@
         "langsmith-38@0.10.1",
         "packaging-53@26.2",
         "pydantic-62@2.13.4",
-        "pyyaml-69@6.0.3",
-        "tenacity-78@9.1.4",
-        "typing-extensions-81@4.16.0",
-        "uuid-utils-85@0.17.0"
+        "pyyaml-70@6.0.3",
+        "tenacity-79@9.1.4",
+        "typing-extensions-82@4.16.0",
+        "uuid-utils-86@0.17.0"
       ],
       "ref": "langchain-core-30@1.4.9"
     },
     {
       "dependsOn": [
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "langchain-protocol-31@0.0.18"
     },
@@ -891,7 +898,7 @@
         "opentelemetry-sdk-48@1.43.0",
         "packaging-53@26.2",
         "pydantic-62@2.13.4",
-        "wrapt-90@2.2.2"
+        "wrapt-91@2.2.2"
       ],
       "ref": "langfuse-32@4.13.2"
     },
@@ -902,7 +909,7 @@
         "langgraph-prebuilt-36@1.1.0",
         "langgraph-sdk-37@0.4.2",
         "pydantic-62@2.13.4",
-        "xxhash-91@3.8.1"
+        "xxhash-92@3.8.1"
       ],
       "ref": "langgraph-33@1.2.9"
     },
@@ -935,7 +942,7 @@
         "langchain-core-30@1.4.9",
         "langchain-protocol-31@0.0.18",
         "orjson-50@3.11.9",
-        "websockets-89@15.0.1"
+        "websockets-90@15.0.1"
       ],
       "ref": "langgraph-sdk-37@0.4.2"
     },
@@ -947,14 +954,14 @@
         "orjson-50@3.11.9",
         "packaging-53@26.2",
         "pydantic-62@2.13.4",
-        "requests-71@2.34.2",
-        "requests-toolbelt-72@1.0.0",
-        "sniffio-76@1.3.1",
-        "typing-extensions-81@4.16.0",
-        "uuid-utils-85@0.17.0",
-        "websockets-89@15.0.1",
-        "xxhash-91@3.8.1",
-        "zstandard-92@0.25.0"
+        "requests-72@2.34.2",
+        "requests-toolbelt-73@1.0.0",
+        "sniffio-77@1.3.1",
+        "typing-extensions-82@4.16.0",
+        "uuid-utils-86@0.17.0",
+        "websockets-90@15.0.1",
+        "xxhash-92@3.8.1",
+        "zstandard-93@0.25.0"
       ],
       "ref": "langsmith-38@0.10.1"
     },
@@ -966,7 +973,7 @@
         "librt-39@0.13.0",
         "mypy-extensions-41@1.1.0",
         "pathspec-54@1.1.1",
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "mypy-40@1.20.2"
     },
@@ -981,7 +988,7 @@
     },
     {
       "dependsOn": [
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "opentelemetry-api-44@1.43.0"
     },
@@ -998,8 +1005,8 @@
         "opentelemetry-exporter-otlp-proto-common-45@1.43.0",
         "opentelemetry-proto-47@1.43.0",
         "opentelemetry-sdk-48@1.43.0",
-        "requests-71@2.34.2",
-        "typing-extensions-81@4.16.0"
+        "requests-72@2.34.2",
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "opentelemetry-exporter-otlp-proto-http-46@1.43.0"
     },
@@ -1013,14 +1020,14 @@
       "dependsOn": [
         "opentelemetry-api-44@1.43.0",
         "opentelemetry-semantic-conventions-49@0.64b0",
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "opentelemetry-sdk-48@1.43.0"
     },
     {
       "dependsOn": [
         "opentelemetry-api-44@1.43.0",
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "opentelemetry-semantic-conventions-49@0.64b0"
     },
@@ -1049,8 +1056,8 @@
       "dependsOn": [
         "psycopg-binary-58@3.3.4",
         "psycopg-pool-59@3.3.1",
-        "typing-extensions-81@4.16.0",
-        "tzdata-83@2026.2"
+        "typing-extensions-82@4.16.0",
+        "tzdata-84@2026.2"
       ],
       "ref": "psycopg-57@3.3.4"
     },
@@ -1059,7 +1066,7 @@
     },
     {
       "dependsOn": [
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "psycopg-pool-59@3.3.1"
     },
@@ -1073,19 +1080,25 @@
       "dependsOn": [
         "annotated-types-3@0.7.0",
         "pydantic-core-63@2.46.4",
-        "typing-extensions-81@4.16.0",
-        "typing-inspection-82@0.4.2"
+        "typing-extensions-82@4.16.0",
+        "typing-inspection-83@0.4.2"
       ],
       "ref": "pydantic-62@2.13.4"
     },
     {
       "dependsOn": [
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
       "ref": "pydantic-core-63@2.46.4"
     },
     {
       "ref": "pygments-64@2.20.0"
+    },
+    {
+      "dependsOn": [
+        "cryptography-13@49.0.0"
+      ],
+      "ref": "pyjwt-65@2.13.0"
     },
     {
       "dependsOn": [
@@ -1095,67 +1108,67 @@
         "pluggy-55@1.6.0",
         "pygments-64@2.20.0"
       ],
-      "ref": "pytest-65@9.1.1"
+      "ref": "pytest-66@9.1.1"
     },
     {
       "dependsOn": [
         "coverage-12@7.15.0",
         "pluggy-55@1.6.0",
-        "pytest-65@9.1.1"
+        "pytest-66@9.1.1"
       ],
-      "ref": "pytest-cov-66@7.1.0"
+      "ref": "pytest-cov-67@7.1.0"
     },
     {
       "dependsOn": [
-        "six-75@1.17.0"
+        "six-76@1.17.0"
       ],
-      "ref": "python-dateutil-67@2.9.0.post0"
+      "ref": "python-dateutil-68@2.9.0.post0"
     },
     {
-      "ref": "python-dotenv-68@1.2.2"
+      "ref": "python-dotenv-69@1.2.2"
     },
     {
-      "ref": "pyyaml-69@6.0.3"
+      "ref": "pyyaml-70@6.0.3"
     },
     {
       "dependsOn": [
         "async-timeout-5@5.0.1"
       ],
-      "ref": "redis-70@8.0.1"
+      "ref": "redis-71@8.0.1"
     },
     {
       "dependsOn": [
         "certifi-7@2026.6.17",
         "charset-normalizer-9@3.4.9",
         "idna-23@3.18",
-        "urllib3-84@2.7.0"
+        "urllib3-85@2.7.0"
       ],
-      "ref": "requests-71@2.34.2"
+      "ref": "requests-72@2.34.2"
     },
     {
       "dependsOn": [
-        "requests-71@2.34.2"
+        "requests-72@2.34.2"
       ],
-      "ref": "requests-toolbelt-72@1.0.0"
+      "ref": "requests-toolbelt-73@1.0.0"
     },
     {
-      "ref": "ruff-73@0.15.21"
+      "ref": "ruff-74@0.15.21"
     },
     {
-      "ref": "setuptools-74@80.10.2"
+      "ref": "setuptools-75@80.10.2"
     },
     {
-      "ref": "six-75@1.17.0"
+      "ref": "six-76@1.17.0"
     },
     {
-      "ref": "sniffio-76@1.3.1"
+      "ref": "sniffio-77@1.3.1"
     },
     {
       "dependsOn": [
         "anyio-4@4.14.1",
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
-      "ref": "starlette-77@1.3.1"
+      "ref": "starlette-78@1.3.1"
     },
     {
       "dependsOn": [
@@ -1171,78 +1184,79 @@
         "mypy-40@1.20.2",
         "psycopg-57@3.3.4",
         "pydantic-62@2.13.4",
-        "pytest-65@9.1.1",
-        "pytest-cov-66@7.1.0",
-        "pyyaml-69@6.0.3",
-        "ruff-73@0.15.21",
-        "setuptools-74@80.10.2",
-        "uvicorn-86@0.51.0"
+        "pyjwt-65@2.13.0",
+        "pytest-66@9.1.1",
+        "pytest-cov-67@7.1.0",
+        "pyyaml-70@6.0.3",
+        "ruff-74@0.15.21",
+        "setuptools-75@80.10.2",
+        "uvicorn-87@0.51.0"
       ],
       "ref": "study-anything-1@0.3.31a0"
     },
     {
-      "ref": "tenacity-78@9.1.4"
+      "ref": "tenacity-79@9.1.4"
     },
     {
-      "ref": "tomli-79@2.4.1"
+      "ref": "tomli-80@2.4.1"
     },
     {
       "dependsOn": [
         "colorama-11@0.4.6"
       ],
-      "ref": "tqdm-80@4.68.4"
+      "ref": "tqdm-81@4.68.4"
     },
     {
-      "ref": "typing-extensions-81@4.16.0"
+      "ref": "typing-extensions-82@4.16.0"
     },
     {
       "dependsOn": [
-        "typing-extensions-81@4.16.0"
+        "typing-extensions-82@4.16.0"
       ],
-      "ref": "typing-inspection-82@0.4.2"
+      "ref": "typing-inspection-83@0.4.2"
     },
     {
-      "ref": "tzdata-83@2026.2"
+      "ref": "tzdata-84@2026.2"
     },
     {
-      "ref": "urllib3-84@2.7.0"
+      "ref": "urllib3-85@2.7.0"
     },
     {
-      "ref": "uuid-utils-85@0.17.0"
+      "ref": "uuid-utils-86@0.17.0"
     },
     {
       "dependsOn": [
         "click-10@8.4.2",
         "h11-19@0.16.0",
         "httptools-21@0.8.0",
-        "python-dotenv-68@1.2.2",
-        "pyyaml-69@6.0.3",
-        "uvloop-87@0.22.1",
-        "watchfiles-88@1.2.0",
-        "websockets-89@15.0.1"
+        "python-dotenv-69@1.2.2",
+        "pyyaml-70@6.0.3",
+        "uvloop-88@0.22.1",
+        "watchfiles-89@1.2.0",
+        "websockets-90@15.0.1"
       ],
-      "ref": "uvicorn-86@0.51.0"
+      "ref": "uvicorn-87@0.51.0"
     },
     {
-      "ref": "uvloop-87@0.22.1"
+      "ref": "uvloop-88@0.22.1"
     },
     {
       "dependsOn": [
         "anyio-4@4.14.1"
       ],
-      "ref": "watchfiles-88@1.2.0"
+      "ref": "watchfiles-89@1.2.0"
     },
     {
-      "ref": "websockets-89@15.0.1"
+      "ref": "websockets-90@15.0.1"
     },
     {
-      "ref": "wrapt-90@2.2.2"
+      "ref": "wrapt-91@2.2.2"
     },
     {
-      "ref": "xxhash-91@3.8.1"
+      "ref": "xxhash-92@3.8.1"
     },
     {
-      "ref": "zstandard-92@0.25.0"
+      "ref": "zstandard-93@0.25.0"
     }
   ],
   "metadata": {

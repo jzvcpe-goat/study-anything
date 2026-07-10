@@ -30,7 +30,7 @@ background. Available profiles:
 The API is published on `127.0.0.1` by default and browser cross-origin access
 is disabled. This is the recommended single-operator local mode.
 
-For an intentional private-network or production deployment, use token mode:
+For an intentional private-network deployment controlled by one operator, use token mode:
 
 ```bash
 APP_ENV=production
@@ -47,6 +47,17 @@ it from the same private `.env`; external tool hosts should send it as
 `Authorization: Bearer <token>`. Never put it in an API URL. Token mode protects
 one private operator API and does not provide hosted user accounts or tenant
 isolation.
+
+For a hosted integration foundation, use `STUDY_ANYTHING_API_AUTH_MODE=oidc_jwt`
+with an external IdP and a static public JWKS. This adds signed tenant principals,
+tenant-filtered sessions, workspace RBAC, and principal-scoped Agent providers;
+it does not add account recovery, SCIM, database RLS, billing, or a managed hosted
+service. Follow `docs/hosted-identity-tenancy.md` and run:
+
+```bash
+python3 scripts/check_env.py --env .env --strict
+python3 scripts/verify_hosted_identity_tenancy.py --check
+```
 
 Agent allowlist entries are comma-separated exact origins, not full invoke URLs.
 Non-loopback production origins must use HTTPS. The API validates the origin again

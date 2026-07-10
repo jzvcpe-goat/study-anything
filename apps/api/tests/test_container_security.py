@@ -88,6 +88,13 @@ class ContainerSecurityTests(unittest.TestCase):
         with self.assertRaises(security.ContainerSecurityError):
             security.validate_compose(compose)
 
+    def test_missing_hosted_identity_passthrough_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        del compose["services"]["api"]["environment"]["STUDY_ANYTHING_OIDC_JWKS_JSON"]
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
     def test_unpinned_action_is_rejected(self) -> None:
         line = "      - uses: actions/checkout@v6"
 

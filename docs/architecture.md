@@ -272,6 +272,20 @@ export type EvolutionReport = {
 };
 ```
 
+## Hosted Identity Boundary
+
+The default runtime remains account-free and local-first. Optional `oidc_jwt` mode adds an external
+identity boundary without moving model credentials into Study Anything: a static public JWKS verifies
+short-lived tokens offline, opaque principals bind issuer + tenant + subject, sessions are
+tenant-filtered, workspaces apply role permissions, and non-demo Agent providers are principal-scoped.
+Unscoped local-only PMF, Sync, plugin, recovery, importer, and adoption routes fail closed in hosted
+mode. This is logical application isolation, not database RLS, IdP lifecycle, or hosted certification.
+
+默认 runtime 仍然免账号且本地优先。可选 `oidc_jwt` 模式只增加外部身份边界：使用静态
+公钥 JWKS 离线验证短期 token，以 issuer + tenant + subject 绑定不可逆 principal，会话按租户
+过滤，工作区执行角色权限，非 demo Agent 按 principal 隔离。尚未租户化的本地全局路由在
+hosted 模式下直接关闭。该能力是应用层逻辑隔离，不是数据库 RLS、IdP 生命周期或托管认证。
+
 ## Runtime Strategy
 
 Mastra is the planned runtime layer for Agent/workflow/tool/HITL orchestration. It should sit below Cognitive Loop Core:
