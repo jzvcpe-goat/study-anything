@@ -421,6 +421,12 @@ def _public_app_env(app_env: str) -> str:
     return app_env if app_env in PUBLIC_APP_ENV_LABELS else "unrecognized"
 
 
+def _write_cli_line(text: str, *, error: bool = False) -> None:
+    stream = sys.stderr if error else sys.stdout
+    stream.write(text)
+    stream.write("\n")
+
+
 def json_report(
     *,
     env_path: Path,
@@ -451,7 +457,7 @@ def json_report(
 
 
 def print_json_report(report: dict[str, Any]) -> None:
-    print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
+    _write_cli_line(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
 
 
 def print_text_report(
@@ -464,16 +470,16 @@ def print_text_report(
     redacted_problems = [_redact_issue(problem, env_path) for problem in problems]
     for warning in warnings:
         redacted_warning = _redact_issue(warning, env_path)
-        print(f"warn  {redacted_warning['message']}")
+        _write_cli_line(f"warn  {redacted_warning['message']}")
         for step in redacted_warning["next_steps"]:
-            print(f"      Recovery: {step}")
+            _write_cli_line(f"      Recovery: {step}")
     if problems:
         for problem in redacted_problems:
-            print(f"fail  {problem['message']}", file=sys.stderr)
+            _write_cli_line(f"fail  {problem['message']}", error=True)
             for step in problem["next_steps"]:
-                print(f"      Recovery: {step}", file=sys.stderr)
+                _write_cli_line(f"      Recovery: {step}", error=True)
         return
-    print(
+    _write_cli_line(
         f"ok    {_redact_env_path(str(env_path), env_path)} is valid for "
         f"APP_ENV={_public_app_env(app_env)}."
     )

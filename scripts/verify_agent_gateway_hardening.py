@@ -71,19 +71,18 @@ def runtime_failure(
     diagnostic: str,
     details: dict[str, Any] | None = None,
 ) -> None:
-    print(
-        json.dumps(
-            runtime_failure_payload(
-                classification=classification,
-                diagnostic=diagnostic,
-                details=details,
-            ),
-            ensure_ascii=False,
-            indent=2,
-            sort_keys=True,
+    serialized = json.dumps(
+        runtime_failure_payload(
+            classification=classification,
+            diagnostic=diagnostic,
+            details=details,
         ),
-        file=sys.stderr,
+        ensure_ascii=False,
+        indent=2,
+        sort_keys=True,
     )
+    sys.stderr.write(serialized)
+    sys.stderr.write("\n")
     sys.exit(1)
 
 
@@ -665,12 +664,14 @@ def main(argv: list[str] | None = None) -> None:
     leaks = [value for value in FORBIDDEN_VALUES if value in serialized]
     if leaks:
         raise GatewayHardeningError(f"Gateway hardening verifier leaked private values: {leaks}")
-    print(serialized)
+    sys.stdout.write(serialized)
+    sys.stdout.write("\n")
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as exc:  # pragma: no cover - CLI failure path
-        print(format_cli_failure(exc), file=sys.stderr)
+        sys.stderr.write(format_cli_failure(exc))
+        sys.stderr.write("\n")
         sys.exit(1)
