@@ -33,13 +33,19 @@ on:
         description: Maximum consecutive failed probes; raising it makes a run diagnostic only
         required: true
         default: "8"
+      evidence_run_id:
+        description: Completed reliability-soak run ID to index without rerunning the two mode jobs
+        required: false
+        default: ""
 
 permissions:
+  actions: read
   contents: read
   packages: read
 
 jobs:
   reliability-soak:
+    if: ${{ inputs.evidence_run_id == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     strategy:
@@ -94,23 +100,60 @@ jobs:
           retention-days: 14
 
   reliability-index:
-    if: always()
+    if: ${{ always() && (needs.reliability-soak.result != 'skipped' || inputs.evidence_run_id != '') }}
     needs: reliability-soak
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - name: Resolve evidence source
+        id: evidence
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUESTED_RUN_ID: ${{ inputs.evidence_run_id }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$REQUESTED_RUN_ID" ]]; then
+            run_id="${{ github.run_id }}"
+            head_sha="${{ github.sha }}"
+            event="${{ github.event_name }}"
+          else
+            [[ "$REQUESTED_RUN_ID" =~ ^[1-9][0-9]*$ ]] || {
+              echo "evidence_run_id must be a positive numeric GitHub run ID" >&2
+              exit 1
+            }
+            metadata="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${REQUESTED_RUN_ID}" \
+              --jq '[.id, .head_sha, .event, .path, .status] | @tsv')"
+            IFS=$'\t' read -r run_id head_sha event workflow_path run_status <<< "$metadata"
+            [[ "$run_id" == "$REQUESTED_RUN_ID" ]]
+            [[ "$workflow_path" == ".github/workflows/reliability-soak.yml" ]] || {
+              echo "evidence run belongs to a different workflow" >&2
+              exit 1
+            }
+            [[ "$run_status" == "completed" ]] || {
+              echo "evidence run must be completed before index replay" >&2
+              exit 1
+            }
+          fi
+          [[ "$head_sha" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$event" =~ ^[A-Za-z0-9_]+$ ]]
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "event=$event" >> "$GITHUB_OUTPUT"
       - name: Download metadata-only mode receipts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          pattern: reliability-*-${{ github.run_id }}
+          pattern: reliability-*-${{ steps.evidence.outputs.run_id }}
           path: ${{ runner.temp }}/reliability-receipts
           merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.evidence.outputs.run_id }}
       - name: Build metadata-only reliability index
         run: |
           python scripts/reliability_evidence_index.py \
-            --run-id "${{ github.run_id }}" \
-            --event "${{ github.event_name }}" \
-            --head-sha "${{ github.sha }}" \
+            --run-id "${{ steps.evidence.outputs.run_id }}" \
+            --event "${{ steps.evidence.outputs.event }}" \
+            --head-sha "${{ steps.evidence.outputs.head_sha }}" \
             --source-receipt "${RUNNER_TEMP}/reliability-receipts/study-anything-source-build-reliability.json" \
             --published-receipt "${RUNNER_TEMP}/reliability-receipts/study-anything-published-image-reliability.json" \
             --output "${RUNNER_TEMP}/self-host-reliability-index.json"
@@ -118,7 +161,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: reliability-index-${{ github.run_id }}
+          name: reliability-index-${{ steps.evidence.outputs.run_id }}
           path: ${{ runner.temp }}/self-host-reliability-index.json
           if-no-files-found: error
           retention-days: 90

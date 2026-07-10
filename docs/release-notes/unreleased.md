@@ -30,6 +30,9 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- Completed reliability runs can now replay only their metadata index by source run ID. The replay
+  binds same-repository artifacts to the original reliability workflow, event, and head commit; it
+  cannot rerun, repair, or relax failed or diagnostic mode receipts.
 - PR #405 is recorded as the current metadata-only release-stack group after all six required
   GitHub checks passed. This terminal self-intake does not require another self-intake under the
   recursion stop rule.

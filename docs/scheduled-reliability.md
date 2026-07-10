@@ -61,6 +61,19 @@ The index artifact is retained for 90 days. One strict dual pass proves one boun
 requires three strict dual passes before setting its limited `longitudinal_trend_claimable` signal,
 and it always keeps `production_slo_claimable=false`.
 
+### Replay An Index From A Completed Run
+
+If both mode jobs completed and uploaded passing receipts but the index job itself failed for an
+infrastructure or workflow-policy reason, dispatch `reliability-soak` again with only
+`evidence_run_id` set to the completed source run. The source-build and published-image jobs are
+skipped. The index job downloads only same-repository artifacts from that exact completed
+`reliability-soak` run, resolves its event and head SHA from the GitHub API, revalidates both
+receipts, and uploads `reliability-index-SOURCE_RUN_ID`.
+
+Replay does not repair or replace a failed mode receipt and does not turn a short run into strict
+evidence. A missing artifact, different workflow path, unfinished run, source-commit mismatch,
+mixed profile, failed receipt, or privacy violation still blocks the index.
+
 To rebuild or append an index offline from downloaded receipts:
 
 ```bash
@@ -98,4 +111,5 @@ or proof that a scheduled run occurred before the corresponding GitHub artifact 
 metadata，不保存密钥、URL、日志、正文、答案或本机路径。短时手动运行不能替代默认两小时
 运行，GitHub 收据不存在时也不能宣称定时可靠性验证已经完成。工作流会额外生成纵向索引；
 只有两种模式都满足严格默认参数才记为一次严格双通过，至少三次才允许声称存在有限趋势，
-并且无论运行多少次都不会自动升级为生产 SLO。
+并且无论运行多少次都不会自动升级为生产 SLO。如果双路径已成功、但索引作业因基础设施或
+工作流策略失败，可以用原始 run ID 重放索引；重放不会重新执行或放宽双路径收据。
