@@ -169,6 +169,7 @@ def export_artifacts(
                 "--no-progress",
                 "--format",
                 "requirements.txt",
+                "--no-header",
                 "--no-dev",
                 "--no-emit-project",
                 *selectors,
