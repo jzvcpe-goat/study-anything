@@ -118,8 +118,9 @@ def build_report() -> dict[str, Any]:
             "failure-contract-v1 -> cbb.trust-policy.v1",
             "failure-contract-v1 + sandbox-receipt-v1 -> cbb.evidence-bundle.v1",
             "attention-reconstruction-summary-v1 -> cbb.qualified-reconstruction.v1",
-            "dual-loop-gate-receipt-v1 + delivery-trust-receipt-v1 -> cbb.gate-decision.v1",
-            "delivery-trust-receipt-v1 -> cbb.delivery-trust-receipt.v1",
+            "dual-loop-gate-receipt-v1 -> cbb.evidence-bundle.v1",
+            "policy + evidence + reconstruction -> cbb.gate-decision.v1",
+            "delivery-trust-receipt-v1 + gate decision -> cbb.delivery-trust-receipt.v1",
         ],
         "cases": cases,
         "equal_scope_case_count": len(cases) - narrowed,
@@ -180,4 +181,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

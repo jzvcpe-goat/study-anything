@@ -15,7 +15,7 @@
           "scope beyond the source v0 receipt"
         ]
       },
-      "decision_ref": "cbb-decision:delivery-trust-receipt-demo-001",
+      "decision_ref": "cbb-decision:3b4c703ae98281154565f1c52fe8bd75",
       "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
       "issued_at": "2026-06-28T00:00:00Z",
       "policy_ref": "cbb-policy:failure-contract-demo-001",
@@ -44,8 +44,8 @@
           ]
         },
         "created_at": "2026-06-28T00:00:00Z",
-        "evidence_digest_sha256": "5aeeadd2e802eb88e22b6b7bfa719b9c9bb0bbcce4d86df4ccc15e9d9c82ec4a",
-        "policy_digest_sha256": "588df7e642435d78a8a25994cdbc44e776ab44f2b0856098c62e296b522f10c4",
+        "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
+        "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
         "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
         "schema_version": "cbb.receipt-provenance.v1",
         "signature": null,
@@ -60,7 +60,7 @@
         }
       },
       "reasons": [
-        "qualified_reconstruction_unavailable"
+        "required_evidence_unavailable"
       ],
       "receipt_id": "cbb-receipt:delivery-trust-receipt-demo-001",
       "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
@@ -71,13 +71,13 @@
     "evidence_bundle": {
       "bundle_id": "cbb-evidence:sandbox-run-demo-001",
       "claim_boundary": {
-        "current_claim": "The mapped v0 sandbox evidence supports this scope only.",
-        "maximum_scope": "sandbox_only",
+        "current_claim": "The complete mapped v0 chain supports controlled customer handoff only.",
+        "maximum_scope": "controlled_customer_handoff",
         "not_claimed": [
-          "human reconstruction completion",
-          "customer handoff approval",
+          "production approval",
           "portable signed attestation",
-          "production approval"
+          "customer outcome guarantee",
+          "authority beyond the source v0 receipts"
         ]
       },
       "created_at": "2026-06-28T00:00:00Z",
@@ -106,9 +106,31 @@
           "source_schema_version": "sandbox-receipt-v1",
           "status": "passed",
           "supported_scope": "sandbox_only"
+        },
+        {
+          "evidence_id": "evidence:dual-loop-gate-demo-001",
+          "evidence_type": "dual_loop_gate",
+          "metadata": {
+            "both_loops_required": true
+          },
+          "source_ref": "dual-loop-gate-receipt.json",
+          "source_schema_version": "dual-loop-gate-receipt-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        },
+        {
+          "evidence_id": "evidence:delivery-trust-receipt-demo-001",
+          "evidence_type": "v0_delivery_trust_receipt",
+          "metadata": {
+            "compatibility_source_only": true
+          },
+          "source_ref": "delivery-trust-receipt.json",
+          "source_schema_version": "delivery-trust-receipt-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
         }
       ],
-      "maximum_supported_scope": "sandbox_only",
+      "maximum_supported_scope": "controlled_customer_handoff",
       "policy_ref": "cbb-policy:failure-contract-demo-001",
       "privacy": {
         "attention_stream_included": false,
@@ -129,21 +151,23 @@
     "gate_decision": {
       "approved_scope": "blocked",
       "claim_boundary": {
-        "current_claim": "The mapped v0 evidence does not authorize delivery.",
+        "current_claim": "The deterministic CBB v1 kernel does not authorize delivery.",
         "maximum_scope": "blocked",
         "not_claimed": [
           "production approval",
           "portable signed attestation",
           "customer outcome guarantee",
-          "scope beyond the source v0 receipt"
+          "general model correctness",
+          "authority beyond the evaluated policy and evidence"
         ]
       },
       "decided_at": "2026-06-28T00:00:00Z",
-      "decision_id": "cbb-decision:delivery-trust-receipt-demo-001",
+      "decision_id": "cbb-decision:3b4c703ae98281154565f1c52fe8bd75",
       "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
       "hard_denies_triggered": [],
       "missing_evidence_types": [
-        "qualified_reconstruction"
+        "qualified_reconstruction",
+        "role:qualified_reviewer"
       ],
       "policy_ref": "cbb-policy:failure-contract-demo-001",
       "privacy": {
@@ -160,13 +184,17 @@
         "signed_urls_included": false
       },
       "reasons": [
-        "qualified_reconstruction_unavailable"
+        "required_evidence_unavailable"
       ],
       "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
       "schema_version": "cbb.gate-decision.v1",
       "source_decision_refs": [
+        "attention-reconstruction-summary.json",
+        "delivery-trust-receipt.json",
         "dual-loop-gate-receipt.json",
-        "delivery-trust-receipt.json"
+        "failure-contract.json",
+        "policy:cbb-policy:failure-contract-demo-001",
+        "sandbox-receipt.json"
       ],
       "status": "needs_evidence",
       "subject_ref": "artifact:metadata-only-demo-change"
@@ -224,8 +252,8 @@
         ]
       },
       "created_at": "2026-06-28T00:00:00Z",
-      "evidence_digest_sha256": "5aeeadd2e802eb88e22b6b7bfa719b9c9bb0bbcce4d86df4ccc15e9d9c82ec4a",
-      "policy_digest_sha256": "588df7e642435d78a8a25994cdbc44e776ab44f2b0856098c62e296b522f10c4",
+      "evidence_digest_sha256": "e1662b365cfa970ec753a7389a62cac25797381845e86aad3aea6f1e62a42250",
+      "policy_digest_sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
       "provenance_id": "cbb-provenance:cbb-evidence:sandbox-run-demo-001",
       "schema_version": "cbb.receipt-provenance.v1",
       "signature": null,
@@ -291,11 +319,6 @@
         {
           "blocking": true,
           "evidence_type": "dual_loop_gate",
-          "required_for_scope": "controlled_customer_handoff"
-        },
-        {
-          "blocking": true,
-          "evidence_type": "delivery_trust_receipt",
           "required_for_scope": "controlled_customer_handoff"
         }
       ],

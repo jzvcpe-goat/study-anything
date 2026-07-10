@@ -1457,6 +1457,16 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic non-expanding CBB v0-to-v1 compatibility report.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-kernel.json",
+        "generated_asset",
+        "Deterministic CBB Protocol v1 Trust Kernel verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-runtime-isolation.json",
+        "generated_asset",
+        "Static canonical Trust Kernel runtime-isolation report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3220,6 +3230,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cbb-protocol-v1-contracts.md",
         "operator_doc",
         "Canonical Protocol v1 schemas, serialization, fixture, and compatibility guide.",
+    ),
+    (
+        "docs/cbb-protocol-v1-kernel.md",
+        "operator_doc",
+        "Canonical deterministic Trust Kernel and runtime-isolation guide.",
     ),
     (
         "docs/delivery-trust-receipt.md",
@@ -5568,6 +5583,13 @@ FILES: list[tuple[str, str, str]] = [
         "fixture",
         "Canonical CBB Protocol v1 scope-expansion rejection fixture.",
     ),
+    ("fixtures/cbb-v1-kernel/pass.json", "fixture", "Canonical Trust Kernel passing fixture."),
+    ("fixtures/cbb-v1-kernel/missing-evidence.json", "fixture", "Canonical missing-evidence decision fixture."),
+    ("fixtures/cbb-v1-kernel/failed-evidence.json", "fixture", "Canonical failed-evidence blocking fixture."),
+    ("fixtures/cbb-v1-kernel/stale-reconstruction.json", "fixture", "Canonical stale reconstruction fixture."),
+    ("fixtures/cbb-v1-kernel/hard-deny.json", "fixture", "Canonical hard-deny fixture."),
+    ("fixtures/cbb-v1-kernel/reference-mismatch.json", "fixture", "Canonical reference-integrity fixture."),
+    ("fixtures/cbb-v1-kernel/claim-boundary-narrowing.json", "fixture", "Canonical claim-boundary narrowing fixture."),
     (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
@@ -5588,6 +5610,8 @@ FILES: list[tuple[str, str, str]] = [
         "verification",
         "Verify v0 compatibility mappings preserve or narrow delivery scope.",
     ),
+    ("scripts/verify_cbb_v1_kernel.py", "verification", "Verify canonical deterministic CBB Protocol v1 Trust Kernel decisions."),
+    ("scripts/verify_cbb_runtime_isolation.py", "verification", "Verify the canonical Trust Kernel has no Agentic runtime authority."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -7913,6 +7937,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_positioning.py --check",
             "python3 scripts/verify_cbb_v1_contracts.py --check",
             "python3 scripts/verify_cbb_v0_compatibility.py --check",
+            "python3 scripts/verify_cbb_v1_kernel.py --check",
+            "python3 scripts/verify_cbb_runtime_isolation.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

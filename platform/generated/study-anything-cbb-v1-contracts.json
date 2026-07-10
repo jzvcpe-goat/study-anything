@@ -13,8 +13,8 @@
   ],
   "canonicalization": {
     "algorithm": "cbb-json-c14n-v1",
-    "byte_count": 1765,
-    "sha256": "588df7e642435d78a8a25994cdbc44e776ab44f2b0856098c62e296b522f10c4",
+    "byte_count": 1655,
+    "sha256": "1b3994554184f32f9e5372d0c4c5ad6506a2898da82255c05829b5fb8cd0c550",
     "stable_across_key_order": true
   },
   "claim_boundary": "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, and canonical JSON bytes. It does not prove production delivery, portable cryptographic signing, customer outcomes, safe Agentic evolution, or independent audit completion.",

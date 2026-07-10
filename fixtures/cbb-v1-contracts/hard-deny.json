@@ -16,11 +16,12 @@
         "production approval",
         "portable signed attestation",
         "customer outcome guarantee",
-        "scope beyond the source v0 receipt"
+        "general model correctness",
+        "authority beyond the evaluated policy and evidence"
       ]
     },
     "decided_at": "2026-06-28T00:00:00Z",
-    "decision_id": "cbb-decision:delivery-trust-receipt-demo-001",
+    "decision_id": "cbb-decision:4c6904805d6fcd58ad60256de4ef6b61",
     "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
     "hard_denies_triggered": [
       "production_mutation"
@@ -46,8 +47,12 @@
     "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
     "schema_version": "cbb.gate-decision.v1",
     "source_decision_refs": [
+      "attention-reconstruction-summary.json",
+      "delivery-trust-receipt.json",
       "dual-loop-gate-receipt.json",
-      "delivery-trust-receipt.json"
+      "failure-contract.json",
+      "policy:cbb-policy:failure-contract-demo-001",
+      "sandbox-receipt.json"
     ],
     "status": "block",
     "subject_ref": "artifact:metadata-only-demo-change"

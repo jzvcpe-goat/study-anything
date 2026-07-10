@@ -41,10 +41,14 @@ failure-contract-v1 + sandbox-receipt-v1
 attention-reconstruction-summary-v1
   -> cbb.qualified-reconstruction.v1
 
-dual-loop-gate-receipt-v1 + delivery-trust-receipt-v1
+dual-loop-gate-receipt-v1
+  -> cbb.evidence-bundle.v1
+
+cbb.trust-policy.v1 + cbb.evidence-bundle.v1
+  + cbb.qualified-reconstruction.v1
   -> cbb.gate-decision.v1
 
-delivery-trust-receipt-v1
+delivery-trust-receipt-v1 + cbb.gate-decision.v1
   -> cbb.delivery-trust-receipt.v1
 ```
 
@@ -90,6 +94,8 @@ receipt.
 python3 scripts/generate_cbb_v1_contract_assets.py --check
 python3 scripts/verify_cbb_v1_contracts.py --check
 python3 scripts/verify_cbb_v0_compatibility.py --check
+python3 scripts/verify_cbb_v1_kernel.py --check
+python3 scripts/verify_cbb_runtime_isolation.py --check
 ./scripts/release_check.sh --cbb-protocol-only
 ```
 
@@ -102,7 +108,8 @@ platform/generated/study-anything-cbb-v0-compatibility.json
 
 ## Claim Boundary
 
-This phase proves strict local contracts, deterministic JSON, metadata privacy,
-and non-expanding v0 compatibility. It does not implement the final Trust Kernel
-evaluator, cryptographic signing, revocation, production delivery, customer
-outcomes, safe Agentic self-evolution, or independent audit completion.
+This contract phase proves strict local contracts, deterministic JSON, metadata
+privacy, and non-expanding v0 compatibility. The separate deterministic Trust
+Kernel phase now evaluates these objects. Neither phase implements cryptographic
+signing, revocation, production delivery, customer outcomes, safe Agentic
+self-evolution, or independent audit completion.

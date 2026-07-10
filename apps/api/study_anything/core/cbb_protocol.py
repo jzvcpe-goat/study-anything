@@ -436,6 +436,237 @@ def _validate_or_reason(
         return None, reason
 
 
+def _v1_privacy_boundary() -> Any:
+    from study_anything.cbb.protocol.models import PrivacyBoundaryV1
+
+    return PrivacyBoundaryV1(
+        metadata_only=True,
+        raw_source_text_included=False,
+        raw_report_text_included=False,
+        raw_customer_payload_included=False,
+        attention_stream_included=False,
+        model_prompts_included=False,
+        model_credentials_included=False,
+        cookies_or_bearer_tokens_included=False,
+        signed_urls_included=False,
+        production_mutation_performed=False,
+        automatic_customer_send_performed=False,
+    )
+
+
+def _evaluate_legacy_inputs_with_v1_kernel(
+    claim_boundary: Mapping[str, Any] | None,
+    trust_root: Mapping[str, Any] | None,
+    reviewer_reconstruction: Mapping[str, Any] | None,
+    risk_owner_scope: Mapping[str, Any] | None,
+    *,
+    claim_valid: bool,
+    trust_valid: bool,
+    reviewer_valid: bool,
+    risk_owner_valid: bool,
+    ai_review_only_triggered: bool,
+) -> Any:
+    from study_anything.cbb.kernel import evaluate_gate as evaluate_v1_gate
+    from study_anything.cbb.protocol.models import (
+        EVIDENCE_BUNDLE_SCHEMA_VERSION,
+        QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION,
+        TRUST_POLICY_SCHEMA_VERSION,
+        ClaimBoundaryV1,
+        DeliveryScope,
+        EvidenceBundleV1,
+        EvidenceItemV1,
+        EvidenceRequirementV1,
+        QualifiedReconstructionV1,
+        RiskBudgetV1,
+        TrustPolicyV1,
+    )
+
+    candidate_ref = str(
+        (claim_boundary or {}).get("candidate_artifact_ref")
+        or "artifact:unknown-candidate"
+    )
+    privacy = _v1_privacy_boundary()
+    policy = TrustPolicyV1(
+        schema_version=TRUST_POLICY_SCHEMA_VERSION,
+        policy_id="cbb-policy:legacy-gate-compatibility",
+        subject_ref=candidate_ref,
+        scenario_ref="scenario:legacy-controlled-customer-handoff",
+        maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+        hard_denies=[
+            "ai_review_only_trust",
+            "irreversible_external_effect",
+            "production_mutation",
+            "unbounded_real_user_exposure",
+        ],
+        risk_budget=RiskBudgetV1(
+            level="medium",
+            production_mutation_allowed=False,
+            real_user_exposure_allowed=False,
+            irreversible_external_effects_allowed=False,
+        ),
+        required_evidence=[
+            EvidenceRequirementV1(
+                evidence_type="claim_boundary",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="trust_root",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="qualified_reconstruction",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+            EvidenceRequirementV1(
+                evidence_type="risk_owner_scope",
+                required_for_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+                blocking=True,
+            ),
+        ],
+        required_roles=["qualified_reviewer"],
+        claim_boundary=ClaimBoundaryV1(
+            current_claim="The compatibility policy evaluates controlled handoff only.",
+            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            not_claimed=[
+                "production approval",
+                "portable signed attestation",
+                "customer outcome guarantee",
+                "general model correctness",
+            ],
+        ),
+        privacy=privacy,
+        created_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+    )
+
+    def evidence_item(
+        evidence_type: str,
+        valid: bool,
+        supplied: bool,
+        source_schema_version: str,
+        source_ref: str,
+    ) -> EvidenceItemV1:
+        return EvidenceItemV1(
+            evidence_id=f"evidence:legacy:{evidence_type}",
+            evidence_type=evidence_type,
+            status="passed" if valid else "failed" if supplied else "missing",
+            source_schema_version=source_schema_version,
+            source_ref=source_ref,
+            supported_scope=(
+                DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+                if valid
+                else DeliveryScope.BLOCKED
+            ),
+            metadata={"compatibility_input": True},
+        )
+
+    evidence = [
+        evidence_item(
+            "claim_boundary",
+            claim_valid,
+            claim_boundary is not None,
+            CLAIM_BOUNDARY_SCHEMA_VERSION,
+            "claim-boundary.json",
+        ),
+        evidence_item(
+            "trust_root",
+            trust_valid,
+            trust_root is not None,
+            TRUST_ROOT_SCHEMA_VERSION,
+            "trust-root.json",
+        ),
+        evidence_item(
+            "risk_owner_scope",
+            risk_owner_valid,
+            risk_owner_scope is not None,
+            RISK_OWNER_SCOPE_SCHEMA_VERSION,
+            "risk-owner-scope.json",
+        ),
+    ]
+    if ai_review_only_triggered:
+        evidence.append(
+            EvidenceItemV1(
+                evidence_id="evidence:legacy:ai-review-only",
+                evidence_type="hard_deny:ai_review_only_trust",
+                status="passed",
+                source_schema_version=TRUST_ROOT_SCHEMA_VERSION,
+                source_ref="trust-root.json#forbidden-trust-basis",
+                supported_scope=DeliveryScope.BLOCKED,
+                metadata={"compatibility_input": True},
+            )
+        )
+    bundle = EvidenceBundleV1(
+        schema_version=EVIDENCE_BUNDLE_SCHEMA_VERSION,
+        bundle_id="cbb-evidence:legacy-gate-compatibility",
+        subject_ref=policy.subject_ref,
+        policy_ref=policy.policy_id,
+        evidence=evidence,
+        maximum_supported_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+        claim_boundary=ClaimBoundaryV1(
+            current_claim="Legacy metadata receipts support controlled handoff only.",
+            maximum_scope=DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF,
+            not_claimed=[
+                "production approval",
+                "portable signed attestation",
+                "authority beyond the legacy receipt set",
+            ],
+        ),
+        privacy=privacy,
+        created_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+    )
+    reconstruction = QualifiedReconstructionV1(
+        schema_version=QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION,
+        reconstruction_id="cbb-reconstruction:legacy-gate-compatibility",
+        policy_ref=policy.policy_id,
+        reviewer_ref="reviewer:legacy-local-operator",
+        status=(
+            "passed"
+            if reviewer_valid
+            else "failed"
+            if reviewer_reconstruction is not None
+            else "missing"
+        ),
+        qualified_scope=(
+            DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+            if reviewer_valid
+            else DeliveryScope.BLOCKED
+        ),
+        active_reconstruction=reviewer_valid,
+        passive_attention_only=False,
+        required_mrus_total=1,
+        required_mrus_passed=1 if reviewer_valid else 0,
+        missing_mru_refs=[] if reviewer_valid else ["mru:legacy-claim-boundary"],
+        evidence_refs=(
+            ["reviewer-reconstruction-receipt.json"]
+            if reviewer_reconstruction is not None
+            else []
+        ),
+        observed_at=dual_loop.DETERMINISTIC_TIMESTAMP,
+        valid_until="2026-09-26T00:00:00Z",
+        claim_boundary=ClaimBoundaryV1(
+            current_claim=(
+                "The legacy reviewer reconstructed the controlled handoff boundary."
+                if reviewer_valid
+                else "The legacy reviewer is not qualified for this handoff."
+            ),
+            maximum_scope=(
+                DeliveryScope.CONTROLLED_CUSTOMER_HANDOFF
+                if reviewer_valid
+                else DeliveryScope.BLOCKED
+            ),
+            not_claimed=[
+                "global reviewer qualification",
+                "permanent human capability",
+                "production approval",
+            ],
+        ),
+        privacy=privacy,
+    )
+    return evaluate_v1_gate(policy, bundle, reconstruction)
+
+
 def evaluate_cbb_gate(
     claim_boundary: Mapping[str, Any] | None,
     trust_root: Mapping[str, Any] | None,
@@ -474,7 +705,27 @@ def evaluate_cbb_gate(
         for reason in (claim_reason, trust_reason, reviewer_reason, risk_reason)
         if reason is not None
     ]
-    allowed = not reasons
+    canonical_decision = None
+    try:
+        canonical_decision = _evaluate_legacy_inputs_with_v1_kernel(
+            claim_boundary,
+            trust_root,
+            reviewer_reconstruction,
+            risk_owner_scope,
+            claim_valid=claim is not None,
+            trust_valid=trust is not None,
+            reviewer_valid=reviewer is not None,
+            risk_owner_valid=risk_owner is not None,
+            ai_review_only_triggered="ai_review_only_trust_basis" in reasons,
+        )
+    except ModuleNotFoundError as exc:
+        if exc.name != "pydantic":
+            raise
+    allowed = not reasons if canonical_decision is None else canonical_decision.status == "allow"
+    if canonical_decision is not None and allowed != (not reasons):
+        raise CBBProtocolError(
+            "legacy compatibility reasons disagree with canonical CBB v1 kernel"
+        )
     candidate_ref = "artifact:unknown-candidate"
     project_id = "study-anything"
     if claim is not None:

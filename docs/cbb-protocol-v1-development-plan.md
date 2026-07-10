@@ -38,7 +38,8 @@ Current `main` already proves these local deterministic capabilities:
   evidence;
 - an external security audit preparation package.
 
-What this baseline does not yet prove:
+What this baseline does not yet prove beyond the canonical contract and kernel
+milestones:
 
 - one minimal canonical Protocol v1 schema family;
 - portable cryptographic provenance across implementations;
@@ -96,8 +97,15 @@ failure-contract-v1 + sandbox-receipt-v1
 attention-reconstruction-summary-v1
   -> cbb.qualified-reconstruction.v1
 
-dual-loop-gate-receipt-v1 + delivery-trust-receipt-v1
-  -> cbb.gate-decision.v1 + cbb.delivery-trust-receipt.v1
+dual-loop-gate-receipt-v1
+  -> cbb.evidence-bundle.v1
+
+cbb.trust-policy.v1 + cbb.evidence-bundle.v1
+  + cbb.qualified-reconstruction.v1
+  -> cbb.gate-decision.v1
+
+delivery-trust-receipt-v1 + cbb.gate-decision.v1
+  -> cbb.delivery-trust-receipt.v1
 ```
 
 Mappings may narrow claims. They may never expand delivery scope.

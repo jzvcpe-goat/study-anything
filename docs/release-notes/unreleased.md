@@ -1,5 +1,20 @@
 # Unreleased Main Development Line
 
+## CBB Protocol v1 Deterministic Trust Kernel
+
+- Added a pure canonical evaluator from Trust Policy, Evidence Bundle, and
+  Qualified Reconstruction to Gate Decision.
+- Added fail-closed hard-deny, failed/missing/stale evidence, reference-integrity,
+  reviewer-role, and claim-boundary scope checks.
+- Routed the shipped v0 CBB gate and v0-to-v1 Dual Loop mapping through the
+  canonical kernel while preserving existing v0 output contracts.
+- Added seven deterministic kernel fixtures, a kernel verifier, and a static
+  runtime-isolation verifier with no model, RAG, network, subprocess, or legacy
+  runtime imports.
+- Added the kernel gates to CBB protocol release receipts. This remains local
+  deterministic proof, not portable signing, production approval, or independent
+  audit completion.
+
 This file records changes on `main` after the tagged `v0.3.31-alpha` release.
 It is not a release tag or published-image claim.
 

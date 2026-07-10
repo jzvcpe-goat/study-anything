@@ -1,0 +1,225 @@
+{
+  "case_id": "reference-mismatch",
+  "decision": {
+    "approved_scope": "blocked",
+    "claim_boundary": {
+      "current_claim": "The deterministic CBB v1 kernel does not authorize delivery.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "production approval",
+        "portable signed attestation",
+        "customer outcome guarantee",
+        "general model correctness",
+        "authority beyond the evaluated policy and evidence"
+      ]
+    },
+    "decided_at": "2026-06-28T00:00:00Z",
+    "decision_id": "cbb-decision:ea2f23c4c5467aa93af1bb81141e3f3a",
+    "evidence_bundle_ref": "cbb-evidence:kernel-demo-001",
+    "hard_denies_triggered": [],
+    "missing_evidence_types": [],
+    "policy_ref": "cbb-policy:kernel-demo-001",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "reasons": [
+      "evidence_policy_ref_mismatch"
+    ],
+    "reconstruction_ref": "cbb-reconstruction:kernel-demo-001",
+    "schema_version": "cbb.gate-decision.v1",
+    "source_decision_refs": [
+      "attention-reconstruction-summary.json",
+      "dual-loop-gate-receipt.json",
+      "failure-contract.json",
+      "policy:cbb-policy:kernel-demo-001",
+      "sandbox-receipt.json"
+    ],
+    "status": "block",
+    "subject_ref": "artifact:kernel-demo-001"
+  },
+  "inputs": {
+    "evidence_bundle": {
+      "bundle_id": "cbb-evidence:kernel-demo-001",
+      "claim_boundary": {
+        "current_claim": "The evidence bundle supports controlled customer handoff only.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "evidence": [
+        {
+          "evidence_id": "evidence:failure-contract-001",
+          "evidence_type": "failure_contract",
+          "metadata": {
+            "metadata_only": true
+          },
+          "source_ref": "failure-contract.json",
+          "source_schema_version": "failure-contract-v1",
+          "status": "passed",
+          "supported_scope": "sandbox_only"
+        },
+        {
+          "evidence_id": "evidence:sandbox-receipt-001",
+          "evidence_type": "sandbox_receipt",
+          "metadata": {
+            "contained": true,
+            "rollback_rehearsed": true
+          },
+          "source_ref": "sandbox-receipt.json",
+          "source_schema_version": "sandbox-receipt-v1",
+          "status": "passed",
+          "supported_scope": "sandbox_only"
+        },
+        {
+          "evidence_id": "evidence:dual-loop-gate-001",
+          "evidence_type": "dual_loop_gate",
+          "metadata": {
+            "both_loops_required": true
+          },
+          "source_ref": "dual-loop-gate-receipt.json",
+          "source_schema_version": "dual-loop-gate-receipt-v1",
+          "status": "passed",
+          "supported_scope": "controlled_customer_handoff"
+        }
+      ],
+      "maximum_supported_scope": "controlled_customer_handoff",
+      "policy_ref": "cbb-policy:different",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "schema_version": "cbb.evidence-bundle.v1",
+      "subject_ref": "artifact:kernel-demo-001"
+    },
+    "policy": {
+      "claim_boundary": {
+        "current_claim": "This policy evaluates a controlled customer handoff candidate only.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee"
+        ]
+      },
+      "created_at": "2026-06-28T00:00:00Z",
+      "hard_denies": [
+        "ai_review_only_trust",
+        "irreversible_external_effect",
+        "production_mutation",
+        "unbounded_real_user_exposure"
+      ],
+      "maximum_scope": "controlled_customer_handoff",
+      "policy_id": "cbb-policy:kernel-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "required_evidence": [
+        {
+          "blocking": true,
+          "evidence_type": "failure_contract",
+          "required_for_scope": "sandbox_only"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "sandbox_receipt",
+          "required_for_scope": "sandbox_only"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "qualified_reconstruction",
+          "required_for_scope": "controlled_customer_handoff"
+        },
+        {
+          "blocking": true,
+          "evidence_type": "dual_loop_gate",
+          "required_for_scope": "controlled_customer_handoff"
+        }
+      ],
+      "required_roles": [
+        "qualified_reviewer"
+      ],
+      "risk_budget": {
+        "irreversible_external_effects_allowed": false,
+        "level": "medium",
+        "production_mutation_allowed": false,
+        "real_user_exposure_allowed": false
+      },
+      "scenario_ref": "scenario:controlled-customer-handoff",
+      "schema_version": "cbb.trust-policy.v1",
+      "subject_ref": "artifact:kernel-demo-001"
+    },
+    "qualified_reconstruction": {
+      "active_reconstruction": true,
+      "claim_boundary": {
+        "current_claim": "The reviewer reconstructed the required boundary for this scope.",
+        "maximum_scope": "controlled_customer_handoff",
+        "not_claimed": [
+          "production approval",
+          "portable signed attestation",
+          "customer outcome guarantee"
+        ]
+      },
+      "evidence_refs": [
+        "attention-reconstruction-summary.json"
+      ],
+      "missing_mru_refs": [],
+      "observed_at": "2026-06-28T00:00:00Z",
+      "passive_attention_only": false,
+      "policy_ref": "cbb-policy:kernel-demo-001",
+      "privacy": {
+        "attention_stream_included": false,
+        "automatic_customer_send_performed": false,
+        "cookies_or_bearer_tokens_included": false,
+        "metadata_only": true,
+        "model_credentials_included": false,
+        "model_prompts_included": false,
+        "production_mutation_performed": false,
+        "raw_customer_payload_included": false,
+        "raw_report_text_included": false,
+        "raw_source_text_included": false,
+        "signed_urls_included": false
+      },
+      "qualified_scope": "controlled_customer_handoff",
+      "reconstruction_id": "cbb-reconstruction:kernel-demo-001",
+      "required_mrus_passed": 2,
+      "required_mrus_total": 2,
+      "reviewer_ref": "reviewer:kernel-fixture",
+      "schema_version": "cbb.qualified-reconstruction.v1",
+      "status": "passed",
+      "valid_until": "2026-09-26T00:00:00Z"
+    }
+  }
+}

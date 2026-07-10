@@ -57,6 +57,7 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("docs/trust-model.md", "trust_doc", "Delivery trust and AI-only review rejection model."),
     PackFile("docs/protocol.md", "protocol_doc", "CBB protocol boundary, verifier surface, and non-claims."),
     PackFile("docs/cbb-protocol-v1-contracts.md", "protocol_doc", "Canonical Protocol v1 contracts and v0 compatibility map."),
+    PackFile("docs/cbb-protocol-v1-kernel.md", "protocol_doc", "Deterministic Protocol v1 Trust Kernel and runtime-isolation boundary."),
     PackFile("docs/release-checklist.md", "release_doc", "Release acceptance and claim-boundary checklist."),
     PackFile("docs/quality-audits/phase-23-repository-security-remediation.md", "quality_audit", "Repository security remediation evidence."),
     PackFile("docs/quality-audits/phase-24-python-supply-chain.md", "quality_audit", "Python supply-chain evidence."),
@@ -69,6 +70,8 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("platform/generated/study-anything-dual-loop-gate.json", "generated_evidence", "Dual Loop propagation gate receipt."),
     PackFile("platform/generated/study-anything-cbb-v1-contracts.json", "generated_evidence", "Canonical CBB Protocol v1 contract verification receipt."),
     PackFile("platform/generated/study-anything-cbb-v0-compatibility.json", "generated_evidence", "Non-expanding v0 compatibility verification receipt."),
+    PackFile("platform/generated/study-anything-cbb-v1-kernel.json", "generated_evidence", "Deterministic CBB Protocol v1 Trust Kernel verification receipt."),
+    PackFile("platform/generated/study-anything-cbb-runtime-isolation.json", "generated_evidence", "Static canonical kernel runtime-isolation receipt."),
     PackFile("platform/schemas/cbb/cbb.trust-policy.v1.schema.json", "protocol_schema", "Canonical trust policy schema."),
     PackFile("platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json", "protocol_schema", "Canonical evidence bundle schema."),
     PackFile("platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json", "protocol_schema", "Canonical qualified reconstruction schema."),
@@ -84,6 +87,13 @@ PACK_FILES: tuple[PackFile, ...] = (
     PackFile("fixtures/cbb-v1-contracts/naive-timestamp.json", "protocol_fixture", "Timezone ambiguity rejection fixture."),
     PackFile("fixtures/cbb-v1-contracts/invalid-state.json", "protocol_fixture", "Cross-field state rejection fixture."),
     PackFile("fixtures/cbb-v1-contracts/scope-expansion.json", "protocol_fixture", "Authority expansion rejection fixture."),
+    PackFile("fixtures/cbb-v1-kernel/pass.json", "kernel_fixture", "Canonical Trust Kernel passing decision fixture."),
+    PackFile("fixtures/cbb-v1-kernel/missing-evidence.json", "kernel_fixture", "Canonical missing evidence decision fixture."),
+    PackFile("fixtures/cbb-v1-kernel/failed-evidence.json", "kernel_fixture", "Canonical failed evidence blocking fixture."),
+    PackFile("fixtures/cbb-v1-kernel/stale-reconstruction.json", "kernel_fixture", "Canonical stale reconstruction fixture."),
+    PackFile("fixtures/cbb-v1-kernel/hard-deny.json", "kernel_fixture", "Canonical hard-deny blocking fixture."),
+    PackFile("fixtures/cbb-v1-kernel/reference-mismatch.json", "kernel_fixture", "Canonical reference-integrity rejection fixture."),
+    PackFile("fixtures/cbb-v1-kernel/claim-boundary-narrowing.json", "kernel_fixture", "Canonical claim-boundary scope narrowing fixture."),
 )
 
 

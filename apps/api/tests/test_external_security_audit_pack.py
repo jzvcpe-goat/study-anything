@@ -34,6 +34,10 @@ class ExternalSecurityAuditPackTests(unittest.TestCase):
             "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
             packaged_paths,
         )
+        self.assertNotIn(
+            "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
+            packaged_paths,
+        )
 
     def test_archive_has_one_safe_root(self) -> None:
         with zipfile.ZipFile(generator.ARCHIVE_PATH) as archive:
