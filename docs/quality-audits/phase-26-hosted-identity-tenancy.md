@@ -67,8 +67,8 @@ against the deployed database, network, identity provider, and operations stack.
 
 | Gate | Result |
 | --- | --- |
-| Hosted identity, environment, container, Agent, store, workspace, and readiness focused tests | Pass; 82 tests during implementation, then 14 authorization-focused and 29 Agent/retrieval regression tests after review fixes |
-| Full API suite | Pass; 929 tests, one existing Starlette/httpx deprecation warning |
+| Hosted identity, environment, container, Agent, store, workspace, and readiness focused tests | Pass; 82 tests during implementation, then 14 authorization-focused, 29 Agent/retrieval, and 19 store/tenant regression tests after review fixes |
+| Full API suite | Pass; 930 tests, one existing Starlette/httpx deprecation warning |
 | Ruff | Pass on the full configured Python surface |
 | Strict mypy | Pass for hosted identity, workspace, API security, and hosted verifier targets |
 | `verify_hosted_identity_tenancy.py --check` | Pass; identity spoofing, cross-tenant access, RBAC, Agent scope, and blocked unscoped routes covered |
@@ -101,6 +101,11 @@ before executing it because the minimal policy environment did not install the
 optional LangGraph runtime. The verifier was corrected to select the deterministic
 workflow explicitly, matching its authorization-only scope; this is a harness
 dependency fix, not a weakened identity or tenancy assertion.
+
+The next CodeQL scan identified two high-severity path-injection flows from the
+session route into the JSON store. They were treated as real findings: JSON-backed
+session filenames now require a canonical UUID and pass a resolved-root containment
+check, with traversal, absolute-path, nested-path, and non-UUID negative tests.
 
 ## Acceptance Matrix
 

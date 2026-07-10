@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+from uuid import UUID
 
 from .events import StudyEvent
 from .workflow import (
@@ -91,9 +93,19 @@ class JsonSessionStore:
         return interrupts
 
     def _path_for(self, session_id: str) -> Path:
-        if "/" in session_id or "\\" in session_id or session_id.startswith("."):
+        try:
+            canonical_session_id = str(UUID(session_id))
+        except (AttributeError, TypeError, ValueError) as exc:
+            raise KeyError(session_id) from exc
+        if session_id.lower() != canonical_session_id:
             raise KeyError(session_id)
-        return self.session_dir / f"{session_id}.json"
+        session_root = os.path.realpath(self.session_dir)
+        target = os.path.realpath(
+            os.path.join(session_root, f"{canonical_session_id}.json")
+        )
+        if not target.startswith(f"{session_root}{os.sep}") or os.path.dirname(target) != session_root:
+            raise KeyError(session_id)
+        return Path(target)
 
 
 class PostgresSessionStore:

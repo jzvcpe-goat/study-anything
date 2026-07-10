@@ -49,6 +49,22 @@ class StoreAndPluginTests(unittest.TestCase):
             with self.assertRaises(KeyError):
                 store.get(state.session_id, tenant_id=tenant_b)
 
+    def test_json_session_store_rejects_untrusted_path_identifiers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            store = JsonSessionStore(Path(tmpdir))
+
+            for session_id in (
+                "../outside",
+                "/tmp/outside",
+                "nested/session",
+                "nested\\session",
+                ".hidden",
+                "not-a-uuid",
+                "{00000000-0000-0000-0000-000000000000}",
+            ):
+                with self.subTest(session_id=session_id), self.assertRaises(KeyError):
+                    store.get(session_id)
+
     def test_create_session_store_defaults_to_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             store = create_session_store(data_dir=Path(tmpdir), backend="json")
