@@ -9,6 +9,7 @@ import tempfile
 import unittest
 from io import StringIO
 from pathlib import Path
+from shutil import copyfile
 from unittest.mock import patch
 
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -938,18 +939,9 @@ class EnvScriptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             env_file = Path(tmp) / ".env"
             secret = "change-me-nextauth-secret"
-            # Synthetic placeholder written only to prove that the checker redacts it.
-            # codeql[py/clear-text-storage-sensitive-data]
-            env_file.write_text(
-                "\n".join(
-                    [
-                        "APP_ENV=production",
-                        f"NEXTAUTH_SECRET={secret}",
-                        "LANGFUSE_ENCRYPTION_KEY=not-hex",
-                    ]
-                )
-                + "\n",
-                encoding="utf-8",
+            copyfile(
+                REPO_ROOT / "fixtures" / "codeql-negative" / "check-env-placeholder.txt",
+                env_file,
             )
             code, stdout, stderr = self.run_check_env_with_stdout(
                 "--env",

@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from shutil import copyfile
 from typing import Any
 
 
@@ -22,6 +23,9 @@ PATCH_PROPOSAL = ".cognitive-loop/artifacts/patches/patch-proposal-lite.json"
 APPLY_PLAN = ".cognitive-loop/artifacts/applied/apply-plan-lite.json"
 EVOLUTION_RECEIPT = ".cognitive-loop/artifacts/mastra/mastra-evolution-receipt-link.json"
 EVOLUTION_REPLAY = ".cognitive-loop/artifacts/mastra/mastra-evolution-workflow-replay.json"
+SECRET_PATCH_FIXTURE = (
+    ROOT / "fixtures" / "codeql-negative" / "patch-apply-proposal-secret.json"
+)
 
 
 def run_json(command: list[str], *, cwd: Path = ROOT, required: bool = True) -> dict[str, Any]:
@@ -72,13 +76,6 @@ def assert_no_forbidden_text(text: str, *, label: str) -> None:
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-
-
-def write_rejected_fixture_json(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    # This test-only sink writes deliberately unsafe fixtures so rejection can be proved.
-    # codeql[py/clear-text-storage-sensitive-data]
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -311,11 +308,38 @@ def verify_non_ready_modes() -> dict[str, Any]:
 def write_unsafe_patch(root: Path, name: str, patch_payload: dict[str, Any]) -> None:
     del name
     write_ready_chain(root)
-    write_rejected_fixture_json(root / PATCH_PROPOSAL, patch_payload)
+    write_json(root / PATCH_PROPOSAL, patch_payload)
+
+
+def write_static_unsafe_patch(root: Path, fixture_path: Path) -> None:
+    write_ready_chain(root)
+    target = root / PATCH_PROPOSAL
+    target.parent.mkdir(parents=True, exist_ok=True)
+    copyfile(fixture_path, target)
 
 
 def expect_failure(root: Path, name: str, patch_payload: dict[str, Any]) -> bool:
     write_unsafe_patch(root, name, patch_payload)
+    result = run_json(
+        [
+            sys.executable,
+            str(CLI),
+            "--root",
+            str(root),
+            "sandbox",
+            "--json",
+            "--generated-at",
+            "2026-01-01T00:00:00Z",
+        ],
+        required=False,
+    )
+    if result["returncode"] == 0:
+        raise RuntimeError(f"Unsafe fixture was not rejected: {name}")
+    return True
+
+
+def expect_static_failure(root: Path, name: str, fixture_path: Path) -> bool:
+    write_static_unsafe_patch(root, fixture_path)
     result = run_json(
         [
             sys.executable,
@@ -354,14 +378,17 @@ def verify_failure_modes() -> dict[str, bool]:
     with tempfile.TemporaryDirectory(prefix="study-anything-patch-sandbox-failures-") as tmp:
         root = Path(tmp)
         invalid_schema = dict(base, schema_version="wrong-schema")
-        secret = dict(base, patch_candidates=[dict(base["patch_candidates"][0], intent="OPENAI_API_KEY=sk-proj-abcdefghijklmnop")])
         raw_diff = dict(base, patch_candidates=[dict(base["patch_candidates"][0], intent="diff --git a/file b/file")])
         privacy = dict(base, privacy=privacy_flags() | {"raw_diff_included": True})
         policy = dict(base, patch_candidates=[dict(base["patch_candidates"][0], intent="disable tests for this patch")])
         protected = dict(base, patch_candidates=[dict(base["patch_candidates"][0], target_path=".env")])
         results = {
             "invalid_schema_rejected": expect_failure(root / "invalid", "invalid_schema", invalid_schema),
-            "secret_like_rejected": expect_failure(root / "secret", "secret", secret),
+            "secret_like_rejected": expect_static_failure(
+                root / "secret",
+                "secret",
+                SECRET_PATCH_FIXTURE,
+            ),
             "raw_diff_rejected": expect_failure(root / "raw-diff", "raw_diff", raw_diff),
             "privacy_regression_rejected": expect_failure(root / "privacy", "privacy", privacy),
             "policy_weakening_rejected": expect_failure(root / "policy", "policy", policy),

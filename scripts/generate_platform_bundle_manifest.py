@@ -3881,6 +3881,31 @@ FILES: list[tuple[str, str, str]] = [
         "fixture",
         "CustomerHandoffPackage negative fixture for missing claim boundary.",
     ),
+    (
+        "fixtures/codeql-negative/check-env-placeholder.txt",
+        "fixture",
+        "Static placeholder environment fixture for redaction verification.",
+    ),
+    (
+        "fixtures/codeql-negative/review-auth-guard.txt",
+        "fixture",
+        "Static source fixture for review redaction verification.",
+    ),
+    (
+        "fixtures/codeql-negative/artifact-console-evolution-secret.json",
+        "fixture",
+        "Static secret-like Evolution report fixture for console rejection verification.",
+    ),
+    (
+        "fixtures/codeql-negative/evolution-pack-patch-secret.json",
+        "fixture",
+        "Static secret-like patch fixture for Evolution pack rejection verification.",
+    ),
+    (
+        "fixtures/codeql-negative/patch-apply-proposal-secret.json",
+        "fixture",
+        "Static secret-like patch fixture for apply sandbox rejection verification.",
+    ),
     *[
         (
             f"fixtures/cbb-protocol/{case_id}/{artifact}",

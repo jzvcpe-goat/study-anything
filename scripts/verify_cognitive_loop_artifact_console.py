@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from shutil import copyfile
 from typing import Any
 
 
@@ -35,6 +36,9 @@ EVOLUTION_CHAIN_REFS = {
     "mastra_workflow_replay": ".cognitive-loop/artifacts/mastra/mastra-evolution-workflow-replay.json",
     "patch_apply_sandbox": ".cognitive-loop/artifacts/applied/patch-apply-sandbox-receipt.json",
 }
+SECRET_EVOLUTION_REPORT_FIXTURE = (
+    ROOT / "fixtures" / "codeql-negative" / "artifact-console-evolution-secret.json"
+)
 
 
 def run_json(command: list[str], *, cwd: Path = ROOT, required: bool = True) -> dict[str, Any]:
@@ -102,14 +106,6 @@ def init_project(root: Path) -> None:
 
 def write_json(path: Path, payload: dict[str, Any]) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return path
-
-
-def write_rejected_fixture_json(path: Path, payload: dict[str, Any]) -> Path:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    # This test-only sink writes deliberately unsafe fixtures so rejection can be proved.
-    # codeql[py/clear-text-storage-sensitive-data]
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return path
 
@@ -553,11 +549,23 @@ def verify_blocked_replay_console() -> dict[str, Any]:
     }
 
 
-def verify_evolution_chain_rejection(name: str, payload: dict[str, Any]) -> bool:
+def verify_evolution_chain_rejection(
+    name: str,
+    payload: dict[str, Any] | None = None,
+    *,
+    fixture_path: Path | None = None,
+) -> bool:
     with tempfile.TemporaryDirectory(prefix=f"study-anything-artifact-console-{name}-") as tmp:
         root = Path(tmp)
         init_project(root)
-        write_rejected_fixture_json(root / EVOLUTION_CHAIN_REFS["evolution_report"], payload)
+        target = root / EVOLUTION_CHAIN_REFS["evolution_report"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if fixture_path is not None:
+            copyfile(fixture_path, target)
+        elif payload is not None:
+            write_json(target, payload)
+        else:
+            raise RuntimeError("Evolution rejection requires payload or static fixture")
         completed = subprocess.run(
             [
                 sys.executable,
@@ -599,13 +607,15 @@ def verify_evolution_chain_rejections() -> dict[str, bool]:
         "commands": {"build": "python3 scripts/cognitive_loop_evolution.py build --html --json"},
     }
     invalid_schema = {**base, "schema_version": "unknown-evolution-schema-v1"}
-    secret = {**base, "title": "OPENAI_API_KEY=sk-proj-abcdefghijklmnop"}
     raw_diff = {**base, "title": "diff --git a/private b/private"}
     privacy_regression = {**base, "privacy": {**base["privacy"], "raw_diff_included": True}}
     policy_weakening = {**base, "title": "disable tests before release"}
     results = {
         "invalid_schema_rejected": verify_evolution_chain_rejection("invalid-schema", invalid_schema),
-        "secret_like_rejected": verify_evolution_chain_rejection("secret", secret),
+        "secret_like_rejected": verify_evolution_chain_rejection(
+            "secret",
+            fixture_path=SECRET_EVOLUTION_REPORT_FIXTURE,
+        ),
         "raw_diff_rejected": verify_evolution_chain_rejection("raw-diff", raw_diff),
         "privacy_regression_rejected": verify_evolution_chain_rejection("privacy-regression", privacy_regression),
         "policy_weakening_rejected": verify_evolution_chain_rejection("policy-weakening", policy_weakening),

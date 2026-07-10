@@ -55,8 +55,6 @@ def write_json(path: str | Path, payload: Mapping[str, Any]) -> None:
     validated = validate_customer_handoff_package(payload)
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    # The package is rejected by metadata-only and contract validation before this sink.
-    # codeql[py/clear-text-storage-sensitive-data]
     target.write_text(dump_json(validated), encoding="utf-8")
 
 

@@ -1,0 +1,3 @@
+APP_ENV=production
+NEXTAUTH_SECRET=change-me-nextauth-secret
+LANGFUSE_ENCRYPTION_KEY=not-hex

@@ -36,12 +36,14 @@ Authority: `通用质检方案.md`, reviewed in S0-S15 order.
   detail, allowlist entries, invalid port values, stack profiles, or raw OS
   errors. Public environment labels are allowlisted.
 - Customer handoff JSON is validated against the metadata-only contract before
-  writing. Deliberately invalid verifier fixtures use a separate test-only sink.
-- Six negative-test writes use query-specific `# codeql[...]` annotations at the
-  exact synthetic sink. The customer handoff writer has one equally narrow
-  annotation only after `validate_customer_handoff_package` succeeds; its
-  secret-like rejection verifier remains blocking. No unvalidated production
-  sink or directory-wide location is suppressed.
+  writing. Its secret-like rejection verifier remains blocking.
+- Secret-like negative cases are checked-in static fixtures under
+  `fixtures/codeql-negative/`. Verifiers copy those fixtures into disposable
+  roots instead of constructing sensitive-looking values and writing them from
+  Python. No query suppression comment, workflow exclusion, or directory-wide
+  static-analysis exclusion is used.
+- The five static fixtures are included in the platform bundle and adoption
+  pack so the same rejection paths remain executable outside the repository.
 - The GitHub posture receipt now records open Code Scanning and Dependabot
   counts and fails unless both are zero.
 
@@ -63,7 +65,7 @@ Authority: `通用质检方案.md`, reviewed in S0-S15 order.
 | Gate | Result |
 | --- | --- |
 | Ruff and Python compilation | Pass on all changed Python surfaces |
-| Focused API/unit regression | Pass; 62 tests |
+| Focused environment regression | Pass; 41 tests |
 | Customer handoff verifier | Pass; secret-like and scope-expansion fixtures still blocked |
 | Agent gateway verifier | Pass in contract-only mode; runtime socket test not replaced |
 | Artifact console verifier | Pass |
@@ -72,8 +74,10 @@ Authority: `通用质检方案.md`, reviewed in S0-S15 order.
 | Cognitive Loop review verifier | Pass; synthetic token does not enter review output |
 | GitHub posture deterministic verifier | Pass; 5 tests including non-zero alert rejection |
 | Full API suite | Pass; 937 tests, with existing Starlette/httpx and importlib metadata deprecation warnings only |
+| Generated evidence topology | Pass; 21 of 21 nodes converged |
+| External adoption pack | Pass; 2204-file pack, 34 tools, isolated Skill Mode flow in 17.5 seconds using the prebuilt local venv |
 | Full strict mypy | Not claimed; broad traversal still reports 71 pre-existing errors across dynamic and optional-integration modules |
-| Partial release check | Pass with exit 0 after updating all plugin intake callers; receipt keeps full/clean-clone/dependency-install flags false |
+| Partial release check | Pass with exit 0 using `--skip-clean-clone`; receipt keeps full/clean-clone/dependency-install flags false |
 | Protected GitHub checks | Pending PR |
 | Pre-merge live alert ledger | Expected fail; Code Scanning 15, Dependabot 0 on current `main` |
 | Post-merge live alert ledger | Pending; both counts must become zero after main-branch analysis |
