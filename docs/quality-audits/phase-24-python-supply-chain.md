@@ -58,9 +58,10 @@ Python 3.13 and newer are not claimed. The tested project matrix is Python 3.11 
 | Ruff and shell syntax | Pass |
 | Offline lock, requirements, SBOM, and receipt reproduction | Pass; 92 lock packages, 91 SBOM components |
 | Container security policy and full Compose config | Pass |
-| Generated release-distribution topology | Pass; 19/19 nodes |
+| Generated release-distribution topology | Pass; 20/20 nodes after adding the previously omitted platform-agent replay generator |
 | Local empty Skill environment install | Stopped after 2 minutes 30 seconds while downloads were still progressing at about 15 KB/s |
-| GitHub locked API install, Docker smoke, CodeQL, dependency review | Pending final PR head |
+| Local `release_check.sh --skip-clean-clone` | Pass; 901 tests and all integrated trust gates, with an honest partial receipt |
+| GitHub locked API install, Docker smoke, lock/SBOM, CodeQL, dependency review | Pass on the implementation head; final audit-only head must replay before merge |
 
 ## S15 Decision
 
@@ -68,3 +69,9 @@ Merge only after GitHub verifies the checked-in lock is unchanged, installs the 
 environment, runs the API suite, builds the real Docker smoke stack, and passes the security checks.
 Do not describe the SBOM as proof that dependencies are vulnerability-free. The existing low-severity
 default-branch advisory and future dependency updates remain separate maintenance work.
+
+During the local partial release run, the release replay test initially forced a new repository venv
+and became an accidental network-install test. The replay launcher now respects an explicitly supplied
+pre-provisioned venv, while clean installation remains owned by the separate supply-chain and GitHub
+CI gates. This also exposed and fixed a harness gap: the generated-evidence topology previously did
+not include platform-agent replay and could report 19/19 while that artifact was stale.

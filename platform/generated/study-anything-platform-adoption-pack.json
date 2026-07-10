@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7025926,
+  "archive_bytes": 7025987,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "8db5cc56d157838c9e5eabea107959547126596789640b16c4234af0531e62fb",
+  "archive_sha256": "884266a3ec2c9de896bac100681f3a5506b3d5b2a816f7433fbc051983b1e70e",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -329,11 +329,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/generated-evidence-topology.md",
-      "bytes": 2182,
+      "bytes": 2202,
       "kind": "operator_doc",
       "path": "docs/generated-evidence-topology.md",
       "purpose": "Release-distribution evidence refresh and fixed-point convergence guide.",
-      "sha256": "1a389349ded73001c702d65930496180477677c889f5076934968fa4ae62c2d8"
+      "sha256": "dfcfc47e8fcd1665014ceab73dc6e1f75a956d8b22ccadd98539ceb43947b865"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/security.md",
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "a6312c58f5e3b80a8d69e2e18d5a4958a7feaa2648430e9648f4066f0616acfa"
+      "sha256": "00bd2cb65184994d9dba88ac349886837fa534077c4b59d6c1d5b545fdf87cc9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -4389,7 +4389,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "50b3f886ecacd3e0d1f39577427d5f95a1c5d3873d7e126d84755cf5608fb1f6"
+      "sha256": "4dfb9b88ba730717f657e1469432549967f4fd313e4798349b665616b4f6e929"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.md",
@@ -4397,15 +4397,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "ee40c323ee21acf57d8939d603a5feb020a3dce69876c4efa892107cffa959fe"
+      "sha256": "0271bd18f604669d100b488d3380dd53adc9f4197e8fc395fec73c770f6d04eb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.zip",
-      "bytes": 157097,
+      "bytes": 157105,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence package.",
-      "sha256": "2b3f6e0b6ac6889734749560aee0f3f5c615ee82f5afb02f9398e79d658b7da1"
+      "sha256": "c3896962e595fd5d24776cbef0954f4ef7ed8a593b63adcb61d4d3f2305c475c"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.sha256",
@@ -4413,7 +4413,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "51f11fc1f0e79f30b4a0fab28722bf7fda8a50a91d1bb75710f424b75235e1e9"
+      "sha256": "fe8f1eaa521a9d0759d9717707a6034ac872517734e4396d9997a40eed1b3c20"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.json",
@@ -4421,7 +4421,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.json",
       "purpose": "GitHub Release asset bootstrap evidence JSON.",
-      "sha256": "82a2eb74b653bb1f8d65856aa187e3b45e094d3e112f87c696fdad2d07d748da"
+      "sha256": "c18a971454601ace8ba0722a4e0fa46e8aa394cebcfb5007fb4655927fa301cb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.md",
@@ -4429,15 +4429,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.md",
       "purpose": "GitHub Release asset bootstrap evidence Markdown.",
-      "sha256": "7f144cdd000a119c51f0a7bb8cdc17d9cac2304a216a19f0f40355f98963891c"
+      "sha256": "3417490b60c27b51ae0a4e65b263e8cb184fee0b87b4ddc9f7ff81a440c6eefb"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.zip",
-      "bytes": 91001,
+      "bytes": 91002,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
       "purpose": "GitHub Release asset bootstrap evidence package.",
-      "sha256": "00ce6ba11446d20f6e3f552552d0d678695ba3184aeb1bf590dd5b23d0dc13e5"
+      "sha256": "c263478305ad4bfa102f5a604f99990dbe0a5afb6af24b2733fc7ec80272ce7b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.sha256",
@@ -4445,7 +4445,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-bootstrap.sha256",
       "purpose": "GitHub Release asset bootstrap evidence checksum.",
-      "sha256": "85fe67c484c47037d3afb0e7513e569732b48d5c3fd6093ccf006a32d07c8408"
+      "sha256": "9b7ac3ead3d93a9dc3972221e438c3dfdc40dbf373493177a9142e4c47bdfc0d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.json",
@@ -4453,7 +4453,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.json",
       "purpose": "Release-only cleanroom bootstrap evidence JSON.",
-      "sha256": "a9e385d6b13ed4f04074633d7364134479fb514b62ac0a4218e9ae638ae50797"
+      "sha256": "082e75aa3229a4ce86ebf4659178c98ca6122c3735114a68c0fb8d4780f39e36"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.md",
@@ -4461,15 +4461,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.md",
       "purpose": "Release-only cleanroom bootstrap evidence Markdown.",
-      "sha256": "87a4b3aa53fb15d6db46fbcee15e07485f698346f73f7c7e8c286fb600aadec0"
+      "sha256": "1fbe7cac5f2a81fa74535582af26459ddf261e5d780fe7f9c23518fc9256c7ae"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-      "bytes": 56805,
+      "bytes": 56811,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
       "purpose": "Release-only cleanroom bootstrap evidence package.",
-      "sha256": "5235491ea876196a5de4f12565db6112cc8ac8e5dcb4d8e6c2598f35d5f90fe1"
+      "sha256": "7034ba68c6b16f9713739bcf2d0a6b5efdc19212d66f7c199c16d2379f2752a7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
@@ -4477,7 +4477,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
       "purpose": "Release-only cleanroom bootstrap evidence checksum.",
-      "sha256": "b7a03fab9b8adfe016d3e6b81658bd55ccfcc26f2b91a9502d9d9e87abda63c5"
+      "sha256": "5bbdc207d5f50f8ffbaf571770282fd7a3f78d7a3e49b0a5330547b3812f98aa"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.json",
@@ -4485,7 +4485,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.json",
       "purpose": "Platform Agent release replay evidence JSON.",
-      "sha256": "0851db88c5a39f5678c085cda2c9b91f04c5291fb95f235577c7f7fd4dda2abd"
+      "sha256": "8b165aea5a6ff757aac06eb761544088a95645d1921151f21fecdf8dd414b28a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.md",
@@ -4493,15 +4493,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.md",
       "purpose": "Platform Agent release replay evidence Markdown.",
-      "sha256": "7f33e39b5898c7e320a66a2f7a10792d5abef9cd941a546d53c8ecf6a85bd04c"
+      "sha256": "df12e304153c751ed56e26033e4885ee290e424058778dae78ded865d62bba99"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.zip",
-      "bytes": 72304,
+      "bytes": 72310,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.zip",
       "purpose": "Platform Agent release replay evidence package.",
-      "sha256": "f7a194239e015d8b7c195d24ca8d7051446a84cb64d6d0c44cbc25db8dab071b"
+      "sha256": "365dd5e00ab517777dc4c404709e600e788160fb089dc40525849dceeda7bc68"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.sha256",
@@ -4509,7 +4509,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-platform-agent-replay.sha256",
       "purpose": "Platform Agent release replay evidence checksum.",
-      "sha256": "efae88bf55247e0cfeb208b160a15051bf7be6d5cca5e2cda1cf552568ae0d90"
+      "sha256": "f4528c081de6428c53076d9a165dec2ca873daa6aa4cceb841fc16ba891f7db2"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.json",
@@ -14729,11 +14729,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generated_evidence_topology.py",
-      "bytes": 16652,
+      "bytes": 16870,
       "kind": "verification",
       "path": "scripts/generated_evidence_topology.py",
       "purpose": "Release-distribution evidence dependency and feedback-edge orchestrator.",
-      "sha256": "d74a0bf8824e1395c86f434ab7d468f116b3d692c4c11a29f1fce85555933ed5"
+      "sha256": "b2cf5a0d146da65f5c3bdafbcc1aeface52c4e42ecee1864b2327f722252ca7d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_generated_evidence_topology.py",
@@ -15121,11 +15121,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/replay_platform_agent_from_release.py",
-      "bytes": 29928,
+      "bytes": 29938,
       "kind": "verification",
       "path": "scripts/replay_platform_agent_from_release.py",
       "purpose": "Replay platform Agent tool calls from public GitHub Release assets.",
-      "sha256": "cc3a7175d0c84e32130692bc696006bf35b2ee6ac724e34587f9983288eb421d"
+      "sha256": "70f5fd217076e20984a1cceb55fe83c866aa39609198a9d74c4b59dcb6102f34"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/generate_platform_agent_replay.py",

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import importlib.util
+import os
 import subprocess
 import sys
 import tempfile
@@ -33,7 +34,12 @@ FORBIDDEN_MARKERS = (
 )
 
 
-def run_script(script: Path, *args: str, timeout: int = 90) -> subprocess.CompletedProcess[str]:
+def run_script(
+    script: Path,
+    *args: str,
+    timeout: int = 90,
+    env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [sys.executable, str(script), *args],
         cwd=REPO,
@@ -41,6 +47,7 @@ def run_script(script: Path, *args: str, timeout: int = 90) -> subprocess.Comple
         capture_output=True,
         check=False,
         timeout=timeout,
+        env=env,
     )
 
 
@@ -102,6 +109,8 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
             self.assertNotIn(marker, serialized)
 
     def test_skill_mode_fixture_bootloader_delegates_to_replay(self) -> None:
+        env = os.environ.copy()
+        env["STUDY_ANYTHING_VENV"] = sys.prefix
         completed = run_script(
             BOOTLOADER,
             "--fixture",
@@ -117,6 +126,7 @@ class ReleaseCleanroomBootstrapTests(unittest.TestCase):
             "--timeout-seconds",
             "180",
             timeout=210,
+            env=env,
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
         payload = json_from_stdout(completed.stdout)

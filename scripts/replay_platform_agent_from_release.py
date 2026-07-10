@@ -558,7 +558,7 @@ def launch_skill_mode(args: argparse.Namespace) -> tuple[str, dict[str, str]]:
     if args.python:
         env["PYTHON_BIN"] = args.python
     if (ROOT / ".venv").exists():
-        env["STUDY_ANYTHING_VENV"] = str(ROOT / ".venv")
+        env.setdefault("STUDY_ANYTHING_VENV", str(ROOT / ".venv"))
     try:
         run_command(["sh", "scripts/launch_skill_mode.sh"], cwd=ROOT, env=env, timeout_seconds=args.timeout_seconds)
         wait_for_api(env["API_BASE"], 60)

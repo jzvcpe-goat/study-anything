@@ -43,6 +43,9 @@ class GeneratedEvidenceTopologyTests(unittest.TestCase):
             for dependency in node.dependencies:
                 self.assertLess(positions[dependency], positions[node.node_id])
 
+        adoption = next(node for node in ordered if node.node_id == "release_asset_adoption")
+        self.assertIn("platform_agent_replay", adoption.dependencies)
+
     def test_hard_cycle_and_unknown_dependency_are_rejected(self) -> None:
         with self.assertRaises(topology.EvidenceTopologyError):
             topology.validate_and_order(

@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-release-cleanroom-bootstrap",
-    "bytes": 56805,
+    "bytes": 56811,
     "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-    "sha256": "5235491ea876196a5de4f12565db6112cc8ac8e5dcb4d8e6c2598f35d5f90fe1",
+    "sha256": "7034ba68c6b16f9713739bcf2d0a6b5efdc19212d66f7c199c16d2379f2752a7",
     "sha256_path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -178,9 +178,9 @@
       "sha256": "3bf001ed81850a5b63fb0deee90b690b08023e59cbd5123d556817347107d2f9"
     },
     {
-      "bytes": 29928,
+      "bytes": 29938,
       "path": "scripts/replay_platform_agent_from_release.py",
-      "sha256": "cc3a7175d0c84e32130692bc696006bf35b2ee6ac724e34587f9983288eb421d"
+      "sha256": "70f5fd217076e20984a1cceb55fe83c866aa39609198a9d74c4b59dcb6102f34"
     }
   ],
   "purpose": "Make the GitHub Release page a repo-free entrypoint: external operators can download public assets, verify digests, import platform tools, run a metadata or runtime drill, and produce a redacted issue-ready report.",
