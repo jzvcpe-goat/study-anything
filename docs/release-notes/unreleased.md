@@ -26,6 +26,9 @@ mutation, or a realtime hosted console.
 
 ## Engineering Gates
 
+- PR #401 is recorded as the current metadata-only release-stack group after both required GitHub
+  checks passed. This terminal self-intake does not require another self-intake under the recursion
+  stop rule.
 - The scheduled published-image reliability path now permits Compose to pull missing dependency
   images after the API image is explicitly pulled and identified. This fixes clean GitHub runners
   that do not already cache Postgres. Compose startup now uses three bounded, auditable attempts for

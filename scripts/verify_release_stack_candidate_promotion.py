@@ -32,12 +32,12 @@ from verify_release_stack_readiness import (
 
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-candidate-promotion.json"
 PR_SOURCES = {
-    398: ROOT / "fixtures" / "release-stack" / "pr-398-intake-candidate.json",
+    401: ROOT / "fixtures" / "release-stack" / "pr-401-intake-candidate.json",
 }
 REPORT_SCHEMA_VERSION = "release-stack-candidate-promotion-v1"
-PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.274"
-PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.272"
-PREVIOUS_CURRENT_PRS = [396]
+PROMOTED_GROUP_ID = "release-stack-promotion-v0.3.276"
+PREVIOUS_CURRENT_GROUP_ID = "release-stack-promotion-v0.3.274"
+PREVIOUS_CURRENT_PRS = [398]
 GENERATED_AT = "2026-01-01T00:00:00Z"
 SAFE_OPERATOR_COMMANDS = {
     "python3 scripts/verify_release_stack_readiness.py",
@@ -410,6 +410,7 @@ POST_MERGE_EVIDENCE_REFS = [
     "apps/api/tests/test_self_host_reliability_matrix.py",
     "apps/api/tests/test_self_host_soak.py",
     ".github/workflows/reliability-soak.yml",
+    "docs/quality-audits/phase-16-remote-reliability-acceptance.md",
 ]
 PR_EVIDENCE_REFS = {
     356: [
@@ -850,6 +851,23 @@ PR_EVIDENCE_REFS = {
         "scripts/generate_platform_adoption_pack.py",
         "scripts/release_check.sh",
     ],
+    401: [
+        "platform/generated/study-anything-release-stack-intake-candidate.json",
+        "platform/generated/study-anything-release-stack-manifest-fixtures.json",
+        "platform/generated/study-anything-release-stack-candidate-promotion.json",
+        "platform/generated/study-anything-platform-bundle.json",
+        "platform/generated/study-anything-platform-adoption-pack.json",
+        "docs/quality-audits/phase-16-remote-reliability-acceptance.md",
+        "docs/scheduled-reliability.md",
+        "scripts/self_host_reliability_matrix.py",
+        "scripts/verify_self_host_reliability_matrix.py",
+        "apps/api/tests/test_self_host_reliability_matrix.py",
+        ".github/workflows/reliability-soak.yml",
+        "docs/release-notes/unreleased.md",
+        "scripts/generate_platform_bundle_manifest.py",
+        "scripts/generate_platform_adoption_pack.py",
+        "scripts/release_check.sh",
+    ],
 }
 PRIVACY_ASSERTIONS = {
     "metadata_only": True,
@@ -977,7 +995,7 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "role": "current",
         "status": "completed",
         "target_branch": "main",
-        "summary": "Completed self-intake for the scheduled source-build and published-image reliability evidence chain.",
+        "summary": "Completed self-intake for the clean-runner reliability acceptance and bounded retry evidence chain.",
         "required_checks": sorted(REQUIRED_CHECKS),
         "operator_commands": [
             "python3 scripts/verify_release_stack_readiness.py",
@@ -992,10 +1010,10 @@ def expected_group(pr_sources: Mapping[int, Mapping[str, Any]]) -> dict[str, Any
         "post_merge_evidence_refs": list(POST_MERGE_EVIDENCE_REFS),
         "stack": [
             load_source_row(
-                pr_sources[398],
-                expected_pr=398,
+                pr_sources[401],
+                expected_pr=401,
                 order=1,
-                evidence_refs=PR_EVIDENCE_REFS[398],
+                evidence_refs=PR_EVIDENCE_REFS[401],
                 require_promotion_commands=True,
             ),
         ],
@@ -1054,7 +1072,7 @@ def verify_promoted_manifest(
     expected = expected_group(pr_sources)
     actual = find_group(manifest, PROMOTED_GROUP_ID)
     if actual != expected:
-        raise ReleaseStackPromotionError("promoted current group does not match the expected #398 candidate group.")
+        raise ReleaseStackPromotionError("promoted current group does not match the expected #401 candidate group.")
     if manifest.get("stack") != expected["stack"]:
         raise ReleaseStackPromotionError("top-level stack must mirror promoted current group stack.")
     validate_commands(actual.get("operator_commands"))
@@ -1141,7 +1159,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
         "version": VERSION,
         "generated_at": GENERATED_AT,
         "source_reports": [
-            "fixtures/release-stack/pr-398-intake-candidate.json",
+            "fixtures/release-stack/pr-401-intake-candidate.json",
             "platform/release-stack.json",
         ],
         "promotion": {
@@ -1180,7 +1198,7 @@ def build_report(manifest: dict[str, Any], pr_sources: Mapping[int, Mapping[str,
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
-    parser.add_argument("--pr-398-source", type=Path, default=PR_SOURCES[398])
+    parser.add_argument("--pr-401-source", type=Path, default=PR_SOURCES[401])
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
@@ -1190,7 +1208,7 @@ def main() -> None:
     args = parse_args()
     manifest = load_json(args.manifest)
     pr_sources = {
-        398: load_json(args.pr_398_source),
+        401: load_json(args.pr_401_source),
     }
     report = build_report(manifest, pr_sources)
     text = dump_json(report)

@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-398-v0.3.274-scheduled-reliability-matrix",
+    "group_id": "release-stack-intake-pr-401-v0.3.276-published-reliability-compose-fix",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -368,7 +368,8 @@
       "scripts/verify_self_host_soak.py",
       "apps/api/tests/test_self_host_reliability_matrix.py",
       "apps/api/tests/test_self_host_soak.py",
-      ".github/workflows/reliability-soak.yml"
+      ".github/workflows/reliability-soak.yml",
+      "docs/quality-audits/phase-16-remote-reliability-acceptance.md"
     ],
     "privacy_assertions": {
       "agent_endpoint_secrets_included": false,
@@ -391,7 +392,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.274-scheduled-reliability-matrix",
+        "branch": "codex/v0.3.276-published-reliability-compose-fix",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -753,12 +754,13 @@
           "scripts/verify_self_host_soak.py",
           "apps/api/tests/test_self_host_reliability_matrix.py",
           "apps/api/tests/test_self_host_soak.py",
-          ".github/workflows/reliability-soak.yml"
+          ".github/workflows/reliability-soak.yml",
+          "docs/quality-audits/phase-16-remote-reliability-acceptance.md"
         ],
         "final_state": "MERGED",
-        "merge_commit": "49d98f6c2916628d2691e03d646f3ece4c5a3b7a",
+        "merge_commit": "c58cda12f98b21db49965296cdf361aa184a8785",
         "order": 1,
-        "pr": 398,
+        "pr": 401,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -767,15 +769,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #398: Add scheduled source and image reliability matrix.",
+    "summary": "Candidate release stack group for PR #401: Fix clean-runner reliability matrix startup.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.274",
-    "represented_pr_count": 129
+    "current_group": "release-stack-promotion-v0.3.276",
+    "represented_pr_count": 130
   },
   "negative_fixtures": [
     {
