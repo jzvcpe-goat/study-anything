@@ -5049,6 +5049,36 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic reliability index, privacy, and workflow wiring verifier.",
     ),
     (
+        "scripts/verify_strict_reliability_acceptance.py",
+        "verification",
+        "Verify one real strict dual-path run and its bounded index replay.",
+    ),
+    (
+        "fixtures/reliability/run-29060766261/source-build-receipt.json",
+        "fixture",
+        "Metadata-only strict source-build reliability receipt.",
+    ),
+    (
+        "fixtures/reliability/run-29060766261/published-image-receipt.json",
+        "fixture",
+        "Metadata-only strict published-image reliability receipt.",
+    ),
+    (
+        "fixtures/reliability/run-29060766261/reliability-index.json",
+        "fixture",
+        "Metadata-only strict dual-path reliability index.",
+    ),
+    (
+        "fixtures/reliability/run-29060766261/remote-evidence.json",
+        "fixture",
+        "Redacted GitHub run and artifact metadata for strict reliability acceptance.",
+    ),
+    (
+        "platform/generated/study-anything-strict-reliability-acceptance.json",
+        "verification_report",
+        "Generated strict reliability acceptance report.",
+    ),
+    (
         "scripts/verify_container_security.py",
         "verification",
         "Deterministic GitHub Actions and container security baseline verifier.",
@@ -6757,6 +6787,11 @@ FILES: list[tuple[str, str, str]] = [
         "fixtures/release-stack/pr-405-intake-candidate.json",
         "fixture",
         "Redacted release stack intake candidate fixture for PR 405.",
+    ),
+    (
+        "fixtures/release-stack/pr-407-intake-candidate.json",
+        "fixture",
+        "Redacted release stack intake candidate fixture for PR 407.",
     ),
     (
         "scripts/verify_cognitive_loop_maintainer_acceptance_ledger.py",
