@@ -52,9 +52,10 @@ def load_json(path: str | Path) -> dict[str, Any]:
 
 
 def write_json(path: str | Path, payload: Mapping[str, Any]) -> None:
+    validated = validate_customer_handoff_package(payload)
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(dump_json(dict(payload)), encoding="utf-8")
+    target.write_text(dump_json(validated), encoding="utf-8")
 
 
 def sha256_payload(payload: Any) -> str:

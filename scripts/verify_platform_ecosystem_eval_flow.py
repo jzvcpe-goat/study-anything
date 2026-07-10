@@ -334,7 +334,7 @@ def main() -> None:
     plugin_capabilities = request("/v1/plugins/capabilities")
     plugin_validation = request(
         "/v1/plugins/validate-package",
-        {"source_path": "plugins/example-enrichment-importer"},
+        {"source_path": "example-enrichment-importer"},
     )
     assert_schema(eval_policy, "agent-eval-policy-v1", "Agent eval policy")
     assert_schema(plugin_sdk, "plugin-sdk-v1", "plugin SDK")

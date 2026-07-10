@@ -47,6 +47,8 @@ def assess_posture(
     dependabot_security_updates_enabled: bool,
     required_checks: Sequence[str] = DEFAULT_REQUIRED_CHECKS,
     mode: str,
+    open_code_scanning_alerts: int = 0,
+    open_dependabot_alerts: int = 0,
 ) -> dict[str, Any]:
     security = require_mapping(repository, "security_and_analysis")
     required_status = require_mapping(branch_protection, "required_status_checks")
@@ -77,6 +79,8 @@ def assess_posture(
         "dependency_graph_enabled": dependency_graph_enabled,
         "dependabot_alerts_enabled": dependabot_alerts_enabled,
         "dependabot_security_updates_enabled": dependabot_security_updates_enabled,
+        "open_code_scanning_alerts_zero": open_code_scanning_alerts == 0,
+        "open_dependabot_alerts_zero": open_dependabot_alerts == 0,
     }
     failed = sorted(name for name, passed in checks.items() if not passed)
     return {
@@ -85,6 +89,10 @@ def assess_posture(
         "mode": mode,
         "checks": checks,
         "required_status_checks": sorted(expected_checks),
+        "open_alert_counts": {
+            "code_scanning": open_code_scanning_alerts,
+            "dependabot": open_dependabot_alerts,
+        },
         "failed_checks": failed,
         "privacy": {
             "metadata_only": True,
@@ -164,6 +172,26 @@ def verify_contract() -> dict[str, Any]:
     )
     if negative["status"] != "fail" or "required_checks_present" not in negative["failed_checks"]:
         raise GithubSecurityPostureError("Missing required status check was not rejected")
+
+    negative = assess_posture(
+        repository=repository,
+        actions_permissions=actions,
+        branch_protection=protection,
+        dependency_graph_enabled=True,
+        dependabot_alerts_enabled=True,
+        dependabot_security_updates_enabled=True,
+        mode="deterministic-negative",
+        open_code_scanning_alerts=1,
+        open_dependabot_alerts=1,
+    )
+    expected_alert_failures = {
+        "open_code_scanning_alerts_zero",
+        "open_dependabot_alerts_zero",
+    }
+    if negative["status"] != "fail" or not expected_alert_failures.issubset(
+        negative["failed_checks"]
+    ):
+        raise GithubSecurityPostureError("Open security alerts were not rejected")
     return report
 
 
@@ -183,6 +211,25 @@ def gh_json(path: str) -> Mapping[str, Any]:
         raise GithubSecurityPostureError("GitHub setting read returned invalid JSON") from exc
     if not isinstance(payload, Mapping):
         raise GithubSecurityPostureError("GitHub setting read must return an object")
+    return payload
+
+
+def gh_list(path: str) -> list[Mapping[str, Any]]:
+    completed = subprocess.run(
+        ["gh", "api", path],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise GithubSecurityPostureError(f"GitHub alert read failed for {path.split('?', 1)[0]}")
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise GithubSecurityPostureError("GitHub alert read returned invalid JSON") from exc
+    if not isinstance(payload, list) or not all(isinstance(item, Mapping) for item in payload):
+        raise GithubSecurityPostureError("GitHub alert read must return an array of objects")
     return payload
 
 
@@ -222,6 +269,12 @@ def verify_live(*, repo: str, branch: str, required_checks: Sequence[str]) -> di
         dependabot_security_updates_enabled=enabled_status(security, "dependabot_security_updates"),
         required_checks=required_checks,
         mode="live-read-only",
+        open_code_scanning_alerts=len(
+            gh_list(f"repos/{repo}/code-scanning/alerts?state=open&per_page=100")
+        ),
+        open_dependabot_alerts=len(
+            gh_list(f"repos/{repo}/dependabot/alerts?state=open&per_page=100")
+        ),
     )
 
 

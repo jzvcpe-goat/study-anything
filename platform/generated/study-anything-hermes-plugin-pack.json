@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 147524,
+    "bytes": 147563,
     "path": "platform/generated/study-anything-hermes-plugin-pack.zip",
     "root": "study-anything-hermes-plugin-pack",
-    "sha256": "61c2c415816439966d38297cef55b1b7735aab05d079f233dcee08cec4d50e01"
+    "sha256": "104a435db8fba91ce55c4972d55dfc577121f41a6539d3647d1112a1f5810e63"
   },
   "entrypoints": {
     "direct_skill_install": "https://raw.githubusercontent.com/jzvcpe-goat/study-anything/main/skills/study-anything/SKILL.md",
@@ -56,11 +56,11 @@
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/platform/study-anything-platform-tools.json",
-      "bytes": 47347,
+      "bytes": 47380,
       "kind": "tool_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source platform tool contract.",
-      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+      "sha256": "9f9168812f6fa4ddf1a0c5d534f4e8967c1c75a22fe981ad941b6799c0868246"
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/platform/generated/study-anything-tool-catalog.md",
@@ -120,11 +120,11 @@
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/scripts/verify_platform_agent_tools.py",
-      "bytes": 47008,
+      "bytes": 47000,
       "kind": "verification",
       "path": "scripts/verify_platform_agent_tools.py",
       "purpose": "Live local API tool-surface verifier.",
-      "sha256": "0087f2c28401f54d7eac2c91cfb068f42ca007c1fd0acd9a43d32ce56d13afd2"
+      "sha256": "65d387cc68ef200dbb4d5d83905cfbb45d2b052c9dc31a903eac8c3921a4ad9c"
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/scripts/verify_external_adoption.py",
@@ -176,11 +176,11 @@
     },
     {
       "archive_path": "study-anything-hermes-plugin-pack/platform/generated/study-anything-platform-openapi.json",
-      "bytes": 91074,
+      "bytes": 91107,
       "kind": "tool_import",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 reference asset for local/private HTTP tools.",
-      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
+      "sha256": "d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550"
     }
   ],
   "import_assets": [

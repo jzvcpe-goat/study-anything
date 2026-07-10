@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 72310,
+    "bytes": 72348,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "365dd5e00ab517777dc4c404709e600e788160fb089dc40525849dceeda7bc68",
+    "sha256": "546f5d4cbddae1ccba0ceb33b9fc08449310356f0c61f82df2bb44f8d8606d96",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -113,14 +113,14 @@
       "sha256": "3bf001ed81850a5b63fb0deee90b690b08023e59cbd5123d556817347107d2f9"
     },
     {
-      "bytes": 91074,
+      "bytes": 91107,
       "path": "platform/generated/study-anything-platform-openapi.json",
-      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
+      "sha256": "d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550"
     },
     {
-      "bytes": 27111,
+      "bytes": 27144,
       "path": "platform/generated/study-anything-openai-tools.json",
-      "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
+      "sha256": "8cafd6351c237c6b154f0fb4cb8e47613862878f5f8252606cd8b52b57ee12c3"
     },
     {
       "bytes": 24882,
@@ -128,9 +128,9 @@
       "sha256": "742ba7d1dfb8f930c8dda6aa667592453f47742224b97d1d11d7a2608fc6f824"
     },
     {
-      "bytes": 23882,
+      "bytes": 23874,
       "path": "platform/packs/codex/README.md",
-      "sha256": "e940c780e718adb7c2cda596f4956627e379df962e4041dac76ce09e993e7a3d"
+      "sha256": "adcd624ef3d3dcd8484015ce649707821c593ff8cd6129d6941ec819a8f38453"
     },
     {
       "bytes": 23147,

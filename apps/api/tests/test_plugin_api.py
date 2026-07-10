@@ -43,6 +43,13 @@ class PluginApiTests(unittest.TestCase):
         stack.enter_context(patch.object(api_main, "plugins", PluginRegistry([install_dir])))
         stack.enter_context(patch.object(api_main, "plugin_install_dir", install_dir))
         stack.enter_context(patch.object(api_main, "plugin_quarantine_dir", quarantine_dir))
+        stack.enter_context(
+            patch.object(
+                api_main,
+                "plugin_source_dirs",
+                [install_dir.parent, install_dir.parent / "source"],
+            )
+        )
         return TestClient(api_main.create_app()), stack
 
     def test_preview_plugin_returns_permission_details_without_installing(self) -> None:
@@ -53,7 +60,7 @@ class PluginApiTests(unittest.TestCase):
             client, stack = self._client(install_dir)
 
             with stack, client:
-                response = client.post("/v1/plugins/preview", json={"source_path": str(source)})
+                response = client.post("/v1/plugins/preview", json={"source_path": source.name})
 
             body = response.json()
             self.assertEqual(response.status_code, 200)
@@ -132,7 +139,7 @@ class PluginApiTests(unittest.TestCase):
                 response = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["read:sessions"],
                     },
                 )
@@ -154,7 +161,7 @@ class PluginApiTests(unittest.TestCase):
                 quarantined = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["network:http", "read:sessions"],
                     },
                 )
@@ -186,14 +193,14 @@ class PluginApiTests(unittest.TestCase):
                 quarantined = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["network:http", "read:sessions"],
                     },
                 )
                 installed = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["network:http", "read:sessions"],
                         "approve_install": True,
                         "approval_note": "Local operator approved this high-risk test plugin.",
@@ -227,7 +234,7 @@ class PluginApiTests(unittest.TestCase):
                 response = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["network:http", "read:sessions"],
                         "approve_install": True,
                     },
@@ -267,7 +274,7 @@ class PluginApiTests(unittest.TestCase):
                 response = client.post(
                     "/v1/plugins/install",
                     json={
-                        "source_path": str(source),
+                        "source_path": source.name,
                         "confirmed_permissions": ["network:http", "read:sessions"],
                         "approve_install": True,
                     },
@@ -277,6 +284,29 @@ class PluginApiTests(unittest.TestCase):
             self.assertIn("trust policy blocks", response.json()["detail"])
             self.assertFalse((install_dir / "demo-plugin").exists())
             self.assertFalse((quarantine_dir / "demo-plugin").exists())
+
+    def test_plugin_file_endpoints_reject_paths_outside_intake_roots(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            install_dir = root / "installed"
+            client, stack = self._client(install_dir)
+
+            with stack, client:
+                responses = [
+                    client.post("/v1/plugins/preview", json={"source_path": "../private"}),
+                    client.post(
+                        "/v1/plugins/validate-package",
+                        json={"source_path": str(root / "private")},
+                    ),
+                    client.post(
+                        "/v1/plugins/install",
+                        json={"source_path": "nested/private"},
+                    ),
+                ]
+
+            self.assertEqual([response.status_code for response in responses], [400, 400, 400])
+            for response in responses:
+                self.assertNotIn(str(root), response.text)
 
 
 if __name__ == "__main__":

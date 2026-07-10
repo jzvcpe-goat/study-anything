@@ -199,6 +199,7 @@ def is_localhost_blocker_message(message: str) -> bool:
 
 
 def build_localhost_block_report(message: str) -> dict[str, Any]:
+    del message
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "blocked",
@@ -209,7 +210,7 @@ def build_localhost_block_report(message: str) -> dict[str, Any]:
                 "The current runner cannot start the verifier's local dry-run Agent "
                 "gateway or mock HTTP Agent, so gateway hardening cannot be executed here."
             ),
-            "diagnostic": message,
+            "diagnostic": "Localhost socket allocation failed; runtime detail is withheld.",
         },
         "recovery": {
             "copyable_commands": [

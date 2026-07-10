@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 72637,
+    "bytes": 73113,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "a2ab7821fe008e67c17e74cd0b5899a2a50901cc62d1b6285bc6535ca72a6d8c"
+    "sha256": "a134d813def36058c555d7d16c7828938538ad5cfb29dd3d5287d722365164d8"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -47,11 +47,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 5972,
+      "bytes": 6074,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "99bf165bdc139cc15906e5fba75698f2b672cdc89a34f706a33aeef54af2cb7e"
+      "sha256": "5af6104975632248773fdd2ec068f8c48331a733fed4e7cc557c81d95e466410"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 7791,
+      "bytes": 8917,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "4755f9a93838a9ec5d7c5dd62c3a188f989f531eb0ed44b0bbc517a6e4f42fd2"
+      "sha256": "301ceb867180d26da133c5f149ecb781f6b88c868d289d6b2ece4457254aed34"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -167,11 +167,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
-      "bytes": 36872,
+      "bytes": 36925,
       "path": "docs/release-checklist.md",
       "purpose": "Release acceptance and claim-boundary checklist.",
       "role": "release_doc",
-      "sha256": "2dbf8b99ceba2bc4bfd6809971714df63fced5ab18f7caea3854b9170d29afd1"
+      "sha256": "c2670e00957f59c3e84ba6e6ff4fe0539e3d84cb49d7624d109520b519709f73"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-23-repository-security-remediation.md",

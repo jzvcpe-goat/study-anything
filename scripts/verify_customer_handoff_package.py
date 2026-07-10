@@ -111,13 +111,6 @@ def build_cases() -> dict[str, dict[str, Any]]:
     }
 
 
-def write_fixture_set(name: str, artifacts: Mapping[str, Mapping[str, Any]]) -> None:
-    target_dir = FIXTURE_DIR / name
-    target_dir.mkdir(parents=True, exist_ok=True)
-    for filename, payload in artifacts.items():
-        customer_handoff.write_json(target_dir / filename, payload)
-
-
 def run_cli(case_dir: Path, output_path: Path, html_path: Path, zip_path: Path) -> dict[str, Any]:
     command = [
         sys.executable,
@@ -152,7 +145,10 @@ def verify_cli_and_zip(pass_case: Mapping[str, Mapping[str, Any]]) -> dict[str, 
         case_dir = root / "pass"
         case_dir.mkdir(parents=True)
         for filename, payload in pass_case.items():
-            customer_handoff.write_json(case_dir / filename, payload)
+            (case_dir / filename).write_text(
+                customer_handoff.dump_json(payload),
+                encoding="utf-8",
+            )
         output_path = case_dir / "actual-customer-handoff-package.json"
         html_path = case_dir / "actual-customer-handoff-package.html"
         zip_path = case_dir / "actual-customer-handoff-package.zip"
@@ -367,7 +363,7 @@ def check_fixtures(cases: Mapping[str, Mapping[str, Mapping[str, Any]]]) -> None
             if customer_handoff.load_json(path) != expected:
                 raise SystemExit(
                     f"Customer handoff fixture is out of date: {path}. "
-                    "Run: python3 scripts/verify_customer_handoff_package.py --write"
+                    "Review and update the checked fixture intentionally; unsafe fixtures are not auto-written."
                 )
 
 
@@ -410,8 +406,6 @@ def main() -> int:
     html = dual_loop.render_html_report("Customer Handoff Package Verification", report)
 
     if args.write:
-        for name, artifacts in cases.items():
-            write_fixture_set(name, artifacts)
         write_outputs(output, html_output, zip_output, report, package)
     if args.check:
         check_fixtures(cases)

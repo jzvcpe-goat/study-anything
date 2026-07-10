@@ -9,6 +9,7 @@ import tempfile
 import unittest
 from io import StringIO
 from pathlib import Path
+from shutil import copyfile
 from unittest.mock import patch
 
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -666,6 +667,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertIn("Recovery:", stderr)
         self.assertIn("<env-file>", stderr)
         self.assertNotIn(str(env_file), stderr)
+        self.assertNotIn("not-a-port", stderr)
 
     def test_check_env_strict_secret_failure_includes_recovery_steps(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -868,7 +870,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertEqual(payload["problem_count"], 1)
         problem = payload["problems"][0]
         self.assertEqual(problem["code"], "duplicate_host_port_value")
-        self.assertIn("STACK_PROFILE=full", problem["message"])
+        self.assertIn("active stack profile", problem["message"])
         self.assertIn("API_PORT, LANGFUSE_PORT", problem["message"])
         self.assertIn("STACK_PROFILE=core ./scripts/launch_self_host.sh", stdout)
         self.assertNotIn(str(env_file), stdout)
@@ -937,16 +939,9 @@ class EnvScriptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             env_file = Path(tmp) / ".env"
             secret = "change-me-nextauth-secret"
-            env_file.write_text(
-                "\n".join(
-                    [
-                        "APP_ENV=production",
-                        f"NEXTAUTH_SECRET={secret}",
-                        "LANGFUSE_ENCRYPTION_KEY=not-hex",
-                    ]
-                )
-                + "\n",
-                encoding="utf-8",
+            copyfile(
+                REPO_ROOT / "fixtures" / "codeql-negative" / "check-env-placeholder.txt",
+                env_file,
             )
             code, stdout, stderr = self.run_check_env_with_stdout(
                 "--env",

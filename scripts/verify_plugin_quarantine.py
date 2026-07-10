@@ -114,11 +114,16 @@ def write_plugin(
     return plugin_dir
 
 
-def client_for(install_dir: Path, quarantine_dir: Path) -> tuple[TestClient, ExitStack]:
+def client_for(
+    install_dir: Path,
+    quarantine_dir: Path,
+    source_dirs: list[Path],
+) -> tuple[TestClient, ExitStack]:
     stack = ExitStack()
     stack.enter_context(patch.object(api_main, "plugins", PluginRegistry([install_dir])))
     stack.enter_context(patch.object(api_main, "plugin_install_dir", install_dir))
     stack.enter_context(patch.object(api_main, "plugin_quarantine_dir", quarantine_dir))
+    stack.enter_context(patch.object(api_main, "plugin_source_dirs", source_dirs))
     return TestClient(api_main.create_app()), stack
 
 
@@ -131,15 +136,15 @@ def verify_api_quarantine(root: Path) -> dict[str, Any]:
     source = write_plugin(root / "source", "quarantine-plugin", permissions=["read:sessions", "network:http"])
     install_dir = root / "installed"
     quarantine_dir = root / "quarantine"
-    client, stack = client_for(install_dir, quarantine_dir)
+    client, stack = client_for(install_dir, quarantine_dir, [source.parent])
     with stack, client:
         policy = client.get("/v1/plugins/trust-policy")
-        preview = client.post("/v1/plugins/preview", json={"source_path": str(source)})
-        validation = client.post("/v1/plugins/validate-package", json={"source_path": str(source)})
+        preview = client.post("/v1/plugins/preview", json={"source_path": source.name})
+        validation = client.post("/v1/plugins/validate-package", json={"source_path": source.name})
         quarantined = client.post(
             "/v1/plugins/install",
             json={
-                "source_path": str(source),
+                "source_path": source.name,
                 "confirmed_permissions": ["network:http", "read:sessions"],
             },
         )
@@ -164,12 +169,12 @@ def verify_api_quarantine(root: Path) -> dict[str, Any]:
     require(not (install_dir / "quarantine-plugin").exists(), "Plugin leaked into install dir during quarantine.")
     require(listed_after_quarantine.json() == [], "Quarantined plugin should not appear as installed.")
 
-    client, stack = client_for(install_dir, quarantine_dir)
+    client, stack = client_for(install_dir, quarantine_dir, [source.parent])
     with stack, client:
         installed = client.post(
             "/v1/plugins/install",
             json={
-                "source_path": str(source),
+                "source_path": source.name,
                 "confirmed_permissions": ["network:http", "read:sessions"],
                 "approve_install": True,
                 "approval_note": "verifier approval",
@@ -220,13 +225,13 @@ def verify_blocked_digest(root: Path) -> dict[str, Any]:
     )
     install_dir = root / "blocked-installed"
     quarantine_dir = root / "blocked-quarantine"
-    client, stack = client_for(install_dir, quarantine_dir)
+    client, stack = client_for(install_dir, quarantine_dir, [source.parent])
     with stack, client:
-        preview = client.post("/v1/plugins/preview", json={"source_path": str(source)})
+        preview = client.post("/v1/plugins/preview", json={"source_path": source.name})
         response = client.post(
             "/v1/plugins/install",
             json={
-                "source_path": str(source),
+                "source_path": source.name,
                 "confirmed_permissions": ["read:sessions"],
                 "approve_install": True,
             },

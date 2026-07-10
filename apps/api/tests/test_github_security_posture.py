@@ -80,6 +80,26 @@ class GithubSecurityPostureTests(unittest.TestCase):
         self.assertEqual(report["status"], "fail")
         self.assertIn("dependency_graph_enabled", report["failed_checks"])
 
+    def test_open_security_alerts_are_rejected(self) -> None:
+        repository, actions, protection = posture.deterministic_fixture()
+
+        report = posture.assess_posture(
+            repository=repository,
+            actions_permissions=actions,
+            branch_protection=protection,
+            dependency_graph_enabled=True,
+            dependabot_alerts_enabled=True,
+            dependabot_security_updates_enabled=True,
+            mode="test",
+            open_code_scanning_alerts=2,
+            open_dependabot_alerts=1,
+        )
+
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(report["open_alert_counts"]["code_scanning"], 2)
+        self.assertIn("open_code_scanning_alerts_zero", report["failed_checks"])
+        self.assertIn("open_dependabot_alerts_zero", report["failed_checks"])
+
 
 if __name__ == "__main__":
     unittest.main()

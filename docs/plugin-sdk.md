@@ -79,12 +79,13 @@ status summary.
 
 ## Package Validation
 
-`POST /v1/plugins/validate-package` validates one local path without copying or
-executing it:
+`POST /v1/plugins/validate-package` validates one direct child directory from
+`STUDY_ANYTHING_PLUGIN_SOURCE_DIRS` without copying or executing it. The API
+rejects absolute, nested, and traversal paths:
 
 ```json
 {
-  "source_path": "plugins/example-exporter"
+  "source_path": "example-exporter"
 }
 ```
 

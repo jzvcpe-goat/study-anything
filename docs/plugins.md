@@ -67,6 +67,8 @@ Supported review statuses:
 
 The API scans `STUDY_ANYTHING_PLUGIN_DIRS`, defaulting to `plugins` and `data/plugins` locally and `/app/plugins:/data/study-anything/plugins` in Docker. Each direct child directory with a `plugin.json` file is validated and returned by `GET /v1/plugins`.
 
+File-facing API operations use the separate `STUDY_ANYTHING_PLUGIN_SOURCE_DIRS` intake allowlist, defaulting to the bundled `plugins` directory plus `data/plugin-intake` locally. The request sends one direct child directory name, never an absolute or traversal path. Hosted OIDC mode blocks all `/v1/plugins` routes until plugin administration has its own operator authorization boundary.
+
 Bundled plugins are listed in `plugins/registry.json`. The registry is local metadata, not a remote
 marketplace. It can pin `sourceDigest` for each plugin and can include trusted Ed25519 public keys
 for registry signatures. Study Anything verifies registry digest/signature metadata when present,
@@ -87,7 +89,7 @@ Bundled examples:
 
 - `GET /v1/plugins/sdk`: typed hook contract, permissions, capabilities, and privacy boundary.
 - `GET /v1/plugins/capabilities`: installed plugin capability index with trust summaries.
-- `POST /v1/plugins/validate-package`: validate one local plugin path without install or execution.
+- `POST /v1/plugins/validate-package`: validate one intake directory name without install or execution.
 
 ## Platform Adoption Kit
 
@@ -209,18 +211,22 @@ When a matching trusted public key is present in the local registry, Study Anyth
 
 ## Local Installation
 
-Review a plugin from an explicitly selected local directory:
+Review a plugin from an explicitly configured intake directory:
 
-1. Paste a local or container-visible plugin directory path.
-2. Preview the manifest.
-3. Review and check every requested permission.
-4. Quarantine the plugin after the permission list is confirmed.
-5. Install only after reviewing the quarantined copy and sending explicit approval.
+1. Copy the plugin directory under `plugins` or `data/plugin-intake`, or configure another trusted root with `STUDY_ANYTHING_PLUGIN_SOURCE_DIRS`.
+2. Send only that directory name as `source_path`; absolute paths, nested paths, and traversal are rejected.
+3. Preview the manifest.
+4. Review and check every requested permission.
+5. Quarantine the plugin after the permission list is confirmed.
+6. Install only after reviewing the quarantined copy and sending explicit approval.
 
 The same flow is available through the API:
 
 - `POST /v1/plugins/preview`
+- `POST /v1/plugins/validate-package`
 - `POST /v1/plugins/install`
+
+Example request body: `{"source_path": "example-exporter"}`.
 
 `/v1/plugins/install` requires the caller to send `confirmed_permissions` matching the manifest exactly. A missing or partial confirmation is rejected with `409`.
 By default the endpoint returns `lifecycle_status=quarantined`, copies the package to `STUDY_ANYTHING_PLUGIN_QUARANTINE_DIR`, executes no entrypoints, and does not make the plugin appear in `GET /v1/plugins`.

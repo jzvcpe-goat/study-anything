@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 159523,
+    "bytes": 159593,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "dfcad3bf8cb84f6e1508268bed5c8f411e4a89583766b4d064f8420249d3af38"
+    "sha256": "f01df49d08122b045eacb40b9fd4c4df69ce3149b47a5c07589d7dcbc8069a68"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -57,11 +57,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/study-anything-platform-tools.json",
-      "bytes": 47347,
+      "bytes": 47380,
       "kind": "tool_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source platform tool contract.",
-      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+      "sha256": "9f9168812f6fa4ddf1a0c5d534f4e8967c1c75a22fe981ad941b6799c0868246"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-tool-catalog.md",
@@ -121,11 +121,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_platform_agent_tools.py",
-      "bytes": 47008,
+      "bytes": 47000,
       "kind": "verification",
       "path": "scripts/verify_platform_agent_tools.py",
       "purpose": "Live local API tool-surface verifier.",
-      "sha256": "0087f2c28401f54d7eac2c91cfb068f42ca007c1fd0acd9a43d32ce56d13afd2"
+      "sha256": "65d387cc68ef200dbb4d5d83905cfbb45d2b052c9dc31a903eac8c3921a4ad9c"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/verify_external_adoption.py",
@@ -137,11 +137,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/api.md",
-      "bytes": 18270,
+      "bytes": 18301,
       "kind": "operator_doc",
       "path": "docs/api.md",
       "purpose": "HTTP API reference for platform workspaces.",
-      "sha256": "9847b8ce9598de711300dea22558e1f5343539f42c3f435912a463afa7a4a5c8"
+      "sha256": "9f58a6b723e122b0d977e80bc3ec414af7ce6861ef25aff309ce1445fcd3742c"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/use-with-workbuddy.md",
@@ -233,11 +233,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/platform/generated/study-anything-platform-openapi.json",
-      "bytes": 91074,
+      "bytes": 91107,
       "kind": "tool_import",
       "path": "platform/generated/study-anything-platform-openapi.json",
       "purpose": "OpenAPI 3.1 fallback import asset.",
-      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
+      "sha256": "d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550"
     }
   ],
   "import_assets": [

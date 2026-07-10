@@ -28,7 +28,7 @@ Status: `pass`
 | `fixtures/workbuddy-learning-flow/deepseek-pm-interview/input.json` | `1565443f015655ae2184ad2b19fd63c22d6a92fce0df278df0b44db2b9634755` |
 | `fixtures/workbuddy-learning-flow/deepseek-pm-interview/expected-boundary.json` | `278baaf1946043fc486c40ba085e33f6cc72f5595242c36fe0b431e934749120` |
 | `platform/generated/study-anything-workbuddy-inline-learning-flow.json` | `913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d` |
-| `platform/generated/study-anything-platform-openapi.json` | `f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd` |
+| `platform/generated/study-anything-platform-openapi.json` | `d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550` |
 
 ## Verify
 

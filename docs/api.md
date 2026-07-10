@@ -253,7 +253,7 @@ secrets, or retrieval snippets.
 - `POST /v1/plugins/validate-package`
 - `POST /v1/plugins/install`
 
-Plugin install is local-first. Preview validates a user-selected local directory and returns the manifest,
+Plugin install is local-first. Preview resolves one direct child directory name from the configured plugin intake roots and returns the manifest,
 permission details, trust summary, and target install directory without copying or executing plugin code.
 Install requires the caller to echo the exact manifest permission list as `confirmed_permissions`;
 otherwise the API returns `409`.
@@ -271,7 +271,7 @@ the endpoint does not execute plugin code.
 declared/inferred capabilities, permission risk summaries, trust reports, and alpha runtime notes.
 It is metadata-only and does not return plugin source code or private learning data.
 
-`POST /v1/plugins/validate-package` accepts `{"source_path": "plugins/example-exporter"}` and
+`POST /v1/plugins/validate-package` accepts `{"source_path": "example-exporter"}` and
 returns `plugin-package-validation-v1`. It validates one local plugin directory against manifest,
 trust, and SDK hook requirements without copying files or executing the entrypoint. The response
 includes `required_permission_confirmations`, `hook_contracts`, `validation_errors`, and privacy

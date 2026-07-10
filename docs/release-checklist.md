@@ -186,7 +186,7 @@
 - [ ] Verify bundled plugins report `registry_status=digest_verified`; `GET /v1/plugins/registry-review` returns `plugin-registry-review-v1` with `remote_code_downloads_allowed=false`; invalid registry digest/signature cases return `do_not_install`.
 - [ ] Verify `GET /v1/plugins/sdk` returns `schema_version=plugin-sdk-v1`, includes importer/enrichment/exporter/agent hooks, and has `entrypoints_executed=false`.
 - [ ] Verify `GET /v1/plugins/capabilities` returns `schema_version=plugin-capability-index-v1`, includes `example-enrichment-importer` and `example-exporter`, and returns no plugin source code or Agent secrets.
-- [ ] Verify `POST /v1/plugins/validate-package` for `plugins/example-exporter` returns `schema_version=plugin-package-validation-v1`, `status=valid`, `execution_allowed_by_validation=false`, and `privacy.package_copied=false`.
+- [ ] Verify `POST /v1/plugins/validate-package` with `source_path=example-exporter` returns `schema_version=plugin-package-validation-v1`, `status=valid`, `execution_allowed_by_validation=false`, and `privacy.package_copied=false`; absolute and traversal paths must return `400`.
 - [ ] Verify `POST /v1/plugins/install` without `approve_install` returns `lifecycle_status=quarantined`, does not appear in `GET /v1/plugins`, and copies only into `STUDY_ANYTHING_PLUGIN_QUARANTINE_DIR`.
 - [ ] Verify `POST /v1/plugins/install` with `approve_install=true` returns `lifecycle_status=installed` only after exact permission confirmation.
 - [ ] Check http://localhost:8000/v1/system/status

@@ -96,6 +96,7 @@ class PluginSdkApiTests(unittest.TestCase):
     def test_sdk_capabilities_and_validate_endpoints(self) -> None:
         stack = ExitStack()
         stack.enter_context(patch.object(api_main, "plugins", PluginRegistry([PLUGIN_ROOT])))
+        stack.enter_context(patch.object(api_main, "plugin_source_dirs", [PLUGIN_ROOT]))
         client = TestClient(api_main.create_app())
 
         with stack, client:
@@ -103,7 +104,7 @@ class PluginSdkApiTests(unittest.TestCase):
             capabilities = client.get("/v1/plugins/capabilities")
             validation = client.post(
                 "/v1/plugins/validate-package",
-                json={"source_path": str(PLUGIN_ROOT / "example-enrichment-importer")},
+                json={"source_path": "example-enrichment-importer"},
             )
 
         self.assertEqual(sdk.status_code, 200)
