@@ -51,6 +51,16 @@ class _AgentHandler(BaseHTTPRequestHandler):
         self.wfile.write(body.encode("utf-8"))
 
 
+class _RedirectAgentHandler(BaseHTTPRequestHandler):
+    def log_message(self, format: str, *args: Any) -> None:  # noqa: A002
+        return
+
+    def do_POST(self) -> None:
+        self.send_response(302)
+        self.send_header("Location", "http://127.0.0.1:9/invoke")
+        self.end_headers()
+
+
 class AgentRegistryTests(unittest.TestCase):
     def setUp(self) -> None:
         _AgentHandler.response = {
@@ -380,6 +390,22 @@ class AgentRegistryTests(unittest.TestCase):
         self.assertEqual(health.diagnostic_code, "provider_unavailable")
         self.assertIn("HTTP agent unavailable", health.message)
 
+    def test_http_agent_redirect_is_rejected_without_following_location(self) -> None:
+        with self._redirect_server() as endpoint:
+            registry = AgentRegistry()
+            provider = registry.configure_provider(
+                kind="http_agent",
+                label="Redirecting Agent",
+                endpoint=endpoint,
+                capabilities=["quiz.generate"],
+            )
+
+            with self.assertRaisesRegex(AgentProviderUnavailable, "HTTP Error 302"):
+                AgentRouter(registry).invoke_provider(
+                    provider.provider_id,
+                    task=AgentTask(task_type="quiz.generate", session_id="redirect"),
+                )
+
     def test_http_agent_malformed_json_health_has_diagnostic_code(self) -> None:
         with self._server(response="{not-json") as endpoint:
             registry = AgentRegistry()
@@ -471,6 +497,30 @@ class AgentRegistryTests(unittest.TestCase):
                 self_inner.thread.start()
                 host, port = self_inner.server.server_address
                 return f"http://{host}:{port}"
+
+            def __exit__(self_inner, exc_type: object, exc: object, tb: object) -> None:
+                self_inner.server.shutdown()
+                self_inner.server.server_close()
+                self_inner.thread.join(timeout=2)
+
+        return ServerContext()
+
+    def _redirect_server(self):
+        class ServerContext:
+            def __enter__(self_inner) -> str:
+                try:
+                    self_inner.server = HTTPServer(("127.0.0.1", 0), _RedirectAgentHandler)
+                except PermissionError as exc:
+                    raise unittest.SkipTest(
+                        "localhost listening sockets are unavailable in this runner"
+                    ) from exc
+                self_inner.thread = threading.Thread(
+                    target=self_inner.server.serve_forever,
+                    daemon=True,
+                )
+                self_inner.thread.start()
+                host, port = self_inner.server.server_address
+                return f"http://{host}:{port}/invoke"
 
             def __exit__(self_inner, exc_type: object, exc: object, tb: object) -> None:
                 self_inner.server.shutdown()

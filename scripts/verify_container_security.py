@@ -150,9 +150,20 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
             require_mapping(services, service_name),
         )
     api_ports = normalized_list(require_mapping(services, "api").get("ports"))
+    api_environment = require_mapping(require_mapping(services, "api"), "environment")
     require(
         any(port.startswith("${API_BIND_HOST:-127.0.0.1}:") for port in api_ports),
         "API port must default to loopback",
+    )
+    require(
+        api_environment.get("STUDY_ANYTHING_AGENT_ENDPOINT_POLICY")
+        == "${STUDY_ANYTHING_AGENT_ENDPOINT_POLICY:-operator}",
+        "API Compose service must pass through the Agent endpoint policy",
+    )
+    require(
+        api_environment.get("STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST")
+        == "${STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST:-}",
+        "API Compose service must pass through the Agent endpoint allowlist",
     )
     mock_ports = normalized_list(require_mapping(services, "mock-http-agent").get("ports"))
     require(
@@ -173,6 +184,10 @@ def validate_compose(payload: Mapping[str, Any]) -> dict[str, Any]:
         ),
         "MinIO root password must not have a fallback default",
     )
+    results["agent_endpoint_policy"] = {
+        "policy_env_forwarded": True,
+        "allowlist_env_forwarded": True,
+    }
     return results
 
 
@@ -209,6 +224,8 @@ def validate_security_workflow(text: str) -> dict[str, Any]:
         "fail-on-severity: high",
         "container policy",
         "verify_container_security.py --check",
+        "verify_dependency_risk_acceptance.py --check",
+        "verify_agent_endpoint_policy.py --check",
     )
     missing = [marker for marker in required if marker not in text]
     require(not missing, f"Security workflow markers are missing: {missing}")

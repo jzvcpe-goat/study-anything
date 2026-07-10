@@ -11,6 +11,13 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- Production HTTP Agent egress now requires a non-empty exact-origin allowlist;
+  non-loopback origins require HTTPS, endpoints are revalidated before invocation,
+  and redirects are rejected. Local single-operator mode keeps operator-selected
+  endpoints without presenting that mode as a hosted SSRF boundary.
+- Low advisory `GHSA-866g-f22w-33x8` has a metadata-only, time-bounded reachability
+  acceptance through 2026-08-10. The scheduled security workflow and release gate
+  fail when that review date expires or the dependency becomes directly reachable.
 - Python 3.11/3.12 dependencies now resolve through a universal `uv.lock`. Docker, CI, Skill Mode,
   and repository policy jobs consume exact, SHA-256-bound requirements; a deterministic CycloneDX
   1.5 SBOM and metadata-only claim receipt are checked in and verified offline.

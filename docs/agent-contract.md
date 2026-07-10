@@ -157,9 +157,17 @@ without a model key, then see `docs/kimi-agent-gateway.md`.
 - Keep provider secrets inside the user's agent process or its own secret manager.
 - Do not put credentials in Agent endpoint URLs, query parameters, or provider metadata.
 - `POST /v1/agents/providers` rejects endpoint credentials and secret-like metadata keys.
+- Local single-operator mode permits operator-selected HTTP(S) endpoints. Production
+  requires `STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist` and exact origins in
+  `STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST`.
+- Non-loopback allowlisted origins must use HTTPS. Agent HTTP redirects are rejected,
+  and the endpoint origin is revalidated immediately before invocation.
 - `GET /v1/agents/status` returns redacted provider metadata and URL-level endpoint redaction.
 - HTTP traces record provider id, task type, latency, status, token/cost metadata if supplied, and redacted metadata only.
 - HTTP Agent responses are limited to 1 MiB before JSON parsing and contract validation.
 - CLI adapters are disabled until an operator explicitly enables a command allowlist and timeout policy.
 - Run `python3 scripts/verify_agent_gateway_hardening.py` and
   `python3 scripts/verify_external_agent_adapter_hardening.py` before release or platform handoff.
+- Run `python3 scripts/verify_agent_endpoint_policy.py --check` for the configured
+  outbound destination boundary. It does not replace hosted identity, tenant
+  isolation, or network-layer egress controls.

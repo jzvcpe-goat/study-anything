@@ -1,0 +1,41 @@
+{
+  "schema_version": "dependency-risk-acceptance-v1",
+  "advisory_id": "GHSA-866g-f22w-33x8",
+  "dependabot_alert_number": 1,
+  "package": {
+    "ecosystem": "npm",
+    "name": "@ai-sdk/provider-utils",
+    "locked_alias": "node_modules/@ai-sdk/provider-utils-v5",
+    "locked_version": "3.0.25",
+    "vulnerable_range": "<=3.0.97",
+    "first_patched_version": null
+  },
+  "severity": "low",
+  "decision": "tolerable_risk",
+  "accepted_on": "2026-07-10",
+  "review_by": "2026-08-10",
+  "scope": "platform/mastra-runtime",
+  "reachability": {
+    "direct_import": false,
+    "affected_response_handlers_called": false,
+    "external_http_response_parsing": false,
+    "model_calls_performed": false,
+    "production_daemon": false,
+    "runtime_input": "schema-validated metadata-only fixtures"
+  },
+  "compensating_controls": [
+    "Mastra runtime source does not import @ai-sdk/provider-utils.",
+    "The affected createJsonResponseHandler and createJsonErrorResponseHandler functions are not called.",
+    "The runtime does not make model calls or parse untrusted external provider responses.",
+    "Runtime commands are bounded deterministic verification commands, not a public daemon.",
+    "The scheduled security workflow fails when this acceptance reaches review_by."
+  ],
+  "remediation_trigger": "Upgrade when Mastra removes the v5 compatibility alias or an upstream patched v3 release exists.",
+  "privacy": {
+    "metadata_only": true,
+    "secrets_included": false,
+    "source_text_included": false,
+    "user_data_included": false
+  },
+  "claim_boundary": "This is a time-bounded reachability-based risk acceptance, not a vulnerability fix, false-positive claim, or vulnerability-free certification."
+}

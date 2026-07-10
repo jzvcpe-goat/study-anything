@@ -151,6 +151,8 @@ class ApiSecurityTests(unittest.TestCase):
                         "API_BIND_HOST=0.0.0.0",
                         "STUDY_ANYTHING_API_AUTH_MODE=token",
                         "STUDY_ANYTHING_API_TOKEN=" + "t" * 40,
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=https://agent.example",
                     ]
                 )
                 + "\n",
@@ -179,6 +181,10 @@ class ApiSecurityTests(unittest.TestCase):
         )
         self.assertNotIn(
             "missing_or_weak_api_token",
+            {item["code"] for item in allowed_payload["problems"]},
+        )
+        self.assertNotIn(
+            "empty_agent_endpoint_allowlist",
             {item["code"] for item in allowed_payload["problems"]},
         )
 

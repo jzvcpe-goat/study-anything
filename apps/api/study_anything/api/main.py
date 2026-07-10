@@ -28,6 +28,7 @@ from study_anything.core.agent_registry import (
     AgentRouter,
     AgentTask,
 )
+from study_anything.core.agent_endpoint_policy import load_agent_endpoint_policy
 from study_anything.core.api_security import load_api_security_config
 from study_anything.core.commercial_readiness import (
     build_commercial_readiness,
@@ -299,7 +300,11 @@ def _env(primary: str, legacy: str, default: str) -> str:
 
 data_dir = Path(_env("STUDY_ANYTHING_DATA_DIR", "NEURAL_CONSOLE_DATA_DIR", "data/api"))
 project_root = Path(__file__).resolve().parents[4]
-agent_registry = AgentRegistry(data_dir / "agent_registry.json")
+agent_endpoint_policy = load_agent_endpoint_policy(os.environ)
+agent_registry = AgentRegistry(
+    data_dir / "agent_registry.json",
+    endpoint_policy=agent_endpoint_policy,
+)
 agent_router = AgentRouter(agent_registry)
 workspace_store = LocalWorkspaceStore(data_dir / "workspace_state.json")
 trace_sink = build_trace_sink()
@@ -357,6 +362,7 @@ def create_app() -> FastAPI:
     api_security = load_api_security_config(os.environ)
     app = FastAPI(title="Cognitive Black Box: Study Anything Adapter", version=__version__)
     app.state.api_security = api_security
+    app.state.agent_endpoint_policy = agent_endpoint_policy
     if api_security.cors_origins:
         app.add_middleware(
             CORSMiddleware,

@@ -79,6 +79,15 @@ class ContainerSecurityTests(unittest.TestCase):
         with self.assertRaises(security.ContainerSecurityError):
             security.validate_compose(compose)
 
+    def test_missing_agent_endpoint_policy_passthrough_is_rejected(self) -> None:
+        compose = copy.deepcopy(security.read_compose())
+        del compose["services"]["api"]["environment"][
+            "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST"
+        ]
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_compose(compose)
+
     def test_unpinned_action_is_rejected(self) -> None:
         line = "      - uses: actions/checkout@v6"
 

@@ -18,10 +18,19 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional
 from uuid import uuid4
 
+from .agent_endpoint_policy import AgentEndpointPolicy, AgentEndpointPolicyError
 from .security import is_secret_key, redact_mapping, redact_url_secrets, url_contains_inline_secret
 
 
 MAX_AGENT_RESPONSE_BYTES = 1_048_576
+
+
+class _NoAgentRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args: Any, **kwargs: Any) -> None:
+        return None
+
+
+_AGENT_HTTP_OPENER = urllib.request.build_opener(_NoAgentRedirectHandler())
 
 
 class AgentCapability(str, Enum):
@@ -378,14 +387,20 @@ class FakeAgentProvider:
 
 
 class HttpAgentProvider:
-    def __init__(self, provider: AgentProviderConfig) -> None:
+    def __init__(
+        self,
+        provider: AgentProviderConfig,
+        endpoint_policy: AgentEndpointPolicy | None = None,
+    ) -> None:
         self.provider = provider
+        self.endpoint_policy = endpoint_policy or AgentEndpointPolicy()
 
     def invoke(self, task: AgentTask) -> AgentResult:
         if not self.provider.endpoint:
             raise AgentConfigurationRequired(
                 f"Agent provider '{self.provider.provider_id}' requires an endpoint."
             )
+        self.endpoint_policy.validate(self.provider.endpoint)
         started = time.monotonic()
         payload = json.dumps(task.public_dict(), ensure_ascii=False).encode("utf-8")
         request = urllib.request.Request(
@@ -395,7 +410,9 @@ class HttpAgentProvider:
             method="POST",
         )
         try:
-            with urllib.request.urlopen(request, timeout=self.provider.timeout_seconds) as response:
+            with _AGENT_HTTP_OPENER.open(
+                request, timeout=self.provider.timeout_seconds
+            ) as response:
                 body = response.read(MAX_AGENT_RESPONSE_BYTES + 1)
                 if len(body) > MAX_AGENT_RESPONSE_BYTES:
                     raise AgentResultInvalid(
@@ -487,8 +504,13 @@ def validate_agent_result(
 class AgentRegistry:
     """Agent provider registry with optional JSON persistence."""
 
-    def __init__(self, storage_path: Optional[Path] = None) -> None:
+    def __init__(
+        self,
+        storage_path: Optional[Path] = None,
+        endpoint_policy: AgentEndpointPolicy | None = None,
+    ) -> None:
         self.storage_path = storage_path
+        self.endpoint_policy = endpoint_policy or AgentEndpointPolicy()
         self._save_lock = threading.Lock()
         self._suspend_save = True
         self._providers: Dict[str, AgentProviderConfig] = {}
@@ -518,6 +540,8 @@ class AgentRegistry:
             else provider.endpoint
         )
         _assert_safe_provider_storage(endpoint=endpoint, metadata=provider.metadata)
+        if endpoint is not None and provider.kind == AgentProviderKind.HTTP_AGENT:
+            self.endpoint_policy.validate(endpoint)
         if endpoint != provider.endpoint:
             provider = replace(provider, endpoint=endpoint)
         if not provider.provider_id:
@@ -618,6 +642,7 @@ class AgentRegistry:
             "schema_version": "agent-v1",
             "providers": [provider.public_dict() for provider in self._providers.values()],
             "defaults": defaults,
+            "endpoint_policy": self.endpoint_policy.public_dict(),
         }
 
     def test_provider(self, provider_id: str) -> AgentHealth:
@@ -649,7 +674,7 @@ class AgentRegistry:
             task = self._health_task(health_capability)
             started = time.monotonic()
             try:
-                HttpAgentProvider(provider).invoke(task)
+                HttpAgentProvider(provider, self.endpoint_policy).invoke(task)
             except (AgentConfigurationRequired, AgentProviderUnavailable, AgentResultInvalid) as exc:
                 return AgentHealth(
                     provider_id=provider.provider_id,
@@ -751,6 +776,15 @@ class AgentRegistry:
                 if normalised_endpoint != endpoint:
                     endpoint = normalised_endpoint
                     sanitized = True
+                if endpoint is not None:
+                    try:
+                        self.endpoint_policy.validate(endpoint)
+                    except AgentEndpointPolicyError:
+                        provider_values["enabled"] = False
+                        metadata["migration_warning"] = (
+                            "provider disabled because its endpoint is outside the active policy"
+                        )
+                        sanitized = True
             secret_metadata_keys = [key for key in metadata if is_secret_key(str(key))]
             if secret_metadata_keys:
                 for key in secret_metadata_keys:
@@ -808,7 +842,9 @@ class AgentRouter:
             result = self._fake.invoke(replace(task, task_type=capability.value))
             return replace(result, provider_id=provider.provider_id)
         if provider.kind == AgentProviderKind.HTTP_AGENT:
-            return HttpAgentProvider(provider).invoke(replace(task, task_type=capability.value))
+            return HttpAgentProvider(provider, self.registry.endpoint_policy).invoke(
+                replace(task, task_type=capability.value)
+            )
         if provider.kind == AgentProviderKind.CLI_AGENT:
             raise AgentProviderUnavailable(
                 "CLI agent adapter is disabled by default; enable it with an explicit allowlist."

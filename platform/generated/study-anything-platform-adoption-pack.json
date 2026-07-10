@@ -97,10 +97,10 @@
     "proof_schema": "adoption-proof-v1",
     "target_minutes": 15
   },
-  "archive_bytes": 7025987,
+  "archive_bytes": 7028425,
   "archive_name": "study-anything-platform-adoption-pack.zip",
   "archive_root": "study-anything-platform-adoption-pack",
-  "archive_sha256": "884266a3ec2c9de896bac100681f3a5506b3d5b2a816f7433fbc051983b1e70e",
+  "archive_sha256": "366803eebca704d817643ec6ca33d54f35711f44b95bbf59f8217436d8374a51",
   "description": "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof.",
   "files": [
     {
@@ -305,11 +305,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/self-hosting.md",
-      "bytes": 21096,
+      "bytes": 21619,
       "kind": "operator_doc",
       "path": "docs/self-hosting.md",
       "purpose": "Docker/Skill Mode self-hosting guide.",
-      "sha256": "c8947c39b89003de7b9f7169d535bd847313ec0d2662c9a266bf78ccfe1133cc"
+      "sha256": "101156de657fd9ca01fd9d99394f5ff83d28dbcb69fd45bcf6590fabf58e250e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/self-host-reliability.md",
@@ -337,11 +337,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/security.md",
-      "bytes": 5660,
+      "bytes": 6809,
       "kind": "operator_doc",
       "path": "docs/security.md",
       "purpose": "Local-first security model and recovery hardening guide.",
-      "sha256": "bbc16b1ee943300cc75c985bd4b2f8140a9130b025440050f3290a9a6605c998"
+      "sha256": "a12e5087f7a99cd971071b3ec8a1afc63e216af6de0383b71a3301cc3679502d"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/docs/security-baseline.md",
@@ -2237,7 +2237,7 @@
       "kind": "bundle_manifest",
       "path": "platform/generated/study-anything-platform-bundle.json",
       "purpose": "Source file manifest for platform assets.",
-      "sha256": "00bd2cb65184994d9dba88ac349886837fa534077c4b59d6c1d5b545fdf87cc9"
+      "sha256": "7c8f1e7d231422c026129895bb22d486a9627ab1c942776b37a5fd728c77e09b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-okf-alignment.json",
@@ -3933,7 +3933,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
       "purpose": "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
-      "sha256": "56ca61e80b945397bce4166ea22c368efec068ecf0c099596d85d9e3b2a4ab95"
+      "sha256": "5c125be8a23cacaf30ee8048909ffb7bfe69d885aae0bbd62a4071f8a8daf752"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-cognitive-loop-review.json",
@@ -4357,7 +4357,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "74174dad96ce1690f9e918110be54742a8d4b38305023ad23b919e4202f380d3"
+      "sha256": "889fca947ff44bd776fe369233a17cd89d0613e388c22c7a1a2306e71f6bff87"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.md",
@@ -4365,15 +4365,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "892032c3d39bcb6ac88553474fca6fd8ba60aefe0698dc87614d42640ae8702c"
+      "sha256": "0f3027525560900da465550147b5e3253b6e4b748dc0c1f0c4f86d0f7a23bf5e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.zip",
-      "bytes": 136522,
+      "bytes": 136758,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "7bb27be210343f989630e96f25cb4acff9776e5a3d18b960c7dd6efad9fbf210"
+      "sha256": "c212af7babb79cad8135cc8c1edfbf0018eba14e78a9c6bf181dd90dfdbb6d69"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-published-image-evidence.sha256",
@@ -4381,7 +4381,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "0c14f2e68c6cefbea9595620aadfb2d4072959b80781055f84580298d9b0289f"
+      "sha256": "ae508ec838d01a208ec810f22ec07a82b23e56f7a6c73a9087b3d84d0939227a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.json",
@@ -4389,7 +4389,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "4dfb9b88ba730717f657e1469432549967f4fd313e4798349b665616b4f6e929"
+      "sha256": "389b72afb0b258c22faea184754b1c7b634278d13dd36fcd7fdcb7f7291aae5e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.md",
@@ -4397,15 +4397,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "0271bd18f604669d100b488d3380dd53adc9f4197e8fc395fec73c770f6d04eb"
+      "sha256": "548bba9baa19926dd64baf9a94d1693e0ad915b01d0a9fa5bef86b80b81556b9"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.zip",
-      "bytes": 157105,
+      "bytes": 157104,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence package.",
-      "sha256": "c3896962e595fd5d24776cbef0954f4ef7ed8a593b63adcb61d4d3f2305c475c"
+      "sha256": "53493279c2c431a51e8bf7ba9de277e86ed2688167d54096b11d25a0d93b201e"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-adoption.sha256",
@@ -4413,7 +4413,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "fe8f1eaa521a9d0759d9717707a6034ac872517734e4396d9997a40eed1b3c20"
+      "sha256": "8e2023cd6d71ced7eaa038a794bcb620bb2c9ada4914ab87420d53ba5ee38fca"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-asset-bootstrap.json",
@@ -4453,7 +4453,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.json",
       "purpose": "Release-only cleanroom bootstrap evidence JSON.",
-      "sha256": "082e75aa3229a4ce86ebf4659178c98ca6122c3735114a68c0fb8d4780f39e36"
+      "sha256": "9d6089eed48ac7a829ae599b74f373726f2cec5ffaadec8dd88d322698de9fe6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.md",
@@ -4461,15 +4461,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.md",
       "purpose": "Release-only cleanroom bootstrap evidence Markdown.",
-      "sha256": "1fbe7cac5f2a81fa74535582af26459ddf261e5d780fe7f9c23518fc9256c7ae"
+      "sha256": "22ea447800ff76936b37aac2f00a8bbd22166cb6681143132d4b1eb5f2258e91"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.zip",
-      "bytes": 56811,
+      "bytes": 57018,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.zip",
       "purpose": "Release-only cleanroom bootstrap evidence package.",
-      "sha256": "7034ba68c6b16f9713739bcf2d0a6b5efdc19212d66f7c199c16d2379f2752a7"
+      "sha256": "59005c3e92b12e5718730da584722f3053b4cf4e31ae629df15f50a35134d58a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
@@ -4477,7 +4477,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-release-cleanroom-bootstrap.sha256",
       "purpose": "Release-only cleanroom bootstrap evidence checksum.",
-      "sha256": "5bbdc207d5f50f8ffbaf571770282fd7a3f78d7a3e49b0a5330547b3812f98aa"
+      "sha256": "5f747b26d238abf7835a2a3fba38df41ebf17c5d19180222a999c5c50a2b9481"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-platform-agent-replay.json",
@@ -4517,7 +4517,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "c7b6602a243713809c6b8db87b3334a428e88bfed2e0af743a09d094529e322f"
+      "sha256": "4e5fabd9caafdf81753b451a8c4a9828f668b8b1a0b35d0adbe0e09c7de8fe2a"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.md",
@@ -4525,15 +4525,15 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "789f0d3f3d36c02059752ee07eaae72385ed27b85e3f5f9b0e12bdb8f6232f9a"
+      "sha256": "ee65a1a1cfd9ab1c6df84df5ca58036dc51c9bec5aabe7c6fb5256c486047792"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.zip",
-      "bytes": 260368,
+      "bytes": 260596,
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "f242901645a395c54edf67c91d113807f744350680685b374d5521d7c323a9e3"
+      "sha256": "1e9251257934c96af2ffd1cf73c638c94746c37a4a9a921e8fceb15ba2402e5b"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/platform/generated/study-anything-adopter-evidence-archive.sha256",
@@ -4541,7 +4541,7 @@
       "kind": "submission_report",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "baf502cc68dd8023be52302f5b5a0187d599b4deb8b509ce742be732bd35be4e"
+      "sha256": "9905244f9894deb30d3e4293fec64f59039123d918aec58d5891410d8170c3d7"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/fixtures/platform-import-failures/schema_mismatch.json",
@@ -14593,11 +14593,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/check_env.py",
-      "bytes": 18142,
+      "bytes": 23158,
       "kind": "runtime",
       "path": "scripts/check_env.py",
       "purpose": "Validate required local environment variables before launch.",
-      "sha256": "2132e414788c6895d88c73981e748368ae2454b2d390bc45b9eee4a6928b0b81"
+      "sha256": "2fdddc5d043689e51b8c0a0c6d9d82298de84d90431c4351fa78157252bf4b30"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/doctor.sh",
@@ -14705,11 +14705,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_container_security.py",
-      "bytes": 15275,
+      "bytes": 16048,
       "kind": "verification",
       "path": "scripts/verify_container_security.py",
       "purpose": "Deterministic GitHub Actions and container security baseline verifier.",
-      "sha256": "5b8a9ee14cb91a4cfa26ba8170fddec82b7d6c8cd21d889d24f780e60ddf7196"
+      "sha256": "3dea0d41ad9ead7c4a48fd710d02cee5aed25dac529e0516a680221575e5b531"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/scripts/verify_github_security_posture.py",
@@ -17465,11 +17465,11 @@
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/infra/compose/docker-compose.yml",
-      "bytes": 10577,
+      "bytes": 10763,
       "kind": "runtime",
       "path": "infra/compose/docker-compose.yml",
       "purpose": "Docker Compose source-build stack definition.",
-      "sha256": "dc67897f0bb86feb34d2e59267da1603267bfec46fcd86418e46d2c93f85c63c"
+      "sha256": "8d4ddb8581ad3184d1ac5443fcbe595b8777587bc6b5436bd95bb3bdc1f17cc6"
     },
     {
       "archive_path": "study-anything-platform-adoption-pack/infra/compose/docker-compose.images.yml",

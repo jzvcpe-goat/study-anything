@@ -4,17 +4,20 @@
 from __future__ import annotations
 
 import argparse
+import ipaddress
 import json
 import re
 import sys
 from pathlib import Path
 from typing import Any
+import urllib.parse
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ENV = ROOT / ".env"
 HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
 API_AUTH_MODES = {"local_only", "token"}
+AGENT_ENDPOINT_POLICY_MODES = {"operator", "allowlist"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
 MIN_API_TOKEN_LENGTH = 32
 
@@ -196,6 +199,63 @@ def wildcard_cors_issue(env_path: Path) -> dict[str, object]:
     )
 
 
+def unsupported_agent_endpoint_policy_issue(mode: str, env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "unsupported_agent_endpoint_policy",
+        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY",
+        f"STUDY_ANYTHING_AGENT_ENDPOINT_POLICY must be operator or allowlist; got {mode!r}.",
+        [
+            f"For local single-operator use, edit {env_path} and set "
+            "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=operator.",
+            "For production use, set the policy to allowlist and provide exact trusted origins.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+        ],
+    )
+
+
+def production_agent_allowlist_required_issue(env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "production_agent_allowlist_required",
+        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY",
+        "APP_ENV=production requires STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist.",
+        [
+            f"Edit {env_path} and set STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist.",
+            "Set STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST to exact trusted HTTPS origins.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
+        ],
+    )
+
+
+def empty_agent_endpoint_allowlist_issue(env_path: Path) -> dict[str, object]:
+    return env_issue(
+        "empty_agent_endpoint_allowlist",
+        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST",
+        "Agent endpoint allowlist mode requires at least one exact trusted origin.",
+        [
+            f"Edit {env_path} and set STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=https://agent.example.",
+            "Use comma-separated exact origins without paths, queries, fragments, or credentials.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
+        ],
+    )
+
+
+def invalid_agent_endpoint_allowlist_origin_issue(
+    index: int,
+    reason: str,
+    env_path: Path,
+) -> dict[str, object]:
+    return env_issue(
+        "invalid_agent_endpoint_allowlist_origin",
+        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST",
+        f"Agent endpoint allowlist entry {index} is invalid: {reason}",
+        [
+            f"Edit entry {index} in {env_path}; use an exact HTTPS origin such as https://agent.example.",
+            "Loopback development origins may use HTTP; non-loopback origins must use HTTPS.",
+            f"Recheck with: python3 scripts/check_env.py --env {env_path} --strict",
+        ],
+    )
+
+
 def unreadable_env_issue(error: str, env_path: Path) -> dict[str, object]:
     return env_issue(
         "env_file_unreadable",
@@ -274,6 +334,40 @@ def is_valid_port(value: str) -> bool:
 def active_host_port_keys(values: dict[str, str]) -> tuple[str, tuple[str, ...]]:
     profile = values.get("STACK_PROFILE", "core").strip() or "core"
     return profile, PROFILE_HOST_PORT_KEYS.get(profile, ())
+
+
+def _is_loopback_agent_host(host: str) -> bool:
+    normalized = host.lower().rstrip(".")
+    if normalized in LOOPBACK_BIND_HOSTS:
+        return True
+    try:
+        return ipaddress.ip_address(normalized).is_loopback
+    except ValueError:
+        return False
+
+
+def validate_agent_endpoint_allowlist(value: str, env_path: Path) -> list[dict[str, object]]:
+    issues: list[dict[str, object]] = []
+    entries = [item.strip() for item in value.split(",") if item.strip()]
+    for index, entry in enumerate(entries, 1):
+        reason = ""
+        try:
+            parts = urllib.parse.urlsplit(entry)
+            if parts.scheme not in {"http", "https"} or not parts.hostname:
+                reason = "entry must be an HTTP(S) origin."
+            elif parts.username or parts.password:
+                reason = "credentials are forbidden."
+            elif parts.path not in {"", "/"} or parts.query or parts.fragment:
+                reason = "paths, queries, and fragments are forbidden."
+            else:
+                parts.port
+                if parts.scheme == "http" and not _is_loopback_agent_host(parts.hostname):
+                    reason = "non-loopback origins must use HTTPS."
+        except ValueError:
+            reason = "port is invalid."
+        if reason:
+            issues.append(invalid_agent_endpoint_allowlist_origin_issue(index, reason, env_path))
+    return issues
 
 
 def _redact_env_path(text: str, env_path: Path) -> str:
@@ -462,6 +556,24 @@ def main() -> None:
         problems.append(missing_api_token_issue(args.env))
     if "*" in cors_origins:
         problems.append(wildcard_cors_issue(args.env))
+
+    default_agent_policy = "allowlist" if app_env == "production" else "operator"
+    agent_endpoint_policy = values.get(
+        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY",
+        default_agent_policy,
+    ).strip().lower()
+    agent_endpoint_allowlist = values.get("STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST", "").strip()
+    agent_endpoint_allowlist_entries = [
+        item.strip() for item in agent_endpoint_allowlist.split(",") if item.strip()
+    ]
+    if agent_endpoint_policy not in AGENT_ENDPOINT_POLICY_MODES:
+        problems.append(unsupported_agent_endpoint_policy_issue(agent_endpoint_policy, args.env))
+    elif app_env == "production" and agent_endpoint_policy != "allowlist":
+        problems.append(production_agent_allowlist_required_issue(args.env))
+    elif agent_endpoint_policy == "allowlist" and not agent_endpoint_allowlist_entries:
+        problems.append(empty_agent_endpoint_allowlist_issue(args.env))
+    if agent_endpoint_allowlist_entries:
+        problems.extend(validate_agent_endpoint_allowlist(agent_endpoint_allowlist, args.env))
 
     for key in PORT_DEFAULTS:
         value = values.get(key)
