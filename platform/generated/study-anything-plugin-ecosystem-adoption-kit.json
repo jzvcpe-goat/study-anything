@@ -6,7 +6,7 @@
       "python3 scripts/verify_plugin_quarantine.py",
       "python3 scripts/study_anything_cli.py plugin-sdk",
       "python3 scripts/study_anything_cli.py plugin-capabilities",
-      "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer"
+      "python3 scripts/study_anything_cli.py plugin-validate example-note-importer"
     ],
     "sample_plugins": [
       "plugins/example-agent-provider",
@@ -157,7 +157,7 @@
       "Do not install or quarantine plugins whose registry digest mismatches."
     ],
     "manifest_invalid": [
-      "Run plugin-validate against the explicit local plugin directory.",
+      "Run plugin-validate with one configured intake directory name.",
       "Keep hooks, capabilities, and permissions inside the documented allowlists."
     ],
     "pack_missing_plugin_assets": [
@@ -232,7 +232,7 @@
   },
   "sample_flows": [
     {
-      "command": "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer",
+      "command": "python3 scripts/study_anything_cli.py plugin-validate example-note-importer",
       "entrypoints_executed": false,
       "expected_schema": "plugin-package-validation-v1",
       "flow_id": "validate_sample_plugin_without_execution"

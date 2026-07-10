@@ -75,6 +75,13 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def write_rejected_fixture_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # This test-only sink writes deliberately unsafe fixtures so rejection can be proved.
+    # codeql[py/clear-text-storage-sensitive-data]
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def privacy_flags() -> dict[str, bool]:
     return {
         "source_text_included": False,
@@ -302,8 +309,9 @@ def verify_non_ready_modes() -> dict[str, Any]:
 
 
 def write_unsafe_patch(root: Path, name: str, patch_payload: dict[str, Any]) -> None:
+    del name
     write_ready_chain(root)
-    write_json(root / PATCH_PROPOSAL, patch_payload)
+    write_rejected_fixture_json(root / PATCH_PROPOSAL, patch_payload)
 
 
 def expect_failure(root: Path, name: str, patch_payload: dict[str, Any]) -> bool:

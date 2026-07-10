@@ -79,6 +79,19 @@ Verify this boundary with:
 python3 scripts/verify_agent_endpoint_policy.py --check
 ```
 
+## Plugin Filesystem Boundary
+
+- Plugin preview, validation, and install APIs never accept an arbitrary local
+  filesystem path. `source_path` is retained for API compatibility but must be
+  one direct child directory name from `STUDY_ANYTHING_PLUGIN_SOURCE_DIRS`.
+- Absolute paths, nested paths, traversal components, missing roots, symlink
+  escapes, and ambiguous names are rejected before the plugin registry reads a
+  manifest.
+- Hosted OIDC mode blocks `/v1/plugins`; the local plugin lifecycle remains a
+  single-operator capability until a separate hosted operator role exists.
+- The standalone local CLI may accept an operator-selected path because it runs
+  in that operator's shell, outside the network API trust boundary.
+
 ## Recovery And Backup
 
 Local operators should create a backup before image upgrades, plugin installs,
@@ -119,6 +132,7 @@ python3 scripts/verify_container_security.py --check
 python3 scripts/verify_dependency_risk_acceptance.py --check
 python3 scripts/verify_agent_endpoint_policy.py --check
 python3 scripts/verify_hosted_identity_tenancy.py --check
+python3 scripts/verify_github_security_posture.py --check
 python3 scripts/generate_external_security_audit_pack.py --check
 python3 scripts/verify_external_security_audit_pack.py --check
 python3 scripts/generate_python_supply_chain.py --check
@@ -129,6 +143,16 @@ The external audit kit lives under `security/audit/` and is distributed as
 contains only public metadata, schemas, hashes, and evidence. It requires an
 external human security reviewer and a signed report bound to an exact commit.
 Generating or verifying the pack does not complete the audit.
+
+For a credentialed, read-only repository ledger check, run:
+
+```bash
+python3 scripts/verify_github_security_posture.py --live --repo jzvcpe-goat/study-anything
+```
+
+The live mode fails when either Code Scanning or Dependabot has any open alert.
+It is a GitHub-state check, not a substitute for source review or penetration
+testing.
 
 The container and GitHub Actions baseline is documented in `docs/security-baseline.md`. The API and
 mock Agent use a fixed non-root runtime identity, read-only root filesystems, dropped capabilities,

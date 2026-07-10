@@ -666,6 +666,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertIn("Recovery:", stderr)
         self.assertIn("<env-file>", stderr)
         self.assertNotIn(str(env_file), stderr)
+        self.assertNotIn("not-a-port", stderr)
 
     def test_check_env_strict_secret_failure_includes_recovery_steps(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -868,7 +869,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertEqual(payload["problem_count"], 1)
         problem = payload["problems"][0]
         self.assertEqual(problem["code"], "duplicate_host_port_value")
-        self.assertIn("STACK_PROFILE=full", problem["message"])
+        self.assertIn("active stack profile", problem["message"])
         self.assertIn("API_PORT, LANGFUSE_PORT", problem["message"])
         self.assertIn("STACK_PROFILE=core ./scripts/launch_self_host.sh", stdout)
         self.assertNotIn(str(env_file), stdout)
@@ -937,6 +938,8 @@ class EnvScriptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             env_file = Path(tmp) / ".env"
             secret = "change-me-nextauth-secret"
+            # Synthetic placeholder written only to prove that the checker redacts it.
+            # codeql[py/clear-text-storage-sensitive-data]
             env_file.write_text(
                 "\n".join(
                     [

@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 133240,
+    "bytes": 133254,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "63eb4ccca7e2a07b79365e527007bfd70358917e5273b36e673ba6a258eddfe0"
+    "sha256": "9e3aa882c57fc7ba4018445dab96a3b9b268feb5ce930e2fae2f5b54497f836e"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -54,11 +54,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/study-anything-platform-tools.json",
-      "bytes": 47347,
+      "bytes": 47380,
       "kind": "tool_manifest",
       "path": "platform/study-anything-platform-tools.json",
       "purpose": "Source platform tool contract.",
-      "sha256": "3e3e674dd65907dc082bb5dc2a8e3f55a89e4359aa1d35aa9fb9fc1632593478"
+      "sha256": "9f9168812f6fa4ddf1a0c5d534f4e8967c1c75a22fe981ad941b6799c0868246"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/generated/study-anything-tool-catalog.md",
@@ -118,11 +118,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/verify_platform_agent_tools.py",
-      "bytes": 47008,
+      "bytes": 47000,
       "kind": "verification",
       "path": "scripts/verify_platform_agent_tools.py",
       "purpose": "Live local API tool-surface verifier.",
-      "sha256": "0087f2c28401f54d7eac2c91cfb068f42ca007c1fd0acd9a43d32ce56d13afd2"
+      "sha256": "65d387cc68ef200dbb4d5d83905cfbb45d2b052c9dc31a903eac8c3921a4ad9c"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/verify_external_adoption.py",
@@ -142,11 +142,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/README.md",
-      "bytes": 23882,
+      "bytes": 23874,
       "kind": "platform_pack",
       "path": "platform/packs/codex/README.md",
       "purpose": "Codex-specific import guide.",
-      "sha256": "e940c780e718adb7c2cda596f4956627e379df962e4041dac76ce09e993e7a3d"
+      "sha256": "adcd624ef3d3dcd8484015ce649707821c593ff8cd6129d6941ec819a8f38453"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/pack.json",

@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-release-asset-bootstrap",
-    "bytes": 90992,
+    "bytes": 91036,
     "path": "platform/generated/study-anything-release-asset-bootstrap.zip",
-    "sha256": "4abf1443ad3207d2dbb704ee43e60e8efb06267ee2364e091869b8c17d26fd62",
+    "sha256": "6b8afa6845e5fc0510d39993eff2f93279a625cfb36e754080ea52354f3c3f40",
     "sha256_path": "platform/generated/study-anything-release-asset-bootstrap.sha256"
   },
   "classification_matrix": [
@@ -175,12 +175,12 @@
     {
       "bytes": 6597,
       "path": "platform/generated/study-anything-platform-agent-replay.json",
-      "sha256": "8b165aea5a6ff757aac06eb761544088a95645d1921151f21fecdf8dd414b28a"
+      "sha256": "5fabd0477791d6a84819601d3d7103320d8223a68249a45896d1b61be83d98a3"
     },
     {
       "bytes": 14256,
       "path": "platform/generated/study-anything-platform-plugin-downloads.json",
-      "sha256": "f5d2a16bc404c2c75544018db814fdb44e7202e824384a6b904aa7149c65ae3b"
+      "sha256": "6d652a7ff5c71e801bc3244751ab4df375714264a2e067e88e807caf24764687"
     },
     {
       "bytes": 1764,
@@ -188,14 +188,14 @@
       "sha256": "b9b71cb26babcbc7a8568e3d8fba6269451fdf5b5b1a1e72eec55a1509568745"
     },
     {
-      "bytes": 91074,
+      "bytes": 91107,
       "path": "platform/generated/study-anything-platform-openapi.json",
-      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
+      "sha256": "d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550"
     },
     {
-      "bytes": 27111,
+      "bytes": 27144,
       "path": "platform/generated/study-anything-openai-tools.json",
-      "sha256": "0ef53f9b4db56fb03fb143b66abd2379ee368a5a136e4f66fcc5088afb90371b"
+      "sha256": "8cafd6351c237c6b154f0fb4cb8e47613862878f5f8252606cd8b52b57ee12c3"
     }
   ],
   "purpose": "Make the GitHub Release page a complete external adoption entrypoint: download platform plugin packs, verify digests, inspect platform import manifests, and emit a redacted bootstrap transcript for Kimi, Codex, WorkBuddy, or generic HTTP tool hosts.",

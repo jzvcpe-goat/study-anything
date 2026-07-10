@@ -285,7 +285,7 @@ def main() -> None:
         raise RuntimeError(f"Plugin capability index did not include enrichment sample: {plugin_capabilities}")
     plugin_validation = request(
         "/v1/plugins/validate-package",
-        {"source_path": "plugins/example-exporter"},
+        {"source_path": "example-exporter"},
     )
     if plugin_validation.get("schema_version") != "plugin-package-validation-v1":
         raise RuntimeError(f"Plugin package validation schema is invalid: {plugin_validation}")

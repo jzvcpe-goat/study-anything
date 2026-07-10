@@ -91,10 +91,10 @@
       "sha256": "913e6b6dca6f8a52a0cd86b8d261569c0b421ff6aa69fcf30584f511ca797e3d"
     },
     {
-      "bytes": 91074,
+      "bytes": 91107,
       "exists": true,
       "path": "platform/generated/study-anything-platform-openapi.json",
-      "sha256": "f557f2b5bf3fae701f5e0a277244e14e7add9e6fa89bac81d90f46912ff1c9cd"
+      "sha256": "d9cfb624863efa53480d7d374bace9d35d40692ee6fb40e6ae3ac0c5c340a550"
     }
   ],
   "marketplace": {

@@ -547,7 +547,7 @@ def main() -> None:
     plugin_validation = call_tool(
         tools,
         "study_anything_validate_plugin_package",
-        {"source_path": "plugins/example-exporter"},
+        {"source_path": "example-exporter"},
     )
     if plugin_validation.get("schema_version") != "plugin-package-validation-v1":
         raise VerificationError(f"Plugin package validation returned invalid schema: {plugin_validation}")

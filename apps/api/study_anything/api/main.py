@@ -355,6 +355,14 @@ plugin_install_dir = Path(os.getenv("STUDY_ANYTHING_PLUGIN_INSTALL_DIR") or data
 plugin_quarantine_dir = Path(
     os.getenv("STUDY_ANYTHING_PLUGIN_QUARANTINE_DIR") or data_dir / "plugins-quarantine"
 )
+plugin_source_dirs = [
+    Path(value)
+    for value in (
+        os.getenv("STUDY_ANYTHING_PLUGIN_SOURCE_DIRS")
+        or f"{project_root / 'plugins'}{os.pathsep}{data_dir / 'plugin-intake'}"
+    ).split(os.pathsep)
+    if value.strip()
+]
 plugin_dirs = [
     Path(value)
     for value in _env(
@@ -376,6 +384,51 @@ def _legacy_capability(capability: str) -> AgentCapability:
         "embed": AgentCapability.EMBEDDING_CREATE,
     }
     return legacy.get(capability, AgentCapability(capability))
+
+
+def _plugin_source_from_intake(source_name: str) -> Path:
+    normalized = source_name.strip()
+    if (
+        not normalized
+        or normalized in {".", ".."}
+        or Path(normalized).name != normalized
+        or "/" in normalized
+        or "\\" in normalized
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Plugin source_path must be one intake directory name, not a filesystem path.",
+        )
+
+    matches: list[Path] = []
+    for configured_root in plugin_source_dirs:
+        try:
+            root = configured_root.expanduser().resolve(strict=True)
+            candidates = list(root.iterdir())
+        except OSError:
+            continue
+        for candidate in candidates:
+            if candidate.name != normalized:
+                continue
+            try:
+                resolved = candidate.resolve(strict=True)
+            except OSError:
+                continue
+            if resolved.parent == root and resolved.is_dir():
+                matches.append(resolved)
+
+    unique_matches = list(dict.fromkeys(matches))
+    if not unique_matches:
+        raise HTTPException(
+            status_code=404,
+            detail="Plugin source was not found in a configured intake directory.",
+        )
+    if len(unique_matches) > 1:
+        raise HTTPException(
+            status_code=409,
+            detail="Plugin source name is ambiguous across configured intake directories.",
+        )
+    return unique_matches[0]
 
 
 def _hosted_principal(request: Request) -> HostedPrincipal | None:
@@ -1793,7 +1846,7 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/plugins/preview")
     def preview_plugin(payload: PluginPreviewRequest) -> dict[str, object]:
-        status = plugins.preview_local(Path(payload.source_path).expanduser())
+        status = plugins.preview_local(_plugin_source_from_intake(payload.source_path))
         return {
             **status.public_dict(),
             "install_dir": "<plugin-install-dir>",
@@ -1804,11 +1857,11 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/plugins/validate-package")
     def validate_plugin_package_endpoint(payload: PluginValidatePackageRequest) -> dict[str, object]:
-        return validate_plugin_package(Path(payload.source_path).expanduser(), plugins)
+        return validate_plugin_package(_plugin_source_from_intake(payload.source_path), plugins)
 
     @app.post("/v1/plugins/install")
     def install_plugin(payload: PluginInstallRequest) -> dict[str, object]:
-        source_path = Path(payload.source_path).expanduser()
+        source_path = _plugin_source_from_intake(payload.source_path)
         preview = plugins.preview_local(source_path)
         if preview.manifest is None:
             raise HTTPException(status_code=400, detail=preview.message)

@@ -27,6 +27,7 @@ DEFAULT_ENV = ROOT / ".env"
 HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
 API_AUTH_MODES = {"local_only", "token", "oidc_jwt"}
 AGENT_ENDPOINT_POLICY_MODES = {"operator", "allowlist"}
+PUBLIC_APP_ENV_LABELS = {"development", "production", "test"}
 LOOPBACK_BIND_HOSTS = {"127.0.0.1", "::1", "localhost"}
 MIN_API_TOKEN_LENGTH = 32
 
@@ -143,11 +144,11 @@ def database_url_issue(env_path: Path) -> dict[str, object]:
     )
 
 
-def unsupported_api_auth_mode_issue(mode: str, env_path: Path) -> dict[str, object]:
+def unsupported_api_auth_mode_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "unsupported_api_auth_mode",
         "STUDY_ANYTHING_API_AUTH_MODE",
-        f"STUDY_ANYTHING_API_AUTH_MODE must be local_only, token, or oidc_jwt; got {mode!r}.",
+        "STUDY_ANYTHING_API_AUTH_MODE must be local_only, token, or oidc_jwt.",
         [
             f"Edit {env_path} and set STUDY_ANYTHING_API_AUTH_MODE=local_only for loopback-only use.",
             "For network or production use, set STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
@@ -169,11 +170,11 @@ def production_api_auth_issue(env_path: Path) -> dict[str, object]:
     )
 
 
-def network_bind_without_auth_issue(bind_host: str, env_path: Path) -> dict[str, object]:
+def network_bind_without_auth_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "network_bind_requires_token_auth",
         "API_BIND_HOST",
-        f"API_BIND_HOST={bind_host} is not loopback and requires token or oidc_jwt authentication.",
+        "A non-loopback API_BIND_HOST requires token or oidc_jwt authentication.",
         [
             f"For local-only use, edit {env_path} and set API_BIND_HOST=127.0.0.1.",
             "For network use, set STUDY_ANYTHING_API_AUTH_MODE=token or oidc_jwt.",
@@ -182,14 +183,11 @@ def network_bind_without_auth_issue(bind_host: str, env_path: Path) -> dict[str,
     )
 
 
-def invalid_oidc_configuration_issue(
-    message: str,
-    env_path: Path,
-) -> dict[str, object]:
+def invalid_oidc_configuration_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "invalid_oidc_configuration",
         "STUDY_ANYTHING_OIDC_ISSUER",
-        f"OIDC JWT authentication is not ready: {message}",
+        "OIDC JWT authentication is not ready; configuration detail is withheld.",
         [
             "Install the hosted dependency extra: python -m pip install -e '.[hosted]'.",
             f"Configure the OIDC issuer, audience, tenant claim, and exactly one static JWKS source in {env_path}.",
@@ -225,11 +223,11 @@ def wildcard_cors_issue(env_path: Path) -> dict[str, object]:
     )
 
 
-def unsupported_agent_endpoint_policy_issue(mode: str, env_path: Path) -> dict[str, object]:
+def unsupported_agent_endpoint_policy_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "unsupported_agent_endpoint_policy",
         "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY",
-        f"STUDY_ANYTHING_AGENT_ENDPOINT_POLICY must be operator or allowlist; got {mode!r}.",
+        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY must be operator or allowlist.",
         [
             f"For local single-operator use, edit {env_path} and set "
             "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=operator.",
@@ -267,13 +265,12 @@ def empty_agent_endpoint_allowlist_issue(env_path: Path) -> dict[str, object]:
 
 def invalid_agent_endpoint_allowlist_origin_issue(
     index: int,
-    reason: str,
     env_path: Path,
 ) -> dict[str, object]:
     return env_issue(
         "invalid_agent_endpoint_allowlist_origin",
         "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST",
-        f"Agent endpoint allowlist entry {index} is invalid: {reason}",
+        f"Agent endpoint allowlist entry {index} violates the exact-origin policy.",
         [
             f"Edit entry {index} in {env_path}; use an exact HTTPS origin such as https://agent.example.",
             "Loopback development origins may use HTTP; non-loopback origins must use HTTPS.",
@@ -282,20 +279,28 @@ def invalid_agent_endpoint_allowlist_origin_issue(
     )
 
 
-def unreadable_env_issue(error: str, env_path: Path) -> dict[str, object]:
+def unreadable_env_issue(reason: str, env_path: Path) -> dict[str, object]:
+    messages = {
+        "missing": f"Missing {env_path}.",
+        "non_utf8": f"{env_path} is not UTF-8 text.",
+        "unreadable": f"Cannot read {env_path}; operating-system detail is withheld.",
+    }
+    recovery = [
+        "Run from the repository root or pass --env path/to/.env.",
+        f"Create a local env file: python3 scripts/setup_env.py --output {env_path}",
+        f"Recheck with: python3 scripts/check_env.py --env {env_path}",
+    ]
+    if reason == "non_utf8":
+        recovery.insert(0, "Save it as UTF-8 text, then retry.")
     return env_issue(
         "env_file_unreadable",
         "env_file",
-        error,
-        [
-            "Run from the repository root or pass --env path/to/.env.",
-            f"Create a local env file: python3 scripts/setup_env.py --output {env_path}",
-            f"Recheck with: python3 scripts/check_env.py --env {env_path}",
-        ],
+        messages.get(reason, messages["unreadable"]),
+        recovery,
     )
 
 
-def invalid_port_issue(key: str, value: str, env_path: Path) -> dict[str, object]:
+def invalid_port_issue(key: str, env_path: Path) -> dict[str, object]:
     default = PORT_DEFAULTS[key]
     launch_command = (
         f"{key}={default} ./scripts/launch_skill_mode.sh"
@@ -305,7 +310,7 @@ def invalid_port_issue(key: str, value: str, env_path: Path) -> dict[str, object
     return env_issue(
         "invalid_port_value",
         key,
-        f"{key} must be a TCP port from 1 to 65535; got {value!r}.",
+        f"{key} must be a TCP port from 1 to 65535.",
         [
             f"Edit {env_path} and set {key}={default}, or another free port from 1 to 65535.",
             f"One-shot retry with a safe default: {launch_command}",
@@ -315,11 +320,11 @@ def invalid_port_issue(key: str, value: str, env_path: Path) -> dict[str, object
     )
 
 
-def unsupported_stack_profile_issue(profile: str, env_path: Path) -> dict[str, object]:
+def unsupported_stack_profile_issue(env_path: Path) -> dict[str, object]:
     return env_issue(
         "unsupported_stack_profile",
         "STACK_PROFILE",
-        f"STACK_PROFILE must be one of core, smoke, or full; got {profile!r}.",
+        "STACK_PROFILE must be one of core, smoke, or full.",
         [
             f"Edit {env_path} and set STACK_PROFILE=core, smoke, or full.",
             "One-shot minimal retry: STACK_PROFILE=core ./scripts/launch_self_host.sh",
@@ -332,15 +337,13 @@ def unsupported_stack_profile_issue(profile: str, env_path: Path) -> dict[str, o
 def duplicate_host_port_issue(
     *,
     keys: list[str],
-    port: str,
-    profile: str,
     env_path: Path,
 ) -> dict[str, object]:
     joined_keys = ", ".join(keys)
     return env_issue(
         "duplicate_host_port_value",
         "host_ports",
-        f"STACK_PROFILE={profile} maps multiple host ports to {port}: {joined_keys}.",
+        f"The active stack profile maps multiple services to one host port: {joined_keys}.",
         [
             f"Edit {env_path} so each active host port is unique: {joined_keys}.",
             "For the smallest first-run path: STACK_PROFILE=core ./scripts/launch_self_host.sh",
@@ -392,7 +395,7 @@ def validate_agent_endpoint_allowlist(value: str, env_path: Path) -> list[dict[s
         except ValueError:
             reason = "port is invalid."
         if reason:
-            issues.append(invalid_agent_endpoint_allowlist_origin_issue(index, reason, env_path))
+            issues.append(invalid_agent_endpoint_allowlist_origin_issue(index, env_path))
     return issues
 
 
@@ -414,6 +417,10 @@ def _redact_issue(issue: dict[str, object], env_path: Path) -> dict[str, object]
     return redacted
 
 
+def _public_app_env(app_env: str) -> str:
+    return app_env if app_env in PUBLIC_APP_ENV_LABELS else "unrecognized"
+
+
 def json_report(
     *,
     env_path: Path,
@@ -429,7 +436,7 @@ def json_report(
         "schema_version": "env-check-result-v1",
         "status": "fail" if problems else "pass",
         "env_file": json_env_file,
-        "app_env": app_env,
+        "app_env": _public_app_env(app_env),
         "strict": strict,
         "problem_count": len(problems),
         "warning_count": len(warnings),
@@ -466,7 +473,10 @@ def print_text_report(
             for step in problem["next_steps"]:
                 print(f"      Recovery: {step}", file=sys.stderr)
         return
-    print(f"ok    {_redact_env_path(str(env_path), env_path)} is valid for APP_ENV={app_env}.")
+    print(
+        f"ok    {_redact_env_path(str(env_path), env_path)} is valid for "
+        f"APP_ENV={_public_app_env(app_env)}."
+    )
 
 
 def parse_env(path: Path) -> dict[str, str]:
@@ -518,7 +528,14 @@ def main() -> None:
     try:
         values = parse_env(args.env)
     except CheckEnvError as exc:
-        unreadable_problem = unreadable_env_issue(str(exc), args.env)
+        cause = exc.__cause__
+        if isinstance(cause, FileNotFoundError):
+            unreadable_reason = "missing"
+        elif isinstance(cause, UnicodeDecodeError):
+            unreadable_reason = "non_utf8"
+        else:
+            unreadable_reason = "unreadable"
+        unreadable_problem = unreadable_env_issue(unreadable_reason, args.env)
         if args.json:
             print_json_report(
                 {
@@ -573,18 +590,18 @@ def main() -> None:
         if origin.strip()
     }
     if api_auth_mode not in API_AUTH_MODES:
-        problems.append(unsupported_api_auth_mode_issue(api_auth_mode, args.env))
+        problems.append(unsupported_api_auth_mode_issue(args.env))
     elif app_env == "production" and api_auth_mode not in {"token", "oidc_jwt"}:
         problems.append(production_api_auth_issue(args.env))
     elif api_auth_mode == "local_only" and api_bind_host not in LOOPBACK_BIND_HOSTS:
-        problems.append(network_bind_without_auth_issue(api_bind_host, args.env))
+        problems.append(network_bind_without_auth_issue(args.env))
     elif api_auth_mode == "token" and len(api_token) < MIN_API_TOKEN_LENGTH:
         problems.append(missing_api_token_issue(args.env))
     elif api_auth_mode == "oidc_jwt":
         try:
             load_hosted_identity_config(values)
-        except HostedIdentityConfigurationError as exc:
-            problems.append(invalid_oidc_configuration_issue(str(exc), args.env))
+        except HostedIdentityConfigurationError:
+            problems.append(invalid_oidc_configuration_issue(args.env))
     if "*" in cors_origins:
         problems.append(wildcard_cors_issue(args.env))
 
@@ -598,7 +615,7 @@ def main() -> None:
         item.strip() for item in agent_endpoint_allowlist.split(",") if item.strip()
     ]
     if agent_endpoint_policy not in AGENT_ENDPOINT_POLICY_MODES:
-        problems.append(unsupported_agent_endpoint_policy_issue(agent_endpoint_policy, args.env))
+        problems.append(unsupported_agent_endpoint_policy_issue(args.env))
     elif app_env == "production" and agent_endpoint_policy != "allowlist":
         problems.append(production_agent_allowlist_required_issue(args.env))
     elif agent_endpoint_policy == "allowlist" and not agent_endpoint_allowlist_entries:
@@ -609,24 +626,22 @@ def main() -> None:
     for key in PORT_DEFAULTS:
         value = values.get(key)
         if value is not None and not is_valid_port(value):
-            problems.append(invalid_port_issue(key, value, args.env))
+            problems.append(invalid_port_issue(key, args.env))
 
     stack_profile, host_port_keys = active_host_port_keys(values)
     if stack_profile not in PROFILE_HOST_PORT_KEYS:
-        problems.append(unsupported_stack_profile_issue(stack_profile, args.env))
+        problems.append(unsupported_stack_profile_issue(args.env))
     else:
         host_ports_by_value: dict[str, list[str]] = {}
         for key in host_port_keys:
             value = values.get(key, HOST_PORT_DEFAULTS[key])
             if is_valid_port(value):
                 host_ports_by_value.setdefault(value, []).append(key)
-        for port, keys in host_ports_by_value.items():
+        for keys in host_ports_by_value.values():
             if len(keys) > 1:
                 problems.append(
                     duplicate_host_port_issue(
                         keys=keys,
-                        port=port,
-                        profile=stack_profile,
                         env_path=args.env,
                     )
                 )

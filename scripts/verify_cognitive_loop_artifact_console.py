@@ -106,6 +106,14 @@ def write_json(path: Path, payload: dict[str, Any]) -> Path:
     return path
 
 
+def write_rejected_fixture_json(path: Path, payload: dict[str, Any]) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # This test-only sink writes deliberately unsafe fixtures so rejection can be proved.
+    # codeql[py/clear-text-storage-sensitive-data]
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return path
+
+
 def build_console(root: Path, *, html: bool = True) -> tuple[dict[str, Any], str]:
     html_path = root / ".cognitive-loop" / "artifacts" / "console" / "index.html"
     manifest_path = root / ".cognitive-loop" / "artifacts" / "console" / "manifest.json"
@@ -549,7 +557,7 @@ def verify_evolution_chain_rejection(name: str, payload: dict[str, Any]) -> bool
     with tempfile.TemporaryDirectory(prefix=f"study-anything-artifact-console-{name}-") as tmp:
         root = Path(tmp)
         init_project(root)
-        write_json(root / EVOLUTION_CHAIN_REFS["evolution_report"], payload)
+        write_rejected_fixture_json(root / EVOLUTION_CHAIN_REFS["evolution_report"], payload)
         completed = subprocess.run(
             [
                 sys.executable,

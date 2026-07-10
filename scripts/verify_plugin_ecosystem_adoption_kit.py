@@ -431,7 +431,7 @@ def sample_flows() -> list[dict[str, Any]]:
     return [
         {
             "flow_id": "validate_sample_plugin_without_execution",
-            "command": "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer",
+            "command": "python3 scripts/study_anything_cli.py plugin-validate example-note-importer",
             "expected_schema": "plugin-package-validation-v1",
             "entrypoints_executed": False,
         },
@@ -521,7 +521,7 @@ def build_report(root: Path) -> dict[str, Any]:
                 "python3 scripts/verify_plugin_quarantine.py",
                 "python3 scripts/study_anything_cli.py plugin-sdk",
                 "python3 scripts/study_anything_cli.py plugin-capabilities",
-                "python3 scripts/study_anything_cli.py plugin-validate plugins/example-note-importer",
+                "python3 scripts/study_anything_cli.py plugin-validate example-note-importer",
             ],
         },
         "operator_docs": validate_docs(root),
@@ -537,7 +537,7 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "failure_remediation": {
             "manifest_invalid": [
-                "Run plugin-validate against the explicit local plugin directory.",
+                "Run plugin-validate with one configured intake directory name.",
                 "Keep hooks, capabilities, and permissions inside the documented allowlists.",
             ],
             "digest_mismatch": [

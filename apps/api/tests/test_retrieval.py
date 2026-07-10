@@ -112,6 +112,35 @@ class RetrievalTests(unittest.TestCase):
             "study-anything-retrieval-quality-cases-v1",
         )
 
+    def test_retrieval_quality_eval_does_not_expose_exception_details(self) -> None:
+        class FailingResultSet:
+            results: list[object] = []
+
+            def public_dict(self) -> dict[str, object]:
+                return {"schema_version": "retrieval-search-results-v1", "status": "ready"}
+
+            def context_package(self, *, title: str, reference: str) -> dict[str, object]:
+                del title, reference
+                raise RuntimeError("private backend diagnostic must not cross the API boundary")
+
+        report = build_retrieval_quality_eval(
+            RetrievalQualityInput(
+                session_id="00000000-0000-0000-0000-000000000001",
+                query="bounded query",
+                retrieval_status={"status": "healthy"},
+                result_set=FailingResultSet(),  # type: ignore[arg-type]
+            )
+        )
+
+        self.assertNotIn("private backend diagnostic", str(report))
+        context_gate = next(
+            gate for gate in report["gates"] if gate["gate_id"] == "context_package_valid"
+        )
+        self.assertEqual(
+            context_gate["metadata"]["error_code"],
+            "context_package_build_failed",
+        )
+
 
 class RetrievalApiTests(unittest.TestCase):
     def _client(self, retrieval_index: object, root: Path) -> tuple[TestClient, ExitStack]:

@@ -30,6 +30,13 @@ def _deepcopy(payload: Mapping[str, Any]) -> dict[str, Any]:
     return json.loads(customer_handoff.dump_json(payload))
 
 
+def write_fixture_json(path: Path, payload: Mapping[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # This verifier intentionally writes rejected synthetic fixtures under test-only paths.
+    # codeql[py/clear-text-storage-sensitive-data]
+    path.write_text(customer_handoff.dump_json(payload), encoding="utf-8")
+
+
 def _dual_loop_pass_artifacts() -> dict[str, dict[str, Any]]:
     contract = dual_loop.failure_contract_demo()
     sandbox = dual_loop.sandbox_receipt_demo()
@@ -115,7 +122,7 @@ def write_fixture_set(name: str, artifacts: Mapping[str, Mapping[str, Any]]) -> 
     target_dir = FIXTURE_DIR / name
     target_dir.mkdir(parents=True, exist_ok=True)
     for filename, payload in artifacts.items():
-        customer_handoff.write_json(target_dir / filename, payload)
+        write_fixture_json(target_dir / filename, payload)
 
 
 def run_cli(case_dir: Path, output_path: Path, html_path: Path, zip_path: Path) -> dict[str, Any]:
@@ -152,7 +159,7 @@ def verify_cli_and_zip(pass_case: Mapping[str, Mapping[str, Any]]) -> dict[str, 
         case_dir = root / "pass"
         case_dir.mkdir(parents=True)
         for filename, payload in pass_case.items():
-            customer_handoff.write_json(case_dir / filename, payload)
+            write_fixture_json(case_dir / filename, payload)
         output_path = case_dir / "actual-customer-handoff-package.json"
         html_path = case_dir / "actual-customer-handoff-package.html"
         zip_path = case_dir / "actual-customer-handoff-package.zip"

@@ -65,23 +65,23 @@ def build_retrieval_quality_eval(values: RetrievalQualityInput) -> dict[str, obj
 
     result_public = values.result_set.public_dict()
     context_package = values.context_package
-    context_error = None
+    context_error_code = None
     if context_package is None:
         try:
             context_package = values.result_set.context_package(
                 title=f"Retrieval eval: {values.query}",
                 reference=f"retrieval://{values.session_id}",
             )
-        except Exception as exc:  # pragma: no cover - exercised through gate status
-            context_error = str(exc)
+        except Exception:  # pragma: no cover - exercised through gate status
+            context_error_code = "context_package_build_failed"
 
     context_valid = False
     if context_package is not None:
         try:
             validate_learning_context_package(context_package)
             context_valid = True
-        except Exception as exc:
-            context_error = str(exc)
+        except Exception:
+            context_error_code = "context_package_validation_failed"
 
     results = values.result_set.results
     top_score = max((result.score for result in results), default=0.0)
@@ -154,7 +154,7 @@ def build_retrieval_quality_eval(values: RetrievalQualityInput) -> dict[str, obj
             required=True,
             score=0.85,
             category="handoff_contract",
-            metadata={"error": context_error},
+            metadata={"error_code": context_error_code},
         ),
     ]
     failed_required = [

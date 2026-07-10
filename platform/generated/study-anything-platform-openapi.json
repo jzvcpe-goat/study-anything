@@ -606,7 +606,7 @@
                 "additionalProperties": false,
                 "properties": {
                   "source_path": {
-                    "description": "Local path visible to the Study Anything API host.",
+                    "description": "One direct child directory name from the API host's configured plugin intake roots.",
                     "minLength": 1,
                     "type": "string"
                   }

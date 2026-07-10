@@ -11,6 +11,14 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- Repository-level security posture now distinguishes a green PR from a clean
+  alert ledger. Read-only live verification fails on any open Code Scanning or
+  Dependabot alert. Retrieval evals no longer expose caught exception text;
+  network plugin endpoints resolve only single-name packages from configured
+  intake roots; environment diagnostics omit raw untrusted values; and customer
+  handoff JSON is metadata-only validated before persistence. Synthetic
+  negative-fixture writes use narrow query-specific CodeQL annotations rather
+  than workflow or repository-wide exclusions.
 - A deterministic external security audit preparation pack now bundles the threat model, rules of
   engagement, remediation SLA, finding/report schemas, SBOM and public trust evidence, manifest,
   archive, and SHA-256 sidecar. Security CI and release gates verify its metadata-only privacy and

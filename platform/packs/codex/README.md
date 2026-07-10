@@ -244,7 +244,7 @@ python3 scripts/study_anything_cli.py context-validate \
   fixtures/notebooklm/notebooklm-style-context-package.json
 python3 scripts/study_anything_cli.py plugin-sdk
 python3 scripts/study_anything_cli.py plugin-capabilities
-python3 scripts/study_anything_cli.py plugin-validate plugins/example-exporter
+python3 scripts/study_anything_cli.py plugin-validate example-exporter
 python3 scripts/study_anything_cli.py context-import \
   fixtures/notebooklm/notebooklm-style-context-package.json --session
 python3 scripts/study_anything_cli.py importer-run example-note-importer \

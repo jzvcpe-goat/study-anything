@@ -122,6 +122,7 @@
       "id": "ci_release_and_reliability",
       "evidence_commands": [
         "python3 scripts/verify_github_security_posture.py --check",
+        "python3 scripts/verify_github_security_posture.py --live --repo jzvcpe-goat/study-anything",
         "python3 scripts/verify_strict_reliability_acceptance.py --check",
         "python3 scripts/generated_evidence_topology.py --check"
       ],

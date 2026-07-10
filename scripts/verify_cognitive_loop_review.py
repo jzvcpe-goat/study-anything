@@ -81,6 +81,8 @@ def prepare_fixture_repo(root: Path) -> None:
 
     api_dir = root / "apps" / "api" / "study_anything" / "core"
     api_dir.mkdir(parents=True, exist_ok=True)
+    # This test-only repository contains a synthetic token to prove review output redaction.
+    # codeql[py/clear-text-storage-sensitive-data]
     (api_dir / "auth_guard.py").write_text(
         f"# file body should stay private\nPROBE = {SECRET_PROBE!r}\n",
         encoding="utf-8",

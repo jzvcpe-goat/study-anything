@@ -444,8 +444,9 @@ API_BASE=http://127.0.0.1:8000 AGENT_ENDPOINT=http://mock-http-agent:8787 ./scri
 
 Bundled plugins live in `/app/plugins` inside the API container. Locally installed plugins live in the writable Study Anything data volume under `/data/study-anything/plugins`. Community plugin directories can also be added to `STUDY_ANYTHING_PLUGIN_DIRS`.
 
-Use `POST /v1/plugins/preview` to preview one explicitly selected local plugin directory, confirm each
-requested permission, and copy it into the writable plugin data directory with `POST /v1/plugins/install`.
+Place API-managed packages under `/app/plugins` or `/data/study-anything/plugin-intake`, then use
+`POST /v1/plugins/preview` with only the direct child directory name. Confirm each requested permission
+and copy it into the writable plugin data directory with `POST /v1/plugins/install`.
 The API never downloads or executes plugin code during this install step.
 
 Before installing or updating community plugins, check the registry review surface:
