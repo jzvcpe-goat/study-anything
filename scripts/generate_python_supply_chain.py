@@ -59,7 +59,10 @@ def require(condition: bool, message: str) -> None:
 
 
 def parse_uv_version(text: str) -> tuple[int, int, int]:
-    match = re.fullmatch(r"uv (\d+)\.(\d+)\.(\d+)(?:[-+].*)?", text.strip())
+    match = re.fullmatch(
+        r"uv (\d+)\.(\d+)\.(\d+)(?:(?:[-+].*)|(?:\s+\(.*\)))?",
+        text.strip(),
+    )
     require(match is not None, "Cannot parse uv version")
     return tuple(int(part) for part in match.groups())  # type: ignore[return-value]
 

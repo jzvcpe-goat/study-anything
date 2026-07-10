@@ -25,6 +25,10 @@ supply_chain = load_script()
 class PythonSupplyChainTests(unittest.TestCase):
     def test_uv_version_floor(self) -> None:
         self.assertEqual(supply_chain.parse_uv_version("uv 0.11.18"), (0, 11, 18))
+        self.assertEqual(
+            supply_chain.parse_uv_version("uv 0.11.18 (e32666915 2026-06-01)"),
+            (0, 11, 18),
+        )
 
     def test_unhashed_requirement_is_rejected(self) -> None:
         with self.assertRaises(supply_chain.PythonSupplyChainError):
