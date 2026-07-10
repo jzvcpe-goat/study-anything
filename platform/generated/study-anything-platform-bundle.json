@@ -1540,21 +1540,21 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-service.json",
       "purpose": "Cognitive Loop repository-started Mastra runtime service verification report.",
-      "sha256": "2ef73061529922b5de7a301fa62245f87760023eaa1dac99afc352cb84dbca79"
+      "sha256": "cb41f63bb62e4eb4b470b4ed29532136cbe10de11dbc70edf2380e4a9c185bf8"
     },
     {
       "bytes": 5144,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-mastra-runtime-durable.json",
       "purpose": "Cognitive Loop durable Mastra runtime suspend/resume verification report.",
-      "sha256": "861b0f6f78cba942776791901416636d1ac6c5c793151540f3683dbb28374abd"
+      "sha256": "0c57f24863e0e5f7b045cb6b3c2458b073ea324e2a399152b0f21d15dbadf27e"
     },
     {
       "bytes": 39132,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-langfuse-observability.json",
       "purpose": "Cognitive Loop Langfuse observability DTO mapping verification report.",
-      "sha256": "9a74a8929937ff61f0a3a6b6f397eb538c3666c8a3cc7d21d076fa422d400320"
+      "sha256": "8c0d56cdad9105d7dd7fb03596e3f46e6a4ddda28b03298cd290b3619bedbd53"
     },
     {
       "bytes": 6243,
@@ -14066,18 +14066,18 @@
       "sha256": "c759472438c6963e8dd472cd4667db8375f41d9fa3d971c7c4224b7a6b724f8b"
     },
     {
-      "bytes": 767,
+      "bytes": 813,
       "kind": "mastra_runtime",
       "path": "platform/mastra-runtime/package.json",
       "purpose": "Repository-started Cognitive Loop Mastra runtime package manifest.",
-      "sha256": "0904430d0bfadfe799d5b1ebe00964719149694bb4c9ec066a61acb455c1cb07"
+      "sha256": "300dbe352077e812bc69ed644af8dbe6a4b0baa0cb23d6a97c93d624a2707dfd"
     },
     {
       "bytes": 138191,
       "kind": "mastra_runtime",
       "path": "platform/mastra-runtime/package-lock.json",
       "purpose": "Repository-started Cognitive Loop Mastra runtime dependency lockfile.",
-      "sha256": "55fed52d46596cea6d4165b538e11e8a9194f18007033757722dd1934b4e797e"
+      "sha256": "0733301c54acc3d192440b8352f2ba86faa05f7c05fdc377e2f530fe2968c721"
     },
     {
       "bytes": 394,
@@ -14829,11 +14829,11 @@
       "sha256": "45307068ccdd70d2c7b5ffef1e7a09bd4bb20379844e7978c7ca7a4f6769a490"
     },
     {
-      "bytes": 3818,
+      "bytes": 4146,
       "kind": "docs",
       "path": "docs/security-baseline.md",
       "purpose": "GitHub Actions and non-root container security baseline.",
-      "sha256": "195caa7d29a7351a013af54038ffe250e76905e537d53cd671da60df2f34c871"
+      "sha256": "5bc645cbf156b599f4795e286b6c967deb6ce83aa98e75e91eee5882cdd60264"
     },
     {
       "bytes": 2366,

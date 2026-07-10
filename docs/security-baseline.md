@@ -66,6 +66,11 @@ The repository setting target is:
 Repository settings are external state. They are not considered complete until a live GitHub API
 readback confirms them after this workflow has merged and produced its first checks.
 
+Dependabot may identify transitive vulnerabilities that cannot be patched without an upstream
+compatible release. Fixable alerts block security completion. Any unfixable alert must retain a
+documented exploitability boundary, upstream reference, and follow-up owner; it must not be silently
+dismissed or described as resolved.
+
 The deterministic contract is part of CI and the release check:
 
 ```bash

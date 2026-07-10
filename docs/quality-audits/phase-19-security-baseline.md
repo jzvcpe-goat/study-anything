@@ -74,6 +74,7 @@ without introducing model keys, hosted accounts, production mutation, or a stand
 | Runtime isolation | UID/GID `10001:10001`, read-only root, `cap_drop: ALL`, `no-new-privileges` | Reduces container blast radius |
 | Workflow reproducibility | 29 Action references across 6 repository/distribution workflows use full SHAs | Prevents mutable tag drift |
 | Negative testing | Root user, writable root, missing tmpfs flags, force pushes, missing Dependabot, and unpinned Actions are rejected | Makes controls regression-resistant |
+| Dependency remediation | `js-yaml` is forced to patched `3.15.0`; npm audit has no moderate/high/critical findings | Removes the fixable Dependabot alert |
 | Release integration | Full clean-clone release check completed with 874 tests | Covers current working tree, not a partial mode |
 | Evidence topology | 19/19 release-distribution nodes converged | Keeps generated packs synchronized |
 
@@ -85,6 +86,7 @@ without introducing model keys, hosted accounts, production mutation, or a stand
 | P1 | Reliability acceptance | Strict run still in progress | Both paths complete and metadata receipts validate | No strict-run claim yet |
 | P1 | Independent security | No threat-led full scan or external audit | Scan, triage, remediation, independent review | No vulnerability-free or hosted-production claim |
 | P2 | Third-party full profile | API and mock are hardened; Postgres/FalkorDB/Langfuse dependencies are not covered by this policy | Separate image/SBOM and service-hardening review | Optional full profile has broader risk |
+| P2 | Unpatched transitive AI SDK alert | Mastra pins affected `@ai-sdk/provider-utils` v3 and upstream has no patched v3 release | Track upstream; current runtime performs no external model calls | Low-severity residual risk |
 | P2 | Dependency warning | Starlette TestClient emits an `httpx` deprecation warning | Planned compatibility upgrade with regression tests | Future test-environment break risk |
 | P2 | Release UX | Clean-clone install has long silent intervals inside a bounded timeout | Periodic progress heartbeat without leaking pip output | Operators may mistake progress for a hang |
 
