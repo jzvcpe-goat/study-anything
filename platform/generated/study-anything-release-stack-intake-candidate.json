@@ -1,6 +1,6 @@
 {
   "candidate_group": {
-    "group_id": "release-stack-intake-pr-401-v0.3.276-published-reliability-compose-fix",
+    "group_id": "release-stack-intake-pr-405-v0.3.279-security-baseline",
     "operator_commands": [
       "python3 scripts/verify_release_stack_intake_candidate.py --check",
       "python3 scripts/verify_release_stack_readiness.py",
@@ -369,7 +369,16 @@
       "apps/api/tests/test_self_host_reliability_matrix.py",
       "apps/api/tests/test_self_host_soak.py",
       ".github/workflows/reliability-soak.yml",
-      "docs/quality-audits/phase-16-remote-reliability-acceptance.md"
+      "docs/quality-audits/phase-16-remote-reliability-acceptance.md",
+      "docs/quality-audits/phase-19-security-baseline.md",
+      "docs/security-baseline.md",
+      "scripts/verify_container_security.py",
+      "scripts/verify_github_security_posture.py",
+      "apps/api/tests/test_container_security.py",
+      "apps/api/tests/test_github_security_posture.py",
+      ".github/workflows/security.yml",
+      "apps/api/Dockerfile",
+      "infra/compose/docker-compose.yml"
     ],
     "privacy_assertions": {
       "agent_endpoint_secrets_included": false,
@@ -392,7 +401,7 @@
     "stack": [
       {
         "base": "main",
-        "branch": "codex/v0.3.276-published-reliability-compose-fix",
+        "branch": "codex/v0.3.279-security-baseline",
         "evidence_refs": [
           "platform/generated/study-anything-release-stack-manifest-fixtures.json",
           "platform/generated/study-anything-platform-bundle.json",
@@ -755,12 +764,21 @@
           "apps/api/tests/test_self_host_reliability_matrix.py",
           "apps/api/tests/test_self_host_soak.py",
           ".github/workflows/reliability-soak.yml",
-          "docs/quality-audits/phase-16-remote-reliability-acceptance.md"
+          "docs/quality-audits/phase-16-remote-reliability-acceptance.md",
+          "docs/quality-audits/phase-19-security-baseline.md",
+          "docs/security-baseline.md",
+          "scripts/verify_container_security.py",
+          "scripts/verify_github_security_posture.py",
+          "apps/api/tests/test_container_security.py",
+          "apps/api/tests/test_github_security_posture.py",
+          ".github/workflows/security.yml",
+          "apps/api/Dockerfile",
+          "infra/compose/docker-compose.yml"
         ],
         "final_state": "MERGED",
-        "merge_commit": "c58cda12f98b21db49965296cdf361aa184a8785",
+        "merge_commit": "583e4f23f0cf546269f98bace9ab92657c779442",
         "order": 1,
-        "pr": 401,
+        "pr": 405,
         "required_checks": {
           "api-tests": "pass",
           "compose-smoke": "pass"
@@ -769,15 +787,15 @@
       }
     ],
     "status": "completed",
-    "summary": "Candidate release stack group for PR #401: Fix clean-runner reliability matrix startup.",
+    "summary": "Candidate release stack group for PR #405: Harden repository and container security baseline.",
     "target_branch": "main"
   },
   "generated_at": "2026-01-01T00:00:00Z",
   "manifest": {
     "candidate_is_not_applied": false,
     "candidate_is_represented": true,
-    "current_group": "release-stack-promotion-v0.3.276",
-    "represented_pr_count": 130
+    "current_group": "release-stack-promotion-v0.3.279",
+    "represented_pr_count": 131
   },
   "negative_fixtures": [
     {

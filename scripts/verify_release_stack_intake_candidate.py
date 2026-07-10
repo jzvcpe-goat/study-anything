@@ -24,7 +24,7 @@ from verify_release_stack_readiness import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-401-intake-candidate.json"
+DEFAULT_SOURCE = ROOT / "fixtures" / "release-stack" / "pr-405-intake-candidate.json"
 REPORT = ROOT / "platform" / "generated" / "study-anything-release-stack-intake-candidate.json"
 REPORT_SCHEMA_VERSION = "release-stack-intake-candidate-v1"
 SOURCE_SCHEMA_VERSION = "release-stack-intake-source-v1"
@@ -398,6 +398,15 @@ EVIDENCE_REFS = [
     "apps/api/tests/test_self_host_soak.py",
     ".github/workflows/reliability-soak.yml",
     "docs/quality-audits/phase-16-remote-reliability-acceptance.md",
+    "docs/quality-audits/phase-19-security-baseline.md",
+    "docs/security-baseline.md",
+    "scripts/verify_container_security.py",
+    "scripts/verify_github_security_posture.py",
+    "apps/api/tests/test_container_security.py",
+    "apps/api/tests/test_github_security_posture.py",
+    ".github/workflows/security.yml",
+    "apps/api/Dockerfile",
+    "infra/compose/docker-compose.yml",
 ]
 FALSE_PRIVACY_FLAGS = {
     "github_tokens_included": False,
