@@ -1,0 +1,33 @@
+{
+  "boundary": {
+    "filesystem_io": false,
+    "legacy_runtime_dependency": false,
+    "model_or_provider_sdk_imports": false,
+    "network_imports": false,
+    "retrieval_imports": false,
+    "subprocess_or_tool_execution": false
+  },
+  "claim_boundary": "This verifier proves static runtime isolation for the canonical kernel files only; it is not a production sandbox or external security audit.",
+  "files": [
+    {
+      "imports": [
+        "study_anything.cbb.kernel.gate"
+      ],
+      "path": "apps/api/study_anything/cbb/kernel/__init__.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "collections",
+        "study_anything.cbb.protocol.canonical",
+        "study_anything.cbb.protocol.models",
+        "typing"
+      ],
+      "path": "apps/api/study_anything/cbb/kernel/gate.py",
+      "violations": []
+    }
+  ],
+  "schema_version": "cbb-runtime-isolation-verification-v1",
+  "status": "passed"
+}

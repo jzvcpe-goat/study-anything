@@ -1,0 +1,96 @@
+{
+  "cases": [
+    {
+      "approved_scope": "internal_handoff",
+      "case_id": "claim-boundary-narrowing",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [],
+      "reasons": [],
+      "status": "allow"
+    },
+    {
+      "approved_scope": "blocked",
+      "case_id": "failed-evidence",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [],
+      "reasons": [
+        "evidence_failed:sandbox_receipt"
+      ],
+      "status": "block"
+    },
+    {
+      "approved_scope": "blocked",
+      "case_id": "hard-deny",
+      "hard_denies_triggered": [
+        "production_mutation"
+      ],
+      "missing_evidence_types": [],
+      "reasons": [
+        "hard_deny:production_mutation"
+      ],
+      "status": "block"
+    },
+    {
+      "approved_scope": "blocked",
+      "case_id": "missing-evidence",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [
+        "dual_loop_gate"
+      ],
+      "reasons": [
+        "required_evidence_unavailable"
+      ],
+      "status": "needs_evidence"
+    },
+    {
+      "approved_scope": "controlled_customer_handoff",
+      "case_id": "pass",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [],
+      "reasons": [],
+      "status": "allow"
+    },
+    {
+      "approved_scope": "blocked",
+      "case_id": "reference-mismatch",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [],
+      "reasons": [
+        "evidence_policy_ref_mismatch"
+      ],
+      "status": "block"
+    },
+    {
+      "approved_scope": "blocked",
+      "case_id": "stale-reconstruction",
+      "hard_denies_triggered": [],
+      "missing_evidence_types": [
+        "qualified_reconstruction",
+        "role:qualified_reviewer"
+      ],
+      "reasons": [
+        "required_evidence_unavailable"
+      ],
+      "status": "needs_evidence"
+    }
+  ],
+  "fixture_count": 7,
+  "kernel": {
+    "deterministic": true,
+    "model_calls": false,
+    "network": false,
+    "production_mutation": false,
+    "retrieval": false,
+    "tool_execution": false
+  },
+  "schema_version": "cbb-v1-kernel-verification-v1",
+  "status": "passed",
+  "verified_properties": [
+    "hard denies block every release scope",
+    "missing or stale required evidence cannot authorize delivery",
+    "failed evidence blocks instead of degrading to an approval",
+    "cross-receipt reference mismatches block",
+    "claim boundaries can narrow but never expand authority",
+    "identical canonical inputs produce identical decisions"
+  ]
+}

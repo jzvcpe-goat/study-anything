@@ -41,8 +41,9 @@
     "failure-contract-v1 -> cbb.trust-policy.v1",
     "failure-contract-v1 + sandbox-receipt-v1 -> cbb.evidence-bundle.v1",
     "attention-reconstruction-summary-v1 -> cbb.qualified-reconstruction.v1",
-    "dual-loop-gate-receipt-v1 + delivery-trust-receipt-v1 -> cbb.gate-decision.v1",
-    "delivery-trust-receipt-v1 -> cbb.delivery-trust-receipt.v1"
+    "dual-loop-gate-receipt-v1 -> cbb.evidence-bundle.v1",
+    "policy + evidence + reconstruction -> cbb.gate-decision.v1",
+    "delivery-trust-receipt-v1 + gate decision -> cbb.delivery-trust-receipt.v1"
   ],
   "narrowed_scope_case_count": 1,
   "negative_checks": {

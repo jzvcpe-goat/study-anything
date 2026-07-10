@@ -31,8 +31,11 @@ EXPECTED_SCOPE_AREAS = {
 EXPECTED_CBB_V1_PACK_ASSETS = {
     "docs/protocol.md",
     "docs/cbb-protocol-v1-contracts.md",
+    "docs/cbb-protocol-v1-kernel.md",
     "platform/generated/study-anything-cbb-v1-contracts.json",
     "platform/generated/study-anything-cbb-v0-compatibility.json",
+    "platform/generated/study-anything-cbb-v1-kernel.json",
+    "platform/generated/study-anything-cbb-runtime-isolation.json",
     "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
     "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
     "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
@@ -48,9 +51,17 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "fixtures/cbb-v1-contracts/naive-timestamp.json",
     "fixtures/cbb-v1-contracts/invalid-state.json",
     "fixtures/cbb-v1-contracts/scope-expansion.json",
+    "fixtures/cbb-v1-kernel/pass.json",
+    "fixtures/cbb-v1-kernel/missing-evidence.json",
+    "fixtures/cbb-v1-kernel/failed-evidence.json",
+    "fixtures/cbb-v1-kernel/stale-reconstruction.json",
+    "fixtures/cbb-v1-kernel/hard-deny.json",
+    "fixtures/cbb-v1-kernel/reference-mismatch.json",
+    "fixtures/cbb-v1-kernel/claim-boundary-narrowing.json",
 }
 EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
+    "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
 }
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(
@@ -143,6 +154,8 @@ def validate_plan(plan: Mapping[str, Any]) -> None:
         {
             "python3 scripts/verify_cbb_v1_contracts.py --check",
             "python3 scripts/verify_cbb_v0_compatibility.py --check",
+            "python3 scripts/verify_cbb_v1_kernel.py --check",
+            "python3 scripts/verify_cbb_runtime_isolation.py --check",
         }
         <= set(trust_scope.get("evidence_commands") or []),
         "canonical CBB v1 verifier commands are missing from the audit plan",

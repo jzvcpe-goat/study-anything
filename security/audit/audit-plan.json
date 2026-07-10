@@ -105,18 +105,24 @@
         "python3 scripts/verify_attention_reconstruction_lite.py --check",
         "python3 scripts/verify_dual_loop_gate.py --check",
         "python3 scripts/verify_cbb_v1_contracts.py --check",
-        "python3 scripts/verify_cbb_v0_compatibility.py --check"
+        "python3 scripts/verify_cbb_v0_compatibility.py --check",
+        "python3 scripts/verify_cbb_v1_kernel.py --check",
+        "python3 scripts/verify_cbb_runtime_isolation.py --check"
       ],
       "evidence_assets": [
         "docs/dual-loop-mvp.md",
         "docs/trust-model.md",
         "docs/protocol.md",
         "docs/cbb-protocol-v1-contracts.md",
+        "docs/cbb-protocol-v1-kernel.md",
         "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
+        "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
         "platform/generated/study-anything-dual-loop-contracts.json",
         "platform/generated/study-anything-dual-loop-gate.json",
         "platform/generated/study-anything-cbb-v1-contracts.json",
         "platform/generated/study-anything-cbb-v0-compatibility.json",
+        "platform/generated/study-anything-cbb-v1-kernel.json",
+        "platform/generated/study-anything-cbb-runtime-isolation.json",
         "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
         "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
         "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
@@ -131,7 +137,14 @@
         "fixtures/cbb-v1-contracts/malformed.json",
         "fixtures/cbb-v1-contracts/naive-timestamp.json",
         "fixtures/cbb-v1-contracts/invalid-state.json",
-        "fixtures/cbb-v1-contracts/scope-expansion.json"
+        "fixtures/cbb-v1-contracts/scope-expansion.json",
+        "fixtures/cbb-v1-kernel/pass.json",
+        "fixtures/cbb-v1-kernel/missing-evidence.json",
+        "fixtures/cbb-v1-kernel/failed-evidence.json",
+        "fixtures/cbb-v1-kernel/stale-reconstruction.json",
+        "fixtures/cbb-v1-kernel/hard-deny.json",
+        "fixtures/cbb-v1-kernel/reference-mismatch.json",
+        "fixtures/cbb-v1-kernel/claim-boundary-narrowing.json"
       ],
       "required_methods": [
         "artifact_integrity_review",

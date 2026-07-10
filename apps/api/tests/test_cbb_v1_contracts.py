@@ -103,6 +103,31 @@ class CBBV1ContractTests(unittest.TestCase):
         self.assertEqual(mapped["gate_decision"].status, "needs_evidence")
         self.assertEqual(mapped["gate_decision"].approved_scope, DeliveryScope.BLOCKED)
 
+    def test_failed_v0_sandbox_maps_to_block_instead_of_schema_error(self) -> None:
+        contract = dual_loop.failure_contract_demo()
+        sandbox = dual_loop.sandbox_receipt_demo()
+        sandbox["status"] = "failed"
+        attention = dual_loop.attention_summary_demo()
+        gate = dual_loop.evaluate_dual_loop_gate(contract, sandbox, attention)
+        receipt = delivery_trust.build_delivery_trust_receipt(
+            contract,
+            sandbox,
+            gate,
+            attention,
+        )
+        mapped = compat_v0.map_v0_delivery_chain(
+            contract,
+            sandbox,
+            attention,
+            gate,
+            receipt,
+        )
+        self.assertEqual(mapped["gate_decision"].status, "block")
+        self.assertIn(
+            "evidence_failed:sandbox_receipt",
+            mapped["gate_decision"].reasons,
+        )
+
     def test_required_verifiers_pass(self) -> None:
         for script in ("verify_cbb_v1_contracts.py", "verify_cbb_v0_compatibility.py"):
             completed = subprocess.run(

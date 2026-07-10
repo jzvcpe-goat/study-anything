@@ -97,6 +97,8 @@ The current `main` line includes deterministic, metadata-only implementations fo
 - Dual-Loop gate receipts;
 - Delivery Trust Receipts and Customer Handoff Packages;
 - CBB protocol contracts, deterministic gates, receipt chains, and self-intake;
+- a canonical v1 Trust Kernel with hard-deny, evidence-state, scope, and static
+  runtime-isolation verifiers;
 - delivery-class, scenario, external feedback, and controlled handoff evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML artifact adapters;
 - local release, security, adoption, and external-audit preparation evidence.
@@ -200,6 +202,7 @@ not an autonomous release decision.
 - [Product positioning](docs/product-positioning.md)
 - [Naming and compatibility](docs/naming-and-compatibility.md)
 - [CBB Protocol v1 development plan](docs/cbb-protocol-v1-development-plan.md)
+- [CBB Protocol v1 deterministic Trust Kernel](docs/cbb-protocol-v1-kernel.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

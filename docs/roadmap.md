@@ -105,8 +105,9 @@ Progress:
 - canonical schemas, deterministic JSON, v0 compatibility adapters, and the
   pass/missing/hard-deny/stale/secret/malformed/naive-timestamp/invalid-state/
   scope-expansion fixture matrix are implemented in PR 1;
-- the deterministic policy evaluator, protocol CLI, and independent conformance
-  consumer remain pending PR 2 and later milestones.
+- the deterministic policy evaluator, hard-deny and evidence-state matrix,
+  static runtime-isolation gate, and v0 gate routing are implemented in PR 2;
+- the protocol CLI and independent conformance consumer remain later milestones.
 
 Exit criteria:
 
