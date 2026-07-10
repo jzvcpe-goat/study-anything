@@ -86,9 +86,39 @@ jobs:
             --output "${RUNNER_TEMP}/study-anything-${{ matrix.mode }}-reliability.json"
       - name: Upload metadata-only reliability receipt
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: reliability-${{ matrix.mode }}-${{ github.run_id }}
           path: ${{ runner.temp }}/study-anything-${{ matrix.mode }}-reliability.json
           if-no-files-found: error
           retention-days: 14
+
+  reliability-index:
+    if: always()
+    needs: reliability-soak
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download metadata-only mode receipts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: reliability-*-${{ github.run_id }}
+          path: ${{ runner.temp }}/reliability-receipts
+          merge-multiple: true
+      - name: Build metadata-only reliability index
+        run: |
+          python scripts/reliability_evidence_index.py \
+            --run-id "${{ github.run_id }}" \
+            --event "${{ github.event_name }}" \
+            --head-sha "${{ github.sha }}" \
+            --source-receipt "${RUNNER_TEMP}/reliability-receipts/study-anything-source-build-reliability.json" \
+            --published-receipt "${RUNNER_TEMP}/reliability-receipts/study-anything-published-image-reliability.json" \
+            --output "${RUNNER_TEMP}/self-host-reliability-index.json"
+      - name: Upload metadata-only reliability index
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reliability-index-${{ github.run_id }}
+          path: ${{ runner.temp }}/self-host-reliability-index.json
+          if-no-files-found: error
+          retention-days: 90

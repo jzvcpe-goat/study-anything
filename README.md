@@ -278,7 +278,8 @@ python3 scripts/setup_env.py
 The API binds to `127.0.0.1` and disables browser cross-origin access by
 default. Production or private-network exposure requires explicit token mode;
 see `docs/security.md`, `docs/self-hosting.md`, `docs/self-host-reliability.md`, and
-`docs/scheduled-reliability.md`.
+`docs/scheduled-reliability.md`. The scheduled workflow also emits a metadata-only longitudinal
+index that keeps short diagnostics separate from strict default-duration evidence.
 
 The default Docker profile is `core`: API and Postgres. Enable observability and optional topology services later with:
 

@@ -5039,6 +5039,16 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic scheduled reliability receipt and workflow verifier.",
     ),
     (
+        "scripts/reliability_evidence_index.py",
+        "diagnostics",
+        "Offline metadata-only longitudinal reliability index builder.",
+    ),
+    (
+        "scripts/verify_reliability_evidence_index.py",
+        "verification",
+        "Deterministic reliability index, privacy, and workflow wiring verifier.",
+    ),
+    (
         ".github/workflows/reliability-soak.yml",
         "workflow",
         "Scheduled real-time source-build and published-image reliability matrix.",

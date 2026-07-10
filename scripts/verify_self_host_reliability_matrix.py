@@ -132,7 +132,7 @@ def verify() -> dict[str, object]:
         "schedule:",
         "timeout-minutes: 180",
         "--fault-duration-seconds",
-        "actions/upload-artifact@v6",
+        "actions/upload-artifact@v7",
     ):
         require(marker in workflow, f"Reliability workflow marker missing: {marker}")
     require("continue-on-error" not in workflow, "Scheduled reliability failures must block jobs.")

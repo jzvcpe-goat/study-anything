@@ -43,6 +43,40 @@ Compose startup is retried at most three times with a ten-second delay to absorb
 or build failures. The receipt records the actual attempt count. Exhausting the retries blocks the
 job with a classified `*_after_retries` failure; retries never weaken soak or recovery thresholds.
 
+## Longitudinal Evidence Index
+
+After both matrix jobs finish, a separate GitHub job downloads their metadata-only receipts and
+builds `self-host-reliability-index-v1`. The index records the workflow run ID, event, head commit,
+canonical receipt hashes, source commit or published image digest, requested thresholds, aggregate
+sampling results, restart/recovery state, and the run decision. It never copies workflow logs,
+Docker output, endpoints, image repository references, source text, learner answers, or secrets.
+
+The index classifies a run as `strict_dual_pass` only when both modes use the exact default profile:
+721 samples, ten-second intervals, a fault at 600 seconds for 45 seconds, a 0.99 minimum success
+ratio, at most eight consecutive failures, observed recovery, and at least 7,200 seconds of elapsed
+evidence. Short runs are `diagnostic_only`; a strict/diagnostic mix is blocked. Source-build and
+published-image evidence have equal weight.
+
+The index artifact is retained for 90 days. One strict dual pass proves one bounded run. The index
+requires three strict dual passes before setting its limited `longitudinal_trend_claimable` signal,
+and it always keeps `production_slo_claimable=false`.
+
+To rebuild or append an index offline from downloaded receipts:
+
+```bash
+python3 scripts/reliability_evidence_index.py \
+  --run-id RUN_ID \
+  --event schedule \
+  --head-sha COMMIT_SHA \
+  --source-receipt source-build.json \
+  --published-receipt published-image.json \
+  --previous-index previous-index.json \
+  --output .cognitive-loop/artifacts/reliability/self-host-reliability-index.json
+```
+
+Omit `--previous-index` for the first run. Add `--require-strict-pass` only when a caller explicitly
+needs to reject valid diagnostic or blocked evidence.
+
 ## Receipt And Privacy Boundary
 
 Each job uploads one `self-host-reliability-matrix-receipt-v1` JSON artifact for 14 days. The receipt
@@ -62,4 +96,6 @@ or proof that a scheduled run occurred before the corresponding GitHub artifact 
 每周任务会分别验证“当前源码构建”和“已发布 GHCR 镜像”。两边都必须完成学习 API
 闭环、经历一次真实 API 容器停止与重启，并在故障后重新观察到健康响应。收据只保存汇总
 metadata，不保存密钥、URL、日志、正文、答案或本机路径。短时手动运行不能替代默认两小时
-运行，GitHub 收据不存在时也不能宣称定时可靠性验证已经完成。
+运行，GitHub 收据不存在时也不能宣称定时可靠性验证已经完成。工作流会额外生成纵向索引；
+只有两种模式都满足严格默认参数才记为一次严格双通过，至少三次才允许声称存在有限趋势，
+并且无论运行多少次都不会自动升级为生产 SLO。
