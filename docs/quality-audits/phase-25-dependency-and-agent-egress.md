@@ -60,7 +60,7 @@ allowed-gateway compromise scenarios.
 | `verify_agent_endpoint_policy.py --check` | Pass |
 | `verify_dependency_risk_acceptance.py --check` | Pass; 31 days until required review on audit date |
 | `verify_container_security.py --check` | Pass; Compose policy passthrough verified |
-| `release_check.sh --skip-clean-clone` | Pass; exit 0, all integrated gates passed, partial receipt only |
+| `release_check.sh --skip-clean-clone` | Pass; exit 0, 914 tests and all integrated gates passed, partial receipt only |
 | Protected GitHub checks | Pending PR |
 
 The first local pytest command did not execute because this isolated worktree had
