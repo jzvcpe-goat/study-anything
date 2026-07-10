@@ -11,6 +11,10 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- The API and mock HTTP Agent run as fixed non-root UID/GID `10001:10001` with read-only roots,
+  dropped capabilities, `no-new-privileges`, init shims, and hardened tmpfs mounts.
+- GitHub Actions are pinned to full commit SHAs. CodeQL, dependency review, and container-policy jobs
+  now provide a reviewable security baseline without replacing a threat-led or independent audit.
 - Docker API publication defaults to `127.0.0.1`.
 - Browser cross-origin access is disabled unless exact trusted origins are set.
 - Production or non-loopback exposure requires bearer-token mode.

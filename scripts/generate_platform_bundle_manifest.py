@@ -5049,6 +5049,16 @@ FILES: list[tuple[str, str, str]] = [
         "Deterministic reliability index, privacy, and workflow wiring verifier.",
     ),
     (
+        "scripts/verify_container_security.py",
+        "verification",
+        "Deterministic GitHub Actions and container security baseline verifier.",
+    ),
+    (
+        "scripts/verify_github_security_posture.py",
+        "verification",
+        "Deterministic and read-only live GitHub repository security posture verifier.",
+    ),
+    (
         ".github/workflows/reliability-soak.yml",
         "workflow",
         "Scheduled real-time source-build and published-image reliability matrix.",
@@ -7322,6 +7332,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/security.md",
         "docs",
         "Local-first security model and recovery hardening guide.",
+    ),
+    (
+        "docs/security-baseline.md",
+        "docs",
+        "GitHub Actions and non-root container security baseline.",
     ),
     (
         "docs/adoption-telemetry.md",

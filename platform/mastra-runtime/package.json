@@ -21,6 +21,9 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
+  "overrides": {
+    "js-yaml": "3.15.0"
+  },
   "engines": {
     "node": ">=22"
   }

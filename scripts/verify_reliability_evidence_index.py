@@ -217,7 +217,7 @@ def verify() -> dict[str, object]:
     ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     for marker in (
         "reliability-index:",
-        "actions/download-artifact@v8",
+        "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
         "reliability_evidence_index.py",
         "self-host-reliability-index.json",
         "retention-days: 90",
