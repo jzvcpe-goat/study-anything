@@ -10,23 +10,24 @@ Auditor: Codex, using `通用质检方案.md`
 
 ## 1. Executive Conclusion
 
-Decision: **Needs Changes before merge; local implementation passes**
+Decision: **Pass for Phase 19 merge; whole product Needs Changes**
 
 The Phase 19 implementation is internally consistent and passes a full clean-clone release check,
-but remote GitHub checks and live repository settings have not yet completed. The whole product is
-still an OSS/local-first alpha, not a hosted commercial service.
+all six required checks pass on final head `bb9d49bd`, and live repository settings pass 13/13
+read-only checks. The whole product is still an OSS/local-first alpha, not a hosted commercial
+service.
 
 Largest remaining risks:
 
-1. The final PR head still needs all required GitHub checks after the posture-verifier follow-up.
-2. The strict two-hour source-build/published-image reliability run is still in progress and cannot be claimed.
-3. A threat-led repository scan, image/SBOM review, and independent audit remain outstanding.
+1. The strict two-hour source-build/published-image reliability run is still in progress and cannot be claimed.
+2. A threat-led repository scan, image/SBOM review, and independent audit remain outstanding.
+3. The optional full profile still needs separate third-party image and service-hardening review.
 
 Next required actions:
 
-1. Require all old and new GitHub checks to pass on the final PR head.
-2. Merge only after the final head is green and the live posture verifier remains green.
-3. Preserve strict reliability and independent security as separate acceptance tracks.
+1. Merge the final green Phase 19 head without weakening branch protection.
+2. Validate both strict-reliability artifacts after the two-hour run finishes.
+3. Run and triage an independent threat-led security scan as a separate acceptance track.
 
 Do not:
 
@@ -39,13 +40,13 @@ Do not:
 | Category | Items | Evidence | Risk |
 |---|---|---|---|
 | Included | Non-root API image, read-only application containers, dropped capabilities, hardened tmpfs | Dockerfile, Compose, runtime inspect smoke | Low after remote CI |
-| Included | Full-SHA Action references, CodeQL, dependency review, container policy | First PR run passed; final head pending | Low after final CI |
+| Included | Full-SHA Action references, CodeQL, dependency review, container policy | Final head passed all six required checks | Low |
 | Included | Read-only live GitHub posture verifier | Live 13/13 checks pass | Low |
 | Excluded | Hosted identity, tenant isolation, billing, payments, SSO | Commercial readiness contract | P0 for hosted commercialization, outside this phase |
 | Excluded | Independent penetration test and external audit | Security claim boundary | P1 before hosted production |
 | Claimed but unproven | Strict two-hour dual-path reliability run | GitHub run `29060766261` is in progress | P1 before reliability acceptance |
 
-Verdict: **Needs Changes before merge**.
+Verdict: **Pass for the Phase 19 merge; Needs Changes for whole-product production readiness**.
 
 ## 3. Source of Truth
 
@@ -82,7 +83,6 @@ without introducing model keys, hosted accounts, production mutation, or a stand
 
 | Severity | Area | Current | Required | Impact |
 |---|---|---|---|---|
-| P1 | Final-head remote validation | First PR run passed; follow-up commit pending | All six required checks pass on final head | Merge remains blocked until green |
 | P1 | Reliability acceptance | Strict run still in progress | Both paths complete and metadata receipts validate | No strict-run claim yet |
 | P1 | Independent security | No threat-led full scan or external audit | Scan, triage, remediation, independent review | No vulnerability-free or hosted-production claim |
 | P2 | Third-party full profile | API and mock are hardened; Postgres/FalkorDB/Langfuse dependencies are not covered by this policy | Separate image/SBOM and service-hardening review | Optional full profile has broader risk |
@@ -140,9 +140,9 @@ shippable workflow.
 | Runtime container policy | `verify_container_security.py --runtime-container-id ...` | Yes for this phase | Real disposable container pass |
 | GitHub posture contract | `verify_github_security_posture.py --check` | Yes | 4 focused posture tests and deterministic gate pass |
 | Live GitHub posture | `verify_github_security_posture.py --live ...` | Yes before phase completion | Pass, 13/13 settings |
-| Code scanning | `codeql (python)` and `CodeQL` | Yes | First PR run passed; final head pending |
-| Dependency changes | `dependency review` | Yes | First PR run passed after enabling Dependency Graph |
-| Existing API/Compose gates | `api-tests`, `compose-smoke` | Yes | First PR run and local full release passed; final head pending |
+| Code scanning | `codeql (python)` and `CodeQL` | Yes | Final head passed both checks |
+| Dependency changes | `dependency review` | Yes | Final head passed after enabling Dependency Graph |
+| Existing API/Compose gates | `api-tests`, `compose-smoke` | Yes | Final head and local full release passed |
 | Distribution consistency | `generated_evidence_topology.py --check` | Yes | 19/19 converged |
 | Full release | `./scripts/release_check.sh` | Yes | Completed, 874 tests, clean clone included |
 
@@ -160,14 +160,14 @@ plugin must be corrected to use `/data/study-anything`, not granted a writable r
 | Container | Non-root and least-privilege source plus runtime checks pass | Pass |
 | Workflow supply chain | All shipped Action references use full SHAs | Pass |
 | Local release | Full clean-clone release receipt completed | Pass |
-| Remote CI | Old and new required jobs pass on the final PR head | Pending final head |
+| Remote CI | Old and new required jobs pass on the final PR head | Pass, 6/6 on `bb9d49bd` |
 | Repository settings | Read-only live posture report passes | Pass, 13/13 checks |
 | Reliability | Strict two-hour dual-path artifacts validate | In progress |
 | Hosted production | Identity, tenancy, SLO, incidents, payment, external audit | Out of scope / not ready |
 
 ## 16. Bottom Line
 
-The security baseline and live repository settings are ready. It is not yet ready to merge and does
-not make the whole product commercially production-ready. Phase 19 becomes Pass only after the
-final PR head is green; strict reliability and independent security remain separate acceptance
-tracks.
+The Phase 19 security baseline, live repository settings, local full release, and final-head CI are
+ready to merge. This does not make the whole product commercially production-ready. Strict
+reliability, third-party full-profile hardening, and independent security remain separate acceptance
+tracks with no passing claim yet.
