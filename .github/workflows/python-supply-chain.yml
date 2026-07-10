@@ -1,0 +1,69 @@
+name: python-supply-chain
+
+on:
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "requirements/**"
+      - "scripts/generate_python_supply_chain.py"
+      - "apps/api/tests/test_python_supply_chain.py"
+      - "platform/generated/study-anything-python-sbom.cdx.json"
+      - "platform/generated/study-anything-python-supply-chain.json"
+      - ".github/workflows/python-supply-chain.yml"
+  push:
+    branches: [main]
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "requirements/**"
+      - "scripts/generate_python_supply_chain.py"
+      - "platform/generated/study-anything-python-sbom.cdx.json"
+      - "platform/generated/study-anything-python-supply-chain.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lock-sbom:
+    name: lock and SBOM
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          version: "0.11.18"
+          enable-cache: false
+      - name: Generate universal lock, hashed requirements, and SBOM
+        run: python3 scripts/generate_python_supply_chain.py --refresh --timeout-seconds 600
+      - name: Upload generated candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: python-supply-chain-candidate
+          if-no-files-found: error
+          path: |
+            uv.lock
+            requirements/locked-*.txt
+            platform/generated/study-anything-python-sbom.cdx.json
+            platform/generated/study-anything-python-supply-chain.json
+      - name: Verify offline reproduction
+        run: python3 scripts/generate_python_supply_chain.py --check --timeout-seconds 120
+      - name: Require generated artifacts to be committed
+        run: |
+          git diff --exit-code -- \
+            uv.lock \
+            requirements/locked-skill.txt \
+            requirements/locked-full.txt \
+            requirements/locked-dev-full.txt \
+            requirements/locked-policy.txt \
+            platform/generated/study-anything-python-sbom.cdx.json \
+            platform/generated/study-anything-python-supply-chain.json
+          test -z "$(git ls-files --others --exclude-standard -- \
+            uv.lock \
+            requirements/locked-skill.txt \
+            requirements/locked-full.txt \
+            requirements/locked-dev-full.txt \
+            requirements/locked-policy.txt \
+            platform/generated/study-anything-python-sbom.cdx.json \
+            platform/generated/study-anything-python-supply-chain.json)"

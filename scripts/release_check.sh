@@ -376,10 +376,11 @@ if [ "$cbb_protocol_only_enabled" = "true" ]; then
   exit 0
 fi
 
-if ! "$python_bin" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)'; then
-  printf "error Python 3.11+ is required. Create a project virtualenv with:\n" >&2
+if ! "$python_bin" -c 'import sys; raise SystemExit(0 if (3, 11) <= sys.version_info < (3, 13) else 1)'; then
+  printf "error Python 3.11 or 3.12 is required. Create a project virtualenv with:\n" >&2
   printf "  python3.11 -m venv .venv\n" >&2
-  printf "  .venv/bin/python -m pip install -e '.[dev,full]'\n" >&2
+  printf "  .venv/bin/python -m pip install --require-hashes -r requirements/locked-dev-full.txt\n" >&2
+  printf "  .venv/bin/python -m pip install --no-deps --no-build-isolation -e .\n" >&2
   exit 1
 fi
 
@@ -387,7 +388,8 @@ if ! "$python_bin" -c 'import fastapi, mypy, pytest, ruff' >/dev/null 2>&1; then
   known_issue="selected Python runtime lacks dev/full release dependencies"
   claim_boundary="Failed repository sanity: the selected Python runtime cannot run full release gates."
   printf "error dev/full release dependencies are missing for %s. Install them with:\n" "$python_bin" >&2
-  printf "  %s -m pip install -e '.[dev,full]'\n" "$python_bin" >&2
+  printf "  %s -m pip install --require-hashes -r requirements/locked-dev-full.txt\n" "$python_bin" >&2
+  printf "  %s -m pip install --no-deps --no-build-isolation -e .\n" "$python_bin" >&2
   printf "Or select an existing full environment with:\n" >&2
   printf "  STUDY_ANYTHING_PYTHON=/path/to/python ./scripts/release_check.sh\n" >&2
   exit 1
@@ -433,6 +435,7 @@ fi
 phase "existing release gates"
 "$python_bin" scripts/verify_local_api_security.py --check
 "$python_bin" scripts/verify_container_security.py --check
+"$python_bin" scripts/generate_python_supply_chain.py --check --timeout-seconds 120
 "$python_bin" scripts/verify_github_security_posture.py --check
 "$python_bin" scripts/verify_self_host_soak.py --check
 "$python_bin" scripts/verify_self_host_reliability_matrix.py --check

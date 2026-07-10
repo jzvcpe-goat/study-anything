@@ -73,7 +73,8 @@ python3 scripts/study_anything_cli.py health
 python3 scripts/study_anything_cli.py demo
 ```
 
-`launch_skill_mode.sh` verifies Python 3.11+, creates `.venv` when needed, installs API dependencies,
+`launch_skill_mode.sh` verifies Python 3.11 or 3.12, creates `.venv` when needed, installs the
+hash-bound dependencies from `requirements/locked-skill.txt`,
 and starts the local API in the background with JSON session storage. Stop it with:
 
 ```bash

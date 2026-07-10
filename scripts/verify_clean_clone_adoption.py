@@ -143,7 +143,10 @@ def classify_failure(message: str) -> str:
         return "skill_mode_demo_step_failed"
     if "skill mode did not create .venv/bin/python" in lowered:
         return "skill_mode_venv_missing"
-    if "python 3.11 or newer is required" in lowered:
+    if (
+        "python 3.11 or newer is required" in lowered
+        or "python 3.11 or 3.12 is required" in lowered
+    ):
         return "python_version_missing"
     if "promptfoo did not pass" in lowered:
         return "promptfoo_eval_failed"
@@ -184,10 +187,10 @@ def failure_next_steps(classification: str) -> list[str]:
         ],
         "skill_mode_venv_missing": [
             "Run `python3 scripts/setup_env.py --force` and then `./scripts/launch_skill_mode.sh` in the clean clone.",
-            "Verify the selected Python points to 3.11 or newer.",
+            "Verify the selected Python points to 3.11 or 3.12.",
         ],
         "python_version_missing": [
-            "Install Python 3.11 or newer, or set `STUDY_ANYTHING_PYTHON=/path/to/python3.11`.",
+            "Install Python 3.11 or 3.12, or set `STUDY_ANYTHING_PYTHON=/path/to/python3.11`.",
             "Avoid system Python versions older than 3.11 for the Skill Mode smoke.",
         ],
         "promptfoo_eval_failed": [
@@ -506,7 +509,7 @@ def is_python_311_or_newer(candidate: str) -> bool:
             [
                 candidate,
                 "-c",
-                "import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)",
+                "import sys; raise SystemExit(0 if (3, 11) <= sys.version_info < (3, 13) else 1)",
             ],
             text=True,
             capture_output=True,
@@ -531,7 +534,7 @@ def find_python_311() -> str:
         if candidate and is_python_311_or_newer(candidate):
             return candidate
     raise CleanCloneAdoptionError(
-        "Python 3.11 or newer is required. Create .venv or install python3.11/python3.12."
+        "Python 3.11 or 3.12 is required. Create .venv or install python3.11/python3.12."
     )
 
 

@@ -39,9 +39,9 @@ Commands have a per-node timeout and do not require a model call or production m
 
 ## Scope And Claim Boundary
 
-The graph covers the release-distribution evidence chain: platform Agent assets, published-image and
-release bootstrap evidence, plugin packs, handoff evidence, platform bundle/adoption pack, external
-consumer drills, maintainer ledger, and adopter archive.
+The graph covers the release-distribution evidence chain: platform Agent assets and replay evidence,
+published-image and release bootstrap evidence, plugin packs, handoff evidence, platform
+bundle/adoption pack, external consumer drills, maintainer ledger, and adopter archive.
 
 It intentionally does not claim to cover every generated fixture or every verifier in the repository.
 Feature-specific contracts remain owned by their existing verifier gates. The orchestrator supplements

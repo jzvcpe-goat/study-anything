@@ -66,6 +66,13 @@ NODES: tuple[EvidenceNode, ...] = (
         ("--check",),
     ),
     EvidenceNode(
+        "platform_agent_replay",
+        "scripts/generate_platform_agent_replay.py",
+        (),
+        ("--check",),
+        dependencies=("platform_agent_assets",),
+    ),
+    EvidenceNode(
         "published_image_evidence",
         "scripts/generate_published_image_evidence.py",
         (),
@@ -76,7 +83,7 @@ NODES: tuple[EvidenceNode, ...] = (
         "scripts/generate_release_asset_adoption.py",
         (),
         ("--check",),
-        dependencies=("published_image_evidence",),
+        dependencies=("published_image_evidence", "platform_agent_replay"),
     ),
     EvidenceNode(
         "release_asset_bootstrap",

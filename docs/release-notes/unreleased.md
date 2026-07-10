@@ -11,6 +11,9 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- Python 3.11/3.12 dependencies now resolve through a universal `uv.lock`. Docker, CI, Skill Mode,
+  and repository policy jobs consume exact, SHA-256-bound requirements; a deterministic CycloneDX
+  1.5 SBOM and metadata-only claim receipt are checked in and verified offline.
 - The API and mock HTTP Agent run as fixed non-root UID/GID `10001:10001` with read-only roots,
   dropped capabilities, `no-new-privileges`, init shims, and hardened tmpfs mounts.
 - GitHub Actions are pinned to full commit SHAs. CodeQL, dependency review, and container-policy jobs

@@ -33,6 +33,7 @@ class ContainerSecurityTests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["dockerfile"]["non_root_user_final"])
         self.assertTrue(report["dockerfile"]["base_image_digest_pinned"])
+        self.assertTrue(report["dockerfile"]["hash_bound_dependencies"])
         self.assertFalse(report["runtime_container"]["checked"])
 
     def test_root_runtime_user_is_rejected(self) -> None:
@@ -100,6 +101,15 @@ class ContainerSecurityTests(unittest.TestCase):
 
         with self.assertRaises(security.ContainerSecurityError):
             security.validate_ci_workflow(broken)
+
+    def test_docker_unhashed_dependency_install_is_rejected(self) -> None:
+        text = security.DOCKERFILE.read_text(encoding="utf-8").replace(
+            "--require-hashes -r requirements/locked-full.txt",
+            "-r requirements/locked-full.txt",
+        )
+
+        with self.assertRaises(security.ContainerSecurityError):
+            security.validate_dockerfile(text)
 
 
 if __name__ == "__main__":

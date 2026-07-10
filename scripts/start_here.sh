@@ -86,7 +86,7 @@ print_failure_hint() {
     print_contract_only_recovery_hint
     printf "%s\n" "- Then rerun from a normal terminal: ./scripts/start_here.sh" >&2
   elif printf "%s" "$log_text" | grep -Eqi "python 3.11|python_version|python: not found|python3: not found"; then
-    printf "%s\n" "- Install Python 3.11 or newer, then rerun: ./scripts/start_here.sh" >&2
+    printf "%s\n" "- Install Python 3.11 or 3.12, then rerun: ./scripts/start_here.sh" >&2
     printf "%s\n" "- If Python is installed elsewhere, set PYTHON_BIN=/path/to/python3.11." >&2
   elif printf "%s" "$log_text" | grep -Eqi "docker command was not found|docker daemon|docker compose"; then
     printf "%s\n" "- Docker is only needed for --docker. For first use, run the no-Docker demo: ./scripts/start_here.sh --demo" >&2

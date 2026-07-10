@@ -8,11 +8,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY pyproject.toml README.md ./
+COPY pyproject.toml README.md uv.lock ./
+COPY requirements/locked-full.txt ./requirements/locked-full.txt
 COPY apps/api ./apps/api
 
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -e '.[full]'
+RUN pip install --no-cache-dir --require-hashes -r requirements/locked-full.txt \
+    && pip install --no-cache-dir --no-deps --no-build-isolation -e .
 
 COPY plugins ./plugins
 COPY scripts/mock_http_agent.py ./scripts/mock_http_agent.py

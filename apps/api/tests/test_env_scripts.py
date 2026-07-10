@@ -132,6 +132,9 @@ class EnvScriptTests(unittest.TestCase):
         self.assertIn("--timeout", script)
         self.assertIn("--retries", script)
         self.assertIn("run_pip_install", script)
+        self.assertIn("requirements/locked-skill.txt", script)
+        self.assertIn("--require-hashes", script)
+        self.assertIn("--no-deps", script)
         self.assertIn("dependency installation timed out after", script)
         self.assertIn("SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200", script)
 

@@ -58,7 +58,7 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
-      - name: Install policy parser
-        run: python -m pip install 'PyYAML>=6.0.2,<7.0'
+      - name: Install locked policy dependencies
+        run: python -m pip install --require-hashes -r requirements/locked-policy.txt
       - name: Verify container and workflow security policy
         run: python scripts/verify_container_security.py --check

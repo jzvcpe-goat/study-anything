@@ -80,6 +80,15 @@ def validate_dockerfile(text: str) -> dict[str, Any]:
         "Package installation must finish before dropping privileges",
     )
     require("sudo" not in text, "Runtime image must not install or invoke sudo")
+    require("--upgrade pip" not in text, "Docker build must not upgrade pip outside the lock")
+    require(
+        "--require-hashes -r requirements/locked-full.txt" in text,
+        "Docker dependencies must use the hash-bound full requirements",
+    )
+    require(
+        "--no-deps --no-build-isolation -e ." in text,
+        "Docker must install the local project without resolving dependencies",
+    )
     return {
         "fixed_uid": 10001,
         "fixed_gid": 10001,
@@ -87,6 +96,7 @@ def validate_dockerfile(text: str) -> dict[str, Any]:
         "package_install_before_user_drop": True,
         "base_image_digest_pinned": True,
         "runtime_data_owned_by_user": True,
+        "hash_bound_dependencies": True,
     }
 
 
@@ -222,6 +232,14 @@ def validate_ci_workflow(text: str) -> dict[str, Any]:
     require(
         "python scripts/setup_env.py --force" in text,
         "Compose smoke must generate its local environment file",
+    )
+    require(
+        "pip install --require-hashes -r requirements/locked-dev-full.txt" in text,
+        "API CI must install hash-bound dev/full dependencies",
+    )
+    require(
+        "generate_python_supply_chain.py --check" in text,
+        "API CI must verify the Python lock and SBOM",
     )
     compose_commands = [
         line.strip() for line in text.splitlines() if "docker compose" in line
