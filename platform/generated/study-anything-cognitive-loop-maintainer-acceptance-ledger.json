@@ -137,7 +137,7 @@
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "required": true,
       "schema_version": "published-image-evidence-v1",
-      "sha256": "10a5c22ff9a850ceb475f49068bf308a3642b6e0893363eb7abc318c4950fd15",
+      "sha256": "b5cd525ccc8ca0e2fd35cde3eb95478a92257df163f180da2dd8f6361ceec175",
       "source_id": "published_image_evidence",
       "status": "pass"
     },

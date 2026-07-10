@@ -1,0 +1,7 @@
+{
+  "case_id": "scope-expansion",
+  "expected_error": "scope expansion rejected",
+  "kind": "compatibility_invalid",
+  "source_scope": "sandbox_only",
+  "target_scope": "limited_beta"
+}

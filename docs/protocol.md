@@ -124,10 +124,24 @@ The reference harness does not claim production readiness, legal or security
 certification, regulatory approval, customer outcome guarantees, or general model
 correctness. Independent human security review remains external to repository CI.
 
+## Canonical V1 Contract Layer
+
+The first Protocol v1 convergence layer now defines six strict canonical objects,
+deterministic `cbb-json-c14n-v1` bytes, and scope-narrowing adapters from the shipped
+Dual Loop and Delivery Trust v0 artifacts. Existing script, schema, package, and
+artifact names remain supported.
+
+This contract layer is not the final Trust Kernel. Policy evaluation, portable
+signing, revocation, outcome degradation, and isolated Agentic evidence discovery
+remain separate milestones. See
+[CBB Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md).
+
 ## Current Verifier Commands
 
 ```bash
 python3 scripts/verify_cbb_positioning.py --check
+python3 scripts/verify_cbb_v1_contracts.py --check
+python3 scripts/verify_cbb_v0_compatibility.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check

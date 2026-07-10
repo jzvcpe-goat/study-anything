@@ -1,0 +1,272 @@
+{
+  "$defs": {
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "EvidenceRequirementV1": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "evidence_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Evidence Type",
+          "type": "string"
+        },
+        "required_for_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        }
+      },
+      "required": [
+        "evidence_type",
+        "required_for_scope",
+        "blocking"
+      ],
+      "title": "EvidenceRequirementV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "RiskBudgetV1": {
+      "additionalProperties": false,
+      "properties": {
+        "irreversible_external_effects_allowed": {
+          "const": false,
+          "title": "Irreversible External Effects Allowed",
+          "type": "boolean"
+        },
+        "level": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "blocked"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "production_mutation_allowed": {
+          "const": false,
+          "title": "Production Mutation Allowed",
+          "type": "boolean"
+        },
+        "real_user_exposure_allowed": {
+          "const": false,
+          "title": "Real User Exposure Allowed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "level",
+        "production_mutation_allowed",
+        "real_user_exposure_allowed",
+        "irreversible_external_effects_allowed"
+      ],
+      "title": "RiskBudgetV1",
+      "type": "object"
+    }
+  },
+  "$id": "cbb.trust-policy.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "created_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "title": "Created At",
+      "type": "string"
+    },
+    "hard_denies": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Hard Denies",
+      "type": "array"
+    },
+    "maximum_scope": {
+      "$ref": "#/$defs/DeliveryScope"
+    },
+    "policy_id": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "required_evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceRequirementV1"
+      },
+      "minItems": 1,
+      "title": "Required Evidence",
+      "type": "array"
+    },
+    "required_roles": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Required Roles",
+      "type": "array"
+    },
+    "risk_budget": {
+      "$ref": "#/$defs/RiskBudgetV1"
+    },
+    "scenario_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Scenario Ref",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "cbb.trust-policy.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "subject_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Subject Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_id",
+    "subject_ref",
+    "scenario_ref",
+    "maximum_scope",
+    "hard_denies",
+    "risk_budget",
+    "required_evidence",
+    "required_roles",
+    "claim_boundary",
+    "privacy",
+    "created_at"
+  ],
+  "title": "TrustPolicyV1",
+  "type": "object"
+}

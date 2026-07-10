@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "canonical_bytes_stable": true,
+      "case_id": "pass",
+      "decision_status": "allow",
+      "reconstruction_status": "passed",
+      "scope_expanded": false,
+      "source_scope": "controlled_customer_handoff",
+      "target_scope": "controlled_customer_handoff"
+    },
+    {
+      "canonical_bytes_stable": true,
+      "case_id": "missing-evidence",
+      "decision_status": "needs_evidence",
+      "reconstruction_status": "missing",
+      "scope_expanded": false,
+      "source_scope": "blocked",
+      "target_scope": "blocked"
+    },
+    {
+      "canonical_bytes_stable": true,
+      "case_id": "stale",
+      "decision_status": "needs_evidence",
+      "reconstruction_status": "stale",
+      "scope_expanded": false,
+      "source_scope": "controlled_customer_handoff",
+      "target_scope": "blocked"
+    }
+  ],
+  "claim_boundary": "This verifies deterministic local compatibility projections from shipped v0 receipts. Mappings may preserve or narrow scope and never expand it. It does not deprecate v0, approve production, sign receipts, or prove customer outcomes.",
+  "compatibility_boundary": {
+    "existing_artifact_names_preserved": true,
+    "existing_schema_names_preserved": true,
+    "existing_script_names_preserved": true,
+    "v0_outputs_mutated": false
+  },
+  "equal_scope_case_count": 2,
+  "expanded_scope_case_count": 0,
+  "mapping_chain": [
+    "failure-contract-v1 -> cbb.trust-policy.v1",
+    "failure-contract-v1 + sandbox-receipt-v1 -> cbb.evidence-bundle.v1",
+    "attention-reconstruction-summary-v1 -> cbb.qualified-reconstruction.v1",
+    "dual-loop-gate-receipt-v1 + delivery-trust-receipt-v1 -> cbb.gate-decision.v1",
+    "delivery-trust-receipt-v1 -> cbb.delivery-trust-receipt.v1"
+  ],
+  "narrowed_scope_case_count": 1,
+  "negative_checks": {
+    "explicit_scope_expansion": "scope expansion rejected",
+    "missing_reconstruction_never_promotes": true,
+    "stale_reconstruction_narrows_source_allow": true
+  },
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_v0_payload_bodies_included": false,
+    "real_secrets_included": false
+  },
+  "schema_version": "cbb-v0-compatibility-verification-v1",
+  "status": "pass"
+}

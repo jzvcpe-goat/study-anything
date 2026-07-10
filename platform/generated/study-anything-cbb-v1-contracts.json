@@ -1,0 +1,140 @@
+{
+  "assets": {
+    "fixture_count": 9,
+    "schema_count": 6
+  },
+  "canonical_contracts": [
+    "cbb.delivery-trust-receipt.v1",
+    "cbb.evidence-bundle.v1",
+    "cbb.gate-decision.v1",
+    "cbb.qualified-reconstruction.v1",
+    "cbb.receipt-provenance.v1",
+    "cbb.trust-policy.v1"
+  ],
+  "canonicalization": {
+    "algorithm": "cbb-json-c14n-v1",
+    "byte_count": 1765,
+    "sha256": "588df7e642435d78a8a25994cdbc44e776ab44f2b0856098c62e296b522f10c4",
+    "stable_across_key_order": true
+  },
+  "claim_boundary": "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, and canonical JSON bytes. It does not prove production delivery, portable cryptographic signing, customer outcomes, safe Agentic evolution, or independent audit completion.",
+  "negative_fixtures": {
+    "invalid_state": "strict schema validation rejected malformed payload",
+    "malformed": "strict schema validation rejected malformed payload",
+    "naive_timestamp": "strict schema validation rejected malformed payload",
+    "secret_like": "forbidden field rejected"
+  },
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false,
+    "raw_payloads_included": false,
+    "real_secrets_included": false
+  },
+  "provenance_bindings": {
+    "decision_ref_matches": true,
+    "decision_scope_matches": true,
+    "decision_status_matches": true,
+    "embedded_provenance_matches": true,
+    "evidence_digest_matches": true,
+    "evidence_ref_matches": true,
+    "policy_digest_matches": true,
+    "policy_ref_matches": true,
+    "reconstruction_ref_matches": true,
+    "subject_digest_matches": true,
+    "verifier_digest_matches": true
+  },
+  "runtime_isolation": {
+    "automatic_customer_send_performed": false,
+    "checked_files": [
+      "apps/api/study_anything/cbb/protocol/__init__.py",
+      "apps/api/study_anything/cbb/protocol/canonical.py",
+      "apps/api/study_anything/cbb/protocol/compat_v0.py",
+      "apps/api/study_anything/cbb/protocol/fixtures.py",
+      "apps/api/study_anything/cbb/protocol/models.py"
+    ],
+    "findings": [],
+    "forbidden_imports": [
+      "anthropic",
+      "httpx",
+      "langchain",
+      "openai",
+      "playwright",
+      "requests",
+      "selenium",
+      "socket",
+      "subprocess"
+    ],
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "production_mutation_performed": false
+  },
+  "schema_version": "cbb-v1-contracts-verification-v1",
+  "schemas": [
+    {
+      "path": "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
+      "schema_version": "cbb.trust-policy.v1",
+      "sha256": "029c88a8cc1010a9f519ee300c7bb2d67cecab32db16f9ae8cce272acf90f728"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
+      "schema_version": "cbb.evidence-bundle.v1",
+      "sha256": "a5a7862ad6f89c577895c9471143e8ce9d25f799568675dd603208ac543d9e24"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
+      "schema_version": "cbb.qualified-reconstruction.v1",
+      "sha256": "369f0c449ce6856974a4dd8cbcd9325a085b469807709c10cd6db4b7e2473cf3"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
+      "schema_version": "cbb.gate-decision.v1",
+      "sha256": "9e52c3c088c501c90bf04dd467614c75a7de4033e97bdb3a66098c2250b8bbd6"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
+      "schema_version": "cbb.delivery-trust-receipt.v1",
+      "sha256": "5354a5d59f512a1d81b823a776db754379e28660b6c10f3c84332db22d891d48"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+      "schema_version": "cbb.receipt-provenance.v1",
+      "sha256": "710b9e210dfd0fe9e52c285a240a0eb3f187a3190b07d92aa63fcfecf4b2b690"
+    }
+  ],
+  "states": {
+    "hard_deny": {
+      "approved_scope": "blocked",
+      "hard_denies_triggered": [
+        "production_mutation"
+      ],
+      "status": "block"
+    },
+    "missing_evidence": {
+      "delivery_trust_receipt": "cbb.delivery-trust-receipt.v1",
+      "evidence_bundle": "cbb.evidence-bundle.v1",
+      "gate_decision": "cbb.gate-decision.v1",
+      "qualified_reconstruction": "cbb.qualified-reconstruction.v1",
+      "receipt_provenance": "cbb.receipt-provenance.v1",
+      "trust_policy": "cbb.trust-policy.v1"
+    },
+    "pass": {
+      "delivery_trust_receipt": "cbb.delivery-trust-receipt.v1",
+      "evidence_bundle": "cbb.evidence-bundle.v1",
+      "gate_decision": "cbb.gate-decision.v1",
+      "qualified_reconstruction": "cbb.qualified-reconstruction.v1",
+      "receipt_provenance": "cbb.receipt-provenance.v1",
+      "trust_policy": "cbb.trust-policy.v1"
+    },
+    "stale": {
+      "delivery_trust_receipt": "cbb.delivery-trust-receipt.v1",
+      "evidence_bundle": "cbb.evidence-bundle.v1",
+      "gate_decision": "cbb.gate-decision.v1",
+      "qualified_reconstruction": "cbb.qualified-reconstruction.v1",
+      "receipt_provenance": "cbb.receipt-provenance.v1",
+      "trust_policy": "cbb.trust-policy.v1"
+    }
+  },
+  "status": "pass"
+}

@@ -100,6 +100,14 @@ Deliver:
 - a protocol CLI independent of the Study Anything workflow;
 - conformance receipt showing current adapters can emit or map to v1.
 
+Progress:
+
+- canonical schemas, deterministic JSON, v0 compatibility adapters, and the
+  pass/missing/hard-deny/stale/secret/malformed/naive-timestamp/invalid-state/
+  scope-expansion fixture matrix are implemented in PR 1;
+- the deterministic policy evaluator, protocol CLI, and independent conformance
+  consumer remain pending PR 2 and later milestones.
+
 Exit criteria:
 
 - policy plus evidence deterministically reproduces a gate decision;

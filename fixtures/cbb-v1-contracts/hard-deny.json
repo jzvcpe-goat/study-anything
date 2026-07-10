@@ -1,0 +1,55 @@
+{
+  "case_id": "hard-deny",
+  "expected": {
+    "approved_scope": "blocked",
+    "hard_deny": "production_mutation",
+    "status": "block"
+  },
+  "kind": "canonical_valid",
+  "model_schema_version": "cbb.gate-decision.v1",
+  "payload": {
+    "approved_scope": "blocked",
+    "claim_boundary": {
+      "current_claim": "The hard deny blocks every delivery scope.",
+      "maximum_scope": "blocked",
+      "not_claimed": [
+        "production approval",
+        "portable signed attestation",
+        "customer outcome guarantee",
+        "scope beyond the source v0 receipt"
+      ]
+    },
+    "decided_at": "2026-06-28T00:00:00Z",
+    "decision_id": "cbb-decision:delivery-trust-receipt-demo-001",
+    "evidence_bundle_ref": "cbb-evidence:sandbox-run-demo-001",
+    "hard_denies_triggered": [
+      "production_mutation"
+    ],
+    "missing_evidence_types": [],
+    "policy_ref": "cbb-policy:failure-contract-demo-001",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "reasons": [
+      "hard_deny:production_mutation"
+    ],
+    "reconstruction_ref": "cbb-reconstruction:attention-summary-demo-001",
+    "schema_version": "cbb.gate-decision.v1",
+    "source_decision_refs": [
+      "dual-loop-gate-receipt.json",
+      "delivery-trust-receipt.json"
+    ],
+    "status": "block",
+    "subject_ref": "artifact:metadata-only-demo-change"
+  }
+}

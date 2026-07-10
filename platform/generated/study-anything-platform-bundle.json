@@ -15,6 +15,8 @@
     "python3 scripts/verify_delivery_trust_receipt.py --check",
     "python3 scripts/verify_customer_handoff_package.py --check",
     "python3 scripts/verify_cbb_positioning.py --check",
+    "python3 scripts/verify_cbb_v1_contracts.py --check",
+    "python3 scripts/verify_cbb_v0_compatibility.py --check",
     "python3 scripts/verify_cbb_protocol_contracts.py --check",
     "python3 scripts/verify_cbb_gate.py --check",
     "python3 scripts/verify_cbb_receipt_chain.py --check",
@@ -120,7 +122,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-operator-drill-transcript.json",
       "purpose": "Deterministic external-platform operator drill transcript.",
-      "sha256": "8b36335c09ce394f4cacec61e1c106c092d4d55b0383fc123f93a9bf272cb114"
+      "sha256": "d7c42c1dd118e5769bf530f26b0d454b6cd3a33bacd785a62c65f29401d40d90"
     },
     {
       "bytes": 1939,
@@ -247,6 +249,20 @@
       "path": "platform/generated/study-anything-dual-loop-trust-pack-consumer-walkthrough.json",
       "purpose": "ZIP-only external consumer walkthrough report for the Dual Loop trust scenario pack.",
       "sha256": "2598bfaf8e0b1b53e93e78308db294e44c940434f1d54cbf9382c1a5f32623ee"
+    },
+    {
+      "bytes": 5156,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v1-contracts.json",
+      "purpose": "Canonical CBB Protocol v1 schema, fixture, canonicalization, and isolation report.",
+      "sha256": "132a9bbea6bec3d1747c39ed7245aac62f6c945c4e03e855761a28830065a09a"
+    },
+    {
+      "bytes": 2308,
+      "kind": "generated_asset",
+      "path": "platform/generated/study-anything-cbb-v0-compatibility.json",
+      "purpose": "Deterministic non-expanding CBB v0-to-v1 compatibility report.",
+      "sha256": "c460757a9a6932eab6f991f54f7a6d344baec8c757d9b348e828b9f23c39ac75"
     },
     {
       "bytes": 3793,
@@ -1520,7 +1536,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-maintainer-acceptance-ledger.json",
       "purpose": "Cognitive Loop maintainer go/no-go acceptance ledger verification report.",
-      "sha256": "6c2a83e00702f85fa8ed9d277046aba970cf9a61e13e0eb33f3fc4dff78e2251"
+      "sha256": "6cdcc18f3afd9e345a03e650616d8fdc78a19797897c489c401261a8d0c42480"
     },
     {
       "bytes": 3786,
@@ -1667,14 +1683,14 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-workflow-install-smoke.json",
       "purpose": "External Cognitive Loop Review Agent adoption-pack workflow install smoke verification report.",
-      "sha256": "64e4aa6a568728e73279735d4768f982ec6170d6d36db939aa114c5704e805d1"
+      "sha256": "51816a0f750a21666446b8681d3fe1f8f7b2b06284913800e5bb45ca4421e4a9"
     },
     {
       "bytes": 6682,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-review-agent-adoption-drill.json",
       "purpose": "External Cognitive Loop Review Agent zip-only adoption drill verification report.",
-      "sha256": "e114ef4119d83ae6c2f44df9dc2d7a28d72e106f9c8ce5ddb50a4610dd8d4cb8"
+      "sha256": "1da2cc911c57273557df6c20716bcf7556b0187c06a1cc5f85730fea3531b5ce"
     },
     {
       "bytes": 2466,
@@ -1744,28 +1760,28 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer.json",
       "purpose": "Zip-only consumer proof for Cognitive Loop recipe CLI schema evidence in the adoption pack.",
-      "sha256": "82fd374e9797ab92da56231a59ad25de01bebecbe700db1ae1d1bd915beab48a"
+      "sha256": "60cafe8f17d97a2b2114aa9213b480e6665a9a01a3e72fbec905556194099d30"
     },
     {
       "bytes": 5372,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-schema-pack-consumer-failures.json",
       "purpose": "Tampered adoption-pack failure proof for Cognitive Loop recipe CLI schema evidence.",
-      "sha256": "a55642938017dc5eeb5796d4adb4b2ac2f133f69e0cf2d15e1b6e84fd919fb81"
+      "sha256": "3f9e92769ec439694bd01cb44f6e4147bae2f153415a5a9db6fccf876dd3a406"
     },
     {
       "bytes": 2714,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-cognitive-loop-pack-extract-smoke.json",
       "purpose": "Extracted adoption-pack smoke proof for bundled Cognitive Loop schema consumer checks.",
-      "sha256": "f3fb28bf3b71cf9d0fbf87f28053b4d4fbf8d793562ed41bc1d8251078915bc8"
+      "sha256": "b186cf606fba969f74fb5ba19592cec24e2f89db77e0800ce17759faf614ef74"
     },
     {
       "bytes": 7892,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-handoff-checklist.json",
       "purpose": "External platform handoff checklist for import, verification, runtime, and support escalation.",
-      "sha256": "694c0669e53b30a4e75cb22190c90ae4b5402a0948527b1eb2a4b41f368f77e9"
+      "sha256": "3307b095b7c9d8b7c454fdae215b399d0627dc36ffcfe0c01675237f09b1d0c5"
     },
     {
       "bytes": 9410,
@@ -1807,7 +1823,7 @@
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-platform-submission-dry-run.json",
       "purpose": "External platform submission dry-run readiness report.",
-      "sha256": "a4b2f3ce9bc31e75b26ddd4d62dc1c08681e8f0e2495b0f7e4afed697e794395"
+      "sha256": "93637585e839ecabf4a5e87133ba9bba14be100b632f654069393be81229cb87"
     },
     {
       "bytes": 107336,
@@ -1943,88 +1959,88 @@
       "sha256": "d985a5cbf2b5e1eab7d23ca6ab8ddf487eca64827b117c4b0085f25336ee7309"
     },
     {
-      "bytes": 11246,
+      "bytes": 11247,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.json",
       "purpose": "Published-image evidence JSON.",
-      "sha256": "10a5c22ff9a850ceb475f49068bf308a3642b6e0893363eb7abc318c4950fd15"
+      "sha256": "b5cd525ccc8ca0e2fd35cde3eb95478a92257df163f180da2dd8f6361ceec175"
     },
     {
       "bytes": 3442,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.md",
       "purpose": "Published-image evidence Markdown.",
-      "sha256": "5c9186c0193a622fedcd571a3f1cc247d0e9396d52e7c8f95f8d5c3583cd260a"
+      "sha256": "adcf59174b8603513748b1dfdd001319fc05a2b109b7971aec6e783786435ccd"
     },
     {
-      "bytes": 119352,
+      "bytes": 119496,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.zip",
       "purpose": "Published-image evidence package.",
-      "sha256": "e6ec2563759c1524effac9f266ca75840cc580fdb87846f784caaea6871ad4a1"
+      "sha256": "b55d82721509f923dd85aaa80519e0825abb69dcc76253880e07318c3d0f3ce0"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-published-image-evidence.sha256",
       "purpose": "Published-image evidence checksum.",
-      "sha256": "ffc7ab0e80be10e8b37b0b42236135f09c0af3cc738b2f03880a1b0d17784a5a"
+      "sha256": "9a4b6fbc1bf423ce7a4c31c9e52731ed7a192b96b1103c9b79e1cefbf29252ae"
     },
     {
-      "bytes": 12998,
+      "bytes": 12999,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.json",
       "purpose": "External adopter evidence archive JSON.",
-      "sha256": "75a9f53a00bd5567193157e9ad3719916dec7478da2bef7d3c719298670bad64"
+      "sha256": "8c1cca3bfc4d38bfad65d2ca2216951dd0540fc6bcc407dfad525c242f4561f4"
     },
     {
       "bytes": 2424,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.md",
       "purpose": "External adopter evidence archive Markdown.",
-      "sha256": "acbe24d7416807e2ca8d1739584bd910146164ba0ede1c06e9191cf010770d8d"
+      "sha256": "7b93976b9bd3039c2e9a28e02f5d8343897bd0b687d649cee1d824d7ec5e1d5a"
     },
     {
-      "bytes": 225352,
+      "bytes": 225633,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.zip",
       "purpose": "External adopter evidence archive package.",
-      "sha256": "723d13e9691eb8b76fa3b28569a53de822adda8573ede1b1e995fa63ff9f138e"
+      "sha256": "7d979475025c2a85dcc466b97308d6483eb4042a073492750215f18f52651993"
     },
     {
       "bytes": 110,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-adopter-evidence-archive.sha256",
       "purpose": "External adopter evidence archive checksum.",
-      "sha256": "13533db408f400bc1764a08bb1a9f3b5796a650befea555d605fbb8a68aab04d"
+      "sha256": "28a5f94ae0b1669c88569a31cabb9575e40374b2fce18d4c44bcd29aca807180"
     },
     {
-      "bytes": 10415,
+      "bytes": 10416,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.json",
       "purpose": "GitHub Release asset adoption replay evidence JSON.",
-      "sha256": "30f68a16bcdaa743df40e87ebc4878f040261931ccd25f2aa716a99362937683"
+      "sha256": "7bbb46ae3e0cb15443d25c3522bca0aea2fc7328cb9d3092f2da2242c1d88098"
     },
     {
       "bytes": 2392,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.md",
       "purpose": "GitHub Release asset adoption replay evidence Markdown.",
-      "sha256": "c50041c8a1278e2a051417305ef97c989c8190f9fdcdba8ff32c4709ef1bf217"
+      "sha256": "bfb20b1877d10955b5c5c12539991f3af653c06bc0aad3ae32da7ea6ece9ca9f"
     },
     {
-      "bytes": 139302,
+      "bytes": 139446,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.zip",
       "purpose": "GitHub Release asset adoption replay evidence archive.",
-      "sha256": "d810ce2cbf40916b7fc58e1085873c3dbcef1dcb49e0ec3356f0cfefb6c3f058"
+      "sha256": "e8a54d57cf831faffb3db450c07947c8ff8b8e93cb166e43443229fd196dcfe6"
     },
     {
       "bytes": 108,
       "kind": "generated_asset",
       "path": "platform/generated/study-anything-release-asset-adoption.sha256",
       "purpose": "GitHub Release asset adoption replay evidence checksum.",
-      "sha256": "3ddd3dff0e107b89a72f9c40213a56c41bb86d4712c43f20174fa3abaeb096a1"
+      "sha256": "d92f771aa8225c92436c03ab0a7141049a0d89fc4326c6e319e9122d19033e9a"
     },
     {
       "bytes": 8886,
@@ -2713,6 +2729,13 @@
       "sha256": "59e8bf413199998a4e06aea1bbf9e35f2c6dfcabd7a0a83e1ba36a73e92b6b38"
     },
     {
+      "bytes": 4120,
+      "kind": "operator_doc",
+      "path": "docs/cbb-protocol-v1-contracts.md",
+      "purpose": "Canonical Protocol v1 schemas, serialization, fixture, and compatibility guide.",
+      "sha256": "9f5790bf986e4e798d0976979f23aef6483a7365e5751f85b55fe752b4025ef6"
+    },
+    {
       "bytes": 4249,
       "kind": "operator_doc",
       "path": "docs/delivery-trust-receipt.md",
@@ -2727,11 +2750,11 @@
       "sha256": "ca4ebca93cbaf575b2732d5b1ac785766d9a5e80fd604bf7a464e780d2f946e1"
     },
     {
-      "bytes": 5380,
+      "bytes": 6064,
       "kind": "operator_doc",
       "path": "docs/protocol.md",
       "purpose": "Cognitive Black Box protocol core and AI delivery trust boundary guide.",
-      "sha256": "345f278c085285e65d10492a7b8570d9726d909e181d7063a6e9359d1f382a25"
+      "sha256": "3dbe5e8f9f031aedc8dbf932294fb1e3fe593a155f5973bf3a628806ae90e5fa"
     },
     {
       "bytes": 5254,
@@ -2844,6 +2867,48 @@
       "path": "platform/schemas/customer-handoff/customer-handoff-package-v1.schema.json",
       "purpose": "CustomerHandoffPackage JSON Schema.",
       "sha256": "7a15702f35a375d85718690fee2c95c640797e75748ff27de56380d6e4f4835e"
+    },
+    {
+      "bytes": 6925,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 trust policy JSON Schema.",
+      "sha256": "1a350deb26295423c1898a95f7ae412c5546594a1282ed4fdf88eddb189b6191"
+    },
+    {
+      "bytes": 6294,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 evidence bundle JSON Schema.",
+      "sha256": "d3b4edc9cdd21a410df65a7af48c74e9172cc899a459edcaaecc9ede9764674c"
+    },
+    {
+      "bytes": 6057,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 qualified reconstruction JSON Schema.",
+      "sha256": "68dd36122a54afeeb1d719d3244bca51913a83a367a59c3ee2fc71fd91122c61"
+    },
+    {
+      "bytes": 5877,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 gate decision JSON Schema.",
+      "sha256": "13be92f228e526fa275b2de14cb066100cc3404c8a20ee511976d25eb3b7181a"
+    },
+    {
+      "bytes": 8744,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 delivery trust receipt JSON Schema.",
+      "sha256": "b0388d3014070af728bad98202a31ff69f236aa21cd94edbeaa48a60446e40a5"
+    },
+    {
+      "bytes": 3954,
+      "kind": "schema",
+      "path": "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+      "purpose": "Canonical CBB Protocol v1 receipt provenance JSON Schema.",
+      "sha256": "cb8b84c3a6a1067e43dd8a8b71fa89344c43fda58293d1aa47a2ff02ffa1d65f"
     },
     {
       "bytes": 961,
@@ -12233,11 +12298,95 @@
       "sha256": "85253567d30f770e86383d85f853d5cccd1ee58b5b29f063ddb4658d2cde5465"
     },
     {
+      "bytes": 24569,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/pass.json",
+      "purpose": "Canonical CBB Protocol v1 passing v0 compatibility fixture.",
+      "sha256": "552f80034461f701f4960904c0668a77de7b576d128dd40d8a1c965b5b99a044"
+    },
+    {
+      "bytes": 22977,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/missing-evidence.json",
+      "purpose": "Canonical CBB Protocol v1 missing-evidence fixture.",
+      "sha256": "9769443251429301d309b7272d71c337bf4a3201b1f20b5c2c988d9c2989765a"
+    },
+    {
+      "bytes": 1785,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/hard-deny.json",
+      "purpose": "Canonical CBB Protocol v1 hard-deny fixture.",
+      "sha256": "c0bff46c252e88b8c76d540a49c1ad645f15c65700074410a3c495136b0de306"
+    },
+    {
+      "bytes": 24643,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/stale.json",
+      "purpose": "Canonical CBB Protocol v1 stale reconstruction fixture.",
+      "sha256": "2ea4a229beba77ad625dff11566f698c8838c1afa4bcc09128a50e66f6f52858"
+    },
+    {
+      "bytes": 2518,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/secret-like.json",
+      "purpose": "Canonical CBB Protocol v1 secret-like rejection fixture.",
+      "sha256": "e354aa10bc79d6b6d8ce1c9ee51701e3cb17ac58dbaf0a16a0218c9d6d514775"
+    },
+    {
+      "bytes": 2477,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/malformed.json",
+      "purpose": "Canonical CBB Protocol v1 malformed payload fixture.",
+      "sha256": "596b22b19c434aa1d80e3d22da8ea75df9231a6568186f1df7cabbf24b9b1fe4"
+    },
+    {
+      "bytes": 2492,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/naive-timestamp.json",
+      "purpose": "Canonical CBB Protocol v1 timezone rejection fixture.",
+      "sha256": "138fb34e7ca556af911d4f1314fca52f8d5b9353c009cf00d0344325568f49d3"
+    },
+    {
+      "bytes": 1714,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/invalid-state.json",
+      "purpose": "Canonical CBB Protocol v1 cross-field state rejection fixture.",
+      "sha256": "254369db3117c78812672cc089030bd2f0b2e956955211bdbf79cc454625378e"
+    },
+    {
+      "bytes": 186,
+      "kind": "fixture",
+      "path": "fixtures/cbb-v1-contracts/scope-expansion.json",
+      "purpose": "Canonical CBB Protocol v1 scope-expansion rejection fixture.",
+      "sha256": "b70d89858932cf1fb78516df0a243bfea06c36ac00cf2ec96cf8a2d536a4643b"
+    },
+    {
       "bytes": 8269,
       "kind": "verification",
       "path": "scripts/verify_cbb_protocol_contracts.py",
       "purpose": "Cognitive Black Box protocol contract and metadata-only privacy verifier.",
       "sha256": "0eaf3c40357ac5b5795453b291aac037ed0e43b430a4fa7a4b7832ae7a812582"
+    },
+    {
+      "bytes": 1762,
+      "kind": "generator",
+      "path": "scripts/generate_cbb_v1_contract_assets.py",
+      "purpose": "Generate canonical CBB Protocol v1 schemas and deterministic fixtures.",
+      "sha256": "ce3b4c7512dd7c433174c4c6480d5e9c019251a7447613e57baabc2f82288d0d"
+    },
+    {
+      "bytes": 13746,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_v1_contracts.py",
+      "purpose": "Verify canonical CBB Protocol v1 contracts and deterministic serialization.",
+      "sha256": "b3db5d26dd95ee4a9692cf7eb1d3910d718a505d91bf35873b25fd2ae1272a8e"
+    },
+    {
+      "bytes": 6700,
+      "kind": "verification",
+      "path": "scripts/verify_cbb_v0_compatibility.py",
+      "purpose": "Verify v0 compatibility mappings preserve or narrow delivery scope.",
+      "sha256": "fedde5332d1458b443e16122b5d483c0dc74c38664c596b0b8c4ecc10b8e461d"
     },
     {
       "bytes": 9032,
@@ -14837,11 +14986,11 @@
       "sha256": "c9db74249d49eaa26fb261c0884c00060d6062aee64f949d53b87c19f7da249d"
     },
     {
-      "bytes": 287227,
+      "bytes": 290013,
       "kind": "verification",
       "path": "scripts/generate_platform_adoption_pack.py",
       "purpose": "Deterministic generator for the distributable external-platform adoption pack.",
-      "sha256": "ccd0b47e20c8a122d46e7e8ec5b76c5c99893ce232dbe0091700fd62bbc20f6e"
+      "sha256": "80285fd38f0537be8032b25b8b6e2ba35870928bd06f37503dc1ab30838099d0"
     },
     {
       "bytes": 69370,
@@ -15159,11 +15308,11 @@
       "sha256": "c2670e00957f59c3e84ba6e6ff4fe0539e3d84cb49d7624d109520b519709f73"
     },
     {
-      "bytes": 9706,
+      "bytes": 10064,
       "kind": "docs",
       "path": "docs/roadmap.md",
       "purpose": "Roadmap and release track for platform adoption goals.",
-      "sha256": "8322e7e8736fedd19842fad9de4a4ca7debcca99606eb412027fa30cc0f69763"
+      "sha256": "8bd020b44c00d738e39d5e35bbd9889c764688f23fe906c66ae759e27a182496"
     },
     {
       "bytes": 3917,

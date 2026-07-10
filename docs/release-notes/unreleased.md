@@ -15,6 +15,12 @@ It is not a release tag or published-image claim.
   top-level product name.
 - A deterministic positioning verifier now blocks obsolete current branding while
   preserving historical release notes and compatibility identifiers.
+- Protocol v1 now has six strict canonical contract schemas, deterministic JSON
+  bytes, and explicit v0 compatibility adapters. Pass, missing-evidence, hard-deny,
+  stale, secret-like, malformed, naive-timestamp, invalid-state, and scope-expansion
+  fixtures prove mappings preserve or narrow delivery authority and never expand it.
+  This is a local unsigned contract layer, not the final Trust Kernel or portable
+  cryptographic attestation.
 
 ## Security
 
@@ -66,6 +72,10 @@ SCIM, database row-level security, separate tenant databases, billing, paid serv
 mutation, or a realtime hosted console.
 
 ## Engineering Gates
+
+- `verify_cbb_v1_contracts.py` and `verify_cbb_v0_compatibility.py` now block the
+  CBB protocol release path when canonical schemas, fixtures, deterministic bytes,
+  runtime isolation, or non-expanding compatibility mappings drift.
 
 - PR #407 is recorded as the current metadata-only release-stack group after all protected GitHub
   checks passed. This terminal self-intake does not require another self-intake under the recursion

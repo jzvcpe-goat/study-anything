@@ -1,0 +1,160 @@
+{
+  "$defs": {
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "VerifierIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "verifier_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Digest Sha256",
+          "type": "string"
+        },
+        "verifier_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Verifier Id",
+          "type": "string"
+        },
+        "verifier_version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Verifier Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verifier_id",
+        "verifier_version",
+        "verifier_digest_sha256"
+      ],
+      "title": "VerifierIdentityV1",
+      "type": "object"
+    }
+  },
+  "$id": "cbb.receipt-provenance.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonicalization": {
+      "const": "cbb-json-c14n-v1",
+      "title": "Canonicalization",
+      "type": "string"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "created_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "title": "Created At",
+      "type": "string"
+    },
+    "evidence_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Digest Sha256",
+      "type": "string"
+    },
+    "policy_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Digest Sha256",
+      "type": "string"
+    },
+    "provenance_id": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Provenance Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "cbb.receipt-provenance.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "signature": {
+      "title": "Signature",
+      "type": "null"
+    },
+    "signature_algorithm": {
+      "title": "Signature Algorithm",
+      "type": "null"
+    },
+    "signing_status": {
+      "const": "unsigned_development",
+      "title": "Signing Status",
+      "type": "string"
+    },
+    "subject_digest_kind": {
+      "const": "metadata_ref_sha256",
+      "title": "Subject Digest Kind",
+      "type": "string"
+    },
+    "subject_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Subject Digest Sha256",
+      "type": "string"
+    },
+    "verifier": {
+      "$ref": "#/$defs/VerifierIdentityV1"
+    }
+  },
+  "required": [
+    "schema_version",
+    "provenance_id",
+    "subject_digest_kind",
+    "subject_digest_sha256",
+    "policy_digest_sha256",
+    "evidence_digest_sha256",
+    "verifier",
+    "canonicalization",
+    "signing_status",
+    "signature_algorithm",
+    "signature",
+    "created_at",
+    "claim_boundary"
+  ],
+  "title": "ReceiptProvenanceV1",
+  "type": "object"
+}

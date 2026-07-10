@@ -62,6 +62,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertTrue(receipt["delivery_trust_verifiers_passed_individually"])
         self.assertTrue(receipt["customer_handoff_verifiers_integrated"])
         self.assertTrue(receipt["customer_handoff_verifiers_passed_individually"])
+        self.assertTrue(receipt["cbb_v1_contract_verifiers_integrated"])
+        self.assertFalse(receipt["cbb_v1_contract_verifiers_passed_individually"])
         self.assertTrue(receipt["partial_modes"]["dual_loop_only"])
         self.assertTrue(receipt["partial_modes"]["skip_clean_clone"])
         self.assertIn("do not claim full", receipt["claim_boundary"])
