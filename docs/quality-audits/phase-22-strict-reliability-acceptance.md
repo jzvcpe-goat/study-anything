@@ -8,7 +8,7 @@ Authority: `通用质检方案.md` (Contract-First Product Audit Framework), rev
 
 ## Executive Conclusion
 
-- Phase 22 delivery: **Pass locally; merge after final-head GitHub CI**.
+- Phase 22 delivery: **Pass for merge**.
 - One strict dual-path run: **Pass**.
 - Longitudinal reliability: **Needs Changes; only one strict run exists**.
 - Whole-product commercial production launch: **Needs Changes**.
@@ -59,13 +59,14 @@ mismatch, tampered index, source-commit mismatch, diagnostic profile, and one-ru
 | External adoption | Pass; 2,195 files in 19.42 seconds |
 | Full `./scripts/release_check.sh` | Pass; clean clone and dependency install completed |
 | Full unit suite | Pass; 883 tests |
-| GitHub protected checks | Pending final PR head |
+| GitHub protected checks | Pass; 6/6 on implementation head `6d695d3a` |
 
 ## S15 Findings And Final Decision
 
-Phase 22 may merge only after generated evidence converges, external adoption passes, a full clean
-clone release receipt completes, staged privacy scanning returns zero unexpected matches, and all
-six protected GitHub checks pass on the final head.
+Phase 22 has converged generated evidence, passed external adoption, completed a full clean-clone
+release receipt, returned zero unexpected staged privacy matches, and passed all six protected
+GitHub checks. The quality decision may merge after this evidence-only report update also passes the
+same protected checks.
 
 After merge, do not self-intake Phase 22 again. The next independent acceptance track is the
 repository-wide Codex Security scan. Reliability work then moves to accumulating two more genuinely
