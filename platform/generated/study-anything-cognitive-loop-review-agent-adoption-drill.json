@@ -23,7 +23,7 @@
   },
   "adoption_pack": {
     "archive_sha256": null,
-    "file_count": 2184,
+    "file_count": 2187,
     "no_frontend_required": true,
     "real_model_keys_stored_by_study_anything": false,
     "schema_version": "study-anything-platform-adoption-pack-v1",
@@ -204,6 +204,6 @@
     "raw_report_upload": false,
     "read_only_permissions": true,
     "secret_dependency": false,
-    "sha256": "7a1e716e3c85d4a7a1120171634382af8ea211d979d8088bd01dc434c3b15d9b"
+    "sha256": "a5fa7560552d07d038fd514435f05535479c74eb366b669b5a8b142522db517c"
   }
 }

@@ -86,7 +86,13 @@ Run the security recovery gate before publishing an alpha:
 ```bash
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_local_api_security.py --check
+python3 scripts/verify_container_security.py --check
 ```
+
+The container and GitHub Actions baseline is documented in `docs/security-baseline.md`. The API and
+mock Agent use a fixed non-root runtime identity, read-only root filesystems, dropped capabilities,
+and `no-new-privileges`. GitHub Actions are full-SHA pinned, with CodeQL and dependency review in a
+separate security workflow.
 
 This verifier proves:
 

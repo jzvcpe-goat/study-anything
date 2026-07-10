@@ -23,7 +23,7 @@ class CognitiveLoopReviewAgentGithubWorkflowTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", text)
         self.assertIn("scripts/cognitive_loop_review_agent_acceptance_bundle.py build", text)
         self.assertIn("GITHUB_STEP_SUMMARY", text)
-        self.assertIn("actions/upload-artifact@v4", text)
+        self.assertIn("actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a", text)
         self.assertNotIn("pull_request:", text)
         self.assertNotIn("push:", text)
         self.assertNotIn("secrets.", text)

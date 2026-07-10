@@ -376,6 +376,7 @@ See:
 - `docs/roadmap.md`
 - `docs/platform-agent-integrations.md`
 - `docs/security.md`
+- `docs/security-baseline.md`
 - `docs/self-host-reliability.md`
 - `docs/scheduled-reliability.md`
 - `docs/generated-evidence-topology.md`

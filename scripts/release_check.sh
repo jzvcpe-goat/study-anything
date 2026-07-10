@@ -428,6 +428,8 @@ fi
 
 phase "existing release gates"
 "$python_bin" scripts/verify_local_api_security.py --check
+"$python_bin" scripts/verify_container_security.py --check
+"$python_bin" scripts/verify_github_security_posture.py --check
 "$python_bin" scripts/verify_self_host_soak.py --check
 "$python_bin" scripts/verify_self_host_reliability_matrix.py --check
 "$python_bin" scripts/verify_reliability_evidence_index.py --check

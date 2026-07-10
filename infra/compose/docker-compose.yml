@@ -6,6 +6,14 @@ services:
       args:
         PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:-python:3.11-slim}
     restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
     environment:
       APP_ENV: ${APP_ENV:-development}
       API_BIND_HOST: ${API_BIND_HOST:-127.0.0.1}
@@ -57,6 +65,14 @@ services:
       args:
         PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:-python:3.11-slim}
     restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m
     command: ["python", "scripts/mock_http_agent.py", "--host", "0.0.0.0", "--port", "8787"]
     ports:
       - "127.0.0.1:${MOCK_AGENT_PORT:-8787}:8787"

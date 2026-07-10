@@ -139,7 +139,7 @@
     "safe_to_attach_to_pr": true
   },
   "negative_workflows": {
-    "unsafe-auto-pr.yml": "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml missing required workflow text: ['workflow_dispatch:', 'evidence_kind:', 'review_agent_report:', 'acceptance_bundle_dir:', 'policy:', 'upload_metadata_bundle:', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py build', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py validate', 'scripts/cognitive_loop_review_agent_policy_gate.py', '--output review-agent-policy-gate.json', 'REVIEW_AGENT_POLICY_EXIT', 'if [ \"$ACCEPTANCE_BUNDLE_DIR\" != \"$OUTPUT_DIR\" ]; then', 'GITHUB_STEP_SUMMARY', 'review-agent-policy-gate.json', 'review-agent-checks-summary.md', 'review-agent-ci-receipt.json', 'review-agent-pr-comment-pack.json']"
+    "unsafe-auto-pr.yml": "fixtures/review-agent-github-workflows/unsafe-auto-pr.yml missing required workflow text: ['workflow_dispatch:', 'evidence_kind:', 'review_agent_report:', 'acceptance_bundle_dir:', 'policy:', 'upload_metadata_bundle:', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py build', 'scripts/cognitive_loop_review_agent_acceptance_bundle.py validate', 'scripts/cognitive_loop_review_agent_policy_gate.py', '--output review-agent-policy-gate.json', 'REVIEW_AGENT_POLICY_EXIT', 'if [ \"$ACCEPTANCE_BUNDLE_DIR\" != \"$OUTPUT_DIR\" ]; then', 'GITHUB_STEP_SUMMARY', 'review-agent-policy-gate.json', 'review-agent-checks-summary.md', 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a', 'review-agent-ci-receipt.json', 'review-agent-pr-comment-pack.json']"
   },
   "platform_packs": {
     "codex": "pass",

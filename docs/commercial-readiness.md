@@ -174,7 +174,10 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
 - Plugin marketplace trust model beyond local installs: hosted signed registry distribution, maintainer review queues, automatic update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
-- Security hardening: threat model, dependency policy, secret scanning, container hardening, external audit.
+- Security completion: the repository has secret scanning/push protection, full-SHA Actions,
+  CodeQL/dependency review, and a non-root least-privilege API container baseline. A threat-led
+  repository scan, finding remediation, live branch/repository setting readback, image/SBOM review,
+  and independent external audit remain required before hosted production claims.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by
   cohort, plugin activation, explicit feedback, and hosted waitlist conversion.
 - Product delivery layer: no standalone frontend is currently shippable; the launch path depends on API/Skill/platform-agent integrations until a new UI is designed.

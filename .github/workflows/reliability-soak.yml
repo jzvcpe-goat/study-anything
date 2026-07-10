@@ -55,8 +55,8 @@ jobs:
       MIN_SUCCESS_RATIO: ${{ inputs.min_success_ratio || '0.99' }}
       MAX_CONSECUTIVE_FAILURES: ${{ inputs.max_consecutive_failures || '8' }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
       - name: Compute published image name
@@ -66,7 +66,7 @@ jobs:
           echo "name=ghcr.io/${repo}/api" >> "$GITHUB_OUTPUT"
       - name: Log in to GHCR for published-image verification
         if: matrix.mode == 'published-image'
-        uses: docker/login-action@v4
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -86,7 +86,7 @@ jobs:
             --output "${RUNNER_TEMP}/study-anything-${{ matrix.mode }}-reliability.json"
       - name: Upload metadata-only reliability receipt
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: reliability-${{ matrix.mode }}-${{ github.run_id }}
           path: ${{ runner.temp }}/study-anything-${{ matrix.mode }}-reliability.json
@@ -98,9 +98,9 @@ jobs:
     needs: reliability-soak
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Download metadata-only mode receipts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: reliability-*-${{ github.run_id }}
           path: ${{ runner.temp }}/reliability-receipts
@@ -116,7 +116,7 @@ jobs:
             --output "${RUNNER_TEMP}/self-host-reliability-index.json"
       - name: Upload metadata-only reliability index
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: reliability-index-${{ github.run_id }}
           path: ${{ runner.temp }}/self-host-reliability-index.json

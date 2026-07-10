@@ -42,7 +42,7 @@ REQUIRED_WORKFLOW_NEEDLES = (
     "GITHUB_STEP_SUMMARY",
     "review-agent-policy-gate.json",
     "review-agent-checks-summary.md",
-    "actions/upload-artifact@v4",
+    "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
     "review-agent-ci-receipt.json",
     "review-agent-pr-comment-pack.json",
 )

@@ -9,8 +9,8 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
       - name: Install API package
@@ -23,6 +23,10 @@ jobs:
         run: python -m mypy --follow-imports=skip apps/api/study_anything/core/api_security.py scripts/verify_local_api_security.py
       - name: Verify local API security boundary
         run: python scripts/verify_local_api_security.py --check
+      - name: Verify container security baseline
+        run: python scripts/verify_container_security.py --check
+      - name: Verify GitHub security posture contract
+        run: python scripts/verify_github_security_posture.py --check
       - name: Verify self-host reliability harness
         run: python scripts/verify_self_host_soak.py --check
       - name: Verify scheduled reliability matrix contract
@@ -79,8 +83,8 @@ jobs:
       LANGFUSE_WORKER_IMAGE: ghcr.io/langfuse/langfuse-worker:3
       FALKORDB_ENABLED: "true"
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
       - name: Generate CI env
