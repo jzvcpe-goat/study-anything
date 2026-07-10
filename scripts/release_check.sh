@@ -24,6 +24,8 @@ customer_handoff_verifiers_integrated="true"
 customer_handoff_verifiers_passed_individually="false"
 cbb_protocol_verifiers_integrated="true"
 cbb_protocol_verifiers_passed_individually="false"
+cbb_v1_contract_verifiers_integrated="true"
+cbb_v1_contract_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -172,6 +174,8 @@ payload = {
     "customer_handoff_verifiers_passed_individually": $(json_bool "$customer_handoff_verifiers_passed_individually"),
     "cbb_protocol_verifiers_integrated": $(json_bool "$cbb_protocol_verifiers_integrated"),
     "cbb_protocol_verifiers_passed_individually": $(json_bool "$cbb_protocol_verifiers_passed_individually"),
+    "cbb_v1_contract_verifiers_integrated": $(json_bool "$cbb_v1_contract_verifiers_integrated"),
+    "cbb_v1_contract_verifiers_passed_individually": $(json_bool "$cbb_v1_contract_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
@@ -267,8 +271,16 @@ run_dual_loop_verifier_gates() {
 }
 
 run_cbb_protocol_verifier_gates() {
+  dependency_backed_contracts="${1:-required}"
   phase "CBB protocol verifier gates"
   "$python_bin" scripts/verify_cbb_positioning.py --check
+  if [ "$dependency_backed_contracts" = "required" ]; then
+    "$python_bin" scripts/verify_cbb_v1_contracts.py --check
+    "$python_bin" scripts/verify_cbb_v0_compatibility.py --check
+    cbb_v1_contract_verifiers_passed_individually="true"
+  else
+    printf "skip  CBB v1 contract verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
+  fi
   "$python_bin" scripts/verify_cbb_protocol_contracts.py --check
   "$python_bin" scripts/verify_cbb_gate.py --check
   "$python_bin" scripts/verify_cbb_receipt_chain.py --check
@@ -357,7 +369,7 @@ printf "Using Python runtime: %s\n" "$python_bin"
 if [ "$dual_loop_only_enabled" = "true" ]; then
   printf "partial  skipping FastAPI/full dependency sanity; running Dual-Loop and CBB protocol gates only.\n"
   run_dual_loop_verifier_gates
-  run_cbb_protocol_verifier_gates
+  run_cbb_protocol_verifier_gates skip-dependency-backed-contracts
   phase "release receipt summary"
   write_release_receipt 0
   printf "release receipt: %s\n" "$receipt_path"

@@ -1,0 +1,79 @@
+{
+  "case_id": "malformed",
+  "expected_error": "validation error",
+  "kind": "canonical_invalid",
+  "model_schema_version": "cbb.trust-policy.v1",
+  "payload": {
+    "claim_boundary": {
+      "current_claim": "The candidate may be evaluated up to the mapped v0 delivery scope only.",
+      "maximum_scope": "controlled_customer_handoff",
+      "not_claimed": [
+        "production approval",
+        "portable signed attestation",
+        "customer outcome guarantee",
+        "general model correctness"
+      ]
+    },
+    "created_at": "2026-06-28T00:00:00Z",
+    "hard_denies": [
+      "ai_review_only_trust",
+      "irreversible_external_effect",
+      "production_mutation",
+      "unbounded_real_user_exposure"
+    ],
+    "maximum_scope": "controlled_customer_handoff",
+    "policy_id": "cbb-policy:failure-contract-demo-001",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "required_evidence": [
+      {
+        "blocking": true,
+        "evidence_type": "failure_contract",
+        "required_for_scope": "sandbox_only"
+      },
+      {
+        "blocking": true,
+        "evidence_type": "sandbox_receipt",
+        "required_for_scope": "sandbox_only"
+      },
+      {
+        "blocking": true,
+        "evidence_type": "qualified_reconstruction",
+        "required_for_scope": "controlled_customer_handoff"
+      },
+      {
+        "blocking": true,
+        "evidence_type": "dual_loop_gate",
+        "required_for_scope": "controlled_customer_handoff"
+      },
+      {
+        "blocking": true,
+        "evidence_type": "delivery_trust_receipt",
+        "required_for_scope": "controlled_customer_handoff"
+      }
+    ],
+    "required_roles": [
+      "qualified_reviewer"
+    ],
+    "risk_budget": {
+      "irreversible_external_effects_allowed": false,
+      "level": "medium",
+      "production_mutation_allowed": false,
+      "real_user_exposure_allowed": false
+    },
+    "schema_version": "cbb.trust-policy.v1",
+    "subject_ref": "artifact:metadata-only-demo-change",
+    "unexpected_authority": "limited_beta"
+  }
+}

@@ -1447,6 +1447,16 @@ FILES: list[tuple[str, str, str]] = [
         "ZIP-only external consumer walkthrough report for the Dual Loop trust scenario pack.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-contracts.json",
+        "generated_asset",
+        "Canonical CBB Protocol v1 schema, fixture, canonicalization, and isolation report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v0-compatibility.json",
+        "generated_asset",
+        "Deterministic non-expanding CBB v0-to-v1 compatibility report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3207,6 +3217,11 @@ FILES: list[tuple[str, str, str]] = [
         "CBB Protocol v1 implementation sequence and acceptance matrix.",
     ),
     (
+        "docs/cbb-protocol-v1-contracts.md",
+        "operator_doc",
+        "Canonical Protocol v1 schemas, serialization, fixture, and compatibility guide.",
+    ),
+    (
         "docs/delivery-trust-receipt.md",
         "operator_doc",
         "Delivery Trust Receipt contract and verifier guide.",
@@ -3300,6 +3315,36 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/customer-handoff/customer-handoff-package-v1.schema.json",
         "schema",
         "CustomerHandoffPackage JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 trust policy JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 evidence bundle JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 qualified reconstruction JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 gate decision JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 delivery trust receipt JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 receipt provenance JSON Schema.",
     ),
     (
         "platform/schemas/cbb/claim-boundary-v1.schema.json",
@@ -5479,9 +5524,69 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box delivery decision gate evaluator.",
     ),
     (
+        "fixtures/cbb-v1-contracts/pass.json",
+        "fixture",
+        "Canonical CBB Protocol v1 passing v0 compatibility fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/missing-evidence.json",
+        "fixture",
+        "Canonical CBB Protocol v1 missing-evidence fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/hard-deny.json",
+        "fixture",
+        "Canonical CBB Protocol v1 hard-deny fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/stale.json",
+        "fixture",
+        "Canonical CBB Protocol v1 stale reconstruction fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/secret-like.json",
+        "fixture",
+        "Canonical CBB Protocol v1 secret-like rejection fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/malformed.json",
+        "fixture",
+        "Canonical CBB Protocol v1 malformed payload fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/naive-timestamp.json",
+        "fixture",
+        "Canonical CBB Protocol v1 timezone rejection fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/invalid-state.json",
+        "fixture",
+        "Canonical CBB Protocol v1 cross-field state rejection fixture.",
+    ),
+    (
+        "fixtures/cbb-v1-contracts/scope-expansion.json",
+        "fixture",
+        "Canonical CBB Protocol v1 scope-expansion rejection fixture.",
+    ),
+    (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
         "Cognitive Black Box protocol contract and metadata-only privacy verifier.",
+    ),
+    (
+        "scripts/generate_cbb_v1_contract_assets.py",
+        "generator",
+        "Generate canonical CBB Protocol v1 schemas and deterministic fixtures.",
+    ),
+    (
+        "scripts/verify_cbb_v1_contracts.py",
+        "verification",
+        "Verify canonical CBB Protocol v1 contracts and deterministic serialization.",
+    ),
+    (
+        "scripts/verify_cbb_v0_compatibility.py",
+        "verification",
+        "Verify v0 compatibility mappings preserve or narrow delivery scope.",
     ),
     (
         "scripts/verify_cbb_positioning.py",
@@ -7806,6 +7911,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_delivery_trust_receipt.py --check",
             "python3 scripts/verify_customer_handoff_package.py --check",
             "python3 scripts/verify_cbb_positioning.py --check",
+            "python3 scripts/verify_cbb_v1_contracts.py --check",
+            "python3 scripts/verify_cbb_v0_compatibility.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

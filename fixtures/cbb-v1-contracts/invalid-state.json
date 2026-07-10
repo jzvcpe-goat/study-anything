@@ -1,0 +1,47 @@
+{
+  "case_id": "invalid-state",
+  "expected_error": "required MRUs passed cannot exceed required MRUs total",
+  "kind": "canonical_invalid",
+  "model_schema_version": "cbb.qualified-reconstruction.v1",
+  "payload": {
+    "active_reconstruction": true,
+    "claim_boundary": {
+      "current_claim": "The mapped v0 reconstruction qualifies the reviewer for this scope.",
+      "maximum_scope": "controlled_customer_handoff",
+      "not_claimed": [
+        "global reviewer qualification",
+        "permanent human capability",
+        "passive attention as understanding",
+        "production approval"
+      ]
+    },
+    "evidence_refs": [
+      "attention-reconstruction-summary.json"
+    ],
+    "missing_mru_refs": [],
+    "observed_at": "2026-06-28T00:00:00Z",
+    "passive_attention_only": false,
+    "policy_ref": "cbb-policy:failure-contract-demo-001",
+    "privacy": {
+      "attention_stream_included": false,
+      "automatic_customer_send_performed": false,
+      "cookies_or_bearer_tokens_included": false,
+      "metadata_only": true,
+      "model_credentials_included": false,
+      "model_prompts_included": false,
+      "production_mutation_performed": false,
+      "raw_customer_payload_included": false,
+      "raw_report_text_included": false,
+      "raw_source_text_included": false,
+      "signed_urls_included": false
+    },
+    "qualified_scope": "controlled_customer_handoff",
+    "reconstruction_id": "cbb-reconstruction:attention-summary-demo-001",
+    "required_mrus_passed": 4,
+    "required_mrus_total": 3,
+    "reviewer_ref": "reviewer:v0-local-operator",
+    "schema_version": "cbb.qualified-reconstruction.v1",
+    "status": "passed",
+    "valid_until": "2026-09-26T00:00:00Z"
+  }
+}
