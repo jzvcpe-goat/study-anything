@@ -364,9 +364,9 @@ The project remains Apache-2.0 and local-first. Monetization is not a paid app g
 
 ## Status
 
-This repository is a public self-host alpha. The tagged binary and image release line remains `v0.3.31-alpha`; `main` is the post-release development line. Current `main` ships a deterministic metadata-only Cognitive Black Box trust harness, static/Lite Cognitive Loop runtime evidence, and the Study Anything learning adapter/platform-Agent package. It does not claim hosted identity, multi-tenant security, production mutation, a daemonized watcher, a realtime console, or paid services.
+This repository is a public self-host alpha. The tagged binary and image release line remains `v0.3.31-alpha`; `main` is the post-release development line. Current `main` ships a deterministic metadata-only Cognitive Black Box trust harness, static/Lite Cognitive Loop runtime evidence, the Study Anything learning adapter/platform-Agent package, and an optional OIDC JWT plus application-layer tenant-authorization foundation. It does not claim a managed hosted account service, database-level tenant isolation, production mutation, a daemonized watcher, a realtime console, paid services, or an independent security audit.
 
-本仓库目前是公开 self-host alpha。已发布二进制和镜像仍属于 `v0.3.31-alpha`；`main` 是该版本之后的开发线。当前 `main` 已包含确定性、metadata-only 的认知黑箱信任机制、静态/Lite Cognitive Loop 运行证据，以及 Study Anything 学习适配层和平台 Agent 包；它不宣称已经具备托管身份、多租户安全、生产改写、常驻 watcher、实时 console 或付费服务。
+本仓库目前是公开 self-host alpha。已发布二进制和镜像仍属于 `v0.3.31-alpha`；`main` 是该版本之后的开发线。当前 `main` 已包含确定性、metadata-only 的认知黑箱信任机制、静态/Lite Cognitive Loop 运行证据、Study Anything 学习适配层和平台 Agent 包，并新增可选 OIDC JWT 与应用层租户授权基础；它不宣称托管账号服务、数据库级租户隔离、生产改写、常驻 watcher、实时 console、付费服务或独立安全审计已经上线。
 
 See:
 
@@ -377,6 +377,7 @@ See:
 - `docs/platform-agent-integrations.md`
 - `docs/security.md`
 - `docs/security-baseline.md`
+- `docs/hosted-identity-tenancy.md`
 - `docs/self-host-reliability.md`
 - `docs/scheduled-reliability.md`
 - `docs/generated-evidence-topology.md`

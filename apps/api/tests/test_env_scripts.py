@@ -11,6 +11,9 @@ from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
+from cryptography.hazmat.primitives.asymmetric import rsa
+import jwt
+
 from _path import ROOT as API_ROOT
 
 
@@ -1005,6 +1008,83 @@ class EnvScriptTests(unittest.TestCase):
         )
 
         self.assertEqual(issues, [])
+
+    def test_check_env_accepts_production_oidc_with_static_jwks(self) -> None:
+        private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        public_jwk = jwt.algorithms.RSAAlgorithm.to_jwk(
+            private_key.public_key(),
+            as_dict=True,
+        )
+        public_jwk.update({"kid": "test-signing-key", "alg": "RS256", "use": "sig"})
+        jwks = json.dumps(
+            {"keys": [public_jwk]},
+            separators=(",", ":"),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            env_file = Path(tmp) / ".env"
+            env_file.write_text(
+                "\n".join(
+                    [
+                        "APP_ENV=production",
+                        "API_BIND_HOST=0.0.0.0",
+                        "STUDY_ANYTHING_API_AUTH_MODE=oidc_jwt",
+                        "STUDY_ANYTHING_OIDC_ISSUER=https://identity.example",
+                        "STUDY_ANYTHING_OIDC_AUDIENCE=study-anything-api",
+                        "STUDY_ANYTHING_OIDC_TENANT_CLAIM=org_id",
+                        f"STUDY_ANYTHING_OIDC_JWKS_JSON={jwks}",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=https://agent.example",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            code, stdout, stderr = self.run_check_env_with_stdout(
+                "--env",
+                str(env_file),
+                "--json",
+            )
+
+        self.assertEqual(code, 1)
+        self.assertEqual(stderr, "")
+        payload = json.loads(stdout)
+        codes = {item["code"] for item in payload["problems"]}
+        self.assertNotIn("production_api_auth_required", codes)
+        self.assertNotIn("network_bind_requires_token_auth", codes)
+        self.assertNotIn("invalid_oidc_configuration", codes)
+
+    def test_check_env_rejects_bad_oidc_without_leaking_jwks(self) -> None:
+        private_needle = "private-signing-material-must-not-leak"
+        with tempfile.TemporaryDirectory() as tmp:
+            env_file = Path(tmp) / ".env"
+            env_file.write_text(
+                "\n".join(
+                    [
+                        "APP_ENV=development",
+                        "STUDY_ANYTHING_API_AUTH_MODE=oidc_jwt",
+                        "STUDY_ANYTHING_OIDC_ISSUER=http://identity.example",
+                        "STUDY_ANYTHING_OIDC_AUDIENCE=study-anything-api",
+                        f"STUDY_ANYTHING_OIDC_JWKS_JSON={private_needle}",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            code, stdout, stderr = self.run_check_env_with_stdout(
+                "--env",
+                str(env_file),
+                "--json",
+            )
+
+        self.assertEqual(code, 1)
+        self.assertEqual(stderr, "")
+        payload = json.loads(stdout)
+        self.assertIn(
+            "invalid_oidc_configuration",
+            {item["code"] for item in payload["problems"]},
+        )
+        self.assertNotIn(private_needle, stdout)
+        self.assertNotIn(str(env_file), stdout)
 
     def test_check_env_rejects_separator_only_agent_allowlist(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

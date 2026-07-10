@@ -66,3 +66,5 @@ jobs:
         run: python scripts/verify_dependency_risk_acceptance.py --check
       - name: Verify Agent endpoint allowlist policy
         run: python scripts/verify_agent_endpoint_policy.py --check
+      - name: Verify hosted identity and tenant isolation
+        run: python scripts/verify_hosted_identity_tenancy.py --check

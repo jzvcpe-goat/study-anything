@@ -163,6 +163,9 @@ without a model key, then see `docs/kimi-agent-gateway.md`.
 - Non-loopback allowlisted origins must use HTTPS. Agent HTTP redirects are rejected,
   and the endpoint origin is revalidated immediately before invocation.
 - `GET /v1/agents/status` returns redacted provider metadata and URL-level endpoint redaction.
+- In `oidc_jwt` mode, non-demo providers and defaults are scoped to the authenticated
+  tenant-bound principal. Scope identifiers are persisted only as opaque IDs and are
+  never returned by provider status.
 - HTTP traces record provider id, task type, latency, status, token/cost metadata if supplied, and redacted metadata only.
 - HTTP Agent responses are limited to 1 MiB before JSON parsing and contract validation.
 - CLI adapters are disabled until an operator explicitly enables a command allowlist and timeout policy.

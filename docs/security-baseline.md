@@ -51,6 +51,8 @@ The `security` workflow runs:
 - GitHub Dependency Review on pull requests, blocking newly introduced high or critical
   vulnerabilities;
 - the deterministic container policy verifier.
+- the hosted identity/tenancy verifier, using ephemeral JWT keys and temporary stores with no
+  external network or production mutation.
 
 The repository setting target is:
 
@@ -75,6 +77,7 @@ The deterministic contract is part of CI and the release check:
 
 ```bash
 python3 scripts/verify_github_security_posture.py --check
+python3 scripts/verify_hosted_identity_tenancy.py --check
 ```
 
 After the settings are applied, perform a read-only live verification:

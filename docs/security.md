@@ -38,18 +38,22 @@ external data access outside the repository database.
 - `STUDY_ANYTHING_API_AUTH_MODE=local_only` is for a single local operator. The
   `user_id` and workspace member fields are local labels, not authenticated
   multi-tenant identities.
-- Production or non-loopback exposure requires
-  `STUDY_ANYTHING_API_AUTH_MODE=token` and a strong
-  `STUDY_ANYTHING_API_TOKEN`. The CLI reads that token from its environment or
-  the private `.env` file and sends it in the `Authorization` header, never in a
-  URL.
+- Production or non-loopback exposure requires either `token` mode with a strong
+  `STUDY_ANYTHING_API_TOKEN`, or optional `oidc_jwt` mode with a fixed issuer,
+  audience, tenant claim, and static public JWKS. The CLI reads a local operator
+  token from its environment or private `.env` and never puts it in a URL.
 - Token mode is an operator boundary for a private self-host. It is not hosted
   account authentication, tenant isolation, SSO, or a Teams security claim.
+- OIDC mode validates signed short-lived JWTs offline and binds opaque principals
+  to issuer, tenant, and subject. Sessions, workspaces, and non-demo Agent
+  providers are application-scoped; unscoped local-operator routes are blocked.
+  See `docs/hosted-identity-tenancy.md` for the exact matrix and limitations.
 
 Verify this boundary with:
 
 ```bash
 python3 scripts/verify_local_api_security.py --check
+python3 scripts/verify_hosted_identity_tenancy.py --check
 ```
 
 ## Agent Egress Boundary
@@ -114,6 +118,7 @@ python3 scripts/verify_local_api_security.py --check
 python3 scripts/verify_container_security.py --check
 python3 scripts/verify_dependency_risk_acceptance.py --check
 python3 scripts/verify_agent_endpoint_policy.py --check
+python3 scripts/verify_hosted_identity_tenancy.py --check
 python3 scripts/generate_python_supply_chain.py --check
 ```
 

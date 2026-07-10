@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 136758,
+    "bytes": 137371,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "c212af7babb79cad8135cc8c1edfbf0018eba14e78a9c6bf181dd90dfdbb6d69",
+    "sha256": "f1132206437b18d07aa0e32e13b10b1dcdfec2605c089394913fce0984680938",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -160,9 +160,9 @@
   },
   "public_asset_refs": [
     {
-      "bytes": 47186,
+      "bytes": 47443,
       "path": "README.md",
-      "sha256": "0de5c08315a4bb88c7eaa4cd1909f0208cb6ada9ba83b7671e416685b00b7801"
+      "sha256": "c01c8c8b38a002187948a0378154ff066d61b82c5b0ad3a8664aececf035eb22"
     },
     {
       "bytes": 19503,
@@ -170,9 +170,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 21619,
+      "bytes": 22139,
       "path": "docs/self-hosting.md",
-      "sha256": "101156de657fd9ca01fd9d99394f5ff83d28dbcb69fd45bcf6590fabf58e250e"
+      "sha256": "bacf196aa9d6367471885807ed28d8048abd505a236478411f44d98af47341bd"
     },
     {
       "bytes": 28276,
@@ -185,9 +185,9 @@
       "sha256": "91bd6459442c7fadae99fa0f3d40f596fd19d42b747494ff3eb3bcff6c42f482"
     },
     {
-      "bytes": 35586,
+      "bytes": 36163,
       "path": "docs/release-checklist.md",
-      "sha256": "0ec24d446872a9cd88a4945e457eb02a23f7c22d25b829d932d69c0200f3e2ec"
+      "sha256": "ecb7dd4ad6eba866e37b06af74196864cc19cf5b98aeb91e5de8384ecd32d7f5"
     },
     {
       "bytes": 35998,
@@ -230,9 +230,9 @@
       "sha256": "cd56361844f5900512cd6bb169b1bfadc7be31143c4e229bbaa69c914229bafb"
     },
     {
-      "bytes": 10763,
+      "bytes": 11311,
       "path": "infra/compose/docker-compose.yml",
-      "sha256": "8d4ddb8581ad3184d1ac5443fcbe595b8777587bc6b5436bd95bb3bdc1f17cc6"
+      "sha256": "d2c6ab394a46e0c7aa0dd788a758826042de42e36266a355920eb7245b1378da"
     },
     {
       "bytes": 452,

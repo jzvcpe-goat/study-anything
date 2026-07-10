@@ -99,6 +99,7 @@ class LearningState:
     user_id: str
     user_hash: str
     workspace_id: Optional[str] = None
+    tenant_id: Optional[str] = None
     track: str = "ACADEMIC"
     stage: str = "created"
     source: Optional[ReadingSource] = None
@@ -120,6 +121,9 @@ class LearningState:
     def public_dict(self) -> dict[str, Any]:
         data = asdict(self)
         data.pop("user_id", None)
+        data.pop("tenant_id", None)
+        data["tenant_scoped"] = self.tenant_id is not None
+        data["tenant_id_included"] = False
         return data
 
 
@@ -128,15 +132,17 @@ def new_session(
     track: str = "ACADEMIC",
     *,
     workspace_id: Optional[str] = None,
+    tenant_id: Optional[str] = None,
     trace_sink: Optional[TraceSink] = None,
 ) -> LearningState:
     session_id = str(uuid4())
-    user_hash = hash_user_id(user_id)
+    user_hash = hash_user_id(f"{tenant_id}:{user_id}" if tenant_id else user_id)
     state = LearningState(
         session_id=session_id,
         user_id=user_id,
         user_hash=user_hash,
         workspace_id=workspace_id,
+        tenant_id=tenant_id,
         track=track,
     )
     return append_event(
@@ -433,6 +439,7 @@ class LearningWorkflow:
             try:
                 agent_result = self.agent_router.invoke(
                     user_id=state.user_id,
+                    scope_id=state.user_id if state.tenant_id else None,
                     capability=capability,
                     task=AgentTask(
                         task_type=capability.value,
@@ -495,6 +502,7 @@ class LearningWorkflow:
         try:
             agent_result = self.agent_router.invoke(
                 user_id=state.user_id,
+                scope_id=state.user_id if state.tenant_id else None,
                 capability=AgentCapability.QUIZ_GENERATE,
                 task=AgentTask(
                     task_type=AgentCapability.QUIZ_GENERATE.value,
@@ -544,6 +552,7 @@ class LearningWorkflow:
             try:
                 agent_result = self.agent_router.invoke(
                     user_id=state.user_id,
+                    scope_id=state.user_id if state.tenant_id else None,
                     capability=AgentCapability.ANSWER_GRADE,
                     task=AgentTask(
                         task_type=AgentCapability.ANSWER_GRADE.value,
@@ -629,6 +638,7 @@ class LearningWorkflow:
         try:
             agent_result = self.agent_router.invoke(
                 user_id=state.user_id,
+                scope_id=state.user_id if state.tenant_id else None,
                 capability=AgentCapability.INSIGHT_SYNTHESIZE,
                 task=AgentTask(
                     task_type=AgentCapability.INSIGHT_SYNTHESIZE.value,

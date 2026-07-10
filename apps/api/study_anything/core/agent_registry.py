@@ -125,6 +125,7 @@ class AgentProviderConfig:
     capabilities: List[AgentCapability] = field(default_factory=list)
     timeout_seconds: int = 15
     enabled: bool = True
+    scope_id: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def public_dict(self) -> dict[str, Any]:
@@ -132,6 +133,16 @@ class AgentProviderConfig:
         values["kind"] = self.kind.value
         values["endpoint"] = redact_url_secrets(self.endpoint)
         values["capabilities"] = [capability.value for capability in self.capabilities]
+        values["scope"] = (
+            "shared_demo"
+            if self.kind == AgentProviderKind.FAKE_AGENT
+            else "principal"
+            if self.scope_id and self.scope_id.startswith("prn_")
+            else "tenant"
+            if self.scope_id
+            else "operator"
+        )
+        values.pop("scope_id", None)
         values["metadata"] = redact_mapping(self.metadata)
         return values
 
@@ -561,6 +572,7 @@ class AgentRegistry:
         capabilities: Optional[List[str]] = None,
         timeout_seconds: int = 15,
         enabled: bool = True,
+        scope_id: Optional[str] = None,
         metadata: Optional[Mapping[str, Any]] = None,
         **legacy_fields: Any,
     ) -> AgentProviderConfig:
@@ -589,6 +601,7 @@ class AgentRegistry:
             capabilities=provider_capabilities,
             timeout_seconds=timeout_seconds,
             enabled=enabled,
+            scope_id=scope_id,
             metadata=provider_metadata,
         )
         return self.register_provider(provider)
@@ -598,10 +611,16 @@ class AgentRegistry:
         user_id: str,
         capability: AgentCapability | str,
         provider_id: str,
+        *,
+        scope_id: Optional[str] = None,
     ) -> None:
         capability_value = _normalise_capability(capability)
         provider = self._providers.get(provider_id)
-        if provider is None:
+        if (
+            provider is None
+            or not provider.enabled
+            or not self._provider_visible(provider, scope_id)
+        ):
             raise KeyError(f"Unknown provider: {provider_id}")
         if capability_value not in provider.capabilities:
             raise ValueError(
@@ -610,13 +629,27 @@ class AgentRegistry:
         self._defaults.setdefault(user_id, {})[capability_value] = provider_id
         self._save()
 
-    def set_demo_defaults(self, user_id: str) -> None:
+    def set_demo_defaults(self, user_id: str, *, scope_id: Optional[str] = None) -> None:
         for capability in ALL_AGENT_CAPABILITIES:
-            self.set_default(user_id, capability, self._fake.provider_id)
+            self.set_default(
+                user_id,
+                capability,
+                self._fake.provider_id,
+                scope_id=scope_id,
+            )
 
-    def get_provider(self, provider_id: str) -> AgentProviderConfig:
+    def get_provider(
+        self,
+        provider_id: str,
+        *,
+        scope_id: Optional[str] = None,
+    ) -> AgentProviderConfig:
         provider = self._providers.get(provider_id)
-        if provider is None or not provider.enabled:
+        if (
+            provider is None
+            or not provider.enabled
+            or not self._provider_visible(provider, scope_id)
+        ):
             raise AgentConfigurationRequired(f"Agent provider '{provider_id}' is missing or disabled.")
         return provider
 
@@ -624,6 +657,8 @@ class AgentRegistry:
         self,
         user_id: str,
         capability: AgentCapability | str,
+        *,
+        scope_id: Optional[str] = None,
     ) -> AgentProviderConfig:
         capability_value = _normalise_capability(capability)
         provider_id = self._defaults.get(user_id, {}).get(capability_value)
@@ -631,22 +666,40 @@ class AgentRegistry:
             raise AgentConfigurationRequired(
                 f"No default agent configured for capability '{capability_value.value}'."
             )
-        return self.get_provider(provider_id)
+        return self.get_provider(provider_id, scope_id=scope_id)
 
-    def status(self, user_id: str) -> dict[str, Any]:
-        defaults = {
-            capability.value: self._defaults.get(user_id, {}).get(capability)
-            for capability in ALL_AGENT_CAPABILITIES
-        }
+    def status(self, user_id: str, *, scope_id: Optional[str] = None) -> dict[str, Any]:
+        defaults: dict[str, Optional[str]] = {}
+        for capability in ALL_AGENT_CAPABILITIES:
+            provider_id = self._defaults.get(user_id, {}).get(capability)
+            provider = self._providers.get(provider_id) if provider_id else None
+            defaults[capability.value] = (
+                provider_id
+                if provider is not None
+                and provider.enabled
+                and self._provider_visible(provider, scope_id)
+                else None
+            )
         return {
             "schema_version": "agent-v1",
-            "providers": [provider.public_dict() for provider in self._providers.values()],
+            "providers": [
+                provider.public_dict()
+                for provider in self._providers.values()
+                if self._provider_visible(provider, scope_id)
+            ],
             "defaults": defaults,
             "endpoint_policy": self.endpoint_policy.public_dict(),
+            "scope_applied": scope_id is not None,
+            "scope_id_included": False,
         }
 
-    def test_provider(self, provider_id: str) -> AgentHealth:
-        provider = self.get_provider(provider_id)
+    def test_provider(
+        self,
+        provider_id: str,
+        *,
+        scope_id: Optional[str] = None,
+    ) -> AgentHealth:
+        provider = self.get_provider(provider_id, scope_id=scope_id)
         capabilities = [capability.value for capability in provider.capabilities]
         if provider.kind == AgentProviderKind.FAKE_AGENT:
             return AgentHealth(
@@ -707,6 +760,12 @@ class AgentRegistry:
             capabilities=capabilities,
             diagnostic_code="mcp_planned",
         )
+
+    @staticmethod
+    def _provider_visible(provider: AgentProviderConfig, scope_id: Optional[str]) -> bool:
+        if provider.kind == AgentProviderKind.FAKE_AGENT:
+            return True
+        return provider.scope_id == scope_id
 
     @staticmethod
     def _health_task(capability: AgentCapability) -> AgentTask:
@@ -804,6 +863,11 @@ class AgentRegistry:
                 ],
                 timeout_seconds=int(provider_values.get("timeout_seconds", 15)),
                 enabled=bool(provider_values.get("enabled", True)),
+                scope_id=(
+                    str(provider_values["scope_id"])
+                    if provider_values.get("scope_id") is not None
+                    else None
+                ),
                 metadata=metadata,
             )
             self._providers[provider.provider_id] = provider
@@ -826,13 +890,28 @@ class AgentRouter:
         user_id: str,
         capability: AgentCapability | str,
         task: AgentTask,
+        scope_id: Optional[str] = None,
     ) -> AgentResult:
         capability_value = _normalise_capability(capability)
-        provider = self.registry.get_default_provider(user_id, capability_value)
-        return self.invoke_provider(provider.provider_id, task=replace(task, task_type=capability_value.value))
+        provider = self.registry.get_default_provider(
+            user_id,
+            capability_value,
+            scope_id=scope_id,
+        )
+        return self.invoke_provider(
+            provider.provider_id,
+            task=replace(task, task_type=capability_value.value),
+            scope_id=scope_id,
+        )
 
-    def invoke_provider(self, provider_id: str, *, task: AgentTask) -> AgentResult:
-        provider = self.registry.get_provider(provider_id)
+    def invoke_provider(
+        self,
+        provider_id: str,
+        *,
+        task: AgentTask,
+        scope_id: Optional[str] = None,
+    ) -> AgentResult:
+        provider = self.registry.get_provider(provider_id, scope_id=scope_id)
         capability = _normalise_capability(task.task_type)
         if capability not in provider.capabilities:
             raise AgentConfigurationRequired(

@@ -9,8 +9,9 @@
 
 `GET /v1/commercial/readiness` returns `commercial-readiness-v1`: the machine-readable answer to
 what can be launched now and what remains contract-only. The current alpha is ready for GitHub OSS,
-self-host, Skill Mode, and platform-Agent distribution. Hosted Sync, Publish, Teams, Catalyst billing,
-SSO, remote accounts, and standalone app commercialization are explicitly not implemented.
+self-host, Skill Mode, and platform-Agent distribution. An optional OIDC JWT and application-layer
+tenant authorization foundation exists, but managed hosted accounts, account recovery, SCIM,
+database RLS, Hosted Sync/Publish/Teams, billing, and standalone app commercialization are not ready.
 
 The report is metadata-only. It must not include raw source text, learner answers, Agent endpoints,
 model secrets, billing credentials, or raw contact data.
@@ -26,6 +27,8 @@ model secrets, billing credentials, or raw contact data.
 Agent request/response schemas are documented in `docs/agent-contract.md`.
 Platform-agent usage patterns are documented in `docs/platform-agent-integrations.md`.
 Agent provider status redacts metadata and URL-level endpoint secrets.
+In `oidc_jwt` mode, non-demo providers are scoped to the authenticated tenant-bound principal;
+request-body user identifiers cannot expose another principal's provider.
 `POST /v1/agents/providers` rejects inline credentials, secret-like query parameters, and secret
 metadata keys. `POST /v1/agents/test` returns `diagnostic_code`, `latency_ms`, capabilities, and
 privacy flags so platform Agents can distinguish configuration errors, unavailable gateways,
@@ -40,21 +43,28 @@ These remain for one alpha release and return agent-backed status:
 - `POST /v1/models/defaults`
 - `POST /v1/models/test`
 
-## Local Workspaces
+## Identity And Workspaces
+
+- `GET /v1/identity/me`
 
 - `GET /v1/workspaces/status`
 - `GET /v1/workspaces`
 - `POST /v1/workspaces`
 - `POST /v1/workspaces/{workspace_id}/members`
 
-Workspaces are local-first ownership boundaries, not hosted accounts. The API stores hashed local
-identities, workspace membership, roles, and role capability names. It does not require an account,
-contact method, remote identity provider, or billing plan.
+In `local_only` and `token` modes, workspaces are local-first ownership boundaries and `user_id`
+values are local labels. In `oidc_jwt` mode, the API ignores body/query identity labels for authority,
+derives opaque tenant-bound principals from validated claims, and scopes workspaces and sessions to
+the authenticated tenant. No raw OIDC subject or tenant claim is returned or stored.
 
 Supported roles are `owner`, `admin`, `member`, and `viewer`. Workspace responses include role
-permissions such as `read_sessions`, `create_sessions`, `manage_members`, `configure_agents`,
+permissions such as `read_sessions`, `create_sessions`, `write_sessions`, `manage_members`, `configure_agents`,
 `install_plugins`, and `export_pmf`. Session creation accepts an optional `workspace_id`; when omitted,
 Study Anything creates or reuses the caller's local default workspace.
+
+Cross-tenant session IDs return `404`; same-tenant principals without membership receive `403`.
+Hosted mode blocks PMF, Sync, recovery, plugin, importer, and adoption routes that are not yet
+tenant-scoped. See `docs/hosted-identity-tenancy.md`.
 
 ## Local Encrypted Sync Package
 

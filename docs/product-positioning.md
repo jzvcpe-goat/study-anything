@@ -34,6 +34,7 @@ Shipped foundation:
 
 - local-first learning loop and platform-Agent packs
 - Bring Your Own Agent and redacted eval evidence
+- optional OIDC JWT and application-layer tenant authorization foundation
 - Obsidian, NotebookLM-style, and Learning Enrichment handoffs
 - Docker and Skill Mode self-host paths
 - Dual-Loop, Delivery Trust Receipt, and CustomerHandoff contracts
@@ -45,6 +46,7 @@ Shipped foundation:
 
 - 本地优先学习闭环和平台 Agent 包
 - Bring Your Own Agent 和脱敏 eval 证据
+- 可选 OIDC JWT 和应用层租户授权基础
 - Obsidian、NotebookLM 式和 Learning Enrichment 交接
 - Docker 和 Skill Mode 自托管路径
 - Dual-Loop、Delivery Trust Receipt 和 CustomerHandoff 契约
@@ -54,7 +56,7 @@ Shipped foundation:
 
 Still not shipped as production capabilities:
 
-- hosted identity, account recovery, or tenant isolation
+- managed hosted accounts, account recovery, SCIM, or database-level tenant isolation
 - daemonized watcher and realtime console
 - governed source-changing auto-apply
 - production Langfuse sink and operational SLOs
@@ -62,7 +64,7 @@ Still not shipped as production capabilities:
 
 仍未作为生产能力交付：
 
-- 托管身份、账号恢复和租户隔离
+- 托管账号、账号恢复、SCIM 和数据库级租户隔离
 - 常驻 watcher 和实时 console
 - 受治理的源码改写 auto-apply
 - 生产 Langfuse sink 和运维 SLO
@@ -204,7 +206,7 @@ Current shipped foundation:
 
 Planned production layers:
 
-- authenticated hosted identity and tenant isolation
+- managed identity lifecycle and database-enforced tenant isolation beyond the shipped OIDC foundation
 - daemonized project watchers
 - realtime HTML Artifact console
 - governed source-changing auto-apply
@@ -213,7 +215,7 @@ Planned production layers:
 
 计划中的生产层：
 
-- 经过认证的托管身份和租户隔离
+- 在现有 OIDC 基础之上的托管身份生命周期和数据库强制租户隔离
 - 常驻项目 watcher
 - 实时 HTML Artifact console
 - 受治理的源码改写 auto-apply

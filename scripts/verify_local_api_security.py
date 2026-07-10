@@ -95,6 +95,8 @@ def verify() -> dict[str, object]:
             "STUDY_ANYTHING_API_AUTH_MODE": "token",
             "STUDY_ANYTHING_API_TOKEN": token,
             "STUDY_ANYTHING_CORS_ORIGINS": "https://trusted.example",
+            "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY": "allowlist",
+            "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST": "https://agent.example",
         },
         clear=False,
     ):

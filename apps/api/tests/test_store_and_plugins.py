@@ -8,22 +8,62 @@ from pathlib import Path
 from _path import ROOT  # noqa: F401
 
 from study_anything.core.plugin_registry import PluginRegistry
-from study_anything.core.store import JsonSessionStore, create_session_store
+from study_anything.core.store import InMemorySessionStore, JsonSessionStore, create_session_store
 from study_anything.core.workflow import new_session
 
 
 class StoreAndPluginTests(unittest.TestCase):
+    def test_session_stores_filter_tenant_before_returning_state(self) -> None:
+        tenant_a = "tnt_" + "a" * 32
+        tenant_b = "tnt_" + "b" * 32
+        store = InMemorySessionStore()
+        state_a = store.save(new_session("principal-a", tenant_id=tenant_a))
+        state_b = store.save(new_session("principal-b", tenant_id=tenant_b))
+
+        self.assertEqual(store.get(state_a.session_id, tenant_id=tenant_a), state_a)
+        with self.assertRaises(KeyError):
+            store.get(state_a.session_id, tenant_id=tenant_b)
+        self.assertEqual(
+            [item.session_id for item in store.list_sessions(tenant_id=tenant_a)],
+            [state_a.session_id],
+        )
+        self.assertNotIn("tenant_id", state_a.public_dict())
+        self.assertTrue(state_a.public_dict()["tenant_scoped"])
+        self.assertNotEqual(state_a.user_hash, state_b.user_hash)
+
     def test_json_session_store_round_trips_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             store = JsonSessionStore(Path(tmpdir))
-            state = new_session("local-user")
+            tenant_a = "tnt_" + "a" * 32
+            tenant_b = "tnt_" + "b" * 32
+            state = new_session("principal-a", tenant_id=tenant_a)
 
             store.save(state)
-            restored = store.get(state.session_id)
+            restored = store.get(state.session_id, tenant_id=tenant_a)
 
             self.assertEqual(restored.session_id, state.session_id)
             self.assertEqual(restored.user_hash, state.user_hash)
-            self.assertEqual(len(store.list_sessions()), 1)
+            self.assertEqual(restored.tenant_id, tenant_a)
+            self.assertEqual(len(store.list_sessions(tenant_id=tenant_a)), 1)
+            self.assertEqual(store.list_sessions(tenant_id=tenant_b), [])
+            with self.assertRaises(KeyError):
+                store.get(state.session_id, tenant_id=tenant_b)
+
+    def test_json_session_store_rejects_untrusted_path_identifiers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            store = JsonSessionStore(Path(tmpdir))
+
+            for session_id in (
+                "../outside",
+                "/tmp/outside",
+                "nested/session",
+                "nested\\session",
+                ".hidden",
+                "not-a-uuid",
+                "{00000000-0000-0000-0000-000000000000}",
+            ):
+                with self.subTest(session_id=session_id), self.assertRaises(KeyError):
+                    store.get(session_id)
 
     def test_create_session_store_defaults_to_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

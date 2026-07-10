@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS study_anything_sessions (
     session_id TEXT PRIMARY KEY,
     user_hash TEXT NOT NULL,
     user_id TEXT NOT NULL,
+    tenant_id TEXT,
+    workspace_id TEXT,
     stage TEXT NOT NULL,
     payload JSONB NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -19,6 +21,12 @@ ON study_anything_sessions (updated_at DESC);
 
 CREATE INDEX IF NOT EXISTS study_anything_sessions_user_hash_idx
 ON study_anything_sessions (user_hash);
+
+CREATE INDEX IF NOT EXISTS study_anything_sessions_tenant_id_idx
+ON study_anything_sessions (tenant_id);
+
+CREATE INDEX IF NOT EXISTS study_anything_sessions_workspace_id_idx
+ON study_anything_sessions (workspace_id);
 
 INSERT INTO study_anything_metadata (key, value)
 VALUES ('schema_version', '0.2.14-alpha')

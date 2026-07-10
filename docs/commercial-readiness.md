@@ -33,7 +33,9 @@ The response is `commercial-readiness-v1`. It is metadata-only and states:
 
 This means Study Anything can be distributed as an OSS local-first learning layer for Kimi, Codex,
 WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
-SSO, remote accounts, or a standalone frontend are ready.
+managed remote accounts, account recovery, or a standalone frontend are ready. Current `main` includes
+optional offline OIDC JWT validation and application-layer tenant/workspace/session/Agent authorization;
+`docs/hosted-identity-tenancy.md` defines what that foundation does and does not prove.
 The Agent gateway hardening verifier is part of the launch proof for this distribution path: it
 checks that real credentials remain outside Study Anything, unsafe provider config is rejected, and
 bad Agent output produces redacted diagnostics.
@@ -96,8 +98,9 @@ alpha:
   `learning-package-v1` and `second-brain-handoff-v1`; publish consent, sharing controls, abuse
   handling, and artifact versioning are still required.
 - `Neural Teams`: shared courses, private workspaces, admin controls, audit/export. The local
-  foundation is workspace metadata; tenant isolation, retention controls, billing, support, and
-  enterprise security posture are still required.
+  foundation now includes OIDC tenant principals plus application-layer workspace/session isolation;
+  database-enforced isolation, retention/deletion controls, billing, support, and enterprise security
+  posture are still required.
 - `Catalyst`: one-time supporter tier for early builds and roadmap voting. It must not lock the core
   workflow or community plugins behind payment.
 
@@ -110,6 +113,8 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Open-source foundation, Apache-2.0 license, contribution docs, security docs, branch policy, and GitHub release flow.
 - Docker full stack with API, app Postgres, mock HTTP agent, and optional Langfuse/FalkorDB boundaries.
 - Bring Your Own Agent architecture with fake demo agent and HTTP agent contract.
+- Optional OIDC JWT authentication with tenant-bound opaque principals, application-layer
+  session/workspace isolation, and principal-scoped Agent providers.
 - Source-bound learning loop: ingestion, quiz generation, grading, mastery, synthesis, scribe log, HITL, discard.
 - Plugin manifest validation and example plugin surfaces.
 - Explicit local plugin installer and API permission-confirmation flow with manifest validation and overwrite protection.
@@ -168,9 +173,11 @@ to user-owned local data, or a closed plugin channel as a requirement.
 
 ## What Blocks Commercial Launch
 
-- Hosted accounts and identity provider integration beyond the local workspace boundary.
+- Managed identity provisioning, account recovery, SCIM, signing-key rotation operations, and IdP
+  lifecycle support beyond the current static-JWKS OIDC foundation.
 - Hosted encrypted sync service: remote storage, multi-device conflict resolution, account recovery, and support tooling.
-- Hosted deployment architecture, tenant isolation, billing, plan limits, and support workflows.
+- Hosted deployment architecture, database-level tenant isolation/RLS, retention and deletion,
+  billing, plan limits, and support workflows.
 - Team spaces beyond local membership metadata: admin controls, export/audit guarantees, and enterprise data retention settings.
 - Plugin marketplace trust model beyond local installs: hosted signed registry distribution, maintainer review queues, automatic update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.

@@ -40,7 +40,7 @@ REQUIREMENT_EXPORTS: tuple[tuple[Path, tuple[str, ...]], ...] = (
     ),
     (
         ROOT / "requirements/locked-policy.txt",
-        ("--extra", "dev", "--group", "build"),
+        ("--extra", "dev", "--extra", "hosted", "--group", "build"),
     ),
 )
 

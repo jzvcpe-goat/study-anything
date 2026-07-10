@@ -5,6 +5,7 @@ from __future__ import annotations
 import atexit
 import os
 from pathlib import Path
+import re
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Request
@@ -30,6 +31,10 @@ from study_anything.core.agent_registry import (
 )
 from study_anything.core.agent_endpoint_policy import load_agent_endpoint_policy
 from study_anything.core.api_security import load_api_security_config
+from study_anything.core.hosted_identity import (
+    HostedAuthenticationError,
+    HostedPrincipal,
+)
 from study_anything.core.commercial_readiness import (
     build_commercial_readiness,
     summarize_commercial_readiness,
@@ -102,10 +107,25 @@ from study_anything.core.workflow import (
     submit_reading,
 )
 from study_anything.core.workspace import (
+    LOCAL_TENANT_ID,
     LocalWorkspaceStore,
     WorkspaceAccessDenied,
     WorkspaceError,
 )
+
+
+SESSION_PATH_PATTERN = re.compile(r"^/v1/sessions/([^/]+)(?:/|$)")
+SESSION_CREATION_ROUTES = {"from-context-package", "from-retrieval"}
+HOSTED_BLOCKED_PREFIXES = (
+    "/v1/adoption",
+    "/v1/importers",
+    "/v1/metrics",
+    "/v1/pmf",
+    "/v1/plugins",
+    "/v1/recovery",
+    "/v1/sync",
+)
+HOSTED_PRINCIPAL_ID_PATTERN = re.compile(r"^prn_[0-9a-f]{32}$")
 
 
 class CreateSessionRequest(BaseModel):
@@ -358,11 +378,49 @@ def _legacy_capability(capability: str) -> AgentCapability:
     return legacy.get(capability, AgentCapability(capability))
 
 
+def _hosted_principal(request: Request) -> HostedPrincipal | None:
+    principal = getattr(request.state, "hosted_principal", None)
+    return principal if isinstance(principal, HostedPrincipal) else None
+
+
+def _actor_context(
+    request: Request,
+    requested_user_id: str,
+) -> tuple[str, Optional[str], Optional[str]]:
+    principal = _hosted_principal(request)
+    if principal is None:
+        return requested_user_id, None, None
+    return principal.principal_id, principal.tenant_id, principal.display_name
+
+
+def _session_id_from_path(path: str) -> str | None:
+    match = SESSION_PATH_PATTERN.match(path)
+    if match is None or match.group(1) in SESSION_CREATION_ROUTES:
+        return None
+    return match.group(1)
+
+
+def _hosted_error(status_code: int, code: str, detail: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "schema_version": "study-anything-hosted-authorization-error-v1",
+            "status": "not_found" if status_code == 404 else "forbidden",
+            "code": code,
+            "detail": detail,
+            "raw_identity_claims_included": False,
+            "tenant_id_included": False,
+        },
+    )
+
+
 def create_app() -> FastAPI:
     api_security = load_api_security_config(os.environ)
+    runtime_agent_endpoint_policy = load_agent_endpoint_policy(os.environ)
+    agent_registry.endpoint_policy = runtime_agent_endpoint_policy
     app = FastAPI(title="Cognitive Black Box: Study Anything Adapter", version=__version__)
     app.state.api_security = api_security
-    app.state.agent_endpoint_policy = agent_endpoint_policy
+    app.state.agent_endpoint_policy = runtime_agent_endpoint_policy
     if api_security.cors_origins:
         app.add_middleware(
             CORSMiddleware,
@@ -375,25 +433,78 @@ def create_app() -> FastAPI:
     @app.middleware("http")
     async def enforce_api_security(request: Request, call_next: Any) -> Any:
         is_public_health = request.url.path == "/v1/health"
-        if (
-            api_security.token_required
-            and request.method != "OPTIONS"
-            and not is_public_health
-            and not api_security.authorises(request.headers.get("Authorization"))
-        ):
-            return JSONResponse(
-                status_code=401,
-                content={
-                    "schema_version": "study-anything-api-auth-error-v1",
-                    "status": "unauthorized",
-                    "detail": "A valid local API bearer token is required.",
-                    "secret_values_included": False,
-                },
-                headers={
-                    "WWW-Authenticate": "Bearer",
-                    "X-Study-Anything-Auth-Mode": api_security.auth_mode,
-                },
-            )
+        request.state.hosted_principal = None
+        if request.method != "OPTIONS" and not is_public_health:
+            authorization = request.headers.get("Authorization")
+            if api_security.token_required and not api_security.authorises(authorization):
+                return JSONResponse(
+                    status_code=401,
+                    content={
+                        "schema_version": "study-anything-api-auth-error-v1",
+                        "status": "unauthorized",
+                        "detail": "A valid local API bearer token is required.",
+                        "secret_values_included": False,
+                    },
+                    headers={
+                        "WWW-Authenticate": "Bearer",
+                        "X-Study-Anything-Auth-Mode": api_security.auth_mode,
+                    },
+                )
+            if api_security.hosted_identity is not None:
+                try:
+                    request.state.hosted_principal = api_security.hosted_identity.authenticate(
+                        authorization
+                    )
+                except HostedAuthenticationError:
+                    return JSONResponse(
+                        status_code=401,
+                        content={
+                            "schema_version": "study-anything-api-auth-error-v1",
+                            "status": "unauthorized",
+                            "detail": "A valid hosted bearer token is required.",
+                            "secret_values_included": False,
+                            "raw_token_claims_included": False,
+                        },
+                        headers={
+                            "WWW-Authenticate": "Bearer",
+                            "X-Study-Anything-Auth-Mode": api_security.auth_mode,
+                        },
+                    )
+
+        principal = _hosted_principal(request)
+        if principal is not None and request.method != "OPTIONS":
+            if any(request.url.path.startswith(prefix) for prefix in HOSTED_BLOCKED_PREFIXES):
+                return _hosted_error(
+                    403,
+                    "hosted_route_not_tenant_scoped",
+                    "This route is unavailable until its storage is tenant-scoped.",
+                )
+            session_id = _session_id_from_path(request.url.path)
+            if session_id is not None:
+                try:
+                    state = store.get(session_id, tenant_id=principal.tenant_id)
+                except KeyError:
+                    return _hosted_error(404, "session_not_found", "Session not found.")
+                if state.workspace_id is None:
+                    return _hosted_error(404, "session_not_found", "Session not found.")
+                permission = (
+                    "read_sessions" if request.method in {"GET", "HEAD"} else "write_sessions"
+                )
+                try:
+                    workspace_store.assert_permission(
+                        principal.principal_id,
+                        state.workspace_id,
+                        permission,
+                        tenant_id=principal.tenant_id,
+                    )
+                except KeyError:
+                    return _hosted_error(404, "session_not_found", "Session not found.")
+                except WorkspaceAccessDenied:
+                    return _hosted_error(
+                        403,
+                        "workspace_permission_denied",
+                        "The authenticated principal cannot perform this session action.",
+                    )
         response = await call_next(request)
         response.headers["X-Study-Anything-Auth-Mode"] = api_security.auth_mode
         return response
@@ -406,8 +517,28 @@ def create_app() -> FastAPI:
             "api_security": api_security.public_dict(),
         }
 
+    @app.get("/v1/identity/me")
+    def identity_me(request: Request) -> dict[str, object]:
+        principal = _hosted_principal(request)
+        if principal is None:
+            return {
+                "schema_version": "study-anything-hosted-identity-v1",
+                "authentication_mode": api_security.auth_mode,
+                "hosted_principal": False,
+                "local_operator": True,
+                "raw_identity_claims_included": False,
+            }
+        workspace_store.ensure_identity(
+            principal.principal_id,
+            principal.display_name,
+            tenant_id=principal.tenant_id,
+        )
+        return principal.public_dict()
+
     @app.get("/v1/system/status")
-    def system_status(user_id: str = "local-user") -> dict[str, object]:
+    def system_status(request: Request, user_id: str = "local-user") -> dict[str, object]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, user_id)
+        sessions = store.list_sessions(tenant_id=tenant_id)
         commercial_readiness = build_commercial_readiness(version=__version__)
         return {
             "status": "ok",
@@ -416,8 +547,8 @@ def create_app() -> FastAPI:
             "data_dir_path_included": False,
             "api_security": api_security.public_dict(),
             "session_store": getattr(store, "backend", "unknown"),
-            "session_count": len(store.list_sessions()),
-            "open_hitl_count": len(store.list_hitl()),
+            "session_count": len(sessions),
+            "open_hitl_count": len(store.list_hitl(tenant_id=tenant_id)),
             "langgraph_available": langgraph_available(),
             "workflow_engine": workflow.engine,
             "langgraph_checkpointer": langgraph_checkpoint.backend if langgraph_checkpoint else None,
@@ -425,16 +556,29 @@ def create_app() -> FastAPI:
             "knowledge_graph": knowledge_graph_sink.status().public_dict(),
             "retrieval": retrieval_index.status().public_dict(),
             "sync": sync_status(),
-            "agent_status": agent_registry.status(user_id),
-            "model_status": {**agent_registry.status(user_id), "deprecated": True},
-            "workspace_status": workspace_store.status(user_id),
+            "agent_status": agent_registry.status(
+                actor_user_id,
+                scope_id=actor_user_id if tenant_id is not None else None,
+            ),
+            "model_status": {
+                **agent_registry.status(
+                    actor_user_id,
+                    scope_id=actor_user_id if tenant_id is not None else None,
+                ),
+                "deprecated": True,
+            },
+            "workspace_status": workspace_store.status(
+                actor_user_id,
+                tenant_id=tenant_id or LOCAL_TENANT_ID,
+                display_name=display_name,
+            ),
             "recovery": recovery_status(project_root),
             "commercial_readiness": summarize_commercial_readiness(commercial_readiness),
             "plugin_count": len(plugins.discover()),
             "pmf_metrics": compute_pmf_metrics(
-                store.list_sessions(),
+                sessions,
                 plugins.discover(),
-                pmf_interest_store.summary(),
+                None if tenant_id is not None else pmf_interest_store.summary(),
             )["signals"],
         }
 
@@ -455,47 +599,82 @@ def create_app() -> FastAPI:
         return recovery_status(project_root)
 
     @app.get("/v1/workspaces/status")
-    def workspace_status(user_id: str = "local-user") -> dict[str, object]:
+    def workspace_status(request: Request, user_id: str = "local-user") -> dict[str, object]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, user_id)
         try:
-            return workspace_store.status(user_id)
+            return workspace_store.status(
+                actor_user_id,
+                tenant_id=tenant_id or LOCAL_TENANT_ID,
+                display_name=display_name,
+            )
         except WorkspaceError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     @app.get("/v1/workspaces")
-    def list_workspaces(user_id: str = "local-user") -> list[dict[str, object]]:
+    def list_workspaces(
+        request: Request,
+        user_id: str = "local-user",
+    ) -> list[dict[str, object]]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, user_id)
+        workspace_tenant_id = tenant_id or LOCAL_TENANT_ID
         try:
-            workspace_store.ensure_default_workspace(user_id)
+            workspace_store.ensure_default_workspace(
+                actor_user_id,
+                display_name,
+                tenant_id=workspace_tenant_id,
+            )
             return [
                 workspace.public_dict()
-                for workspace in workspace_store.list_for_user(user_id)
+                for workspace in workspace_store.list_for_user(
+                    actor_user_id,
+                    tenant_id=workspace_tenant_id,
+                )
             ]
         except WorkspaceError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     @app.post("/v1/workspaces")
-    def create_workspace(payload: WorkspaceCreateRequest) -> dict[str, object]:
+    def create_workspace(
+        request: Request,
+        payload: WorkspaceCreateRequest,
+    ) -> dict[str, object]:
+        owner_user_id, tenant_id, display_name = _actor_context(
+            request,
+            payload.owner_user_id,
+        )
         try:
             return workspace_store.create_workspace(
-                owner_user_id=payload.owner_user_id,
+                owner_user_id=owner_user_id,
                 name=payload.name,
                 slug=payload.slug,
-                owner_display_name=payload.owner_display_name,
+                owner_display_name=display_name or payload.owner_display_name,
+                tenant_id=tenant_id or LOCAL_TENANT_ID,
             ).public_dict()
         except WorkspaceError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     @app.post("/v1/workspaces/{workspace_id}/members")
     def add_workspace_member(
+        request: Request,
         workspace_id: str,
         payload: WorkspaceMemberRequest,
     ) -> dict[str, object]:
+        acting_user_id, tenant_id, _ = _actor_context(request, payload.acting_user_id)
+        if tenant_id is not None and not HOSTED_PRINCIPAL_ID_PATTERN.fullmatch(
+            payload.member_user_id
+        ):
+            raise HTTPException(
+                status_code=400,
+                detail="Hosted workspace members must use an opaque principal_id from /v1/identity/me.",
+            )
         try:
             return workspace_store.add_member(
                 workspace_id=workspace_id,
-                acting_user_id=payload.acting_user_id,
+                acting_user_id=acting_user_id,
                 member_user_id=payload.member_user_id,
                 role=payload.role,
                 display_name=payload.display_name,
+                tenant_id=tenant_id or LOCAL_TENANT_ID,
             ).public_dict()
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Workspace not found") from exc
@@ -634,40 +813,71 @@ def create_app() -> FastAPI:
         return retrieval_index.status().public_dict()
 
     @app.get("/v1/agents/status")
-    def agent_status(user_id: str = "local-user") -> dict[str, object]:
-        return agent_registry.status(user_id)
+    def agent_status(request: Request, user_id: str = "local-user") -> dict[str, object]:
+        actor_user_id, tenant_id, _ = _actor_context(request, user_id)
+        return agent_registry.status(
+            actor_user_id,
+            scope_id=actor_user_id if tenant_id is not None else None,
+        )
 
     @app.post("/v1/agents/providers")
-    def add_agent_provider(payload: AgentProviderRequest) -> dict[str, object]:
+    def add_agent_provider(
+        request: Request,
+        payload: AgentProviderRequest,
+    ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
-            provider = agent_registry.configure_provider(**payload.model_dump())
+            provider = agent_registry.configure_provider(
+                **payload.model_dump(),
+                scope_id=principal.principal_id if principal is not None else None,
+            )
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         return provider.public_dict()
 
     @app.post("/v1/agents/defaults")
-    def set_agent_default(payload: AgentDefaultsRequest) -> dict[str, object]:
+    def set_agent_default(
+        request: Request,
+        payload: AgentDefaultsRequest,
+    ) -> dict[str, object]:
+        actor_user_id, tenant_id, _ = _actor_context(request, payload.user_id)
+        scope_id = actor_user_id if tenant_id is not None else None
         try:
-            agent_registry.set_default(payload.user_id, payload.capability, payload.provider_id)
+            agent_registry.set_default(
+                actor_user_id,
+                payload.capability,
+                payload.provider_id,
+                scope_id=scope_id,
+            )
         except (KeyError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
-        return agent_registry.status(payload.user_id)
+        return agent_registry.status(actor_user_id, scope_id=scope_id)
 
     @app.post("/v1/agents/test")
-    def test_agent_provider(payload: TestAgentProviderRequest) -> dict[str, object]:
+    def test_agent_provider(
+        request: Request,
+        payload: TestAgentProviderRequest,
+    ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
-            return agent_registry.test_provider(payload.provider_id).public_dict()
+            return agent_registry.test_provider(
+                payload.provider_id,
+                scope_id=principal.principal_id if principal is not None else None,
+            ).public_dict()
         except (KeyError, ValueError, AgentConfigurationRequired) as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.post("/v1/agents/{provider_id}/invoke")
     def invoke_agent(
+        request: Request,
         provider_id: str,
         payload: AgentInvokeRequest,
     ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
             result = agent_router.invoke_provider(
                 provider_id,
+                scope_id=principal.principal_id if principal is not None else None,
                 task=AgentTask(
                     task_type=payload.task_type,
                     session_id=payload.session_id,
@@ -691,13 +901,27 @@ def create_app() -> FastAPI:
         return result.public_dict()
 
     @app.get("/v1/models/status")
-    def model_status(user_id: str = "local-user") -> dict[str, object]:
-        return {**agent_registry.status(user_id), "deprecated": True}
+    def model_status(request: Request, user_id: str = "local-user") -> dict[str, object]:
+        actor_user_id, tenant_id, _ = _actor_context(request, user_id)
+        return {
+            **agent_registry.status(
+                actor_user_id,
+                scope_id=actor_user_id if tenant_id is not None else None,
+            ),
+            "deprecated": True,
+        }
 
     @app.post("/v1/models/providers")
-    def add_model_provider(payload: AgentProviderRequest) -> dict[str, object]:
+    def add_model_provider(
+        request: Request,
+        payload: AgentProviderRequest,
+    ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
-            provider = agent_registry.configure_provider(**payload.model_dump())
+            provider = agent_registry.configure_provider(
+                **payload.model_dump(),
+                scope_id=principal.principal_id if principal is not None else None,
+            )
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         values = provider.public_dict()
@@ -705,24 +929,46 @@ def create_app() -> FastAPI:
         return values
 
     @app.post("/v1/models/defaults")
-    def set_model_default(payload: AgentDefaultsRequest) -> dict[str, object]:
+    def set_model_default(
+        request: Request,
+        payload: AgentDefaultsRequest,
+    ) -> dict[str, object]:
+        actor_user_id, tenant_id, _ = _actor_context(request, payload.user_id)
+        scope_id = actor_user_id if tenant_id is not None else None
         try:
-            agent_registry.set_default(payload.user_id, _legacy_capability(payload.capability), payload.provider_id)
+            agent_registry.set_default(
+                actor_user_id,
+                _legacy_capability(payload.capability),
+                payload.provider_id,
+                scope_id=scope_id,
+            )
         except (KeyError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
-        return {**agent_registry.status(payload.user_id), "deprecated": True}
+        return {**agent_registry.status(actor_user_id, scope_id=scope_id), "deprecated": True}
 
     @app.post("/v1/models/test")
-    def test_model_provider(payload: TestAgentProviderRequest) -> dict[str, object]:
+    def test_model_provider(
+        request: Request,
+        payload: TestAgentProviderRequest,
+    ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
-            values = agent_registry.test_provider(payload.provider_id).public_dict()
+            values = agent_registry.test_provider(
+                payload.provider_id,
+                scope_id=principal.principal_id if principal is not None else None,
+            ).public_dict()
             values["deprecated"] = True
             return values
         except (KeyError, ValueError, AgentConfigurationRequired) as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.post("/v1/sessions")
-    def create_session(payload: CreateSessionRequest) -> dict[str, object]:
+    def create_session(
+        request: Request,
+        payload: CreateSessionRequest,
+    ) -> dict[str, object]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, payload.user_id)
+        workspace_tenant_id = tenant_id or LOCAL_TENANT_ID
         use_demo = (
             payload.use_demo_agent
             if payload.use_demo_agent is not None
@@ -731,14 +977,17 @@ def create_app() -> FastAPI:
         try:
             if payload.workspace_id:
                 workspace_store.assert_permission(
-                    payload.user_id,
+                    actor_user_id,
                     payload.workspace_id,
                     "create_sessions",
+                    tenant_id=workspace_tenant_id,
                 )
                 workspace_id = payload.workspace_id
             else:
                 workspace_id = workspace_store.ensure_default_workspace(
-                    payload.user_id
+                    actor_user_id,
+                    display_name,
+                    tenant_id=workspace_tenant_id,
                 ).workspace_id
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Workspace not found") from exc
@@ -747,12 +996,16 @@ def create_app() -> FastAPI:
         except WorkspaceError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         if use_demo:
-            agent_registry.set_demo_defaults(payload.user_id)
+            agent_registry.set_demo_defaults(
+                actor_user_id,
+                scope_id=actor_user_id if tenant_id is not None else None,
+            )
         state = store.save(
             new_session(
-                payload.user_id,
+                actor_user_id,
                 payload.track,
                 workspace_id=workspace_id,
+                tenant_id=tenant_id,
                 trace_sink=trace_sink,
             )
         )
@@ -788,8 +1041,11 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/sessions/from-context-package")
     def create_session_from_context_package(
+        request: Request,
         payload: LearningContextSessionRequest,
     ) -> dict[str, object]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, payload.user_id)
+        workspace_tenant_id = tenant_id or LOCAL_TENANT_ID
         try:
             package = validate_learning_context_package(payload.package)
             use_demo = (
@@ -799,14 +1055,17 @@ def create_app() -> FastAPI:
             )
             if payload.workspace_id:
                 workspace_store.assert_permission(
-                    payload.user_id,
+                    actor_user_id,
                     payload.workspace_id,
                     "create_sessions",
+                    tenant_id=workspace_tenant_id,
                 )
                 workspace_id = payload.workspace_id
             else:
                 workspace_id = workspace_store.ensure_default_workspace(
-                    payload.user_id
+                    actor_user_id,
+                    display_name,
+                    tenant_id=workspace_tenant_id,
                 ).workspace_id
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Workspace not found") from exc
@@ -817,11 +1076,15 @@ def create_app() -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         if use_demo:
-            agent_registry.set_demo_defaults(payload.user_id)
+            agent_registry.set_demo_defaults(
+                actor_user_id,
+                scope_id=actor_user_id if tenant_id is not None else None,
+            )
         state = new_session(
-            payload.user_id,
+            actor_user_id,
             payload.track or package.track or "ACADEMIC",
             workspace_id=workspace_id,
+            tenant_id=tenant_id,
             trace_sink=trace_sink,
         )
         state = submit_enrichment(
@@ -841,22 +1104,37 @@ def create_app() -> FastAPI:
 
     @app.get("/v1/sessions")
     def list_sessions(
+        request: Request,
         user_id: str = "local-user",
         workspace_id: Optional[str] = None,
     ) -> list[dict[str, object]]:
-        sessions = store.list_sessions()
+        actor_user_id, tenant_id, _ = _actor_context(request, user_id)
+        workspace_tenant_id = tenant_id or LOCAL_TENANT_ID
+        sessions = store.list_sessions(tenant_id=tenant_id)
         if workspace_id:
             try:
                 workspace_store.assert_permission(
-                    user_id,
+                    actor_user_id,
                     workspace_id,
                     "read_sessions",
+                    tenant_id=workspace_tenant_id,
                 )
             except KeyError as exc:
                 raise HTTPException(status_code=404, detail="Workspace not found") from exc
             except WorkspaceAccessDenied as exc:
                 raise HTTPException(status_code=403, detail=str(exc)) from exc
             sessions = [state for state in sessions if state.workspace_id == workspace_id]
+        elif tenant_id is not None:
+            allowed_workspace_ids = {
+                workspace.workspace_id
+                for workspace in workspace_store.list_for_user(
+                    actor_user_id,
+                    tenant_id=workspace_tenant_id,
+                )
+            }
+            sessions = [
+                state for state in sessions if state.workspace_id in allowed_workspace_ids
+            ]
         return [state.public_dict() for state in sessions]
 
     @app.get("/v1/sessions/{session_id}")
@@ -1146,9 +1424,23 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=503, detail=str(exc)) from exc
 
     @app.post("/v1/sessions/from-retrieval")
-    def create_session_from_retrieval(payload: RetrievalSessionRequest) -> dict[str, object]:
+    def create_session_from_retrieval(
+        request: Request,
+        payload: RetrievalSessionRequest,
+    ) -> dict[str, object]:
+        actor_user_id, tenant_id, display_name = _actor_context(request, payload.user_id)
+        workspace_tenant_id = tenant_id or LOCAL_TENANT_ID
         try:
-            store.get(payload.source_session_id)
+            source_state = store.get(payload.source_session_id, tenant_id=tenant_id)
+            if tenant_id is not None:
+                if source_state.workspace_id is None:
+                    raise KeyError(payload.source_session_id)
+                workspace_store.assert_permission(
+                    actor_user_id,
+                    source_state.workspace_id,
+                    "read_sessions",
+                    tenant_id=workspace_tenant_id,
+                )
             result_set = retrieval_index.search(
                 session_id=payload.source_session_id,
                 query=payload.query,
@@ -1167,14 +1459,17 @@ def create_app() -> FastAPI:
             )
             if payload.workspace_id:
                 workspace_store.assert_permission(
-                    payload.user_id,
+                    actor_user_id,
                     payload.workspace_id,
                     "create_sessions",
+                    tenant_id=workspace_tenant_id,
                 )
                 workspace_id = payload.workspace_id
             else:
                 workspace_id = workspace_store.ensure_default_workspace(
-                    payload.user_id
+                    actor_user_id,
+                    display_name,
+                    tenant_id=workspace_tenant_id,
                 ).workspace_id
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
@@ -1189,11 +1484,15 @@ def create_app() -> FastAPI:
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
         if use_demo:
-            agent_registry.set_demo_defaults(payload.user_id)
+            agent_registry.set_demo_defaults(
+                actor_user_id,
+                scope_id=actor_user_id if tenant_id is not None else None,
+            )
         state = new_session(
-            payload.user_id,
+            actor_user_id,
             payload.track or package.track or "ACADEMIC",
             workspace_id=workspace_id,
+            tenant_id=tenant_id,
             trace_sink=trace_sink,
         )
         state = submit_enrichment(
@@ -1214,12 +1513,23 @@ def create_app() -> FastAPI:
 
     @app.post("/v1/sessions/{session_id}/retrieval/context-package")
     def append_session_from_retrieval(
+        request: Request,
         session_id: str,
         payload: RetrievalSessionRequest,
     ) -> dict[str, object]:
+        actor_user_id, tenant_id, _ = _actor_context(request, payload.user_id)
         try:
-            state = store.get(session_id)
-            store.get(payload.source_session_id)
+            state = store.get(session_id, tenant_id=tenant_id)
+            source_state = store.get(payload.source_session_id, tenant_id=tenant_id)
+            if tenant_id is not None:
+                if source_state.workspace_id is None:
+                    raise KeyError(payload.source_session_id)
+                workspace_store.assert_permission(
+                    actor_user_id,
+                    source_state.workspace_id,
+                    "read_sessions",
+                    tenant_id=tenant_id,
+                )
             result_set = retrieval_index.search(
                 session_id=payload.source_session_id,
                 query=payload.query,
@@ -1240,6 +1550,8 @@ def create_app() -> FastAPI:
             )
         except KeyError as exc:
             raise HTTPException(status_code=404, detail="Session not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
         except RetrievalProjectionRequired as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         except RetrievalUnavailable as exc:
@@ -1273,15 +1585,51 @@ def create_app() -> FastAPI:
         return {**result.public_dict(), "topology": topology.public_dict()}
 
     @app.get("/v1/hitl")
-    def list_hitl() -> list[dict[str, object]]:
-        return [item.__dict__ for item in store.list_hitl()]
+    def list_hitl(request: Request) -> list[dict[str, object]]:
+        principal = _hosted_principal(request)
+        if principal is None:
+            return [item.__dict__ for item in store.list_hitl()]
+        allowed_workspace_ids = {
+            workspace.workspace_id
+            for workspace in workspace_store.list_for_user(
+                principal.principal_id,
+                tenant_id=principal.tenant_id,
+            )
+        }
+        return [
+            item.__dict__
+            for state in store.list_sessions(tenant_id=principal.tenant_id)
+            if state.workspace_id in allowed_workspace_ids
+            for item in state.hitl_interrupts
+            if item.status == "open"
+        ]
 
     @app.post("/v1/hitl/{task_id}/resolve")
-    def resolve_hitl(task_id: str, payload: ResolveHitlRequest) -> dict[str, object]:
+    def resolve_hitl(
+        request: Request,
+        task_id: str,
+        payload: ResolveHitlRequest,
+    ) -> dict[str, object]:
+        principal = _hosted_principal(request)
         try:
-            state = workflow.resolve_hitl(store.get(payload.session_id), task_id, payload.payload)
+            state = store.get(
+                payload.session_id,
+                tenant_id=principal.tenant_id if principal is not None else None,
+            )
+            if principal is not None:
+                if state.workspace_id is None:
+                    raise KeyError(payload.session_id)
+                workspace_store.assert_permission(
+                    principal.principal_id,
+                    state.workspace_id,
+                    "write_sessions",
+                    tenant_id=principal.tenant_id,
+                )
+            state = workflow.resolve_hitl(state, task_id, payload.payload)
         except KeyError as exc:
-            raise HTTPException(status_code=404, detail=str(exc)) from exc
+            raise HTTPException(status_code=404, detail="Session or HITL task not found") from exc
+        except WorkspaceAccessDenied as exc:
+            raise HTTPException(status_code=403, detail="Workspace permission denied") from exc
         return store.save(state).public_dict()
 
     @app.get("/v1/sessions/{session_id}/events")

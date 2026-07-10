@@ -5014,6 +5014,11 @@ FILES: list[tuple[str, str, str]] = [
         "Validate required local environment variables before launch.",
     ),
     (
+        "scripts/verify_hosted_identity_tenancy.py",
+        "verification",
+        "Verify optional OIDC identity and application-layer tenant isolation.",
+    ),
+    (
         "scripts/doctor.sh",
         "diagnostics",
         "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
@@ -7377,6 +7382,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/security-baseline.md",
         "docs",
         "GitHub Actions and non-root container security baseline.",
+    ),
+    (
+        "docs/hosted-identity-tenancy.md",
+        "docs",
+        "Optional OIDC JWT and application-layer tenant authorization guide.",
     ),
     (
         "docs/adoption-telemetry.md",

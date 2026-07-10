@@ -93,15 +93,22 @@ class ModelRegistry(AgentRegistry):
         user_id: str,
         capability: Capability | AgentCapability | str,
         provider_id: str,
+        *,
+        scope_id: Optional[str] = None,
     ) -> None:
         if isinstance(capability, AgentCapability):
-            super().set_default(user_id, capability, provider_id)
+            super().set_default(user_id, capability, provider_id, scope_id=scope_id)
             return
         cap = Capability(capability) if not isinstance(capability, Capability) else capability
-        super().set_default(user_id, _capability_to_agent(cap), provider_id)
+        super().set_default(
+            user_id,
+            _capability_to_agent(cap),
+            provider_id,
+            scope_id=scope_id,
+        )
 
-    def status(self, user_id: str) -> dict[str, object]:
-        status = super().status(user_id)
+    def status(self, user_id: str, *, scope_id: Optional[str] = None) -> dict[str, object]:
+        status = super().status(user_id, scope_id=scope_id)
         defaults = status["defaults"]
         status["legacy_defaults"] = {
             "chat": defaults.get(AgentCapability.QUIZ_GENERATE.value),

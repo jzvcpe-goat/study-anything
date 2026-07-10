@@ -6,9 +6,9 @@
   },
   "claim_boundary": "This receipt proves lock freshness, hash-bound exported requirements, and a generated CycloneDX dependency inventory. It does not prove every package is vulnerability-free, that every package index is trustworthy, or that an online advisory query ran locally.",
   "lock": {
-    "package_count": 92,
+    "package_count": 93,
     "path": "uv.lock",
-    "sha256": "673aaebfa6db3af7648ff146a6c0b584def1fec91cb704aaa49007e04861b44f",
+    "sha256": "fcbf062d8776f7b6d68a3b0595c5339a5bcd17e74aba7baa2f43f5849e412834",
     "universal_cross_platform": true
   },
   "privacy": {
@@ -20,7 +20,7 @@
     "raw_source_text_included": false,
     "secrets_included": false
   },
-  "pyproject_sha256": "a067571f6514e28273356750df09ccd1cdc29a2c7ff402a4a973e87f9fcb3820",
+  "pyproject_sha256": "daa5121ebf85527ea30baa72eb90ce3ef9d394d644892a031126cdf3ebe65bd5",
   "python_support": ">=3.11,<3.13",
   "requirements": [
     {
@@ -31,28 +31,28 @@
     },
     {
       "hashes_required": true,
-      "package_count": 79,
+      "package_count": 80,
       "path": "requirements/locked-full.txt",
-      "sha256": "ea3e2a3a86b50872941b6056f22e128c1e8180ea8526ade669ccd7a97cb758ff"
+      "sha256": "acdaef678ec5551ac7f47d6080e1727df5c4e5d7dc02c10e3efdb81305778b7b"
     },
     {
       "hashes_required": true,
-      "package_count": 91,
+      "package_count": 92,
       "path": "requirements/locked-dev-full.txt",
-      "sha256": "2ae2bcb2381732f34ae2ffc427bff103ee96d15d26da3de7d2663b9e7a0413b6"
+      "sha256": "27d4bf793d93c1fb592fa5ed372af1a9b7794c54edc346f4b597f04518d26e7d"
     },
     {
       "hashes_required": true,
-      "package_count": 32,
+      "package_count": 36,
       "path": "requirements/locked-policy.txt",
-      "sha256": "21be5f6c008af7b31bdd99a9e0385b31018d9286ffd57d1423258bbd5cae9fe6"
+      "sha256": "db7437a9cbe82e83c7647f88a7316ac3478e0924d390b4cfc82d952f3946bc2c"
     }
   ],
   "sbom": {
-    "component_count": 91,
+    "component_count": 92,
     "format": "CycloneDX",
     "path": "platform/generated/study-anything-python-sbom.cdx.json",
-    "sha256": "2a29b867b84ac0a64825a6492ff3320dc405572399e23d2f1ef6fec5429e336d",
+    "sha256": "1f5ef29770932cd84a05ae584e1ff36e11c1a07182f0aba38c4372c66fe60d53",
     "spec_version": "1.5"
   },
   "schema_version": "python-supply-chain-receipt-v1",
