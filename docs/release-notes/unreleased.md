@@ -24,6 +24,11 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- The independent security audit pack now carries the canonical CBB Protocol v1
+  schemas, fixtures, verifier receipts, and protocol documents, while keeping the
+  local-path-bearing Phase 31 audit record in the pinned repository rather than the
+  public metadata-only ZIP.
+
 - Repository-level security posture now distinguishes a green PR from a clean
   alert ledger. Read-only live verification fails on any open Code Scanning or
   Dependabot alert. Retrieval evals no longer expose caught exception text;

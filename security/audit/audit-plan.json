@@ -103,13 +103,35 @@
         "python3 scripts/verify_dual_loop_contracts.py --check",
         "python3 scripts/verify_failure_sandbox_lite.py --check",
         "python3 scripts/verify_attention_reconstruction_lite.py --check",
-        "python3 scripts/verify_dual_loop_gate.py --check"
+        "python3 scripts/verify_dual_loop_gate.py --check",
+        "python3 scripts/verify_cbb_v1_contracts.py --check",
+        "python3 scripts/verify_cbb_v0_compatibility.py --check"
       ],
       "evidence_assets": [
         "docs/dual-loop-mvp.md",
         "docs/trust-model.md",
+        "docs/protocol.md",
+        "docs/cbb-protocol-v1-contracts.md",
+        "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
         "platform/generated/study-anything-dual-loop-contracts.json",
-        "platform/generated/study-anything-dual-loop-gate.json"
+        "platform/generated/study-anything-dual-loop-gate.json",
+        "platform/generated/study-anything-cbb-v1-contracts.json",
+        "platform/generated/study-anything-cbb-v0-compatibility.json",
+        "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
+        "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
+        "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
+        "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
+        "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
+        "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+        "fixtures/cbb-v1-contracts/pass.json",
+        "fixtures/cbb-v1-contracts/missing-evidence.json",
+        "fixtures/cbb-v1-contracts/hard-deny.json",
+        "fixtures/cbb-v1-contracts/stale.json",
+        "fixtures/cbb-v1-contracts/secret-like.json",
+        "fixtures/cbb-v1-contracts/malformed.json",
+        "fixtures/cbb-v1-contracts/naive-timestamp.json",
+        "fixtures/cbb-v1-contracts/invalid-state.json",
+        "fixtures/cbb-v1-contracts/scope-expansion.json"
       ],
       "required_methods": [
         "artifact_integrity_review",
