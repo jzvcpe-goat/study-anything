@@ -1,8 +1,8 @@
 # Commercial Readiness
 
-Study Anything is currently a public self-host Alpha foundation with a machine-readable commercial
-readiness contract. The current launch path is GitHub OSS plus platform-Agent adoption, not a paid
-standalone app.
+This repository is the public local-first reference harness for Cognitive Black Box Protocol, with a
+machine-readable readiness contract for its historical `study-anything` distribution. The current
+path is GitHub OSS, protocol conformance, and platform-Agent adoption, not a paid standalone app.
 
 Use:
 
@@ -31,8 +31,8 @@ The response is `commercial-readiness-v1`. It is metadata-only and states:
 - `standalone_app=not_in_launch_path`
 - `hosted_paid_services=not_ready`
 
-This means Study Anything can be distributed as an OSS local-first learning layer for Kimi, Codex,
-WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
+This means the Study Anything adapter can be distributed as one OSS evidence and human-reconstruction
+adapter for Kimi, Codex, WorkBuddy-style tools, and user-owned Agent gateways. It does not mean hosted subscriptions, billing,
 managed remote accounts, account recovery, or a standalone frontend are ready. Current `main` includes
 optional offline OIDC JWT validation and application-layer tenant/workspace/session/Agent authorization;
 `docs/hosted-identity-tenancy.md` defines what that foundation does and does not prove.
@@ -91,18 +91,18 @@ The commercial contract treats these as release-blocking local-first invariants:
 These services are designed as future convenience products and remain `contract_only` in the current
 alpha:
 
-- `Neural Sync`: encrypted backup and multi-device learning-state sync. The local foundation is
+- Hosted encrypted sync: encrypted backup and multi-device adapter-state sync. The local foundation is
   `sync-package-v1`; remote encrypted storage, conflict resolution, account recovery, support, and
   security review are still required before sale.
-- `Neural Publish`: selected learning maps, reading trails, decks, or reports. The local foundation is
+- Hosted artifact publishing: selected evidence reports and handoff packages. The local foundation is
   `learning-package-v1` and `second-brain-handoff-v1`; publish consent, sharing controls, abuse
   handling, and artifact versioning are still required.
-- `Neural Teams`: shared courses, private workspaces, admin controls, audit/export. The local
+- Hosted team workspaces: shared evidence, private workspaces, admin controls, and audit/export. The local
   foundation now includes OIDC tenant principals plus application-layer workspace/session isolation;
   database-enforced isolation, retention/deletion controls, billing, support, and enterprise security
   posture are still required.
-- `Catalyst`: one-time supporter tier for early builds and roadmap voting. It must not lock the core
-  workflow or community plugins behind payment.
+- Contributor sponsorship: optional community support. It must not lock the protocol core or adapters
+  behind payment.
 
 Paid services should sell convenience, reliability, collaboration, hosting, and trust operations.
 They must not sell lock-in to the core learning workflow, hosted custody of real model keys, access

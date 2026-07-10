@@ -19,7 +19,7 @@ Paid services should sell convenience, reliability, collaboration, and hosting, 
 - Study Sync: hosted encrypted backup/sync on top of the local encrypted package boundary.
 - Study Publish: publish selected learning artifacts.
 - Study Teams: collaboration and admin controls.
-- Catalyst: optional supporter tier.
+- Contributor sponsorship: optional community support.
 
 ## PMF Before Monetization
 

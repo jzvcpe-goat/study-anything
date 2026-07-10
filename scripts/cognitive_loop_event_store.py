@@ -492,7 +492,7 @@ def render_event_store_html(report: Mapping[str, Any]) -> str:
 <body>
   <main>
     <header>
-      <h1>Cognitive Loop System</h1>
+      <h1>Cognitive Black Box Protocol</h1>
       <p class="summary">SQLite Event Store: local metadata memory for validated Cognitive Loop artifacts.</p>
     </header>
     <section>

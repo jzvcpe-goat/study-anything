@@ -1,6 +1,6 @@
 # External Platform Operator Drill
 
-This drill proves that Study Anything can be adopted through a platform Agent
+This drill proves that the Study Anything adapter can be adopted through a platform Agent
 without a standalone frontend. It is for Kimi Work, Codex, WorkBuddy-style HTTP
 workspaces, Hermes Agent, and other agents that can import local HTTP tools or
 run the repo Skill.

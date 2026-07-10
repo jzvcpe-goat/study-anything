@@ -5,9 +5,16 @@ It is not a release tag or published-image claim.
 
 ## Product
 
-- Cognitive Black Box / Dual-Loop Trust Harness is the public product center.
-- Study Anything remains the compatible learning adapter, Python package, API
-  namespace, and repository distribution name.
+- Cognitive Black Box Protocol is the public project identity: an open,
+  local-first receipt protocol with this repository as its reference harness.
+- Dual Loop is the core controlled-failure plus qualified-human-reconstruction
+  mechanism, not the complete protocol identity.
+- Study Anything remains the compatible Human Reconstruction / Learning Adapter,
+  Python package, API namespace, and repository distribution name.
+- Cognitive Loop remains an internal evidence and evolution workflow, not the
+  top-level product name.
+- A deterministic positioning verifier now blocks obsolete current branding while
+  preserving historical release notes and compatibility identifiers.
 
 ## Security
 

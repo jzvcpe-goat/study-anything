@@ -1,6 +1,6 @@
 # Cognitive Loop Mastra Runtime MVP
 
-This package is the first repository-started Mastra runtime surface for Cognitive Loop System.
+This package is the repository-started Mastra runtime adapter for the Cognitive Black Box reference harness.
 It is intentionally small: it starts a local Mastra instance, registers the existing
 `cognitive-loop-runtime-adapter` workflow, runs metadata-only evidence through it, and proves
 the Human Mastery Gate paths.

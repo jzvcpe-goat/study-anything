@@ -3286,7 +3286,7 @@ def render_cli_artifact_html(report: Mapping[str, Any]) -> str:
 <body>
   <main>
     <header>
-      <h1 class="brand">Cognitive Loop System</h1>
+      <h1 class="brand">Cognitive Black Box Protocol</h1>
       <p class="summary">{escape(value('objective'))}</p>
     </header>
     <section>

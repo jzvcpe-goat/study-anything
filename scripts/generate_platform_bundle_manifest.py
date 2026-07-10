@@ -3187,6 +3187,26 @@ FILES: list[tuple[str, str, str]] = [
         "Cognitive Black Box AI delivery trust model.",
     ),
     (
+        "docs/product-positioning.md",
+        "operator_doc",
+        "Canonical Cognitive Black Box Protocol positioning and claim boundary.",
+    ),
+    (
+        "docs/architecture.md",
+        "operator_doc",
+        "Protocol-first reference harness architecture and isolation boundary.",
+    ),
+    (
+        "docs/naming-and-compatibility.md",
+        "operator_doc",
+        "Canonical naming, historical identifiers, and migration rules.",
+    ),
+    (
+        "docs/cbb-protocol-v1-development-plan.md",
+        "operator_doc",
+        "CBB Protocol v1 implementation sequence and acceptance matrix.",
+    ),
+    (
         "docs/delivery-trust-receipt.md",
         "operator_doc",
         "Delivery Trust Receipt contract and verifier guide.",
@@ -5462,6 +5482,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
         "Cognitive Black Box protocol contract and metadata-only privacy verifier.",
+    ),
+    (
+        "scripts/verify_cbb_positioning.py",
+        "verification",
+        "Verify protocol-first positioning, compatibility boundaries, and obsolete-brand removal.",
     ),
     (
         "scripts/verify_cbb_gate.py",
@@ -7758,8 +7783,8 @@ def build_manifest() -> dict[str, object]:
         "schema_version": "study-anything-platform-bundle-v1",
         "name": "study-anything-platform-bundle",
         "description": (
-            "Deterministic file manifest for distributing Study Anything platform packs, "
-            "tool import assets, Skill instructions, and acceptance evidence."
+            "Deterministic manifest for distributing CBB reference-harness adapters, "
+            "including the compatible Study Anything platform packs and acceptance evidence."
         ),
         "source_manifest": "platform/study-anything-platform-tools.json",
         "source_manifest_sha256": sha256(SOURCE_MANIFEST),
@@ -7780,6 +7805,7 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_workbuddy_real_agent_learning_quality.py --check",
             "python3 scripts/verify_delivery_trust_receipt.py --check",
             "python3 scripts/verify_customer_handoff_package.py --check",
+            "python3 scripts/verify_cbb_positioning.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

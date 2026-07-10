@@ -2,7 +2,7 @@
 
 ## English
 
-The Code Review Loop is the first advisory review flow for Cognitive Loop System. It turns a git diff or redacted PR summary into structured, local evidence that Codex, Kimi, WorkBuddy, or a private platform Agent can read:
+The Code Review Loop is an advisory evidence flow inside the Cognitive Black Box reference harness. It turns a git diff or redacted PR summary into structured, local evidence that Codex, Kimi, WorkBuddy, or a private platform Agent can read:
 
 - `ReviewRun`: the review session, source, changed paths, findings, test gaps, security gate, decision, and metrics.
 - `ReviewFinding`: up to five deterministic high-confidence findings, each with file path, diff ref, risk level, confidence, and a verification command.
@@ -61,7 +61,7 @@ Later phases:
 
 ## 中文
 
-Code Review Loop 是 Cognitive Loop System 的第一个代码审查咨询流。它把 git diff 或脱敏 PR 摘要转换成本地结构化证据，供 Codex、Kimi、WorkBuddy 或私有平台 Agent 读取：
+Code Review Loop 是认知黑箱参考实现里的代码审查咨询证据流。它把 git diff 或脱敏 PR 摘要转换成本地结构化证据，供 Codex、Kimi、WorkBuddy 或私有平台 Agent 读取：
 
 - `ReviewRun`：一次审查会话，包含来源、变更路径、发现、测试缺口、安全门、决策和指标。
 - `ReviewFinding`：最多五条确定性高置信发现，每条包含文件路径、diff ref、风险等级、置信度和建议验证命令。

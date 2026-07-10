@@ -3,7 +3,7 @@
 This is the beginner path for using Study Anything inside WorkBuddy or
 CodeBuddy. Treat WorkBuddy/CodeBuddy as the main Agent. It owns real model
 choice, browsing, external tools, files, visualization, and private credentials.
-Study Anything is the local learning workflow kernel: it records source-bound
+Study Anything is the local Human Reconstruction / Learning Adapter: it records source-bound
 learning state, quiz/mastery evidence, audit metadata, and exports.
 
 ## 0. The Important Change

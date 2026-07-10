@@ -1363,6 +1363,10 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("docs/release-cleanroom-bootstrap.md", "operator_doc", "Release-only cleanroom bootloader guide for repo-free external adoption."),
     ("docs/release-checklist.md", "operator_doc", "Release gate checklist for platform adoption evidence."),
     ("docs/roadmap.md", "operator_doc", "Roadmap and release track for platform adoption goals."),
+    ("docs/product-positioning.md", "operator_doc", "Canonical Cognitive Black Box Protocol positioning and claim boundary."),
+    ("docs/architecture.md", "operator_doc", "Protocol-first reference harness architecture and isolation boundary."),
+    ("docs/naming-and-compatibility.md", "operator_doc", "Canonical naming, historical identifiers, and migration rules."),
+    ("docs/cbb-protocol-v1-development-plan.md", "operator_doc", "CBB Protocol v1 implementation sequence and acceptance matrix."),
     ("docs/operating-model.md", "operator_doc", "Cognitive Black Box three-loop operating model and PR evidence rules."),
     ("docs/release-stack-policy.md", "operator_doc", "Release-stack recursion guard and batch archive policy."),
     ("docs/product-runway.md", "operator_doc", "Next product runway for Dual Loop trust protocol development."),
@@ -2740,6 +2744,7 @@ PACK_FILES: list[tuple[str, str, str]] = [
     ("scripts/cbb_protocol_cli.py", "cli", "Cognitive Black Box deterministic protocol demo artifact generator."),
     ("scripts/cbb_gate.py", "cli", "Cognitive Black Box delivery decision gate evaluator."),
     ("scripts/verify_cbb_protocol_contracts.py", "verification", "Cognitive Black Box protocol contract and metadata-only privacy verifier."),
+    ("scripts/verify_cbb_positioning.py", "verification", "Verify protocol-first positioning, compatibility boundaries, and obsolete-brand removal."),
     ("scripts/verify_cbb_gate.py", "verification", "Cognitive Black Box delivery gate pass/fail fixture verifier."),
     ("scripts/cbb_receipt_chain.py", "cli", "Cognitive Black Box tamper-evident receipt-chain builder."),
     ("scripts/cbb_self_intake.py", "cli", "Cognitive Black Box PR self-intake receipt and evidence-pack builder."),
@@ -3119,15 +3124,16 @@ def validate_source_contract() -> None:
 
 
 def pack_readme() -> str:
-    return """# Study Anything Platform Adoption Pack
+    return """# CBB Reference Harness Platform Adoption Pack
 
 This archive is the copy-ready integration bundle for Kimi Work, Codex,
-WorkBuddy-style HTTP tool workspaces, and other platform Agents.
+WorkBuddy-style HTTP tool workspaces, and other platform Agents. It carries the
+historical Study Anything adapter interfaces; it is not the CBB Protocol itself.
 
 Use it when the platform Agent owns browsing, files, video slicing, outside
-tools, real model credentials, and conversation. Study Anything owns the
-source-bound learning workflow, state, audit, eval evidence, retrieval quality,
-OKF-style Markdown knowledge bundles, and Obsidian/NotebookLM handoff.
+tools, real model credentials, and conversation. The Study Anything adapter owns
+source-bound human-reconstruction and learning state, audit/eval evidence,
+retrieval quality, OKF-style Markdown bundles, and Obsidian/NotebookLM handoff.
 
 ## Quick Start
 
@@ -3149,7 +3155,7 @@ fallback evidence.
 
 ## Privacy
 
-Do not put real model API keys in Study Anything. Keep real model credentials
+Do not put real model API keys in the Study Anything adapter. Keep real model credentials
 inside the user's own Agent or platform runtime. The adoption evidence is
 designed to be redacted and must not include raw source text, long answers,
 agent endpoints with secrets, or platform-private browsing/video context.
@@ -3168,8 +3174,9 @@ def manifest_payload() -> dict[str, object]:
         "archive_name": ARCHIVE_PATH.name,
         "archive_root": ARCHIVE_ROOT,
         "description": (
-            "Copy-ready platform adoption pack for Kimi Work, Codex, WorkBuddy-style "
-            "HTTP workspaces, Hermes Agent, NotebookLM/Obsidian handoff, and external Agent eval proof."
+            "Copy-ready CBB reference-harness adapter pack for Kimi Work, Codex, "
+            "WorkBuddy-style HTTP workspaces, Hermes Agent, NotebookLM/Obsidian "
+            "handoff, and external Agent eval proof."
         ),
         "supported_platforms": [
             "kimi-work",

@@ -77,7 +77,7 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
     hosted_services = [
         {
             "service_id": "neural_sync",
-            "label": "Neural Sync",
+            "label": "Hosted encrypted sync",
             "status": "contract_only",
             "commercial_stage": "post_pmf",
             "user_value": "Encrypted backup and multi-device learning-state sync.",
@@ -94,7 +94,7 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
         },
         {
             "service_id": "neural_publish",
-            "label": "Neural Publish",
+            "label": "Hosted artifact publishing",
             "status": "contract_only",
             "commercial_stage": "post_pmf",
             "user_value": "Publish selected learning maps, reading trails, decks, or mastery reports.",
@@ -109,7 +109,7 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
         },
         {
             "service_id": "neural_teams",
-            "label": "Neural Teams",
+            "label": "Hosted team workspaces",
             "status": "contract_only",
             "commercial_stage": "post_pmf",
             "user_value": "Shared courses, private team workspaces, admin controls, and export/audit.",
@@ -126,7 +126,7 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
         },
         {
             "service_id": "catalyst",
-            "label": "Catalyst",
+            "label": "Contributor sponsorship",
             "status": "contract_only",
             "commercial_stage": "community_validation",
             "user_value": "One-time supporter tier for early builds, roadmap voting, and community signal.",
@@ -152,8 +152,8 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
             "standalone_app": "not_in_launch_path",
             "hosted_paid_services": "not_ready",
             "commercialization_strategy": (
-                "Ship the OSS local-first learning layer first, collect adoption and PMF "
-                "evidence, then sell optional hosted convenience services."
+                "Ship the open CBB protocol and local-first reference harness first, collect "
+                "conformance and adoption evidence, then offer optional hosted operations."
             ),
         },
         "local_core_invariants": local_core_invariants,

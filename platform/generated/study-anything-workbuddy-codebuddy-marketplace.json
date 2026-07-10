@@ -1,22 +1,22 @@
 {
   "files": [
     {
-      "bytes": 1225,
+      "bytes": 1318,
       "exists": true,
       "path": ".codebuddy-plugin/marketplace.json",
-      "sha256": "d6a6826fa8c4576a55fecf03f579b39ccedc16607ba0a09aad28a604ad16b1c3"
+      "sha256": "951a823da6025c262fd2062ca2e6261f2477981e666433f7cff433fe316a73e6"
     },
     {
-      "bytes": 1957,
+      "bytes": 2019,
       "exists": true,
       "path": "plugins/study-anything/.codebuddy-plugin/plugin.json",
-      "sha256": "5888d89d3d9689e29295e8a32d1f5bffe217975e4462a4608a27c542a0ef4401"
+      "sha256": "ab8e07e783dc2a4ae091c3b5dd92f1f3079657ce2f748a9d7f3fe26feebca9a8"
     },
     {
-      "bytes": 3903,
+      "bytes": 3927,
       "exists": true,
       "path": "plugins/study-anything/skills/study-anything/SKILL.md",
-      "sha256": "0d098b6b576fbe92acf4ca36df72765d7267a0440c5068c0a74f3288bf42993c"
+      "sha256": "4c2ea479eb5e7420e0dc4619182f5618899fc5623a32192c2a6cbc47114edbea"
     },
     {
       "bytes": 998,
@@ -43,10 +43,10 @@
       "sha256": "620e2e6fbe177317695661826c00b65e1e45ea8b9a219e4a6883ba281a04e9cd"
     },
     {
-      "bytes": 7500,
+      "bytes": 7515,
       "exists": true,
       "path": "docs/use-with-workbuddy.md",
-      "sha256": "4b9f437e04d1e563605ed65f922452fffa1053bdb4447a7dceb736522e14c228"
+      "sha256": "24e820edfa859f07ea6e03bdc065bc3a14b7b70d931b33fb983103a76412941c"
     },
     {
       "bytes": 6446,

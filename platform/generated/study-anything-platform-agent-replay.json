@@ -1,9 +1,9 @@
 {
   "archive": {
     "archive_root": "study-anything-platform-agent-replay",
-    "bytes": 72348,
+    "bytes": 72358,
     "path": "platform/generated/study-anything-platform-agent-replay.zip",
-    "sha256": "546f5d4cbddae1ccba0ceb33b9fc08449310356f0c61f82df2bb44f8d8606d96",
+    "sha256": "40243737acb6b8e4ec768de8c4bf16b5d658eece2808d39c713eaf38f8444a55",
     "sha256_path": "platform/generated/study-anything-platform-agent-replay.sha256"
   },
   "classification_matrix": [
@@ -98,9 +98,9 @@
       "sha256": "3ad36e5047af1fb3f51a54c2fd98e0da6a68c4e9f3deb892a8d45ebff0f7e335"
     },
     {
-      "bytes": 28276,
+      "bytes": 28288,
       "path": "docs/platform-agent-integrations.md",
-      "sha256": "df9358d2e316e5a2c0754f0c63ea3d76b6a4f6ba8ed36bc5bf5cbd8dcb62d77a"
+      "sha256": "8c11b9f333cd6c72a0510b6c9b7c7d5afdfb1066e7ed0ff700584a30b46b2008"
     },
     {
       "bytes": 29938,
