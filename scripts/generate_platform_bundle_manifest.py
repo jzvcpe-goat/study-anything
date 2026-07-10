@@ -3242,6 +3242,16 @@ FILES: list[tuple[str, str, str]] = [
         "Dual-Loop failure contract JSON Schema.",
     ),
     (
+        "platform/schemas/security/external-security-audit-finding-v1.schema.json",
+        "schema",
+        "Metadata-only independent security audit finding JSON Schema.",
+    ),
+    (
+        "platform/schemas/security/external-security-audit-report-v1.schema.json",
+        "schema",
+        "Signed independent security audit report JSON Schema.",
+    ),
+    (
         "platform/schemas/dual-loop/sandbox-receipt-v1.schema.json",
         "schema",
         "Dual-Loop sandbox receipt JSON Schema.",
@@ -5019,6 +5029,16 @@ FILES: list[tuple[str, str, str]] = [
         "Verify optional OIDC identity and application-layer tenant isolation.",
     ),
     (
+        "scripts/generate_external_security_audit_pack.py",
+        "generator",
+        "Generate the deterministic metadata-only external security audit preparation pack.",
+    ),
+    (
+        "scripts/verify_external_security_audit_pack.py",
+        "verification",
+        "Verify audit-pack integrity, privacy, scope, and independent-review boundaries.",
+    ),
+    (
         "scripts/doctor.sh",
         "diagnostics",
         "Self-host doctor for Docker, ports, env, Compose config, plugins, and recovery commands.",
@@ -5082,6 +5102,26 @@ FILES: list[tuple[str, str, str]] = [
         "platform/generated/study-anything-strict-reliability-acceptance.json",
         "verification_report",
         "Generated strict reliability acceptance report.",
+    ),
+    (
+        "platform/generated/study-anything-external-security-audit-pack.json",
+        "audit_pack",
+        "Machine-readable external security audit preparation pack manifest.",
+    ),
+    (
+        "platform/generated/study-anything-external-security-audit-pack.md",
+        "audit_pack",
+        "Human-readable external security audit preparation summary.",
+    ),
+    (
+        "platform/generated/study-anything-external-security-audit-pack.zip",
+        "audit_pack",
+        "Portable metadata-only external security audit preparation archive.",
+    ),
+    (
+        "platform/generated/study-anything-external-security-audit-pack.sha256",
+        "audit_pack",
+        "SHA-256 checksum for the external security audit preparation archive.",
     ),
     (
         "scripts/verify_container_security.py",
@@ -7387,6 +7427,46 @@ FILES: list[tuple[str, str, str]] = [
         "docs/hosted-identity-tenancy.md",
         "docs",
         "Optional OIDC JWT and application-layer tenant authorization guide.",
+    ),
+    (
+        "security/audit/README.md",
+        "security_audit",
+        "Independent security audit kit entrypoint and claim boundary.",
+    ),
+    (
+        "SECURITY.md",
+        "security_audit",
+        "Public vulnerability reporting and independent audit claim boundary.",
+    ),
+    (
+        "security/audit/audit-plan.json",
+        "security_audit",
+        "Machine-readable external audit scope, methods, and acceptance rules.",
+    ),
+    (
+        "security/audit/threat-model.md",
+        "security_audit",
+        "External audit threat model and required abuse cases.",
+    ),
+    (
+        "security/audit/rules-of-engagement.md",
+        "security_audit",
+        "External audit authorization, restrictions, and independence rules.",
+    ),
+    (
+        "security/audit/remediation-policy.md",
+        "security_audit",
+        "Finding remediation SLA and closure evidence policy.",
+    ),
+    (
+        "security/audit/report-template.md",
+        "security_audit",
+        "Signed independent security audit report template.",
+    ),
+    (
+        ".github/ISSUE_TEMPLATE/external-security-audit.yml",
+        "security_audit",
+        "Redacted external security audit execution issue template.",
     ),
     (
         "docs/adoption-telemetry.md",

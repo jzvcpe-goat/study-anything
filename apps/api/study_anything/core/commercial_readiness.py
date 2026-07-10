@@ -175,8 +175,22 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
                 "separate tenant databases",
                 "retention and deletion operations",
                 "hosted infrastructure security",
-                "independent external audit",
+                "independent external audit completion",
             ],
+        },
+        "security_audit": {
+            "status": "ready_for_independent_audit",
+            "audit_completed": False,
+            "self_certification_allowed": False,
+            "human_security_reviewer_required": True,
+            "ai_only_review_sufficient": False,
+            "signed_report_required": True,
+            "pack": "platform/generated/study-anything-external-security-audit-pack.zip",
+            "verifier": "python3 scripts/verify_external_security_audit_pack.py --check",
+            "commercial_gate": (
+                "Hosted paid production remains not_ready until an external auditor returns "
+                "a signed report and all critical or high findings are closed and retested."
+            ),
         },
         "hosted_service_contracts": hosted_services,
         "monetization_alignment": {
@@ -223,10 +237,13 @@ def build_commercial_readiness(*, version: str) -> dict[str, Any]:
                 "second-brain-handoff-v1",
                 "sync-package-v1",
                 "hosted-identity-tenancy-verification-v1",
+                "external-security-audit-pack-v1",
             ],
             "commands": [
                 "python3 scripts/verify_commercial_readiness.py",
                 "python3 scripts/verify_hosted_identity_tenancy.py --check",
+                "python3 scripts/generate_external_security_audit_pack.py --check",
+                "python3 scripts/verify_external_security_audit_pack.py --check",
                 "python3 scripts/generate_platform_agent_assets.py --check",
                 "python3 scripts/generate_platform_adoption_pack.py --check",
                 "python3 scripts/verify_external_adoption.py --pack platform/generated/study-anything-platform-adoption-pack.zip --copy-worktree",
@@ -273,4 +290,8 @@ def summarize_commercial_readiness(report: dict[str, Any]) -> dict[str, Any]:
         "local_invariants_passed": sum(1 for item in local_invariants if item.get("status") == "pass"),
         "local_invariant_count": len(local_invariants),
         "hosted_contract_count": len(hosted_services),
+        "security_audit_status": (report.get("security_audit") or {}).get("status"),
+        "security_audit_completed": (report.get("security_audit") or {}).get(
+            "audit_completed"
+        ),
     }

@@ -205,17 +205,33 @@ def validate_report(report: dict[str, Any]) -> None:
     for boundary in (
         "database row-level security",
         "hosted infrastructure security",
-        "independent external audit",
+        "independent external audit completion",
     ):
         if boundary not in not_proven:
             raise CommercialReadinessError(
                 f"Hosted foundation claim boundary is missing: {boundary}"
             )
 
+    security_audit = report.get("security_audit") or {}
+    if security_audit.get("status") != "ready_for_independent_audit":
+        raise CommercialReadinessError("External security audit pack is not ready.")
+    if security_audit.get("audit_completed") is not False:
+        raise CommercialReadinessError("Repository must not self-certify audit completion.")
+    if security_audit.get("self_certification_allowed") is not False:
+        raise CommercialReadinessError("Security audit self-certification must stay forbidden.")
+    if security_audit.get("human_security_reviewer_required") is not True:
+        raise CommercialReadinessError("External audit requires a human security reviewer.")
+    if security_audit.get("ai_only_review_sufficient") is not False:
+        raise CommercialReadinessError("AI-only security review cannot satisfy the external audit.")
+
     services = report.get("hosted_service_contracts")
     if not isinstance(services, list) or len(services) < 4:
         raise CommercialReadinessError("Commercial readiness must include hosted service contracts.")
-    service_ids = {item.get("service_id") for item in services if isinstance(item, dict)}
+    service_ids = {
+        str(item["service_id"])
+        for item in services
+        if isinstance(item, dict) and isinstance(item.get("service_id"), str)
+    }
     required_ids = {"neural_sync", "neural_publish", "neural_teams", "catalyst"}
     if service_ids != required_ids:
         raise CommercialReadinessError(f"Hosted service ids mismatch: {sorted(service_ids)}")
@@ -253,12 +269,15 @@ def validate_report(report: dict[str, Any]) -> None:
         "deployment-guide-v1",
         "adoption-proof-v1",
         "agent-eval-report-v1",
+        "external-security-audit-pack-v1",
     ]:
         if schema not in schemas:
             raise CommercialReadinessError(f"Acceptance evidence missing schema {schema}.")
     commands = "\n".join(str(command) for command in acceptance.get("commands") or [])
     if "verify_commercial_readiness.py" not in commands:
         raise CommercialReadinessError("Acceptance evidence must include verify_commercial_readiness.py.")
+    if "verify_external_security_audit_pack.py --check" not in commands:
+        raise CommercialReadinessError("Acceptance evidence must include the external audit pack verifier.")
 
     assert_no_forbidden_markers(report)
 

@@ -440,6 +440,13 @@ Acceptance:
 - The next loop shows measurable improvement in task success, explanation quality, test coverage, or approval efficiency.
 - The system never automatically weakens risk thresholds, audit, rollback, tests, production policy, privacy policy, or permissions.
 
+Security checkpoint:
+
+- The metadata-only external audit preparation pack may reach `ready_for_independent_audit`.
+- Hosted commercial launch remains blocked until an external human reviewer returns a signed,
+  commit-bound report and all critical or high findings are remediated and retested.
+- Repository CI, CodeQL, or AI review cannot substitute for that independent decision.
+
 ## Commercial Direction
 
 The core remains Apache-2.0 and local-first. Commercialization should follow trust-preserving convenience:

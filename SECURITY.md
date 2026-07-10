@@ -41,5 +41,20 @@ The verifier covers backup manifest tamper detection, path traversal rejection,
 wrong-passphrase redaction, restore-preview privacy, and the disabled destructive
 restore API boundary.
 
+## Independent Audit Preparation
+
+The public, metadata-only audit kit is under `security/audit/`. Generate and
+verify the portable package with:
+
+```bash
+python3 scripts/generate_external_security_audit_pack.py --check
+python3 scripts/verify_external_security_audit_pack.py --check
+```
+
+`ready_for_independent_audit` means an external human reviewer can begin from a
+pinned commit. It does not mean an audit or penetration test has run or passed.
+Private reproduction details must use the vulnerability reporting channel, not
+the public audit-tracking issue.
+
 See `docs/security.md` for the local-first security model and operational
 recovery expectations.

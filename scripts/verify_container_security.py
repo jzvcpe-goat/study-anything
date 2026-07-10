@@ -250,6 +250,7 @@ def validate_security_workflow(text: str) -> dict[str, Any]:
         "verify_dependency_risk_acceptance.py --check",
         "verify_agent_endpoint_policy.py --check",
         "verify_hosted_identity_tenancy.py --check",
+        "verify_external_security_audit_pack.py --check",
     )
     missing = [marker for marker in required if marker not in text]
     require(not missing, f"Security workflow markers are missing: {missing}")

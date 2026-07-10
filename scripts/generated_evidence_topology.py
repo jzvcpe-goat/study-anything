@@ -114,6 +114,12 @@ NODES: tuple[EvidenceNode, ...] = (
         dependencies=("platform_plugin_packs",),
     ),
     EvidenceNode(
+        "external_security_audit_pack",
+        "scripts/generate_external_security_audit_pack.py",
+        (),
+        ("--check",),
+    ),
+    EvidenceNode(
         "platform_handoff_checklist",
         "scripts/verify_platform_handoff_checklist.py",
         ("--write",),
@@ -130,6 +136,7 @@ NODES: tuple[EvidenceNode, ...] = (
         (),
         ("--check",),
         dependencies=(
+            "external_security_audit_pack",
             "release_cleanroom_bootstrap",
             "platform_handoff_checklist",
             "platform_plugin_downloads",

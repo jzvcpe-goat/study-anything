@@ -237,6 +237,17 @@ For release downloads, use `docs/platform-plugin-downloads.md` or the generated 
 `platform/generated/study-anything-platform-plugin-downloads.json`; the GitHub Release must attach
 each plugin pack archive, manifest, and checksum sidecar.
 
+The independent security audit preparation pack is also generated under
+`platform/generated/`:
+
+- `study-anything-external-security-audit-pack.zip`
+- `study-anything-external-security-audit-pack.json`
+- `study-anything-external-security-audit-pack.sha256`
+
+It packages the threat model, rules of engagement, schemas, public evidence,
+and verification commands for an external human-led audit. Its status is
+`ready_for_independent_audit`; it is not an audit report or certificate.
+
 For Kimi Work, Codex, WorkBuddy-style HTTP workspaces, Hermes Agent, or another platform Agent, verify the copy-ready adoption pack:
 
 ```bash
@@ -364,9 +375,9 @@ The project remains Apache-2.0 and local-first. Monetization is not a paid app g
 
 ## Status
 
-This repository is a public self-host alpha. The tagged binary and image release line remains `v0.3.31-alpha`; `main` is the post-release development line. Current `main` ships a deterministic metadata-only Cognitive Black Box trust harness, static/Lite Cognitive Loop runtime evidence, the Study Anything learning adapter/platform-Agent package, and an optional OIDC JWT plus application-layer tenant-authorization foundation. It does not claim a managed hosted account service, database-level tenant isolation, production mutation, a daemonized watcher, a realtime console, paid services, or an independent security audit.
+This repository is a public self-host alpha. The tagged binary and image release line remains `v0.3.31-alpha`; `main` is the post-release development line. Current `main` ships a deterministic metadata-only Cognitive Black Box trust harness, static/Lite Cognitive Loop runtime evidence, the Study Anything learning adapter/platform-Agent package, an optional OIDC JWT plus application-layer tenant-authorization foundation, and a metadata-only package ready for an independent human-led security audit. It does not claim a managed hosted account service, database-level tenant isolation, production mutation, a daemonized watcher, a realtime console, paid services, or that an independent security audit has run or passed.
 
-本仓库目前是公开 self-host alpha。已发布二进制和镜像仍属于 `v0.3.31-alpha`；`main` 是该版本之后的开发线。当前 `main` 已包含确定性、metadata-only 的认知黑箱信任机制、静态/Lite Cognitive Loop 运行证据、Study Anything 学习适配层和平台 Agent 包，并新增可选 OIDC JWT 与应用层租户授权基础；它不宣称托管账号服务、数据库级租户隔离、生产改写、常驻 watcher、实时 console、付费服务或独立安全审计已经上线。
+本仓库目前是公开 self-host alpha。已发布二进制和镜像仍属于 `v0.3.31-alpha`；`main` 是该版本之后的开发线。当前 `main` 已包含确定性、metadata-only 的认知黑箱信任机制、静态/Lite Cognitive Loop 运行证据、Study Anything 学习适配层和平台 Agent 包、可选 OIDC JWT 与应用层租户授权基础，以及可交给外部人类安全审查员的 metadata-only 审计准备包；它不宣称托管账号服务、数据库级租户隔离、生产改写、常驻 watcher、实时 console、付费服务或独立安全审计已经执行或通过。
 
 See:
 
@@ -378,6 +389,7 @@ See:
 - `docs/security.md`
 - `docs/security-baseline.md`
 - `docs/hosted-identity-tenancy.md`
+- `security/audit/README.md`
 - `docs/self-host-reliability.md`
 - `docs/scheduled-reliability.md`
 - `docs/generated-evidence-topology.md`

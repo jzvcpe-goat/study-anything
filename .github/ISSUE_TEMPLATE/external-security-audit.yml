@@ -1,0 +1,58 @@
+name: External security audit
+description: Track execution of an independent, human-led security audit at a pinned commit.
+title: "[Security audit] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this issue for redacted coordination only. Do not include secrets, tokens,
+        customer payloads, or private exploit reproduction details.
+  - type: input
+    id: scope_commit
+    attributes:
+      label: Scope commit
+      description: Exact 40-character commit SHA covered by the engagement.
+      placeholder: 0123456789abcdef0123456789abcdef01234567
+    validations:
+      required: true
+  - type: input
+    id: auditor
+    attributes:
+      label: External auditor
+      description: Organization and lead human reviewer, or a private stable reviewer identifier.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Authorized scope
+      description: Confirm included scope areas, test environment, exclusions, and private reporting channel.
+    validations:
+      required: true
+  - type: input
+    id: pack_sha256
+    attributes:
+      label: Audit pack SHA-256
+      description: SHA-256 from the generated external audit pack sidecar.
+    validations:
+      required: true
+  - type: textarea
+    id: public_status
+    attributes:
+      label: Redacted status and findings
+      description: Finding IDs, severities, states, remediation commits, and retest status only.
+    validations:
+      required: false
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundaries
+      options:
+        - label: The lead reviewer is independent from implementation of the scoped commit, or conflicts are disclosed.
+          required: true
+        - label: AI-only review is not being used as the independent audit decision.
+          required: true
+        - label: No real secrets, customer payloads, or private exploit details are included in this public issue.
+          required: true
+        - label: Opening or closing this issue does not itself mean the audit passed.
+          required: true

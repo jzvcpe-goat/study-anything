@@ -11,6 +11,11 @@ It is not a release tag or published-image claim.
 
 ## Security
 
+- A deterministic external security audit preparation pack now bundles the threat model, rules of
+  engagement, remediation SLA, finding/report schemas, SBOM and public trust evidence, manifest,
+  archive, and SHA-256 sidecar. Security CI and release gates verify its metadata-only privacy and
+  reject self-certified `audit_passed` status. The pack is `ready_for_independent_audit`; no
+  independent audit, penetration test, or production security certification is claimed.
 - Optional `oidc_jwt` mode validates RS256/ES256 bearer tokens against an operator-supplied static
   public JWKS, binds opaque principals to issuer + tenant + subject, ignores request-body identity
   spoofing, tenant-filters sessions/workspaces, and principal-scopes non-demo Agent providers.

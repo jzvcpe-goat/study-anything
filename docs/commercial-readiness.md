@@ -182,9 +182,11 @@ to user-owned local data, or a closed plugin channel as a requirement.
 - Plugin marketplace trust model beyond local installs: hosted signed registry distribution, maintainer review queues, automatic update UX, and payment boundaries.
 - Production observability: SLOs, incident response, trace retention, privacy-preserving telemetry.
 - Security completion: the repository has secret scanning/push protection, full-SHA Actions,
-  CodeQL/dependency review, and a non-root least-privilege API container baseline. A threat-led
-  repository scan, finding remediation, live branch/repository setting readback, image/SBOM review,
-  and independent external audit remain required before hosted production claims.
+  CodeQL/dependency review, a non-root least-privilege API container baseline, and a deterministic
+  metadata-only package with threat model, rules of engagement, SBOM evidence, finding schemas,
+  and retest policy. Its status is `ready_for_independent_audit`, not `audit_passed`. An external
+  human reviewer must execute the audit, return a signed commit-bound report, and retest every
+  critical or high finding before hosted production claims.
 - PMF validation at community scale: real weekly active learners, repeat sessions, mastery delta by
   cohort, plugin activation, explicit feedback, and hosted waitlist conversion.
 - Product delivery layer: no standalone frontend is currently shippable; the launch path depends on API/Skill/platform-agent integrations until a new UI is designed.
