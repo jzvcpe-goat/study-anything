@@ -7,9 +7,9 @@
   },
   "archive": {
     "archive_root": "study-anything-published-image-evidence",
-    "bytes": 136522,
+    "bytes": 136758,
     "path": "platform/generated/study-anything-published-image-evidence.zip",
-    "sha256": "7bb27be210343f989630e96f25cb4acff9776e5a3d18b960c7dd6efad9fbf210",
+    "sha256": "c212af7babb79cad8135cc8c1edfbf0018eba14e78a9c6bf181dd90dfdbb6d69",
     "sha256_path": "platform/generated/study-anything-published-image-evidence.sha256"
   },
   "ci_evidence": {
@@ -170,9 +170,9 @@
       "sha256": "93235158fa8a8372a66117d387387aca617fce186a5e4f81733032f66f84b9e6"
     },
     {
-      "bytes": 21096,
+      "bytes": 21619,
       "path": "docs/self-hosting.md",
-      "sha256": "c8947c39b89003de7b9f7169d535bd847313ec0d2662c9a266bf78ccfe1133cc"
+      "sha256": "101156de657fd9ca01fd9d99394f5ff83d28dbcb69fd45bcf6590fabf58e250e"
     },
     {
       "bytes": 28276,
@@ -230,9 +230,9 @@
       "sha256": "cd56361844f5900512cd6bb169b1bfadc7be31143c4e229bbaa69c914229bafb"
     },
     {
-      "bytes": 10577,
+      "bytes": 10763,
       "path": "infra/compose/docker-compose.yml",
-      "sha256": "dc67897f0bb86feb34d2e59267da1603267bfec46fcd86418e46d2c93f85c63c"
+      "sha256": "8d4ddb8581ad3184d1ac5443fcbe595b8777587bc6b5436bd95bb3bdc1f17cc6"
     },
     {
       "bytes": 452,

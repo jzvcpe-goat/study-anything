@@ -435,6 +435,8 @@ fi
 phase "existing release gates"
 "$python_bin" scripts/verify_local_api_security.py --check
 "$python_bin" scripts/verify_container_security.py --check
+"$python_bin" scripts/verify_dependency_risk_acceptance.py --check
+"$python_bin" scripts/verify_agent_endpoint_policy.py --check
 "$python_bin" scripts/generate_python_supply_chain.py --check --timeout-seconds 120
 "$python_bin" scripts/verify_github_security_posture.py --check
 "$python_bin" scripts/verify_self_host_soak.py --check

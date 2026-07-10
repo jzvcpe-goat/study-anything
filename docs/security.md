@@ -52,6 +52,29 @@ Verify this boundary with:
 python3 scripts/verify_local_api_security.py --check
 ```
 
+## Agent Egress Boundary
+
+- Local single-operator deployments default to
+  `STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=operator`. This preserves Bring Your Own
+  Agent flexibility, but it is not a hosted SSRF boundary.
+- `APP_ENV=production` requires `allowlist` mode and a non-empty
+  `STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST` containing comma-separated exact
+  origins. Paths, queries, fragments, and credentials are rejected.
+- Non-loopback allowlist entries must use HTTPS. The selected endpoint is checked
+  during registration and immediately before invocation.
+- HTTP Agent redirects are rejected so an allowed gateway cannot redirect a
+  request to a different destination. Status responses expose only policy mode
+  and origin count, never the configured origins.
+- Hosted operators should additionally enforce network-level egress controls.
+  This policy does not certify a compromised allowed gateway or malicious DNS as
+  safe.
+
+Verify this boundary with:
+
+```bash
+python3 scripts/verify_agent_endpoint_policy.py --check
+```
+
 ## Recovery And Backup
 
 Local operators should create a backup before image upgrades, plugin installs,
@@ -89,6 +112,8 @@ Run the security recovery gate before publishing an alpha:
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_local_api_security.py --check
 python3 scripts/verify_container_security.py --check
+python3 scripts/verify_dependency_risk_acceptance.py --check
+python3 scripts/verify_agent_endpoint_policy.py --check
 python3 scripts/generate_python_supply_chain.py --check
 ```
 

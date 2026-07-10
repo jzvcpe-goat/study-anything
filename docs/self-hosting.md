@@ -38,6 +38,8 @@ API_BIND_HOST=0.0.0.0
 STUDY_ANYTHING_API_AUTH_MODE=token
 STUDY_ANYTHING_API_TOKEN=<strong-random-value>
 STUDY_ANYTHING_CORS_ORIGINS=https://your-trusted-console.example
+STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist
+STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=https://your-private-agent.example
 ```
 
 `python3 scripts/setup_env.py` generates the token. The CLI automatically reads
@@ -45,6 +47,12 @@ it from the same private `.env`; external tool hosts should send it as
 `Authorization: Bearer <token>`. Never put it in an API URL. Token mode protects
 one private operator API and does not provide hosted user accounts or tenant
 isolation.
+
+Agent allowlist entries are comma-separated exact origins, not full invoke URLs.
+Non-loopback production origins must use HTTPS. The API validates the origin again
+immediately before each request and does not follow Agent redirects. Local
+single-operator development keeps `operator` mode so a user may choose a local or
+private gateway without turning that convenience into a hosted-security claim.
 
 Use the heavier full profile only when you want the optional operational services:
 

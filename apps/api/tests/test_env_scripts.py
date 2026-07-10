@@ -958,7 +958,7 @@ class EnvScriptTests(unittest.TestCase):
         self.assertEqual(payload["schema_version"], "env-check-result-v1")
         self.assertEqual(payload["status"], "fail")
         self.assertEqual(payload["env_file"], "<env-file>")
-        self.assertEqual(payload["problem_count"], 9)
+        self.assertEqual(payload["problem_count"], 10)
         self.assertFalse(payload["privacy"]["local_absolute_paths_included"])
         self.assertFalse(payload["privacy"]["secret_values_included"])
         self.assertFalse(payload["privacy"]["raw_env_values_included"])
@@ -967,6 +967,72 @@ class EnvScriptTests(unittest.TestCase):
         self.assertIn("weak_or_placeholder_secret", {item["code"] for item in payload["problems"]})
         self.assertIn("invalid_langfuse_encryption_key", {item["code"] for item in payload["problems"]})
         self.assertIn("production_api_auth_required", {item["code"] for item in payload["problems"]})
+        self.assertIn("empty_agent_endpoint_allowlist", {item["code"] for item in payload["problems"]})
+
+    def test_check_env_production_agent_allowlist_is_actionable_and_redacted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            env_file = Path(tmp) / ".env"
+            env_file.write_text(
+                "\n".join(
+                    [
+                        "APP_ENV=production",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=operator",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=http://private-agent.example/invoke?token=secret",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            code, stdout, stderr = self.run_check_env_with_stdout(
+                "--env",
+                str(env_file),
+                "--json",
+            )
+
+        self.assertEqual(code, 1)
+        self.assertEqual(stderr, "")
+        payload = json.loads(stdout)
+        codes = {item["code"] for item in payload["problems"]}
+        self.assertIn("production_agent_allowlist_required", codes)
+        self.assertIn("invalid_agent_endpoint_allowlist_origin", codes)
+        self.assertNotIn("private-agent.example", stdout)
+        self.assertNotIn("token=secret", stdout)
+
+    def test_check_env_accepts_production_agent_https_allowlist(self) -> None:
+        issues = check_env.validate_agent_endpoint_allowlist(
+            "https://agent.example,https://second-agent.example:8443/",
+            Path(".env"),
+        )
+
+        self.assertEqual(issues, [])
+
+    def test_check_env_rejects_separator_only_agent_allowlist(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            env_file = Path(tmp) / ".env"
+            env_file.write_text(
+                "\n".join(
+                    [
+                        "APP_ENV=development",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_POLICY=allowlist",
+                        "STUDY_ANYTHING_AGENT_ENDPOINT_ALLOWLIST=, ,",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            code, stdout, stderr = self.run_check_env_with_stdout(
+                "--env",
+                str(env_file),
+                "--json",
+            )
+
+        self.assertEqual(code, 1)
+        self.assertEqual(stderr, "")
+        payload = json.loads(stdout)
+        self.assertIn(
+            "empty_agent_endpoint_allowlist",
+            {item["code"] for item in payload["problems"]},
+        )
 
     def test_check_env_json_missing_file_redacts_absolute_path(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
