@@ -89,12 +89,19 @@ Run the security recovery gate before publishing an alpha:
 python3 scripts/verify_security_recovery_hardening.py
 python3 scripts/verify_local_api_security.py --check
 python3 scripts/verify_container_security.py --check
+python3 scripts/generate_python_supply_chain.py --check
 ```
 
 The container and GitHub Actions baseline is documented in `docs/security-baseline.md`. The API and
 mock Agent use a fixed non-root runtime identity, read-only root filesystems, dropped capabilities,
 and `no-new-privileges`. GitHub Actions are full-SHA pinned, with CodeQL and dependency review in a
 separate security workflow.
+
+Python application dependencies are resolved in the universal `uv.lock` for the tested Python 3.11
+and 3.12 range. Docker, CI, policy jobs, and Skill Mode consume generated requirements with exact
+versions and SHA-256 hashes. The CycloneDX inventory and metadata-only receipt are documented in
+`docs/python-supply-chain.md`. Hash-bound installation reduces resolver drift and package replacement
+risk; it is not a vulnerability-free claim or a substitute for dependency review.
 
 This verifier proves:
 

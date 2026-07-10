@@ -51,6 +51,17 @@ class PythonSupplyChainTests(unittest.TestCase):
             1,
         )
 
+    def test_checked_in_supply_chain_reproduces_offline(self) -> None:
+        receipt = supply_chain.generate(
+            refresh=False,
+            refresh_from_lock=False,
+            timeout_seconds=120,
+        )
+
+        self.assertEqual(receipt["status"], "pass")
+        self.assertTrue(receipt["lock"]["universal_cross_platform"])
+        self.assertGreater(receipt["lock"]["package_count"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -30,6 +30,8 @@ class ReleaseCheckScriptTests(unittest.TestCase):
         self.assertIn("--dual-loop-only", script)
         self.assertIn("--skip-clean-clone", script)
         self.assertIn("import fastapi, mypy, pytest, ruff", script)
+        self.assertIn("requirements/locked-dev-full.txt", script)
+        self.assertIn("generate_python_supply_chain.py --check", script)
         self.assertIn('release_python_prefix="$("$python_bin" -c', script)
         self.assertIn('--venv "$release_python_prefix"', script)
 

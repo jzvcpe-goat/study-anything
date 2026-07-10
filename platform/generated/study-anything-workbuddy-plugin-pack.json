@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 158810,
+    "bytes": 158889,
     "path": "platform/generated/study-anything-workbuddy-plugin-pack.zip",
     "root": "study-anything-workbuddy-plugin-pack",
-    "sha256": "009d29879c2e2130447d8eddf330b7ab4785df5d583a327f2bccad292dcdb7c5"
+    "sha256": "37e4ab4bef1739c52b393fa738d0b2ca0c6cc39b3fc1f380fd28360f802f5d38"
   },
   "entrypoints": {
     "api_docs": "docs/api.md",
@@ -41,11 +41,11 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/getting-started.md",
-      "bytes": 5247,
+      "bytes": 5261,
       "kind": "operator_doc",
       "path": "docs/getting-started.md",
       "purpose": "Step-by-step first-run guide.",
-      "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
+      "sha256": "1b9f1ce9c173f35ba2cc316918c323b885e29b06cd081ce03736830f5bf9ba94"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/docs/operator-drill.md",
@@ -73,19 +73,19 @@
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/start_here.sh",
-      "bytes": 10068,
+      "bytes": 10067,
       "kind": "launcher",
       "path": "scripts/start_here.sh",
       "purpose": "One-command local runtime launcher.",
-      "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
+      "sha256": "2d780fb97587d68afb0a35d6f3b768c1a3074ae2d1e039d4e3720ae4357940cd"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/launch_skill_mode.sh",
-      "bytes": 28010,
+      "bytes": 28596,
       "kind": "runtime",
       "path": "scripts/launch_skill_mode.sh",
       "purpose": "Local Skill Mode API launcher.",
-      "sha256": "c2816380364c7cf0acbf9cefde5ce0a3db4d5a851aea78f906628a73d56bb517"
+      "sha256": "1b184a2572c056136b0232245cb26ca37b2d6058136663e4240d6ba97b373efd"
     },
     {
       "archive_path": "study-anything-workbuddy-plugin-pack/scripts/stop_skill_mode.sh",

@@ -2,7 +2,11 @@
 
 ## v0.3.31-alpha
 
-- [ ] Create `.venv` with Python 3.11+ and run `.venv/bin/python -m pip install -e '.[dev,full]'`.
+- [ ] Create `.venv` with Python 3.11 or 3.12, install
+  `requirements/locked-dev-full.txt` with `--require-hashes`, then install the local package with
+  `--no-deps --no-build-isolation -e .`.
+- [ ] Run `python scripts/generate_python_supply_chain.py --check` and inspect the metadata-only
+  supply-chain receipt and CycloneDX SBOM claim boundary.
 - [ ] `.venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `STUDY_ANYTHING_STRICT_MSGPACK=1 .venv/bin/python -m unittest discover apps/api/tests`
 - [ ] `.venv/bin/python -m compileall -q apps/api/study_anything scripts plugins`

@@ -64,8 +64,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install local package
-        run: python -m pip install -e .
+      - name: Install locked local package
+        run: |
+          python -m pip install --require-hashes -r requirements/locked-skill.txt
+          python -m pip install --no-deps --no-build-isolation -e .
 
       - name: Build or validate metadata-only acceptance bundle
         shell: bash

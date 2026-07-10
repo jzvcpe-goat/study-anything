@@ -67,6 +67,7 @@ pip_default_timeout="${PIP_DEFAULT_TIMEOUT:-60}"
 pip_retries="${PIP_RETRIES:-3}"
 skill_install_target="${SKILL_PIP_INSTALL_TARGET:-}"
 skill_workflow_engine="${SKILL_WORKFLOW_ENGINE:-deterministic}"
+locked_skill_requirements="$ROOT/requirements/locked-skill.txt"
 
 validate_skill_api_port() {
   case "$api_port" in
@@ -375,7 +376,7 @@ print_venv_creation_failure_hint() {
 
 print_python_recovery_paths() {
   printf "Try one of these recovery paths:\n" >&2
-  printf "  1. Install Python 3.11+ and retry: ./scripts/launch_skill_mode.sh\n" >&2
+  printf "  1. Install Python 3.11 or 3.12 and retry: ./scripts/launch_skill_mode.sh\n" >&2
   printf "  2. Use a specific interpreter: PYTHON_BIN=/path/to/python3.11 ./scripts/launch_skill_mode.sh\n" >&2
   printf "  3. Use an existing venv: STUDY_ANYTHING_VENV=/path/to/.venv ./scripts/launch_skill_mode.sh\n" >&2
   printf "  4. Use Docker published images instead: USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh\n" >&2
@@ -383,7 +384,7 @@ print_python_recovery_paths() {
 }
 
 print_python_missing_hint() {
-  printf "Python 3.11 or newer is required for Skill Mode, but no usable interpreter was found.\n" >&2
+  printf "Python 3.11 or 3.12 is required for Skill Mode, but no usable interpreter was found.\n" >&2
   if [ -n "${PYTHON_BIN:-}" ]; then
     printf "Configured PYTHON_BIN was not found or not executable: %s\n" "$(display_path "$PYTHON_BIN")" >&2
   else
@@ -396,7 +397,7 @@ print_python_version_hint() {
   python_candidate="$1"
   version_text="$("$python_candidate" -c 'import sys; print(sys.version.split()[0])' 2>/dev/null || printf "unknown")"
   resolved_python="$(command -v "$python_candidate" 2>/dev/null || printf "%s" "$python_candidate")"
-  printf "Python 3.11 or newer is required for Skill Mode; found %s at %s.\n" "$version_text" "$(display_path "$resolved_python")" >&2
+  printf "Python 3.11 or 3.12 is required for Skill Mode; found %s at %s.\n" "$version_text" "$(display_path "$resolved_python")" >&2
   print_python_recovery_paths
 }
 
@@ -535,7 +536,7 @@ fi
 if ! "$python_bin" - <<'PY'
 import sys
 
-raise SystemExit(0 if sys.version_info >= (3, 11) else 1)
+raise SystemExit(0 if (3, 11) <= sys.version_info < (3, 13) else 1)
 PY
 then
   print_python_version_hint "$python_bin"
@@ -562,7 +563,22 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
   export PIP_RETRIES="$pip_retries"
   export PIP_NO_INPUT="${PIP_NO_INPUT:-1}"
   install_failed="false"
-  if [ -z "$skill_install_target" ]; then
+  if [ -f "$locked_skill_requirements" ]; then
+    if ! run_pip_install -m pip install \
+      --timeout "$pip_default_timeout" \
+      --retries "$pip_retries" \
+      --require-hashes \
+      -r "$locked_skill_requirements"; then
+      install_failed="true"
+    elif [ -n "$skill_install_target" ]; then
+      run_pip_install -m pip install \
+        --timeout "$pip_default_timeout" \
+        --retries "$pip_retries" \
+        --no-deps \
+        --no-build-isolation \
+        -e "$skill_install_target" || install_failed="true"
+    fi
+  elif [ -z "$skill_install_target" ]; then
     if run_pip_install -m pip install \
       --timeout "$pip_default_timeout" \
       --retries "$pip_retries" \
@@ -609,7 +625,7 @@ if ! "$venv_python" -c "import fastapi, uvicorn" >/dev/null 2>&1; then
     printf "  1. Re-run from a normal terminal with network access: ./scripts/launch_skill_mode.sh\n" >&2
     printf "  2. Configure a reachable package index, for example: PIP_INDEX_URL=https://pypi.org/simple ./scripts/launch_skill_mode.sh\n" >&2
     printf "  3. Use Docker published images instead of local Python install: USE_PUBLISHED_IMAGES=true ./scripts/launch_self_host.sh\n" >&2
-    printf "  4. Preinstall Skill Mode runtime deps in the selected venv: %s -m pip install 'fastapi>=0.115.0' 'uvicorn>=0.30.0' 'pydantic>=2.8.0' 'httpx>=0.27.0'\n" "$(display_path "$venv_python")" >&2
+    printf "  4. Preinstall the locked Skill Mode runtime: %s -m pip install --require-hashes -r requirements/locked-skill.txt\n" "$(display_path "$venv_python")" >&2
     printf "  5. If downloads are just slow, increase the bounded install wait: SKILL_PIP_INSTALL_TIMEOUT_SECONDS=1200 ./scripts/launch_skill_mode.sh\n" >&2
     printf "  6. If you are inside an AI platform sandbox, run python3 scripts/diagnose_adoption.py and share the redacted output.\n" >&2
     printf "Full pip log: %s\n" "$(display_path "$pip_install_log")" >&2

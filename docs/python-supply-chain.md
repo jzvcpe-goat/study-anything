@@ -23,6 +23,10 @@ python3 scripts/generate_python_supply_chain.py --refresh
 python3 scripts/generate_python_supply_chain.py --check
 ```
 
+Use `--refresh-from-lock` to regenerate projections offline after retrieving a reviewed lock
+candidate from CI. CycloneDX timestamps and random serial numbers are intentionally removed so the
+checked-in SBOM represents dependency identity rather than one generator invocation.
+
 The check is offline and fails when `pyproject.toml`, `uv.lock`, an exported requirement file, the
 SBOM, or the receipt is stale. Network access is only required when a maintainer intentionally
 refreshes the lock.

@@ -56,6 +56,7 @@ jobs:
             requirements/locked-skill.txt \
             requirements/locked-full.txt \
             requirements/locked-dev-full.txt \
+            requirements/locked-policy.txt \
             platform/generated/study-anything-python-sbom.cdx.json \
             platform/generated/study-anything-python-supply-chain.json
           test -z "$(git ls-files --others --exclude-standard -- \
@@ -63,5 +64,6 @@ jobs:
             requirements/locked-skill.txt \
             requirements/locked-full.txt \
             requirements/locked-dev-full.txt \
+            requirements/locked-policy.txt \
             platform/generated/study-anything-python-sbom.cdx.json \
             platform/generated/study-anything-python-supply-chain.json)"

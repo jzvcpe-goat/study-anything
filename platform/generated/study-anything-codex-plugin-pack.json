@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 132775,
+    "bytes": 132887,
     "path": "platform/generated/study-anything-codex-plugin-pack.zip",
     "root": "study-anything-codex-plugin-pack",
-    "sha256": "cf6cfe0f6dbd70dbd852bb021947439a4caf3117192d48ff5cccfce0706ffb32"
+    "sha256": "4255eaa97513d2d5f35d833154b646b933d2ba3579cfef86680afb094194ad1e"
   },
   "entrypoints": {
     "cleanroom_bootloader": "platform/bootstrap/study_anything_release_bootstrap.py",
@@ -38,11 +38,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/getting-started.md",
-      "bytes": 5247,
+      "bytes": 5261,
       "kind": "operator_doc",
       "path": "docs/getting-started.md",
       "purpose": "Step-by-step first-run guide.",
-      "sha256": "867f4ad2454808f2e9c7f6ceff23adfe647cb60b10f3639c9b4bca292037ecd6"
+      "sha256": "1b9f1ce9c173f35ba2cc316918c323b885e29b06cd081ce03736830f5bf9ba94"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/operator-drill.md",
@@ -70,19 +70,19 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/start_here.sh",
-      "bytes": 10068,
+      "bytes": 10067,
       "kind": "launcher",
       "path": "scripts/start_here.sh",
       "purpose": "One-command local runtime launcher.",
-      "sha256": "db704e1cbde5386e2a6131ab6f62e942d98bd47913060315ac94fa14fea4a68e"
+      "sha256": "2d780fb97587d68afb0a35d6f3b768c1a3074ae2d1e039d4e3720ae4357940cd"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/launch_skill_mode.sh",
-      "bytes": 28010,
+      "bytes": 28596,
       "kind": "runtime",
       "path": "scripts/launch_skill_mode.sh",
       "purpose": "Local Skill Mode API launcher.",
-      "sha256": "c2816380364c7cf0acbf9cefde5ce0a3db4d5a851aea78f906628a73d56bb517"
+      "sha256": "1b184a2572c056136b0232245cb26ca37b2d6058136663e4240d6ba97b373efd"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/scripts/stop_skill_mode.sh",
@@ -134,11 +134,11 @@
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/docs/skill-mode.md",
-      "bytes": 11755,
+      "bytes": 11810,
       "kind": "operator_doc",
       "path": "docs/skill-mode.md",
       "purpose": "Skill Mode startup and CLI guide.",
-      "sha256": "d552a1d10d1dce5980c1f7044e39120e0661ef527ab50ef23073f9e24a3d4c1d"
+      "sha256": "cdff0151e536588cb0eba5046fd70f733aa43a4517fbcaa53326f7e1e47c4562"
     },
     {
       "archive_path": "study-anything-codex-plugin-pack/platform/packs/codex/README.md",

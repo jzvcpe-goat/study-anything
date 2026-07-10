@@ -38,6 +38,10 @@ REQUIREMENT_EXPORTS: tuple[tuple[Path, tuple[str, ...]], ...] = (
         ROOT / "requirements/locked-dev-full.txt",
         ("--extra", "full", "--extra", "dev", "--group", "build"),
     ),
+    (
+        ROOT / "requirements/locked-policy.txt",
+        ("--extra", "dev", "--group", "build"),
+    ),
 )
 
 
@@ -203,6 +207,13 @@ def export_artifacts(
     )
     sbom_payload = json.loads(temp_sbom.read_text(encoding="utf-8"))
     require(isinstance(sbom_payload, Mapping), "SBOM root must be an object")
+    sbom_payload = dict(sbom_payload)
+    sbom_payload.pop("serialNumber", None)
+    metadata = sbom_payload.get("metadata")
+    if isinstance(metadata, Mapping):
+        normalized_metadata = dict(metadata)
+        normalized_metadata.pop("timestamp", None)
+        sbom_payload["metadata"] = normalized_metadata
     validate_sbom(sbom_payload)
     outputs[SBOM_FILE] = (
         json.dumps(sbom_payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
@@ -277,9 +288,15 @@ def compare_or_write(path: Path, payload: bytes, *, refresh: bool) -> None:
     require(path.read_bytes() == payload, f"Generated artifact is stale: {relative(path)}")
 
 
-def generate(*, refresh: bool, timeout_seconds: int) -> dict[str, Any]:
+def generate(
+    *,
+    refresh: bool,
+    refresh_from_lock: bool,
+    timeout_seconds: int,
+) -> dict[str, Any]:
     uv = resolve_uv()
     require(PYPROJECT.exists(), "pyproject.toml is missing")
+    write_outputs = refresh or refresh_from_lock
     if refresh:
         run_uv(uv, ("lock", "--no-progress"), timeout_seconds=timeout_seconds)
     else:
@@ -296,8 +313,8 @@ def generate(*, refresh: bool, timeout_seconds: int) -> dict[str, Any]:
         json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     ).encode("utf-8")
     for path, payload in outputs.items():
-        compare_or_write(path, payload, refresh=refresh)
-    compare_or_write(RECEIPT_FILE, receipt_bytes, refresh=refresh)
+        compare_or_write(path, payload, refresh=write_outputs)
+    compare_or_write(RECEIPT_FILE, receipt_bytes, refresh=write_outputs)
     return receipt
 
 
@@ -306,6 +323,7 @@ def main() -> None:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check", action="store_true")
     mode.add_argument("--refresh", action="store_true")
+    mode.add_argument("--refresh-from-lock", action="store_true")
     parser.add_argument(
         "--timeout-seconds",
         type=int,
@@ -314,7 +332,11 @@ def main() -> None:
     args = parser.parse_args()
     require(args.timeout_seconds > 0, "--timeout-seconds must be positive")
     try:
-        receipt = generate(refresh=args.refresh, timeout_seconds=args.timeout_seconds)
+        receipt = generate(
+            refresh=args.refresh,
+            refresh_from_lock=args.refresh_from_lock,
+            timeout_seconds=args.timeout_seconds,
+        )
     except PythonSupplyChainError as exc:
         print(f"generate_python_supply_chain failed: {exc}", file=os.sys.stderr)
         raise SystemExit(1) from exc

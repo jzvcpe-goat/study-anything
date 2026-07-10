@@ -8,6 +8,10 @@ Study Anything is designed to be self-hosted first.
 - 2 GB RAM minimum for the API/Postgres stack, more if your own agent runs local models.
 - Optional: any local/private HTTP agent gateway.
 
+Source builds install the API from `requirements/locked-full.txt` with SHA-256 hash enforcement.
+Supported Python for local tooling is 3.11 or 3.12; newer interpreters are outside the current test
+matrix. Published images remain the simplest path when local package downloads are slow.
+
 ## Launch
 
 ```bash
