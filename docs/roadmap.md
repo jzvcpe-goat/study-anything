@@ -264,3 +264,7 @@ phase, including clean clone and dependency installation, to complete.
 
 The PR-level implementation sequence, acceptance matrix, risk register, and next
 Codex goal are in [CBB Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
+
+Canonical contracts, the deterministic Trust Kernel, and local provenance/signing
+are implemented. The next ordered milestone is scenario and qualification policy;
+outcome-driven trust degradation and isolated Agentic evolution follow it.

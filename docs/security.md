@@ -136,7 +136,16 @@ python3 scripts/verify_github_security_posture.py --check
 python3 scripts/generate_external_security_audit_pack.py --check
 python3 scripts/verify_external_security_audit_pack.py --check
 python3 scripts/generate_python_supply_chain.py --check
+python3 scripts/verify_cbb_v1_provenance.py --check
+python3 scripts/verify_cbb_v1_tamper_cases.py --check
 ```
+
+CBB v1 local provenance uses optional Ed25519 signing. Private keys remain local,
+owner-only files and are never included in protocol packages or generated evidence.
+The embedded public key is self-asserted: a valid signature proves integrity and key
+possession, not external identity, audit completion, or production authority.
+Expiry, supplied-registry revocation, and optional nonce consumption are verified
+offline; none is presented as a globally synchronized revocation service.
 
 The external audit kit lives under `security/audit/` and is distributed as
 `platform/generated/study-anything-external-security-audit-pack.zip`. The pack

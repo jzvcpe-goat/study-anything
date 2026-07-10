@@ -1467,6 +1467,16 @@ FILES: list[tuple[str, str, str]] = [
         "Static canonical Trust Kernel runtime-isolation report.",
     ),
     (
+        "platform/generated/study-anything-cbb-v1-provenance.json",
+        "generated_asset",
+        "Local Ed25519 provenance and offline verification report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-v1-tamper-cases.json",
+        "generated_asset",
+        "Canonical object and signature tamper rejection report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3235,6 +3245,11 @@ FILES: list[tuple[str, str, str]] = [
         "docs/cbb-protocol-v1-kernel.md",
         "operator_doc",
         "Canonical deterministic Trust Kernel and runtime-isolation guide.",
+    ),
+    (
+        "docs/cbb-protocol-v1-provenance.md",
+        "operator_doc",
+        "Canonical local signing, offline verification, and claim-boundary guide.",
     ),
     (
         "docs/delivery-trust-receipt.md",
@@ -5590,6 +5605,18 @@ FILES: list[tuple[str, str, str]] = [
     ("fixtures/cbb-v1-kernel/hard-deny.json", "fixture", "Canonical hard-deny fixture."),
     ("fixtures/cbb-v1-kernel/reference-mismatch.json", "fixture", "Canonical reference-integrity fixture."),
     ("fixtures/cbb-v1-kernel/claim-boundary-narrowing.json", "fixture", "Canonical claim-boundary narrowing fixture."),
+    ("fixtures/cbb-v1-provenance/pass-signed.json", "fixture", "Canonical locally signed provenance fixture."),
+    ("fixtures/cbb-v1-provenance/unsigned-development.json", "fixture", "Unsigned development provenance rejection fixture."),
+    ("fixtures/cbb-v1-provenance/expired.json", "fixture", "Expired provenance rejection fixture."),
+    ("fixtures/cbb-v1-provenance/revoked.json", "fixture", "Local revocation rejection fixture."),
+    ("fixtures/cbb-v1-provenance/replay.json", "fixture", "Replay nonce consumption fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-policy.json", "fixture", "Policy tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-evidence.json", "fixture", "Evidence tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-reconstruction.json", "fixture", "Reconstruction tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-decision.json", "fixture", "Decision tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-receipt.json", "fixture", "Delivery receipt envelope tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/tampered-signature.json", "fixture", "Signature tamper rejection fixture."),
+    ("fixtures/cbb-v1-provenance/wrong-public-key.json", "fixture", "Wrong public key rejection fixture."),
     (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
@@ -5599,6 +5626,11 @@ FILES: list[tuple[str, str, str]] = [
         "scripts/generate_cbb_v1_contract_assets.py",
         "generator",
         "Generate canonical CBB Protocol v1 schemas and deterministic fixtures.",
+    ),
+    (
+        "scripts/generate_cbb_v1_provenance_assets.py",
+        "generator",
+        "Generate deterministic public-only CBB Protocol v1 provenance fixtures.",
     ),
     (
         "scripts/verify_cbb_v1_contracts.py",
@@ -5612,6 +5644,9 @@ FILES: list[tuple[str, str, str]] = [
     ),
     ("scripts/verify_cbb_v1_kernel.py", "verification", "Verify canonical deterministic CBB Protocol v1 Trust Kernel decisions."),
     ("scripts/verify_cbb_runtime_isolation.py", "verification", "Verify the canonical Trust Kernel has no Agentic runtime authority."),
+    ("scripts/cbb_provenance.py", "cli", "Generate local keys, sign canonical receipt sets, and verify packages offline."),
+    ("scripts/verify_cbb_v1_provenance.py", "verification", "Verify local signing, expiry, revocation, replay, and scope boundaries."),
+    ("scripts/verify_cbb_v1_tamper_cases.py", "verification", "Verify canonical object, signature, and public-key tamper rejection."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -7939,6 +7974,8 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_v0_compatibility.py --check",
             "python3 scripts/verify_cbb_v1_kernel.py --check",
             "python3 scripts/verify_cbb_runtime_isolation.py --check",
+            "python3 scripts/verify_cbb_v1_provenance.py --check",
+            "python3 scripts/verify_cbb_v1_tamper_cases.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

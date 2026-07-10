@@ -203,6 +203,7 @@ not an autonomous release decision.
 - [Naming and compatibility](docs/naming-and-compatibility.md)
 - [CBB Protocol v1 development plan](docs/cbb-protocol-v1-development-plan.md)
 - [CBB Protocol v1 deterministic Trust Kernel](docs/cbb-protocol-v1-kernel.md)
+- [CBB Protocol v1 local provenance](docs/cbb-protocol-v1-provenance.md)
 - [Roadmap](docs/roadmap.md)
 - [Delivery Trust Receipt](docs/delivery-trust-receipt.md)
 - [Customer Handoff Package](docs/customer-handoff-package.md)

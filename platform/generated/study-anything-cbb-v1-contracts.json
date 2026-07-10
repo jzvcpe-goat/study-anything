@@ -33,14 +33,18 @@
     "real_secrets_included": false
   },
   "provenance_bindings": {
+    "decision_digest_matches": true,
     "decision_ref_matches": true,
     "decision_scope_matches": true,
     "decision_status_matches": true,
     "embedded_provenance_matches": true,
     "evidence_digest_matches": true,
     "evidence_ref_matches": true,
+    "package_digest_matches": true,
     "policy_digest_matches": true,
     "policy_ref_matches": true,
+    "receipt_envelope_digest_matches": true,
+    "reconstruction_digest_matches": true,
     "reconstruction_ref_matches": true,
     "subject_digest_matches": true,
     "verifier_digest_matches": true
@@ -95,12 +99,12 @@
     {
       "path": "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
       "schema_version": "cbb.delivery-trust-receipt.v1",
-      "sha256": "5354a5d59f512a1d81b823a776db754379e28660b6c10f3c84332db22d891d48"
+      "sha256": "bf4b2f3e56951425b403113254281c442c9efe76a9ea811cd03efefc084ef05a"
     },
     {
       "path": "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
       "schema_version": "cbb.receipt-provenance.v1",
-      "sha256": "710b9e210dfd0fe9e52c285a240a0eb3f187a3190b07d92aa63fcfecf4b2b690"
+      "sha256": "2fa5a4be60f0f622f3b4f529c46432a816765260ea0aff1fd382ecca0b32e2e5"
     }
   ],
   "states": {

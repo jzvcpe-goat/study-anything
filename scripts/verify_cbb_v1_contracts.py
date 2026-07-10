@@ -220,6 +220,8 @@ def _provenance_binding_report() -> dict[str, bool]:
     decision = canonical["gate_decision"]
     provenance = canonical["receipt_provenance"]
     receipt = canonical["delivery_trust_receipt"]
+    receipt_envelope = dict(receipt)
+    receipt_envelope.pop("provenance")
     verifier_identity = {
         "verifier_id": provenance["verifier"]["verifier_id"],
         "verifier_version": provenance["verifier"]["verifier_version"],
@@ -231,6 +233,24 @@ def _provenance_binding_report() -> dict[str, bool]:
         == canonical_sha256(policy),
         "evidence_digest_matches": provenance["evidence_digest_sha256"]
         == canonical_sha256(evidence),
+        "reconstruction_digest_matches": provenance["reconstruction_digest_sha256"]
+        == canonical_sha256(reconstruction),
+        "decision_digest_matches": provenance["decision_digest_sha256"]
+        == canonical_sha256(decision),
+        "receipt_envelope_digest_matches": provenance[
+            "receipt_envelope_digest_sha256"
+        ]
+        == canonical_sha256(receipt_envelope),
+        "package_digest_matches": provenance["package_digest_sha256"]
+        == canonical_sha256(
+            {
+                "policy_digest_sha256": canonical_sha256(policy),
+                "evidence_digest_sha256": canonical_sha256(evidence),
+                "reconstruction_digest_sha256": canonical_sha256(reconstruction),
+                "decision_digest_sha256": canonical_sha256(decision),
+                "receipt_envelope_digest_sha256": canonical_sha256(receipt_envelope),
+            }
+        ),
         "verifier_digest_matches": provenance["verifier"]["verifier_digest_sha256"]
         == canonical_sha256(verifier_identity),
         "embedded_provenance_matches": receipt["provenance"] == provenance,

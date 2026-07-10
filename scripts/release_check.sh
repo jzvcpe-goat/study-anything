@@ -28,6 +28,8 @@ cbb_v1_contract_verifiers_integrated="true"
 cbb_v1_contract_verifiers_passed_individually="false"
 cbb_v1_kernel_verifiers_integrated="true"
 cbb_v1_kernel_verifiers_passed_individually="false"
+cbb_v1_provenance_verifiers_integrated="true"
+cbb_v1_provenance_verifiers_passed_individually="false"
 known_issue="none"
 claim_boundary="Full release validation has not completed yet."
 PIP_INSTALL_TIMEOUT_SECONDS="${PIP_INSTALL_TIMEOUT_SECONDS:-900}"
@@ -180,6 +182,8 @@ payload = {
     "cbb_v1_contract_verifiers_passed_individually": $(json_bool "$cbb_v1_contract_verifiers_passed_individually"),
     "cbb_v1_kernel_verifiers_integrated": $(json_bool "$cbb_v1_kernel_verifiers_integrated"),
     "cbb_v1_kernel_verifiers_passed_individually": $(json_bool "$cbb_v1_kernel_verifiers_passed_individually"),
+    "cbb_v1_provenance_verifiers_integrated": $(json_bool "$cbb_v1_provenance_verifiers_integrated"),
+    "cbb_v1_provenance_verifiers_passed_individually": $(json_bool "$cbb_v1_provenance_verifiers_passed_individually"),
     "partial_modes": {
         "dual_loop_only": $(json_bool "$dual_loop_only_enabled"),
         "cbb_protocol_only": $(json_bool "$cbb_protocol_only_enabled"),
@@ -283,10 +287,13 @@ run_cbb_protocol_verifier_gates() {
     "$python_bin" scripts/verify_cbb_v0_compatibility.py --check
     "$python_bin" scripts/verify_cbb_v1_kernel.py --check
     "$python_bin" scripts/verify_cbb_runtime_isolation.py --check
+    "$python_bin" scripts/verify_cbb_v1_provenance.py --check
+    "$python_bin" scripts/verify_cbb_v1_tamper_cases.py --check
     cbb_v1_contract_verifiers_passed_individually="true"
     cbb_v1_kernel_verifiers_passed_individually="true"
+    cbb_v1_provenance_verifiers_passed_individually="true"
   else
-    printf "skip  CBB v1 contract and kernel verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
+    printf "skip  CBB v1 contract, kernel, and provenance verifiers require project dependencies; dual-loop-only does not claim they passed.\n"
   fi
   "$python_bin" scripts/verify_cbb_protocol_contracts.py --check
   "$python_bin" scripts/verify_cbb_gate.py --check

@@ -209,3 +209,9 @@ The ordered implementation and acceptance matrix are maintained in
 does not prioritize a new frontend, plugin family, learning experience, or hosted
 service until the protocol-core convergence, provenance, outcome, and runtime
 isolation gates are in place.
+
+The provenance layer is now local and explicit: Ed25519 signatures bind canonical
+policy, evidence, qualified reconstruction, and deterministic decision objects.
+It remains separate from the Trust Kernel and proves local key possession rather
+than external signer identity. Outcome degradation and Agentic runtime isolation
+remain later milestones.

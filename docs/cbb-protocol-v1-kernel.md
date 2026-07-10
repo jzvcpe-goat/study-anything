@@ -91,7 +91,7 @@ platform/generated/study-anything-cbb-runtime-isolation.json
 ## Claim Boundary
 
 This phase proves deterministic local policy evaluation, fail-closed evidence
-handling, scope monotonicity, v0 compatibility, and static runtime isolation. It
-does not prove portable signing, receipt revocation, production sandboxing,
-customer outcomes, safe Agentic evidence collection, or independent audit
-completion.
+handling, scope monotonicity, v0 compatibility, and static runtime isolation. Local
+signing and supplied-registry revocation checks are a separate provenance layer;
+the kernel itself does not prove signer identity, production sandboxing, customer
+outcomes, safe Agentic evidence collection, or independent audit completion.
