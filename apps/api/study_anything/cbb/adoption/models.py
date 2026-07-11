@@ -153,6 +153,14 @@ class ControlledAdoptionReceiptV1(StrictProtocolModel):
     outcome_receipt_ref: str | None = Field(default=None, max_length=500)
     outcome_status: Literal["monitored", "degraded", "frozen", "revoked"] | None
     trust_action: str | None = Field(default=None, max_length=120)
+    external_attestation_receipt_ref: str | None = Field(
+        default=None,
+        max_length=500,
+    )
+    external_attestation_receipt_sha256: str | None = Field(
+        default=None,
+        pattern=r"^[0-9a-f]{64}$",
+    )
     authorization_delta: Literal["none", "narrowed", "blocked"]
     checks: dict[str, bool] = Field(min_length=1)
     reasons: list[str] = Field(min_length=1)
@@ -172,6 +180,14 @@ class ControlledAdoptionReceiptV1(StrictProtocolModel):
             and self.evidence_class != AdoptionEvidenceClass.EXTERNAL_ADOPTER
         ):
             raise ValueError("only external-adopter evidence may carry a real-evidence claim")
+        attestation_refs_present = (
+            self.external_attestation_receipt_ref is not None,
+            self.external_attestation_receipt_sha256 is not None,
+        )
+        if any(attestation_refs_present) and not all(attestation_refs_present):
+            raise ValueError("external attestation receipt ref and digest must appear together")
+        if self.real_adopter_evidence and not all(attestation_refs_present):
+            raise ValueError("real adopter evidence requires a bound attestation receipt")
         if not scope_is_at_most(self.resulting_scope, self.binding.source_approved_scope):
             raise ValueError("adoption evidence cannot expand source clearance scope")
         if not scope_is_at_most(

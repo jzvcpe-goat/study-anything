@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate controlled-adoption and external-audit intake schemas and fixtures."""
+"""Generate controlled-adoption, external-attestation, and audit-intake assets."""
 
 from __future__ import annotations
 
@@ -14,13 +14,20 @@ sys.path.insert(0, str(ROOT / "apps" / "api"))
 from study_anything.cbb.adoption.fixtures import (  # noqa: E402
     asset_outputs as adoption_outputs,
 )
+from study_anything.cbb.adoption.attestation_fixtures import (  # noqa: E402
+    asset_outputs as adoption_attestation_outputs,
+)
 from study_anything.cbb.audit.fixtures import (  # noqa: E402
     asset_outputs as audit_outputs,
 )
 
 
 def expected_outputs() -> dict[Path, str]:
-    return {**adoption_outputs(ROOT), **audit_outputs(ROOT)}
+    return {
+        **adoption_outputs(ROOT),
+        **adoption_attestation_outputs(ROOT),
+        **audit_outputs(ROOT),
+    }
 
 
 def main() -> int:
@@ -46,7 +53,10 @@ def main() -> int:
             "CBB adoption/audit assets are stale; run "
             f"generate_cbb_adoption_audit_assets.py --write: {stale}"
         )
-    print(f"ok    {len(outputs)} controlled-adoption and audit-intake assets are current")
+    print(
+        f"ok    {len(outputs)} controlled-adoption, external-attestation, "
+        "and audit-intake assets are current"
+    )
     return 0
 
 

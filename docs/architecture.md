@@ -46,7 +46,7 @@ replaced without changing what a valid receipt means.
 │ handoff package, outcome receipt, degradation, revocation   │
 ├──────────────────────────────────────────────────────────────┤
 │ Adoption and External Evidence Intake                       │
-│ shadow/dogfood outcomes, audit report verification          │
+│ adoption outcomes, external attestation, audit verification │
 ├──────────────────────────────────────────────────────────────┤
 │ Adaptive Evolution Layer                                    │
 │ RAG, typed tools, Agentic planning, recipe proposals        │
@@ -71,10 +71,10 @@ The Trust Kernel is deliberately small and model-free. It owns:
 The kernel must not call models, execute arbitrary Agent tools, treat RAG memory as
 truth, or accept model-generated policy as self-applying.
 
-Adoption and audit intake remain outside the Trust Kernel. They may preserve or reduce
-an existing scope, record incidents, require remediation, or accept a separately signed
-external report. They may not grant delivery authority, synthesize an external actor,
-or turn repository fixtures into real-world evidence.
+Adoption, adopter-attestation, and audit intake remain outside the Trust Kernel. They
+may preserve or reduce an existing scope, record incidents, require remediation, or
+accept separately signed external evidence. They may not grant delivery authority,
+synthesize an external actor, or turn repository fixtures into real-world evidence.
 
 ## Equal-Weight Evidence Loops
 
@@ -209,9 +209,10 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 - local API, Skill, platform-Agent, Docker, and static HTML adapters;
 - local security, release, adoption, and external-audit preparation evidence.
 
-### Planned For Protocol v1
+### External Execution Still Required
 
-- controlled real-world adoption evidence and signed independent-audit intake.
+- a signed observation from an independently pinned real adopter;
+- a signed report from an independently pinned human security auditor.
 
 ### Explicitly Not Claimed
 
@@ -244,6 +245,7 @@ than external signer identity. Scenario and qualification policy is also impleme
 without creating another pre-delivery receipt family. Outcome degradation is a
 canonical post-delivery extension. The Agentic layer now stops at signed local
 candidates. Vendor-neutral fixture conformance, the second package-independent
-consumer, controlled-adoption state machine, and external-audit intake channel are
-implemented as deterministic local skeletons. Real external adoption evidence and an
-independently signed audit report remain the next non-repository checkpoints.
+consumer, controlled-adoption state machine, independently pinned external-adopter
+attestation channel, and external-audit intake channel are implemented as deterministic
+local skeletons. Real external adoption evidence and an independently signed audit
+report remain the next non-repository checkpoints.

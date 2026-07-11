@@ -14,12 +14,13 @@ version, and conformance-pack digest are bound into every
 | `synthetic_fixture` | Deterministic repository test; not adoption evidence |
 | `local_shadow` | Operator-supplied non-production shadow observation |
 | `local_dogfood` | Operator-supplied internal use observation |
-| `external_adopter` | Reserved for a future independently signed adoption-attestation path; fail-closed in this implementation |
+| `external_adopter` | Requires an independently signed, pre-pinned external-adopter attestation |
 
-Repository fixtures use only `synthetic_fixture`. The current generated report records
-`real_adopter_evidence_count: 0`. Merely setting `evidence_class` to
-`external_adopter` is not evidence: the current evaluator blocks it and emits
-`real_adopter_evidence: false` until an independent attestation protocol exists.
+Repository fixtures use only `synthetic_fixture`. The current generated reports record
+zero real adopter evidence. Merely setting `evidence_class` to `external_adopter` is not
+evidence: the evaluator requires a verified
+`cbb.external-adoption-attestation-receipt.v1` bound to the exact case, source package,
+release commit, conformance digest, and independently pinned adopter identity.
 
 ## State Machine
 
@@ -40,15 +41,21 @@ provenance; an old adoption pass cannot revive a revoked receipt.
 ```bash
 python3 scripts/generate_cbb_adoption_audit_assets.py --check
 python3 scripts/verify_cbb_controlled_adoption_outcomes.py --check
+python3 scripts/verify_cbb_external_adoption_attestation.py --check
 python3 scripts/cbb_controlled_adoption.py \
   --package path/to/offline-provenance-package.json \
   --case path/to/operator-adoption-case.json \
   --expected-release-commit <40-character-commit> \
-  --conformance-pack-sha256 <sha256>
+  --conformance-pack-sha256 <sha256> \
+  --external-attestation-expected-scope path/to/operator-pinned-expected-scope.json \
+  --external-attestation-envelope path/to/external-signed-attestation.json
 ```
 
-The CLI reads explicit local files, performs no model or network call, and sends
-nothing to a customer.
+The two attestation arguments are required only for the `external_adopter` evidence
+class. The evaluator replays the signature and trust-root checks; it does not trust a
+receipt JSON supplied by the caller. The CLI reads explicit local files, performs no
+model or network call, and sends nothing to a customer. See
+[External Adopter Attestation](cbb-external-adoption-attestation.md).
 
 ## Claim Boundary
 

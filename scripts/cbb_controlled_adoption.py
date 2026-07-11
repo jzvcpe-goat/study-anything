@@ -16,6 +16,10 @@ sys.path.insert(0, str(ROOT / "apps" / "api"))
 from study_anything.cbb.adoption.evaluator import (  # noqa: E402
     evaluate_controlled_adoption,
 )
+from study_anything.cbb.adoption.attestation_models import (  # noqa: E402
+    ExternalAdoptionAttestationEnvelopeV1,
+    ExternalAdoptionExpectedScopeV1,
+)
 from study_anything.cbb.adoption.models import ControlledAdoptionCaseV1  # noqa: E402
 from study_anything.cbb.protocol.canonical import model_payload  # noqa: E402
 from study_anything.cbb.provenance.signing import (  # noqa: E402
@@ -45,17 +49,35 @@ def main() -> int:
     parser.add_argument("--case", type=Path, required=True)
     parser.add_argument("--expected-release-commit", required=True)
     parser.add_argument("--conformance-pack-sha256", required=True)
+    parser.add_argument("--external-attestation-expected-scope", type=Path)
+    parser.add_argument("--external-attestation-envelope", type=Path)
     parser.add_argument("--revoked-handle", action="append", default=[])
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
     package = OfflineProvenancePackageV1.model_validate(_load(args.package))
     case = ControlledAdoptionCaseV1.model_validate(_load(args.case))
+    attestation_expected_scope = (
+        ExternalAdoptionExpectedScopeV1.model_validate(
+            _load(args.external_attestation_expected_scope)
+        )
+        if args.external_attestation_expected_scope is not None
+        else None
+    )
+    attestation_envelope = (
+        ExternalAdoptionAttestationEnvelopeV1.model_validate(
+            _load(args.external_attestation_envelope)
+        )
+        if args.external_attestation_envelope is not None
+        else None
+    )
     receipt = evaluate_controlled_adoption(
         package,
         case,
         expected_release_scope_commit=args.expected_release_commit,
         expected_conformance_pack_sha256=args.conformance_pack_sha256,
         revoked_source_handles=set(args.revoked_handle),
+        external_attestation_expected_scope=attestation_expected_scope,
+        external_attestation_envelope=attestation_envelope,
     )
     _emit(model_payload(receipt), args.out)
     return 0

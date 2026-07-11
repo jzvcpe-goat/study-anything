@@ -6,6 +6,9 @@
   reopen receipts bound to an existing Delivery Clearance package and conformance digest.
 - Added detached-signature external audit intake with exact commit, audit pack,
   conformance pack, audit plan, scope, finding, and identity boundaries.
+- Added an independently pinned external-adopter attestation extension that binds the
+  adopter identity and Ed25519 signature to the exact controlled-adoption case, release,
+  source package, clearance receipt, revocation handle, scope, and conformance digest.
 - Added synthetic-only fixtures and verifiers that never claim real adoption, external
   audit execution, production certification, or new delivery authority.
 

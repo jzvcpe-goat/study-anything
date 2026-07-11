@@ -15,8 +15,8 @@
       "public_key": "5znbSOfVu0j32Ka9i5-kZxk-l0AT_VxP2wUMKusNdIo",
       "public_key_encoding": "ed25519-raw-base64url",
       "public_key_fingerprint_sha256": "089694835ee689284947bf1c2b11c6a425a32d39d2aa4ef2f140fdd603f719ed",
-      "signature": "3f7H_UMpnBBw7BP73q9f4ux3YgL6vpmK3WlFXAj_lka67LEUdRtTRYznTg7z-EUPci4ZCHl7iVou2ApmJCWQBg",
-      "signed_payload_sha256": "18501739b9a2b04ead773185999e7161f266bf0cace26683f30a8b5673bb597e"
+      "signature": "JuoyENO1OWGhcQEbPMb6UYfYrQzVA6Rf3dTUXmiu6clHX61OSOPJ5HW_KQ3f3Cc7uyDhpL6rXX5T1PEYTqWZDg",
+      "signed_payload_sha256": "b92c9c7429c7ac6d3b2373f55406b56f7269aabcc283b05b51566a0bb8529457"
     },
     "envelope_id": "audit-intake-envelope:open-high",
     "findings": [
@@ -88,7 +88,7 @@
         "audit_pack_ref": "platform/generated/study-anything-external-security-audit-pack.zip",
         "audit_pack_sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5",
         "audit_plan_ref": "security/audit/audit-plan.json",
-        "audit_plan_sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0",
+        "audit_plan_sha256": "81b473eb8fb49b6f37c167b4d1c62fb1efd167b8895ed2c11a66b3567d821183",
         "conformance_pack_ref": "platform/generated/study-anything-cbb-v1-conformance-pack.zip",
         "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
         "protocol_version": "1.0.0"
@@ -121,7 +121,7 @@
       "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",
       "signature": {
         "method": "other",
-        "report_sha256": "18501739b9a2b04ead773185999e7161f266bf0cace26683f30a8b5673bb597e",
+        "report_sha256": "b92c9c7429c7ac6d3b2373f55406b56f7269aabcc283b05b51566a0bb8529457",
         "signature_ref": "detached:audit-intake-envelope:open-high"
       }
     },
@@ -136,7 +136,7 @@
   },
   "expected_scope": {
     "audit_pack_sha256": "a511697dd3cdec593b71dfdc8968b39ae8ff3a373bb348337733374fac4bc0f5",
-    "audit_plan_sha256": "9fe349acd7409db8ad64132fb1cccffdb13ed2f13ccf2413ee1635ba228355f0",
+    "audit_plan_sha256": "81b473eb8fb49b6f37c167b4d1c62fb1efd167b8895ed2c11a66b3567d821183",
     "conformance_pack_sha256": "aa8c80e9cc71b08d08785e92c6d0be55935c4386b924b28c7de5a9aa8b6817fe",
     "repository": "jzvcpe-goat/study-anything",
     "repository_actor_refs": [
@@ -225,8 +225,8 @@
       "signed_urls_included": false
     },
     "production_certification_granted": false,
-    "receipt_id": "external-audit-intake:47a33f474a4f50a486770be76ebcfa29",
-    "report_digest_sha256": "18501739b9a2b04ead773185999e7161f266bf0cace26683f30a8b5673bb597e",
+    "receipt_id": "external-audit-intake:329be18d5341d24f76195e04f8eb02b2",
+    "report_digest_sha256": "b92c9c7429c7ac6d3b2373f55406b56f7269aabcc283b05b51566a0bb8529457",
     "report_execution_completed": false,
     "schema_version": "external-security-audit-intake-receipt-v1",
     "scope_commit": "1ada8ffa6318b91e38ec69bc5cd14dc294950518",

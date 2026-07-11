@@ -208,7 +208,16 @@ revocation, and reopen requirements move trust downward or keep it blocked. Curr
 repository fixtures contain no real adopter evidence and authorize no customer send or
 production mutation. The expected release commit is an independent evaluator input, not
 a value trusted from the adoption case. The `external_adopter` evidence class remains
-fail-closed until an independently verifiable adoption-attestation contract exists.
+fail-closed unless a signed attestation is bound to the exact case digest and all source
+clearance identifiers. The adopter organization, human-observer ref, key fingerprint,
+and independence reference must match an expected trust record supplied outside the
+untrusted envelope. Key possession, a class name, or an envelope-supplied trust record
+alone cannot create external evidence. Synthetic fixtures and hermetic contract tests
+never increment the public real-adopter count. Controlled Adoption replays the signed
+envelope and expected scope; a caller-supplied attestation receipt cannot authorize
+itself by setting verified booleans. The public deterministic fixture key is hard-denied
+as an external trust root, and the resulting Controlled Adoption receipt id binds the
+accepted attestation receipt ref and digest.
 
 For a credentialed, read-only repository ledger check, run:
 

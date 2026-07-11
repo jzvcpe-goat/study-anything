@@ -282,14 +282,15 @@ Exit criteria:
 - no broad “AI trusted” claim is made.
 
 **Status:** intake and workflow skeleton implemented. Deterministic fixtures cover
-shadow, dogfood, canary block, incident, rollback, revocation, reopen, signed report
-validation, self-certification rejection, incomplete scope, invalid signatures, and
-open high findings. Expected commits and trusted auditor fingerprints are supplied
-outside the untrusted case/report envelope; forged key fingerprints and self-asserted
-external identities fail closed. Real external adopter evidence remains zero, and the
-external-adopter class is reserved pending an attestation contract. Independent
-auditor assignment, a real signed report, remediation, and audit closure remain pending
-in #414.
+shadow, dogfood, canary block, incident, rollback, revocation, reopen, external-adopter
+attestation, signed audit-report validation, self-certification rejection, incomplete
+scope, invalid signatures, and open high findings. Expected commits and trusted adopter
+or auditor identities are supplied outside the untrusted case/report envelope; forged
+key fingerprints, case-digest mismatches, and self-asserted external identities fail
+closed. A hermetic test proves the signed external-adopter path integrates with
+Controlled Adoption without granting authority, but real external adopter evidence
+remains zero. Independent adopter participation, auditor assignment, a real signed
+report, remediation, and audit closure remain pending.
 
 ## Release Gates
 
@@ -316,6 +317,6 @@ Codex goal are in [Protocol v1 Development Plan](cbb-protocol-v1-development-pla
 Canonical contracts, the deterministic Trust Kernel, local provenance/signing,
 scenario/qualification policy, outcome-driven trust degradation, isolated proposal-only
 Agentic evolution, vendor-neutral fixture conformance, controlled-adoption workflow,
-and external-audit intake are implemented. The next ordered milestone requires actual
-external adopter evidence or an independently signed audit report; neither may be
-synthesized by repository automation.
+independently pinned external-adopter attestation, and external-audit intake are
+implemented. The next ordered milestone requires actual external adopter evidence or an
+independently signed audit report; neither may be synthesized by repository automation.
