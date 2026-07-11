@@ -15,6 +15,7 @@ families without deleting or renaming their public v0 interfaces.
 | `cbb.delivery-trust-receipt.v1` | Claim-bounded receipt that carries the canonical decision and provenance |
 | `cbb.receipt-provenance.v1` | Deterministic digest bindings and explicit unsigned-development status |
 | `cbb.delivery-outcome-receipt.v1` | Signed-source post-delivery evidence and non-increasing trust update |
+| `cbb.evolution-gate-receipt.v1` | Proposal-only Agentic evidence, required controls, deterministic evolution decision, and local provenance |
 
 All models reject unknown fields. The committed Draft 2020-12 JSON Schemas are
 generated from the strict Python models and checked for exact freshness.
@@ -109,8 +110,9 @@ platform/generated/study-anything-cbb-v0-compatibility.json
 
 ## Claim Boundary
 
-This contract phase proves strict local contracts, deterministic JSON, metadata
-privacy, and non-expanding v0 compatibility. The separate deterministic Trust
-Kernel phase now evaluates these objects. Neither phase implements cryptographic
-signing, revocation, production delivery, customer outcomes, safe Agentic
-self-evolution, or independent audit completion.
+This contract layer proves strict local contracts, deterministic JSON, metadata
+privacy, and non-expanding v0 compatibility. Separate local phases now provide a
+deterministic Trust Kernel, local signatures/revocation, outcome degradation, and a
+proposal-only evolution gate. They do not provide production delivery, customer
+outcome guarantees, automatic policy application, safe autonomous self-evolution,
+global revocation, or independent audit completion.

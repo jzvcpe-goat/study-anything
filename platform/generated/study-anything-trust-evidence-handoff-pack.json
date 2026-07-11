@@ -1,9 +1,9 @@
 {
   "archive": {
-    "bytes": 148111,
+    "bytes": 148297,
     "path": "platform/generated/study-anything-trust-evidence-handoff-pack.zip",
     "root": "study-anything-trust-evidence-handoff-pack",
-    "sha256": "fab5f9d2a5819a847ee2f761e0f33ca40046b78f8ce947c935f6221f75c10e43"
+    "sha256": "4c52279a00165dfd11e4ddea3ede41b1a1544cb444f710c70cdfc2b5b3b794eb"
   },
   "audience": [
     "external_operator",
@@ -92,7 +92,7 @@
         "schema_version": "support-response-delivery-class-verification-v1"
       }
     },
-    "delivery_trust_case_pack_sha256": "698ac0cb028cf16230cba1a0063e1fe42ac5fdbd808f76360f5b8d93342150a1",
+    "delivery_trust_case_pack_sha256": "eb754234255064cb4bf379d18cfa579a1f77add85a7dd9f11a27d5ce9698be41",
     "trust_scenario_count": 5
   },
   "entrypoints": {
@@ -105,11 +105,11 @@
   "files": [
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/docs/trust-model.md",
-      "bytes": 9113,
+      "bytes": 9701,
       "path": "docs/trust-model.md",
       "purpose": "Cognitive Black Box trust model.",
       "role": "operator_doc",
-      "sha256": "207c53987057c2a074a896f124f9e956457f869d370a3acb2e3c95701bf025d0"
+      "sha256": "bf4c288e769623ca2f582749887ad2ec22109eae2644c76c90c5645d2f30de8a"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/docs/product-runway.md",
@@ -277,7 +277,7 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.json",
       "purpose": "Delivery Trust Case Pack manifest.",
       "role": "evidence",
-      "sha256": "30ebfd0ef41ef8b8c2c4f4919bf723637d022573308073ec2a15d303abab82e8"
+      "sha256": "9860ff0aba29295599858042edbce6749a53314c5f600f3bb1fdd00f7b4e9032"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.md",
@@ -285,7 +285,7 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.md",
       "purpose": "Delivery Trust Case Pack markdown report.",
       "role": "evidence",
-      "sha256": "3038819ce99bb106aa243e026cef9888bbfba9bb655de0cc3230c3535440fd4f"
+      "sha256": "d21773977eb287b2fa425cd5eaf3681b4e53c1c0cddc8b28951c281d08b469ad"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/generated/study-anything-delivery-trust-case-pack.sha256",
@@ -293,7 +293,7 @@
       "path": "platform/generated/study-anything-delivery-trust-case-pack.sha256",
       "purpose": "Delivery Trust Case Pack checksum.",
       "role": "checksum",
-      "sha256": "0c8d0a1157a3cf933e4da83d7177b59f6399f01fc7ff9e418ecfa196e00ee472"
+      "sha256": "78537141e6cd6d22df98138f19f3fbf3c78aa1294ac2d2d1fd50696fa78312fb"
     },
     {
       "archive_path": "study-anything-trust-evidence-handoff-pack/platform/schemas/delivery-trust/code-review-handoff-case-v1.schema.json",

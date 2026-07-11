@@ -142,6 +142,9 @@ python3 scripts/verify_cbb_v1_tamper_cases.py --check
 python3 scripts/verify_cbb_v1_scenarios.py --check
 python3 scripts/verify_cbb_v1_qualification.py --check
 python3 scripts/verify_cbb_v1_outcomes.py --check
+python3 scripts/verify_cbb_agentic_tool_boundary.py --check
+python3 scripts/verify_cbb_memory_quarantine.py --check
+python3 scripts/verify_cbb_evolution_gate.py --check
 ```
 
 CBB v1 local provenance uses optional Ed25519 signing. Private keys remain local,
@@ -166,6 +169,15 @@ claim/evidence violations revoke the local source handle. An expired source may 
 historical outcome evidence but regains no delivery authority. These remain
 supplied-registry controls, not a global revocation service or proof that
 affected-party redress is complete.
+
+The Agentic reference layer has no network, filesystem-write, policy-mutation, gate,
+or production authority. Retrieved memory is metadata-only and remains quarantined
+when it is untrusted, expired, instruction-like, policy-like, or challenged by
+counter-evidence. The evolution gate deterministically replays tool, memory, canary,
+rollback, reconstruction, risk-owner, and maintainer evidence. Its locally signed
+receipt stops at a non-applied local candidate and grants no delivery scope. This does
+not prove prompt-injection elimination, production sandboxing, external signer
+identity, or safe autonomous self-evolution.
 
 The external audit kit lives under `security/audit/` and is distributed as
 `platform/generated/study-anything-external-security-audit-pack.zip`. The pack

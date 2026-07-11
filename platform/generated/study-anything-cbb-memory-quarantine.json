@@ -1,0 +1,32 @@
+{
+  "checks": {
+    "counter_evidence_preserved": true,
+    "counter_evidence_quarantined": true,
+    "deterministic_replay": true,
+    "eligibility_inflation_rejected": true,
+    "expired_memory_ignored": true,
+    "future_memory_ignored": true,
+    "injected_memory_cannot_be_eligible": true,
+    "memory_cannot_claim_policy_authority": true,
+    "only_verified_safe_memory_eligible": true,
+    "policy_directive_ignored": true,
+    "policy_override_forbidden": true,
+    "raw_content_field_rejected": true,
+    "raw_content_not_returned": true,
+    "static_runtime_isolation": true,
+    "trust_increase_forbidden": true
+  },
+  "claim_boundary": "This verifies metadata-only quarantine classification. Memory remains evidence, not policy or truth, and no raw retrieved content is returned.",
+  "eligible_count": 1,
+  "entry_count": 5,
+  "privacy": {
+    "metadata_only": true,
+    "model_calls_performed": false,
+    "network_calls_performed": false,
+    "policy_mutation_performed": false,
+    "production_mutation_performed": false,
+    "raw_content_included": false
+  },
+  "schema_version": "cbb-memory-quarantine-verification-v1",
+  "status": "pass"
+}

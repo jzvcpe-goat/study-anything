@@ -1,0 +1,1247 @@
+{
+  "$defs": {
+    "AgenticEvidenceContextV1": {
+      "additionalProperties": false,
+      "properties": {
+        "agentic_output_authority": {
+          "const": "supporting_evidence_only",
+          "title": "Agentic Output Authority",
+          "type": "string"
+        },
+        "gate_decision_from_agent": {
+          "const": false,
+          "title": "Gate Decision From Agent",
+          "type": "boolean"
+        },
+        "memory_query": {
+          "$ref": "#/$defs/MemoryQueryResultV1"
+        },
+        "plan": {
+          "$ref": "#/$defs/AgenticPlanV1"
+        },
+        "policy_override_allowed": {
+          "const": false,
+          "title": "Policy Override Allowed",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "tool_results": {
+          "items": {
+            "$ref": "#/$defs/AgenticToolResultV1"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Tool Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "plan",
+        "tool_results",
+        "memory_query",
+        "agentic_output_authority",
+        "policy_override_allowed",
+        "gate_decision_from_agent",
+        "production_mutation_performed"
+      ],
+      "title": "AgenticEvidenceContextV1",
+      "type": "object"
+    },
+    "AgenticPlanV1": {
+      "additionalProperties": false,
+      "properties": {
+        "calls": {
+          "items": {
+            "$ref": "#/$defs/AgenticToolCallV1"
+          },
+          "maxItems": 30,
+          "minItems": 1,
+          "title": "Calls",
+          "type": "array"
+        },
+        "created_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "final_authority": {
+          "const": "proposal_only",
+          "title": "Final Authority",
+          "type": "string"
+        },
+        "gate_decision_requested": {
+          "const": false,
+          "title": "Gate Decision Requested",
+          "type": "boolean"
+        },
+        "plan_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Plan Id",
+          "type": "string"
+        },
+        "planner_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Planner Id",
+          "type": "string"
+        },
+        "planner_kind": {
+          "$ref": "#/$defs/AgenticPlannerKind"
+        },
+        "policy_mutation_requested": {
+          "const": false,
+          "title": "Policy Mutation Requested",
+          "type": "boolean"
+        },
+        "production_mutation_requested": {
+          "const": false,
+          "title": "Production Mutation Requested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "plan_id",
+        "planner_id",
+        "planner_kind",
+        "created_at",
+        "calls",
+        "final_authority",
+        "policy_mutation_requested",
+        "gate_decision_requested",
+        "production_mutation_requested"
+      ],
+      "title": "AgenticPlanV1",
+      "type": "object"
+    },
+    "AgenticPlannerKind": {
+      "enum": [
+        "deterministic_fixture",
+        "model_assisted"
+      ],
+      "title": "AgenticPlannerKind",
+      "type": "string"
+    },
+    "AgenticToolCallV1": {
+      "additionalProperties": false,
+      "properties": {
+        "call_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "input_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Input Refs",
+          "type": "array"
+        },
+        "quarantine_acknowledged": {
+          "title": "Quarantine Acknowledged",
+          "type": "boolean"
+        },
+        "requested_effect": {
+          "$ref": "#/$defs/AgenticToolEffect"
+        },
+        "requests_gate_decision": {
+          "const": false,
+          "title": "Requests Gate Decision",
+          "type": "boolean"
+        },
+        "requests_policy_mutation": {
+          "const": false,
+          "title": "Requests Policy Mutation",
+          "type": "boolean"
+        },
+        "requests_production_mutation": {
+          "const": false,
+          "title": "Requests Production Mutation",
+          "type": "boolean"
+        },
+        "tool_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Tool Id",
+          "type": "string"
+        },
+        "untrusted_input_present": {
+          "title": "Untrusted Input Present",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "call_id",
+        "tool_id",
+        "requested_effect",
+        "input_refs",
+        "untrusted_input_present",
+        "quarantine_acknowledged",
+        "requests_policy_mutation",
+        "requests_gate_decision",
+        "requests_production_mutation"
+      ],
+      "title": "AgenticToolCallV1",
+      "type": "object"
+    },
+    "AgenticToolEffect": {
+      "enum": [
+        "read_metadata",
+        "query_quarantine",
+        "propose_candidate"
+      ],
+      "title": "AgenticToolEffect",
+      "type": "string"
+    },
+    "AgenticToolResultV1": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "const": "supporting_evidence_only",
+          "title": "Authority",
+          "type": "string"
+        },
+        "call_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Call Id",
+          "type": "string"
+        },
+        "effect": {
+          "$ref": "#/$defs/AgenticToolEffect"
+        },
+        "gate_decision_allowed": {
+          "const": false,
+          "title": "Gate Decision Allowed",
+          "type": "boolean"
+        },
+        "output_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Output Refs",
+          "type": "array"
+        },
+        "policy_override_allowed": {
+          "const": false,
+          "title": "Policy Override Allowed",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "provenance_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Provenance Refs",
+          "type": "array"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "redaction_count": {
+          "minimum": 0,
+          "title": "Redaction Count",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "blocked"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Tool Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "call_id",
+        "tool_id",
+        "effect",
+        "status",
+        "output_refs",
+        "provenance_refs",
+        "redaction_count",
+        "reasons",
+        "authority",
+        "policy_override_allowed",
+        "gate_decision_allowed",
+        "production_mutation_performed"
+      ],
+      "title": "AgenticToolResultV1",
+      "type": "object"
+    },
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "EvolutionChangeKind": {
+      "enum": [
+        "trust_recipe",
+        "policy",
+        "runtime",
+        "tool_registry",
+        "memory_policy"
+      ],
+      "title": "EvolutionChangeKind",
+      "type": "string"
+    },
+    "EvolutionControlEvidenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_kind": {
+          "enum": [
+            "deterministic_verifier",
+            "human_reconstructor",
+            "risk_owner",
+            "maintainer"
+          ],
+          "title": "Actor Kind",
+          "type": "string"
+        },
+        "actor_ref": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Actor Ref",
+          "type": "string"
+        },
+        "control_type": {
+          "$ref": "#/$defs/EvolutionControlType"
+        },
+        "evidence_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Ref"
+        },
+        "status": {
+          "$ref": "#/$defs/EvolutionControlStatus"
+        }
+      },
+      "required": [
+        "control_type",
+        "status",
+        "actor_kind",
+        "actor_ref"
+      ],
+      "title": "EvolutionControlEvidenceV1",
+      "type": "object"
+    },
+    "EvolutionControlSetV1": {
+      "additionalProperties": false,
+      "properties": {
+        "controls": {
+          "items": {
+            "$ref": "#/$defs/EvolutionControlEvidenceV1"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Controls",
+          "type": "array"
+        }
+      },
+      "required": [
+        "controls"
+      ],
+      "title": "EvolutionControlSetV1",
+      "type": "object"
+    },
+    "EvolutionControlStatus": {
+      "enum": [
+        "passed",
+        "failed",
+        "missing"
+      ],
+      "title": "EvolutionControlStatus",
+      "type": "string"
+    },
+    "EvolutionControlType": {
+      "enum": [
+        "deterministic_replay",
+        "canary",
+        "rollback",
+        "human_reconstruction",
+        "risk_owner_acceptance",
+        "maintainer_approval"
+      ],
+      "title": "EvolutionControlType",
+      "type": "string"
+    },
+    "EvolutionDecisionStatus": {
+      "enum": [
+        "block",
+        "needs_evidence",
+        "approved_for_local_candidate"
+      ],
+      "title": "EvolutionDecisionStatus",
+      "type": "string"
+    },
+    "EvolutionGateDecisionV1": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_apply_allowed": {
+          "const": false,
+          "title": "Automatic Apply Allowed",
+          "type": "boolean"
+        },
+        "candidate_state": {
+          "enum": [
+            "rejected",
+            "pending",
+            "local_candidate"
+          ],
+          "title": "Candidate State",
+          "type": "string"
+        },
+        "explicit_maintainer_apply_required": {
+          "const": true,
+          "title": "Explicit Maintainer Apply Required",
+          "type": "boolean"
+        },
+        "production_apply_allowed": {
+          "const": false,
+          "title": "Production Apply Allowed",
+          "type": "boolean"
+        },
+        "proposal_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proposal Digest Sha256",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "release_performed": {
+          "const": false,
+          "title": "Release Performed",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/EvolutionDecisionStatus"
+        },
+        "tool_or_memory_authority_used_as_final_basis": {
+          "const": false,
+          "title": "Tool Or Memory Authority Used As Final Basis",
+          "type": "boolean"
+        },
+        "trust_kernel_mutation_performed": {
+          "const": false,
+          "title": "Trust Kernel Mutation Performed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "candidate_state",
+        "proposal_digest_sha256",
+        "reasons",
+        "automatic_apply_allowed",
+        "production_apply_allowed",
+        "trust_kernel_mutation_performed",
+        "release_performed",
+        "tool_or_memory_authority_used_as_final_basis",
+        "explicit_maintainer_apply_required"
+      ],
+      "title": "EvolutionGateDecisionV1",
+      "type": "object"
+    },
+    "EvolutionProposalV1": {
+      "additionalProperties": false,
+      "properties": {
+        "base_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Base Digest Sha256",
+          "type": "string"
+        },
+        "candidate_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Digest Sha256",
+          "type": "string"
+        },
+        "change_kind": {
+          "$ref": "#/$defs/EvolutionChangeKind"
+        },
+        "changes_revocation_semantics": {
+          "title": "Changes Revocation Semantics",
+          "type": "boolean"
+        },
+        "changes_verifier_or_signing": {
+          "title": "Changes Verifier Or Signing",
+          "type": "boolean"
+        },
+        "current_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "expands_delivery_scope": {
+          "title": "Expands Delivery Scope",
+          "type": "boolean"
+        },
+        "expands_tool_authority": {
+          "title": "Expands Tool Authority",
+          "type": "boolean"
+        },
+        "memory_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Memory Refs",
+          "type": "array"
+        },
+        "proposal_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Proposal Id",
+          "type": "string"
+        },
+        "proposal_only": {
+          "const": true,
+          "title": "Proposal Only",
+          "type": "boolean"
+        },
+        "proposer_kind": {
+          "enum": [
+            "agent",
+            "human",
+            "deterministic"
+          ],
+          "title": "Proposer Kind",
+          "type": "string"
+        },
+        "proposer_ref": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Proposer Ref",
+          "type": "string"
+        },
+        "raw_patch_included": {
+          "const": false,
+          "title": "Raw Patch Included",
+          "type": "boolean"
+        },
+        "requested_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "requests_automatic_apply": {
+          "title": "Requests Automatic Apply",
+          "type": "boolean"
+        },
+        "requests_production_mutation": {
+          "title": "Requests Production Mutation",
+          "type": "boolean"
+        },
+        "submitted_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Submitted At",
+          "type": "string"
+        },
+        "summary_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Summary Digest Sha256",
+          "type": "string"
+        },
+        "target_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Target Ref",
+          "type": "string"
+        },
+        "touches_hard_denies": {
+          "title": "Touches Hard Denies",
+          "type": "boolean"
+        },
+        "weakens_required_evidence": {
+          "title": "Weakens Required Evidence",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "proposal_id",
+        "change_kind",
+        "target_ref",
+        "base_digest_sha256",
+        "candidate_digest_sha256",
+        "summary_digest_sha256",
+        "proposer_kind",
+        "proposer_ref",
+        "submitted_at",
+        "current_scope",
+        "requested_scope",
+        "evidence_refs",
+        "memory_refs",
+        "touches_hard_denies",
+        "weakens_required_evidence",
+        "expands_delivery_scope",
+        "expands_tool_authority",
+        "changes_verifier_or_signing",
+        "changes_revocation_semantics",
+        "requests_automatic_apply",
+        "requests_production_mutation",
+        "proposal_only",
+        "raw_patch_included"
+      ],
+      "title": "EvolutionProposalV1",
+      "type": "object"
+    },
+    "EvolutionReceiptProvenanceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization": {
+          "const": "cbb-json-c14n-v1",
+          "title": "Canonicalization",
+          "type": "string"
+        },
+        "claim_boundary": {
+          "$ref": "#/$defs/ClaimBoundaryV1"
+        },
+        "created_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "decision_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Decision Digest Sha256",
+          "type": "string"
+        },
+        "envelope_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Envelope Digest Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "replay_nonce": {
+          "maxLength": 200,
+          "minLength": 16,
+          "title": "Replay Nonce",
+          "type": "string"
+        },
+        "revocation": {
+          "$ref": "#/$defs/RevocationReferenceV1"
+        },
+        "signature": {
+          "pattern": "^[A-Za-z0-9_-]{86}$",
+          "title": "Signature",
+          "type": "string"
+        },
+        "signature_algorithm": {
+          "const": "ed25519",
+          "title": "Signature Algorithm",
+          "type": "string"
+        },
+        "signer": {
+          "$ref": "#/$defs/SignerIdentityV1"
+        },
+        "signing_status": {
+          "const": "locally_signed",
+          "title": "Signing Status",
+          "type": "string"
+        },
+        "verifier": {
+          "$ref": "#/$defs/VerifierIdentityV1"
+        }
+      },
+      "required": [
+        "envelope_digest_sha256",
+        "decision_digest_sha256",
+        "verifier",
+        "canonicalization",
+        "signing_status",
+        "signature_algorithm",
+        "signature",
+        "signer",
+        "created_at",
+        "expires_at",
+        "replay_nonce",
+        "revocation",
+        "claim_boundary"
+      ],
+      "title": "EvolutionReceiptProvenanceV1",
+      "type": "object"
+    },
+    "MemoryDispositionV1": {
+      "additionalProperties": false,
+      "properties": {
+        "memory_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "expired",
+            "not_yet_observed",
+            "untrusted",
+            "injection_signal",
+            "policy_directive",
+            "counter_evidence_pending",
+            "ineligible"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "memory_id",
+        "reason"
+      ],
+      "title": "MemoryDispositionV1",
+      "type": "object"
+    },
+    "MemoryQueryResultV1": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "considered_entries": {
+          "items": {
+            "$ref": "#/$defs/QuarantinedMemoryEntryV1"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Considered Entries",
+          "type": "array"
+        },
+        "eligible_memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Eligible Memory Ids",
+          "type": "array"
+        },
+        "ignored_entries": {
+          "items": {
+            "$ref": "#/$defs/MemoryDispositionV1"
+          },
+          "title": "Ignored Entries",
+          "type": "array"
+        },
+        "policy_override_allowed": {
+          "const": false,
+          "title": "Policy Override Allowed",
+          "type": "boolean"
+        },
+        "query_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Query Id",
+          "type": "string"
+        },
+        "raw_content_returned": {
+          "const": false,
+          "title": "Raw Content Returned",
+          "type": "boolean"
+        },
+        "trust_increase_allowed": {
+          "const": false,
+          "title": "Trust Increase Allowed",
+          "type": "boolean"
+        },
+        "unresolved_counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Counter Evidence Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "query_id",
+        "as_of",
+        "considered_entries",
+        "eligible_memory_ids",
+        "ignored_entries",
+        "unresolved_counter_evidence_refs",
+        "policy_override_allowed",
+        "trust_increase_allowed",
+        "raw_content_returned"
+      ],
+      "title": "MemoryQueryResultV1",
+      "type": "object"
+    },
+    "MemorySourceTrust": {
+      "enum": [
+        "untrusted",
+        "local_verified",
+        "signed_external"
+      ],
+      "title": "MemorySourceTrust",
+      "type": "string"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "QuarantinedMemoryEntryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "content_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Digest Sha256",
+          "type": "string"
+        },
+        "counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counter Evidence Refs",
+          "type": "array"
+        },
+        "eligible_as_supporting_evidence": {
+          "title": "Eligible As Supporting Evidence",
+          "type": "boolean"
+        },
+        "expires_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "injection_signals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Injection Signals",
+          "type": "array"
+        },
+        "memory_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "memory_kind": {
+          "enum": [
+            "failure",
+            "receipt",
+            "outcome",
+            "counter_evidence"
+          ],
+          "title": "Memory Kind",
+          "type": "string"
+        },
+        "observed_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "policy_authority": {
+          "const": false,
+          "title": "Policy Authority",
+          "type": "boolean"
+        },
+        "policy_directive_detected": {
+          "title": "Policy Directive Detected",
+          "type": "boolean"
+        },
+        "quarantined": {
+          "const": true,
+          "title": "Quarantined",
+          "type": "boolean"
+        },
+        "raw_content_included": {
+          "const": false,
+          "title": "Raw Content Included",
+          "type": "boolean"
+        },
+        "signature_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature Ref"
+        },
+        "source_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Digest Sha256",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "source_trust": {
+          "$ref": "#/$defs/MemorySourceTrust"
+        },
+        "verification_ref": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verification Ref"
+        }
+      },
+      "required": [
+        "memory_id",
+        "memory_kind",
+        "source_ref",
+        "source_digest_sha256",
+        "content_digest_sha256",
+        "source_trust",
+        "observed_at",
+        "expires_at",
+        "counter_evidence_refs",
+        "injection_signals",
+        "policy_directive_detected",
+        "eligible_as_supporting_evidence",
+        "quarantined",
+        "policy_authority",
+        "raw_content_included"
+      ],
+      "title": "QuarantinedMemoryEntryV1",
+      "type": "object"
+    },
+    "RevocationReferenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "handle": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Handle",
+          "type": "string"
+        },
+        "registry_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Registry Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "handle",
+        "registry_ref"
+      ],
+      "title": "RevocationReferenceV1",
+      "type": "object"
+    },
+    "SignerIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_scope": {
+          "const": "local_self_asserted",
+          "title": "Identity Scope",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Key Id",
+          "type": "string"
+        },
+        "public_key": {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "title": "Public Key",
+          "type": "string"
+        },
+        "public_key_encoding": {
+          "const": "ed25519-raw-base64url",
+          "title": "Public Key Encoding",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        },
+        "signer_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Signer Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signer_id",
+        "key_id",
+        "identity_scope",
+        "public_key_encoding",
+        "public_key",
+        "public_key_fingerprint_sha256"
+      ],
+      "title": "SignerIdentityV1",
+      "type": "object"
+    },
+    "VerifierIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "verifier_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Digest Sha256",
+          "type": "string"
+        },
+        "verifier_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Verifier Id",
+          "type": "string"
+        },
+        "verifier_version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Verifier Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verifier_id",
+        "verifier_version",
+        "verifier_digest_sha256"
+      ],
+      "title": "VerifierIdentityV1",
+      "type": "object"
+    }
+  },
+  "$id": "cbb.evolution-gate-receipt.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agentic_evidence": {
+      "$ref": "#/$defs/AgenticEvidenceContextV1"
+    },
+    "automatic_apply_performed": {
+      "const": false,
+      "title": "Automatic Apply Performed",
+      "type": "boolean"
+    },
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "controls": {
+      "$ref": "#/$defs/EvolutionControlSetV1"
+    },
+    "decision": {
+      "$ref": "#/$defs/EvolutionGateDecisionV1"
+    },
+    "evolution_receipt_id": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Evolution Receipt Id",
+      "type": "string"
+    },
+    "issued_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "title": "Issued At",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "proposal": {
+      "$ref": "#/$defs/EvolutionProposalV1"
+    },
+    "provenance": {
+      "$ref": "#/$defs/EvolutionReceiptProvenanceV1"
+    },
+    "schema_version": {
+      "const": "cbb.evolution-gate-receipt.v1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evolution_receipt_id",
+    "proposal",
+    "agentic_evidence",
+    "controls",
+    "decision",
+    "issued_at",
+    "claim_boundary",
+    "provenance",
+    "privacy",
+    "automatic_apply_performed"
+  ],
+  "title": "EvolutionGateReceiptV1",
+  "type": "object"
+}

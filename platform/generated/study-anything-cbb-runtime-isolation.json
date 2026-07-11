@@ -7,7 +7,7 @@
     "retrieval_imports": false,
     "subprocess_or_tool_execution": false
   },
-  "claim_boundary": "This verifier proves static runtime isolation for the canonical kernel and outcome-policy files only; it is not a production sandbox or external security audit.",
+  "claim_boundary": "This verifier proves static runtime isolation for the canonical kernel and pure outcome/Agentic policy files only; it is not a production sandbox, prompt-injection proof, or external security audit.",
   "files": [
     {
       "imports": [
@@ -35,6 +35,46 @@
         "typing"
       ],
       "path": "apps/api/study_anything/cbb/outcomes/policy.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "dataclasses",
+        "study_anything.cbb.protocol.canonical",
+        "study_anything.cbb.protocol.models",
+        "typing"
+      ],
+      "path": "apps/api/study_anything/cbb/agentic/tools.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "collections.abc",
+        "study_anything.cbb.protocol.models",
+        "typing"
+      ],
+      "path": "apps/api/study_anything/cbb/agentic/memory.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "study_anything.cbb.protocol.models"
+      ],
+      "path": "apps/api/study_anything/cbb/agentic/planner.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "study_anything.cbb.agentic.memory",
+        "study_anything.cbb.agentic.tools",
+        "study_anything.cbb.protocol.canonical",
+        "study_anything.cbb.protocol.models"
+      ],
+      "path": "apps/api/study_anything/cbb/agentic/policy.py",
       "violations": []
     }
   ],

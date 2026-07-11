@@ -1,12 +1,13 @@
 {
   "assets": {
     "fixture_count": 9,
-    "schema_count": 7
+    "schema_count": 8
   },
   "canonical_contracts": [
     "cbb.delivery-outcome-receipt.v1",
     "cbb.delivery-trust-receipt.v1",
     "cbb.evidence-bundle.v1",
+    "cbb.evolution-gate-receipt.v1",
     "cbb.gate-decision.v1",
     "cbb.qualified-reconstruction.v1",
     "cbb.receipt-provenance.v1",
@@ -18,7 +19,7 @@
     "sha256": "0ae390f48af496bcd300f762f0356b263f45ea1aa4ebc0698848ff215a7851b4",
     "stable_across_key_order": true
   },
-  "claim_boundary": "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, and canonical JSON bytes. It does not prove production delivery, portable cryptographic signing, customer outcomes, safe Agentic evolution, or independent audit completion.",
+  "claim_boundary": "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, and canonical JSON bytes. It does not prove production delivery, portable cryptographic signing, customer outcomes, safe autonomous Agentic self-evolution, or independent audit completion.",
   "negative_fixtures": {
     "invalid_state": "strict schema validation rejected malformed payload",
     "malformed": "strict schema validation rejected malformed payload",
@@ -111,6 +112,11 @@
       "path": "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
       "schema_version": "cbb.delivery-outcome-receipt.v1",
       "sha256": "489ea70b20bd3362ebf15656ac951b68608483e80029199dd9549355b7e0f8b9"
+    },
+    {
+      "path": "platform/schemas/cbb/cbb.evolution-gate-receipt.v1.schema.json",
+      "schema_version": "cbb.evolution-gate-receipt.v1",
+      "sha256": "a3109cd3d50a37f8585abc852bcc300f94807a523a4a5d33c88fbe357ac18de1"
     }
   ],
   "states": {

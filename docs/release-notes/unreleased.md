@@ -1,5 +1,23 @@
 # Unreleased Main Development Line
 
+## Agentic Evidence Isolation And Evolution Gate
+
+- Added `cbb.evolution-gate-receipt.v1` as the eighth canonical Protocol v1 schema.
+- Added a typed three-tool allowlist whose results are supporting evidence only and
+  cannot mutate policy, decide a gate, write files, use the network, or affect production.
+- Added metadata-only memory quarantine with provenance, expiry, prompt-injection and
+  policy-directive findings, counter-evidence preservation, and deterministic replay.
+- Added proposal-only evolution decisions for block, needs-evidence, and approved local
+  candidates. Replay, canary, rollback, human reconstruction, risk-owner acceptance,
+  and maintainer approval must all pass.
+- Added actor separation, local Ed25519 signing, expiry, revocation, and deterministic
+  decision replay so a valid signer cannot under-evaluate its own candidate.
+- Added six fixtures, CLI, three verifier reports, unit tests, release gates, and
+  distribution/audit-pack wiring.
+- An approved local candidate is not automatically applied and carries no delivery
+  authority. This does not prove production sandboxing, prompt-injection elimination,
+  third-party identity, safe autonomous self-evolution, conformance, or audit completion.
+
 ## Delivery Clearance Outcomes And Trust Degradation
 
 - Made `Delivery Clearance / AI Delivery Clearance Protocol / AI 交付放行协议` the

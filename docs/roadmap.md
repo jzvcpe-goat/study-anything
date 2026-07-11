@@ -225,6 +225,13 @@ Exit criteria:
 - tool output is typed, bounded, attributable, and redacted;
 - every self-change is a proposal until deterministic and required human gates pass.
 
+**Status:** implemented as a deterministic metadata-only local skeleton. Three typed
+tools are allowlisted without network, write, gate, policy, or production authority.
+Memory is quarantined with provenance, expiry, injection findings, and counter-evidence.
+The eighth canonical receipt replays six controls, blocks protected-boundary changes
+and self-authorization, signs the result locally, grants no delivery scope, and stops
+approved work at `local_candidate` without applying it.
+
 ## M6: Conformance And Open Governance
 
 **Goal:** let independent implementations interoperate without trusting this
@@ -291,5 +298,6 @@ The PR-level implementation sequence, acceptance matrix, risk register, and next
 Codex goal are in [Protocol v1 Development Plan](cbb-protocol-v1-development-plan.md).
 
 Canonical contracts, the deterministic Trust Kernel, local provenance/signing,
-scenario/qualification policy, and outcome-driven trust degradation are implemented.
-The next ordered milestone is isolated Agentic evolution.
+scenario/qualification policy, outcome-driven trust degradation, and isolated
+proposal-only Agentic evolution are implemented. The next ordered milestone is a
+vendor-neutral conformance pack and second independent implementation.

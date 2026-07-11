@@ -318,7 +318,8 @@ def build_report() -> dict[str, Any]:
         "claim_boundary": (
             "This verifies local deterministic Protocol v1 contracts, schemas, fixtures, "
             "and canonical JSON bytes. It does not prove production delivery, portable "
-            "cryptographic signing, customer outcomes, safe Agentic evolution, or "
+            "cryptographic signing, customer outcomes, safe autonomous Agentic "
+            "self-evolution, or "
             "independent audit completion."
         ),
         "privacy": {

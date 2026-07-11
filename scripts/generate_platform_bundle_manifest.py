@@ -1492,6 +1492,21 @@ FILES: list[tuple[str, str, str]] = [
         "Post-delivery outcome and trust-degradation verification report.",
     ),
     (
+        "platform/generated/study-anything-cbb-agentic-tool-boundary.json",
+        "generated_asset",
+        "Typed allowlisted Agentic tool boundary report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-memory-quarantine.json",
+        "generated_asset",
+        "Quarantined memory provenance, expiry, injection, and counter-evidence report.",
+    ),
+    (
+        "platform/generated/study-anything-cbb-evolution-gate.json",
+        "generated_asset",
+        "Proposal-only deterministic evolution-gate report.",
+    ),
+    (
         "platform/generated/study-anything-cbb-protocol-contracts.json",
         "generated_asset",
         "Cognitive Black Box protocol contract and privacy verification report.",
@@ -3277,6 +3292,11 @@ FILES: list[tuple[str, str, str]] = [
         "Post-delivery outcome receipt and non-increasing trust-degradation guide.",
     ),
     (
+        "docs/cbb-protocol-v1-agentic-evolution.md",
+        "operator_doc",
+        "Typed Agentic tools, quarantined memory, and proposal-only evolution-gate guide.",
+    ),
+    (
         "docs/delivery-trust-receipt.md",
         "operator_doc",
         "Delivery Trust Receipt contract and verifier guide.",
@@ -3405,6 +3425,11 @@ FILES: list[tuple[str, str, str]] = [
         "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
         "schema",
         "Canonical CBB Protocol v1 post-delivery outcome JSON Schema.",
+    ),
+    (
+        "platform/schemas/cbb/cbb.evolution-gate-receipt.v1.schema.json",
+        "schema",
+        "Canonical CBB Protocol v1 proposal-only evolution-gate JSON Schema.",
     ),
     (
         "platform/schemas/cbb/claim-boundary-v1.schema.json",
@@ -5658,6 +5683,12 @@ FILES: list[tuple[str, str, str]] = [
     ("fixtures/cbb-v1-outcomes/affected-party-challenge-freezes.json", "fixture", "Affected-party challenge fixture that freezes the recipe."),
     ("fixtures/cbb-v1-outcomes/claim-violation-revokes.json", "fixture", "Confirmed claim-violation fixture that revokes clearance."),
     ("fixtures/cbb-v1-outcomes/failed-rollback-revokes.json", "fixture", "Failed rollback fixture that revokes clearance."),
+    ("fixtures/cbb-v1-agentic-evolution/approved-local-candidate.json", "fixture", "All controls pass but the candidate remains local and unapplied."),
+    ("fixtures/cbb-v1-agentic-evolution/missing-human-reconstruction.json", "fixture", "Missing human reconstruction leaves the proposal pending."),
+    ("fixtures/cbb-v1-agentic-evolution/hard-deny-change-blocked.json", "fixture", "Hard-deny modification is blocked."),
+    ("fixtures/cbb-v1-agentic-evolution/poisoned-memory-needs-evidence.json", "fixture", "Poisoned memory cannot support approval."),
+    ("fixtures/cbb-v1-agentic-evolution/self-authorization-blocked.json", "fixture", "Proposer self-authorization is blocked."),
+    ("fixtures/cbb-v1-agentic-evolution/tool-authority-expansion-blocked.json", "fixture", "Tool-authority expansion is blocked."),
     (
         "scripts/verify_cbb_protocol_contracts.py",
         "verification",
@@ -5694,6 +5725,11 @@ FILES: list[tuple[str, str, str]] = [
     ("scripts/generate_cbb_v1_outcome_assets.py", "generator", "Generate deterministic post-delivery outcome fixtures."),
     ("scripts/cbb_delivery_outcome.py", "cli", "Build metadata-only post-delivery outcome receipts from signed clearance packages."),
     ("scripts/verify_cbb_v1_outcomes.py", "verification", "Verify historical source binding, deterministic degradation replay, non-increasing trust, recipe freeze, and revocation."),
+    ("scripts/generate_cbb_v1_agentic_assets.py", "generator", "Generate deterministic Agentic evolution fixtures."),
+    ("scripts/cbb_evolution_gate.py", "cli", "Build signed proposal-only evolution-gate receipts."),
+    ("scripts/verify_cbb_agentic_tool_boundary.py", "verification", "Verify typed tool allowlisting and supporting-evidence-only authority."),
+    ("scripts/verify_cbb_memory_quarantine.py", "verification", "Verify memory provenance, expiry, injection, and counter-evidence quarantine."),
+    ("scripts/verify_cbb_evolution_gate.py", "verification", "Verify deterministic evolution replay, actor separation, and no automatic apply."),
     (
         "scripts/verify_cbb_positioning.py",
         "verification",
@@ -8028,6 +8064,10 @@ def build_manifest() -> dict[str, object]:
             "python3 scripts/verify_cbb_v1_qualification.py --check",
             "python3 scripts/generate_cbb_v1_outcome_assets.py --check",
             "python3 scripts/verify_cbb_v1_outcomes.py --check",
+            "python3 scripts/generate_cbb_v1_agentic_assets.py --check",
+            "python3 scripts/verify_cbb_agentic_tool_boundary.py --check",
+            "python3 scripts/verify_cbb_memory_quarantine.py --check",
+            "python3 scripts/verify_cbb_evolution_gate.py --check",
             "python3 scripts/verify_cbb_protocol_contracts.py --check",
             "python3 scripts/verify_cbb_gate.py --check",
             "python3 scripts/verify_cbb_receipt_chain.py --check",

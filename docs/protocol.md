@@ -100,7 +100,8 @@ handoff into production approval.
 The protocol must learn from reality and distrust its own history. A later outcome
 receipt may maintain, narrow, freeze, revoke, or require replay of a trust recipe. A policy
 or recipe update is a proposal until an evolution gate verifies it through replay,
-canary, rollback, and an explicit claim boundary.
+canary, rollback, qualified human controls, and an explicit claim boundary. Even then,
+the reference receipt stops at a local candidate and does not apply the change.
 
 ## Two-Speed Architecture
 
@@ -139,7 +140,7 @@ correctness. Independent human security review remains external to repository CI
 
 ## Canonical V1 Contract Layer
 
-Protocol v1 defines seven strict canonical objects,
+Protocol v1 defines eight strict canonical objects,
 deterministic `cbb-json-c14n-v1` bytes, and scope-narrowing adapters from the shipped
 Dual Loop and Delivery Trust v0 artifacts. Existing script, schema, package, and
 artifact names remain supported.
@@ -153,14 +154,16 @@ adds scoped recipients, risk owners, affected parties, safeguards, MRUs, and
 challengeable human/model capability profiles. The canonical outcome receipt verifies
 the historically valid signed source clearance, bounded sample, adverse events,
 rollback result, replayed deterministic degradation action, and local revocation effect
-while forbidding trust inflation. Isolated Agentic evidence discovery
-remains a later milestone.
+while forbidding trust inflation. The Agentic evidence layer now uses a typed tool
+allowlist, quarantined metadata memory, actor separation, deterministic replay, and a
+signed evolution receipt that grants neither automatic apply nor delivery scope.
 See
 [Protocol v1 Canonical Contracts](cbb-protocol-v1-contracts.md) and
 [Protocol v1 Deterministic Trust Kernel](cbb-protocol-v1-kernel.md), and
 [Protocol v1 Local Provenance](cbb-protocol-v1-provenance.md), and
 [Protocol v1 Scenarios And Qualification](cbb-protocol-v1-scenarios-and-qualification.md), and
-[Protocol v1 Outcomes And Trust Degradation](cbb-protocol-v1-outcomes.md).
+[Protocol v1 Outcomes And Trust Degradation](cbb-protocol-v1-outcomes.md), and
+[Protocol v1 Agentic Evidence And Evolution Gate](cbb-protocol-v1-agentic-evolution.md).
 
 ## Current Verifier Commands
 
@@ -175,6 +178,9 @@ python3 scripts/verify_cbb_v1_tamper_cases.py --check
 python3 scripts/verify_cbb_v1_scenarios.py --check
 python3 scripts/verify_cbb_v1_qualification.py --check
 python3 scripts/verify_cbb_v1_outcomes.py --check
+python3 scripts/verify_cbb_agentic_tool_boundary.py --check
+python3 scripts/verify_cbb_memory_quarantine.py --check
+python3 scripts/verify_cbb_evolution_gate.py --check
 python3 scripts/verify_cbb_protocol_contracts.py --check
 python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
