@@ -1,0 +1,815 @@
+{
+  "$defs": {
+    "ClaimBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "current_claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Current Claim",
+          "type": "string"
+        },
+        "maximum_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "not_claimed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Not Claimed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "current_claim",
+        "maximum_scope",
+        "not_claimed"
+      ],
+      "title": "ClaimBoundaryV1",
+      "type": "object"
+    },
+    "DeliveryScope": {
+      "description": "Ordered scopes from no release authority to a production candidate.",
+      "enum": [
+        "blocked",
+        "personal_local",
+        "sandbox_only",
+        "public_demo",
+        "internal_handoff",
+        "controlled_customer_handoff",
+        "limited_beta",
+        "production_candidate"
+      ],
+      "title": "DeliveryScope",
+      "type": "string"
+    },
+    "OutcomeEventType": {
+      "enum": [
+        "delivery_observation",
+        "near_miss",
+        "incident",
+        "complaint",
+        "claim_violation",
+        "affected_party_challenge",
+        "evidence_invalidated"
+      ],
+      "title": "OutcomeEventType",
+      "type": "string"
+    },
+    "OutcomeEventV1": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_party_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Party Refs",
+          "type": "array"
+        },
+        "claim_boundary_violated": {
+          "title": "Claim Boundary Violated",
+          "type": "boolean"
+        },
+        "counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counter Evidence Refs",
+          "type": "array"
+        },
+        "event_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "$ref": "#/$defs/OutcomeEventType"
+        },
+        "external_effect_observed": {
+          "title": "External Effect Observed",
+          "type": "boolean"
+        },
+        "occurred_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "resolution_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resolution Refs",
+          "type": "array"
+        },
+        "severity": {
+          "$ref": "#/$defs/OutcomeSeverity"
+        },
+        "source_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "reported",
+            "confirmed",
+            "resolved",
+            "disputed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "severity",
+        "status",
+        "source_refs",
+        "affected_party_refs",
+        "occurred_at",
+        "external_effect_observed",
+        "claim_boundary_violated",
+        "counter_evidence_refs",
+        "resolution_refs"
+      ],
+      "title": "OutcomeEventV1",
+      "type": "object"
+    },
+    "OutcomeReceiptProvenanceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization": {
+          "const": "cbb-json-c14n-v1",
+          "title": "Canonicalization",
+          "type": "string"
+        },
+        "claim_boundary": {
+          "$ref": "#/$defs/ClaimBoundaryV1"
+        },
+        "created_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "expires_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "outcome_envelope_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Outcome Envelope Digest Sha256",
+          "type": "string"
+        },
+        "replay_nonce": {
+          "maxLength": 200,
+          "minLength": 16,
+          "title": "Replay Nonce",
+          "type": "string"
+        },
+        "revocation": {
+          "$ref": "#/$defs/RevocationReferenceV1"
+        },
+        "signature": {
+          "pattern": "^[A-Za-z0-9_-]{86}$",
+          "title": "Signature",
+          "type": "string"
+        },
+        "signature_algorithm": {
+          "const": "ed25519",
+          "title": "Signature Algorithm",
+          "type": "string"
+        },
+        "signer": {
+          "$ref": "#/$defs/SignerIdentityV1"
+        },
+        "signing_status": {
+          "const": "locally_signed",
+          "title": "Signing Status",
+          "type": "string"
+        },
+        "source_package_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Package Digest Sha256",
+          "type": "string"
+        },
+        "verifier": {
+          "$ref": "#/$defs/VerifierIdentityV1"
+        }
+      },
+      "required": [
+        "outcome_envelope_digest_sha256",
+        "source_package_digest_sha256",
+        "verifier",
+        "canonicalization",
+        "signing_status",
+        "signature_algorithm",
+        "signature",
+        "signer",
+        "created_at",
+        "expires_at",
+        "replay_nonce",
+        "revocation",
+        "claim_boundary"
+      ],
+      "title": "OutcomeReceiptProvenanceV1",
+      "type": "object"
+    },
+    "OutcomeSeverity": {
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "OutcomeSeverity",
+      "type": "string"
+    },
+    "PostDeliverySamplingV1": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage_complete": {
+          "title": "Coverage Complete",
+          "type": "boolean"
+        },
+        "eligible_count": {
+          "minimum": 1,
+          "title": "Eligible Count",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "sampled_count": {
+          "minimum": 1,
+          "title": "Sampled Count",
+          "type": "integer"
+        },
+        "sampling_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Sampling Id",
+          "type": "string"
+        },
+        "selection_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Selection Ref",
+          "type": "string"
+        },
+        "strategy": {
+          "enum": [
+            "all_observed",
+            "bounded_sample",
+            "triggered_review"
+          ],
+          "title": "Strategy",
+          "type": "string"
+        },
+        "window_ended_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Window Ended At",
+          "type": "string"
+        },
+        "window_started_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Window Started At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sampling_id",
+        "strategy",
+        "window_started_at",
+        "window_ended_at",
+        "eligible_count",
+        "sampled_count",
+        "selection_ref",
+        "coverage_complete",
+        "limitations"
+      ],
+      "title": "PostDeliverySamplingV1",
+      "type": "object"
+    },
+    "PrivacyBoundaryV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attention_stream_included": {
+          "const": false,
+          "title": "Attention Stream Included",
+          "type": "boolean"
+        },
+        "automatic_customer_send_performed": {
+          "const": false,
+          "title": "Automatic Customer Send Performed",
+          "type": "boolean"
+        },
+        "cookies_or_bearer_tokens_included": {
+          "const": false,
+          "title": "Cookies Or Bearer Tokens Included",
+          "type": "boolean"
+        },
+        "metadata_only": {
+          "const": true,
+          "title": "Metadata Only",
+          "type": "boolean"
+        },
+        "model_credentials_included": {
+          "const": false,
+          "title": "Model Credentials Included",
+          "type": "boolean"
+        },
+        "model_prompts_included": {
+          "const": false,
+          "title": "Model Prompts Included",
+          "type": "boolean"
+        },
+        "production_mutation_performed": {
+          "const": false,
+          "title": "Production Mutation Performed",
+          "type": "boolean"
+        },
+        "raw_customer_payload_included": {
+          "const": false,
+          "title": "Raw Customer Payload Included",
+          "type": "boolean"
+        },
+        "raw_report_text_included": {
+          "const": false,
+          "title": "Raw Report Text Included",
+          "type": "boolean"
+        },
+        "raw_source_text_included": {
+          "const": false,
+          "title": "Raw Source Text Included",
+          "type": "boolean"
+        },
+        "signed_urls_included": {
+          "const": false,
+          "title": "Signed Urls Included",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "metadata_only",
+        "raw_source_text_included",
+        "raw_report_text_included",
+        "raw_customer_payload_included",
+        "attention_stream_included",
+        "model_prompts_included",
+        "model_credentials_included",
+        "cookies_or_bearer_tokens_included",
+        "signed_urls_included",
+        "production_mutation_performed",
+        "automatic_customer_send_performed"
+      ],
+      "title": "PrivacyBoundaryV1",
+      "type": "object"
+    },
+    "RevocationReferenceV1": {
+      "additionalProperties": false,
+      "properties": {
+        "handle": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Handle",
+          "type": "string"
+        },
+        "registry_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Registry Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "handle",
+        "registry_ref"
+      ],
+      "title": "RevocationReferenceV1",
+      "type": "object"
+    },
+    "RollbackOutcomeV1": {
+      "additionalProperties": false,
+      "properties": {
+        "attempted": {
+          "title": "Attempted",
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "not_required",
+            "not_attempted",
+            "succeeded",
+            "partial",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "required",
+        "attempted",
+        "status",
+        "evidence_refs"
+      ],
+      "title": "RollbackOutcomeV1",
+      "type": "object"
+    },
+    "SignerIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_scope": {
+          "const": "local_self_asserted",
+          "title": "Identity Scope",
+          "type": "string"
+        },
+        "key_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Key Id",
+          "type": "string"
+        },
+        "public_key": {
+          "pattern": "^[A-Za-z0-9_-]{43}$",
+          "title": "Public Key",
+          "type": "string"
+        },
+        "public_key_encoding": {
+          "const": "ed25519-raw-base64url",
+          "title": "Public Key Encoding",
+          "type": "string"
+        },
+        "public_key_fingerprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Fingerprint Sha256",
+          "type": "string"
+        },
+        "signer_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Signer Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signer_id",
+        "key_id",
+        "identity_scope",
+        "public_key_encoding",
+        "public_key",
+        "public_key_fingerprint_sha256"
+      ],
+      "title": "SignerIdentityV1",
+      "type": "object"
+    },
+    "SourceClearanceVerificationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "checks_passed": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Checks Passed",
+          "type": "array"
+        },
+        "clearance_valid_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Clearance Valid At",
+          "type": "string"
+        },
+        "local_self_asserted_signer_only": {
+          "const": true,
+          "title": "Local Self Asserted Signer Only",
+          "type": "boolean"
+        },
+        "package_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Package Digest Sha256",
+          "type": "string"
+        },
+        "package_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Package Ref",
+          "type": "string"
+        },
+        "verification_status": {
+          "const": "pass",
+          "title": "Verification Status",
+          "type": "string"
+        },
+        "verified_at": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+          "title": "Verified At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "package_ref",
+        "package_digest_sha256",
+        "verification_status",
+        "verified_at",
+        "clearance_valid_at",
+        "checks_passed",
+        "local_self_asserted_signer_only"
+      ],
+      "title": "SourceClearanceVerificationV1",
+      "type": "object"
+    },
+    "TrustDegradationAction": {
+      "enum": [
+        "maintain_current_ceiling",
+        "narrow_scope",
+        "freeze_recipe",
+        "revoke_clearance"
+      ],
+      "title": "TrustDegradationAction",
+      "type": "string"
+    },
+    "TrustDegradationV1": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/TrustDegradationAction"
+        },
+        "affected_party_follow_up_required": {
+          "title": "Affected Party Follow Up Required",
+          "type": "boolean"
+        },
+        "counter_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counter Evidence Refs",
+          "type": "array"
+        },
+        "policy_reconstruction_required": {
+          "title": "Policy Reconstruction Required",
+          "type": "boolean"
+        },
+        "previous_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Reasons",
+          "type": "array"
+        },
+        "recipe_ref": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Recipe Ref",
+          "type": "string"
+        },
+        "recipe_state": {
+          "enum": [
+            "active",
+            "frozen",
+            "revoked"
+          ],
+          "title": "Recipe State",
+          "type": "string"
+        },
+        "replay_required": {
+          "title": "Replay Required",
+          "type": "boolean"
+        },
+        "resulting_scope": {
+          "$ref": "#/$defs/DeliveryScope"
+        },
+        "revoked_clearance_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Revoked Clearance Handles",
+          "type": "array"
+        },
+        "risk_owner_reacceptance_required": {
+          "title": "Risk Owner Reacceptance Required",
+          "type": "boolean"
+        },
+        "source_clearance_revoked": {
+          "title": "Source Clearance Revoked",
+          "type": "boolean"
+        },
+        "trust_increase_allowed": {
+          "const": false,
+          "title": "Trust Increase Allowed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action",
+        "previous_scope",
+        "resulting_scope",
+        "recipe_ref",
+        "recipe_state",
+        "source_clearance_revoked",
+        "revoked_clearance_handles",
+        "replay_required",
+        "policy_reconstruction_required",
+        "risk_owner_reacceptance_required",
+        "affected_party_follow_up_required",
+        "counter_evidence_refs",
+        "reasons",
+        "trust_increase_allowed"
+      ],
+      "title": "TrustDegradationV1",
+      "type": "object"
+    },
+    "VerifierIdentityV1": {
+      "additionalProperties": false,
+      "properties": {
+        "verifier_digest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Digest Sha256",
+          "type": "string"
+        },
+        "verifier_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Verifier Id",
+          "type": "string"
+        },
+        "verifier_version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Verifier Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verifier_id",
+        "verifier_version",
+        "verifier_digest_sha256"
+      ],
+      "title": "VerifierIdentityV1",
+      "type": "object"
+    }
+  },
+  "$id": "cbb.delivery-outcome-receipt.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "claim_boundary": {
+      "$ref": "#/$defs/ClaimBoundaryV1"
+    },
+    "events": {
+      "items": {
+        "$ref": "#/$defs/OutcomeEventV1"
+      },
+      "minItems": 1,
+      "title": "Events",
+      "type": "array"
+    },
+    "issued_at": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "title": "Issued At",
+      "type": "string"
+    },
+    "outcome_provenance": {
+      "$ref": "#/$defs/OutcomeReceiptProvenanceV1"
+    },
+    "outcome_receipt_id": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Outcome Receipt Id",
+      "type": "string"
+    },
+    "policy_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Policy Ref",
+      "type": "string"
+    },
+    "privacy": {
+      "$ref": "#/$defs/PrivacyBoundaryV1"
+    },
+    "rollback": {
+      "$ref": "#/$defs/RollbackOutcomeV1"
+    },
+    "sampling": {
+      "$ref": "#/$defs/PostDeliverySamplingV1"
+    },
+    "scenario_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Scenario Ref",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "cbb.delivery-outcome-receipt.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_approved_scope": {
+      "$ref": "#/$defs/DeliveryScope"
+    },
+    "source_clearance_revocation_handle": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Source Clearance Revocation Handle",
+      "type": "string"
+    },
+    "source_delivery_receipt_digest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Delivery Receipt Digest Sha256",
+      "type": "string"
+    },
+    "source_delivery_receipt_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Source Delivery Receipt Ref",
+      "type": "string"
+    },
+    "source_verification": {
+      "$ref": "#/$defs/SourceClearanceVerificationV1"
+    },
+    "status": {
+      "enum": [
+        "monitored",
+        "degraded",
+        "frozen",
+        "revoked"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "subject_ref": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Subject Ref",
+      "type": "string"
+    },
+    "trust_update": {
+      "$ref": "#/$defs/TrustDegradationV1"
+    }
+  },
+  "required": [
+    "schema_version",
+    "outcome_receipt_id",
+    "source_delivery_receipt_ref",
+    "source_delivery_receipt_digest_sha256",
+    "source_clearance_revocation_handle",
+    "subject_ref",
+    "policy_ref",
+    "scenario_ref",
+    "source_approved_scope",
+    "source_verification",
+    "sampling",
+    "events",
+    "rollback",
+    "status",
+    "trust_update",
+    "issued_at",
+    "claim_boundary",
+    "outcome_provenance",
+    "privacy"
+  ],
+  "title": "DeliveryOutcomeReceiptV1",
+  "type": "object"
+}

@@ -13,8 +13,8 @@ Status: `pass`
 
 | Path | SHA-256 |
 | --- | --- |
-| `.codebuddy-plugin/marketplace.json` | `951a823da6025c262fd2062ca2e6261f2477981e666433f7cff433fe316a73e6` |
-| `plugins/study-anything/.codebuddy-plugin/plugin.json` | `ab8e07e783dc2a4ae091c3b5dd92f1f3079657ce2f748a9d7f3fe26feebca9a8` |
+| `.codebuddy-plugin/marketplace.json` | `f9ff93ac9ce210527a45aead5444904ed5cb3463cb198ee5ac71fcdb274814fc` |
+| `plugins/study-anything/.codebuddy-plugin/plugin.json` | `6cb7aa01c7aaa24fa9ea98fac7fb15086b7bfc07acf9773ac82b1f6bf0815c36` |
 | `plugins/study-anything/skills/study-anything/SKILL.md` | `4c2ea479eb5e7420e0dc4619182f5618899fc5623a32192c2a6cbc47114edbea` |
 | `plugins/study-anything/commands/start.md` | `e99dc14d7e79294eb921b3eb43400bac7ededc72c038be379f1d26a04b31db03` |
 | `plugins/study-anything/commands/learn.md` | `32219417f6c36424162b9ae062e7f44d8f9ec82b621b9b2cb352c667c5260040` |

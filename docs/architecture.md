@@ -177,13 +177,15 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 ### Implemented
 
 - deterministic metadata-only Dual Loop and Protocol v1 receipt contracts;
-- six strict canonical Protocol v1 objects plus scope-narrowing v0 adapters;
+- seven strict canonical Protocol v1 objects plus scope-narrowing v0 adapters;
 - model-free Trust Kernel, local gate, hard denies, and negative fixtures;
 - local Ed25519 provenance, tamper, expiry, replay, and revocation checks;
 - scenario-scoped recipients, risk owners, affected parties, safeguards, MRUs,
   and challengeable human/model capability profiles;
 - deterministic scenario ladder from personal local use through blocked production
   and regulated/irreversible candidates;
+- signed-source outcome receipts, bounded sampling, shared deterministic degradation
+  replay, historical source binding, recipe freeze, and local clearance revocation;
 - Delivery Trust Receipt and Customer Handoff Package;
 - receipt-chain and repository self-intake evidence;
 - local API, Skill, platform-Agent, Docker, and static HTML adapters;
@@ -191,9 +193,8 @@ artifact migration, deprecation evidence, and a no-old-import gate.
 
 ### Planned For Protocol v1
 
-- expiry, revocation, trust degradation, and incident feedback;
 - isolated Agentic evidence discovery and quarantined trust memory;
-- Outcome Receipt and Evolution Receipt extensions inside the canonical ceiling;
+- Evolution Receipt extensions inside the canonical ceiling;
 - vendor-neutral conformance fixtures and governance.
 
 ### Explicitly Not Claimed
@@ -224,5 +225,5 @@ The provenance layer is local and explicit: Ed25519 signatures bind canonical
 policy, evidence, qualified reconstruction, and deterministic decision objects.
 It remains separate from the Trust Kernel and proves local key possession rather
 than external signer identity. Scenario and qualification policy is also implemented
-without creating another core receipt family. Outcome degradation and Agentic runtime
-isolation remain the next milestones.
+without creating another pre-delivery receipt family. Outcome degradation is now a
+canonical post-delivery extension; Agentic runtime isolation remains the next milestone.

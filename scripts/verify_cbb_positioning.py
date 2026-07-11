@@ -97,6 +97,14 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "production-candidate-blocked",
         "regulated-or-irreversible-blocked",
     ),
+    "docs/cbb-protocol-v1-outcomes.md": (
+        "cbb.delivery-outcome-receipt.v1",
+        "maintain_current_ceiling",
+        "narrow_scope",
+        "freeze_recipe",
+        "revoke_clearance",
+        "never increases scope",
+    ),
     "docs/adapters/study-anything.md": (
         "Human Reconstruction / Learning Adapter",
         "not the protocol, the Trust Kernel, or the top-level product identity.",
@@ -108,6 +116,7 @@ REQUIRED_TEXT: dict[str, tuple[str, ...]] = {
         "scripts/verify_cbb_protocol_contracts.py --check",
         "scripts/verify_cbb_v1_scenarios.py --check",
         "scripts/verify_cbb_v1_qualification.py --check",
+        "scripts/verify_cbb_v1_outcomes.py --check",
     ),
 }
 

@@ -34,6 +34,7 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "docs/cbb-protocol-v1-kernel.md",
     "docs/cbb-protocol-v1-provenance.md",
     "docs/cbb-protocol-v1-scenarios-and-qualification.md",
+    "docs/cbb-protocol-v1-outcomes.md",
     "platform/generated/study-anything-cbb-v1-contracts.json",
     "platform/generated/study-anything-cbb-v0-compatibility.json",
     "platform/generated/study-anything-cbb-v1-kernel.json",
@@ -42,12 +43,14 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "platform/generated/study-anything-cbb-v1-tamper-cases.json",
     "platform/generated/study-anything-cbb-v1-scenarios.json",
     "platform/generated/study-anything-cbb-v1-qualification.json",
+    "platform/generated/study-anything-cbb-v1-outcomes.json",
     "platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
     "platform/schemas/cbb/cbb.evidence-bundle.v1.schema.json",
     "platform/schemas/cbb/cbb.qualified-reconstruction.v1.schema.json",
     "platform/schemas/cbb/cbb.gate-decision.v1.schema.json",
     "platform/schemas/cbb/cbb.delivery-trust-receipt.v1.schema.json",
     "platform/schemas/cbb/cbb.receipt-provenance.v1.schema.json",
+    "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
     "fixtures/cbb-v1-contracts/pass.json",
     "fixtures/cbb-v1-contracts/missing-evidence.json",
     "fixtures/cbb-v1-contracts/hard-deny.json",
@@ -82,12 +85,18 @@ EXPECTED_CBB_V1_PACK_ASSETS = {
     "fixtures/cbb-v1-scenarios/paid-customer-candidate.json",
     "fixtures/cbb-v1-scenarios/production-candidate-blocked.json",
     "fixtures/cbb-v1-scenarios/regulated-or-irreversible-blocked.json",
+    "fixtures/cbb-v1-outcomes/monitored-no-adverse-signal.json",
+    "fixtures/cbb-v1-outcomes/near-miss-narrows-scope.json",
+    "fixtures/cbb-v1-outcomes/affected-party-challenge-freezes.json",
+    "fixtures/cbb-v1-outcomes/claim-violation-revokes.json",
+    "fixtures/cbb-v1-outcomes/failed-rollback-revokes.json",
 }
 EXPECTED_CBB_V1_PLAN_ASSETS = EXPECTED_CBB_V1_PACK_ASSETS | {
     "docs/quality-audits/phase-31-cbb-protocol-v1-contracts.md",
     "docs/quality-audits/phase-33-cbb-protocol-v1-kernel.md",
     "docs/quality-audits/phase-34-cbb-protocol-v1-provenance.md",
     "docs/quality-audits/phase-35-delivery-clearance-scenarios-and-positioning.md",
+    "docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
 }
 LOCAL_PATH_PATTERN = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
 SECRET_PATTERN = re.compile(
@@ -187,6 +196,8 @@ def validate_plan(plan: Mapping[str, Any]) -> None:
             "python3 scripts/generate_cbb_v1_scenario_assets.py --check",
             "python3 scripts/verify_cbb_v1_scenarios.py --check",
             "python3 scripts/verify_cbb_v1_qualification.py --check",
+            "python3 scripts/generate_cbb_v1_outcome_assets.py --check",
+            "python3 scripts/verify_cbb_v1_outcomes.py --check",
         }
         <= set(trust_scope.get("evidence_commands") or []),
         "canonical CBB v1 verifier commands are missing from the audit plan",

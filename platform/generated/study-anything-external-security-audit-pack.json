@@ -12,10 +12,10 @@
     "open_high_findings_allowed": 0
   },
   "archive": {
-    "bytes": 224454,
+    "bytes": 252017,
     "path": "platform/generated/study-anything-external-security-audit-pack.zip",
     "root": "study-anything-external-security-audit-pack",
-    "sha256": "5bf3c71d42fd82137e242aacd7c9ac3484b0aea0e980f13b1d346d9d902e720b"
+    "sha256": "926752b856909d5db14246d16fa124bb056ad01945b33fb52bb97b4c56747d19"
   },
   "claim_boundary": {
     "current_claim": "The repository is packaged and ready for an independent security audit at a pinned commit.",
@@ -47,11 +47,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/audit-plan.json",
-      "bytes": 10107,
+      "bytes": 10832,
       "path": "security/audit/audit-plan.json",
       "purpose": "Machine-readable scope, methods, acceptance, and independence rules.",
       "role": "audit_plan",
-      "sha256": "f0f3bda3c2b74868a06231e038c8a56cb6156374015bde0626f6f4f3a8c661c7"
+      "sha256": "eae4bc06eb10dd6506869dc3734cce7fb42f90b25a08ff66374a84af1d7173b0"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/security/audit/threat-model.md",
@@ -111,11 +111,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security.md",
-      "bytes": 10194,
+      "bytes": 10933,
       "path": "docs/security.md",
       "purpose": "Local-first security and privacy boundary.",
       "role": "security_doc",
-      "sha256": "aeb19e47546e37fcdeea2a923faae639ca2504344412b22ec8b743ad14cc687f"
+      "sha256": "1a4b98c2871ba9426622e946e331fb20730237b8d861d3adb74520fb3b721e80"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/security-baseline.md",
@@ -159,27 +159,27 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/trust-model.md",
-      "bytes": 8546,
+      "bytes": 9113,
       "path": "docs/trust-model.md",
       "purpose": "Delivery trust and AI-only review rejection model.",
       "role": "trust_doc",
-      "sha256": "5a1b37a17f6c0a33ae9d20db79c0730352066838bd8ef0ed206901823244148c"
+      "sha256": "207c53987057c2a074a896f124f9e956457f869d370a3acb2e3c95701bf025d0"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/protocol.md",
-      "bytes": 7606,
+      "bytes": 7928,
       "path": "docs/protocol.md",
       "purpose": "AI Delivery Clearance Protocol boundary, verifier surface, and non-claims.",
       "role": "protocol_doc",
-      "sha256": "088ed767179e46b89789132f2492fde066b3f4f057038c46c04f6d7382a2d9d5"
+      "sha256": "bd1921c5078d84bc2806dd72e604c16e5cfd455657d14b77875f90f06e2c2385"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-contracts.md",
-      "bytes": 4382,
+      "bytes": 4491,
       "path": "docs/cbb-protocol-v1-contracts.md",
       "purpose": "Canonical Protocol v1 contracts and v0 compatibility map.",
       "role": "protocol_doc",
-      "sha256": "f6a40e9bd833ee9ead3739f670d044e8e817a5540e71903de4b47fbacb6989c0"
+      "sha256": "f73d7928921c55a590357b18c0616b5085c799081b117973db76517e7f103b1d"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-kernel.md",
@@ -199,11 +199,19 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-scenarios-and-qualification.md",
-      "bytes": 4565,
+      "bytes": 4646,
       "path": "docs/cbb-protocol-v1-scenarios-and-qualification.md",
       "purpose": "Scenario, affected-party, MRU, and scoped capability policy.",
       "role": "protocol_doc",
-      "sha256": "ffa919c4e5f19a9f6273407faf17ce16718362e477e4c293ed6fb5125b1e22e3"
+      "sha256": "dad2e8b5cd5a149c7f436cd988ad4cf421cd3cfc3fd3fd393d8cc4a135f6af09"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/docs/cbb-protocol-v1-outcomes.md",
+      "bytes": 6478,
+      "path": "docs/cbb-protocol-v1-outcomes.md",
+      "purpose": "Post-delivery outcome receipt and non-increasing trust-degradation policy.",
+      "role": "protocol_doc",
+      "sha256": "d6f6eec72878f26757fb762f38d5ab252dd516a29a2bccf71881680b9721f65d"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/docs/release-checklist.md",
@@ -254,6 +262,14 @@
       "sha256": "33f34072c98d8d25acea5a4d3d02e29e71d4a80152c9c1d04fee14d65b7017f1"
     },
     {
+      "archive_path": "study-anything-external-security-audit-pack/docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
+      "bytes": 12321,
+      "path": "docs/quality-audits/phase-36-delivery-clearance-outcomes.md",
+      "purpose": "Delivery Clearance outcome and trust-degradation Contract-First audit.",
+      "role": "quality_audit",
+      "sha256": "94e7e9dfe63ab3ff2188fce96bbba9706e0a4b866b89e729a54e39110aa9c242"
+    },
+    {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-python-supply-chain.json",
       "bytes": 2213,
       "path": "platform/generated/study-anything-python-supply-chain.json",
@@ -295,11 +311,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-contracts.json",
-      "bytes": 5317,
+      "bytes": 5593,
       "path": "platform/generated/study-anything-cbb-v1-contracts.json",
       "purpose": "Canonical CBB Protocol v1 contract verification receipt.",
       "role": "generated_evidence",
-      "sha256": "84c6c4234ddd66416c5a71d23edd7d7476fea1ef0b182f102a306553c38444ad"
+      "sha256": "34edbe3b2a16bcbc6e127a9c440214eb4164a52be88b9fde369244f5519329c8"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v0-compatibility.json",
@@ -319,11 +335,11 @@
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-runtime-isolation.json",
-      "bytes": 955,
+      "bytes": 1214,
       "path": "platform/generated/study-anything-cbb-runtime-isolation.json",
       "purpose": "Static canonical kernel runtime-isolation receipt.",
       "role": "generated_evidence",
-      "sha256": "2c632793acdf076b513722969c606b6c3479642785d454098c1fc31a36d5ac1d"
+      "sha256": "e50949fd7352c6ee34aea22aa5c31dd3839ca77b04811d59a120d687aa762a77"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-provenance.json",
@@ -356,6 +372,14 @@
       "purpose": "Scoped MRU and human/model qualification receipt.",
       "role": "generated_evidence",
       "sha256": "4dc6af31f725553f43a9544c5937cd807c6c78e39820d37cd9ee68889794b068"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/generated/study-anything-cbb-v1-outcomes.json",
+      "bytes": 3288,
+      "path": "platform/generated/study-anything-cbb-v1-outcomes.json",
+      "purpose": "Post-delivery outcome, deterministic degradation replay, and trust-degradation verification receipt.",
+      "role": "generated_evidence",
+      "sha256": "1c3bbbbafdbadc2b95f4be2e68b6a43f2de3e476a844bc3d86a2449029fb116d"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.trust-policy.v1.schema.json",
@@ -404,6 +428,14 @@
       "purpose": "Canonical unsigned-development and local-signing provenance schema.",
       "role": "protocol_schema",
       "sha256": "771a2385d7d3146011be370dc22b8335e0c63d28cf85f1b0438f6ef181adf8c9"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
+      "bytes": 21425,
+      "path": "platform/schemas/cbb/cbb.delivery-outcome-receipt.v1.schema.json",
+      "purpose": "Canonical post-delivery outcome and trust-degradation schema.",
+      "role": "protocol_schema",
+      "sha256": "bda0ad7b9a10d0c84cb29f96eb00ef72e17e459d0fa0c2a70ed943e4f9ecb181"
     },
     {
       "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-contracts/pass.json",
@@ -676,6 +708,46 @@
       "purpose": "Regulated or irreversible hard-deny fixture.",
       "role": "scenario_fixture",
       "sha256": "f7d8c19f1cf33122e23053197a5c69cebad20818cb5d1340a6f685f4ee203f55"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-outcomes/monitored-no-adverse-signal.json",
+      "bytes": 8282,
+      "path": "fixtures/cbb-v1-outcomes/monitored-no-adverse-signal.json",
+      "purpose": "Bounded monitoring fixture that preserves but never increases scope.",
+      "role": "outcome_fixture",
+      "sha256": "7631e8ec594220f2fb61cfb74f419f317bba873d10e223519cabc5507c15d224"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-outcomes/near-miss-narrows-scope.json",
+      "bytes": 8522,
+      "path": "fixtures/cbb-v1-outcomes/near-miss-narrows-scope.json",
+      "purpose": "Near-miss fixture that narrows future scope.",
+      "role": "outcome_fixture",
+      "sha256": "e541b90531de5f041a4dcadc94815d918bce60429f12dd57d67cd48b6f02aafd"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-outcomes/affected-party-challenge-freezes.json",
+      "bytes": 8806,
+      "path": "fixtures/cbb-v1-outcomes/affected-party-challenge-freezes.json",
+      "purpose": "Affected-party challenge fixture that freezes the recipe.",
+      "role": "outcome_fixture",
+      "sha256": "1ca9c3b5613a22d8794072f49c05971cd6eb5caf5cf7b502b3f7248fb589cbc9"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-outcomes/claim-violation-revokes.json",
+      "bytes": 8718,
+      "path": "fixtures/cbb-v1-outcomes/claim-violation-revokes.json",
+      "purpose": "Confirmed claim violation fixture that revokes source clearance.",
+      "role": "outcome_fixture",
+      "sha256": "f50e5deb2239048e2d360e10155985e81ba750a86be61564968fc953b22d9ac3"
+    },
+    {
+      "archive_path": "study-anything-external-security-audit-pack/fixtures/cbb-v1-outcomes/failed-rollback-revokes.json",
+      "bytes": 8680,
+      "path": "fixtures/cbb-v1-outcomes/failed-rollback-revokes.json",
+      "purpose": "Failed rollback fixture that revokes source clearance.",
+      "role": "outcome_fixture",
+      "sha256": "434ad2e2dc75cca0511042f368b7a74ef23e2d776b687626e94d7cc7921e41fa"
     }
   ],
   "independence": {

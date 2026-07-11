@@ -141,6 +141,7 @@ python3 scripts/verify_cbb_v1_provenance.py --check
 python3 scripts/verify_cbb_v1_tamper_cases.py --check
 python3 scripts/verify_cbb_v1_scenarios.py --check
 python3 scripts/verify_cbb_v1_qualification.py --check
+python3 scripts/verify_cbb_v1_outcomes.py --check
 ```
 
 CBB v1 local provenance uses optional Ed25519 signing. Private keys remain local,
@@ -155,6 +156,16 @@ prove a real person's professional credential, affected-party consent, appeal
 outcome, redress completion, or production authority. Limited-beta and paid-customer
 fixtures are handoff candidates only: the default risk budget still forbids real-user
 exposure, production mutation, automatic sending, and irreversible effects.
+
+Outcome receipts accept only an offline-verified signed source package and typed,
+metadata-only observations. The outcome envelope is separately locally signed,
+expiring, and revocable. It can keep, narrow, freeze, or revoke the existing scope,
+but cannot increase it. Verification replays the deterministic degradation policy;
+the local signature alone is not the trust decision. Failed rollback and substantiated
+claim/evidence violations revoke the local source handle. An expired source may anchor
+historical outcome evidence but regains no delivery authority. These remain
+supplied-registry controls, not a global revocation service or proof that
+affected-party redress is complete.
 
 The external audit kit lives under `security/audit/` and is distributed as
 `platform/generated/study-anything-external-security-audit-pack.zip`. The pack

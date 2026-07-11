@@ -10,27 +10,24 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 TRUST_POLICY_SCHEMA_VERSION: Literal["cbb.trust-policy.v1"] = "cbb.trust-policy.v1"
-EVIDENCE_BUNDLE_SCHEMA_VERSION: Literal["cbb.evidence-bundle.v1"] = (
-    "cbb.evidence-bundle.v1"
-)
-QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION: Literal[
+EVIDENCE_BUNDLE_SCHEMA_VERSION: Literal["cbb.evidence-bundle.v1"] = "cbb.evidence-bundle.v1"
+QUALIFIED_RECONSTRUCTION_SCHEMA_VERSION: Literal["cbb.qualified-reconstruction.v1"] = (
     "cbb.qualified-reconstruction.v1"
-] = "cbb.qualified-reconstruction.v1"
-GATE_DECISION_SCHEMA_VERSION: Literal["cbb.gate-decision.v1"] = (
-    "cbb.gate-decision.v1"
 )
-DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION: Literal[
+GATE_DECISION_SCHEMA_VERSION: Literal["cbb.gate-decision.v1"] = "cbb.gate-decision.v1"
+DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION: Literal["cbb.delivery-trust-receipt.v1"] = (
     "cbb.delivery-trust-receipt.v1"
-] = "cbb.delivery-trust-receipt.v1"
+)
 RECEIPT_PROVENANCE_SCHEMA_VERSION: Literal["cbb.receipt-provenance.v1"] = (
     "cbb.receipt-provenance.v1"
+)
+DELIVERY_OUTCOME_RECEIPT_SCHEMA_VERSION: Literal["cbb.delivery-outcome-receipt.v1"] = (
+    "cbb.delivery-outcome-receipt.v1"
 )
 
 CANONICALIZATION_ALGORITHM: Literal["cbb-json-c14n-v1"] = "cbb-json-c14n-v1"
 DETERMINISTIC_TIMESTAMP = "2026-06-28T00:00:00Z"
-TIMESTAMP_PATTERN = (
-    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
-)
+TIMESTAMP_PATTERN = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$"
 
 HARD_DENIES_REQUIRED = frozenset(
     {
@@ -83,6 +80,31 @@ class ReconstructionBoundaryType(StrEnum):
     ROLLBACK_TRIGGER = "rollback_trigger"
     EVIDENCE_WEAKNESS_AND_LIMITATIONS = "evidence_weakness_and_limitations"
     RESIDUAL_RISK = "residual_risk"
+
+
+class OutcomeEventType(StrEnum):
+    DELIVERY_OBSERVATION = "delivery_observation"
+    NEAR_MISS = "near_miss"
+    INCIDENT = "incident"
+    COMPLAINT = "complaint"
+    CLAIM_VIOLATION = "claim_violation"
+    AFFECTED_PARTY_CHALLENGE = "affected_party_challenge"
+    EVIDENCE_INVALIDATED = "evidence_invalidated"
+
+
+class OutcomeSeverity(StrEnum):
+    INFO = "info"
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+class TrustDegradationAction(StrEnum):
+    MAINTAIN_CURRENT_CEILING = "maintain_current_ceiling"
+    NARROW_SCOPE = "narrow_scope"
+    FREEZE_RECIPE = "freeze_recipe"
+    REVOKE_CLEARANCE = "revoke_clearance"
 
 
 def scope_is_at_most(candidate: DeliveryScope, ceiling: DeliveryScope) -> bool:
@@ -244,17 +266,30 @@ class DeliveryScenarioV1(StrictProtocolModel):
             raise ValueError("scenario contains duplicate affected-party refs")
         if (self.recipient.external or self.affected_parties) and not self.disclosure.required:
             raise ValueError("external or affected-party scenarios require disclosure")
-        if any(party.appeal_required for party in self.affected_parties) and not self.appeal.required:
+        if (
+            any(party.appeal_required for party in self.affected_parties)
+            and not self.appeal.required
+        ):
             raise ValueError("affected-party appeal requirement is not configured")
-        if any(party.redress_required for party in self.affected_parties) and not self.redress.required:
+        if (
+            any(party.redress_required for party in self.affected_parties)
+            and not self.redress.required
+        ):
             raise ValueError("affected-party redress requirement is not configured")
-        if self.scenario_class in {
-            DeliveryScenarioClass.LIMITED_BETA,
-            DeliveryScenarioClass.PAID_CUSTOMER_CANDIDATE,
-            DeliveryScenarioClass.PRODUCTION_CANDIDATE,
-        } and not self.risk_owner.required:
+        if (
+            self.scenario_class
+            in {
+                DeliveryScenarioClass.LIMITED_BETA,
+                DeliveryScenarioClass.PAID_CUSTOMER_CANDIDATE,
+                DeliveryScenarioClass.PRODUCTION_CANDIDATE,
+            }
+            and not self.risk_owner.required
+        ):
             raise ValueError("higher-scope scenario requires a scoped risk owner")
-        if self.scenario_class == DeliveryScenarioClass.PRODUCTION_CANDIDATE and not self.affected_parties:
+        if (
+            self.scenario_class == DeliveryScenarioClass.PRODUCTION_CANDIDATE
+            and not self.affected_parties
+        ):
             raise ValueError("production candidate must identify affected parties")
         return self
 
@@ -434,9 +469,7 @@ class TrustPolicyV1(StrictProtocolModel):
             and requirement.evidence_type is not None
         )
         if missing_safeguards:
-            raise ValueError(
-                f"trust policy missing safeguard evidence: {missing_safeguards}"
-            )
+            raise ValueError(f"trust policy missing safeguard evidence: {missing_safeguards}")
         if self.scenario.risk_owner.required:
             risk_evidence = self.scenario.risk_owner.acceptance_evidence_type
             if "risk_owner" not in self.required_roles or risk_evidence not in evidence_types:
@@ -752,6 +785,324 @@ class DeliveryTrustReceiptV1(StrictProtocolModel):
         return self
 
 
+class PostDeliverySamplingV1(StrictProtocolModel):
+    sampling_id: str = Field(min_length=1, max_length=160)
+    strategy: Literal["all_observed", "bounded_sample", "triggered_review"]
+    window_started_at: str = Field(
+        min_length=1,
+        max_length=64,
+        pattern=TIMESTAMP_PATTERN,
+    )
+    window_ended_at: str = Field(
+        min_length=1,
+        max_length=64,
+        pattern=TIMESTAMP_PATTERN,
+    )
+    eligible_count: int = Field(ge=1)
+    sampled_count: int = Field(ge=1)
+    selection_ref: str = Field(min_length=1, max_length=500)
+    coverage_complete: bool
+    limitations: list[str]
+
+    @model_validator(mode="after")
+    def validate_sampling_window(self) -> PostDeliverySamplingV1:
+        started_at = parse_timestamp(self.window_started_at)
+        ended_at = parse_timestamp(self.window_ended_at)
+        if ended_at <= started_at:
+            raise ValueError("post-delivery sampling window must end after it starts")
+        if self.sampled_count > self.eligible_count:
+            raise ValueError("sampled outcome count cannot exceed eligible count")
+        if self.strategy == "all_observed":
+            if not self.coverage_complete or self.sampled_count != self.eligible_count:
+                raise ValueError("all-observed sampling must cover every eligible outcome")
+        elif not self.coverage_complete and not self.limitations:
+            raise ValueError("incomplete outcome sampling must disclose limitations")
+        return self
+
+
+class OutcomeEventV1(StrictProtocolModel):
+    event_id: str = Field(min_length=1, max_length=160)
+    event_type: OutcomeEventType
+    severity: OutcomeSeverity
+    status: Literal["reported", "confirmed", "resolved", "disputed"]
+    source_refs: list[str] = Field(min_length=1)
+    affected_party_refs: list[str]
+    occurred_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    external_effect_observed: bool
+    claim_boundary_violated: bool
+    counter_evidence_refs: list[str]
+    resolution_refs: list[str]
+
+    @model_validator(mode="after")
+    def validate_outcome_event(self) -> OutcomeEventV1:
+        parse_timestamp(self.occurred_at)
+        if len(self.source_refs) != len(set(self.source_refs)):
+            raise ValueError("outcome event contains duplicate source refs")
+        if len(self.affected_party_refs) != len(set(self.affected_party_refs)):
+            raise ValueError("outcome event contains duplicate affected-party refs")
+        if self.event_type == OutcomeEventType.AFFECTED_PARTY_CHALLENGE:
+            if not self.affected_party_refs:
+                raise ValueError("affected-party challenge requires an affected party ref")
+        if self.event_type == OutcomeEventType.CLAIM_VIOLATION:
+            if not self.claim_boundary_violated:
+                raise ValueError("claim-violation event must mark the claim boundary violated")
+        if (
+            self.status == "confirmed"
+            and self.event_type != OutcomeEventType.DELIVERY_OBSERVATION
+            and self.severity == OutcomeSeverity.INFO
+        ):
+            raise ValueError("confirmed adverse outcome cannot have info severity")
+        if self.status == "resolved" and not self.resolution_refs:
+            raise ValueError("resolved outcome requires resolution evidence")
+        return self
+
+
+class RollbackOutcomeV1(StrictProtocolModel):
+    required: bool
+    attempted: bool
+    status: Literal["not_required", "not_attempted", "succeeded", "partial", "failed"]
+    evidence_refs: list[str]
+
+    @model_validator(mode="after")
+    def validate_rollback_state(self) -> RollbackOutcomeV1:
+        if not self.required:
+            if self.attempted or self.status != "not_required" or self.evidence_refs:
+                raise ValueError("optional rollback cannot imply execution evidence")
+        elif not self.attempted:
+            if self.status != "not_attempted" or self.evidence_refs:
+                raise ValueError("unattempted rollback cannot include result evidence")
+        elif self.status not in {"succeeded", "partial", "failed"}:
+            raise ValueError("attempted rollback requires an execution result")
+        elif not self.evidence_refs:
+            raise ValueError("attempted rollback requires evidence refs")
+        return self
+
+
+class SourceClearanceVerificationV1(StrictProtocolModel):
+    package_ref: str = Field(min_length=1, max_length=500)
+    package_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    verification_status: Literal["pass"]
+    verified_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    clearance_valid_at: str = Field(
+        min_length=1,
+        max_length=64,
+        pattern=TIMESTAMP_PATTERN,
+    )
+    checks_passed: list[str] = Field(min_length=1)
+    local_self_asserted_signer_only: Literal[True]
+
+    @model_validator(mode="after")
+    def validate_source_verification(self) -> SourceClearanceVerificationV1:
+        verified_at = parse_timestamp(self.verified_at)
+        clearance_valid_at = parse_timestamp(self.clearance_valid_at)
+        if clearance_valid_at > verified_at:
+            raise ValueError("source clearance validity anchor cannot follow verification")
+        if len(self.checks_passed) != len(set(self.checks_passed)):
+            raise ValueError("source clearance verification has duplicate checks")
+        return self
+
+
+class TrustDegradationV1(StrictProtocolModel):
+    action: TrustDegradationAction
+    previous_scope: DeliveryScope
+    resulting_scope: DeliveryScope
+    recipe_ref: str = Field(min_length=1, max_length=500)
+    recipe_state: Literal["active", "frozen", "revoked"]
+    source_clearance_revoked: bool
+    revoked_clearance_handles: list[str]
+    replay_required: bool
+    policy_reconstruction_required: bool
+    risk_owner_reacceptance_required: bool
+    affected_party_follow_up_required: bool
+    counter_evidence_refs: list[str]
+    reasons: list[str] = Field(min_length=1)
+    trust_increase_allowed: Literal[False]
+
+    @model_validator(mode="after")
+    def validate_degradation_state(self) -> TrustDegradationV1:
+        if not scope_is_at_most(self.resulting_scope, self.previous_scope):
+            raise ValueError("outcome feedback cannot increase the clearance scope")
+        if len(self.revoked_clearance_handles) != len(set(self.revoked_clearance_handles)):
+            raise ValueError("trust degradation contains duplicate revocation handles")
+        if self.action == TrustDegradationAction.MAINTAIN_CURRENT_CEILING:
+            if self.resulting_scope != self.previous_scope:
+                raise ValueError("maintain action cannot change the clearance scope")
+            if self.recipe_state != "active" or self.source_clearance_revoked:
+                raise ValueError("maintain action requires an active, non-revoked recipe")
+            if self.revoked_clearance_handles or self.replay_required:
+                raise ValueError("maintain action cannot revoke or require replay")
+        elif self.action == TrustDegradationAction.NARROW_SCOPE:
+            if (
+                self.resulting_scope == DeliveryScope.BLOCKED
+                or self.resulting_scope == self.previous_scope
+            ):
+                raise ValueError("narrow action requires a lower non-blocked scope")
+            if self.recipe_state != "active" or self.source_clearance_revoked:
+                raise ValueError("narrow action cannot revoke the source clearance")
+            if self.revoked_clearance_handles or not self.replay_required:
+                raise ValueError("narrow action requires replay without revocation")
+        elif self.action == TrustDegradationAction.FREEZE_RECIPE:
+            if self.resulting_scope != DeliveryScope.BLOCKED:
+                raise ValueError("frozen recipe cannot authorize future delivery")
+            if self.recipe_state != "frozen" or self.source_clearance_revoked:
+                raise ValueError("freeze action must freeze without revoking the source")
+            if self.revoked_clearance_handles or not self.replay_required:
+                raise ValueError("freeze action requires replay without revocation handles")
+        else:
+            if self.resulting_scope != DeliveryScope.BLOCKED:
+                raise ValueError("revoked clearance cannot authorize future delivery")
+            if self.recipe_state != "revoked" or not self.source_clearance_revoked:
+                raise ValueError("revoke action must revoke the source clearance")
+            if not self.revoked_clearance_handles or not self.replay_required:
+                raise ValueError("revoke action requires revocation handles and replay")
+        return self
+
+
+class OutcomeReceiptProvenanceV1(StrictProtocolModel):
+    outcome_envelope_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_package_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    verifier: VerifierIdentityV1
+    canonicalization: Literal["cbb-json-c14n-v1"]
+    signing_status: Literal["locally_signed"]
+    signature_algorithm: Literal["ed25519"]
+    signature: str = Field(pattern=r"^[A-Za-z0-9_-]{86}$")
+    signer: SignerIdentityV1
+    created_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    expires_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    replay_nonce: str = Field(min_length=16, max_length=200)
+    revocation: RevocationReferenceV1
+    claim_boundary: ClaimBoundaryV1
+
+    @model_validator(mode="after")
+    def validate_outcome_provenance(self) -> OutcomeReceiptProvenanceV1:
+        created_at = parse_timestamp(self.created_at)
+        expires_at = parse_timestamp(self.expires_at)
+        if expires_at <= created_at:
+            raise ValueError("outcome receipt provenance must expire after creation")
+        if "third-party signer identity" not in self.claim_boundary.not_claimed:
+            raise ValueError("local outcome signature must disclaim third-party identity")
+        return self
+
+
+class DeliveryOutcomeReceiptV1(StrictProtocolModel):
+    model_config = ConfigDict(
+        extra="forbid",
+        frozen=True,
+        str_strip_whitespace=True,
+        json_schema_extra={"$id": DELIVERY_OUTCOME_RECEIPT_SCHEMA_VERSION},
+    )
+
+    schema_version: Literal["cbb.delivery-outcome-receipt.v1"]
+    outcome_receipt_id: str = Field(min_length=1, max_length=160)
+    source_delivery_receipt_ref: str = Field(min_length=1, max_length=500)
+    source_delivery_receipt_digest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    source_clearance_revocation_handle: str = Field(min_length=1, max_length=200)
+    subject_ref: str = Field(min_length=1, max_length=500)
+    policy_ref: str = Field(min_length=1, max_length=500)
+    scenario_ref: str = Field(min_length=1, max_length=500)
+    source_approved_scope: DeliveryScope
+    source_verification: SourceClearanceVerificationV1
+    sampling: PostDeliverySamplingV1
+    events: list[OutcomeEventV1] = Field(min_length=1)
+    rollback: RollbackOutcomeV1
+    status: Literal["monitored", "degraded", "frozen", "revoked"]
+    trust_update: TrustDegradationV1
+    issued_at: str = Field(min_length=1, max_length=64, pattern=TIMESTAMP_PATTERN)
+    claim_boundary: ClaimBoundaryV1
+    outcome_provenance: OutcomeReceiptProvenanceV1
+    privacy: PrivacyBoundaryV1
+
+    @model_validator(mode="after")
+    def validate_outcome_receipt(self) -> DeliveryOutcomeReceiptV1:
+        issued_at = parse_timestamp(self.issued_at)
+        if issued_at < parse_timestamp(self.sampling.window_ended_at):
+            raise ValueError("outcome receipt cannot precede its sampling window")
+        if issued_at != parse_timestamp(self.source_verification.verified_at):
+            raise ValueError("source verification must occur when the outcome receipt is issued")
+        if issued_at != parse_timestamp(self.outcome_provenance.created_at):
+            raise ValueError("outcome provenance must be created when the receipt is issued")
+        event_ids = [event.event_id for event in self.events]
+        if len(event_ids) != len(set(event_ids)):
+            raise ValueError("outcome receipt contains duplicate event ids")
+        window_start = parse_timestamp(self.sampling.window_started_at)
+        window_end = parse_timestamp(self.sampling.window_ended_at)
+        if parse_timestamp(self.source_verification.clearance_valid_at) > window_start:
+            raise ValueError("source clearance validity anchor cannot follow outcome sampling")
+        if any(
+            not window_start <= parse_timestamp(event.occurred_at) <= window_end
+            for event in self.events
+        ):
+            raise ValueError("outcome event falls outside the sampling window")
+        if self.trust_update.previous_scope != self.source_approved_scope:
+            raise ValueError("trust update does not start from source approved scope")
+        expected_status = {
+            TrustDegradationAction.MAINTAIN_CURRENT_CEILING: "monitored",
+            TrustDegradationAction.NARROW_SCOPE: "degraded",
+            TrustDegradationAction.FREEZE_RECIPE: "frozen",
+            TrustDegradationAction.REVOKE_CLEARANCE: "revoked",
+        }[self.trust_update.action]
+        if self.status != expected_status:
+            raise ValueError("outcome receipt status does not match trust action")
+        if not scope_is_at_most(
+            self.claim_boundary.maximum_scope,
+            self.trust_update.resulting_scope,
+        ):
+            raise ValueError("outcome claim boundary expands resulting scope")
+        if "customer outcome guarantee" not in self.claim_boundary.not_claimed:
+            raise ValueError("outcome receipt must disclaim customer outcome guarantees")
+        if (
+            self.outcome_provenance.source_package_digest_sha256
+            != self.source_verification.package_digest_sha256
+        ):
+            raise ValueError("outcome provenance source package digest mismatch")
+        if not scope_is_at_most(
+            self.outcome_provenance.claim_boundary.maximum_scope,
+            self.trust_update.resulting_scope,
+        ):
+            raise ValueError("outcome provenance claim expands resulting scope")
+        if self.rollback.status == "failed" and not self.trust_update.source_clearance_revoked:
+            raise ValueError("failed rollback must revoke the source clearance")
+        substantiated = {"confirmed", "resolved"}
+        if any(
+            event.status in substantiated
+            and event.event_type
+            in {OutcomeEventType.CLAIM_VIOLATION, OutcomeEventType.EVIDENCE_INVALIDATED}
+            for event in self.events
+        ) and not self.trust_update.source_clearance_revoked:
+            raise ValueError("substantiated claim or evidence violation must revoke clearance")
+        if any(
+            event.status in substantiated
+            and event.severity in {OutcomeSeverity.HIGH, OutcomeSeverity.CRITICAL}
+            and (
+                event.event_type == OutcomeEventType.INCIDENT
+                or event.external_effect_observed
+            )
+            for event in self.events
+        ) and not self.trust_update.source_clearance_revoked:
+            raise ValueError("substantiated high-impact outcome must revoke clearance")
+        if self.trust_update.action == TrustDegradationAction.MAINTAIN_CURRENT_CEILING:
+            clean_observations_only = all(
+                event.event_type == OutcomeEventType.DELIVERY_OBSERVATION
+                and event.status == "confirmed"
+                and event.severity == OutcomeSeverity.INFO
+                and not event.external_effect_observed
+                and not event.claim_boundary_violated
+                for event in self.events
+            )
+            if not clean_observations_only or self.rollback.status != "not_required":
+                raise ValueError("maintain action requires confirmed clean observations only")
+        if (
+            any(
+                event.event_type == OutcomeEventType.AFFECTED_PARTY_CHALLENGE
+                and event.status != "resolved"
+                for event in self.events
+            )
+            and not self.trust_update.affected_party_follow_up_required
+        ):
+            raise ValueError("open affected-party challenge requires follow-up")
+        return self
+
+
 PROTOCOL_MODELS: dict[str, type[StrictProtocolModel]] = {
     TRUST_POLICY_SCHEMA_VERSION: TrustPolicyV1,
     EVIDENCE_BUNDLE_SCHEMA_VERSION: EvidenceBundleV1,
@@ -759,4 +1110,5 @@ PROTOCOL_MODELS: dict[str, type[StrictProtocolModel]] = {
     GATE_DECISION_SCHEMA_VERSION: GateDecisionV1,
     DELIVERY_TRUST_RECEIPT_SCHEMA_VERSION: DeliveryTrustReceiptV1,
     RECEIPT_PROVENANCE_SCHEMA_VERSION: ReceiptProvenanceV1,
+    DELIVERY_OUTCOME_RECEIPT_SCHEMA_VERSION: DeliveryOutcomeReceiptV1,
 }

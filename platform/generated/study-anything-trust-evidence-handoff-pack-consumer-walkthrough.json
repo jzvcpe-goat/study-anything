@@ -45,8 +45,8 @@
     "entry_count": 74,
     "file_record_count": 73,
     "manifest_schema_version": "trust-evidence-handoff-pack-v1",
-    "manifest_sha256": "4ab6ec0a29d6bbce79ea518e35147c1eaf019a6b0291116b7fde9ff677a39919",
-    "zip_sha256": "88a823c92ec11a17f13ba0638d2f2234d3eb8ed45859806840ff06ebf71fb7d5"
+    "manifest_sha256": "8c747d29dbf35c130199187f88b038b3d26985b726049766245cb0075fc1e996",
+    "zip_sha256": "fab5f9d2a5819a847ee2f761e0f33ca40046b78f8ce947c935f6221f75c10e43"
   },
   "privacy": {
     "attention_streams_included": false,

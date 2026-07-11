@@ -7,7 +7,7 @@
     "retrieval_imports": false,
     "subprocess_or_tool_execution": false
   },
-  "claim_boundary": "This verifier proves static runtime isolation for the canonical kernel files only; it is not a production sandbox or external security audit.",
+  "claim_boundary": "This verifier proves static runtime isolation for the canonical kernel and outcome-policy files only; it is not a production sandbox or external security audit.",
   "files": [
     {
       "imports": [
@@ -25,6 +25,16 @@
         "typing"
       ],
       "path": "apps/api/study_anything/cbb/kernel/gate.py",
+      "violations": []
+    },
+    {
+      "imports": [
+        "__future__",
+        "collections.abc",
+        "study_anything.cbb.protocol.models",
+        "typing"
+      ],
+      "path": "apps/api/study_anything/cbb/outcomes/policy.py",
       "violations": []
     }
   ],

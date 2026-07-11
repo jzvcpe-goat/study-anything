@@ -53,7 +53,7 @@
       "privacy_scan_passed": true
     },
     {
-      "bytes": 15921,
+      "bytes": 15911,
       "content_hash_omitted": "temporary artifacts include generated timestamps",
       "path": ".cognitive-loop/artifacts/mastra-runtime-event-store.html",
       "privacy_scan_passed": true

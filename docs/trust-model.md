@@ -166,6 +166,14 @@ regression, compromised memory, or claim-boundary violation can:
 - require replay or independent review;
 - narrow the allowed delivery scope.
 
+The canonical outcome evaluator now enforces these downward transitions against a
+historically valid offline-verified source receipt and signs the outcome envelope
+separately. The verifier replays the same deterministic policy rather than trusting
+the signature as the decision. A bounded clean sample may maintain the existing
+ceiling, but cannot raise it. Failed rollback and substantiated claim/evidence
+violations revoke the source handle; open affected-party challenges freeze the recipe
+and require follow-up.
+
 ## Neural-System Design Analogy
 
 This is a design analogy, not a neuroscience claim:
@@ -209,6 +217,7 @@ python3 scripts/verify_cbb_gate.py --check
 python3 scripts/verify_cbb_receipt_chain.py --check
 python3 scripts/verify_cbb_v1_scenarios.py --check
 python3 scripts/verify_cbb_v1_qualification.py --check
+python3 scripts/verify_cbb_v1_outcomes.py --check
 ```
 
 Passing these commands proves only their documented deterministic scope.
